@@ -1,0 +1,168 @@
+import java.text.SimpleDateFormat
+
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    signingConfigs {
+        config {
+            keyAlias APP_KEY_ALIAS
+            keyPassword APP_KEY_PASSWORD
+            storePassword APP_STORE_PASSWORD
+            storeFile file(keystore_path)
+            //加载资源
+            //Properties properties = new Properties()
+            //InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+            //properties.load( inputStream )
+
+            //读取文件
+            //def keystore_file = properties.getProperty('RELEASE_STORE_FILE')
+        }
+    }
+
+    defaultConfig {
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        signingConfig signingConfigs.config
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
+        buildConfigField("String", "BASE_URL", "${rootProject.ext.base_url}")
+        buildConfigField("String", "LEANCLOUD_APP_ID", "${rootProject.ext.leancloud_id}")
+        buildConfigField("String", "LEANCLOUD_APP_KEY", "${rootProject.ext.leancloud_key}")
+        buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
+        buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
+        buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", "${rootProject.ext.leancloud_broadcast_conversation_id}")
+        buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", "${rootProject.ext.default_apk_download_url}")
+        buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
+        buildConfigField("String", "PRIVACY_POLICY_URL", PRIVACY_POLICY_URL)
+
+        buildConfigField("String", "WECHAT_APP_ID", "${rootProject.ext.wechat_app_id}")
+        buildConfigField("String", "WECHAT_APP_SECRET", "${rootProject.ext.wechat_app_secret}")
+
+        flavorDimensions 'yellow'
+
+        // Enabling multidex support.
+        multiDexEnabled true
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86','x86_64'
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable rootProject.ext.debuggable
+            jniDebuggable rootProject.ext.jniDebuggable
+            signingConfig signingConfigs.config
+            minifyEnabled rootProject.ext.minifyEnabled
+            pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
+            zipAlignEnabled rootProject.ext.zipAlignEnabled
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix rootProject.ext.applicationIdSuffix
+            versionNameSuffix rootProject.ext.versionNameSuffix
+            resValue "string", "app_name", rootProject.ext.app_name
+
+        }
+        debug {
+            debuggable rootProject.ext.debuggable
+            jniDebuggable rootProject.ext.jniDebuggable
+            signingConfig signingConfigs.config
+            minifyEnabled rootProject.ext.minifyEnabled
+            pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
+            zipAlignEnabled rootProject.ext.zipAlignEnabled
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix rootProject.ext.applicationIdSuffix
+            versionNameSuffix rootProject.ext.versionNameSuffix
+            resValue "string", "app_name", rootProject.ext.app_name
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //product flavors
+    productFlavors {
+
+        devolop {}
+
+        alpha {}
+
+        yingyongbao {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+
+    }
+
+    // If you use each() to iterate through the variant objects,
+    // you need to start using all(). That's because each() iterates
+    // through only the objects that already exist during configuration time—
+    // but those object don't exist at configuration time with the new model.
+    // However, all() adapts to the new model by picking up object as they are
+    // added during execution.
+
+    // rename the apk with the version name
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //输出 apk 文件名
+            def fileName = "${rootProject.ext.app_name}_${variant.flavorName}_${formatDate()}.apk"
+
+            println fileName
+
+            //新方式
+            outputFileName = fileName
+
+            //该方式已被废除
+            //output.outputFile = new File(output.outputFile.parent, fileName)
+        }
+    }
+}
+
+static def formatDate() {
+    def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
+    def formatDate = sdf.format(new Date())
+    return formatDate
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:design:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:cardview-v7:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:support-vector-drawable:'+ rootProject.ext.supportVersion
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+    implementation 'pub.devrel:easypermissions:0.4.3'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    // LeanCloud 基础包
+    implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.0'
+    // 推送与实时聊天需要的包
+    implementation('cn.leancloud.android:avoscloud-push:v4.6.0@aar') { transitive = true }
+    //fastjson
+    implementation 'com.alibaba:fastjson:1.1.68.android'
+    //zxing
+    implementation 'com.google.zxing:core:3.3.0'
+}

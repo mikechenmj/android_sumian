@@ -1,0 +1,109 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.1.51'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'http://mvn.leancloud.cn/nexus/content/repositories/public' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+
+    develop_env = 0x01 //0x01 开发  0x02 测试 0x03 常规版本线上
+    keystore_path = develop_env <= 0x02 ? DEBUG_STORE_FILE : RELEASE_STORE_FILE
+
+    compileSdkVersion = 27
+    buildToolsVersion = "27.0.3"
+    applicationId =  "com.sumian.sleepdoctor"
+    minSdkVersion = 18
+    targetSdkVersion = 27
+    versionCode = 1
+    versionName = "0.0.1"
+
+    applicationIdSuffix = null
+    versionNameSuffix = null
+
+    app_name ="Sumian Doctor"
+
+    libVersionCode = 1
+    libVersionName = "1.0"
+
+    supportVersion = '27.0.2'
+
+    abortOnError = true
+    debuggable = true
+    zipAlignEnabled = true
+    minifyEnabled = false
+    pseudoLocalesEnabled = true
+    jniDebuggable = debuggable
+    renderscriptDebuggable = debuggable
+
+    default_apk_download_url = DEFAULT_CLINICAL_APK_DOWNLOAD_URL
+
+    //打包第三方
+    umeng_app_key = develop_env <= 0x02 ? TEST_UMENG_APP_KEY : OFFICIAL_UMENG_APP_KEY
+
+    wechat_app_id = develop_env <= 0x02 ? DEV_WECHAT_APP_ID : OFFICIAL_WECHAT_APP_ID
+    wechat_app_secret = develop_env <= 0x02 ? DEV_WECHAT_APP_SECRET : OFFICIAL_WECHAT_APP_SECRET
+
+    switch (develop_env) {
+        case 0x01:
+            app_name += "-Dev"
+
+            applicationIdSuffix = null
+            versionNameSuffix = "_dev"
+
+            base_url = DEV_URL
+
+            leancloud_id = DEV_LEANCLOUD_APP_ID
+            leancloud_key = DEV_LEANCLOUD_APP_KEY
+            leancloud_broadcast_conversation_id = DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID
+            break
+        case 0x02:
+            app_name += "-Test"
+
+            applicationIdSuffix = null
+            versionNameSuffix = "_test"
+
+            base_url = TEST_URL
+
+            leancloud_id = TEST_LEANCLOUD_APP_ID
+            leancloud_key = TEST_LEANCLOUD_APP_KEY
+            leancloud_broadcast_conversation_id = TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID
+            break
+        case 0x03:
+            //app_name = "Sumian"
+
+            applicationIdSuffix = null
+            versionNameSuffix = "_release"
+
+            base_url = OFFICIAL_URL
+
+            leancloud_id = OFFICIAL_LEANCLOUD_APP_ID
+            leancloud_key = OFFICIAL_LEANCLOUD_APP_KEY
+            leancloud_broadcast_conversation_id = OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID
+            break
+        default:
+            break
+    }
+}
