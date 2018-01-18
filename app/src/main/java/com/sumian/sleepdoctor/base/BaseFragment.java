@@ -7,12 +7,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.main.MainActivity;
 
 import butterknife.ButterKnife;
@@ -181,7 +183,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
         }
     }
 
-    protected void popBack() {
+    protected void popBackPressed() {
         if (mActivity == null) {
             mActivity = getActivity();
         }
@@ -197,5 +199,13 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
         if (mActivity instanceof MainActivity) {
             ((MainActivity) mActivity).goHome();
         }
+    }
+
+    protected void showToast(String message) {
+        runOnUiThread(() -> ToastHelper.show(message));
+    }
+
+    protected void showToast(@StringRes int messageId) {
+        showToast(getString(messageId));
     }
 }

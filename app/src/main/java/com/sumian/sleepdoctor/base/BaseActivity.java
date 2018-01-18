@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.DefaultLifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -11,7 +14,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,14 +21,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.fragment.LoginFragment;
+import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.main.WelcomeFragment;
 import com.sumian.sleepdoctor.main.tab.GroupFragment;
 import com.sumian.sleepdoctor.main.tab.MeFragment;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -38,11 +42,13 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements DefaultLifecycleObserver {
+public abstract class BaseActivity extends AppCompatActivity implements DefaultLifecycleObserver, Observer<Boolean> {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Unbinder mBind;
     protected View mRoot;
+    private LiveData<Boolean> mTokenInvalidStateLiveData;
+    private boolean mIsTopLogin;
 
     /**
      * 设置状态栏黑色字体图标，
@@ -187,6 +193,10 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
             initWidget();
             initData();
             getLifecycle().addObserver(this);
+            if (mTokenInvalidStateLiveData == null) {
+                mTokenInvalidStateLiveData = ViewModelProviders.of(this).get(AccountViewModel.class).getLiveDataTokenInvalidState();
+            }
+            mTokenInvalidStateLiveData.observe(this, this);
         } else {
             finish();
         }
@@ -195,7 +205,10 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     @Override
     protected void onDestroy() {
         onRelease();
-        // getLifecycle().removeObserver(this);
+        if (mTokenInvalidStateLiveData != null && (mTokenInvalidStateLiveData.hasActiveObservers() || mTokenInvalidStateLiveData.hasObservers())) {
+            mTokenInvalidStateLiveData.removeObservers(this);
+        }
+        getLifecycle().removeObserver(this);
         this.mBind.unbind();
         this.mRoot = null;
         super.onDestroy();
@@ -225,32 +238,35 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     }
 
     public void commitReplaceTabFragment(Fragment fragment) {
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                .beginTransaction().setCustomAnimations(com.qmuiteam.qmui.arch.R.anim.scale_enter, com.qmuiteam.qmui.arch.R.anim.scale_exit);
+        FragmentTransaction fragmentTransaction = getFragmentTransaction();
         fragmentTransaction.replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName());
         if (!(fragment instanceof GroupFragment || fragment instanceof MeFragment)) {
-            fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+            addToBackStack(fragment, fragmentTransaction);
         }
-        fragmentTransaction.commit();
+        commitTransaction(fragmentTransaction);
     }
 
     public void commitReplacePagerFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().setCustomAnimations(com.qmuiteam.qmui.arch.R.anim.scale_enter, com.qmuiteam.qmui.arch.R.anim.scale_exit);
+        this.mIsTopLogin = fragment instanceof LoginFragment;
+
+        FragmentTransaction fragmentTransaction = getFragmentTransaction();
         fragmentTransaction.replace(R.id.lay_page_container, fragment, fragment.getClass().getSimpleName());
         if (!(fragment instanceof WelcomeFragment)) {
-            fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+            addToBackStack(fragment, fragmentTransaction);
         }
-        fragmentTransaction.commit();
+        commitTransaction(fragmentTransaction);
     }
 
     public void goHome() {
+        this.mIsTopLogin = false;
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        for (int i = 0; i < backStackEntryCount; i++) {
-            FragmentManager.BackStackEntry backStackEntry = getSupportFragmentManager().getBackStackEntryAt(i);
-            Log.e(TAG, "goHome: --------->" + backStackEntry.toString());
-            getSupportFragmentManager().popBackStack(backStackEntry.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
+        Log.e(TAG, "goHome: ------------>backStackEntryCount=" + backStackEntryCount);
+        //for (int i = 0; i < backStackEntryCount; i++) {
+        getSupportFragmentManager().popBackStackImmediate();
+        // FragmentManager.BackStackEntry backStackEntry =
+        //   Log.e(TAG, "goHome: --------->" + backStackEntry.toString());
+        // getSupportFragmentManager().popBackStackImmediate(backStackEntry.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        //}
     }
 
     public static void show(Context context, Class<? extends BaseActivity> clx) {
@@ -260,41 +276,91 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onCreate: -------->");
-
     }
 
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
-
         Log.d(TAG, "onStart: --------->");
-
     }
 
     @Override
     public void onResume(@NonNull LifecycleOwner owner) {
-
         Log.d(TAG, "onResume: -------->");
-
     }
 
     @Override
     public void onPause(@NonNull LifecycleOwner owner) {
-
         Log.d(TAG, "onPause: ----------->");
-
     }
 
     @Override
     public void onStop(@NonNull LifecycleOwner owner) {
-
         Log.d(TAG, "onStop: ----------->");
-
     }
 
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
-
         Log.d(TAG, "onDestroy: ----------->");
+    }
 
+    @Override
+    public void onBackPressed() {
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        Log.e(TAG, "onBackPressed: -----1--->" + backStackEntryCount);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        Log.e(TAG, "onBackPressed: -----2----->" + fragments.toString());
+
+        if (fragments.isEmpty() || isGroupFragment(fragments) || isMeFragment(fragments) || isLoginFragment(fragments) || backStackEntryCount <= 1) {
+            finishAffinity();
+        } else {
+            super.onBackPressed();
+        }
+        Log.e(TAG, "onBackPressed: ------3---->" + fragments.toString());
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public void onChanged(@Nullable Boolean tokenIsInvalid) {
+        if (tokenIsInvalid && !mIsTopLogin) commitReplacePagerFragment(LoginFragment.newInstance());
+    }
+
+    @SuppressWarnings("LoopStatementThatDoesntLoop")
+    private boolean isLoginFragment(List<Fragment> fragments) {
+        if (fragments == null || fragments.isEmpty()) return false;
+        for (Fragment fragment : fragments) {
+            return fragment instanceof LoginFragment;
+        }
+        return false;
+    }
+
+    @SuppressWarnings("LoopStatementThatDoesntLoop")
+    private boolean isGroupFragment(List<Fragment> fragments) {
+        if (fragments == null || fragments.isEmpty()) return false;
+        for (Fragment fragment : fragments) {
+            return fragment instanceof GroupFragment;
+        }
+        return false;
+    }
+
+    @SuppressWarnings("LoopStatementThatDoesntLoop")
+    private boolean isMeFragment(List<Fragment> fragments) {
+        if (fragments == null || fragments.isEmpty()) return false;
+        for (Fragment fragment : fragments) {
+            return fragment instanceof MeFragment;
+        }
+        return false;
+    }
+
+    @SuppressLint("CommitTransaction")
+    private FragmentTransaction getFragmentTransaction() {
+        return getSupportFragmentManager().beginTransaction().setCustomAnimations(com.qmuiteam.qmui.arch.R.anim.scale_enter, com.qmuiteam.qmui.arch.R.anim.scale_exit);
+    }
+
+    private void addToBackStack(Fragment fragment, FragmentTransaction fragmentTransaction) {
+        fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+    }
+
+    private void commitTransaction(FragmentTransaction fragmentTransaction) {
+        fragmentTransaction.commit();
     }
 }

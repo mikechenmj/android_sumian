@@ -31,7 +31,7 @@ interface DoctorApi {
     fun getUserProfile(): Call<UserProfile>
 
     @PATCH("user/profile")
-    fun modifyUserProfile(@Field("nickname") nickname: String, @Field("name") name: String): Call<Unit>
+    fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserProfile>
 
 
 }

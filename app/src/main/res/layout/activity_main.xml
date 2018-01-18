@@ -18,8 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true" />
+            android:background="@color/b1_color"
+            android:clickable="false"
+            android:focusable="false" />
 
         <com.sumian.sleepdoctor.widget.nav.NavTab
             android:id="@+id/nav_Tab"
@@ -32,8 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/b1_color"
-        android:clickable="true"
-        android:focusable="true"
+        android:clickable="false"
+        android:focusable="false"
         android:visibility="gone"
         tools:visibility="visible" />
 

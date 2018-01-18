@@ -37,5 +37,8 @@
     <string name="input_real_name">请输入真实姓名</string>
     <string name="warn_real_name">真实姓名只有医生才能看到</string>
     <string name="complete">完成</string>
+    <string name="scan_qr_code_join_group">扫码入群</string>
+    <string name="qr_code_desc_part_one">还未加入群组,点击下方扫码按钮,扫描医生群组二维码入群.</string>
+    <string name="qr_code_desc_part_two">二维码一般由医生提供,如果想加入医生随访群,请向主治医生咨询.</string>
 
 </resources>

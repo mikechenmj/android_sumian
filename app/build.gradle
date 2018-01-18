@@ -115,7 +115,7 @@ android {
         yingyongbao {}
 
         productFlavors.all { flavor ->
-            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name, scheme: "${SCHEME}", host: "${HOST}"]
         }
 
     }
@@ -182,8 +182,6 @@ dependencies {
 
     //fastjson
     implementation 'com.alibaba:fastjson:1.2.44'
-    //zxing
-    implementation 'com.google.zxing:core:3.3.0'
 
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.0.0"
@@ -192,6 +190,6 @@ dependencies {
     // Java8 support for Lifecycles
     implementation "android.arch.lifecycle:common-java8:1.0.0"
 
-    implementation project(':common')
+    api project(':common')
 
 }

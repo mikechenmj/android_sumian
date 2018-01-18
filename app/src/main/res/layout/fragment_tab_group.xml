@@ -3,12 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="群组"
-        android:textSize="@dimen/font_50" />
+    <include
+        android:id="@+id/lay_scan_qr_code_container"
+        layout="@layout/lay_scan_join_group_default" />
 
 </LinearLayout>

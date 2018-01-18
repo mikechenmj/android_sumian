@@ -1,20 +1,16 @@
 package com.sumian.sleepdoctor.main;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.tab.GroupFragment;
 import com.sumian.sleepdoctor.main.tab.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -75,39 +71,6 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     }
 
     @Override
-    public void onBackPressed() {
-        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        Log.e(TAG, "onBackPressed: -----1--->" + backStackEntryCount);
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        Log.e(TAG, "onBackPressed: -----2----->" + fragments.toString());
-
-        if (fragments.isEmpty() || isGroupFragment(fragments) || isLoginFragment(fragments) || backStackEntryCount <= 1) {
-            finishAffinity();
-        } else {
-            super.onBackPressed();
-        }
-        Log.e(TAG, "onBackPressed: ------3---->" + fragments.toString());
-    }
-
-    @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private boolean isLoginFragment(List<Fragment> fragments) {
-        if (fragments == null || fragments.isEmpty()) return false;
-        for (Fragment fragment : fragments) {
-            return fragment instanceof LoginFragment;
-        }
-        return false;
-    }
-
-    @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private boolean isGroupFragment(List<Fragment> fragments) {
-        if (fragments == null || fragments.isEmpty()) return false;
-        for (Fragment fragment : fragments) {
-            return fragment instanceof GroupFragment;
-        }
-        return false;
-    }
-
-    @Override
     public void commitReplacePagerFragment(Fragment fragment) {
         mLayTabParentContainer.setVisibility(View.GONE);
         mLayPageContainer.setVisibility(View.VISIBLE);
@@ -120,5 +83,4 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
         mLayPageContainer.setVisibility(View.GONE);
         super.commitReplaceTabFragment(fragment);
     }
-
 }

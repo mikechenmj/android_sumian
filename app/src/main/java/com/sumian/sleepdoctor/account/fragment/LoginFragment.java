@@ -1,10 +1,8 @@
 package com.sumian.sleepdoctor.account.fragment;
 
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
@@ -13,6 +11,9 @@ import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.contract.LoginContract;
 import com.sumian.sleepdoctor.account.presenter.LoginPresenter;
 import com.sumian.sleepdoctor.base.BaseFragment;
+
+import net.qiujuer.genius.ui.widget.Button;
+import net.qiujuer.genius.ui.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,9 +27,9 @@ import butterknife.OnClick;
 public final class LoginFragment extends BaseFragment<LoginPresenter> implements View.OnClickListener, LoginContract.View {
 
     @BindView(R.id.et_mobil)
-    TextInputEditText mEtMobil;
+    EditText mEtMobil;
     @BindView(R.id.et_captcha)
-    TextInputEditText mEtCaptcha;
+    EditText mEtCaptcha;
     @BindView(R.id.bt_send_captcha)
     Button mBtSendCaptcha;
     @BindView(R.id.bt_login)
@@ -77,10 +78,10 @@ public final class LoginFragment extends BaseFragment<LoginPresenter> implements
 
     @Override
     public void onLoginSuccess(boolean isNewAccount) {
-        runOnUiThread(()->{
-            if (isNewAccount){
+        runOnUiThread(() -> {
+            if (isNewAccount) {
                 commitReplacePager(ImproveUserProfileOneFragment.newInstance());
-            }else {
+            } else {
                 goHome();
             }
         });

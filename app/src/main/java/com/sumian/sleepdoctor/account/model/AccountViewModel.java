@@ -27,11 +27,13 @@ public class AccountViewModel extends AndroidViewModel {
 
     private MutableLiveData<Token> mTokenLiveData;
 
+    private MutableLiveData<Boolean> mTokenIsInvalid;
+
     public AccountViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<Token> LoadToken() {
+    public void LoadToken() {
         if (mTokenLiveData == null) {
             mTokenLiveData = new MutableLiveData<>();
         }
@@ -40,6 +42,8 @@ public class AccountViewModel extends AndroidViewModel {
             Future<Token> future = Executors.newSingleThreadExecutor().submit(() -> AccountCache.getTokenCache(Token.class));
             try {
                 Token t = future.get();
+                updateTokenInvalidState(t == null);
+
                 mTokenLiveData.postValue(t);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -47,13 +51,9 @@ public class AccountViewModel extends AndroidViewModel {
                 e.printStackTrace();
             }
         }
-        return mTokenLiveData;
     }
 
     public LiveData<Token> getLiveDataToken() {
-        if (mTokenLiveData == null) {
-            mTokenLiveData = new MutableLiveData<>();
-        }
         return mTokenLiveData;
     }
 
@@ -63,11 +63,13 @@ public class AccountViewModel extends AndroidViewModel {
 
     public void updateToken(Token token) {
         mTokenLiveData.postValue(token);
+        updateTokenInvalidState(false);
         AppOperator.runOnThread(() -> AccountCache.updateTokenCache(token));
     }
 
     public void updateUserProfile(UserProfile userProfile) {
         Token token = getToken();
+        token.is_new = false;
         token.user = userProfile;
         updateToken(token);
     }
@@ -80,4 +82,17 @@ public class AccountViewModel extends AndroidViewModel {
         return getToken() == null ? null : getToken().token;
     }
 
+    public void updateTokenInvalidState(boolean tokenIsInvalid) {
+        if (mTokenIsInvalid == null) {
+            mTokenIsInvalid = new MutableLiveData<>();
+        }
+        mTokenIsInvalid.postValue(tokenIsInvalid);
+    }
+
+    public LiveData<Boolean> getLiveDataTokenInvalidState() {
+        if (mTokenIsInvalid == null) {
+            mTokenIsInvalid = new MutableLiveData<>();
+        }
+        return mTokenIsInvalid;
+    }
 }
