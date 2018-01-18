@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lay_my_msg_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_12"
+        tools:ignore="RtlSymmetry">
+
+        <ImageView
+            android:id="@+id/iv_type"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_10"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/info_icon_set"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_type_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:text="@string/user_info_center"
+            android:textColor="@color/t1_color"
+            android:textSize="@dimen/font_18"
+            tools:ignore="RtlHardcoded" />
+
+        <View
+            android:id="@+id/v_dot"
+            android:layout_width="@dimen/space_6"
+            android:layout_height="@dimen/space_6"
+            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginRight="@dimen/space_4"
+            android:background="@drawable/bg_tab_dot"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_setting_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:text="@string/user_info_center"
+            android:textColor="@color/t1_color"
+            android:textSize="@dimen/font_18"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:layout_width="@dimen/space_32"
+            android:layout_height="@dimen/space_32"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_8"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/info_icon_enter" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_divider_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:background="@color/b1_color" />
+
+</LinearLayout>

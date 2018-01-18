@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--itemTab-->
+    <declare-styleable name="ItemTab">
+        <attr name="tab_icon" format="reference" />
+        <attr name="tab_text" format="string|reference" />
+    </declare-styleable>
+
+    <!--divider view-->
+    <declare-styleable name="SettingDividerView">
+        <attr name="type_icon" format="reference" />
+        <attr name="type_desc" format="string|reference" />
+        <attr name="type_desc_text_color" format="color|reference" />
+        <attr name="type_desc_text_size" format="dimension|reference" />
+        <attr name="dot_color" format="color|reference" />
+        <attr name="type_content" format="string|reference" />
+        <attr name="type_content_text_color" format="color|reference" />
+        <attr name="type_content_text_size" format="dimension|reference" />
+        <attr name="divider_line_color" format="color|reference" />
+        <attr name="divider_line_size" format="dimension|reference" />
+        <attr name="divider_line_visible" format="enum">
+            <enum name="gone" value="0x00000008" />
+            <enum name="visible" value="0x00000000" />
+            <enum name="invisible" value="0x00000004" />
+        </attr>
+    </declare-styleable>
+
+    <!--title bar-->
+    <declare-styleable name="TitleBar">
+        <attr name="show_back" format="boolean|reference" />
+        <attr name="title" format="reference|string" />
+        <attr name="show_spanner" format="boolean|reference" />
+        <attr name="more_icon" format="reference" />
+        <attr name="more_text" format="string|reference" />
+
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/space_120"
+            android:layout_height="@dimen/space_120"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@mipmap/info_avatar_patient"
+            app:civ_border_color="@android:color/white"
+            app:civ_border_width="@dimen/space_2" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_20"
+            tools:text="@string/user_info_center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            android:id="@+id/dv_user_info_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_desc="@string/user_info_center"
+            app:type_icon="@mipmap/info_icon_information" />
+
+        <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            android:id="@+id/dv_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_icon="@mipmap/info_icon_set" />
+
+    </LinearLayout>
+
+</LinearLayout>

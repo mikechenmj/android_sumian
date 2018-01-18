@@ -1,11 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+
     ext.kotlin_version = '1.1.51'
+
     repositories {
         google()
         jcenter()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -32,7 +35,7 @@ ext {
     develop_env = 0x01 //0x01 开发  0x02 测试 0x03 常规版本线上
     keystore_path = develop_env <= 0x02 ? DEBUG_STORE_FILE : RELEASE_STORE_FILE
 
-    compileSdkVersion = 27
+    compileSdkVersion = 26
     buildToolsVersion = "27.0.3"
     applicationId =  "com.sumian.sleepdoctor"
     minSdkVersion = 18
@@ -43,7 +46,7 @@ ext {
     applicationIdSuffix = null
     versionNameSuffix = null
 
-    app_name ="Sumian Doctor"
+    app_name ="Sleep Doctor"
 
     libVersionCode = 1
     libVersionName = "1.0"

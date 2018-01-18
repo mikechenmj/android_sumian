@@ -2,8 +2,31 @@
 <resources>
 
     <string name="app_name">睡眠医生</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <string name="tab_group">群组</string>
+    <string name="tab_me">我的</string>
+    <string name="none_nickname">匿名</string>
+    <string name="user_info_center">个人信息</string>
+    <string name="hello">你好,</string>
+    <string name="login_welcome">欢迎使用睡眠医生,请登录</string>
+    <string name="input_mobil">请输入手机号码</string>
+    <string name="input_captcha">请输入验证码</string>
+    <string name="send_captcha">发送验证码</string>
+    <string name="login">登录</string>
+    <string name="improve_user_profile_one_part_one">你好,很高兴认识你.</string>
+    <string name="improve_user_profile_one_part_two">请问怎么称呼?</string>
+    <string name="jump">跳过</string>
+    <string name="improve_user_profile_one">完善信息1/2</string>
+    <string name="next_step">下一步</string>
+    <string name="nickname">昵称</string>
+    <string name="input_nickname">请输入昵称</string>
+    <string name="improve_user_profile_two">完善信息2/2</string>
+    <string name="improve_user_profile_two_part_one">你的真实姓名是?</string>
+    <string name="improve_user_profile_two_part_two">医生可以通过真实姓名匹配你的线下就诊记录,能更好的解答你的问题哦.</string>
+    <string name="real_name">真实姓名</string>
+    <string name="input_real_name">请输入真实姓名</string>
+    <string name="warn_real_name">真实姓名只有医生才能看到</string>
+    <string name="complete">完成</string>
+
 
 </resources>
