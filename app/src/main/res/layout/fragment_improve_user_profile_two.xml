@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:more_text="@string/jump"
         app:show_back="true"
-        app:title="@string/improve_user_profile_two" />
+        app:text="@string/improve_user_profile_two" />
 
     <TextView
         android:layout_width="match_parent"

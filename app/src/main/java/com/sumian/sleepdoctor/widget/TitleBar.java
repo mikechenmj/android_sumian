@@ -66,7 +66,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
         boolean showBack = a.getBoolean(R.styleable.TitleBar_show_back, true);
 
-        String title = a.getString(R.styleable.TitleBar_title);
+        String title = a.getString(R.styleable.TitleBar_text);
         boolean showSpanner = a.getBoolean(R.styleable.TitleBar_show_spanner, false);
         String moreText = a.getString(R.styleable.TitleBar_more_text);
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_more_icon);

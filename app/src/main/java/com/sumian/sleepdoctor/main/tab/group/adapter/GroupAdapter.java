@@ -14,9 +14,9 @@ import com.sumian.sleepdoctor.main.tab.group.bean.GroupDetail;
  * desc:
  */
 
-class GroupAdapter extends BaseRecyclerAdapter<GroupDetail<UserProfile, UserProfile>> {
+public class GroupAdapter extends BaseRecyclerAdapter<GroupDetail<UserProfile, UserProfile>> {
 
-    protected GroupAdapter(Context context) {
+    public GroupAdapter(Context context) {
         super(context);
     }
 

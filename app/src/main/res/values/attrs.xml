@@ -28,8 +28,8 @@
 
     <!--title bar-->
     <declare-styleable name="TitleBar">
+        <attr name="text" format="string|reference" />
         <attr name="show_back" format="boolean|reference" />
-        <attr name="title" format="reference|string" />
         <attr name="show_spanner" format="boolean|reference" />
         <attr name="more_icon" format="reference" />
         <attr name="more_text" format="string|reference" />
