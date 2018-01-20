@@ -25,8 +25,8 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.main.WelcomeFragment;
-import com.sumian.sleepdoctor.main.tab.GroupFragment;
-import com.sumian.sleepdoctor.main.tab.MeFragment;
+import com.sumian.sleepdoctor.main.tab.group.fragment.GroupFragment;
+import com.sumian.sleepdoctor.main.tab.me.MeFragment;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -239,6 +239,14 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
 
     public void commitReplaceTabFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getFragmentTransaction();
+
+        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
+        if (fragmentByTag != null) {
+            // Log.e(TAG, "commitReplaceTabFragment: ---------->" + fragmentByTag.toString());
+            return;
+        }
+
+
         fragmentTransaction.replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName());
         if (!(fragment instanceof GroupFragment || fragment instanceof MeFragment)) {
             addToBackStack(fragment, fragmentTransaction);
@@ -250,6 +258,13 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
         this.mIsTopLogin = fragment instanceof LoginFragment;
 
         FragmentTransaction fragmentTransaction = getFragmentTransaction();
+
+        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
+        if (fragmentByTag != null) {
+            // Log.e(TAG, "commitReplaceTabFragment: ---------->" + fragmentByTag.toString());
+            return;
+        }
+
         fragmentTransaction.replace(R.id.lay_page_container, fragment, fragment.getClass().getSimpleName());
         if (!(fragment instanceof WelcomeFragment)) {
             addToBackStack(fragment, fragmentTransaction);
@@ -306,16 +321,16 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     @Override
     public void onBackPressed() {
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        Log.e(TAG, "onBackPressed: -----1--->" + backStackEntryCount);
+        // Log.e(TAG, "onBackPressed: -----1--->" + backStackEntryCount);
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        Log.e(TAG, "onBackPressed: -----2----->" + fragments.toString());
+        // Log.e(TAG, "onBackPressed: -----2----->" + fragments.toString());
 
         if (fragments.isEmpty() || isGroupFragment(fragments) || isMeFragment(fragments) || isLoginFragment(fragments) || backStackEntryCount <= 1) {
-            finishAffinity();
+            finish();
         } else {
             super.onBackPressed();
         }
-        Log.e(TAG, "onBackPressed: ------3---->" + fragments.toString());
+        //   Log.e(TAG, "onBackPressed: ------3---->" + fragments.toString());
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -24,21 +24,24 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="scan_qr_theme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:windowOverscan">true</item>
+    <style name="scan_qr_theme" parent="Base.ThemeOverlay.AppCompat">
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
-        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent
+        <item name="android:windowOverscan">true</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black_alpha_48
         </item>
-
+        <item name="android:navigationMode">listMode</item>
+        <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="android:configChanges">keyboardHidden|orientation</item>
         <item name="android:launchMode">singleInstance</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
-        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
-
     </style>
 
     <style name="popup_anim_style_alpha" parent="Base.Widget.AppCompat.PopupMenu.Overflow" />

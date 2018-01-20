@@ -10,8 +10,8 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowOverscan">true</item>
-        <item name="android:outlineProvider" tools:ignore="NewApi">@null</item>
         <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">false</item>
         <item name="android:configChanges">keyboardHidden|orientation</item>
         <item name="android:launchMode">singleInstance</item>
         <item name="android:screenOrientation">portrait</item>
@@ -61,6 +61,21 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
+    <style name="scan_qr_theme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowOverscan">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent
+        </item>
+
+        <item name="android:configChanges">keyboardHidden|orientation</item>
+        <item name="android:launchMode">singleInstance</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+    </style>
 
 
 </resources>

@@ -28,7 +28,7 @@
         app:qrcv_isTipTextBelowRect="true"
         app:qrcv_maskColor="#33FFFFFF"
         app:qrcv_qrCodeTipText="@string/scan_qr_code_note"
-        app:qrcv_rectWidth="300dp"
+        app:qrcv_rectWidth="280dp"
         app:qrcv_scanLineColor="@color/colorPrimaryDark"
         app:qrcv_scanLineMargin="0dp"
         app:qrcv_scanLineSize="0.5dp"
@@ -40,8 +40,7 @@
     <FrameLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="UselessParent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -56,18 +55,14 @@
             tools:ignore="RtlHardcoded" />
 
         <TextView
-            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@drawable/bg_material"
             android:gravity="center"
             android:padding="@dimen/space_12"
             android:text="@string/scan_qr_code"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20"
-            tools:ignore="KeyboardInaccessibleWidget"
-            tools:text="群组" />
+            android:textSize="@dimen/font_20" />
     </FrameLayout>
 
 

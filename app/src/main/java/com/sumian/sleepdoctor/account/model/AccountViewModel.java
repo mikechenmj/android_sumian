@@ -74,10 +74,6 @@ public class AccountViewModel extends AndroidViewModel {
         updateToken(token);
     }
 
-    public boolean isLogin() {
-        return mTokenLiveData.getValue() != null;
-    }
-
     public String accessToken() {
         return getToken() == null ? null : getToken().token;
     }

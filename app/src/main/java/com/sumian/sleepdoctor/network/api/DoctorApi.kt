@@ -2,6 +2,8 @@ package com.sumian.sleepdoctor.network.api
 
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.main.tab.group.bean.GroupDetail
+import com.sumian.sleepdoctor.network.response.BaseResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -33,5 +35,9 @@ interface DoctorApi {
     @PATCH("user/profile")
     fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserProfile>
 
+    @GET("user/groups")
+    fun getGroups(@QueryMap map: MutableMap<String, Int>): Call<BaseResponse<List<GroupDetail<UserProfile, UserProfile>>>>
 
+    @GET("groups/{id}")
+    fun getGroupsDetail(@Path("id") int: Int): Call<GroupDetail<UserProfile, UserProfile>>
 }

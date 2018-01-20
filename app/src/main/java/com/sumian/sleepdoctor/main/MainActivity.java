@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.main.tab.GroupFragment;
-import com.sumian.sleepdoctor.main.tab.MeFragment;
+import com.sumian.sleepdoctor.main.tab.group.fragment.GroupFragment;
+import com.sumian.sleepdoctor.main.tab.me.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
 

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
+import com.sumian.sleepdoctor.main.tab.group.model.GroupViewModel;
 import com.sumian.sleepdoctor.network.api.DoctorApi;
 import com.sumian.sleepdoctor.network.engine.NetEngine;
 
@@ -21,6 +22,7 @@ public final class AppManager {
 
     private DoctorApi mDoctorApi;
     private AccountViewModel mAccountViewModel;
+    private GroupViewModel mGroupViewModel;
 
     private AppManager() {
     }
@@ -35,6 +37,13 @@ public final class AppManager {
 
     public static synchronized AccountViewModel getAccountViewModel() {
         return Holder.INSTANCE.mAccountViewModel;
+    }
+
+    public static synchronized GroupViewModel getGroupViewModel() {
+        if (Holder.INSTANCE.mGroupViewModel == null) {
+            Holder.INSTANCE.mGroupViewModel = new GroupViewModel();
+        }
+        return Holder.INSTANCE.mGroupViewModel;
     }
 
     public static synchronized DoctorApi getHttpService() {

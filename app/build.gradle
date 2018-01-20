@@ -190,6 +190,6 @@ dependencies {
     // Java8 support for Lifecycles
     implementation "android.arch.lifecycle:common-java8:1.0.0"
 
-    api project(':common')
+    implementation project(':common')
 
 }

@@ -31,7 +31,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
 
     private static final String TAG = BaseFragment.class.getSimpleName();
 
-    private Activity mActivity;
+    protected Activity mActivity;
     protected View mRootView;
     public Bundle mBundle;
 
