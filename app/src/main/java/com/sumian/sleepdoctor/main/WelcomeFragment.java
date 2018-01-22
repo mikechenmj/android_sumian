@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -32,6 +33,12 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
     }
 
     @Override
+    protected void initWidget(View root) {
+        super.initWidget(root);
+        setStatusBar();
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
@@ -51,4 +58,5 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
 
         Log.e(TAG, "onChanged: ---------->" + token);
     }
+
 }

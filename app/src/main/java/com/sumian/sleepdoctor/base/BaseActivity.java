@@ -18,9 +18,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
@@ -67,15 +66,10 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        //StatusBarDarkMode(this, StatusBarLightMode(this));
-
-        //去除标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         super.onCreate(savedInstanceState);
         if (initBundle(getIntent().getExtras())) {
             setContentView(getLayoutId());
+            setStatusBar();
             initWindow();
             this.mBind = ButterKnife.bind(this);
             this.mRoot = getWindow().getDecorView();
@@ -101,6 +95,10 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
         this.mBind.unbind();
         this.mRoot = null;
         super.onDestroy();
+    }
+
+    public void setStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
     }
 
     protected boolean initBundle(Bundle bundle) {
@@ -280,5 +278,9 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
     @Override
     public Lifecycle getLifecycle() {
         return mLifecycleRegistry;
+    }
+
+    public void setTransparentForImageViewInFragment(@Nullable View needOffsetView) {
+        StatusBarUtil.setTransparentForImageViewInFragment(this, needOffsetView);
     }
 }

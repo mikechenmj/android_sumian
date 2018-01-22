@@ -104,8 +104,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
         //4.4版本之后沉浸式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
-            setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
+            //setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
+            //setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
         }
 
         setBackgroundResource(R.color.colorPrimary);

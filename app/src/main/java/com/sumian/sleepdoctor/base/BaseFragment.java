@@ -248,4 +248,14 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     public Lifecycle getLifecycle() {
         return mLifecycleRegistry;
     }
+
+    public void setStatusBar() {
+        if (mActivity == null) {
+            mActivity = getActivity();
+        }
+
+        if (mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).setTransparentForImageViewInFragment(null);
+        }
+    }
 }

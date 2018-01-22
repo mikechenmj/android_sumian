@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/pay" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/b2_color"
+        android:padding="@dimen/space_20">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_group_icon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/group_btn_scan_code"
+            app:civ_border_color="@color/b2_color"
+            app:civ_border_overlay="true"
+            app:civ_border_width="@dimen/space_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            style="@style/text_t3_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:maxEms="10"
+            android:maxLines="1"
+            android:minLines="1"
+            android:singleLine="true"
+            android:textSize="@dimen/font_20"
+            app:layout_constraintBottom_toTopOf="@+id/tv_group_money"
+            app:layout_constraintLeft_toRightOf="@id/iv_group_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlHardcoded"
+            tools:text="一个有十二个字符的随访群" />
+
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="10"
+            android:maxLines="1"
+            android:minLines="1"
+            android:singleLine="true"
+            android:text="@string/advisory_one"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintBottom_toBottomOf="@id/iv_group_icon"
+            app:layout_constraintLeft_toLeftOf="@id/tv_desc"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
+
+        <TextView
+            android:id="@+id/tv_group_money"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxEms="10"
+            android:maxLines="1"
+            android:minLines="1"
+            android:singleLine="true"
+            android:textColor="@color/t4_color"
+            android:textSize="@dimen/font_16"
+            app:layout_constraintBottom_toBottomOf="@id/textView1"
+            app:layout_constraintLeft_toRightOf="@id/textView1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+            app:layout_constraintTop_toTopOf="@id/textView1"
+            tools:ignore="RtlHardcoded"
+            tools:text="50" />
+
+        <TextView
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:text="@string/money_for_month"
+            app:layout_constraintBottom_toBottomOf="@id/tv_group_money"
+            app:layout_constraintLeft_toRightOf="@+id/tv_group_money"
+            app:layout_constraintTop_toTopOf="@+id/tv_group_money" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.sumian.sleepdoctor.widget.pay.PayCalculateItemView
+        android:id="@+id/pay_calculate_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_16" />
+
+    <com.sumian.sleepdoctor.widget.pay.PayItemGroupView
+        android:id="@+id/pay_group_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_16" />
+
+
+    <net.qiujuer.genius.ui.widget.Button
+        android:id="@+id/bt_pay"
+        style="@style/bt_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_56"
+        android:layout_marginLeft="@dimen/space_32"
+        android:layout_marginRight="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_28"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/join"
+        app:gTouchCornerRadius="@dimen/space_32"
+        app:gTouchEffect="ripple" />
+
+</LinearLayout>

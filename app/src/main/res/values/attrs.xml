@@ -38,7 +38,13 @@
         <attr name="show_spanner" format="boolean|reference" />
         <attr name="more_icon" format="reference" />
         <attr name="more_text" format="string|reference" />
+    </declare-styleable>
 
+    <!--pay item view-->
+    <declare-styleable name="PayItemView">
+        <attr name="icon" format="reference" />
+        <attr name="desc" format="string|reference" />
+        <attr name="is_select" format="boolean|reference" />
     </declare-styleable>
 
 </resources>

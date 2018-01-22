@@ -22,6 +22,7 @@
 
     <!--space size-->
 
+    <dimen name="space_220">220dp</dimen>
     <dimen name="space_200">200dp</dimen>
     <dimen name="space_180">180dp</dimen>
     <dimen name="space_160">160dp</dimen>

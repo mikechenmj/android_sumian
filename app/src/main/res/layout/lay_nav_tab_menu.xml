@@ -39,5 +39,9 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:background="@color/l1_color" />
 
 </merge>

@@ -56,5 +56,19 @@
     <string name="current_app_version">当前版本</string>
     <string name="about_me">关于我们</string>
     <string name="logout">退出登录</string>
+    <string name="brief">简介</string>
+    <string name="advisory">咨询费用</string>
+    <string name="zero_money">0.00</string>
+    <string name="money_for_month">元/月</string>
+    <string name="join">加入</string>
+    <string name="re_scan">重新扫描</string>
+    <string name="pay">支付</string>
+    <string name="advisory_one">咨询费用:</string>
+    <string name="pay_money">支付金额</string>
+    <string name="yuan">元</string>
+    <string name="pay_duration">购买时长(月)</string>
+    <string name="one">1</string>
+    <string name="wechat_pay">微信支付</string>
+    <string name="alipay">支付宝支付</string>
 
 </resources>

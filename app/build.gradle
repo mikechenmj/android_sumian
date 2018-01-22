@@ -178,7 +178,10 @@ dependencies {
     //implementation 'com.google.code.gson:gson:2.8.2'
 
     implementation 'net.qiujuer.genius:ui:2.0.0'
-    compile 'net.qiujuer.genius:res:2.0.0'
+    implementation 'net.qiujuer.genius:res:2.0.0'
+
+    //status bar util
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
 
     //fastjson
     implementation 'com.alibaba:fastjson:1.2.44'

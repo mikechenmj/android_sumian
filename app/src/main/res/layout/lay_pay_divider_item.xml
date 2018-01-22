@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_80"
+    android:background="@color/b2_color"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_20">
+
+    <ImageView
+        android:id="@+id/iv_pay_icon"
+        android:layout_width="@dimen/space_32"
+        android:layout_height="@dimen/space_32"
+        android:contentDescription="@null"
+        android:src="@mipmap/group_pay_icon_wechatpayment" />
+
+    <TextView
+        android:id="@+id/tv_pay_desc"
+        style="@style/text_t1_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_16"
+        android:layout_marginRight="@dimen/space_16"
+        android:text="@string/wechat_pay" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/iv_pay_select"
+        android:layout_width="@dimen/space_32"
+        android:layout_height="@dimen/space_32"
+        android:contentDescription="@null"
+        android:src="@mipmap/group_pay_selected" />
+
+</merge>

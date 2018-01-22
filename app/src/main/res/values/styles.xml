@@ -1,24 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/Theme.Design.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowOverscan">true</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">false</item>
-        <item name="android:configChanges">keyboardHidden|orientation</item>
-        <item name="android:launchMode">singleInstance</item>
-        <item name="android:screenOrientation">portrait</item>
-        <item name="android:textCursorDrawable">@drawable/bg_cursor</item>
-        <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
-    </style>
-
     <style name="text_t3_style">
         <item name="android:textColor">@color/t3_color</item>
         <item name="android:textSize">@dimen/font_40</item>
