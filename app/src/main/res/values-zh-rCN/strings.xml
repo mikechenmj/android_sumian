@@ -36,8 +36,16 @@
     <string name="scan_qr_code_warn">扫描二维码,需要授予相机权限,是否授予?</string>
     <string name="scan_qr_code_denied">扫描二维码,授予相机权限失败,请检查该权限是否正确授予,并授予</string>
     <string name="open_camera_failed">打开相机失败,请进入系统设置检查相机权限是否正确授予,并授予</string>
-    <string name="no_have_more_data">我也是有底线的...</string>
+    <string name="no_have_more_data">我也是有底线的…</string>
     <string name="refresh">刷新</string>
+    <string name="expired">已过期</string>
+    <string name="doctor">医生</string>
+    <string name="time_expired_suffix">天后过期</string>
+    <string name="setting">设置</string>
+    <string name="martian">火星人</string>
+    <string name="current_app_version">当前版本</string>
+    <string name="about_me">关于我们</string>
+    <string name="logout">退出登录</string>
 
 
 </resources>

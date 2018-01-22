@@ -1,6 +1,6 @@
 package com.sumian.sleepdoctor.main;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -72,15 +72,15 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     @Override
     public void commitReplacePagerFragment(Fragment fragment) {
-        mLayTabParentContainer.setVisibility(View.GONE);
-        mLayPageContainer.setVisibility(View.VISIBLE);
         super.commitReplacePagerFragment(fragment);
+        mLayPageContainer.setVisibility(View.VISIBLE);
+        mLayTabParentContainer.setVisibility(View.GONE);
     }
 
     @Override
     public void commitReplaceTabFragment(Fragment fragment) {
+        super.commitReplaceTabFragment(fragment);
         mLayTabParentContainer.setVisibility(View.VISIBLE);
         mLayPageContainer.setVisibility(View.GONE);
-        super.commitReplaceTabFragment(fragment);
     }
 }

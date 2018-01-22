@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.account.fragment;
 
+import android.app.Fragment;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;

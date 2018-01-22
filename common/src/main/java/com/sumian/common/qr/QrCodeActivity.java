@@ -61,16 +61,14 @@ public class QrCodeActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     protected void onStop() {
-        mZXingView.clearFocus();
-        mZXingView.stopSpot();
-        mZXingView.stopCamera();
         super.onStop();
+        mZXingView.stopCamera();
     }
 
     @Override
     protected void onDestroy() {
-        this.mZXingView.onDestroy();
         super.onDestroy();
+        this.mZXingView.onDestroy();
     }
 
     @Override

@@ -45,6 +45,8 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements Group
     @BindView(R.id.request_scan_qr_code_view)
     GroupRequestScanQrCodeView mRequestScanQrCodeView;
 
+    private GroupAdapter mGroupAdapter;
+
     public static GroupFragment newInstance() {
         return new GroupFragment();
     }
@@ -61,7 +63,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements Group
         mRefresh.setOnRefreshListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
-        mRecycler.setAdapter(new GroupAdapter(root.getContext()));
+        mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(root.getContext()));
         mRequestScanQrCodeView.setFragment(this).setOnGrantedCallback(this);
     }
 
@@ -124,8 +126,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements Group
         runOnUiThread(() -> {
             mGroupErrorView.hideError();
             mRequestScanQrCodeView.hide();
-
-
+            mGroupAdapter.addAll(groups);
         });
     }
 

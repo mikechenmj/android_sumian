@@ -1,10 +1,10 @@
 package com.sumian.sleepdoctor.widget;
 
 import android.Manifest;
+import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.main.tab.group.fragment.GroupFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -69,7 +70,7 @@ public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnC
         mOnGrantedCallback = onGrantedCallback;
     }
 
-    public GroupRequestScanQrCodeView setFragment(Fragment fragment) {
+    public GroupRequestScanQrCodeView setFragment(GroupFragment fragment) {
         if (mFragmentWeakReference == null) {
             mFragmentWeakReference = new WeakReference<>(fragment);
         }

@@ -1,8 +1,8 @@
 package com.sumian.sleepdoctor.main;
 
+import android.app.Fragment;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.sumian.sleepdoctor.R;

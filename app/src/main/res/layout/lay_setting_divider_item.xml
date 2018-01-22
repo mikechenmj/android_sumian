@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@color/b2_color"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/lay_my_msg_notice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/space_64"
         android:background="@drawable/bg_material_ripple"
         android:gravity="center"
         android:orientation="horizontal"
@@ -66,12 +66,16 @@
             tools:visibility="visible" />
 
         <ImageView
+            android:id="@+id/iv_more"
             android:layout_width="@dimen/space_32"
             android:layout_height="@dimen/space_32"
             android:contentDescription="@null"
-            android:padding="@dimen/space_8"
+            android:paddingBottom="@dimen/space_8"
+            android:paddingLeft="@dimen/space_8"
+            android:paddingTop="@dimen/space_8"
             android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/info_icon_enter" />
+            app:srcCompat="@mipmap/info_icon_enter"
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 
@@ -79,6 +83,6 @@
         android:id="@+id/v_divider_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_px_1"
-        android:background="@color/b1_color" />
+        android:background="@color/l1_color" />
 
 </LinearLayout>

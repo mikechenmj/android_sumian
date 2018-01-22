@@ -48,6 +48,17 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
+    <style name="bt_t2_group_style">
+        <item name="android:paddingLeft">@dimen/space_12</item>
+        <item name="android:paddingRight">@dimen/space_12</item>
+        <item name="android:paddingTop">@dimen/space_8</item>
+        <item name="android:paddingBottom">@dimen/space_8</item>
+        <item name="android:background">@drawable/bg_bt_group</item>
+        <item name="android:textColor">@color/t2_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
     <style name="text_t1_style">
         <item name="android:textColor">@color/t1_color</item>
         <item name="android:textSize">@dimen/font_18</item>
@@ -61,7 +72,7 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="scan_qr_theme" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+    <style name="scan_qr_theme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowOverscan">true</item>

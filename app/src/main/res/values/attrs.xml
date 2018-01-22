@@ -24,6 +24,11 @@
             <enum name="visible" value="0x00000000" />
             <enum name="invisible" value="0x00000004" />
         </attr>
+        <attr name="divider_more_visible" format="enum">
+            <enum name="gone" value="0x00000008" />
+            <enum name="visible" value="0x00000000" />
+            <enum name="invisible" value="0x00000004" />
+        </attr>
     </declare-styleable>
 
     <!--title bar-->

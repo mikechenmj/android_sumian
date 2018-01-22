@@ -7,6 +7,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Dimension;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -41,6 +42,8 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
     LinearLayout mLayMyMsgNotice;
     @BindView(R.id.v_divider_line)
     View mVDividerLine;
+    @BindView(R.id.iv_more)
+    ImageView mIvMore;
 
     private OnShowMoreListener mOnShowMoreListener;
 
@@ -67,7 +70,7 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         setHorizontalGravity(LinearLayout.VERTICAL);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingDividerView);
 
-        @DrawableRes int iconId = typedArray.getResourceId(R.styleable.SettingDividerView_type_icon, R.mipmap.info_icon_information);
+        @DrawableRes int iconId = typedArray.getResourceId(R.styleable.SettingDividerView_type_icon, -1);
         String typeDesc = typedArray.getString(R.styleable.SettingDividerView_type_desc);
         @ColorInt int typeDescColor = typedArray.getColor(R.styleable.SettingDividerView_type_desc_text_color, getResources().getColor(R.color.t1_color));
         // @Dimension float typeDescTextSize = typedArray.getDimension(R.styleable.SettingDividerView_type_desc_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics()));
@@ -78,14 +81,22 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         @ColorInt int typeContentColor = typedArray.getColor(R.styleable.SettingDividerView_type_content_text_color, getResources().getColor(R.color.t1_color));
         // float typeContentTextSize = typedArray.getDimension(R.styleable.SettingDividerView_type_content_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics()));
 
-        @ColorInt int dividerLineColor = typedArray.getColor(R.styleable.SettingDividerView_divider_line_color, getResources().getColor(R.color.t1_color));
+        @ColorInt int dividerLineColor = typedArray.getColor(R.styleable.SettingDividerView_divider_line_color, getResources().getColor(R.color.b1_color));
         @Dimension float dividerLineSize = typedArray.getDimension(R.styleable.SettingDividerView_divider_line_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
 
         int dividerGone = typedArray.getInt(R.styleable.SettingDividerView_divider_line_visible, View.VISIBLE);
 
+        int moreGone = typedArray.getInt(R.styleable.SettingDividerView_divider_more_visible, View.VISIBLE);
+
         typedArray.recycle();
 
-        mIvType.setImageResource(iconId);
+        if (iconId <= -1) {
+            mIvType.setVisibility(GONE);
+        } else {
+            mIvType.setVisibility(VISIBLE);
+            mIvType.setImageResource(iconId);
+        }
+
         mTvTypeDesc.setTextColor(typeDescColor);
         // mTvTypeDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, typeDescTextSize);
         mTvTypeDesc.setText(typeDesc);
@@ -94,14 +105,17 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
 
         mTvSettingContent.setText(typeContent);
         mTvSettingContent.setTextColor(typeContentColor);
+        mTvSettingContent.setVisibility(TextUtils.isEmpty(typeContent) ? GONE : VISIBLE);
         //mTvSettingContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, typeContentTextSize);
 
         mVDividerLine.setBackgroundColor(dividerLineColor);
         ViewGroup.LayoutParams layoutParams = mVDividerLine.getLayoutParams();
-        // layoutParams.width = (int) dividerLineSize;
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         layoutParams.height = (int) dividerLineSize;
         mVDividerLine.setLayoutParams(layoutParams);
-        // mVDividerLine.setVisibility(dividerGone);
+        mVDividerLine.setVisibility(dividerGone);
+
+        mIvMore.setVisibility(moreGone);
 
         setOnClickListener(this);
     }

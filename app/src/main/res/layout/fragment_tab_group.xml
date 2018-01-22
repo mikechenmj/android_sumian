@@ -30,8 +30,10 @@
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/space_12"
-                    android:paddingTop="@dimen/space_12" />
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:fitsSystemWindows="true"
+                    android:paddingTop="@dimen/space_16" />
 
             </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -23,7 +23,7 @@ public class GroupDetail<Doctor, User> {
     public String code_url;//二维码url (医团)
     public int expired_at;//过期时间 (患者)
     public int day_last;//剩余时间，0表示已过期 (患者)
-    public List<Doctor> doctor;//医生信息 (未加群，未登录，患者，医团)
+    public Doctor doctor;//医生信息 (未加群，未登录，患者，医团)
     public List<User> users;//群成员信息 include=users 时显示 (医团)
 
     @Override
