@@ -65,6 +65,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements Group
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(root.getContext()));
         mRequestScanQrCodeView.setFragment(this).setOnGrantedCallback(this);
+        setStatusBar(mTitleBar);
     }
 
     @Override

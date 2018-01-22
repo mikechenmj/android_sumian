@@ -1,8 +1,12 @@
 package com.sumian.sleepdoctor.main.tab.me;
 
+import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.BaseFragment;
@@ -37,6 +41,13 @@ public class MeFragment extends BaseFragment<UserProfile> implements View.OnClic
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        ViewGroup decorView = (ViewGroup) mActivity.getWindow().getDecorView();
+        ViewGroup rootView = (ViewGroup) ((ViewGroup) mActivity.findViewById(android.R.id.content)).getChildAt(0);
+        decorView.removeView(rootView);
+        rootView.setFitsSystemWindows(false);
+        rootView.setClipToPadding(false);
+        StatusBarUtil.setTransparent(mActivity);
+        StatusBarUtil.setTranslucent(mActivity, 0);
     }
 
     @Override

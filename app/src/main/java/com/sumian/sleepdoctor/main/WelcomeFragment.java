@@ -2,9 +2,13 @@ package com.sumian.sleepdoctor.main;
 
 import android.app.Fragment;
 import android.arch.lifecycle.Observer;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -12,6 +16,10 @@ import com.sumian.sleepdoctor.account.fragment.ImproveUserProfileOneFragment;
 import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by jzz
@@ -23,7 +31,10 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
 
     private static final String TAG = WelcomeFragment.class.getSimpleName();
 
-    public static Fragment newInstance() {
+    @BindView(R.id.lay_container)
+    LinearLayout mLayContainer;
+
+    public static WelcomeFragment newInstance() {
         return new WelcomeFragment();
     }
 
@@ -35,7 +46,7 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        setStatusBar();
+        //setStatusBar(mLayContainer);
     }
 
     @Override
@@ -58,5 +69,4 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
 
         Log.e(TAG, "onChanged: ---------->" + token);
     }
-
 }

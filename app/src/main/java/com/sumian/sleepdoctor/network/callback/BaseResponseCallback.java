@@ -59,7 +59,6 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
             }
         }
-
     }
 
     @Override

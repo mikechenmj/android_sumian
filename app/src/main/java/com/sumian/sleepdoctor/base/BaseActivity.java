@@ -2,8 +2,6 @@ package com.sumian.sleepdoctor.base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.arch.lifecycle.DefaultLifecycleObserver;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
@@ -12,12 +10,19 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
@@ -39,7 +44,7 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public abstract class BaseActivity extends Activity implements DefaultLifecycleObserver, Observer<Boolean>, LifecycleOwner {
+public abstract class BaseActivity extends AppCompatActivity implements DefaultLifecycleObserver, Observer<Boolean>, LifecycleOwner {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Unbinder mBind;
@@ -65,11 +70,16 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
     }
 
     @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        setStatusBar();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (initBundle(getIntent().getExtras())) {
             setContentView(getLayoutId());
-            setStatusBar();
             initWindow();
             this.mBind = ButterKnife.bind(this);
             this.mRoot = getWindow().getDecorView();
@@ -98,7 +108,8 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
     }
 
     public void setStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
+        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setTranslucent(this, 0);
     }
 
     protected boolean initBundle(Bundle bundle) {
@@ -127,7 +138,7 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
     public void commitReplaceTabFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getFragmentTransaction();
 
-        Fragment fragmentByTag = getFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
+        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
         if (fragmentByTag != null) {
             // Log.e(TAG, "commitReplaceTabFragment: ---------->" + fragmentByTag.toString());
             return;
@@ -139,7 +150,7 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
             addToBackStack(fragment, fragmentTransaction);
         }
 
-        Fragment welcomeFragment = getFragmentManager().findFragmentByTag("WelcomeFragment");
+        Fragment welcomeFragment = getSupportFragmentManager().findFragmentByTag("WelcomeFragment");
         if (welcomeFragment != null)
             fragmentTransaction.remove(welcomeFragment);
 
@@ -151,7 +162,7 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
 
         FragmentTransaction fragmentTransaction = getFragmentTransaction();
 
-        Fragment fragmentByTag = getFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
+        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
         if (fragmentByTag != null) {
             // Log.e(TAG, "commitReplaceTabFragment: ---------->" + fragmentByTag.toString());
             return;
@@ -263,7 +274,7 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
 
     @SuppressLint("CommitTransaction")
     private FragmentTransaction getFragmentTransaction() {
-        return getFragmentManager().beginTransaction();//.setCustomAnimations(com.qmuiteam.qmui.arch.R.anim.scale_enter, com.qmuiteam.qmui.arch.R.anim.scale_exit);
+        return getSupportFragmentManager().beginTransaction();//.setCustomAnimations(com.qmuiteam.qmui.arch.R.anim.scale_enter, com.qmuiteam.qmui.arch.R.anim.scale_exit);
     }
 
     private void addToBackStack(Fragment fragment, FragmentTransaction fragmentTransaction) {
@@ -281,6 +292,52 @@ public abstract class BaseActivity extends Activity implements DefaultLifecycleO
     }
 
     public void setTransparentForImageViewInFragment(@Nullable View needOffsetView) {
-        StatusBarUtil.setTransparentForImageViewInFragment(this, needOffsetView);
+        setColor(this, getResources().getColor(R.color.colorPrimary));
+    }
+
+    /**
+     * 设置状态栏颜色
+     *
+     * @param activity 需要设置的activity
+     * @param color    状态栏颜色值
+     */
+    public static void setColor(Activity activity, int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // 设置状态栏透明
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 生成一个状态栏大小的矩形
+            View statusView = createStatusView(activity, color);
+            // 添加 statusView 到布局中
+            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+            decorView.addView(statusView);
+            // 设置根布局的参数
+            ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+            rootView.setFitsSystemWindows(true);
+            rootView.setClipToPadding(true);
+        }
+    }
+
+    /**
+     * 生成一个和状态栏大小相同的矩形条
+     *
+     * @param activity 需要设置的activity
+     * @param color    状态栏颜色值
+     * @return 状态栏矩形条
+     */
+    private static View createStatusView(Activity activity, int color) {
+        // 获得状态栏高度
+        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        float dimension = activity.getResources().getDimension(resourceId);
+
+        int statusBarHeight = (int) (dimension <= 66.0f ? dimension + 4.0f : dimension + 0.5f);
+
+        // 绘制一个和状态栏一样高的矩形
+        View statusView = new View(activity);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                statusBarHeight);
+        statusView.setLayoutParams(params);
+        statusView.setBackgroundColor(color);
+        return statusView;
     }
 }

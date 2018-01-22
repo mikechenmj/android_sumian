@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.account.fragment;
 
-import android.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -35,7 +34,7 @@ public final class LoginFragment extends BaseFragment<LoginPresenter> implements
     @BindView(R.id.bt_login)
     Button mBtLogin;
 
-    public static Fragment newInstance() {
+    public static LoginFragment newInstance() {
         return new LoginFragment();
     }
 

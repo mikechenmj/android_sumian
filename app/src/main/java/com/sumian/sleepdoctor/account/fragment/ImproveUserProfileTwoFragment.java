@@ -35,7 +35,7 @@ public class ImproveUserProfileTwoFragment extends BaseFragment<ImproveUserProfi
     @BindView(R.id.bt_complete)
     AppCompatButton mBtComplete;
 
-    public static Fragment newInstance() {
+    public static ImproveUserProfileTwoFragment newInstance() {
         return new ImproveUserProfileTwoFragment();
     }
 

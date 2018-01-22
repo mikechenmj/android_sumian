@@ -1,16 +1,14 @@
 package com.sumian.sleepdoctor.base;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.arch.lifecycle.DefaultLifecycleObserver;
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LifecycleRegistry;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +39,6 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
 
     protected Presenter mPresenter;
 
-    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -57,7 +53,6 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
         setRetainInstance(true);
         mBundle = getArguments();
         initBundle(mBundle);
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
     }
 
     @Override
@@ -83,36 +78,6 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initData();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);
-    }
-
-    @Override
-    public void onPause() {
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
-        super.onDestroy();
     }
 
     @Override
@@ -243,19 +208,23 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
         showToast(getString(messageId));
     }
 
-    @NonNull
-    @Override
-    public Lifecycle getLifecycle() {
-        return mLifecycleRegistry;
-    }
-
-    public void setStatusBar() {
+    public void setTag(){
         if (mActivity == null) {
             mActivity = getActivity();
         }
 
         if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).setTransparentForImageViewInFragment(null);
+            ((MainActivity) mActivity).setStatusBar();
+        }
+    }
+
+    public void setStatusBar(View view) {
+        if (mActivity == null) {
+            mActivity = getActivity();
+        }
+
+        if (mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).setTransparentForImageViewInFragment(view);
         }
     }
 }
