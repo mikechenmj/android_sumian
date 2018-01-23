@@ -2,8 +2,8 @@ package com.sumian.sleepdoctor.network.api
 
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
-import com.sumian.sleepdoctor.tab.bean.GroupDetail
 import com.sumian.sleepdoctor.network.response.BaseResponse
+import com.sumian.sleepdoctor.tab.bean.GroupDetail
 import retrofit2.Call
 import retrofit2.http.*
 

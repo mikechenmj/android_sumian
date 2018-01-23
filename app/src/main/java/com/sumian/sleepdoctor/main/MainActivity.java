@@ -5,12 +5,13 @@ import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.widget.FrameLayout;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.delegate.FragmentManagerDelegate;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.pager.fragment.WelcomeFragment;
-import com.sumian.sleepdoctor.tab.fragment.TabGroupFragment;
-import com.sumian.sleepdoctor.tab.fragment.TabMeFragment;
+import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
+import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
 
@@ -34,6 +35,8 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     private FragmentManagerDelegate mFragmentManagerDelegate;
 
+    private int mCurrentPosition = 0;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -43,10 +46,11 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     protected void initWidget() {
         super.initWidget();
 
+        StatusBarUtil.setTransparent(this);
+        StatusBarUtil.setTranslucent(this, 0);
+
         mFragmentManagerDelegate = new FragmentManagerDelegate(this)
-                .bindFragmentContainer(mFragmentContainer)
-                .bindNavTab(mNavTab)
-                .registerFragmentLifecycleCallback();
+                .bindNavTab(mNavTab);
 
         mNavTab.setOnTabChangeListener(this);
     }
@@ -60,7 +64,7 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     @Override
     protected void onRelease() {
         super.onRelease();
-        mFragmentManagerDelegate.unRegisterFragmentLifecycleCallback();
+        mFragmentManagerDelegate.onRelease();
     }
 
     @Override
@@ -71,18 +75,22 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     @Override
     public void tab(ItemTab itemTab, int position) {
+        if (mCurrentPosition == position) {
+            return;
+        }
         Class<? extends Fragment> clx;
         switch (position) {
             case 0:
-                clx = TabGroupFragment.class;
+                clx = GroupFragment.class;
                 break;
             case 1:
-                clx = TabMeFragment.class;
+                clx = MeFragment.class;
                 break;
             default:
-                clx = TabGroupFragment.class;
+                clx = GroupFragment.class;
                 break;
         }
+        mCurrentPosition = position;
         commitReplace(clx);
     }
 

@@ -7,10 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.sumian.common.qr.QrCodeActivity;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.main.QrCodeActivity;
+import com.sumian.sleepdoctor.pager.fragment.ScanQrCodeFragment;
 import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.tab.contract.GroupContract;
@@ -29,7 +31,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class TabGroupFragment extends BaseFragment<GroupPresenter> implements GroupRequestScanQrCodeView.OnGrantedCallback,
+public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeDelegate, GroupRequestScanQrCodeView.OnGrantedCallback,
         GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.title_bar)
@@ -55,13 +57,15 @@ public class TabGroupFragment extends BaseFragment<GroupPresenter> implements Gr
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+
+        setStatusBarColor();
+
         mTitleBar.addOnMoreListener(this);
         mRefresh.setOnRefreshListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(root.getContext()));
         mRequestScanQrCodeView.setFragment(this).setOnGrantedCallback(this);
-        setStatusBar(mTitleBar);
     }
 
     @Override
@@ -110,7 +114,8 @@ public class TabGroupFragment extends BaseFragment<GroupPresenter> implements Gr
 
     @Override
     public void onGrantedSuccess() {
-        QrCodeActivity.show(getContext());
+        //QrCodeActivity.show(getContext());
+         commitReplace(ScanQrCodeFragment.class);
     }
 
     @Override

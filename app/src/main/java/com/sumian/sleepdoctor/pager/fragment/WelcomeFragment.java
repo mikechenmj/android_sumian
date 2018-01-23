@@ -11,8 +11,9 @@ import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.fragment.ImproveUserProfileOneFragment;
 import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.delegate.OtherDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
-import com.sumian.sleepdoctor.tab.fragment.TabGroupFragment;
+import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
 
 import butterknife.BindView;
 
@@ -22,7 +23,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class WelcomeFragment extends BaseFragment implements Observer<Token> {
+public class WelcomeFragment extends BaseFragment implements OtherDelegate, Observer<Token> {
 
     private static final String TAG = WelcomeFragment.class.getSimpleName();
 
@@ -54,7 +55,7 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
             } else if (token.is_new) {
                 commitReplace(ImproveUserProfileOneFragment.class);
             } else {
-                commitReplace(TabGroupFragment.class);
+                commitReplace(GroupFragment.class);
             }
         }, 1000);
 

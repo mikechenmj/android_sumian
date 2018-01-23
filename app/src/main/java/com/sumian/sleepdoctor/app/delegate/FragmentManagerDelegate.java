@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.app.delegate;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,13 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.pager.fragment.WelcomeFragment;
-import com.sumian.sleepdoctor.tab.fragment.TabGroupFragment;
+import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
+import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
 
 import java.lang.ref.WeakReference;
@@ -40,33 +39,16 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
 
     private WeakReference<AppCompatActivity> mActivityWeakReference;
 
-    private FragmentLifecycleDelegate mFragmentLifecycleDelegate;
+    private LinkedList<String> mBackFragments;
 
-    private LinkedList<String> mFragments;
-    private LinkedList<String> mBackStacks;
-
-    private Fragment mCurrentTabFragment;
-
-    private Fragment mTopFragment;
-
-    private Fragment mPreFragment;//上一个 fragment,可以提前预处理,比如在不可见时,预处理 ui, 当可见时,再去刷新数据
-
-    private FrameLayout mFragmentContainer;
+    //private Fragment mPreFragment;//上一个 fragment,可以提前预处理,比如在不可见时,预处理 ui, 当可见时,再去刷新数据
 
     private NavTab mNavTab;
-
-    private boolean mIsLoginTop;
 
     public FragmentManagerDelegate(AppCompatActivity activity) {
         this.mActivityWeakReference = new WeakReference<>(activity);
         this.mFragmentManager = activity.getSupportFragmentManager();
-        this.mFragments = new LinkedList<>();
-        this.mBackStacks = new LinkedList<>();
-    }
-
-    public FragmentManagerDelegate bindFragmentContainer(View fragmentContainer) {
-        this.mFragmentContainer = (FrameLayout) fragmentContainer;
-        return this;
+        this.mBackFragments = new LinkedList<>();
     }
 
     public FragmentManagerDelegate bindNavTab(View navTab) {
@@ -74,60 +56,8 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
         return this;
     }
 
-    public FragmentManagerDelegate registerFragmentLifecycleCallback() {
-        mFragmentManager.registerFragmentLifecycleCallbacks(mFragmentLifecycleDelegate = new FragmentLifecycleDelegate(this), true);
-        return this;
-    }
-
-    public void unRegisterFragmentLifecycleCallback() {
-        mFragmentManager.unregisterFragmentLifecycleCallbacks(mFragmentLifecycleDelegate);
-    }
-
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {
-
-        mIsLoginTop = f instanceof LoginFragment;
-
-        mCurrentTabFragment = mTopFragment = f;
-        //当是 loginFragment 时,表示鉴权不通过,可直接触发back退出 app
-    }
-
-    @Override
-    public void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-
-    }
-
-    @Override
-    public void onFragmentDetached(FragmentManager fm, Fragment f) {
-
-        if (f instanceof WelcomeFragment) {
-            return;
-        }
-
-        if (f instanceof LoginFragment) {
-            mIsLoginTop = false;
-            return;
-        }
-
-        String fragmentTag = f.getClass().getName();
-        Log.e(TAG, "onFragmentDetached: -------1---->fragmentTag=" + fragmentTag);
-
-        if (this.mFragments.contains(fragmentTag)) {
-            Log.e(TAG, "onFragmentDetached: ------------is exist----->");
-            return;
-        }
-
-        if (fragmentTag.startsWith("Tab")) {
-            // mCurrentTabFragment = f;
-        }
-
-
-        this.mFragments.offerLast(fragmentTag);
     }
 
     @Override
@@ -140,92 +70,128 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
         replaceFragment(R.id.lay_fragment_container, clx, args);
     }
 
+    @UiThread
     @Override
     public void replaceFragment(@IdRes int containerId, Class<? extends Fragment> clx, @Nullable Bundle args) {
         replace(containerId, clx, args);
     }
 
+    @UiThread
     @Override
     public void showNavTab() {
         mNavTab.setVisibility(View.VISIBLE);
     }
 
+    @UiThread
     @Override
     public void hideNavTab() {
         mNavTab.setVisibility(View.GONE);
-
-        boolean a = Looper.myLooper() == Looper.getMainLooper();
-        Log.e(TAG, "hideNavTab: --------->" + a);
     }
 
     @UiThread
     public void onBackPressedDelegate() {
 
-        Log.e(TAG, "onBackPressedDelegate: ---------->" + mFragments.toString());
+        Log.e(TAG, "onBackPressedDelegate: ---------->" + mBackFragments.toString());
 
         AppCompatActivity appCompatActivity = this.mActivityWeakReference.get();
         if (appCompatActivity == null) return;
 
-        //tag 栈中没有元素,或者只有一个元素,说明已经在 home,直接退出 app
-        if (mFragments.isEmpty() || mFragments.size() <= 1) {
+        //1.tag 栈中没有元素,
+        //2.只有一个元素,
+        //那么直接退出 app
+        if (mBackFragments.isEmpty() || mBackFragments.size() <= 1) {
             appCompatActivity.finishAffinity();
             return;
         }
 
         //开始fragment事务回退栈
-        // String lastFragmentTag = mFragments.removeLast();//弹出栈顶元素,可返回空
+        String TopFName = mBackFragments.removeLast();//弹出栈顶元素,不可返回空
 
-        //弹出栈顶元素之后,检查回退栈中的大小,当为 null, 直接退出 app
-        // if (mFragments.isEmpty()) {
-        //   appCompatActivity.finishAffinity();
-        //  return;
-        //}
-
-        String lastCurrentFragmentTag = mFragments.pollLast();//获取栈顶元素,可返回空.但不删除该元素
-
-        Class<? extends Fragment> clx = getFragmentClass(lastCurrentFragmentTag);
-
-        if (clx == null || clx.getSimpleName().contains(LoginFragment.class.getSimpleName())) {
+        //3.栈顶元素是 login
+        //那么直接退出 app
+        if (LoginFragment.class.getName().equals(TopFName)) {
             appCompatActivity.finishAffinity();
             return;
         }
+
+        //4.弹出栈顶元素之后,检查回退栈中的大小,当为 null,
+        //那么直接退出 app
+        if (mBackFragments.isEmpty()) {
+            appCompatActivity.finishAffinity();
+            return;
+        }
+
+        String lastCurrentFragmentTag = mBackFragments.peekLast();//获取弹栈之后的回退栈中的栈顶元素,可返回空.但不删除该元素
+
+        Class<? extends Fragment> clx = getFragmentClass(lastCurrentFragmentTag);
 
         replaceFragment(clx);
     }
 
     @UiThread
     public void goHome() {
-        if (mCurrentTabFragment != null) {
-            mFragmentManager.beginTransaction().show(mCurrentTabFragment).commitNowAllowingStateLoss();
-            showNavTab();
-        } else {
+        String fName = mBackFragments.peekFirst();
+        Class<? extends Fragment> clx = getFragmentClass(fName);
+        if (clx == null || clx.getName().equals(WelcomeFragment.class.getName())) {
+            clx = GroupFragment.class;
+        }
+        //noinspection unchecked
+        removeAll(LoginFragment.class, WelcomeFragment.class);
+        replaceFragment(clx);
+    }
 
-            String fName = mFragments.peekFirst();
-            Class<? extends Fragment> clx = getFragmentClass(fName);
-            if (clx == null) {
-                clx = TabGroupFragment.class;
-            }
-            replaceFragment(clx);
+    @Override
+    public void onRelease() {
+        this.mActivityWeakReference.clear();
+        this.mBackFragments.clear();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void removeAll(Class<? extends Fragment>... args) {
+        for (Class<? extends Fragment> arg : args) {
+            mBackFragments.remove(arg.getName());
         }
     }
 
     @UiThread
     private void replace(@IdRes int containerId, @NonNull Class<? extends Fragment> clx, @Nullable Bundle args) {
 
-        String peekLast = mFragments.peekLast();
+        String fName = clx.getName();
 
-        if (!TextUtils.isEmpty(peekLast) && peekLast.contains(mCurrentTabFragment.getClass().getSimpleName()))
-            return;
+        if (mBackFragments.isEmpty()) {//第一次有元素入栈,直接添加
+            this.mBackFragments.add(fName);
+        } else {//进入回退栈
 
-        if (clx.getName().contains("Tab")) {
-            showNavTab();
-        } else {
-            hideNavTab();
+            int index = mBackFragments.indexOf(fName);// 查找元素
+
+            switch (index) {
+                case -1://回退栈没有该元素,直接添加/替换
+                    if (fName.equals(GroupFragment.class.getName()) || fName.equals(MeFragment.class.getName())) {
+                        mBackFragments.set(0, fName);
+                    } else {
+                        this.mBackFragments.add(fName);
+                    }
+                    break;
+                //回退栈有该元素
+                case 0://home 元素 直接替换掉
+                    mBackFragments.set(0, fName);
+                    break;
+                default://已存在的 pager 元素,不进行更新
+                    Log.e(TAG, "replace: -----------------is exist------->");
+                    return;
+            }
         }
 
         Fragment fragment = null;
         try {
             fragment = clx.getConstructor().newInstance();
+
+            if (fragment instanceof HomeDelegate) {
+                showNavTab();
+            } else {
+                hideNavTab();
+            }
+
             if (args != null) {
                 args.setClassLoader(fragment.getClass().getClassLoader());
                 fragment.setArguments(args);
@@ -251,5 +217,4 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
         }
         return clx;
     }
-
 }

@@ -137,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
 //
 //        fragmentTransaction.replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName());
 //
-//        if (!(fragment instanceof TabGroupFragment || fragment instanceof TabMeFragment)) {
+//        if (!(fragment instanceof GroupFragment || fragment instanceof MeFragment)) {
 //            addToBackStack(fragment, fragmentTransaction);
 //        }
 //

@@ -15,9 +15,9 @@ public interface FragmentLifecycleCallback {
 
     void onFragmentAttached(FragmentManager fm, Fragment f, Context context);
 
-    void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState);
+    //void onFragmentCreated(FragmentManager fm, Fragment f, Bundle savedInstanceState);
 
-    void onFragmentDestroyed(FragmentManager fm, Fragment f);
+    //void onFragmentDestroyed(FragmentManager fm, Fragment f);
 
-    void onFragmentDetached(FragmentManager fm, Fragment f);
+    //void onFragmentDetached(FragmentManager fm, Fragment f);
 }

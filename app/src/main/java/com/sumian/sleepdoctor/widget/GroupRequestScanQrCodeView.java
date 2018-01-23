@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.tab.fragment.TabGroupFragment;
+import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -70,7 +70,7 @@ public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnC
         mOnGrantedCallback = onGrantedCallback;
     }
 
-    public GroupRequestScanQrCodeView setFragment(TabGroupFragment fragment) {
+    public GroupRequestScanQrCodeView setFragment(GroupFragment fragment) {
         if (mFragmentWeakReference == null) {
             mFragmentWeakReference = new WeakReference<>(fragment);
         }

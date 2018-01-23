@@ -123,13 +123,17 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (mOnShowMoreListener != null) {
-            mOnShowMoreListener.onShowMore();
+            mOnShowMoreListener.onShowMore(this);
         }
+    }
+
+    public void setContent(String content) {
+        mTvSettingContent.setText(content);
     }
 
 
     public interface OnShowMoreListener {
 
-        void onShowMore();
+        void onShowMore(View v);
     }
 }

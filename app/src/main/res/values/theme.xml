@@ -19,7 +19,9 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">
+            @android:color/background_dark
+        </item>
         <item name="android:windowAnimationStyle">@style/AnimationStyle</item>
     </style>
 

@@ -40,7 +40,7 @@ public class PayGroupScanResultFragment extends BaseFragment implements View.OnC
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_tab_join_one;
+        return R.layout.fragment_pager_join_one;
     }
 
     @Override

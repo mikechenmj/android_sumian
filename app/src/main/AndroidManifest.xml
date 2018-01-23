@@ -35,6 +35,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".main.QrCodeActivity"
+            android:theme="@style/scan_qr_theme" />
 
     </application>
 

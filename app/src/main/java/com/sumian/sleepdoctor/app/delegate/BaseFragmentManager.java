@@ -27,4 +27,6 @@ public interface BaseFragmentManager<Fragment> {
 
     void goHome();
 
+    void onRelease();
+
 }

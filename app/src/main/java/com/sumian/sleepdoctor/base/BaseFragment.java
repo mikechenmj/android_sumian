@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.main.MainActivity;
 
 import java.lang.reflect.InvocationTargetException;
@@ -70,7 +72,6 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         mBundle = getArguments();
         initBundle(mBundle);
     }
@@ -219,23 +220,13 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
         showToast(getString(messageId));
     }
 
-    public void setStatusBar() {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).setStatusBar();
-        }
+    protected void setStatusBarColor() {
+        StatusBarUtil.setColorNoTranslucent(getActivity(), getResources().getColor(R.color.colorPrimary));
     }
 
-    public void setStatusBar(View view) {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).setTransparentForImageViewInFragment(view);
-        }
+    protected void setStatusBarTranslucent() {
+        StatusBarUtil.setTransparent(getActivity());
+        StatusBarUtil.setTranslucent(getActivity(), 0);
     }
+
 }

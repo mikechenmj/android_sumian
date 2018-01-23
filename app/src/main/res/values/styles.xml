@@ -59,11 +59,11 @@
         <item name="android:windowOverscan">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
-        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/transparent
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@android:color/background_dark
         </item>
 
         <item name="android:configChanges">keyboardHidden|orientation</item>
-        <item name="android:launchMode">singleInstance</item>
+        <!--<item name="android:launchMode">singleInstance</item>-->
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
         <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>

@@ -1,77 +1,85 @@
-package com.sumian.sleepdoctor.pager.fragment;
+package com.sumian.sleepdoctor.main;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 
-import com.jaeger.library.StatusBarUtil;
+import com.sumian.common.R;
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseFragment;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static android.content.Context.VIBRATOR_SERVICE;
-
 /**
- * Created by sm
- * on 2018/1/23.
+ * Created by jzz
+ * on 2018/1/18.
  * desc:
  */
 
-public class ScanQrCodeFragment extends BaseFragment implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
+public class QrCodeActivity extends AppCompatActivity implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
 
-    private static final String TAG = ScanQrCodeFragment.class.getSimpleName();
+    private static final String TAG = QrCodeActivity.class.getSimpleName();
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
 
-    @BindView(R.id.zxing_view)
-    ZXingView mZXingView;
+    private ZXingView mZXingView;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_pager_scan_qr_code;
+    public static void show(Context context) {
+        context.startActivity(new Intent(context, QrCodeActivity.class));
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
-        StatusBarUtil.setTranslucent(getActivity());
-        StatusBarUtil.setTranslucent(getActivity(), 0);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_scan_qr_code);
+
+        FrameLayout titleBar = findViewById(R.id.title_bar);
+        //4.4版本之后沉浸式
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            titleBar.setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
+            titleBar.setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
+        }
+        findViewById(R.id.iv_back).setOnClickListener(this);
+        this.mZXingView = findViewById(R.id.zxing_view);
         this.mZXingView.setDelegate(this);
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
         requestCodeQRCodePermissions();
     }
 
     @Override
-    public void onStop() {
-        mZXingView.post(() -> {
-            if (mZXingView != null) {
-                mZXingView.stopCamera();
-                mZXingView.onDestroy();
-            }
-        });
+    protected void onStop() {
         super.onStop();
+        mZXingView.stopCamera();
     }
 
-    @OnClick({R.id.iv_back})
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.mZXingView.onDestroy();
+    }
+
     @Override
     public void onClick(View v) {
-        popBack();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -105,7 +113,7 @@ public class ScanQrCodeFragment extends BaseFragment implements View.OnClickList
     @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)
     private void requestCodeQRCodePermissions() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!EasyPermissions.hasPermissions(getContext(), perms)) {
+        if (!EasyPermissions.hasPermissions(this, perms)) {
             EasyPermissions.requestPermissions(this, getString(R.string.scan_qr_code_warn), REQUEST_CODE_QR_CODE_PERMISSIONS, perms);
         } else {
             preScanQrCode();
@@ -120,11 +128,11 @@ public class ScanQrCodeFragment extends BaseFragment implements View.OnClickList
         //}, 500);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void vibrate() {
-        Vibrator vibrator = (Vibrator) getContext().getSystemService(VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         if (vibrator != null) {
             vibrator.vibrate(200);
         }
     }
 }
+

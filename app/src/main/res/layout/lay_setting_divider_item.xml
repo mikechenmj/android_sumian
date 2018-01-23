@@ -58,11 +58,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_8"
-            android:layout_marginRight="@dimen/space_8"
             android:text="@string/user_info_center"
             android:textColor="@color/t1_color"
             android:textSize="@dimen/font_18"
             android:visibility="gone"
+            tools:ignore="RtlHardcoded"
             tools:visibility="visible" />
 
         <ImageView
