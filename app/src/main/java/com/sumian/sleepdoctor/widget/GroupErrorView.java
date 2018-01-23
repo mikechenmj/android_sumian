@@ -64,20 +64,20 @@ public class GroupErrorView extends LinearLayout implements View.OnClickListener
     }
 
     public void showError() {
-        mIvError.setImageResource(R.mipmap.btn_download);
-        mTvError.setText("网络请求失败,请重试...");
+        mIvError.setImageResource(R.mipmap.group_synchronizationfailed);
+        mTvError.setText(R.string.network_error);
         mBtRefresh.setVisibility(VISIBLE);
     }
 
     public void showRequest() {
-        mIvError.setImageResource(R.mipmap.btn_download);
-        mTvError.setText("正在同步中,请稍后...");
+        mIvError.setImageResource(R.mipmap.group_synchronizing);
+        mTvError.setText(R.string.syncing);
         mBtRefresh.setVisibility(VISIBLE);
     }
 
     public void hideError() {
-        mIvError.setImageResource(R.mipmap.btn_download);
-        mTvError.setText("正在同步中,请稍后...");
+        mIvError.setImageResource(R.mipmap.group_synchronizing);
+        mTvError.setText(R.string.syncing);
         mBtRefresh.setVisibility(INVISIBLE);
     }
 

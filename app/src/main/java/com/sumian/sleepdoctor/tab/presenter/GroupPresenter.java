@@ -1,11 +1,11 @@
-package com.sumian.sleepdoctor.main.tab.group.presenter;
+package com.sumian.sleepdoctor.tab.presenter;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.tab.group.bean.GroupDetail;
-import com.sumian.sleepdoctor.main.tab.group.contract.GroupContract;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
+import com.sumian.sleepdoctor.tab.contract.GroupContract;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.BaseResponse;
 

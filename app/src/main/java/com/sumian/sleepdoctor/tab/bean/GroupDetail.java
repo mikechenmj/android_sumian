@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.main.tab.group.bean;
+package com.sumian.sleepdoctor.tab.bean;
 
 import java.util.List;
 
@@ -20,11 +20,13 @@ public class GroupDetail<Doctor, User> {
     public int created_at;//群创建时间 (未加群，未登录，患者，医团)
     public int updated_at;//群更新时间 (未加群，未登录，患者，医团)
     public int user_count;//群人数 (医团)
+    public int role;//本人在群里身份 0：患者，1：运营人员，2：医生助理，3：医生(患者,医团)
     public String code_url;//二维码url (医团)
     public int expired_at;//过期时间 (患者)
     public int day_last;//剩余时间，0表示已过期 (患者)
     public Doctor doctor;//医生信息 (未加群，未登录，患者，医团)
     public List<User> users;//群成员信息 include=users 时显示 (医团)
+    public List<Packages> packages;//群成员信息 include=packages 时显示 (未加群，未登录，患者，医团)
 
     @Override
     public String toString() {
@@ -39,11 +41,13 @@ public class GroupDetail<Doctor, User> {
                 ", created_at=" + created_at +
                 ", updated_at=" + updated_at +
                 ", user_count=" + user_count +
+                ", role=" + role +
                 ", code_url='" + code_url + '\'' +
                 ", expired_at=" + expired_at +
                 ", day_last=" + day_last +
                 ", doctor=" + doctor +
                 ", users=" + users +
+                ", packages=" + packages +
                 '}';
     }
 }

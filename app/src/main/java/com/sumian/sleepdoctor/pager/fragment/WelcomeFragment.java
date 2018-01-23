@@ -1,13 +1,9 @@
-package com.sumian.sleepdoctor.main;
+package com.sumian.sleepdoctor.pager.fragment;
 
-import android.app.Fragment;
 import android.arch.lifecycle.Observer;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
@@ -16,10 +12,9 @@ import com.sumian.sleepdoctor.account.fragment.ImproveUserProfileOneFragment;
 import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.tab.fragment.TabGroupFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by jzz
@@ -34,13 +29,9 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
     @BindView(R.id.lay_container)
     LinearLayout mLayContainer;
 
-    public static WelcomeFragment newInstance() {
-        return new WelcomeFragment();
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_main_welcome;
+        return R.layout.fragment_pager_welcome;
     }
 
     @Override
@@ -59,11 +50,11 @@ public class WelcomeFragment extends BaseFragment implements Observer<Token> {
     public void onChanged(@Nullable Token token) {
         mRootView.postDelayed(() -> {
             if (token == null) {
-                commitReplacePager(LoginFragment.newInstance());
+                commitReplace(LoginFragment.class);
             } else if (token.is_new) {
-                commitReplacePager(ImproveUserProfileOneFragment.newInstance());
+                commitReplace(ImproveUserProfileOneFragment.class);
             } else {
-                goHome();
+                commitReplace(TabGroupFragment.class);
             }
         }, 1000);
 

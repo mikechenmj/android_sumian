@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.account.fragment;
 
-import android.app.Fragment;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
@@ -35,13 +34,9 @@ public class ImproveUserProfileTwoFragment extends BaseFragment<ImproveUserProfi
     @BindView(R.id.bt_complete)
     AppCompatButton mBtComplete;
 
-    public static ImproveUserProfileTwoFragment newInstance() {
-        return new ImproveUserProfileTwoFragment();
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_improve_user_profile_two;
+        return R.layout.fragment_pager_improve_user_profile_two;
     }
 
     @Override
@@ -74,7 +69,7 @@ public class ImproveUserProfileTwoFragment extends BaseFragment<ImproveUserProfi
 
     @Override
     public void onBack(View v) {
-        popBackPressed();
+        popBack();
     }
 
     @Override

@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.main.MainActivity;
 
+import java.lang.reflect.InvocationTargetException;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -38,6 +40,24 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     private Unbinder mUnbinder;
 
     protected Presenter mPresenter;
+
+    public static Fragment newInstance(Class<? extends Fragment> clx) {
+        return newInstance(clx, null);
+    }
+
+    public static Fragment newInstance(Class<? extends Fragment> clx, Bundle args) {
+        Fragment fragment = null;
+        try {
+            fragment = clx.getConstructor().newInstance();
+            if (args != null) {
+                args.setClassLoader(fragment.getClass().getClassLoader());
+                fragment.setArguments(args);
+            }
+        } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return fragment;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -135,54 +155,45 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
 
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onCreate: -------->" + this.toString());
+        Log.d(TAG, "onCreate: -------->" + this.toString());
         initPresenter();
     }
 
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onStart: --------->" + this.toString());
+        Log.d(TAG, "onStart: --------->" + this.toString());
     }
 
     @Override
     public void onResume(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onResume: -------->" + this.toString());
+        Log.d(TAG, "onResume: -------->" + this.toString());
     }
 
     @Override
     public void onPause(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onPause: ----------->" + this.toString());
+        Log.d(TAG, "onPause: ----------->" + this.toString());
     }
 
     @Override
     public void onStop(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onStop: ----------->" + this.toString());
+        Log.d(TAG, "onStop: ----------->" + this.toString());
     }
 
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onDestroy: ----------->" + this.toString());
+        Log.d(TAG, "onDestroy: ----------->" + this.toString());
     }
 
-    protected void commitReplaceTab(Fragment fragment) {
+    protected void commitReplace(@NonNull Class<? extends Fragment> clx) {
         if (mActivity == null) {
             mActivity = getActivity();
         }
-        if (mActivity instanceof BaseActivity) {
-            ((BaseActivity) mActivity).commitReplaceTabFragment(fragment);
+        if (mActivity instanceof MainActivity) {
+            ((MainActivity) mActivity).commitReplace(clx);
         }
     }
 
-    protected void commitReplacePager(Fragment fragment) {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof BaseActivity) {
-            ((BaseActivity) mActivity).commitReplacePagerFragment(fragment);
-        }
-    }
-
-    protected void popBackPressed() {
+    protected void popBack() {
         if (mActivity == null) {
             mActivity = getActivity();
         }
@@ -208,7 +219,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
         showToast(getString(messageId));
     }
 
-    public void setTag(){
+    public void setStatusBar() {
         if (mActivity == null) {
             mActivity = getActivity();
         }

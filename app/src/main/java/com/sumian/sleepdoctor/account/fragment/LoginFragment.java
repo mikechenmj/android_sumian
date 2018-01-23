@@ -34,13 +34,9 @@ public final class LoginFragment extends BaseFragment<LoginPresenter> implements
     @BindView(R.id.bt_login)
     Button mBtLogin;
 
-    public static LoginFragment newInstance() {
-        return new LoginFragment();
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_main_login;
+        return R.layout.fragment_pager_main_login;
     }
 
     @Override
@@ -79,7 +75,7 @@ public final class LoginFragment extends BaseFragment<LoginPresenter> implements
     public void onLoginSuccess(boolean isNewAccount) {
         runOnUiThread(() -> {
             if (isNewAccount) {
-                commitReplacePager(ImproveUserProfileOneFragment.newInstance());
+                commitReplace(ImproveUserProfileOneFragment.class);
             } else {
                 goHome();
             }

@@ -1,9 +1,9 @@
-package com.sumian.sleepdoctor.main.tab.group.contract;
+package com.sumian.sleepdoctor.tab.contract;
 
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.BasePresenter;
 import com.sumian.sleepdoctor.base.BaseView;
-import com.sumian.sleepdoctor.main.tab.group.bean.GroupDetail;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import java.util.List;
 

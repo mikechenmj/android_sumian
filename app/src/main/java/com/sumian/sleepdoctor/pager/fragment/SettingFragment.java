@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.main.setting;
+package com.sumian.sleepdoctor.pager.fragment;
 
 import android.view.View;
 
@@ -19,13 +19,9 @@ public class SettingFragment extends BaseFragment implements TitleBar.OnBackList
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
-    public static SettingFragment newInstance() {
-        return new SettingFragment();
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_main_setting;
+        return R.layout.fragment_pager_setting;
     }
 
     @Override
@@ -36,6 +32,6 @@ public class SettingFragment extends BaseFragment implements TitleBar.OnBackList
 
     @Override
     public void onBack(View v) {
-        popBackPressed();
+        popBack();
     }
 }

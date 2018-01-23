@@ -1,11 +1,11 @@
-package com.sumian.sleepdoctor.main.tab.group.model;
+package com.sumian.sleepdoctor.tab.model;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.sumian.sleepdoctor.account.bean.UserProfile;
-import com.sumian.sleepdoctor.main.tab.group.bean.GroupDetail;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import java.util.ArrayList;
 import java.util.List;

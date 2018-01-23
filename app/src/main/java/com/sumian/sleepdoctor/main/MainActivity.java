@@ -1,14 +1,16 @@
 package com.sumian.sleepdoctor.main;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.delegate.FragmentManagerDelegate;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.main.tab.group.fragment.GroupFragment;
-import com.sumian.sleepdoctor.main.tab.me.MeFragment;
+import com.sumian.sleepdoctor.pager.fragment.WelcomeFragment;
+import com.sumian.sleepdoctor.tab.fragment.TabGroupFragment;
+import com.sumian.sleepdoctor.tab.fragment.TabMeFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
 
@@ -24,14 +26,13 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    @BindView(R.id.lay_tab_parent_container)
-    LinearLayout mLayTabParentContainer;
-
     @BindView(R.id.nav_Tab)
     NavTab mNavTab;
 
-    @BindView(R.id.lay_page_container)
-    FrameLayout mLayPageContainer;
+    @BindView(R.id.lay_fragment_container)
+    FrameLayout mFragmentContainer;
+
+    private FragmentManagerDelegate mFragmentManagerDelegate;
 
     @Override
     protected int getLayoutId() {
@@ -41,46 +42,57 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     @Override
     protected void initWidget() {
         super.initWidget();
+
+        mFragmentManagerDelegate = new FragmentManagerDelegate(this)
+                .bindFragmentContainer(mFragmentContainer)
+                .bindNavTab(mNavTab)
+                .registerFragmentLifecycleCallback();
+
         mNavTab.setOnTabChangeListener(this);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        commitReplacePagerFragment(WelcomeFragment.newInstance());
+        commitReplace(WelcomeFragment.class);
+    }
+
+    @Override
+    protected void onRelease() {
+        super.onRelease();
+        mFragmentManagerDelegate.unRegisterFragmentLifecycleCallback();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        mFragmentManagerDelegate.onBackPressedDelegate();
     }
 
     @Override
     public void tab(ItemTab itemTab, int position) {
-        Fragment tempFragment = null;
+        Class<? extends Fragment> clx;
         switch (position) {
             case 0:
-                tempFragment = GroupFragment.newInstance();
+                clx = TabGroupFragment.class;
                 break;
             case 1:
-                tempFragment = MeFragment.newInstance();
+                clx = TabMeFragment.class;
+                break;
+            default:
+                clx = TabGroupFragment.class;
                 break;
         }
-        commitReplaceTabFragment(tempFragment);
+        commitReplace(clx);
     }
 
-    @Override
+    @UiThread
     public void goHome() {
-        super.goHome();
-        commitReplaceTabFragment(GroupFragment.newInstance());
+        mFragmentManagerDelegate.goHome();
     }
 
-    @Override
-    public void commitReplacePagerFragment(Fragment fragment) {
-        super.commitReplacePagerFragment(fragment);
-        mLayPageContainer.setVisibility(View.VISIBLE);
-        mLayTabParentContainer.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void commitReplaceTabFragment(Fragment fragment) {
-        super.commitReplaceTabFragment(fragment);
-        mLayTabParentContainer.setVisibility(View.VISIBLE);
-        mLayPageContainer.setVisibility(View.GONE);
+    @UiThread
+    public void commitReplace(@NonNull Class<? extends Fragment> clx) {
+        mFragmentManagerDelegate.replaceFragment(clx);
     }
 }

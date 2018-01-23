@@ -33,13 +33,9 @@ public class ImproveUserProfileOneFragment extends BaseFragment<ImproveUserProfi
     @BindView(R.id.bt_next_step)
     AppCompatButton mBtNextStep;
 
-    public static ImproveUserProfileOneFragment newInstance() {
-        return new ImproveUserProfileOneFragment();
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_improve_user_profile_one;
+        return R.layout.fragment_pager_improve_user_profile_one;
     }
 
     @Override
@@ -74,7 +70,7 @@ public class ImproveUserProfileOneFragment extends BaseFragment<ImproveUserProfi
 
     @Override
     public void onBack(View v) {
-        popBackPressed();
+        popBack();
     }
 
     @Override
@@ -94,7 +90,7 @@ public class ImproveUserProfileOneFragment extends BaseFragment<ImproveUserProfi
 
     @Override
     public void onMore(View v) {
-        commitReplacePager(ImproveUserProfileTwoFragment.newInstance());
+        commitReplace(ImproveUserProfileTwoFragment.class);
     }
 
     @Override

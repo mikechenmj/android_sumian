@@ -57,6 +57,8 @@
     <string name="pay_money">支付金额</string>
     <string name="yuan">元</string>
     <string name="wechat_pay">微信支付</string>
+    <string name="network_error">同步失败,请检查网络</string>
+    <string name="syncing">正在同步,请稍后...</string>
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.main.tab.group.adapter;
+package com.sumian.sleepdoctor.tab.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ import com.sumian.common.base.BaseRecyclerAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
-import com.sumian.sleepdoctor.main.tab.group.bean.GroupDetail;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import net.qiujuer.genius.ui.widget.Button;
 

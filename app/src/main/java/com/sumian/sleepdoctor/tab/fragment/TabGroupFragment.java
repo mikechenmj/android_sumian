@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.main.tab.group.fragment;
+package com.sumian.sleepdoctor.tab.fragment;
 
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,10 +11,10 @@ import com.sumian.common.qr.QrCodeActivity;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.BaseFragment;
-import com.sumian.sleepdoctor.main.tab.group.adapter.GroupAdapter;
-import com.sumian.sleepdoctor.main.tab.group.bean.GroupDetail;
-import com.sumian.sleepdoctor.main.tab.group.contract.GroupContract;
-import com.sumian.sleepdoctor.main.tab.group.presenter.GroupPresenter;
+import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
+import com.sumian.sleepdoctor.tab.contract.GroupContract;
+import com.sumian.sleepdoctor.tab.presenter.GroupPresenter;
 import com.sumian.sleepdoctor.widget.GroupErrorView;
 import com.sumian.sleepdoctor.widget.GroupRequestScanQrCodeView;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -29,7 +29,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class GroupFragment extends BaseFragment<GroupPresenter> implements GroupRequestScanQrCodeView.OnGrantedCallback,
+public class TabGroupFragment extends BaseFragment<GroupPresenter> implements GroupRequestScanQrCodeView.OnGrantedCallback,
         GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.title_bar)
@@ -46,10 +46,6 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements Group
     GroupRequestScanQrCodeView mRequestScanQrCodeView;
 
     private GroupAdapter mGroupAdapter;
-
-    public static GroupFragment newInstance() {
-        return new GroupFragment();
-    }
 
     @Override
     protected int getLayoutId() {

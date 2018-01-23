@@ -1,10 +1,10 @@
-package com.sumian.sleepdoctor.main.pay.activity;
+package com.sumian.sleepdoctor.pager.activity;
 
 import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.pay.PayCalculateItemView;
 import com.sumian.sleepdoctor.widget.pay.PayItemGroupView;
@@ -21,7 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-public class PayGroupActivity extends BaseActivity implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackListener {
+public class PayGroupFragment extends BaseFragment implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -46,12 +46,12 @@ public class PayGroupActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_main_join_two;
+        return R.layout.fragment_pager_join_two;
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initWidget(View root) {
+        super.initWidget(root);
         mTitleBar.addOnBackListener(this);
         mPayGroupView.setOnSelectPayWayListener(this);
     }

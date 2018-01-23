@@ -1,22 +1,16 @@
 package com.sumian.sleepdoctor.base;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.DefaultLifecycleObserver;
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,13 +20,7 @@ import android.widget.LinearLayout;
 
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
-import com.sumian.sleepdoctor.main.WelcomeFragment;
-import com.sumian.sleepdoctor.main.tab.group.fragment.GroupFragment;
-import com.sumian.sleepdoctor.main.tab.me.MeFragment;
-
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -52,7 +40,16 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     private LiveData<Boolean> mTokenInvalidStateLiveData;
     private boolean mIsTopLogin;
 
-    private LifecycleRegistry mLifecycleRegistry = new LifecycleRegistry(this);
+    public static void show(Context context, Class<? extends BaseActivity> clx) {
+        show(context, clx, null);
+    }
+
+    public static void show(Context context, Class<? extends BaseActivity> clx, Bundle extras) {
+        Intent intent = new Intent(context, clx);
+        if (extras != null)
+            intent.putExtras(extras);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -60,13 +57,6 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
         if (!initBundle(intent.getExtras())) {
             finish();
         }
-    }
-
-    @CallSuper
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        mLifecycleRegistry.markState(Lifecycle.State.CREATED);
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -135,63 +125,60 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
 
     }
 
-    public void commitReplaceTabFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getFragmentTransaction();
+    //public void commitReplace(@NonNull Class<? extends Fragment> clx) {
 
-        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
-        if (fragmentByTag != null) {
-            // Log.e(TAG, "commitReplaceTabFragment: ---------->" + fragmentByTag.toString());
-            return;
-        }
+//        FragmentTransaction fragmentTransaction = getFragmentTransaction();
+//
+//        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
+//        if (fragmentByTag != null) {
+//            // Log.e(TAG, "commitReplace: ---------->" + fragmentByTag.toString());
+//            return;
+//        }
+//
+//        fragmentTransaction.replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName());
+//
+//        if (!(fragment instanceof TabGroupFragment || fragment instanceof TabMeFragment)) {
+//            addToBackStack(fragment, fragmentTransaction);
+//        }
+//
+//        Fragment welcomeFragment = getSupportFragmentManager().findFragmentByTag("WelcomeFragment");
+//        if (welcomeFragment != null)
+//            fragmentTransaction.remove(welcomeFragment);
 
-        fragmentTransaction.replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName());
+    //commitTransaction(fragmentTransaction);
+    // }
 
-        if (!(fragment instanceof GroupFragment || fragment instanceof MeFragment)) {
-            addToBackStack(fragment, fragmentTransaction);
-        }
+    // public void commitReplacePagerFragment(@NonNull Class<? extends Fragment> clx) {
+//        this.mIsTopLogin = fragment instanceof LoginFragment;
+//
+//        FragmentTransaction fragmentTransaction = getFragmentTransaction();
+//
+//        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
+//        if (fragmentByTag != null) {
+//            // Log.e(TAG, "commitReplace: ---------->" + fragmentByTag.toString());
+//            return;
+//        }
+//
+//        fragmentTransaction.replace(R.id.lay_page_container, fragment, fragment.getClass().getSimpleName());
+//
+//        if (!(fragment instanceof WelcomeFragment)) {
+//            addToBackStack(fragment, fragmentTransaction);
+//        }
+//
+//        commitTransaction(fragmentTransaction);
+    //  }
 
-        Fragment welcomeFragment = getSupportFragmentManager().findFragmentByTag("WelcomeFragment");
-        if (welcomeFragment != null)
-            fragmentTransaction.remove(welcomeFragment);
-
-        commitTransaction(fragmentTransaction);
-    }
-
-    public void commitReplacePagerFragment(Fragment fragment) {
-        this.mIsTopLogin = fragment instanceof LoginFragment;
-
-        FragmentTransaction fragmentTransaction = getFragmentTransaction();
-
-        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
-        if (fragmentByTag != null) {
-            // Log.e(TAG, "commitReplaceTabFragment: ---------->" + fragmentByTag.toString());
-            return;
-        }
-
-        fragmentTransaction.replace(R.id.lay_page_container, fragment, fragment.getClass().getSimpleName());
-
-        if (!(fragment instanceof WelcomeFragment)) {
-            addToBackStack(fragment, fragmentTransaction);
-        }
-
-        commitTransaction(fragmentTransaction);
-    }
-
-    public void goHome() {
-        this.mIsTopLogin = false;
-        int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
-        Log.e(TAG, "goHome: ------------>backStackEntryCount=" + backStackEntryCount);
-        //for (int i = 0; i < backStackEntryCount; i++) {
-        getFragmentManager().popBackStackImmediate();
-        // FragmentManager.BackStackEntry backStackEntry =
-        //   Log.e(TAG, "goHome: --------->" + backStackEntry.toString());
-        // getSupportFragmentManager().popBackStackImmediate(backStackEntry.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        //}
-    }
-
-    public static void show(Context context, Class<? extends BaseActivity> clx) {
-        context.startActivity(new Intent(context, clx));
-    }
+//    public void goHome() {
+    //this.mIsTopLogin = false;
+    //int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+    //Log.e(TAG, "goHome: ------------>backStackEntryCount=" + backStackEntryCount);
+    //for (int i = 0; i < backStackEntryCount; i++) {
+    //getFragmentManager().popBackStackImmediate();
+    // FragmentManager.BackStackEntry backStackEntry =
+    //   Log.e(TAG, "goHome: --------->" + backStackEntry.toString());
+    // getSupportFragmentManager().popBackStackImmediate(backStackEntry.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    //}
+    //  }
 
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
@@ -223,72 +210,28 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
         Log.d(TAG, "onDestroy: ----------->");
     }
 
-    @Override
-    public void onBackPressed() {
-        int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
-        // Log.e(TAG, "onBackPressed: -----1--->" + backStackEntryCount);
-        //List<Fragment> fragments = getFragmentManager().getFragments();
-        // Log.e(TAG, "onBackPressed: -----2----->" + fragments.toString());
-
-        //  fragments.isEmpty() || isGroupFragment(fragments) || isMeFragment(fragments) || isLoginFragment(fragments) ||
-        if (backStackEntryCount <= 0) {
-            finish();
-        } else {
-            super.onBackPressed();
-        }
-        //   Log.e(TAG, "onBackPressed: ------3---->" + fragments.toString());
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//        // int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
+//        // Log.e(TAG, "onBackPressedDelegate: -----1--->" + backStackEntryCount);
+//        //List<Fragment> fragments = getFragmentManager().getFragments();
+//        // Log.e(TAG, "onBackPressedDelegate: -----2----->" + fragments.toString());
+//
+//        //  fragments.isEmpty() || isGroupFragment(fragments) || isMeFragment(fragments) || isLoginFragment(fragments) ||
+//        // if (backStackEntryCount <= 0) {
+//        //   finish();
+//        //} else {
+//        // super.onBackPressed();
+//        //}
+//
+//        //   Log.e(TAG, "onBackPressedDelegate: ------3---->" + fragments.toString());
+//    }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onChanged(@Nullable Boolean tokenIsInvalid) {
-        if (tokenIsInvalid && !mIsTopLogin) commitReplacePagerFragment(LoginFragment.newInstance());
-    }
-
-    @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private boolean isLoginFragment(List<Fragment> fragments) {
-        if (fragments == null || fragments.isEmpty()) return false;
-        for (Fragment fragment : fragments) {
-            return fragment instanceof LoginFragment;
-        }
-        return false;
-    }
-
-    @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private boolean isGroupFragment(List<Fragment> fragments) {
-        if (fragments == null || fragments.isEmpty()) return false;
-        for (Fragment fragment : fragments) {
-            return fragment instanceof GroupFragment;
-        }
-        return false;
-    }
-
-    @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private boolean isMeFragment(List<Fragment> fragments) {
-        if (fragments == null || fragments.isEmpty()) return false;
-        for (Fragment fragment : fragments) {
-            return fragment instanceof MeFragment;
-        }
-        return false;
-    }
-
-    @SuppressLint("CommitTransaction")
-    private FragmentTransaction getFragmentTransaction() {
-        return getSupportFragmentManager().beginTransaction();//.setCustomAnimations(com.qmuiteam.qmui.arch.R.anim.scale_enter, com.qmuiteam.qmui.arch.R.anim.scale_exit);
-    }
-
-    private void addToBackStack(Fragment fragment, FragmentTransaction fragmentTransaction) {
-        fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
-    }
-
-    private void commitTransaction(FragmentTransaction fragmentTransaction) {
-        fragmentTransaction.commit();
-    }
-
-    @NonNull
-    @Override
-    public Lifecycle getLifecycle() {
-        return mLifecycleRegistry;
+       // if (tokenIsInvalid && !mIsTopLogin) commitReplacePagerFragment(LoginFragment.class);
     }
 
     public void setTransparentForImageViewInFragment(@Nullable View needOffsetView) {

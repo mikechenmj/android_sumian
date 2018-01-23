@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.main.pay.activity;
+package com.sumian.sleepdoctor.pager.fragment;
 
 import android.view.View;
 import android.widget.TextView;
@@ -38,14 +38,9 @@ public class PayGroupScanResultFragment extends BaseFragment implements View.OnC
     @BindView(R.id.bt_re_scan)
     Button mBtReScan;
 
-
-    public static PayGroupScanResultFragment newInstance() {
-        return new PayGroupScanResultFragment();
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_main_join_one;
+        return R.layout.fragment_tab_join_one;
     }
 
     @Override
