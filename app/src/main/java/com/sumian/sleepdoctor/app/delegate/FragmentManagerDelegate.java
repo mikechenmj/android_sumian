@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +13,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.fragment.LoginFragment;
+import com.sumian.sleepdoctor.account.activity.LoginActivity;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.pager.fragment.WelcomeFragment;
+import com.sumian.sleepdoctor.pager.activity.WelcomeActivity;
 import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
@@ -67,28 +66,24 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
 
     @Override
     public void replaceFragment(@NonNull Class<? extends Fragment> clx, @Nullable Bundle args) {
-        replaceFragment(R.id.lay_fragment_container, clx, args);
+        replaceFragment(R.id.lay_tab_container, clx, args);
     }
 
-    @UiThread
     @Override
-    public void replaceFragment(@IdRes int containerId, Class<? extends Fragment> clx, @Nullable Bundle args) {
+    public void replaceFragment(@IdRes int containerId, @NonNull Class<? extends Fragment> clx, @Nullable Bundle args) {
         replace(containerId, clx, args);
     }
 
-    @UiThread
     @Override
     public void showNavTab() {
         mNavTab.setVisibility(View.VISIBLE);
     }
 
-    @UiThread
     @Override
     public void hideNavTab() {
         mNavTab.setVisibility(View.GONE);
     }
 
-    @UiThread
     public void onBackPressedDelegate() {
 
         Log.e(TAG, "onBackPressedDelegate: ---------->" + mBackFragments.toString());
@@ -109,7 +104,7 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
 
         //3.栈顶元素是 login
         //那么直接退出 app
-        if (LoginFragment.class.getName().equals(TopFName)) {
+        if (LoginActivity.class.getName().equals(TopFName)) {
             appCompatActivity.finishAffinity();
             return;
         }
@@ -128,15 +123,28 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
         replaceFragment(clx);
     }
 
-    @UiThread
+    @Override
+    public void pop(String fName) {
+        if (TextUtils.isEmpty(fName)) {
+            mBackFragments.pollLast();
+        } else {
+            boolean remove = mBackFragments.remove(fName);
+        }
+    }
+
+    @Override
+    public void pop() {
+        pop(null);
+    }
+
     public void goHome() {
         String fName = mBackFragments.peekFirst();
         Class<? extends Fragment> clx = getFragmentClass(fName);
-        if (clx == null || clx.getName().equals(WelcomeFragment.class.getName())) {
+        if (clx == null || clx.getName().equals(WelcomeActivity.class.getName())) {
             clx = GroupFragment.class;
         }
         //noinspection unchecked
-        removeAll(LoginFragment.class, WelcomeFragment.class);
+       // removeAll(LoginActivity.class, WelcomeActivity.class);
         replaceFragment(clx);
     }
 
@@ -153,7 +161,6 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
         }
     }
 
-    @UiThread
     private void replace(@IdRes int containerId, @NonNull Class<? extends Fragment> clx, @Nullable Bundle args) {
 
         String fName = clx.getName();

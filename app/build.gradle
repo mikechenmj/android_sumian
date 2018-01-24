@@ -193,6 +193,11 @@ dependencies {
     // Java8 support for Lifecycles
     implementation 'android.arch.lifecycle:common-java8:1.0.0'
 
+    //ping++
+    compile 'com.pingxx:pingpp-core:2.1.17' // (Ping++ 标准版 SDK) 必须添加
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+' // 使用微信支付时添加,具体版本参考微信官方文档
+    compile 'com.pingxx:pingpp-alipay:2.1.17' // 使用支付宝时添加
+
     implementation project(':common')
 
 }

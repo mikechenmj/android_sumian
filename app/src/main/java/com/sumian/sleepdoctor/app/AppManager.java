@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
-import com.sumian.sleepdoctor.tab.model.GroupViewModel;
 import com.sumian.sleepdoctor.network.api.DoctorApi;
 import com.sumian.sleepdoctor.network.engine.NetEngine;
+import com.sumian.sleepdoctor.tab.model.GroupViewModel;
 
 /**
  * Created by jzz

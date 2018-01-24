@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.fragment;
+package com.sumian.sleepdoctor.account.activity;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -9,7 +9,8 @@ import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.contract.LoginContract;
 import com.sumian.sleepdoctor.account.presenter.LoginPresenter;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.main.MainActivity;
 
 import net.qiujuer.genius.ui.widget.Button;
 import net.qiujuer.genius.ui.widget.EditText;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public final class LoginFragment extends BaseFragment<LoginPresenter> implements View.OnClickListener, LoginContract.View {
+public final class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, LoginContract.View {
 
     @BindView(R.id.et_mobil)
     EditText mEtMobil;
@@ -75,9 +76,9 @@ public final class LoginFragment extends BaseFragment<LoginPresenter> implements
     public void onLoginSuccess(boolean isNewAccount) {
         runOnUiThread(() -> {
             if (isNewAccount) {
-                commitReplace(ImproveUserProfileOneFragment.class);
+                ImproveUserProfileOneActivity.show(mEtMobil.getContext(), ImproveUserProfileOneActivity.class);
             } else {
-                goHome();
+                MainActivity.show(mEtMobil.getContext(), MainActivity.class);
             }
         });
     }

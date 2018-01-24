@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.fragment;
+package com.sumian.sleepdoctor.account.activity;
 
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
@@ -8,7 +8,7 @@ import android.view.View;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.account.presenter.ImproveUserProfilePresenter;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
@@ -20,9 +20,8 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ImproveUserProfileOneFragment extends BaseFragment<ImproveUserProfilePresenter> implements View.OnClickListener,
+public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener,
         TitleBar.OnBackListener, TitleBar.OnMoreListener, ImproveUserProfileContract.View {
-
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -70,7 +69,7 @@ public class ImproveUserProfileOneFragment extends BaseFragment<ImproveUserProfi
 
     @Override
     public void onBack(View v) {
-        popBack();
+        finish();
     }
 
     @Override
@@ -90,7 +89,7 @@ public class ImproveUserProfileOneFragment extends BaseFragment<ImproveUserProfi
 
     @Override
     public void onMore(View v) {
-        commitReplace(ImproveUserProfileTwoFragment.class);
+        ImproveUserProfileOneActivity.show(v.getContext(), ImproveUserProfileTwoActivity.class);
     }
 
     @Override
@@ -100,6 +99,6 @@ public class ImproveUserProfileOneFragment extends BaseFragment<ImproveUserProfi
 
     @Override
     public void onImproveUserProfileSuccess() {
-        goHome();
+        onMore(null);
     }
 }

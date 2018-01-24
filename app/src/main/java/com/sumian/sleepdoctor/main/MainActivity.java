@@ -1,15 +1,11 @@
 package com.sumian.sleepdoctor.main;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.FrameLayout;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.delegate.FragmentManagerDelegate;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.pager.fragment.WelcomeFragment;
 import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
@@ -30,10 +26,10 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     @BindView(R.id.nav_Tab)
     NavTab mNavTab;
 
-    @BindView(R.id.lay_fragment_container)
+    @BindView(R.id.lay_tab_container)
     FrameLayout mFragmentContainer;
 
-    private FragmentManagerDelegate mFragmentManagerDelegate;
+    // private FragmentManagerDelegate mFragmentManagerDelegate;
 
     private int mCurrentPosition = 0;
 
@@ -43,14 +39,13 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initWidget(View root) {
+        super.initWidget(root);
 
-        StatusBarUtil.setTransparent(this);
-        StatusBarUtil.setTranslucent(this, 0);
+       // StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
 
-        mFragmentManagerDelegate = new FragmentManagerDelegate(this)
-                .bindNavTab(mNavTab);
+        // mFragmentManagerDelegate = new FragmentManagerDelegate(this)
+        //        .bindNavTab(mNavTab);
 
         mNavTab.setOnTabChangeListener(this);
     }
@@ -58,19 +53,14 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     @Override
     protected void initData() {
         super.initData();
-        commitReplace(WelcomeFragment.class);
+        //commitReplace(WelcomeActivity.class);
+        initTab(0);
     }
 
     @Override
     protected void onRelease() {
         super.onRelease();
-        mFragmentManagerDelegate.onRelease();
-    }
-
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-        mFragmentManagerDelegate.onBackPressedDelegate();
+        //mFragmentManagerDelegate.onRelease();
     }
 
     @Override
@@ -78,29 +68,23 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
         if (mCurrentPosition == position) {
             return;
         }
-        Class<? extends Fragment> clx;
+        initTab(position);
+    }
+
+    private void initTab(int position) {
+        Fragment fragment;
         switch (position) {
             case 0:
-                clx = GroupFragment.class;
+                fragment = GroupFragment.newInstance(GroupFragment.class);
                 break;
             case 1:
-                clx = MeFragment.class;
+                fragment = MeFragment.newInstance(MeFragment.class);
                 break;
             default:
-                clx = GroupFragment.class;
+                fragment = GroupFragment.newInstance(GroupFragment.class);
                 break;
         }
         mCurrentPosition = position;
-        commitReplace(clx);
-    }
-
-    @UiThread
-    public void goHome() {
-        mFragmentManagerDelegate.goHome();
-    }
-
-    @UiThread
-    public void commitReplace(@NonNull Class<? extends Fragment> clx) {
-        mFragmentManagerDelegate.replaceFragment(clx);
+        getSupportFragmentManager().beginTransaction().replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName()).commitNowAllowingStateLoss();
     }
 }

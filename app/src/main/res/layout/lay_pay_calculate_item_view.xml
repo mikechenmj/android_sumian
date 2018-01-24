@@ -6,11 +6,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_80"
+        android:layout_height="wrap_content"
         android:background="@color/b2_color"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/space_20">
+        android:paddingBottom="@dimen/space_12"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20"
+        android:paddingTop="@dimen/space_12">
 
         <TextView
             style="@style/text_t1_style"
@@ -23,22 +26,22 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <net.qiujuer.genius.ui.widget.ImageView
+        <ImageView
             android:id="@+id/iv_reduce_duration"
             style="@style/text_t1_style"
             android:layout_width="@dimen/space_40"
             android:layout_height="@dimen/space_40"
-            android:src="@mipmap/group_pay_btn_plus_disabled"
-            android:text="@string/zero_money"
-            android:textColor="@color/t4_color" />
+            android:padding="@dimen/space_4"
+            android:src="@mipmap/group_pay_btn_plus_disabled" />
 
         <TextView
             android:id="@+id/tv_duration"
             style="@style/text_t1_style"
-            android:layout_width="@dimen/space_48"
-            android:layout_height="@dimen/space_40"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_36"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
             android:background="@drawable/shape_t1"
             android:gravity="center"
             android:paddingBottom="@dimen/space_8"
@@ -47,14 +50,13 @@
             android:paddingTop="@dimen/space_8"
             android:text="@string/one" />
 
-        <net.qiujuer.genius.ui.widget.ImageView
+        <ImageView
             android:id="@+id/iv_add_duration"
             style="@style/text_t1_style"
             android:layout_width="@dimen/space_40"
             android:layout_height="@dimen/space_40"
-            android:src="@mipmap/group_pay_btn_minus"
-            android:text="@string/zero_money"
-            android:textColor="@color/t4_color" />
+            android:padding="@dimen/space_4"
+            android:src="@mipmap/group_pay_btn_minus" />
 
     </LinearLayout>
 
@@ -65,11 +67,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_80"
+        android:layout_height="wrap_content"
         android:background="@color/b2_color"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="@dimen/space_28">
+        android:paddingBottom="@dimen/space_18"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20"
+        android:paddingTop="@dimen/space_18">
 
         <TextView
             style="@style/text_t1_style"

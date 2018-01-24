@@ -1,12 +1,14 @@
 package com.sumian.sleepdoctor.account.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by jzz
  * on 2018/1/17.
  * desc:
  */
 
-public class UserProfile {
+public class UserProfile implements Serializable {
 
     public int id;
     public String mobile;

@@ -16,6 +16,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_16"
         android:background="@color/b2_color"
         android:padding="@dimen/space_20">
 
@@ -24,7 +25,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:contentDescription="@null"
-            android:src="@mipmap/group_btn_scan_code"
+            android:src="@mipmap/group_avatar"
             app:civ_border_color="@color/b2_color"
             app:civ_border_overlay="true"
             app:civ_border_width="@dimen/space_4"
@@ -117,6 +118,7 @@
         style="@style/bt_t1_style"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_56"
+        android:layout_marginBottom="@dimen/space_36"
         android:layout_marginLeft="@dimen/space_32"
         android:layout_marginRight="@dimen/space_32"
         android:layout_marginTop="@dimen/space_28"

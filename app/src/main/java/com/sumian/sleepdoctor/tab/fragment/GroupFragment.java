@@ -7,12 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
-import com.sumian.sleepdoctor.main.QrCodeActivity;
-import com.sumian.sleepdoctor.pager.fragment.ScanQrCodeFragment;
+import com.sumian.sleepdoctor.pager.activity.ScanQrCodeActivity;
 import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.tab.contract.GroupContract;
@@ -58,7 +58,8 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     protected void initWidget(View root) {
         super.initWidget(root);
 
-        setStatusBarColor();
+         setStatusBarColor();
+        StatusBarUtil.setColorNoTranslucent(getActivity(), getResources().getColor(R.color.colorPrimary));
 
         mTitleBar.addOnMoreListener(this);
         mRefresh.setOnRefreshListener(this);
@@ -114,8 +115,8 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onGrantedSuccess() {
-        //QrCodeActivity.show(getContext());
-         commitReplace(ScanQrCodeFragment.class);
+        ScanQrCodeActivity.show(getContext(), ScanQrCodeActivity.class);
+        // commitReplace(ScanQrCodeActivity.class);
     }
 
     @Override

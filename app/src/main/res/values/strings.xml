@@ -79,5 +79,6 @@
     <string name="take_photo">拍照</string>
     <string name="picture">从手机相册选择</string>
     <string name="cancel">取消</string>
+    <string name="group_detail">群详情</string>
 
 </resources>

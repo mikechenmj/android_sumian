@@ -11,8 +11,8 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
-import com.sumian.sleepdoctor.pager.fragment.SettingFragment;
-import com.sumian.sleepdoctor.pager.fragment.UserProfileFragment;
+import com.sumian.sleepdoctor.pager.activity.SettingActivity;
+import com.sumian.sleepdoctor.pager.activity.UserProfileActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,10 +60,10 @@ public class MeFragment extends BaseFragment<UserProfile> implements HomeDelegat
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dv_user_info_center:
-                commitReplace(UserProfileFragment.class);
+                UserProfileActivity.show(getContext(), UserProfileActivity.class);
                 break;
             case R.id.dv_setting:
-                commitReplace(SettingFragment.class);
+                SettingActivity.show(getContext(), SettingActivity.class);
                 break;
         }
     }

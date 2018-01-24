@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.jaeger.library.StatusBarUtil;
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
+import com.sumian.sleepdoctor.account.activity.LoginActivity;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 
 import butterknife.ButterKnife;
@@ -32,13 +34,16 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements DefaultLifecycleObserver, Observer<Boolean>, LifecycleOwner {
+public abstract class BaseActivity<Presenter> extends AppCompatActivity implements DefaultLifecycleObserver, Observer<Boolean>, LifecycleOwner {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Unbinder mBind;
-    protected View mRoot;
+
     private LiveData<Boolean> mTokenInvalidStateLiveData;
+    protected View mRoot;
     private boolean mIsTopLogin;
+
+    protected Presenter mPresenter;
 
     public static void show(Context context, Class<? extends BaseActivity> clx) {
         show(context, clx, null);
@@ -60,12 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     }
 
     @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        setStatusBar();
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (initBundle(getIntent().getExtras())) {
@@ -73,7 +72,8 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
             initWindow();
             this.mBind = ButterKnife.bind(this);
             this.mRoot = getWindow().getDecorView();
-            initWidget();
+            initWidget(mRoot);
+            initPresenter();
             initData();
             getLifecycle().addObserver(this);
             if (mTokenInvalidStateLiveData == null) {
@@ -113,7 +113,11 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
 
     protected abstract int getLayoutId();
 
-    protected void initWidget() {
+    protected void initWidget(View root) {
+
+    }
+
+    protected void initPresenter() {
 
     }
 
@@ -141,7 +145,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
 //            addToBackStack(fragment, fragmentTransaction);
 //        }
 //
-//        Fragment welcomeFragment = getSupportFragmentManager().findFragmentByTag("WelcomeFragment");
+//        Fragment welcomeFragment = getSupportFragmentManager().findFragmentByTag("WelcomeActivity");
 //        if (welcomeFragment != null)
 //            fragmentTransaction.remove(welcomeFragment);
 
@@ -149,7 +153,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     // }
 
     // public void commitReplacePagerFragment(@NonNull Class<? extends Fragment> clx) {
-//        this.mIsTopLogin = fragment instanceof LoginFragment;
+//        this.mIsTopLogin = fragment instanceof LoginActivity;
 //
 //        FragmentTransaction fragmentTransaction = getFragmentTransaction();
 //
@@ -161,7 +165,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
 //
 //        fragmentTransaction.replace(R.id.lay_page_container, fragment, fragment.getClass().getSimpleName());
 //
-//        if (!(fragment instanceof WelcomeFragment)) {
+//        if (!(fragment instanceof WelcomeActivity)) {
 //            addToBackStack(fragment, fragmentTransaction);
 //        }
 //
@@ -231,11 +235,7 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onChanged(@Nullable Boolean tokenIsInvalid) {
-       // if (tokenIsInvalid && !mIsTopLogin) commitReplacePagerFragment(LoginFragment.class);
-    }
-
-    public void setTransparentForImageViewInFragment(@Nullable View needOffsetView) {
-        setColor(this, getResources().getColor(R.color.colorPrimary));
+        if (tokenIsInvalid && !mIsTopLogin) LoginActivity.show(this, LoginActivity.class);
     }
 
     /**
@@ -282,5 +282,13 @@ public abstract class BaseActivity extends AppCompatActivity implements DefaultL
         statusView.setLayoutParams(params);
         statusView.setBackgroundColor(color);
         return statusView;
+    }
+
+    protected void showToast(String message) {
+        runOnUiThread(() -> ToastHelper.show(message));
+    }
+
+    protected void showToast(@StringRes int messageId) {
+        showToast(getString(messageId));
     }
 }

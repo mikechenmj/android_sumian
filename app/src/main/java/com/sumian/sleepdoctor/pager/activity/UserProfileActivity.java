@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.pager.fragment;
+package com.sumian.sleepdoctor.pager.activity;
 
 import android.util.Log;
 import android.view.View;
@@ -10,7 +10,7 @@ import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.pager.sheet.AvatarBottomSheet;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
@@ -25,9 +25,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-public class UserProfileFragment extends BaseFragment implements View.OnClickListener, TitleBar.OnBackListener, SettingDividerView.OnShowMoreListener, AvatarBottomSheet.OnTakePhotoCallback {
+public class UserProfileActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener, SettingDividerView.OnShowMoreListener, AvatarBottomSheet.OnTakePhotoCallback {
 
-    private static final String TAG = UserProfileFragment.class.getSimpleName();
+    private static final String TAG = UserProfileActivity.class.getSimpleName();
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -53,7 +53,6 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        setStatusBarColor();
         mTitleBar.addOnBackListener(this);
         mDvNickname.setOnShowMoreListener(this);
         mDvName.setOnShowMoreListener(this);
@@ -80,7 +79,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .add(AvatarBottomSheet.newInstance().addOnTakePhotoCallback(this), AvatarBottomSheet.class.getSimpleName())
                 .commitNowAllowingStateLoss();
@@ -89,7 +88,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onBack(View v) {
-        popBack();
+        finish();
     }
 
     @Override
@@ -114,7 +113,7 @@ public class UserProfileFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onPicPictureCallback() {
-        ImagePickerActivity.show(getContext(), new SelectOptions
+        ImagePickerActivity.show(this, new SelectOptions
                 .Builder()
                 .setHasCam(true)
                 .setSelectCount(1)

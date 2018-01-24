@@ -17,13 +17,17 @@ public interface BaseFragmentManager<Fragment> {
 
     void replaceFragment(@NonNull Class<? extends Fragment> clx, @Nullable Bundle args);
 
-    void replaceFragment(@IdRes int containerId, Class<? extends Fragment> clx, @Nullable Bundle args);
+    void replaceFragment(@IdRes int containerId, @NonNull Class<? extends Fragment> clx, @Nullable Bundle args);
 
     void showNavTab();
 
     void hideNavTab();
 
     void onBackPressedDelegate();
+
+    void pop(String fName);
+
+    void pop();
 
     void goHome();
 

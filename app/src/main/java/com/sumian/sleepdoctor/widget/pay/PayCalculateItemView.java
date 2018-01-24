@@ -5,12 +5,11 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-
-import net.qiujuer.genius.ui.widget.ImageView;
 
 import java.util.Locale;
 
@@ -25,6 +24,8 @@ import butterknife.OnClick;
  */
 
 public class PayCalculateItemView extends LinearLayout implements View.OnClickListener {
+
+    private static final String TAG = PayCalculateItemView.class.getSimpleName();
 
     @BindView(R.id.iv_reduce_duration)
     ImageView mIvReduceDuration;
@@ -41,6 +42,8 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
     private int mCurrentDuration = 1;
     private float mCurrentMoney = 0.00f;
     private float mDefaultMoney = 0.00f;
+
+    private OnMoneyChangeCallback mOnMoneyChangeCallback;
 
     public PayCalculateItemView(Context context) {
         this(context, null);
@@ -61,18 +64,24 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         setOrientation(VERTICAL);
     }
 
+    public PayCalculateItemView setOnMoneyChangeCallback(OnMoneyChangeCallback onMoneyChangeCallback) {
+        mOnMoneyChangeCallback = onMoneyChangeCallback;
+        return this;
+    }
+
     @OnClick({R.id.iv_reduce_duration, R.id.iv_add_duration})
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_reduce_duration:
-                mCurrentDuration++;
-                break;
-            case R.id.iv_add_duration:
                 if (mCurrentDuration == 0) {
                     mCurrentDuration = 0;
                 } else {
                     mCurrentDuration--;
                 }
+                break;
+            case R.id.iv_add_duration:
+                mCurrentDuration++;
                 break;
             default:
                 break;
@@ -88,6 +97,10 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
         mTvDuration.setText(String.valueOf(mCurrentDuration));
         mCurrentMoney = mDefaultMoney * mCurrentDuration;
+
+        if (mOnMoneyChangeCallback != null) {
+            mOnMoneyChangeCallback.onMoneyChange(mCurrentMoney);
+        }
         updateMoney(mCurrentMoney);
     }
 
@@ -116,5 +129,10 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
     public float getDefaultMoney() {
         return mDefaultMoney;
+    }
+
+    public interface OnMoneyChangeCallback {
+
+        void onMoneyChange(float money);
     }
 }

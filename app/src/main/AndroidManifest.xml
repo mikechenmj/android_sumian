@@ -16,7 +16,7 @@
         tools:replace="android:name,android:icon, android:theme">
 
         <activity
-            android:name=".main.MainActivity"
+            android:name=".pager.activity.WelcomeActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,9 +35,44 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".main.MainActivity" />
+        <activity android:name=".account.activity.LoginActivity" />
+        <activity android:name=".account.activity.ImproveUserProfileOneActivity" />
+        <activity android:name=".account.activity.ImproveUserProfileTwoActivity" />
+        <activity android:name=".pager.activity.UserProfileActivity" />
+        <activity android:name=".pager.activity.AboutMeActivity" />
+        <activity android:name=".pager.activity.PayGroupActivity" />
+        <activity android:name=".pager.activity.ScanGroupResultActivity" />
+
         <activity
-            android:name=".main.QrCodeActivity"
+            android:name=".pager.activity.ScanQrCodeActivity"
             android:theme="@style/scan_qr_theme" />
+
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--WeChat-->
+        <activity-alias
+            android:name="com.sumian.sleepdoctor.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity" />
+
+        <!--Alipay-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind" />
+
 
     </application>
 

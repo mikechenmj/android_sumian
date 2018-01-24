@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.main.MainActivity;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -183,33 +182,6 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onDestroy: ----------->" + this.toString());
-    }
-
-    protected void commitReplace(@NonNull Class<? extends Fragment> clx) {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).commitReplace(clx);
-        }
-    }
-
-    protected void popBack() {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof MainActivity) {
-            mActivity.onBackPressed();
-        }
-    }
-
-    protected void goHome() {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).goHome();
-        }
     }
 
     protected void showToast(String message) {

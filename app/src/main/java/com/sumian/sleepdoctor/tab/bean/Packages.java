@@ -1,12 +1,14 @@
 package com.sumian.sleepdoctor.tab.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by sm
  * on 2018/1/23.
  * desc:群成员信息 include=packages 时显示 (未加群，未登录，患者，医团)
  */
 
-public class Packages {
+public class Packages implements Serializable{
     public int id;//群套餐id (未加群，未登录，患者，医团)
     public int days;//天 (未加群，未登录，患者，医团)
     public String description;//群套餐描述 (未加群，未登录，患者，医团)

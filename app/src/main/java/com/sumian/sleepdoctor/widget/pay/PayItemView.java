@@ -75,9 +75,8 @@ public class PayItemView extends LinearLayout implements View.OnClickListener {
         setOrientation(HORIZONTAL);
     }
 
-    public PayItemView setOnPayWayCallback(OnPayWayCallback onPayWayCallback) {
+    public void setOnPayWayCallback(OnPayWayCallback onPayWayCallback) {
         mOnPayWayCallback = onPayWayCallback;
-        return this;
     }
 
     public void select() {

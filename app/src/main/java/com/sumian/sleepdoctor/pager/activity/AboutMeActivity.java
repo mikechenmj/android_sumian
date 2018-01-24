@@ -1,9 +1,9 @@
-package com.sumian.sleepdoctor.pager.fragment;
+package com.sumian.sleepdoctor.pager.activity;
 
 import android.view.View;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
@@ -14,7 +14,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class AboutMefragment extends BaseFragment implements TitleBar.OnBackListener {
+public class AboutMeActivity extends BaseActivity implements TitleBar.OnBackListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -32,6 +32,6 @@ public class AboutMefragment extends BaseFragment implements TitleBar.OnBackList
 
     @Override
     public void onBack(View v) {
-        popBack();
+        finish();
     }
 }

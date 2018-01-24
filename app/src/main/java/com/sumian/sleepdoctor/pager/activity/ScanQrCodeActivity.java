@@ -1,8 +1,10 @@
-package com.sumian.sleepdoctor.pager.fragment;
+package com.sumian.sleepdoctor.pager.activity;
 
 import android.Manifest;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -10,8 +12,10 @@ import android.view.View;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.BaseActivity;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,17 +25,15 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static android.content.Context.VIBRATOR_SERVICE;
-
 /**
  * Created by sm
  * on 2018/1/23.
  * desc:
  */
 
-public class ScanQrCodeFragment extends BaseFragment implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
+public class ScanQrCodeActivity extends BaseActivity implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
 
-    private static final String TAG = ScanQrCodeFragment.class.getSimpleName();
+    private static final String TAG = ScanQrCodeActivity.class.getSimpleName();
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
 
@@ -46,8 +48,8 @@ public class ScanQrCodeFragment extends BaseFragment implements View.OnClickList
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        StatusBarUtil.setTranslucent(getActivity());
-        StatusBarUtil.setTranslucent(getActivity(), 0);
+        StatusBarUtil.setTranslucent(this);
+        StatusBarUtil.setTranslucent(this, 0);
         this.mZXingView.setDelegate(this);
     }
 
@@ -71,13 +73,35 @@ public class ScanQrCodeFragment extends BaseFragment implements View.OnClickList
     @OnClick({R.id.iv_back})
     @Override
     public void onClick(View v) {
-        popBack();
+        finish();
     }
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        ToastHelper.show(result, Gravity.CENTER);
         vibrate();
+
+        String decodeUrl = null;
+        try {
+            decodeUrl = URLDecoder.decode(result, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        ToastHelper.show(decodeUrl, Gravity.CENTER);
+
+        if (!TextUtils.isEmpty(decodeUrl) && (decodeUrl.startsWith("http") || decodeUrl.startsWith("https"))) {
+            if (decodeUrl.contains("scheme=sleepdoctor://addgroup")) {
+                String scheme = decodeUrl.substring(decodeUrl.indexOf("scheme"));
+                String groupId = scheme.substring(scheme.indexOf("id=") + 3);
+
+                Log.e(TAG, "onScanQRCodeSuccess: ---------->decodeUrl=" + decodeUrl + "  groupId=" + groupId);
+                Bundle args = new Bundle();
+                args.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, Integer.parseInt(groupId, 10));
+                ScanGroupResultActivity.show(this, ScanGroupResultActivity.class, args);
+                finish();
+            }
+        }
+
         this.mZXingView.startSpot();
     }
 
@@ -105,7 +129,7 @@ public class ScanQrCodeFragment extends BaseFragment implements View.OnClickList
     @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)
     private void requestCodeQRCodePermissions() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!EasyPermissions.hasPermissions(getContext(), perms)) {
+        if (!EasyPermissions.hasPermissions(this, perms)) {
             EasyPermissions.requestPermissions(this, getString(R.string.scan_qr_code_warn), REQUEST_CODE_QR_CODE_PERMISSIONS, perms);
         } else {
             preScanQrCode();
@@ -117,12 +141,12 @@ public class ScanQrCodeFragment extends BaseFragment implements View.OnClickList
         this.mZXingView.startCamera();
         this.mZXingView.showScanRect();
         this.mZXingView.startSpot();
-        //}, 500);
+        // }, 500);
     }
 
     @SuppressWarnings("ConstantConditions")
     private void vibrate() {
-        Vibrator vibrator = (Vibrator) getContext().getSystemService(VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         if (vibrator != null) {
             vibrator.vibrate(200);
         }
