@@ -30,6 +30,8 @@
     <color name="s3_color">#ff5c6373</color>
     <color name="s4_color">#4c000000</color>
 
+    <color name="loading_bg_color">#96000000</color>
+
     <color name="black_alpha_48">#30000000</color>
 
 </resources>

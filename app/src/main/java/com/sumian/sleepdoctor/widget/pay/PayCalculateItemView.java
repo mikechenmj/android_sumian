@@ -116,7 +116,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
     }
 
     private void formatMoney(TextView tv, float money) {
-        tv.setText(String.format(Locale.getDefault(), "%.2f", money));
+        tv.setText(String.format(Locale.getDefault(), "%.2f", money / 100.0f));
     }
 
     public int getCurrentDuration() {

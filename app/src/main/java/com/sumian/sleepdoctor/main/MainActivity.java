@@ -31,6 +31,10 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     // private FragmentManagerDelegate mFragmentManagerDelegate;
 
+    private GroupFragment mGroupFragment;
+
+    private MeFragment mMeFragment;
+
     private int mCurrentPosition = 0;
 
     @Override
@@ -42,7 +46,7 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     protected void initWidget(View root) {
         super.initWidget(root);
 
-       // StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
+        // StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
 
         // mFragmentManagerDelegate = new FragmentManagerDelegate(this)
         //        .bindNavTab(mNavTab);
@@ -74,17 +78,17 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     private void initTab(int position) {
         Fragment fragment;
         switch (position) {
-            case 0:
-                fragment = GroupFragment.newInstance(GroupFragment.class);
-                break;
             case 1:
                 fragment = MeFragment.newInstance(MeFragment.class);
                 break;
+            case 0:
             default:
                 fragment = GroupFragment.newInstance(GroupFragment.class);
                 break;
         }
-        mCurrentPosition = position;
+
         getSupportFragmentManager().beginTransaction().replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName()).commitNowAllowingStateLoss();
+
+        mCurrentPosition = position;
     }
 }

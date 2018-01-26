@@ -99,9 +99,9 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_join:
-                Bundle args=new Bundle();
-                args.putSerializable(PayGroupActivity.ARGS_GROUP_DETAIL,mGroupDetail);
-                PayGroupActivity.show(this, PayGroupActivity.class,args);
+                Bundle args = new Bundle();
+                args.putSerializable(PayGroupActivity.ARGS_GROUP_DETAIL, mGroupDetail);
+                PayGroupActivity.show(this, PayGroupActivity.class, args);
                 break;
             case R.id.bt_re_scan:
                 ScanQrCodeActivity.show(this, ScanQrCodeActivity.class);
@@ -128,7 +128,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
 
     @Override
     public void onGetGroupDetailSuccess(GroupDetail<UserProfile, UserProfile> groupDetail) {
-        this.mGroupDetail=groupDetail;
+        this.mGroupDetail = groupDetail;
         runOnUiThread(() -> {
             RequestOptions options = new RequestOptions();
             options.placeholder(R.mipmap.group_avatar).error(R.mipmap.group_avatar).getOptions();
@@ -138,7 +138,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
             mTvDoctorName.setText(String.format(Locale.getDefault(), "%s%s", getString(R.string.doctor), groupDetail.doctor.nickname));
             mTvGroupDesc.setText(groupDetail.description);
 
-            mTvMoney.setText(String.format(Locale.getDefault(), "%.2f", groupDetail.monthly_price));
+            mTvMoney.setText(String.format(Locale.getDefault(), "%.2f", groupDetail.monthly_price / 100.0f));
 
         });
     }

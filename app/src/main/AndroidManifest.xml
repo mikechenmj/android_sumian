@@ -44,6 +44,7 @@
         <activity android:name=".pager.activity.AboutMeActivity" />
         <activity android:name=".pager.activity.PayGroupActivity" />
         <activity android:name=".pager.activity.ScanGroupResultActivity" />
+        <activity android:name=".pager.activity.SettingActivity" />
 
         <activity
             android:name=".pager.activity.ScanQrCodeActivity"

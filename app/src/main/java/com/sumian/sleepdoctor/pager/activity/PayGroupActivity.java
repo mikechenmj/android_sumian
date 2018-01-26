@@ -7,19 +7,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.pingplusplus.android.Pingpp;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.pager.bean.Order;
+import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.pager.contract.PayGroupContract;
 import com.sumian.sleepdoctor.pager.presenter.PayGroupPresenter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.pay.PayCalculateItemView;
 import com.sumian.sleepdoctor.widget.pay.PayItemGroupView;
 
 import net.qiujuer.genius.ui.widget.Button;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,6 +34,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackListener, PayCalculateItemView.OnMoneyChangeCallback, PayGroupContract.View {
+
+    private static final String TAG = PayGroupActivity.class.getSimpleName();
 
     public static final String ARGS_GROUP_DETAIL = "args_group_detail";
 
@@ -60,6 +64,8 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     private GroupDetail<UserProfile, UserProfile> mGroupDetail;
 
+    private ActionLoadingDialog mActionLoadingDialog;
+
     @SuppressWarnings("unchecked")
     @Override
     protected boolean initBundle(Bundle bundle) {
@@ -87,34 +93,19 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
         options.placeholder(R.mipmap.group_avatar).error(R.mipmap.group_avatar).getOptions();
         Glide.with(this).load(mGroupDetail.avatar).apply(options).into(mIvGroupIcon);
         mTvDesc.setText(mGroupDetail.name);
-        mTvGroupMoney.setText(String.valueOf(mGroupDetail.monthly_price));
-        mPayCalculateItemView.setDefaultMoney(0.1f);
-
+        mTvGroupMoney.setText(String.format(Locale.getDefault(), "%.2f", mGroupDetail.monthly_price / 100.0f));
+        mPayCalculateItemView.setDefaultMoney(mGroupDetail.monthly_price);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //支付页面返回处理
-        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
-            String result = data.getExtras().getString("pay_result");
-       /* 处理返回值
-        * "success" - 支付成功
-        * "fail"    - 支付失败
-        * "cancel"  - 取消支付
-        * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
-        * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
-        */
-            String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
-            String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-        }
-
+        mPresenter.onPayActivityResultDelegate(requestCode, resultCode, data);
     }
 
     @Override
     protected void initPresenter() {
         super.initPresenter();
-
         PayGroupPresenter.init(this);
     }
 
@@ -122,7 +113,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                mPresenter.payAmount(this, mPayChannel, mGroupDetail, mPayCalculateItemView.getCurrentMoney(), mPayCalculateItemView.getCurrentDuration());
+                mPresenter.CreatePayOrder(this, mPayChannel, mGroupDetail, mPayCalculateItemView.getCurrentMoney(), mPayCalculateItemView.getCurrentDuration());
                 break;
             default:
                 break;
@@ -141,6 +132,19 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     @Override
     public void onBack(View v) {
+        onBack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onBack();
+    }
+
+    private void onBack() {
+        if (mActionLoadingDialog != null) {
+            mActionLoadingDialog.dismissAllowingStateLoss();
+        }
         finish();
     }
 
@@ -162,16 +166,39 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     @Override
     public void onBegin() {
-
+        showToast(R.string.create_order);
+        mActionLoadingDialog = new ActionLoadingDialog().show(getSupportFragmentManager());
     }
 
     @Override
     public void onFinish() {
+        if (mActionLoadingDialog != null) {
+            mActionLoadingDialog.dismissAllowingStateLoss();
+        }
+    }
+
+    @Override
+    public void onCreatePayOrderSuccess() {
+        showToast(R.string.create_order_success);
+    }
+
+    @Override
+    public void onOrderPaySuccess(String payMsg) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        MainActivity.show(this, MainActivity.class);
+        finish();
 
     }
 
     @Override
-    public void onPayAmountSuccess(Order order) {
+    public void onOrderPayFailed(String payMsg) {
+
+    }
+
+    @Override
+    public void onOrderPayInvalid(String payMsg) {
 
     }
 }
