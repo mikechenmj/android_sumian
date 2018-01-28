@@ -39,7 +39,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
 
     @Override
     public void onBack(View v) {
-       finish();
+        finish();
     }
 
     @OnClick({R.id.version, R.id.about_me, R.id.bt_logout})
@@ -50,10 +50,10 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
 
                 break;
             case R.id.about_me:
-                AboutMeActivity.show(this,AboutMeActivity.class);
+                AboutMeActivity.show(this, AboutMeActivity.class);
                 break;
             case R.id.bt_logout:
-                LoginActivity.show(this,LoginActivity.class);
+                LoginActivity.showClearTop(this, LoginActivity.class);
                 break;
             default:
                 break;

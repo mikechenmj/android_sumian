@@ -187,11 +187,11 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.44'
 
     // ViewModel and LiveData
-    implementation 'android.arch.lifecycle:extensions:1.0.0'
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.0'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.1.0'
 
     // Java8 support for Lifecycles
-    implementation 'android.arch.lifecycle:common-java8:1.0.0'
+    implementation 'android.arch.lifecycle:common-java8:1.1.0'
 
     //ping++
     compile 'com.pingxx:pingpp-core:2.1.17' // (Ping++ 标准版 SDK) 必须添加

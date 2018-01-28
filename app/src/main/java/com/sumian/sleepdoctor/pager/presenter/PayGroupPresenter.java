@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.pingplusplus.android.Pingpp;
@@ -35,6 +34,8 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
     private PayGroupContract.View mView;
     private Order mOrder;
 
+    private String mOrderNo;
+
     private PayGroupPresenter(PayGroupContract.View view) {
         view.bindPresenter(this);
         mView = view;
@@ -48,7 +49,7 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
     public void CreatePayOrder(Activity activity, String channel, GroupDetail<UserProfile, UserProfile> groupDetail, float money, int count) {
 
         if (mOrder != null) {
-
+            doPay(activity);
             return;
         }
 
@@ -70,6 +71,7 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
                     @Override
                     protected void onSuccess(Order response) {
                         mOrder = response;
+                        mOrderNo = response.order_no;
                         mView.onCreatePayOrderSuccess();
                     }
 
@@ -96,27 +98,22 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
 
     @Override
     public void CheckPayOrder() {
-        String orderNo = null;
-        if (mOrder != null) {
-            orderNo = mOrder.order_no;
-        }
-
-        if (TextUtils.isEmpty(orderNo)) {
+        if (TextUtils.isEmpty(mOrderNo)) {
             return;
         }
 
         mView.onBegin();
 
-        AppManager.getHttpService().getOrderDetail(orderNo).enqueue(new BaseResponseCallback<OrderDetail>() {
+        AppManager.getHttpService().getOrderDetail(mOrderNo).enqueue(new BaseResponseCallback<OrderDetail>() {
             @Override
             protected void onSuccess(OrderDetail response) {
-
-
+                mView.onCheckOrderPayIsOk();
             }
 
             @Override
             protected void onFailure(String error) {
                 mView.onFailure(error);
+                mView.onCheckOrderPayIsInvalid(error);
             }
 
             @Override
@@ -130,21 +127,25 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
     @Override
     public void doPay(Activity activity) {
         Pingpp.DEBUG = BuildConfig.DEBUG;
-        Pingpp.enableDebugLog(true);
+        Pingpp.enableDebugLog(BuildConfig.DEBUG);
         Pingpp.createPayment(activity, JSON.toJSONString(mOrder));
     }
 
     @Override
     public void clearPayAction() {
         this.mOrder = null;
+       // this.mOrderNo = null;
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onPayActivityResultDelegate(int requestCode, int resultCode, Intent data) {
+
         //支付页面返回处理
         if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+
             String result = data.getExtras().getString("pay_result");
+
             @StringRes int payResultMsg;
             switch (result) {
                 case "success":
@@ -152,24 +153,26 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
                     mView.onOrderPaySuccess(App.Companion.getAppContext().getString(payResultMsg));
                     break;
                 case "fail":
-                    String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
-                    String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-
                     payResultMsg = R.string.pay_failed;
-                    mView.onOrderPayFailed(App.Companion.getAppContext().getString(payResultMsg));
+
+                    String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                    // String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+
+                    mView.onOrderPayFailed(App.Companion.getAppContext().getString(payResultMsg) + "," + errorMsg);
                     break;
                 case "cancel":
                     payResultMsg = R.string.pay_cancel;
+                    mView.onOrderPayCancel(App.Companion.getAppContext().getString(payResultMsg));
                     clearPayAction();
                     break;
                 case "invalid":
                     payResultMsg = R.string.pay_invalid;
+                    mView.onOrderPayInvalid(App.Companion.getAppContext().getString(payResultMsg));
                     break;
                 case "unknown":
-                    payResultMsg = R.string.pay_unknown;
-                    break;
                 default:
                     payResultMsg = R.string.pay_unknown;
+                    mView.onOrderPayFailed(App.Companion.getAppContext().getString(payResultMsg));
                     break;
             }
 
@@ -181,8 +184,7 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
         * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
         */
 
-
-            Log.e(TAG, "onActivityResult: -------------->result=" + result + "  error_msg=" + errorMsg + "  extra_msg=" + extraMsg);
+            //  Log.e(TAG, "onActivityResult: -------------->result=" + result + "  error_msg=" + errorMsg + "  extra_msg=" + extraMsg);
 
         }
     }

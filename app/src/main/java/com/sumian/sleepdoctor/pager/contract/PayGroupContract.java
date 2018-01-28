@@ -27,6 +27,12 @@ public interface PayGroupContract {
 
         void onOrderPayInvalid(String payMsg);
 
+        void onOrderPayCancel(String payMsg);
+
+        void onCheckOrderPayIsOk();
+
+        void onCheckOrderPayIsInvalid(String invalidError);
+
     }
 
     interface Presenter extends BasePresenter {

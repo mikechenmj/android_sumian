@@ -15,7 +15,6 @@ import com.sumian.sleepdoctor.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by sm
@@ -64,6 +63,8 @@ public class PayItemView extends LinearLayout implements View.OnClickListener {
         mIvPay.setImageResource(isSelect ? R.mipmap.group_pay_selected : R.mipmap.group_pay_unselected);
 
         a.recycle();
+
+        setOnClickListener(this);
     }
 
     private void init(Context context) {
@@ -92,18 +93,18 @@ public class PayItemView extends LinearLayout implements View.OnClickListener {
         mIvPay.setImageResource(R.mipmap.group_pay_unselected);
     }
 
-    @OnClick({R.id.iv_pay_select})
+    // @OnClick({R.id.iv_pay_select})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_pay_select:
-                if (mIvPay.getTag() == null) {
-                    select();
-                }
-                break;
-            default:
-                break;
+        // switch (v.getId()) {
+        //    case R.id.iv_pay_select:
+        if (mIvPay.getTag() == null) {
+            select();
         }
+        //       break;
+        //  default:
+        //    break;
+        // }
     }
 
 

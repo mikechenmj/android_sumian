@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.tab.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.base.BaseRecyclerAdapter;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
+import com.sumian.sleepdoctor.pager.activity.ScanGroupResultActivity;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import net.qiujuer.genius.ui.widget.Button;
@@ -111,12 +114,21 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupDetail<UserProfile, U
             }
         }
 
-        @OnClick({R.id.iv_group_icon})
+        @OnClick({R.id.iv_group_icon, R.id.bt_expired})
         @Override
         public void onClick(View v) {
             super.onClick(v);
             switch (v.getId()) {
                 case R.id.iv_group_icon:
+
+                    ToastHelper.show("群头像");
+
+                    break;
+                case R.id.bt_expired:
+
+                    Bundle extras = new Bundle();
+                    extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.id);
+                    ScanGroupResultActivity.show(v.getContext(), ScanGroupResultActivity.class, extras);
 
                     break;
                 default:
@@ -127,6 +139,15 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupDetail<UserProfile, U
         @Override
         protected void onItemClick(View v) {
             super.onItemClick(v);
+
+            if (mItem.day_last == 0) {
+                Bundle extras = new Bundle();
+                extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.id);
+                ScanGroupResultActivity.show(v.getContext(), ScanGroupResultActivity.class, extras);
+            } else {
+                ToastHelper.show("进入群聊天");
+            }
+
         }
     }
 

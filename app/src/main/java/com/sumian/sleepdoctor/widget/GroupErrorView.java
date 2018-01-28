@@ -50,12 +50,11 @@ public class GroupErrorView extends LinearLayout implements View.OnClickListener
     }
 
     private void init(Context context, AttributeSet attrs) {
-
-        ButterKnife.bind(inflate(context, R.layout.lay_error_view, this));
         setGravity(Gravity.CENTER);
         setOrientation(VERTICAL);
         setBackgroundColor(getResources().getColor(R.color.b1_color));
         setVisibility(GONE);
+        ButterKnife.bind(inflate(context, R.layout.lay_error_view, this));
     }
 
     public GroupErrorView setOnErrorRefreshListener(OnErrorRefreshListener onErrorRefreshListener) {

@@ -1,10 +1,12 @@
 package com.sumian.sleepdoctor.pager.activity;
 
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
@@ -118,12 +120,16 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                 .setHasCam(true)
                 .setSelectCount(1)
                 .setSelectedImages(new String[]{})
-                .setCallback(images -> {
-                    for (String image : images) {
-                        Log.e(TAG, "doSelected: ---------->" + image);
-                        RequestOptions options = new RequestOptions();
-                        options.error(R.mipmap.info_avatar_patient).placeholder(R.mipmap.info_avatar_patient).getOptions();
-                        Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
+                .setCallback(new Callback() {
+                    @Override
+                    public void doSelected(String[] images) {
+                        super.doSelected(images);
+                        for (String image : images) {
+                            Log.e(TAG, "doSelected: ---------->" + image.toString()+(Looper.myLooper()==Looper.getMainLooper()));
+                            RequestOptions options = new RequestOptions();
+                            options.error(R.mipmap.info_avatar_patient).placeholder(R.mipmap.info_avatar_patient).getOptions();
+                            Glide.with(getApplicationContext()).load(image).apply(options).into(mIvAvatar);
+                        }
                     }
                 }).build());
     }

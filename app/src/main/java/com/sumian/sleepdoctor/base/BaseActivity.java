@@ -41,6 +41,7 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
 
     private LiveData<Boolean> mTokenInvalidStateLiveData;
     protected View mRoot;
+
     private boolean mIsTopLogin;
 
     protected Presenter mPresenter;
@@ -53,6 +54,16 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
         Intent intent = new Intent(context, clx);
         if (extras != null)
             intent.putExtras(extras);
+
+        if (!(context instanceof Activity)) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+        context.startActivity(intent);
+    }
+
+    public static void showClearTop(Context context, Class<? extends BaseActivity> clx) {
+        Intent intent = new Intent(context, clx);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
 

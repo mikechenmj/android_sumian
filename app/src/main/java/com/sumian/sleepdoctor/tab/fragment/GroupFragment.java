@@ -58,7 +58,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     protected void initWidget(View root) {
         super.initWidget(root);
 
-         setStatusBarColor();
+        setStatusBarColor();
         StatusBarUtil.setColorNoTranslucent(getActivity(), getResources().getColor(R.color.colorPrimary));
 
         mTitleBar.addOnMoreListener(this);
@@ -140,7 +140,8 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onShowErrorGroupView() {
-        mGroupErrorView.showError();
+        if (mGroupErrorView != null)
+            mGroupErrorView.showError();
     }
 
     @Override

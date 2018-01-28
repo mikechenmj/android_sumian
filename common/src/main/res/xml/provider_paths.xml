@@ -2,7 +2,7 @@
 <paths>
     <external-path
         name="files_root"
-        path="Android/data/com.sumian.common/" />
+        path="Android/data/com.sumian.media/" />
     <external-path
         name="external_storage_root"
         path="." />

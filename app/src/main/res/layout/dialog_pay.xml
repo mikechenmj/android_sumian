@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_28"
+    android:background="@drawable/bg_dialog_b2"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -27,9 +29,7 @@
         style="@style/bt_t1_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
-        android:layout_marginTop="@dimen/space_24"
+        android:layout_margin="@dimen/space_32"
         android:text="@string/join_group"
         app:gTouchCornerRadius="@dimen/space_32"
         app:gTouchEffect="auto" />

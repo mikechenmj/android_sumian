@@ -61,12 +61,10 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onStop() {
-        mZXingView.post(() -> {
-            if (mZXingView != null) {
-                mZXingView.stopCamera();
-                mZXingView.onDestroy();
-            }
-        });
+        if (mZXingView != null) {
+            mZXingView.stopCamera();
+            mZXingView.onDestroy();
+        }
         super.onStop();
     }
 
@@ -137,11 +135,9 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
     }
 
     private void preScanQrCode() {
-        // this.mZXingView.postDelayed(() -> {
-        this.mZXingView.startCamera();
-        this.mZXingView.showScanRect();
-        this.mZXingView.startSpot();
-        // }, 500);
+            this.mZXingView.startCamera();
+            this.mZXingView.showScanRect();
+            this.mZXingView.startSpot();
     }
 
     @SuppressWarnings("ConstantConditions")

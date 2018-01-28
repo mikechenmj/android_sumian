@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,13 +28,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.GlideUrl;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.sumian.common.R;
 import com.sumian.common.utils.BitmapUtil;
@@ -54,7 +54,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 @SuppressWarnings("unused")
 public class ImageGalleryActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
-    EasyPermissions.PermissionCallbacks {
+        EasyPermissions.PermissionCallbacks {
     private PreviewerViewPager mImagePager;
     private TextView mIndexText;
     private ImageView mImageSave;
@@ -182,15 +182,15 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
 
         Object urlOrPath;
         // Do load
-        if (mOptions.getHeaders() != null)
-            urlOrPath = getGlideUrlByUser(path);
-        else
+       // if (mOptions.getHeaders() != null)
+        //    urlOrPath = getGlideUrlByUser(path);
+        //else
             urlOrPath = path;
 
         // In this save max image size is source
         final Future<File> future = mLoader
-            .load(urlOrPath)
-            .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+                .load(urlOrPath)
+                .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
 
         try {
             File sourceFile = future.get();
@@ -293,12 +293,16 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
             ImagePreviewView previewView = (ImagePreviewView) view.findViewById(R.id.iv_preview);
             previewView.setOnReachBorderListener(this);
             ImageView defaultView = (ImageView) view.findViewById(R.id.iv_default);
-            mLoader.load(mImageSources[position]).fitCenter().into(previewView);
+
+            RequestOptions options = new RequestOptions();
+            options.fitCenter().getOptions();
+
+            mLoader.load(mImageSources[position]).apply(options).into(previewView);
             ProgressBar loading = (ProgressBar) view.findViewById(R.id.progressBar);
 
-            if (mOptions.getHeaders() != null)
-                loadImage(position, getGlideUrlByUser(mImageSources[position]), previewView, defaultView, loading);
-            else
+           // if (mOptions.getHeaders() != null)
+            //    loadImage(position, getGlideUrlByUser(mImageSources[position]), previewView, defaultView, loading);
+            //else
                 loadImage(position, mImageSources[position], previewView, defaultView, loading);
 
             previewView.setOnClickListener(getListener());
@@ -327,49 +331,42 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
                                    final ImageView defaultView, final ProgressBar loading) {
 
             loadImageDoDownAndGetOverrideSize(urlOrPath, (overrideW, overrideH, isTrue) -> {
-                DrawableRequestBuilder builder = mLoader
-                    .load(urlOrPath)
-                    .listener(new RequestListener<T, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e,
-                                                   T model,
-                                                   Target<GlideDrawable> target,
-                                                   boolean isFirstResource) {
-                            if (e != null)
-                                e.printStackTrace();
-//                                    loading.stop();
-                            loading.setVisibility(View.GONE);
-                            defaultView.setVisibility(View.VISIBLE);
-                            updateDownloadStatus(pos, false);
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource,
-                                                       T model,
-                                                       Target<GlideDrawable> target,
-                                                       boolean isFromMemoryCache,
-                                                       boolean isFirstResource) {
-//                                    loading.stop();
-                            loading.setVisibility(View.GONE);
-                            updateDownloadStatus(pos, true);
-                            return false;
-                        }
-                    }).diskCacheStrategy(DiskCacheStrategy.SOURCE);
+                RequestOptions options = new RequestOptions();
 
                 // If download or get option error we not set override
                 if (isTrue && overrideW > 0 && overrideH > 0) {
-                    builder = builder.override(overrideW, overrideH).fitCenter();
+                    options.override(overrideW, overrideH).fitCenter().getOptions();
                 }
 
-                builder.into(previewView);
+                mLoader.load(urlOrPath)
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                if (e != null)
+                                    e.printStackTrace();
+//                                    loading.stop();
+                                loading.setVisibility(View.GONE);
+                                defaultView.setVisibility(View.VISIBLE);
+                                updateDownloadStatus(pos, false);
+
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                loading.setVisibility(View.GONE);
+                                updateDownloadStatus(pos, true);
+                                return false;
+                            }
+                        }).apply(options).into(previewView);
             });
         }
 
+        @SuppressWarnings("deprecation")
         private <T> void loadImageDoDownAndGetOverrideSize(final T urlOrPath, final DoOverrideSizeCallback callback) {
             // In this save max image size is source
             final Future<File> future = Glide.with(ImageGalleryActivity.this).load(urlOrPath)
-                .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
+                    .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
 
             new Thread() {
                 @Override
@@ -441,8 +438,8 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
         super.onDestroy();
     }
 
-    private GlideUrl getGlideUrlByUser(String url) {
-        if (mOptions == null || mOptions.getHeaders() == null) return new GlideUrl(url);
-        return new GlideUrl(url, mOptions.getHeaders());
-    }
+    //private GlideUrl getGlideUrlByUser(String url) {
+       //// if (mOptions == null || mOptions.getHeaders() == null) return new GlideUrl(url);
+    //    return new GlideUrl(url, mOptions.getHeaders());
+    //}
 }

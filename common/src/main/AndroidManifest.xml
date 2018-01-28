@@ -11,6 +11,16 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <permission
+        android:name="com.sumian.common.READ_CONTENT"
+        android:permissionGroup="media"
+        android:protectionLevel="signature" />
+
+    <permission
+        android:name="com.sumian.common.WRITE_CONTENT"
+        android:permissionGroup="media"
+        android:protectionLevel="signature" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -35,9 +45,8 @@
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
-            android:exported="false"
             android:grantUriPermissions="true"
-            android:multiprocess="true">
+            android:exported="false">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />

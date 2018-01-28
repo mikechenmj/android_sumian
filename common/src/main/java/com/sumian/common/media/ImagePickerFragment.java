@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -13,9 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
-import android.support.v4.content.FileProvider;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,6 +25,7 @@ import android.widget.Toast;
 
 import com.sumian.common.R;
 import com.sumian.common.base.BaseRecyclerAdapter;
+import com.sumian.common.helper.FileProviderHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,7 +36,9 @@ import java.util.List;
  * on 17/2/27.
  */
 public class ImagePickerFragment extends Fragment implements Contract.View, View.OnClickListener,
-    BaseRecyclerAdapter.OnItemClickListener {
+        BaseRecyclerAdapter.OnItemClickListener {
+
+    private static final String TAG = ImagePickerFragment.class.getSimpleName();
 
     private static final String ARGS_OPTIONS = "options";
 
@@ -62,11 +62,12 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
     private View mRootView;
 
     private SelectOptions mOption;
+    private File outfile;
 
     public static ImagePickerFragment newInstance(SelectOptions options) {
         ImagePickerFragment imagePickerFragment = new ImagePickerFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARGS_OPTIONS, options);
+        args.putParcelable(ARGS_OPTIONS, options);
         imagePickerFragment.setArguments(args);
         return imagePickerFragment;
     }
@@ -78,7 +79,7 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
         super.onAttach(context);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            this.mOption = (SelectOptions) arguments.getSerializable(ARGS_OPTIONS);
+            this.mOption = arguments.getParcelable(ARGS_OPTIONS);
         }
     }
 
@@ -274,50 +275,49 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
         }
 
         mCamImageName = MediaUtil.getSaveImageFullName();
-        File out = new File(savePath, mCamImageName);
+        outfile = new File(savePath, mCamImageName);
 
-        /*
-         * android N 系统适配
-         */
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Uri uri;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(getContext(), "com.sumian.common.provider", out);
-        } else {
-            uri = Uri.fromFile(out);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            Uri fileUri = FileProviderHelper.getUriForFile(getContext(), outfile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+            startActivityForResult(takePictureIntent, 0x03);
         }
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent, 0x03);
+
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            switch (requestCode) {
-                case 0x03:
-                    if (mCamImageName == null) return;
-                    Uri localUri = Uri.fromFile(new File(MediaUtil.getCameraPath() + mCamImageName));
-                    Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
-                    getActivity().sendBroadcast(localIntent);
-                    break;
-                case 0x04:
-                    if (data == null) return;
-                    mOption.getCallback().doSelected(new String[]{data.getStringExtra("crop_path")});
-                    getActivity().finish();
-                    break;
-            }
+        //if (resultCode == AppCompatActivity.RESULT_OK) {
+        switch (requestCode) {
+            case 0x03:
+                if (mCamImageName == null) return;
+
+                Uri localUri = Uri.fromFile(outfile);
+                Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
+                getActivity().sendBroadcast(localIntent);
+
+                mOption.getCallback().doSelected(new String[]{outfile.getAbsolutePath()});
+                getActivity().finish();
+                break;
+            case 0x04:
+                if (data == null) return;
+                mOption.getCallback().doSelected(new String[]{data.getStringExtra("crop_path")});
+                getActivity().finish();
+                break;
         }
+        // }
     }
 
     private class LoaderListener implements LoaderManager.LoaderCallbacks<Cursor> {
         private final String[] IMAGE_PROJECTION = {
-            MediaStore.Images.Media.DATA,
-            MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.DATE_ADDED,
-            MediaStore.Images.Media._ID,
-            MediaStore.Images.Media.MINI_THUMB_MAGIC,
-            MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.DATE_ADDED,
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.MINI_THUMB_MAGIC,
+                MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
 
         @SuppressWarnings("ConstantConditions")
         @Override
@@ -325,8 +325,8 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
             if (id == 0) {
                 //数据库光标加载器
                 return new CursorLoader(getContext(),
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION,
-                    null, null, IMAGE_PROJECTION[2] + " DESC");
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION,
+                        null, null, IMAGE_PROJECTION[2] + " DESC");
             }
             return null;
         }

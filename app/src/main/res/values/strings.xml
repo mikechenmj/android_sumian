@@ -83,9 +83,13 @@
 
     <string name="pay_success">支付成功</string>
     <string name="pay_failed">支付失败</string>
-    <string name="pay_invalid">未找到支付插件,请检查第三方支付客户端是否已安装</string>
+    <string name="pay_cancel">支付取消</string>
+    <string name="pay_unknown">未知错误,支付失败</string>
+    <string name="pay_invalid">支付异常,请稍后支付</string>
     <string name="create_order">正在创建订单…</string>
-    <string name="create_order_success">订单创建成功,准备支付中,请稍后</string>
+    <string name="create_order_success">支付中,请稍后</string>
     <string name="join_group">进入群组</string>
+    <string name="re_pay">重新支付</string>
+    <string name="back">返回</string>
 
 </resources>

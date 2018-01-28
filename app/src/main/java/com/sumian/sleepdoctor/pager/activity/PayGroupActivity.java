@@ -12,6 +12,7 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.pager.contract.PayGroupContract;
+import com.sumian.sleepdoctor.pager.dialog.PayDialog;
 import com.sumian.sleepdoctor.pager.presenter.PayGroupPresenter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -66,6 +67,8 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     private ActionLoadingDialog mActionLoadingDialog;
 
+    private PayDialog mPayDialog;
+
     @SuppressWarnings("unchecked")
     @Override
     protected boolean initBundle(Bundle bundle) {
@@ -84,6 +87,8 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
         mTitleBar.addOnBackListener(this);
         mPayGroupView.setOnSelectPayWayListener(this);
         mPayCalculateItemView.setOnMoneyChangeCallback(this);
+        mPayDialog = new PayDialog(root.getContext()).bindContentView(R.layout.dialog_pay);
+        mPayDialog.setOwnerActivity(this);
     }
 
     @Override
@@ -157,6 +162,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     @Override
     public void bindPresenter(PayGroupContract.Presenter presenter) {
         this.mPresenter = (PayGroupPresenter) presenter;
+        this.mPayDialog.bindPresenter(presenter);
     }
 
     @Override
@@ -166,7 +172,6 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     @Override
     public void onBegin() {
-        showToast(R.string.create_order);
         mActionLoadingDialog = new ActionLoadingDialog().show(getSupportFragmentManager());
     }
 
@@ -179,26 +184,42 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     @Override
     public void onCreatePayOrderSuccess() {
+        mPresenter.doPay(this);
         showToast(R.string.create_order_success);
     }
 
     @Override
     public void onOrderPaySuccess(String payMsg) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        MainActivity.show(this, MainActivity.class);
-        finish();
-
+        //showToast(R.string.pay_success);
+        mPresenter.clearPayAction();
+        mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show();
     }
 
     @Override
     public void onOrderPayFailed(String payMsg) {
-
+        showToast(payMsg);
+        mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show();
     }
 
     @Override
     public void onOrderPayInvalid(String payMsg) {
+        showToast(payMsg);
+        mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
+    }
 
+    @Override
+    public void onOrderPayCancel(String payMsg) {
+        showToast(payMsg);
+    }
+
+    @Override
+    public void onCheckOrderPayIsOk() {
+        finish();
+        MainActivity.showClearTop(this, MainActivity.class);
+    }
+
+    @Override
+    public void onCheckOrderPayIsInvalid(String invalidError) {
+        onCheckOrderPayIsOk();
     }
 }

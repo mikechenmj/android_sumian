@@ -14,6 +14,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimary</item>
@@ -25,7 +26,7 @@
         <item name="android:windowAnimationStyle">@style/AnimationStyle</item>
     </style>
 
-    <style name="keyboardTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="keyboardTheme" parent="Theme.Design.Light.NoActionBar">
         <item name="android:configChanges">keyboardHidden|orientation</item>
         <item name="android:launchMode">singleInstance</item>
         <item name="android:screenOrientation">portrait</item>
