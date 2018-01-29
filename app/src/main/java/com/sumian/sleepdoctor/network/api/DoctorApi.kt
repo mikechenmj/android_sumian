@@ -41,7 +41,10 @@ interface DoctorApi {
     fun getGroups(@QueryMap map: MutableMap<String, Int>): Call<BaseResponse<List<GroupDetail<UserProfile, UserProfile>>>>
 
     @GET("groups/{id}")
-    fun getGroupsDetail(@Path("id") int: Int, @Query("include") include: String): Call<GroupDetail<UserProfile, UserProfile>>
+    fun getGroupsDetail(@Path("id") groupId: Int): Call<GroupDetail<UserProfile, UserProfile>>
+
+    @GET("groups/{id}")
+    fun getGroupsDetail(@Path("id") groupId: Int, @Query("include") include: String): Call<GroupDetail<UserProfile, UserProfile>>
 
     @FormUrlEncoded
     @POST("orders")

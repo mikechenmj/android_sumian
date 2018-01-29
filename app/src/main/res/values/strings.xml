@@ -91,5 +91,14 @@
     <string name="join_group">进入群组</string>
     <string name="re_pay">重新支付</string>
     <string name="back">返回</string>
+    <string name="ask">提问</string>
+    <string name="send">发送</string>
+    <string name="talk">按住说话</string>
+
+    <string name="str_request_camera_message">请求获取相机权限</string>
+    <string name="str_request_record_message">请求获取录音权限</string>
+    <string name="permissions_camera_error">相机无法完成初始化,请正确授权.</string>
+    <string name="permissions_record_error">麦克风无法完成初始化,请正确授权.</string>
+    <string name="answer_the_question">管理员回答了你的问题</string>
 
 </resources>

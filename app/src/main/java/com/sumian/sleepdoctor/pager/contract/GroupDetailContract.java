@@ -21,6 +21,6 @@ public interface GroupDetailContract {
 
     interface Presenter extends BasePresenter {
 
-        void getGroupDetail(int groupId, String include);
+        void getGroupDetail(int groupId);
     }
 }

@@ -35,7 +35,7 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
         mLoader = Glide.with(itemView.getContext());
     }
 
-    protected void initView(Item item) {
+    public void initView(Item item) {
         this.mItem = item;
         itemView.setOnClickListener(this::onItemClick);
     }

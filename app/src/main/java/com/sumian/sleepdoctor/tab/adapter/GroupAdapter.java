@@ -15,6 +15,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
+import com.sumian.sleepdoctor.chat.activity.MsgActivity;
 import com.sumian.sleepdoctor.pager.activity.ScanGroupResultActivity;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
@@ -145,7 +146,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupDetail<UserProfile, U
                 extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.id);
                 ScanGroupResultActivity.show(v.getContext(), ScanGroupResultActivity.class, extras);
             } else {
-                ToastHelper.show("进入群聊天");
+                MsgActivity.show(v.getContext(), MsgActivity.class);
             }
 
         }

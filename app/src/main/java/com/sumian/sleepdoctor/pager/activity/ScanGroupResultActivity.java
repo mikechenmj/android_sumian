@@ -92,7 +92,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getGroupDetail(mGroupId, "packages,users");
+        mPresenter.getGroupDetail(mGroupId);
     }
 
     @OnClick({R.id.bt_join, R.id.bt_re_scan})

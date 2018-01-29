@@ -45,9 +45,7 @@ public class AccountViewModel extends AndroidViewModel {
                 updateTokenInvalidState(t == null);
 
                 mTokenLiveData.postValue(t);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }

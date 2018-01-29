@@ -27,13 +27,13 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
     }
 
     @Override
-    public void getGroupDetail(int groupId, String include) {
+    public void getGroupDetail(int groupId) {
 
         mView.onBegin();
 
         AppManager
                 .getHttpService()
-                .getGroupsDetail(groupId, include)
+                .getGroupsDetail(groupId)
                 .enqueue(new BaseResponseCallback<GroupDetail<UserProfile, UserProfile>>() {
                     @Override
                     protected void onSuccess(GroupDetail<UserProfile, UserProfile> response) {

@@ -193,6 +193,11 @@ dependencies {
     // Java8 support for Lifecycles
     implementation 'android.arch.lifecycle:common-java8:1.1.0'
 
+    // LeanCloud 基础包
+    implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.0'
+    // 推送与实时聊天需要的包
+    implementation('cn.leancloud.android:avoscloud-push:v4.6.0@aar') { transitive = true }
+
     //ping++
     compile 'com.pingxx:pingpp-core:2.1.17' // (Ping++ 标准版 SDK) 必须添加
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+' // 使用微信支付时添加,具体版本参考微信官方文档

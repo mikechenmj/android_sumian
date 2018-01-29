@@ -73,6 +73,7 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind" />
+        <activity android:name=".chat.activity.MsgActivity" />
 
 
     </application>
