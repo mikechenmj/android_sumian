@@ -29,6 +29,9 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
 
     protected Item mItem;
 
+
+    private OnReplayListener<Item> mOnReplayListener;
+
     public BaseViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -38,9 +41,15 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     public void initView(Item item) {
         this.mItem = item;
         itemView.setOnClickListener(this::onItemClick);
-        itemView.setOnLongClickListener(this::onItemLongClick);
+        itemView.setOnLongClickListener(v -> {
+            onItemLongClick(v);
+            return true;
+        });
     }
 
+    public void setOnReplayListener(OnReplayListener<Item> onReplayListener) {
+        mOnReplayListener = onReplayListener;
+    }
 
     @Override
     public void onClick(View v) {
@@ -92,8 +101,17 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
         Log.d(TAG, "onItemClick: -------->" + v.toString());
     }
 
-    private boolean onItemLongClick(View v) {
+    protected boolean onItemLongClick(View v) {
         Log.e(TAG, "onItemLongClick: ----------->" + v.toString());
+
+        if (mOnReplayListener != null) {
+            mOnReplayListener.onReplyMsg(mItem);
+        }
         return false;
+    }
+
+    public interface OnReplayListener<Message> {
+
+        void onReplyMsg(Message msg);
     }
 }

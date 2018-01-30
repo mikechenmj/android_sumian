@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
-import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.sumian.sleepdoctor.base.BasePresenter;
 import com.sumian.sleepdoctor.base.BaseView;
 
@@ -20,15 +20,15 @@ public interface MsgContract {
 
     interface View extends BaseView<Presenter> {
 
-        void onSendingMsg(AVIMMessage msg);
+        void onSendingMsg(AVIMTypedMessage msg);
 
-        void onSendMsgSuccess(AVIMMessage msg);
+        void onSendMsgSuccess(AVIMTypedMessage msg);
 
-        void onSendMsgFailed(AVIMMessage msg);
+        void onSendMsgFailed(AVIMTypedMessage msg);
 
-        void onSyncMsgHistorySuccess(List<AVIMMessage> messages);
+        void onSyncMsgHistorySuccess(List<AVIMTypedMessage> messages);
 
-        void onSyncPreMsgHistorySuccess(List<AVIMMessage> messages);
+        void onSyncPreMsgHistorySuccess(List<AVIMTypedMessage> messages);
 
         void onSyncMsgHistoryFailed();
 
@@ -48,13 +48,13 @@ public interface MsgContract {
 
         void getGroupDetail(int groupId);
 
-        void sendTextMsg(String content, boolean isQuestion,boolean isAnswer);
+        void sendTextMsg(String content, boolean isQuestion, AVIMTypedMessage replyMsg);
 
         void sendPicMsg(Activity activity, int type);
 
         void sendVoice(Activity activity, String recordFilePath, int second);
 
-        void syncMsgHistory();
+        void syncMsgHistory(String conversationId);
 
         void syncPreMsgHistory(boolean isLoadPre);
 

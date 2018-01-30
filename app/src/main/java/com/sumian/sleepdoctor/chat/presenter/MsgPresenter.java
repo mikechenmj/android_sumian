@@ -13,6 +13,12 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMSingleMessageQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
@@ -26,6 +32,7 @@ import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +65,8 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     private File cameraFile;
     private File storageDir = null;
     private String mLocalImagePath;
+
+    private AVIMMessage mLastMsg;
 
     private MsgPresenter(MsgContract.View view) {
         view.bindPresenter(this);
@@ -138,13 +147,13 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void sendTextMsg(String content, boolean isQuestion, boolean isAnswer) {
+    public void sendTextMsg(String content, boolean isQuestion, AVIMTypedMessage replyMsg) {
         AVIMTextMessage msg = new AVIMTextMessage();
         msg.setText(content);
 
         Map<String, Object> attr = null;
 
-        if (isQuestion || isAnswer) {
+        if (isQuestion || replyMsg != null) {
             attr = new HashMap<>();
         }
 
@@ -152,16 +161,16 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             attr.put("type", "question");
         }
 
-        if (isAnswer) {
+        if (replyMsg != null) {
             attr.put("mention_id", "");
             attr.put("type", "reply");
-            attr.put("send_timestamp", System.currentTimeMillis());
-            attr.put("question_msg_id", "");
-        }
-        if (isQuestion || isAnswer) {
-            msg.setAttrs(attr);
+            attr.put("send_timestamp", replyMsg.getTimestamp());
+            attr.put("question_msg_id", replyMsg.getMessageId());
         }
 
+        if (isQuestion || replyMsg != null) {
+            msg.setAttrs(attr);
+        }
 
         AppManager.getChatEngine().sendMsg(msg);
         if (mView != null)
@@ -231,8 +240,30 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void syncMsgHistory() {
+    public void syncMsgHistory(String conversationId) {
+        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
 
+        ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
+
+        avimConversation.getLastMessage(new AVIMSingleMessageQueryCallback() {
+            @Override
+            public void done(AVIMMessage avimMessage, AVIMException e) {
+                avimTypedMessages.add((AVIMTypedMessage) avimMessage);
+                avimConversation.queryMessages(avimMessage.getMessageId(), avimMessage.getTimestamp(), 19, new AVIMMessagesQueryCallback() {
+                    @Override
+                    public void done(List<AVIMMessage> list, AVIMException e) {
+                        Log.e(TAG, "done: ---------->" + list.toString());
+                        if (!list.isEmpty()) {
+                            mLastMsg = list.get(0);
+                            for (AVIMMessage message : list) {
+                                avimTypedMessages.add(0, (AVIMTypedMessage) message);
+                            }
+                            mView.onSyncMsgHistorySuccess(avimTypedMessages);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override

@@ -8,17 +8,20 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.chat.adapter.MsgAdapter;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
+import com.sumian.sleepdoctor.chat.holder.delegate.AdapterDelegate;
 import com.sumian.sleepdoctor.chat.presenter.MsgPresenter;
 import com.sumian.sleepdoctor.chat.sheet.SelectPictureBottomSheet;
 import com.sumian.sleepdoctor.chat.widget.KeyboardView;
@@ -35,13 +38,14 @@ import butterknife.BindView;
  */
 
 public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements MsgContract.View,
-        ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback, KeyboardView.onKeyboardActionListener, TitleBar.OnBackListener, ChatEngine.OnMsgCallback {
+        ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback,
+        KeyboardView.onKeyboardActionListener, TitleBar.OnBackListener, ChatEngine.OnMsgCallback,
+        AdapterDelegate.OnReplyCallback {
 
     private static final String TAG = MsgActivity.class.getSimpleName();
 
     public static final String ARGS_CONVERSATION_ID = "args_conversation_id";
     public static final String ARGS_GROUP_ID = "args_group_id";
-
 
     @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
@@ -85,7 +89,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
         mTitleBar.addOnBackListener(this);
         mKeyboardView.setOnKeyboardActionListener(this);
-        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter());
+        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter(this));
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -121,6 +125,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         super.initData();
         mPresenter.joinChatRoom(mConversationId);
         mPresenter.getGroupDetail(mGroupId);
+        mPresenter.syncMsgHistory(mConversationId);
         AppManager.getChatEngine().setOnMsgCallback(this);
     }
 
@@ -137,30 +142,30 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     }
 
     @Override
-    public void onSendingMsg(AVIMMessage msg) {
+    public void onSendingMsg(AVIMTypedMessage msg) {
         this.mMsgAdapter.addMsg(msg);
         this.mRecyclerView.scrollToPosition(mMsgAdapter.getItemCount() - 1);
     }
 
     @Override
-    public void onSendMsgSuccess(AVIMMessage msg) {
+    public void onSendMsgSuccess(AVIMTypedMessage msg) {
         onSendMsgFailed(msg);
     }
 
     @Override
-    public void onSendMsgFailed(AVIMMessage msg) {
+    public void onSendMsgFailed(AVIMTypedMessage msg) {
         this.mMsgAdapter.updateMsg(msg);
     }
 
     @Override
-    public void onSyncMsgHistorySuccess(List<AVIMMessage> messages) {
+    public void onSyncMsgHistorySuccess(List<AVIMTypedMessage> messages) {
         this.mMsgAdapter.addMessages(messages);
         this.mRecyclerView.setVisibility(View.VISIBLE);
         this.mRecyclerView.scrollToPosition(mMsgAdapter.getItemCount() - 1);
     }
 
     @Override
-    public void onSyncPreMsgHistorySuccess(List<AVIMMessage> messages) {
+    public void onSyncPreMsgHistorySuccess(List<AVIMTypedMessage> messages) {
         this.mMsgAdapter.addHistories(messages);
     }
 
@@ -182,6 +187,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     protected void onRelease() {
         mTitleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        AppManager.getChatEngine().removeOnMsgCallback(this);
         super.onRelease();
     }
 
@@ -229,7 +235,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void sendText(String content) {
-        mPresenter.sendTextMsg(content, mKeyboardView.isQuestion(), false);
+        mPresenter.sendTextMsg(content, mKeyboardView.isQuestion(), mKeyboardView.getReplyMsg());
     }
 
     @Override
@@ -256,8 +262,16 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     }
 
     @Override
-    public void onMsgCallback(AVIMMessage msg) {
+    public void onMsgCallback(AVIMTypedMessage msg) {
         mMsgAdapter.addMsg(msg);
         this.mRecyclerView.scrollToPosition(mMsgAdapter.getItemCount() - 1);
+    }
+
+    @Override
+    public void onReply(AVIMTypedMessage msg) {
+        //应用 msg
+        Log.e(TAG, "onReply: -------->" + msg.toString());
+
+        mKeyboardView.setAnswerLabel((AVIMTextMessage) msg);
     }
 }

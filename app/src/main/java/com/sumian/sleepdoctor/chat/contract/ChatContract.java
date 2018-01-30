@@ -30,6 +30,8 @@ public interface ChatContract {
 
         AVIMConversation getAVIMConversation();
 
+        AVIMConversation getAVIMConversation(String conversationId);
+
         List<AVIMMessage> getHistoryMsg();
 
     }

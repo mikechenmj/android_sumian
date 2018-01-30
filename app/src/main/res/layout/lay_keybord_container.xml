@@ -29,6 +29,7 @@
             android:layout_margin="@dimen/space_8"
             android:background="@drawable/shape_answer_babel"
             android:gravity="center"
+            android:lineSpacingExtra="@dimen/space_4"
             android:paddingBottom="@dimen/space_4"
             android:paddingLeft="@dimen/space_6"
             android:paddingRight="@dimen/space_6"
@@ -46,6 +47,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:inputType="textMultiLine"
+            android:lineSpacingExtra="@dimen/space_4"
             android:paddingBottom="@dimen/space_2"
             android:paddingLeft="@dimen/space_4"
             android:paddingRight="@dimen/space_4"
@@ -65,7 +67,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/bt_ask"
+            android:id="@+id/bt_question"
             android:layout_width="@dimen/len_96"
             android:layout_height="@dimen/space_40"
             android:contentDescription="@null"

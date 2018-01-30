@@ -1,7 +1,5 @@
 package com.sumian.sleepdoctor.chat.holder.delegate;
 
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
@@ -22,13 +20,17 @@ import com.sumian.sleepdoctor.chat.holder.VoiceReplyViewHolder;
 
 import java.util.Map;
 
+import static com.avos.avoscloud.im.v2.AVIMMessageType.AUDIO_MESSAGE_TYPE;
+import static com.avos.avoscloud.im.v2.AVIMMessageType.IMAGE_MESSAGE_TYPE;
+import static com.avos.avoscloud.im.v2.AVIMMessageType.TEXT_MESSAGE_TYPE;
+
 /**
  * Created by jzz
  * on 2018/1/4.
  * desc:
  */
 
-public class AdapterDelegate {
+public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMTypedMessage> {
 
     private static final String TAG = AdapterDelegate.class.getSimpleName();
 
@@ -59,6 +61,13 @@ public class AdapterDelegate {
     private static final int UNKNOWN_TYPE = 0x00;
 
 
+    private OnReplyCallback mOnReplyCallback;
+
+    public void setOnReplyCallback(OnReplyCallback onReplyCallback) {
+        mOnReplyCallback = onReplyCallback;
+    }
+
+    @SuppressWarnings("unchecked")
     public BaseViewHolder findViewHolder(ViewGroup parent, int viewType) {
         boolean isLeft = false;
 
@@ -114,11 +123,12 @@ public class AdapterDelegate {
                 return null;
         }
 
+        baseViewHolder.setOnReplayListener(this);
         baseViewHolder.itemView.setTag(baseViewHolder);
         return baseViewHolder;
     }
 
-    public void onBindViewHolder(int viewType, BaseViewHolder holder, AVIMMessage msg) {
+    public void onBindViewHolder(int viewType, BaseViewHolder holder, AVIMTypedMessage msg) {
         switch (viewType) {
             case LEFT_TEXT_NORMAL_TYPE://text
                 //isLeft = true;
@@ -175,42 +185,109 @@ public class AdapterDelegate {
     }
 
     public int getItemViewType(AVIMTypedMessage msg) {
-        String from = msg.getFrom();
-        Log.e(TAG, "getItemViewType: ---------->" + from);
-        if (TextUtils.isEmpty(from)) return UNKNOWN_TYPE;
-
         AVIMMessage.AVIMMessageIOType ioType = msg.getMessageIOType();
+        int messageType = msg.getMessageType();
+        Map<String, Object> attrs;
+        String type;
         if (ioType == AVIMMessage.AVIMMessageIOType.AVIMMessageIOTypeOut) {//右
-            int messageType = msg.getMessageType();
-
-
-        } else {//左
-
-        }
-
-        if (msg instanceof AVIMTextMessage) {
-            ((AVIMTextMessage) msg).getMessageType()
-            Map<String, Object> attrs = ((AVIMTextMessage) msg).getAttrs();
-            if (attrs == null || attrs.isEmpty()) return RIGHT_TEXT_NORMAL_TYPE;
-
-            String type = (String) attrs.get("type");
-            switch (type) {
-                case "reply":
-
-                    return RIGHT_TEXT_REPLAY_TYPE;
-                case "question":
-
-                    return RIGHT_TEXT_QUESTION_TYPE;
-                default:
-                    return RIGHT_TEXT_NORMAL_TYPE;
+            switch (messageType) {
+                case TEXT_MESSAGE_TYPE:
+                    attrs = ((AVIMTextMessage) msg).getAttrs();
+                    if (attrs == null || attrs.isEmpty()) return RIGHT_TEXT_NORMAL_TYPE;
+                    type = (String) attrs.get("type");
+                    switch (type) {
+                        case "reply":
+                            return RIGHT_TEXT_REPLAY_TYPE;
+                        case "question":
+                            return RIGHT_TEXT_QUESTION_TYPE;
+                        default:
+                            return RIGHT_TEXT_NORMAL_TYPE;
+                    }
+                    // break;
+                case IMAGE_MESSAGE_TYPE:
+                    attrs = ((AVIMImageMessage) msg).getAttrs();
+                    if (attrs == null || attrs.isEmpty()) return RIGHT_IMAGE_NORMAL_YPE;
+                    type = (String) attrs.get("type");
+                    switch (type) {
+                        case "reply":
+                            return RIGHT_IMAGE_REPLAY_TYPE;
+                        case "question":
+                            return RIGHT_IMAGE_QUESTION_TYPE;
+                        default:
+                            return RIGHT_IMAGE_NORMAL_YPE;
+                    }
+                    // break;
+                case AUDIO_MESSAGE_TYPE:
+                    attrs = ((AVIMAudioMessage) msg).getAttrs();
+                    if (attrs == null || attrs.isEmpty()) return RIGHT_VOICE_NORMAL_TYPE;
+                    type = (String) attrs.get("type");
+                    switch (type) {
+                        case "reply":
+                            return RIGHT_VOICE_REPLAY_TYPE;
+                        case "question":
+                            return RIGHT_VOICE_QUESTION_TYPE;
+                        default:
+                            return RIGHT_VOICE_NORMAL_TYPE;
+                    }
+                    // break;
             }
-
-        } else if (msg instanceof AVIMImageMessage) {
-            return RIGHT_IMAGE_TYPE;
-        } else if (msg instanceof AVIMAudioMessage) {
-            return RIGHT_VOICE_TYPE;
+        } else {//左
+            switch (messageType) {
+                case TEXT_MESSAGE_TYPE:
+                    attrs = ((AVIMTextMessage) msg).getAttrs();
+                    if (attrs == null || attrs.isEmpty()) return LEFT_TEXT_NORMAL_TYPE;
+                    type = (String) attrs.get("type");
+                    switch (type) {
+                        case "reply":
+                            return LEFT_TEXT_REPLAY_TYPE;
+                        case "question":
+                            return LEFT_TEXT_QUESTION_TYPE;
+                        default:
+                            return LEFT_TEXT_NORMAL_TYPE;
+                    }
+                    // break;
+                case IMAGE_MESSAGE_TYPE:
+                    attrs = ((AVIMImageMessage) msg).getAttrs();
+                    if (attrs == null || attrs.isEmpty()) return LEFT_IMAGE_NORMAL_TYPE;
+                    type = (String) attrs.get("type");
+                    switch (type) {
+                        case "reply":
+                            return LEFT_IMAGE_REPLAY_TYPE;
+                        case "question":
+                            return LEFT_IMAGE_QUESTION_TYPE;
+                        default:
+                            return LEFT_IMAGE_NORMAL_TYPE;
+                    }
+                    // break;
+                case AUDIO_MESSAGE_TYPE:
+                    attrs = ((AVIMAudioMessage) msg).getAttrs();
+                    if (attrs == null || attrs.isEmpty()) return LEFT_VOICE_NORMAL_TYPE;
+                    type = (String) attrs.get("type");
+                    switch (type) {
+                        case "reply":
+                            return LEFT_VOICE_REPLAY_TYPE;
+                        case "question":
+                            return LEFT_VOICE_QUESTION_TYPE;
+                        default:
+                            return LEFT_VOICE_NORMAL_TYPE;
+                    }
+                    // break;
+            }
         }
-
         return UNKNOWN_TYPE;
+    }
+
+    @Override
+    public void onReplyMsg(AVIMTypedMessage msg) {
+
+        if (mOnReplyCallback != null) {
+            mOnReplyCallback.onReply(msg);
+        }
+    }
+
+
+    public interface OnReplyCallback {
+
+        void onReply(AVIMTypedMessage msg);
     }
 }

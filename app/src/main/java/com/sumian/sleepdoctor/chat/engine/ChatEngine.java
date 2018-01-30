@@ -14,6 +14,7 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageHandler;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMClientStatusCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
@@ -65,6 +66,11 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
         return this;
     }
 
+    public void removeOnMsgCallback(OnMsgCallback onMsgCallback) {
+        if (mOnMsgCallbacks == null || mOnMsgCallbacks.isEmpty()) return;
+        mOnMsgCallbacks.remove(onMsgCallback);
+    }
+
     @Override
     public void registerMsgHandler() {
         AVIMMessageManager.registerMessageHandler(AVIMMessage.class, mMessageHandler = new AVIMMessageHandler() {
@@ -72,13 +78,14 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
             public void onMessage(AVIMMessage avimMessage, AVIMConversation avimConversation, AVIMClient avimClient) {
                 Log.e(TAG, "onMessage: --------->" + avimMessage.toString());
 
+                if (!(avimMessage instanceof AVIMTypedMessage)) return;
+
                 if (mOnMsgCallbacks == null || mOnMsgCallbacks.isEmpty()) return;
                 for (OnMsgCallback onMsgCallback : mOnMsgCallbacks) {
                     if (onMsgCallback != null) {
-                        onMsgCallback.onMsgCallback(avimMessage);
+                        onMsgCallback.onMsgCallback((AVIMTypedMessage) avimMessage);
                     }
                 }
-
             }
 
             @Override
@@ -179,6 +186,12 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     }
 
     @Override
+    public AVIMConversation getAVIMConversation(String conversationId) {
+        return mAVIMClient.getConversation(conversationId);
+    }
+
+
+    @Override
     public List<AVIMMessage> getHistoryMsg() {
         return null;
     }
@@ -197,6 +210,6 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     public interface OnMsgCallback {
 
-        void onMsgCallback(AVIMMessage msg);
+        void onMsgCallback(AVIMTypedMessage msg);
     }
 }

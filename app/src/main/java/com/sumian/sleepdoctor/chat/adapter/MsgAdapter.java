@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.holder.delegate.AdapterDelegate;
 
@@ -22,12 +23,13 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private static final String TAG = MsgAdapter.class.getSimpleName();
 
-    private List<AVIMMessage> mItems;
+    private List<AVIMTypedMessage> mItems;
     private AdapterDelegate mAdapterDelegate;
 
-    public MsgAdapter() {
-        this.mAdapterDelegate = new AdapterDelegate();
+    public MsgAdapter(AdapterDelegate.OnReplyCallback onReplyCallback) {
         this.mItems = new ArrayList<>(0);
+        this.mAdapterDelegate = new AdapterDelegate();
+        this.mAdapterDelegate.setOnReplyCallback(onReplyCallback);
     }
 
     @Override
@@ -38,13 +40,13 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         int viewType = getItemViewType(position);
-        AVIMMessage msg = this.mItems.get(position);
+        AVIMTypedMessage msg = this.mItems.get(position);
         mAdapterDelegate.onBindViewHolder(viewType, holder, msg);
     }
 
     @Override
     public int getItemViewType(int position) {
-        AVIMMessage msg = this.mItems.get(position);
+        AVIMTypedMessage msg = this.mItems.get(position);
         return mAdapterDelegate.getItemViewType(msg);
     }
 
@@ -58,7 +60,7 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      *
      * @param items leancloud  msg
      */
-    public void addHistories(List<AVIMMessage> items) {
+    public void addHistories(List<AVIMTypedMessage> items) {
         this.mItems.addAll(0, items);
         notifyItemRangeInserted(0, items.size());
     }
@@ -68,7 +70,7 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      *
      * @param items leancloud  msg
      */
-    public void addMessages(List<AVIMMessage> items) {
+    public void addMessages(List<AVIMTypedMessage> items) {
         if (items != null) {
             mItems.addAll(items);
             notifyItemRangeInserted(mItems.size(), items.size());
@@ -80,7 +82,7 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      *
      * @param item msg
      */
-    public void addMsg(AVIMMessage item) {
+    public void addMsg(AVIMTypedMessage item) {
         mItems.add(item);
         notifyItemInserted(mItems.size());
     }
@@ -90,7 +92,7 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      *
      * @param msg msg
      */
-    public void updateMsg(AVIMMessage msg) {
+    public void updateMsg(AVIMTypedMessage msg) {
         int tempPosition = -1;
         for (int i = 0, len = mItems.size(); i < len; i++) {
             AVIMMessage tempMsg = mItems.get(i);

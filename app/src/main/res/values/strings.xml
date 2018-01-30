@@ -100,5 +100,6 @@
     <string name="permissions_camera_error">相机无法完成初始化,请正确授权.</string>
     <string name="permissions_record_error">麦克风无法完成初始化,请正确授权.</string>
     <string name="answer_the_question">管理员回答了你的问题</string>
+    <string name="answer">回答:</string>
 
 </resources>

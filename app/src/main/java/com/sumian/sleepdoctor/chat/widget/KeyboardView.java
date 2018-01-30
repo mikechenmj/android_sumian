@@ -9,12 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.chat.utils.UiUtil;
 
@@ -35,7 +36,7 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
     @BindView(R.id.et_input)
     EmojiAppCompatEditText mEtInput;
 
-    @BindView(R.id.bt_ask)
+    @BindView(R.id.bt_question)
     ImageView mBtAsk;
     @BindView(R.id.iv_voice)
     ImageView mIvVoice;
@@ -56,6 +57,8 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
     @BindView(R.id.tv_answer_label)
     TextView mTvAnswerLabel;
+
+    private AVIMTextMessage mReplyMsg;
 
     private onKeyboardActionListener mOnKeyboardActionListener;
 
@@ -88,10 +91,6 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         return this;
     }
 
-    public EditText getEtInputView() {
-        return mEtInput;
-    }
-
     public String getContent() {
         String content = mEtInput.getText().toString().trim();
         mEtInput.setText(null);
@@ -102,11 +101,17 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         return mBtAsk.getTag() != null;
     }
 
-    @OnClick({R.id.bt_ask, R.id.et_input, R.id.iv_voice, R.id.iv_image, R.id.bt_send, R.id.iv_garbage, R.id.keyboardView})
+    public AVIMTypedMessage getReplyMsg(){
+
+        return mReplyMsg;
+    }
+
+    @OnClick({R.id.bt_question, R.id.et_input, R.id.iv_voice, R.id.iv_image, R.id.bt_send, R.id.iv_garbage, R.id.keyboardView})
     @Override
     public void onClick(View v) {
+        mTvAnswerLabel.setVisibility(GONE);
         switch (v.getId()) {
-            case R.id.bt_ask:
+            case R.id.bt_question:
 
                 if (mBtAsk.getTag() == null) {
                     mBtAsk.setImageResource(R.mipmap.inputbox_icon_label_selected);
@@ -196,13 +201,22 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
     }
 
+    public void setAnswerLabel(AVIMTextMessage msg) {
+        this.mReplyMsg = msg;
+        String text = msg.getText();
+
+        mTvAnswerLabel.setText(text);
+        mTvAnswerLabel.setVisibility(VISIBLE);
+        mTvAnswerLabel.setTag(true);
+    }
+
     public interface onKeyboardActionListener {
 
         void sendText(String content);
 
         void sendPic();
 
-        void sendVoice(String path,int duration);
+        void sendVoice(String path, int duration);
 
     }
 }

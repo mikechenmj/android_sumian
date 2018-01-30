@@ -1,8 +1,5 @@
 package com.sumian.sleepdoctor.chat.holder;
 
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +44,7 @@ public class TextNormalViewHolder extends BaseViewHolder<AVIMTextMessage> {
     private boolean mIsLeft;
 
     public TextNormalViewHolder(ViewGroup parent, boolean isLeft) {
-        super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_left_text_chat : R.layout.lay_item_right_text_chat, parent, false));
+        super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_left_text_nomal_chat : R.layout.lay_item_right_text_chat, parent, false));
         this.mIsLeft = isLeft;
     }
 
@@ -55,30 +52,10 @@ public class TextNormalViewHolder extends BaseViewHolder<AVIMTextMessage> {
     public void initView(AVIMTextMessage avimTextMessage) {
         super.initView(avimTextMessage);
 
-        Map<String, Object> attrs = avimTextMessage.getAttrs();
-
         String text = avimTextMessage.getText();
 
-        if (attrs != null) {
-            String replay = (String) attrs.get("type");
-            switch (replay) {
-                case "question"://提问
-                    ImageSpan imgSpan = new ImageSpan(itemView.getContext(), R.mipmap.group_chatbubble_icon_label);
-                    SpannableString spannableString = new SpannableString("[icon]  " + text);
-                    spannableString.setSpan(imgSpan, 0, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTvMsg.setText(text);
 
-                    mTvMsg.setText(spannableString);
-                    break;
-                case "reply"://回答
-                    break;
-                default:
-                    break;
-            }
-
-
-        } else {
-            mTvMsg.setText(text);
-        }
 
     }
 

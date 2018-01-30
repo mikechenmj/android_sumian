@@ -2,7 +2,7 @@
 
 buildscript {
 
-    ext.kotlin_version = '1.1.51'
+    ext.kotlin_version = '1.2.21'
 
     repositories {
         google()
@@ -23,8 +23,6 @@ allprojects {
         google()
         jcenter()
         maven { url 'http://mvn.leancloud.cn/nexus/content/repositories/public' }
-        maven { url 'http://mvn.leancloud.cn/nexus/content/repositories/public' }
-
     }
 }
 
@@ -44,7 +42,7 @@ ext {
     compileSdkVersion = 27
     buildToolsVersion = "27.0.3"
     applicationId = "com.sumian.sleepdoctor"
-    minSdkVersion = 19
+    minSdkVersion = 21
     targetSdkVersion = 27
     versionCode = buildTime
     versionName = "1.0." + buildTime

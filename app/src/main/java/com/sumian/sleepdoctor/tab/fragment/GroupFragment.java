@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
@@ -97,6 +97,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     @Override
     protected void onRelease() {
         mPresenter.release();
+        AppManager.getChatEngine().removeOnMsgCallback(this);
         super.onRelease();
     }
 
@@ -169,7 +170,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     }
 
     @Override
-    public void onMsgCallback(AVIMMessage msg) {
+    public void onMsgCallback(AVIMTypedMessage msg) {
         int position = mGroupAdapter.updateMsg(msg);
         mRecycler.scrollToPosition(position);
     }
