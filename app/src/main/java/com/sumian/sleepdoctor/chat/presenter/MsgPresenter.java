@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.chat.presenter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +10,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.sumian.common.media.Callback;
+import com.sumian.common.media.ImagePickerActivity;
+import com.sumian.common.media.SelectOptions;
+import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -19,6 +26,10 @@ import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by jzz
@@ -26,11 +37,12 @@ import java.lang.ref.WeakReference;
  * desc:
  */
 
-public class MsgPresenter implements MsgContract.Presenter {
+public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.PermissionCallbacks {
 
     private static final String TAG = MsgPresenter.class.getSimpleName();
 
     private final static String imagePathName = "/image/";
+
     public static final int PIC_REQUEST_CODE_LOCAL = 0x01;
     public static final int PIC_REQUEST_CODE_CAMERA = 0x02;
 
@@ -56,10 +68,9 @@ public class MsgPresenter implements MsgContract.Presenter {
         new MsgPresenter(view);
     }
 
-
     @Override
-    public void loginChatRoom() {
-        // LeanCloudHelper.establishConversationWithService(serviceType);
+    public void joinChatRoom(String conversationId) {
+        AppManager.getChatEngine().joinChatGroup(conversationId);
     }
 
     @Override
@@ -133,50 +144,66 @@ public class MsgPresenter implements MsgContract.Presenter {
         //  LeanCloudHelper.sendTextMsg(mServiceType, content);
     }
 
+    @AfterPermissionGranted(CAMERA_PERM)
     @Override
     public void sendPic(Activity activity, int type) {
-
         if (type == PIC_REQUEST_CODE_LOCAL) {//pic local
+            ImagePickerActivity.show(activity, new SelectOptions
+                    .Builder()
+                    .setHasCam(true)
+                    .setSelectCount(9)
+                    .setSelectedImages(new String[]{})
+                    .setCallback(new Callback() {
 
-//            ImagePickerActivity.show(activity, new SelectOptions
-//                    .Builder()
-//                    .setHasCam(true)
-//                    .setSelectCount(9)
-//                    .setSelectedImages(new String[]{})
-//                    .setCallback(images -> {
-//                        // LeanCloudHelper.sendImageMsg(mServiceType, image);
-//                        for (String image : images) {
-//                            Log.e(TAG, "doSelected: ---------->" + image);
-//                        }
-//                    }).build());
+                        @Override
+                        public void doSelected(String[] images) {
+                            super.doSelected(images);
+                            for (String image : images) {
+                                Log.e(TAG, "doSelected: ---------->" + image);
+                            }
+
+                        }
+                    }).build());
 
         } else {//pic camera
-            //cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountModel().getUser().getId()), BaseApp.getAppContext()), AppManager.getAccountModel().getUser().getId()
-            //    + System.currentTimeMillis() + ".jpg");
 
-            //noinspection ResultOfMethodCallIgnored
-            cameraFile.getParentFile().mkdirs();
+            String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
+            if (EasyPermissions.hasPermissions(activity, perms)) {
 
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //noinspection ResultOfMethodCallIgnored
+                cameraFile.getParentFile().mkdirs();
 
-            //android 7.1之后的相机处理方式
-            if (Build.VERSION.SDK_INT < 24) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
-                activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                //android 7.1之后的相机处理方式
+                if (Build.VERSION.SDK_INT < 24) {
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
+                    activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+                } else {
+                    ContentValues contentValues = new ContentValues(1);
+                    contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
+                    Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+                }
+
             } else {
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
-                Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+                // Request one permission
+                EasyPermissions.requestPermissions(activity, activity.getResources().getString(R.string.str_request_camera_message), CAMERA_PERM, perms);
             }
         }
 
     }
 
+    @AfterPermissionGranted(RECORD_PERM)
     @Override
-    public void sendVoice(String recordFilePath, int second) {
-        //  LeanCloudHelper.sendVoiceMsg(mServiceType, recordFilePath);
+    public void sendVoice(Activity activity, String recordFilePath, int second) {
+        String[] perms = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
+        if (EasyPermissions.hasPermissions(activity, perms)) {
+        } else {
+            // Request one permission
+            EasyPermissions.requestPermissions(activity, activity.getResources().getString(R.string.str_request_record_message), RECORD_PERM, perms);
+        }
     }
 
     @Override
@@ -192,14 +219,6 @@ public class MsgPresenter implements MsgContract.Presenter {
                     if (cameraFile != null && cameraFile.exists()) {
                         this.mLocalImagePath = cameraFile.getAbsolutePath();
                         // updateLocalCache();
-                    }
-                    break;
-                case PIC_REQUEST_CODE_LOCAL:// send local image
-                    if (data != null) {
-                        Uri selectedImage = data.getData();
-                        if (selectedImage != null) {
-                            sendPicByUri(selectedImage);
-                        }
                     }
                     break;
                 default:
@@ -268,5 +287,23 @@ public class MsgPresenter implements MsgContract.Presenter {
             storageDir = applicationContext.getFilesDir();
         }
         return storageDir;
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        //  if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+
+        //}
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

@@ -16,8 +16,6 @@ public interface ChatContract {
 
     interface Presenter {
 
-        void loginImServer();
-
         void registerMsgHandler();
 
         void unRegisterMsgHandler();

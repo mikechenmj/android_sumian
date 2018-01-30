@@ -2,9 +2,13 @@ package com.sumian.sleepdoctor.chat.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.text.emoji.widget.EmojiAppCompatEditText;
+import android.support.text.emoji.widget.EmojiEditText;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,10 +28,12 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class KeyboardView extends LinearLayout implements View.OnClickListener {
+public class KeyboardView extends LinearLayout implements View.OnClickListener, View.OnFocusChangeListener {
+
+    private static final String TAG = KeyboardView.class.getSimpleName();
 
     @BindView(R.id.et_input)
-    EditText mEtInput;
+    EmojiAppCompatEditText mEtInput;
 
     @BindView(R.id.bt_ask)
     ImageView mBtAsk;
@@ -50,6 +56,8 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
 
     private onKeyboardActionListener mOnKeyboardActionListener;
 
+    private InputMethodManager inputMethodManager;
+
     public KeyboardView(Context context) {
         this(context, null);
     }
@@ -66,6 +74,9 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
     private void init(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_keybord_container, this));
         // mBtRecordVoice.setSavePath(LCIMPathUtils.getRecordPathByCurrentTime(getContext()));
+        inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        mEtInput.setOnFocusChangeListener(this);
 
     }
 
@@ -83,11 +94,23 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_ask:
+
+                boolean active = inputMethodManager.isActive();
+                Log.e(TAG, "onClick: --------->" + active);
+
+                mEtInput.clearFocus();
+
                 break;
             case R.id.iv_voice:
-                if (mOnKeyboardActionListener != null) {
-                    // mOnKeyboardActionListener.onRecordVoiceCallback();
+
+                if (mIvVoice.getTag() == null) {//show
+                    mTvVoiceContainer.setVisibility(VISIBLE);
+                    mIvVoice.setTag(true);
+                } else {//hide
+                    mTvVoiceContainer.setVisibility(GONE);
+                    mIvVoice.setTag(false);
                 }
+
                 break;
             case R.id.iv_image:
                 if (mOnKeyboardActionListener != null) {
@@ -116,6 +139,18 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+
+
+        boolean active = inputMethodManager.isActive(v);
+       // inputMethodManager.isWatchingCursor()
+
+
+        Log.e(TAG, "onFocusChange: --------->" + hasFocus + "   " + active);
+
     }
 
     public interface onKeyboardActionListener {

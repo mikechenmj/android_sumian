@@ -86,7 +86,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupDetail<UserProfile, U
         public void initView(GroupDetail<UserProfile, UserProfile> item) {
             super.initView(item);
             RequestOptions options = new RequestOptions();
-            options.error(R.mipmap.ic_launcher_round).placeholder(R.mipmap.info_icon_enter).getOptions();
+            options.error(R.mipmap.group_avatar).placeholder(R.mipmap.group_avatar).getOptions();
             load(item.avatar, options, mIvGroupIcon);
 
             setText(mTvDesc, item.name);
@@ -146,7 +146,12 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupDetail<UserProfile, U
                 extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.id);
                 ScanGroupResultActivity.show(v.getContext(), ScanGroupResultActivity.class, extras);
             } else {
-                MsgActivity.show(v.getContext(), MsgActivity.class);
+
+                Bundle extras = new Bundle();
+                extras.putInt(MsgActivity.ARGS_GROUP_ID, mItem.id);
+                extras.putString(MsgActivity.ARGS_CONVERSATION_ID, mItem.conversation_id);
+
+                MsgActivity.show(v.getContext(), MsgActivity.class, extras);
             }
 
         }

@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.chat.engine;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -16,7 +17,6 @@ import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMClientStatusCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.ChatContract;
 
@@ -38,38 +38,17 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     private AVIMConversation mAVIMConversation;
 
+    private String mConversationId;
+
     private Handler mHandler;
 
     private AVIMMessageHandler mMessageHandler;
 
-    public ChatEngine() {
+    public ChatEngine(Context context) {
         this.mHandler = new Handler(Looper.getMainLooper(), this);
+        AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
-        AVOSCloud.initialize(App.Companion.getAppContext(), BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
-    }
-
-    @Override
-    public void loginImServer() {
-        AVIMClient client = AVIMClient.getInstance(AppManager.getAccountViewModel().getToken().user.leancloud_id);
-        client.getClientStatus(new AVIMClientStatusCallback() {
-            @Override
-            public void done(AVIMClient.AVIMClientStatus AVIMClientStatus) {
-
-                Log.e(TAG, "done: --------->" + AVIMClientStatus.getCode());
-
-            }
-        });
-        client.open(new AVIMClientCallback() {
-            @Override
-            public void done(AVIMClient avimClient, AVIMException e) {
-                if (e == null) {
-                    mAVIMClient = avimClient;
-                    Log.e(TAG, "done: -------登录 im server 成功 ---->");
-                } else {
-                    mHandler.sendEmptyMessageDelayed(MSG_WHAT_LOGIN, 1000);
-                }
-            }
-        });
+        registerMsgHandler();
     }
 
     @Override
@@ -95,7 +74,26 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     @Override
     public void joinChatGroup(String conversationId) {
-        this.mAVIMConversation = this.mAVIMClient.getConversation(conversationId, false, false);
+        this.mConversationId = conversationId;
+        this.mAVIMClient = AVIMClient.getInstance(AppManager.getAccountViewModel().getToken().user.leancloud_id);
+        mAVIMClient.open(new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (e == null) {
+                    mAVIMConversation = avimClient.getConversation(conversationId, false, false);
+                    Log.e(TAG, "done: -------登录 im server 成功 ---->");
+                } else {
+                    mHandler.sendEmptyMessageDelayed(MSG_WHAT_LOGIN, 1000);
+                }
+            }
+        });
+
+        mAVIMClient.getClientStatus(new AVIMClientStatusCallback() {
+            @Override
+            public void done(AVIMClient.AVIMClientStatus avimClientStatus) {
+                Log.e(TAG, "done: --------->" + avimClientStatus);
+            }
+        });
     }
 
     @Override
@@ -140,7 +138,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MSG_WHAT_LOGIN:
-                loginImServer();
+                joinChatGroup(mConversationId);
                 break;
             default:
                 break;

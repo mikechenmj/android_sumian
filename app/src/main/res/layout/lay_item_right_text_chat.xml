@@ -62,11 +62,11 @@
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
             android:id="@+id/msg_send_error_view"
             android:layout_width="@dimen/space_12"
-            android:layout_marginRight="@dimen/space_12"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/space_12" />
 
-        <TextView
+        <android.support.text.emoji.widget.EmojiAppCompatTextView
             android:id="@+id/tv_msg"
             style="@style/text_t1_style"
             android:layout_width="0dp"

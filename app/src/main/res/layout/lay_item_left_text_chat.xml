@@ -64,7 +64,7 @@
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
 
-        <TextView
+        <android.support.text.emoji.widget.EmojiAppCompatTextView
             android:id="@+id/tv_msg"
             style="@style/text_t1_style"
             android:layout_width="wrap_content"

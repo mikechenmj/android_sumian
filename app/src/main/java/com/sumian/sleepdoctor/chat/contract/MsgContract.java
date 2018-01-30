@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.chat.contract;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.sumian.sleepdoctor.base.BasePresenter;
@@ -41,11 +42,17 @@ public interface MsgContract {
 
         void onLoginFailed();
 
+        void onPermissionsDenied();
+
     }
 
     interface Presenter extends BasePresenter {
 
-        void loginChatRoom();
+        int CAMERA_PERM = 1;
+
+        int RECORD_PERM = 2;
+
+        void joinChatRoom(String conversationId);
 
         void getGroupDetail(int groupId);
 
@@ -53,13 +60,15 @@ public interface MsgContract {
 
         void sendPic(Activity activity, int type);
 
-        void sendVoice(String recordFilePath, int second);
+        void sendVoice(Activity activity, String recordFilePath, int second);
 
         void syncMsgHistory();
 
         void syncPreMsgHistory(boolean isLoadPre);
 
         void resultCodeDelegate(int requestCode, int resultCode, Intent data);
+
+        void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
 
 
     }

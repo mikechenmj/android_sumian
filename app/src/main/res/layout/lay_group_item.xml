@@ -22,7 +22,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:contentDescription="@null"
-            android:src="@mipmap/group_btn_scan_code"
+            android:src="@mipmap/group_avatar"
             app:civ_border_color="@color/b2_color"
             app:civ_border_overlay="true"
             app:civ_border_width="@dimen/space_4"

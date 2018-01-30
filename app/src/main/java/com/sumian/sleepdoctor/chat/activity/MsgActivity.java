@@ -1,11 +1,9 @@
 package com.sumian.sleepdoctor.chat.activity;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,10 +25,6 @@ import com.sumian.sleepdoctor.widget.TitleBar;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.AppSettingsDialog;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by jzz
@@ -38,15 +32,14 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class MsgActivity extends BaseActivity implements View.OnClickListener, MsgContract.View,
-        ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks {
+public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements MsgContract.View,
+        ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback {
 
     private static final String TAG = MsgActivity.class.getSimpleName();
 
-    private static final int CAMERA_PERM = 1;
-    private static final int RECORD_PERM = 2;
+    public static final String ARGS_CONVERSATION_ID = "args_conversation_id";
+    public static final String ARGS_GROUP_ID = "args_group_id";
 
-    private static final String EXTRA_SERVICE_TYPE = "service_type";
 
     @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
@@ -69,19 +62,24 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     private int mOpenKeyboardHeight = 0;
     private int mInitBottomHeight = 0;
 
-    private boolean mIsLogin;
+    private String mConversationId;
+    private int mGroupId;
+
+    @Override
+    protected boolean initBundle(Bundle bundle) {
+        this.mGroupId = bundle.getInt(ARGS_GROUP_ID);
+        this.mConversationId = bundle.getString(ARGS_CONVERSATION_ID);
+        return super.initBundle(bundle);
+    }
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main_msg;
     }
 
-    @SuppressWarnings("LambdaParameterTypeCanBeSpecified")
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        //MsgPresenter.init(this);
         this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter());
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -110,11 +108,14 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     protected void initPresenter() {
         super.initPresenter();
+        MsgPresenter.init(this);
     }
 
     @Override
     protected void initData() {
         super.initData();
+        mPresenter.joinChatRoom(mConversationId);
+        mPresenter.getGroupDetail(mGroupId);
     }
 
     @Override
@@ -126,21 +127,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // EasyPermissions handles the request result.
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        //ToastHelper.show(R.string.permissions_camera_error);
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        //ToastHelper.show(R.string.gallery_save_file_not_have_external_storage_permission);
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
-        }
+        mPresenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -198,21 +185,11 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
 
     @Override
     public void onLoginFailed() {
-        mIsLogin = false;
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_title})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.tv_title:
+    @Override
+    public void onPermissionsDenied() {
 
-                break;
-            default:
-                break;
-        }
     }
 
     @Override
@@ -254,7 +231,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
 
     @Override
     public void onTakePhotoCallback() {
-        cameraTask();
+        mPresenter.sendPic(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA);
     }
 
     @Override
@@ -262,42 +239,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         mPresenter.sendPic(this, MsgPresenter.PIC_REQUEST_CODE_LOCAL);
     }
 
-    @AfterPermissionGranted(CAMERA_PERM)
-    private void cameraTask() {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            mPresenter.sendPic(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA);
-        } else {
-            // Request one permission
-            EasyPermissions.requestPermissions(this,
-                    getResources().getString(R.string.str_request_camera_message), CAMERA_PERM, perms);
-        }
-    }
-
-    @AfterPermissionGranted(RECORD_PERM)
-    private boolean recordTask() {
-        String[] perms = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            return true;
-        } else {
-            // Request one permission
-            EasyPermissions.requestPermissions(this,
-                    getResources().getString(R.string.str_request_record_message), RECORD_PERM, perms);
-            return false;
-        }
-    }
-
-
-    public boolean sendText(String input) {
-        if (!mIsLogin) {
-            // ToastHelper.show(R.string.leancloud_login_failed_hint);
-            return false;
-        }
-        mPresenter.doSendTextMsg(input);
-        return true;
-    }
-
-    public void sendPic() {
+    private void sendPic() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(SelectPictureBottomSheet
@@ -314,19 +256,8 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         }
     }
 
-
-    public boolean onPermissionCallback() {
-
-        return recordTask();
-    }
-
-    @Override
-    public void onChanged(@Nullable Object o) {
-
-    }
-
     @Override
     public void bindPresenter(MsgContract.Presenter presenter) {
-
+        mPresenter = presenter;
     }
 }
