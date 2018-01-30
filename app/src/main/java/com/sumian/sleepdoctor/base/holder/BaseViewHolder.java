@@ -38,7 +38,9 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     public void initView(Item item) {
         this.mItem = item;
         itemView.setOnClickListener(this::onItemClick);
+        itemView.setOnLongClickListener(this::onItemLongClick);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -88,5 +90,10 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
 
     protected void onItemClick(View v) {
         Log.d(TAG, "onItemClick: -------->" + v.toString());
+    }
+
+    private boolean onItemLongClick(View v) {
+        Log.e(TAG, "onItemLongClick: ----------->" + v.toString());
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
@@ -20,6 +21,7 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.ChatContract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,11 +46,23 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     private AVIMMessageHandler mMessageHandler;
 
+    private List<OnMsgCallback> mOnMsgCallbacks;
+
+
     public ChatEngine(Context context) {
         this.mHandler = new Handler(Looper.getMainLooper(), this);
         AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
         registerMsgHandler();
+    }
+
+    public ChatEngine setOnMsgCallback(OnMsgCallback onMsgCallback) {
+        if (mOnMsgCallbacks == null) {
+            mOnMsgCallbacks = new ArrayList<>();
+        }
+        if (mOnMsgCallbacks.contains(onMsgCallback)) return this;
+        mOnMsgCallbacks.add(onMsgCallback);
+        return this;
     }
 
     @Override
@@ -57,6 +71,14 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
             @Override
             public void onMessage(AVIMMessage avimMessage, AVIMConversation avimConversation, AVIMClient avimClient) {
                 Log.e(TAG, "onMessage: --------->" + avimMessage.toString());
+
+                if (mOnMsgCallbacks == null || mOnMsgCallbacks.isEmpty()) return;
+                for (OnMsgCallback onMsgCallback : mOnMsgCallbacks) {
+                    if (onMsgCallback != null) {
+                        onMsgCallback.onMsgCallback(avimMessage);
+                    }
+                }
+
             }
 
             @Override
@@ -76,11 +98,12 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     public void joinChatGroup(String conversationId) {
         this.mConversationId = conversationId;
         this.mAVIMClient = AVIMClient.getInstance(AppManager.getAccountViewModel().getToken().user.leancloud_id);
+        //AVIMClient.setAutoOpen(true);
         mAVIMClient.open(new AVIMClientCallback() {
             @Override
             public void done(AVIMClient avimClient, AVIMException e) {
                 if (e == null) {
-                    mAVIMConversation = avimClient.getConversation(conversationId, false, false);
+                    mAVIMConversation = avimClient.getConversation(conversationId);
                     Log.e(TAG, "done: -------登录 im server 成功 ---->");
                 } else {
                     mHandler.sendEmptyMessageDelayed(MSG_WHAT_LOGIN, 1000);
@@ -94,6 +117,32 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
                 Log.e(TAG, "done: --------->" + avimClientStatus);
             }
         });
+    }
+
+    @Override
+    public void loginImServer() {
+        String leancloudId = AppManager.getAccountViewModel().getToken().user.leancloud_id;
+        if (TextUtils.isEmpty(leancloudId)) return;
+        this.mAVIMClient = AVIMClient.getInstance(leancloudId);
+        //AVIMClient.setAutoOpen(true);
+        mAVIMClient.open(new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (e == null) {
+                    Log.e(TAG, "done: -------登录 im server 成功 ---->");
+                } else {
+                    mHandler.sendEmptyMessageDelayed(MSG_WHAT_LOGIN, 1000);
+                }
+            }
+        });
+
+        mAVIMClient.getClientStatus(new AVIMClientStatusCallback() {
+            @Override
+            public void done(AVIMClient.AVIMClientStatus avimClientStatus) {
+                Log.e(TAG, "done: --------->" + avimClientStatus);
+            }
+        });
+
     }
 
     @Override
@@ -118,7 +167,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
                 if (e == null) {
                     Log.e(TAG, "done: ------msg send success--->");
                 } else {
-                    Log.e(TAG, "done: ------msg  send failed---->");
+                    Log.e(TAG, "done: ------msg  send failed---->" + e.toString());
                 }
             }
         });
@@ -144,5 +193,10 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
                 break;
         }
         return true;
+    }
+
+    public interface OnMsgCallback {
+
+        void onMsgCallback(AVIMMessage msg);
     }
 }

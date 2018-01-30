@@ -32,15 +32,7 @@ public interface MsgContract {
 
         void onSyncMsgHistoryFailed();
 
-        void onReceiveMsg(AVIMMessage msg);
-
         void onNoHaveMsg();
-
-        void onPrepareLogin();
-
-        void onLoginSuccess();
-
-        void onLoginFailed();
 
         void onPermissionsDenied();
 
@@ -56,9 +48,9 @@ public interface MsgContract {
 
         void getGroupDetail(int groupId);
 
-        void doSendTextMsg(String content);
+        void sendTextMsg(String content, boolean isQuestion,boolean isAnswer);
 
-        void sendPic(Activity activity, int type);
+        void sendPicMsg(Activity activity, int type);
 
         void sendVoice(Activity activity, String recordFilePath, int second);
 

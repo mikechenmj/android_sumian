@@ -7,20 +7,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.pager.activity.ScanQrCodeActivity;
 import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
+import com.sumian.sleepdoctor.tab.bean.GroupItem;
 import com.sumian.sleepdoctor.tab.contract.GroupContract;
 import com.sumian.sleepdoctor.tab.presenter.GroupPresenter;
 import com.sumian.sleepdoctor.widget.GroupErrorView;
 import com.sumian.sleepdoctor.widget.GroupRequestScanQrCodeView;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,7 +37,7 @@ import butterknife.BindView;
  */
 
 public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeDelegate, GroupRequestScanQrCodeView.OnGrantedCallback,
-        GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener {
+        GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener, ChatEngine.OnMsgCallback {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -67,6 +72,8 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(root.getContext()));
         mRequestScanQrCodeView.setFragment(this).setOnGrantedCallback(this);
+        AppManager.getChatEngine().setOnMsgCallback(this);
+        AppManager.getChatEngine().loginImServer();
     }
 
     @Override
@@ -127,9 +134,16 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     @Override
     public void onGetGroupsSuccess(List<GroupDetail<UserProfile, UserProfile>> groups) {
         runOnUiThread(() -> {
+            List<GroupItem> groupItems = new ArrayList<>();
+            GroupItem groupItem;
+            for (GroupDetail<UserProfile, UserProfile> group : groups) {
+                groupItem = new GroupItem();
+                groupItem.mGroupDetail = group;
+                groupItems.add(groupItem);
+            }
             mGroupErrorView.hideError();
             mRequestScanQrCodeView.hide();
-            mGroupAdapter.addAll(groups);
+            mGroupAdapter.addAll(groupItems);
         });
     }
 
@@ -152,5 +166,11 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     @Override
     public void onRefresh() {
 
+    }
+
+    @Override
+    public void onMsgCallback(AVIMMessage msg) {
+        int position = mGroupAdapter.updateMsg(msg);
+        mRecycler.scrollToPosition(position);
     }
 }

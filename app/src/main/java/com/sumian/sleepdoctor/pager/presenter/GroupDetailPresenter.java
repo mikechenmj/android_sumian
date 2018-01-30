@@ -33,7 +33,7 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
 
         AppManager
                 .getHttpService()
-                .getGroupsDetail(groupId)
+                .getGroupsDetail(groupId,"users,packages")
                 .enqueue(new BaseResponseCallback<GroupDetail<UserProfile, UserProfile>>() {
                     @Override
                     protected void onSuccess(GroupDetail<UserProfile, UserProfile> response) {

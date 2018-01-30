@@ -22,6 +22,8 @@ public interface ChatContract {
 
         void joinChatGroup(String conversationId);
 
+        void loginImServer();
+
         void logoutImServer();
 
         void sendMsg(AVIMMessage msg);

@@ -192,19 +192,22 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     public void onOrderPaySuccess(String payMsg) {
         //showToast(R.string.pay_success);
         mPresenter.clearPayAction();
-        mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show();
+        if (!mPayDialog.isShowing())
+            mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show();
     }
 
     @Override
     public void onOrderPayFailed(String payMsg) {
         showToast(payMsg);
-        mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show();
+        if (!mPayDialog.isShowing())
+            mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show();
     }
 
     @Override
     public void onOrderPayInvalid(String payMsg) {
         showToast(payMsg);
-        mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
+        if (!mPayDialog.isShowing())
+            mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
     }
 
     @Override
@@ -214,8 +217,8 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     @Override
     public void onCheckOrderPayIsOk() {
-        finish();
         MainActivity.showClearTop(this, MainActivity.class);
+        finish();
     }
 
     @Override

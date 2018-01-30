@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
@@ -25,8 +26,9 @@ import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -46,7 +48,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     public static final int PIC_REQUEST_CODE_LOCAL = 0x01;
     public static final int PIC_REQUEST_CODE_CAMERA = 0x02;
 
-    private WeakReference<MsgContract.View> mViewWeakReference;
+    private MsgContract.View mView;
 
     private long mTimestamp;
     private String mMsgId;
@@ -59,7 +61,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
     private MsgPresenter(MsgContract.View view) {
         view.bindPresenter(this);
-        this.mViewWeakReference = new WeakReference<>(view);
+        this.mView = view;
         // LeanCloudHelper.addOnMsgCallback(this);
         //LeanCloudHelper.addOnConversationCallback(this);
     }
@@ -100,11 +102,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             return;
         }
 
-        WeakReference<MsgContract.View> viewWeakReference = this.mViewWeakReference;
-        MsgContract.View view = viewWeakReference.get();
-        if (view == null) return;
-
-        view.onBegin();
+        mView.onBegin();
         mIsLoad = true;
 
         // AVIMConversation conversation = LeanCloudHelper.getConversation(mServiceType);
@@ -140,13 +138,39 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void doSendTextMsg(String content) {
-        //  LeanCloudHelper.sendTextMsg(mServiceType, content);
+    public void sendTextMsg(String content, boolean isQuestion, boolean isAnswer) {
+        AVIMTextMessage msg = new AVIMTextMessage();
+        msg.setText(content);
+
+        Map<String, Object> attr = null;
+
+        if (isQuestion || isAnswer) {
+            attr = new HashMap<>();
+        }
+
+        if (isQuestion) {
+            attr.put("type", "question");
+        }
+
+        if (isAnswer) {
+            attr.put("mention_id", "");
+            attr.put("type", "reply");
+            attr.put("send_timestamp", System.currentTimeMillis());
+            attr.put("question_msg_id", "");
+        }
+        if (isQuestion || isAnswer) {
+            msg.setAttrs(attr);
+        }
+
+
+        AppManager.getChatEngine().sendMsg(msg);
+        if (mView != null)
+            mView.onSendingMsg(msg);
     }
 
     @AfterPermissionGranted(CAMERA_PERM)
     @Override
-    public void sendPic(Activity activity, int type) {
+    public void sendPicMsg(Activity activity, int type) {
         if (type == PIC_REQUEST_CODE_LOCAL) {//pic local
             ImagePickerActivity.show(activity, new SelectOptions
                     .Builder()

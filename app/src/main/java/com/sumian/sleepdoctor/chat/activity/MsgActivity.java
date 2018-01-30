@@ -14,9 +14,11 @@ import android.widget.LinearLayout;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.chat.adapter.MsgAdapter;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
+import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.chat.presenter.MsgPresenter;
 import com.sumian.sleepdoctor.chat.sheet.SelectPictureBottomSheet;
 import com.sumian.sleepdoctor.chat.widget.KeyboardView;
@@ -33,7 +35,7 @@ import butterknife.BindView;
  */
 
 public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements MsgContract.View,
-        ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback {
+        ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback, KeyboardView.onKeyboardActionListener, TitleBar.OnBackListener, ChatEngine.OnMsgCallback {
 
     private static final String TAG = MsgActivity.class.getSimpleName();
 
@@ -80,6 +82,9 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+
+        mTitleBar.addOnBackListener(this);
+        mKeyboardView.setOnKeyboardActionListener(this);
         this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter());
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -116,6 +121,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         super.initData();
         mPresenter.joinChatRoom(mConversationId);
         mPresenter.getGroupDetail(mGroupId);
+        AppManager.getChatEngine().setOnMsgCallback(this);
     }
 
     @Override
@@ -160,31 +166,12 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void onSyncMsgHistoryFailed() {
-    }
 
-    @Override
-    public void onReceiveMsg(AVIMMessage msg) {
-        this.mMsgAdapter.addMsg(msg);
-        this.mRecyclerView.scrollToPosition(mMsgAdapter.getItemCount() - 1);
     }
 
     @Override
     public void onNoHaveMsg() {
 
-    }
-
-    @Override
-    public void onPrepareLogin() {
-
-    }
-
-    @Override
-    public void onLoginSuccess() {
-
-    }
-
-    @Override
-    public void onLoginFailed() {
     }
 
     @Override
@@ -200,6 +187,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void onGlobalLayout() {
+
         Rect KeypadRect = new Rect();
 
         this.mLayMsgContainer.getWindowVisibleDisplayFrame(KeypadRect);
@@ -231,33 +219,45 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void onTakePhotoCallback() {
-        mPresenter.sendPic(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA);
+        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA);
     }
 
     @Override
     public void onPicPictureCallback() {
-        mPresenter.sendPic(this, MsgPresenter.PIC_REQUEST_CODE_LOCAL);
+        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_LOCAL);
     }
 
-    private void sendPic() {
+    @Override
+    public void sendText(String content) {
+        mPresenter.sendTextMsg(content, mKeyboardView.isQuestion(), false);
+    }
+
+    @Override
+    public void sendPic() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(SelectPictureBottomSheet
-                        .newInstance()
-                        .addOnTakePhotoCallback(this), SelectPictureBottomSheet.class.getSimpleName())
-                .commit();
+                .add(SelectPictureBottomSheet.newInstance().addOnTakePhotoCallback(this), SelectPictureBottomSheet.class.getSimpleName())
+                .commitAllowingStateLoss();
     }
 
-    public void onSoftKeyboardCallback(boolean closeAction) {
-        if (closeAction) {
-            //  UiUtil.closeKeyboard(mKeyboardView.getEtInputView());
-        } else {
-            //  UiUtil.openKeyboard(mKeyboardView.getEtInputView());
-        }
+    @Override
+    public void sendVoice(String path, int duration) {
+        mPresenter.sendVoice(this, path, duration);
     }
 
     @Override
     public void bindPresenter(MsgContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onBack(View v) {
+        finish();
+    }
+
+    @Override
+    public void onMsgCallback(AVIMMessage msg) {
+        mMsgAdapter.addMsg(msg);
+        this.mRecyclerView.scrollToPosition(mMsgAdapter.getItemCount() - 1);
     }
 }

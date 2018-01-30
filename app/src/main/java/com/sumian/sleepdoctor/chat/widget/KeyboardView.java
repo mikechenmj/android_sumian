@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.chat.widget;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.text.emoji.widget.EmojiAppCompatEditText;
-import android.support.text.emoji.widget.EmojiEditText;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.chat.utils.UiUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +54,9 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
     @BindView(R.id.iv_garbage)
     ImageView mIvGarbage;
 
+    @BindView(R.id.tv_answer_label)
+    TextView mTvAnswerLabel;
+
     private onKeyboardActionListener mOnKeyboardActionListener;
 
     private InputMethodManager inputMethodManager;
@@ -89,48 +92,90 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         return mEtInput;
     }
 
-    @OnClick({R.id.bt_ask, R.id.iv_voice, R.id.iv_image, R.id.bt_send, R.id.iv_garbage, R.id.keyboardView})
+    public String getContent() {
+        String content = mEtInput.getText().toString().trim();
+        mEtInput.setText(null);
+        return content;
+    }
+
+    public boolean isQuestion() {
+        return mBtAsk.getTag() != null;
+    }
+
+    @OnClick({R.id.bt_ask, R.id.et_input, R.id.iv_voice, R.id.iv_image, R.id.bt_send, R.id.iv_garbage, R.id.keyboardView})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_ask:
 
+                if (mBtAsk.getTag() == null) {
+                    mBtAsk.setImageResource(R.mipmap.inputbox_icon_label_selected);
+                    mBtAsk.setTag(true);
+                } else {
+                    mBtAsk.setImageResource(R.mipmap.inputbox_icon_label_unselected);
+                    mBtAsk.setTag(null);
+                }
+
                 boolean active = inputMethodManager.isActive();
                 Log.e(TAG, "onClick: --------->" + active);
+                mEtInput.requestFocus();
+                mTvVoiceContainer.setVisibility(GONE);
+                mIvVoice.setTag(null);
 
-                mEtInput.clearFocus();
+                UiUtil.showSoftKeyboard(mEtInput);
 
                 break;
+            case R.id.et_input:
+                Log.e(TAG, "onClick: --------->");
+                mTvVoiceContainer.setVisibility(GONE);
+                mIvVoice.setTag(null);
+                UiUtil.showSoftKeyboard(mEtInput);
+                break;
             case R.id.iv_voice:
+
+                mEtInput.clearFocus();
+                UiUtil.closeKeyboard(mEtInput);
 
                 if (mIvVoice.getTag() == null) {//show
                     mTvVoiceContainer.setVisibility(VISIBLE);
                     mIvVoice.setTag(true);
                 } else {//hide
                     mTvVoiceContainer.setVisibility(GONE);
-                    mIvVoice.setTag(false);
+                    mIvVoice.setTag(null);
                 }
+
 
                 break;
             case R.id.iv_image:
+
+                mEtInput.clearFocus();
+
+                UiUtil.closeKeyboard(mEtInput);
+
+                mTvVoiceContainer.setVisibility(GONE);
+                mIvVoice.setTag(null);
+
+
                 if (mOnKeyboardActionListener != null) {
                     this.mOnKeyboardActionListener.sendPic();
+
                 }
                 break;
             case R.id.bt_send:
 
+                mTvVoiceContainer.setVisibility(GONE);
+                mIvVoice.setTag(null);
+
+                String input = this.mEtInput.getText().toString().trim();
+
+                if (TextUtils.isEmpty(input)) {
+                    return;
+                }
+
+                mEtInput.setText("");
+
                 if (mOnKeyboardActionListener != null) {
-
-                    String input = this.mEtInput.getText().toString().trim();
-
-                    if (TextUtils.isEmpty(input)) {
-                        return;
-                    }
-
-                    boolean isSendText = this.mOnKeyboardActionListener.sendText(input);
-                    if (isSendText) {
-                        mEtInput.setText("");
-                    }
+                    this.mOnKeyboardActionListener.sendText(input);
                 }
 
                 break;
@@ -144,10 +189,8 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
 
-
         boolean active = inputMethodManager.isActive(v);
-       // inputMethodManager.isWatchingCursor()
-
+        // inputMethodManager.isWatchingCursor()
 
         Log.e(TAG, "onFocusChange: --------->" + hasFocus + "   " + active);
 
@@ -155,11 +198,11 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
     public interface onKeyboardActionListener {
 
-        boolean sendText(String input);
+        void sendText(String content);
 
         void sendPic();
 
-        void onSoftKeyboardCallback(boolean closeAction);
+        void sendVoice(String path,int duration);
 
     }
 }

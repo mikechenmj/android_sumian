@@ -9,24 +9,53 @@
     android:paddingBottom="@dimen/space_4"
     android:paddingTop="@dimen/space_4">
 
-    <android.support.text.emoji.widget.EmojiAppCompatEditText
-        android:id="@+id/et_input"
+    <LinearLayout
+        android:id="@+id/input_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_48"
-        android:layout_gravity="center"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/space_4"
         android:layout_marginLeft="@dimen/space_8"
         android:layout_marginRight="@dimen/space_8"
         android:layout_marginTop="@dimen/space_4"
         android:background="@drawable/bg_chat_input"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:inputType="textMultiLine"
-        android:padding="@dimen/space_2"
-        android:singleLine="false"
-        android:textColor="@color/l3_color"
-        android:textCursorDrawable="@drawable/bg_cursor"
-        tools:ignore="LabelFor,RtlHardcoded" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_answer_label"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/space_8"
+            android:background="@drawable/shape_answer_babel"
+            android:gravity="center"
+            android:paddingBottom="@dimen/space_4"
+            android:paddingLeft="@dimen/space_6"
+            android:paddingRight="@dimen/space_6"
+            android:paddingTop="@dimen/space_4"
+            android:text="回答:sadasdsadad"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <android.support.text.emoji.widget.EmojiAppCompatEditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_48"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="textMultiLine"
+            android:paddingBottom="@dimen/space_2"
+            android:paddingLeft="@dimen/space_4"
+            android:paddingRight="@dimen/space_4"
+            android:paddingTop="@dimen/space_2"
+            android:singleLine="false"
+            android:textColor="@color/t3_color"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            tools:ignore="LabelFor,RtlHardcoded" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,7 +67,7 @@
         <ImageView
             android:id="@+id/bt_ask"
             android:layout_width="@dimen/len_96"
-            android:layout_height="@dimen/space_48"
+            android:layout_height="@dimen/space_40"
             android:contentDescription="@null"
             android:padding="@dimen/space_8"
             android:scaleType="centerCrop"

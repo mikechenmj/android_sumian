@@ -15,7 +15,7 @@ public final class TimeUtils {
     private static ThreadLocal<SimpleDateFormat> mDateFormatMsgThreadLocal = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat(" yyyy年MM月dd日 HH:mm:ss", Locale.getDefault());
+            return new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         }
     };
 

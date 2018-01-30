@@ -4,10 +4,10 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.tab.bean.GroupDetail;
-import com.sumian.sleepdoctor.tab.contract.GroupContract;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.BaseResponse;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
+import com.sumian.sleepdoctor.tab.contract.GroupContract;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +65,11 @@ public class GroupPresenter implements GroupContract.Presenter {
                         return;
                     } else {
                         mView.noNoHaveMoreGroups(App.Companion.getAppContext().getString(R.string.no_have_more_data));//没有更多数据
+                        return;
+                    }
+                } else {
+                    if (data.isEmpty() && currentPage == 1) {//第一次请求完全就没有数据
+                        mView.onNoHaveAnyGroups();
                         return;
                     }
                 }

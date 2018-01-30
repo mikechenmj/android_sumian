@@ -54,12 +54,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_12"
-        android:orientation="horizontal">
+        android:gravity="center|left"
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_72"
-            android:layout_height="@dimen/space_72"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
@@ -71,8 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_12"
             android:background="@drawable/group_chatbubble_question_l"
-            android:padding="@dimen/space_16"
-            android:text="dasdadsadasdsadsa我去一个我需要去的地方,那是一个没了的地方,我的小孩dadadadadadadadadsdadasdaaadadadadaadada" />
+            android:textSize="@dimen/font_12"
+            tools:text="dasdadsadasdsadsa我去一个我需要去的地方,那是一个没了的地方,我的小孩dadadadadadadadadsdadasdaaadadadadaadada" />
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
             android:id="@+id/msg_send_error_view"

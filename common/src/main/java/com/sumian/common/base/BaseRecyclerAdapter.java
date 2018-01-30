@@ -20,7 +20,7 @@ import java.util.List;
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     protected LayoutInflater mInflater;
-    private List<T> mItems;
+    protected List<T> mItems;
     protected RequestManager mLoader;
     private OnItemClickListener onItemClickListener;
     private OnClickListener onClickListener;

@@ -34,6 +34,7 @@ interface DoctorApi {
     @GET("user/profile")
     fun getUserProfile(): Call<UserProfile>
 
+    @FormUrlEncoded
     @PATCH("user/profile")
     fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserProfile>
 
@@ -51,5 +52,5 @@ interface DoctorApi {
     fun createOrder(@FieldMap map: MutableMap<String, Any>): Call<Order>
 
     @GET("orders/{order_no}")
-    fun getOrderDetail(@Query("order_no") orderNumber: String): Call<OrderDetail>
+    fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
 }

@@ -99,6 +99,6 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     public void onImproveUserProfileSuccess() {
-        onMore(null);
+        onMore(mRoot);
     }
 }
