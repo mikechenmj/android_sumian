@@ -7,10 +7,14 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.widget.MsgSendErrorView;
+import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 
-import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,9 +46,10 @@ public class TextNormalViewHolder extends BaseViewHolder<AVIMTextMessage> {
     MsgSendErrorView mMsgSendErrorView;
 
     private boolean mIsLeft;
+    private int mGroupId;
 
     public TextNormalViewHolder(ViewGroup parent, boolean isLeft) {
-        super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_left_text_nomal_chat : R.layout.lay_item_right_text_chat, parent, false));
+        super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_left_text_nomal_chat : R.layout.lay_item_right_text_normal_chat, parent, false));
         this.mIsLeft = isLeft;
     }
 
@@ -56,8 +61,42 @@ public class TextNormalViewHolder extends BaseViewHolder<AVIMTextMessage> {
 
         mTvMsg.setText(text);
 
-
     }
+
+    public void bindGroupId(int groupId) {
+        this.mGroupId = groupId;
+
+        AppManager
+                .getHttpService()
+                .getLeancloudGroupUsers(mItem.getFrom(), mGroupId)
+                .enqueue(new BaseResponseCallback<JSONObject>() {
+
+                    @Override
+                    protected void onSuccess(JSONObject response) {
+
+                        try {
+                            UserProfile tempUserProfile = (UserProfile) response.get(mItem.getFrom());
+
+                            if (tempUserProfile != null) {
+                                mTvNickname.setText(tempUserProfile.nickname);
+                                formatRoleLabel(tempUserProfile.role, mTvLabel);
+                                formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, mIvIcon);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    protected void onFailure(String error) {
+                        formatRoleLabel(0, mTvLabel);
+                        formatRoleAvatar(0, null, mIvIcon);
+                    }
+                });
+    }
+
 
     @OnClick({R.id.iv_msg_failed})
     @Override

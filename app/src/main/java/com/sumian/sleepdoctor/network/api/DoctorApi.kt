@@ -6,6 +6,7 @@ import com.sumian.sleepdoctor.network.response.BaseResponse
 import com.sumian.sleepdoctor.pager.bean.Order
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
 import com.sumian.sleepdoctor.tab.bean.GroupDetail
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -53,4 +54,8 @@ interface DoctorApi {
 
     @GET("orders/{order_no}")
     fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
+
+    @FormUrlEncoded
+    @POST("user/leancloud")
+    fun getLeancloudGroupUsers(@Field("leancloud_ids") leancloudIds: String, @Field("group_id") groupId: Int): Call<JSONObject>
 }

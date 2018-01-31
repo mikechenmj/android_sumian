@@ -106,6 +106,15 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
+    public void getLeancloudGroupUsers(String leancloudIds, int groupId) {
+
+        if (mView == null) return;
+
+        mView.onBegin();
+
+    }
+
+    @Override
     public void syncPreMsgHistory(boolean isLoadPre) {
         if (mIsLoad) {
             return;

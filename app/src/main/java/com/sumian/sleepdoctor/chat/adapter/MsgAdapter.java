@@ -32,6 +32,11 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.mAdapterDelegate.setOnReplyCallback(onReplyCallback);
     }
 
+    public MsgAdapter bindGroupId(int groupId) {
+        this.mAdapterDelegate.bindGroupId(groupId);
+        return this;
+    }
+
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return mAdapterDelegate.findViewHolder(parent, viewType);

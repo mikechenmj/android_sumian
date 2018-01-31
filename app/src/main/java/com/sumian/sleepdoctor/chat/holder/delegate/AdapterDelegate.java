@@ -63,6 +63,8 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
 
     private OnReplyCallback mOnReplyCallback;
 
+    private int mGroupId;
+
     public void setOnReplyCallback(OnReplyCallback onReplyCallback) {
         mOnReplyCallback = onReplyCallback;
     }
@@ -133,51 +135,68 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
             case LEFT_TEXT_NORMAL_TYPE://text
                 //isLeft = true;
             case RIGHT_TEXT_NORMAL_TYPE:
-                ((TextNormalViewHolder) holder).initView((AVIMTextMessage) msg);
+                TextNormalViewHolder textNormalViewHolder = (TextNormalViewHolder) holder;
+                textNormalViewHolder.initView((AVIMTextMessage) msg);
+                textNormalViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_TEXT_REPLAY_TYPE:
                 //isLeft = true;
             case RIGHT_TEXT_REPLAY_TYPE:
-                ((TextReplyViewHolder) holder).initView((AVIMTextMessage) msg);
+                TextReplyViewHolder textReplyViewHolder = (TextReplyViewHolder) holder;
+                textReplyViewHolder.initView((AVIMTextMessage) msg);
+                textReplyViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_TEXT_QUESTION_TYPE:
                 // isLeft = true;
             case RIGHT_TEXT_QUESTION_TYPE:
-                ((TextQuestionViewHolder) holder).initView((AVIMTextMessage) msg);
+                TextQuestionViewHolder textQuestionViewHolder = (TextQuestionViewHolder) holder;
+                textQuestionViewHolder.initView((AVIMTextMessage) msg);
+                textQuestionViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_IMAGE_NORMAL_TYPE://image
                 //isLeft = true;
             case RIGHT_IMAGE_NORMAL_YPE:
-                ((ImageNormalViewHolder) holder).initView((AVIMImageMessage) msg);
+                ImageNormalViewHolder imageNormalViewHolder = (ImageNormalViewHolder) holder;
+                imageNormalViewHolder.initView((AVIMImageMessage) msg);
+                imageNormalViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_IMAGE_REPLAY_TYPE:
                 //isLeft = true;
             case RIGHT_IMAGE_REPLAY_TYPE:
-                ((ImageReplyViewHolder) holder).initView((AVIMImageMessage) msg);
+                ImageReplyViewHolder imageReplyViewHolder = (ImageReplyViewHolder) holder;
+                imageReplyViewHolder.initView((AVIMImageMessage) msg);
+                imageReplyViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_IMAGE_QUESTION_TYPE:
                 //isLeft = true;
             case RIGHT_IMAGE_QUESTION_TYPE:
-                ((ImageQuestionViewHolder) holder).initView((AVIMImageMessage) msg);
-
+                ImageQuestionViewHolder imageQuestionViewHolder = (ImageQuestionViewHolder) holder;
+                imageQuestionViewHolder.initView((AVIMImageMessage) msg);
+                imageQuestionViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_VOICE_NORMAL_TYPE://voice
                 //isLeft = true;
             case RIGHT_VOICE_NORMAL_TYPE:
-                ((VoiceNormalViewHolder) holder).initView((AVIMAudioMessage) msg);
 
+                VoiceNormalViewHolder voiceNormalViewHolder = (VoiceNormalViewHolder) holder;
+                voiceNormalViewHolder.initView((AVIMAudioMessage) msg);
+                voiceNormalViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_VOICE_REPLAY_TYPE:
                 //  isLeft = true;
             case RIGHT_VOICE_REPLAY_TYPE:
-                ((VoiceReplyViewHolder) holder).initView((AVIMAudioMessage) msg);
 
+                VoiceReplyViewHolder voiceReplyViewHolder = (VoiceReplyViewHolder) holder;
+                voiceReplyViewHolder.initView((AVIMAudioMessage) msg);
+                voiceReplyViewHolder.bindGroupId(mGroupId);
                 break;
             case LEFT_VOICE_QUESTION_TYPE:
                 // isLeft = true;
             case RIGHT_VOICE_QUESTION_TYPE:
-                ((VoiceQuestionViewHolder) holder).initView((AVIMAudioMessage) msg);
 
+                VoiceQuestionViewHolder voiceQuestionViewHolder = (VoiceQuestionViewHolder) holder;
+                voiceQuestionViewHolder.initView((AVIMAudioMessage) msg);
+                voiceQuestionViewHolder.bindGroupId(mGroupId);
                 break;
             default:
                 break;
@@ -283,6 +302,10 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
         if (mOnReplyCallback != null) {
             mOnReplyCallback.onReply(msg);
         }
+    }
+
+    public void bindGroupId(int groupId) {
+        this.mGroupId = groupId;
     }
 
 

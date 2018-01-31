@@ -1,9 +1,23 @@
 package com.sumian.sleepdoctor.chat.holder;
 
-import android.view.View;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
+import com.sumian.sleepdoctor.chat.widget.BubbleImageView;
+import com.sumian.sleepdoctor.chat.widget.MsgSendErrorView;
+import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by sm
@@ -13,10 +27,68 @@ import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 
 public class ImageNormalViewHolder extends BaseViewHolder<AVIMImageMessage> {
 
-    private boolean mIsLeft;
+    @BindView(R.id.tv_time_line)
+    TextView mTvTimeLine;
 
-    public ImageNormalViewHolder(View itemView, boolean isLeft) {
-        super(itemView);
+    @BindView(R.id.tv_label)
+    TextView mTvLabel;
+    @BindView(R.id.tv_nickname)
+    TextView mTvNickname;
+
+    @BindView(R.id.msg_send_error_view)
+    MsgSendErrorView mMsgSendErrorView;
+
+    @BindView(R.id.biv_image)
+    BubbleImageView mBivImage;
+
+    @BindView(R.id.iv_icon)
+    CircleImageView mIvIcon;
+
+    private boolean mIsLeft;
+    private int mGroupId;
+
+    public ImageNormalViewHolder(ViewGroup parent, boolean isLeft) {
+        super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_right_image_normal_chat : R.layout.lay_item_right_image_normal_chat, parent, false));
         this.mIsLeft = isLeft;
+    }
+
+    @Override
+    public void initView(AVIMImageMessage avimImageMessage) {
+        super.initView(avimImageMessage);
+
+    }
+
+    public void bindGroupId(int groupId) {
+        this.mGroupId = groupId;
+
+        AppManager
+                .getHttpService()
+                .getLeancloudGroupUsers(mItem.getFrom(), mGroupId)
+                .enqueue(new BaseResponseCallback<JSONObject>() {
+
+                    @Override
+                    protected void onSuccess(JSONObject response) {
+
+                        try {
+                            UserProfile tempUserProfile = (UserProfile) response.get(mItem.getFrom());
+
+                            if (tempUserProfile != null) {
+                                mTvNickname.setText(tempUserProfile.nickname);
+                                formatRoleLabel(tempUserProfile.role, mTvLabel);
+                                formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, mIvIcon);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    protected void onFailure(String error) {
+                        formatRoleLabel(0, mTvLabel);
+                        formatRoleAvatar(0, null, mIvIcon);
+                    }
+                });
     }
 }
