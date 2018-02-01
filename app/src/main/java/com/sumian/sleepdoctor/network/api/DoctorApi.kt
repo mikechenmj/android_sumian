@@ -57,5 +57,5 @@ interface DoctorApi {
 
     @FormUrlEncoded
     @POST("user/leancloud")
-    fun getLeancloudGroupUsers(@Field("leancloud_ids") leancloudIds: String, @Field("group_id") groupId: Int): Call<JSONObject>
+    fun getLeancloudGroupUsers(@Field("leancloud_ids") leancloudIds: String, @Field("group_id") groupId: Int): Call<String>
 }

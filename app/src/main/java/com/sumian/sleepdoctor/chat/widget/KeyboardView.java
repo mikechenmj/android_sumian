@@ -101,7 +101,7 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         return mBtAsk.getTag() != null;
     }
 
-    public AVIMTypedMessage getReplyMsg(){
+    public AVIMTypedMessage getReplyMsg() {
 
         return mReplyMsg;
     }
@@ -178,10 +178,12 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
                 }
 
                 mEtInput.setText("");
+                mReplyMsg = null;
 
                 if (mOnKeyboardActionListener != null) {
                     this.mOnKeyboardActionListener.sendText(input);
                 }
+
 
                 break;
             case R.id.iv_garbage:

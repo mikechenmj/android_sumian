@@ -34,7 +34,7 @@ public interface MsgContract {
 
         void onNoHaveMsg();
 
-        void onPermissionsDenied();
+        void onPermissionsDenied(int requestCode, List<String> perms);
 
     }
 
@@ -46,8 +46,6 @@ public interface MsgContract {
 
         void joinChatRoom(String conversationId);
 
-        void getGroupDetail(int groupId);
-
         void sendTextMsg(String content, boolean isQuestion, AVIMTypedMessage replyMsg);
 
         void sendPicMsg(Activity activity, int type);
@@ -56,7 +54,7 @@ public interface MsgContract {
 
         void syncMsgHistory(String conversationId);
 
-        void syncPreMsgHistory(boolean isLoadPre);
+        void syncPreMsgHistory(String conversationId);
 
         void resultCodeDelegate(int requestCode, int resultCode, Intent data);
 

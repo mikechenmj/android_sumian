@@ -1,12 +1,13 @@
 package com.sumian.sleepdoctor.chat.holder.delegate;
 
+import android.text.TextUtils;
 import android.view.ViewGroup;
 
-import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.holder.ImageNormalViewHolder;
 import com.sumian.sleepdoctor.chat.holder.ImageQuestionViewHolder;
@@ -204,11 +205,14 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
     }
 
     public int getItemViewType(AVIMTypedMessage msg) {
-        AVIMMessage.AVIMMessageIOType ioType = msg.getMessageIOType();
+        //  AVIMMessage.AVIMMessageIOType ioType = msg.getMessageIOType();
         int messageType = msg.getMessageType();
         Map<String, Object> attrs;
         String type;
-        if (ioType == AVIMMessage.AVIMMessageIOType.AVIMMessageIOTypeOut) {//右
+
+        String from = msg.getFrom();
+        if (TextUtils.isEmpty(from)) return UNKNOWN_TYPE;
+        if (from.equals(AppManager.getAccountViewModel().getToken().user.leancloud_id)) {//右
             switch (messageType) {
                 case TEXT_MESSAGE_TYPE:
                     attrs = ((AVIMTextMessage) msg).getAttrs();

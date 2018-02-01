@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     private MeFragment mMeFragment;
 
-    private int mCurrentPosition = 0;
+    private int mCurrentPosition = -1;
 
     @Override
     protected int getLayoutId() {
@@ -70,9 +70,27 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     @Override
     public void tab(ItemTab itemTab, int position) {
         if (mCurrentPosition == position) {
-            return;
+            if (position == 0) {
+                if (mGroupFragment != null) {
+                    getSupportFragmentManager().beginTransaction().show(mGroupFragment).commitNowAllowingStateLoss();
+                }
+                if (mMeFragment != null) {
+                    getSupportFragmentManager().beginTransaction().hide(mMeFragment).commitNowAllowingStateLoss();
+                }
+
+            } else {
+
+                if (mMeFragment != null) {
+                    getSupportFragmentManager().beginTransaction().show(mMeFragment).commitNowAllowingStateLoss();
+                }
+
+                if (mGroupFragment != null) {
+                    getSupportFragmentManager().beginTransaction().hide(mGroupFragment).commitNowAllowingStateLoss();
+                }
+            }
+        } else {
+            initTab(position);
         }
-        initTab(position);
     }
 
     private void initTab(int position) {
@@ -87,7 +105,7 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
                 break;
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName()).commitNowAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().add(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName()).commitNowAllowingStateLoss();
 
         mCurrentPosition = position;
     }

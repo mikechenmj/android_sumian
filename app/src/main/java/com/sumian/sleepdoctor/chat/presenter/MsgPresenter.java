@@ -24,12 +24,9 @@ import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
-import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,11 +54,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
     private MsgContract.View mView;
 
-    private long mTimestamp;
-    private String mMsgId;
-
-    private boolean mIsLoad;
-
     private File cameraFile;
     private File storageDir = null;
     private String mLocalImagePath;
@@ -71,8 +63,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     private MsgPresenter(MsgContract.View view) {
         view.bindPresenter(this);
         this.mView = view;
-        // LeanCloudHelper.addOnMsgCallback(this);
-        //LeanCloudHelper.addOnConversationCallback(this);
     }
 
     public static void init(MsgContract.View view) {
@@ -85,74 +75,24 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void getGroupDetail(int groupId) {
-
-        AppManager
-                .getHttpService()
-                .getGroupsDetail(groupId, "users,packages")
-                .enqueue(new BaseResponseCallback<GroupDetail<UserProfile, UserProfile>>() {
-
-                    @Override
-                    protected void onSuccess(GroupDetail<UserProfile, UserProfile> response) {
-
-                    }
-
-                    @Override
-                    protected void onFailure(String error) {
-
-                    }
-                });
-
+    public void syncPreMsgHistory(String conversationId) {
+        ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
+        syncMsgHistory(mLastMsg, true, avimTypedMessages, conversationId, 20);
     }
 
     @Override
-    public void getLeancloudGroupUsers(String leancloudIds, int groupId) {
+    public void syncMsgHistory(String conversationId) {
+        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
 
-        if (mView == null) return;
+        ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
 
-        mView.onBegin();
-
-    }
-
-    @Override
-    public void syncPreMsgHistory(boolean isLoadPre) {
-        if (mIsLoad) {
-            return;
-        }
-
-        mView.onBegin();
-        mIsLoad = true;
-
-        // AVIMConversation conversation = LeanCloudHelper.getConversation(mServiceType);
-
-//        conversation.queryMessages(mMsgId, mTimestamp, 20, new AVIMMessagesQueryCallback() {
-//            @Override
-//            public void done(List<AVIMMessage> list, AVIMException e) {
-//                view.onFinish();
-//                if (e == null) {
-//                    if (list == null || list.isEmpty()) {
-//                        view.onNoHaveMsg();
-//                    } else {
-//                        mMsgId = list.get(0).getMessageId();
-//                        mTimestamp = list.get(0).getTimestamp();
-//
-//                        if (mServiceType == LeanCloudHelper.SERVICE_TYPE_MAIL) {
-//                            Collections.reverse(list);
-//                        }
-//                        if (isLoadPre) {
-//                            view.onSyncPreMsgHistorySuccess(list);
-//                        } else {
-//                            view.onSyncMsgHistorySuccess(list);
-//                        }
-//
-//                    }
-//                    mIsLoad = false;
-//                } else {
-//                    view.onSyncMsgHistoryFailed();
-//                    mIsLoad = false;
-//                }
-//            }
-//        });
+        avimConversation.getLastMessage(new AVIMSingleMessageQueryCallback() {
+            @Override
+            public void done(AVIMMessage avimMessage, AVIMException e) {
+                avimTypedMessages.add((AVIMTypedMessage) avimMessage);
+                syncMsgHistory(avimMessage, false, avimTypedMessages, conversationId, 19);
+            }
+        });
     }
 
     @Override
@@ -249,33 +189,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void syncMsgHistory(String conversationId) {
-        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
-
-        ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
-
-        avimConversation.getLastMessage(new AVIMSingleMessageQueryCallback() {
-            @Override
-            public void done(AVIMMessage avimMessage, AVIMException e) {
-                avimTypedMessages.add((AVIMTypedMessage) avimMessage);
-                avimConversation.queryMessages(avimMessage.getMessageId(), avimMessage.getTimestamp(), 19, new AVIMMessagesQueryCallback() {
-                    @Override
-                    public void done(List<AVIMMessage> list, AVIMException e) {
-                        Log.e(TAG, "done: ---------->" + list.toString());
-                        if (!list.isEmpty()) {
-                            mLastMsg = list.get(0);
-                            for (AVIMMessage message : list) {
-                                avimTypedMessages.add(0, (AVIMTypedMessage) message);
-                            }
-                            mView.onSyncMsgHistorySuccess(avimTypedMessages);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    @Override
     public void resultCodeDelegate(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
@@ -289,15 +202,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
                     break;
             }
         }
-    }
-
-    @Override
-    public void release() {
-        // LeanCloudHelper.clearMsgNotification(mServiceType);
-        //  LeanCloudHelper.removeOnMsgCallback(this);
-        // LeanCloudHelper.removeOnConversationCallback();
-        this.mTimestamp = 0;
-        this.mMsgId = null;
     }
 
     /**
@@ -333,6 +237,46 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         }
     }
 
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        mView.onPermissionsDenied(requestCode, perms);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+    private void syncMsgHistory(AVIMMessage lastMsg, boolean isLoadPre, ArrayList<AVIMTypedMessage> avimTypedMessages, String conversationId, int limit) {
+        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
+
+        avimConversation.queryMessages(lastMsg.getMessageId(), lastMsg.getTimestamp(), limit, new AVIMMessagesQueryCallback() {
+            @Override
+            public void done(List<AVIMMessage> list, AVIMException e) {
+                if (!list.isEmpty()) {
+                    mLastMsg = list.get(0);
+                    for (AVIMMessage message : list) {
+                        avimTypedMessages.add(0, (AVIMTypedMessage) message);
+                    }
+                    if (isLoadPre) {
+                        mView.onSyncPreMsgHistorySuccess(avimTypedMessages);
+                    } else {
+                        mView.onSyncMsgHistorySuccess(avimTypedMessages);
+                    }
+                } else {
+                    mView.onNoHaveMsg();
+                }
+            }
+        });
+    }
+
     private File generateImagePath(String userName, Context applicationContext) {
         String path;
         String pathPrefix = "/Android/data/" + applicationContext.getPackageName() + "/";
@@ -351,23 +295,5 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             storageDir = applicationContext.getFilesDir();
         }
         return storageDir;
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        //  if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-
-        //}
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // EasyPermissions handles the request result.
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

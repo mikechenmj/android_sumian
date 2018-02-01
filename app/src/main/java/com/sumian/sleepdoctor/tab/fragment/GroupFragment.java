@@ -8,13 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
-import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
+import com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout;
 import com.sumian.sleepdoctor.pager.activity.ScanQrCodeActivity;
 import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
@@ -43,7 +43,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     TitleBar mTitleBar;
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout mRefresh;
+    SumianRefreshLayout mRefresh;
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
     @BindView(R.id.group_error_view)
@@ -53,6 +53,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     GroupRequestScanQrCodeView mRequestScanQrCodeView;
 
     private GroupAdapter mGroupAdapter;
+    private boolean mIsRefresh;
 
     @Override
     protected int getLayoutId() {
@@ -64,7 +65,6 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
         super.initWidget(root);
 
         setStatusBarColor();
-        StatusBarUtil.setColorNoTranslucent(getActivity(), getResources().getColor(R.color.colorPrimary));
 
         mTitleBar.addOnMoreListener(this);
         mRefresh.setOnRefreshListener(this);
@@ -108,12 +108,13 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onBegin() {
+        mRefresh.setRefreshing(true);
         mGroupErrorView.showRequest();
     }
 
     @Override
     public void onFinish() {
-
+        mRefresh.setRefreshing(false);
     }
 
     @Override
@@ -135,6 +136,12 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     @Override
     public void onGetGroupsSuccess(List<GroupDetail<UserProfile, UserProfile>> groups) {
         runOnUiThread(() -> {
+
+            if (mIsRefresh) {
+                mGroupAdapter.clear();
+                mIsRefresh = false;
+            }
+
             List<GroupItem> groupItems = new ArrayList<>();
             GroupItem groupItem;
             for (GroupDetail<UserProfile, UserProfile> group : groups) {
@@ -166,7 +173,8 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onRefresh() {
-
+        mIsRefresh = true;
+        initData();
     }
 
     @Override

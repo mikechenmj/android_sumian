@@ -126,18 +126,29 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             }
 
             int dayLast = groupDetail.day_last;
+            int role = item.mGroupDetail.role;
 
-            if (dayLast <= 0) {//已过期
-                setText(mTvExpired, String.format(Locale.getDefault(), "%s", getText(R.string.expired)));
-                visible(mLayExpiredContainer);
-            } else {//剩余天数
-                gone(mLayExpiredContainer);
-                if (dayLast <= 5) {
-                    setText(mTvExpired, formatText("%d%s", dayLast, getText(R.string.time_expired_suffix)));
-                } else {
-                    gone(mTvExpired);
+            if (role == 0) {//患者
+                if (dayLast == 0) {//已过期
+                    setText(mTvExpired, String.format(Locale.getDefault(), "%s", getText(R.string.expired)));
+                    visible(mLayExpiredContainer);
+                } else {//剩余天数
+                    gone(mLayExpiredContainer);
+                    if (dayLast <= 5) {
+                        setText(mTvExpired, formatText("%d%s", dayLast, getText(R.string.time_expired_suffix)));
+                    } else {
+                        gone(mTvExpired);
+                    }
                 }
+            } else {
+                gone(mLayExpiredContainer);
+                //if (dayLast <= 5) {
+                //   setText(mTvExpired, formatText("%d%s", dayLast, getText(R.string.time_expired_suffix)));
+                //} else {
+                gone(mTvExpired);
+                //}
             }
+
 
             mTvChatHistoryTwo.setVisibility(View.GONE);
             mTvChatHistoryTwoTime.setVisibility(View.GONE);

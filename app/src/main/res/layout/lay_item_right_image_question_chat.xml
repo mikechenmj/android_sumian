@@ -36,19 +36,19 @@
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:background="@drawable/bg_chat_assistant_label"
-            android:paddingLeft="@dimen/space_6"
-            android:paddingRight="@dimen/space_6"
-            android:text="医生"
+            android:paddingLeft="@dimen/space_12"
+            android:paddingRight="@dimen/space_12"
             android:textColor="@color/b2_color"
-            android:textSize="@dimen/font_16" />
+            android:textSize="@dimen/font_12"
+            tools:text="医生" />
 
         <TextView
             android:id="@+id/tv_nickname"
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="欧主任"
-            android:textSize="@dimen/font_16" />
+            android:textSize="@dimen/font_12"
+            tools:text="欧主任" />
 
     </LinearLayout>
 
@@ -66,19 +66,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
-        <com.sumian.app.widget.BubbleImageView
+        <com.sumian.sleepdoctor.chat.widget.BubbleImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_160"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
             android:scaleType="fitCenter"
-            app:chat_image_mask="@drawable/group_chatbubble_l" />
+            android:src="@mipmap/group_chatbubble_r"
+            app:chat_image_mask="@drawable/group_chatbubble_r" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_72"
-            android:layout_height="@dimen/space_72"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />

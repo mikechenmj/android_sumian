@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16">
+    android:padding="@dimen/space_16"
+    android:rotationX="180"
+    android:rotationY="0">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -51,12 +54,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_12"
-        android:gravity="center|left"
-        android:orientation="horizontal"
-        tools:ignore="RtlHardcoded">
+        android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
@@ -66,15 +67,15 @@
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
 
-        <android.support.text.emoji.widget.EmojiAppCompatTextView
-            android:id="@+id/tv_msg"
-            style="@style/text_t1_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_12"
-            android:background="@drawable/group_chatbubble_l"
-            android:textSize="@dimen/font_12"
-            tools:text="dasdadsadasdsadsa我去一个我需要去的地方,那是一个没了的地方,我的小孩dadadadadadadadadsdadasdaaadadadadaadada" />
+        <com.sumian.app.widget.BubbleImageView
+            android:id="@+id/biv_image"
+            android:layout_width="@dimen/space_100"
+            android:layout_height="@dimen/space_160"
+            android:layout_marginLeft="@dimen/space_12"
+            android:layout_marginRight="@dimen/space_12"
+            android:scaleType="fitCenter"
+            android:src="@drawable/group_chatbubble_l"
+            app:chat_image_mask="@drawable/group_chatbubble_l" />
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
             android:id="@+id/msg_send_error_view"

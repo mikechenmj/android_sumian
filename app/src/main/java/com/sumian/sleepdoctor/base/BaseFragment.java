@@ -197,8 +197,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     }
 
     protected void setStatusBarTranslucent() {
-        StatusBarUtil.setTransparent(getActivity());
-        StatusBarUtil.setTranslucent(getActivity(), 0);
+        StatusBarUtil.hideFakeStatusBarView(getActivity());
     }
 
 }

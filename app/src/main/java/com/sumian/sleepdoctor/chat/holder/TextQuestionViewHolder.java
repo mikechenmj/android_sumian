@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
@@ -83,20 +84,24 @@ public class TextQuestionViewHolder extends BaseViewHolder<AVIMTextMessage> {
         AppManager
                 .getHttpService()
                 .getLeancloudGroupUsers(mItem.getFrom(), mGroupId)
-                .enqueue(new BaseResponseCallback<JSONObject>() {
+                .enqueue(new BaseResponseCallback<String>() {
 
                     @Override
-                    protected void onSuccess(JSONObject response) {
+                    protected void onSuccess(String response) {
 
                         try {
-                            UserProfile tempUserProfile = (UserProfile) response.get(mItem.getFrom());
+
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String json = jsonObject.getString(mItem.getFrom());
+
+                            UserProfile tempUserProfile = JSON.parseObject(json, UserProfile.class);
 
                             if (tempUserProfile != null) {
                                 mTvNickname.setText(tempUserProfile.nickname);
                                 formatRoleLabel(tempUserProfile.role, mTvLabel);
                                 formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, mIvIcon);
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

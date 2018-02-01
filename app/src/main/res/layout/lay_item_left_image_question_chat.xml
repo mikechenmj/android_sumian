@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16">
+    android:padding="@dimen/space_16"
+    android:rotationX="180"
+    android:rotationY="0">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -31,8 +34,8 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="欧主任"
-            android:textSize="@dimen/font_16" />
+            android:textSize="@dimen/font_12"
+            tools:text="欧主任" />
 
         <TextView
             android:id="@+id/tv_label"
@@ -42,11 +45,11 @@
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:background="@drawable/bg_chat_doctor_label"
-            android:paddingLeft="@dimen/space_6"
-            android:paddingRight="@dimen/space_6"
-            android:text="医生"
+            android:paddingLeft="@dimen/space_2"
+            android:paddingRight="@dimen/space_2"
             android:textColor="@color/b2_color"
-            android:textSize="@dimen/font_16" />
+            android:textSize="@dimen/font_12"
+            tools:text="医生" />
 
     </LinearLayout>
 
@@ -58,49 +61,27 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_72"
-            android:layout_height="@dimen/space_72"
-            android:layout_gravity="center"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
 
-        <com.sumian.sleepdoctor.chat.widget.VoiceProgress
+        <com.sumian.app.widget.BubbleImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
-            android:layout_height="@dimen/space_72"
-            android:layout_gravity="center"
+            android:layout_height="@dimen/space_160"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
-            android:background="@mipmap/group_chatbubble_l" />
-
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <View
-                android:id="@+id/voice_dot"
-                android:layout_width="@dimen/space_8"
-                android:layout_height="@dimen/space_8"
-                android:background="@drawable/bg_tab_dot" />
-
-            <TextView
-                android:id="@+id/tv_voice_duration"
-                style="@style/text_t2_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="60''" />
-        </FrameLayout>
+            android:scaleType="fitCenter"
+            android:src="@drawable/group_chatbubble_l"
+            app:chat_image_mask="@drawable/group_chatbubble_l" />
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
             android:id="@+id/msg_send_error_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/space_12"
-            android:layout_marginRight="@dimen/space_12" />
+            android:layout_gravity="center" />
 
     </LinearLayout>
 

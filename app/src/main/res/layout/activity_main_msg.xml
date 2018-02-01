@@ -36,18 +36,18 @@
 
     </FrameLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.v7.widget.RecyclerView
+        <com.sumian.sleepdoctor.chat.widget.MsgRecycleView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout>
 
     <!-- 底部输入框区域 -->
     <com.sumian.sleepdoctor.chat.widget.KeyboardView

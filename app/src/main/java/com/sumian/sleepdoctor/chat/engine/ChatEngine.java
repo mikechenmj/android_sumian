@@ -187,7 +187,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     @Override
     public AVIMConversation getAVIMConversation(String conversationId) {
-        return mAVIMClient.getConversation(conversationId);
+        return this.mAVIMConversation = mAVIMClient.getConversation(conversationId);
     }
 
 

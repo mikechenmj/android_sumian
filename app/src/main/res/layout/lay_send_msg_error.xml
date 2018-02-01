@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:showIn="@layout/lay_item_left_image_chat">
+    tools:showIn="@layout/lay_item_left_image_normal_chat">
 
     <ImageView
         android:id="@+id/iv_msg_failed"

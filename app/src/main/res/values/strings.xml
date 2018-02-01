@@ -104,6 +104,5 @@
     <string name="patient">患者</string>
     <string name="dbo">运营</string>
     <string name="assistant">助理</string>
-    <string name="doctor">医生</string>
 
 </resources>

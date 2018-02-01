@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -25,11 +23,14 @@ import com.sumian.sleepdoctor.chat.holder.delegate.AdapterDelegate;
 import com.sumian.sleepdoctor.chat.presenter.MsgPresenter;
 import com.sumian.sleepdoctor.chat.sheet.SelectPictureBottomSheet;
 import com.sumian.sleepdoctor.chat.widget.KeyboardView;
+import com.sumian.sleepdoctor.chat.widget.MsgRecycleView;
+import com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.List;
 
 import butterknife.BindView;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by jzz
@@ -40,7 +41,7 @@ import butterknife.BindView;
 public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements MsgContract.View,
         ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback,
         KeyboardView.onKeyboardActionListener, TitleBar.OnBackListener, ChatEngine.OnMsgCallback,
-        AdapterDelegate.OnReplyCallback {
+        AdapterDelegate.OnReplyCallback, TitleBar.OnMoreListener, MsgRecycleView.OnLoadDataCallback {
 
     private static final String TAG = MsgActivity.class.getSimpleName();
 
@@ -54,9 +55,9 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     TitleBar mTitleBar;
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout mRefreshView;
+    SumianRefreshLayout mRefreshView;
     @BindView(R.id.recycler)
-    RecyclerView mRecyclerView;
+    MsgRecycleView mRecyclerView;
 
     @BindView(R.id.keyboardView)
     KeyboardView mKeyboardView;
@@ -87,31 +88,17 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     protected void initWidget(View root) {
         super.initWidget(root);
 
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.addOnBackListener(this).addOnMoreListener(this);
+        //  mRefreshView.setOnRefreshListener(this);
+
         mKeyboardView.setOnKeyboardActionListener(this);
-        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter(this));
+
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter(this).bindGroupId(mGroupId));
+        this.mRecyclerView.setOnLoadDataCallback(this);
 
-        this.mLayMsgContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
-
-        this.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                // Log.e(TAG, "onScrollStateChanged: ------->" + newState + "  position=" + position);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && position == 0) {
-                    mPresenter.syncPreMsgHistory(true);
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                // Log.e(TAG, "onScrolled: ------->dx=" + dx + "   dy=" + dy);
-            }
-        });
+        //this.mLayMsgContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
     @Override
@@ -124,7 +111,6 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     protected void initData() {
         super.initData();
         mPresenter.joinChatRoom(mConversationId);
-        mPresenter.getGroupDetail(mGroupId);
         mPresenter.syncMsgHistory(mConversationId);
         AppManager.getChatEngine().setOnMsgCallback(this);
     }
@@ -180,13 +166,16 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     }
 
     @Override
-    public void onPermissionsDenied() {
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
 
+        }
     }
+
 
     @Override
     protected void onRelease() {
-        mTitleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        // mTitleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         AppManager.getChatEngine().removeOnMsgCallback(this);
         super.onRelease();
     }
@@ -273,5 +262,15 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         Log.e(TAG, "onReply: -------->" + msg.toString());
 
         mKeyboardView.setAnswerLabel((AVIMTextMessage) msg);
+    }
+
+    @Override
+    public void onMore(View v) {
+
+    }
+
+    @Override
+    public void onLoadPre() {
+        mPresenter.syncPreMsgHistory(mConversationId);
     }
 }

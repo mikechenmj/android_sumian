@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
@@ -95,13 +96,18 @@ public class TextReplyViewHolder extends BaseViewHolder<AVIMTextMessage> {
         AppManager
                 .getHttpService()
                 .getLeancloudGroupUsers(mItem.getFrom(), mGroupId)
-                .enqueue(new BaseResponseCallback<JSONObject>() {
+                .enqueue(new BaseResponseCallback<String>() {
 
                     @Override
-                    protected void onSuccess(JSONObject response) {
+                    protected void onSuccess(String response) {
 
                         try {
-                            UserProfile tempUserProfile = (UserProfile) response.get(mItem.getFrom());
+
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String json = jsonObject.getString(mItem.getFrom());
+
+                            UserProfile tempUserProfile = JSON.parseObject(json, UserProfile.class);
 
                             if (tempUserProfile != null) {
                                 mTvNickname.setText(tempUserProfile.nickname);

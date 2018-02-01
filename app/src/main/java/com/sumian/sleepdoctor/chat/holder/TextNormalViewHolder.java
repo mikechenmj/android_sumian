@@ -1,10 +1,12 @@
 package com.sumian.sleepdoctor.chat.holder;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
@@ -28,6 +30,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TextNormalViewHolder extends BaseViewHolder<AVIMTextMessage> {
 
+    private static final String TAG = TextNormalViewHolder.class.getSimpleName();
+
     @BindView(R.id.tv_time_line)
     TextView mTvTimeLine;
 
@@ -45,12 +49,10 @@ public class TextNormalViewHolder extends BaseViewHolder<AVIMTextMessage> {
     @BindView(R.id.msg_send_error_view)
     MsgSendErrorView mMsgSendErrorView;
 
-    private boolean mIsLeft;
     private int mGroupId;
 
     public TextNormalViewHolder(ViewGroup parent, boolean isLeft) {
         super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_left_text_nomal_chat : R.layout.lay_item_right_text_normal_chat, parent, false));
-        this.mIsLeft = isLeft;
     }
 
     @Override
@@ -66,16 +68,24 @@ public class TextNormalViewHolder extends BaseViewHolder<AVIMTextMessage> {
     public void bindGroupId(int groupId) {
         this.mGroupId = groupId;
 
+        Log.e(TAG, "bindGroupId: ------1--->" + mItem.getMessageIOType() + "   " + mItem.getFrom());
+
         AppManager
                 .getHttpService()
-                .getLeancloudGroupUsers(mItem.getFrom(), mGroupId)
-                .enqueue(new BaseResponseCallback<JSONObject>() {
+                .getLeancloudGroupUsers(mItem.getFrom(), groupId)
+                .enqueue(new BaseResponseCallback<String>() {
 
                     @Override
-                    protected void onSuccess(JSONObject response) {
+                    protected void onSuccess(String response) {
+
+                        Log.e(TAG, "onSuccess: -------2----->" + mItem.getFrom() + "   " + response);
 
                         try {
-                            UserProfile tempUserProfile = (UserProfile) response.get(mItem.getFrom());
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String json = jsonObject.getString(mItem.getFrom());
+
+                            UserProfile tempUserProfile = JSON.parseObject(json, UserProfile.class);
 
                             if (tempUserProfile != null) {
                                 mTvNickname.setText(tempUserProfile.nickname);
