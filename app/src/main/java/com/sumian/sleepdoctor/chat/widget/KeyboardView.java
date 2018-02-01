@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.chat.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.text.emoji.widget.EmojiAppCompatEditText;
 import android.text.TextUtils;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.chat.AudioRecorder;
+import com.sumian.sleepdoctor.chat.utils.FilePathUtil;
 import com.sumian.sleepdoctor.chat.utils.UiUtil;
 
 import butterknife.BindView;
@@ -73,6 +76,14 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
     private InputMethodManager inputMethodManager;
     private Animation mAnimation;
+    private float mDownX;
+
+    private AudioRecorder mAudioRecorder;
+
+    private String mAudioFilePath;
+    private CountDownTimer mCountDownTimer;
+
+    private int mDuration;
 
     public KeyboardView(Context context) {
         this(context, null);
@@ -87,7 +98,6 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         init(context);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private void init(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_keybord_container, this));
         // mBtRecordVoice.setSavePath(LCIMPathUtils.getRecordPathByCurrentTime(getContext()));
@@ -95,18 +105,87 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
         mEtInput.setOnFocusChangeListener(this);
 
+        this.mAudioRecorder = AudioRecorder.init();
+
         mIvVoiceInput.setOnTouchListener((v, event) -> {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
+
                     mAnimation = AnimationUtils.loadAnimation(v.getContext(), R.anim.record_scale_anim);
                     mLayVoice.startAnimation(mAnimation);
+
+                    mAudioFilePath = FilePathUtil.makeFilePath(v.getContext(), AudioRecorder.AUDIO_DIR_PATH, System.currentTimeMillis() + AudioRecorder.AUDIO_SUFFIX_WAV);
+
+                    mDownX = event.getX();
+
+                    mTvVoiceLabel.setText("向右滑动,取消发送");
+                    mTvVoiceLabel.setTextColor(getResources().getColor(R.color.t2_color));
+
+                    if (mAudioRecorder.getState() != AudioRecorder.State.RECORDING) {
+                        this.mCountDownTimer = new CountDownTimer(60 * 1000, 1000) {
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                int time = (int) (millisUntilFinished / 1000L);
+
+                                mDuration = 60 - time;
+
+                                mTvVoiceLabel.setText(time + "s后停止录音");
+                                if (time <= 10) {
+                                    mTvVoiceLabel.setTextColor(getResources().getColor(R.color.t2_color));
+                                }
+
+                                if (mAudioRecorder.getState() != AudioRecorder.State.RECORDING) {
+                                    mAudioRecorder.setOutputFile(mAudioFilePath);
+                                    mAudioRecorder.prepare();
+                                    mAudioRecorder.start();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                mDuration = 0;
+                                mLayVoice.clearAnimation();
+                                mAudioRecorder.finishRecord();
+                                if (mOnKeyboardActionListener != null) {
+                                    mOnKeyboardActionListener.sendVoice(mAudioFilePath, mDuration);
+                                }
+                            }
+                        }.start();
+                    }
                     break;
+                case MotionEvent.ACTION_MOVE:
+
+                    float moveX = event.getX();
+                    if (moveX - mDownX > 10) {//向右滑动
+                        mTvVoiceLabel.setText("松开手指,取消发送");
+                        mTvVoiceLabel.setTextColor(getResources().getColor(R.color.t4_color));
+                        mIvGarbage.setImageResource(R.mipmap.inputbox_btn_delete_pre);
+
+                        mAudioRecorder.deleteListRecord();
+                        mAudioRecorder.finishRecord();
+
+                        mCountDownTimer.cancel();
+                        mDuration = 0;
+                        mLayVoice.clearAnimation();
+                    }
+
+                    break;
+                case MotionEvent.ACTION_CANCEL:
                 case MotionEvent.ACTION_UP:
                     mLayVoice.clearAnimation();
+                    mTvVoiceLabel.setText("按住说话");
+                    mTvVoiceLabel.setTextColor(getResources().getColor(R.color.t2_color));
+                    mIvGarbage.setImageResource(R.mipmap.inputbox_btn_delete_default);
+
+                    mCountDownTimer.onFinish();
+                    mCountDownTimer.cancel();
+                    mCountDownTimer = null;
                     break;
                 default:
                     break;
-
             }
             return true;
         });
@@ -175,6 +254,9 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
                     mIvVoice.setTag(null);
                 }
 
+                if (mOnKeyboardActionListener != null) {
+                    mOnKeyboardActionListener.CheckRecordPermission();
+                }
 
                 break;
             case R.id.iv_image:
@@ -225,6 +307,8 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         boolean active = inputMethodManager.isActive(v);
         // inputMethodManager.isWatchingCursor()
 
+        mTvVoiceContainer.setVisibility(GONE);
+
         Log.e(TAG, "onFocusChange: --------->" + hasFocus + "   " + active);
 
     }
@@ -245,6 +329,8 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         void sendPic();
 
         void sendVoice(String path, int duration);
+
+        void CheckRecordPermission();
 
     }
 }

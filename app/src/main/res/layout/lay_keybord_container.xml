@@ -34,8 +34,8 @@
             android:paddingLeft="@dimen/space_6"
             android:paddingRight="@dimen/space_6"
             android:paddingTop="@dimen/space_4"
-            android:text="回答:sadasdsadad"
             android:visibility="gone"
+            tools:text="回答:sadasdsadad"
             tools:visibility="visible" />
 
         <android.support.text.emoji.widget.EmojiAppCompatEditText

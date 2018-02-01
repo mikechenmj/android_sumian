@@ -1,7 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/b1_color"
     android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/group_detail" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/space_20"
+                android:paddingLeft="@dimen/space_28"
+                android:paddingRight="@dimen/space_28"
+                android:paddingTop="@dimen/space_20">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_group_icon"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/group_avatar"
+                    app:civ_border_color="@color/b2_color"
+                    app:civ_border_overlay="true"
+                    app:civ_border_width="@dimen/space_4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_desc"
+                    style="@style/text_t3_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginRight="@dimen/space_16"
+                    android:maxEms="10"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:singleLine="true"
+                    android:textSize="@dimen/font_20"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_doctor_name"
+                    app:layout_constraintLeft_toRightOf="@id/iv_group_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="一个有十二个字符的随访群" />
+
+                <TextView
+                    android:id="@+id/tv_doctor_name"
+                    style="@style/text_t1_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_16"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxEms="10"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:singleLine="true"
+                    android:textSize="@dimen/font_16"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_group_icon"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_desc"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+                    tools:text="医生 : 二货" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:background="@color/b2_color"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_t1_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_16"
+                    android:layout_marginLeft="@dimen/space_28"
+                    android:layout_marginRight="@dimen/space_28"
+                    android:layout_marginTop="@dimen/space_16"
+                    android:gravity="center"
+                    android:text="@string/brief" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1"
+                    android:layout_marginLeft="@dimen/space_28"
+                    android:background="@color/l1_color"
+                    tools:ignore="RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/tv_group_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_16"
+                    android:layout_marginLeft="@dimen/space_28"
+                    android:layout_marginRight="@dimen/space_28"
+                    android:layout_marginTop="@dimen/space_16"
+                    tools:text="这里是一个群的介绍,也可以是医生信息的介绍.大萨达大所大大所大撒大大大大大大大大大大多所大大奥奥大大大大大大大大大dddddd" />
+            </LinearLayout>
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/sdv_renewal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_68"
+                app:type_content="@string/renewal"
+                app:type_desc="@string/remain_days" />
+
+            <net.qiujuer.genius.ui.widget.Button
+                android:id="@+id/bt_join_up"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_72"
+                android:layout_marginTop="@dimen/space_16"
+                android:background="@color/b2_color"
+                android:clickable="true"
+                android:elevation="@dimen/space_1"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/join_up_group"
+                android:textColor="@color/t4_color"
+                android:textSize="@dimen/font_20"
+                app:gTouchCornerRadius="@dimen/space_32"
+                app:gTouchEffect="ripple"
+                tools:targetApi="lollipop" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

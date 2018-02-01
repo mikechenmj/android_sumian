@@ -21,7 +21,7 @@ public class FilePathUtil {
      * @return 生成的文件路径
      */
     public static String makeFilePath(Context context, String folderPath, String fileName) {
-        File file = null;
+        File file;
         if (android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED)) {
             file = new File(android.os.Environment.getExternalStorageDirectory(),

@@ -9,6 +9,7 @@ import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
+import com.sumian.sleepdoctor.chat.player.VoicePlayer;
 import com.sumian.sleepdoctor.network.api.DoctorApi;
 import com.sumian.sleepdoctor.network.engine.NetEngine;
 import com.sumian.sleepdoctor.tab.model.GroupViewModel;
@@ -28,6 +29,8 @@ public final class AppManager {
     private GroupViewModel mGroupViewModel;
 
     private ChatEngine mChatEngine;
+
+    private VoicePlayer mVoicePlayer;
 
     private AppManager() {
     }
@@ -53,6 +56,10 @@ public final class AppManager {
             Holder.INSTANCE.mGroupViewModel = new GroupViewModel();
         }
         return Holder.INSTANCE.mGroupViewModel;
+    }
+
+    public static synchronized VoicePlayer getVoicePlayer() {
+        return Holder.INSTANCE.mVoicePlayer == null ? Holder.INSTANCE.mVoicePlayer = new VoicePlayer() : Holder.INSTANCE.mVoicePlayer;
     }
 
     public static synchronized DoctorApi getHttpService() {

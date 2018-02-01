@@ -36,6 +36,7 @@ public interface MsgContract {
 
         void onPermissionsDenied(int requestCode, List<String> perms);
 
+        void callRecord();
     }
 
     interface Presenter extends BasePresenter {
@@ -50,7 +51,7 @@ public interface MsgContract {
 
         void sendPicMsg(Activity activity, int type);
 
-        void sendVoice(Activity activity, String recordFilePath, int second);
+        void checkRecordPermission(Activity activity);
 
         void syncMsgHistory(String conversationId);
 
@@ -61,6 +62,7 @@ public interface MsgContract {
         void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
 
 
+        void senAudioMsg(String audioFilePath, int duration);
     }
 
 }

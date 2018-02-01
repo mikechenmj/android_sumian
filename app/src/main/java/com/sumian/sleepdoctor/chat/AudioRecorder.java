@@ -21,43 +21,18 @@ import java.util.List;
  * desc:
  */
 
-public class AudioRecorderEx {
+public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener {
 
-    private static final String TAG = AudioRecorderEx.class.getSimpleName();
+    private static final String TAG = AudioRecorder.class.getSimpleName();
 
     public static final String AUDIO_SUFFIX_WAV = ".wav";
-
     public static final String AUDIO_SUFFIX_MP3 = ".mp3";
     public static final String AUDIO_DIR_PATH = "audioRecorderEx";
 
-    private List<String> mRecordFiles = new ArrayList<String>();
+    private List<String> mRecordFiles = new ArrayList<>();
     private String savePath;
 
-    private static Context mContext;
-
-    private final static int[] sampleRates = {44100, 22050, 11025, 8000};
-
-    public static AudioRecorderEx getInstance(Context context) {
-        mContext = context;
-        AudioRecorderEx result = new AudioRecorderEx(MediaRecorder.AudioSource.MIC,
-                sampleRates[3], AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT);
-
-        return result;
-    }
-
-
-    /**
-     * INITIALIZING : recorder is initializing; READY : recorder has been
-     * initialized, recorder not yet started RECORDING : recording ERROR :
-     * reconstruction needed STOPPED: reset needed
-     */
-    public enum State {
-        INITIALIZING, READY, RECORDING, ERROR, STOPPED
-    }
-
-    ;
-
+    private int lastCamplitude = 0;
 
     //public static final boolean RECORDING_UNCOMPRESSED = true;
 
@@ -115,77 +90,16 @@ public class AudioRecorderEx {
     // the wave file
     private int payloadSize;
 
+
+    private final static int[] sampleRates = {44100, 22050, 11025, 8000};
+
     /**
-     * Returns the state of the recorder in a RehearsalAudioRecord.State typed
-     * object. Useful, as no exceptions are thrown.
-     *
-     * @return recorder state
+     * INITIALIZING : recorder is initializing; READY : recorder has been
+     * initialized, recorder not yet started RECORDING : recording ERROR :
+     * reconstruction needed STOPPED: reset needed
      */
-    public State getState() {
-        return state;
-    }
-
-
-    private int lastCamplitude = 0;
-    /*
-     * Method used for recording.
-     */
-    private AudioRecord.OnRecordPositionUpdateListener updateListener = new AudioRecord.OnRecordPositionUpdateListener() {
-
-        public void onPeriodicNotification(AudioRecord recorder) {
-            //Log.i("buffer", "start write time:" + System.currentTimeMillis());
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    writeData();
-                }
-            }).start();
-
-        }
-
-        public void onMarkerReached(AudioRecord recorder) {
-            // NOT USED
-        }
-    };
-
-    private synchronized void writeData() {
-        if (state == State.STOPPED) {
-            return;
-            //stopRecording();
-        }
-
-        audioRecorder.read(buffer, 0, buffer.length); // Fill buffer
-        //Toast.makeText(mContext, "writing", Toast.LENGTH_SHORT).show();
-        try {
-            //rawFile.write(buffer);
-            randomAccessWriter.write(buffer); // Write buffer to file
-            payloadSize += buffer.length;
-            Log.i(TAG, "buffer size:" + buffer.length + " payloadSize:" + payloadSize);
-            if (bSamples == 16) {
-                //long len = 0;
-                for (int i = 0; i < buffer.length / 2; i++) { // 16bit
-                    // sample
-                    // size
-                    short curSample = getShort(buffer[i * 2],
-                            buffer[i * 2 + 1]);
-                    if (curSample > cAmplitude) { // Check amplitude
-                        //cAmplitude = Math.abs(curSample);
-                        cAmplitude = curSample;
-                    }
-                    //len += buffer[i] * buffer[i];
-                }
-                //cAmplitude = (int)(len / (double) r);
-            } else { // 8bit sample size
-                for (int i = 0; i < buffer.length; i++) {
-                    if (buffer[i] > cAmplitude) { // Check amplitude
-                        cAmplitude = buffer[i];
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error occured in updateListener, recording is aborted");
-            //stop();
-        }
+    public enum State {
+        INITIALIZING, READY, RECORDING, ERROR, STOPPED
     }
 
     /**
@@ -195,8 +109,7 @@ public class AudioRecorderEx {
      * parameters can be left as 0. In case of errors, no exception is thrown,
      * but the state is set to ERROR
      */
-    public AudioRecorderEx(int audioSource,
-                           int sampleRate, int channelConfig, int audioFormat) {
+    private AudioRecorder(int audioSource, int sampleRate, int channelConfig, int audioFormat) {
         try {
             if (audioFormat == AudioFormat.ENCODING_PCM_16BIT) {
                 bSamples = 16;
@@ -230,12 +143,13 @@ public class AudioRecorderEx {
 
             }
 
-            audioRecorder = new AudioRecord(audioSource, sampleRate,
-                    channelConfig, audioFormat, bufferSize);
+            audioRecorder = new AudioRecord(audioSource, sampleRate, channelConfig, audioFormat, bufferSize);
 
-            if (audioRecorder.getState() != AudioRecord.STATE_INITIALIZED)
+            if (audioRecorder.getState() != AudioRecord.STATE_INITIALIZED) {
                 throw new Exception("AudioRecord initialization failed");
-            audioRecorder.setRecordPositionUpdateListener(updateListener);
+            }
+
+            audioRecorder.setRecordPositionUpdateListener(this);
             audioRecorder.setPositionNotificationPeriod(framePeriod);
 
 
@@ -250,6 +164,71 @@ public class AudioRecorderEx {
 
             }
             state = State.ERROR;
+        }
+    }
+
+
+    public static AudioRecorder init() {
+        return new AudioRecorder(MediaRecorder.AudioSource.MIC, sampleRates[0], AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_16BIT);
+    }
+
+    @Override
+    public void onMarkerReached(AudioRecord recorder) {
+
+    }
+
+    @Override
+    public void onPeriodicNotification(AudioRecord recorder) {
+        //Log.i("buffer", "start write time:" + System.currentTimeMillis());
+        new Thread(this::writeData).start();
+    }
+
+    /**
+     * Returns the state of the recorder in a RehearsalAudioRecord.State typed
+     * object. Useful, as no exceptions are thrown.
+     *
+     * @return recorder state
+     */
+    public State getState() {
+        return state;
+    }
+
+    private synchronized void writeData() {
+        if (state == State.STOPPED) {
+            return;
+            //stopRecording();
+        }
+
+        audioRecorder.read(buffer, 0, buffer.length); // Fill buffer
+        //Toast.makeText(mContext, "writing", Toast.LENGTH_SHORT).show();
+        try {
+            //rawFile.write(buffer);
+            randomAccessWriter.write(buffer); // Write buffer to file
+            payloadSize += buffer.length;
+            Log.i(TAG, "buffer size:" + buffer.length + " payloadSize:" + payloadSize);
+            if (bSamples == 16) {
+                //long len = 0;
+                for (int i = 0; i < (buffer.length >> 1); i++) { // 16bit
+                    // sample
+                    // size
+                    short curSample = getShort(buffer[i * 2], buffer[i * 2 + 1]);
+                    if (curSample > cAmplitude) { // Check amplitude
+                        //cAmplitude = Math.abs(curSample);
+                        cAmplitude = curSample;
+                    }
+                    //len += buffer[i] * buffer[i];
+                }
+                //cAmplitude = (int)(len / (double) r);
+            } else { // 8bit sample size
+                for (byte aBuffer : buffer) {
+                    if (aBuffer > cAmplitude) { // Check amplitude
+                        cAmplitude = aBuffer;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error occured in updateListener, recording is aborted");
+            //stop();
         }
     }
 
@@ -323,8 +302,7 @@ public class AudioRecorderEx {
                 if ((audioRecorder.getState() == AudioRecord.STATE_INITIALIZED)
                         & (savePath != null)) {
 
-                    randomAccessWriter = new RandomAccessFile(savePath,
-                            "rw");
+                    randomAccessWriter = new RandomAccessFile(savePath, "rw");
 
                     randomAccessWriter.setLength(0); // Set file length to
                     // 0, to prevent
@@ -500,8 +478,8 @@ public class AudioRecorderEx {
     }
 
 
-    public File mergeAudioFile() {
-        String path = FilePathUtil.makeFilePath(mContext, AUDIO_DIR_PATH, "merge" + System.currentTimeMillis() + AUDIO_SUFFIX_WAV);
+    public File mergeAudioFile(Context context) {
+        String path = FilePathUtil.makeFilePath(context, AUDIO_DIR_PATH, "merge" + System.currentTimeMillis() + AUDIO_SUFFIX_WAV);
         File mixFile = new File(path);
         if (mRecordFiles.size() == 0) {
             return mixFile;
@@ -582,8 +560,8 @@ public class AudioRecorderEx {
     }
 
 
-    public String getMixAudioFilePath(String mixFileName) {
-        return FilePathUtil.makeFilePath(mContext, AUDIO_DIR_PATH, mixFileName);
+    public String getMixAudioFilePath(Context context,String mixFileName) {
+        return FilePathUtil.makeFilePath(context, AUDIO_DIR_PATH, mixFileName);
     }
 
 
@@ -597,7 +575,7 @@ public class AudioRecorderEx {
         if (audioDir.exists() && audioDir.isDirectory()) {
             File[] files = audioDir.listFiles();
             for (int i = 0; i < files.length; i++) {
-                if (!files[i].getName().endsWith(AudioRecorderEx.AUDIO_SUFFIX_MP3)) {
+                if (!files[i].getName().endsWith(AudioRecorder.AUDIO_SUFFIX_MP3)) {
                     files[i].delete();
                 }
             }

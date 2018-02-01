@@ -12,9 +12,9 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.avos.avoscloud.im.v2.AVIMMessageHandler;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMClientStatusCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
@@ -45,7 +45,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     private Handler mHandler;
 
-    private AVIMMessageHandler mMessageHandler;
+    private AVIMTypedMessageHandler<AVIMTypedMessage> mMessageHandler;
 
     private List<OnMsgCallback> mOnMsgCallbacks;
 
@@ -73,25 +73,23 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     @Override
     public void registerMsgHandler() {
-        AVIMMessageManager.registerMessageHandler(AVIMMessage.class, mMessageHandler = new AVIMMessageHandler() {
+
+        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, mMessageHandler = new AVIMTypedMessageHandler<AVIMTypedMessage>() {
+
             @Override
-            public void onMessage(AVIMMessage avimMessage, AVIMConversation avimConversation, AVIMClient avimClient) {
-                Log.e(TAG, "onMessage: --------->" + avimMessage.toString());
-
-                if (!(avimMessage instanceof AVIMTypedMessage)) return;
-
+            public void onMessage(AVIMTypedMessage message, AVIMConversation conversation, AVIMClient client) {
+                super.onMessage(message, conversation, client);
+                Log.e(TAG, "onMessage: --------->" + message.toString());
                 if (mOnMsgCallbacks == null || mOnMsgCallbacks.isEmpty()) return;
                 for (OnMsgCallback onMsgCallback : mOnMsgCallbacks) {
-                    if (onMsgCallback != null) {
-                        onMsgCallback.onMsgCallback((AVIMTypedMessage) avimMessage);
-                    }
+                    onMsgCallback.onMsgCallback(message);
                 }
             }
 
             @Override
-            public void onMessageReceipt(AVIMMessage avimMessage, AVIMConversation avimConversation, AVIMClient avimClient) {
-
-                Log.e(TAG, "onMessageReceipt: --------->" + avimMessage.toString());
+            public void onMessageReceipt(AVIMTypedMessage message, AVIMConversation conversation, AVIMClient client) {
+                super.onMessageReceipt(message, conversation, client);
+                Log.e(TAG, "onMessageReceipt: --------->" + message.toString());
             }
         });
     }

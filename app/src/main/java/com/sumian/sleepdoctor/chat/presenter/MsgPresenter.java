@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -18,6 +17,7 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
+import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.common.media.Callback;
@@ -214,9 +214,12 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
     @AfterPermissionGranted(RECORD_PERM)
     @Override
-    public void sendVoice(Activity activity, String recordFilePath, int second) {
-        String[] perms = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
+    public void checkRecordPermission(Activity activity) {
+        String[] perms = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(activity, perms)) {
+            if (mView != null) {
+                mView.callRecord();
+            }
         } else {
             // Request one permission
             EasyPermissions.requestPermissions(activity, activity.getResources().getString(R.string.str_request_record_message), RECORD_PERM, perms);
@@ -249,39 +252,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         }
     }
 
-    /**
-     * send image
-     *
-     * @param selectedImage selectedImage
-     */
-    private void sendPicByUri(Uri selectedImage) {
-
-        // WeakReference<MsgContract.View> viewWeakReference = this.mViewWeakReference;
-        //MsgContract.View view = viewWeakReference.get();
-
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor cursor = App.Companion.getAppContext().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            this.mLocalImagePath = picturePath;
-            if (picturePath == null || picturePath.equals("null")) {
-                return;
-            }
-            //updateLocalCache();
-        } else {
-            File file = new File(selectedImage.getPath());
-            this.mLocalImagePath = file.getAbsolutePath();
-            if (!file.exists()) {
-                return;
-            }
-            // updateLocalCache();
-        }
-    }
-
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
 
@@ -296,6 +266,21 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void senAudioMsg(String audioFilePath, int duration) {
+        AVIMAudioMessage msg = null;
+        try {
+            msg = new AVIMAudioMessage(audioFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (mView != null) {
+            mView.onSendingMsg(msg);
+        }
+        AppManager.getChatEngine().sendMsg(msg);
     }
 
     private File generateImagePath(String userName, Context applicationContext) {

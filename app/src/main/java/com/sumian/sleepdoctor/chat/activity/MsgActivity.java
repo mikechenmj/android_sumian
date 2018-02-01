@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -88,6 +89,8 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+
+        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
 
         mTitleBar.addOnBackListener(this).addOnMoreListener(this);
         //  mRefreshView.setOnRefreshListener(this);
@@ -173,6 +176,11 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         }
     }
 
+    @Override
+    public void callRecord() {
+
+    }
+
 
     @Override
     protected void onRelease() {
@@ -238,7 +246,12 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void sendVoice(String path, int duration) {
-        mPresenter.sendVoice(this, path, duration);
+        mPresenter.senAudioMsg(path, duration);
+    }
+
+    @Override
+    public void CheckRecordPermission() {
+        mPresenter.checkRecordPermission(this);
     }
 
     @Override
