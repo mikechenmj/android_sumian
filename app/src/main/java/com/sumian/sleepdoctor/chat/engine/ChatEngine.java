@@ -168,11 +168,14 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     @Override
     public void sendMsg(AVIMMessage msg) {
+        msg.setTimestamp(System.currentTimeMillis());
+
         this.mAVIMConversation.sendMessage(msg, new AVIMConversationCallback() {
             @Override
             public void done(AVIMException e) {
                 if (e == null) {
                     Log.e(TAG, "done: ------msg send success--->");
+                    mAVIMConversation.addToLocalCache(msg);
                 } else {
                     Log.e(TAG, "done: ------msg  send failed---->" + e.toString());
                 }

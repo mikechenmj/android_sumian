@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.pager.activity;
 
-import android.util.Log;
 import android.view.View;
 
 import com.sumian.sleepdoctor.R;
@@ -45,9 +44,7 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
                     MainActivity.show(WelcomeActivity.this, MainActivity.class);
                 }
                 finish();
-            }, 500);
-
-            Log.e(TAG, "onChanged: ---------->" + token);
+            }, 10);
         });
     }
 }

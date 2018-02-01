@@ -31,8 +31,8 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="欧主任"
-            android:textSize="@dimen/font_12" />
+            android:textSize="@dimen/font_12"
+            tools:text="欧主任" />
 
         <TextView
             android:id="@+id/tv_label"
@@ -44,9 +44,9 @@
             android:background="@drawable/bg_chat_doctor_label"
             android:paddingLeft="@dimen/space_2"
             android:paddingRight="@dimen/space_2"
-            tools:text="医生"
             android:textColor="@color/b2_color"
-            android:textSize="@dimen/font_16" />
+            android:textSize="@dimen/font_16"
+            tools:text="医生" />
 
     </LinearLayout>
 

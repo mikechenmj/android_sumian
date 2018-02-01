@@ -33,7 +33,7 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
 
     protected Item mItem;
 
-    private OnReplayListener<Item> mOnReplayListener;
+    protected OnReplayListener<Item> mOnReplayListener;
 
     public BaseViewHolder(View itemView) {
         super(itemView);
@@ -107,9 +107,6 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     protected boolean onItemLongClick(View v) {
         Log.e(TAG, "onItemLongClick: ----------->" + v.toString());
 
-        if (mOnReplayListener != null) {
-            mOnReplayListener.onReplyMsg(mItem);
-        }
         return false;
     }
 

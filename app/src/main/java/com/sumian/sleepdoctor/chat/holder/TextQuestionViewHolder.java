@@ -4,6 +4,7 @@ import android.support.text.emoji.widget.EmojiAppCompatTextView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
+import com.sumian.sleepdoctor.chat.widget.CustomPopWindow;
 import com.sumian.sleepdoctor.chat.widget.MsgSendErrorView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 
@@ -32,6 +34,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class TextQuestionViewHolder extends BaseViewHolder<AVIMTextMessage> {
+
+    private static final String TAG = TextQuestionViewHolder.class.getSimpleName();
 
     @BindView(R.id.tv_time_line)
     TextView mTvTimeLine;
@@ -76,6 +80,29 @@ public class TextQuestionViewHolder extends BaseViewHolder<AVIMTextMessage> {
     @Override
     public void onClick(View v) {
         super.onClick(v);
+    }
+
+    @Override
+    protected boolean onItemLongClick(View v) {
+
+        View rootView = LayoutInflater.from(v.getContext()).inflate(R.layout.lay_pop_question, null, false);
+
+        CustomPopWindow popWindow = new CustomPopWindow.PopupWindowBuilder(v.getContext())
+                .setView(rootView)//显示的布局，还可以通过设置一个View
+                //     .size(600,400) //设置显示的大小，不设置就默认包裹内容
+                .setFocusable(true)//是否获取焦点，默认为ture
+                .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
+                .create()//创建PopupWindow
+                .showAsDropDown(mTvMsg, 0, (int) (-2.5 * mTvMsg.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
+
+        rootView.setOnClickListener(v1 -> {
+            popWindow.dissmiss();
+            if (mOnReplayListener != null) {
+                mOnReplayListener.onReplyMsg(mItem);
+            }
+        });
+
+        return super.onItemLongClick(v);
     }
 
     public void bindGroupId(int groupId) {

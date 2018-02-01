@@ -18,7 +18,7 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMSingleMessageQueryCallback;
+import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
@@ -29,6 +29,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +78,21 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     @Override
     public void syncPreMsgHistory(String conversationId) {
         ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
-        syncMsgHistory(mLastMsg, true, avimTypedMessages, conversationId, 20);
+        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
+        avimConversation.queryMessages(mLastMsg.getMessageId(), mLastMsg.getTimestamp(), 20, new AVIMMessagesQueryCallback() {
+            @Override
+            public void done(List<AVIMMessage> list, AVIMException e) {
+                if (!list.isEmpty()) {
+                    mLastMsg = list.get(0);
+                    for (AVIMMessage message : list) {
+                        avimTypedMessages.add((AVIMTypedMessage) message);
+                    }
+                    mView.onSyncPreMsgHistorySuccess(avimTypedMessages);
+                } else {
+                    mView.onNoHaveMsg();
+                }
+            }
+        });
     }
 
     @Override
@@ -86,11 +101,18 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
         ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
 
-        avimConversation.getLastMessage(new AVIMSingleMessageQueryCallback() {
+        avimConversation.queryMessages(20, new AVIMMessagesQueryCallback() {
             @Override
-            public void done(AVIMMessage avimMessage, AVIMException e) {
-                avimTypedMessages.add((AVIMTypedMessage) avimMessage);
-                syncMsgHistory(avimMessage, false, avimTypedMessages, conversationId, 19);
+            public void done(List<AVIMMessage> list, AVIMException e) {
+                if (!list.isEmpty()) {
+                    mLastMsg = list.get(0);
+                    for (AVIMMessage message : list) {
+                        avimTypedMessages.add((AVIMTypedMessage) message);
+                    }
+                    mView.onSyncMsgHistorySuccess(avimTypedMessages);
+                } else {
+                    mView.onNoHaveMsg();
+                }
             }
         });
     }
@@ -132,7 +154,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         if (type == PIC_REQUEST_CODE_LOCAL) {//pic local
             ImagePickerActivity.show(activity, new SelectOptions
                     .Builder()
-                    .setHasCam(true)
+                    .setHasCam(false)
                     .setSelectCount(9)
                     .setSelectedImages(new String[]{})
                     .setCallback(new Callback() {
@@ -140,18 +162,31 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
                         @Override
                         public void doSelected(String[] images) {
                             super.doSelected(images);
+
                             for (String image : images) {
-                                Log.e(TAG, "doSelected: ---------->" + image);
+                                Log.e(TAG, "doSelected: -------->" + images.toString());
+
+                                AVIMImageMessage msg = null;
+                                try {
+                                    msg = new AVIMImageMessage(image);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (mView != null)
+                                    mView.onSendingMsg(msg);
+
+                                AppManager.getChatEngine().sendMsg(msg);
                             }
 
                         }
                     }).build());
 
         } else {//pic camera
-
             String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
             if (EasyPermissions.hasPermissions(activity, perms)) {
 
+                cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
                 //noinspection ResultOfMethodCallIgnored
                 cameraFile.getParentFile().mkdirs();
 
@@ -195,7 +230,17 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
                 case PIC_REQUEST_CODE_CAMERA:// capture new image
                     if (cameraFile != null && cameraFile.exists()) {
                         this.mLocalImagePath = cameraFile.getAbsolutePath();
-                        // updateLocalCache();
+                        AVIMImageMessage msg = null;
+                        try {
+                            msg = new AVIMImageMessage(mLocalImagePath);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (mView != null)
+                            mView.onSendingMsg(msg);
+
+                        AppManager.getChatEngine().sendMsg(msg);
                     }
                     break;
                 default:
@@ -251,30 +296,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-
-    private void syncMsgHistory(AVIMMessage lastMsg, boolean isLoadPre, ArrayList<AVIMTypedMessage> avimTypedMessages, String conversationId, int limit) {
-        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
-
-        avimConversation.queryMessages(lastMsg.getMessageId(), lastMsg.getTimestamp(), limit, new AVIMMessagesQueryCallback() {
-            @Override
-            public void done(List<AVIMMessage> list, AVIMException e) {
-                if (!list.isEmpty()) {
-                    mLastMsg = list.get(0);
-                    for (AVIMMessage message : list) {
-                        avimTypedMessages.add(0, (AVIMTypedMessage) message);
-                    }
-                    if (isLoadPre) {
-                        mView.onSyncPreMsgHistorySuccess(avimTypedMessages);
-                    } else {
-                        mView.onSyncMsgHistorySuccess(avimTypedMessages);
-                    }
-                } else {
-                    mView.onNoHaveMsg();
-                }
-            }
-        });
     }
 
     private File generateImagePath(String userName, Context applicationContext) {

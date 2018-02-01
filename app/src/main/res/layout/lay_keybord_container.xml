@@ -69,7 +69,7 @@
         <ImageView
             android:id="@+id/bt_question"
             android:layout_width="@dimen/len_96"
-            android:layout_height="@dimen/space_40"
+            android:layout_height="@dimen/space_32"
             android:contentDescription="@null"
             android:padding="@dimen/space_8"
             android:scaleType="centerCrop"
@@ -81,7 +81,7 @@
             android:layout_height="@dimen/space_48"
             android:layout_marginRight="@dimen/space_8"
             android:contentDescription="@null"
-            android:padding="@dimen/space_4"
+            android:padding="@dimen/space_6"
             app:srcCompat="@mipmap/inputbox_icon_voice"
             tools:ignore="RtlHardcoded" />
 
@@ -90,7 +90,7 @@
             android:layout_width="@dimen/space_48"
             android:layout_height="@dimen/space_48"
             android:contentDescription="@null"
-            android:padding="@dimen/space_4"
+            android:padding="@dimen/space_6"
             app:srcCompat="@mipmap/inputbox_icon_image" />
 
         <Space
@@ -102,11 +102,9 @@
             android:id="@+id/bt_send"
             style="@style/bt_t2_style"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/space_44"
-            android:paddingLeft="@dimen/space_4"
-            android:paddingRight="@dimen/space_4"
+            android:layout_height="@dimen/space_36"
             android:text="@string/send"
-            android:textSize="@dimen/font_20" />
+            android:textSize="@dimen/font_16" />
     </LinearLayout>
 
     <RelativeLayout
@@ -126,27 +124,42 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/space_20"
             android:gravity="center"
-            android:text="@string/talk" />
+            android:text="@string/talk"
+            android:textSize="@dimen/font_16" />
 
-        <ImageView
-            android:id="@+id/iv_voice_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:id="@+id/lay_voice"
+            android:layout_width="@dimen/space_120"
+            android:layout_height="@dimen/space_120"
             android:layout_below="@+id/tv_voice_label"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/space_20"
-            android:contentDescription="@null"
-            app:srcCompat="@mipmap/inputbox_btn_voice_default" />
+            android:layout_marginBottom="@dimen/space_20">
+
+            <ImageView
+                android:id="@+id/iv_voice_anim"
+                android:layout_width="@dimen/space_100"
+                android:layout_height="@dimen/space_100"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                app:srcCompat="@drawable/shape_circle_voice" />
+
+            <ImageView
+                android:id="@+id/iv_voice_input"
+                android:layout_width="@dimen/space_72"
+                android:layout_height="@dimen/space_72"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                app:srcCompat="@mipmap/inputbox_btn_voice_pre_icon" />
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/iv_garbage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_voice_input"
-            android:layout_alignLeft="@+id/iv_voice_input"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/space_10"
-            android:layout_marginLeft="@dimen/space_100"
+            android:layout_alignBottom="@+id/lay_voice"
+            android:layout_marginBottom="34dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/lay_voice"
             android:contentDescription="@null"
             app:srcCompat="@mipmap/inputbox_btn_delete_default"
             tools:ignore="RtlHardcoded" />

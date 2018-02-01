@@ -1,12 +1,16 @@
 package com.sumian.sleepdoctor.chat.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.text.emoji.widget.EmojiAppCompatEditText;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -50,8 +54,13 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
     @BindView(R.id.tv_voice_label)
     TextView mTvVoiceLabel;
+
+    @BindView(R.id.iv_voice_anim)
+    ImageView mLayVoice;
+
     @BindView(R.id.iv_voice_input)
     ImageView mIvVoiceInput;
+
     @BindView(R.id.iv_garbage)
     ImageView mIvGarbage;
 
@@ -63,6 +72,7 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
     private onKeyboardActionListener mOnKeyboardActionListener;
 
     private InputMethodManager inputMethodManager;
+    private Animation mAnimation;
 
     public KeyboardView(Context context) {
         this(context, null);
@@ -77,6 +87,7 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         init(context);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void init(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_keybord_container, this));
         // mBtRecordVoice.setSavePath(LCIMPathUtils.getRecordPathByCurrentTime(getContext()));
@@ -84,11 +95,25 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
         mEtInput.setOnFocusChangeListener(this);
 
+        mIvVoiceInput.setOnTouchListener((v, event) -> {
+            switch (event.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    mAnimation = AnimationUtils.loadAnimation(v.getContext(), R.anim.record_scale_anim);
+                    mLayVoice.startAnimation(mAnimation);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    mLayVoice.clearAnimation();
+                    break;
+                default:
+                    break;
+
+            }
+            return true;
+        });
     }
 
-    public KeyboardView setOnKeyboardActionListener(onKeyboardActionListener onKeyboardActionListener) {
+    public void setOnKeyboardActionListener(onKeyboardActionListener onKeyboardActionListener) {
         mOnKeyboardActionListener = onKeyboardActionListener;
-        return this;
     }
 
     public String getContent() {
@@ -106,7 +131,8 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         return mReplyMsg;
     }
 
-    @OnClick({R.id.bt_question, R.id.et_input, R.id.iv_voice, R.id.iv_image, R.id.bt_send, R.id.iv_garbage, R.id.keyboardView})
+    @OnClick({R.id.bt_question, R.id.et_input, R.id.iv_voice, R.id.iv_image, R.id.bt_send,
+            R.id.iv_garbage, R.id.keyboardView})
     @Override
     public void onClick(View v) {
         mTvAnswerLabel.setVisibility(GONE);

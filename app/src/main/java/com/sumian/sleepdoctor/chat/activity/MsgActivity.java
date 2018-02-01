@@ -30,6 +30,7 @@ import com.sumian.sleepdoctor.widget.TitleBar;
 import java.util.List;
 
 import butterknife.BindView;
+import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -168,7 +169,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-
+            new AppSettingsDialog.Builder(this).build().show();
         }
     }
 

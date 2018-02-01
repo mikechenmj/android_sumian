@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16"
-    android:rotationX="180"
-    android:rotationY="0">
+    android:padding="@dimen/space_16">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -67,7 +65,7 @@
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
 
-        <com.sumian.app.widget.BubbleImageView
+        <com.sumian.sleepdoctor.chat.widget.BubbleImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_160"

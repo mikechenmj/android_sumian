@@ -1,11 +1,14 @@
 package com.sumian.sleepdoctor.chat.holder;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
+import com.bumptech.glide.request.RequestOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -28,6 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ImageNormalViewHolder extends BaseViewHolder<AVIMImageMessage> {
 
+    private static final String TAG = ImageNormalViewHolder.class.getSimpleName();
+
     @BindView(R.id.tv_time_line)
     TextView mTvTimeLine;
 
@@ -46,14 +51,35 @@ public class ImageNormalViewHolder extends BaseViewHolder<AVIMImageMessage> {
     CircleImageView mIvIcon;
 
     private int mGroupId;
+    private String mMediaUrlPath;
+
+    private boolean mIsLeft;
 
     public ImageNormalViewHolder(ViewGroup parent, boolean isLeft) {
         super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_left_image_normal_chat : R.layout.lay_item_right_image_normal_chat, parent, false));
+        this.mIsLeft = isLeft;
     }
 
     @Override
     public void initView(AVIMImageMessage avimImageMessage) {
         super.initView(avimImageMessage);
+
+        Log.e(TAG, "initView: --------->");
+
+        String thumbnailUrl = avimImageMessage.getAVFile().getThumbnailUrl(true, 100, 160);
+
+        String localFilePath = avimImageMessage.getLocalFilePath();
+
+        if (TextUtils.isEmpty(localFilePath)) {
+            localFilePath = avimImageMessage.getFileUrl();
+        }
+
+        RequestOptions options = new RequestOptions();
+        options.error(mIsLeft ? R.drawable.group_chatbubble_l : R.drawable.group_chatbubble_r)
+                .getOptions();
+
+        this.mMediaUrlPath = localFilePath;
+        mLoader.load(localFilePath).apply(options).thumbnail(mLoader.load(thumbnailUrl).apply(options)).into(mBivImage);
 
     }
 
