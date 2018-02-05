@@ -108,5 +108,9 @@
     <string name="remain_days">剩余天数</string>
     <string name="renewal">续费</string>
     <string name="join_up_group">退出群组</string>
+    <string name="from_qr_code_join_group">扫一扫上面的二维码图案,加入此群</string>
+    <string name="is_renew">是否续费?</string>
+    <string name="group_invalid">该群已过期,续费后可继续使用</string>
+    <string name="go_renew">去续费</string>
 
 </resources>

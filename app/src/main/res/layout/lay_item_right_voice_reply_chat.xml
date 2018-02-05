@@ -65,33 +65,77 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <View
-                android:id="@+id/voice_dot"
-                android:layout_width="@dimen/space_8"
-                android:layout_height="@dimen/space_8"
-                android:background="@drawable/bg_tab_dot" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_12"
+            android:layout_weight="1"
+            android:background="@drawable/group_chatbubble_r"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_voice_duration"
+                style="@style/text_t1_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_8"
+                android:text="@string/answer"
+                android:textColor="@color/b2_color"
+                android:textSize="@dimen/font_14" />
+
+            <android.support.text.emoji.widget.EmojiAppCompatTextView
+                android:id="@+id/tv_reply"
                 style="@style/text_t2_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="60''" />
-        </FrameLayout>
+                android:layout_marginLeft="@dimen/space_8"
+                android:layout_marginRight="@dimen/space_8"
+                android:background="@drawable/shape_answer_right_label"
+                android:lineSpacingExtra="@dimen/space_4"
+                android:padding="@dimen/space_8"
+                android:textColor="@color/b2_color"
+                android:textSize="@dimen/font_12"
+                tools:text="我去一个我需要去的地方,那是一个没了的地方" />
 
-        <com.sumian.sleepdoctor.chat.widget.VoiceProgress
-            android:id="@+id/biv_image"
-            android:layout_width="@dimen/space_100"
-            android:layout_height="@dimen/space_48"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/space_12"
-            android:layout_marginRight="@dimen/space_12"
-            android:background="@drawable/group_chatbubble_r" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginBottom="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_12"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
+
+                    <View
+                        android:id="@+id/voice_dot"
+                        android:layout_width="@dimen/space_8"
+                        android:layout_height="@dimen/space_8"
+                        android:background="@drawable/bg_tab_dot" />
+
+                    <TextView
+                        android:id="@+id/tv_voice_duration"
+                        style="@style/text_t2_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="60''"
+                        android:textColor="@color/b2_color" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/biv_image"
+                    android:layout_width="@dimen/space_72"
+                    android:layout_height="@dimen/space_48"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/voice_anim_r" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"

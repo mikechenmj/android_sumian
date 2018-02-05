@@ -57,6 +57,8 @@ public class BubbleImageView extends AppCompatImageView {
             a.recycle();
         }
         init();
+
+        requestLayout();
     }
 
     private void init() {

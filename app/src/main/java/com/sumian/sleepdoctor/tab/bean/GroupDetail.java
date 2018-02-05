@@ -9,7 +9,7 @@ import java.util.List;
  * desc:
  */
 
-public class GroupDetail<Doctor, User> implements Serializable {
+public class GroupDetail<Doctor, User> implements Serializable{
 
     public int id;//群自增id (未加群，未登录，患者，医团)
     public int group_no;//群id (未加群，未登录，患者，医团)

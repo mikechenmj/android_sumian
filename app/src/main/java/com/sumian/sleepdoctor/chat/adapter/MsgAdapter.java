@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
-import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
+import com.sumian.sleepdoctor.chat.base.BaseChatViewHolder;
 import com.sumian.sleepdoctor.chat.holder.delegate.AdapterDelegate;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  * desc:
  */
 
-public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class MsgAdapter extends RecyclerView.Adapter<BaseChatViewHolder> {
 
     private static final String TAG = MsgAdapter.class.getSimpleName();
 
@@ -37,13 +37,18 @@ public class MsgAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return this;
     }
 
+    public MsgAdapter bindRole(int role){
+        this.mAdapterDelegate.bindGroupRole(role);
+        return this;
+    }
+
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return mAdapterDelegate.findViewHolder(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseChatViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         AVIMTypedMessage msg = this.mItems.get(position);
         mAdapterDelegate.onBindViewHolder(viewType, holder, msg);

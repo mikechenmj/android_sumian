@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="群成员列表" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_32"
+        android:background="@drawable/shape_answer_babel"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_12"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_16"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/space_72"
+                android:layout_height="@dimen/space_72"
+                android:contentDescription="@null"
+                app:srcCompat="@mipmap/group_avatar" />
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/text_t3_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginRight="@dimen/space_16"
+                android:ellipsize="marquee"
+                android:ems="10"
+                android:singleLine="true"
+                android:text="欧主任随访群"
+                android:textSize="@dimen/font_18" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginLeft="@dimen/space_12"
+            android:layout_marginRight="@dimen/space_12"
+            android:background="@drawable/shape_answer_label"
+            android:contentDescription="@null"
+            android:paddingBottom="@dimen/space_40"
+            android:paddingLeft="@dimen/space_20"
+            android:paddingRight="@dimen/space_20"
+            android:paddingTop="@dimen/space_40"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/group_details_icon_qrcode" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/bt_t2_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_4"
+        android:text="@string/from_qr_code_join_group" />
+
+</LinearLayout>

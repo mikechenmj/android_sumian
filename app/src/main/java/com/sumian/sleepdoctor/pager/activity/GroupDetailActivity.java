@@ -1,0 +1,185 @@
+package com.sumian.sleepdoctor.pager.activity;
+
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.pager.contract.GroupDetailContract;
+import com.sumian.sleepdoctor.pager.presenter.GroupDetailPresenter;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
+import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
+
+import net.qiujuer.genius.ui.widget.Button;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+/**
+ * Created by sm
+ * on 2018/2/2.
+ * desc:
+ */
+
+public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> implements GroupDetailContract.View,
+        TitleBar.OnBackListener, View.OnClickListener, SettingDividerView.OnShowMoreListener {
+
+    public static final String ARGS_GROUP_ID = "group_id";
+
+    @BindView(R.id.title_bar)
+    TitleBar mTitleBar;
+
+    @BindView(R.id.iv_group_icon)
+    CircleImageView mIvGroupIcon;
+    @BindView(R.id.tv_desc)
+    TextView mTvDesc;
+    @BindView(R.id.tv_doctor_name)
+    TextView mTvDoctorName;
+    @BindView(R.id.iv_qr_code)
+    ImageView mIvQrCode;
+
+    @BindView(R.id.tv_group_desc)
+    TextView mTvGroupDesc;
+    @BindView(R.id.sdv_renewal)
+    SettingDividerView mSdvRenewal;
+    @BindView(R.id.bt_join_up)
+    Button mBtJoinUp;
+
+    private int mGroupId;
+
+    private GroupDetail<UserProfile, UserProfile> mGroupDetail;
+
+
+    @Override
+    protected boolean initBundle(Bundle bundle) {
+        this.mGroupId = bundle.getInt(ARGS_GROUP_ID);
+        return super.initBundle(bundle);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_pager_group_detail;
+    }
+
+    @Override
+    protected void initWidget(View root) {
+        super.initWidget(root);
+        mTitleBar.addOnBackListener(this);
+        mSdvRenewal.setOnShowMoreListener(this);
+        if (AppManager.getAccountViewModel().getToken().user.role != 0) {
+            mIvQrCode.setVisibility(View.VISIBLE);
+            mBtJoinUp.setVisibility(View.GONE);
+        } else {
+            mIvQrCode.setVisibility(View.GONE);
+            mBtJoinUp.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.getGroupDetail(mGroupId);
+    }
+
+    @Override
+    protected void initPresenter() {
+        super.initPresenter();
+        GroupDetailPresenter.init(this);
+    }
+
+    @Override
+    public void bindPresenter(GroupDetailContract.Presenter presenter) {
+        this.mPresenter = (GroupDetailPresenter) presenter;
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
+
+    @Override
+    public void onFailure(String error) {
+        showToast(error);
+    }
+
+    @Override
+    public void onGetGroupDetailSuccess(GroupDetail<UserProfile, UserProfile> groupDetail) {
+        this.mGroupDetail = groupDetail;
+
+        RequestOptions options = new RequestOptions();
+
+        Glide.with(this)
+                .asBitmap()
+                .load(groupDetail.avatar)
+                .apply(options)
+                .into(mIvGroupIcon);
+
+        mTvDesc.setText(groupDetail.name);
+        mTvDoctorName.setText(groupDetail.doctor.nickname);
+        mTvGroupDesc.setText(groupDetail.description);
+
+        String label;
+        String content;
+        if (AppManager.getAccountViewModel().getToken().user.role == 0) {
+            label = "剩余" + groupDetail.day_last + " 天";
+            content = "续费";
+        } else {
+            label = "群成员";
+            content = groupDetail.user_count + "人";
+        }
+        mSdvRenewal.setLabel(label);
+        mSdvRenewal.setContent(content);
+    }
+
+    @Override
+    public void onBack(View v) {
+        finish();
+    }
+
+    @OnClick({R.id.iv_qr_code})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_qr_code:
+                Bundle extras = new Bundle();
+                extras.putString("group_qr_code_url", mGroupDetail.code_url);
+                GroupQrCodeActivity.show(this, GroupQrCodeActivity.class, extras);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onShowMore(View v) {
+        if (AppManager.getAccountViewModel().getToken().user.role == 0) {//点击再次续费
+
+            showToast("开始续费");
+
+        } else {//群成员联系人列表
+
+            Bundle extras = new Bundle();
+
+            extras.putParcelableArrayList("user_group_members", (ArrayList<? extends Parcelable>) mGroupDetail.users);
+            GroupMembersActivity.show(this, GroupMembersActivity.class, extras);
+
+        }
+
+    }
+}

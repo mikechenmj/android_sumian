@@ -26,6 +26,7 @@ import com.sumian.sleepdoctor.chat.sheet.SelectPictureBottomSheet;
 import com.sumian.sleepdoctor.chat.widget.KeyboardView;
 import com.sumian.sleepdoctor.chat.widget.MsgRecycleView;
 import com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout;
+import com.sumian.sleepdoctor.pager.activity.GroupDetailActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     public static final String ARGS_CONVERSATION_ID = "args_conversation_id";
     public static final String ARGS_GROUP_ID = "args_group_id";
+    public static final java.lang.String ARGS_ROLE = "args_role";//自己在该群的角色
 
     @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
@@ -73,11 +75,13 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     private String mConversationId;
     private int mGroupId;
+    private int mRole;
 
     @Override
     protected boolean initBundle(Bundle bundle) {
         this.mGroupId = bundle.getInt(ARGS_GROUP_ID);
         this.mConversationId = bundle.getString(ARGS_CONVERSATION_ID);
+        this.mRole = bundle.getInt(ARGS_ROLE);
         return super.initBundle(bundle);
     }
 
@@ -95,11 +99,16 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         mTitleBar.addOnBackListener(this).addOnMoreListener(this);
         //  mRefreshView.setOnRefreshListener(this);
 
+        if (mRole == 0) {//患者
+            mKeyboardView.showQuestionAction();
+        } else {
+            mKeyboardView.hideQuestionAction();
+        }
         mKeyboardView.setOnKeyboardActionListener(this);
 
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter(this).bindGroupId(mGroupId));
+        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter(this).bindGroupId(mGroupId).bindRole(mRole));
         this.mRecyclerView.setOnLoadDataCallback(this);
 
         //this.mLayMsgContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -114,7 +123,6 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.joinChatRoom(mConversationId);
         mPresenter.syncMsgHistory(mConversationId);
         AppManager.getChatEngine().setOnMsgCallback(this);
     }
@@ -280,6 +288,10 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void onMore(View v) {
+
+        Bundle extras = new Bundle();
+        extras.putInt(GroupDetailActivity.ARGS_GROUP_ID, mGroupId);
+        GroupDetailActivity.show(this, GroupDetailActivity.class, extras);
 
     }
 

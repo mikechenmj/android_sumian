@@ -71,9 +71,9 @@
             android:layout_height="@dimen/space_160"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
-            android:scaleType="fitCenter"
-            android:src="@drawable/group_chatbubble_l"
-            app:chat_image_mask="@drawable/group_chatbubble_l" />
+            android:contentDescription="@null"
+            android:src="@mipmap/group_photobubble_shadow"
+            app:chat_image_mask="@drawable/group_photobubble_shadow" />
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
             android:id="@+id/msg_send_error_view"

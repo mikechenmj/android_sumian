@@ -81,6 +81,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_desc"
                     tools:text="医生 : 二货" />
 
+                <ImageView
+                    android:id="@+id/iv_qr_code"
+                    android:layout_width="@dimen/space_32"
+                    android:layout_height="@dimen/space_32"
+                    android:contentDescription="@null"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:srcCompat="@mipmap/group_details_icon_qrcode"
+                    tools:visibility="visible" />
+
             </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
@@ -112,10 +123,10 @@
                     android:id="@+id/tv_group_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_16"
+                    android:layout_marginBottom="@dimen/space_24"
                     android:layout_marginLeft="@dimen/space_28"
                     android:layout_marginRight="@dimen/space_28"
-                    android:layout_marginTop="@dimen/space_16"
+                    android:layout_marginTop="@dimen/space_24"
                     tools:text="这里是一个群的介绍,也可以是医生信息的介绍.大萨达大所大大所大撒大大大大大大大大大大多所大大奥奥大大大大大大大大大dddddd" />
             </LinearLayout>
 
@@ -139,9 +150,10 @@
                 android:text="@string/join_up_group"
                 android:textColor="@color/t4_color"
                 android:textSize="@dimen/font_20"
-                app:gTouchCornerRadius="@dimen/space_32"
+                android:visibility="gone"
                 app:gTouchEffect="ripple"
-                tools:targetApi="lollipop" />
+                tools:targetApi="lollipop"
+                tools:visibility="visible" />
 
         </LinearLayout>
 

@@ -94,7 +94,7 @@
                 tools:text="我去一个我需要去的地方,那是一个没了的地方" />
 
             <android.support.text.emoji.widget.EmojiAppCompatTextView
-                android:id="@+id/tv_msg"
+                android:id="@+id/tv_content"
                 style="@style/text_t1_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

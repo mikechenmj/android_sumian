@@ -85,6 +85,9 @@
             android:exported="false"
             android:screenOrientation="behind" />
         <activity android:name=".chat.activity.MsgActivity" />
+        <activity android:name=".pager.activity.GroupDetailActivity" />
+        <activity android:name=".pager.activity.GroupQrCodeActivity" />
+        <activity android:name=".pager.activity.GroupMembersActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->

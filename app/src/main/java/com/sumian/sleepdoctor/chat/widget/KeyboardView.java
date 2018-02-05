@@ -201,6 +201,14 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         return content;
     }
 
+    public void showQuestionAction() {
+        mBtAsk.setVisibility(VISIBLE);
+    }
+
+    public void hideQuestionAction() {
+        mBtAsk.setVisibility(GONE);
+    }
+
     public boolean isQuestion() {
         return mBtAsk.getTag() != null;
     }

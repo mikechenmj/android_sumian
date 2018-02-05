@@ -70,15 +70,15 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
         mRefresh.setOnRefreshListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
-        mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(root.getContext()));
+        mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(getContext()));
         mRequestScanQrCodeView.setFragment(this).setOnGrantedCallback(this);
         AppManager.getChatEngine().setOnMsgCallback(this);
-        AppManager.getChatEngine().loginImServer();
     }
 
     @Override
     protected void initData() {
         super.initData();
+        AppManager.getChatEngine().loginImServer();
         mPresenter.getGroups();
     }
 

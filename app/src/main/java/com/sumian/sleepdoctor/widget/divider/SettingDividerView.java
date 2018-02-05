@@ -131,6 +131,10 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         mTvSettingContent.setText(content);
     }
 
+    public void setLabel(String label){
+        mTvTypeDesc.setText(label);
+    }
+
 
     public interface OnShowMoreListener {
 

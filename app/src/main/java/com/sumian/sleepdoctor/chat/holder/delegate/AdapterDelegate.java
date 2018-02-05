@@ -7,8 +7,10 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
+import com.sumian.sleepdoctor.chat.base.BaseChatViewHolder;
 import com.sumian.sleepdoctor.chat.holder.ImageNormalViewHolder;
 import com.sumian.sleepdoctor.chat.holder.ImageQuestionViewHolder;
 import com.sumian.sleepdoctor.chat.holder.ImageReplyViewHolder;
@@ -24,6 +26,9 @@ import java.util.Map;
 import static com.avos.avoscloud.im.v2.AVIMMessageType.AUDIO_MESSAGE_TYPE;
 import static com.avos.avoscloud.im.v2.AVIMMessageType.IMAGE_MESSAGE_TYPE;
 import static com.avos.avoscloud.im.v2.AVIMMessageType.TEXT_MESSAGE_TYPE;
+import static com.sumian.sleepdoctor.chat.engine.ChatEngine.MSG_QUESTION_TYPE;
+import static com.sumian.sleepdoctor.chat.engine.ChatEngine.MSG_REPLY_TYPE;
+import static com.sumian.sleepdoctor.chat.engine.ChatEngine.MSG_TYPE_ATTR;
 
 /**
  * Created by jzz
@@ -31,7 +36,7 @@ import static com.avos.avoscloud.im.v2.AVIMMessageType.TEXT_MESSAGE_TYPE;
  * desc:
  */
 
-public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMTypedMessage> {
+public class AdapterDelegate implements BaseChatViewHolder.OnReplayListener<AVIMTypedMessage> {
 
     private static final String TAG = AdapterDelegate.class.getSimpleName();
 
@@ -65,62 +70,63 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
     private OnReplyCallback mOnReplyCallback;
 
     private int mGroupId;
+    private int mRole;
 
     public void setOnReplyCallback(OnReplyCallback onReplyCallback) {
         mOnReplyCallback = onReplyCallback;
     }
 
     @SuppressWarnings("unchecked")
-    public BaseViewHolder findViewHolder(ViewGroup parent, int viewType) {
+    public BaseChatViewHolder findViewHolder(ViewGroup parent, int viewType) {
         boolean isLeft = false;
 
-        BaseViewHolder baseViewHolder = null;
+        BaseChatViewHolder baseViewHolder;
 
         switch (viewType) {
             case LEFT_TEXT_NORMAL_TYPE://text
                 isLeft = true;
             case RIGHT_TEXT_NORMAL_TYPE:
-                baseViewHolder = new TextNormalViewHolder(parent, isLeft);
+                baseViewHolder = new TextNormalViewHolder(parent, isLeft, R.layout.lay_item_left_text_nomal_chat, R.layout.lay_item_right_text_normal_chat);
                 break;
             case LEFT_TEXT_REPLAY_TYPE:
                 isLeft = true;
             case RIGHT_TEXT_REPLAY_TYPE:
-                baseViewHolder = new TextReplyViewHolder(parent, isLeft);
+                baseViewHolder = new TextReplyViewHolder(parent, isLeft, R.layout.lay_item_left_text_reply_chat, R.layout.lay_item_right_image_reply_chat);
                 break;
             case LEFT_TEXT_QUESTION_TYPE:
                 isLeft = true;
             case RIGHT_TEXT_QUESTION_TYPE:
-                baseViewHolder = new TextQuestionViewHolder(parent, isLeft);
+                baseViewHolder = new TextQuestionViewHolder(parent, isLeft, R.layout.lay_item_left_text_question_chat, R.layout.lay_item_right_text_question_chat);
                 break;
             case LEFT_IMAGE_NORMAL_TYPE://image
                 isLeft = true;
             case RIGHT_IMAGE_NORMAL_YPE:
-                baseViewHolder = new ImageNormalViewHolder(parent, isLeft);
+                baseViewHolder = new ImageNormalViewHolder(parent, isLeft, R.layout.lay_item_left_image_normal_chat, R.layout.lay_item_right_image_normal_chat);
                 break;
             case LEFT_IMAGE_REPLAY_TYPE:
                 isLeft = true;
             case RIGHT_IMAGE_REPLAY_TYPE:
-                baseViewHolder = new ImageReplyViewHolder(parent, isLeft);
+                baseViewHolder = new ImageReplyViewHolder(parent, isLeft, R.layout.lay_item_left_image_reply_chat, R.layout.lay_item_right_image_reply_chat);
                 break;
             case LEFT_IMAGE_QUESTION_TYPE:
                 isLeft = true;
             case RIGHT_IMAGE_QUESTION_TYPE:
-                baseViewHolder = new ImageQuestionViewHolder(parent, isLeft);
+                baseViewHolder = new ImageQuestionViewHolder(parent, isLeft, R.layout.lay_item_left_image_question_chat, R.layout.lay_item_right_image_question_chat);
                 break;
             case LEFT_VOICE_NORMAL_TYPE://voice
                 isLeft = true;
             case RIGHT_VOICE_NORMAL_TYPE:
-                baseViewHolder = new VoiceNormalViewHolder(parent, isLeft);
+                baseViewHolder = new VoiceNormalViewHolder(parent, isLeft, R.layout.lay_item_left_voice_normal_chat, R.layout.lay_item_right_voice_normal_chat);
                 break;
             case LEFT_VOICE_REPLAY_TYPE:
                 isLeft = true;
             case RIGHT_VOICE_REPLAY_TYPE:
-                baseViewHolder = new VoiceReplyViewHolder(parent, isLeft);
+                baseViewHolder = new VoiceReplyViewHolder(parent, isLeft, R.layout.lay_item_left_voice_reply_chat, R.layout.lay_item_right_voice_reply_chat);
                 break;
             case LEFT_VOICE_QUESTION_TYPE:
                 isLeft = true;
             case RIGHT_VOICE_QUESTION_TYPE:
-                baseViewHolder = new VoiceQuestionViewHolder(parent, isLeft);
+                baseViewHolder = new VoiceQuestionViewHolder(parent, isLeft, R.layout.lay_item_left_voice_question_chat, R.layout.lay_item_right_voice_question_chat);
                 break;
             default:
                 return null;
@@ -134,70 +140,49 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
     public void onBindViewHolder(int viewType, BaseViewHolder holder, AVIMTypedMessage msg) {
         switch (viewType) {
             case LEFT_TEXT_NORMAL_TYPE://text
-                //isLeft = true;
             case RIGHT_TEXT_NORMAL_TYPE:
                 TextNormalViewHolder textNormalViewHolder = (TextNormalViewHolder) holder;
-                textNormalViewHolder.initView((AVIMTextMessage) msg);
-                textNormalViewHolder.bindGroupId(mGroupId);
+                textNormalViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMTextMessage) msg);
                 break;
             case LEFT_TEXT_REPLAY_TYPE:
-                //isLeft = true;
             case RIGHT_TEXT_REPLAY_TYPE:
                 TextReplyViewHolder textReplyViewHolder = (TextReplyViewHolder) holder;
-                textReplyViewHolder.initView((AVIMTextMessage) msg);
-                textReplyViewHolder.bindGroupId(mGroupId);
+                textReplyViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMTextMessage) msg);
                 break;
             case LEFT_TEXT_QUESTION_TYPE:
-                // isLeft = true;
             case RIGHT_TEXT_QUESTION_TYPE:
                 TextQuestionViewHolder textQuestionViewHolder = (TextQuestionViewHolder) holder;
-                textQuestionViewHolder.initView((AVIMTextMessage) msg);
-                textQuestionViewHolder.bindGroupId(mGroupId);
+                textQuestionViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMTextMessage) msg);
                 break;
             case LEFT_IMAGE_NORMAL_TYPE://image
-                //isLeft = true;
             case RIGHT_IMAGE_NORMAL_YPE:
                 ImageNormalViewHolder imageNormalViewHolder = (ImageNormalViewHolder) holder;
-                imageNormalViewHolder.initView((AVIMImageMessage) msg);
-                imageNormalViewHolder.bindGroupId(mGroupId);
+                imageNormalViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMImageMessage) msg);
                 break;
             case LEFT_IMAGE_REPLAY_TYPE:
-                //isLeft = true;
             case RIGHT_IMAGE_REPLAY_TYPE:
                 ImageReplyViewHolder imageReplyViewHolder = (ImageReplyViewHolder) holder;
-                imageReplyViewHolder.initView((AVIMImageMessage) msg);
-                imageReplyViewHolder.bindGroupId(mGroupId);
+                imageReplyViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMImageMessage) msg);
                 break;
             case LEFT_IMAGE_QUESTION_TYPE:
-                //isLeft = true;
             case RIGHT_IMAGE_QUESTION_TYPE:
                 ImageQuestionViewHolder imageQuestionViewHolder = (ImageQuestionViewHolder) holder;
-                imageQuestionViewHolder.initView((AVIMImageMessage) msg);
-                imageQuestionViewHolder.bindGroupId(mGroupId);
+                imageQuestionViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMImageMessage) msg);
                 break;
             case LEFT_VOICE_NORMAL_TYPE://voice
-                //isLeft = true;
             case RIGHT_VOICE_NORMAL_TYPE:
-
                 VoiceNormalViewHolder voiceNormalViewHolder = (VoiceNormalViewHolder) holder;
-                voiceNormalViewHolder.initView((AVIMAudioMessage) msg);
-                voiceNormalViewHolder.bindGroupId(mGroupId);
+                voiceNormalViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMAudioMessage) msg);
                 break;
             case LEFT_VOICE_REPLAY_TYPE:
-                //  isLeft = true;
             case RIGHT_VOICE_REPLAY_TYPE:
-
                 VoiceReplyViewHolder voiceReplyViewHolder = (VoiceReplyViewHolder) holder;
-                voiceReplyViewHolder.initView((AVIMAudioMessage) msg);
-                voiceReplyViewHolder.bindGroupId(mGroupId);
+                voiceReplyViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMAudioMessage) msg);
                 break;
             case LEFT_VOICE_QUESTION_TYPE:
-                // isLeft = true;
             case RIGHT_VOICE_QUESTION_TYPE:
-
                 VoiceQuestionViewHolder voiceQuestionViewHolder = (VoiceQuestionViewHolder) holder;
-                voiceQuestionViewHolder.initView((AVIMAudioMessage) msg);
-                voiceQuestionViewHolder.bindGroupId(mGroupId);
+                voiceQuestionViewHolder.bindGroupId(mGroupId).bindGroupRole(mRole).initView((AVIMAudioMessage) msg);
                 break;
             default:
                 break;
@@ -205,7 +190,6 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
     }
 
     public int getItemViewType(AVIMTypedMessage msg) {
-        //  AVIMMessage.AVIMMessageIOType ioType = msg.getMessageIOType();
         int messageType = msg.getMessageType();
         Map<String, Object> attrs;
         String type;
@@ -217,11 +201,11 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
                 case TEXT_MESSAGE_TYPE:
                     attrs = ((AVIMTextMessage) msg).getAttrs();
                     if (attrs == null || attrs.isEmpty()) return RIGHT_TEXT_NORMAL_TYPE;
-                    type = (String) attrs.get("type");
+                    type = (String) attrs.get(MSG_TYPE_ATTR);
                     switch (type) {
-                        case "reply":
+                        case MSG_REPLY_TYPE:
                             return RIGHT_TEXT_REPLAY_TYPE;
-                        case "question":
+                        case MSG_QUESTION_TYPE:
                             return RIGHT_TEXT_QUESTION_TYPE;
                         default:
                             return RIGHT_TEXT_NORMAL_TYPE;
@@ -230,11 +214,11 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
                 case IMAGE_MESSAGE_TYPE:
                     attrs = ((AVIMImageMessage) msg).getAttrs();
                     if (attrs == null || attrs.isEmpty()) return RIGHT_IMAGE_NORMAL_YPE;
-                    type = (String) attrs.get("type");
+                    type = (String) attrs.get(MSG_TYPE_ATTR);
                     switch (type) {
-                        case "reply":
+                        case MSG_REPLY_TYPE:
                             return RIGHT_IMAGE_REPLAY_TYPE;
-                        case "question":
+                        case MSG_QUESTION_TYPE:
                             return RIGHT_IMAGE_QUESTION_TYPE;
                         default:
                             return RIGHT_IMAGE_NORMAL_YPE;
@@ -243,11 +227,11 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
                 case AUDIO_MESSAGE_TYPE:
                     attrs = ((AVIMAudioMessage) msg).getAttrs();
                     if (attrs == null || attrs.isEmpty()) return RIGHT_VOICE_NORMAL_TYPE;
-                    type = (String) attrs.get("type");
+                    type = (String) attrs.get(MSG_TYPE_ATTR);
                     switch (type) {
-                        case "reply":
+                        case MSG_REPLY_TYPE:
                             return RIGHT_VOICE_REPLAY_TYPE;
-                        case "question":
+                        case MSG_QUESTION_TYPE:
                             return RIGHT_VOICE_QUESTION_TYPE;
                         default:
                             return RIGHT_VOICE_NORMAL_TYPE;
@@ -259,11 +243,11 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
                 case TEXT_MESSAGE_TYPE:
                     attrs = ((AVIMTextMessage) msg).getAttrs();
                     if (attrs == null || attrs.isEmpty()) return LEFT_TEXT_NORMAL_TYPE;
-                    type = (String) attrs.get("type");
+                    type = (String) attrs.get(MSG_TYPE_ATTR);
                     switch (type) {
-                        case "reply":
+                        case MSG_REPLY_TYPE:
                             return LEFT_TEXT_REPLAY_TYPE;
-                        case "question":
+                        case MSG_QUESTION_TYPE:
                             return LEFT_TEXT_QUESTION_TYPE;
                         default:
                             return LEFT_TEXT_NORMAL_TYPE;
@@ -272,11 +256,11 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
                 case IMAGE_MESSAGE_TYPE:
                     attrs = ((AVIMImageMessage) msg).getAttrs();
                     if (attrs == null || attrs.isEmpty()) return LEFT_IMAGE_NORMAL_TYPE;
-                    type = (String) attrs.get("type");
+                    type = (String) attrs.get(MSG_TYPE_ATTR);
                     switch (type) {
-                        case "reply":
+                        case MSG_REPLY_TYPE:
                             return LEFT_IMAGE_REPLAY_TYPE;
-                        case "question":
+                        case MSG_QUESTION_TYPE:
                             return LEFT_IMAGE_QUESTION_TYPE;
                         default:
                             return LEFT_IMAGE_NORMAL_TYPE;
@@ -285,11 +269,11 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
                 case AUDIO_MESSAGE_TYPE:
                     attrs = ((AVIMAudioMessage) msg).getAttrs();
                     if (attrs == null || attrs.isEmpty()) return LEFT_VOICE_NORMAL_TYPE;
-                    type = (String) attrs.get("type");
+                    type = (String) attrs.get(MSG_TYPE_ATTR);
                     switch (type) {
-                        case "reply":
+                        case MSG_REPLY_TYPE:
                             return LEFT_VOICE_REPLAY_TYPE;
-                        case "question":
+                        case MSG_QUESTION_TYPE:
                             return LEFT_VOICE_QUESTION_TYPE;
                         default:
                             return LEFT_VOICE_NORMAL_TYPE;
@@ -302,7 +286,6 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
 
     @Override
     public void onReplyMsg(AVIMTypedMessage msg) {
-
         if (mOnReplyCallback != null) {
             mOnReplyCallback.onReply(msg);
         }
@@ -310,6 +293,10 @@ public class AdapterDelegate implements BaseViewHolder.OnReplayListener<AVIMType
 
     public void bindGroupId(int groupId) {
         this.mGroupId = groupId;
+    }
+
+    public void bindGroupRole(int role) {
+        this.mRole = role;
     }
 
 

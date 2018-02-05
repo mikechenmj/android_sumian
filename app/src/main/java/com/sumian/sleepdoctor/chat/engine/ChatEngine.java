@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
+import com.avos.avoscloud.im.v2.AVIMClientOpenOption;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
@@ -35,13 +37,17 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     private static final String TAG = ChatEngine.class.getSimpleName();
 
+    public static final String MSG_TYPE_ATTR = "type";
+    public static final String MSG_QUESTION_TYPE = "question";
+    public static final String MSG_REPLY_TYPE = "reply";
+    public static final String MSG_SEND_TIMESTAMP="send_timestamp";
+    public static final String MSG_QUESTION_MSG_ID="question_msg_id";
+
     private static final int MSG_WHAT_LOGIN = 0x01;
 
     private AVIMClient mAVIMClient;
 
     private AVIMConversation mAVIMConversation;
-
-    private String mConversationId;
 
     private Handler mHandler;
 
@@ -54,16 +60,32 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
         this.mHandler = new Handler(Looper.getMainLooper(), this);
         AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
+        AVIMClient.setAutoOpen(true);
+        AVIMClient.setClientEventHandler(new AVIMClientEventHandler() {
+            @Override
+            public void onConnectionPaused(AVIMClient avimClient) {
+                Log.e(TAG, "onConnectionPaused: ----------->");
+            }
+
+            @Override
+            public void onConnectionResume(AVIMClient avimClient) {
+                Log.e(TAG, "onConnectionResume: ------------->");
+            }
+
+            @Override
+            public void onClientOffline(AVIMClient avimClient, int i) {
+                Log.e(TAG, "onClientOffline: ------------------->");
+            }
+        });
         registerMsgHandler();
     }
 
-    public ChatEngine setOnMsgCallback(OnMsgCallback onMsgCallback) {
+    public void setOnMsgCallback(OnMsgCallback onMsgCallback) {
         if (mOnMsgCallbacks == null) {
             mOnMsgCallbacks = new ArrayList<>();
         }
-        if (mOnMsgCallbacks.contains(onMsgCallback)) return this;
+        if (mOnMsgCallbacks.contains(onMsgCallback)) return;
         mOnMsgCallbacks.add(onMsgCallback);
-        return this;
     }
 
     public void removeOnMsgCallback(OnMsgCallback onMsgCallback) {
@@ -73,7 +95,6 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     @Override
     public void registerMsgHandler() {
-
         AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, mMessageHandler = new AVIMTypedMessageHandler<AVIMTypedMessage>() {
 
             @Override
@@ -100,43 +121,22 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     }
 
     @Override
-    public void joinChatGroup(String conversationId) {
-        this.mConversationId = conversationId;
-        this.mAVIMClient = AVIMClient.getInstance(AppManager.getAccountViewModel().getToken().user.leancloud_id);
-        //AVIMClient.setAutoOpen(true);
-        mAVIMClient.open(new AVIMClientCallback() {
-            @Override
-            public void done(AVIMClient avimClient, AVIMException e) {
-                if (e == null) {
-                    mAVIMConversation = avimClient.getConversation(conversationId);
-                    Log.e(TAG, "done: -------登录 im server 成功 ---->");
-                } else {
-                    mHandler.sendEmptyMessageDelayed(MSG_WHAT_LOGIN, 1000);
-                }
-            }
-        });
-
-        mAVIMClient.getClientStatus(new AVIMClientStatusCallback() {
-            @Override
-            public void done(AVIMClient.AVIMClientStatus avimClientStatus) {
-                Log.e(TAG, "done: --------->" + avimClientStatus);
-            }
-        });
-    }
-
-    @Override
     public void loginImServer() {
         String leancloudId = AppManager.getAccountViewModel().getToken().user.leancloud_id;
         if (TextUtils.isEmpty(leancloudId)) return;
         this.mAVIMClient = AVIMClient.getInstance(leancloudId);
-        //AVIMClient.setAutoOpen(true);
-        mAVIMClient.open(new AVIMClientCallback() {
+
+        AVIMClientOpenOption options = new AVIMClientOpenOption();
+        options.setForceSingleLogin(true);
+
+        mAVIMClient.open(options, new AVIMClientCallback() {
             @Override
             public void done(AVIMClient avimClient, AVIMException e) {
                 if (e == null) {
                     Log.e(TAG, "done: -------登录 im server 成功 ---->");
                 } else {
-                    mHandler.sendEmptyMessageDelayed(MSG_WHAT_LOGIN, 1000);
+                    Log.e(TAG, "done: ---------登录  im server  失败  1s 后尝试重新登录--->");
+                    mHandler.sendEmptyMessageDelayed(MSG_WHAT_LOGIN, 2000);
                 }
             }
         });
@@ -144,10 +144,9 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
         mAVIMClient.getClientStatus(new AVIMClientStatusCallback() {
             @Override
             public void done(AVIMClient.AVIMClientStatus avimClientStatus) {
-                Log.e(TAG, "done: --------->" + avimClientStatus);
+                Log.e(TAG, "done: -----AVIMClientStatus------->" + avimClientStatus);
             }
         });
-
     }
 
     @Override
@@ -182,26 +181,16 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     }
 
     @Override
-    public AVIMConversation getAVIMConversation() {
-        return mAVIMConversation;
-    }
-
-    @Override
     public AVIMConversation getAVIMConversation(String conversationId) {
         return this.mAVIMConversation = mAVIMClient.getConversation(conversationId);
-    }
-
-
-    @Override
-    public List<AVIMMessage> getHistoryMsg() {
-        return null;
     }
 
     @Override
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MSG_WHAT_LOGIN:
-                joinChatGroup(mConversationId);
+                Log.e(TAG, "handleMessage: -------------->登录失败,重试登录尝试,1s 一次");
+                loginImServer();
                 break;
             default:
                 break;

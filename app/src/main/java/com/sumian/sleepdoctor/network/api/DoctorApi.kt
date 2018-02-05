@@ -6,7 +6,6 @@ import com.sumian.sleepdoctor.network.response.BaseResponse
 import com.sumian.sleepdoctor.pager.bean.Order
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
 import com.sumian.sleepdoctor.tab.bean.GroupDetail
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -41,9 +40,6 @@ interface DoctorApi {
 
     @GET("user/groups")
     fun getGroups(@QueryMap map: MutableMap<String, Int>): Call<BaseResponse<List<GroupDetail<UserProfile, UserProfile>>>>
-
-    @GET("groups/{id}")
-    fun getGroupsDetail(@Path("id") groupId: Int): Call<GroupDetail<UserProfile, UserProfile>>
 
     @GET("groups/{id}")
     fun getGroupsDetail(@Path("id") groupId: Int, @Query("include") include: String): Call<GroupDetail<UserProfile, UserProfile>>

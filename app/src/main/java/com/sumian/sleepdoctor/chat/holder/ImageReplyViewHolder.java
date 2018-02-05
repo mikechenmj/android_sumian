@@ -1,21 +1,13 @@
 package com.sumian.sleepdoctor.chat.holder;
 
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
+import com.sumian.sleepdoctor.chat.base.BaseChatViewHolder;
 import com.sumian.sleepdoctor.chat.widget.BubbleImageView;
 import com.sumian.sleepdoctor.chat.widget.MsgSendErrorView;
-import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -26,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-public class ImageReplyViewHolder extends BaseViewHolder<AVIMImageMessage> {
+public class ImageReplyViewHolder extends BaseChatViewHolder<AVIMImageMessage> {
 
     @BindView(R.id.tv_time_line)
     TextView mTvTimeLine;
@@ -41,49 +33,13 @@ public class ImageReplyViewHolder extends BaseViewHolder<AVIMImageMessage> {
     @BindView(R.id.iv_icon)
     CircleImageView mIvIcon;
 
-    private boolean mIsLeft;
-
-    private int mGroupId;
-
-    public ImageReplyViewHolder(ViewGroup parent, boolean isLeft) {
-        super(LayoutInflater.from(parent.getContext()).inflate(isLeft ? R.layout.lay_item_left_image_reply_chat : R.layout.lay_item_right_image_reply_chat, parent, false));
-        this.mIsLeft = isLeft;
+    public ImageReplyViewHolder(ViewGroup parent, boolean isLeft, int leftLayoutId, int rightLayoutId) {
+        super(parent, isLeft, leftLayoutId, rightLayoutId);
     }
 
-    public void bindGroupId(int groupId) {
-        this.mGroupId = groupId;
-
-        AppManager
-                .getHttpService()
-                .getLeancloudGroupUsers(mItem.getFrom(), mGroupId)
-                .enqueue(new BaseResponseCallback<String>() {
-
-                    @Override
-                    protected void onSuccess(String response) {
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            String json = jsonObject.getString(mItem.getFrom());
-
-                            UserProfile tempUserProfile = JSON.parseObject(json, UserProfile.class);
-
-                            if (tempUserProfile != null) {
-                                mTvNickname.setText(tempUserProfile.nickname);
-                                formatRoleLabel(tempUserProfile.role, mTvLabel);
-                                formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, mIvIcon);
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    protected void onFailure(String error) {
-                        formatRoleLabel(0, mTvLabel);
-                        formatRoleAvatar(0, null, mIvIcon);
-                    }
-                });
+    @Override
+    public void initView(AVIMImageMessage avimImageMessage) {
+        super.initView(avimImageMessage);
+        updateUserProfile(avimImageMessage.getFrom(), mGroupId, mTvLabel, mTvNickname, mIvIcon);
     }
 }

@@ -45,8 +45,6 @@ public interface MsgContract {
 
         int RECORD_PERM = 2;
 
-        void joinChatRoom(String conversationId);
-
         void sendTextMsg(String content, boolean isQuestion, AVIMTypedMessage replyMsg);
 
         void sendPicMsg(Activity activity, int type);

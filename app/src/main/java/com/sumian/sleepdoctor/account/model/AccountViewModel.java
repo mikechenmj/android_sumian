@@ -59,6 +59,14 @@ public class AccountViewModel extends AndroidViewModel {
         return mTokenLiveData.getValue();
     }
 
+    public UserProfile getUserProfile() {
+        return getToken().user;
+    }
+
+    public boolean isPatient() {
+        return getUserProfile().role == 0;
+    }
+
     public void updateToken(Token token) {
         mTokenLiveData.postValue(token);
         updateTokenInvalidState(false);

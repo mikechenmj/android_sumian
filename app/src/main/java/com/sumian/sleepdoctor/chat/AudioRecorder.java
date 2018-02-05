@@ -27,7 +27,7 @@ public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener
 
     public static final String AUDIO_SUFFIX_WAV = ".wav";
     public static final String AUDIO_SUFFIX_MP3 = ".mp3";
-    public static final String AUDIO_DIR_PATH = "audioRecorderEx";
+    public static final String AUDIO_DIR_PATH = TAG;
 
     private List<String> mRecordFiles = new ArrayList<>();
     private String savePath;
@@ -560,7 +560,7 @@ public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener
     }
 
 
-    public String getMixAudioFilePath(Context context,String mixFileName) {
+    public String getMixAudioFilePath(Context context, String mixFileName) {
         return FilePathUtil.makeFilePath(context, AUDIO_DIR_PATH, mixFileName);
     }
 

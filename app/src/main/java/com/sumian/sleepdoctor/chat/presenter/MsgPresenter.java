@@ -71,11 +71,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void joinChatRoom(String conversationId) {
-        AppManager.getChatEngine().joinChatGroup(conversationId);
-    }
-
-    @Override
     public void syncPreMsgHistory(String conversationId) {
         ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
         AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
