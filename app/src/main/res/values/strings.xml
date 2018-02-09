@@ -112,5 +112,6 @@
     <string name="is_renew">是否续费?</string>
     <string name="group_invalid">该群已过期,续费后可继续使用</string>
     <string name="go_renew">去续费</string>
+    <string name="modify_nickname">修改昵称</string>
 
 </resources>

@@ -43,8 +43,7 @@ android {
         buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
         buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", "${rootProject.ext.leancloud_broadcast_conversation_id}")
         buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", "${rootProject.ext.default_apk_download_url}")
-        buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
-        buildConfigField("String", "PRIVACY_POLICY_URL", PRIVACY_POLICY_URL)
+        buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
 
         buildConfigField("String", "WECHAT_APP_ID", "${rootProject.ext.wechat_app_id}")
         buildConfigField("String", "WECHAT_APP_SECRET", "${rootProject.ext.wechat_app_secret}")
@@ -201,6 +200,9 @@ dependencies {
 
     implementation 'com.android.support:support-emoji-appcompat:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
+
+    //aliyun oss
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 
     //ping++
     implementation 'com.pingxx:pingpp-core:2.1.17' // (Ping++ 标准版 SDK) 必须添加

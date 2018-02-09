@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.arch.lifecycle.DefaultLifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,7 +32,7 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public abstract class BaseActivity<Presenter> extends AppCompatActivity implements DefaultLifecycleObserver, Observer<Boolean>, LifecycleOwner {
+public abstract class BaseActivity<Presenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Unbinder mBind;
@@ -90,7 +88,10 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
             if (mTokenInvalidStateLiveData == null) {
                 mTokenInvalidStateLiveData = new AccountViewModel(getApplication()).getLiveDataTokenInvalidState();
             }
-            mTokenInvalidStateLiveData.observe(this, this);
+            mTokenInvalidStateLiveData.observe(this, tokenIsInvalid -> {
+                //noinspection ConstantConditions
+                if (tokenIsInvalid && !mIsTopLogin) LoginActivity.show(this, LoginActivity.class);
+            });
         } else {
             finish();
         }
@@ -140,61 +141,6 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
 
     }
 
-    //public void commitReplace(@NonNull Class<? extends Fragment> clx) {
-
-//        FragmentTransaction fragmentTransaction = getFragmentTransaction();
-//
-//        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
-//        if (fragmentByTag != null) {
-//            // Log.e(TAG, "commitReplace: ---------->" + fragmentByTag.toString());
-//            return;
-//        }
-//
-//        fragmentTransaction.replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName());
-//
-//        if (!(fragment instanceof GroupFragment || fragment instanceof MeFragment)) {
-//            addToBackStack(fragment, fragmentTransaction);
-//        }
-//
-//        Fragment welcomeFragment = getSupportFragmentManager().findFragmentByTag("WelcomeActivity");
-//        if (welcomeFragment != null)
-//            fragmentTransaction.remove(welcomeFragment);
-
-    //commitTransaction(fragmentTransaction);
-    // }
-
-    // public void commitReplacePagerFragment(@NonNull Class<? extends Fragment> clx) {
-//        this.mIsTopLogin = fragment instanceof LoginActivity;
-//
-//        FragmentTransaction fragmentTransaction = getFragmentTransaction();
-//
-//        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
-//        if (fragmentByTag != null) {
-//            // Log.e(TAG, "commitReplace: ---------->" + fragmentByTag.toString());
-//            return;
-//        }
-//
-//        fragmentTransaction.replace(R.id.lay_page_container, fragment, fragment.getClass().getSimpleName());
-//
-//        if (!(fragment instanceof WelcomeActivity)) {
-//            addToBackStack(fragment, fragmentTransaction);
-//        }
-//
-//        commitTransaction(fragmentTransaction);
-    //  }
-
-//    public void goHome() {
-    //this.mIsTopLogin = false;
-    //int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
-    //Log.e(TAG, "goHome: ------------>backStackEntryCount=" + backStackEntryCount);
-    //for (int i = 0; i < backStackEntryCount; i++) {
-    //getFragmentManager().popBackStackImmediate();
-    // FragmentManager.BackStackEntry backStackEntry =
-    //   Log.e(TAG, "goHome: --------->" + backStackEntry.toString());
-    // getSupportFragmentManager().popBackStackImmediate(backStackEntry.getName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    //}
-    //  }
-
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onCreate: -------->");
@@ -225,30 +171,6 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
         Log.d(TAG, "onDestroy: ----------->");
     }
 
-//    @Override
-//    public void onBackPressed() {
-//
-//        // int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
-//        // Log.e(TAG, "onBackPressedDelegate: -----1--->" + backStackEntryCount);
-//        //List<Fragment> fragments = getFragmentManager().getFragments();
-//        // Log.e(TAG, "onBackPressedDelegate: -----2----->" + fragments.toString());
-//
-//        //  fragments.isEmpty() || isGroupFragment(fragments) || isMeFragment(fragments) || isLoginFragment(fragments) ||
-//        // if (backStackEntryCount <= 0) {
-//        //   finish();
-//        //} else {
-//        // super.onBackPressed();
-//        //}
-//
-//        //   Log.e(TAG, "onBackPressedDelegate: ------3---->" + fragments.toString());
-//    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public void onChanged(@Nullable Boolean tokenIsInvalid) {
-        if (tokenIsInvalid && !mIsTopLogin) LoginActivity.show(this, LoginActivity.class);
-    }
-
     /**
      * 设置状态栏颜色
      *
@@ -256,19 +178,17 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
      * @param color    状态栏颜色值
      */
     public static void setColor(Activity activity, int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // 设置状态栏透明
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // 生成一个状态栏大小的矩形
-            View statusView = createStatusView(activity, color);
-            // 添加 statusView 到布局中
-            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-            decorView.addView(statusView);
-            // 设置根布局的参数
-            ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-            rootView.setFitsSystemWindows(true);
-            rootView.setClipToPadding(true);
-        }
+        // 设置状态栏透明
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // 生成一个状态栏大小的矩形
+        View statusView = createStatusView(activity, color);
+        // 添加 statusView 到布局中
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        decorView.addView(statusView);
+        // 设置根布局的参数
+        ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+        rootView.setFitsSystemWindows(true);
+        rootView.setClipToPadding(true);
     }
 
     /**

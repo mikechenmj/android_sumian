@@ -48,12 +48,12 @@ public class MeFragment extends BaseFragment<UserProfile> implements HomeDelegat
         super.initData();
         UserProfile userProfile = AppManager.getAccountViewModel().getToken().user;
 
-        RequestOptions options = new RequestOptions();
-        options.error(R.mipmap.info_avatar_patient).placeholder(R.mipmap.info_avatar_patient).getOptions();
-        Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
+        updateUserProfile(userProfile);
 
-        String nickname = userProfile.nickname;
-        mTvNickname.setText(TextUtils.isEmpty(nickname) ? userProfile.mobile : nickname);
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
+            if (token != null)
+                updateUserProfile(token.user);
+        });
     }
 
     @OnClick({R.id.dv_user_info_center, R.id.dv_setting})
@@ -66,5 +66,14 @@ public class MeFragment extends BaseFragment<UserProfile> implements HomeDelegat
                 SettingActivity.show(getContext(), SettingActivity.class);
                 break;
         }
+    }
+
+    private void updateUserProfile(UserProfile userProfile) {
+        RequestOptions options = new RequestOptions();
+        options.error(R.mipmap.info_avatar_patient).placeholder(R.mipmap.info_avatar_patient).getOptions();
+        Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
+
+        String nickname = userProfile.nickname;
+        mTvNickname.setText(TextUtils.isEmpty(nickname) ? userProfile.mobile : nickname);
     }
 }

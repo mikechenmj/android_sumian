@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.network.api
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.network.response.BaseResponse
+import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.Order
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
 import com.sumian.sleepdoctor.tab.bean.GroupDetail
@@ -38,6 +39,9 @@ interface DoctorApi {
     @PATCH("user/profile")
     fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserProfile>
 
+    @PATCH("user/avatar")
+    fun uploadAvatar(): Call<OssResponse>
+
     @GET("user/groups")
     fun getGroups(@QueryMap map: MutableMap<String, Int>): Call<BaseResponse<List<GroupDetail<UserProfile, UserProfile>>>>
 
@@ -54,4 +58,5 @@ interface DoctorApi {
     @FormUrlEncoded
     @POST("user/leancloud")
     fun getLeancloudGroupUsers(@Field("leancloud_ids") leancloudIds: String, @Field("group_id") groupId: Int): Call<String>
+
 }

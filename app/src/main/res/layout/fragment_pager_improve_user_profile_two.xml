@@ -88,7 +88,10 @@
         android:layout_marginLeft="@dimen/space_32"
         android:layout_marginRight="@dimen/space_32"
         android:layout_marginTop="@dimen/space_20"
-        android:text="@string/complete" />
+        android:elevation="@dimen/space_2"
+        android:outlineProvider="background"
+        android:text="@string/complete"
+        android:translationZ="@dimen/space_2" />
 
 
 </LinearLayout>
