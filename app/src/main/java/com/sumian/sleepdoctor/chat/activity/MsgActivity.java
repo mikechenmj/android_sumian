@@ -231,12 +231,12 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void onTakePhotoCallback() {
-        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA);
+        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA, mKeyboardView.getReplyMsg());
     }
 
     @Override
     public void onPicPictureCallback() {
-        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_LOCAL);
+        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_LOCAL, mKeyboardView.getReplyMsg());
     }
 
     @Override
@@ -254,7 +254,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void sendVoice(String path, int duration) {
-        mPresenter.senAudioMsg(path, duration);
+        mPresenter.senAudioMsg(path, duration, mKeyboardView.getReplyMsg());
     }
 
     @Override

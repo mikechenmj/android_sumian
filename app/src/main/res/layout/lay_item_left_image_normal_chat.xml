@@ -65,15 +65,15 @@
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
 
-        <com.sumian.sleepdoctor.chat.widget.BubbleImageView
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_160"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
             android:contentDescription="@null"
-            android:src="@mipmap/group_photobubble_shadow"
-            app:chat_image_mask="@drawable/group_photobubble_shadow" />
+            android:src="@mipmap/group_avatar"
+            app:qmui_corner_radius="@dimen/space_4" />
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
             android:id="@+id/msg_send_error_view"

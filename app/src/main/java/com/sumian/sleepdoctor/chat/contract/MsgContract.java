@@ -47,7 +47,9 @@ public interface MsgContract {
 
         void sendTextMsg(String content, boolean isQuestion, AVIMTypedMessage replyMsg);
 
-        void sendPicMsg(Activity activity, int type);
+        void sendPicMsg(Activity activity, int type, AVIMTypedMessage replyMsg);
+
+        void senAudioMsg(String audioFilePath, int duration, AVIMTypedMessage replyMsg);
 
         void checkRecordPermission(Activity activity);
 
@@ -59,8 +61,6 @@ public interface MsgContract {
 
         void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
 
-
-        void senAudioMsg(String audioFilePath, int duration);
     }
 
 }

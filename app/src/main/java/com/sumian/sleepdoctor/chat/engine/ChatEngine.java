@@ -40,8 +40,8 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     public static final String MSG_TYPE_ATTR = "type";
     public static final String MSG_QUESTION_TYPE = "question";
     public static final String MSG_REPLY_TYPE = "reply";
-    public static final String MSG_SEND_TIMESTAMP="send_timestamp";
-    public static final String MSG_QUESTION_MSG_ID="question_msg_id";
+    public static final String MSG_SEND_TIMESTAMP = "send_timestamp";
+    public static final String MSG_QUESTION_MSG_ID = "question_msg_id";
 
     private static final int MSG_WHAT_LOGIN = 0x01;
 
@@ -164,20 +164,9 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     }
 
     @Override
-    public void sendMsg(AVIMMessage msg) {
+    public void sendMsg(AVIMMessage msg, AVIMConversationCallback conversationCallback) {
         msg.setTimestamp(System.currentTimeMillis());
-
-        this.mAVIMConversation.sendMessage(msg, new AVIMConversationCallback() {
-            @Override
-            public void done(AVIMException e) {
-                if (e == null) {
-                    Log.e(TAG, "done: ------msg send success--->");
-                    mAVIMConversation.addToLocalCache(msg);
-                } else {
-                    Log.e(TAG, "done: ------msg  send failed---->" + e.toString());
-                }
-            }
-        });
+        this.mAVIMConversation.sendMessage(msg, conversationCallback);
     }
 
     @Override

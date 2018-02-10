@@ -4,9 +4,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.chat.base.BaseChatViewHolder;
-import com.sumian.sleepdoctor.chat.widget.BubbleImageView;
 import com.sumian.sleepdoctor.chat.widget.MsgSendErrorView;
 
 import butterknife.BindView;
@@ -29,7 +29,7 @@ public class ImageReplyViewHolder extends BaseChatViewHolder<AVIMImageMessage> {
     @BindView(R.id.msg_send_error_view)
     MsgSendErrorView mMsgSendErrorView;
     @BindView(R.id.biv_image)
-    BubbleImageView mBivImage;
+    QMUIRadiusImageView mBivImage;
     @BindView(R.id.iv_icon)
     CircleImageView mIvIcon;
 

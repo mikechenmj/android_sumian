@@ -72,6 +72,4 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
     </style>
-
-
 </resources>

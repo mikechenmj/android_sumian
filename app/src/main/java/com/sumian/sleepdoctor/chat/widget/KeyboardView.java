@@ -214,15 +214,18 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
     }
 
     public AVIMTypedMessage getReplyMsg() {
-
         return mReplyMsg;
     }
 
-    @OnClick({R.id.bt_question, R.id.et_input, R.id.iv_voice, R.id.iv_image, R.id.bt_send,
+    public void clearReplay() {
+        if (mReplyMsg != null) mReplyMsg = null;
+    }
+
+    @OnClick({R.id.bt_question, R.id.iv_voice, R.id.iv_image, R.id.bt_send,
             R.id.iv_garbage, R.id.keyboardView})
     @Override
     public void onClick(View v) {
-        mTvAnswerLabel.setVisibility(GONE);
+        // mTvAnswerLabel.setVisibility(GONE);
         switch (v.getId()) {
             case R.id.bt_question:
 
@@ -294,12 +297,10 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
                 }
 
                 mEtInput.setText("");
-                mReplyMsg = null;
 
                 if (mOnKeyboardActionListener != null) {
                     this.mOnKeyboardActionListener.sendText(input);
                 }
-
 
                 break;
             case R.id.iv_garbage:

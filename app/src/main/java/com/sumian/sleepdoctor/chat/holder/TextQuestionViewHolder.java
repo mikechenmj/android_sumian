@@ -78,7 +78,7 @@ public class TextQuestionViewHolder extends BaseChatViewHolder<AVIMTextMessage> 
                 .setFocusable(true)//是否获取焦点，默认为ture
                 .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
                 .create()//创建PopupWindow
-                .showAsDropDown(mTvContent, 0, (int) (-2.5 * mTvContent.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
+                .showAsDropDown(mTvContent, 0, (int) (-2.1 * mTvContent.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
 
         rootView.setOnClickListener(v1 -> {
             popWindow.dissmiss();

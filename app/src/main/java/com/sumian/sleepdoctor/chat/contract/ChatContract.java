@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.chat.contract;
 
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 
 /**
  * Created by sm
@@ -22,7 +23,7 @@ public interface ChatContract {
 
         void logoutImServer();
 
-        void sendMsg(AVIMMessage msg);
+        void sendMsg(AVIMMessage msg, AVIMConversationCallback conversationCallback);
 
         AVIMConversation getAVIMConversation(String conversationId);
 
