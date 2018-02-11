@@ -37,7 +37,7 @@
         android:orientation="horizontal">
 
         <net.qiujuer.genius.ui.widget.Button
-            android:id="@+id/bt_join"
+            android:id="@+id/bt_cancel"
             style="@style/bt_t2_group_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:layout_marginRight="@dimen/space_8"
             android:layout_weight="1"
             android:background="@drawable/bg_bt_group"
-            android:elevation="2dp"
+            android:elevation="@dimen/space_2"
             android:outlineProvider="background"
             android:padding="@dimen/space_16"
             android:text="@string/cancel"
@@ -53,23 +53,24 @@
             android:textSize="@dimen/font_20"
             android:translationZ="@dimen/space_2"
             app:gTouchCornerRadius="@dimen/space_32"
-            app:gTouchEffect="auto"
+            app:gTouchEffect="ripple"
             tools:ignore="RtlHardcoded" />
 
         <net.qiujuer.genius.ui.widget.Button
+            android:id="@+id/bt_renewal"
             style="@style/bt_t1_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginLeft="@dimen/space_8"
             android:layout_weight="1"
-            android:elevation="2dp"
+            android:elevation="@dimen/space_2"
             android:outlineProvider="background"
             android:padding="@dimen/space_16"
             android:text="@string/go_renew"
             android:translationZ="@dimen/space_2"
             app:gTouchCornerRadius="@dimen/space_32"
-            app:gTouchEffect="auto"
+            app:gTouchEffect="ripple"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 

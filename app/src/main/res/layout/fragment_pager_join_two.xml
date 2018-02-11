@@ -123,8 +123,11 @@
         android:layout_marginRight="@dimen/space_32"
         android:layout_marginTop="@dimen/space_28"
         android:clickable="true"
+        android:elevation="@dimen/space_4"
         android:focusable="true"
+        android:outlineProvider="background"
         android:text="@string/join"
+        android:translationZ="@dimen/space_2"
         app:gTouchCornerRadius="@dimen/space_32"
         app:gTouchEffect="ripple" />
 

@@ -85,7 +85,7 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
             e.printStackTrace();
         }
 
-        ToastHelper.show(decodeUrl, Gravity.CENTER);
+        //ToastHelper.show(this, decodeUrl, Gravity.CENTER);
 
         if (!TextUtils.isEmpty(decodeUrl) && (decodeUrl.startsWith("http") || decodeUrl.startsWith("https"))) {
             if (decodeUrl.contains("scheme=sleepdoctor://addgroup")) {
@@ -98,8 +98,9 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
                 ScanGroupResultActivity.show(this, ScanGroupResultActivity.class, args);
                 finish();
             }
+        } else {
+            ToastHelper.show(this, decodeUrl, Gravity.CENTER);
         }
-
         this.mZXingView.startSpot();
     }
 
@@ -135,9 +136,9 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
     }
 
     private void preScanQrCode() {
-            this.mZXingView.startCamera();
-            this.mZXingView.showScanRect();
-            this.mZXingView.startSpot();
+        this.mZXingView.startCamera();
+        this.mZXingView.showScanRect();
+        this.mZXingView.startSpot();
     }
 
     @SuppressWarnings("ConstantConditions")

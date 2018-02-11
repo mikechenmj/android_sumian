@@ -91,7 +91,7 @@ public class AdapterDelegate implements BaseChatViewHolder.OnReplayListener<AVIM
             case LEFT_TEXT_REPLAY_TYPE:
                 isLeft = true;
             case RIGHT_TEXT_REPLAY_TYPE:
-                baseViewHolder = new TextReplyViewHolder(parent, isLeft, R.layout.lay_item_left_text_reply_chat, R.layout.lay_item_right_image_reply_chat);
+                baseViewHolder = new TextReplyViewHolder(parent, isLeft, R.layout.lay_item_left_text_reply_chat, R.layout.lay_item_right_text_reply_chat);
                 break;
             case LEFT_TEXT_QUESTION_TYPE:
                 isLeft = true;

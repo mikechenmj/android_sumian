@@ -81,7 +81,7 @@ public class TextQuestionViewHolder extends BaseChatViewHolder<AVIMTextMessage> 
                 .showAsDropDown(mTvContent, 0, (int) (-2.1 * mTvContent.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
 
         rootView.setOnClickListener(v1 -> {
-            popWindow.dissmiss();
+            popWindow.dismiss();
             if (mOnReplayListener != null) {
                 mOnReplayListener.onReplyMsg(mItem);
             }

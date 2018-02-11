@@ -137,6 +137,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/advisory" />
 
+                <ImageView
+                    android:id="@+id/iv_faq"
+                    android:layout_width="@dimen/space_20"
+                    android:layout_height="@dimen/space_20"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginRight="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/groupdetails_icon_costdescription" />
+
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -192,9 +201,11 @@
                 android:text="@string/re_scan"
                 android:textColor="@color/b3_color"
                 android:textSize="@dimen/font_20"
+                android:visibility="gone"
                 app:gTouchCornerRadius="@dimen/space_32"
                 app:gTouchEffect="ripple"
-                tools:targetApi="lollipop" />
+                tools:targetApi="lollipop"
+                tools:visibility="visible" />
 
         </LinearLayout>
 

@@ -1,15 +1,18 @@
 package com.sumian.sleepdoctor.widget.pay;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.chat.widget.CustomPopWindow;
 
 import java.util.Locale;
 
@@ -26,6 +29,13 @@ import butterknife.OnClick;
 public class PayCalculateItemView extends LinearLayout implements View.OnClickListener {
 
     private static final String TAG = PayCalculateItemView.class.getSimpleName();
+
+
+    @BindView(R.id.tv_label)
+    TextView mTvLabel;
+
+    @BindView(R.id.iv_faq)
+    ImageView mIvPayFaq;
 
     @BindView(R.id.iv_reduce_duration)
     ImageView mIvReduceDuration;
@@ -64,15 +74,30 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         setOrientation(VERTICAL);
     }
 
-    public PayCalculateItemView setOnMoneyChangeCallback(OnMoneyChangeCallback onMoneyChangeCallback) {
+    public void setOnMoneyChangeCallback(OnMoneyChangeCallback onMoneyChangeCallback) {
         mOnMoneyChangeCallback = onMoneyChangeCallback;
-        return this;
     }
 
-    @OnClick({R.id.iv_reduce_duration, R.id.iv_add_duration})
+    @OnClick({R.id.iv_faq, R.id.iv_reduce_duration, R.id.iv_add_duration})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_faq:
+
+                @SuppressLint("InflateParams") View rootView = LayoutInflater.from(v.getContext()).inflate(R.layout.lay_pop_pay_faq, null, false);
+
+                CustomPopWindow popWindow = new CustomPopWindow.PopupWindowBuilder(v.getContext())
+                        .setView(rootView)//显示的布局，还可以通过设置一个View
+                        //     .size(600,400) //设置显示的大小，不设置就默认包裹内容
+                        .setFocusable(true)//是否获取焦点，默认为ture
+                        .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
+                        .create()//创建PopupWindow
+                        .showAsDropDown(mIvPayFaq, -3 * (mIvPayFaq.getWidth()), (int) (-4.4 * mIvPayFaq.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
+
+                v.postDelayed(popWindow::dismiss, 3000);
+                rootView.setOnClickListener(v1 -> popWindow.dismiss());
+
+                break;
             case R.id.iv_reduce_duration:
                 if (mCurrentDuration == 0) {
                     mCurrentDuration = 0;
@@ -81,7 +106,9 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
                 }
                 break;
             case R.id.iv_add_duration:
-                mCurrentDuration++;
+                if (mCurrentDuration < 6) {
+                    mCurrentDuration++;
+                }
                 break;
             default:
                 break;
@@ -93,6 +120,14 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         } else {
             mIvReduceDuration.setEnabled(false);
             mIvReduceDuration.setImageResource(R.mipmap.group_pay_btn_plus_disabled);
+        }
+
+        if (mCurrentDuration < 6) {
+            mIvAddDuration.setEnabled(true);
+            mIvAddDuration.setImageResource(R.mipmap.group_pay_btn_minus);
+        } else {
+            mIvAddDuration.setEnabled(false);
+            mIvAddDuration.setImageResource(R.mipmap.group_pay_btn_minus_disabled);
         }
 
         mTvDuration.setText(String.valueOf(mCurrentDuration));
@@ -115,7 +150,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         formatMoney(mTvMoney, mDefaultMoney);
     }
 
-    private void formatMoney(TextView tv, float money) {
+    private void formatMoney(TextView tv, double money) {
         tv.setText(String.format(Locale.getDefault(), "%.2f", money / 100.0f));
     }
 

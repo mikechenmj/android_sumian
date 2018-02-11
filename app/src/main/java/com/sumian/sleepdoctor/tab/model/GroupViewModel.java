@@ -21,7 +21,6 @@ public class GroupViewModel extends ViewModel {
     private MutableLiveData<List<GroupDetail<UserProfile, UserProfile>>> mGroupsLiveData;
     private MutableLiveData<GroupDetail<UserProfile, UserProfile>> mGroupDetailLiveData;
 
-
     public void notifyGroups(List<GroupDetail<UserProfile, UserProfile>> groupList) {
         if (mGroupsLiveData == null) {
             mGroupsLiveData = new MutableLiveData<>();
@@ -34,6 +33,7 @@ public class GroupViewModel extends ViewModel {
         }
         groups.addAll(groupList);
         mGroupsLiveData.postValue(groupList);
+
     }
 
     public void notifyGroupDetail(GroupDetail<UserProfile, UserProfile> groupDetail) {
@@ -50,11 +50,16 @@ public class GroupViewModel extends ViewModel {
         return mGroupsLiveData;
     }
 
-    public LiveData<GroupDetail<UserProfile, UserProfile>> getGroupDetail() {
+    public LiveData<GroupDetail<UserProfile, UserProfile>> getGroupDetailLiveData() {
         if (mGroupDetailLiveData == null) {
             mGroupDetailLiveData = new MutableLiveData<>();
         }
         return mGroupDetailLiveData;
+    }
+
+
+    public List<GroupDetail<UserProfile, UserProfile>> getGroupDetails() {
+        return mGroupsLiveData.getValue();
     }
 
 }

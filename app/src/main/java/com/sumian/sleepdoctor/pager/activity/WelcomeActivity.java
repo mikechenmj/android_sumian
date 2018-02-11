@@ -34,17 +34,15 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
     @Override
     protected void initData() {
         super.initData();
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
-            mRoot.postDelayed(() -> {
-                if (token == null) {
-                    LoginActivity.show(WelcomeActivity.this, LoginActivity.class);
-                } else if (token.is_new) {
-                    ImproveUserProfileOneActivity.show(WelcomeActivity.this, ImproveUserProfileOneActivity.class);
-                } else {
-                    MainActivity.show(WelcomeActivity.this, MainActivity.class);
-                }
-                finish();
-            }, 10);
-        });
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> mRoot.postDelayed(() -> {
+            if (token == null) {
+                LoginActivity.show(WelcomeActivity.this, LoginActivity.class);
+            } else if (token.is_new) {
+                ImproveUserProfileOneActivity.show(WelcomeActivity.this, ImproveUserProfileOneActivity.class);
+            } else {
+                MainActivity.show(WelcomeActivity.this, MainActivity.class);
+            }
+            finish();
+        }, 500));
     }
 }

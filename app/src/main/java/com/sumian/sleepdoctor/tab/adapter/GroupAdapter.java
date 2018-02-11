@@ -58,13 +58,13 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
     public int updateMsg(AVIMMessage msg) {
         int position = -1;
         for (int i = 0, len = mItems.size(); i < len; i++) {
-            String conversationId = mItems.get(i).mGroupDetail.conversation_id;
+            String conversationId = mItems.get(i).groupDetail.conversation_id;
             if (conversationId.equals(msg.getConversationId())) {
-                AVIMMessage lastMsg = mItems.get(i).LastMsg;
+                AVIMMessage lastMsg = mItems.get(i).lastMsg;
                 if (lastMsg != null) {
-                    mItems.get(i).SecondLastMsg = lastMsg;
+                    mItems.get(i).secondLastMsg = lastMsg;
                 }
-                mItems.get(i).LastMsg = msg;
+                mItems.get(i).lastMsg = msg;
                 updateItem(i);
                 position = i;
                 break;
@@ -109,7 +109,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
 
         public void initView(GroupItem item) {
             super.initView(item);
-            GroupDetail<UserProfile, UserProfile> groupDetail = item.mGroupDetail;
+            GroupDetail<UserProfile, UserProfile> groupDetail = item.groupDetail;
             RequestOptions options = new RequestOptions();
             options.error(R.mipmap.group_avatar).placeholder(R.mipmap.group_avatar).getOptions();
             load(groupDetail.avatar, options, mIvGroupIcon);
@@ -126,7 +126,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             }
 
             int dayLast = groupDetail.day_last;
-            int role = item.mGroupDetail.role;
+            int role = item.groupDetail.role;
 
             if (role == 0) {//患者
                 if (dayLast == 0) {//已过期
@@ -153,7 +153,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             mTvChatHistoryTwo.setVisibility(View.GONE);
             mTvChatHistoryTwoTime.setVisibility(View.GONE);
 
-            AVIMMessage secondLastMsg = item.SecondLastMsg;
+            AVIMMessage secondLastMsg = item.secondLastMsg;
 
             if (secondLastMsg != null) {
                 if (secondLastMsg instanceof AVIMTextMessage) {
@@ -182,7 +182,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             mTvChatHistoryOne.setVisibility(View.GONE);
             mTvChatHistoryOneTime.setVisibility(View.GONE);
 
-            AVIMMessage lastMsg = item.LastMsg;
+            AVIMMessage lastMsg = item.lastMsg;
             if (lastMsg != null) {
                 if (lastMsg instanceof AVIMTextMessage) {
                     String text = ((AVIMTextMessage) lastMsg).getText();
@@ -221,7 +221,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
                 case R.id.bt_expired:
 
                     Bundle extras = new Bundle();
-                    extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.mGroupDetail.id);
+                    extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.groupDetail.id);
                     ScanGroupResultActivity.show(v.getContext(), ScanGroupResultActivity.class, extras);
 
                     break;
@@ -234,16 +234,16 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         protected void onItemClick(View v) {
             super.onItemClick(v);
 
-            if (mItem.mGroupDetail.day_last == 0) {
+            if (mItem.groupDetail.day_last == 0) {
                 Bundle extras = new Bundle();
-                extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.mGroupDetail.id);
+                extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.groupDetail.id);
                 ScanGroupResultActivity.show(v.getContext(), ScanGroupResultActivity.class, extras);
             } else {
 
                 Bundle extras = new Bundle();
-                extras.putInt(MsgActivity.ARGS_GROUP_ID, mItem.mGroupDetail.id);
-                extras.putString(MsgActivity.ARGS_CONVERSATION_ID, mItem.mGroupDetail.conversation_id);
-                extras.putInt(MsgActivity.ARGS_ROLE, mItem.mGroupDetail.role);
+                extras.putInt(MsgActivity.ARGS_GROUP_ID, mItem.groupDetail.id);
+                extras.putString(MsgActivity.ARGS_CONVERSATION_ID, mItem.groupDetail.conversation_id);
+                extras.putInt(MsgActivity.ARGS_ROLE, mItem.groupDetail.role);
 
                 MsgActivity.show(v.getContext(), MsgActivity.class, extras);
             }

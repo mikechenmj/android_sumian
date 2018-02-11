@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,10 +16,22 @@
         android:paddingTop="@dimen/space_12">
 
         <TextView
+            android:id="@+id/tv_label"
             style="@style/text_t1_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/pay_duration" />
+
+        <ImageView
+            android:id="@+id/iv_faq"
+            android:layout_width="@dimen/space_20"
+            android:layout_height="@dimen/space_20"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:contentDescription="@null"
+            android:src="@mipmap/groupdetails_icon_costdescription" />
 
         <Space
             android:layout_width="0dp"
@@ -31,6 +43,7 @@
             style="@style/text_t1_style"
             android:layout_width="@dimen/space_40"
             android:layout_height="@dimen/space_40"
+            android:contentDescription="@null"
             android:padding="@dimen/space_4"
             android:src="@mipmap/group_pay_btn_plus_disabled" />
 
@@ -55,6 +68,7 @@
             style="@style/text_t1_style"
             android:layout_width="@dimen/space_40"
             android:layout_height="@dimen/space_40"
+            android:contentDescription="@null"
             android:padding="@dimen/space_4"
             android:src="@mipmap/group_pay_btn_minus" />
 
@@ -104,4 +118,4 @@
             android:text="@string/yuan" />
 
     </LinearLayout>
-</merge>
+</LinearLayout>

@@ -9,7 +9,6 @@ import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.contract.LoginContract;
 import com.sumian.sleepdoctor.account.presenter.LoginPresenter;
-import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 
@@ -85,6 +84,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
                 ImproveUserProfileOneActivity.show(mEtMobil.getContext(), ImproveUserProfileOneActivity.class);
             } else {
                 MainActivity.show(mEtMobil.getContext(), MainActivity.class);
+                finish();
             }
         });
     }
@@ -106,12 +106,15 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
         switch (v.getId()) {
             case R.id.bt_send_captcha:
                 mobile = mEtMobil.getText().toString().trim();
+
+                if (checkMobile(mobile)) return;
+
                 mPresenter.doSendCaptcha(mobile);
                 break;
             case R.id.bt_login:
                 mobile = mEtMobil.getText().toString().trim();
                 String captcha = mEtCaptcha.getText().toString().trim();
-                if (TextUtils.isEmpty(mobile)) return;
+                if (checkMobile(mobile)) return;
 
                 if (TextUtils.isEmpty(captcha)) return;
 
@@ -120,5 +123,13 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
             default:
                 break;
         }
+    }
+
+    private boolean checkMobile(String mobile) {
+        if (TextUtils.isEmpty(mobile) || !mobile.matches("^1([0-9]{10})$")) {
+            showToast(R.string.mobile_error);
+            return true;
+        }
+        return false;
     }
 }

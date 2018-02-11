@@ -146,7 +146,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
             GroupItem groupItem;
             for (GroupDetail<UserProfile, UserProfile> group : groups) {
                 groupItem = new GroupItem();
-                groupItem.mGroupDetail = group;
+                groupItem.groupDetail = group;
                 groupItems.add(groupItem);
             }
             mGroupErrorView.hideError();

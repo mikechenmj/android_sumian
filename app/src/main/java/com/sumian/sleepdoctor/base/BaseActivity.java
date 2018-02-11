@@ -1,6 +1,8 @@
 package com.sumian.sleepdoctor.base;
 
 import android.app.Activity;
+import android.app.Application;
+import android.app.Service;
 import android.arch.lifecycle.DefaultLifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.content.Context;
@@ -47,7 +49,7 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
         if (extras != null)
             intent.putExtras(extras);
 
-        if (!(context instanceof Activity)) {
+        if (context instanceof Application || context instanceof Service) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
         context.startActivity(intent);

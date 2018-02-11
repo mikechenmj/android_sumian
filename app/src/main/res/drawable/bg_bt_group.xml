@@ -3,6 +3,7 @@
 
     <item android:state_pressed="false">
         <shape>
+            <stroke android:width="@dimen/divider_px_1" android:color="@color/b1_color" />
             <corners android:radius="@dimen/space_32" />
             <solid android:color="@color/b2_color" />
         </shape>
@@ -10,6 +11,7 @@
 
     <item android:state_pressed="true">
         <shape android:dither="true">
+            <stroke android:width="@dimen/divider_px_1" android:color="@color/b1_color" />
             <corners android:radius="@dimen/space_32" />
             <solid android:color="@color/b2_color" />
         </shape>

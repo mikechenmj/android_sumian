@@ -44,11 +44,6 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-    }
-
-    @Override
     protected void initPresenter() {
         super.initPresenter();
         ImproveUserProfilePresenter.init(this);
@@ -61,6 +56,11 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
         String nickname = mEtCaptcha.getText().toString().trim();
         if (TextUtils.isEmpty(nickname)) {
             showToast(R.string.improve_user_profile_one_part_two);
+            return;
+        }
+
+        if ((nickname.length() <= 0 && nickname.length() > 10)){
+            showToast(R.string.error_nickname);
             return;
         }
 
@@ -89,7 +89,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     public void onMore(View v) {
-        ImproveUserProfileOneActivity.show(v.getContext(), ImproveUserProfileTwoActivity.class);
+        ImproveUserProfileTwoActivity.show(this, ImproveUserProfileTwoActivity.class);
     }
 
     @Override

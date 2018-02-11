@@ -13,6 +13,7 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.pager.contract.GroupDetailContract;
+import com.sumian.sleepdoctor.pager.dialog.RenewDialog;
 import com.sumian.sleepdoctor.pager.presenter.GroupDetailPresenter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -60,7 +61,6 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
 
     private GroupDetail<UserProfile, UserProfile> mGroupDetail;
 
-
     @Override
     protected boolean initBundle(Bundle bundle) {
         this.mGroupId = bundle.getInt(ARGS_GROUP_ID);
@@ -77,13 +77,6 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
         super.initWidget(root);
         mTitleBar.addOnBackListener(this);
         mSdvRenewal.setOnShowMoreListener(this);
-        if (AppManager.getAccountViewModel().getToken().user.role != 0) {
-            mIvQrCode.setVisibility(View.VISIBLE);
-            mBtJoinUp.setVisibility(View.GONE);
-        } else {
-            mIvQrCode.setVisibility(View.GONE);
-            mBtJoinUp.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -104,16 +97,6 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
     }
 
     @Override
-    public void onBegin() {
-
-    }
-
-    @Override
-    public void onFinish() {
-
-    }
-
-    @Override
     public void onFailure(String error) {
         showToast(error);
     }
@@ -131,17 +114,27 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
                 .into(mIvGroupIcon);
 
         mTvDesc.setText(groupDetail.name);
-        mTvDoctorName.setText(groupDetail.doctor.nickname);
+        UserProfile doctor = groupDetail.doctor;
+        if (doctor == null) {
+            mTvDoctorName.setVisibility(View.GONE);
+        } else {
+            mTvDoctorName.setText(groupDetail.doctor.nickname);
+            mTvDoctorName.setVisibility(View.VISIBLE);
+        }
         mTvGroupDesc.setText(groupDetail.description);
 
         String label;
         String content;
-        if (AppManager.getAccountViewModel().getToken().user.role == 0) {
+        if (groupDetail.role == 0) {
+            mIvQrCode.setVisibility(View.GONE);
+            mBtJoinUp.setVisibility(View.VISIBLE);
             label = "剩余" + groupDetail.day_last + " 天";
             content = "续费";
         } else {
             label = "群成员";
             content = groupDetail.user_count + "人";
+            mIvQrCode.setVisibility(View.VISIBLE);
+            mBtJoinUp.setVisibility(View.GONE);
         }
         mSdvRenewal.setLabel(label);
         mSdvRenewal.setContent(content);
@@ -170,7 +163,11 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
     public void onShowMore(View v) {
         if (AppManager.getAccountViewModel().getToken().user.role == 0) {//点击再次续费
 
-            showToast("开始续费");
+            RenewDialog renewDialog = new RenewDialog(v.getContext()).bindContentView(R.layout.dialog_renew);
+            renewDialog.setOwnerActivity(this);
+            if (!renewDialog.isShowing()) {
+                renewDialog.show();
+            }
 
         } else {//群成员联系人列表
 
@@ -181,5 +178,9 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
 
         }
 
+    }
+
+    public GroupDetail<UserProfile, UserProfile> onGetGroupDetail() {
+        return mGroupDetail;
     }
 }

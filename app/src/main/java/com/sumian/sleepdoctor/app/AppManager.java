@@ -38,8 +38,6 @@ public final class AppManager implements Observer<Boolean> {
     private VoicePlayer mVoicePlayer;
     private LiveData<Boolean> mTokenInvalidStateLiveData;
 
-    private volatile boolean mIsTopLogin;
-
     private AppManager() {
     }
 
@@ -54,13 +52,9 @@ public final class AppManager implements Observer<Boolean> {
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onChanged(@Nullable Boolean tokenIsInvalid) {
-        Log.e(TAG, "onChanged: -------------->" + tokenIsInvalid);
-        if (!tokenIsInvalid) {
-            this.mIsTopLogin = false;
-        }
+        Log.e(TAG, "onChanged: -------token  is invalid------->" + tokenIsInvalid);
 
-        if (tokenIsInvalid && !mIsTopLogin) {
-            this.mIsTopLogin = true;
+        if (tokenIsInvalid) {
             LoginActivity.show(App.Companion.getAppContext(), LoginActivity.class);
         }
     }

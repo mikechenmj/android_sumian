@@ -11,16 +11,16 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 
 public class GroupItem {
 
-    public GroupDetail<UserProfile, UserProfile> mGroupDetail;
-    public AVIMMessage SecondLastMsg;
-    public AVIMMessage LastMsg;
+    public GroupDetail<UserProfile, UserProfile> groupDetail;
+    public AVIMMessage secondLastMsg;
+    public AVIMMessage lastMsg;
 
     @Override
     public String toString() {
         return "GroupItem{" +
-                "mGroupDetail=" + mGroupDetail +
-                ", SecondLastMsg=" + SecondLastMsg +
-                ", LastMsg=" + LastMsg +
+                "groupDetail=" + groupDetail +
+                ", secondLastMsg=" + secondLastMsg +
+                ", lastMsg=" + lastMsg +
                 '}';
     }
 }

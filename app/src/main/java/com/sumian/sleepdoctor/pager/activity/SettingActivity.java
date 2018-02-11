@@ -2,14 +2,19 @@ package com.sumian.sleepdoctor.pager.activity;
 
 import android.view.View;
 
+import com.sumian.common.operator.AppOperator;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.activity.LoginActivity;
+import com.sumian.sleepdoctor.account.cache.AccountCache;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kotlin.Unit;
 
 /**
  * Created by jzz
@@ -53,6 +58,26 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
                 AboutMeActivity.show(this, AboutMeActivity.class);
                 break;
             case R.id.bt_logout:
+                AppManager.getHttpService().logout().enqueue(new BaseResponseCallback<Unit>() {
+                    @Override
+                    protected void onSuccess(Unit response) {
+
+                    }
+
+                    @Override
+                    protected void onFailure(String error) {
+
+                    }
+                });
+                //                    ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//                    if (activityManager != null) {
+//boolean applicationUserData = activityManager.clearApplicationUserData();
+//  if (applicationUserData)
+// }
+                AppOperator.runOnThread(AccountCache::clearCache);
+                AppManager.getGroupViewModel().notifyGroups(null);
+                AppManager.getChatEngine().logoutImServer();
+                AppManager.getAccountViewModel().updateToken(null);
                 LoginActivity.showClearTop(this, LoginActivity.class);
                 break;
             default:

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/b1_color"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.sumian.sleepdoctor.main.MainActivity">
 
@@ -13,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clickable="false"
+        android:clickable="true"
         android:fitsSystemWindows="true"
-        android:focusable="false" />
+        android:focusable="true" />
 
     <com.sumian.sleepdoctor.widget.nav.NavTab
         android:id="@+id/nav_Tab"

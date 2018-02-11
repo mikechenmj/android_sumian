@@ -156,7 +156,7 @@ public class CustomPopWindow {
     /**
      * 关闭popWindow
      */
-    public void dissmiss() {
+    public void dismiss() {
         if (mPopupWindow != null) {
             mPopupWindow.dismiss();
         }

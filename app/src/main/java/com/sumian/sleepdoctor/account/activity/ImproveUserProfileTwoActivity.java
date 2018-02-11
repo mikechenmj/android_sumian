@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.account.activity;
 
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
@@ -23,7 +25,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackListener, TitleBar.OnMoreListener, ImproveUserProfileContract.View {
+public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackListener, TitleBar.OnMoreListener, ImproveUserProfileContract.View, Observer<Token> {
 
     private static final String TAG = ImproveUserProfileOneActivity.class.getSimpleName();
 
@@ -65,6 +67,12 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
             showToast(R.string.improve_user_profile_two_part_one);
             return;
         }
+
+        if ((name.length() < 2 && name.length() > 8)) {
+            showToast(R.string.name_error);
+            return;
+        }
+
         mPresenter.improveUserProfile(ImproveUserProfileContract.IMPROVE_NAME_KEY, name);
     }
 
@@ -78,7 +86,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
         Token cacheToken = AppManager.getAccountViewModel().getToken();
         cacheToken.is_new = false;
         AppManager.getAccountViewModel().updateToken(cacheToken);
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> finish());
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
     }
 
     @Override
@@ -88,6 +96,13 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     public void onImproveUserProfileSuccess() {
-        MainActivity.show(this,MainActivity.class);
+        MainActivity.show(this, MainActivity.class);
+        AppManager.getChatEngine().loginImServer();
+        finish();
+    }
+
+    @Override
+    public void onChanged(@Nullable Token token) {
+        onImproveUserProfileSuccess();
     }
 }

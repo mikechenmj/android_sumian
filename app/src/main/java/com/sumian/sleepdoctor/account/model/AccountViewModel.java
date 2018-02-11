@@ -42,7 +42,7 @@ public class AccountViewModel extends AndroidViewModel {
             Future<Token> future = Executors.newSingleThreadExecutor().submit(() -> AccountCache.getTokenCache(Token.class));
             try {
                 Token t = future.get();
-                updateTokenInvalidState(t == null);
+                //updateTokenInvalidState(t == null);
 
                 mTokenLiveData.postValue(t);
             } catch (InterruptedException | ExecutionException e) {
@@ -65,7 +65,7 @@ public class AccountViewModel extends AndroidViewModel {
 
     public void updateToken(Token token) {
         mTokenLiveData.postValue(token);
-        updateTokenInvalidState(false);
+        updateTokenInvalidState(token == null);
         AppOperator.runOnThread(() -> AccountCache.updateTokenCache(token));
     }
 
