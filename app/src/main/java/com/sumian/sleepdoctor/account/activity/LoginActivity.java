@@ -9,6 +9,7 @@ import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.contract.LoginContract;
 import com.sumian.sleepdoctor.account.presenter.LoginPresenter;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 
@@ -60,6 +61,11 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     @Override
     public void bindPresenter(LoginContract.Presenter presenter) {
         mPresenter = (LoginPresenter) presenter;
+    }
+
+    @Override
+    protected void onRelease() {
+        super.onRelease();
     }
 
     @Override

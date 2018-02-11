@@ -202,11 +202,11 @@ dependencies {
     implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
 
     //aliyun oss
-    implementation 'com.aliyun.dpa:oss-android-sdk:+'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.7.2'
 
     //ping++
     implementation 'com.pingxx:pingpp-core:2.1.17' // (Ping++ 标准版 SDK) 必须添加
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
     // 使用微信支付时添加,具体版本参考微信官方文档
     implementation 'com.pingxx:pingpp-alipay:2.1.17' // 使用支付宝时添加
 

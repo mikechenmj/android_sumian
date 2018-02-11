@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.base;
 import android.app.Activity;
 import android.arch.lifecycle.DefaultLifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +18,6 @@ import android.widget.LinearLayout;
 
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.sleepdoctor.account.activity.LoginActivity;
-import com.sumian.sleepdoctor.account.model.AccountViewModel;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -37,10 +34,7 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Unbinder mBind;
 
-    private LiveData<Boolean> mTokenInvalidStateLiveData;
     protected View mRoot;
-
-    private boolean mIsTopLogin;
 
     protected Presenter mPresenter;
 
@@ -85,13 +79,6 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
             initPresenter();
             initData();
             getLifecycle().addObserver(this);
-            if (mTokenInvalidStateLiveData == null) {
-                mTokenInvalidStateLiveData = new AccountViewModel(getApplication()).getLiveDataTokenInvalidState();
-            }
-            mTokenInvalidStateLiveData.observe(this, tokenIsInvalid -> {
-                //noinspection ConstantConditions
-                if (tokenIsInvalid && !mIsTopLogin) LoginActivity.show(this, LoginActivity.class);
-            });
         } else {
             finish();
         }
@@ -100,9 +87,6 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
     @Override
     protected void onDestroy() {
         onRelease();
-        if (mTokenInvalidStateLiveData != null && (mTokenInvalidStateLiveData.hasActiveObservers() || mTokenInvalidStateLiveData.hasObservers())) {
-            mTokenInvalidStateLiveData.removeObservers(this);
-        }
         getLifecycle().removeObserver(this);
         this.mBind.unbind();
         this.mRoot = null;

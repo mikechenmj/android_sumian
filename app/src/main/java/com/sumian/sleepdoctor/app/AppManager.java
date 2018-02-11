@@ -1,12 +1,17 @@
 package com.sumian.sleepdoctor.app;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
+import android.util.Log;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.sleepdoctor.account.activity.LoginActivity;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.chat.player.VoicePlayer;
@@ -20,7 +25,7 @@ import com.sumian.sleepdoctor.tab.model.GroupViewModel;
  * desc:
  */
 
-public final class AppManager {
+public final class AppManager implements Observer<Boolean> {
 
     private static final String TAG = AppManager.class.getSimpleName();
 
@@ -31,6 +36,9 @@ public final class AppManager {
     private ChatEngine mChatEngine;
 
     private VoicePlayer mVoicePlayer;
+    private LiveData<Boolean> mTokenInvalidStateLiveData;
+
+    private volatile boolean mIsTopLogin;
 
     private AppManager() {
     }
@@ -41,6 +49,20 @@ public final class AppManager {
 
     public static synchronized ChatEngine getChatEngine() {
         return Holder.INSTANCE.mChatEngine;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public void onChanged(@Nullable Boolean tokenIsInvalid) {
+        Log.e(TAG, "onChanged: -------------->" + tokenIsInvalid);
+        if (!tokenIsInvalid) {
+            this.mIsTopLogin = false;
+        }
+
+        if (tokenIsInvalid && !mIsTopLogin) {
+            this.mIsTopLogin = true;
+            LoginActivity.show(App.Companion.getAppContext(), LoginActivity.class);
+        }
     }
 
     private static class Holder {
@@ -79,9 +101,18 @@ public final class AppManager {
             Holder.INSTANCE.mAccountViewModel.LoadToken();
         }
 
+        mTokenInvalidStateLiveData = Holder.INSTANCE.mAccountViewModel.getLiveDataTokenInvalidState();
+        mTokenInvalidStateLiveData.observeForever(this);
+
         if (mChatEngine == null) {
             this.mChatEngine = new ChatEngine(context);
         }
     }
 
+    public void release() {
+        if (mTokenInvalidStateLiveData != null && (mTokenInvalidStateLiveData.hasActiveObservers() || mTokenInvalidStateLiveData.hasObservers())) {
+            mTokenInvalidStateLiveData.removeObserver(this);
+        }
+        Holder.INSTANCE = null;
+    }
 }

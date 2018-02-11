@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
