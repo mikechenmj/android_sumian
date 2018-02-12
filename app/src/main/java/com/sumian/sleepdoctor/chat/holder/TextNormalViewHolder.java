@@ -52,11 +52,13 @@ public class TextNormalViewHolder extends BaseChatViewHolder<AVIMTextMessage> {
         updateText(avimTextMessage, mTvContent);
     }
 
-    @OnClick({R.id.iv_msg_failed})
+    @OnClick({R.id.iv_icon})
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         switch (v.getId()) {
-            case R.id.iv_msg_failed://发送失败,再次发送
+            case R.id.iv_icon:
+                showOtherUserProfile(v);
                 break;
             default:
                 break;

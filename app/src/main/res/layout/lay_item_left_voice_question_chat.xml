@@ -65,15 +65,16 @@
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
 
-        <com.sumian.sleepdoctor.chat.widget.VoiceProgress
+        <ImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_48"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
-            android:background="@drawable/group_chatbubble_l" />
-
+            android:background="@drawable/group_chatbubble_l"
+            android:contentDescription="@null"
+            android:src="@drawable/voice_anim_l" />
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -91,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="60''" />
+                tools:text="60 ''" />
         </FrameLayout>
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView

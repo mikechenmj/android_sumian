@@ -67,7 +67,7 @@
 
         <ImageView
             android:id="@+id/biv_image"
-            android:layout_width="@dimen/space_72"
+            android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_48"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/space_12"

@@ -59,34 +59,39 @@ public class VoiceNormalViewHolder extends BaseChatViewHolder<AVIMAudioMessage> 
         super.initView(avimAudioMessage);
         updateUserProfile(avimAudioMessage.getFrom(), mGroupId, mTvLabel, mTvNickname, mIvIcon);
 
-        double duration = avimAudioMessage.getDuration();
-
-        mTvVoiceDuration.setText(String.format("%s''", String.valueOf(duration)));
-
-        mVoiceDot.setVisibility(mIsLeft ? View.VISIBLE : View.INVISIBLE);
+        updateDuration(avimAudioMessage, mTvVoiceDuration, mVoiceDot);
     }
 
-    @OnClick({R.id.biv_image})
+    @OnClick({R.id.biv_image, R.id.iv_icon})
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        switch (v.getId()) {
+            case R.id.iv_icon:
+                showOtherUserProfile(v);
+                break;
+            case R.id.biv_image:
 
-        mVoiceDot.setVisibility(View.INVISIBLE);
-        String conversationId = mItem.getConversationId();
-        AppManager.getChatEngine().getAVIMConversation(conversationId).read();
+                mVoiceDot.setVisibility(View.INVISIBLE);
+                String conversationId = mItem.getConversationId();
+                AppManager.getChatEngine().getAVIMConversation(conversationId).read();
 
-        String localFilePath = mItem.getLocalFilePath();
-        if (TextUtils.isEmpty(localFilePath)) {
-            localFilePath = mItem.getFileUrl();
+                String localFilePath = mItem.getLocalFilePath();
+                if (TextUtils.isEmpty(localFilePath)) {
+                    localFilePath = mItem.getFileUrl();
+                }
+                AppManager.getVoicePlayer().play(localFilePath, getAdapterPosition()).setStatusListener(this);
+                break;
+            default:
+                break;
         }
-
-        AppManager.getVoicePlayer().play(localFilePath, getAdapterPosition()).setStatusListener(this);
     }
 
     @Override
     public void play() {
         mVoiceDot.setVisibility(View.INVISIBLE);
         AnimationDrawable drawable = (AnimationDrawable) mBivImage.getDrawable();
+        drawable.setVisible(true, true);
         drawable.start();
     }
 
@@ -95,5 +100,7 @@ public class VoiceNormalViewHolder extends BaseChatViewHolder<AVIMAudioMessage> 
         mVoiceDot.setVisibility(View.INVISIBLE);
         AnimationDrawable drawable = (AnimationDrawable) mBivImage.getDrawable();
         drawable.stop();
+        drawable.setVisible(true, true);
+       // mBivImage.setImageDrawable(drawable);
     }
 }

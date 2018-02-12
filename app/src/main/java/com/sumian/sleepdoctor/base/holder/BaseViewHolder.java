@@ -54,10 +54,14 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     }
 
     protected void load(String url, RequestOptions options, ImageView iv) {
+        load(null, url, options, iv);
+    }
+
+    protected void load(String thumbnail, String url, RequestOptions options, ImageView iv) {
         if (options == null) {
             mLoader.load(url).into(iv);
         } else {
-            mLoader.load(url).apply(options).into(iv);
+            mLoader.load(url).apply(options).thumbnail(mLoader.load(thumbnail).apply(options)).into(iv);
         }
     }
 

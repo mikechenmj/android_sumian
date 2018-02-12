@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="60''" />
+                tools:text="60 ''" />
         </FrameLayout>
 
         <ImageView
@@ -92,6 +92,7 @@
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
             android:background="@drawable/group_chatbubble_r"
+            android:contentDescription="@null"
             android:src="@drawable/voice_anim_r" />
 
         <de.hdodenhof.circleimageview.CircleImageView

@@ -127,11 +127,15 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         }
     }
 
+    public void hideMoreIcon() {
+        mIvMore.setVisibility(INVISIBLE);
+    }
+
     public void setContent(String content) {
         mTvSettingContent.setText(content);
     }
 
-    public void setLabel(String label){
+    public void setLabel(String label) {
         mTvTypeDesc.setText(label);
     }
 

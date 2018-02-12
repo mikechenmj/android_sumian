@@ -175,10 +175,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
 
     private void goMsgCenter(View v) {
         Bundle extras = new Bundle();
-        extras.putInt(MsgActivity.ARGS_GROUP_ID, mGroupDetail.id);
-        extras.putString(MsgActivity.ARGS_CONVERSATION_ID, mGroupDetail.conversation_id);
-        extras.putInt(MsgActivity.ARGS_ROLE, mGroupDetail.role);
-
+        extras.putSerializable(MsgActivity.ARGS_GROUP_DETAIL, mGroupDetail);
         MsgActivity.show(v.getContext(), MsgActivity.class, extras);
     }
 

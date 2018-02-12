@@ -66,7 +66,6 @@ public class AdapterDelegate implements BaseChatViewHolder.OnReplayListener<AVIM
 
     private static final int UNKNOWN_TYPE = 0x00;
 
-
     private OnReplyCallback mOnReplyCallback;
 
     private int mGroupId;

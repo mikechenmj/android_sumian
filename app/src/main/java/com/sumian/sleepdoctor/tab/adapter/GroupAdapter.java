@@ -241,10 +241,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             } else {
 
                 Bundle extras = new Bundle();
-                extras.putInt(MsgActivity.ARGS_GROUP_ID, mItem.groupDetail.id);
-                extras.putString(MsgActivity.ARGS_CONVERSATION_ID, mItem.groupDetail.conversation_id);
-                extras.putInt(MsgActivity.ARGS_ROLE, mItem.groupDetail.role);
-
+                extras.putSerializable(MsgActivity.ARGS_GROUP_DETAIL, mItem.groupDetail);
                 MsgActivity.show(v.getContext(), MsgActivity.class, extras);
             }
 

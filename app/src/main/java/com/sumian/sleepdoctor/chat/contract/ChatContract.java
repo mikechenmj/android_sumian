@@ -23,7 +23,7 @@ public interface ChatContract {
 
         void logoutImServer();
 
-        void sendMsg(AVIMMessage msg, AVIMConversationCallback conversationCallback);
+        void sendMsg(AVIMConversation avimConversation, AVIMMessage msg, AVIMConversationCallback conversationCallback);
 
         AVIMConversation getAVIMConversation(String conversationId);
 

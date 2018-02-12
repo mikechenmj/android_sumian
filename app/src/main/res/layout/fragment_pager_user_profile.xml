@@ -49,6 +49,7 @@
             android:src="@mipmap/info_avatar_patient" />
 
         <ImageView
+            android:id="@+id/iv_avatar_more"
             android:layout_width="@dimen/space_32"
             android:layout_height="@dimen/space_32"
             android:contentDescription="@null"

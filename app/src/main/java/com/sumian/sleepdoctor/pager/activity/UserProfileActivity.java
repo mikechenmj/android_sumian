@@ -73,6 +73,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     SettingDividerView mDvMobile;
 
     private UserProfile mUserProfile;
+
     private File cameraFile;
     private File storageDir = null;
     private String mLocalImagePath;

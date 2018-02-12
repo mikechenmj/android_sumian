@@ -37,17 +37,17 @@
             android:background="@drawable/bg_chat_assistant_label"
             android:paddingLeft="@dimen/space_2"
             android:paddingRight="@dimen/space_2"
-            tools:text="医生"
             android:textColor="@color/b2_color"
-            android:textSize="@dimen/font_12" />
+            android:textSize="@dimen/font_12"
+            tools:text="医生" />
 
         <TextView
             android:id="@+id/tv_nickname"
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="欧主任"
-            android:textSize="@dimen/font_12" />
+            android:textSize="@dimen/font_12"
+            tools:text="欧主任" />
 
     </LinearLayout>
 
@@ -81,17 +81,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="60''" />
+                tools:text="60 ''" />
         </FrameLayout>
 
-        <com.sumian.sleepdoctor.chat.widget.VoiceProgress
+        <ImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_48"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
-            android:background="@drawable/group_chatbubble_r" />
+            android:background="@drawable/group_chatbubble_r"
+            android:contentDescription="@null"
+            android:src="@drawable/voice_anim_r" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"

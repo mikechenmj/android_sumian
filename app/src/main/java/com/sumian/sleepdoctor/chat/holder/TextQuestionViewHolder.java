@@ -57,17 +57,24 @@ public class TextQuestionViewHolder extends BaseChatViewHolder<AVIMTextMessage> 
         updateImageText(avimTextMessage, mTvContent);
     }
 
-    @OnClick({R.id.msg_send_error_view})
+    @OnClick({R.id.iv_icon})
     @Override
     public void onClick(View v) {
         super.onClick(v);
+        switch (v.getId()) {
+            case R.id.iv_icon:
+                showOtherUserProfile(v);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     protected boolean onItemLongClick(View v) {
         if (mRole == 0) {
             Log.e(TAG, "onItemLongClick: --------你是患者,不能回答----->");
-            return super.onItemLongClick(v);
+            return true;
         }
 
         @SuppressLint("InflateParams") View rootView = LayoutInflater.from(v.getContext()).inflate(R.layout.lay_pop_question, null, false);

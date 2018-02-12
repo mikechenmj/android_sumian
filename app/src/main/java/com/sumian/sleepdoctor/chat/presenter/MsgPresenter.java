@@ -59,11 +59,10 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
     private File cameraFile;
     private File storageDir = null;
-    private String mLocalImagePath;
 
     private AVIMMessage mLastMsg;
 
-    private String mConversationId;
+    private AVIMConversation mAVIMConversation;
 
     private AVIMTypedMessage mReplyMsg;
 
@@ -77,11 +76,9 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void syncPreMsgHistory(String conversationId) {
-        this.mConversationId = conversationId;
+    public void syncPreMsgHistory() {
         ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
-        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
-        avimConversation.queryMessages(mLastMsg.getMessageId(), mLastMsg.getTimestamp(), 20, new AVIMMessagesQueryCallback() {
+        mAVIMConversation.queryMessages(mLastMsg.getMessageId(), mLastMsg.getTimestamp(), 20, new AVIMMessagesQueryCallback() {
             @Override
             public void done(List<AVIMMessage> list, AVIMException e) {
                 if (!list.isEmpty()) {
@@ -99,11 +96,11 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
     @Override
     public void syncMsgHistory(String conversationId) {
-        AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
+        mAVIMConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
 
         ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
 
-        avimConversation.queryMessages(20, new AVIMMessagesQueryCallback() {
+        mAVIMConversation.queryMessages(20, new AVIMMessagesQueryCallback() {
             @Override
             public void done(List<AVIMMessage> list, AVIMException e) {
                 if (!list.isEmpty()) {
@@ -122,6 +119,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     @Override
     public void sendTextMsg(String content, boolean isQuestion, AVIMTypedMessage replyMsg) {
         this.mReplyMsg = replyMsg;
+
         AVIMTextMessage msg = new AVIMTextMessage();
         msg.setText(content);
 
@@ -153,83 +151,12 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     @Override
     public void sendPicMsg(Activity activity, int type, AVIMTypedMessage replyMsg) {
         this.mReplyMsg = replyMsg;
+
         if (type == PIC_REQUEST_CODE_LOCAL) {//pic local
-            ImagePickerActivity.show(activity, new SelectOptions
-                    .Builder()
-                    .setHasCam(false)
-                    .setSelectCount(9)
-                    .setSelectedImages(new String[]{})
-                    .setCallback(new Callback() {
-
-                        @Override
-                        public void doSelected(String[] images) {
-                            super.doSelected(images);
-
-                            for (String image : images) {
-                                Log.e(TAG, "doSelected: -------->" + image);
-
-                                AVIMImageMessage msg = initImageMsg(image);
-
-                                sendMsg(msg);
-                            }
-
-                        }
-                    }).build());
-
+            picLocal(activity);
         } else {//pic camera
-            String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
-            if (EasyPermissions.hasPermissions(activity, perms)) {
-
-                cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
-                //noinspection ResultOfMethodCallIgnored
-                cameraFile.getParentFile().mkdirs();
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                //android 7.1之后的相机处理方式
-                if (Build.VERSION.SDK_INT < 24) {
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
-                    activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
-                } else {
-                    ContentValues contentValues = new ContentValues(1);
-                    contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
-                    Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                    activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
-                }
-
-            } else {
-                // Request one permission
-                EasyPermissions.requestPermissions(activity, activity.getResources().getString(R.string.str_request_camera_message), CAMERA_PERM, perms);
-            }
+            picCamera(activity);
         }
-
-    }
-
-    @Nullable
-    private AVIMImageMessage initImageMsg(String image) {
-        AVIMImageMessage msg = null;
-        try {
-            msg = new AVIMImageMessage(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Map<String, Object> attr;
-
-        if (mReplyMsg != null) {
-            attr = new HashMap<>();
-            attr.put("mention_id", "");
-            attr.put("type", "reply");
-            attr.put("send_timestamp", mReplyMsg.getTimestamp());
-            attr.put("question_msg_id", mReplyMsg.getMessageId());
-
-            if (msg != null) {
-                msg.setAttrs(attr);
-            }
-        }
-
-        return msg;
     }
 
     @AfterPermissionGranted(RECORD_PERM)
@@ -252,8 +179,8 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             switch (requestCode) {
                 case PIC_REQUEST_CODE_CAMERA:// capture new image
                     if (cameraFile != null && cameraFile.exists()) {
-                        this.mLocalImagePath = cameraFile.getAbsolutePath();
-                        AVIMImageMessage msg = initImageMsg(mLocalImagePath);
+                        String localImagePath = cameraFile.getAbsolutePath();
+                        AVIMImageMessage msg = initImageMsg(localImagePath);
                         sendMsg(msg);
                     }
                     break;
@@ -281,6 +208,8 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
     @Override
     public void senAudioMsg(String audioFilePath, int duration, AVIMTypedMessage replyMsg) {
+        this.mReplyMsg = replyMsg;
+
         AVIMAudioMessage msg = null;
         try {
             msg = new AVIMAudioMessage(audioFilePath);
@@ -305,11 +234,89 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         sendMsg(msg);
     }
 
+    private void picLocal(Activity activity) {
+        ImagePickerActivity.show(activity, new SelectOptions
+                .Builder()
+                .setHasCam(false)
+                .setSelectCount(9)
+                .setSelectedImages(new String[]{})
+                .setCallback(new Callback() {
+
+                    @Override
+                    public void doSelected(String[] images) {
+                        super.doSelected(images);
+                        for (String image : images) {
+                            Log.e(TAG, "doSelected: -------->" + image);
+                            AVIMImageMessage msg = initImageMsg(image);
+                            sendMsg(msg);
+                        }
+                    }
+                }).build());
+    }
+
+    private void picCamera(Activity activity) {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
+        if (EasyPermissions.hasPermissions(activity, perms)) {
+
+            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
+            //noinspection ResultOfMethodCallIgnored
+            cameraFile.getParentFile().mkdirs();
+
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            //android 7.1之后的相机处理方式
+            if (Build.VERSION.SDK_INT < 24) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
+                activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+            } else {
+                ContentValues contentValues = new ContentValues(1);
+                contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
+                Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+            }
+
+        } else {
+            // Request one permission
+            EasyPermissions.requestPermissions(activity, activity.getResources().getString(R.string.str_request_camera_message), CAMERA_PERM, perms);
+        }
+    }
+
+    @Nullable
+    private AVIMImageMessage initImageMsg(String image) {
+        AVIMImageMessage msg = null;
+        try {
+            msg = new AVIMImageMessage(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Map<String, Object> attr;
+
+        if (mReplyMsg != null) {
+            attr = new HashMap<>();
+            attr.put("mention_id", "");
+            attr.put("type", "reply");
+            attr.put("send_timestamp", mReplyMsg.getTimestamp());
+            attr.put("question_msg_id", mReplyMsg.getMessageId());
+            if (msg != null) {
+                msg.setAttrs(attr);
+            }
+        }
+
+        return msg;
+    }
+
     private void sendMsg(AVIMTypedMessage msg) {
+        if (msg == null) {
+            Log.e(TAG, "sendMsg: -------msg is null--->");
+            return;
+        }
+
         if (mView != null)
             mView.onSendingMsg(msg);
 
-        AppManager.getChatEngine().sendMsg(msg, new AVIMConversationCallback() {
+        AppManager.getChatEngine().sendMsg(mAVIMConversation, msg, new AVIMConversationCallback() {
             @Override
             public void done(AVIMException e) {
                 if (e == null) {
@@ -317,11 +324,11 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
                     if (mView != null) {
                         mView.onSendMsgSuccess(msg);
                     }
-                    AppManager.getChatEngine().getAVIMConversation(mConversationId).addToLocalCache(msg);
                 } else {
                     if (mView != null) {
                         mView.onSendMsgFailed(msg);
                     }
+                    mAVIMConversation.addToLocalCache(msg);
                     Log.e(TAG, "done: ------msg  send failed---->" + e.toString());
                 }
             }

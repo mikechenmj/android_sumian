@@ -55,7 +55,7 @@ public interface MsgContract {
 
         void syncMsgHistory(String conversationId);
 
-        void syncPreMsgHistory(String conversationId);
+        void syncPreMsgHistory();
 
         void resultCodeDelegate(int requestCode, int resultCode, Intent data);
 

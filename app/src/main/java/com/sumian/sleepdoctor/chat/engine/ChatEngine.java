@@ -47,8 +47,6 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     private AVIMClient mAVIMClient;
 
-    private AVIMConversation mAVIMConversation;
-
     private Handler mHandler;
 
     private AVIMTypedMessageHandler<AVIMTypedMessage> mMessageHandler;
@@ -60,7 +58,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
         this.mHandler = new Handler(Looper.getMainLooper(), this);
         AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
-        AVIMClient.setAutoOpen(true);
+        AVIMClient.setAutoOpen(false);
         AVIMClient.setClientEventHandler(new AVIMClientEventHandler() {
             @Override
             public void onConnectionPaused(AVIMClient avimClient) {
@@ -115,6 +113,10 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
         });
     }
 
+    public AVIMClient getAVIMClient() {
+        return mAVIMClient;
+    }
+
     @Override
     public void unRegisterMsgHandler() {
         AVIMMessageManager.unregisterMessageHandler(AVIMMessage.class, mMessageHandler);
@@ -164,14 +166,14 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     }
 
     @Override
-    public void sendMsg(AVIMMessage msg, AVIMConversationCallback conversationCallback) {
+    public void sendMsg(AVIMConversation avimConversation, AVIMMessage msg, AVIMConversationCallback conversationCallback) {
         msg.setTimestamp(System.currentTimeMillis());
-        this.mAVIMConversation.sendMessage(msg, conversationCallback);
+        avimConversation.sendMessage(msg, conversationCallback);
     }
 
     @Override
     public AVIMConversation getAVIMConversation(String conversationId) {
-        return this.mAVIMConversation = mAVIMClient.getConversation(conversationId);
+        return mAVIMClient.getConversation(conversationId);
     }
 
     @Override

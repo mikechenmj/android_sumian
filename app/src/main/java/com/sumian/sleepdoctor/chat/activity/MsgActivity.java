@@ -15,6 +15,7 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.chat.adapter.MsgAdapter;
@@ -27,6 +28,7 @@ import com.sumian.sleepdoctor.chat.widget.KeyboardView;
 import com.sumian.sleepdoctor.chat.widget.MsgRecycleView;
 import com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout;
 import com.sumian.sleepdoctor.pager.activity.GroupDetailActivity;
+import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.List;
@@ -48,9 +50,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     private static final String TAG = MsgActivity.class.getSimpleName();
 
-    public static final String ARGS_CONVERSATION_ID = "args_conversation_id";
-    public static final String ARGS_GROUP_ID = "args_group_id";
-    public static final java.lang.String ARGS_ROLE = "args_role";//自己在该群的角色
+    public static final String ARGS_GROUP_DETAIL = "group_detail";
 
     @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
@@ -73,15 +73,14 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     private int mOpenKeyboardHeight = 0;
     private int mInitBottomHeight = 0;
 
-    private String mConversationId;
-    private int mGroupId;
-    private int mRole;
+    private GroupDetail<UserProfile, UserProfile> mGroupDetail;
 
+    private AVIMTypedMessage mReplyMsg;
+
+    @SuppressWarnings("unchecked")
     @Override
     protected boolean initBundle(Bundle bundle) {
-        this.mGroupId = bundle.getInt(ARGS_GROUP_ID);
-        this.mConversationId = bundle.getString(ARGS_CONVERSATION_ID);
-        this.mRole = bundle.getInt(ARGS_ROLE);
+        this.mGroupDetail = (GroupDetail<UserProfile, UserProfile>) bundle.getSerializable(ARGS_GROUP_DETAIL);
         return super.initBundle(bundle);
     }
 
@@ -99,7 +98,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         mTitleBar.addOnBackListener(this).addOnMoreListener(this);
         //  mRefreshView.setOnRefreshListener(this);
 
-        if (mRole == 0) {//患者
+        if (mGroupDetail.role == 0) {//患者
             mKeyboardView.showQuestionAction();
         } else {
             mKeyboardView.hideQuestionAction();
@@ -108,7 +107,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter(this).bindGroupId(mGroupId).bindRole(mRole));
+        this.mRecyclerView.setAdapter(mMsgAdapter = new MsgAdapter(this).bindGroupId(mGroupDetail.id).bindRole(mGroupDetail.role));
         this.mRecyclerView.setOnLoadDataCallback(this);
 
         //this.mLayMsgContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
@@ -123,7 +122,8 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.syncMsgHistory(mConversationId);
+        mTitleBar.setText(mGroupDetail.name);
+        mPresenter.syncMsgHistory(mGroupDetail.conversation_id);
         AppManager.getChatEngine().setOnMsgCallback(this);
     }
 
@@ -174,7 +174,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void onNoHaveMsg() {
-
+        showToast("没有历史消息");
     }
 
     @Override
@@ -231,17 +231,17 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void onTakePhotoCallback() {
-        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA, mKeyboardView.getReplyMsg());
+        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA, mReplyMsg);
     }
 
     @Override
     public void onPicPictureCallback() {
-        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_LOCAL, mKeyboardView.getReplyMsg());
+        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_LOCAL, mReplyMsg);
     }
 
     @Override
     public void sendText(String content) {
-        mPresenter.sendTextMsg(content, mKeyboardView.isQuestion(), mKeyboardView.getReplyMsg());
+        mPresenter.sendTextMsg(content, mKeyboardView.isQuestion(), mReplyMsg);
     }
 
     @Override
@@ -254,7 +254,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
     @Override
     public void sendVoice(String path, int duration) {
-        mPresenter.senAudioMsg(path, duration, mKeyboardView.getReplyMsg());
+        mPresenter.senAudioMsg(path, duration, mReplyMsg);
     }
 
     @Override
@@ -281,22 +281,22 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     public void onReply(AVIMTypedMessage msg) {
         //应用 msg
-        Log.e(TAG, "onReply: -------->" + msg.toString());
+        mKeyboardView.setAnswerLabel(((AVIMTextMessage) msg).getText());
 
-        mKeyboardView.setAnswerLabel((AVIMTextMessage) msg);
+        this.mReplyMsg = msg;
+
+        Log.e(TAG, "setAnswerLabel: --------被引用的消息----->text=" + ((AVIMTextMessage) msg).getText() + "  timeStamp=" + msg.getTimestamp() + " msg_id=" + msg.getMessageId());
     }
 
     @Override
     public void onMore(View v) {
-
         Bundle extras = new Bundle();
-        extras.putInt(GroupDetailActivity.ARGS_GROUP_ID, mGroupId);
+        extras.putInt(GroupDetailActivity.ARGS_GROUP_ID, mGroupDetail.id);
         GroupDetailActivity.show(this, GroupDetailActivity.class, extras);
-
     }
 
     @Override
     public void onLoadPre() {
-        mPresenter.syncPreMsgHistory(mConversationId);
+        mPresenter.syncPreMsgHistory();
     }
 }

@@ -107,6 +107,7 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     tools:ignore="UselessParent">
 
                     <View
@@ -121,16 +122,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:gravity="center"
                         android:text="60''"
                         android:textColor="@color/b2_color" />
                 </FrameLayout>
 
                 <ImageView
                     android:id="@+id/biv_image"
-                    android:layout_width="@dimen/space_72"
+                    android:layout_width="@dimen/space_48"
                     android:layout_height="@dimen/space_48"
                     android:layout_gravity="center"
                     android:contentDescription="@null"
+                    android:padding="@dimen/space_8"
                     android:src="@drawable/voice_anim_r" />
 
             </LinearLayout>

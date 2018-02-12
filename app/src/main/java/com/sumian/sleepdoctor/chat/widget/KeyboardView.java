@@ -19,8 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
-import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.chat.AudioRecorder;
 import com.sumian.sleepdoctor.chat.utils.FilePathUtil;
@@ -69,8 +67,6 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
     @BindView(R.id.tv_answer_label)
     TextView mTvAnswerLabel;
-
-    private AVIMTextMessage mReplyMsg;
 
     private onKeyboardActionListener mOnKeyboardActionListener;
 
@@ -213,19 +209,10 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
         return mBtAsk.getTag() != null;
     }
 
-    public AVIMTypedMessage getReplyMsg() {
-        return mReplyMsg;
-    }
-
-    public void clearReplay() {
-        if (mReplyMsg != null) mReplyMsg = null;
-    }
-
     @OnClick({R.id.bt_question, R.id.iv_voice, R.id.iv_image, R.id.bt_send,
             R.id.iv_garbage, R.id.keyboardView})
     @Override
     public void onClick(View v) {
-        // mTvAnswerLabel.setVisibility(GONE);
         switch (v.getId()) {
             case R.id.bt_question:
 
@@ -322,13 +309,15 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
 
     }
 
-    public void setAnswerLabel(AVIMTextMessage msg) {
-        this.mReplyMsg = msg;
-        String text = msg.getText();
-
-        mTvAnswerLabel.setText(text);
+    public void setAnswerLabel(String replyText) {
+        mTvAnswerLabel.setText(replyText);
         mTvAnswerLabel.setVisibility(VISIBLE);
         mTvAnswerLabel.setTag(true);
+    }
+
+    public void clearReplayMsgLabel() {
+        mTvAnswerLabel.setText(null);
+        mTvAnswerLabel.setVisibility(GONE);
     }
 
     public interface onKeyboardActionListener {

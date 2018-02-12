@@ -59,6 +59,9 @@ public class GroupViewModel extends ViewModel {
 
 
     public List<GroupDetail<UserProfile, UserProfile>> getGroupDetails() {
+        if (mGroupsLiveData == null) {
+            mGroupsLiveData = new MutableLiveData<>();
+        }
         return mGroupsLiveData.getValue();
     }
 
