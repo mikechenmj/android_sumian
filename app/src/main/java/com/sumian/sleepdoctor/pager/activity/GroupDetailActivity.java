@@ -8,10 +8,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
-import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.chat.activity.MsgActivity;
 import com.sumian.sleepdoctor.pager.contract.GroupDetailContract;
 import com.sumian.sleepdoctor.pager.dialog.RenewDialog;
 import com.sumian.sleepdoctor.pager.presenter.GroupDetailPresenter;
@@ -25,7 +26,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by sm
@@ -42,7 +42,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
     TitleBar mTitleBar;
 
     @BindView(R.id.iv_group_icon)
-    CircleImageView mIvGroupIcon;
+    QMUIRadiusImageView mIvGroupIcon;
     @BindView(R.id.tv_desc)
     TextView mTvDesc;
     @BindView(R.id.tv_doctor_name)
@@ -151,7 +151,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
         switch (v.getId()) {
             case R.id.iv_qr_code:
                 Bundle extras = new Bundle();
-                extras.putString("group_qr_code_url", mGroupDetail.code_url);
+                extras.putSerializable(MsgActivity.ARGS_GROUP_DETAIL, mGroupDetail);
                 GroupQrCodeActivity.show(this, GroupQrCodeActivity.class, extras);
                 break;
             default:
@@ -161,7 +161,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
 
     @Override
     public void onShowMore(View v) {
-        if (AppManager.getAccountViewModel().getToken().user.role == 0) {//点击再次续费
+        if (mGroupDetail.role == 0) {//点击再次续费
 
             RenewDialog renewDialog = new RenewDialog(v.getContext()).bindContentView(R.layout.dialog_renew);
             renewDialog.setOwnerActivity(this);

@@ -117,5 +117,6 @@
     <string name="error_nickname">你的昵称太长了,不好记哦</string>
     <string name="name_error">你的真实姓名太长了,不容易让人记住</string>
     <string name="pay_faq">咨询费用按月收费,一个月按30天计算</string>
+    <string name="qr_code">二维码</string>
 
 </resources>

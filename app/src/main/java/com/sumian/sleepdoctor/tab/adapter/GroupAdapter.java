@@ -14,6 +14,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.bumptech.glide.request.RequestOptions;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.common.base.BaseRecyclerAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
@@ -30,7 +31,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by jzz
@@ -78,7 +78,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         private static final String TAG = ViewHolder.class.getSimpleName();
 
         @BindView(R.id.iv_group_icon)
-        CircleImageView mIvGroupIcon;
+        QMUIRadiusImageView mIvGroupIcon;
         @BindView(R.id.tv_desc)
         TextView mTvDesc;
         @BindView(R.id.tv_doctor_name)

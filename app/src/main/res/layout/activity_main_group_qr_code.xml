@@ -11,7 +11,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="群成员列表" />
+        app:text="@string/qr_code" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,15 +30,21 @@
             android:padding="@dimen/space_16"
             tools:ignore="UseCompoundDrawables">
 
-            <ImageView
-                android:id="@+id/imageView"
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_group_icon"
                 android:layout_width="@dimen/space_72"
                 android:layout_height="@dimen/space_72"
                 android:contentDescription="@null"
+                android:elevation="@dimen/space_2"
+                android:outlineProvider="background"
+                android:translationZ="@dimen/space_2"
+                app:qmui_border_color="@color/b1_color"
+                app:qmui_border_width="@dimen/space_4"
+                app:qmui_corner_radius="@dimen/space_4"
                 app:srcCompat="@mipmap/group_avatar" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_group_name"
                 style="@style/text_t3_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,12 +54,12 @@
                 android:ellipsize="marquee"
                 android:ems="10"
                 android:singleLine="true"
-                android:text="欧主任随访群"
-                android:textSize="@dimen/font_18" />
+                android:textSize="@dimen/font_18"
+                tools:text="欧主任随访群" />
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/iv_qr_code"
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_gravity="center"
