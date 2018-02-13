@@ -59,7 +59,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
             return;
         }
 
-        if ((nickname.length() <= 0 && nickname.length() > 10)){
+        if (nickname.length() <= 0 || nickname.length() > 10) {
             showToast(R.string.error_nickname);
             return;
         }

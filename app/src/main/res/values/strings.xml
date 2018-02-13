@@ -114,8 +114,8 @@
     <string name="group_invalid">该群已过期,续费后可继续使用</string>
     <string name="go_renew">去续费</string>
     <string name="modify_nickname">修改昵称</string>
-    <string name="error_nickname">你的昵称太长了,不好记哦</string>
-    <string name="name_error">你的真实姓名太长了,不容易让人记住</string>
+    <string name="error_nickname">昵称太简单了,不容易让人记住哦</string>
+    <string name="name_error">真实姓名太长或太短,不容易让人记住哦</string>
     <string name="pay_faq">咨询费用按月收费,一个月按30天计算</string>
     <string name="qr_code">二维码</string>
 

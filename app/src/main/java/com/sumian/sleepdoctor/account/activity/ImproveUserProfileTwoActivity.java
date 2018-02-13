@@ -68,7 +68,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
             return;
         }
 
-        if ((name.length() < 2 && name.length() > 8)) {
+        if (name.length() < 2 || name.length() > 8) {
             showToast(R.string.name_error);
             return;
         }
@@ -79,6 +79,11 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
     @Override
     public void onBack(View v) {
         finish();
+    }
+
+    @Override
+    public void onFailure(String error) {
+        showToast(error);
     }
 
     @Override
