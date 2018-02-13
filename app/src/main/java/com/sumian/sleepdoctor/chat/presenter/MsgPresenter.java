@@ -134,7 +134,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         }
 
         if (replyMsg != null) {
-            attr.put("mention_id", "");
+            attr.put("mention_id", replyMsg.getMessageId());
             attr.put("type", "reply");
             attr.put("send_timestamp", replyMsg.getTimestamp());
             attr.put("question_msg_id", replyMsg.getMessageId());
@@ -217,7 +217,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             e.printStackTrace();
         }
 
-        Map<String, Object> attr = null;
+        Map<String, Object> attr;
 
         if (replyMsg != null) {
             attr = new HashMap<>();
@@ -225,10 +225,9 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             attr.put("type", "reply");
             attr.put("send_timestamp", replyMsg.getTimestamp());
             attr.put("question_msg_id", replyMsg.getMessageId());
-        }
-
-        if (msg != null && replyMsg != null) {
-            msg.setAttrs(attr);
+            if (msg != null) {
+                msg.setAttrs(attr);
+            }
         }
 
         sendMsg(msg);
@@ -295,7 +294,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
         if (mReplyMsg != null) {
             attr = new HashMap<>();
-            attr.put("mention_id", "");
+            attr.put("mention_id", mReplyMsg.getMessageId());
             attr.put("type", "reply");
             attr.put("send_timestamp", mReplyMsg.getTimestamp());
             attr.put("question_msg_id", mReplyMsg.getMessageId());

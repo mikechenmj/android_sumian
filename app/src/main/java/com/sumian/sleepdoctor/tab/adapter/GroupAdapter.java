@@ -147,11 +147,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
                 }
             } else {
                 gone(mLayExpiredContainer);
-                //if (dayLast <= 5) {
-                //   setText(mTvExpired, formatText("%d%s", dayLast, getText(R.string.time_expired_suffix)));
-                //} else {
                 gone(mTvExpired);
-                //}
             }
 
             if (item.lastMsg == null && item.secondLastMsg == null) {
@@ -167,8 +163,8 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
                             mTvChatHistoryTwoTime.setVisibility(View.GONE);
                         } else {
                             if (list.size() == 2) {
-                                item.lastMsg = list.get(0);
-                                item.secondLastMsg = list.get(1);
+                                item.lastMsg = list.get(1);
+                                item.secondLastMsg = list.get(0);
                             } else {
                                 item.lastMsg = list.get(0);
                             }
@@ -182,6 +178,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         }
 
         private void updateMsg(GroupItem item) {
+
             mTvChatHistoryTwo.setVisibility(View.GONE);
             mTvChatHistoryTwoTime.setVisibility(View.GONE);
 

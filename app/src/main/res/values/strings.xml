@@ -119,5 +119,8 @@
     <string name="pay_faq">咨询费用按月收费,一个月按30天计算</string>
     <string name="qr_code">二维码</string>
     <string name="welcome_join_title">欢迎加入%s,目前暂无新消息</string>
+    <string name="up_cancel_record">松开手指,取消发送</string>
+    <string name="start_record">按住说话</string>
+    <string name="turn_right_cancel_record">向右滑动,取消发送</string>
 
 </resources>

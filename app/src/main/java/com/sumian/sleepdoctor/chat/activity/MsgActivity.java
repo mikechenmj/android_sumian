@@ -263,6 +263,11 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     }
 
     @Override
+    public void clearReplyMsg() {
+        mReplyMsg = null;
+    }
+
+    @Override
     public void bindPresenter(MsgContract.Presenter presenter) {
         mPresenter = presenter;
     }

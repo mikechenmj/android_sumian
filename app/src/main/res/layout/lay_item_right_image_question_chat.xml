@@ -36,8 +36,8 @@
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:background="@drawable/bg_chat_assistant_label"
-            android:paddingLeft="@dimen/space_12"
-            android:paddingRight="@dimen/space_12"
+            android:paddingLeft="@dimen/space_2"
+            android:paddingRight="@dimen/space_2"
             android:textColor="@color/b2_color"
             android:textSize="@dimen/font_12"
             tools:text="医生" />
