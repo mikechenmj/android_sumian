@@ -73,16 +73,6 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
     }
 
     @Override
-    public void onBegin() {
-
-    }
-
-    @Override
-    public void onFinish() {
-
-    }
-
-    @Override
     public void onFailure(String error) {
         showToast(error);
     }

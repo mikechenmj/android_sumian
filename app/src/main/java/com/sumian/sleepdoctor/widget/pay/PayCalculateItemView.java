@@ -50,8 +50,9 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
     TextView mTvMoney;
 
     private int mCurrentDuration = 1;
-    private float mCurrentMoney = 0.00f;
-    private float mDefaultMoney = 0.00f;
+
+    private double mDefaultMoney = 0.00f;
+    private double mCurrentMoney = 0.00f;
 
     private OnMoneyChangeCallback mOnMoneyChangeCallback;
 
@@ -99,8 +100,8 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
                 break;
             case R.id.iv_reduce_duration:
-                if (mCurrentDuration == 0) {
-                    mCurrentDuration = 0;
+                if (mCurrentDuration == 1) {
+                    mCurrentDuration = 1;
                 } else {
                     mCurrentDuration--;
                 }
@@ -114,7 +115,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
                 break;
         }
 
-        if (mCurrentDuration > 0) {
+        if (mCurrentDuration > 1) {
             mIvReduceDuration.setEnabled(true);
             mIvReduceDuration.setImageResource(R.mipmap.group_pay_btn_plus);
         } else {
@@ -139,35 +140,35 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         updateMoney(mCurrentMoney);
     }
 
-    private void updateMoney(float currentMoney) {
+    private void updateMoney(double currentMoney) {
         this.mCurrentMoney = currentMoney;
         formatMoney(mTvMoney, mCurrentMoney);
     }
 
-    public void setDefaultMoney(float defaultMoney) {
+    public void setDefaultMoney(double defaultMoney) {
         this.mDefaultMoney = defaultMoney;
         this.mCurrentMoney = mDefaultMoney * mCurrentDuration;
         formatMoney(mTvMoney, mDefaultMoney);
     }
 
     private void formatMoney(TextView tv, double money) {
-        tv.setText(String.format(Locale.getDefault(), "%.2f", money / 100.0f));
+        tv.setText(String.format(Locale.getDefault(), "%.2f", money / 100.00f));
     }
 
     public int getCurrentDuration() {
         return mCurrentDuration;
     }
 
-    public float getCurrentMoney() {
+    public double getCurrentMoney() {
         return mCurrentMoney;
     }
 
-    public float getDefaultMoney() {
+    public double getDefaultMoney() {
         return mDefaultMoney;
     }
 
     public interface OnMoneyChangeCallback {
 
-        void onMoneyChange(float money);
+        void onMoneyChange(double money);
     }
 }

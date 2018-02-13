@@ -9,14 +9,14 @@ import java.util.List;
  * desc:
  */
 
-public class GroupDetail<Doctor, User> implements Serializable{
+public class GroupDetail<Doctor, User> implements Serializable {
 
     public int id;//群自增id (未加群，未登录，患者，医团)
     public int group_no;//群id (未加群，未登录，患者，医团)
     public String name;//群名 (未加群，未登录，患者，医团)
     public String description;//群简介 (未加群，未登录，患者，医团)
     public String conversation_id;//会话id (未加群，未登录，患者，医团)
-    public float monthly_price;//30天价格 (未加群，未登录，患者，医团)
+    public double monthly_price;//30天价格 (未加群，未登录，患者，医团)
     public String avatar;//群头像 (未加群，未登录，患者，医团)
     public int created_at;//群创建时间 (未加群，未登录，患者，医团)
     public int updated_at;//群更新时间 (未加群，未登录，患者，医团)

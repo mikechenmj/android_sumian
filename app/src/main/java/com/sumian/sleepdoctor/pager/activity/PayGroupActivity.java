@@ -98,7 +98,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
         options.placeholder(R.mipmap.group_avatar).error(R.mipmap.group_avatar).getOptions();
         Glide.with(this).load(mGroupDetail.avatar).apply(options).into(mIvGroupIcon);
         mTvDesc.setText(mGroupDetail.name);
-        mTvGroupMoney.setText(String.format(Locale.getDefault(), "%.2f", mGroupDetail.monthly_price / 100.0f));
+        mTvGroupMoney.setText(String.format(Locale.getDefault(), "%.2f", mGroupDetail.monthly_price / 100.00f));
         mPayCalculateItemView.setDefaultMoney(mGroupDetail.monthly_price);
     }
 
@@ -118,7 +118,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                mPresenter.CreatePayOrder(this, mPayChannel, mGroupDetail, mPayCalculateItemView.getCurrentMoney(), mPayCalculateItemView.getCurrentDuration());
+                mPresenter.CreatePayOrder(this, mPayChannel, mGroupDetail, (float) mPayCalculateItemView.getCurrentMoney(), mPayCalculateItemView.getCurrentDuration());
                 break;
             default:
                 break;
@@ -154,9 +154,9 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     }
 
     @Override
-    public void onMoneyChange(float money) {
-        mBtPay.setEnabled(money > 0.0f);
-        mBtPay.setAlpha(money > 0.0f ? 1.0f : 0.5f);
+    public void onMoneyChange(double money) {
+        mBtPay.setEnabled(money > 0.00f);
+        mBtPay.setAlpha(money > 0.00f ? 1.00f : 0.50f);
     }
 
     @Override
