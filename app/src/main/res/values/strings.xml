@@ -118,5 +118,6 @@
     <string name="name_error">真实姓名太长或太短,不容易让人记住哦</string>
     <string name="pay_faq">咨询费用按月收费,一个月按30天计算</string>
     <string name="qr_code">二维码</string>
+    <string name="welcome_join_title">欢迎加入%s,目前暂无新消息</string>
 
 </resources>

@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
@@ -18,6 +21,7 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.common.base.BaseRecyclerAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.activity.MsgActivity;
 import com.sumian.sleepdoctor.chat.utils.TimeUtils;
@@ -27,6 +31,7 @@ import com.sumian.sleepdoctor.tab.bean.GroupItem;
 
 import net.qiujuer.genius.ui.widget.Button;
 
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -149,7 +154,34 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
                 //}
             }
 
+            if (item.lastMsg == null && item.secondLastMsg == null) {
+                AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(item.groupDetail.conversation_id);
+                avimConversation.queryMessages(2, new AVIMMessagesQueryCallback() {
+                    @Override
+                    public void done(List<AVIMMessage> list, AVIMException e) {
+                        if (list == null || list.isEmpty()) {
+                            mTvChatHistoryOne.setText(String.format(Locale.getDefault(), itemView.getResources().getString(R.string.welcome_join_title), item.groupDetail.name));
+                            mTvChatHistoryOne.setVisibility(View.VISIBLE);
+                            mTvChatHistoryOneTime.setVisibility(View.GONE);
+                            mTvChatHistoryTwo.setVisibility(View.GONE);
+                            mTvChatHistoryTwoTime.setVisibility(View.GONE);
+                        } else {
+                            if (list.size() == 2) {
+                                item.lastMsg = list.get(0);
+                                item.secondLastMsg = list.get(1);
+                            } else {
+                                item.lastMsg = list.get(0);
+                            }
+                            updateMsg(item);
+                        }
+                    }
+                });
+            } else {
+                updateMsg(item);
+            }
+        }
 
+        private void updateMsg(GroupItem item) {
             mTvChatHistoryTwo.setVisibility(View.GONE);
             mTvChatHistoryTwoTime.setVisibility(View.GONE);
 

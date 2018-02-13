@@ -136,7 +136,6 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     @Override
     public void onGetGroupsSuccess(List<GroupDetail<UserProfile, UserProfile>> groups) {
         runOnUiThread(() -> {
-
             if (mIsRefresh) {
                 mGroupAdapter.clear();
                 mIsRefresh = false;
@@ -144,11 +143,13 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
             List<GroupItem> groupItems = new ArrayList<>();
             GroupItem groupItem;
+
             for (GroupDetail<UserProfile, UserProfile> group : groups) {
                 groupItem = new GroupItem();
                 groupItem.groupDetail = group;
                 groupItems.add(groupItem);
             }
+
             mGroupErrorView.hideError();
             mRequestScanQrCodeView.hide();
             mGroupAdapter.addAll(groupItems);
