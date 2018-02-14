@@ -1,8 +1,15 @@
 package com.sumian.sleepdoctor.chat.activity;
 
+import android.Manifest;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +23,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.chat.adapter.MsgAdapter;
@@ -31,11 +39,15 @@ import com.sumian.sleepdoctor.pager.activity.GroupDetailActivity;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.sumian.sleepdoctor.chat.presenter.MsgPresenter.PIC_REQUEST_CODE_CAMERA;
 
 /**
  * Created by jzz
@@ -51,6 +63,11 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     private static final String TAG = MsgActivity.class.getSimpleName();
 
     public static final String ARGS_GROUP_DETAIL = "group_detail";
+
+    private final static String imagePathName = "/image/";
+
+    private File cameraFile;
+    private File storageDir = null;
 
     @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
@@ -229,9 +246,35 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         //  Log.e(TAG, "onGlobalLayout: ------->screenHeight=" + screenHeight + " keypadHeight=" + keypadHeight + " initBottomHeight=" + mInitBottomHeight + " openKeyboardHeight=" + mOpenKeyboardHeight);
     }
 
+    @AfterPermissionGranted(PIC_REQUEST_CODE_CAMERA)
     @Override
     public void onTakePhotoCallback() {
-        mPresenter.sendPicMsg(this, MsgPresenter.PIC_REQUEST_CODE_CAMERA, mReplyMsg);
+        mPresenter.sendPicMsg(this, PIC_REQUEST_CODE_CAMERA, mReplyMsg);
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+
+            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
+            //noinspection ResultOfMethodCallIgnored
+            cameraFile.getParentFile().mkdirs();
+
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            //android 7.1之后的相机处理方式
+            if (Build.VERSION.SDK_INT < 24) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
+                startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+            } else {
+                ContentValues contentValues = new ContentValues(1);
+                contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
+                Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+            }
+
+        } else {
+            // Request one permission
+            EasyPermissions.requestPermissions(this, getResources().getString(R.string.str_request_camera_message), PIC_REQUEST_CODE_CAMERA, perms);
+        }
     }
 
     @Override
@@ -303,5 +346,25 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     public void onLoadPre() {
         mPresenter.syncPreMsgHistory();
+    }
+
+    private File generateImagePath(String userName, Context applicationContext) {
+        String path;
+        String pathPrefix = "/Android/data/" + applicationContext.getPackageName() + "/";
+        path = pathPrefix + userName + imagePathName;
+        return new File(getStorageDir(applicationContext), path);
+    }
+
+    private File getStorageDir(Context applicationContext) {
+        if (storageDir == null) {
+            //try to use sd card if possible
+            File sdPath = Environment.getExternalStorageDirectory();
+            if (sdPath.exists()) {
+                return sdPath;
+            }
+            //use application internal storage instead
+            storageDir = applicationContext.getFilesDir();
+        }
+        return storageDir;
     }
 }

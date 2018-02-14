@@ -2,13 +2,7 @@ package com.sumian.sleepdoctor.chat.presenter;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -26,7 +20,6 @@ import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
 
@@ -147,15 +140,13 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         sendMsg(msg);
     }
 
-    @AfterPermissionGranted(CAMERA_PERM)
     @Override
     public void sendPicMsg(Activity activity, int type, AVIMTypedMessage replyMsg) {
         this.mReplyMsg = replyMsg;
-
         if (type == PIC_REQUEST_CODE_LOCAL) {//pic local
             picLocal(activity);
         } else {//pic camera
-            picCamera(activity);
+          //  picCamera(activity);
         }
     }
 
@@ -253,34 +244,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
                 }).build());
     }
 
-    private void picCamera(Activity activity) {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.VIBRATE};
-        if (EasyPermissions.hasPermissions(activity, perms)) {
-
-            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
-            //noinspection ResultOfMethodCallIgnored
-            cameraFile.getParentFile().mkdirs();
-
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-            //android 7.1之后的相机处理方式
-            if (Build.VERSION.SDK_INT < 24) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
-                activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
-            } else {
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
-                Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
-            }
-
-        } else {
-            // Request one permission
-            EasyPermissions.requestPermissions(activity, activity.getResources().getString(R.string.str_request_camera_message), CAMERA_PERM, perms);
-        }
-    }
-
     @Nullable
     private AVIMImageMessage initImageMsg(String image) {
         AVIMImageMessage msg = null;
@@ -334,23 +297,4 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         });
     }
 
-    private File generateImagePath(String userName, Context applicationContext) {
-        String path;
-        String pathPrefix = "/Android/data/" + applicationContext.getPackageName() + "/";
-        path = pathPrefix + userName + imagePathName;
-        return new File(getStorageDir(applicationContext), path);
-    }
-
-    private File getStorageDir(Context applicationContext) {
-        if (storageDir == null) {
-            //try to use sd card if possible
-            File sdPath = Environment.getExternalStorageDirectory();
-            if (sdPath.exists()) {
-                return sdPath;
-            }
-            //use application internal storage instead
-            storageDir = applicationContext.getFilesDir();
-        }
-        return storageDir;
-    }
 }
