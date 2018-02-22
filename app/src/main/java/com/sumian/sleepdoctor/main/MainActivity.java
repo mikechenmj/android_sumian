@@ -32,11 +32,13 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     // private FragmentManagerDelegate mFragmentManagerDelegate;
 
-    private GroupFragment mGroupFragment;
+    // private GroupFragment mGroupFragment;
 
-    private MeFragment mMeFragment;
+    // private MeFragment mMeFragment;
 
     private int mCurrentPosition = -1;
+
+    private FragmentManager mFragmentManager;
 
     @Override
     protected int getLayoutId() {
@@ -53,6 +55,8 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
         //        .bindNavTab(mNavTab);
 
         mNavTab.setOnTabChangeListener(this);
+        this.mFragmentManager = getSupportFragmentManager();
+
     }
 
     @Override
@@ -77,27 +81,28 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     }
 
     private void initTab(int position) {
-        Fragment fragment;
-        switch (position) {
-            case 1:
-                if (mMeFragment == null) {
-                    mMeFragment = (MeFragment) MeFragment.newInstance(MeFragment.class);
-                }
-                fragment = mMeFragment;
-                break;
-            case 0:
-            default:
-                if (mGroupFragment == null) {
-                    mGroupFragment = (GroupFragment) GroupFragment.newInstance(GroupFragment.class);
-                }
-                fragment = mGroupFragment;
-                break;
+        mCurrentPosition = position;
+
+        String showFragmentTag = position == 1 ? MeFragment.class.getSimpleName() : GroupFragment.class.getSimpleName();
+
+        Fragment showFragment = getFragmentByTag(showFragmentTag);
+
+        if (showFragment != null) {
+            mFragmentManager.beginTransaction().show(showFragment).commitNowAllowingStateLoss();
+        } else {
+            Fragment fragment = position == 1 ? MeFragment.newInstance(MeFragment.class) : GroupFragment.newInstance(GroupFragment.class);
+            mFragmentManager.beginTransaction().add(R.id.lay_tab_container, fragment, showFragmentTag).commitNowAllowingStateLoss();
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        String hideFragmentTag = position == 1 ? GroupFragment.class.getSimpleName() : MeFragment.class.getSimpleName();
 
-        fragmentManager.beginTransaction().replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName()).commitNowAllowingStateLoss();
+        Fragment hideFragment = getFragmentByTag(hideFragmentTag);
+        if (hideFragment != null) {
+            mFragmentManager.beginTransaction().hide(hideFragment).commitNowAllowingStateLoss();
+        }
+    }
 
-        mCurrentPosition = position;
+    private Fragment getFragmentByTag(String hideFragmentTag) {
+        return mFragmentManager.findFragmentByTag(hideFragmentTag);
     }
 }

@@ -93,6 +93,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         return mItems.get(position);
     }
 
+    public List<T> getItems() {
+        return mItems;
+    }
+
     public final void resetItem(List<T> items) {
         if (items != null) {
             clear();

@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16"
-    android:rotationX="180"
-    android:rotationY="0">
+    android:padding="@dimen/space_16">
 
     <TextView
         android:id="@+id/tv_time_line"
