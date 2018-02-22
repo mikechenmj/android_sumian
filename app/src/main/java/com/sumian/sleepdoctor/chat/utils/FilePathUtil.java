@@ -20,12 +20,11 @@ public class FilePathUtil {
      * @param fileName   文件名
      * @return 生成的文件路径
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static String makeFilePath(Context context, String folderPath, String fileName) {
         File file;
-        if (android.os.Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED)) {
-            file = new File(android.os.Environment.getExternalStorageDirectory(),
-                    folderPath);
+        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+            file = new File(android.os.Environment.getExternalStorageDirectory(), folderPath);
         } else {
             file = context.getApplicationContext().getCacheDir();
         }
@@ -46,12 +45,13 @@ public class FilePathUtil {
     /**
      * 得到文件夹目录
      *
-     * @param context
-     * @param folderPath
-     * @return
+     * @param context    context
+     * @param folderPath folderPath
+     * @return folderDir
      */
+    @SuppressWarnings("unused")
     public static String getFolderDir(Context context, String folderPath) {
-        File file = null;
+        File file;
         if (android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED)) {
             file = new File(android.os.Environment.getExternalStorageDirectory(),
@@ -60,7 +60,7 @@ public class FilePathUtil {
             file = context.getApplicationContext().getCacheDir();
         }
         if (!file.exists() || !file.isDirectory()) {
-            file.mkdirs();
+            boolean mkdirs = file.mkdirs();
         }
 
         return file.getPath();
@@ -69,9 +69,10 @@ public class FilePathUtil {
     /**
      * 清空某一路径下的文件
      *
-     * @param context
-     * @param filePath
+     * @param context  context
+     * @param filePath filePath
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void clearFilePath(Context context, File filePath) {
         if (!filePath.exists()) {
             return;
@@ -82,8 +83,8 @@ public class FilePathUtil {
         }
         if (filePath.isDirectory()) {
             File[] folders = filePath.listFiles();
-            for (int i = 0; i < folders.length; i++) {
-                clearFilePath(context, folders[i]);
+            for (File folder : folders) {
+                clearFilePath(context, folder);
             }
         }
     }

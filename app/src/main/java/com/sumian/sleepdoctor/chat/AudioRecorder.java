@@ -57,7 +57,7 @@ public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener
     //private String filePath = null;
 
     // Recorder state; see State
-    public State state;
+    private State state;
 
     // File writer (only in uncompressed mode)
     private RandomAccessFile randomAccessWriter;
@@ -71,12 +71,6 @@ public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener
     private int sRate;
 
     private short bSamples;
-
-    private int bufferSize;
-
-    private int aSource;
-
-    private int aFormat;
 
     // Number of frames written to file on each output(only in uncompressed
     // mode)
@@ -123,12 +117,10 @@ public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener
                 nChannels = 2;
             }
 
-            aSource = audioSource;
             sRate = sampleRate;
-            aFormat = audioFormat;
 
             framePeriod = sampleRate * TIMER_INTERVAL / 1000;
-            bufferSize = framePeriod * 2 * bSamples * nChannels / 8;
+            int bufferSize = framePeriod * 2 * bSamples * nChannels / 8;
             if (bufferSize < AudioRecord.getMinBufferSize(sampleRate,
                     channelConfig, audioFormat)) { // Check to make sure
                 // buffer size is not
@@ -254,6 +246,11 @@ public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener
         }
     }
 
+
+    public File getOutputFile() {
+        return new File(savePath);
+    }
+
     /**
      * Returns the largest amplitude sampled since the last call to this method.
      *
@@ -320,31 +317,22 @@ public class AudioRecorder implements AudioRecord.OnRecordPositionUpdateListener
                     // 16
                     // for
                     // PCM
-                    randomAccessWriter.writeShort(Short
-                            .reverseBytes((short) 1)); // AudioFormat, 1 for
+                    randomAccessWriter.writeShort(Short.reverseBytes((short) 1)); // AudioFormat, 1 for
                     // PCM
-                    randomAccessWriter.writeShort(Short
-                            .reverseBytes(nChannels));// Number of channels,
+                    randomAccessWriter.writeShort(Short.reverseBytes(nChannels));// Number of channels,
                     // 1 for mono, 2 for
                     // stereo
-                    randomAccessWriter
-                            .writeInt(Integer.reverseBytes(sRate)); // Sample
+                    randomAccessWriter.writeInt(Integer.reverseBytes(sRate)); // Sample
                     // rate
-                    randomAccessWriter.writeInt(Integer.reverseBytes(sRate
-                            * bSamples * nChannels / 8)); // Byte rate,
+                    randomAccessWriter.writeInt(Integer.reverseBytes(sRate * bSamples * nChannels / 8)); // Byte rate,
                     // SampleRate*NumberOfChannels*BitsPerSample/8
-                    randomAccessWriter
-                            .writeShort(Short
-                                    .reverseBytes((short) (nChannels
-                                            * bSamples / 8))); // Block
+                    randomAccessWriter.writeShort(Short.reverseBytes((short) (nChannels * bSamples / 8))); // Block
                     // align,
                     // NumberOfChannels*BitsPerSample/8
-                    randomAccessWriter.writeShort(Short
-                            .reverseBytes(bSamples)); // Bits per sample
+                    randomAccessWriter.writeShort(Short.reverseBytes(bSamples)); // Bits per sample
                     randomAccessWriter.writeBytes("data");
                     randomAccessWriter.writeInt(0); // Data chunk size not
                     // known yet, write 0
-
 
                     Log.i(TAG, "fileheader length:" + randomAccessWriter.length());
                     buffer = new byte[framePeriod * bSamples / 8

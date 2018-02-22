@@ -198,7 +198,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             case R.id.tv_more:
                 OnMoreListener onMoreListener = this.mOnMoreListener;
                 if (onMoreListener == null) return;
-                onMoreListener.onMore(v);
+                onMoreListener.onLoadMore(v);
                 break;
             default:
                 break;
@@ -214,6 +214,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     }
 
     public interface OnMoreListener {
-        void onMore(View v);
+        void onLoadMore(View v);
     }
 }

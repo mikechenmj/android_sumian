@@ -1,8 +1,7 @@
 package com.sumian.sleepdoctor.chat.contract;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.sumian.sleepdoctor.base.BasePresenter;
@@ -34,32 +33,22 @@ public interface MsgContract {
 
         void onNoHaveMsg();
 
-        void onPermissionsDenied(int requestCode, List<String> perms);
-
-        void callRecord();
+        void onNoHaveMoreMsg();
     }
 
     interface Presenter extends BasePresenter {
 
-        int CAMERA_PERM = 1;
-
-        int RECORD_PERM = 2;
-
         void sendTextMsg(String content, boolean isQuestion, AVIMTypedMessage replyMsg);
 
-        void sendPicMsg(Activity activity, int type, AVIMTypedMessage replyMsg);
+        void sendPicMsg(AppCompatActivity activity, int type, AVIMTypedMessage replyMsg);
 
         void senAudioMsg(String audioFilePath, int duration, AVIMTypedMessage replyMsg);
-
-        void checkRecordPermission(Activity activity);
 
         void syncMsgHistory(String conversationId);
 
         void syncPreMsgHistory();
 
         void resultCodeDelegate(int requestCode, int resultCode, Intent data);
-
-        void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
 
     }
 

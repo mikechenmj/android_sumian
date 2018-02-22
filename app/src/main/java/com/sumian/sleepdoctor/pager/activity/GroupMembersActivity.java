@@ -66,5 +66,4 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
         finish();
     }
 
-
 }

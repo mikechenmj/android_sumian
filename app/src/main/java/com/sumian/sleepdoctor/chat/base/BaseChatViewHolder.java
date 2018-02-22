@@ -129,7 +129,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
 
     protected void updateDuration(AVIMAudioMessage msg, TextView tvVoiceDuration, View voiceDot) {
         double duration = msg.getDuration();
-        tvVoiceDuration.setText(String.format(Locale.getDefault(), "%d%s%s", (int) duration, " ", "''"));
+        tvVoiceDuration.setText(String.format(Locale.getDefault(), "%d%s%s", (int) (duration + 0.5), " ", "''"));
 
         voiceDot.setVisibility(mIsLeft ? View.VISIBLE : View.INVISIBLE);
     }

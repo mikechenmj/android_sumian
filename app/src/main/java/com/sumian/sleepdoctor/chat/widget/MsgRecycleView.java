@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 
 /**
  * Created by jzz
@@ -12,11 +14,13 @@ import android.util.AttributeSet;
  * desc:
  */
 
-public class MsgRecycleView extends RecyclerView {
+public class MsgRecycleView extends RecyclerView implements RecyclerView.OnItemTouchListener {
 
+    private static final String TAG = MsgRecycleView.class.getSimpleName();
 
     private OnLoadDataCallback mOnLoadDataCallback;
 
+    private OnCloseKeyboardCallback mOnCloseKeyboardCallback;
 
     public MsgRecycleView(Context context) {
         this(context, null);
@@ -32,13 +36,24 @@ public class MsgRecycleView extends RecyclerView {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                // Log.e(TAG, "onScrollStateChanged: ------->" + newState + "  position=" + position);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && position == 0) {
-                    if (mOnLoadDataCallback != null) {
-                        mOnLoadDataCallback.onLoadPre();
-                    }
+                Log.e(TAG, "onScrollStateChanged: ------->" + newState);
+
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        if (position == 0) {
+                            if (mOnLoadDataCallback != null) {
+                                mOnLoadDataCallback.onLoadPre();
+                            }
+                        }
+                        break;
+                    default:
+                        if (mOnCloseKeyboardCallback != null) {
+                            mOnCloseKeyboardCallback.onCloseKeyboard();
+                        }
+                        break;
                 }
+
             }
 
             @Override
@@ -47,14 +62,45 @@ public class MsgRecycleView extends RecyclerView {
                 // Log.e(TAG, "onScrolled: ------->dx=" + dx + "   dy=" + dy);
             }
         });
+
+        addOnItemTouchListener(this);
     }
 
     public void setOnLoadDataCallback(OnLoadDataCallback onLoadDataCallback) {
         mOnLoadDataCallback = onLoadDataCallback;
     }
 
+    public void setOnCloseKeyboardCallback(OnCloseKeyboardCallback OnCloseKeyboardCallback) {
+        mOnCloseKeyboardCallback = OnCloseKeyboardCallback;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        if (rv.getScrollState() == RecyclerView.SCROLL_STATE_IDLE && e.getActionMasked() == MotionEvent.ACTION_DOWN) {
+            if (mOnCloseKeyboardCallback != null) {
+                mOnCloseKeyboardCallback.onCloseKeyboard();
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+    }
+
     public interface OnLoadDataCallback {
 
         void onLoadPre();
+    }
+
+    public interface OnCloseKeyboardCallback {
+
+        void onCloseKeyboard();
     }
 }

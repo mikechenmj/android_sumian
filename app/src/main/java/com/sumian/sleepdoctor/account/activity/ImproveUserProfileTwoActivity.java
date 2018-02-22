@@ -87,7 +87,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
     }
 
     @Override
-    public void onMore(View v) {
+    public void onLoadMore(View v) {
         Token cacheToken = AppManager.getAccountViewModel().getToken();
         cacheToken.is_new = false;
         AppManager.getAccountViewModel().updateToken(cacheToken);

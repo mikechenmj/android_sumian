@@ -1,11 +1,11 @@
 package com.sumian.sleepdoctor.main;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
@@ -71,42 +71,32 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     @Override
     public void tab(ItemTab itemTab, int position) {
         if (mCurrentPosition == position) {
-            if (position == 0) {
-                if (mGroupFragment != null) {
-                    getSupportFragmentManager().beginTransaction().show(mGroupFragment).commitNowAllowingStateLoss();
-                }
-                if (mMeFragment != null) {
-                    getSupportFragmentManager().beginTransaction().hide(mMeFragment).commitNowAllowingStateLoss();
-                }
-
-            } else {
-
-                if (mMeFragment != null) {
-                    getSupportFragmentManager().beginTransaction().show(mMeFragment).commitNowAllowingStateLoss();
-                }
-
-                if (mGroupFragment != null) {
-                    getSupportFragmentManager().beginTransaction().hide(mGroupFragment).commitNowAllowingStateLoss();
-                }
-            }
-        } else {
-            initTab(position);
+            return;
         }
+        initTab(position);
     }
 
     private void initTab(int position) {
         Fragment fragment;
         switch (position) {
             case 1:
-                fragment = MeFragment.newInstance(MeFragment.class);
+                if (mMeFragment == null) {
+                    mMeFragment = (MeFragment) MeFragment.newInstance(MeFragment.class);
+                }
+                fragment = mMeFragment;
                 break;
             case 0:
             default:
-                fragment = GroupFragment.newInstance(GroupFragment.class);
+                if (mGroupFragment == null) {
+                    mGroupFragment = (GroupFragment) GroupFragment.newInstance(GroupFragment.class);
+                }
+                fragment = mGroupFragment;
                 break;
         }
 
-        getSupportFragmentManager().beginTransaction().add(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName()).commitNowAllowingStateLoss();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction().replace(R.id.lay_tab_container, fragment, fragment.getClass().getSimpleName()).commitNowAllowingStateLoss();
 
         mCurrentPosition = position;
     }

@@ -78,7 +78,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
     }
 
     @Override
-    public void onMore(View v) {
+    public void onLoadMore(View v) {
         ImproveUserProfileTwoActivity.show(this, ImproveUserProfileTwoActivity.class);
     }
 
@@ -89,6 +89,6 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     public void onImproveUserProfileSuccess() {
-        onMore(mRoot);
+        onLoadMore(mRoot);
     }
 }

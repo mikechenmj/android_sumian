@@ -5,12 +5,9 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 
 import com.jaeger.library.StatusBarUtil;
-import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 
@@ -32,8 +29,6 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 public class ScanQrCodeActivity extends BaseActivity implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
-
-    private static final String TAG = ScanQrCodeActivity.class.getSimpleName();
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
 
@@ -85,28 +80,27 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
             e.printStackTrace();
         }
 
-        //ToastHelper.show(this, decodeUrl, Gravity.CENTER);
-
         if (!TextUtils.isEmpty(decodeUrl) && (decodeUrl.startsWith("http") || decodeUrl.startsWith("https"))) {
             if (decodeUrl.contains("scheme=sleepdoctor://addgroup")) {
                 String scheme = decodeUrl.substring(decodeUrl.indexOf("scheme"));
                 String groupId = scheme.substring(scheme.indexOf("id=") + 3);
 
-                Log.e(TAG, "onScanQRCodeSuccess: ---------->decodeUrl=" + decodeUrl + "  groupId=" + groupId);
                 Bundle args = new Bundle();
                 args.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, Integer.parseInt(groupId, 10));
                 ScanGroupResultActivity.show(this, ScanGroupResultActivity.class, args);
                 finish();
+            } else {
+                showToast(R.string.invalid_qr_code);
             }
         } else {
-            ToastHelper.show(this, decodeUrl, Gravity.CENTER);
+            showCenterToast(decodeUrl);
         }
         this.mZXingView.startSpot();
     }
 
     @Override
     public void onScanQRCodeOpenCameraError() {
-        ToastHelper.show(R.string.open_camera_failed);
+        showToast(R.string.open_camera_failed);
     }
 
     @Override
@@ -116,13 +110,12 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        Log.e(TAG, "onPermissionsGranted: ------------>");
         preScanQrCode();
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        ToastHelper.show(R.string.scan_qr_code_denied);
+        showToast(R.string.scan_qr_code_denied);
     }
 
     @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)

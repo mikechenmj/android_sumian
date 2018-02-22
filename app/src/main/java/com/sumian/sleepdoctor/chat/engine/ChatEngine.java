@@ -21,6 +21,7 @@ import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMClientStatusCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.ChatContract;
 
@@ -124,7 +125,9 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     @Override
     public void loginImServer() {
-        String leancloudId = AppManager.getAccountViewModel().getToken().user.leancloud_id;
+        UserProfile userProfile = AppManager.getAccountViewModel().getUserProfile();
+        if (userProfile == null) return;
+        String leancloudId = userProfile.leancloud_id;
         if (TextUtils.isEmpty(leancloudId)) return;
         this.mAVIMClient = AVIMClient.getInstance(leancloudId);
 

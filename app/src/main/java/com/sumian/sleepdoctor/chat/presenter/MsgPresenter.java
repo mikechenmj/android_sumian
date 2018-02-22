@@ -2,9 +2,15 @@ package com.sumian.sleepdoctor.chat.presenter;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.avos.avoscloud.im.v2.AVIMConversation;
@@ -20,6 +26,7 @@ import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
 
@@ -39,7 +46,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.PermissionCallbacks {
+public class MsgPresenter implements MsgContract.Presenter {
 
     private static final String TAG = MsgPresenter.class.getSimpleName();
 
@@ -50,7 +57,7 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
 
     private MsgContract.View mView;
 
-    private File cameraFile;
+    private File cameraFile = null;
     private File storageDir = null;
 
     private AVIMMessage mLastMsg;
@@ -74,14 +81,18 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         mAVIMConversation.queryMessages(mLastMsg.getMessageId(), mLastMsg.getTimestamp(), 20, new AVIMMessagesQueryCallback() {
             @Override
             public void done(List<AVIMMessage> list, AVIMException e) {
-                if (!list.isEmpty()) {
-                    mLastMsg = list.get(0);
-                    for (AVIMMessage message : list) {
-                        avimTypedMessages.add((AVIMTypedMessage) message);
+                if (e == null) {
+                    if (!list.isEmpty()) {
+                        mLastMsg = list.get(0);
+                        for (AVIMMessage message : list) {
+                            avimTypedMessages.add((AVIMTypedMessage) message);
+                        }
+                        mView.onSyncPreMsgHistorySuccess(avimTypedMessages);
+                    } else {
+                        mView.onNoHaveMoreMsg();
                     }
-                    mView.onSyncPreMsgHistorySuccess(avimTypedMessages);
                 } else {
-                    mView.onNoHaveMsg();
+                    mView.onSyncMsgHistoryFailed();
                 }
             }
         });
@@ -96,14 +107,18 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
         mAVIMConversation.queryMessages(20, new AVIMMessagesQueryCallback() {
             @Override
             public void done(List<AVIMMessage> list, AVIMException e) {
-                if (!list.isEmpty()) {
-                    mLastMsg = list.get(0);
-                    for (AVIMMessage message : list) {
-                        avimTypedMessages.add((AVIMTypedMessage) message);
+                if (e == null) {
+                    if (!list.isEmpty()) {
+                        mLastMsg = list.get(0);
+                        for (AVIMMessage message : list) {
+                            avimTypedMessages.add((AVIMTypedMessage) message);
+                        }
+                        mView.onSyncMsgHistorySuccess(avimTypedMessages);
+                    } else {
+                        mView.onNoHaveMsg();
                     }
-                    mView.onSyncMsgHistorySuccess(avimTypedMessages);
                 } else {
-                    mView.onNoHaveMsg();
+                    mView.onSyncMsgHistoryFailed();
                 }
             }
         });
@@ -131,6 +146,11 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             attr.put("type", "reply");
             attr.put("send_timestamp", replyMsg.getTimestamp());
             attr.put("question_msg_id", replyMsg.getMessageId());
+
+            //添加被引用@的消息
+            List<String> peerIdList = new ArrayList<>();
+            peerIdList.add(replyMsg.getFrom());
+            msg.setMentionList(peerIdList);
         }
 
         if (isQuestion || replyMsg != null) {
@@ -141,26 +161,31 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
     }
 
     @Override
-    public void sendPicMsg(Activity activity, int type, AVIMTypedMessage replyMsg) {
+    public void sendPicMsg(AppCompatActivity activity, int type, AVIMTypedMessage replyMsg) {
         this.mReplyMsg = replyMsg;
         if (type == PIC_REQUEST_CODE_LOCAL) {//pic local
             picLocal(activity);
         } else {//pic camera
-          //  picCamera(activity);
+            picCamera(activity);
         }
     }
 
-    @AfterPermissionGranted(RECORD_PERM)
-    @Override
-    public void checkRecordPermission(Activity activity) {
-        String[] perms = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (EasyPermissions.hasPermissions(activity, perms)) {
-            if (mView != null) {
-                mView.callRecord();
-            }
-        } else {
-            // Request one permission
-            EasyPermissions.requestPermissions(activity, activity.getResources().getString(R.string.str_request_record_message), RECORD_PERM, perms);
+    private void picCamera(AppCompatActivity activity) {
+        cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
+        //noinspection ResultOfMethodCallIgnored
+        cameraFile.getParentFile().mkdirs();
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (Build.VERSION.SDK_INT < 24) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
+            activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
+        } else {//android 7.1之后的相机处理方式
+            ContentValues contentValues = new ContentValues(1);
+            contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
+            Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            activity.startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
         }
     }
 
@@ -179,22 +204,6 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
                     break;
             }
         }
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        mView.onPermissionsDenied(requestCode, perms);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // EasyPermissions handles the request result.
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override
@@ -218,6 +227,9 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             attr.put("question_msg_id", replyMsg.getMessageId());
             if (msg != null) {
                 msg.setAttrs(attr);
+                List<String> peerIdList = new ArrayList<>();
+                peerIdList.add(replyMsg.getFrom());
+                msg.setMentionList(peerIdList);
             }
         }
 
@@ -244,6 +256,26 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
                 }).build());
     }
 
+    private File generateImagePath(String userName, Context applicationContext) {
+        String path;
+        String pathPrefix = "/Android/data/" + applicationContext.getPackageName() + "/";
+        path = pathPrefix + userName + imagePathName;
+        return new File(getStorageDir(applicationContext), path);
+    }
+
+    private File getStorageDir(Context applicationContext) {
+        if (storageDir == null) {
+            //try to use sd card if possible
+            File sdPath = Environment.getExternalStorageDirectory();
+            if (sdPath.exists()) {
+                return sdPath;
+            }
+            //use application internal storage instead
+            storageDir = applicationContext.getFilesDir();
+        }
+        return storageDir;
+    }
+
     @Nullable
     private AVIMImageMessage initImageMsg(String image) {
         AVIMImageMessage msg = null;
@@ -263,6 +295,11 @@ public class MsgPresenter implements MsgContract.Presenter, EasyPermissions.Perm
             attr.put("question_msg_id", mReplyMsg.getMessageId());
             if (msg != null) {
                 msg.setAttrs(attr);
+
+                //添加默认的被@的那条消息
+                List<String> peerIdList = new ArrayList<>();
+                peerIdList.add(mReplyMsg.getFrom());
+                msg.setMentionList(peerIdList);
             }
         }
 

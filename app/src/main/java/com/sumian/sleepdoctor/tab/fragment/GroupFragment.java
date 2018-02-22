@@ -168,7 +168,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     }
 
     @Override
-    public void onMore(View v) {
+    public void onLoadMore(View v) {
         mRequestScanQrCodeView.requestCodeQRCodePermissions();
     }
 
