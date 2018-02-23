@@ -31,6 +31,16 @@
             app:qmui_border_width="@dimen/space_4"
             app:qmui_corner_radius="@dimen/space_4" />
 
+        <View
+            android:id="@+id/msg_dot"
+            android:layout_width="@dimen/space_12"
+            android:layout_height="@dimen/space_12"
+            android:background="@drawable/bg_msg_dot"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@+id/iv_group_icon"
+            tools:ignore="RtlHardcoded"
+            tools:visibility="visible" />
+
         <TextView
             android:id="@+id/tv_desc"
             style="@style/text_t3_style"
@@ -158,7 +168,6 @@
             android:singleLine="true"
             android:textSize="@dimen/font_16"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="@id/tv_chat_history_two"
             app:layout_constraintTop_toBottomOf="@id/tv_chat_history_two"
@@ -178,10 +187,30 @@
             android:singleLine="true"
             android:textSize="@dimen/font_16"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_chat_history_two_time"
             tools:text="昨天"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_msg_reply_label"
+            style="@style/text_t2_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxEms="16"
+            android:maxLines="1"
+            android:minLines="1"
+            android:singleLine="true"
+            android:textColor="@color/t4_color"
+            android:textSize="@dimen/font_16"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="@id/tv_chat_history_one"
+            app:layout_constraintTop_toBottomOf="@id/tv_chat_history_one"
+            tools:text="[收到新的医生回复]"
             tools:visibility="visible" />
 
     </android.support.constraint.ConstraintLayout>

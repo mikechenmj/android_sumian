@@ -33,7 +33,7 @@
                 android:paddingTop="@dimen/space_20">
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/iv_group_icon"
+                    android:id="@+id/lay_group_icon"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:contentDescription="@null"
@@ -61,7 +61,7 @@
                     android:singleLine="true"
                     android:textSize="@dimen/font_20"
                     app:layout_constraintBottom_toTopOf="@+id/tv_doctor_name"
-                    app:layout_constraintLeft_toRightOf="@id/iv_group_icon"
+                    app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed"
                     tools:text="一个有十二个字符的随访群" />
@@ -79,7 +79,7 @@
                     android:minLines="1"
                     android:singleLine="true"
                     android:textSize="@dimen/font_16"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_group_icon"
+                    app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
                     app:layout_constraintLeft_toLeftOf="@id/tv_desc"
                     app:layout_constraintTop_toBottomOf="@+id/tv_desc"
                     tools:text="医生 : 二货" />

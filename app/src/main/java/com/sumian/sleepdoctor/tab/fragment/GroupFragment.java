@@ -7,7 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -27,6 +31,7 @@ import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -72,7 +77,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(getContext()));
         mRequestScanQrCodeView.setFragment(this).setOnGrantedCallback(this);
-        AppManager.getChatEngine().setOnMsgCallback(this);
+        AppManager.getChatEngine().addOnMsgCallback(this);
     }
 
     @Override
@@ -147,6 +152,23 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
             for (GroupDetail<UserProfile, UserProfile> group : groups) {
                 groupItem = new GroupItem();
                 groupItem.groupDetail = group;
+                AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(group.conversation_id);
+                avimConversation.queryMessages(2, new AVIMMessagesQueryCallback() {
+                    @Override
+                    public void done(List<AVIMMessage> list, AVIMException e) {
+                        if (list == null || list.isEmpty()) {
+
+                        } else {
+                            if (list.size() == 2) {
+                                item.lastMsg = list.get(1);
+                                item.secondLastMsg = list.get(0);
+                            } else {
+                                item.lastMsg = list.get(0);
+                            }
+                            updateMsg(item);
+                        }
+                    }
+                });
                 groupItems.add(groupItem);
             }
 
@@ -179,7 +201,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     }
 
     @Override
-    public void onMsgCallback(AVIMTypedMessage msg) {
+    public void onReceiverMsgCallback(AVIMTypedMessage msg) {
         int position = mGroupAdapter.updateMsg(msg);
         mRecycler.scrollToPosition(position);
     }

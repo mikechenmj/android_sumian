@@ -12,6 +12,7 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.avos.avoscloud.im.v2.AVIMClientOpenOption;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMConversationEventHandler;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
@@ -53,6 +54,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
     private AVIMTypedMessageHandler<AVIMTypedMessage> mMessageHandler;
 
     private List<OnMsgCallback> mOnMsgCallbacks;
+    private List<OnUpdateUnReadMsgCountCallback> mOnUpdateUnReadMsgCountCallbacks;
 
 
     public ChatEngine(Context context) {
@@ -76,10 +78,11 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
                 Log.e(TAG, "onClientOffline: ------------------->");
             }
         });
+        registerConversationHandler();
         registerMsgHandler();
     }
 
-    public void setOnMsgCallback(OnMsgCallback onMsgCallback) {
+    public void addOnMsgCallback(OnMsgCallback onMsgCallback) {
         if (mOnMsgCallbacks == null) {
             mOnMsgCallbacks = new ArrayList<>();
         }
@@ -92,6 +95,20 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
         mOnMsgCallbacks.remove(onMsgCallback);
     }
 
+    public void addOnUnReadMsgCountCallback(OnUpdateUnReadMsgCountCallback updateUnReadMsgCountCallback) {
+        if (mOnUpdateUnReadMsgCountCallbacks == null) {
+            mOnUpdateUnReadMsgCountCallbacks = new ArrayList<>();
+        }
+        if (mOnUpdateUnReadMsgCountCallbacks.contains(updateUnReadMsgCountCallback)) return;
+        mOnUpdateUnReadMsgCountCallbacks.add(updateUnReadMsgCountCallback);
+    }
+
+    public void removeOnUnReadMsgCountCallback(OnUpdateUnReadMsgCountCallback updateUnReadMsgCountCallback) {
+        if (mOnUpdateUnReadMsgCountCallbacks == null || mOnUpdateUnReadMsgCountCallbacks.isEmpty())
+            return;
+        mOnUpdateUnReadMsgCountCallbacks.remove(updateUnReadMsgCountCallback);
+    }
+
     @Override
     public void registerMsgHandler() {
         AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, mMessageHandler = new AVIMTypedMessageHandler<AVIMTypedMessage>() {
@@ -99,21 +116,60 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
             @Override
             public void onMessage(AVIMTypedMessage message, AVIMConversation conversation, AVIMClient client) {
                 super.onMessage(message, conversation, client);
-                Log.e(TAG, "onMessage: --------->" + message.toString());
+                // Log.e(TAG, "onMessage: --------->" + message.toString());
                 if (mOnMsgCallbacks == null || mOnMsgCallbacks.isEmpty()) return;
                 for (OnMsgCallback onMsgCallback : mOnMsgCallbacks) {
-                    onMsgCallback.onMsgCallback(message);
+                    onMsgCallback.onReceiverMsgCallback(message);
                 }
             }
 
             @Override
             public void onMessageReceipt(AVIMTypedMessage message, AVIMConversation conversation, AVIMClient client) {
                 super.onMessageReceipt(message, conversation, client);
-                Log.e(TAG, "onMessageReceipt: --------->" + message.toString());
+                //  Log.e(TAG, "onMessageReceipt: --------->" + message.toString());
             }
         });
     }
 
+    @Override
+    public void registerConversationHandler() {
+        AVIMClient.setUnreadNotificationEnabled(true);
+        AVIMMessageManager.setConversationEventHandler(new AVIMConversationEventHandler() {
+            @Override
+            public void onMemberLeft(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
+
+            }
+
+            @Override
+            public void onMemberJoined(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
+
+            }
+
+            @Override
+            public void onKicked(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
+
+            }
+
+            @Override
+            public void onInvited(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
+
+            }
+
+            @Override
+            public void onUnreadMessagesCountUpdated(AVIMClient client, AVIMConversation conversation) {
+                super.onUnreadMessagesCountUpdated(client, conversation);
+                Log.e(TAG, "onUnreadMessagesCountUpdated: ------->" + conversation.getUnreadMessagesCount());
+                if (mOnUpdateUnReadMsgCountCallbacks == null || mOnUpdateUnReadMsgCountCallbacks.isEmpty())
+                    return;
+                for (OnUpdateUnReadMsgCountCallback onUpdateUnReadMsgCountCallback : mOnUpdateUnReadMsgCountCallbacks) {
+                    onUpdateUnReadMsgCountCallback.onUpdateUnReadMsgCount(client, conversation, conversation.getUnreadMessagesCount());
+                }
+            }
+        });
+
+    }
+
+    @Override
     public AVIMClient getAVIMClient() {
         return mAVIMClient;
     }
@@ -194,6 +250,11 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     public interface OnMsgCallback {
 
-        void onMsgCallback(AVIMTypedMessage msg);
+        void onReceiverMsgCallback(AVIMTypedMessage msg);
+    }
+
+    public interface OnUpdateUnReadMsgCountCallback {
+
+        void onUpdateUnReadMsgCount(AVIMClient client, AVIMConversation conversation, int unReadMsgCount);
     }
 }

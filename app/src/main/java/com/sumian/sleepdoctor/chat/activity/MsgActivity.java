@@ -125,7 +125,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
         super.initData();
         mTitleBar.setText(mGroupDetail.name);
         mPresenter.syncMsgHistory(mGroupDetail.conversation_id);
-        AppManager.getChatEngine().setOnMsgCallback(this);
+        AppManager.getChatEngine().addOnMsgCallback(this);
     }
 
     @Override
@@ -267,9 +267,10 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     }
 
     @Override
-    public void onMsgCallback(AVIMTypedMessage msg) {
+    public void onReceiverMsgCallback(AVIMTypedMessage msg) {
         mMsgAdapter.addMsg(msg);
         this.mRecyclerView.scrollToPosition(mMsgAdapter.getItemCount() - 1);
+        AppManager.getChatEngine().getAVIMConversation(msg.getConversationId()).read();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.chat.presenter;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,7 +24,6 @@ import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
-import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
@@ -36,9 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by jzz
@@ -101,6 +96,7 @@ public class MsgPresenter implements MsgContract.Presenter {
     @Override
     public void syncMsgHistory(String conversationId) {
         mAVIMConversation = AppManager.getChatEngine().getAVIMConversation(conversationId);
+        mAVIMConversation.read();
 
         ArrayList<AVIMTypedMessage> avimTypedMessages = new ArrayList<>();
 

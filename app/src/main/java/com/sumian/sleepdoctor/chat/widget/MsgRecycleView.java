@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -36,7 +35,7 @@ public class MsgRecycleView extends RecyclerView implements RecyclerView.OnItemT
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.e(TAG, "onScrollStateChanged: ------->" + newState);
+                //Log.e(TAG, "onScrollStateChanged: ------->" + newState);
 
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:

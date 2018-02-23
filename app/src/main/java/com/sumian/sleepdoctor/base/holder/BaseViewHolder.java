@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.base.holder;
 
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +22,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private static final String TAG = BaseViewHolder.class.getSimpleName();
+    //private static final String TAG = BaseViewHolder.class.getSimpleName();
 
     protected final RequestManager mLoader;
 
@@ -46,7 +45,7 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
 
     @Override
     public void onClick(View v) {
-        Log.d(TAG, "onClick: ---------->" + v.toString());
+        // Log.d(TAG, "onClick: ---------->" + v.toString());
     }
 
     protected void load(String url, ImageView iv) {
@@ -95,12 +94,11 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     }
 
     protected void onItemClick(View v) {
-        Log.d(TAG, "onItemClick: -------->" + v.toString());
+        // Log.d(TAG, "onItemClick: -------->" + v.toString());
     }
 
     protected boolean onItemLongClick(View v) {
-        Log.e(TAG, "onItemLongClick: ----------->" + v.toString());
-
+        //  Log.e(TAG, "onItemLongClick: ----------->" + v.toString());
         return false;
     }
 }

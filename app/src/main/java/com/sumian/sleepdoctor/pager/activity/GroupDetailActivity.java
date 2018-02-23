@@ -41,7 +41,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
-    @BindView(R.id.iv_group_icon)
+    @BindView(R.id.lay_group_icon)
     QMUIRadiusImageView mIvGroupIcon;
     @BindView(R.id.tv_desc)
     TextView mTvDesc;
@@ -173,7 +173,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
 
             Bundle extras = new Bundle();
 
-            extras.putParcelableArrayList("user_group_members", (ArrayList<? extends Parcelable>) mGroupDetail.users);
+            extras.putParcelableArrayList(GroupMembersActivity.ARGS_MEMBERS, (ArrayList<? extends Parcelable>) mGroupDetail.users);
             GroupMembersActivity.show(this, GroupMembersActivity.class, extras);
 
         }

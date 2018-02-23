@@ -14,6 +14,10 @@ public class GroupItem {
     public GroupDetail<UserProfile, UserProfile> groupDetail;
     public AVIMMessage secondLastMsg;
     public AVIMMessage lastMsg;
+    public int unReadMsgCount;
+    public boolean isMsgMentioned;
+
+
 
     @Override
     public String toString() {
@@ -21,6 +25,8 @@ public class GroupItem {
                 "groupDetail=" + groupDetail +
                 ", secondLastMsg=" + secondLastMsg +
                 ", lastMsg=" + lastMsg +
+                ", unReadMsgCount=" + unReadMsgCount +
+                ", isMsgMentioned=" + isMsgMentioned +
                 '}';
     }
 }

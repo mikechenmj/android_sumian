@@ -1,8 +1,8 @@
 package com.sumian.sleepdoctor.pager.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import com.sumian.common.base.BaseRecyclerAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.bean.PinYinUserProfile;
+import com.sumian.sleepdoctor.pager.activity.OtherUserProfileActivity;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,15 +58,16 @@ public class MemberAdapter extends BaseRecyclerAdapter<PinYinUserProfile> {
 
 
         public void initView(PinYinUserProfile item) {
+            super.initView(item);
 
             RequestOptions options = new RequestOptions();
 
-            if (item.userProfile.role == 0) {
+            if (item.userProfile.role != 3) {
                 options.placeholder(R.mipmap.info_avatar_patient).error(R.mipmap.info_avatar_patient).getOptions();
-                mTvLabel.setBackgroundColor(itemView.getResources().getColor(R.color.b3_color));
+                mTvLabel.setBackground(itemView.getResources().getDrawable(R.drawable.bg_chat_assistant_label));
             } else {
-                options.placeholder(R.mipmap.info_avatar_doctor).error(R.mipmap.info_avatar_patient).getOptions();
-                mTvLabel.setBackgroundColor(itemView.getResources().getColor(R.color.b4_color));
+                options.placeholder(R.mipmap.info_avatar_doctor).error(R.mipmap.info_avatar_doctor).getOptions();
+                mTvLabel.setBackground(itemView.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
             }
 
             load(item.userProfile.avatar, options, mCivAvatar);
@@ -77,7 +79,7 @@ public class MemberAdapter extends BaseRecyclerAdapter<PinYinUserProfile> {
 
 
         private void formatRoleLabel(int role, TextView tvRoleLabel) {
-            String roleLabel = null;
+            String roleLabel;
             switch (role) {
                 case 0://患者
                     roleLabel = itemView.getResources().getString(R.string.patient);
@@ -92,12 +94,25 @@ public class MemberAdapter extends BaseRecyclerAdapter<PinYinUserProfile> {
                     roleLabel = itemView.getResources().getString(R.string.doctor);
                     break;
                 default:
+                    roleLabel = itemView.getResources().getString(R.string.patient);
                     break;
             }
             tvRoleLabel.setText(roleLabel);
-            tvRoleLabel.setVisibility(TextUtils.isEmpty(roleLabel) ? View.INVISIBLE : View.VISIBLE);
+            //tvRoleLabel.setVisibility(TextUtils.isEmpty(roleLabel) ? View.GONE : View.VISIBLE);
+            if (role == 0) {
+                mTvLabel.setVisibility(View.GONE);
+            } else {
+                mTvLabel.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        protected void onItemClick(View v) {
+            super.onItemClick(v);
+            Bundle extras = new Bundle();
+            extras.putParcelable(OtherUserProfileActivity.ARGS_USER_PROFILE, mItem.userProfile);
+            OtherUserProfileActivity.show(v.getContext(), OtherUserProfileActivity.class, extras);
         }
     }
-
 
 }

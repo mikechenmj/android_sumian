@@ -14,6 +14,7 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.chat.bean.PinYinUserProfile;
 import com.sumian.sleepdoctor.chat.widget.IndexView;
 import com.sumian.sleepdoctor.pager.adapter.MemberAdapter;
+import com.sumian.sleepdoctor.pager.decoration.MemberDecoration;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -55,6 +56,7 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
     private List<UserProfile> mMembers;
 
     private MemberAdapter mMemberAdapter;
+    private MemberDecoration mDecoration;
 
     private static HanyuPinyinOutputFormat mFormat;
 
@@ -83,6 +85,7 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
         mTitleBar.addOnBackListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
+        mRecycler.addItemDecoration(mDecoration = new MemberDecoration());
         mRecycler.setAdapter(mMemberAdapter = new MemberAdapter(this));
         mIndexView.setOnIndexTouchListener(this);
     }
@@ -109,16 +112,17 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
             pinYinUserProfile.userProfile = member;
             String convertToPinyin = convertToPinyin(nickname, SPLIT_HEAD);
             pinYinUserProfile.pinyin = convertToPinyin;
-            String firstChar = convertToPinyin.substring(0, 1).toUpperCase();
-            pinYinUserProfile.firstChar = firstChar.matches("[A-Z]") ? firstChar : DEFAULT_CHAR;
+            String firstChar = convertToPinyin.substring(1, 2);
+            pinYinUserProfile.firstChar = firstChar.matches("[a-zA-Z]") ? firstChar : DEFAULT_CHAR;
 
             pinyinFormatMembers.add(pinYinUserProfile);
         }
 
         Collections.sort(pinyinFormatMembers);
 
-        Collections.sort(pinyinFormatMembers, (o1, o2) -> o1.userProfile.role - o2.userProfile.role);
+        Collections.sort(pinyinFormatMembers, (o1, o2) -> o2.userProfile.role - o1.userProfile.role);
 
+        mDecoration.addAllItems(pinyinFormatMembers);
         mMemberAdapter.addAll(pinyinFormatMembers);
     }
 
@@ -171,7 +175,7 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
 
     @Override
     public void onIndexTouchMove(char indexLetter) {
-        String str = Character.toString(indexLetter);
+        String str = Character.toString(indexLetter).toLowerCase();
         List<PinYinUserProfile> friends = mMemberAdapter.getItems();
         int position = -1;
         int size = friends.size();

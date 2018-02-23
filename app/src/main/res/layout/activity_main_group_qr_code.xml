@@ -31,7 +31,7 @@
             tools:ignore="UseCompoundDrawables">
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:id="@+id/iv_group_icon"
+                android:id="@+id/lay_group_icon"
                 android:layout_width="@dimen/space_72"
                 android:layout_height="@dimen/space_72"
                 android:contentDescription="@null"

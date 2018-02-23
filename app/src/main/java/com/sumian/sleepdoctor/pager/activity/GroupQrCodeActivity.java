@@ -28,7 +28,7 @@ public class GroupQrCodeActivity extends BaseActivity implements TitleBar.OnBack
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
-    @BindView(R.id.iv_group_icon)
+    @BindView(R.id.lay_group_icon)
     QMUIRadiusImageView mIvGroupIcon;
 
     @BindView(R.id.tv_group_name)

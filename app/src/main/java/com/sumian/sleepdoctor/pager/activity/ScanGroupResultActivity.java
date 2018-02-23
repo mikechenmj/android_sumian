@@ -47,7 +47,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
-    @BindView(R.id.iv_group_icon)
+    @BindView(R.id.lay_group_icon)
     CircleImageView mIvGroupIcon;
 
     @BindView(R.id.tv_desc)

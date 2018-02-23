@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.chat.contract;
 
+import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
@@ -17,7 +18,11 @@ public interface ChatContract {
 
         void registerMsgHandler();
 
+        void registerConversationHandler();
+
         void unRegisterMsgHandler();
+
+        AVIMClient getAVIMClient();
 
         void loginImServer();
 

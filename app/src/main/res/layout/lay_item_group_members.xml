@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:background="@color/b2_color"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/bg_material_ripple"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_12">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_avatar"
-        android:layout_width="@dimen/space_72"
-        android:layout_height="@dimen/space_72"
+        android:layout_width="@dimen/space_60"
+        android:layout_height="@dimen/space_60"
         android:src="@mipmap/info_avatar_doctor" />
 
     <TextView
@@ -18,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/space_12"
-        android:textSize="@dimen/font_12"
+        android:textSize="@dimen/font_16"
         tools:text="欧主任" />
 
     <TextView
@@ -28,10 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/bg_chat_doctor_label"
-        android:paddingLeft="@dimen/space_2"
-        android:paddingRight="@dimen/space_2"
+        android:paddingLeft="@dimen/space_4"
+        android:paddingRight="@dimen/space_4"
         android:textColor="@color/b2_color"
-        android:textSize="@dimen/font_12"
+        android:textSize="@dimen/font_14"
         tools:text="医生" />
 
 </LinearLayout>
