@@ -233,7 +233,7 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
     }
 
     public void clearReplayMsgLabel() {
-        if (mTvAnswerLabel.getVisibility() == View.VISIBLE && mOnKeyboardActionListener != null) {
+        if (mOnKeyboardActionListener != null) {
             mOnKeyboardActionListener.clearReplyMsg();
         }
 

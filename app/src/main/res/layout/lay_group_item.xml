@@ -7,7 +7,7 @@
     android:layout_marginBottom="@dimen/space_16"
     android:layout_marginLeft="@dimen/space_16"
     android:layout_marginRight="@dimen/space_16"
-    android:background="@drawable/bg_material_ripple"
+    android:foreground="@drawable/bg_material_ripple"
     app:cardCornerRadius="@dimen/space_4">
 
     <android.support.constraint.ConstraintLayout
@@ -17,29 +17,11 @@
         android:padding="@dimen/space_16"
         android:visibility="visible">
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/iv_group_icon"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:contentDescription="@null"
-            android:elevation="@dimen/space_2"
-            android:outlineProvider="background"
-            android:src="@mipmap/group_avatar"
-            android:translationZ="@dimen/space_2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:qmui_border_color="@color/b1_color"
-            app:qmui_border_width="@dimen/space_4"
-            app:qmui_corner_radius="@dimen/space_4" />
-
-        <View
-            android:id="@+id/msg_dot"
-            android:layout_width="@dimen/space_12"
-            android:layout_height="@dimen/space_12"
-            android:background="@drawable/bg_msg_dot"
-            android:visibility="gone"
-            app:layout_constraintLeft_toRightOf="@+id/iv_group_icon"
-            tools:ignore="RtlHardcoded"
-            tools:visibility="visible" />
+        <com.sumian.sleepdoctor.widget.GroupDetailHaveDotView
+            android:id="@+id/group_detail_have_dot_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/tv_desc"
@@ -55,8 +37,8 @@
             android:singleLine="true"
             android:textSize="@dimen/font_20"
             app:layout_constraintBottom_toTopOf="@+id/tv_doctor_name"
-            app:layout_constraintLeft_toRightOf="@id/iv_group_icon"
-            app:layout_constraintTop_toTopOf="@id/iv_group_icon"
+            app:layout_constraintLeft_toRightOf="@id/group_detail_have_dot_view"
+            app:layout_constraintTop_toTopOf="@+id/group_detail_have_dot_view"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="一个有十二个字符的随访群" />
 
@@ -94,7 +76,7 @@
             android:textColor="@color/b2_color"
             android:textSize="@dimen/font_12"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/iv_group_icon"
+            app:layout_constraintBottom_toBottomOf="@id/group_detail_have_dot_view"
             app:layout_constraintStart_toStartOf="@+id/tv_doctor_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_doctor_name"
             tools:text="5天后过期" />
@@ -113,84 +95,28 @@
             android:layout_marginTop="@dimen/space_16"
             android:background="@color/l1_color"
             android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="@id/iv_group_icon"
+            app:layout_constraintLeft_toLeftOf="@id/group_detail_have_dot_view"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline"
             tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/tv_chat_history_two"
-            style="@style/text_t2_style"
-            android:layout_width="wrap_content"
+        <com.sumian.sleepdoctor.widget.MsgCacheLabelView
+            android:id="@+id/cache_msg_two_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_16"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="16"
-            android:maxLines="1"
-            android:minLines="1"
-            android:singleLine="true"
-            android:textSize="@dimen/font_16"
-            android:visibility="gone"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toLeftOf="@id/v_line"
-            app:layout_constraintTop_toBottomOf="@id/v_line"
-            tools:text="助理-方方方: 回答: 我昨晚失眠"
-            tools:visibility="visible" />
+            app:layout_constraintLeft_toLeftOf="@+id/v_line"
+            app:layout_constraintTop_toBottomOf="@+id/v_line" />
 
-        <TextView
-            android:id="@+id/tv_chat_history_two_time"
-            style="@style/text_t2_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="4"
-            android:maxLines="1"
-            android:minLines="1"
-            android:singleLine="true"
-            android:textSize="@dimen/font_16"
-            android:visibility="gone"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/v_line"
-            tools:text="昨天"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_chat_history_one"
-            style="@style/text_t2_style"
-            android:layout_width="wrap_content"
+        <com.sumian.sleepdoctor.widget.MsgCacheLabelView
+            android:id="@+id/cache_msg_one_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_16"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="16"
-            android:maxLines="1"
-            android:minLines="1"
-            android:singleLine="true"
-            android:textSize="@dimen/font_16"
-            android:visibility="gone"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toLeftOf="@id/tv_chat_history_two"
-            app:layout_constraintTop_toBottomOf="@id/tv_chat_history_two"
-            tools:text="助理-方方方: 回答: 我昨晚失眠"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_chat_history_one_time"
-            style="@style/text_t2_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_16"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="4"
-            android:maxLines="1"
-            android:minLines="1"
-            android:singleLine="true"
-            android:textSize="@dimen/font_16"
-            android:visibility="gone"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_chat_history_two_time"
-            tools:text="昨天"
-            tools:visibility="visible" />
+            app:layout_constraintLeft_toLeftOf="@+id/cache_msg_two_view"
+            app:layout_constraintTop_toBottomOf="@+id/cache_msg_two_view" />
 
         <TextView
             android:id="@+id/tv_msg_reply_label"
@@ -208,8 +134,8 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toLeftOf="@id/tv_chat_history_one"
-            app:layout_constraintTop_toBottomOf="@id/tv_chat_history_one"
+            app:layout_constraintLeft_toLeftOf="@id/cache_msg_one_view"
+            app:layout_constraintTop_toBottomOf="@id/cache_msg_one_view"
             tools:text="[收到新的医生回复]"
             tools:visibility="visible" />
 
@@ -237,6 +163,5 @@
             app:gTouchEffect="ripple" />
 
     </FrameLayout>
-
 
 </android.support.v7.widget.CardView>

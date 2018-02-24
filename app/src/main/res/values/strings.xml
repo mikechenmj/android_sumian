@@ -124,5 +124,7 @@
     <string name="turn_right_cancel_record">向右滑动,取消发送</string>
     <string name="members">群成员列表</string>
     <string name="invalid_qr_code">二维码无效</string>
+    <string name="pic_label">[图片]</string>
+    <string name="voice_label">[语音]</string>
 
 </resources>

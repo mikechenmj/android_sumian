@@ -257,7 +257,8 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
                 break;
         }
         tvRoleLabel.setText(roleLabel);
-        tvRoleLabel.setVisibility(TextUtils.isEmpty(roleLabel) ? View.INVISIBLE : View.VISIBLE);
+        tvRoleLabel.setBackground(role == 0 ? tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_assistant_label) : tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
+        tvRoleLabel.setVisibility(role == 0 || TextUtils.isEmpty(roleLabel) ? View.INVISIBLE : View.VISIBLE);
     }
 
     public interface OnReplayListener<Message> {

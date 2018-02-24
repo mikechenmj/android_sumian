@@ -4,36 +4,29 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
-import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
-import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
-import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
-import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.bumptech.glide.request.RequestOptions;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.common.base.BaseRecyclerAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.activity.MsgActivity;
-import com.sumian.sleepdoctor.chat.engine.ChatEngine;
-import com.sumian.sleepdoctor.chat.utils.TimeUtils;
 import com.sumian.sleepdoctor.pager.activity.ScanGroupResultActivity;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.tab.bean.GroupItem;
+import com.sumian.sleepdoctor.widget.GroupDetailHaveDotView;
+import com.sumian.sleepdoctor.widget.MsgCacheLabelView;
 
 import net.qiujuer.genius.ui.widget.Button;
 
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -47,6 +40,8 @@ import butterknife.OnClick;
 
 public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
 
+    private static final String TAG = GroupAdapter.class.getSimpleName();
+
     public GroupAdapter(Context context) {
         super(context);
     }
@@ -59,19 +54,21 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
     @Override
     protected void onBindViewHolder(RecyclerView.ViewHolder holder, GroupItem item, int position) {
         ((ViewHolder) holder).initView(item);
-
     }
 
-    public int updateMsg(AVIMMessage msg) {
+    public int updateReceiverMsg(AVIMTypedMessage msg) {
         int position = -1;
         for (int i = 0, len = mItems.size(); i < len; i++) {
             String conversationId = mItems.get(i).groupDetail.conversation_id;
             if (conversationId.equals(msg.getConversationId())) {
-                AVIMMessage lastMsg = mItems.get(i).lastMsg;
+                AVIMTypedMessage lastMsg = mItems.get(i).lastMsg;
                 if (lastMsg != null) {
                     mItems.get(i).secondLastMsg = lastMsg;
                 }
                 mItems.get(i).lastMsg = msg;
+                mItems.get(i).unReadMsgCount = AppManager.getChatEngine().getAVIMConversation(msg.getConversationId()).getUnreadMessagesCount();
+                mItems.get(i).isMsgMentioned = mItems.get(i).isMsgMentioned || msg.mentioned();
+                Log.e(TAG, "updateReceiverMsg: ------>" + msg.mentioned());
                 updateItem(i);
                 position = i;
                 break;
@@ -80,15 +77,50 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         return position;
     }
 
-    static class ViewHolder extends BaseViewHolder<GroupItem> implements ChatEngine.OnUpdateUnReadMsgCountCallback {
+    public void updateSecondMsg(AVIMTypedMessage secondMsg) {
+        if (secondMsg == null) return;
+        for (int i = 0, len = mItems.size(); i < len; i++) {
+            String conversationId = mItems.get(i).groupDetail.conversation_id;
+            if (conversationId.equals(secondMsg.getConversationId())) {
+                mItems.get(i).secondLastMsg = secondMsg;
+                updateItem(i);
+                break;
+            }
+        }
+    }
+
+    public void updateLastMsg(AVIMTypedMessage lastMsg) {
+        if (lastMsg == null) return;
+        for (int i = 0, len = mItems.size(); i < len; i++) {
+            String conversationId = mItems.get(i).groupDetail.conversation_id;
+            if (conversationId.equals(lastMsg.getConversationId())) {
+                mItems.get(i).lastMsg = lastMsg;
+                mItems.get(i).isMsgMentioned = lastMsg.mentioned() && AppManager.getChatEngine().getAVIMConversation(lastMsg.getConversationId()).getUnreadMessagesCount() > 0;
+                mItems.get(i).unReadMsgCount = AppManager.getChatEngine().getAVIMConversation(lastMsg.getConversationId()).getUnreadMessagesCount();
+                updateItem(i);
+                break;
+            }
+        }
+    }
+
+    public void updateItemForUnReadMsgCount(AVIMConversation conversation, int unReadMsgCount) {
+        for (int i = 0, len = mItems.size(); i < len; i++) {
+            String conversationId = mItems.get(i).groupDetail.conversation_id;
+            if (conversationId.equals(conversation.getConversationId())) {
+                mItems.get(i).unReadMsgCount = unReadMsgCount;
+                mItems.get(i).isMsgMentioned = unReadMsgCount > 0;
+                updateItem(i);
+                break;
+            }
+        }
+    }
+
+    static class ViewHolder extends BaseViewHolder<GroupItem> {
 
         private static final String TAG = ViewHolder.class.getSimpleName();
 
-        @BindView(R.id.iv_group_icon)
-        QMUIRadiusImageView mIvGroupIcon;
-
-        @BindView(R.id.msg_dot)
-        View mMsgDot;
+        @BindView(R.id.group_detail_have_dot_view)
+        GroupDetailHaveDotView mGroupDetailHaveDotView;
 
         @BindView(R.id.tv_desc)
         TextView mTvDesc;
@@ -100,14 +132,14 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         @BindView(R.id.v_line)
         View mLine;
 
-        @BindView(R.id.tv_chat_history_two)
-        TextView mTvChatHistoryTwo;
-        @BindView(R.id.tv_chat_history_two_time)
-        TextView mTvChatHistoryTwoTime;
-        @BindView(R.id.tv_chat_history_one)
-        TextView mTvChatHistoryOne;
-        @BindView(R.id.tv_chat_history_one_time)
-        TextView mTvChatHistoryOneTime;
+        @BindView(R.id.cache_msg_two_view)
+        MsgCacheLabelView mMsgCacheLabelTwoView;
+
+        @BindView(R.id.cache_msg_one_view)
+        MsgCacheLabelView mMsgCacheLabelOneView;
+
+        @BindView(R.id.tv_msg_reply_label)
+        TextView mTvMsgReplyLabel;
 
         @BindView(R.id.bt_expired)
         Button mBtExpired;
@@ -120,10 +152,15 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
 
         public void initView(GroupItem item) {
             super.initView(item);
+            updateGroupDetail(item);
+            updateMsg(item);
+        }
+
+        private void updateGroupDetail(GroupItem item) {
             GroupDetail<UserProfile, UserProfile> groupDetail = item.groupDetail;
             RequestOptions options = new RequestOptions();
             options.error(R.mipmap.group_avatar).placeholder(R.mipmap.group_avatar).getOptions();
-            load(groupDetail.avatar, options, mIvGroupIcon);
+            load(groupDetail.avatar, options, mGroupDetailHaveDotView.getImageView());
 
             setText(mTvDesc, groupDetail.name);
 
@@ -155,115 +192,31 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
                 gone(mLayExpiredContainer);
                 gone(mTvExpired);
             }
-
-            if (item.lastMsg == null && item.secondLastMsg == null) {
-                AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(item.groupDetail.conversation_id);
-                avimConversation.queryMessages(2, new AVIMMessagesQueryCallback() {
-                    @Override
-                    public void done(List<AVIMMessage> list, AVIMException e) {
-                        if (list == null || list.isEmpty()) {
-                            mTvChatHistoryOne.setText(String.format(Locale.getDefault(), itemView.getResources().getString(R.string.welcome_join_title), item.groupDetail.name));
-                            mTvChatHistoryOne.setVisibility(View.VISIBLE);
-                            mTvChatHistoryOneTime.setVisibility(View.GONE);
-                            mTvChatHistoryTwo.setVisibility(View.GONE);
-                            mTvChatHistoryTwoTime.setVisibility(View.GONE);
-                        } else {
-                            if (list.size() == 2) {
-                                item.lastMsg = list.get(1);
-                                item.secondLastMsg = list.get(0);
-                            } else {
-                                item.lastMsg = list.get(0);
-                            }
-                            updateMsg(item);
-                        }
-                    }
-                });
-            } else {
-                updateMsg(item);
-            }
-
-
-            AppManager.getChatEngine().addOnUnReadMsgCountCallback(this);
-
-
         }
 
         private void updateMsg(GroupItem item) {
 
-            AVIMMessage secondLastMsg = item.secondLastMsg;
+            mMsgCacheLabelTwoView.updateMsg(item.secondLastMsg);
+            mMsgCacheLabelOneView.updateMsg(item.lastMsg);
 
-            updateSecondLastMsg(secondLastMsg);
+            if (item.secondLastMsg == null && item.lastMsg == null) {
+                mMsgCacheLabelOneView.showWelcomeText(item.groupDetail.name);
+                mMsgCacheLabelTwoView.hide();
+            }
 
-            AVIMMessage lastMsg = item.lastMsg;
-
-            updateLastMsg(lastMsg);
-
-            AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(item.groupDetail.conversation_id);
-
-            int unreadMessagesCount = avimConversation.getUnreadMessagesCount();
             //会话中,未读消息数量大于0,小红点提示
-            mMsgDot.setVisibility(item.unReadMsgCount > 0 ? View.VISIBLE : View.GONE);
+            mGroupDetailHaveDotView.showOrHideDot(item.unReadMsgCount > 0);
 
-            boolean messagesMentioned = avimConversation.unreadMessagesMentioned();
-
-        }
-
-        private void updateLastMsg(AVIMMessage lastMsg) {
-            mTvChatHistoryOne.setVisibility(View.GONE);
-            mTvChatHistoryOneTime.setVisibility(View.GONE);
-
-            if (lastMsg != null) {
-                if (lastMsg instanceof AVIMTextMessage) {
-                    String text = ((AVIMTextMessage) lastMsg).getText();
-                    if (!TextUtils.isEmpty(text)) {
-                        mTvChatHistoryOne.setText(text);
-                        mTvChatHistoryOneTime.setText(TimeUtils.formatMsgTime(lastMsg.getTimestamp()));
-                        mTvChatHistoryOne.setVisibility(View.VISIBLE);
-                        mTvChatHistoryOneTime.setVisibility(View.VISIBLE);
-                    }
-                } else if (lastMsg instanceof AVIMImageMessage) {
-                    String text = "[图片]";
-                    mTvChatHistoryOne.setText(text);
-                    mTvChatHistoryOneTime.setText(TimeUtils.formatMsgTime(lastMsg.getTimestamp()));
-                    mTvChatHistoryOne.setVisibility(View.VISIBLE);
-                    mTvChatHistoryOneTime.setVisibility(View.VISIBLE);
-                } else if (lastMsg instanceof AVIMAudioMessage) {
-                    String text = "[语音]";
-                    mTvChatHistoryOne.setText(text);
-                    mTvChatHistoryOneTime.setText(TimeUtils.formatMsgTime(lastMsg.getTimestamp()));
-                    mTvChatHistoryOne.setVisibility(View.VISIBLE);
-                    mTvChatHistoryOneTime.setVisibility(View.VISIBLE);
-                }
+            //当有人回复你的提问时,即@了你.显示回复 dot label
+            if (item.isMsgMentioned) {
+                mTvMsgReplyLabel.setText("[收到新的医生回复]");
+                mTvMsgReplyLabel.setVisibility(View.VISIBLE);
+                mMsgCacheLabelTwoView.hide();
+            } else {
+                mTvMsgReplyLabel.setVisibility(View.GONE);
+                mMsgCacheLabelTwoView.show();
             }
-        }
 
-        private void updateSecondLastMsg(AVIMMessage secondLastMsg) {
-            mTvChatHistoryTwo.setVisibility(View.GONE);
-            mTvChatHistoryTwoTime.setVisibility(View.GONE);
-
-            if (secondLastMsg != null) {
-                if (secondLastMsg instanceof AVIMTextMessage) {
-                    String text = ((AVIMTextMessage) secondLastMsg).getText();
-                    if (!TextUtils.isEmpty(text)) {
-                        mTvChatHistoryTwo.setText(text);
-                        mTvChatHistoryTwoTime.setText(TimeUtils.formatMsgTime(secondLastMsg.getTimestamp()));
-                        mTvChatHistoryTwo.setVisibility(View.VISIBLE);
-                        mTvChatHistoryTwoTime.setVisibility(View.VISIBLE);
-                    }
-                } else if (secondLastMsg instanceof AVIMImageMessage) {
-                    String text = "[图片]";
-                    mTvChatHistoryTwo.setText(text);
-                    mTvChatHistoryTwoTime.setText(TimeUtils.formatMsgTime(secondLastMsg.getTimestamp()));
-                    mTvChatHistoryTwo.setVisibility(View.VISIBLE);
-                    mTvChatHistoryTwoTime.setVisibility(View.VISIBLE);
-                } else if (secondLastMsg instanceof AVIMAudioMessage) {
-                    String text = "[语音]";
-                    mTvChatHistoryTwo.setText(text);
-                    mTvChatHistoryTwoTime.setText(TimeUtils.formatMsgTime(secondLastMsg.getTimestamp()));
-                    mTvChatHistoryTwo.setVisibility(View.VISIBLE);
-                    mTvChatHistoryTwoTime.setVisibility(View.VISIBLE);
-                }
-            }
         }
 
         @OnClick({R.id.bt_expired})
@@ -291,24 +244,19 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         @Override
         protected void onItemClick(View v) {
             super.onItemClick(v);
-
             if (mItem.groupDetail.day_last == 0) {
                 Bundle extras = new Bundle();
                 extras.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, mItem.groupDetail.id);
                 ScanGroupResultActivity.show(v.getContext(), ScanGroupResultActivity.class, extras);
             } else {
-                //AppManager.getChatEngine().getAVIMConversation(mItem.groupDetail.conversation_id).read();
+                AppManager.getChatEngine().getAVIMConversation(mItem.groupDetail.conversation_id).read();
+                mItem.unReadMsgCount = 0;
+                mItem.isMsgMentioned = false;
                 updateMsg(mItem);
                 Bundle extras = new Bundle();
                 extras.putSerializable(MsgActivity.ARGS_GROUP_DETAIL, mItem.groupDetail);
                 MsgActivity.show(v.getContext(), MsgActivity.class, extras);
             }
-
-        }
-
-        @Override
-        public void onUpdateUnReadMsgCount(AVIMClient client, AVIMConversation conversation, int unReadMsgCount) {
-            mMsgDot.setVisibility(unReadMsgCount > 0 ? View.VISIBLE : View.GONE);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.sumian.sleepdoctor.tab.bean;
 
-import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 
 /**
@@ -12,11 +12,10 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 public class GroupItem {
 
     public GroupDetail<UserProfile, UserProfile> groupDetail;
-    public AVIMMessage secondLastMsg;
-    public AVIMMessage lastMsg;
+    public AVIMTypedMessage secondLastMsg;
+    public AVIMTypedMessage lastMsg;
     public int unReadMsgCount;
     public boolean isMsgMentioned;
-
 
 
     @Override

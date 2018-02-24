@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
@@ -31,7 +32,6 @@ import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -42,7 +42,7 @@ import butterknife.BindView;
  */
 
 public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeDelegate, GroupRequestScanQrCodeView.OnGrantedCallback,
-        GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener, ChatEngine.OnMsgCallback {
+        GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener, ChatEngine.OnMsgCallback, ChatEngine.OnUpdateUnReadMsgCountCallback {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -78,6 +78,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
         mRecycler.setAdapter(mGroupAdapter = new GroupAdapter(getContext()));
         mRequestScanQrCodeView.setFragment(this).setOnGrantedCallback(this);
         AppManager.getChatEngine().addOnMsgCallback(this);
+        AppManager.getChatEngine().addOnUnReadMsgCountCallback(this);
     }
 
     @Override
@@ -103,6 +104,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     protected void onRelease() {
         mPresenter.release();
         AppManager.getChatEngine().removeOnMsgCallback(this);
+        AppManager.getChatEngine().removeOnUnReadMsgCountCallback(this);
         super.onRelease();
     }
 
@@ -147,28 +149,34 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
             }
 
             List<GroupItem> groupItems = new ArrayList<>();
+
             GroupItem groupItem;
+            AVIMConversation avimConversation;
 
             for (GroupDetail<UserProfile, UserProfile> group : groups) {
                 groupItem = new GroupItem();
                 groupItem.groupDetail = group;
-                AVIMConversation avimConversation = AppManager.getChatEngine().getAVIMConversation(group.conversation_id);
+                avimConversation = AppManager.getChatEngine().getAVIMConversation(group.conversation_id);
                 avimConversation.queryMessages(2, new AVIMMessagesQueryCallback() {
                     @Override
                     public void done(List<AVIMMessage> list, AVIMException e) {
                         if (list == null || list.isEmpty()) {
-
+                            mGroupAdapter.updateLastMsg(null);
+                            mGroupAdapter.updateSecondMsg(null);
                         } else {
                             if (list.size() == 2) {
-                                item.lastMsg = list.get(1);
-                                item.secondLastMsg = list.get(0);
+                                mGroupAdapter.updateLastMsg((AVIMTypedMessage) list.get(1));
+                                mGroupAdapter.updateSecondMsg((AVIMTypedMessage) list.get(0));
                             } else {
-                                item.lastMsg = list.get(0);
+                                mGroupAdapter.updateLastMsg((AVIMTypedMessage) list.get(0));
+                                mGroupAdapter.updateSecondMsg(null);
                             }
-                            updateMsg(item);
                         }
                     }
                 });
+                groupItem.unReadMsgCount = avimConversation.getUnreadMessagesCount();
+                groupItem.isMsgMentioned = avimConversation.unreadMessagesMentioned();
+
                 groupItems.add(groupItem);
             }
 
@@ -202,7 +210,12 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onReceiverMsgCallback(AVIMTypedMessage msg) {
-        int position = mGroupAdapter.updateMsg(msg);
+        int position = mGroupAdapter.updateReceiverMsg(msg);
         mRecycler.scrollToPosition(position);
+    }
+
+    @Override
+    public void onUpdateUnReadMsgCount(AVIMClient client, AVIMConversation conversation, int unReadMsgCount) {
+        mGroupAdapter.updateItemForUnReadMsgCount(conversation, unReadMsgCount);
     }
 }
