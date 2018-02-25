@@ -176,12 +176,12 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
     @Override
     public void onIndexTouchMove(char indexLetter) {
         String str = Character.toString(indexLetter).toLowerCase();
-        List<PinYinUserProfile> friends = mMemberAdapter.getItems();
+        List<PinYinUserProfile> patients = mMemberAdapter.getItems();
         int position = -1;
-        int size = friends.size();
+        int size = patients.size();
         for (int i = 0; i < size; i++) {
-            PinYinUserProfile friend = friends.get(i);
-            if (friend.firstChar.startsWith(str)) {
+            PinYinUserProfile friend = patients.get(i);
+            if (friend.firstChar.startsWith(str) && friend.userProfile.role == 0) {
                 position = i;
                 break;
             }

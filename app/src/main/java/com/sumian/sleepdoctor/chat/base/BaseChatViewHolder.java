@@ -214,7 +214,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
     }
 
     protected void showOtherUserProfile(View v) {
-        if (mUserProfile != null && mUserProfile.role != 0) {
+        if (mRole != 0) {
             Bundle extras = new Bundle();
             extras.putParcelable(OtherUserProfileActivity.ARGS_USER_PROFILE, mUserProfile);
             OtherUserProfileActivity.show(v.getContext(), OtherUserProfileActivity.class, extras);

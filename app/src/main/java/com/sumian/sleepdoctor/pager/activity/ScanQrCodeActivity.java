@@ -4,8 +4,10 @@ import android.Manifest;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
@@ -31,6 +33,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class ScanQrCodeActivity extends BaseActivity implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
+
+    @BindView(R.id.fl_content)
+    FrameLayout mFrameLayout;
 
     @BindView(R.id.zxing_view)
     ZXingView mZXingView;
@@ -90,12 +95,18 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
                 ScanGroupResultActivity.show(this, ScanGroupResultActivity.class, args);
                 finish();
             } else {
-                showToast(R.string.invalid_qr_code);
+                showSnackbar();
             }
         } else {
-            showCenterToast(decodeUrl);
+            showSnackbar();
         }
         this.mZXingView.startSpot();
+    }
+
+    private void showSnackbar() {
+        Snackbar.make(mFrameLayout, R.string.invalid_qr_code, Snackbar.LENGTH_LONG).setAction(R.string.re_scan_qr_code, v -> {
+
+        }).show();
     }
 
     @Override
@@ -109,12 +120,12 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         preScanQrCode();
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         showToast(R.string.scan_qr_code_denied);
     }
 

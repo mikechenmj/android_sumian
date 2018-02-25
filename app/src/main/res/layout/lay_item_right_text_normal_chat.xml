@@ -39,7 +39,9 @@
             android:paddingRight="@dimen/space_2"
             android:textColor="@color/b2_color"
             android:textSize="@dimen/font_12"
-            tools:text="医生" />
+            android:visibility="invisible"
+            tools:text="医生"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_nickname"

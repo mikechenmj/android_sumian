@@ -56,7 +56,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         ((ViewHolder) holder).initView(item);
     }
 
-    public int updateReceiverMsg(AVIMTypedMessage msg) {
+    public int updateReceiveMsg(AVIMTypedMessage msg) {
         int position = -1;
         for (int i = 0, len = mItems.size(); i < len; i++) {
             String conversationId = mItems.get(i).groupDetail.conversation_id;
@@ -68,7 +68,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
                 mItems.get(i).lastMsg = msg;
                 mItems.get(i).unReadMsgCount = AppManager.getChatEngine().getAVIMConversation(msg.getConversationId()).getUnreadMessagesCount();
                 mItems.get(i).isMsgMentioned = mItems.get(i).isMsgMentioned || msg.mentioned();
-                Log.e(TAG, "updateReceiverMsg: ------>" + msg.mentioned());
+                Log.e(TAG, "updateReceiveMsg: ------>" + msg.mentioned());
                 updateItem(i);
                 position = i;
                 break;
@@ -95,8 +95,6 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             String conversationId = mItems.get(i).groupDetail.conversation_id;
             if (conversationId.equals(lastMsg.getConversationId())) {
                 mItems.get(i).lastMsg = lastMsg;
-                mItems.get(i).isMsgMentioned = lastMsg.mentioned() && AppManager.getChatEngine().getAVIMConversation(lastMsg.getConversationId()).getUnreadMessagesCount() > 0;
-                mItems.get(i).unReadMsgCount = AppManager.getChatEngine().getAVIMConversation(lastMsg.getConversationId()).getUnreadMessagesCount();
                 updateItem(i);
                 break;
             }
@@ -108,7 +106,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             String conversationId = mItems.get(i).groupDetail.conversation_id;
             if (conversationId.equals(conversation.getConversationId())) {
                 mItems.get(i).unReadMsgCount = unReadMsgCount;
-                mItems.get(i).isMsgMentioned = unReadMsgCount > 0;
+                mItems.get(i).isMsgMentioned = false;
                 updateItem(i);
                 break;
             }
@@ -205,7 +203,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
             }
 
             //会话中,未读消息数量大于0,小红点提示
-            mGroupDetailHaveDotView.showOrHideDot(item.unReadMsgCount > 0);
+            mGroupDetailHaveDotView.showOrHideDot(item.unReadMsgCount > 0 || item.isMsgMentioned);
 
             //当有人回复你的提问时,即@了你.显示回复 dot label
             if (item.isMsgMentioned) {

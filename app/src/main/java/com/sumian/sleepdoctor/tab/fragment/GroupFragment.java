@@ -174,6 +174,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
                         }
                     }
                 });
+                //第一次初始化
                 groupItem.unReadMsgCount = avimConversation.getUnreadMessagesCount();
                 groupItem.isMsgMentioned = avimConversation.unreadMessagesMentioned();
 
@@ -210,7 +211,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onReceiverMsgCallback(AVIMTypedMessage msg) {
-        int position = mGroupAdapter.updateReceiverMsg(msg);
+        int position = mGroupAdapter.updateReceiveMsg(msg);
         mRecycler.scrollToPosition(position);
     }
 
