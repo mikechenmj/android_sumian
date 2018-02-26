@@ -127,7 +127,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
         String content;
         if (groupDetail.role == 0) {
             mIvQrCode.setVisibility(View.GONE);
-            mBtJoinUp.setVisibility(View.VISIBLE);
+            //mBtJoinUp.setVisibility(View.VISIBLE);
             label = "剩余" + groupDetail.day_last + " 天";
             content = "续费";
         } else {

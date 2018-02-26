@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.chat.holder;
 
 import android.annotation.SuppressLint;
 import android.support.text.emoji.widget.EmojiAppCompatTextView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +72,6 @@ public class TextQuestionViewHolder extends BaseChatViewHolder<AVIMTextMessage> 
     @Override
     protected boolean onItemLongClick(View v) {
         if (mRole == 0) {
-            Log.e(TAG, "onItemLongClick: --------你是患者,不能回答----->");
             return true;
         }
 

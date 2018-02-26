@@ -34,6 +34,7 @@
     <!--title bar-->
     <declare-styleable name="TitleBar">
         <attr name="text" format="string|reference" />
+        <attr name="text_size" format="dimension|reference" />
         <attr name="show_back" format="boolean|reference" />
         <attr name="show_spanner" format="boolean|reference" />
         <attr name="more_icon" format="reference" />
@@ -56,7 +57,7 @@
     <declare-styleable name="RoundedImageView">
         <attr name="border_thickness" format="dimension" />
         <attr name="border_inside_color" format="color" />
-        <attr name="border_outside_color" format="color"/>
+        <attr name="border_outside_color" format="color" />
     </declare-styleable>
 
 </resources>

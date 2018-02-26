@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/space_80"
+    android:layout_height="@dimen/space_64"
     android:background="@color/b2_color"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="@dimen/space_20">
+    android:paddingLeft="@dimen/space_16"
+    android:paddingRight="@dimen/space_16">
 
     <ImageView
         android:id="@+id/iv_pay_icon"
-        android:layout_width="@dimen/space_32"
-        android:layout_height="@dimen/space_32"
+        android:layout_width="@dimen/space_24"
+        android:layout_height="@dimen/space_24"
         android:contentDescription="@null"
         android:src="@mipmap/group_pay_icon_wechatpayment" />
 
@@ -30,8 +31,8 @@
 
     <ImageView
         android:id="@+id/iv_pay_select"
-        android:layout_width="@dimen/space_32"
-        android:layout_height="@dimen/space_32"
+        android:layout_width="@dimen/space_24"
+        android:layout_height="@dimen/space_24"
         android:contentDescription="@null"
         android:src="@mipmap/group_pay_selected" />
 

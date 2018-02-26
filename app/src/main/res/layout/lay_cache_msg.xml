@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/space_16"
     android:paddingRight="@dimen/space_16">
@@ -18,7 +17,7 @@
         android:maxLines="1"
         android:minLines="1"
         android:singleLine="true"
-        android:textSize="@dimen/font_16"
+        android:textSize="@dimen/font_14"
         tools:text="助理-方方方: 回答: 我昨晚失眠"
         tools:visibility="visible" />
 
@@ -37,7 +36,7 @@
         android:maxLines="1"
         android:minLines="1"
         android:singleLine="true"
-        android:textSize="@dimen/font_16"
+        android:textSize="@dimen/font_14"
         tools:text="昨天"
         tools:visibility="visible" />
 </merge>

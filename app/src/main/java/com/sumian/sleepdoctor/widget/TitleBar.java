@@ -69,6 +69,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         String title = a.getString(R.styleable.TitleBar_text);
         boolean showSpanner = a.getBoolean(R.styleable.TitleBar_show_spanner, false);
         String moreText = a.getString(R.styleable.TitleBar_more_text);
+
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_more_icon);
 
         a.recycle();
@@ -82,9 +83,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             mIvBack.setVisibility(INVISIBLE);
         }
 
-        if (!TextUtils.isEmpty(title)) {
-            mTvTitle.setText(title);
-        }
+        //if (!TextUtils.isEmpty(title)) {
+        mTvTitle.setText(title);
+        // }
 
         if (showSpanner) {
             mTvTitle.setOnClickListener(this);
@@ -159,6 +160,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public TextView getTitle() {
         return mTvTitle;
+    }
+
+    public TextView getMore() {
+        return mTvMore;
     }
 
     public TitleBar setTitle(@StringRes int titleRes) {

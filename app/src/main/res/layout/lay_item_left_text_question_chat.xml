@@ -31,7 +31,7 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_14"
             tools:text="欧主任" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:paddingLeft="@dimen/space_2"
             android:paddingRight="@dimen/space_2"
             android:textColor="@color/b2_color"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_16"
             android:visibility="invisible"
             tools:text="医生"
             tools:visibility="visible" />
@@ -75,7 +75,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_12"
             android:background="@drawable/group_chatbubble_question_l"
-            android:textSize="@dimen/font_12"
             tools:text="dasdadsadasdsadsa我去一个我需要去的地方,那是一个没了的地方,我的小孩dadadadadadadadadsdadasdaaadadadadaadada" />
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView

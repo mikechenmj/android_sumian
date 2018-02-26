@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="space_50">50dp</dimen>
+    <dimen name="space_300">300dp</dimen>
+    <dimen name="space_240">240dp</dimen>
+    <dimen name="space_92">92dp</dimen>
+    <dimen name="space_84">84dp</dimen>
 </resources>

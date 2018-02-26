@@ -2,12 +2,12 @@
 
     <style name="text_t3_style">
         <item name="android:textColor">@color/t3_color</item>
-        <item name="android:textSize">@dimen/font_40</item>
+        <item name="android:textSize">@dimen/font_36</item>
     </style>
 
     <style name="text_t2_style">
         <item name="android:textColor">@color/t2_color</item>
-        <item name="android:textSize">@dimen/font_20</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 
     <style name="bt_t1_style">
@@ -15,14 +15,12 @@
         <item name="android:background">@drawable/bg_bt</item>
         <item name="android:textColor">@color/b2_color</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/font_20</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 
     <style name="bt_t2_style">
-        <item name="android:paddingLeft">@dimen/space_12</item>
-        <item name="android:paddingRight">@dimen/space_12</item>
-        <item name="android:paddingTop">@dimen/space_8</item>
-        <item name="android:paddingBottom">@dimen/space_8</item>
+        <item name="android:paddingLeft">@dimen/space_8</item>
+        <item name="android:paddingRight">@dimen/space_8</item>
         <item name="android:background">@drawable/bg_bt</item>
         <item name="android:textColor">@color/b2_color</item>
         <item name="android:gravity">center</item>
@@ -42,7 +40,7 @@
 
     <style name="text_t1_style">
         <item name="android:textColor">@color/t1_color</item>
-        <item name="android:textSize">@dimen/font_18</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 
     <style name="edit_text_t2_style">

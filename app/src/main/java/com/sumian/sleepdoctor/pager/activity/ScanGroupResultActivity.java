@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.jaeger.library.StatusBarUtil;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -29,7 +30,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by sm
@@ -48,7 +48,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
     TitleBar mTitleBar;
 
     @BindView(R.id.lay_group_icon)
-    CircleImageView mIvGroupIcon;
+    QMUIRadiusImageView mIvGroupIcon;
 
     @BindView(R.id.tv_desc)
     TextView mTvDesc;

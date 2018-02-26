@@ -31,7 +31,7 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_14"
             tools:text="欧主任" />
 
         <TextView
@@ -56,7 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_12"
-        android:gravity="center|left"
         android:orientation="horizontal"
         tools:ignore="RtlHardcoded">
 
@@ -92,7 +91,7 @@
                 android:background="@drawable/shape_answer_label"
                 android:lineSpacingExtra="@dimen/space_4"
                 android:padding="@dimen/space_8"
-                android:textSize="@dimen/font_12"
+                android:textSize="@dimen/font_16"
                 tools:text="我去一个我需要去的地方,那是一个没了的地方" />
 
             <android.support.text.emoji.widget.EmojiAppCompatTextView
@@ -104,7 +103,7 @@
                 android:layout_marginRight="@dimen/space_8"
                 android:lineSpacingExtra="@dimen/space_4"
                 android:padding="@dimen/space_8"
-                android:textSize="@dimen/font_12"
+                android:textSize="@dimen/font_16"
                 tools:text="dasdadsadasdsadsa我去一个我需要去的地方,那是一个没了的地方,我的小孩dadadadadadadadadsdadasdaaadadadadaadada" />
 
         </LinearLayout>

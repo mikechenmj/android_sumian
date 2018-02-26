@@ -13,7 +13,6 @@
         android:id="@+id/input_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_4"
         android:layout_marginLeft="@dimen/space_8"
         android:layout_marginRight="@dimen/space_8"
         android:layout_marginTop="@dimen/space_4"
@@ -41,7 +40,7 @@
         <android.support.text.emoji.widget.EmojiAppCompatEditText
             android:id="@+id/et_input"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_48"
+            android:layout_height="@dimen/space_40"
             android:layout_gravity="center"
             android:background="@null"
             android:focusable="true"
@@ -61,37 +60,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_56"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_8"
         android:layout_marginRight="@dimen/space_8"
         android:gravity="center">
 
         <ImageView
             android:id="@+id/bt_question"
-            android:layout_width="@dimen/len_96"
+            android:layout_width="@dimen/space_48"
             android:layout_height="@dimen/space_32"
             android:contentDescription="@null"
-            android:padding="@dimen/space_8"
-            android:scaleType="centerCrop"
+            android:scaleType="fitStart"
             android:src="@mipmap/inputbox_icon_label_unselected" />
 
         <ImageView
             android:id="@+id/iv_voice"
             android:layout_width="@dimen/space_48"
             android:layout_height="@dimen/space_48"
-            android:layout_marginRight="@dimen/space_8"
             android:contentDescription="@null"
-            android:padding="@dimen/space_6"
+            android:paddingBottom="@dimen/space_6"
+            android:paddingTop="@dimen/space_6"
             app:srcCompat="@mipmap/inputbox_icon_voice"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="@dimen/space_48"
             android:layout_height="@dimen/space_48"
             android:contentDescription="@null"
-            android:padding="@dimen/space_6"
-            app:srcCompat="@mipmap/inputbox_icon_image" />
+            android:paddingBottom="@dimen/space_6"
+            android:paddingRight="@dimen/space_8"
+            android:paddingTop="@dimen/space_6"
+            app:srcCompat="@mipmap/inputbox_icon_image"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <Space
             android:layout_width="0dp"
@@ -100,10 +101,12 @@
 
         <Button
             android:id="@+id/bt_send"
-            style="@style/bt_t2_style"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/space_36"
+            android:layout_width="@dimen/space_72"
+            android:layout_height="@dimen/space_32"
+            android:background="@drawable/bg_bt"
+            android:gravity="center"
             android:text="@string/send"
+            android:textColor="@color/b2_color"
             android:textSize="@dimen/font_16" />
     </LinearLayout>
 

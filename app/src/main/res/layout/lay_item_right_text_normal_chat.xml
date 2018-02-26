@@ -48,7 +48,7 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_14"
             tools:text="欧主任" />
 
     </LinearLayout>
@@ -83,7 +83,7 @@
                 android:layout_marginEnd="@dimen/space_12"
                 android:background="@drawable/group_chatbubble_r"
                 android:textColor="@color/b2_color"
-                android:textSize="@dimen/font_12"
+                android:textSize="@dimen/font_16"
                 tools:text="da" />
 
         </LinearLayout>

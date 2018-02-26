@@ -12,7 +12,7 @@
         android:id="@+id/iv_pay_status"
         android:layout_width="@dimen/space_56"
         android:layout_height="@dimen/space_56"
-        android:layout_marginTop="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_40"
         android:contentDescription="@null"
         app:srcCompat="@mipmap/msg_icon_success" />
 

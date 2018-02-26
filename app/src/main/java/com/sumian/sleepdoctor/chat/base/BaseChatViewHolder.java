@@ -1,12 +1,12 @@
 package com.sumian.sleepdoctor.chat.base;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +25,8 @@ import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.bumptech.glide.request.RequestOptions;
+import com.qmuiteam.qmui.span.QMUIAlignMiddleImageSpan;
+import com.qmuiteam.qmui.span.QMUIMarginImageSpan;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
@@ -85,7 +87,11 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
 
     protected void updateImageText(AVIMTextMessage msg, TextView tvContent) {
         String text = msg.getText();
-        ImageSpan imgSpan = new ImageSpan(itemView.getContext(), R.mipmap.group_chatbubble_icon_label);
+
+        Drawable drawable = itemView.getResources().getDrawable(R.mipmap.group_chatbubble_icon_label);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+        QMUIMarginImageSpan imgSpan = new QMUIMarginImageSpan(drawable, QMUIAlignMiddleImageSpan.ALIGN_MIDDLE, 0, 0);
         SpannableString spannableString = new SpannableString("[icon]  " + text);
         spannableString.setSpan(imgSpan, 0, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -245,8 +251,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
                 roleLabel = itemView.getResources().getString(R.string.patient);
                 break;
             case 1://运营
-                roleLabel = itemView.getResources().getString(R.string.dbo);
-                break;
+                // roleLabel = itemView.getResources().getString(R.string.dbo);
             case 2://助理
                 roleLabel = itemView.getResources().getString(R.string.assistant);
                 break;
@@ -257,7 +262,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
                 break;
         }
         tvRoleLabel.setText(roleLabel);
-        tvRoleLabel.setBackground(role == 0 ? tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_assistant_label) : tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
+        tvRoleLabel.setBackground(role != 3 ? tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_assistant_label) : tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
         tvRoleLabel.setVisibility(role == 0 || TextUtils.isEmpty(roleLabel) ? View.INVISIBLE : View.VISIBLE);
     }
 

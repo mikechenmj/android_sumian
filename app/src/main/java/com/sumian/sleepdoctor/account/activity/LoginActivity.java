@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.account.activity;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
@@ -13,7 +14,6 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 
 import net.qiujuer.genius.ui.widget.Button;
-import net.qiujuer.genius.ui.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;

@@ -32,7 +32,7 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_14"
             tools:text="欧主任" />
 
         <TextView
@@ -92,7 +92,7 @@
                 android:background="@drawable/shape_answer_label"
                 android:lineSpacingExtra="@dimen/space_4"
                 android:padding="@dimen/space_8"
-                android:textSize="@dimen/font_12"
+                android:textSize="@dimen/font_16"
                 tools:text="我去一个我需要去的地方,那是一个没了的地方" />
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
