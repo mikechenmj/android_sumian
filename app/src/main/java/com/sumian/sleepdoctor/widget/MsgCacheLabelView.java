@@ -71,10 +71,10 @@ public class MsgCacheLabelView extends LinearLayout {
             case AVIMMessageType.TEXT_MESSAGE_TYPE:
                 text = ((AVIMTextMessage) msg).getText();
                 break;
-            case AVIMMessageType.AUDIO_MESSAGE_TYPE:
+            case AVIMMessageType.IMAGE_MESSAGE_TYPE:
                 text = getContext().getString(R.string.pic_label);
                 break;
-            case AVIMMessageType.IMAGE_MESSAGE_TYPE:
+            case AVIMMessageType.AUDIO_MESSAGE_TYPE:
                 text = getContext().getString(R.string.voice_label);
                 break;
             default:

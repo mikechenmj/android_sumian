@@ -16,7 +16,6 @@
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/b1_color</item>
         <item name="android:navigationBarColor">@android:color/background_dark</item>
         <item name="android:windowAnimationStyle">@style/AnimationStyle</item>

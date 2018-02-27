@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16">
+    android:paddingBottom="@dimen/space_8"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20"
+    android:paddingTop="@dimen/space_4">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -19,7 +22,7 @@
         android:visibility="gone"
         tools:ignore="RtlHardcoded"
         tools:text="8月31日 15:40"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -68,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        <com.sumian.sleepdoctor.widget.shapeImageView.GlideImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_160"
@@ -76,12 +79,12 @@
             android:layout_marginRight="@dimen/space_12"
             android:contentDescription="@null"
             android:src="@mipmap/group_avatar"
-            app:qmui_corner_radius="@dimen/space_4" />
+            app:riv_corner_radius="@dimen/space_4" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_48"
-            android:layout_height="@dimen/space_48"
+            android:layout_width="@dimen/space_44"
+            android:layout_height="@dimen/space_44"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />

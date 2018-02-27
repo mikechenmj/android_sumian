@@ -155,72 +155,60 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-
     implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
     implementation 'com.android.support:design:' + rootProject.ext.supportVersion
     implementation 'com.android.support:cardview-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-vector-drawable:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:palette-v7:' + rootProject.ext.supportVersion
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.3.1"
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
-
     //implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'pub.devrel:easypermissions:1.1.3'
 
+    implementation 'pub.devrel:easypermissions:1.1.3'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     //implementation 'com.sunfusheng:glideimageview:1.2.0'
-
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     implementation 'com.qmuiteam:qmui:1.0.6'
     implementation 'com.qmuiteam:arch:0.0.1'
     //implementation 'com.google.code.gson:gson:2.8.2'
-
     implementation 'net.qiujuer.genius:ui:2.0.0'
     implementation 'net.qiujuer.genius:res:2.0.0'
-
     //status bar util
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
-
     //fastjson
     implementation 'com.alibaba:fastjson:1.2.44'
-
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.0'
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.0'
     // Java8 support for Lifecycles
     implementation 'android.arch.lifecycle:common-java8:1.1.0'
-
     // LeanCloud 基础包
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.2'
     // 推送与实时聊天需要的包
     implementation('cn.leancloud.android:avoscloud-push:v4.6.2@aar') { transitive = true }
-
     //support emoji
     implementation 'com.android.support:support-emoji-appcompat:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
-
     //aliyun oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.7.2'
-
     //ping++
-    implementation 'com.pingxx:pingpp-core:2.1.17' // (Ping++ 标准版 SDK) 必须添加
+    implementation 'com.pingxx:pingpp-core:2.1.17'
+    // (Ping++ 标准版 SDK) 必须添加
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
     // 使用微信支付时添加,具体版本参考微信官方文档
-    implementation 'com.pingxx:pingpp-alipay:2.1.17' // 使用支付宝时添加
-
+    implementation 'com.pingxx:pingpp-alipay:2.1.17'
+    // 使用支付宝时添加
     //拼音分词
     implementation 'com.belerweb:pinyin4j:2.5.0'
-
     implementation project(':common')
-
 }

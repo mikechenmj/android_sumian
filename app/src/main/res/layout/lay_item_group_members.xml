@@ -12,8 +12,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_avatar"
-        android:layout_width="@dimen/space_60"
-        android:layout_height="@dimen/space_60"
+        android:layout_width="@dimen/space_52"
+        android:layout_height="@dimen/space_52"
         android:src="@mipmap/info_avatar_doctor" />
 
     <TextView
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/space_12"
+        android:textColor="@color/t1_color"
         android:textSize="@dimen/font_16"
         tools:text="欧主任" />
 
@@ -36,7 +37,7 @@
         android:paddingLeft="@dimen/space_4"
         android:paddingRight="@dimen/space_4"
         android:textColor="@color/b2_color"
-        android:textSize="@dimen/font_14"
+        android:textSize="@dimen/font_12"
         tools:text="医生" />
 
 </LinearLayout>

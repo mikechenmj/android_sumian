@@ -27,13 +27,13 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/space_12"
             android:orientation="horizontal"
-            android:padding="@dimen/space_16"
             tools:ignore="UseCompoundDrawables">
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:id="@+id/lay_group_icon"
                 android:layout_width="@dimen/space_72"
                 android:layout_height="@dimen/space_72"
+                android:layout_margin="@dimen/space_12"
                 android:contentDescription="@null"
                 android:elevation="@dimen/space_2"
                 android:outlineProvider="background"
@@ -49,12 +49,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/space_16"
                 android:layout_marginRight="@dimen/space_16"
                 android:ellipsize="marquee"
-                android:ems="10"
+                android:ems="13"
                 android:singleLine="true"
-                android:textSize="@dimen/font_18"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold"
+                tools:ignore="RtlHardcoded"
                 tools:text="欧主任随访群" />
         </LinearLayout>
 
@@ -82,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/space_4"
-        android:text="@string/from_qr_code_join_group" />
+        android:text="@string/from_qr_code_join_group"
+        android:textSize="@dimen/font_14" />
 
 </LinearLayout>

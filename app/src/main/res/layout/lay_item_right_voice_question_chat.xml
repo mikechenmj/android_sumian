@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16">
+    android:paddingBottom="@dimen/space_8"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20"
+    android:paddingTop="@dimen/space_4">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -75,7 +78,8 @@
                 android:id="@+id/voice_dot"
                 android:layout_width="@dimen/space_8"
                 android:layout_height="@dimen/space_8"
-                android:background="@drawable/bg_tab_dot" />
+                android:background="@drawable/bg_tab_dot"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_voice_duration"
@@ -86,21 +90,31 @@
                 tools:text="60 ''" />
         </FrameLayout>
 
-        <ImageView
-            android:id="@+id/biv_image"
-            android:layout_width="@dimen/space_100"
-            android:layout_height="@dimen/space_48"
+        <FrameLayout
+            android:layout_width="@dimen/space_60"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
             android:background="@drawable/group_chatbubble_r"
-            android:contentDescription="@null"
-            android:src="@drawable/voice_anim_r" />
+            android:minHeight="@dimen/space_40">
+
+            <ImageView
+                android:id="@+id/biv_image"
+                android:layout_width="@dimen/space_20"
+                android:layout_height="@dimen/space_20"
+                android:layout_gravity="center|right"
+                android:contentDescription="@null"
+                android:paddingBottom="@dimen/space_1"
+                android:paddingTop="@dimen/space_1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/voice_anim_r" />
+        </FrameLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_48"
-            android:layout_height="@dimen/space_48"
+            android:layout_width="@dimen/space_44"
+            android:layout_height="@dimen/space_44"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />

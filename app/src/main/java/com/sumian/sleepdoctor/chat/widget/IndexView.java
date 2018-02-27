@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.sumian.sleepdoctor.R;
+
 /**
  * index view
  **/
@@ -46,7 +48,7 @@ public class IndexView extends View {
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTextSize(a.getDimensionPixelSize(0, 12));
-        paint.setColor(a.getColor(1, 0xff000000));
+        paint.setColor(a.getColor(1, getContext().getResources().getColor(R.color.t2_color)));
 
         a.recycle();
 
@@ -92,7 +94,7 @@ public class IndexView extends View {
         int action = event.getActionMasked();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                setBackgroundColor(0x50000000);
+                //setBackgroundColor(0x50000000);
             case MotionEvent.ACTION_MOVE:
                 final float y = event.getY();
                 final int newIndex = (int) (y / itemHeight);
@@ -105,7 +107,7 @@ public class IndexView extends View {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                setBackgroundColor(0);
+                //setBackgroundColor(0);
                 if (indexTouchListener != null) {
                     indexTouchListener.onIndexTouchUp();
                 }
