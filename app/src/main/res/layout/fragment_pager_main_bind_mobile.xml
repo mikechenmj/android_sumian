@@ -6,27 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="@dimen/space_32">
-
-        <TextView
-            style="@style/text_t3_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_32"
-            android:text="@string/hello" />
-
-        <TextView
-            style="@style/text_t2_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_16"
-            android:text="@string/login_welcome" />
-    </LinearLayout>
+        app:show_back="false"
+        app:show_spanner="false"
+        app:text="绑定手机" />
 
     <EditText
         android:id="@+id/et_mobil"
@@ -35,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_32"
         android:layout_marginRight="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_36"
         android:background="@null"
         android:hint="@string/input_mobil"
         android:inputType="phone"
@@ -56,7 +43,6 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/space_32"
         android:paddingRight="@dimen/space_32">
-
 
         <EditText
             android:id="@+id/et_captcha"
@@ -111,26 +97,5 @@
         android:translationZ="@dimen/space_2"
         app:gTouchCornerRadius="@dimen/space_32"
         app:gTouchEffect="ripple" />
-
-    <com.sumian.sleepdoctor.widget.LoginRuleView
-        android:id="@+id/login_rule_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_24" />
-
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="5" />
-
-    <TextView
-        android:id="@+id/tv_wechat_login"
-        style="@style/text_t2_style"
-        android:layout_width="@dimen/space_64"
-        android:layout_height="@dimen/space_20"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/space_20"
-        android:text="@string/wechat_login" />
-
 
 </LinearLayout>

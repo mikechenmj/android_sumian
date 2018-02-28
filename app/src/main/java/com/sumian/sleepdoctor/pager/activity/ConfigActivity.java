@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.pager.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
@@ -16,7 +17,6 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by jzz
@@ -24,7 +24,13 @@ import butterknife.ButterKnife;
  * desc:
  */
 
-public class AboutMeActivity extends BaseActivity implements TitleBar.OnBackListener {
+public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListener {
+
+    public static final String ARGS_CONFIG_TYPE = "args_config_type";
+
+    public static final int ABOUT_ME = 0x01;
+    public static final int USER_AGREEMENT = 0x02;
+    public static final int USER_PRIVACY = 0x03;
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -33,6 +39,15 @@ public class AboutMeActivity extends BaseActivity implements TitleBar.OnBackList
     LinearLayout mLayContainer;
 
     WebView mWebView;
+
+    int mConfigType = ABOUT_ME;
+    String mLoadUrl = BuildConfig.ABOUT_ME_URL;
+
+    @Override
+    protected boolean initBundle(Bundle bundle) {
+        this.mConfigType = bundle.getInt(ARGS_CONFIG_TYPE, ABOUT_ME);
+        return super.initBundle(bundle);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -43,10 +58,33 @@ public class AboutMeActivity extends BaseActivity implements TitleBar.OnBackList
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+
+        @StringRes int resType;
+        switch (mConfigType) {
+            case ABOUT_ME:
+                resType = R.string.about_me;
+                mLoadUrl = BuildConfig.ABOUT_ME_URL;
+                break;
+            case USER_AGREEMENT:
+                resType = R.string.register_rule_user_agreement_title;
+                mLoadUrl = BuildConfig.USER_AGREEMENT_URL;
+                break;
+            case USER_PRIVACY:
+                resType = R.string.register_rule_privacy_policy_title;
+                mLoadUrl = BuildConfig.USER_POLICY_URL;
+                break;
+            default:
+                resType = R.string.about_me;
+                mLoadUrl = BuildConfig.ABOUT_ME_URL;
+                break;
+        }
+
+        mTitleBar.setTitle(resType);
         mTitleBar.addOnBackListener(this);
 
         //防止 webview  内存泄漏  不在 xml 文件中声明
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.weight = 1;
         mWebView = new WebView(getApplicationContext());
         mWebView.setLayoutParams(params);
         mLayContainer.addView(mWebView);
@@ -82,7 +120,7 @@ public class AboutMeActivity extends BaseActivity implements TitleBar.OnBackList
     @Override
     protected void initData() {
         super.initData();
-        mWebView.loadUrl(BuildConfig.ABOUT_ME_URL);
+        mWebView.loadUrl(mLoadUrl);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -109,12 +147,5 @@ public class AboutMeActivity extends BaseActivity implements TitleBar.OnBackList
             mWebView = null;
         }
         super.onRelease();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

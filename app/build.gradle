@@ -44,6 +44,8 @@ android {
         buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", "${rootProject.ext.leancloud_broadcast_conversation_id}")
         buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", "${rootProject.ext.default_apk_download_url}")
         buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
+        buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
+        buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
 
         buildConfigField("String", "WECHAT_APP_ID", "${rootProject.ext.wechat_app_id}")
         buildConfigField("String", "WECHAT_APP_SECRET", "${rootProject.ext.wechat_app_secret}")
@@ -153,6 +155,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
@@ -204,11 +209,11 @@ dependencies {
     //ping++
     implementation 'com.pingxx:pingpp-core:2.1.17'
     // (Ping++ 标准版 SDK) 必须添加
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
     // 使用微信支付时添加,具体版本参考微信官方文档
     implementation 'com.pingxx:pingpp-alipay:2.1.17'
     // 使用支付宝时添加
     //拼音分词
     implementation 'com.belerweb:pinyin4j:2.5.0'
     implementation project(':common')
+    implementation project(':open')
 }

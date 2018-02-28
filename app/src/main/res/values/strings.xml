@@ -17,6 +17,12 @@
     <string name="send_captcha">发送验证码</string>
     <string name="ok_captcha_hint">验证码已发送成功，请注意查收</string>
     <string name="error_captcha_failed_hint">验证码获取失败，请60s后重新获取</string>
+    <string name="register_rule_one">注册即代表同意</string>
+    <string name="register_rule_two"><u>睡眠医生用户协议</u></string>
+    <string name="register_rule_three">及</string>
+    <string name="register_rule_four"><u>隐私政策</u></string>
+    <string name="register_rule_user_agreement_title">用户协议</string>
+    <string name="register_rule_privacy_policy_title">隐私政策</string>
 
     <!--network error-->
     <string name="error_network_hint">网络不给力，请检查网络设置&#8230;</string>
@@ -127,5 +133,6 @@
     <string name="pic_label">[图片]</string>
     <string name="voice_label">[语音]</string>
     <string name="re_scan_qr_code">重新扫描</string>
+    <string name="wechat_login">微信登录</string>
 
 </resources>

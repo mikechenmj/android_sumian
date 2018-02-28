@@ -56,7 +56,7 @@
         <activity android:name=".account.activity.ImproveUserProfileOneActivity" />
         <activity android:name=".account.activity.ImproveUserProfileTwoActivity" />
         <activity android:name=".pager.activity.UserProfileActivity" />
-        <activity android:name=".pager.activity.AboutMeActivity" />
+        <activity android:name=".pager.activity.ConfigActivity" />
 
         <activity android:name=".pager.activity.PayGroupActivity" />
         <activity android:name=".pager.activity.ScanGroupResultActivity" />
@@ -96,6 +96,7 @@
             android:screenOrientation="behind" />
         <activity android:name=".pager.activity.OtherUserProfileActivity" />
         <activity android:name=".pager.activity.GroupQrCodeActivity" />
+        <activity android:name=".account.activity.BindMobileActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->

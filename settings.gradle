@@ -1,1 +1,1 @@
-include ':app', ':common'//, ':chatkit'
+include ':app', ':common', ':open'//, ':chatkit'

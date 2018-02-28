@@ -36,6 +36,14 @@ interface DoctorApi {
     fun getUserProfile(): Call<UserProfile>
 
     @FormUrlEncoded
+    @POST("authorizations/socialite-bound")
+    fun loginOpenPlatform(@FieldMap map: MutableMap<String, Any>): Call<Token>
+
+    @FormUrlEncoded
+    @POST("authorizations/socialite-bind")
+    fun bindSocial(@FieldMap map: Map<String, Any>): Call<Token>
+
+    @FormUrlEncoded
     @PATCH("user/profile")
     fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserProfile>
 
