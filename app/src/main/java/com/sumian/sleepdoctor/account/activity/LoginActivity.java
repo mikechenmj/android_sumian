@@ -1,7 +1,9 @@
 package com.sumian.sleepdoctor.account.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -35,6 +37,8 @@ import butterknife.OnClick;
 
 public final class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, LoginContract.View, LoginRuleView.OnCheckedListener, UMAuthListener {
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
     @BindView(R.id.et_mobil)
     EditText mEtMobil;
     @BindView(R.id.et_captcha)
@@ -46,6 +50,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @BindView(R.id.login_rule_view)
     LoginRuleView mLoginRuleView;
+
     private ActionLoadingDialog mActionLoadingDialog;
 
     @Override
@@ -116,7 +121,11 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onNotBindCallback(String error, String openUserInfo) {
-
+        Bundle extras = new Bundle();
+        extras.putSerializable(BindMobileActivity.EXTRA_SHARE_MEDIA, SHARE_MEDIA.WEIXIN);
+        extras.putString(BindMobileActivity.EXTRA_OPEN_USER_INFO, openUserInfo);
+        BindMobileActivity.show(this, BindMobileActivity.class, extras);
+        finish();
     }
 
     @Override
@@ -163,7 +172,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onStart(SHARE_MEDIA share_media) {
-        //  Log.e(TAG, "onBegin: -------->" + share_media);
+        Log.e(TAG, "onBegin: -------->" + share_media);
         switch (share_media) {
             case WEIXIN:
                 ToastHelper.show(R.string.opening_wechat);
@@ -173,14 +182,14 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-        //Log.e(TAG, "onComplete: --------->" + share_media + "  i=" + i + "   map=" + map.toString());
-        onFinish();
+        Log.e(TAG, "onComplete: --------->" + share_media + "  i=" + i + "   map=" + map.toString());
         mPresenter.checkOpenIsBind(share_media, map);
+        onFinish();
     }
 
     @Override
     public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-        //Log.e(TAG, "onError: ----------->" + share_media + "  i=" + i + "  " + throwable.getMessage());
+        Log.e(TAG, "onError: ----------->" + share_media + "  i=" + i + "  " + throwable.getMessage());
         onFinish();
         // if (i == UMAuthListener.ACTION_AUTHORIZE) {
         switch (share_media) {
@@ -193,7 +202,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onCancel(SHARE_MEDIA share_media, int i) {
-        // Log.e(TAG, "onCancel: --------->" + share_media + "  i=" + i);
+        Log.e(TAG, "onCancel: --------->" + share_media + "  i=" + i);
         onFinish();
     }
 
@@ -209,10 +218,5 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 }

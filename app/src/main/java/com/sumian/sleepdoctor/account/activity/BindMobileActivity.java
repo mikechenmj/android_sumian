@@ -12,6 +12,7 @@ import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.contract.BindMobileContract;
 import com.sumian.sleepdoctor.account.presenter.BindMobilePresenter;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.main.MainActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import net.qiujuer.genius.ui.widget.Button;
@@ -27,8 +28,8 @@ import butterknife.OnClick;
 
 public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implements View.OnClickListener, BindMobileContract.View {
 
-    private static final String EXTRA_OPEN_USER_INFO = "open_user_info";
-    private static final String EXTRA_SHARE_MEDIA = "share_media";
+    public static final String EXTRA_OPEN_USER_INFO = "open_user_info";
+    public static final String EXTRA_SHARE_MEDIA = "share_media";
 
     @BindView(R.id.et_mobil)
     EditText mEtMobil;
@@ -64,7 +65,7 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
     protected void initPresenter() {
         super.initPresenter();
 
-        BindMobilePresenter.Companion.init(this);
+        BindMobilePresenter.init(this);
     }
 
     @Override
@@ -97,7 +98,12 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
                 if (checkMobile(mobile)) return;
 
                 if (TextUtils.isEmpty(captcha)) return;
-                mPresenter.bindOpenSocial(mobile, captcha, 0, mOpenUserInfo);
+
+                int thirdType = 0;
+                if (mShareMedia == SHARE_MEDIA.WEIXIN) {
+                    thirdType = 0;
+                }
+                mPresenter.bindOpenSocial(mobile, captcha, thirdType, mOpenUserInfo);
                 break;
             default:
                 break;
@@ -119,15 +125,15 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
 
     @Override
     public void onSendCaptchaSuccess() {
-
+        runOnUiThread(() -> CaptchaTimeDistanceConfig.showTimer(mBtSendCaptcha, true, SumianConfig.BIND_SOCIAL_CAPTCHA_TYPE));
     }
 
     @Override
     public void bindOpenSocialSuccess(Token response) {
         if (response.is_new) {
             ImproveUserProfileOneActivity.show(this, ImproveUserProfileOneActivity.class);
-        } else {
-
+        }else {
+            MainActivity.show(this,MainActivity.class);
         }
 
     }

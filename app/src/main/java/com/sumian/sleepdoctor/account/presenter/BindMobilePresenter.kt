@@ -21,6 +21,7 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
 
     companion object {
 
+        @JvmStatic
         fun init(view: BindMobileContract.View) {
             BindMobilePresenter(view)
         }
@@ -32,9 +33,16 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
 
         mView!!.onBegin()
 
+        val map = mutableMapOf<String, Any>()
+
+        map["mobile"] = mobile
+        map["captcha"] = captcha
+        map["type"] = socialType
+        map["info"] = socialInfo
+
         AppManager
                 .getHttpService()
-                .bindSocial(mapOf("mobile" to mobile, "captcha" to captcha, "type" to 0, "info" to socialInfo))
+                .bindSocial(map)
                 .enqueue(object : BaseResponseCallback<Token>() {
 
                     override fun onSuccess(response: Token?) {

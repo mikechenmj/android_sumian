@@ -41,7 +41,7 @@ interface DoctorApi {
 
     @FormUrlEncoded
     @POST("authorizations/socialite-bind")
-    fun bindSocial(@FieldMap map: Map<String, Any>): Call<Token>
+    fun bindSocial(@FieldMap map: MutableMap<String, Any>): Call<Token>
 
     @FormUrlEncoded
     @PATCH("user/profile")

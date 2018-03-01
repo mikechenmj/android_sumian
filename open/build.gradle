@@ -66,7 +66,5 @@ dependencies {
     })
     api 'com.umeng.sdk:common:1.4.1'
     api 'com.umeng.sdk:analytics:7.4.1'
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
-
 }
 

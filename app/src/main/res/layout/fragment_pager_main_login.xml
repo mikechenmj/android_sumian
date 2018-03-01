@@ -130,7 +130,8 @@
         android:layout_height="@dimen/space_20"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/space_20"
-        android:text="@string/wechat_login" />
+        android:text="@string/wechat_login"
+        android:visibility="visible" />
 
 
 </LinearLayout>
