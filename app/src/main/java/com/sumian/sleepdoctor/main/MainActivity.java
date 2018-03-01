@@ -1,20 +1,16 @@
 package com.sumian.sleepdoctor.main;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.fragment.LoginFragment;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.main.tab.GroupFragment;
-import com.sumian.sleepdoctor.main.tab.MeFragment;
+import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
+import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
-
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -28,14 +24,21 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    @BindView(R.id.lay_tab_parent_container)
-    LinearLayout mLayTabParentContainer;
-
     @BindView(R.id.nav_Tab)
     NavTab mNavTab;
 
-    @BindView(R.id.lay_page_container)
-    FrameLayout mLayPageContainer;
+    @BindView(R.id.lay_tab_container)
+    FrameLayout mFragmentContainer;
+
+    // private FragmentManagerDelegate mFragmentManagerDelegate;
+
+    // private GroupFragment mGroupFragment;
+
+    // private MeFragment mMeFragment;
+
+    private int mCurrentPosition = -1;
+
+    private FragmentManager mFragmentManager;
 
     @Override
     protected int getLayoutId() {
@@ -43,82 +46,63 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initWidget(View root) {
+        super.initWidget(root);
+
+        // StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
+
+        // mFragmentManagerDelegate = new FragmentManagerDelegate(this)
+        //        .bindNavTab(mNavTab);
+
         mNavTab.setOnTabChangeListener(this);
+        this.mFragmentManager = getSupportFragmentManager();
+
     }
 
     @Override
     protected void initData() {
         super.initData();
-        commitReplacePagerFragment(WelcomeFragment.newInstance());
+        //commitReplace(WelcomeActivity.class);
+        initTab(0);
+    }
+
+    @Override
+    protected void onRelease() {
+        super.onRelease();
+        //mFragmentManagerDelegate.onRelease();
     }
 
     @Override
     public void tab(ItemTab itemTab, int position) {
-        Fragment tempFragment = null;
-        switch (position) {
-            case 0:
-                tempFragment = GroupFragment.newInstance();
-                break;
-            case 1:
-                tempFragment = MeFragment.newInstance();
-                break;
+        if (mCurrentPosition == position) {
+            return;
         }
-        commitReplaceTabFragment(tempFragment);
+        initTab(position);
     }
 
-    @Override
-    public void goHome() {
-        super.goHome();
-        commitReplaceTabFragment(GroupFragment.newInstance());
-    }
+    private void initTab(int position) {
+        mCurrentPosition = position;
 
-    @Override
-    public void onBackPressed() {
-        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        Log.e(TAG, "onBackPressed: -----1--->" + backStackEntryCount);
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        Log.e(TAG, "onBackPressed: -----2----->" + fragments.toString());
+        String showFragmentTag = position == 1 ? MeFragment.class.getSimpleName() : GroupFragment.class.getSimpleName();
 
-        if (fragments.isEmpty() || isGroupFragment(fragments) || isLoginFragment(fragments) || backStackEntryCount <= 1) {
-            finishAffinity();
+        Fragment showFragment = getFragmentByTag(showFragmentTag);
+
+        if (showFragment != null) {
+            mFragmentManager.beginTransaction().show(showFragment).commitNowAllowingStateLoss();
         } else {
-            super.onBackPressed();
+            Fragment fragment = position == 1 ? MeFragment.newInstance(MeFragment.class) : GroupFragment.newInstance(GroupFragment.class);
+            mFragmentManager.beginTransaction().add(R.id.lay_tab_container, fragment, showFragmentTag).commitNowAllowingStateLoss();
         }
-        Log.e(TAG, "onBackPressed: ------3---->" + fragments.toString());
-    }
 
-    @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private boolean isLoginFragment(List<Fragment> fragments) {
-        if (fragments == null || fragments.isEmpty()) return false;
-        for (Fragment fragment : fragments) {
-            return fragment instanceof LoginFragment;
+        String hideFragmentTag = position == 1 ? GroupFragment.class.getSimpleName() : MeFragment.class.getSimpleName();
+
+        Fragment hideFragment = getFragmentByTag(hideFragmentTag);
+        if (hideFragment != null) {
+            mFragmentManager.beginTransaction().hide(hideFragment).commitNowAllowingStateLoss();
         }
-        return false;
     }
 
-    @SuppressWarnings("LoopStatementThatDoesntLoop")
-    private boolean isGroupFragment(List<Fragment> fragments) {
-        if (fragments == null || fragments.isEmpty()) return false;
-        for (Fragment fragment : fragments) {
-            return fragment instanceof GroupFragment;
-        }
-        return false;
+    private Fragment getFragmentByTag(String hideFragmentTag) {
+        return mFragmentManager.findFragmentByTag(hideFragmentTag);
     }
-
-    @Override
-    public void commitReplacePagerFragment(Fragment fragment) {
-        mLayTabParentContainer.setVisibility(View.GONE);
-        mLayPageContainer.setVisibility(View.VISIBLE);
-        super.commitReplacePagerFragment(fragment);
-    }
-
-    @Override
-    public void commitReplaceTabFragment(Fragment fragment) {
-        mLayTabParentContainer.setVisibility(View.VISIBLE);
-        mLayPageContainer.setVisibility(View.GONE);
-        super.commitReplaceTabFragment(fragment);
-    }
-
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/lay_item_left_image_normal_chat">
+
+    <ImageView
+        android:id="@+id/iv_msg_failed"
+        android:layout_width="@dimen/space_24"
+        android:layout_height="@dimen/space_24"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:visibility="invisible"
+        app:srcCompat="@mipmap/ic_advisory_caveat_s"
+        tools:visibility="visible" />
+
+    <com.sumian.common.widget.Loading
+        android:id="@+id/msg_loading"
+        android:layout_width="@dimen/space_24"
+        android:layout_height="@dimen/space_24"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/space_4"
+        android:layout_marginRight="@dimen/space_4"
+        android:visibility="invisible"
+        tools:ignore="RtlHardcoded"
+        tools:visibility="visible" />
+
+</FrameLayout>

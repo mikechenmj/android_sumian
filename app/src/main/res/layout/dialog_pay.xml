@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_28"
+    android:background="@drawable/bg_dialog_b2"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_pay_status"
+        android:layout_width="@dimen/space_56"
+        android:layout_height="@dimen/space_56"
+        android:layout_marginTop="@dimen/space_40"
+        android:contentDescription="@null"
+        app:srcCompat="@mipmap/msg_icon_success" />
+
+    <TextView
+        android:id="@+id/tv_pay_desc"
+        style="@style/text_t1_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_24"
+        android:text="@string/pay_success" />
+
+    <net.qiujuer.genius.ui.widget.Button
+        android:id="@+id/bt_join"
+        style="@style/bt_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_32"
+        android:text="@string/join_group"
+        app:gTouchCornerRadius="@dimen/space_32"
+        app:gTouchEffect="auto" />
+</LinearLayout>

@@ -25,7 +25,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * on 17/2/27.
  */
 public class ImagePickerActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks,
-    Contract.Presenter {
+        Contract.Presenter {
 
     private static final int RC_CAMERA_PERM = 0x03;
     private static final int RC_EXTERNAL_STORAGE = 0x04;
@@ -34,13 +34,15 @@ public class ImagePickerActivity extends AppCompatActivity implements EasyPermis
     private Contract.View mView;
 
     public static void show(Context context, SelectOptions options) {
-        mOption = options;
-        context.startActivity(new Intent(context, ImagePickerActivity.class));
+        mOption=options;
+        Intent intent = new Intent(context, ImagePickerActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_select_image);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null && actionBar.isShowing())
@@ -51,24 +53,24 @@ public class ImagePickerActivity extends AppCompatActivity implements EasyPermis
     @AfterPermissionGranted(RC_CAMERA_PERM)
     @Override
     public void requestCamera() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             if (mView != null) {
                 mView.onOpenCameraSuccess();
             }
         } else {
-            EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启相机权限.", RC_CAMERA_PERM, Manifest.permission.CAMERA);
+            EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启相机权限.", RC_CAMERA_PERM, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
 
     @AfterPermissionGranted(RC_EXTERNAL_STORAGE)
     @Override
     public void requestExternalStorage() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             if (mView == null) {
                 handleView();
             }
         } else {
-            EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启读取手机存储权限.", RC_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+            EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启读取手机存储权限.", RC_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
     }
 
@@ -106,7 +108,7 @@ public class ImagePickerActivity extends AppCompatActivity implements EasyPermis
 
     @Override
     protected void onDestroy() {
-        mOption = null;
+        //mOption = null;
         super.onDestroy();
     }
 
@@ -116,9 +118,9 @@ public class ImagePickerActivity extends AppCompatActivity implements EasyPermis
             return;
         try {
             getSupportFragmentManager()
-                .beginTransaction()
-                .remove((Fragment) view)
-                .commit();
+                    .beginTransaction()
+                    .remove((Fragment) view)
+                    .commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,9 +129,9 @@ public class ImagePickerActivity extends AppCompatActivity implements EasyPermis
     private void handleView() {
         try {
             getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fl_content, ImagePickerFragment.newInstance(mOption))
-                .commitNowAllowingStateLoss();
+                    .beginTransaction()
+                    .replace(R.id.fl_content, ImagePickerFragment.newInstance(mOption))
+                    .commitNowAllowingStateLoss();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,11 +141,11 @@ public class ImagePickerActivity extends AppCompatActivity implements EasyPermis
                             DialogInterface.OnClickListener listener,
                             DialogInterface.OnClickListener negativeListener) {
         new AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton(positiveButton, listener)
-            .setNegativeButton(negativeButton, negativeListener)
-            .setCancelable(false)
-            .create().show();
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(positiveButton, listener)
+                .setNegativeButton(negativeButton, negativeListener)
+                .setCancelable(false)
+                .create().show();
     }
 }

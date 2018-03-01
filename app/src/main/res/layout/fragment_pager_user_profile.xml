@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/user_info_center" />
+
+    <LinearLayout
+        android:id="@+id/lay_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
+        android:background="@color/b2_color"
+        android:foreground="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_20"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_12"
+        android:paddingTop="@dimen/space_20"
+        tools:ignore="RtlHardcoded">
+
+        <TextView
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/avatar" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/space_56"
+            android:layout_height="@dimen/space_56"
+            android:layout_marginLeft="@dimen/space_16"
+            android:layout_marginRight="@dimen/space_10"
+            android:contentDescription="@null"
+            android:src="@mipmap/info_avatar_patient" />
+
+        <ImageView
+            android:id="@+id/iv_avatar_more"
+            android:layout_width="@dimen/space_32"
+            android:layout_height="@dimen/space_32"
+            android:contentDescription="@null"
+            android:paddingBottom="@dimen/space_8"
+            android:paddingLeft="@dimen/space_8"
+            android:paddingTop="@dimen/space_8"
+            app:srcCompat="@mipmap/info_icon_enter"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+    </LinearLayout>
+
+    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        android:id="@+id/dv_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
+        app:divider_line_visible="visible"
+        app:type_content="@string/none_nickname"
+        app:type_desc="@string/nickname" />
+
+    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        android:id="@+id/dv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="visible"
+        app:type_content="@string/martian"
+        app:type_desc="@string/name" />
+
+    <TextView
+        style="@style/text_t2_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_56"
+        android:gravity="center|left"
+        android:paddingBottom="@dimen/space_24"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20"
+        android:paddingTop="@dimen/space_16"
+        android:text="@string/see_name_for_doctor"
+        android:textSize="@dimen/font_12"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        android:id="@+id/dv_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="visible"
+        app:divider_more_visible="gone"
+        app:type_content="13412345678"
+        app:type_desc="@string/register_mobile" />
+
+</LinearLayout>

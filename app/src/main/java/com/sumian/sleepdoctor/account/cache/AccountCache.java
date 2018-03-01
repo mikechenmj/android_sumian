@@ -44,7 +44,10 @@ public final class AccountCache {
     }
 
     private static void saveTokenCache(Object obj) {
-        if (obj == null) throw new NullPointerException("obj is null...");
+        if (obj == null) {
+            clearCache();
+            return;
+        }
         // Log.e(TAG, "saveTokenCache: ------------->" + obj.toString());
         SharedPreferences.Editor edit = initEdit();
         String json = JSON.toJSONString(obj);

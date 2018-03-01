@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:show_back="true"
+        app:text="@string/setting" />
+
+    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_16"
+        app:divider_line_visible="visible"
+        app:divider_more_visible="gone"
+        app:type_content="1.0.0"
+        app:type_desc="@string/current_app_version" />
+
+    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        android:id="@+id/about_me"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="gone"
+        app:type_desc="@string/about_me" />
+
+    <net.qiujuer.genius.ui.widget.Button
+        android:id="@+id/bt_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_64"
+        android:layout_marginTop="@dimen/space_16"
+        android:background="@color/b2_color"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/logout"
+        android:textColor="@color/t4_color"
+        android:textSize="@dimen/font_16"
+        app:gTouchCornerRadius="0dp"
+        app:gTouchEffect="auto" />
+
+</LinearLayout>

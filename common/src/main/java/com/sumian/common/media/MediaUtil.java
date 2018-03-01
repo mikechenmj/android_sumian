@@ -17,7 +17,7 @@ import java.util.List;
  * on 17/2/27.
  */
 @SuppressWarnings("unused")
-class MediaUtil {
+public class MediaUtil {
     static boolean hasSDCard() {
         String status = Environment.getExternalStorageState();
         return status.equals(Environment.MEDIA_MOUNTED);
@@ -32,7 +32,7 @@ class MediaUtil {
         return "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";// 照片命名
     }
 
-    static String[] toArray(List<Image> images) {
+    public static String[] toArray(List<Image> images) {
         if (images == null)
             return null;
         int len = images.size();

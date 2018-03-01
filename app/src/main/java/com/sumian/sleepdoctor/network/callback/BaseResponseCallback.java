@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.alibaba.fastjson.JSON;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 
 import java.io.IOException;
@@ -46,8 +47,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                             onNotFound(errorResponse.toString());
                             break;
                         case 401://token 鉴权失败
-
-
+                            AppManager.getAccountViewModel().updateTokenInvalidState(true);
                             break;
                         default:
                             onFailure(errorResponse.message);
@@ -59,7 +59,6 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
             }
         }
-
     }
 
     @Override

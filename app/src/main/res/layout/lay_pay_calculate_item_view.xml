@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_64"
+        android:background="@color/b2_color"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_12"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20"
+        android:paddingTop="@dimen/space_12">
+
+        <TextView
+            android:id="@+id/tv_label"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/pay_duration" />
+
+        <ImageView
+            android:id="@+id/iv_faq"
+            android:layout_width="@dimen/space_18"
+            android:layout_height="@dimen/space_18"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:contentDescription="@null"
+            android:src="@mipmap/groupdetails_icon_costdescription" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_reduce_duration"
+            style="@style/text_t1_style"
+            android:layout_width="@dimen/space_40"
+            android:layout_height="@dimen/space_40"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_6"
+            android:src="@mipmap/group_pay_btn_plus_disabled" />
+
+        <TextView
+            android:id="@+id/tv_duration"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_32"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_2"
+            android:layout_marginRight="@dimen/space_2"
+            android:background="@drawable/shape_t1"
+            android:gravity="center"
+            android:paddingBottom="@dimen/space_2"
+            android:paddingLeft="@dimen/space_12"
+            android:paddingRight="@dimen/space_12"
+            android:paddingTop="@dimen/space_2"
+            android:text="@string/one" />
+
+        <ImageView
+            android:id="@+id/iv_add_duration"
+            style="@style/text_t1_style"
+            android:layout_width="@dimen/space_40"
+            android:layout_height="@dimen/space_40"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_6"
+            android:src="@mipmap/group_pay_btn_minus" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:background="@color/l1_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_64"
+        android:background="@color/b2_color"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_18"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20"
+        android:paddingTop="@dimen/space_18">
+
+        <TextView
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pay_money" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:text="@string/zero_money"
+            android:textColor="@color/t4_color" />
+
+        <TextView
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yuan" />
+
+    </LinearLayout>
+</LinearLayout>

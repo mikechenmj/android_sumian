@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.account.bean;
 
 /**
  * Created by jzz
- * on 2018/1/17.
+ * on 2018/1/23.
  * desc:
  */
 
@@ -12,7 +12,7 @@ public class Token {
     public int expired_at;
     public int refresh_expired_at;
     public UserProfile user;
-    public boolean is_new;
+    public boolean is_new;//true:新用户，false:旧用户
 
     @Override
     public String toString() {

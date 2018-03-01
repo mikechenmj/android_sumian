@@ -1,9 +1,9 @@
 package com.sumian.common.media;
 
 
-import com.bumptech.glide.load.model.LazyHeaders;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,20 +12,41 @@ import java.util.List;
  * Created by haibin
  * on 17/2/27.
  */
-@SuppressWarnings("all")
-public class SelectOptions implements Serializable{
+public class SelectOptions implements Parcelable{
     private boolean isCrop;
     private int mCropWidth, mCropHeight;
     private Callback mCallback;
     private boolean hasCam;
     private int mSelectCount;
     private List<String> mSelectedImages;
-    private LazyHeaders mHeaders;
     private String mSavePath;
 
     private SelectOptions() {
 
     }
+
+    protected SelectOptions(Parcel in) {
+        isCrop = in.readByte() != 0;
+        mCropWidth = in.readInt();
+        mCropHeight = in.readInt();
+        mCallback = in.readParcelable(Callback.class.getClassLoader());
+        hasCam = in.readByte() != 0;
+        mSelectCount = in.readInt();
+        mSelectedImages = in.createStringArrayList();
+        mSavePath = in.readString();
+    }
+
+    public static final Creator<SelectOptions> CREATOR = new Creator<SelectOptions>() {
+        @Override
+        public SelectOptions createFromParcel(Parcel in) {
+            return new SelectOptions(in);
+        }
+
+        @Override
+        public SelectOptions[] newArray(int size) {
+            return new SelectOptions[size];
+        }
+    };
 
     public boolean isCrop() {
         return isCrop;
@@ -55,12 +76,25 @@ public class SelectOptions implements Serializable{
         return mSelectedImages;
     }
 
-    public LazyHeaders getHeaders() {
-        return mHeaders;
-    }
-
     public String getSavePath() {
         return mSavePath;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (isCrop ? 1 : 0));
+        dest.writeInt(mCropWidth);
+        dest.writeInt(mCropHeight);
+        dest.writeParcelable(mCallback, flags);
+        dest.writeByte((byte) (hasCam ? 1 : 0));
+        dest.writeInt(mSelectCount);
+        dest.writeStringList(mSelectedImages);
+        dest.writeString(mSavePath);
     }
 
     public static class Builder {
@@ -70,8 +104,6 @@ public class SelectOptions implements Serializable{
         private boolean hasCam;
         private int selectCount;
         private List<String> selectedImages;
-        private LazyHeaders
-                .Builder glideHeader;
         private String savePath;
 
         public Builder() {
@@ -117,13 +149,7 @@ public class SelectOptions implements Serializable{
             return this;
         }
 
-        public Builder setGlideHeader(String key, String value) {
-            if (glideHeader == null) glideHeader = new LazyHeaders.Builder();
-            glideHeader.addHeader(key, value);
-            return this;
-        }
-
-        public Builder setSavaPath(String path){
+        public Builder setSavaPath(String path) {
             this.savePath = path;
             return this;
         }
@@ -139,12 +165,8 @@ public class SelectOptions implements Serializable{
             options.mSelectedImages = selectedImages;
             options.mSavePath = savePath;
             if (isCrop) options.mSelectCount = 1;
-            if (glideHeader != null) options.mHeaders = glideHeader.build();
             return options;
         }
     }
 
-    public interface Callback {
-        void doSelected(String[] images);
-    }
 }

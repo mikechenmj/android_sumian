@@ -1,5 +1,3 @@
-import java.text.SimpleDateFormat
-
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -45,8 +43,9 @@ android {
         buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
         buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", "${rootProject.ext.leancloud_broadcast_conversation_id}")
         buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", "${rootProject.ext.default_apk_download_url}")
+        buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
         buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
-        buildConfigField("String", "PRIVACY_POLICY_URL", PRIVACY_POLICY_URL)
+        buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
 
         buildConfigField("String", "WECHAT_APP_ID", "${rootProject.ext.wechat_app_id}")
         buildConfigField("String", "WECHAT_APP_SECRET", "${rootProject.ext.wechat_app_secret}")
@@ -115,7 +114,7 @@ android {
         yingyongbao {}
 
         productFlavors.all { flavor ->
-            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name, scheme: "${SCHEME}", host: "${HOST}"]
         }
 
     }
@@ -131,7 +130,10 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             //输出 apk 文件名
-            def fileName = "${rootProject.ext.app_name}_${variant.flavorName}_${formatDate()}.apk"
+
+            def buildTime = new Date().format('yyyyMMddHHmmSS').toLong()
+
+            def fileName = "${rootProject.ext.app_name}_${variant.flavorName}_${buildTime}.apk"
 
             println fileName
 
@@ -142,18 +144,18 @@ android {
             //output.outputFile = new File(output.outputFile.parent, fileName)
         }
     }
-}
 
-
-static def formatDate() {
-    def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
-    def formatDate = sdf.format(new Date())
-    return formatDate
+    if (rootProject.ext.buildType) {//默认在开发模式下,禁用 png 优化,加速编译
+        aaptOptions.cruncherEnabled = false
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
@@ -162,36 +164,56 @@ dependencies {
     implementation 'com.android.support:design:' + rootProject.ext.supportVersion
     implementation 'com.android.support:cardview-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-vector-drawable:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:palette-v7:' + rootProject.ext.supportVersion
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.3.1"
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
     //implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'pub.devrel:easypermissions:0.4.3'
+
+    implementation 'pub.devrel:easypermissions:1.1.3'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
-    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    //implementation 'com.sunfusheng:glideimageview:1.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     implementation 'com.qmuiteam:qmui:1.0.6'
     implementation 'com.qmuiteam:arch:0.0.1'
     //implementation 'com.google.code.gson:gson:2.8.2'
-
-    implementation "net.qiujuer.genius:ui:2.0.0"
+    implementation 'net.qiujuer.genius:ui:2.0.0'
     implementation 'net.qiujuer.genius:res:2.0.0'
-
+    //status bar util
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
     //fastjson
     implementation 'com.alibaba:fastjson:1.2.44'
-    //zxing
-    implementation 'com.google.zxing:core:3.3.0'
-
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.0.0"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
-
+    implementation 'android.arch.lifecycle:extensions:1.1.0'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.1.0'
     // Java8 support for Lifecycles
-    implementation "android.arch.lifecycle:common-java8:1.0.0"
-
+    implementation 'android.arch.lifecycle:common-java8:1.1.0'
+    // LeanCloud 基础包
+    implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.2'
+    // 推送与实时聊天需要的包
+    implementation('cn.leancloud.android:avoscloud-push:v4.6.2@aar') { transitive = true }
+    //support emoji
+    implementation 'com.android.support:support-emoji-appcompat:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
+    //aliyun oss
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.7.2'
+    //ping++
+    implementation 'com.pingxx:pingpp-core:2.1.17'
+    // 使用微信支付时添加,具体版本参考微信官方文档
+    //provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.4'
+    // 使用支付宝时添加
+    implementation 'com.pingxx:pingpp-alipay:2.1.17'
+    //拼音分词
+    implementation 'com.belerweb:pinyin4j:2.5.0'
     implementation project(':common')
-
+    implementation project(':open')
 }
+
+

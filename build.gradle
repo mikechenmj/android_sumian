@@ -2,7 +2,7 @@
 
 buildscript {
 
-    ext.kotlin_version = '1.1.51'
+    ext.kotlin_version = '1.2.21'
 
     repositories {
         google()
@@ -32,21 +32,25 @@ task clean(type: Delete) {
 
 ext {
 
-    develop_env = 0x01 //0x01 开发  0x02 测试 0x03 常规版本线上
+    develop_env = 0x03 //0x01 开发  0x02 测试 0x03 常规版本线上
     keystore_path = develop_env <= 0x02 ? DEBUG_STORE_FILE : RELEASE_STORE_FILE
 
-    compileSdkVersion = 26
+    buildType = project.hasProperty("devBuild")//获取开发模式下的构建方式
+
+    buildTime = buildType ? 1 : new Date().format('yyyyMMddHH').toInteger()
+
+    compileSdkVersion = 27
     buildToolsVersion = "27.0.3"
-    applicationId =  "com.sumian.sleepdoctor"
-    minSdkVersion = 18
+    applicationId = "com.sumian.sleepdoctor"
+    minSdkVersion = 21
     targetSdkVersion = 27
-    versionCode = 1
-    versionName = "0.0.1"
+    versionCode = buildTime
+    versionName = "1.0." + buildTime
 
     applicationIdSuffix = null
     versionNameSuffix = null
 
-    app_name ="Sleep Doctor"
+    app_name = "Sleep Doctor"
 
     libVersionCode = 1
     libVersionName = "1.0"

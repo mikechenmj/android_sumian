@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/b2_color"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_take_photo"
+        style="@style/text_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:padding="@dimen/space_16"
+        android:text="@string/take_photo" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:background="@color/l1_color" />
+
+    <TextView
+        android:id="@+id/tv_pic_photo"
+        style="@style/text_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:padding="@dimen/space_16"
+        android:text="@string/picture" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_12"
+        android:background="@color/b1_color" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/text_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:padding="@dimen/space_16"
+        android:text="@string/cancel" />
+
+</LinearLayout>

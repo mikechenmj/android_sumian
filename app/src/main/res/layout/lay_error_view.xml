@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <net.qiujuer.genius.ui.widget.ImageView
+        android:id="@+id/iv_error"
+        android:layout_width="@dimen/space_100"
+        android:layout_height="@dimen/space_100"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/group_synchronizing" />
+
+    <net.qiujuer.genius.ui.widget.TextView
+        android:id="@+id/tv_error"
+        style="@style/text_t2_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
+        android:gravity="center"
+        tools:text="网络请求失败,请重试" />
+
+    <net.qiujuer.genius.ui.widget.Button
+        android:id="@+id/bt_refresh"
+        style="@style/bt_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_32"
+        android:layout_marginRight="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_28"
+        android:text="@string/refresh"
+        android:textSize="@dimen/font_22"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</merge>

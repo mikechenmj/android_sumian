@@ -66,9 +66,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
         boolean showBack = a.getBoolean(R.styleable.TitleBar_show_back, true);
 
-        String title = a.getString(R.styleable.TitleBar_title);
+        String title = a.getString(R.styleable.TitleBar_text);
         boolean showSpanner = a.getBoolean(R.styleable.TitleBar_show_spanner, false);
         String moreText = a.getString(R.styleable.TitleBar_more_text);
+
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_more_icon);
 
         a.recycle();
@@ -82,9 +83,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             mIvBack.setVisibility(INVISIBLE);
         }
 
-        if (!TextUtils.isEmpty(title)) {
-            mTvTitle.setText(title);
-        }
+        //if (!TextUtils.isEmpty(title)) {
+        mTvTitle.setText(title);
+        // }
 
         if (showSpanner) {
             mTvTitle.setOnClickListener(this);
@@ -104,8 +105,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
         //4.4版本之后沉浸式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
-            setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
+            //setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
+            //setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
         }
 
         setBackgroundResource(R.color.colorPrimary);
@@ -161,6 +162,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return mTvTitle;
     }
 
+    public TextView getMore() {
+        return mTvMore;
+    }
+
     public TitleBar setTitle(@StringRes int titleRes) {
         if (titleRes <= 0)
             return this;
@@ -198,7 +203,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             case R.id.tv_more:
                 OnMoreListener onMoreListener = this.mOnMoreListener;
                 if (onMoreListener == null) return;
-                onMoreListener.onMore(v);
+                onMoreListener.onLoadMore(v);
                 break;
             default:
                 break;
@@ -214,6 +219,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     }
 
     public interface OnMoreListener {
-        void onMore(View v);
+        void onLoadMore(View v);
     }
 }

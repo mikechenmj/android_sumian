@@ -1,40 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical"
     tools:context="com.sumian.sleepdoctor.main.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/lay_tab_parent_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <FrameLayout
-            android:id="@+id/lay_tab_container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true" />
-
-        <com.sumian.sleepdoctor.widget.nav.NavTab
-            android:id="@+id/nav_Tab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
     <FrameLayout
-        android:id="@+id/lay_page_container"
+        android:id="@+id/lay_tab_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/b1_color"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
+        android:fitsSystemWindows="true"
+        android:focusable="true" />
+
+    <com.sumian.sleepdoctor.widget.nav.NavTab
+        android:id="@+id/nav_Tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:visibility="visible" />
 
-</FrameLayout>
+</LinearLayout>

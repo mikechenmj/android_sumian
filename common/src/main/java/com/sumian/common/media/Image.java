@@ -4,42 +4,42 @@ package com.sumian.common.media;
  * Created by haibin
  * on 17/2/27.
  */
-class Image {
+public class Image {
     private int id;
     private String path;
     private boolean isSelect;
 
     private String name;
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    String getPath() {
+    public String getPath() {
         return path;
     }
 
-    void setPath(String path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    boolean isSelect() {
+    public boolean isSelect() {
         return isSelect;
     }
 
-    void setSelect(boolean select) {
+    public void setSelect(boolean select) {
         isSelect = select;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

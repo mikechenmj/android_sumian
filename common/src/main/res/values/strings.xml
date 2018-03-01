@@ -8,4 +8,10 @@
     <string name="finish">完成</string>
     <string name="link_label">输入链接名称</string>
     <string name="link_url">输入链接地址</string>
+    <string name="scan_qr_code">扫描二维码</string>
+    <string name="scan_qr_code_note">将医生群组二维码放入框中,可自动扫描</string>
+    <string name="scan_qr_code_warn">扫描二维码,需要授予相机权限,是否授予?</string>
+    <string name="scan_qr_code_denied">扫描二维码,授予相机权限失败,请检查该权限是否正确授予,并授予</string>
+    <string name="open_camera_failed">打开相机失败,请进入系统设置检查相机权限是否正确授予,并授予</string>
+
 </resources>

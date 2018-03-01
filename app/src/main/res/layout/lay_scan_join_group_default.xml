@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/space_32"
+    android:paddingRight="@dimen/space_32"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        style="@style/text_t3_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/scan_qr_code_join_group"
+        android:textSize="@dimen/font_22" />
+
+    <TextView
+        style="@style/text_t2_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/space_4"
+        android:text="@string/qr_code_desc_part_one"
+        android:textSize="@dimen/font_16" />
+
+    <TextView
+        style="@style/text_t2_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10"
+        android:lineSpacingExtra="@dimen/space_4"
+        android:text="@string/qr_code_desc_part_two"
+        android:textSize="@dimen/font_16" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
+
+    <ImageView
+        android:id="@+id/ib_scan"
+        android:layout_width="@dimen/space_240"
+        android:layout_height="@dimen/space_240"
+        android:background="@drawable/bg_iv"
+        android:contentDescription="@null"
+        android:src="@mipmap/group_btn_scan_code" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5" />
+</merge>

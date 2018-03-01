@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/space_16"
+    android:paddingTop="@dimen/space_16">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="@dimen/space_18"
+        android:layout_height="@dimen/space_18"
+        android:layout_marginEnd="@dimen/space_4"
+        android:contentDescription="@null"
+        android:src="@drawable/ck_check" />
+
+    <TextView
+        android:id="@+id/tv_rule_user_agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:gravity="center"
+        android:text="@string/register_rule_two"
+        android:textColor="@color/b3_color"
+        android:textSize="@dimen/font_14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/register_rule_three"
+        android:textColor="@color/t2_color"
+        android:textSize="@dimen/font_14" />
+
+    <TextView
+        android:id="@+id/tv_privacy_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/register_rule_four"
+        android:textColor="@color/b3_color"
+        android:textSize="@dimen/font_14" />
+
+</merge>

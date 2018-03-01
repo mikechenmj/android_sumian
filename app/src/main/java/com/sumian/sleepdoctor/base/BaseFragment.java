@@ -7,13 +7,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.jaeger.library.StatusBarUtil;
+import com.sumian.common.helper.ToastHelper;
+import com.sumian.sleepdoctor.R;
+
+import java.lang.reflect.InvocationTargetException;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -25,11 +30,11 @@ import butterknife.Unbinder;
  * <p>
  * desc: base fragment
  */
-public abstract class BaseFragment<Presenter> extends Fragment implements DefaultLifecycleObserver {
+public abstract class BaseFragment<Presenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
 
-    private Activity mActivity;
+    protected Activity mActivity;
     protected View mRootView;
     public Bundle mBundle;
 
@@ -37,19 +42,35 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
 
     protected Presenter mPresenter;
 
+    public static Fragment newInstance(Class<? extends Fragment> clx) {
+        return newInstance(clx, null);
+    }
+
+    public static Fragment newInstance(Class<? extends Fragment> clx, Bundle args) {
+        Fragment fragment = null;
+        try {
+            fragment = clx.getConstructor().newInstance();
+            if (args != null) {
+                args.setClassLoader(fragment.getClass().getClassLoader());
+                fragment.setArguments(args);
+            }
+        } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return fragment;
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (mActivity == null)
             mActivity = (Activity) context;
-
         getLifecycle().addObserver(this);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         mBundle = getArguments();
         initBundle(mBundle);
     }
@@ -134,68 +155,49 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
 
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onCreate: -------->");
+        Log.d(TAG, "onCreate: -------->" + this.toString());
         initPresenter();
     }
 
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onStart: --------->");
+        Log.d(TAG, "onStart: --------->" + this.toString());
     }
 
     @Override
     public void onResume(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onResume: -------->");
+        Log.d(TAG, "onResume: -------->" + this.toString());
     }
 
     @Override
     public void onPause(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onPause: ----------->");
+        Log.d(TAG, "onPause: ----------->" + this.toString());
     }
 
     @Override
     public void onStop(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onStop: ----------->");
+        Log.d(TAG, "onStop: ----------->" + this.toString());
     }
 
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
-        Log.e(TAG, "onDestroy: ----------->");
+        Log.d(TAG, "onDestroy: ----------->" + this.toString());
     }
 
-    protected void commitReplaceTab(Fragment fragment) {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof BaseActivity) {
-            ((BaseActivity) mActivity).commitReplaceTabFragment(fragment);
-        }
+    protected void showToast(String message) {
+        runOnUiThread(() -> ToastHelper.show(message));
     }
 
-    protected void commitReplacePager(Fragment fragment) {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof BaseActivity) {
-            ((BaseActivity) mActivity).commitReplacePagerFragment(fragment);
-        }
+    protected void showToast(@StringRes int messageId) {
+        showToast(getString(messageId));
     }
 
-    protected void popBack() {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof MainActivity) {
-            mActivity.onBackPressed();
-        }
+    protected void setStatusBarColor() {
+        StatusBarUtil.setColorNoTranslucent(getActivity(), getResources().getColor(R.color.colorPrimary));
     }
 
-    protected void goHome() {
-        if (mActivity == null) {
-            mActivity = getActivity();
-        }
-        if (mActivity instanceof MainActivity) {
-            ((MainActivity) mActivity).goHome();
-        }
+    protected void setStatusBarTranslucent() {
+        StatusBarUtil.hideFakeStatusBarView(getActivity());
     }
+
 }

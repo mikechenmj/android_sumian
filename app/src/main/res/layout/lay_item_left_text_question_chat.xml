@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/space_8"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20"
+    android:paddingTop="@dimen/space_4">
+
+    <TextView
+        android:id="@+id/tv_time_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:lineSpacingExtra="0dp"
+        android:padding="@dimen/space_6"
+        android:textSize="@dimen/font_12"
+        android:visibility="gone"
+        tools:ignore="RtlHardcoded"
+        tools:text="8月31日 15:40"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/text_t2_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_14"
+            tools:text="欧主任" />
+
+        <TextView
+            android:id="@+id/tv_label"
+            style="@style/text_t2_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@drawable/bg_chat_doctor_label"
+            android:paddingLeft="@dimen/space_2"
+            android:paddingRight="@dimen/space_2"
+            android:textColor="@color/b2_color"
+            android:textSize="@dimen/font_12"
+            android:visibility="invisible"
+            tools:text="医生"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="@dimen/space_44"
+            android:layout_height="@dimen/space_44"
+            android:contentDescription="@null"
+            android:src="@mipmap/info_avatar_doctor"
+            tools:ignore="RtlHardcoded" />
+
+        <android.support.text.emoji.widget.EmojiAppCompatTextView
+            android:id="@+id/tv_content"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_12"
+            android:background="@drawable/group_chatbubble_question_l"
+            android:maxWidth="@dimen/space_180"
+            android:minHeight="@dimen/space_40"
+            tools:text="dasdadsadasdsadsa我去一个我需要去的地方,那是一个没了的地方,我的小孩dadadadadadadadadsdadasdaaadadadadaadada" />
+
+        <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
+            android:id="@+id/msg_send_error_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
