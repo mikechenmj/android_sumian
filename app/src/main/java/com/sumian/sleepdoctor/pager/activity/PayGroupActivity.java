@@ -191,7 +191,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     @Override
     public void onOrderPaySuccess(String payMsg) {
         //showToast(R.string.pay_success);
-        mPresenter.clearPayAction();
+        //mPresenter.clearPayAction();
         if (!mPayDialog.isShowing())
             mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show();
     }
