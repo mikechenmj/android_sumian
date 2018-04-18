@@ -54,17 +54,6 @@ freeline_project_description.json
 # BlueJ files
 *.ctxt
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 # Uncomment the following line if you do not want to check your keystore files in.
@@ -74,4 +63,3 @@ hs_err_pid*
 
 # Cache of project
 .gradletasknamecache
-

@@ -82,13 +82,13 @@ public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnC
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         Log.e(TAG, "onPermissionsGranted: ----------->");
         permissionsGranted();
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         ToastHelper.show(R.string.scan_qr_code_denied);
     }
 

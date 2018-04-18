@@ -203,7 +203,7 @@ dependencies {
     implementation 'com.android.support:support-emoji-appcompat:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
     //aliyun oss
-    implementation 'com.aliyun.dpa:oss-android-sdk:2.7.2'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.7.0'
     //ping++
     implementation 'com.pingxx:pingpp-core:2.1.17'
     // 使用微信支付时添加,具体版本参考微信官方文档
