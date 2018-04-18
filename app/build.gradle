@@ -210,7 +210,7 @@ dependencies {
     implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
 
     //aliyun oss
-    implementation 'com.aliyun.dpa:oss-android-sdk:2.7.2'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.8.0'
 
     //ping++
     implementation 'com.pingxx:pingpp-core:2.1.17' // (Ping++ 标准版 SDK) 必须添加
