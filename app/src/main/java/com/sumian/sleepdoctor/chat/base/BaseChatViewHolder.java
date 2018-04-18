@@ -1,15 +1,16 @@
 package com.sumian.sleepdoctor.chat.base;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -24,8 +25,14 @@ import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.span.QMUIAlignMiddleImageSpan;
+import com.qmuiteam.qmui.span.QMUIMarginImageSpan;
+import com.sumian.common.media.Image;
+import com.sumian.common.media.ImageGalleryActivity;
+import com.sumian.common.media.MediaUtil;
+import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -33,10 +40,12 @@ import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.pager.activity.OtherUserProfileActivity;
+import com.sumian.sleepdoctor.widget.shapeImageView.GlideImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,7 +94,11 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
 
     protected void updateImageText(AVIMTextMessage msg, TextView tvContent) {
         String text = msg.getText();
-        ImageSpan imgSpan = new ImageSpan(itemView.getContext(), R.mipmap.group_chatbubble_icon_label);
+
+        Drawable drawable = itemView.getResources().getDrawable(R.mipmap.group_chatbubble_icon_label);
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth() + 10, drawable.getIntrinsicHeight() + 10);
+
+        QMUIMarginImageSpan imgSpan = new QMUIMarginImageSpan(drawable, QMUIAlignMiddleImageSpan.ALIGN_MIDDLE, 0, 0);
         SpannableString spannableString = new SpannableString("[icon]  " + text);
         spannableString.setSpan(imgSpan, 0, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -93,7 +106,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
     }
 
 
-    protected void findMediaUrlAndUpdate(AVIMTypedMessage msg, QMUIRadiusImageView qriv) {
+    protected void findMediaUrlAndUpdate(AVIMTypedMessage msg, ImageView qriv) {
         String thumbnailUrl = null;
         String localFilePath = null;
         switch (msg.getMessageType()) {
@@ -127,11 +140,58 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
         mLoader.load(localFilePath).apply(options).thumbnail(mLoader.load(thumbnailUrl).apply(options)).into(qriv);
     }
 
+    protected void findMediaUrlAndLoadShape(AVIMTypedMessage msg, GlideImageView glideImageView) {
+        String thumbnailUrl = null;
+        String localFilePath = null;
+        switch (msg.getMessageType()) {
+            case AVIMMessageType.IMAGE_MESSAGE_TYPE:
+                thumbnailUrl = ((AVIMImageMessage) msg).getAVFile().getThumbnailUrl(true, 100, 100, 50, "png");
+                localFilePath = ((AVIMImageMessage) msg).getLocalFilePath();
+
+                if (TextUtils.isEmpty(localFilePath)) {
+                    localFilePath = ((AVIMImageMessage) msg).getFileUrl();
+                }
+
+                break;
+            case AVIMMessageType.AUDIO_MESSAGE_TYPE:
+                thumbnailUrl = ((AVIMAudioMessage) msg).getAVFile().getThumbnailUrl(true, 100, 100, 50, "png");
+                localFilePath = ((AVIMAudioMessage) msg).getLocalFilePath();
+
+                if (TextUtils.isEmpty(localFilePath)) {
+                    localFilePath = ((AVIMAudioMessage) msg).getFileUrl();
+                }
+
+                break;
+            default:
+                break;
+        }
+
+        this.mMediaUrlPath = localFilePath;
+
+        RequestOptions options = glideImageView.requestOptions(R.color.trans)
+                .fitCenter()
+                .skipMemoryCache(false) // 不跳过内存缓存
+                .diskCacheStrategy(DiskCacheStrategy.ALL); // 缓存到SDCard中
+
+        glideImageView.getImageLoader().requestBuilder(localFilePath, options)
+                .thumbnail(mLoader.load(thumbnailUrl).apply(options))//加载缩略图
+                //.transition(DrawableTransitionOptions.withCrossFade()) // 动画渐变加载
+                .into(glideImageView);
+
+        glideImageView.setOnClickListener(v -> {
+            List<Image> mSelectedImage = new ArrayList<>();
+            Image image = new Image();
+            image.setPath(mMediaUrlPath);
+            mSelectedImage.add(image);
+            ImageGalleryActivity.show(v.getContext(), new SelectOptions.Builder().setSelectedImages(MediaUtil.toArray(mSelectedImage)).build(), 0);
+        });
+    }
+
     protected void updateDuration(AVIMAudioMessage msg, TextView tvVoiceDuration, View voiceDot) {
         double duration = msg.getDuration();
         tvVoiceDuration.setText(String.format(Locale.getDefault(), "%d%s%s", (int) (duration + 0.5), " ", "''"));
 
-        voiceDot.setVisibility(mIsLeft ? View.VISIBLE : View.INVISIBLE);
+        voiceDot.setVisibility(mIsLeft ? View.INVISIBLE : View.INVISIBLE);
     }
 
     protected void updateText(AVIMTextMessage msg, TextView tvContent) {
@@ -245,8 +305,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
                 roleLabel = itemView.getResources().getString(R.string.patient);
                 break;
             case 1://运营
-                roleLabel = itemView.getResources().getString(R.string.dbo);
-                break;
+                // roleLabel = itemView.getResources().getString(R.string.dbo);
             case 2://助理
                 roleLabel = itemView.getResources().getString(R.string.assistant);
                 break;
@@ -257,7 +316,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
                 break;
         }
         tvRoleLabel.setText(roleLabel);
-        tvRoleLabel.setBackground(role == 0 ? tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_assistant_label) : tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
+        tvRoleLabel.setBackground(role != 3 ? tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_assistant_label) : tvRoleLabel.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
         tvRoleLabel.setVisibility(role == 0 || TextUtils.isEmpty(roleLabel) ? View.INVISIBLE : View.VISIBLE);
     }
 

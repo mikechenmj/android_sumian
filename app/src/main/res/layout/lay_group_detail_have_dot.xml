@@ -7,11 +7,10 @@
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
         android:id="@+id/iv_group_icon"
-        android:layout_width="@dimen/space_120"
-        android:layout_height="@dimen/space_120"
+        android:layout_width="@dimen/space_88"
+        android:layout_height="@dimen/space_88"
         android:layout_gravity="center"
         android:contentDescription="@null"
-        android:padding="@dimen/space_4"
         android:src="@mipmap/group_avatar"
         app:qmui_border_color="@color/b1_color"
         app:qmui_border_width="@dimen/space_4"

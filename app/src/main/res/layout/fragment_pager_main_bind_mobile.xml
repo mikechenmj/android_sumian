@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:show_back="false"
+        app:show_spanner="false"
+        app:text="绑定手机" />
+
+    <EditText
+        android:id="@+id/et_mobil"
+        style="@style/edit_text_t2_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_32"
+        android:layout_marginRight="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_36"
+        android:background="@null"
+        android:hint="@string/input_mobil"
+        android:inputType="phone"
+        android:textColorHint="@color/t2_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginLeft="@dimen/space_32"
+        android:layout_marginRight="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_12"
+        android:background="@color/l3_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_24"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_32"
+        android:paddingRight="@dimen/space_32">
+
+        <EditText
+            android:id="@+id/et_captcha"
+            style="@style/edit_text_t2_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/input_captcha"
+            android:inputType="number"
+            android:textColorHint="@color/t2_color"
+            tools:ignore="RtlHardcoded" />
+
+        <net.qiujuer.genius.ui.widget.Button
+            android:id="@+id/bt_send_captcha"
+            style="@style/bt_t2_style"
+            android:layout_width="@dimen/space_120"
+            android:layout_height="@dimen/space_46"
+            android:layout_gravity="bottom"
+            android:paddingLeft="@dimen/space_16"
+            android:paddingRight="@dimen/space_16"
+            android:text="@string/send_captcha"
+            app:gTouchCornerRadius="@dimen/space_32"
+            app:gTouchEffect="ripple" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginEnd="@dimen/space_160"
+        android:layout_marginStart="@dimen/space_32"
+        android:background="@color/l3_color" />
+
+    <net.qiujuer.genius.ui.widget.Button
+        android:id="@+id/bt_login"
+        style="@style/bt_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/space_32"
+        android:layout_marginRight="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_28"
+        android:elevation="@dimen/space_2"
+        android:gravity="center"
+        android:outlineProvider="background"
+        android:shadowColor="@color/s1_color"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:text="@string/login"
+        android:translationZ="@dimen/space_2"
+        app:gTouchCornerRadius="@dimen/space_32"
+        app:gTouchEffect="ripple" />
+
+</LinearLayout>

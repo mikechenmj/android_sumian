@@ -20,7 +20,7 @@ class NetEngine {
     private val mDoctorApi: DoctorApi
 
     companion object {
-        private val TIMEOUT = 5
+        private const val TIMEOUT = 5
     }
 
     init {

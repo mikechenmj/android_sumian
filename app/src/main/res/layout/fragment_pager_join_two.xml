@@ -20,30 +20,31 @@
         android:background="@color/b2_color"
         android:padding="@dimen/space_20">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/lay_group_icon"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="@dimen/space_92"
+            android:layout_height="@dimen/space_92"
             android:contentDescription="@null"
             android:src="@mipmap/group_avatar"
-            app:civ_border_color="@color/b2_color"
-            app:civ_border_overlay="true"
-            app:civ_border_width="@dimen/space_4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:qmui_border_color="@color/b2_color"
+            app:qmui_border_width="@dimen/space_4"
+            app:qmui_corner_radius="@dimen/space_4" />
 
         <TextView
             android:id="@+id/tv_desc"
             style="@style/text_t3_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_8"
-            android:maxEms="10"
-            android:maxLines="1"
+            android:layout_marginLeft="@dimen/space_12"
+            android:ellipsize="marquee"
+            android:maxEms="11"
             android:minLines="1"
             android:singleLine="true"
-            android:textSize="@dimen/font_20"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tv_group_money"
             app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
             app:layout_constraintTop_toTopOf="parent"
@@ -60,7 +61,7 @@
             android:minLines="1"
             android:singleLine="true"
             android:text="@string/advisory_one"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/font_14"
             app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
             app:layout_constraintLeft_toLeftOf="@id/tv_desc"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
@@ -79,7 +80,7 @@
             android:minLines="1"
             android:singleLine="true"
             android:textColor="@color/t4_color"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/font_14"
             app:layout_constraintBottom_toBottomOf="@id/textView1"
             app:layout_constraintLeft_toRightOf="@id/textView1"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc"
@@ -94,6 +95,7 @@
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:text="@string/money_for_month"
+            android:textSize="@dimen/font_14"
             app:layout_constraintBottom_toBottomOf="@id/tv_group_money"
             app:layout_constraintLeft_toRightOf="@+id/tv_group_money"
             app:layout_constraintTop_toTopOf="@+id/tv_group_money" />
@@ -112,7 +114,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_16" />
 
-
     <net.qiujuer.genius.ui.widget.Button
         android:id="@+id/bt_pay"
         style="@style/bt_t1_style"
@@ -123,7 +124,7 @@
         android:layout_marginRight="@dimen/space_32"
         android:layout_marginTop="@dimen/space_28"
         android:clickable="true"
-        android:elevation="@dimen/space_4"
+        android:elevation="@dimen/space_2"
         android:focusable="true"
         android:outlineProvider="background"
         android:text="@string/join"

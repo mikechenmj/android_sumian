@@ -22,12 +22,13 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/scan_qr_code_join_group"
-        android:textSize="@dimen/font_28" />
+        android:textSize="@dimen/font_22" />
 
     <TextView
         style="@style/text_t2_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/space_4"
         android:text="@string/qr_code_desc_part_one"
         android:textSize="@dimen/font_16" />
 
@@ -36,14 +37,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
-        android:layout_weight="1"
+        android:lineSpacingExtra="@dimen/space_4"
         android:text="@string/qr_code_desc_part_two"
         android:textSize="@dimen/font_16" />
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
+
     <ImageView
         android:id="@+id/ib_scan"
-        android:layout_width="@dimen/space_200"
-        android:layout_height="@dimen/space_200"
+        android:layout_width="@dimen/space_240"
+        android:layout_height="@dimen/space_240"
         android:background="@drawable/bg_iv"
         android:contentDescription="@null"
         android:src="@mipmap/group_btn_scan_code" />
@@ -51,5 +57,5 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1.5" />
 </merge>

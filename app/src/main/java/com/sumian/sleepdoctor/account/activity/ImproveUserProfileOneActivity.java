@@ -40,6 +40,8 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        // mTitleBar.getTitle().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_16);
+        //mTitleBar.getMore().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_14);
         mTitleBar.addOnBackListener(this).addOnMoreListener(this);
     }
 

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -26,7 +27,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by sm
@@ -44,7 +44,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     TitleBar mTitleBar;
 
     @BindView(R.id.lay_group_icon)
-    CircleImageView mIvGroupIcon;
+    QMUIRadiusImageView mIvGroupIcon;
 
     @BindView(R.id.tv_desc)
     TextView mTvDesc;
@@ -191,7 +191,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     @Override
     public void onOrderPaySuccess(String payMsg) {
         //showToast(R.string.pay_success);
-        mPresenter.clearPayAction();
+        //mPresenter.clearPayAction();
         if (!mPayDialog.isShowing())
             mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show();
     }

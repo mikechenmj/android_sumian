@@ -5,10 +5,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.chat.base.BaseChatViewHolder;
 import com.sumian.sleepdoctor.chat.widget.MsgSendErrorView;
+import com.sumian.sleepdoctor.widget.shapeImageView.GlideImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,7 +36,7 @@ public class ImageNormalViewHolder extends BaseChatViewHolder<AVIMImageMessage> 
     MsgSendErrorView mMsgSendErrorView;
 
     @BindView(R.id.biv_image)
-    QMUIRadiusImageView mBivImage;
+    GlideImageView mBivImage;
 
     @BindView(R.id.iv_icon)
     CircleImageView mIvIcon;
@@ -51,8 +51,7 @@ public class ImageNormalViewHolder extends BaseChatViewHolder<AVIMImageMessage> 
         super.initView(avimImageMessage);
 
         updateUserProfile(avimImageMessage.getFrom(), mGroupId, mTvLabel, mTvNickname, mIvIcon);
-        findMediaUrlAndUpdate(avimImageMessage, mBivImage);
-
+        findMediaUrlAndLoadShape(avimImageMessage, mBivImage);
     }
 
     @OnClick({R.id.biv_image, R.id.iv_icon})

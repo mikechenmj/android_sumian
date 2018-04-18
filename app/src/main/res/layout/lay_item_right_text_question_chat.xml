@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16">
+    android:paddingBottom="@dimen/space_8"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20"
+    android:paddingTop="@dimen/space_4">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -48,7 +51,7 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_14"
             tools:text="欧主任" />
 
     </LinearLayout>
@@ -83,16 +86,17 @@
                 android:layout_marginEnd="@dimen/space_12"
                 android:background="@drawable/group_chatbubble_question_r"
                 android:gravity="left"
+                android:maxWidth="@dimen/space_180"
+                android:minHeight="@dimen/space_40"
                 android:textColor="@color/b2_color"
-                android:textSize="@dimen/font_12"
                 tools:text="da" />
 
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_48"
-            android:layout_height="@dimen/space_48"
+            android:layout_width="@dimen/space_44"
+            android:layout_height="@dimen/space_44"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />

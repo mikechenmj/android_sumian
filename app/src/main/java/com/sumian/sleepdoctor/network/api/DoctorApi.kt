@@ -4,7 +4,6 @@ import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.network.response.BaseResponse
 import com.sumian.sleepdoctor.oss.bean.OssResponse
-import com.sumian.sleepdoctor.pager.bean.Order
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
 import com.sumian.sleepdoctor.tab.bean.GroupDetail
 import retrofit2.Call
@@ -36,6 +35,14 @@ interface DoctorApi {
     fun getUserProfile(): Call<UserProfile>
 
     @FormUrlEncoded
+    @POST("authorizations/socialite-bound")
+    fun loginOpenPlatform(@FieldMap map: MutableMap<String, Any>): Call<Token>
+
+    @FormUrlEncoded
+    @POST("authorizations/socialite-bind")
+    fun bindSocial(@FieldMap map: MutableMap<String, Any>): Call<Token>
+
+    @FormUrlEncoded
     @PATCH("user/profile")
     fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserProfile>
 
@@ -50,7 +57,7 @@ interface DoctorApi {
 
     @FormUrlEncoded
     @POST("orders")
-    fun createOrder(@FieldMap map: MutableMap<String, Any>): Call<Order>
+    fun createOrder(@FieldMap map: MutableMap<String, Any>): Call<String>
 
     @GET("orders/{order_no}")
     fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>

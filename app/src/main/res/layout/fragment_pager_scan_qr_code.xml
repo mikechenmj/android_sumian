@@ -34,7 +34,7 @@
         app:qrcv_scanLineMargin="0dp"
         app:qrcv_scanLineSize="0.5dp"
         app:qrcv_tipTextColor="@android:color/white"
-        app:qrcv_tipTextSize="16sp"
+        app:qrcv_tipTextSize="14sp"
         app:qrcv_toolbarHeight="140dp"
         app:qrcv_topOffset="20dp" />
 
@@ -63,7 +63,7 @@
             android:padding="@dimen/space_12"
             android:text="@string/scan_qr_code"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/font_20" />
+            android:textSize="@dimen/font_16" />
     </FrameLayout>
 
 

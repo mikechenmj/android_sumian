@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.pager.activity;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.sumian.common.operator.AppOperator;
@@ -55,7 +56,9 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
 
                 break;
             case R.id.about_me:
-                AboutMeActivity.show(this, AboutMeActivity.class);
+                Bundle extras = new Bundle();
+                extras.putInt(ConfigActivity.ARGS_CONFIG_TYPE, ConfigActivity.USER_AGREEMENT);
+                ConfigActivity.show(this, ConfigActivity.class, extras);
                 break;
             case R.id.bt_logout:
                 AppManager.getHttpService().logout().enqueue(new BaseResponseCallback<Unit>() {

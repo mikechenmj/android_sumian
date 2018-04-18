@@ -11,6 +11,9 @@ import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.util.Log;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.open.OpenEngine;
+import com.sumian.open.login.OpenLogin;
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.activity.LoginActivity;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
@@ -37,6 +40,7 @@ public final class AppManager implements Observer<Boolean> {
 
     private VoicePlayer mVoicePlayer;
     private LiveData<Boolean> mTokenInvalidStateLiveData;
+    private OpenEngine mOpenEngine;
 
     private AppManager() {
     }
@@ -82,6 +86,10 @@ public final class AppManager implements Observer<Boolean> {
         return Holder.INSTANCE.mDoctorApi == null ? Holder.INSTANCE.mDoctorApi = new NetEngine().httpRequest() : Holder.INSTANCE.mDoctorApi;
     }
 
+    public static synchronized OpenLogin getOpenLogin() {
+        return Holder.INSTANCE.mOpenEngine.getOpenLogin();
+    }
+
     public void with(@NonNull Context context) {
         init(context);
     }
@@ -101,6 +109,10 @@ public final class AppManager implements Observer<Boolean> {
         if (mChatEngine == null) {
             this.mChatEngine = new ChatEngine(context);
         }
+
+        if (mOpenEngine == null)
+            this.mOpenEngine = new OpenEngine().register(context, BuildConfig.DEBUG);
+
     }
 
     public void release() {

@@ -58,7 +58,6 @@ freeline_project_description.json
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.zip
@@ -75,3 +74,5 @@ hs_err_pid*
 # Cache of project
 .gradletasknamecache
 
+libs/
+!/open/libs/

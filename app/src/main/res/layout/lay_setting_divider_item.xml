@@ -19,10 +19,10 @@
 
         <ImageView
             android:id="@+id/iv_type"
-            android:layout_width="@dimen/space_48"
-            android:layout_height="@dimen/space_48"
+            android:layout_width="@dimen/space_32"
+            android:layout_height="@dimen/space_32"
             android:contentDescription="@null"
-            android:padding="@dimen/space_10"
+            android:padding="@dimen/space_6"
             android:scaleType="fitCenter"
             app:srcCompat="@mipmap/info_icon_set"
             tools:ignore="RtlHardcoded" />
@@ -35,7 +35,7 @@
             android:layout_marginRight="@dimen/space_8"
             android:text="@string/user_info_center"
             android:textColor="@color/t1_color"
-            android:textSize="@dimen/font_18"
+            android:textSize="@dimen/font_16"
             tools:ignore="RtlHardcoded" />
 
         <View
@@ -58,9 +58,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
             android:text="@string/user_info_center"
             android:textColor="@color/t1_color"
-            android:textSize="@dimen/font_18"
+            android:textSize="@dimen/font_16"
             android:visibility="gone"
             tools:ignore="RtlHardcoded"
             tools:visibility="visible" />
@@ -70,9 +71,9 @@
             android:layout_width="@dimen/space_32"
             android:layout_height="@dimen/space_32"
             android:contentDescription="@null"
-            android:paddingBottom="@dimen/space_8"
+            android:paddingBottom="@dimen/space_10"
             android:paddingLeft="@dimen/space_8"
-            android:paddingTop="@dimen/space_8"
+            android:paddingTop="@dimen/space_10"
             android:scaleType="fitCenter"
             app:srcCompat="@mipmap/info_icon_enter"
             tools:ignore="RtlHardcoded" />

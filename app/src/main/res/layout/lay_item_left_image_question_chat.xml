@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16"
-    android:rotationX="180"
-    android:rotationY="0">
+    android:paddingBottom="@dimen/space_8"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20"
+    android:paddingTop="@dimen/space_4">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -34,7 +35,7 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_14"
             tools:text="欧主任" />
 
         <TextView
@@ -63,20 +64,22 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_48"
-            android:layout_height="@dimen/space_48"
+            android:layout_width="@dimen/space_44"
+            android:layout_height="@dimen/space_44"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        <com.sumian.sleepdoctor.widget.shapeImageView.GlideImageView
             android:id="@+id/biv_image"
             android:layout_width="@dimen/space_100"
             android:layout_height="@dimen/space_160"
+            android:layout_gravity="center"
             android:layout_marginLeft="@dimen/space_12"
             android:layout_marginRight="@dimen/space_12"
+            android:contentDescription="@null"
             android:src="@mipmap/group_avatar"
-            app:qmui_corner_radius="@dimen/space_4" />
+            app:riv_corner_radius="@dimen/space_4" />
 
         <com.sumian.sleepdoctor.chat.widget.MsgSendErrorView
             android:id="@+id/msg_send_error_view"

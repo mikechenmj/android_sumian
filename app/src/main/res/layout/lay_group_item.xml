@@ -32,10 +32,11 @@
             android:layout_marginRight="@dimen/space_16"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="9"
+            android:maxEms="11"
             android:minLines="1"
             android:singleLine="true"
-            android:textSize="@dimen/font_20"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tv_doctor_name"
             app:layout_constraintLeft_toRightOf="@id/group_detail_have_dot_view"
             app:layout_constraintTop_toTopOf="@+id/group_detail_have_dot_view"
@@ -54,7 +55,7 @@
             android:maxLines="1"
             android:minLines="1"
             android:singleLine="true"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/font_14"
             app:layout_constraintBottom_toTopOf="@+id/tv_expired"
             app:layout_constraintStart_toStartOf="@+id/tv_desc"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc"
@@ -75,7 +76,7 @@
             android:singleLine="true"
             android:textColor="@color/b2_color"
             android:textSize="@dimen/font_12"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/group_detail_have_dot_view"
             app:layout_constraintStart_toStartOf="@+id/tv_doctor_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_doctor_name"
@@ -86,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="120dp" />
+            app:layout_constraintGuide_begin="90dp" />
 
         <View
             android:id="@+id/v_line"
@@ -104,7 +105,7 @@
             android:id="@+id/cache_msg_two_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_16"
+            android:layout_marginTop="@dimen/space_12"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="@+id/v_line"
             app:layout_constraintTop_toBottomOf="@+id/v_line" />
@@ -113,7 +114,7 @@
             android:id="@+id/cache_msg_one_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_16"
+            android:layout_marginTop="@dimen/space_12"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="@+id/cache_msg_two_view"
             app:layout_constraintTop_toBottomOf="@+id/cache_msg_two_view" />
@@ -130,7 +131,7 @@
             android:minLines="1"
             android:singleLine="true"
             android:textColor="@color/t4_color"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/font_14"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"

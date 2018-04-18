@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/space_16">
+    android:paddingBottom="@dimen/space_8"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20"
+    android:paddingTop="@dimen/space_4">
 
     <TextView
         android:id="@+id/tv_time_line"
@@ -48,7 +51,7 @@
             style="@style/text_t2_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_12"
+            android:textSize="@dimen/font_14"
             tools:text="欧主任" />
 
     </LinearLayout>
@@ -68,42 +71,41 @@
             android:layout_gravity="center" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/space_180"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/space_12"
-            android:layout_weight="1"
             android:background="@drawable/group_chatbubble_r"
+            android:minHeight="@dimen/space_40"
             android:orientation="vertical">
 
             <TextView
                 style="@style/text_t1_style"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/space_8"
                 android:text="@string/answer"
                 android:textColor="@color/b2_color"
-                android:textSize="@dimen/font_14" />
+                android:textSize="@dimen/font_16" />
 
             <android.support.text.emoji.widget.EmojiAppCompatTextView
                 android:id="@+id/tv_reply"
                 style="@style/text_t2_style"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
-                android:layout_marginRight="@dimen/space_8"
+                android:layout_marginTop="@dimen/space_4"
                 android:background="@drawable/shape_answer_right_label"
                 android:lineSpacingExtra="@dimen/space_4"
-                android:padding="@dimen/space_8"
+                android:minWidth="@dimen/space_100"
+                android:paddingLeft="@dimen/space_4"
+                android:paddingRight="@dimen/space_4"
                 android:textColor="@color/b2_color"
-                android:textSize="@dimen/font_12"
+                android:textSize="@dimen/font_16"
                 tools:text="我去一个我需要去的地方,那是一个没了的地方" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginBottom="@dimen/space_12"
-                android:layout_marginTop="@dimen/space_12"
+                android:layout_marginTop="@dimen/space_8"
                 android:orientation="horizontal">
 
                 <FrameLayout
@@ -125,18 +127,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="60''"
-                        android:textColor="@color/b2_color" />
+                        android:textColor="@color/b2_color"
+                        tools:text="60''" />
                 </FrameLayout>
 
                 <ImageView
                     android:id="@+id/biv_image"
-                    android:layout_width="@dimen/space_48"
-                    android:layout_height="@dimen/space_48"
-                    android:layout_gravity="center"
+                    android:layout_width="@dimen/space_20"
+                    android:layout_height="@dimen/space_20"
+                    android:layout_gravity="center|left"
                     android:contentDescription="@null"
-                    android:padding="@dimen/space_8"
-                    android:src="@drawable/voice_anim_r" />
+                    android:paddingBottom="@dimen/space_1"
+                    android:paddingTop="@dimen/space_1"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/voice_anim_r"
+                    tools:ignore="RtlHardcoded" />
 
             </LinearLayout>
 
@@ -144,8 +149,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_icon"
-            android:layout_width="@dimen/space_48"
-            android:layout_height="@dimen/space_48"
+            android:layout_width="@dimen/space_44"
+            android:layout_height="@dimen/space_44"
             android:contentDescription="@null"
             android:src="@mipmap/info_avatar_doctor"
             tools:ignore="RtlHardcoded" />

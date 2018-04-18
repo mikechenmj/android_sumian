@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.widget;
 
 import android.content.Context;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -70,10 +71,10 @@ public class MsgCacheLabelView extends LinearLayout {
             case AVIMMessageType.TEXT_MESSAGE_TYPE:
                 text = ((AVIMTextMessage) msg).getText();
                 break;
-            case AVIMMessageType.AUDIO_MESSAGE_TYPE:
+            case AVIMMessageType.IMAGE_MESSAGE_TYPE:
                 text = getContext().getString(R.string.pic_label);
                 break;
-            case AVIMMessageType.IMAGE_MESSAGE_TYPE:
+            case AVIMMessageType.AUDIO_MESSAGE_TYPE:
                 text = getContext().getString(R.string.voice_label);
                 break;
             default:
@@ -84,6 +85,11 @@ public class MsgCacheLabelView extends LinearLayout {
         mTvChatHistoryTime.setText(formatMsgTime);
         mTvChatHistoryTime.setVisibility(VISIBLE);
         show();
+    }
+
+    public void setTextColor(@ColorRes int color) {
+        mTvChatHistory.setTextColor(getResources().getColor(color));
+        mTvChatHistoryTime.setTextColor(getResources().getColor(color));
     }
 
     public void hide() {

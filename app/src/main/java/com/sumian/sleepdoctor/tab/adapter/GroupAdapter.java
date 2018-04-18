@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -68,7 +67,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
                 mItems.get(i).lastMsg = msg;
                 mItems.get(i).unReadMsgCount = AppManager.getChatEngine().getAVIMConversation(msg.getConversationId()).getUnreadMessagesCount();
                 mItems.get(i).isMsgMentioned = mItems.get(i).isMsgMentioned || msg.mentioned();
-                Log.e(TAG, "updateReceiveMsg: ------>" + msg.mentioned());
+                // Log.e(TAG, "updateReceiveMsg: ------>" + msg.mentioned());
                 updateItem(i);
                 position = i;
                 break;
@@ -115,7 +114,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
 
     static class ViewHolder extends BaseViewHolder<GroupItem> {
 
-        private static final String TAG = ViewHolder.class.getSimpleName();
+        // private static final String TAG = ViewHolder.class.getSimpleName();
 
         @BindView(R.id.group_detail_have_dot_view)
         GroupDetailHaveDotView mGroupDetailHaveDotView;
@@ -195,12 +194,17 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         private void updateMsg(GroupItem item) {
 
             mMsgCacheLabelTwoView.updateMsg(item.secondLastMsg);
+            mMsgCacheLabelTwoView.setTextColor(R.color.t2_alpha_color);
             mMsgCacheLabelOneView.updateMsg(item.lastMsg);
 
             if (item.secondLastMsg == null && item.lastMsg == null) {
                 mMsgCacheLabelOneView.showWelcomeText(item.groupDetail.name);
                 mMsgCacheLabelTwoView.hide();
+                mLine.setVisibility(View.GONE);
+            } else {
+                mLine.setVisibility(View.VISIBLE);
             }
+
 
             //会话中,未读消息数量大于0,小红点提示
             mGroupDetailHaveDotView.showOrHideDot(item.unReadMsgCount > 0 || item.isMsgMentioned);

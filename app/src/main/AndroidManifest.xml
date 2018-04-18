@@ -56,8 +56,7 @@
         <activity android:name=".account.activity.ImproveUserProfileOneActivity" />
         <activity android:name=".account.activity.ImproveUserProfileTwoActivity" />
         <activity android:name=".pager.activity.UserProfileActivity" />
-        <activity android:name=".pager.activity.AboutMeActivity" />
-
+        <activity android:name=".pager.activity.ConfigActivity" />
         <activity android:name=".pager.activity.PayGroupActivity" />
         <activity android:name=".pager.activity.ScanGroupResultActivity" />
         <activity android:name=".pager.activity.SettingActivity" />
@@ -66,10 +65,23 @@
         <activity android:name=".pager.activity.GroupQrCodeActivity" />
         <activity android:name=".pager.activity.GroupMembersActivity" />
         <activity android:name=".pager.activity.ModifyNicknameActivity" />
+        <activity android:name=".pager.activity.OtherUserProfileActivity" />
+        <activity android:name=".account.activity.BindMobileActivity" />
 
         <activity
             android:name=".pager.activity.ScanQrCodeActivity"
             android:theme="@style/scan_qr_theme" />
+
+        <!--third  login-->
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--pay start-->
 
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
@@ -94,8 +106,6 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind" />
-        <activity android:name=".pager.activity.OtherUserProfileActivity" />
-        <activity android:name=".pager.activity.GroupQrCodeActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
@@ -110,7 +120,6 @@
             </intent-filter>
         </receiver>
         <!-- 实时通信模块、推送 END -->
-
 
     </application>
 

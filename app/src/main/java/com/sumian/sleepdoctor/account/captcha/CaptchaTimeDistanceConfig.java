@@ -64,7 +64,7 @@ public final class CaptchaTimeDistanceConfig {
             @Override
             public void onTick(long millisUntilFinished) {
                 int time = (int) (millisUntilFinished / 1000L);
-                tvCaptcha.setText(String.format(Locale.getDefault(), "%02ds", time));
+                tvCaptcha.setText(String.format(Locale.getDefault(), "%s%02ds", " 已发送", time));
                 mRemainingTime = time;
             }
 
@@ -74,7 +74,7 @@ public final class CaptchaTimeDistanceConfig {
                 tvCaptcha.setEnabled(true);
                 tvCaptcha.setActivated(false);
                 tvCaptcha.setText(R.string.send_captcha);
-                tvCaptcha.setTextColor(tvCaptcha.getResources().getColor(R.color.t2_color));
+                tvCaptcha.setTextColor(tvCaptcha.getResources().getColor(R.color.b2_color));
                 NotifyOrClearCaptchaTimeDistance(tvCaptcha, captchaTimeType);
             }
         }.start();
