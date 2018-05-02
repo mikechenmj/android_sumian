@@ -5,7 +5,6 @@ import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 /**
  * Created by jzz
@@ -31,6 +30,7 @@ class AuthInterceptor private constructor() : Interceptor {
             val userAgent: String = try {
                 WebSettings.getDefaultUserAgent(App.getAppContext())
             } catch (e: Exception) {
+                e.printStackTrace()
                 System.getProperty("http.agent")
             }
 
@@ -50,7 +50,6 @@ class AuthInterceptor private constructor() : Interceptor {
             return sb.toString()
         }
 
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val request = chain
@@ -58,7 +57,7 @@ class AuthInterceptor private constructor() : Interceptor {
                 .newBuilder()
                 .addHeader("Accept", "application/vnd.sumianapi+json")
                 .addHeader("Content-Type", "application/json")
-                .header("User-Agent", userAgent)
+                .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android")
                 .addHeader("Authorization", "Bearer " + AppManager.getAccountViewModel().accessToken())
                 .build()
 

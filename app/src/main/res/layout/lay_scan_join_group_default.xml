@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,28 +17,21 @@
 
     <TextView
         style="@style/text_t3_style"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/scan_qr_code_join_group"
+        android:text="@string/scan_2_bind_doctor"
         android:textSize="@dimen/font_22" />
 
     <TextView
         style="@style/text_t2_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_20"
         android:lineSpacingExtra="@dimen/space_4"
-        android:text="@string/qr_code_desc_part_one"
-        android:textSize="@dimen/font_16" />
+        android:text="您还未绑定主治医生，点击下方扫码按钮，扫描医生二维码进行绑定。
 
-    <TextView
-        style="@style/text_t2_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_10"
-        android:lineSpacingExtra="@dimen/space_4"
-        android:text="@string/qr_code_desc_part_two"
+二维码一般由医生提供，请向主治医生咨询。"
         android:textSize="@dimen/font_16" />
 
     <Space
@@ -58,4 +51,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1.5" />
-</merge>
+</LinearLayout>

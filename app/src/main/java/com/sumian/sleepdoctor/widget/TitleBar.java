@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -166,8 +167,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return mTvMore;
     }
 
+    @SuppressLint("ResourceType")
     public TitleBar setTitle(@StringRes int titleRes) {
-        if (titleRes <= 0)
+        if (titleRes <= 0x00)
             return this;
         mTvTitle.setText(titleRes);
         return this;
