@@ -18,12 +18,25 @@
         android:orientation="horizontal">
 
         <com.sumian.sleepdoctor.widget.nav.ItemTab
-            android:id="@+id/tb_group"
+            android:id="@+id/tb_record"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:tab_icon="@drawable/tab_group_icon"
-            app:tab_text="@string/tab_group" />
+            app:tab_icon="@drawable/tab_record_icon"
+            app:tab_text="@string/tab_record" />
+
+        <View
+            android:layout_width="@dimen/space_1"
+            android:layout_height="@dimen/space_24"
+            android:background="@color/l1_color" />
+
+        <com.sumian.sleepdoctor.widget.nav.ItemTab
+            android:id="@+id/tb_doctor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tab_icon="@drawable/tab_doctor_icon"
+            app:tab_text="@string/tab_doctor" />
 
         <View
             android:layout_width="@dimen/space_1"
@@ -39,10 +52,5 @@
             app:tab_text="@string/tab_me" />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_px_1"
-        android:background="@color/l1_color" />
 
 </merge>

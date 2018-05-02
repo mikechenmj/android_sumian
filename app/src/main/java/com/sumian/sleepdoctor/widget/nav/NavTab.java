@@ -22,10 +22,15 @@ import butterknife.OnClick;
 
 public class NavTab extends LinearLayout implements View.OnClickListener {
 
-    @BindView(R.id.tb_group)
-    ItemTab mTbGroup;
+    @BindView(R.id.tb_record)
+    ItemTab mTbRecord;
+
+    @BindView(R.id.tb_doctor)
+    ItemTab mTbDoctor;
+
     @BindView(R.id.tb_me)
     ItemTab mTbMe;
+
 
     private OnTabChangeListener mOnTabChangeListener;
 
@@ -44,7 +49,8 @@ public class NavTab extends LinearLayout implements View.OnClickListener {
 
     private void init() {
         ButterKnife.bind(inflate(getContext(), R.layout.lay_nav_tab_menu, this));
-        mTbGroup.setActivated(true);
+        mTbRecord.setActivated(true);
+        mTbDoctor.setActivated(false);
         mTbMe.setActivated(false);
         setGravity(Gravity.CENTER);
         setOrientation(VERTICAL);
@@ -73,32 +79,31 @@ public class NavTab extends LinearLayout implements View.OnClickListener {
         }
     }
 
-    @OnClick({R.id.tb_group, R.id.tb_me})
+    @OnClick({R.id.tb_record, R.id.tb_doctor, R.id.tb_me})
     @Override
     public void onClick(View v) {
         int position = -1;
         switch (v.getId()) {
-            case R.id.tb_group:
+            case R.id.tb_record:
                 position = 0;
-                mTbGroup.setActivated(true);
+                mTbRecord.setActivated(true);
+                mTbDoctor.setActivated(false);
+                mTbMe.setActivated(false);
+                break;
+            case R.id.tb_doctor:
+                position = 1;
+                mTbRecord.setActivated(false);
+                mTbDoctor.setActivated(true);
                 mTbMe.setActivated(false);
                 break;
             case R.id.tb_me:
-                position = 1;
-                mTbGroup.setActivated(false);
+                position = 2;
+                mTbRecord.setActivated(false);
+                mTbDoctor.setActivated(false);
                 mTbMe.setActivated(true);
                 break;
         }
-        if (mOnTabChangeListener != null)
-            mOnTabChangeListener.tab((ItemTab) v, position);
-    }
-
-    public void showDot(int position, int show) {
-        if (position == 0) {
-            mTbGroup.showDot(show);
-        } else if (position == 2) {
-            mTbMe.showDot(show);
-        }
+        mOnTabChangeListener.tab((ItemTab) v, position);
     }
 
     /**

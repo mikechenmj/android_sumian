@@ -7,8 +7,10 @@ import android.widget.FrameLayout;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
+import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.tab.fragment.DoctorFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
+import com.sumian.sleepdoctor.tab.fragment.RecordFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
 import com.sumian.sleepdoctor.widget.nav.NavTab;
 
@@ -30,15 +32,11 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     @BindView(R.id.lay_tab_container)
     FrameLayout mFragmentContainer;
 
-    // private FragmentManagerDelegate mFragmentManagerDelegate;
-
-    // private GroupFragment mGroupFragment;
-
-    // private MeFragment mMeFragment;
-
     private int mCurrentPosition = -1;
 
     private FragmentManager mFragmentManager;
+
+    private String[] mFTags = new String[]{RecordFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), MeFragment.class.getSimpleName()};
 
     @Override
     protected int getLayoutId() {
@@ -81,28 +79,54 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     }
 
     private void initTab(int position) {
+        if (mCurrentPosition == position) return;
+        for (int i = 0, len = mFTags.length; i < len; i++) {
+            Fragment fragmentByTag;
+            String fTag = mFTags[i];
+            fragmentByTag = getFragmentByTag(fTag);
+            if (position == i) {
+                if (fragmentByTag != null) {
+                    showFragment(fragmentByTag);
+                } else {
+                    switch (position) {
+                        case 0:
+                            fragmentByTag = BaseFragment.newInstance(RecordFragment.class);
+                            break;
+                        case 1:
+                            fragmentByTag = BaseFragment.newInstance(DoctorFragment.class);
+                            break;
+                        case 2:
+                            fragmentByTag = BaseFragment.newInstance(MeFragment.class);
+                            break;
+                        default:
+                            fragmentByTag = BaseFragment.newInstance(RecordFragment.class);
+                            break;
+                    }
+                    addFragment(fragmentByTag, fTag);
+                }
+            } else {
+                if (fragmentByTag == null) {
+                    continue;
+                }
+                hideFragment(fragmentByTag);
+            }
+        }
         mCurrentPosition = position;
-
-        String showFragmentTag = position == 1 ? MeFragment.class.getSimpleName() : GroupFragment.class.getSimpleName();
-
-        Fragment showFragment = getFragmentByTag(showFragmentTag);
-
-        if (showFragment != null) {
-            mFragmentManager.beginTransaction().show(showFragment).commitNowAllowingStateLoss();
-        } else {
-            Fragment fragment = position == 1 ? MeFragment.newInstance(MeFragment.class) : GroupFragment.newInstance(GroupFragment.class);
-            mFragmentManager.beginTransaction().add(R.id.lay_tab_container, fragment, showFragmentTag).commitNowAllowingStateLoss();
-        }
-
-        String hideFragmentTag = position == 1 ? GroupFragment.class.getSimpleName() : MeFragment.class.getSimpleName();
-
-        Fragment hideFragment = getFragmentByTag(hideFragmentTag);
-        if (hideFragment != null) {
-            mFragmentManager.beginTransaction().hide(hideFragment).commitNowAllowingStateLoss();
-        }
     }
 
-    private Fragment getFragmentByTag(String hideFragmentTag) {
-        return mFragmentManager.findFragmentByTag(hideFragmentTag);
+    private Fragment getFragmentByTag(String fTag) {
+        return mFragmentManager.findFragmentByTag(fTag);
+    }
+
+    private void hideFragment(Fragment f) {
+        mFragmentManager.beginTransaction().hide(f).commitNowAllowingStateLoss();
+    }
+
+    private void showFragment(Fragment f) {
+        mFragmentManager.beginTransaction().show(f).commitNowAllowingStateLoss();
+    }
+
+    private void addFragment(Fragment f, String fTag) {
+        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).commitNowAllowingStateLoss();
     }
 }

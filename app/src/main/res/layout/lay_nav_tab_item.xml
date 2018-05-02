@@ -22,7 +22,7 @@
             android:contentDescription="@null"
             android:padding="@dimen/space_6"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/tab_group_icon" />
+            app:srcCompat="@drawable/tab_doctor_icon" />
 
         <View
             android:id="@+id/tab_dot"

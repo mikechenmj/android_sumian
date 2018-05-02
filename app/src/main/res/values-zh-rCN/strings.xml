@@ -135,5 +135,7 @@
     <string name="voice_label">[语音]</string>
     <string name="re_scan_qr_code">重新扫描</string>
     <string name="wechat_login">微信登录</string>
+    <string name="tab_record">记录</string>
+    <string name="tab_doctor">医生</string>
 
 </resources>
