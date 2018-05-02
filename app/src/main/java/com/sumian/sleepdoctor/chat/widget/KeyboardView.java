@@ -158,10 +158,10 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
             case R.id.bt_question:
 
                 if (mBtAsk.getTag() == null) {
-                    mBtAsk.setImageResource(R.mipmap.inputbox_icon_label_selected);
+                    mBtAsk.setImageResource(R.mipmap.ic_inputbox_icon_label_selected);
                     mBtAsk.setTag(true);
                 } else {
-                    mBtAsk.setImageResource(R.mipmap.inputbox_icon_label_unselected);
+                    mBtAsk.setImageResource(R.mipmap.ic_inputbox_icon_label_unselected);
                     mBtAsk.setTag(null);
                 }
 
@@ -361,13 +361,13 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
                 if (moveX - mDownX > 40) {//向右滑动
                     mTvVoiceLabel.setText(R.string.up_cancel_record);
                     mTvVoiceLabel.setTextColor(getResources().getColor(R.color.t4_color));
-                    mIvGarbage.setImageResource(R.mipmap.inputbox_btn_delete_pre);
+                    mIvGarbage.setImageResource(R.mipmap.ic_inputbox_btn_delete_pre);
                     mIsDelete = true;
                 } else {
                     mIsDelete = false;
                     mTvVoiceLabel.setText(String.format(Locale.getDefault(), "%d%s", (60 - mDuration), "s后停止录音"));
                     mTvVoiceLabel.setTextColor(getResources().getColor(R.color.t2_color));
-                    mIvGarbage.setImageResource(R.mipmap.inputbox_btn_delete_default);
+                    mIvGarbage.setImageResource(R.mipmap.ic_inputbox_btn_delete_default);
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
@@ -375,7 +375,7 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener, 
                 mLayVoice.clearAnimation();
                 mTvVoiceLabel.setText(R.string.start_record);
                 mTvVoiceLabel.setTextColor(getResources().getColor(R.color.t2_color));
-                mIvGarbage.setImageResource(R.mipmap.inputbox_btn_delete_default);
+                mIvGarbage.setImageResource(R.mipmap.ic_inputbox_btn_delete_default);
 
                 mCountDownTimer.cancel();
                 mAudioRecorder.finishRecord();

@@ -52,7 +52,7 @@
         android:layout_height="@dimen/space_240"
         android:background="@drawable/bg_iv"
         android:contentDescription="@null"
-        android:src="@mipmap/group_btn_scan_code" />
+        android:src="@mipmap/ic_group_btn_scan_code" />
 
     <Space
         android:layout_width="wrap_content"

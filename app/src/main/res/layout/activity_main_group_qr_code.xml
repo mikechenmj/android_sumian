@@ -41,7 +41,7 @@
                 app:qmui_border_color="@color/b1_color"
                 app:qmui_border_width="@dimen/space_4"
                 app:qmui_corner_radius="@dimen/space_4"
-                app:srcCompat="@mipmap/group_avatar" />
+                app:srcCompat="@mipmap/ic_group_avatar" />
 
             <TextView
                 android:id="@+id/tv_group_name"
@@ -74,7 +74,7 @@
             android:paddingRight="@dimen/space_20"
             android:paddingTop="@dimen/space_40"
             android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/group_details_icon_qrcode" />
+            app:srcCompat="@mipmap/ic_group_details_icon_qrcode" />
     </LinearLayout>
 
     <TextView

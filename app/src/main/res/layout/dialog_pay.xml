@@ -14,7 +14,7 @@
         android:layout_height="@dimen/space_56"
         android:layout_marginTop="@dimen/space_40"
         android:contentDescription="@null"
-        app:srcCompat="@mipmap/msg_icon_success" />
+        app:srcCompat="@mipmap/ic_msg_icon_success" />
 
     <TextView
         android:id="@+id/tv_pay_desc"

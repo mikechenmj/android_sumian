@@ -18,7 +18,7 @@
         android:layout_width="@dimen/space_100"
         android:layout_height="@dimen/space_100"
         android:scaleType="fitCenter"
-        android:src="@mipmap/group_synchronizing" />
+        android:src="@mipmap/ic_group_synchronizing" />
 
     <net.qiujuer.genius.ui.widget.TextView
         android:id="@+id/tv_error"

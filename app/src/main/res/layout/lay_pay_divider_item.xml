@@ -13,7 +13,7 @@
         android:layout_width="@dimen/space_24"
         android:layout_height="@dimen/space_24"
         android:contentDescription="@null"
-        android:src="@mipmap/group_pay_icon_wechatpayment" />
+        android:src="@mipmap/ic_group_pay_icon_wechatpayment" />
 
     <TextView
         android:id="@+id/tv_pay_desc"
@@ -34,6 +34,6 @@
         android:layout_width="@dimen/space_24"
         android:layout_height="@dimen/space_24"
         android:contentDescription="@null"
-        android:src="@mipmap/group_pay_selected" />
+        android:src="@mipmap/ic_group_pay_selected" />
 
 </merge>

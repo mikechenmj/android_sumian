@@ -31,7 +31,7 @@
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:contentDescription="@null"
-            android:src="@mipmap/groupdetails_icon_costdescription" />
+            android:src="@mipmap/ic_groupdetails_icon_costdescription" />
 
         <Space
             android:layout_width="0dp"
@@ -45,7 +45,7 @@
             android:layout_height="@dimen/space_40"
             android:contentDescription="@null"
             android:padding="@dimen/space_6"
-            android:src="@mipmap/group_pay_btn_plus_disabled" />
+            android:src="@mipmap/ic_group_pay_btn_plus_disabled" />
 
         <TextView
             android:id="@+id/tv_duration"
@@ -70,7 +70,7 @@
             android:layout_height="@dimen/space_40"
             android:contentDescription="@null"
             android:padding="@dimen/space_6"
-            android:src="@mipmap/group_pay_btn_minus" />
+            android:src="@mipmap/ic_group_pay_btn_minus" />
 
     </LinearLayout>
 

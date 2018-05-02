@@ -15,7 +15,7 @@
         android:contentDescription="@null"
         android:padding="@dimen/space_16"
         android:scaleType="fitCenter"
-        android:src="@mipmap/nav_icon_back"
+        android:src="@mipmap/ic_nav_icon_back"
         tools:ignore="RtlHardcoded" />
 
     <TextView
@@ -49,7 +49,7 @@
             android:contentDescription="@null"
             android:padding="@dimen/space_16"
             android:scaleType="fitCenter"
-            android:src="@mipmap/nav_icon_more"
+            android:src="@mipmap/ic_nav_icon_more"
             android:visibility="gone"
             tools:visibility="visible" />
 

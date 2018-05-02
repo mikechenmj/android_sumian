@@ -46,7 +46,7 @@
             android:layout_marginLeft="@dimen/space_16"
             android:layout_marginRight="@dimen/space_10"
             android:contentDescription="@null"
-            android:src="@mipmap/info_avatar_patient" />
+            android:src="@mipmap/ic_info_avatar_patient" />
 
         <ImageView
             android:id="@+id/iv_avatar_more"
@@ -56,7 +56,7 @@
             android:paddingBottom="@dimen/space_8"
             android:paddingLeft="@dimen/space_8"
             android:paddingTop="@dimen/space_8"
-            app:srcCompat="@mipmap/info_icon_enter"
+            app:srcCompat="@mipmap/ic_info_icon_enter"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
     </LinearLayout>
 

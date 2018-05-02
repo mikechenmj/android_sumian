@@ -82,6 +82,7 @@ ext {
             versionNameSuffix = "_dev"
 
             base_url = DEV_URL
+            base_h5_url = BASE_DEV_H5_URL
 
             leancloud_id = DEV_LEANCLOUD_APP_ID
             leancloud_key = DEV_LEANCLOUD_APP_KEY
@@ -94,6 +95,7 @@ ext {
             versionNameSuffix = "_test"
 
             base_url = TEST_URL
+            base_h5_url = BASE_TEST_H5_URL
 
             leancloud_id = TEST_LEANCLOUD_APP_ID
             leancloud_key = TEST_LEANCLOUD_APP_KEY
@@ -106,6 +108,7 @@ ext {
             versionNameSuffix = "_release"
 
             base_url = OFFICIAL_URL
+            base_h5_url = BASE_OFFICIAL_H5_URL
 
             leancloud_id = OFFICIAL_LEANCLOUD_APP_ID
             leancloud_key = OFFICIAL_LEANCLOUD_APP_KEY

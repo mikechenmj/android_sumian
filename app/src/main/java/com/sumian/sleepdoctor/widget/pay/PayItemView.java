@@ -60,7 +60,7 @@ public class PayItemView extends LinearLayout implements View.OnClickListener {
 
         boolean isSelect = a.getBoolean(R.styleable.PayItemView_is_select, false);
         mIvPay.setTag(isSelect ? true : null);
-        mIvPay.setImageResource(isSelect ? R.mipmap.group_pay_selected : R.mipmap.group_pay_unselected);
+        mIvPay.setImageResource(isSelect ? R.mipmap.ic_group_pay_selected : R.mipmap.ic_group_pay_unselected);
 
         a.recycle();
 
@@ -82,7 +82,7 @@ public class PayItemView extends LinearLayout implements View.OnClickListener {
 
     public void select() {
         mIvPay.setTag(true);
-        mIvPay.setImageResource(R.mipmap.group_pay_selected);
+        mIvPay.setImageResource(R.mipmap.ic_group_pay_selected);
         if (mOnPayWayCallback != null) {
             mOnPayWayCallback.onSelectPayWay(this);
         }
@@ -90,7 +90,7 @@ public class PayItemView extends LinearLayout implements View.OnClickListener {
 
     public void unSelect() {
         mIvPay.setTag(null);
-        mIvPay.setImageResource(R.mipmap.group_pay_unselected);
+        mIvPay.setImageResource(R.mipmap.ic_group_pay_unselected);
     }
 
     // @OnClick({R.id.iv_pay_select})

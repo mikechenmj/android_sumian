@@ -95,7 +95,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
     protected void updateImageText(AVIMTextMessage msg, TextView tvContent) {
         String text = msg.getText();
 
-        Drawable drawable = itemView.getResources().getDrawable(R.mipmap.group_chatbubble_icon_label);
+        Drawable drawable = itemView.getResources().getDrawable(R.mipmap.ic_group_chatbubble_icon_label);
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth() + 10, drawable.getIntrinsicHeight() + 10);
 
         QMUIMarginImageSpan imgSpan = new QMUIMarginImageSpan(drawable, QMUIAlignMiddleImageSpan.ALIGN_MIDDLE, 0, 0);
@@ -133,7 +133,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
         }
 
         RequestOptions options = new RequestOptions();
-        options.error(mIsLeft ? R.mipmap.group_photobubble_shadow : R.mipmap.group_photobubble_shadow).getOptions();
+        options.error(mIsLeft ? R.mipmap.ic_group_photobubble_shadow : R.mipmap.ic_group_photobubble_shadow).getOptions();
 
         this.mMediaUrlPath = localFilePath;
 
@@ -285,9 +285,9 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
 
         @DrawableRes int drawableId;
         if (role == 0) {
-            drawableId = R.mipmap.info_avatar_patient;
+            drawableId = R.mipmap.ic_info_avatar_patient;
         } else {
-            drawableId = R.mipmap.info_avatar_doctor;
+            drawableId = R.mipmap.ic_info_avatar_doctor;
         }
 
         RequestOptions options = new RequestOptions();

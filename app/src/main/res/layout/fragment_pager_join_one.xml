@@ -39,7 +39,7 @@
                     android:contentDescription="@null"
                     android:elevation="@dimen/space_2"
                     android:outlineProvider="background"
-                    android:src="@mipmap/group_avatar"
+                    android:src="@mipmap/ic_group_avatar"
                     android:translationZ="@dimen/space_2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -152,7 +152,7 @@
                     android:layout_marginLeft="@dimen/space_8"
                     android:layout_marginRight="@dimen/space_8"
                     android:contentDescription="@null"
-                    android:src="@mipmap/groupdetails_icon_costdescription" />
+                    android:src="@mipmap/ic_groupdetails_icon_costdescription" />
 
                 <Space
                     android:layout_width="0dp"

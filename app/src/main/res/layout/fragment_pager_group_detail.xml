@@ -39,7 +39,7 @@
                     android:contentDescription="@null"
                     android:elevation="@dimen/space_2"
                     android:outlineProvider="background"
-                    android:src="@mipmap/group_avatar"
+                    android:src="@mipmap/ic_group_avatar"
                     android:translationZ="@dimen/space_2"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -93,7 +93,7 @@
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:srcCompat="@mipmap/group_details_icon_qrcode"
+                    app:srcCompat="@mipmap/ic_group_details_icon_qrcode"
                     tools:visibility="visible" />
 
             </android.support.constraint.ConstraintLayout>

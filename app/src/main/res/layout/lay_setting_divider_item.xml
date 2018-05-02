@@ -24,7 +24,7 @@
             android:contentDescription="@null"
             android:padding="@dimen/space_6"
             android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/info_icon_set"
+            app:srcCompat="@mipmap/ic_info_icon_set"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -75,7 +75,7 @@
             android:paddingLeft="@dimen/space_8"
             android:paddingTop="@dimen/space_10"
             android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/info_icon_enter"
+            app:srcCompat="@mipmap/ic_info_icon_enter"
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>

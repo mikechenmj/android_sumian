@@ -11,7 +11,7 @@
         android:layout_height="@dimen/space_88"
         android:layout_gravity="center"
         android:contentDescription="@null"
-        android:src="@mipmap/group_avatar"
+        android:src="@mipmap/ic_group_avatar"
         app:qmui_border_color="@color/b1_color"
         app:qmui_border_width="@dimen/space_4"
         app:qmui_corner_radius="@dimen/space_4" />

@@ -74,7 +74,7 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
 
     private void updateUserProfile(UserProfile userProfile) {
         RequestOptions options = new RequestOptions();
-        options.error(R.mipmap.info_avatar_patient).placeholder(R.mipmap.info_avatar_patient).getOptions();
+        options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
         Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
 
         mDvNickname.setContent(userProfile.nickname);

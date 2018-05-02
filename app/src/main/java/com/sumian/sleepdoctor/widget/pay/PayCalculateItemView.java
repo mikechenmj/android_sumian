@@ -117,18 +117,18 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
         if (mCurrentDuration > 1) {
             mIvReduceDuration.setEnabled(true);
-            mIvReduceDuration.setImageResource(R.mipmap.group_pay_btn_plus);
+            mIvReduceDuration.setImageResource(R.mipmap.ic_group_pay_btn_plus);
         } else {
             mIvReduceDuration.setEnabled(false);
-            mIvReduceDuration.setImageResource(R.mipmap.group_pay_btn_plus_disabled);
+            mIvReduceDuration.setImageResource(R.mipmap.ic_group_pay_btn_plus_disabled);
         }
 
         if (mCurrentDuration < 6) {
             mIvAddDuration.setEnabled(true);
-            mIvAddDuration.setImageResource(R.mipmap.group_pay_btn_minus);
+            mIvAddDuration.setImageResource(R.mipmap.ic_group_pay_btn_minus);
         } else {
             mIvAddDuration.setEnabled(false);
-            mIvAddDuration.setImageResource(R.mipmap.group_pay_btn_minus_disabled);
+            mIvAddDuration.setImageResource(R.mipmap.ic_group_pay_btn_minus_disabled);
         }
 
         mTvDuration.setText(String.valueOf(mCurrentDuration));

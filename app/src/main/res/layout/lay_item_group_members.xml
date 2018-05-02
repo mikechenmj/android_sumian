@@ -14,7 +14,7 @@
         android:id="@+id/civ_avatar"
         android:layout_width="@dimen/space_52"
         android:layout_height="@dimen/space_52"
-        android:src="@mipmap/info_avatar_doctor" />
+        android:src="@mipmap/ic_info_avatar_doctor" />
 
     <TextView
         android:id="@+id/tv_nickname"

@@ -63,19 +63,19 @@ public class GroupErrorView extends LinearLayout implements View.OnClickListener
     }
 
     public void showError() {
-        mIvError.setImageResource(R.mipmap.group_synchronizationfailed);
+        mIvError.setImageResource(R.mipmap.ic_group_synchronizationfailed);
         mTvError.setText(R.string.network_error);
         mBtRefresh.setVisibility(VISIBLE);
     }
 
     public void showRequest() {
-        mIvError.setImageResource(R.mipmap.group_synchronizing);
+        mIvError.setImageResource(R.mipmap.ic_group_synchronizing);
         mTvError.setText(R.string.syncing);
         mBtRefresh.setVisibility(VISIBLE);
     }
 
     public void hideError() {
-        mIvError.setImageResource(R.mipmap.group_synchronizing);
+        mIvError.setImageResource(R.mipmap.ic_group_synchronizing);
         mTvError.setText(R.string.syncing);
         mBtRefresh.setVisibility(INVISIBLE);
     }

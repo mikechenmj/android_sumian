@@ -156,7 +156,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
         private void updateGroupDetail(GroupItem item) {
             GroupDetail<UserProfile, UserProfile> groupDetail = item.groupDetail;
             RequestOptions options = new RequestOptions();
-            options.error(R.mipmap.group_avatar).placeholder(R.mipmap.group_avatar).getOptions();
+            options.error(R.mipmap.ic_group_avatar).placeholder(R.mipmap.ic_group_avatar).getOptions();
             load(groupDetail.avatar, options, mGroupDetailHaveDotView.getImageView());
 
             setText(mTvDesc, groupDetail.name);

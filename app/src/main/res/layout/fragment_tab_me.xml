@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/space_32"
             android:contentDescription="@null"
-            android:src="@mipmap/info_avatar_patient"
+            android:src="@mipmap/ic_info_avatar_patient"
             app:civ_border_color="@android:color/white"
             app:civ_border_width="@dimen/space_4" />
 
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:type_desc="@string/user_info_center"
-            app:type_icon="@mipmap/info_icon_information" />
+            app:type_icon="@mipmap/ic_info_icon_information" />
 
         <com.sumian.sleepdoctor.widget.divider.SettingDividerView
             android:id="@+id/dv_setting"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             app:divider_line_visible="gone"
             app:type_desc="@string/setting"
-            app:type_icon="@mipmap/info_icon_set" />
+            app:type_icon="@mipmap/ic_info_icon_set" />
 
     </LinearLayout>
 

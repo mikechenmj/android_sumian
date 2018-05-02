@@ -95,7 +95,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     protected void initData() {
         super.initData();
         RequestOptions options = new RequestOptions();
-        options.placeholder(R.mipmap.group_avatar).error(R.mipmap.group_avatar).getOptions();
+        options.placeholder(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar).getOptions();
         Glide.with(this).load(mGroupDetail.avatar).apply(options).into(mIvGroupIcon);
         mTvDesc.setText(mGroupDetail.name);
         mTvGroupMoney.setText(String.format(Locale.getDefault(), "%.2f", mGroupDetail.monthly_price / 100.00f));

@@ -189,7 +189,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
         this.mGroupDetail = groupDetail;
         runOnUiThread(() -> {
             RequestOptions options = new RequestOptions();
-            options.placeholder(R.mipmap.group_avatar).error(R.mipmap.group_avatar).getOptions();
+            options.placeholder(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar).getOptions();
             Glide.with(this).load(groupDetail.avatar).apply(options).into(mIvGroupIcon);
 
             mTvDesc.setText(groupDetail.name);

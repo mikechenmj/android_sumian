@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:desc="@string/wechat_pay"
-        app:icon="@mipmap/group_pay_icon_wechatpayment"
+        app:icon="@mipmap/ic_group_pay_icon_wechatpayment"
         app:is_select="true" />
 
     <View
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:desc="@string/alipay"
-        app:icon="@mipmap/group_pay_icon_alipay"
+        app:icon="@mipmap/ic_group_pay_icon_alipay"
         app:is_select="false" />
 
 </merge>

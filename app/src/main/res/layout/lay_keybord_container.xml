@@ -71,7 +71,7 @@
             android:layout_height="@dimen/space_32"
             android:contentDescription="@null"
             android:scaleType="fitStart"
-            android:src="@mipmap/inputbox_icon_label_unselected" />
+            android:src="@mipmap/ic_inputbox_icon_label_unselected" />
 
         <ImageView
             android:id="@+id/iv_voice"
@@ -80,7 +80,7 @@
             android:contentDescription="@null"
             android:paddingBottom="@dimen/space_6"
             android:paddingTop="@dimen/space_6"
-            app:srcCompat="@mipmap/inputbox_icon_voice"
+            app:srcCompat="@mipmap/ic_inputbox_icon_voice"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <ImageView
@@ -91,7 +91,7 @@
             android:paddingBottom="@dimen/space_6"
             android:paddingRight="@dimen/space_8"
             android:paddingTop="@dimen/space_6"
-            app:srcCompat="@mipmap/inputbox_icon_image"
+            app:srcCompat="@mipmap/ic_inputbox_icon_image"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <Space
@@ -152,7 +152,7 @@
                 android:layout_height="@dimen/space_72"
                 android:layout_gravity="center"
                 android:contentDescription="@null"
-                app:srcCompat="@mipmap/inputbox_btn_voice_pre_icon" />
+                app:srcCompat="@mipmap/ic_inputbox_btn_voice_pre_icon" />
         </FrameLayout>
 
         <ImageView
@@ -164,7 +164,7 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/lay_voice"
             android:contentDescription="@null"
-            app:srcCompat="@mipmap/inputbox_btn_delete_default"
+            app:srcCompat="@mipmap/ic_inputbox_btn_delete_default"
             tools:ignore="RtlHardcoded" />
     </RelativeLayout>
 
