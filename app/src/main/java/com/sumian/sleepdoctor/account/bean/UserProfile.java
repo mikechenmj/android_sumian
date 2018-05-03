@@ -3,6 +3,8 @@ package com.sumian.sleepdoctor.account.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
+
 import java.io.Serializable;
 import java.util.List;
 

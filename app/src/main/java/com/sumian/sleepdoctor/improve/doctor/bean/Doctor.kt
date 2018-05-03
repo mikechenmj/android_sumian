@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.bean
+package com.sumian.sleepdoctor.improve.doctor.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
