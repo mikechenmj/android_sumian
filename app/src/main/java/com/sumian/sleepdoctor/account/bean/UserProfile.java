@@ -32,6 +32,7 @@ public class UserProfile implements Serializable, Parcelable {
     public int updated_at;//账号更新时间 (医团)
     public List<Social> socialites;//绑定信息
     public Doctor doctor;//绑定的医生信息
+    public int role; // add by zxz for passing compile
 
     public UserProfile() {
     }
