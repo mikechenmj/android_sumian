@@ -79,9 +79,9 @@ public class MemberDecoration extends RecyclerView.ItemDecoration {
             // String preFirstChar = prePinYinUserProfile.firstChar;
             // String currentFirstChar = currentPinYinUserProfile.firstChar;
 
-            return
+            return true;
                     //!preFirstChar.equals(currentFirstChar) ||
-                    prePinYinUserProfile.userProfile.role > currentPinYinUserProfile.userProfile.role;
+                   // prePinYinUserProfile.userProfile.role > currentPinYinUserProfile.userProfile.role;
         }
     }
 }

@@ -2,6 +2,9 @@ package com.sumian.common.helper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -20,26 +23,24 @@ public class ToastHelper {
 
     private Toast mToast;
     private int mYOffset;
+    private Handler mUiHandle = new Handler(Looper.getMainLooper());
 
     private Context mContext;
 
     private ToastHelper(Context context) {
         this.mContext = context;
+        @SuppressLint("ShowToast") Toast toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, context.getResources().getDimensionPixelSize(R.dimen.toast_space_100));
+        this.mYOffset = toast.getYOffset();
+        this.mToast = toast;
     }
 
-    public static void init(Context context) {
-        if (context == null) {
-            throw new IllegalArgumentException("Context should not be null!!!");
-        }
+    public static void init(@NonNull Context context) {
         if (INSTANCE == null) {
             synchronized (ToastHelper.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new ToastHelper(context);
-                    @SuppressLint("ShowToast") Toast toast = Toast.makeText(context, null, Toast.LENGTH_SHORT);
-                    toast.setDuration(Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM, 0, context.getResources().getDimensionPixelSize(R.dimen.toast_space_100));
-                    INSTANCE.mYOffset = toast.getYOffset();
-                    INSTANCE.mToast = toast;
                 }
             }
         }
@@ -76,6 +77,14 @@ public class ToastHelper {
         toast.setText(content);
         toast.setDuration(duration);
         toast.setGravity(gravity, 0, yOffset);
-        toast.show();
+        INSTANCE.runUiThread(toast::show);
+    }
+
+    private void runUiThread(Runnable run) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            run.run();
+        } else {
+            INSTANCE.mUiHandle.post(run);
+        }
     }
 }

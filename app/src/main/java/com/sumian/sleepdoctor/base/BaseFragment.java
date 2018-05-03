@@ -19,6 +19,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -38,7 +39,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     protected View mRootView;
     public Bundle mBundle;
 
-    private Unbinder mUnbinder;
+    private Unbinder mUnBinder;
 
     protected Presenter mPresenter;
 
@@ -81,7 +82,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
         // Do something
         onBindViewBefore(rootView);
         // Bind view
-        this.mUnbinder = ButterKnife.bind(this, rootView);
+        this.mUnBinder = ButterKnife.bind(this, rootView);
         // Get savedInstanceState
         if (savedInstanceState != null) {
             onRestartInstance(savedInstanceState);
@@ -102,8 +103,8 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
 
     @Override
     public void onDestroyView() {
-        this.mUnbinder.unbind();
         super.onDestroyView();
+        this.mUnBinder.unbind();
     }
 
     @Override
@@ -197,7 +198,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     }
 
     protected void setStatusBarTranslucent() {
-        StatusBarUtil.hideFakeStatusBarView(getActivity());
+        StatusBarUtil.hideFakeStatusBarView(Objects.requireNonNull(getActivity()));
     }
 
 }

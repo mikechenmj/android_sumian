@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/space_32"
-    android:paddingRight="@dimen/space_32"
     android:visibility="gone"
     tools:visibility="visible">
 
@@ -27,6 +25,8 @@
         style="@style/text_t2_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_30"
+        android:layout_marginRight="@dimen/space_30"
         android:layout_marginTop="@dimen/space_20"
         android:lineSpacingExtra="@dimen/space_4"
         android:text="您还未绑定主治医生，点击下方扫码按钮，扫描医生二维码进行绑定。
@@ -42,8 +42,10 @@
 
     <ImageView
         android:id="@+id/ib_scan"
-        android:layout_width="@dimen/space_240"
-        android:layout_height="@dimen/space_240"
+        android:layout_width="@dimen/space_324"
+        android:layout_height="@dimen/space_324"
+        android:layout_marginLeft="@dimen/len_24"
+        android:layout_marginRight="@dimen/len_24"
         android:background="@drawable/bg_iv"
         android:contentDescription="@null"
         android:src="@mipmap/ic_group_btn_scan_code" />

@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
+import com.sumian.sleepdoctor.base.BaseFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -65,11 +65,12 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
         ButterKnife.bind(inflate(context, R.layout.lay_scan_2_bind_doctor_default, this));
     }
 
-    public void setOnGrantedCallback(OnGrantedCallback onGrantedCallback) {
+    public RequestScanQrCodeView setOnGrantedCallback(OnGrantedCallback onGrantedCallback) {
         mOnGrantedCallback = onGrantedCallback;
+        return this;
     }
 
-    public RequestScanQrCodeView setFragment(GroupFragment fragment) {
+    public RequestScanQrCodeView setFragment(BaseFragment fragment) {
         if (mFragmentWeakReference == null) {
             mFragmentWeakReference = new WeakReference<>(fragment);
         }

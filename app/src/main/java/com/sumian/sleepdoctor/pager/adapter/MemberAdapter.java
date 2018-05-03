@@ -62,17 +62,17 @@ public class MemberAdapter extends BaseRecyclerAdapter<PinYinUserProfile> {
 
             RequestOptions options = new RequestOptions();
 
-            if (item.userProfile.role != 3) {
-                options.placeholder(R.mipmap.ic_info_avatar_patient).error(R.mipmap.ic_info_avatar_patient).getOptions();
-                mTvLabel.setBackground(itemView.getResources().getDrawable(R.drawable.bg_chat_assistant_label));
-            } else {
-                options.placeholder(R.mipmap.ic_info_avatar_doctor).error(R.mipmap.ic_info_avatar_doctor).getOptions();
-                mTvLabel.setBackground(itemView.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
-            }
+            //if (item.userProfile.role != 3) {
+            options.placeholder(R.mipmap.ic_info_avatar_patient).error(R.mipmap.ic_info_avatar_patient).getOptions();
+            mTvLabel.setBackground(itemView.getResources().getDrawable(R.drawable.bg_chat_assistant_label));
+            // } else {
+            options.placeholder(R.mipmap.ic_info_avatar_doctor).error(R.mipmap.ic_info_avatar_doctor).getOptions();
+            mTvLabel.setBackground(itemView.getResources().getDrawable(R.drawable.bg_chat_doctor_label));
+            //  }
 
             load(item.userProfile.avatar, options, mCivAvatar);
 
-            formatRoleLabel(item.userProfile.role, mTvLabel);
+            // formatRoleLabel(item.userProfile.role, mTvLabel);
 
             mTvNickname.setText(item.userProfile.nickname);
         }

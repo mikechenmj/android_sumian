@@ -216,8 +216,8 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
 
                             if (tempUserProfile != null) {
                                 tvNickName.setText(tempUserProfile.nickname);
-                                formatRoleLabel(tempUserProfile.role, tvLabel);
-                                formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, civAvatar);
+                               // formatRoleLabel(tempUserProfile.role, tvLabel);
+                               // formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, civAvatar);
                             }
 
                             mUserProfile = tempUserProfile;

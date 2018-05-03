@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
-import com.sumian.sleepdoctor.tab.fragment.DoctorFragment;
+import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.tab.fragment.RecordFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;

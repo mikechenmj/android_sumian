@@ -113,4 +113,8 @@ public class UserProfile implements Serializable, Parcelable {
                 ", doctor=" + doctor +
                 '}';
     }
+
+    public boolean isBindDoctor() {
+        return doctor != null;
+    }
 }

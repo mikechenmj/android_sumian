@@ -120,7 +120,7 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
 
         Collections.sort(pinyinFormatMembers);
 
-        Collections.sort(pinyinFormatMembers, (o1, o2) -> o2.userProfile.role - o1.userProfile.role);
+       // Collections.sort(pinyinFormatMembers, (o1, o2) -> o2.userProfile.role - o1.userProfile.role);
 
         mDecoration.addAllItems(pinyinFormatMembers);
         mMemberAdapter.addAll(pinyinFormatMembers);
@@ -181,10 +181,10 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
         int size = patients.size();
         for (int i = 0; i < size; i++) {
             PinYinUserProfile friend = patients.get(i);
-            if (friend.firstChar.startsWith(str) && friend.userProfile.role == 0) {
-                position = i;
-                break;
-            }
+           // if (friend.firstChar.startsWith(str) && friend.userProfile.role == 0) {
+          //      position = i;
+          //      break;
+          //  }
         }
 
         if (position >= 0) {
