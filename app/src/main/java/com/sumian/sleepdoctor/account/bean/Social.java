@@ -3,13 +3,15 @@ package com.sumian.sleepdoctor.account.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by sm
  * on 2018/2/9.
  * desc:
  */
 
-public class Social implements Parcelable {
+public class Social implements Parcelable, Serializable {
 
     public int id;//第三方绑定id
     public int type;//类型 0:微信

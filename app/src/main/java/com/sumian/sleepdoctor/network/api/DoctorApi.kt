@@ -18,7 +18,7 @@ import retrofit2.http.*
 interface DoctorApi {
 
     @PATCH("authorizations/current")
-    fun refreshTOken(): Call<Token>
+    fun refreshToken(): Call<Token>
 
     @FormUrlEncoded
     @POST("authorizations")

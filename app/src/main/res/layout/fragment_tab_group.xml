@@ -50,7 +50,7 @@
 
     </LinearLayout>
 
-    <com.sumian.sleepdoctor.widget.GroupRequestScanQrCodeView
+    <com.sumian.sleepdoctor.widget.RequestScanQrCodeView
         android:id="@+id/request_scan_qr_code_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

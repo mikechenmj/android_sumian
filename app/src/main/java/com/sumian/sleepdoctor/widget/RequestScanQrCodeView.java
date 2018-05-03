@@ -31,9 +31,9 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class RequestScanQrCodeView extends LinearLayout implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
-    private static final String TAG = GroupRequestScanQrCodeView.class.getSimpleName();
+    private static final String TAG = RequestScanQrCodeView.class.getSimpleName();
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
 
@@ -43,16 +43,15 @@ public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnC
     private WeakReference<Fragment> mFragmentWeakReference;
     private OnGrantedCallback mOnGrantedCallback;
 
-
-    public GroupRequestScanQrCodeView(Context context) {
+    public RequestScanQrCodeView(Context context) {
         this(context, null);
     }
 
-    public GroupRequestScanQrCodeView(Context context, @Nullable AttributeSet attrs) {
+    public RequestScanQrCodeView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public GroupRequestScanQrCodeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public RequestScanQrCodeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
         setPadding(getResources().getDimensionPixelSize(R.dimen.space_32), 0, getResources().getDimensionPixelSize(R.dimen.space_32), 0);
@@ -63,14 +62,14 @@ public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnC
     }
 
     private void init(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.lay_scan_join_group_default, this));
+        ButterKnife.bind(inflate(context, R.layout.lay_scan_2_bind_doctor_default, this));
     }
 
     public void setOnGrantedCallback(OnGrantedCallback onGrantedCallback) {
         mOnGrantedCallback = onGrantedCallback;
     }
 
-    public GroupRequestScanQrCodeView setFragment(GroupFragment fragment) {
+    public RequestScanQrCodeView setFragment(GroupFragment fragment) {
         if (mFragmentWeakReference == null) {
             mFragmentWeakReference = new WeakReference<>(fragment);
         }
@@ -84,7 +83,7 @@ public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnC
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         Log.e(TAG, "onPermissionsGranted: ----------->");
-        permissionsGranted();
+        //permissionsGranted();
     }
 
     @Override
@@ -99,7 +98,7 @@ public class GroupRequestScanQrCodeView extends LinearLayout implements View.OnC
 
     @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)
     public void requestCodeQRCodePermissions() {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (!EasyPermissions.hasPermissions(getContext(), perms)) {
             Fragment fragment = mFragmentWeakReference.get();
             EasyPermissions.requestPermissions(fragment, getResources().getString(R.string.scan_qr_code_warn), REQUEST_CODE_QR_CODE_PERMISSIONS, perms);

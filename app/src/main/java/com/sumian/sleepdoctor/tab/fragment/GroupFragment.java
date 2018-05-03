@@ -27,7 +27,7 @@ import com.sumian.sleepdoctor.tab.bean.GroupItem;
 import com.sumian.sleepdoctor.tab.contract.GroupContract;
 import com.sumian.sleepdoctor.tab.presenter.GroupPresenter;
 import com.sumian.sleepdoctor.widget.GroupErrorView;
-import com.sumian.sleepdoctor.widget.GroupRequestScanQrCodeView;
+import com.sumian.sleepdoctor.widget.RequestScanQrCodeView;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeDelegate, GroupRequestScanQrCodeView.OnGrantedCallback,
+public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeDelegate, RequestScanQrCodeView.OnGrantedCallback,
         GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener, ChatEngine.OnMsgCallback, ChatEngine.OnUpdateUnReadMsgCountCallback {
 
     @BindView(R.id.title_bar)
@@ -55,7 +55,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     GroupErrorView mGroupErrorView;
 
     @BindView(R.id.request_scan_qr_code_view)
-    GroupRequestScanQrCodeView mRequestScanQrCodeView;
+    RequestScanQrCodeView mRequestScanQrCodeView;
 
     private GroupAdapter mGroupAdapter;
     private boolean mIsRefresh;

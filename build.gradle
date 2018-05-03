@@ -3,7 +3,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
 
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.41'
 
     repositories {
         google()
