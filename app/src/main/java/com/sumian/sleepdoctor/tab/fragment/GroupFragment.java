@@ -20,7 +20,7 @@ import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout;
-import com.sumian.sleepdoctor.pager.activity.ScanQrCodeActivity;
+import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity;
 import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.tab.bean.GroupItem;
@@ -131,8 +131,8 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onGrantedSuccess() {
-        ScanQrCodeActivity.show(getContext(), ScanQrCodeActivity.class);
-        // commitReplace(ScanQrCodeActivity.class);
+        ScanDoctorQrCodeActivity.show(getContext(), ScanDoctorQrCodeActivity.class);
+        // commitReplace(ScanDoctorQrCodeActivity.class);
     }
 
     @Override

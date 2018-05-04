@@ -28,7 +28,7 @@
         app:qrcv_isShowTipTextAsSingleLine="false"
         app:qrcv_isTipTextBelowRect="true"
         app:qrcv_maskColor="#33FFFFFF"
-        app:qrcv_qrCodeTipText="@string/scan_qr_code_note"
+        app:qrcv_qrCodeTipText="@string/scan_2_doctor_desc"
         app:qrcv_rectWidth="280dp"
         app:qrcv_scanLineColor="@color/colorPrimaryDark"
         app:qrcv_scanLineMargin="0dp"

@@ -149,6 +149,7 @@
     <string name="error_message_center">没有消息提醒</string>
     <string name="error_message_center_desc">您收到医生回复、建议或报告更新，都会在这里收到消息提醒</string>
     <string name="scan_2_bind_doctor">扫码绑定医生</string>
+    <string name="scan_2_doctor_desc">将医生二维码放入框内，可自动扫描</string>
 
     <!--doctor module-->
 

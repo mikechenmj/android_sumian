@@ -3,7 +3,9 @@ package com.sumian.sleepdoctor.improve.doctor.fragment
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.improve.doctor.contract.DoctorContract
 import com.sumian.sleepdoctor.improve.doctor.presenter.DoctorPresenter
+import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity
 import com.sumian.sleepdoctor.widget.RequestScanQrCodeView
 import kotlinx.android.synthetic.main.fragment_tab_doctor.*
 
@@ -12,11 +14,15 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback {
-
+class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_doctor
+    }
+
+    override fun initPresenter() {
+        super.initPresenter()
+        DoctorPresenter.initPrensenter(this)
     }
 
     override fun initData() {
@@ -34,8 +40,12 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
         request_scan_qr_code_view.onRequestPermissionsResultDelegate(requestCode, permissions, grantResults)
     }
 
+    override fun bindPresenter(presenter: DoctorContract.Presenter?) {
+        this.mPresenter = presenter as DoctorPresenter
+    }
+
     override fun onGrantedSuccess() {
-        //TODO
+        ScanDoctorQrCodeActivity.show(context, ScanDoctorQrCodeActivity::class.java)
 
     }
 }
