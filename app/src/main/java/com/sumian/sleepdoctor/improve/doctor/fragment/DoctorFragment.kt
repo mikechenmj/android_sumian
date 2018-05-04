@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.improve.doctor.fragment
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.improve.doctor.presenter.DoctorPresenter
 import com.sumian.sleepdoctor.widget.RequestScanQrCodeView
 import kotlinx.android.synthetic.main.fragment_tab_doctor.*
 
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : BaseFragment<Any>(), RequestScanQrCodeView.OnGrantedCallback {
+class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback {
 
 
     override fun getLayoutId(): Int {

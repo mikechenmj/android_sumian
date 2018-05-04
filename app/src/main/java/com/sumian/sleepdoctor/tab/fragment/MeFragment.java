@@ -24,7 +24,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-public class MeFragment extends BaseFragment<UserProfile> implements HomeDelegate, View.OnClickListener {
+@SuppressWarnings("ResultOfMethodCallIgnored")
+public class MeFragment extends BaseFragment implements HomeDelegate, View.OnClickListener {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
