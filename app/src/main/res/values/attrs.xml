@@ -101,4 +101,12 @@
         <attr name="cpv_reachCapRound" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="DoctorServiceItemView">
+        <attr name="dsiv_title">String</attr>
+        <attr name="dsiv_desc">String</attr>
+        <attr name="dsiv_show_price">boolean</attr>
+        <attr name="dsiv_price">float</attr>
+        <attr name="dsiv_image">reference</attr>
+    </declare-styleable>
+
 </resources>

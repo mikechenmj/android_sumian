@@ -43,6 +43,6 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
                 MainActivity.show(WelcomeActivity.this, MainActivity.class);
             }
             finish();
-        }, 500));
+        }, 50));
     }
 }
