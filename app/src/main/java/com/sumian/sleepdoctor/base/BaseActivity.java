@@ -126,7 +126,9 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     }
 
     protected void onRelease() {
-        mPresenter.release();
+        if (mPresenter != null) {
+            mPresenter.release();
+        }
     }
 
     @Override

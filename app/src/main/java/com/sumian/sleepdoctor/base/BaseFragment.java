@@ -141,7 +141,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     }
 
     protected void onRelease() {
-        mPresenter.release();
+        if (mPresenter != null) {
+            mPresenter.release();
+        }
     }
 
     protected void runOnUiThread(Runnable run) {
