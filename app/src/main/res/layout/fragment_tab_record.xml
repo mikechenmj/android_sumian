@@ -23,5 +23,5 @@
     <com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView
         android:id="@+id/dsiv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/doctor_service_item_view_height" />
+        android:layout_height="@dimen/space_130" />
 </LinearLayout>
