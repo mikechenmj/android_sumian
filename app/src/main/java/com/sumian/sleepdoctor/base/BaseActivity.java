@@ -33,7 +33,7 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public abstract class BaseActivity<Presenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
+public abstract class BaseActivity<Presenter extends BasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Unbinder mBind;
@@ -90,11 +90,11 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         onRelease();
         getLifecycle().removeObserver(this);
         this.mBind.unbind();
         this.mRoot = null;
-        super.onDestroy();
     }
 
     public void setStatusBar() {
@@ -126,7 +126,7 @@ public abstract class BaseActivity<Presenter> extends AppCompatActivity implemen
     }
 
     protected void onRelease() {
-
+        mPresenter.release();
     }
 
     @Override

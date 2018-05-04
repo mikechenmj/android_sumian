@@ -31,7 +31,7 @@ import butterknife.Unbinder;
  * <p>
  * desc: base fragment
  */
-public abstract class BaseFragment<Presenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
+public abstract class BaseFragment<Presenter extends BasePresenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
 
@@ -109,9 +109,9 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
 
     @Override
     public void onDetach() {
-        onRelease();
-        getLifecycle().removeObserver(this);
         super.onDetach();
+        getLifecycle().removeObserver(this);
+        onRelease();
     }
 
     protected void onRestartInstance(Bundle savedInstanceState) {
@@ -141,7 +141,7 @@ public abstract class BaseFragment<Presenter> extends Fragment implements Defaul
     }
 
     protected void onRelease() {
-
+        mPresenter.release();
     }
 
     protected void runOnUiThread(Runnable run) {

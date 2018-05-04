@@ -1,12 +1,13 @@
 package com.sumian.sleepdoctor.network.engine
 
+import com.google.gson.GsonBuilder
 import com.sumian.sleepdoctor.BuildConfig
 import com.sumian.sleepdoctor.network.api.DoctorApi
 import com.sumian.sleepdoctor.network.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.fastjson.FastJsonConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
@@ -36,7 +37,7 @@ class NetEngine {
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(FastJsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .callFactory(okHttpClient)
                 .build()
 
