@@ -3,7 +3,6 @@ package com.sumian.common.operator;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * Created by jzz

@@ -23,7 +23,7 @@ public class ToastHelper {
 
     private Toast mToast;
     private int mYOffset;
-    private Handler mUiHandle = new Handler(Looper.getMainLooper());
+    private Handler mUiHandler = new Handler(Looper.getMainLooper());
 
     private Context mContext;
 
@@ -84,7 +84,7 @@ public class ToastHelper {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             run.run();
         } else {
-            INSTANCE.mUiHandle.post(run);
+            INSTANCE.mUiHandler.post(run);
         }
     }
 }

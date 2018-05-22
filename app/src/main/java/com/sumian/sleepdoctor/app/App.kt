@@ -28,6 +28,8 @@ class App : Application() {
 
         mAppContext = this
 
+        AppManager.init().with(this)
+
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
 
         val cb = object : QbSdk.PreInitCallback {
@@ -46,9 +48,9 @@ class App : Application() {
         //x5内核初始化接口
         QbSdk.initX5Environment(this, cb)
 
-        AppManager.init().with(this)
 
     }
 
 
 }
+

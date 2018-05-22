@@ -1,3 +1,7 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -10,11 +14,35 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     signingConfigs {
-        config {
+
+        debug {
             keyAlias APP_KEY_ALIAS
             keyPassword APP_KEY_PASSWORD
             storePassword APP_STORE_PASSWORD
-            storeFile file(keystore_path)
+
+            storeFile file(DEBUG_STORE_FILE)
+            //加载资源
+            //Properties properties = new Properties()
+            // InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+            //  properties.load(inputStream)
+
+            // 读取文件
+
+            //def url = new URL("http://key.sumian.com/sumian_release.keystore")
+            //def keystore_file = new File(url.toURI())
+            //  storeFile file(keystore_file)
+
+        }
+
+        release {
+            keyAlias APP_KEY_ALIAS
+            keyPassword APP_KEY_PASSWORD
+            storePassword APP_STORE_PASSWORD
+
+            def userName = System.getProperty("user.name")//根据 os 账户信息动态生成keystore 保存路径
+            def keystore_path = Os.isFamily(Os.FAMILY_WINDOWS) ? WINDOWS_RELEASE_STORE_FILE : LINUX_RELEASE_STORE_FILE
+            keystore_path = keystore_path.replace("{user_name}", userName)
+
             //加载资源
             //Properties properties = new Properties()
             //InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
@@ -22,78 +50,67 @@ android {
 
             //读取文件
             //def keystore_file = properties.getProperty('RELEASE_STORE_FILE')
+
+            storeFile file(keystore_path)
         }
+
     }
 
     defaultConfig {
-        applicationId rootProject.ext.applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
-        signingConfig signingConfigs.config
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
-        buildConfigField("String", "BASE_URL", "${rootProject.ext.base_url}")
-
-        buildConfigField("String", "BASE_H5_URL", "${rootProject.ext.base_h5_url}")
-        buildConfigField("String", "H5_URI_QUESTION", H5_URI_QUESTION)
-        buildConfigField("String", "H5_URI_DOCTOR_SERVICE", H5_URI_DOCTOR_SERVICE)
-        buildConfigField("String", "H5_URI_DOCTOR", H5_URI_DOCTOR)
-
-        buildConfigField("String", "LEANCLOUD_APP_ID", "${rootProject.ext.leancloud_id}")
-        buildConfigField("String", "LEANCLOUD_APP_KEY", "${rootProject.ext.leancloud_key}")
         buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
         buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
-        buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", "${rootProject.ext.leancloud_broadcast_conversation_id}")
-
-        buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", "${rootProject.ext.default_apk_download_url}")
-        buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
-        buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
-        buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
-
-        buildConfigField("String", "WECHAT_APP_ID", "${rootProject.ext.wechat_app_id}")
-        buildConfigField("String", "WECHAT_APP_SECRET", "${rootProject.ext.wechat_app_secret}")
-
-        flavorDimensions 'yellow'
 
         // Enabling multidex support.
         multiDexEnabled true
 
         ndk {
             //设置支持的SO库架构
-            abiFilters 'armeabi', 'armeabi-v7a'
+            abiFilters 'armeabi', 'armeabi-v7a'//,'arm64-v8a'
         }
+    }
+
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
     }
 
     buildTypes {
 
         release {
-            debuggable rootProject.ext.debuggable
-            jniDebuggable rootProject.ext.jniDebuggable
-            signingConfig signingConfigs.config
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.release
             minifyEnabled rootProject.ext.minifyEnabled
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
-            resValue "string", "app_name", rootProject.ext.app_name
+            resValue("string", "umeng_app_key", OFFICIAL_UMENG_APP_KEY)
+            buildConfigField("String", "WECHAT_APP_ID", OFFICIAL_WECHAT_APP_ID)
+            buildConfigField("String", "WECHAT_APP_SECRET", OFFICIAL_WECHAT_APP_SECRET)
         }
 
         debug {
-            debuggable rootProject.ext.debuggable
-            jniDebuggable rootProject.ext.jniDebuggable
-            signingConfig signingConfigs.config
+            debuggable true
+            jniDebuggable true
+            signingConfig signingConfigs.debug
             minifyEnabled rootProject.ext.minifyEnabled
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
-            resValue "string", "app_name", rootProject.ext.app_name
+
+            resValue("string", "umeng_app_key", TEST_UMENG_APP_KEY)
+            buildConfigField("String", "WECHAT_APP_ID", DEV_WECHAT_APP_ID)
+            buildConfigField("String", "WECHAT_APP_SECRET", DEV_WECHAT_APP_SECRET)
         }
 
     }
@@ -115,13 +132,103 @@ android {
     }
 
     //product flavors
+    flavorDimensions "market", "environment"
     productFlavors {
 
-        devolop {}
+        def app_name = "睡眠医生"
+        def application_id = rootProject.ext.applicationId
+        def version_name = rootProject.ext.versionName
 
-        alpha {}
+        yingyongbao {
+            dimension "market"
 
-        yingyongbao {}
+            buildConfigField("String", "H5_URI_QUESTION", H5_URI_QUESTION)
+            buildConfigField("String", "H5_URI_DOCTOR_SERVICE", H5_URI_DOCTOR_SERVICE)
+            buildConfigField("String", "H5_URI_DOCTOR", H5_URI_DOCTOR)
+        }
+
+        devolop {
+            dimension "environment"
+
+            def real_app_name = "${app_name}-Dev"
+
+            applicationId = application_id
+            applicationIdSuffix = null
+            versionName = version_name
+            versionNameSuffix = "-dev"
+
+            buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
+
+            buildConfigField("String", "BASE_URL", BASE_DEV_URL)
+
+            buildConfigField("String", "BASE_H5_URL", BASE_DEV_H5_URL)
+
+            buildConfigField("String", "LEANCLOUD_APP_ID", DEV_LEANCLOUD_APP_ID)
+            buildConfigField("String", "LEANCLOUD_APP_KEY", DEV_LEANCLOUD_APP_KEY)
+            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
+            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
+            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
+
+            buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
+            buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
+            buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
+            buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
+
+            resValue "string", "app_name", real_app_name
+            println("${real_app_name}")
+        }
+
+        alpha {
+            dimension "environment"
+
+            def real_app_name = "${app_name}-Test"
+
+            applicationId = application_id
+            applicationIdSuffix = null
+            versionName = version_name
+            versionNameSuffix = "-test"
+
+
+            buildConfigField("String", "BASE_URL", BASE_TEST_URL)
+
+            buildConfigField("String", "BASE_H5_URL", BASE_TEST_H5_URL)
+
+            buildConfigField("String", "LEANCLOUD_APP_ID", TEST_LEANCLOUD_APP_ID)
+            buildConfigField("String", "LEANCLOUD_APP_KEY", TEST_LEANCLOUD_APP_KEY)
+            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
+            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
+            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
+
+            buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
+            buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
+            buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
+            buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
+
+            resValue "string", "app_name", real_app_name
+            println("${real_app_name}")
+        }
+
+        official {
+            dimension "environment"
+
+            applicationId = application_id
+            applicationIdSuffix = null
+            versionName = version_name
+            versionNameSuffix = "-release"
+
+            buildConfigField("String", "BASE_URL", BASE_OFFICIAL_URL)
+
+            buildConfigField("String", "BASE_H5_URL", BASE_OFFICIAL_H5_URL)
+
+            buildConfigField("String", "LEANCLOUD_APP_ID", OFFICIAL_LEANCLOUD_APP_ID)
+            buildConfigField("String", "LEANCLOUD_APP_KEY", OFFICIAL_LEANCLOUD_APP_KEY)
+            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
+            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
+            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
+
+            resValue "string", "app_name", app_name
+            println("${app_name}")
+        }
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name, scheme: "${SCHEME}", host: "${HOST}"]
@@ -141,9 +248,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def buildTime = new Date().format('yyyyMMddHHmmSS').toLong()
-
-            def fileName = "${rootProject.ext.app_name}_${variant.flavorName}_${buildTime}.apk"
+            def fileName = "${variant.flavorName}_${variant.flavorName}_${formatDate()}.apk"
 
             println fileName
 
@@ -155,14 +260,16 @@ android {
         }
     }
 
-    if (rootProject.ext.buildType) {//默认在开发模式下,禁用 png 优化,加速编译
-        // aaptOptions.cruncherEnabled = false
-    }
-
     //启动 as 自带的 kotlin parcelize 序列化功能
     androidExtensions {
         experimental = true
     }
+}
+
+static def formatDate() {
+    def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
+    def formatDate = sdf.format(new Date())
+    return formatDate
 }
 
 dependencies {
@@ -173,6 +280,10 @@ dependencies {
     })
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation project(':common')
+    implementation project(':open')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
@@ -224,8 +335,9 @@ dependencies {
     implementation 'com.pingxx:pingpp-alipay:2.1.17'
     //拼音分词
     implementation 'com.belerweb:pinyin4j:2.5.0'
-    implementation project(':common')
-    implementation project(':open')
+
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.1'
+    implementation 'cn.bingoogolapple:bga-qrcode-core:1.2.1'
 }
 
 
