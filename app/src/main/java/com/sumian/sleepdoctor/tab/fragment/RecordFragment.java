@@ -5,6 +5,7 @@ import android.view.View;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
+import com.sumian.sleepdoctor.widget.IconToast;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 
@@ -31,10 +32,9 @@ public class RecordFragment extends BaseFragment {
             ActionLoadingDialog loadingDialog = new ActionLoadingDialog();
             loadingDialog.show(getFragmentManager());
         });
-
-        showOpenNotificationDialog();
     }
 
+    @SuppressWarnings("unused")
     private void showOpenNotificationDialog() {
         SumianAlertDialog.create()
                 .setCloseIconVisible(true)

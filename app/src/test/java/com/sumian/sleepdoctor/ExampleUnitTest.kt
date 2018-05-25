@@ -1,8 +1,7 @@
 package com.sumian.sleepdoctor
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import java.util.*
 
 /**
@@ -18,13 +17,15 @@ class ExampleUnitTest {
 
     @Test
     fun printDimen() {
-        for (i in 1..500) {
-            if (i % 2 == 1) {
-                continue
-            }
-            val format = String.format(Locale.getDefault(), "<dimen name=\"space_$i\">${i}dp</dimen>")
-            System.out.println(format)
+        for (i in 10 downTo 1) {
+            val color = (25.5 * i).toInt()
+            val hex = Integer.toHexString(color).toUpperCase()
+            System.out.println(String.format(Locale.getDefault(),
+                    "<color name=\"%s_%d\">#%s%s</color>",
+                    "black",
+                    i * 10,
+                    hex,
+                    "000000"))
         }
-
     }
 }

@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.app
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import com.blankj.utilcode.util.Utils
 import com.tencent.smtt.sdk.QbSdk
 
 /**
@@ -29,7 +30,7 @@ class App : Application() {
         mAppContext = this
 
         AppManager.init().with(this)
-
+        Utils.init(this)
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
 
         val cb = object : QbSdk.PreInitCallback {
