@@ -6,14 +6,11 @@ import android.graphics.Color;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.widget.shapeImageView.progress.GlideApp;
 
@@ -93,6 +90,7 @@ public class DoctorServiceItemView extends RelativeLayout {
         mImageView.setImageResource(drawableId);
     }
 
+    @SuppressWarnings("unused")
     public void loadImage(String uri) {
         GlideApp.with(this)
                 .load(uri)

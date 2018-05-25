@@ -152,7 +152,7 @@
     <string name="scan_2_doctor_desc">将医生二维码放入框内，可自动扫描</string>
     <string name="opening_wechat">正在打开微信中…</string>
     <string name="no_have_wechat">手机上未安装微信客户端</string>
-
+    <string name="confirm">确定</string>
     <!--doctor module-->
 
 </resources>
