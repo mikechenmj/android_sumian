@@ -37,5 +37,12 @@
     <color name="loading_bg_color">#96000000</color>
 
     <color name="black_alpha_48">#30000000</color>
+    <!--sleep record progress-->
+    <color name="sleep_record_progress_high_start">@color/b6_color</color>
+    <color name="sleep_record_progress_high_end">@color/b7_color</color>
+    <color name="sleep_record_progress_middle_start">#F2DA91</color>
+    <color name="sleep_record_progress_middle_end">@color/b4_color</color>
+    <color name="sleep_record_progress_low_start">#F2A291</color>
+    <color name="sleep_record_progress_low_end">@color/t4_color</color>
 
 </resources>

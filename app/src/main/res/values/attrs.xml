@@ -102,11 +102,15 @@
     </declare-styleable>
 
     <declare-styleable name="DoctorServiceItemView">
-        <attr name="dsiv_title">String</attr>
-        <attr name="dsiv_desc">String</attr>
-        <attr name="dsiv_show_price">boolean</attr>
-        <attr name="dsiv_price">float</attr>
-        <attr name="dsiv_image">reference</attr>
+        <attr name="dsiv_title" format="string"/>
+        <attr name="dsiv_desc" format="string"/>
+        <attr name="dsiv_show_price" format="boolean"/>
+        <attr name="dsiv_price" format="float"/>
+        <attr name="dsiv_image" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="ProgressView" >
+        <attr name="pv_ring_width" format="float"/>
+        <attr name="pv_ring_bg_color" format="color"/>
+    </declare-styleable>
 </resources>
