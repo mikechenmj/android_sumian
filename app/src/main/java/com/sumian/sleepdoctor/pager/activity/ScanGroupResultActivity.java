@@ -18,6 +18,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.chat.activity.MsgActivity;
 import com.sumian.sleepdoctor.chat.widget.CustomPopWindow;
+import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity;
 import com.sumian.sleepdoctor.pager.contract.GroupDetailContract;
 import com.sumian.sleepdoctor.pager.presenter.GroupDetailPresenter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
@@ -159,7 +160,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
 
                 break;
             case R.id.bt_re_scan:
-                ScanQrCodeActivity.show(this, ScanQrCodeActivity.class);
+                ScanDoctorQrCodeActivity.show(this, ScanDoctorQrCodeActivity.class);
                 finish();
                 break;
             default:

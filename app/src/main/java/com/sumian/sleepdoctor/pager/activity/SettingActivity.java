@@ -57,7 +57,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
                 break;
             case R.id.about_me:
                 Bundle extras = new Bundle();
-                extras.putInt(ConfigActivity.ARGS_CONFIG_TYPE, ConfigActivity.USER_AGREEMENT);
+                extras.putInt(ConfigActivity.ARGS_CONFIG_TYPE, ConfigActivity.ABOUT_ME);
                 ConfigActivity.show(this, ConfigActivity.class, extras);
                 break;
             case R.id.bt_logout:

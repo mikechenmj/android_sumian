@@ -13,12 +13,4 @@
     <!--suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
-
-    <application>
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="@string/umeng_app_key" />
-
-    </application>
-
 </manifest>

@@ -123,7 +123,7 @@ public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListe
     protected void initData() {
         super.initData();
         mWebView.loadUrl(mLoadUrl);
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        mWebView.setWebChromeClient(new WebChromeClient() {
 
 
         });

@@ -281,8 +281,8 @@
     <dimen name="divider_px_1">1px</dimen>
 
     <!--default toast for system-->
-    <dimen name="toast_space_64">64dp</dimen>
-    <dimen name="toast_space_100">100dp</dimen>
+    <dimen name="toast_space_64">@dimen/space_64</dimen>
+    <dimen name="toast_space_100">@dimen/space_100</dimen>
 
 </resources>
 

@@ -1,17 +1,19 @@
-package com.sumian.sleepdoctor.pager.activity;
+package com.sumian.sleepdoctor.improve.doctor.activity;
 
 import android.Manifest;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.improve.browser.X5BrowserActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -30,7 +32,9 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class ScanQrCodeActivity extends BaseActivity implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
+public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
+
+    private static final String TAG = ScanDoctorQrCodeActivity.class.getSimpleName();
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
 
@@ -42,15 +46,16 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_scan_qr_code;
+        return R.layout.activity_main_scan_doctor_qr_code;
     }
 
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        StatusBarUtil.setTranslucent(this);
-        StatusBarUtil.setTranslucent(this, 0);
+        StatusBarUtil.setTransparent(this);
         this.mZXingView.setDelegate(this);
+
+
     }
 
     @Override
@@ -76,6 +81,7 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onScanQRCodeSuccess(String result) {
+        Log.e(TAG, "onScanQRCodeSuccess: --------scan--->" + result);
         vibrate();
 
         String decodeUrl = null;
@@ -85,25 +91,27 @@ public class ScanQrCodeActivity extends BaseActivity implements View.OnClickList
             e.printStackTrace();
         }
 
-        if (!TextUtils.isEmpty(decodeUrl) && (decodeUrl.startsWith("http") || decodeUrl.startsWith("https"))) {
-            if (decodeUrl.contains("scheme=sleepdoctor://addgroup")) {
-                String scheme = decodeUrl.substring(decodeUrl.indexOf("scheme"));
-                String groupId = scheme.substring(scheme.indexOf("id=") + 3);
+        Log.e(TAG, "onScanQRCodeSuccess: -----decodeUrl--->" + decodeUrl);
 
-                Bundle args = new Bundle();
-                args.putInt(ScanGroupResultActivity.ARGS_GROUP_ID, Integer.parseInt(groupId, 10));
-                ScanGroupResultActivity.show(this, ScanGroupResultActivity.class, args);
-                finish();
-            } else {
-                showSnackbar();
-            }
-        } else {
-            showSnackbar();
-        }
-        this.mZXingView.startSpot();
+        Uri uri = Uri.parse(decodeUrl);
+
+        Bundle extras = new Bundle();
+
+        String uriQuery = Uri.encode(uri.getQueryParameter("scheme"), "utf-8");
+        Log.e(TAG, "onScanQRCodeSuccess: ----uriQuery------>" + uriQuery);
+
+        String encodedPath = uri.getEncodedPath();
+        Log.e(TAG, "onScanQRCodeSuccess: ---encodedPath------>" + encodedPath);
+
+        //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
+        extras.putString(X5BrowserActivity.ARGS_URL, decodeUrl);
+        X5BrowserActivity.show(this, X5BrowserActivity.class, extras);
+
+        String encodedQuery = uri.getEncodedQuery();
+        Log.e(TAG, "onScanQRCodeSuccess: ------encodedQuery----->" + encodedQuery);
     }
 
-    private void showSnackbar() {
+    private void showSnackBar() {
         Snackbar.make(mFrameLayout, R.string.invalid_qr_code, Snackbar.LENGTH_LONG).setAction(R.string.re_scan_qr_code, v -> {
 
         }).show();

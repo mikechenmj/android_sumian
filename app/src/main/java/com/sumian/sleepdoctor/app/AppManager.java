@@ -110,8 +110,9 @@ public final class AppManager implements Observer<Boolean> {
             this.mChatEngine = new ChatEngine(context);
         }
 
-        if (mOpenEngine == null)
-            this.mOpenEngine = new OpenEngine().register(context, BuildConfig.DEBUG);
+        if (mOpenEngine == null) {
+            this.mOpenEngine = new OpenEngine().register(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+        }
 
     }
 
