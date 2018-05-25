@@ -92,4 +92,20 @@
         <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
+
+    <style name="TopNotificationText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_40</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="TopNotificationText.Blue">
+        <item name="android:background">@color/b5_color</item>
+    </style>
+
+    <style name="TopNotificationText.Red">
+        <item name="android:background">#F0918E</item>
+    </style>
 </resources>
