@@ -15,26 +15,7 @@ android {
 
     signingConfigs {
 
-        debug {
-            keyAlias APP_KEY_ALIAS
-            keyPassword APP_KEY_PASSWORD
-            storePassword APP_STORE_PASSWORD
-
-            storeFile file(DEBUG_STORE_FILE)
-            //加载资源
-            //Properties properties = new Properties()
-            // InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
-            //  properties.load(inputStream)
-
-            // 读取文件
-
-            //def url = new URL("http://key.sumian.com/sumian_release.keystore")
-            //def keystore_file = new File(url.toURI())
-            //  storeFile file(keystore_file)
-
-        }
-
-        release {
+        configs {
             keyAlias APP_KEY_ALIAS
             keyPassword APP_KEY_PASSWORD
             storePassword APP_STORE_PASSWORD
@@ -72,7 +53,7 @@ android {
 
         ndk {
             //设置支持的SO库架构
-            abiFilters 'armeabi', 'armeabi-v7a'//,'arm64-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
@@ -85,7 +66,7 @@ android {
         release {
             debuggable false
             jniDebuggable false
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.configs
             minifyEnabled rootProject.ext.minifyEnabled
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
@@ -100,7 +81,7 @@ android {
         debug {
             debuggable true
             jniDebuggable true
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.configs
             minifyEnabled rootProject.ext.minifyEnabled
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
@@ -248,7 +229,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def fileName = "${variant.flavorName}_${variant.flavorName}_${formatDate()}.apk"
+            def fileName = "睡眠医生_${variant.flavorName}_${formatDate()}.apk"
 
             println fileName
 
@@ -280,10 +261,8 @@ dependencies {
     })
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     implementation project(':common')
     implementation project(':open')
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
@@ -319,9 +298,9 @@ dependencies {
     // Java8 support for Lifecycles
     implementation 'android.arch.lifecycle:common-java8:1.1.1'
     // LeanCloud 基础包
-    implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.6'
+    implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.7'
     // 推送与实时聊天需要的包
-    implementation('cn.leancloud.android:avoscloud-push:v4.6.6@aar') { transitive = true }
+    implementation('cn.leancloud.android:avoscloud-push:v4.6.7@aar') { transitive = true }
     //support emoji
     implementation 'com.android.support:support-emoji-appcompat:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
@@ -335,7 +314,6 @@ dependencies {
     implementation 'com.pingxx:pingpp-alipay:2.1.17'
     //拼音分词
     implementation 'com.belerweb:pinyin4j:2.5.0'
-
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.1'
     implementation 'cn.bingoogolapple:bga-qrcode-core:1.2.1'
 }

@@ -21,6 +21,7 @@ import com.sumian.sleepdoctor.chat.player.VoicePlayer;
 import com.sumian.sleepdoctor.network.api.DoctorApi;
 import com.sumian.sleepdoctor.network.engine.NetEngine;
 import com.sumian.sleepdoctor.tab.model.GroupViewModel;
+import com.tencent.smtt.sdk.QbSdk;
 
 /**
  * Created by jzz
@@ -28,7 +29,7 @@ import com.sumian.sleepdoctor.tab.model.GroupViewModel;
  * desc:
  */
 
-public final class AppManager implements Observer<Boolean> {
+public final class AppManager implements Observer<Boolean>, QbSdk.PreInitCallback {
 
     private static final String TAG = AppManager.class.getSimpleName();
 
@@ -98,6 +99,11 @@ public final class AppManager implements Observer<Boolean> {
         ToastHelper.init(context);
         EmojiCompat.Config config = new BundledEmojiCompatConfig(context);
         EmojiCompat.init(config);
+
+        //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+        //x5内核初始化接口
+        QbSdk.initX5Environment(context, this);
+
         if (Holder.INSTANCE.mAccountViewModel == null) {
             Holder.INSTANCE.mAccountViewModel = new AccountViewModel((Application) context);
             Holder.INSTANCE.mAccountViewModel.LoadToken();
@@ -121,5 +127,17 @@ public final class AppManager implements Observer<Boolean> {
             mTokenInvalidStateLiveData.removeObserver(this);
         }
         Holder.INSTANCE = null;
+    }
+
+    @Override
+    public void onCoreInitFinished() {
+        Log.e(TAG, "onCoreInitFinished: -----x5 webview' core  初始化完成----->");
+    }
+
+    @Override
+    public void onViewInitFinished(boolean isX5Core) {
+        //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+        Log.e(TAG, " onViewInitFinished is " + isX5Core);
+
     }
 }
