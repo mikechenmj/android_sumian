@@ -25,6 +25,7 @@
         android:layout_height="@dimen/space_130" />
 
     <com.sumian.sleepdoctor.improve.record.view.ProgressView
+        android:visibility="gone"
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
