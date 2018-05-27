@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/web_view_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0" />
+
+    <com.sumian.sleepdoctor.improve.error.EmptyErrorView
+        android:id="@+id/empty_error_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</merge>

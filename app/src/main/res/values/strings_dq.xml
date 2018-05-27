@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="empty_msg_center_msg">没有消息提醒</string>
+    <string name="empty_msg_center_desc"><b>您收到医生回复、建议或报告更新，</b>都会在这里收到消息提醒</string>
+
+    <string name="empty_report_msg">暂无电子报告</string>
+    <string name="empty_report_desc">报告更新后，我们会在消息中心通知您</string>
+
+    <string name="empty_evaluation_msg">暂无测评记录</string>
+    <string name="empty_evaluation_desc">了解您的睡眠健康及心理状况</string>
+
+    <string name="empty_404_msg">很抱歉！</string>
+    <string name="empty_404_desc">您要访问的页面不存在</string>
+
+    <string name="empty_network_error_msg">网络连接异常</string>
+    <string name="empty_network_error_desc">请查看网络设置或稍后重试</string>
+
+    <string name="emtpy_advisory_msg">暂无相关记录</string>
+    <string name="emtpy_advisory_desc">绑定医生后，可向主治医生咨询</string>
 </resources>
