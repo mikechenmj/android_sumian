@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 
 public class ItemTab extends LinearLayout {
 
+    @SuppressWarnings("unused")
     private static final String TAG = "TabButton";
 
     @BindView(R.id.iv_tab_icon)
@@ -51,18 +52,11 @@ public class ItemTab extends LinearLayout {
 
     private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
         ButterKnife.bind(inflate(context, R.layout.lay_nav_tab_item, this));
-
         setGravity(Gravity.CENTER);
-        setHorizontalGravity(HORIZONTAL);
-        //setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ItemTab);
         String text = typedArray.getString(R.styleable.ItemTab_tab_text);
-
         @DrawableRes int iconId = typedArray.getResourceId(R.styleable.ItemTab_tab_icon, 0);
-
         typedArray.recycle();
-
         mIvIcon.setImageResource(iconId);
         mTvText.setText(text);
     }
@@ -75,6 +69,7 @@ public class ItemTab extends LinearLayout {
     }
 
 
+    @SuppressWarnings("unused")
     public void showDot(int show) {
         mDot.setVisibility(show);
     }
