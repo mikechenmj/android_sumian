@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.tab.fragment.RecordFragment;
 import com.sumian.sleepdoctor.widget.nav.ItemTab;
-import com.sumian.sleepdoctor.widget.nav.NavTab;
+import com.sumian.sleepdoctor.widget.nav.NavTabV2;
 
 import butterknife.BindView;
 
@@ -22,12 +22,13 @@ import butterknife.BindView;
  * desc:
  */
 
-public class MainActivity extends BaseActivity implements NavTab.OnTabChangeListener {
+public class MainActivity extends BaseActivity implements NavTabV2.OnSelectedTabChangeListener {
 
+    @SuppressWarnings("unused")
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    @BindView(R.id.nav_Tab)
-    NavTab mNavTab;
+    @BindView(R.id.nav_tab)
+    NavTabV2 mNavTab;
 
     @BindView(R.id.lay_tab_container)
     FrameLayout mFragmentContainer;
@@ -52,7 +53,7 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
         // mFragmentManagerDelegate = new FragmentManagerDelegate(this)
         //        .bindNavTab(mNavTab);
 
-        mNavTab.setOnTabChangeListener(this);
+        mNavTab.setOnSelectedTabChangeListener(this);
         this.mFragmentManager = getSupportFragmentManager();
 
     }
@@ -68,14 +69,6 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
     protected void onRelease() {
         super.onRelease();
         //mFragmentManagerDelegate.onRelease();
-    }
-
-    @Override
-    public void tab(ItemTab itemTab, int position) {
-        if (mCurrentPosition == position) {
-            return;
-        }
-        initTab(position);
     }
 
     private void initTab(int position) {
@@ -128,5 +121,13 @@ public class MainActivity extends BaseActivity implements NavTab.OnTabChangeList
 
     private void addFragment(Fragment f, String fTag) {
         mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).commitNowAllowingStateLoss();
+    }
+
+    @Override
+    public void onSelectedTabChange(ItemTab itemTab, int position) {
+        if (mCurrentPosition == position) {
+            return;
+        }
+        initTab(position);
     }
 }

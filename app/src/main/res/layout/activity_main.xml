@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,10 +17,38 @@
         android:fitsSystemWindows="true"
         android:focusable="true" />
 
-    <com.sumian.sleepdoctor.widget.nav.NavTab
-        android:id="@+id/nav_Tab"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:visibility="visible" />
+        android:layout_height="@dimen/space_1"
+        android:background="@color/l1_color" />
+
+    <com.sumian.sleepdoctor.widget.nav.NavTabV2
+        android:id="@+id/nav_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
+        android:background="@color/white">
+
+        <com.sumian.sleepdoctor.widget.nav.ItemTab
+            android:id="@+id/tb_record"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/tab_record_icon"
+            app:tab_text="@string/tab_record" />
+
+        <include layout="@layout/lay_nav_tab_divider" />
+
+        <com.sumian.sleepdoctor.widget.nav.ItemTab
+            android:id="@+id/tb_doctor"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/tab_doctor_icon"
+            app:tab_text="@string/tab_doctor" />
+
+        <include layout="@layout/lay_nav_tab_divider" />
+
+        <com.sumian.sleepdoctor.widget.nav.ItemTab
+            android:id="@+id/tb_me"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/tab_me_icon"
+            app:tab_text="@string/tab_me" />
+    </com.sumian.sleepdoctor.widget.nav.NavTabV2>
 
 </LinearLayout>
