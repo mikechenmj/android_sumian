@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.improve.browser.X5BrowserActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -25,6 +24,8 @@ import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+//import com.sumian.sleepdoctor.improve.browser.X5BrowserActivity;
 
 /**
  * Created by sm
@@ -104,8 +105,9 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
         Log.e(TAG, "onScanQRCodeSuccess: ---encodedPath------>" + encodedPath);
 
         //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
-        extras.putString(X5BrowserActivity.ARGS_URL, decodeUrl);
-        X5BrowserActivity.show(this, X5BrowserActivity.class, extras);
+        // TODO: 2018/5/27 X5BrowserActivity do not exist
+//        extras.putString(X5BrowserActivity.ARGS_URL, decodeUrl);
+//        X5BrowserActivity.show(this, X5BrowserActivity.class, extras);
 
         String encodedQuery = uri.getEncodedQuery();
         Log.e(TAG, "onScanQRCodeSuccess: ------encodedQuery----->" + encodedQuery);
