@@ -1,66 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:clickable="true"
-    android:fitsSystemWindows="true"
-    android:focusable="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:clickable="true"
         android:fitsSystemWindows="true"
-        android:gravity="center"
+        android:focusable="true"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/space_100"
-            android:layout_height="@dimen/space_100"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/space_32"
-            android:contentDescription="@null"
-            android:src="@mipmap/ic_info_avatar_patient"
-            app:civ_border_color="@android:color/white"
-            app:civ_border_width="@dimen/space_4" />
-
-        <TextView
-            android:id="@+id/tv_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_16"
-            android:singleLine="true"
-            android:text="@string/martian"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/font_18" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:background="@color/b1_color"
-        android:orientation="vertical">
-
-        <com.sumian.sleepdoctor.widget.divider.SettingDividerView
-            android:id="@+id/dv_user_info_center"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:type_desc="@string/user_info_center"
-            app:type_icon="@mipmap/ic_info_icon_information" />
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <com.sumian.sleepdoctor.widget.divider.SettingDividerView
-            android:id="@+id/dv_setting"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/space_100"
+                android:layout_height="@dimen/space_100"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_32"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_info_avatar_patient"
+                app:civ_border_color="@android:color/white"
+                app:civ_border_width="@dimen/space_4" />
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_40"
+                android:layout_marginTop="@dimen/space_16"
+                android:singleLine="true"
+                android:text="@string/martian"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_18" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:divider_line_visible="gone"
-            app:type_desc="@string/setting"
-            app:type_icon="@mipmap/ic_info_icon_set" />
+            android:layout_height="match_parent"
+            android:background="@color/b1_color"
+            android:orientation="vertical">
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_user_info_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_10"
+                app:divider_line_visible="gone"
+                app:type_desc="@string/user_info_center"
+                app:type_icon="@mipmap/ic_info_icon_information" />
+
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_my_evaluation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/my_evaluation"
+                app:type_icon="@mipmap/ic_my_evaluation" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_my_consulting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/my_consulting"
+                app:type_icon="@mipmap/ic_my_consulting" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_electric_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_10"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/electric_report"
+                app:type_icon="@mipmap/ic_electric_report" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="gone"
+                app:type_desc="@string/setting"
+                app:type_icon="@mipmap/ic_info_icon_set" />
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
