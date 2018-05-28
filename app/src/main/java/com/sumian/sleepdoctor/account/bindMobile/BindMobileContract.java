@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.contract;
+package com.sumian.sleepdoctor.account.bindMobile;
 
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.base.BasePresenter;

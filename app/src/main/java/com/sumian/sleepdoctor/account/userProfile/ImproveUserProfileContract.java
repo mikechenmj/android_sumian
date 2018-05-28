@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.contract;
+package com.sumian.sleepdoctor.account.userProfile;
 
 import com.sumian.sleepdoctor.base.BasePresenter;
 import com.sumian.sleepdoctor.base.BaseView;

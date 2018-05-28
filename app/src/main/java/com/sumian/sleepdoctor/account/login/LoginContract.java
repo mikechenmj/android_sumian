@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.contract;
+package com.sumian.sleepdoctor.account.login;
 
 import android.app.Activity;
 

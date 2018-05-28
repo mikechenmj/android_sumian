@@ -1,7 +1,6 @@
-package com.sumian.sleepdoctor.account.presenter
+package com.sumian.sleepdoctor.account.bindMobile
 
 import com.sumian.sleepdoctor.account.bean.Token
-import com.sumian.sleepdoctor.account.contract.BindMobileContract
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 

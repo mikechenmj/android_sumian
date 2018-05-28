@@ -1,10 +1,9 @@
-package com.sumian.sleepdoctor.account.presenter;
+package com.sumian.sleepdoctor.account.login;
 
 import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.contract.LoginContract;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.umeng.socialize.UMAuthListener;
@@ -23,8 +22,6 @@ import retrofit2.Call;
  */
 
 public class LoginPresenter implements LoginContract.Presenter {
-
-    private static final String TAG = LoginPresenter.class.getSimpleName();
 
     private LoginContract.View mView;
     private String mOpenUserInfo;

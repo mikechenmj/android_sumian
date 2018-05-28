@@ -10,15 +10,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.activity.LoginActivity;
+import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.pager.activity.WelcomeActivity;
 import com.sumian.sleepdoctor.tab.fragment.GroupFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
-import com.sumian.sleepdoctor.widget.nav.NavTab;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
@@ -42,17 +40,10 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
 
     //private Fragment mPreFragment;//上一个 fragment,可以提前预处理,比如在不可见时,预处理 ui, 当可见时,再去刷新数据
 
-    private NavTab mNavTab;
-
     public FragmentManagerDelegate(AppCompatActivity activity) {
         this.mActivityWeakReference = new WeakReference<>(activity);
         this.mFragmentManager = activity.getSupportFragmentManager();
         this.mBackFragments = new LinkedList<>();
-    }
-
-    public FragmentManagerDelegate bindNavTab(View navTab) {
-        this.mNavTab = (NavTab) navTab;
-        return this;
     }
 
     @Override
@@ -76,12 +67,10 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
 
     @Override
     public void showNavTab() {
-        mNavTab.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideNavTab() {
-        mNavTab.setVisibility(View.GONE);
     }
 
     public void onBackPressedDelegate() {
@@ -128,7 +117,7 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
         if (TextUtils.isEmpty(fName)) {
             mBackFragments.pollLast();
         } else {
-            boolean remove = mBackFragments.remove(fName);
+            mBackFragments.remove(fName);
         }
     }
 
@@ -144,7 +133,7 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
             clx = GroupFragment.class;
         }
         //noinspection unchecked
-       // removeAll(LoginActivity.class, WelcomeActivity.class);
+        // removeAll(LoginActivity.class, WelcomeActivity.class);
         replaceFragment(clx);
     }
 
@@ -154,7 +143,7 @@ public class FragmentManagerDelegate implements BaseFragmentManager<Fragment>, F
         this.mBackFragments.clear();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "unused"})
     private void removeAll(Class<? extends Fragment>... args) {
         for (Class<? extends Fragment> arg : args) {
             mBackFragments.remove(arg.getName());
