@@ -7,12 +7,14 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Dimension;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,8 +30,10 @@ import butterknife.ButterKnife;
  * desc:
  */
 
+@SuppressWarnings("unused")
 public class SettingDividerView extends LinearLayout implements View.OnClickListener {
 
+    public static final int INVALID_RES_ID = -1;
     @BindView(R.id.iv_type)
     ImageView mIvType;
     @BindView(R.id.tv_type_desc)
@@ -44,8 +48,11 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
     View mVDividerLine;
     @BindView(R.id.iv_more)
     ImageView mIvMore;
+    @BindView(R.id.sw)
+    SwitchCompat mSwitch;
 
     private OnShowMoreListener mOnShowMoreListener;
+    private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
 
     public void setOnShowMoreListener(OnShowMoreListener onShowMoreListener) {
         mOnShowMoreListener = onShowMoreListener;
@@ -69,53 +76,43 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         setGravity(Gravity.CENTER);
         setHorizontalGravity(LinearLayout.VERTICAL);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingDividerView);
-
-        @DrawableRes int iconId = typedArray.getResourceId(R.styleable.SettingDividerView_type_icon, -1);
+        @DrawableRes int iconId = typedArray.getResourceId(R.styleable.SettingDividerView_type_icon, INVALID_RES_ID);
         String typeDesc = typedArray.getString(R.styleable.SettingDividerView_type_desc);
         @ColorInt int typeDescColor = typedArray.getColor(R.styleable.SettingDividerView_type_desc_text_color, getResources().getColor(R.color.t1_color));
         // @Dimension float typeDescTextSize = typedArray.getDimension(R.styleable.SettingDividerView_type_desc_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics()));
-
         @ColorInt int dotColor = typedArray.getColor(R.styleable.SettingDividerView_dot_color, Color.RED);
-
         String typeContent = typedArray.getString(R.styleable.SettingDividerView_type_content);
         @ColorInt int typeContentColor = typedArray.getColor(R.styleable.SettingDividerView_type_content_text_color, getResources().getColor(R.color.t1_color));
         // float typeContentTextSize = typedArray.getDimension(R.styleable.SettingDividerView_type_content_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics()));
-
         @ColorInt int dividerLineColor = typedArray.getColor(R.styleable.SettingDividerView_divider_line_color, getResources().getColor(R.color.b1_color));
         @Dimension float dividerLineSize = typedArray.getDimension(R.styleable.SettingDividerView_divider_line_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
-
         int dividerGone = typedArray.getInt(R.styleable.SettingDividerView_divider_line_visible, View.VISIBLE);
-
         int moreGone = typedArray.getInt(R.styleable.SettingDividerView_divider_more_visible, View.VISIBLE);
-
+        boolean showSwitch = typedArray.getBoolean(R.styleable.SettingDividerView_show_switch, false);
         typedArray.recycle();
 
-        if (iconId <= -1) {
+        if (iconId == INVALID_RES_ID) {
             mIvType.setVisibility(GONE);
         } else {
             mIvType.setVisibility(VISIBLE);
             mIvType.setImageResource(iconId);
         }
-
         mTvTypeDesc.setTextColor(typeDescColor);
         // mTvTypeDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, typeDescTextSize);
         mTvTypeDesc.setText(typeDesc);
-
         mVDot.setBackgroundColor(dotColor);
-
         mTvSettingContent.setText(typeContent);
         mTvSettingContent.setTextColor(typeContentColor);
         mTvSettingContent.setVisibility(TextUtils.isEmpty(typeContent) ? GONE : VISIBLE);
         //mTvSettingContent.setTextSize(TypedValue.COMPLEX_UNIT_SP, typeContentTextSize);
-
         mVDividerLine.setBackgroundColor(dividerLineColor);
         ViewGroup.LayoutParams layoutParams = mVDividerLine.getLayoutParams();
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         layoutParams.height = (int) dividerLineSize;
         mVDividerLine.setLayoutParams(layoutParams);
         mVDividerLine.setVisibility(dividerGone);
-
         mIvMore.setVisibility(moreGone);
+        mSwitch.setVisibility(showSwitch ? VISIBLE : GONE);
 
         setOnClickListener(this);
     }
@@ -143,5 +140,23 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
     public interface OnShowMoreListener {
 
         void onShowMore(View v);
+    }
+
+    public void setOnCheckedChangeListener(@Nullable CompoundButton.OnCheckedChangeListener listener) {
+        mOnCheckedChangeListener = listener;
+        mSwitch.setOnCheckedChangeListener(listener);
+    }
+
+    public void setSwitchChecked(boolean checked) {
+        mSwitch.setChecked(checked);
+    }
+
+    /**
+     * 控件初始化数据的时候，可能不需要触发回调，可以调用该方法
+     */
+    public void setSwitchCheckedWithoutCallback(boolean checked) {
+        mSwitch.setOnCheckedChangeListener(null);
+        mSwitch.setChecked(checked);
+        mSwitch.setOnCheckedChangeListener(mOnCheckedChangeListener);
     }
 }

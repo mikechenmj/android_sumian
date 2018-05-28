@@ -78,6 +78,14 @@
             app:srcCompat="@mipmap/ic_info_icon_enter"
             tools:ignore="RtlHardcoded" />
 
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/sw"
+            tools:visibility="visible"
+            android:visibility="gone"
+            tools:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <View

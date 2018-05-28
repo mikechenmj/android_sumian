@@ -23,6 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OtherUserProfileActivity extends BaseActivity implements TitleBar.OnBackListener {
 
+    @SuppressWarnings("unused")
     private static final String TAG = OtherUserProfileActivity.class.getSimpleName();
 
     public static final String ARGS_USER_PROFILE = "args_user_profile";
@@ -54,7 +55,7 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_user_profile;
+        return R.layout.activity_user_profile;
     }
 
     @Override
@@ -72,6 +73,7 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
         updateUserProfile(mUserProfile);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void updateUserProfile(UserProfile userProfile) {
         RequestOptions options = new RequestOptions();
         options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();

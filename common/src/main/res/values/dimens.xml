@@ -1,7 +1,6 @@
 <resources>
 
     <!--font size-->
-
     <dimen name="font_50">50sp</dimen>
     <dimen name="font_48">48sp</dimen>
     <dimen name="font_44">44sp</dimen>
@@ -21,7 +20,6 @@
     <dimen name="font_8">8sp</dimen>
 
     <!--space size-->
-
     <dimen name="space_1">1dp</dimen>
     <dimen name="space_2">2dp</dimen>
     <dimen name="space_3">3dp</dimen>
