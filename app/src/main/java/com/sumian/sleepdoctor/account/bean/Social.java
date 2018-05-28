@@ -3,6 +3,8 @@ package com.sumian.sleepdoctor.account.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.sumian.sleepdoctor.account.model.AccountManager;
+
 import java.io.Serializable;
 
 /**
@@ -11,9 +13,12 @@ import java.io.Serializable;
  * desc:
  */
 
+@SuppressWarnings("WeakerAccess")
 public class Social implements Parcelable, Serializable {
 
+
     public int id;//第三方绑定id
+    @AccountManager.SocialType
     public int type;//类型 0:微信
     public int user_id;//用户id
     public String open_id;//第三方open id
@@ -78,4 +83,5 @@ public class Social implements Parcelable, Serializable {
                 ", updated_at=" + updated_at +
                 '}';
     }
+
 }

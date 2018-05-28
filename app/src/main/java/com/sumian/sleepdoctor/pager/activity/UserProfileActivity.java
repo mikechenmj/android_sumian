@@ -22,6 +22,7 @@ import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.model.AccountManager;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -97,11 +98,15 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         super.initData();
         mUserProfile = AppManager.getAccountViewModel().getToken().user;
         updateUserProfile(mUserProfile);
-
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
             if (token != null)
                 updateUserProfile(token.user);
         });
+        AccountManager accountManager = AccountManager.getInstance();
+        String wechatInfo = accountManager.getWechatInfo();
+        mDvWechat.setSwitchCheckedWithoutCallback(wechatInfo != null);
+        String wechatNickname = accountManager.getWechatNickname();
+        mDvWechat.setContent(wechatNickname);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
