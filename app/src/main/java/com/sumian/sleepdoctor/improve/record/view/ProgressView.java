@@ -11,8 +11,6 @@ import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.sumian.sleepdoctor.R;
 

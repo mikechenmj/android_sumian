@@ -20,9 +20,9 @@ import java.util.List;
 
 public class NavTabV2 extends LinearLayout implements View.OnClickListener {
 
-    public static final int TAB_COUNT = 3;
+    private static final int DEFAULT_TAB_COUNT = 3;
     private OnSelectedTabChangeListener mOnSelectedTabChangeListener;
-    private List<ItemTab> mItemTabs = new ArrayList<>(TAB_COUNT);
+    private List<ItemTab> mItemTabs = new ArrayList<>(DEFAULT_TAB_COUNT);
 
     public NavTabV2(Context context) {
         this(context, null);
