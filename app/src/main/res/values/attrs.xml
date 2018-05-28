@@ -2,7 +2,7 @@
 <resources>
 
     <!--itemTab-->
-    <declare-styleable name="ItemTab">
+    <declare-styleable name="NavigationItem">
         <attr name="tab_icon" format="reference" />
         <attr name="tab_text" format="string|reference" />
     </declare-styleable>

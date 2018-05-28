@@ -17,7 +17,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.sumian.sleepdoctor.widget.nav.ItemTab
+        <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_record"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:layout_height="@dimen/space_24"
             android:background="@color/l1_color" />
 
-        <com.sumian.sleepdoctor.widget.nav.ItemTab
+        <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_doctor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_height="@dimen/space_24"
             android:background="@color/l1_color" />
 
-        <com.sumian.sleepdoctor.widget.nav.ItemTab
+        <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_me"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

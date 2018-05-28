@@ -11,8 +11,8 @@ import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.tab.fragment.RecordFragment;
-import com.sumian.sleepdoctor.widget.nav.ItemTab;
-import com.sumian.sleepdoctor.widget.nav.NavTabV2;
+import com.sumian.sleepdoctor.widget.nav.NavigationItem;
+import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar;
 
 import butterknife.BindView;
 
@@ -22,13 +22,13 @@ import butterknife.BindView;
  * desc:
  */
 
-public class MainActivity extends BaseActivity implements NavTabV2.OnSelectedTabChangeListener {
+public class MainActivity extends BaseActivity implements BottomNavigationBar.OnSelectedTabChangeListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @BindView(R.id.nav_tab)
-    NavTabV2 mNavTab;
+    BottomNavigationBar mNavTab;
 
     @BindView(R.id.lay_tab_container)
     FrameLayout mFragmentContainer;
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements NavTabV2.OnSelectedTab
     }
 
     @Override
-    public void onSelectedTabChange(ItemTab itemTab, int position) {
+    public void onSelectedTabChange(NavigationItem navigationItem, int position) {
         if (mCurrentPosition == position) {
             return;
         }

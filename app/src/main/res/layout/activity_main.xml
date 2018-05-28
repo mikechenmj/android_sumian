@@ -22,13 +22,13 @@
         android:layout_height="@dimen/space_1"
         android:background="@color/l1_color" />
 
-    <com.sumian.sleepdoctor.widget.nav.NavTabV2
+    <com.sumian.sleepdoctor.widget.nav.BottomNavigationBar
         android:id="@+id/nav_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_48"
         android:background="@color/white">
 
-        <com.sumian.sleepdoctor.widget.nav.ItemTab
+        <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_record"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/tab_record_icon"
@@ -36,7 +36,7 @@
 
         <include layout="@layout/lay_nav_tab_divider" />
 
-        <com.sumian.sleepdoctor.widget.nav.ItemTab
+        <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_doctor"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/tab_doctor_icon"
@@ -44,11 +44,11 @@
 
         <include layout="@layout/lay_nav_tab_divider" />
 
-        <com.sumian.sleepdoctor.widget.nav.ItemTab
+        <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_me"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/tab_me_icon"
             app:tab_text="@string/tab_me" />
-    </com.sumian.sleepdoctor.widget.nav.NavTabV2>
+    </com.sumian.sleepdoctor.widget.nav.BottomNavigationBar>
 
 </LinearLayout>

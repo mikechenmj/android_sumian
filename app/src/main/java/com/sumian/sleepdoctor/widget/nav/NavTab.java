@@ -18,18 +18,22 @@ import butterknife.OnClick;
  * on 2017/4/28.
  * <p>
  * desc:
+ *
+ * @deprecated Use {@link BottomNavigationBar} instead
  */
 
+@SuppressWarnings("DeprecatedIsStillUsed")
+@Deprecated
 public class NavTab extends LinearLayout implements View.OnClickListener {
 
     @BindView(R.id.tb_record)
-    ItemTab mTbRecord;
+    NavigationItem mTbRecord;
 
     @BindView(R.id.tb_doctor)
-    ItemTab mTbDoctor;
+    NavigationItem mTbDoctor;
 
     @BindView(R.id.tb_me)
-    ItemTab mTbMe;
+    NavigationItem mTbMe;
 
 
     private OnTabChangeListener mOnTabChangeListener;
@@ -56,6 +60,7 @@ public class NavTab extends LinearLayout implements View.OnClickListener {
         setOrientation(VERTICAL);
     }
 
+    @SuppressWarnings("unused")
     public void setOnTabChangeListener(OnTabChangeListener OnTabChangeListener) {
         mOnTabChangeListener = OnTabChangeListener;
     }
@@ -65,11 +70,12 @@ public class NavTab extends LinearLayout implements View.OnClickListener {
      *
      * @param position viewPager select position
      */
+    @SuppressWarnings("unused")
     public void pageSelected(int position) {
         View v = getChildAt(position);
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
-            if (child instanceof ItemTab) {
+            if (child instanceof NavigationItem) {
                 if (child.getId() == v.getId()) {
                     child.setActivated(true);
                 } else {
@@ -103,14 +109,14 @@ public class NavTab extends LinearLayout implements View.OnClickListener {
                 mTbMe.setActivated(true);
                 break;
         }
-        mOnTabChangeListener.tab((ItemTab) v, position);
+        mOnTabChangeListener.tab((NavigationItem) v, position);
     }
 
     /**
      * 自己主动向外联动
      */
     public interface OnTabChangeListener {
-        void tab(ItemTab itemTab, int position);
+        void tab(NavigationItem navigationItem, int position);
     }
 
 }

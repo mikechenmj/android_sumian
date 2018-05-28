@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  * desc:
  */
 
-public class ItemTab extends LinearLayout {
+public class NavigationItem extends LinearLayout {
 
     @SuppressWarnings("unused")
     private static final String TAG = "TabButton";
@@ -37,15 +37,15 @@ public class ItemTab extends LinearLayout {
     @BindView(R.id.tab_dot)
     View mDot;
 
-    public ItemTab(@NonNull Context context) {
+    public NavigationItem(@NonNull Context context) {
         this(context, null);
     }
 
-    public ItemTab(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public NavigationItem(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ItemTab(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public NavigationItem(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -53,9 +53,9 @@ public class ItemTab extends LinearLayout {
     private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
         ButterKnife.bind(inflate(context, R.layout.lay_nav_tab_item, this));
         setGravity(Gravity.CENTER);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ItemTab);
-        String text = typedArray.getString(R.styleable.ItemTab_tab_text);
-        @DrawableRes int iconId = typedArray.getResourceId(R.styleable.ItemTab_tab_icon, 0);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NavigationItem);
+        String text = typedArray.getString(R.styleable.NavigationItem_tab_text);
+        @DrawableRes int iconId = typedArray.getResourceId(R.styleable.NavigationItem_tab_icon, 0);
         typedArray.recycle();
         mIvIcon.setImageResource(iconId);
         mTvText.setText(text);
