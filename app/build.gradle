@@ -151,7 +151,7 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
-            buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
+            buildConfigField("String", "ABOUT_ME_URL", DEV_ABOUT_ME_URL)
             buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
             buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
 
@@ -181,7 +181,7 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
-            buildConfigField("String", "ABOUT_ME_URL", ABOUT_ME_URL)
+            buildConfigField("String", "ABOUT_ME_URL", TEST_ABOUT_ME_URL)
             buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
             buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
 
@@ -207,6 +207,11 @@ android {
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
 
+            buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
+            buildConfigField("String", "ABOUT_ME_URL", OFFICIAL_ABOUT_ME_URL)
+            buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
+            buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
+
             resValue "string", "app_name", app_name
             println("${app_name}")
         }
@@ -229,7 +234,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def fileName = "睡眠医生_${variant.flavorName}_${formatDate()}.apk"
+            def fileName = "Sleep Doctor_${variant.flavorName}_${formatDate()}.apk"
 
             println fileName
 
@@ -284,8 +289,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
     implementation 'com.qmuiteam:qmui:1.1.0'
     implementation 'com.qmuiteam:arch:0.0.1'
+
     implementation 'net.qiujuer.genius:ui:2.0.0'
     implementation 'net.qiujuer.genius:res:2.0.0'
     //status bar util
