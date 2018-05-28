@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -54,12 +55,11 @@ public class X5WebView extends WebView {
 
     public X5WebView(Context context, AttributeSet attributeSet, int i) {
         super(context, attributeSet, i);
-        initView(context);
+        initView();
     }
 
 
-    private void initView(Context context) {
-
+    private void initView() {
         if (BuildConfig.DEBUG) {
             setWebContentsDebuggingEnabled(true);
         }
@@ -139,6 +139,24 @@ public class X5WebView extends WebView {
             // view.loadUrl(url);很多网上都在这里加这一句,其实不用.因为我们默认用的就是  webView.loadUrl();
             //所以只要把该标志位设置为 true 就行.
             return true;
+        }
+
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView webView, String s) {
+            Log.e(TAG, "shouldInterceptRequest: ------1----->url=" + s);
+            return super.shouldInterceptRequest(webView, s);
+        }
+
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest) {
+            Log.e(TAG, "shouldInterceptRequest: -------2------>");
+            return super.shouldInterceptRequest(webView, webResourceRequest);
+        }
+
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
+            Log.e(TAG, "shouldInterceptRequest: -------3------>");
+            return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
         }
 
         @Override
