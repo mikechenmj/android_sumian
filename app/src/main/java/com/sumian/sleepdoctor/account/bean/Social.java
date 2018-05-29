@@ -2,10 +2,11 @@ package com.sumian.sleepdoctor.account.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.sumian.sleepdoctor.account.model.AccountManager;
+import android.support.annotation.IntDef;
 
 import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by sm
@@ -15,18 +16,32 @@ import java.io.Serializable;
 
 @SuppressWarnings("WeakerAccess")
 public class Social implements Parcelable, Serializable {
+    public static final int SOCIAL_TYPE_WECHAT = 0;
 
+    @IntDef({SOCIAL_TYPE_WECHAT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SocialType {
+    }
+
+    /**
+     * type : 0
+     * open_id : ouV7E1SWfPLo3pzHtflGSXpS3Xl4
+     * union_id : oQT0F0rlH7sbHKmpfWFNg-0xYB34
+     * nickname : 詹徐照
+     * id : 87
+     */
 
     public int id;//第三方绑定id
-    @AccountManager.SocialType
+    @SocialType
     public int type;//类型 0:微信
-    public int user_id;//用户id
     public String open_id;//第三方open id
     public String union_id;//第三方union id
     public String nickname;//第三方昵称
+    public int user_id;//用户id
     public int created_at;//第三方绑定时间
     public int updated_at;//第三方最后更新时间
 
+    @SuppressWarnings("unused")
     public Social() {
     }
 

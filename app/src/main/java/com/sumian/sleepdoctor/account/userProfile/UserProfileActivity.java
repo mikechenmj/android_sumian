@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.pager.activity;
+package com.sumian.sleepdoctor.account.userProfile;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,20 +22,28 @@ import com.sumian.common.media.Callback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
-import com.sumian.sleepdoctor.account.model.AccountManager;
+import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.oss.bean.OssResponse;
 import com.sumian.sleepdoctor.oss.engine.OssEngine;
+import com.sumian.sleepdoctor.pager.activity.ModifyNicknameActivity;
 import com.sumian.sleepdoctor.pager.sheet.AvatarBottomSheet;
+import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -102,11 +111,19 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             if (token != null)
                 updateUserProfile(token.user);
         });
-        AccountManager accountManager = AccountManager.getInstance();
-        String wechatInfo = accountManager.getWechatInfo();
-        mDvWechat.setSwitchCheckedWithoutCallback(wechatInfo != null);
-        String wechatNickname = accountManager.getWechatNickname();
-        mDvWechat.setContent(wechatNickname);
+        updateDvWechat();
+    }
+
+    private void updateDvWechat() {
+        List<Social> socialites = mUserProfile.socialites;
+        boolean hasSocial = socialites != null && socialites.size() > 0;
+        mDvWechat.setSwitchCheckedWithoutCallback(hasSocial);
+        if (hasSocial) {
+            String wechatNickname = socialites.get(0).nickname;
+            mDvWechat.setContent(wechatNickname);
+        } else {
+            mDvWechat.setContent(getResources().getString(R.string.not_bind_yet));
+        }
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -145,7 +162,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
@@ -281,6 +299,104 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        ToastUtils.showShort("" + isChecked);
+        int title = isChecked ? R.string.bind_wechat_title : R.string.unbind_wechat_title;
+        int message = isChecked ? R.string.bind_wechat_message : R.string.unbind_wechat_message;
+        int leftBtn = R.string.cancel;
+        int rightBtn = isChecked ? R.string.bind : R.string.unbind;
+        SumianAlertDialog.create()
+                .setTitle(title)
+                .setMessage(message)
+                .setLeftBtn(leftBtn, v -> mDvWechat.setSwitchCheckedWithoutCallback(!isChecked))
+                .setRightBtn(rightBtn, v -> {
+                    if (isChecked) {
+                        bindSocialites();
+                    } else {
+                        unbindSocialites();
+                    }
+                })
+                .show(getSupportFragmentManager());
+    }
+
+    private void bindSocialites() {
+        AppManager.getOpenLogin().weChatLogin(this, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                map.put("nickname", map.get("name"));
+                String userInfoJson = JsonUtil.toJson(map);
+                AppManager.getHttpService()
+                        .bindSocialites(Social.SOCIAL_TYPE_WECHAT, userInfoJson)
+                        .enqueue(new BaseResponseCallback<Social>() {
+                            @Override
+                            protected void onSuccess(Social response) {
+                                updateSocialites(response);
+                            }
+
+                            @Override
+                            protected void onFailure(String error) {
+                            }
+                        });
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+
+            }
+        });
+
+    }
+
+    /**
+     * unbind socialite
+     */
+    private void unbindSocialites() {
+        List<Social> socialites = mUserProfile.socialites;
+        if (socialites == null || socialites.size() == 0) {
+            return;
+        }
+        Social social = socialites.get(0);
+        AppManager
+                .getHttpService()
+                .unbindSocialites(social.id)
+                .enqueue(new BaseResponseCallback<String>() {
+                    @Override
+                    protected void onSuccess(String response) {
+                        LogUtils.d(response);
+                        ToastUtils.showShort(R.string.unbind_success);
+                        updateSocialites(null);
+                    }
+
+                    @Override
+                    protected void onFailure(String error) {
+                        LogUtils.d(error);
+                        ToastUtils.showShort(R.string.unbind_failed);
+                    }
+
+                    @Override
+                    protected void onFinish() {
+                        super.onFinish();
+                        LogUtils.d("unbind wechat finish");
+                    }
+                });
+    }
+
+    private void updateSocialites(Social social) {
+        List<Social> socials = new ArrayList<>();
+        if (social != null) {
+            socials.add(social);
+        }
+        mUserProfile.socialites = socials;
+        AccountViewModel accountViewModel = AppManager.getAccountViewModel();
+        accountViewModel.updateUserProfile(mUserProfile);
+        updateDvWechat();
     }
 }

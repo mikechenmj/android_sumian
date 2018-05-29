@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.account.bindMobile
 
 import com.sumian.sleepdoctor.account.bean.Token
-import com.sumian.sleepdoctor.account.model.AccountManager
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 
@@ -48,7 +47,6 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
                     override fun onSuccess(response: Token?) {
                         AppManager.getAccountViewModel().updateToken(response)
                         mView!!.bindOpenSocialSuccess(response)
-                        AccountManager.getInstance().wechatInfo = socialInfo
                     }
 
                     override fun onFailure(error: String?) {

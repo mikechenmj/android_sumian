@@ -155,7 +155,11 @@
     <string name="confirm">确定</string>
     <!--doctor module-->
 
-    <!-- common text-->
+    <!-- common -->
     <string name="success">成功</string>
     <string name="fail">失败</string>
+    <string name="unbind_failed">解绑失败</string>
+    <string name="bind">绑定</string>
+    <string name="unbind">解绑</string>
+    <string name="not_bind_yet">未绑定</string>
 </resources>

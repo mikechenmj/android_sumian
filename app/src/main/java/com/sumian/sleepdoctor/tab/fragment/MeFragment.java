@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.pager.activity.SettingActivity;
-import com.sumian.sleepdoctor.pager.activity.UserProfileActivity;
+import com.sumian.sleepdoctor.account.userProfile.UserProfileActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;

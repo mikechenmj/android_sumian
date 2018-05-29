@@ -65,7 +65,7 @@
         <activity android:name=".account.login.LoginActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileOneActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileTwoActivity" />
-        <activity android:name=".pager.activity.UserProfileActivity" />
+        <activity android:name=".account.userProfile.UserProfileActivity" />
         <activity android:name=".pager.activity.ConfigActivity" />
         <activity android:name=".pager.activity.PayGroupActivity" />
         <activity android:name=".pager.activity.ScanGroupResultActivity" />

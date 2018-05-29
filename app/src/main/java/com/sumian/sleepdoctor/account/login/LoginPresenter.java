@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.model.AccountManager;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.umeng.socialize.UMAuthListener;
@@ -127,7 +126,6 @@ public class LoginPresenter implements LoginContract.Presenter {
             protected void onSuccess(Token response) {
                 AppManager.getAccountViewModel().updateToken(response);
                 mView.onBindOpenSuccess(response);
-                AccountManager.getInstance().setWechatInfo(mOpenUserInfo);
             }
 
             @Override

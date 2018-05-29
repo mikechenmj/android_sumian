@@ -9,5 +9,10 @@
     <string name="my_consulting">我的咨询</string>
     <string name="electric_report">电子报告</string>
     <string name="wechat_bind">微信绑定</string>
+    <string name="unbind_success">解绑成功</string>
+    <string name="bind_wechat_title">是否绑定微信？</string>
+    <string name="unbind_wechat_title">确定解绑微信？</string>
+    <string name="bind_wechat_message">绑定后，可使用微信账号登录睡眠医生</string>
+    <string name="unbind_wechat_message">解绑后，你将无法使用微信账号登录</string>
 
 </resources>

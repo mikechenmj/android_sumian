@@ -25,7 +25,6 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
 
     @Override
     public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
-        onFinish();
         if (response.isSuccessful()) {
             T body = response.body();
             onSuccess(body);
@@ -59,13 +58,14 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
             }
         }
+        onFinish();
     }
 
     @Override
     public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
-        onFinish();
-        onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
         t.printStackTrace();
+        onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
+        onFinish();
     }
 
     protected void onNotFound(String error) {

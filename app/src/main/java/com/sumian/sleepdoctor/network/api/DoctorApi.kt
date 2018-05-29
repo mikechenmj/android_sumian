@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.network.api
 
+import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.network.response.BaseResponse
@@ -9,6 +10,7 @@ import com.sumian.sleepdoctor.tab.bean.GroupDetail
 import retrofit2.Call
 import retrofit2.http.*
 
+@Suppress("unused")
 /**
  * Created by jzz
  * on 2018/1/15.
@@ -66,4 +68,10 @@ interface DoctorApi {
     @POST("user/leancloud")
     fun getLeancloudGroupUsers(@Field("leancloud_ids") leancloudIds: String, @Field("group_id") groupId: Int): Call<String>
 
+    @FormUrlEncoded
+    @POST("socialites")
+    fun bindSocialites(@Field("type") type: Int, @Field("info") info: String): Call<Social>
+
+    @DELETE("socialites/{id}")
+    fun unbindSocialites(@Path("id") userId: Int): Call<String>
 }
