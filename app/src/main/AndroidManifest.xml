@@ -62,9 +62,9 @@
         </activity>
 
         <activity android:name=".main.MainActivity" />
-        <activity android:name=".account.activity.LoginActivity" />
-        <activity android:name=".account.activity.ImproveUserProfileOneActivity" />
-        <activity android:name=".account.activity.ImproveUserProfileTwoActivity" />
+        <activity android:name=".account.login.LoginActivity" />
+        <activity android:name=".account.userProfile.ImproveUserProfileOneActivity" />
+        <activity android:name=".account.userProfile.ImproveUserProfileTwoActivity" />
         <activity android:name=".pager.activity.UserProfileActivity" />
         <activity android:name=".pager.activity.ConfigActivity" />
         <activity android:name=".pager.activity.PayGroupActivity" />
@@ -76,7 +76,7 @@
         <activity android:name=".pager.activity.GroupMembersActivity" />
         <activity android:name=".pager.activity.ModifyNicknameActivity" />
         <activity android:name=".pager.activity.OtherUserProfileActivity" />
-        <activity android:name=".account.activity.BindMobileActivity" />
+        <activity android:name=".account.bindMobile.BindMobileActivity" />
 
         <activity
             android:name=".improve.doctor.activity.ScanDoctorQrCodeActivity"
@@ -88,7 +88,6 @@
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--pay start-->
@@ -116,7 +115,7 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind" />
-        <activity android:name=".improve.browser.X5BrowserActivity" />
+        <!--<activity android:name=".improve.browser.X5BrowserActivity" />-->
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->

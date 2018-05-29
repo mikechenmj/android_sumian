@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.sumian.common.operator.AppOperator;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.activity.LoginActivity;
+import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;

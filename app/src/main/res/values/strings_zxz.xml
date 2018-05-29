@@ -8,4 +8,6 @@
     <string name="my_evaluation">我的测评</string>
     <string name="my_consulting">我的咨询</string>
     <string name="electric_report">电子报告</string>
+    <string name="wechat_bind">微信绑定</string>
+
 </resources>

@@ -14,7 +14,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.open.OpenEngine;
 import com.sumian.open.login.OpenLogin;
 import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.account.activity.LoginActivity;
+import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.chat.player.VoicePlayer;

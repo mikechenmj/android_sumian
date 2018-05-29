@@ -1,10 +1,10 @@
-package com.sumian.sleepdoctor.account.presenter;
+package com.sumian.sleepdoctor.account.login;
 
 import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.contract.LoginContract;
+import com.sumian.sleepdoctor.account.model.AccountManager;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.umeng.socialize.UMAuthListener;
@@ -23,8 +23,6 @@ import retrofit2.Call;
  */
 
 public class LoginPresenter implements LoginContract.Presenter {
-
-    private static final String TAG = LoginPresenter.class.getSimpleName();
 
     private LoginContract.View mView;
     private String mOpenUserInfo;
@@ -106,9 +104,9 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void checkOpenIsBind(SHARE_MEDIA shareMedia, Map<String, String> OpenMap) {
-        OpenMap.put("nickname", OpenMap.get("screen_name"));
-        this.mOpenUserInfo = JSON.toJSONString(OpenMap);
+    public void checkOpenIsBind(SHARE_MEDIA shareMedia, Map<String, String> openMap) {
+        openMap.put("nickname", openMap.get("screen_name"));
+        this.mOpenUserInfo = JSON.toJSONString(openMap);
 
         mView.onBegin();
 
@@ -121,7 +119,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         Map<String, Object> map = new HashMap<>();
         map.put("type", openType);
-        map.put("union_id", OpenMap.get("unionid"));
+        map.put("union_id", openMap.get("unionid"));
         Call<Token> call = AppManager.getHttpService().loginOpenPlatform(map);
 
         call.enqueue(new BaseResponseCallback<Token>() {
@@ -129,6 +127,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             protected void onSuccess(Token response) {
                 AppManager.getAccountViewModel().updateToken(response);
                 mView.onBindOpenSuccess(response);
+                AccountManager.getInstance().setWechatInfo(mOpenUserInfo);
             }
 
             @Override

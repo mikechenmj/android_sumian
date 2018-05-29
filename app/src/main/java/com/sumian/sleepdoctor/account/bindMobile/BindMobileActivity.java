@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.activity;
+package com.sumian.sleepdoctor.account.bindMobile;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,8 +9,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
-import com.sumian.sleepdoctor.account.contract.BindMobileContract;
-import com.sumian.sleepdoctor.account.presenter.BindMobilePresenter;
+import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;

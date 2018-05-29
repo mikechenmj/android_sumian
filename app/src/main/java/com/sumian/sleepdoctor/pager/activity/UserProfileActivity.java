@@ -12,7 +12,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.CompoundButton;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.media.Callback;
@@ -20,6 +22,7 @@ import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.model.AccountManager;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -49,38 +52,36 @@ import static com.sumian.sleepdoctor.pager.activity.ModifyNicknameActivity.MODIF
  * desc:
  */
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserProfileActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
-        SettingDividerView.OnShowMoreListener, AvatarBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks {
+        SettingDividerView.OnShowMoreListener, AvatarBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks, CompoundButton.OnCheckedChangeListener {
 
+    @SuppressWarnings("unused")
     private static final String TAG = UserProfileActivity.class.getSimpleName();
-
     private final static String imagePathName = "/image/";
-
     private static final int PIC_REQUEST_CODE_CAMERA = 0x02;
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
-
     @BindView(R.id.dv_nickname)
     SettingDividerView mDvNickname;
     @BindView(R.id.dv_name)
     SettingDividerView mDvName;
-
     @BindView(R.id.dv_mobile)
     SettingDividerView mDvMobile;
+    @BindView(R.id.dv_wechat_bind)
+    SettingDividerView mDvWechat;
 
     private UserProfile mUserProfile;
-
     private File cameraFile;
     private File storageDir = null;
     private String mLocalImagePath;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_user_profile;
+        return R.layout.activity_user_profile;
     }
 
     @Override
@@ -89,6 +90,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         mTitleBar.addOnBackListener(this);
         mDvNickname.setOnShowMoreListener(this);
         mDvName.setOnShowMoreListener(this);
+        mDvWechat.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -96,21 +98,24 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         super.initData();
         mUserProfile = AppManager.getAccountViewModel().getToken().user;
         updateUserProfile(mUserProfile);
-
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
             if (token != null)
                 updateUserProfile(token.user);
         });
+        AccountManager accountManager = AccountManager.getInstance();
+        String wechatInfo = accountManager.getWechatInfo();
+        mDvWechat.setSwitchCheckedWithoutCallback(wechatInfo != null);
+        String wechatNickname = accountManager.getWechatNickname();
+        mDvWechat.setContent(wechatNickname);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void updateUserProfile(UserProfile userProfile) {
         RequestOptions options = new RequestOptions();
         options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
         Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
-
         mDvNickname.setContent(userProfile.nickname);
         mDvName.setContent(userProfile.name);
-
         mDvMobile.setContent(userProfile.mobile);
     }
 
@@ -118,12 +123,10 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     @OnClick(R.id.lay_avatar)
     @Override
     public void onClick(View v) {
-
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(AvatarBottomSheet.newInstance().addOnTakePhotoCallback(this), AvatarBottomSheet.class.getSimpleName())
                 .commitNowAllowingStateLoss();
-
     }
 
     @Override
@@ -132,12 +135,12 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
 
     }
 
@@ -146,6 +149,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -273,5 +277,10 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             storageDir = applicationContext.getFilesDir();
         }
         return storageDir;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        ToastUtils.showShort("" + isChecked);
     }
 }

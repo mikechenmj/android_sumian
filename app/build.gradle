@@ -90,8 +90,8 @@ android {
             versionNameSuffix rootProject.ext.versionNameSuffix
 
             resValue("string", "umeng_app_key", TEST_UMENG_APP_KEY)
-            buildConfigField("String", "WECHAT_APP_ID", DEV_WECHAT_APP_ID)
-            buildConfigField("String", "WECHAT_APP_SECRET", DEV_WECHAT_APP_SECRET)
+            buildConfigField("String", "WECHAT_APP_ID", OFFICIAL_WECHAT_APP_ID)
+            buildConfigField("String", "WECHAT_APP_SECRET", OFFICIAL_WECHAT_APP_SECRET)
         }
 
     }

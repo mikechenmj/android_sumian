@@ -3,8 +3,8 @@ package com.sumian.sleepdoctor.pager.activity;
 import android.view.View;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.activity.ImproveUserProfileOneActivity;
-import com.sumian.sleepdoctor.account.activity.LoginActivity;
+import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
+import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.OtherDelegate;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -17,8 +17,6 @@ import com.sumian.sleepdoctor.main.MainActivity;
  */
 
 public class WelcomeActivity extends BaseActivity implements OtherDelegate {
-
-    private static final String TAG = WelcomeActivity.class.getSimpleName();
 
     @Override
     protected int getLayoutId() {

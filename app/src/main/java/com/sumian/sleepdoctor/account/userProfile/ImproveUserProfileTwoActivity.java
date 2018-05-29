@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.activity;
+package com.sumian.sleepdoctor.account.userProfile;
 
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
@@ -9,8 +9,6 @@ import android.view.View;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.contract.ImproveUserProfileContract;
-import com.sumian.sleepdoctor.account.presenter.ImproveUserProfilePresenter;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
@@ -26,8 +24,6 @@ import butterknife.OnClick;
  */
 
 public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackListener, TitleBar.OnMoreListener, ImproveUserProfileContract.View, Observer<Token> {
-
-    private static final String TAG = ImproveUserProfileOneActivity.class.getSimpleName();
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;

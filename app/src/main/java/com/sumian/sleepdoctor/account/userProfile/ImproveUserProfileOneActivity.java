@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.account.activity;
+package com.sumian.sleepdoctor.account.userProfile;
 
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.contract.ImproveUserProfileContract;
-import com.sumian.sleepdoctor.account.presenter.ImproveUserProfilePresenter;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 

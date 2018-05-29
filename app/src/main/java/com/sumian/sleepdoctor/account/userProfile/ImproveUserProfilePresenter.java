@@ -1,7 +1,6 @@
-package com.sumian.sleepdoctor.account.presenter;
+package com.sumian.sleepdoctor.account.userProfile;
 
 import com.sumian.sleepdoctor.account.bean.UserProfile;
-import com.sumian.sleepdoctor.account.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 

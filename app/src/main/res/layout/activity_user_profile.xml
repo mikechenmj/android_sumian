@@ -96,7 +96,17 @@
         android:layout_height="wrap_content"
         app:divider_line_visible="visible"
         app:divider_more_visible="gone"
-        app:type_content="13412345678"
-        app:type_desc="@string/register_mobile" />
+        app:type_desc="@string/register_mobile"
+        tools:type_content="13412345678" />
+
+    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        android:id="@+id/dv_wechat_bind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="visible"
+        app:divider_more_visible="gone"
+        app:show_switch="true"
+        app:type_desc="@string/wechat_bind"
+        tools:type_content="微信昵称" />
 
 </LinearLayout>
