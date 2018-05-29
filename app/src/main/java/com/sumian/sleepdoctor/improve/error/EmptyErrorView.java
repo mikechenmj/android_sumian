@@ -37,13 +37,14 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
     public EmptyErrorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
+        setBackgroundColor(getResources().getColor(R.color.b1_color));
+        setOnClickListener(this);
         initView(context);
     }
 
     private void initView(Context context) {
         View rootView = inflate(context, R.layout.lay_empty_view, this);
         this.mIvEmptyIcon = rootView.findViewById(R.id.iv_empty_icon);
-        this.mIvEmptyIcon.setOnClickListener(this);
         this.mTvEmptyMsgTitle = rootView.findViewById(R.id.tv_empty_msg_title);
         this.mTvEmptyMsgDesc = rootView.findViewById(R.id.tv_empty_msg_desc);
     }
@@ -111,14 +112,10 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_empty_icon:
-                if (mOnEmptyCallback != null) {
-                    this.mOnEmptyCallback.onReload();
-                }
-                hide();
-                break;
+        if (mOnEmptyCallback != null) {
+            this.mOnEmptyCallback.onReload();
         }
+        hide();
     }
 
 

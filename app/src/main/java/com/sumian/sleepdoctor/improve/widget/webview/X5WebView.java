@@ -3,12 +3,13 @@ package com.sumian.sleepdoctor.improve.widget.webview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -18,6 +19,9 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -30,13 +34,17 @@ public class X5WebView extends WebView {
 
     private static final String TAG = X5WebView.class.getSimpleName();
 
+    private static final long DEFAULT_DELAY_MILLIS = 10 * 1000L;
+
     private OnX5WebViewListener mX5WebViewListener;
+
+    private int mErrorCode = -1;
 
     private Runnable mDismissRunnable = new Runnable() {
         @Override
         public void run() {
             if (mX5WebViewListener != null) {
-                mX5WebViewListener.onPageFinish(X5WebView.this);
+                mX5WebViewListener.onRequestNetworkErrorCallback(X5WebView.this);
             }
         }
     };
@@ -55,23 +63,23 @@ public class X5WebView extends WebView {
 
     public X5WebView(Context context, AttributeSet attributeSet, int i) {
         super(context, attributeSet, i);
-        initView();
+        initView(context);
     }
 
 
-    private void initView() {
+    private void initView(Context context) {
         if (BuildConfig.DEBUG) {
             setWebContentsDebuggingEnabled(true);
         }
 
-        initWebSettings();
+        initWebSettings(context);
 
         setWebChromeClient(new WVChromeClient());
         setWebViewClient(new WVClient());
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void initWebSettings() {
+    private void initWebSettings(Context context) {
         WebSettings webSettings = this.getSettings();
 
         //开启js脚本支持
@@ -124,11 +132,16 @@ public class X5WebView extends WebView {
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
             Log.e(TAG, "onProgressChanged: ---------->progress=" + newProgress);
-            if (mX5WebViewListener != null) {
-                mX5WebViewListener.onProgressChange(view, newProgress);
+            if (newProgress == 100 && mErrorCode != -1) {
+                if (mX5WebViewListener != null) {
+                    mX5WebViewListener.onRequestErrorCallback(view, mErrorCode);
+                }
+            } else {
+                if (mX5WebViewListener != null) {
+                    mX5WebViewListener.onProgressChange(view, newProgress);
+                }
             }
         }
-
     }
 
     private class WVClient extends WebViewClient {
@@ -138,25 +151,8 @@ public class X5WebView extends WebView {
             //在当前Activity打开
             // view.loadUrl(url);很多网上都在这里加这一句,其实不用.因为我们默认用的就是  webView.loadUrl();
             //所以只要把该标志位设置为 true 就行.
+            Log.e(TAG, "shouldOverrideUrlLoading: --------1---->" + url);
             return true;
-        }
-
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView webView, String s) {
-            Log.e(TAG, "shouldInterceptRequest: ------1----->url=" + s);
-            return super.shouldInterceptRequest(webView, s);
-        }
-
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest) {
-            Log.e(TAG, "shouldInterceptRequest: -------2------>");
-            return super.shouldInterceptRequest(webView, webResourceRequest);
-        }
-
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView webView, WebResourceRequest webResourceRequest, Bundle bundle) {
-            Log.e(TAG, "shouldInterceptRequest: -------3------>");
-            return super.shouldInterceptRequest(webView, webResourceRequest, bundle);
         }
 
         @Override
@@ -171,9 +167,10 @@ public class X5WebView extends WebView {
         @Override
         public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
             super.onReceivedError(webView, webResourceRequest, webResourceError);
-            Log.e(TAG, "onReceivedError: -------2----->");
+            Log.e(TAG, "onReceivedError: -------2----->errorCode=" + webResourceError.getErrorCode() + "   error=" + webResourceError.getDescription());
+            mErrorCode = webResourceError.getErrorCode();
             if (mX5WebViewListener != null) {
-                mX5WebViewListener.onRequestErrorCallback(webView, webResourceError.getErrorCode());
+                mX5WebViewListener.onRequestErrorCallback(webView, mErrorCode);
             }
         }
 
@@ -181,6 +178,7 @@ public class X5WebView extends WebView {
         public void onReceivedHttpError(WebView webView, WebResourceRequest webResourceRequest, WebResourceResponse webResourceResponse) {
             super.onReceivedHttpError(webView, webResourceRequest, webResourceResponse);
             Log.e(TAG, "onReceivedHttpError: ---------3------->");
+            mErrorCode = webResourceResponse.getStatusCode();
             if (mX5WebViewListener != null) {
                 mX5WebViewListener.onRequestErrorCallback(webView, webResourceResponse.getStatusCode());
             }
@@ -195,6 +193,7 @@ public class X5WebView extends WebView {
         @Override
         public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
             super.onPageStarted(webView, s, bitmap);
+            Log.e(TAG, "onPageStarted: ----------->" + s);
             if (mX5WebViewListener != null) {
                 mX5WebViewListener.onPageStarted(webView);
             }
@@ -203,16 +202,33 @@ public class X5WebView extends WebView {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if (mX5WebViewListener != null) {
-                mX5WebViewListener.onPageFinish(view);
+            removeCallbacks(mDismissRunnable);
+            Log.e(TAG, "onPageFinished: ---------->" + url);
+            if (mErrorCode != -1) {
+                if (mX5WebViewListener != null) {
+                    mX5WebViewListener.onRequestErrorCallback(view, mErrorCode);
+                }
+            } else {
+                if (mX5WebViewListener != null) {
+                    mX5WebViewListener.onPageFinish(view);
+                }
             }
         }
+    }
 
-        @Override
-        public void onLoadResource(WebView webView, String s) {
-            super.onLoadResource(webView, s);
-            //设定加载资源的操作
-        }
+    public void loadRequestUrl(String url) {
+        this.mErrorCode = -1;
+        postDelayed(mDismissRunnable, DEFAULT_DELAY_MILLIS);
+        String encode = Uri.encode(url, "utf-8");
+
+        Log.e(TAG, "loadRequestUrl: ---------->" + encode);
+
+        Map<String, String> headers = new HashMap<>(0);
+        headers.put("User-Agent", getSettings().getUserAgentString() + " Sumian-Doctor-iOS");
+        // headers.put("Accept", "application/vnd.sumianapi+json");
+        headers.put("Authorization", "Bearer " + AppManager.getAccountViewModel().accessToken());
+        //  headers.put("Content-Type", "application/json");
+        loadUrl(url, headers);
     }
 
     //进度回调接口

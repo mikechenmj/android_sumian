@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * on 2018/5/25 09:54
  * desc:
  **/
-public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5WebViewListener {
+public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5WebViewListener, EmptyErrorView.OnEmptyCallback {
 
     @BindView(R.id.web_view_progress)
     ProgressBar mWebViewProgress;
@@ -47,6 +47,7 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
 
     private void initView(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_webview_container_view, this));
+        this.mEmptyErrorView.setOnEmptyCallback(this);
         this.mX5WebView = new X5WebView(context);
         this.mX5WebView.setOnWebViewListener(this);
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -86,7 +87,7 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
         this.mEmptyErrorView.hide();
         this.mWebViewProgress.setVisibility(VISIBLE);
         this.mWebViewProgress.setProgress(0);
-        this.mX5WebView.loadUrl(requestUrl);
+        this.mX5WebView.loadRequestUrl(requestUrl);
     }
 
     @Override
@@ -112,6 +113,7 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
     public void onRequestErrorCallback(WebView view, int responseCode) {
         this.mWebViewProgress.setVisibility(GONE);
         this.mWebViewProgress.setProgress(0);
+        this.mEmptyErrorView.invalidRequestError();
     }
 
     @Override
@@ -119,5 +121,10 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
         this.mWebViewProgress.setVisibility(GONE);
         this.mWebViewProgress.setProgress(0);
         this.mEmptyErrorView.invalidNetworkError();
+    }
+
+    @Override
+    public void onReload() {
+        this.mX5WebView.reload();
     }
 }

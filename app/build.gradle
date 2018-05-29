@@ -321,8 +321,8 @@ dependencies {
     implementation 'com.pingxx:pingpp-alipay:2.1.17'
     //拼音分词
     implementation 'com.belerweb:pinyin4j:2.5.0'
-    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.1'
-    implementation 'cn.bingoogolapple:bga-qrcode-core:1.2.1'
+    //scan qr code
+    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.1'
     // utils
     implementation 'com.blankj:utilcode:1.16.0'
 }
