@@ -162,4 +162,14 @@
     <string name="bind">绑定</string>
     <string name="unbind">解绑</string>
     <string name="not_bind_yet">未绑定</string>
+
+    <!-- weekday-->
+    <string name="sun">日</string>
+    <string name="mon">一</string>
+    <string name="tue">二</string>
+    <string name="wed">三</string>
+    <string name="thu">四</string>
+    <string name="fri">五</string>
+    <string name="sat">六</string>
+    <string name="go_to_today">回到今天</string>
 </resources>

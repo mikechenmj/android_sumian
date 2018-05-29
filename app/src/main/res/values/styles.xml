@@ -114,4 +114,10 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
     </style>
+
+    <style name="CalendarDateText" parent="HorizontalWeight">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textColor">@color/t2_color</item>
+    </style>
 </resources>

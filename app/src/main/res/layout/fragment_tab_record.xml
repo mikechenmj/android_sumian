@@ -23,4 +23,9 @@
         android:id="@+id/dsiv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_130" />
+
+    <com.sumian.sleepdoctor.widget.calendar.CalendarViewWrapper
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

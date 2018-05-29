@@ -325,6 +325,9 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-qrcode-core:1.2.1'
     // utils
     implementation 'com.blankj:utilcode:1.16.0'
+    // RecyclerViewPager
+    implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+
 }
 
 
