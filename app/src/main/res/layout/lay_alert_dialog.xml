@@ -13,18 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="@dimen/space_20">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/iv_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_20"
                 android:contentDescription="@null"
                 tools:src="@mipmap/ic_notification_alert" />
 
@@ -33,9 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_margin="@dimen/space_10"
+                android:layout_marginEnd="@dimen/space_20"
                 android:contentDescription="@null"
-                android:padding="@dimen/space_10"
                 android:src="@mipmap/ic_close" />
         </FrameLayout>
 
@@ -59,17 +59,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_30"
-            android:paddingEnd="@dimen/space_20"
-            android:paddingStart="@dimen/space_20">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_left"
                 style="@style/SumianButton"
                 android:layout_marginBottom="@dimen/space_30"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_30"
                 android:layout_weight="1"
-                tools:text="@string/confirm" />
+                tools:background="@drawable/bg_btn_white"
+                tools:text="@string/confirm"
+                tools:textColor="@color/t5_color" />
 
             <Space
                 android:id="@+id/space"
@@ -80,6 +81,8 @@
                 android:id="@+id/btn_right"
                 style="@style/SumianButton"
                 android:layout_marginBottom="@dimen/space_30"
+                android:layout_marginEnd="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_30"
                 android:layout_weight="1"
                 tools:text="@string/cancel" />
         </LinearLayout>

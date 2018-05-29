@@ -56,6 +56,8 @@ public class SumianAlertDialog extends DialogFragment {
     private View.OnClickListener mLeftBtnClickListener;
     private int mRightBtnTextRes;
     private View.OnClickListener mRightBtnClickListener;
+    private boolean mWhitenLeft;
+    private boolean mWhitenRight;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +94,14 @@ public class SumianAlertDialog extends DialogFragment {
         mBtnRight.setVisibility(mRightBtnTextRes == 0 ? View.GONE : View.VISIBLE);
         if (mRightBtnTextRes != 0) mBtnRight.setText(mRightBtnTextRes);
         mSpace.setVisibility(mLeftBtnTextRes != 0 && mRightBtnTextRes != 0 ? View.VISIBLE : View.GONE);
+        if (mWhitenLeft) {
+            mBtnLeft.setBackgroundResource(R.drawable.bg_btn_white);
+            mBtnLeft.setTextColor(getResources().getColor(R.color.t5_color));
+        }
+        if (mWhitenRight) {
+            mBtnRight.setBackgroundResource(R.drawable.bg_btn_white);
+            mBtnRight.setTextColor(getResources().getColor(R.color.t5_color));
+        }
     }
 
     public SumianAlertDialog setCloseIconVisible(boolean visible) {
@@ -153,5 +163,15 @@ public class SumianAlertDialog extends DialogFragment {
                 break;
         }
         dismiss();
+    }
+
+    public SumianAlertDialog whitenLeft() {
+        mWhitenLeft = true;
+        return this;
+    }
+
+    public SumianAlertDialog whitenRight() {
+        mWhitenRight = true;
+        return this;
     }
 }

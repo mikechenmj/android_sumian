@@ -306,6 +306,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         SumianAlertDialog.create()
                 .setTitle(title)
                 .setMessage(message)
+                .whitenLeft()
                 .setLeftBtn(leftBtn, v -> mDvWechat.setSwitchCheckedWithoutCallback(!isChecked))
                 .setRightBtn(rightBtn, v -> {
                     if (isChecked) {
