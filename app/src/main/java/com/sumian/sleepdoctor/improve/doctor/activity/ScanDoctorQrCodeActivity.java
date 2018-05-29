@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,15 +13,14 @@ import android.widget.FrameLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.improve.browser.X5BrowserActivity;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
-import cn.bingoogolapple.qrcode.zxing.ZXingView;
+import cn.bingoogolapple.qrcode.zbar.ZBarView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -43,7 +42,7 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
     FrameLayout mFrameLayout;
 
     @BindView(R.id.zxing_view)
-    ZXingView mZXingView;
+    ZBarView mZXingView;
 
     @Override
     protected int getLayoutId() {
@@ -55,23 +54,27 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
         super.initWidget(root);
         StatusBarUtil.setTransparent(this);
         this.mZXingView.setDelegate(this);
-
-
     }
 
     @Override
-    protected void initData() {
-        super.initData();
+    protected void onResume() {
+        super.onResume();
         requestCodeQRCodePermissions();
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
+        super.onStop();
+        mZXingView.stopCamera();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         if (mZXingView != null) {
             mZXingView.stopCamera();
             mZXingView.onDestroy();
         }
-        super.onStop();
     }
 
     @OnClick({R.id.iv_back})
@@ -85,38 +88,23 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
         Log.e(TAG, "onScanQRCodeSuccess: --------scan--->" + result);
         vibrate();
 
-        String decodeUrl = null;
-        try {
-            decodeUrl = URLDecoder.decode(result, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if (TextUtils.isEmpty(result)) {
+            showCenterToast("无效的二维码，请重新扫描...");
+            return;
         }
 
-        Log.e(TAG, "onScanQRCodeSuccess: -----decodeUrl--->" + decodeUrl);
+        Uri uri = Uri.parse(result);
 
-        Uri uri = Uri.parse(decodeUrl);
+        String uriQuery = Uri.decode(uri.getQueryParameter("scheme"));
+        if (TextUtils.isEmpty(uriQuery)) {
+            showCenterToast("无效的二维码，请重新扫描...");
+            return;
+        }
 
         Bundle extras = new Bundle();
-
-        String uriQuery = Uri.encode(uri.getQueryParameter("scheme"), "utf-8");
-        Log.e(TAG, "onScanQRCodeSuccess: ----uriQuery------>" + uriQuery);
-
-        String encodedPath = uri.getEncodedPath();
-        Log.e(TAG, "onScanQRCodeSuccess: ---encodedPath------>" + encodedPath);
-
         //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
-        // TODO: 2018/5/27 X5BrowserActivity do not exist
-//        extras.putString(X5BrowserActivity.ARGS_URL, decodeUrl);
-//        X5BrowserActivity.show(this, X5BrowserActivity.class, extras);
-
-        String encodedQuery = uri.getEncodedQuery();
-        Log.e(TAG, "onScanQRCodeSuccess: ------encodedQuery----->" + encodedQuery);
-    }
-
-    private void showSnackBar() {
-        Snackbar.make(mFrameLayout, R.string.invalid_qr_code, Snackbar.LENGTH_LONG).setAction(R.string.re_scan_qr_code, v -> {
-
-        }).show();
+        extras.putString(X5BrowserActivity.ARGS_URL, uriQuery);
+        X5BrowserActivity.show(this, X5BrowserActivity.class, extras);
     }
 
     @Override
@@ -131,7 +119,6 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        preScanQrCode();
     }
 
     @Override
