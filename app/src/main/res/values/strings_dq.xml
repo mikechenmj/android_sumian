@@ -17,4 +17,17 @@
 
     <string name="emtpy_advisory_msg">暂无相关记录</string>
     <string name="emtpy_advisory_desc">绑定医生后，可向主治医生咨询</string>
+
+    <!--doctor-->
+    <string name="bind_doctor">绑定医生</string>
+    <string name="bind_other_doctor_state">"您已绑定了其他医生，如需换绑请联系客服"</string>
+    <string name="doctor_summary">医生简介</string>
+    <string name="doctor_service">医生服务</string>
+    <string name="doctor_details_label">详细信息</string>
+
+    <string name="graphic_service">图文咨询服务</string>
+    <string name="remote_sleep_manage_service">远程睡眠管理服务</string>
+    <string name="ask_questions">去提问</string>
+
+
 </resources>

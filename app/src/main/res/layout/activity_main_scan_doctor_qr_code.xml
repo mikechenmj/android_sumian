@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <cn.bingoogolapple.qrcode.zbar.ZBarView
+    <com.sumian.sleepdoctor.improve.widget.qr.RequestQrCodeView
         android:id="@+id/zxing_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,7 +25,7 @@
         app:qrcv_isShowDefaultGridScanLineDrawable="false"
         app:qrcv_isShowDefaultScanLineDrawable="true"
         app:qrcv_isShowTipBackground="true"
-        app:qrcv_isShowTipTextAsSingleLine="false"
+        app:qrcv_isShowTipTextAsSingleLine="true"
         app:qrcv_isTipTextBelowRect="true"
         app:qrcv_maskColor="#33FFFFFF"
         app:qrcv_qrCodeTipText="@string/scan_2_doctor_desc"
@@ -41,7 +41,8 @@
     <FrameLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_24">
 
         <ImageView
             android:id="@+id/iv_back"

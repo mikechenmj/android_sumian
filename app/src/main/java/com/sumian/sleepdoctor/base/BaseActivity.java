@@ -93,7 +93,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         super.onDestroy();
         onRelease();
         getLifecycle().removeObserver(this);
-        this.mBind.unbind();
+        //this.mBind.unbind();
         this.mRoot = null;
     }
 

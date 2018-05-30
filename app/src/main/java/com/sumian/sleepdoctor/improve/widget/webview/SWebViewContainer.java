@@ -6,12 +6,12 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.improve.error.EmptyErrorView;
-import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * on 2018/5/25 09:54
  * desc:
  **/
-public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5WebViewListener, EmptyErrorView.OnEmptyCallback {
+public class SWebViewContainer extends FrameLayout implements SWebView.OnX5WebViewListener, EmptyErrorView.OnEmptyCallback {
 
     @BindView(R.id.web_view_progress)
     ProgressBar mWebViewProgress;
@@ -29,18 +29,17 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
     @BindView(R.id.empty_error_view)
     EmptyErrorView mEmptyErrorView;
 
-    private X5WebView mX5WebView;
+    private SWebView mSWebView;
 
-
-    public X5WebViewContainer(@NonNull Context context) {
+    public SWebViewContainer(@NonNull Context context) {
         this(context, null);
     }
 
-    public X5WebViewContainer(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public SWebViewContainer(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public X5WebViewContainer(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SWebViewContainer(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
     }
@@ -48,35 +47,37 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
     private void initView(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_webview_container_view, this));
         this.mEmptyErrorView.setOnEmptyCallback(this);
-        this.mX5WebView = new X5WebView(context);
-        this.mX5WebView.setOnWebViewListener(this);
+        this.mSWebView = new SWebView(getContext());
+        this.mSWebView.setOnWebViewListener(this);
         LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.gravity = Gravity.CENTER;
-        addView(mX5WebView, 0, layoutParams);
+        addView(mSWebView, 0, layoutParams);
     }
 
-    public X5WebView getX5WebView() {
-        return mX5WebView;
+    public SWebView getSWebView() {
+        return mSWebView;
     }
 
     public void resumeWebView() {
-        mX5WebView.onResume();
-        mX5WebView.resumeTimers();
+        mSWebView.onResume();
+        mSWebView.resumeTimers();
     }
 
     public void pauseWebView() {
-        mX5WebView.onPause();
-        mX5WebView.pauseTimers();
+        mSWebView.onPause();
+        mSWebView.pauseTimers();
     }
 
     public void destroyWebView() {
-        removeView(mX5WebView);
-        mX5WebView.destroy();
+        removeView(mSWebView);
+        if (mSWebView != null) {
+            mSWebView.destroy();
+        }
     }
 
     public boolean webViewCanGoBack() {
-        if (mX5WebView != null && mX5WebView.canGoBack()) {
-            mX5WebView.goBack();
+        if (mSWebView != null && mSWebView.canGoBack()) {
+            mSWebView.goBack();
             return true;
         } else {
             return false;
@@ -87,7 +88,7 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
         this.mEmptyErrorView.hide();
         this.mWebViewProgress.setVisibility(VISIBLE);
         this.mWebViewProgress.setProgress(0);
-        this.mX5WebView.loadRequestUrl(requestUrl);
+        this.mSWebView.loadRequestUrl(requestUrl);
     }
 
     @Override
@@ -125,6 +126,6 @@ public class X5WebViewContainer extends FrameLayout implements X5WebView.OnX5Web
 
     @Override
     public void onReload() {
-        this.mX5WebView.reload();
+        this.mSWebView.reload();
     }
 }

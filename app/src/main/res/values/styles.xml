@@ -3,7 +3,7 @@
     <!--text-->
     <style name="text_t1_style">
         <item name="android:textColor">@color/t1_color</item>
-        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
     <style name="text_t2_style">
@@ -13,7 +13,7 @@
 
     <style name="text_t3_style">
         <item name="android:textColor">@color/t3_color</item>
-        <item name="android:textSize">@dimen/font_36</item>
+        <item name="android:textSize">@dimen/font_18</item>
     </style>
 
     <!--button-->

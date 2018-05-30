@@ -115,7 +115,8 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind" />
-        <!--<activity android:name=".improve.browser.X5BrowserActivity" />-->
+
+        <activity android:name=".improve.doctor.activity.DoctorWebViewActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->

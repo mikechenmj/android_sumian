@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b2_color"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginLeft="@dimen/space_20"
+        android:background="@color/l1_color"
+        tools:ignore="RtlHardcoded" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_130">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/iv_service_icon"
+            android:layout_width="@dimen/space_90"
+            android:layout_height="@dimen/space_90"
+            android:layout_marginLeft="@dimen/space_20"
+            android:layout_marginRight="@dimen/space_20"
+            android:contentDescription="@null"
+            android:elevation="@dimen/space_2"
+            android:outlineProvider="bounds"
+            android:src="@mipmap/ic_img_advisory_avatar"
+            android:translationZ="@dimen/space_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:qmui_border_color="@color/b2_color"
+            app:qmui_border_width="@dimen/space_6"
+            app:qmui_corner_radius="@dimen/space_6" />
+
+        <TextView
+            android:id="@+id/tv_service_name"
+            style="@style/text_t3_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_20"
+            android:layout_marginRight="@dimen/space_20"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxEms="11"
+            android:minLines="1"
+            android:singleLine="true"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tv_service_desc"
+            app:layout_constraintLeft_toRightOf="@+id/iv_service_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_service_icon"
+            tools:text="张三" />
+
+        <TextView
+            android:id="@+id/tv_service_desc"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_20"
+            android:layout_marginRight="@dimen/space_20"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxEms="11"
+            android:minLines="1"
+            app:layout_constraintBottom_toBottomOf="@id/iv_service_icon"
+            app:layout_constraintLeft_toRightOf="@id/iv_service_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_service_name"
+            tools:text="报告解读、症状咨询等服务" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20">
+
+        <TextView
+            android:id="@+id/tv_service_use_desc"
+            style="@style/text_t1_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已购买，剩余3次提问机会"
+            android:textColor="@color/t2_color"
+            tools:ignore="HardcodedText" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_service_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@mipmap/ic_advisory_icon_quiz"
+            android:drawablePadding="@dimen/space_10"
+            android:text="@string/ask_questions" />
+
+    </LinearLayout>
+
+</LinearLayout>

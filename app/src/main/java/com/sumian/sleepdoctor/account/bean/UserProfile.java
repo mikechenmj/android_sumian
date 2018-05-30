@@ -118,4 +118,8 @@ public class UserProfile implements Serializable, Parcelable {
     public boolean isBindDoctor() {
         return doctor != null;
     }
+
+    public boolean isSameDoctor(int otherDoctorId) {
+        return doctor != null && doctor.getId() == otherDoctorId;
+    }
 }

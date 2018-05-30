@@ -1,30 +1,18 @@
 package com.sumian.sleepdoctor.improve.doctor.activity;
 
-import android.Manifest;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.improve.browser.X5BrowserActivity;
-
-import java.util.List;
+import com.sumian.sleepdoctor.improve.widget.qr.RequestQrCodeView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bingoogolapple.qrcode.core.QRCodeView;
-import cn.bingoogolapple.qrcode.zbar.ZBarView;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
-
-//import com.sumian.sleepdoctor.improve.browser.X5BrowserActivity;
 
 /**
  * Created by sm
@@ -32,17 +20,12 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
+public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, RequestQrCodeView.OnShowQrCodeCallback {
 
     private static final String TAG = ScanDoctorQrCodeActivity.class.getSimpleName();
 
-    private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
-
-    @BindView(R.id.fl_content)
-    FrameLayout mFrameLayout;
-
     @BindView(R.id.zxing_view)
-    ZBarView mZXingView;
+    RequestQrCodeView mZXingView;
 
     @Override
     protected int getLayoutId() {
@@ -52,14 +35,13 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        StatusBarUtil.setTransparent(this);
-        this.mZXingView.setDelegate(this);
+        mZXingView.setOnShowQrCodeCallback(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        requestCodeQRCodePermissions();
+        mZXingView.requestCodeQRCodePermissions(this);
     }
 
     @Override
@@ -72,7 +54,6 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
     protected void onDestroy() {
         super.onDestroy();
         if (mZXingView != null) {
-            mZXingView.stopCamera();
             mZXingView.onDestroy();
         }
     }
@@ -84,16 +65,21 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
     }
 
     @Override
-    public void onScanQRCodeSuccess(String result) {
-        Log.e(TAG, "onScanQRCodeSuccess: --------scan--->" + result);
-        vibrate();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mZXingView.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
-        if (TextUtils.isEmpty(result)) {
+    @Override
+    public void onShowQrCode(String qrCode) {
+        Log.e(TAG, "onScanQRCodeSuccess: --------scan--->" + qrCode);
+
+        if (TextUtils.isEmpty(qrCode)) {
             showCenterToast("无效的二维码，请重新扫描...");
             return;
         }
 
-        Uri uri = Uri.parse(result);
+        Uri uri = Uri.parse(qrCode);
 
         String uriQuery = Uri.decode(uri.getQueryParameter("scheme"));
         if (TextUtils.isEmpty(uriQuery)) {
@@ -103,50 +89,10 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
 
         Bundle extras = new Bundle();
         //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
-        extras.putString(X5BrowserActivity.ARGS_URL, uriQuery);
-        X5BrowserActivity.show(this, X5BrowserActivity.class, extras);
-    }
+        extras.putString(DoctorWebViewActivity.ARGS_URL, uriQuery);
+        DoctorWebViewActivity.show(this, DoctorWebViewActivity.class, extras);
 
-    @Override
-    public void onScanQRCodeOpenCameraError() {
-        showToast(R.string.open_camera_failed);
-    }
+        //TestNativeActivity.show(this, TestNativeActivity.class);
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        showToast(R.string.scan_qr_code_denied);
-    }
-
-    @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)
-    private void requestCodeQRCodePermissions() {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!EasyPermissions.hasPermissions(this, perms)) {
-            EasyPermissions.requestPermissions(this, getString(R.string.scan_qr_code_warn), REQUEST_CODE_QR_CODE_PERMISSIONS, perms);
-        } else {
-            preScanQrCode();
-        }
-    }
-
-    private void preScanQrCode() {
-        this.mZXingView.startCamera();
-        this.mZXingView.showScanRect();
-        this.mZXingView.startSpot();
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    private void vibrate() {
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        if (vibrator != null) {
-            vibrator.vibrate(200);
-        }
     }
 }

@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         app:text="@string/about_me" />
 
-    <com.sumian.sleepdoctor.improve.widget.webview.X5WebViewContainer
-        android:id="@+id/x5_webview_container"
+    <com.sumian.sleepdoctor.improve.widget.webview.SWebViewContainer
+        android:id="@+id/sm_webview_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

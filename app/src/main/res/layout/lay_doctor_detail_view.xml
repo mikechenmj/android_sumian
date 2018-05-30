@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_170"
+                android:background="@color/b3_color">
+
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="@dimen/space_104"
+                    android:layout_height="@dimen/space_104"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginRight="@dimen/space_20"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_info_avatar_doctor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/text_t3_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginRight="@dimen/space_20"
+                    android:ellipsize="marquee"
+                    android:maxEms="11"
+                    android:minLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/b2_color"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_department"
+                    app:layout_constraintLeft_toRightOf="@+id/iv_avatar"
+                    app:layout_constraintTop_toTopOf="@id/iv_avatar"
+                    tools:text="张三" />
+
+                <TextView
+                    android:id="@+id/tv_department"
+                    style="@style/text_t1_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginRight="@dimen/space_20"
+                    android:lineSpacingExtra="@dimen/space_4"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="2"
+                    android:minLines="1"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+                    app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name"
+                    tools:text="哈尔滨医科大学附属第一医院 睡眠医学中心睡眠医学中心科室主任医…" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="@color/b2_color"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_t2_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_20"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginRight="@dimen/space_20"
+                    android:layout_marginTop="@dimen/space_20"
+                    android:gravity="center"
+                    android:text="@string/doctor_summary"
+                    android:textColor="@color/t1_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:background="@color/l1_color"
+                    tools:ignore="RtlHardcoded" />
+
+                <com.sumian.sleepdoctor.improve.widget.fold.FoldLayout
+                    android:id="@+id/fold_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_20"
+                    android:paddingLeft="@dimen/space_20"
+                    android:paddingRight="@dimen/space_20" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="@color/b2_color"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_t2_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_20"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginRight="@dimen/space_20"
+                    android:layout_marginTop="@dimen/space_20"
+                    android:gravity="center"
+                    android:text="@string/doctor_summary"
+                    android:textColor="@color/t1_color" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:background="@color/l1_color"
+                    tools:ignore="RtlHardcoded" />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>

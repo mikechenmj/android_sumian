@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.network.api
 import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.network.response.BaseResponse
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
@@ -74,4 +75,18 @@ interface DoctorApi {
 
     @DELETE("socialites/{id}")
     fun unbindSocialites(@Path("id") userId: Int): Call<String>
+
+    //doctor
+
+    @PATCH("doctor-bind")
+    fun bindDoctor(@FieldMap map: MutableMap<String, Any>): Call<Doctor>
+
+    @GET("doctors/{id}")
+    fun getDoctorInfo(@Path("id") id: Int, @Query("include") include: String): Call<Doctor>
+
+    @GET
+    fun getBindDoctorInfo(): Call<Doctor>
+
+    @DELETE("doctor/binding")
+    fun unbindDoctor(): Call<Unit>
 }

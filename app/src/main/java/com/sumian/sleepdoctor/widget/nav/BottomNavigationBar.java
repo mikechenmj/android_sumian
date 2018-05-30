@@ -7,8 +7,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.blankj.utilcode.util.LogUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,6 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
 
     @Override
     protected void onAttachedToWindow() {
-        LogUtils.d("onAttachToWindow");
         super.onAttachedToWindow();
         initNavigationItems();
     }

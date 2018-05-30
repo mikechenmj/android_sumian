@@ -10,6 +10,7 @@ import com.sumian.common.operator.AppOperator;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
+import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
@@ -61,6 +62,15 @@ public class AccountViewModel extends AndroidViewModel {
 
     public UserProfile getUserProfile() {
         return getToken().user;
+    }
+
+    public void updateBindDoctor(Doctor doctor) {
+        Token token = getToken();
+        token.is_new = false;
+        UserProfile userProfile = getUserProfile();
+        userProfile.doctor = doctor;
+        token.user = userProfile;
+        updateToken(token);
     }
 
     public void updateToken(Token token) {
