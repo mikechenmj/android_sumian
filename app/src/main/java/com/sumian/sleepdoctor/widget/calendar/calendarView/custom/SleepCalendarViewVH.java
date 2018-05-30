@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.calendar;
+package com.sumian.sleepdoctor.widget.calendar.calendarView.custom;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewVH;
+import com.sumian.sleepdoctor.widget.calendar.calendarView.DayType;
 
 /**
  * <pre>
@@ -18,8 +20,8 @@ import com.sumian.sleepdoctor.R;
  *     version: 1.0
  * </pre>
  */
-public class SleepCalendarVH extends CalendarVH {
-    private SleepCalendarVH(View itemView) {
+public class SleepCalendarViewVH extends CalendarViewVH {
+    private SleepCalendarViewVH(View itemView) {
         super(itemView);
     }
 
@@ -34,32 +36,32 @@ public class SleepCalendarVH extends CalendarVH {
 //    TEXT_TYPE_DE_EMPHASIZE_3
 
     @NonNull
-    public static CalendarVH create(ViewGroup parent) {
+    public static CalendarViewVH create(ViewGroup parent) {
         Context context = parent.getContext();
         View inflate = LayoutInflater.from(context).inflate(R.layout.item_calendar, parent, false);
-        return new SleepCalendarVH(inflate);
+        return new SleepCalendarViewVH(inflate);
     }
 
     @Override
-    protected int getTextColor(int textType) {
+    protected int getTextColor(DayType textType) {
         int colorRes;
         switch (textType) {
-            case CalendarView.DAY_TYPE_DE_EMPHASIZE_1:
+            case DE_EMPHASIZE_1:
                 colorRes = R.color.t2_alpha_40_color;
                 break;
-            case CalendarView.DAY_TYPE_EMPHASIZE_1:
+            case EMPHASIZE_1:
                 colorRes = R.color.t1_color;
                 break;
-            case CalendarView.DAY_TYPE_EMPHASIZE_2:
+            case EMPHASIZE_2:
                 colorRes = R.color.t1_color;
                 break;
-            case CalendarView.DAY_TYPE_EMPHASIZE_3:
+            case EMPHASIZE_3:
                 colorRes = R.color.white;
                 break;
-            case CalendarView.DAY_TYPE_EMPHASIZE_4:
+            case EMPHASIZE_4:
                 colorRes = R.color.b3_color;
                 break;
-            case CalendarView.DAY_TYPE_NORMAL:
+            case NORMAL:
             default:
                 colorRes = R.color.t2_color;
                 break;
@@ -68,13 +70,13 @@ public class SleepCalendarVH extends CalendarVH {
     }
 
     @Override
-    protected Drawable getBgDrawable(int textType) {
+    protected Drawable getBgDrawable(DayType textType) {
         int drawableRes;
         switch (textType) {
-            case CalendarView.DAY_TYPE_EMPHASIZE_2:
+            case EMPHASIZE_2:
                 drawableRes = R.drawable.ring_blue_b5;
                 break;
-            case CalendarView.DAY_TYPE_EMPHASIZE_3:
+            case EMPHASIZE_3:
                 drawableRes = R.drawable.circle_blue_b3;
                 break;
             default:

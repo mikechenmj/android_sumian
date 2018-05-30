@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.calendar;
+package com.sumian.sleepdoctor.widget.calendar.calendarView;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,25 +23,25 @@ import butterknife.ButterKnife;
  *     version: 1.0
  * </pre>
  */
-public class CalendarVH extends RecyclerView.ViewHolder{
+public class CalendarViewVH extends RecyclerView.ViewHolder{
 
-    Context mContext;
+    protected Context mContext;
     @BindView(R.id.tv)
     TextView mTextView;
 
-    public static CalendarVH create(ViewGroup parent) {
+    public static CalendarViewVH create(ViewGroup parent) {
         Context context = parent.getContext();
         View inflate = LayoutInflater.from(context).inflate(R.layout.item_calendar, parent, false);
-        return new CalendarVH(inflate);
+        return new CalendarViewVH(inflate);
     }
 
-    CalendarVH(View itemView) {
+    protected CalendarViewVH(View itemView) {
         super(itemView);
         mContext = itemView.getContext();
         ButterKnife.bind(this, itemView);
     }
 
-    public void setDay(int day, @CalendarView.DayType int textType) {
+    public void setDay(int day, DayType textType) {
         String text = day > 0 ? String.valueOf(day) : "";
         mTextView.setText(text);
         mTextView.setTextColor
@@ -49,11 +49,11 @@ public class CalendarVH extends RecyclerView.ViewHolder{
         mTextView.setBackground(getBgDrawable(textType));
     }
 
-    protected int getTextColor(int textType) {
+    protected int getTextColor(DayType textType) {
         return Color.DKGRAY;
     }
 
-    protected Drawable getBgDrawable(int textType) {
+    protected Drawable getBgDrawable(DayType textType) {
         return null;
     }
 }
