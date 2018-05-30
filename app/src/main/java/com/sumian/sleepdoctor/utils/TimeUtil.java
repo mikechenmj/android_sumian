@@ -313,4 +313,14 @@ public final class TimeUtil {
         return second / 60 % 60;
     }
 
+    public static String formatDate(String pattern, long timeInMillis) {
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(new Date(timeInMillis));
+    }
+
+    public static int getDayOfMonth(long timeInMillis) {
+        Calendar calendar = getCalendar(timeInMillis);
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
 }
