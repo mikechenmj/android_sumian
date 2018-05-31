@@ -1,21 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.improve.widget.doctor.DoctorDetailLayout
-        android:id="@+id/doctor_detail_layout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:layout_height="@dimen/space_72"
+        android:background="@color/b3_color"
+        android:paddingTop="@dimen/space_24">
 
-    <com.sumian.sleepdoctor.widget.RequestScanQrCodeView
-        android:id="@+id/request_scan_qr_code_view"
+        <TextView
+            style="@style/text_t2_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/tab_doctor"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/iv_notice"
+            android:layout_width="@dimen/space_24"
+            android:layout_height="@dimen/space_24"
+            android:layout_gravity="center|right"
+            android:layout_marginRight="@dimen/space_16"
+            android:contentDescription="@null"
+            app:srcCompat="@mipmap/ic_nav_icon_news"
+            tools:ignore="RtlHardcoded" />
+
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <com.sumian.sleepdoctor.improve.widget.doctor.DoctorDetailLayout
+            android:id="@+id/doctor_detail_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.sumian.sleepdoctor.widget.RequestScanQrCodeView
+            android:id="@+id/request_scan_qr_code_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+</LinearLayout>
