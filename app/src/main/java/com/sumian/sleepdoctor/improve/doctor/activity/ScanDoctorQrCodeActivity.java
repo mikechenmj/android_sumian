@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.improve.doctor.activity;
 
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -87,9 +86,10 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
             return;
         }
 
-        Bundle extras = new Bundle();
-        //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
-        extras.putString(DoctorWebViewActivity.ARGS_URL, uriQuery);
-        DoctorWebViewActivity.show(this, DoctorWebViewActivity.class, extras);
+//        Bundle extras = new Bundle();
+//        //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
+//        extras.putString(DoctorWebViewActivity.ARGS_URL, uriQuery);
+//        DoctorWebViewActivity.show(this, DoctorWebViewActivity.class, extras);
+        DoctorWebViewActivity.launch(this, uriQuery);
     }
 }

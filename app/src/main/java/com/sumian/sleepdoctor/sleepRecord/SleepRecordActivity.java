@@ -1,9 +1,8 @@
 package com.sumian.sleepdoctor.sleepRecord;
 
-import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
-import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
+import com.sumian.sleepdoctor.h5.H5Url;
 
 /**
  * <pre>
@@ -15,34 +14,15 @@ import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
  * </pre>
  */
 public class SleepRecordActivity extends BaseWebViewActivity {
-    @Override
-    protected String h5HandlerName() {
-        return "name";
-    }
 
     @Override
     protected int initTitle() {
-        return R.string.success;
+        return R.string.tab_record;
     }
 
     @Override
-    protected String queryParameter() {
-        return "date='2018-4-24'";
-    }
-
-    @Override
-    protected String appendUri() {
-        return BuildConfig.H5_URI_QUESTION;
-    }
-
-    @Override
-    protected void parseUrl(String url) {
-        super.parseUrl(appendUri());
-    }
-
-    @Override
-    protected void registerHandler(SWebView sWebView) {
-
+    protected String getUrlContentPart() {
+        return H5Url.H5_URI_SLEEP_RECORD_RECORD_SLEEP;
     }
 
 }

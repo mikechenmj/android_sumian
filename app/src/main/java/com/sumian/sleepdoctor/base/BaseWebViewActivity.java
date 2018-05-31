@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.base;
 
-import android.os.Bundle;
+import android.arch.lifecycle.LifecycleOwner;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.view.View;
 
@@ -20,31 +21,15 @@ import butterknife.BindView;
  **/
 public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackListener {
 
-    public static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
-
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
     @BindView(R.id.sm_webview_container)
     SWebViewContainer mSWebViewContainer;
 
-    protected String mUrl;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main_base_webview;
-    }
-
-    @Override
-    protected boolean initBundle(Bundle bundle) {
-        if (initDefaultUri() != null) {
-            parseUrl(initDefaultUri());
-        } else {
-            if (bundle != null) {
-                parseUrl(bundle.getString(ARGS_URL));
-            }
-        }
-        return super.initBundle(bundle);
     }
 
     @Override
@@ -58,7 +43,12 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     protected void initData() {
         super.initData();
         registerHandler(mSWebViewContainer.getSWebView());
-        mSWebViewContainer.loadRequestUrl(mUrl);
+    }
+
+    @Override
+    public void onStart(@NonNull LifecycleOwner owner) {
+        super.onStart(owner);
+        mSWebViewContainer.loadRequestUrl(getCompleteUrl());
     }
 
     @Override
@@ -79,32 +69,15 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         mSWebViewContainer.destroyWebView();
     }
 
-    protected String initBaseH5Url() {
-        return BuildConfig.BASE_H5_URL;
+    protected String h5HandlerName(){
+        return null;
     }
-
-    protected abstract String h5HandlerName();
 
     @StringRes
     protected abstract int initTitle();
 
-    protected abstract String queryParameter();
+    protected void registerHandler(SWebView sWebView){
 
-    protected abstract String appendUri();
-
-    protected abstract void registerHandler(SWebView sWebView);
-
-    protected String initDefaultUri() {
-        return null;
-    }
-
-
-    protected void parseUrl(String url) {
-        this.mUrl = initBaseH5Url() + appendToken(url);
-    }
-
-    private String appendToken(String formatUrl) {
-        return formatUrl + "?token=" + AppManager.getAccountViewModel().accessToken();
     }
 
     @Override
@@ -117,6 +90,20 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         if (!mSWebViewContainer.webViewCanGoBack()) {
             super.onBackPressed();
         }
+    }
+
+    private String getCompleteUrl() {
+        return getUrlServerPart() + getUrlContentPart() + getUrlToken();
+    }
+
+    private String getUrlServerPart() {
+        return BuildConfig.BASE_H5_URL;
+    }
+
+    protected abstract String getUrlContentPart();
+
+    private String getUrlToken() {
+        return "?token=" + AppManager.getAccountViewModel().accessToken();
     }
 
 }

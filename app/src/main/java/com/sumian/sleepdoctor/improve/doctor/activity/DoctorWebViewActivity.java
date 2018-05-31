@@ -1,12 +1,14 @@
 package com.sumian.sleepdoctor.improve.doctor.activity;
 
+import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
-import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.h5.H5Url;
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
 import com.sumian.sleepdoctor.improve.doctor.contract.BindDoctorContract;
 import com.sumian.sleepdoctor.improve.doctor.presenter.BindDoctorPresenter;
@@ -23,8 +25,16 @@ import org.jetbrains.annotations.NotNull;
  * desc:
  **/
 public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
+    private static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
 
-    private static final String TAG = DoctorWebViewActivity.class.getSimpleName();
+    private String mArgUrl;
+
+    public static void launch(Context context, String url) {
+        Bundle extras = new Bundle();
+        //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
+        extras.putString(ARGS_URL, url);
+        DoctorWebViewActivity.show(context, DoctorWebViewActivity.class, extras);
+    }
 
     @Override
     protected void initWidget(View root) {
@@ -34,6 +44,19 @@ public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresent
     @Override
     protected void initData() {
         super.initData();
+    }
+
+    @Override
+    protected boolean initBundle(Bundle bundle) {
+        mArgUrl = bundle.getString(ARGS_URL);
+        return super.initBundle(bundle);
+    }
+
+    @Override
+    protected String getUrlContentPart() {
+        Uri argUri = Uri.parse(mArgUrl);
+        String originUrl = H5Url.H5_URI_DOCTOR_SERVICE;
+        return originUrl.replace("{id}", argUri.getQueryParameter("id"));
     }
 
     @Override
@@ -52,22 +75,21 @@ public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresent
         return R.string.bind_doctor;
     }
 
-    @Override
-    protected String queryParameter() {
-        return "id";
-    }
-
-    @Override
-    protected String appendUri() {
-        return BuildConfig.H5_URI_DOCTOR;
-    }
-
-    @Override
-    protected void parseUrl(String url) {
-        Uri parseUrl = Uri.parse(url);
-        String appendUrl = appendUri().replace("{id}", parseUrl.getQueryParameter(queryParameter()));
-        super.parseUrl(appendUrl);
-    }
+//    @Override
+//    protected String queryParameter() {
+//        return "id";
+//    }
+//
+//    @Override
+//    protected String appendUri() {
+//        return BuildConfig.H5_URI_DOCTOR;
+//    }
+//
+//
+//    public void parseUrl(String url) {
+//        Uri parseUrl = Uri.parse(url);
+//        String appendUrl = appendUri().replace("{id}", parseUrl.getQueryParameter(queryParameter()));
+//    }
 
     @Override
     protected void registerHandler(SWebView sWebView) {
