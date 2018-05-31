@@ -5,11 +5,13 @@ import android.arch.lifecycle.DefaultLifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -190,11 +192,27 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     }
 
     protected void showToast(String message) {
-        runOnUiThread(() -> ToastHelper.show(message));
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            ToastHelper.show(message);
+        } else {
+            runOnUiThread(() -> ToastHelper.show(message));
+        }
     }
 
     protected void showToast(@StringRes int messageId) {
         showToast(getString(messageId));
+    }
+
+    protected void showCenterToast(String message) {
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            runOnUiThread(() -> ToastHelper.show(getContext(), message, Gravity.CENTER));
+        } else {
+            ToastHelper.show(getContext(), message, Gravity.CENTER);
+        }
+    }
+
+    protected void showCenterToast(@StringRes int messageId) {
+        showCenterToast(getString(messageId));
     }
 
     protected void setStatusBarColor() {

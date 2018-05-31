@@ -1,6 +1,6 @@
 package com.sumian.sleepdoctor.improve.doctor.fragment
 
-import android.util.Log
+import android.view.View
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
@@ -18,10 +18,14 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  */
 class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View {
 
-    val TAG: String = DoctorFragment::class.java.javaClass.simpleName
+    private val TAG: String = DoctorFragment::class.java.javaClass.simpleName
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_doctor
+    }
+
+    override fun initWidget(root: View?) {
+        super.initWidget(root)
     }
 
     override fun initData() {
@@ -38,7 +42,6 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
             doctor_detail_layout.hide()
             request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
         }
-        Log.e("DoctorFragment------->", AppManager.getAccountViewModel().userProfile.toString())
     }
 
     override fun initPresenter() {
@@ -60,11 +63,10 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
     }
 
     override fun onGetDoctorInfoFailed(error: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showCenterToast(error)
     }
 
     override fun setPresenter(presenter: DoctorContract.Presenter?) {
         this.mPresenter = presenter as DoctorPresenter?
-        Log.e(TAG, "setPresenter-------->")
     }
 }

@@ -9,11 +9,11 @@ import android.widget.EditText;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bindMobile.BindMobileActivity;
-import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.account.bindMobile.BindMobileActivity;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
+import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
@@ -93,7 +93,9 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onFinish() {
-        mActionLoadingDialog.dismiss();
+        if (mActionLoadingDialog != null) {
+            mActionLoadingDialog.dismiss();
+        }
     }
 
     @Override

@@ -63,7 +63,7 @@
 
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/scan_qr_theme" />
+            android:theme="@style/AppTheme" />
 
         <activity android:name=".account.login.LoginActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileOneActivity" />
