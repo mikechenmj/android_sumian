@@ -62,14 +62,24 @@
             android:src="@mipmap/ic_nav_icon_scan" />
     </RelativeLayout>
 
-    <com.sumian.sleepdoctor.widget.calendar.calendarViewWrapper.CalendarViewWrapper
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:visibility="gone" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView
-        android:id="@+id/dsiv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_130" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.sumian.sleepdoctor.sleepRecord.view.SleepRecordView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView
+                android:id="@+id/dsiv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

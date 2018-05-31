@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/space_130">
+    android:layout_height="@dimen/space_130"
+    android:layout_marginTop="@dimen/space_10"
+    android:background="@color/white">
 
     <android.support.v7.widget.CardView
         android:id="@+id/iv_wrapper"
@@ -70,4 +72,4 @@
         tools:background="#3333"
         tools:ignore="RelativeOverlap"
         tools:text="50元" />
-</merge>
+</RelativeLayout><!--</FrameLayout>-->

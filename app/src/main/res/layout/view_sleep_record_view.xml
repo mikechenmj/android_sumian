@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_sleep_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:visibility="visible">
+
+        <com.sumian.sleepdoctor.sleepRecord.view.TitleView
+            android:id="@+id/title_view_sleep_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu_text="@string/refill"
+            app:title_text="@string/sleep_record" />
+
+        <LinearLayout
+            android:id="@+id/ll_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            tools:visibility="gone">
+
+            <com.sumian.sleepdoctor.improve.record.view.ProgressView
+                android:layout_width="@dimen/space_150"
+                android:layout_height="@dimen/space_150"
+                android:layout_marginStart="@dimen/space_44" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_20"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SleepRecordMedicineTv"
+                    tools:text="药药药药" />
+
+                <TextView
+                    style="@style/SleepRecordMedicineTv"
+                    tools:text="药药药药" />
+
+                <TextView
+                    style="@style/SleepRecordMedicineTv"
+                    tools:text="药药药药" />
+
+                <TextView
+                    style="@style/SleepRecordMedicineTv"
+                    tools:text="药药药药" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_40">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SleepRecordGreyIconTv"
+                    android:drawableStart="@mipmap/ic_record_icon_wakeup"
+                    android:text="@string/actual_work_and_reset" />
+
+                <TextView
+                    style="@style/SleepRecordTimeTv"
+                    tools:text="20:00-22:00" />
+            </LinearLayout>
+
+            <View
+                style="@style/VerticalDividerLine"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SleepRecordGreyIconTv"
+                    android:drawableStart="@mipmap/ic_record_icon_sleep"
+                    android:text="@string/record_sleep_time" />
+
+                <TextView
+                    style="@style/SleepRecordTimeTv"
+                    tools:text="20:00-22:00" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalDividerLine"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_40">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SleepRecordGreyIconTv"
+                    android:drawableStart="@mipmap/ic_record_icon_clock"
+                    android:text="@string/record_sleep_duration" />
+
+                <TextView
+                    style="@style/SleepRecordTimeTv"
+                    tools:text="20:00-22:00" />
+            </LinearLayout>
+
+            <View
+                style="@style/VerticalDividerLine"
+                android:layout_height="50dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/SleepRecordGreyIconTv"
+                    android:drawableStart="@mipmap/ic_record_icon_sleep"
+                    android:text="@string/fall_asleep_duration" />
+
+                <TextView
+                    style="@style/SleepRecordTimeTv"
+                    tools:text="20:00-22:00" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalDividerLine"
+            android:layout_marginStart="@dimen/space_20" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_10"
+            tools:text="我今天失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两种药物，但是感觉对睡眠并没有什么帮助，醒来之后感觉很沮丧，不知道要怎么改善这种状态比较好。" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_doctor_advice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.sumian.sleepdoctor.sleepRecord.view.TitleView
+            android:id="@+id/title_view_doctor_advise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_text="@string/doctor_advise" />
+
+        <TextView
+            android:id="@+id/tv_doctor_advice"
+            style="@style/text_t2_14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_10"
+            tools:text="我今天失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两种药物，但是感觉对睡眠并没有什么帮助，醒来之后感觉很沮丧，不知道要怎么改善这种状态比较好。" />
+    </LinearLayout>
+</LinearLayout>

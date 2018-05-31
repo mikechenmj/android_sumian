@@ -114,4 +114,9 @@
         <attr name="pv_ring_width" format="float"/>
         <attr name="pv_ring_bg_color" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="TitleView" >
+        <attr name="title_text" format="string|reference"/>
+        <attr name="menu_text" format="string|reference"/>
+    </declare-styleable>
 </resources>

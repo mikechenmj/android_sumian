@@ -75,22 +75,6 @@ public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresent
         return R.string.bind_doctor;
     }
 
-//    @Override
-//    protected String queryParameter() {
-//        return "id";
-//    }
-//
-//    @Override
-//    protected String appendUri() {
-//        return BuildConfig.H5_URI_DOCTOR;
-//    }
-//
-//
-//    public void parseUrl(String url) {
-//        Uri parseUrl = Uri.parse(url);
-//        String appendUrl = appendUri().replace("{id}", parseUrl.getQueryParameter(queryParameter()));
-//    }
-
     @Override
     protected void registerHandler(SWebView sWebView) {
         sWebView.registerHandler(h5HandlerName(), new SBridgeHandler() {

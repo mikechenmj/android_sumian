@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -69,14 +70,14 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         mSWebViewContainer.destroyWebView();
     }
 
-    protected String h5HandlerName(){
+    protected String h5HandlerName() {
         return null;
     }
 
     @StringRes
     protected abstract int initTitle();
 
-    protected void registerHandler(SWebView sWebView){
+    protected void registerHandler(SWebView sWebView) {
 
     }
 
@@ -93,7 +94,17 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     }
 
     private String getCompleteUrl() {
-        return getUrlServerPart() + getUrlContentPart() + getUrlToken();
+        StringBuilder stringBuilder = new StringBuilder();
+        String urlServerPart = getUrlServerPart();
+        String urlContentPart = getUrlContentPart();
+        boolean contentContainerParams = urlContentPart.contains("?");
+        stringBuilder.append(urlServerPart)
+                .append(urlContentPart)
+                .append(contentContainerParams ? "&" : "?")
+                .append(getUrlToken());
+        String url = stringBuilder.toString();
+        LogUtils.d("load url: %s", url);
+        return url;
     }
 
     private String getUrlServerPart() {
@@ -103,7 +114,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     protected abstract String getUrlContentPart();
 
     private String getUrlToken() {
-        return "?token=" + AppManager.getAccountViewModel().accessToken();
+        return "token=" + AppManager.getAccountViewModel().accessToken();
     }
 
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_62"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="@dimen/space_20"
+        android:textColor="@color/t1_color"
+        android:textSize="@dimen/font_16"
+        tools:text="睡眠记录" />
+
+    <TextView
+        android:id="@+id/tv_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="@dimen/space_20"
+        android:textColor="@color/b3_color"
+        android:textSize="@dimen/font_16"
+        tools:text="睡眠记录" />
+
+    <View
+        style="@style/HorizontalDividerLine"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/space_20" />
+</FrameLayout>

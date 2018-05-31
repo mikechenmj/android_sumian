@@ -172,4 +172,11 @@
     <string name="fri">五</string>
     <string name="sat">六</string>
     <string name="go_to_today">回到今天</string>
+    <string name="sleep_record">睡眠记录</string>
+    <string name="refill">重填</string>
+    <string name="actual_work_and_reset">实际作息</string>
+    <string name="record_sleep_time">睡眠时间</string>
+    <string name="record_sleep_duration">睡眠时长</string>
+    <string name="fall_asleep_duration">入睡时长</string>
+    <string name="doctor_advise">医生建议</string>
 </resources>

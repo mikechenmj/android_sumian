@@ -91,7 +91,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
                 turnDateArrow(!mIvDateArrow.isActivated());
                 break;
             case R.id.iv_notification:
-                startActivity(new Intent(getContext(), SleepRecordActivity.class));
+                startActivity(new Intent(getContext(), RecordSleepRecordActivity.class));
                 break;
         }
     }

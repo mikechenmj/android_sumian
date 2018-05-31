@@ -2,13 +2,29 @@
 
     <!--text-->
     <style name="text_t1_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/t1_color</item>
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
+    <style name="text_t1_12" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
+    <style name="text_t1_16" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
     <style name="text_t2_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/t2_color</item>
         <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t2_14" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_14</item>
     </style>
 
     <style name="text_t3_style">
@@ -91,5 +107,35 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/font_14</item>
         <item name="android:textColor">@color/t2_color</item>
+    </style>
+
+    <style name="SleepRecordMedicineTv" parent="text_t1_12">
+        <item name="android:layout_marginTop">@dimen/space_8</item>
+        <item name="android:layout_marginBottom">@dimen/space_8</item>
+        <item name="android:drawableLeft">@drawable/rect_b5_10dp</item>
+        <item name="android:drawablePadding">@dimen/space_6</item>
+    </style>
+
+    <style name="SleepRecordGreyIconTv" parent="text_t2_14">
+        <item name="android:layout_marginBottom">@dimen/space_10</item>
+        <item name="android:drawablePadding">@dimen/space_10</item>
+    </style>
+
+    <style name="SleepRecordTimeTv" parent="text_t1_16">
+        <item name="android:layout_marginBottom">@dimen/space_20</item>
+    </style>
+
+    <style name="DividerLine">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/l1_color</item>
+    </style>
+
+    <style name="HorizontalDividerLine" parent="DividerLine">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="VerticalDividerLine" parent="DividerLine">
+        <item name="android:layout_height">match_parent</item>
     </style>
 </resources>

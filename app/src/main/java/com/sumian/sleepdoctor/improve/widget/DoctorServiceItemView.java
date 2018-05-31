@@ -7,6 +7,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  *     version: 1.0
  * </pre>
  */
-public class DoctorServiceItemView extends RelativeLayout {
+public class DoctorServiceItemView extends FrameLayout {
     @BindView(R.id.v_price_bg)
     View mPriceBg;
     @BindView(R.id.tv_price)
@@ -50,7 +51,6 @@ public class DoctorServiceItemView extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        setBackgroundColor(Color.WHITE);
         inflate(context, R.layout.lay_doctor_service_item, this);
         ButterKnife.bind(this);
 
