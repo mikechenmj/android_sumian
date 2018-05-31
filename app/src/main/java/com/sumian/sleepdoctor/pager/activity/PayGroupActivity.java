@@ -160,7 +160,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     }
 
     @Override
-    public void bindPresenter(PayGroupContract.Presenter presenter) {
+    public void setPresenter(PayGroupContract.Presenter presenter) {
         this.mPresenter = (PayGroupPresenter) presenter;
         this.mPayDialog.bindPresenter(presenter);
     }

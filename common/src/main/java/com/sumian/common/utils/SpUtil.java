@@ -19,10 +19,8 @@ public final class SpUtil {
         return initSp(context, spFileName).edit();
     }
 
-
     public static void apply(SharedPreferences.Editor editor) {
         editor.apply();
-        //SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
     }
 
 }

@@ -92,7 +92,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
     }
 
     @Override
-    public void bindPresenter(GroupDetailContract.Presenter presenter) {
+    public void setPresenter(GroupDetailContract.Presenter presenter) {
         this.mPresenter = (GroupDetailPresenter) presenter;
     }
 

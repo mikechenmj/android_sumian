@@ -84,7 +84,7 @@ interface DoctorApi {
     @GET("doctors/{id}")
     fun getDoctorInfo(@Path("id") id: Int, @Query("include") include: String): Call<Doctor>
 
-    @GET
+    @GET("user/doctor")
     fun getBindDoctorInfo(): Call<Doctor>
 
     @DELETE("doctor/binding")

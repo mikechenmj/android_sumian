@@ -87,6 +87,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         if (savedInstanceState != null) {
             onRestartInstance(savedInstanceState);
         }
+        //init presenter
+        initPresenter();
+
         // Init
         initWidget(rootView);
         this.mRootView = rootView;
@@ -159,7 +162,6 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onCreate: -------->" + this.toString());
-        initPresenter();
     }
 
     @Override

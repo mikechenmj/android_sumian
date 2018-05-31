@@ -61,7 +61,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".main.MainActivity" />
+        <activity
+            android:name=".main.MainActivity"
+            android:theme="@style/scan_qr_theme" />
+
         <activity android:name=".account.login.LoginActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileOneActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileTwoActivity" />
@@ -117,6 +120,7 @@
             android:screenOrientation="behind" />
 
         <activity android:name=".improve.doctor.activity.DoctorWebViewActivity" />
+        <activity android:name=".improve.doctor.activity.DoctorServiceActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->

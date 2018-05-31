@@ -257,7 +257,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     }
 
     @Override
-    public void bindPresenter(MsgContract.Presenter presenter) {
+    public void setPresenter(MsgContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

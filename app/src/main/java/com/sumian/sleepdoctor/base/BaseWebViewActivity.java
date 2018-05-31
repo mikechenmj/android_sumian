@@ -11,8 +11,6 @@ import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebViewContainer;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
-import java.lang.reflect.Type;
-
 import butterknife.BindView;
 
 /**

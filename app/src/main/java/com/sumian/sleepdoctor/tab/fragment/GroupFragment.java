@@ -109,7 +109,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     }
 
     @Override
-    public void bindPresenter(GroupContract.Presenter presenter) {
+    public void setPresenter(GroupContract.Presenter presenter) {
         this.mPresenter = (GroupPresenter) presenter;
     }
 

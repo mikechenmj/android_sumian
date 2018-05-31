@@ -14,7 +14,7 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
     private var mView: BindMobileContract.View? = view
 
     init {
-        view.bindPresenter(this)
+        view.setPresenter(this)
         this.mView = view
     }
 

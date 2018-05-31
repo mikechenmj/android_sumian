@@ -118,7 +118,7 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
     }
 
     @Override
-    public void bindPresenter(BindMobileContract.Presenter presenter) {
+    public void setPresenter(BindMobileContract.Presenter presenter) {
         this.mPresenter = (BindMobilePresenter) presenter;
     }
 

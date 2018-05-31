@@ -27,7 +27,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     private String mOpenUserInfo;
 
     private LoginPresenter(LoginContract.View view) {
-        view.bindPresenter(this);
+        view.setPresenter(this);
         this.mView = view;
     }
 

@@ -22,7 +22,7 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
 
 
     private ImproveUserProfilePresenter(ImproveUserProfileContract.View view) {
-        view.bindPresenter(this);
+        view.setPresenter(this);
         this.mView = view;
     }
 

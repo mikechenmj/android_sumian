@@ -62,7 +62,7 @@ public class MsgPresenter implements MsgContract.Presenter {
     private AVIMTypedMessage mReplyMsg;
 
     private MsgPresenter(MsgContract.View view) {
-        view.bindPresenter(this);
+        view.setPresenter(this);
         this.mView = view;
     }
 

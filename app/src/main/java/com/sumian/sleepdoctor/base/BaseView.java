@@ -9,7 +9,7 @@ package com.sumian.sleepdoctor.base;
 
 public interface BaseView<T> {
 
-    void bindPresenter(T presenter);
+    void setPresenter(T presenter);
 
     default void onFailure(String error) {
 

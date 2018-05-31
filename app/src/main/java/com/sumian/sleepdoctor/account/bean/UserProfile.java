@@ -26,16 +26,20 @@ public class UserProfile implements Serializable, Parcelable {
     public String birthday;
     public String height;
     public String weight;
+    public int socialite_id;// 已经绑定的第三方账号,以最后一个为准
     public String leancloud_id;
-    public String last_login;//最后登录时间
-    public int created_at;//账号创建时间 (医团)
-    public int updated_at;//账号更新时间 (医团)
+    public int bound_at;
+    public String last_login_at;
+    public int created_at;//账号创建时间
+    public int updated_at;//账号更新时间
+    public int doctor_id;//已经绑定的医生的 id
     public List<Social> socialites;//绑定信息
     public Doctor doctor;//绑定的医生信息
     public int role; // add by zxz for passing compile
 
     public UserProfile() {
     }
+
 
     protected UserProfile(Parcel in) {
         id = in.readInt();
@@ -48,12 +52,45 @@ public class UserProfile implements Serializable, Parcelable {
         birthday = in.readString();
         height = in.readString();
         weight = in.readString();
+        socialite_id = in.readInt();
         leancloud_id = in.readString();
-        last_login = in.readString();
+        bound_at = in.readInt();
+        last_login_at = in.readString();
         created_at = in.readInt();
         updated_at = in.readInt();
+        doctor_id = in.readInt();
         socialites = in.createTypedArrayList(Social.CREATOR);
         doctor = in.readParcelable(Doctor.class.getClassLoader());
+        role = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(mobile);
+        dest.writeString(nickname);
+        dest.writeString(name);
+        dest.writeString(avatar);
+        dest.writeString(area);
+        dest.writeString(gender);
+        dest.writeString(birthday);
+        dest.writeString(height);
+        dest.writeString(weight);
+        dest.writeInt(socialite_id);
+        dest.writeString(leancloud_id);
+        dest.writeInt(bound_at);
+        dest.writeString(last_login_at);
+        dest.writeInt(created_at);
+        dest.writeInt(updated_at);
+        dest.writeInt(doctor_id);
+        dest.writeTypedList(socialites);
+        dest.writeParcelable(doctor, flags);
+        dest.writeInt(role);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<UserProfile> CREATOR = new Creator<UserProfile>() {
@@ -69,31 +106,6 @@ public class UserProfile implements Serializable, Parcelable {
     };
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(mobile);
-        dest.writeString(nickname);
-        dest.writeString(name);
-        dest.writeString(avatar);
-        dest.writeString(area);
-        dest.writeString(gender);
-        dest.writeString(birthday);
-        dest.writeString(height);
-        dest.writeString(weight);
-        dest.writeString(leancloud_id);
-        dest.writeString(last_login);
-        dest.writeInt(created_at);
-        dest.writeInt(updated_at);
-        dest.writeTypedList(socialites);
-        dest.writeParcelable(doctor, flags);
-    }
-
-    @Override
     public String toString() {
         return "UserProfile{" +
                 "id=" + id +
@@ -106,20 +118,24 @@ public class UserProfile implements Serializable, Parcelable {
                 ", birthday='" + birthday + '\'' +
                 ", height='" + height + '\'' +
                 ", weight='" + weight + '\'' +
+                ", socialite_id=" + socialite_id +
                 ", leancloud_id='" + leancloud_id + '\'' +
-                ", last_login='" + last_login + '\'' +
+                ", bound_at=" + bound_at +
+                ", last_login_at='" + last_login_at + '\'' +
                 ", created_at=" + created_at +
                 ", updated_at=" + updated_at +
+                ", doctor_id=" + doctor_id +
                 ", socialites=" + socialites +
                 ", doctor=" + doctor +
+                ", role=" + role +
                 '}';
     }
 
     public boolean isBindDoctor() {
-        return doctor != null;
+        return bound_at > 0 && doctor_id > 0 && doctor != null;
     }
 
     public boolean isSameDoctor(int otherDoctorId) {
-        return doctor != null && doctor.getId() == otherDoctorId;
+        return isBindDoctor() && otherDoctorId == doctor_id && otherDoctorId == doctor.getId();
     }
 }

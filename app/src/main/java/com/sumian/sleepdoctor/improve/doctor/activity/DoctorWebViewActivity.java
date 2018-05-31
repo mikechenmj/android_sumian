@@ -8,8 +8,8 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
-import com.sumian.sleepdoctor.improve.doctor.contract.DoctorContract;
-import com.sumian.sleepdoctor.improve.doctor.presenter.DoctorPresenter;
+import com.sumian.sleepdoctor.improve.doctor.contract.BindDoctorContract;
+import com.sumian.sleepdoctor.improve.doctor.presenter.BindDoctorPresenter;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeResult;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
  * on 2018/5/28 11:40
  * desc:
  **/
-public class DoctorWebViewActivity extends BaseWebViewActivity<DoctorPresenter> implements DoctorContract.View {
+public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
 
     private static final String TAG = DoctorWebViewActivity.class.getSimpleName();
 
@@ -39,7 +39,7 @@ public class DoctorWebViewActivity extends BaseWebViewActivity<DoctorPresenter> 
     @Override
     protected void initPresenter() {
         super.initPresenter();
-        DoctorPresenter.Companion.initPresenter(this);
+        BindDoctorPresenter.Companion.init(this);
     }
 
     @Override
@@ -84,8 +84,8 @@ public class DoctorWebViewActivity extends BaseWebViewActivity<DoctorPresenter> 
     }
 
     @Override
-    public void bindPresenter(DoctorContract.Presenter presenter) {
-        this.mPresenter = (DoctorPresenter) presenter;
+    public void setPresenter(BindDoctorContract.Presenter presenter) {
+        this.mPresenter = (BindDoctorPresenter) presenter;
     }
 
     @Override

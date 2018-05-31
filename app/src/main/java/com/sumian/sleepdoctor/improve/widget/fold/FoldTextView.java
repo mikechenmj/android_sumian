@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.improve.widget.textview;
+package com.sumian.sleepdoctor.improve.widget.fold;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
