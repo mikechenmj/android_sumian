@@ -73,7 +73,7 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
 
     private DayType getTextType(int position) {
         if (position < mWeekdayShift) {
-            return DayType.NORMAL;
+            return DayType.TYPE_0;
         } else {
             return getDayTypeByDay(getDayByPosition(position));
         }
@@ -97,7 +97,7 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
     private DayType getDayTypeByDay(int day) {
         DayType dayType = mDayDayTypeMap.get(day);
         if (dayType == null) {
-            return DayType.NORMAL;
+            return DayType.TYPE_0;
         } else {
             return dayType;
         }

@@ -13,5 +13,5 @@ import android.util.LongSparseArray;
  */
 public class CalendarViewData {
     public long monthTime;  // calendar 对应的月份
-    public LongSparseArray<DayType> dayDayTypeMap; // 高亮的天, dayInMillis-dayType
+    public LongSparseArray<DayType> dayDayTypeMap = new LongSparseArray<>(); // 高亮的天, dayInMillis-dayType
 }

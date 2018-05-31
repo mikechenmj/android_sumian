@@ -11,8 +11,6 @@ import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebViewContainer;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
-import java.lang.reflect.Type;
-
 import butterknife.BindView;
 
 /**
@@ -21,8 +19,6 @@ import butterknife.BindView;
  * desc:
  **/
 public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackListener {
-
-    private static final String TAG = BaseWebViewActivity.class.getSimpleName();
 
     public static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
 
@@ -57,8 +53,13 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     protected void initData() {
         super.initData();
+        initUrl();
         registerHandler(mSWebViewContainer.getSWebView());
         mSWebViewContainer.loadRequestUrl(mUrl);
+    }
+
+    protected void initUrl() {
+
     }
 
     @Override

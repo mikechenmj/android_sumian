@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor;
+package com.sumian.sleepdoctor.util;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.utils.JsonUtil;

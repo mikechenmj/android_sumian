@@ -1,8 +1,11 @@
 package com.sumian.sleepdoctor.pager.activity;
 
+import android.arch.lifecycle.LiveData;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -32,7 +35,17 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
     @Override
     protected void initData() {
         super.initData();
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> mRoot.postDelayed(() -> {
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
+            LogUtils.d(token);
+            onToken(token);
+        });
+        LiveData<Token> liveDataToken = AppManager.getAccountViewModel().getLiveDataToken();
+        Token token = liveDataToken.getValue();
+        onToken(token);
+    }
+
+    public void onToken(Token token) {
+        mRoot.postDelayed(() -> {
             if (token == null) {
                 LoginActivity.show(WelcomeActivity.this, LoginActivity.class);
             } else if (token.is_new) {
@@ -41,6 +54,6 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
                 MainActivity.show(WelcomeActivity.this, MainActivity.class);
             }
             finish();
-        }, 50));
+        }, 50);
     }
 }

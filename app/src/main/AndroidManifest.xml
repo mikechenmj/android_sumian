@@ -27,15 +27,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name,android:icon,android:theme">
-
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="@string/umeng_app_key" />
-
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
-
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowing"
             android:value="true" />
@@ -60,7 +57,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-
         <activity android:name=".main.MainActivity" />
         <activity android:name=".account.login.LoginActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileOneActivity" />
@@ -77,12 +73,11 @@
         <activity android:name=".pager.activity.ModifyNicknameActivity" />
         <activity android:name=".pager.activity.OtherUserProfileActivity" />
         <activity android:name=".account.bindMobile.BindMobileActivity" />
-
         <activity
             android:name=".improve.doctor.activity.ScanDoctorQrCodeActivity"
             android:theme="@style/scan_qr_theme" />
 
-        <!--third  login-->
+        <!-- third  login -->
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -90,21 +85,19 @@
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--pay start-->
+        <!-- pay start -->
 
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!--WeChat-->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- WeChat -->
         <activity-alias
-            android:name="com.sumian.sleepdoctor.wxapi.WXPayEntryActivity"
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:targetActivity="com.pingplusplus.android.PaymentActivity" />
 
-        <!--Alipay-->
+        <!-- Alipay -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -115,12 +108,12 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind" />
-
         <activity android:name=".improve.doctor.activity.DoctorWebViewActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
         <service android:name="com.avos.avoscloud.PushService" />
+
         <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -132,6 +125,7 @@
         </receiver>
         <!-- 实时通信模块、推送 END -->
 
+        <activity android:name=".sleepRecord.SleepRecordActivity" />
     </application>
 
 </manifest>

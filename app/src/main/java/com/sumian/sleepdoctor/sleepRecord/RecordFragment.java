@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.sleepRecord;
 
+import android.content.Intent;
 import android.text.format.DateUtils;
 import android.util.LongSparseArray;
 import android.view.View;
@@ -8,9 +9,13 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
+import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.sleepRecord.bean.SleepData;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewAdapter;
 import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewData;
@@ -21,6 +26,7 @@ import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,6 +43,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
     @BindView(R.id.tv_date)
     TextView mTvDate;
     private long mPopupDismissTime;
+    private CalendarViewWrapper mCalendarViewWrapper;
 
     @Override
     protected int getLayoutId() {
@@ -77,11 +84,14 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
 
     }
 
-    @OnClick({R.id.iv_date_arrow})
+    @OnClick({R.id.iv_date_arrow, R.id.iv_notification})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_date_arrow:
                 turnDateArrow(!mIvDateArrow.isActivated());
+                break;
+            case R.id.iv_notification:
+                startActivity(new Intent(getContext(), SleepRecordActivity.class));
                 break;
         }
     }
@@ -93,11 +103,11 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         mIvDateArrow.setActivated(activated);
         if (mPopupWindow == null) {
             mPopupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            CalendarViewWrapper calendarViewWrapper = new CalendarViewWrapper(getContext());
-            calendarViewWrapper.setOnDateClickListener(this);
-            calendarViewWrapper.setData(getCalendarViewDataList());
-            calendarViewWrapper.scrollToTime(System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 60 ,false);
-            mPopupWindow.setContentView(calendarViewWrapper);
+            mCalendarViewWrapper = new CalendarViewWrapper(getContext());
+            mCalendarViewWrapper.setOnDateClickListener(this);
+            mCalendarViewWrapper.setData(getCalendarViewDataList());
+            mCalendarViewWrapper.scrollToTime(System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 60, false);
+            mPopupWindow.setContentView(mCalendarViewWrapper);
             mPopupWindow.setOutsideTouchable(true);
             mPopupWindow.setOnDismissListener(() -> {
                 mPopupDismissTime = System.currentTimeMillis();
@@ -106,10 +116,54 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         }
         if (activated) {
             mPopupWindow.showAsDropDown(mToolbar);
+            querySleepData();
         } else {
             mPopupWindow.dismiss();
         }
     }
+
+    private void querySleepData() {
+        AppManager.getHttpService().querySleepDiary((int) (System.currentTimeMillis() / 1000), 1, 10, 0)
+                .enqueue(new BaseResponseCallback<Map<String, List<SleepData>>>() {
+                    @Override
+                    protected void onSuccess(Map<String, List<SleepData>> response) {
+                        LogUtils.d(response);
+                        sleepDataResponseToCalendarViewData(response);
+                    }
+
+                    @Override
+                    protected void onFailure(String error) {
+
+                    }
+                });
+
+    }
+
+    private List<CalendarViewData> sleepDataResponseToCalendarViewData(Map<String, List<SleepData>> response) {
+        if (response == null) {
+            return null;
+        }
+        List<CalendarViewData> list = new ArrayList<>();
+        for (Map.Entry<String, List<SleepData>> entry : response.entrySet()) {
+            String key = entry.getKey();
+            long monthTime = Integer.valueOf(key);
+            CalendarViewData calendarViewData = new CalendarViewData();
+            calendarViewData.monthTime = monthTime;
+
+            LongSparseArray<DayType> map = new LongSparseArray<>();
+//            for (SleepData sleepData : entry.getValue()) {
+//                long dateInMillis = sleepData.getDateInMillis();
+//                getDayType(sleepData);
+//            }
+//            map.put(monthTime + DateUtils.DAY_IN_MILLIS * 10, DayType.EMPHASIZE_2);
+            calendarViewData.dayDayTypeMap = map;
+            list.add(calendarViewData);
+        }
+
+        return list;
+    }
+
+
 
     @Override
     public void onDateClick(long time) {
@@ -125,10 +179,11 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
             long monthTime = l - DateUtils.DAY_IN_MILLIS * 31 * i;
             calendarViewData.monthTime = monthTime;
             LongSparseArray<DayType> map = new LongSparseArray<>();
-            map.put(monthTime + DateUtils.DAY_IN_MILLIS * 10, DayType.EMPHASIZE_2);
+//            map.put(monthTime + DateUtils.DAY_IN_MILLIS * 10, DayType.EMPHASIZE_2);
             calendarViewData.dayDayTypeMap = map;
             list.add(calendarViewData);
         }
         return list;
     }
+
 }
