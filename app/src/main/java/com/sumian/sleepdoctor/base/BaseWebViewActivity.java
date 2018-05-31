@@ -37,8 +37,12 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
 
     @Override
     protected boolean initBundle(Bundle bundle) {
-        if (bundle != null) {
-            parseUrl(bundle.getString(ARGS_URL));
+        if (initDefaultUri() != null) {
+            parseUrl(initDefaultUri());
+        } else {
+            if (bundle != null) {
+                parseUrl(bundle.getString(ARGS_URL));
+            }
         }
         return super.initBundle(bundle);
     }
@@ -94,6 +98,10 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     protected abstract String appendUri();
 
     protected abstract void registerHandler(SWebView sWebView);
+
+    protected String initDefaultUri() {
+        return null;
+    }
 
 
     protected void parseUrl(String url) {
