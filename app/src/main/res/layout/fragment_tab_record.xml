@@ -47,7 +47,7 @@
             android:layout_marginEnd="@dimen/space_16"
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_nav_icon_news_unread" />
+            android:src="@mipmap/ic_nav_icon_notification_unread" />
 
 
         <ImageView

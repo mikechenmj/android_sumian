@@ -27,7 +27,7 @@
             android:layout_gravity="center|right"
             android:layout_marginRight="@dimen/space_16"
             android:contentDescription="@null"
-            app:srcCompat="@mipmap/ic_nav_icon_news"
+            app:srcCompat="@mipmap/ic_nav_icon_notification"
             tools:ignore="RtlHardcoded" />
 
     </FrameLayout>
