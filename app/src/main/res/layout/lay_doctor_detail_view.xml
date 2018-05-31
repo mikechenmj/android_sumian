@@ -98,6 +98,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lay_doctor_service_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
@@ -122,13 +123,6 @@
             android:layout_marginLeft="@dimen/space_20"
             android:background="@color/l1_color"
             tools:ignore="RtlHardcoded" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="true"
-            android:paddingTop="@dimen/space_20" />
 
     </LinearLayout>
 

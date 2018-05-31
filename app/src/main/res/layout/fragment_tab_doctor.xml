@@ -32,23 +32,29 @@
 
     </FrameLayout>
 
-    <FrameLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sumian.sleepdoctor.improve.widget.doctor.DoctorDetailLayout
-            android:id="@+id/doctor_detail_layout"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:layout_height="match_parent">
 
-        <com.sumian.sleepdoctor.widget.RequestScanQrCodeView
-            android:id="@+id/request_scan_qr_code_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible" />
-    </FrameLayout>
+            <com.sumian.sleepdoctor.improve.widget.doctor.DoctorDetailLayout
+                android:id="@+id/doctor_detail_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.sumian.sleepdoctor.widget.RequestScanQrCodeView
+                android:id="@+id/request_scan_qr_code_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </FrameLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

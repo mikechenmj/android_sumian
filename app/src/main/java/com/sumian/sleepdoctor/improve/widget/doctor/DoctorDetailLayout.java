@@ -3,22 +3,20 @@ package com.sumian.sleepdoctor.improve.widget.doctor;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-import com.sumian.common.base.BaseRecyclerAdapter;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.improve.doctor.adapter.DoctorServiceAdapter;
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
+import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.fold.FoldLayout;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -41,12 +39,10 @@ public class DoctorDetailLayout extends FrameLayout {
     @BindView(R.id.fold_layout)
     FoldLayout foldLayout;
 
-    @BindView(R.id.recycler)
-    RecyclerView recycler;
+    @BindView(R.id.lay_doctor_service_container)
+    LinearLayout layDoctorServiceContainer;
 
     private Doctor mDoctor;
-
-    private DoctorServiceAdapter mDoctorServiceAdapter;
 
     public DoctorDetailLayout(@NonNull Context context) {
         this(context, null);
@@ -63,9 +59,6 @@ public class DoctorDetailLayout extends FrameLayout {
 
     private void initView(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_doctor_detail_view, this));
-        recycler.setItemAnimator(new DefaultItemAnimator());
-        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        recycler.setAdapter(this.mDoctorServiceAdapter = new DoctorServiceAdapter());
     }
 
     public void invalidDoctor(Doctor doctor) {
@@ -77,8 +70,23 @@ public class DoctorDetailLayout extends FrameLayout {
         this.tvDepartment.setText(String.format(Locale.getDefault(), "%s %s", doctor.getHospital(), doctor.getTitle()));
         this.foldLayout.setText(doctor.getIntroduction());
 
-        this.mDoctorServiceAdapter.addItems(doctor.getServices());
+        appendDoctorServices(doctor);
         show();
+    }
+
+    private void appendDoctorServices(Doctor doctor) {
+        if (doctor.getServices() != null) {
+            this.layDoctorServiceContainer.removeViewsInLayout(2, layDoctorServiceContainer.getChildCount() - 2);
+            DoctorServiceLayout doctorServiceLayout;
+            DoctorService doctorService;
+            ArrayList<DoctorService> doctorServices = doctor.getServices();
+            for (int i = 0; i < doctorServices.size(); i++) {
+                doctorService = doctorServices.get(i);
+                doctorServiceLayout = new DoctorServiceLayout(getContext());
+                doctorServiceLayout.invalidDoctorService(doctorService, i == doctorServices.size() - 1);
+                this.layDoctorServiceContainer.addView(doctorServiceLayout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            }
+        }
     }
 
     public void show() {

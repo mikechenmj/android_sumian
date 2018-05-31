@@ -55,22 +55,7 @@ public class DoctorServiceAdapter extends RecyclerView.Adapter<DoctorServiceAdap
 
     class ViewHolder extends BaseViewHolder<DoctorService> {
 
-        @BindView(R.id.iv_service_icon)
-        QMUIRadiusImageView ivServiceIcon;
-        @BindView(R.id.tv_service_name)
-        TextView tvServiceName;
-        @BindView(R.id.tv_service_desc)
-        TextView tvServiceDesc;
 
-        @BindView(R.id.lay_service_action)
-        LinearLayout layServiceAction;
-        @BindView(R.id.tv_service_use_desc)
-        TextView tvServiceUseDesc;
-        @BindView(R.id.tv_service_action)
-        TextView tvServiceAction;
-
-        @BindView(R.id.v_divider)
-        View bottomDivider;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -80,37 +65,7 @@ public class DoctorServiceAdapter extends RecyclerView.Adapter<DoctorServiceAdap
         public void initView(DoctorService doctorService) {
             super.initView(doctorService);
 
-            @DrawableRes int serviceIconId = R.mipmap.ic_img_sleepdiary_avatar;
-            @StringRes int nextActionId = R.string.ask_questions;
-            switch (doctorService.getType()) {
-                case DoctorService.GRAPHIC_SERVICE_TYPE:
-                    serviceIconId = R.mipmap.ic_img_advisory_avatar;
-                    nextActionId = R.string.ask_questions;
-                    break;
-                case DoctorService.SLEEP_REPORT_TYPE:
-                    serviceIconId = R.mipmap.ic_img_sleepdiary_avatar;
-                    nextActionId = R.string.go_records;
-                    break;
-                default:
-                    break;
-            }
 
-            load(doctorService.getIcon(), serviceIconId, ivServiceIcon);
-
-            tvServiceName.setText(doctorService.getName());
-            tvServiceDesc.setText(doctorService.getNot_buy_description());
-
-            if (doctorService.getLast_count() == 0 && doctorService.getDay_last() == 0 && doctorService.getExpired_at() == 0) {
-                layServiceAction.setVisibility(View.GONE);
-            } else {
-                layServiceAction.setVisibility(View.VISIBLE);
-            }
-
-            tvServiceUseDesc.setText(doctorService.getRemaining_description());
-
-            tvServiceAction.setText(nextActionId);
-
-            bottomDivider.setVisibility(getAdapterPosition() == getItemCount() - 1 ? View.GONE : View.VISIBLE);
         }
 
         @Override

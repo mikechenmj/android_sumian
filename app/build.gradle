@@ -122,10 +122,6 @@ android {
 
         yingyongbao {
             dimension "market"
-
-            buildConfigField("String", "H5_URI_QUESTION", H5_URI_QUESTION)
-            buildConfigField("String", "H5_URI_DOCTOR_SERVICE", H5_URI_DOCTOR_SERVICE)
-            buildConfigField("String", "H5_URI_DOCTOR", H5_URI_DOCTOR)
         }
 
         devolop {
@@ -152,8 +148,8 @@ android {
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
             buildConfigField("String", "ABOUT_ME_URL", DEV_ABOUT_ME_URL)
-            buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
-            buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
+            buildConfigField("String", "USER_AGREEMENT_URL", DEV_USER_AGREEMENT_URL)
+            buildConfigField("String", "USER_POLICY_URL", DEV_USER_PRIVACY_URL)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -182,8 +178,8 @@ android {
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
             buildConfigField("String", "ABOUT_ME_URL", TEST_ABOUT_ME_URL)
-            buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
-            buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
+            buildConfigField("String", "USER_AGREEMENT_URL", TEST_USER_AGREEMENT_URL)
+            buildConfigField("String", "USER_POLICY_URL", TEST_USER_PRIVACY_URL)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -209,8 +205,8 @@ android {
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
             buildConfigField("String", "ABOUT_ME_URL", OFFICIAL_ABOUT_ME_URL)
-            buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
-            buildConfigField("String", "USER_POLICY_URL", USER_PRIVACY_URL)
+            buildConfigField("String", "USER_AGREEMENT_URL", OFFICIAL_USER_AGREEMENT_URL)
+            buildConfigField("String", "USER_POLICY_URL", OFFICIAL_USER_PRIVACY_URL)
 
             resValue "string", "app_name", app_name
             println("${app_name}")
