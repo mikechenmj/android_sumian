@@ -28,6 +28,7 @@
     <string name="graphic_service">图文咨询服务</string>
     <string name="remote_sleep_manage_service">远程睡眠管理服务</string>
     <string name="ask_questions">去提问</string>
+    <string name="go_records">去记录</string>
 
 
 </resources>

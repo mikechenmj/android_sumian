@@ -181,7 +181,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
     }
 
     @Override
-    public void bindPresenter(GroupDetailContract.Presenter presenter) {
+    public void setPresenter(GroupDetailContract.Presenter presenter) {
         mPresenter = (GroupDetailPresenter) presenter;
     }
 

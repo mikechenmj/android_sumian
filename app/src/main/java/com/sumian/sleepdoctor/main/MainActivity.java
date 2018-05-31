@@ -9,10 +9,10 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
-import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.sleepRecord.RecordFragment;
-import com.sumian.sleepdoctor.widget.nav.NavigationItem;
+import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar;
+import com.sumian.sleepdoctor.widget.nav.NavigationItem;
 
 import butterknife.BindView;
 
@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             String fTag = mFTags[i];
             fragmentByTag = getFragmentByTag(fTag);
             if (position == i) {
-                if (fragmentByTag != null) {
+                if (fragmentByTag != null && fragmentByTag.isAdded()) {
                     showFragment(fragmentByTag);
                 } else {
                     switch (position) {
@@ -112,15 +112,15 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void hideFragment(Fragment f) {
-        mFragmentManager.beginTransaction().hide(f).commitNowAllowingStateLoss();
+        mFragmentManager.beginTransaction().hide(f).commit();
     }
 
     private void showFragment(Fragment f) {
-        mFragmentManager.beginTransaction().show(f).commitNowAllowingStateLoss();
+        mFragmentManager.beginTransaction().show(f).commit();
     }
 
     private void addFragment(Fragment f, String fTag) {
-        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).commitNowAllowingStateLoss();
+        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).commit();
     }
 
     @Override

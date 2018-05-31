@@ -77,7 +77,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     }
 
     @Override
-    public void bindPresenter(LoginContract.Presenter presenter) {
+    public void setPresenter(LoginContract.Presenter presenter) {
         mPresenter = (LoginPresenter) presenter;
     }
 

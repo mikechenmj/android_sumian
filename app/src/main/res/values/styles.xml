@@ -65,34 +65,6 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="scan_qr_theme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowOverscan">true</item>
-        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black_alpha_48
-        </item>
-        <item name="android:navigationMode">listMode</item>
-        <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:configChanges">keyboardHidden|orientation</item>
-        <item name="android:launchMode">singleInstance</item>
-        <item name="android:screenOrientation">portrait</item>
-        <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
-    </style>
-
-    <style name="SumianDialog">
-        <item name="android:windowMinWidthMinor">90%</item> <!-- 宽度屏占比 -->
-        <!-- 默认背景是白色的圆角矩形，改为透明 -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
-        <item name="android:windowCloseOnTouchOutside">true</item>
-    </style>
-
     <style name="TopNotificationText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/space_40</item>

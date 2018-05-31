@@ -18,7 +18,7 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
 
 
     public GroupDetailPresenter(GroupDetailContract.View view) {
-        view.bindPresenter(this);
+        view.setPresenter(this);
         mView = view;
     }
 

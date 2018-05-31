@@ -27,9 +27,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name,android:icon,android:theme">
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="@string/umeng_app_key" />
+
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
@@ -57,7 +59,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity" />
+        <activity
+            android:name=".main.MainActivity"
+            android:theme="@style/scan_qr_theme" />
         <activity android:name=".account.login.LoginActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileOneActivity" />
         <activity android:name=".account.userProfile.ImproveUserProfileTwoActivity" />
@@ -93,7 +97,7 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- WeChat -->
         <activity-alias
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.sumian.sleepdoctor.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:targetActivity="com.pingplusplus.android.PaymentActivity" />
 
@@ -109,6 +113,7 @@
             android:exported="false"
             android:screenOrientation="behind" />
         <activity android:name=".improve.doctor.activity.DoctorWebViewActivity" />
+        <activity android:name=".improve.doctor.activity.DoctorServiceActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->

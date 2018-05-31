@@ -83,7 +83,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
     }
 
     @Override
-    public void bindPresenter(ImproveUserProfileContract.Presenter presenter) {
+    public void setPresenter(ImproveUserProfileContract.Presenter presenter) {
         this.mPresenter = (ImproveUserProfilePresenter) presenter;
     }
 

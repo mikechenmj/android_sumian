@@ -6,7 +6,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import com.sumian.common.operator.AppOperator;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
@@ -68,21 +67,24 @@ public class AccountViewModel extends AndroidViewModel {
         Token token = getToken();
         token.is_new = false;
         UserProfile userProfile = getUserProfile();
+        userProfile.doctor_id = doctor.getId();
+        userProfile.bound_at = doctor.getId();
         userProfile.doctor = doctor;
         token.user = userProfile;
-        updateToken(token);
+        updateUserProfile(userProfile);
     }
 
     public void updateToken(Token token) {
         mTokenLiveData.postValue(token);
         updateTokenInvalidState(token == null);
-        AppOperator.runOnThread(() -> AccountCache.updateTokenCache(token));
+        AccountCache.updateTokenCache(token);
     }
 
     public void updateUserProfile(UserProfile userProfile) {
         Token token = getToken();
         token.is_new = false;
         token.user = userProfile;
+        AccountCache.updateUserCache(userProfile);
         updateToken(token);
     }
 

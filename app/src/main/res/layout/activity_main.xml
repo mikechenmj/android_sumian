@@ -14,7 +14,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clickable="true"
-        android:fitsSystemWindows="true"
         android:focusable="true" />
 
     <View

@@ -31,7 +31,7 @@ public class GroupPresenter implements GroupContract.Presenter {
     private Call<BaseResponse<List<GroupDetail<UserProfile, UserProfile>>>> mCall;
 
     private GroupPresenter(GroupContract.View view) {
-        view.bindPresenter(this);
+        view.setPresenter(this);
         mView = view;
     }
 

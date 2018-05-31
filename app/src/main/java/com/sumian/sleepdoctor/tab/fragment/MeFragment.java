@@ -8,11 +8,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.userProfile.UserProfileActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.pager.activity.SettingActivity;
-import com.sumian.sleepdoctor.account.userProfile.UserProfileActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,7 +41,7 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        setStatusBarTranslucent();
+        //setStatusBarTranslucent();
     }
 
     @Override

@@ -3,9 +3,9 @@ package com.sumian.sleepdoctor.account.cache;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.sumian.common.utils.SpUtil;
 import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.utils.JsonUtil;
 
 /**
  * Created by jzz
@@ -33,12 +33,13 @@ public final class AccountCache {
 
     private static void saveUserCache(Object obj) {
         if (obj == null) {
-            throw new NullPointerException("obj is null...");
+            clearCache();
+            return;
         }
 
         //  Log.e(TAG, "saveUserCache: ------------->" + obj.toString());
         SharedPreferences.Editor edit = initEdit();
-        String json = JSON.toJSONString(obj);
+        String json = JsonUtil.toJson(obj);
         edit.putString(KEY_USER, json);
         apply(edit);
     }
@@ -50,7 +51,7 @@ public final class AccountCache {
         }
         // Log.e(TAG, "saveTokenCache: ------------->" + obj.toString());
         SharedPreferences.Editor edit = initEdit();
-        String json = JSON.toJSONString(obj);
+        String json = JsonUtil.toJson(obj);
         edit.putString(KEY_TOKEN, json);
         apply(edit);
     }
@@ -62,7 +63,7 @@ public final class AccountCache {
             return null;
         }
         // Log.e(TAG, "getCache: ------------->" + cacheJSon);
-        return JSON.parseObject(cacheJSon, clx);
+        return JsonUtil.fromJson(cacheJSon, clx);
     }
 
     public static <T> T getTokenCache(Class<T> clx) {
@@ -72,7 +73,7 @@ public final class AccountCache {
             return null;
         }
         // Log.e(TAG, "getCache: ------------->" + cacheJSon);
-        return JSON.parseObject(cacheJSon, clx);
+        return JsonUtil.fromJson(cacheJSon, clx);
     }
 
     public static void clearCache() {

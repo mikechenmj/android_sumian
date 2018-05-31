@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.improve.widget.textview.FoldTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +42,7 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener, Fo
 
         tvSummary.setShowLineRule(4);
         tvSummary.setOnFoldListener(this);
-        if (tvSummary.getLineHeight() > 4) {
+        if (tvSummary.getLineCount() > 4) {
             tvShowMore.setOnClickListener(this);
             tvShowMore.setVisibility(VISIBLE);
         } else {
@@ -70,5 +69,9 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener, Fo
     @Override
     public void unfold() {
         tvShowMore.setTag(null);
+    }
+
+    public void setText(String text) {
+        tvSummary.setText(text);
     }
 }

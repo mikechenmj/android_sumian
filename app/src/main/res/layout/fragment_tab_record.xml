@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_24"
+        android:background="@color/b3_color" />
+
     <RelativeLayout
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
@@ -58,10 +63,10 @@
     </RelativeLayout>
 
     <com.sumian.sleepdoctor.widget.calendar.calendarViewWrapper.CalendarViewWrapper
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white" />
+        android:background="@color/white"
+        android:visibility="gone" />
 
     <com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView
         android:id="@+id/dsiv"

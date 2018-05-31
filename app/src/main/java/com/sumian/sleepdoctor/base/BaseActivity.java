@@ -206,7 +206,11 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     }
 
     protected void showToast(String message) {
-        runOnUiThread(() -> ToastHelper.show(message));
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            ToastHelper.show(message);
+        } else {
+            runOnUiThread(() -> ToastHelper.show(message));
+        }
     }
 
     protected void showToast(@StringRes int messageId) {

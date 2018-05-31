@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.improve.widget.qr.RequestQrCodeView;
+import com.sumian.sleepdoctor.improve.widget.qr.QrCodeView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,12 +20,12 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, RequestQrCodeView.OnShowQrCodeCallback {
+public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, QrCodeView.OnShowQrCodeCallback {
 
     private static final String TAG = ScanDoctorQrCodeActivity.class.getSimpleName();
 
     @BindView(R.id.zxing_view)
-    RequestQrCodeView mZXingView;
+    QrCodeView mZXingView;
 
     @Override
     protected int getLayoutId() {
@@ -91,8 +91,5 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
         //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
         extras.putString(DoctorWebViewActivity.ARGS_URL, uriQuery);
         DoctorWebViewActivity.show(this, DoctorWebViewActivity.class, extras);
-
-        //TestNativeActivity.show(this, TestNativeActivity.class);
-
     }
 }

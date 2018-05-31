@@ -37,7 +37,7 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
     private String mOrderNo;
 
     private PayGroupPresenter(PayGroupContract.View view) {
-        view.bindPresenter(this);
+        view.setPresenter(this);
         mView = view;
     }
 
