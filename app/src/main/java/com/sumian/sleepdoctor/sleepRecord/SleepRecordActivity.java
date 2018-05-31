@@ -45,9 +45,4 @@ public class SleepRecordActivity extends BaseWebViewActivity {
 
     }
 
-    @Override
-    protected void initUrl() {
-        super.initUrl();
-        super.parseUrl(appendUri());
-    }
 }

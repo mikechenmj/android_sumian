@@ -57,13 +57,8 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     protected void initData() {
         super.initData();
-        initUrl();
         registerHandler(mSWebViewContainer.getSWebView());
         mSWebViewContainer.loadRequestUrl(mUrl);
-    }
-
-    protected void initUrl() {
-
     }
 
     @Override
