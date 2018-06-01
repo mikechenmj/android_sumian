@@ -86,9 +86,9 @@ public final class TimeUtil {
         return String.format(Locale.getDefault(), "%d", (Math.abs(second) / 60));
     }
 
-    public static String formatDate(int date) {
+    public static String formatDate(int timeInSecond) {
         Calendar instance = Calendar.getInstance();
-        instance.setTimeInMillis(date * 1000L);
+        instance.setTimeInMillis(timeInSecond * 1000L);
         int month = (instance.get(Calendar.MONTH) + 1);
         int day = instance.get(Calendar.DATE);
         return String.format(Locale.getDefault(), "%d月%d日", month, day);

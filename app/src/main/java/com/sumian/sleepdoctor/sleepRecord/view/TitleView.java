@@ -3,12 +3,15 @@ package com.sumian.sleepdoctor.sleepRecord.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
+
+import java.nio.file.AtomicMoveNotSupportedException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,5 +54,13 @@ public class TitleView extends LinearLayout {
 
     public void setOnMenuClickListener(OnClickListener listener) {
         tvMenu.setOnClickListener(listener);
+    }
+
+    public void setTvTitle(String title) {
+        tvTitle.setText(title);
+    }
+
+    public void setTvMenu(String menu) {
+        tvMenu.setText(menu);
     }
 }

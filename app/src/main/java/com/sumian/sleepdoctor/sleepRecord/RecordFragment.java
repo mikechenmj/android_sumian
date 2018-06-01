@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
@@ -55,6 +54,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
 
     private long mPopupDismissTime;
     private CalendarViewWrapper mCalendarViewWrapper;
+    private long mSelectedTime = System.currentTimeMillis();
 
     @Override
     protected int getLayoutId() {
@@ -68,12 +68,17 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         mDoctorServiceItemView.setDesc("连续7天监测你的睡眠日记");
         mDoctorServiceItemView.setPrice(50f);
         mDoctorServiceItemView.loadImage(R.mipmap.ic_doctor_service_item_view_sleep_diary);
-
         mDoctorServiceItemView.setOnClickListener(v -> {
             ActionLoadingDialog loadingDialog = new ActionLoadingDialog();
             loadingDialog.show(getFragmentManager());
         });
         setTvDate(System.currentTimeMillis());
+        mSleepRecordView.setOnClickRefillSleepRecordListener(v -> {
+            launchFillSleepRecordActivity(mSelectedTime);
+        });
+        mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> {
+            launchFillSleepRecordActivity(mSelectedTime);
+        });
     }
 
     private void setTvDate(long timeInMillis) {
@@ -98,19 +103,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
     @Override
     protected void initData() {
         super.initData();
-        AppManager.getHttpService().querySleepDiaryDetail((int) (System.currentTimeMillis() / 1000L))
-                .enqueue(new BaseResponseCallback<SleepRecord>() {
-                    @Override
-                    protected void onSuccess(SleepRecord response) {
-                        LogUtils.d(response);
-                        mSleepRecordView.setSleepRecord(response);
-                    }
-
-                    @Override
-                    protected void onFailure(String error) {
-                        LogUtils.d(error);
-                    }
-                });
+        queryAndShowSleepReportAtTime(System.currentTimeMillis());
     }
 
     @OnClick({R.id.iv_date_arrow, R.id.iv_notification})
@@ -120,9 +113,13 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
                 turnDateArrow(!mIvDateArrow.isActivated());
                 break;
             case R.id.iv_notification:
-                FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD);
+
                 break;
         }
+    }
+
+    private void launchFillSleepRecordActivity(long time) {
+        FillSleepRecordActivity.launchForResult(this, time, REQUEST_CODE_FILL_SLEEP_RECORD);
     }
 
     private void turnDateArrow(boolean activated) {
@@ -145,14 +142,14 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         }
         if (activated) {
             mPopupWindow.showAsDropDown(mToolbar);
-            querySleepData();
+            querySleepReportSummaryList();
         } else {
             mPopupWindow.dismiss();
         }
     }
 
-    private void querySleepData() {
-        AppManager.getHttpService().querySleepDiaryList((int) (System.currentTimeMillis() / 1000), 1, 10, 0)
+    private void querySleepReportSummaryList() {
+        AppManager.getHttpService().querySleepDiarySummaryList((int) (System.currentTimeMillis() / 1000), 1, 10, 0)
                 .enqueue(new BaseResponseCallback<Map<String, List<SleepRecordSummary>>>() {
                     @Override
                     protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
@@ -189,15 +186,31 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
             calendarViewData.dayDayTypeMap = map;
             list.add(calendarViewData);
         }
-
         return list;
     }
 
-
     @Override
     public void onDateClick(long time) {
-        setTvDate(time);
         mPopupWindow.dismiss();
+        mSelectedTime = time;
+        setTvDate(time);
+        queryAndShowSleepReportAtTime(time);
+    }
+
+    private void queryAndShowSleepReportAtTime(long time) {
+        mSleepRecordView.setTime(time);
+        AppManager.getHttpService().querySleepDiaryDetail((int) (time / 1000L))
+                .enqueue(new BaseResponseCallback<SleepRecord>() {
+                    @Override
+                    protected void onSuccess(SleepRecord response) {
+                        mSleepRecordView.setSleepRecord(response);
+                    }
+
+                    @Override
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        mSleepRecordView.setSleepRecord(null);
+                    }
+                });
     }
 
     private List<CalendarViewData> getCalendarViewDataList() {
@@ -221,6 +234,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
             if (resultCode == Activity.RESULT_OK) {
                 SleepRecord sleepRecord = FillSleepRecordActivity.resolveResultData(data);
                 mSleepRecordView.setSleepRecord(sleepRecord);
+                assert sleepRecord != null;
                 ToastUtils.showShort(sleepRecord.toString());
             }
         } else {

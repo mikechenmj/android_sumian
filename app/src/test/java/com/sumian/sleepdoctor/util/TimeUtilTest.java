@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.util;
 
+import android.text.format.DateUtils;
+
 import com.sumian.sleepdoctor.utils.TimeUtil;
 
 import org.junit.Test;
@@ -14,10 +16,12 @@ import org.junit.Test;
  * </pre>
  */
 public class TimeUtilTest {
+    private long currentTime() {
+        return System.currentTimeMillis();
+    }
+
     @Test
     public void test() {
-        int second = 3600 * 0 + 60 * 2;
-        System.out.println(TimeUtil.getHourMinuteStringFromSecondInZh(second));
-        System.out.println(TimeUtil.getHourMinuteStringFromSecondInEn(second));
+        System.out.println(TimeUtil.formatDate("M月d日", currentTime() + DateUtils.DAY_IN_MILLIS * 12));
     }
 }

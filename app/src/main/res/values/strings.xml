@@ -182,4 +182,7 @@
     <string name="error">Error</string>
     <string name="empty_response">Empty_response</string>
     <string name="taken_pills">服用药物</string>
+    <string name="no_sleep_record_hint">保持良好的记录睡眠日记的习惯，有助于睡眠医生分析您的睡眠情况！</string>
+    <string name="go_record">去记录</string>
+    <string name="no_record_yet">暂无记录</string>
 </resources>

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class SleepRecordView extends LinearLayout {
     LinearLayout llRoot;
     @BindView(R.id.progress_view_sleep)
     ProgressView progressViewSleep;
-    @BindView(R.id.tv_sleep_status)
+    @BindView(R.id.tv_sleep_quality)
     TextView tvSleepQuality;
     @BindView(R.id.tv_pills)
     TextView tvPills;
@@ -67,6 +68,12 @@ public class SleepRecordView extends LinearLayout {
     TextView tvWakeupDuration;
     @BindView(R.id.tv_little_sleep_duration)
     TextView tvLittleSleepDuration;
+    @BindView(R.id.tv_no_record_date)
+    TextView tvNoRecordDate;
+    @BindView(R.id.btn_go_record)
+    Button btnGoRecord;
+    @BindView(R.id.ll_no_sleep_record)
+    LinearLayout llNoSleepRecord;
     private SleepRecord mSleepRecord;
 
     public SleepRecordView(Context context) {
@@ -88,6 +95,17 @@ public class SleepRecordView extends LinearLayout {
 
     public void setSleepRecord(SleepRecord sleepRecord) {
         mSleepRecord = sleepRecord;
+        boolean hasRecord = mSleepRecord != null;
+        llSleepRecord.setVisibility(hasRecord ? VISIBLE: GONE);
+        llNoSleepRecord.setVisibility(hasRecord ? GONE : VISIBLE);
+        llDoctorEvaluation.setVisibility(hasRecord ? VISIBLE : GONE);
+        titleViewSleepRecord.setTvMenu(null);
+        if (hasRecord) {
+            showSleepRecord(sleepRecord);
+        }
+    }
+
+    private void showSleepRecord(SleepRecord sleepRecord) {
         SleepRecordAnswer answer = sleepRecord.getAnswer();
         tvSleepQuality.setText(getSleepQualityString(answer.getEnergetic()));
         tvPills.setText(getPillsString(answer.getSleep_pills()));
@@ -154,5 +172,17 @@ public class SleepRecordView extends LinearLayout {
 
     private void showPillsDialog() {
         PillsDialog.show(getContext(), mSleepRecord.getAnswer().getSleep_pills());
+    }
+
+    public void setOnClickRefillSleepRecordListener(OnClickListener listener) {
+        titleViewSleepRecord.setOnMenuClickListener(listener);
+    }
+
+    public void setOnClickFillSleepRecordBtnListener(OnClickListener listener) {
+        btnGoRecord.setOnClickListener(listener);
+    }
+
+    public void setTime(long timeInMillis) {
+        tvNoRecordDate.setText(TimeUtil.formatDate("M月d日", timeInMillis));
     }
 }
