@@ -19,7 +19,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
-import com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout;
+import com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout;
 import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity;
 import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
@@ -115,13 +115,13 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
     @Override
     public void onBegin() {
-        mRefresh.setRefreshing(true);
+        mRefresh.showRefreshAnim();
         mGroupErrorView.showRequest();
     }
 
     @Override
     public void onFinish() {
-        mRefresh.setRefreshing(false);
+        mRefresh.hideRefreshAnim();
     }
 
     @Override

@@ -39,6 +39,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.pager.activity.OtherUserProfileActivity;
 import com.sumian.sleepdoctor.widget.shapeImageView.GlideImageView;
 
@@ -216,8 +217,8 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
 
                             if (tempUserProfile != null) {
                                 tvNickName.setText(tempUserProfile.nickname);
-                               // formatRoleLabel(tempUserProfile.role, tvLabel);
-                               // formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, civAvatar);
+                                // formatRoleLabel(tempUserProfile.role, tvLabel);
+                                // formatRoleAvatar(tempUserProfile.role, tempUserProfile.avatar, civAvatar);
                             }
 
                             mUserProfile = tempUserProfile;
@@ -228,7 +229,7 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
                     }
 
                     @Override
-                    protected void onFailure(String error) {
+                    protected void onFailure(ErrorResponse errorResponse) {
                         formatRoleLabel(0, tvLabel);
                         formatRoleAvatar(0, null, civAvatar);
                     }

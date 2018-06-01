@@ -5,11 +5,12 @@ import android.view.View;
 
 import com.sumian.common.operator.AppOperator;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
+import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
 
@@ -68,9 +69,10 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
                     }
 
                     @Override
-                    protected void onFailure(String error) {
+                    protected void onFailure(ErrorResponse errorResponse) {
 
                     }
+
                 });
                 //                    ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 //                    if (activityManager != null) {

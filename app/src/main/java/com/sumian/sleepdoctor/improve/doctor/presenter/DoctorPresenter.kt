@@ -5,6 +5,7 @@ import com.sumian.sleepdoctor.base.BasePresenter.mCalls
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.improve.doctor.contract.DoctorContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
+import com.sumian.sleepdoctor.network.response.ErrorResponse
 
 /**
  *
@@ -31,21 +32,20 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
     override fun getBindDoctorInfo(doctorId: Int) {
 
-        val doctorInfoCall = AppManager.getHttpService().getDoctorInfo(doctorId, "services")
-
         mView?.onBegin()
+
+        val doctorInfoCall = AppManager.getHttpService().getDoctorInfo(doctorId, "services")
 
         mCalls?.add(doctorInfoCall)
 
         doctorInfoCall.enqueue(object : BaseResponseCallback<Doctor>() {
+            override fun onFailure(errorResponse: ErrorResponse?) {
+                mView?.onFailure(errorResponse?.message)
+            }
 
             override fun onSuccess(response: Doctor?) {
                 AppManager.getAccountViewModel().updateBindDoctor(response)
                 mView?.onGetDoctorInfoSuccess(response)
-            }
-
-            override fun onFailure(error: String?) {
-                mView?.onFailure(error)
             }
 
             override fun onFinish() {

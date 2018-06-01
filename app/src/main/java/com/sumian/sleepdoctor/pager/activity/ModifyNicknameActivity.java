@@ -11,6 +11,7 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.HashMap;
@@ -92,9 +93,10 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
                     }
 
                     @Override
-                    protected void onFailure(String error) {
-                        showToast(error);
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        showToast(errorResponse.message);
                     }
+
                 });
     }
 

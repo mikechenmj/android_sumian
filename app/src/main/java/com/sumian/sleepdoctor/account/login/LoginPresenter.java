@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -52,8 +53,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(String error) {
-                        mView.onFailure(error);
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.message);
                     }
 
                     @Override
@@ -80,8 +81,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(String error) {
-                        mView.onFailure(error);
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.message);
                     }
 
                     @Override
@@ -129,20 +130,17 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
-                mView.onFailure(error);
+            protected void onFailure(ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.message);
+                if (errorResponse.status_code == 404) {
+                    mView.onNotBindCallback(errorResponse.message, mOpenUserInfo);
+                }
             }
 
             @Override
             protected void onFinish() {
                 super.onFinish();
                 mView.onFinish();
-            }
-
-            @Override
-            protected void onNotFound(String error) {
-                super.onNotFound(error);
-                mView.onNotBindCallback(error, mOpenUserInfo);
             }
         });
 

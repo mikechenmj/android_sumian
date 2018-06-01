@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.account.bindMobile
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
+import com.sumian.sleepdoctor.network.response.ErrorResponse
 
 /**
  * Created by sm
@@ -49,8 +50,8 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
                         mView!!.bindOpenSocialSuccess(response)
                     }
 
-                    override fun onFailure(error: String?) {
-                        mView!!.onFailure(error)
+                    override fun onFailure(errorResponse: ErrorResponse?) {
+                        mView!!.onFailure(errorResponse?.message)
                     }
 
                     override fun onFinish() {
@@ -67,13 +68,12 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
         mView!!.onBegin()
 
         AppManager.getHttpService().getCaptcha(mobile).enqueue(object : BaseResponseCallback<Unit>() {
+            override fun onFailure(errorResponse: ErrorResponse?) {
+                mView!!.onFailure(errorResponse?.message)
+            }
 
             override fun onSuccess(response: Unit?) {
                 mView!!.onSendCaptchaSuccess()
-            }
-
-            override fun onFailure(error: String?) {
-                mView!!.onFailure(error)
             }
 
             override fun onFinish() {

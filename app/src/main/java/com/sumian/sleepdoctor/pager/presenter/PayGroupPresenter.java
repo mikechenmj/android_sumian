@@ -11,6 +11,7 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.pager.bean.OrderDetail;
 import com.sumian.sleepdoctor.pager.contract.PayGroupContract;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
@@ -76,8 +77,8 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(String error) {
-                        mView.onFailure(error);
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.message);
                     }
 
                     @Override
@@ -86,11 +87,6 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
                         mView.onFinish();
                     }
 
-                    @Override
-                    protected void onNotFound(String error) {
-                        super.onNotFound(error);
-                        mView.onFailure(error);
-                    }
                 });
 
     }
@@ -107,9 +103,9 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
-                mView.onFailure(error);
-                mView.onCheckOrderPayIsInvalid(error);
+            protected void onFailure(ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.message);
+                mView.onCheckOrderPayIsInvalid(errorResponse.message);
             }
 
             @Override
@@ -171,13 +167,13 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
                     break;
             }
 
-       /* 处理返回值
-        * "success" - 支付成功
-        * "fail"    - 支付失败
-        * "cancel"  - 取消支付
-        * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
-        * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
-        */
+            /* 处理返回值
+             * "success" - 支付成功
+             * "fail"    - 支付失败
+             * "cancel"  - 取消支付
+             * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
+             * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
+             */
 
             // Log.e(TAG, "onActivityResult: -------------->result=" + result + " package name=" + App.Companion.getAppContext().getPackageName());
 
