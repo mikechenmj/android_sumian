@@ -25,56 +25,54 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
 
     @Override
     public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
+        onFinish();
         if (response.isSuccessful()) {
             T body = response.body();
             onSuccess(body);
         } else {
             ResponseBody errorBody = response.errorBody();
             if (errorBody == null) {
-                onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
+                onFailure(transformNormalErrorResponse());
                 return;
             }
+
             try {
                 String errorJson = errorBody.string();
                 ErrorResponse errorResponse = JSON.parseObject(errorJson, ErrorResponse.class);
                 if (errorResponse == null) {
-                    onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
+                    onFailure(transformNormalErrorResponse());
                 } else {
+                    onFailure(errorResponse);
                     int statusCode = errorResponse.status_code;
-                    switch (statusCode) {
-                        case 404:
-                            onNotFound(errorResponse.toString());
-                            break;
-                        case 401://token 鉴权失败
-                            AppManager.getAccountViewModel().updateTokenInvalidState(true);
-                            break;
-                        default:
-                            onFailure(errorResponse.message);
-                            break;
+                    if (statusCode == 401) { //token 鉴权失败
+                        AppManager.getAccountViewModel().updateTokenInvalidState(true);
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
+                onFailure(transformNormalErrorResponse());
             }
         }
-        onFinish();
     }
 
     @Override
     public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
-        t.printStackTrace();
-        onFailure(App.Companion.getAppContext().getString(R.string.error_request_failed_hint));
         onFinish();
+        t.printStackTrace();
+        onFailure(transformNormalErrorResponse());
     }
 
-    protected void onNotFound(String error) {
-
+    @NonNull
+    private ErrorResponse transformNormalErrorResponse() {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.status_code = 0;
+        errorResponse.message = App.Companion.getAppContext().getString(R.string.error_request_failed_hint);
+        return errorResponse;
     }
 
     protected abstract void onSuccess(T response);
 
-    protected abstract void onFailure(String error);
+    protected abstract void onFailure(ErrorResponse errorResponse);
 
     protected void onFinish() {
     }

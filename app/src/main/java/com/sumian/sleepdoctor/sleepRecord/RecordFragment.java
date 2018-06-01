@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepData;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewAdapter;
@@ -132,9 +133,10 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
                     }
 
                     @Override
-                    protected void onFailure(String error) {
+                    protected void onFailure(ErrorResponse errorResponse) {
 
                     }
+
                 });
 
     }
@@ -162,7 +164,6 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
 
         return list;
     }
-
 
 
     @Override

@@ -6,6 +6,7 @@ import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.BaseResponse;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.tab.contract.GroupContract;
 
@@ -92,8 +93,8 @@ public class GroupPresenter implements GroupContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
-                mView.onFailure(error);
+            protected void onFailure(ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.message);
                 List<GroupDetail<UserProfile, UserProfile>> groupDetails = AppManager.getGroupViewModel().getGroupsLiveData().getValue();
                 if (groupDetails == null || !groupDetails.isEmpty()) {
                     mView.onShowErrorGroupView();

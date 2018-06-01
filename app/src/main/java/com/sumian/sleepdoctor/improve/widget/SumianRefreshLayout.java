@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.chat.widget;
+package com.sumian.sleepdoctor.improve.widget;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -16,6 +16,8 @@ import com.sumian.sleepdoctor.R;
 
 public class SumianRefreshLayout extends SwipeRefreshLayout {
 
+    private static final long DELAY_MILLS = 6 * 1000L;
+    private Runnable mDismissRunnable = this::hideRefreshAnim;
 
     public SumianRefreshLayout(@NonNull Context context) {
         this(context, null);
@@ -28,5 +30,15 @@ public class SumianRefreshLayout extends SwipeRefreshLayout {
 
     private void initView() {
         this.setColorSchemeResources(R.color.b3_color, R.color.b7_color, R.color.b8_color);
+    }
+
+    public void showRefreshAnim() {
+        setRefreshing(true);
+        removeCallbacks(mDismissRunnable);
+        postDelayed(mDismissRunnable, DELAY_MILLS);
+    }
+
+    public void hideRefreshAnim() {
+        setRefreshing(false);
     }
 }

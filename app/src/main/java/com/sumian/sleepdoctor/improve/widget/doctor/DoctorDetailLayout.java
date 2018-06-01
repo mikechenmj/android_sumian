@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +14,7 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
+import com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout;
 import com.sumian.sleepdoctor.improve.widget.fold.FoldLayout;
 
 import java.util.ArrayList;
@@ -27,7 +28,9 @@ import butterknife.ButterKnife;
  * on 2018/5/30 17:36
  * desc:医生详情
  **/
-public class DoctorDetailLayout extends FrameLayout {
+public class DoctorDetailLayout extends SumianRefreshLayout {
+
+    private static final String TAG = DoctorDetailLayout.class.getSimpleName();
 
     @BindView(R.id.iv_avatar)
     QMUIRadiusImageView ivAvatar;
@@ -49,11 +52,7 @@ public class DoctorDetailLayout extends FrameLayout {
     }
 
     public DoctorDetailLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public DoctorDetailLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(context, attrs);
         initView(context);
     }
 
@@ -83,6 +82,13 @@ public class DoctorDetailLayout extends FrameLayout {
             for (int i = 0; i < doctorServices.size(); i++) {
                 doctorService = doctorServices.get(i);
                 doctorServiceLayout = new DoctorServiceLayout(getContext());
+                doctorServiceLayout.setTag(doctorService);
+                doctorServiceLayout.setOnClickListener(v -> {
+                    DoctorService cacheDoctorService = (DoctorService) v.getTag();
+
+                    Log.e(TAG, "onClick: -------->" + cacheDoctorService.toString());
+
+                });
                 doctorServiceLayout.invalidDoctorService(doctorService, i == doctorServices.size() - 1);
                 this.layDoctorServiceContainer.addView(doctorServiceLayout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             }
@@ -96,4 +102,5 @@ public class DoctorDetailLayout extends FrameLayout {
     public void hide() {
         setVisibility(GONE);
     }
+
 }

@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.pager.presenter;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.pager.contract.GroupDetailContract;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
@@ -33,7 +34,7 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
 
         AppManager
                 .getHttpService()
-                .getGroupsDetail(groupId,"users,packages")
+                .getGroupsDetail(groupId, "users,packages")
                 .enqueue(new BaseResponseCallback<GroupDetail<UserProfile, UserProfile>>() {
                     @Override
                     protected void onSuccess(GroupDetail<UserProfile, UserProfile> response) {
@@ -42,8 +43,11 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(String error) {
-                        mView.onFailure(error);
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.message);
+                        if (errorResponse.status_code == 404) {
+                            mView.onFailure(errorResponse.message);
+                        }
                     }
 
                     @Override
@@ -52,11 +56,6 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
                         mView.onFinish();
                     }
 
-                    @Override
-                    protected void onNotFound(String error) {
-                        super.onNotFound(error);
-                        mView.onFailure(error);
-                    }
                 });
 
     }

@@ -29,6 +29,7 @@ import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.oss.bean.OssResponse;
 import com.sumian.sleepdoctor.oss.engine.OssEngine;
 import com.sumian.sleepdoctor.pager.activity.ModifyNicknameActivity;
@@ -271,9 +272,10 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(ErrorResponse errorResponse) {
                 upload();
             }
+
         });
     }
 
@@ -338,8 +340,10 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                             }
 
                             @Override
-                            protected void onFailure(String error) {
+                            protected void onFailure(ErrorResponse errorResponse) {
+
                             }
+
                         });
             }
 
@@ -377,8 +381,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                     }
 
                     @Override
-                    protected void onFailure(String error) {
-                        LogUtils.d(error);
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        LogUtils.d(errorResponse.message);
                         ToastUtils.showShort(R.string.unbind_failed);
                     }
 

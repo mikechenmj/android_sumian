@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout
+            <com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout
                 android:id="@+id/refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -38,7 +38,7 @@
                     android:fitsSystemWindows="true"
                     android:paddingTop="@dimen/space_16" />
 
-            </com.sumian.sleepdoctor.chat.widget.SumianRefreshLayout>
+            </com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout>
 
             <com.sumian.sleepdoctor.widget.GroupErrorView
                 android:id="@+id/group_error_view"

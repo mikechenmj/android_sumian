@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.improve.doctor.fragment
 
-import android.view.View
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
@@ -22,10 +21,6 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_doctor
-    }
-
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
     }
 
     override fun initData() {
@@ -52,6 +47,16 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         request_scan_qr_code_view.onRequestPermissionsResultDelegate(requestCode, permissions, grantResults)
+    }
+
+    override fun onBegin() {
+        super.onBegin()
+        doctor_detail_layout.showRefreshAnim()
+    }
+
+    override fun onFinish() {
+        super.onFinish()
+        doctor_detail_layout.hideRefreshAnim()
     }
 
     override fun onGrantedSuccess() {

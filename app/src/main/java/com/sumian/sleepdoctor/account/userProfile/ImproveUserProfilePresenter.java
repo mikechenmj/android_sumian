@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.account.userProfile;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.network.response.ErrorResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,8 +54,8 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
             }
 
             @Override
-            protected void onFailure(String error) {
-                mView.onFailure(error);
+            protected void onFailure(ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.message);
             }
 
             @Override
