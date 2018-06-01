@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.calendar.calendarViewWrapper;
+package com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarViewWrapper;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.utils.TimeUtil;
-import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewAdapter;
-import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewData;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewAdapter;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewData;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,6 +50,7 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     private CalendarWrapperAdapter mAdapter;
     private int mCurrentPosition;
     private List<CalendarViewData> mDataList;
+    private CalendarViewAdapter.OnDateClickListener mOnDateClickListener;
 
     public CalendarViewWrapper(Context context) {
         this(context, null);
@@ -77,7 +78,8 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     }
 
     public void setOnDateClickListener(CalendarViewAdapter.OnDateClickListener listener) {
-        mAdapter.setOnDateClickListener(listener);
+        mOnDateClickListener = listener;
+        mAdapter.setOnDateClickListener(mOnDateClickListener);
     }
 
     public void scrollToTime(long time, boolean smooth) {
@@ -105,7 +107,7 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
         ivLeft.setClickable(newPosition != mDataList.size() - 1);
     }
 
-    @OnClick({R.id.iv_left, R.id.iv_right})
+    @OnClick({R.id.iv_left, R.id.iv_right, R.id.tv_go_to_today})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_left:
@@ -113,6 +115,9 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
                 break;
             case R.id.iv_right:
                 mRecyclerViewPager.smoothScrollToPosition(mCurrentPosition - 1);
+                break;
+            case R.id.tv_go_to_today:
+                mOnDateClickListener.onDateClick(System.currentTimeMillis());
                 break;
         }
     }

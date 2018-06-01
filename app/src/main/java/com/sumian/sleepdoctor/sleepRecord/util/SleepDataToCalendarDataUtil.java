@@ -4,8 +4,8 @@ import android.text.format.DateUtils;
 
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.utils.TimeUtil;
-import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewData;
-import com.sumian.sleepdoctor.widget.calendar.calendarView.DayType;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewData;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.DayType;
 
 import java.util.ArrayList;
 import java.util.Calendar;
