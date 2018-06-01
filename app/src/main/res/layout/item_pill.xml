@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/space_5"
+    android:paddingEnd="@dimen/space_32"
+    android:paddingStart="@dimen/space_30"
+    android:paddingTop="@dimen/space_5"
+    tools:layout_marginTop="@dimen/space_24">
+
+    <TextView
+        android:id="@+id/tv_pill"
+        style="@style/text_t2_16"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        tools:text="扎来普隆（1/2片）" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_t2_16"
+        tools:text="早饭前/后" />
+</LinearLayout>

@@ -28,36 +28,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <com.sumian.sleepdoctor.improve.record.view.ProgressView
+                android:id="@+id/progress_view_sleep"
                 android:layout_width="@dimen/space_150"
                 android:layout_height="@dimen/space_150"
-                android:layout_marginStart="@dimen/space_44" />
+                android:layout_marginStart="@dimen/space_20" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_20"
                 android:layout_marginStart="@dimen/space_20"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_sleep_status"
                     style="@style/SleepRecordMedicineTv"
-                    tools:text="药药药药" />
+                    tools:text="醒来情绪较差" />
 
                 <TextView
+                    android:id="@+id/tv_pills"
                     style="@style/SleepRecordMedicineTv"
-                    tools:text="药药药药" />
+                    tools:text="咪达唑仑、氟西泮、咪达唑仑、氟西泮、咪达唑仑、氟西泮、咪达唑仑、氟西泮、" />
 
                 <TextView
+                    android:id="@+id/tv_wakeup_duration"
                     style="@style/SleepRecordMedicineTv"
-                    tools:text="药药药药" />
+                    tools:text="夜醒：2h45min" />
 
                 <TextView
+                    android:id="@+id/tv_little_sleep_duration"
                     style="@style/SleepRecordMedicineTv"
-                    tools:text="药药药药" />
+                    tools:text="小睡：15min " />
             </LinearLayout>
 
         </LinearLayout>
@@ -80,6 +86,7 @@
                     android:text="@string/actual_work_and_reset" />
 
                 <TextView
+                    android:id="@+id/tv_actual_work_and_reset_time"
                     style="@style/SleepRecordTimeTv"
                     tools:text="20:00-22:00" />
             </LinearLayout>
@@ -101,6 +108,7 @@
                     android:text="@string/record_sleep_time" />
 
                 <TextView
+                    android:id="@+id/tv_sleep_time"
                     style="@style/SleepRecordTimeTv"
                     tools:text="20:00-22:00" />
             </LinearLayout>
@@ -129,8 +137,9 @@
                     android:text="@string/record_sleep_duration" />
 
                 <TextView
+                    android:id="@+id/tv_sleep_duration"
                     style="@style/SleepRecordTimeTv"
-                    tools:text="20:00-22:00" />
+                    tools:text="6小时15分钟" />
             </LinearLayout>
 
             <View
@@ -150,8 +159,9 @@
                     android:text="@string/fall_asleep_duration" />
 
                 <TextView
+                    android:id="@+id/tv_fall_asleep_duration"
                     style="@style/SleepRecordTimeTv"
-                    tools:text="20:00-22:00" />
+                    tools:text="15分钟" />
             </LinearLayout>
         </LinearLayout>
 
@@ -160,6 +170,7 @@
             android:layout_marginStart="@dimen/space_20" />
 
         <TextView
+            android:id="@+id/tv_sleep_desc"
             style="@style/text_t2_14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,7 +180,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_doctor_advice"
+        android:id="@+id/ll_doctor_evaluation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
@@ -183,7 +194,7 @@
             app:title_text="@string/doctor_advise" />
 
         <TextView
-            android:id="@+id/tv_doctor_advice"
+            android:id="@+id/tv_doctor_evaluation"
             style="@style/text_t2_14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

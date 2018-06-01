@@ -179,4 +179,7 @@
     <string name="record_sleep_duration">睡眠时长</string>
     <string name="fall_asleep_duration">入睡时长</string>
     <string name="doctor_advise">医生建议</string>
+    <string name="error">Error</string>
+    <string name="empty_response">Empty_response</string>
+    <string name="taken_pills">服用药物</string>
 </resources>

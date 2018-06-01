@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  *     version: 1.0
  * </pre>
  */
-public class SleepData {
+public class SleepRecordSummary {
 
     /**
      * id : 277
@@ -66,7 +66,7 @@ public class SleepData {
 
     @Override
     public String toString() {
-        return "SleepData{" +
+        return "SleepRecordSummary{" +
                 "id=" + id +
                 ", dateInSecond=" + dateInSecond +
                 ", isToday=" + isToday +

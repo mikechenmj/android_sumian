@@ -323,4 +323,28 @@ public final class TimeUtil {
         return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
+    public static String getHourMinuteStringFromSecond(int second, String hourString, String minuteString) {
+        int hour = getHourFromSecond(second);
+        int min = getMinuteFromSecond(second);
+        String hourMinuteStr;
+        StringBuilder stringBuilder = new StringBuilder();
+        if (hour != 0) {
+            stringBuilder.append(hour)
+                    .append(hourString);
+        }
+        if (min != 0) {
+            stringBuilder.append(min)
+                    .append(minuteString);
+        }
+        hourMinuteStr = stringBuilder.toString();
+        return hourMinuteStr;
+    }
+
+    public static String getHourMinuteStringFromSecondInZh(int second) {
+        return getHourMinuteStringFromSecond(second, "小时", "分钟");
+    }
+
+    public static String getHourMinuteStringFromSecondInEn(int second) {
+        return getHourMinuteStringFromSecond(second, "h", "min");
+    }
 }

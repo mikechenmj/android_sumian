@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.sleepRecord.util;
 
 import android.text.format.DateUtils;
 
-import com.sumian.sleepdoctor.sleepRecord.bean.SleepData;
+import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewData;
 import com.sumian.sleepdoctor.widget.calendar.calendarView.DayType;
@@ -30,14 +30,14 @@ public class SleepDataToCalendarDataUtil {
     // TYPE_4 有数据，有评价
     // TYPE_5 当前选择的天
 
-    public static CalendarViewData getCalendarViewData(long monthTime, long currentTime,
-                                                       long currentSelectTime, List<SleepData> sleepDataList) {
+    private static CalendarViewData getCalendarViewData(long monthTime, long currentTime,
+                                                        long currentSelectTime, List<SleepRecordSummary> sleepRecordSummaryList) {
         List<Long> hasSleepDataDays = new ArrayList<>();
         List<Long> hasDoctorEvaluationDays = new ArrayList<>();
-        for (SleepData sleepData : sleepDataList) {
-            long sleepDataTime = sleepData.getDateInMillis();
+        for (SleepRecordSummary sleepRecordSummary : sleepRecordSummaryList) {
+            long sleepDataTime = sleepRecordSummary.getDateInMillis();
             hasSleepDataDays.add(sleepDataTime);
-            if (sleepData.isHasDoctorsEvaluation()) {
+            if (sleepRecordSummary.isHasDoctorsEvaluation()) {
                 hasDoctorEvaluationDays.add(sleepDataTime);
             }
         }
@@ -66,7 +66,7 @@ public class SleepDataToCalendarDataUtil {
         return calendarViewData;
     }
 
-    public static List<CalendarViewData> sleepResponseToCalendarViewData(Map<String, List<SleepData>> response,
+    public static List<CalendarViewData> sleepResponseToCalendarViewData(Map<String, List<SleepRecordSummary>> response,
                                                                          long currentTime, long currentSelectTime) {
         currentTime = TimeUtil.getDayStartTime(currentTime);
         currentSelectTime = TimeUtil.getDayStartTime(currentSelectTime);
@@ -74,8 +74,8 @@ public class SleepDataToCalendarDataUtil {
             return null;
         }
         List<CalendarViewData> list = new ArrayList<>();
-        Set<Map.Entry<String, List<SleepData>>> entries = response.entrySet();
-        for (Map.Entry<String, List<SleepData>> entry : entries) {
+        Set<Map.Entry<String, List<SleepRecordSummary>>> entries = response.entrySet();
+        for (Map.Entry<String, List<SleepRecordSummary>> entry : entries) {
             long monthTime = Integer.valueOf(entry.getKey()) * 1000L;
             CalendarViewData calendarViewData = getCalendarViewData(monthTime, currentTime, currentSelectTime, entry.getValue());
             list.add(calendarViewData);

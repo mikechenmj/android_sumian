@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.sleepRecord;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.text.format.DateUtils;
 import android.util.LongSparseArray;
@@ -10,12 +11,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.sleepRecord.bean.SleepData;
+import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
+import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
+import com.sumian.sleepdoctor.sleepRecord.view.SleepRecordView;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewAdapter;
 import com.sumian.sleepdoctor.widget.calendar.calendarView.CalendarViewData;
@@ -33,6 +38,8 @@ import butterknife.OnClick;
 
 public class RecordFragment extends BaseFragment implements CalendarViewAdapter.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
+    public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
+
     @BindView(R.id.dsiv)
     DoctorServiceItemView mDoctorServiceItemView;
     @BindView(R.id.rl_toolbar)
@@ -42,6 +49,9 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
     private PopupWindow mPopupWindow;
     @BindView(R.id.tv_date)
     TextView mTvDate;
+    @BindView(R.id.sleep_record)
+    SleepRecordView mSleepRecordView;
+
     private long mPopupDismissTime;
     private CalendarViewWrapper mCalendarViewWrapper;
 
@@ -84,6 +94,24 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
 
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        AppManager.getHttpService().querySleepDiaryDetail((int) (System.currentTimeMillis() / 1000L))
+                .enqueue(new BaseResponseCallback<SleepRecord>() {
+                    @Override
+                    protected void onSuccess(SleepRecord response) {
+                        LogUtils.d(response);
+                        mSleepRecordView.setSleepRecord(response);
+                    }
+
+                    @Override
+                    protected void onFailure(String error) {
+                        LogUtils.d(error);
+                    }
+                });
+    }
+
     @OnClick({R.id.iv_date_arrow, R.id.iv_notification})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -91,7 +119,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
                 turnDateArrow(!mIvDateArrow.isActivated());
                 break;
             case R.id.iv_notification:
-                startActivity(new Intent(getContext(), RecordSleepRecordActivity.class));
+                FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD);
                 break;
         }
     }
@@ -123,10 +151,10 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
     }
 
     private void querySleepData() {
-        AppManager.getHttpService().querySleepDiary((int) (System.currentTimeMillis() / 1000), 1, 10, 0)
-                .enqueue(new BaseResponseCallback<Map<String, List<SleepData>>>() {
+        AppManager.getHttpService().querySleepDiaryList((int) (System.currentTimeMillis() / 1000), 1, 10, 0)
+                .enqueue(new BaseResponseCallback<Map<String, List<SleepRecordSummary>>>() {
                     @Override
-                    protected void onSuccess(Map<String, List<SleepData>> response) {
+                    protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
                         LogUtils.d(response);
                         sleepDataResponseToCalendarViewData(response);
                     }
@@ -139,19 +167,19 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
 
     }
 
-    private List<CalendarViewData> sleepDataResponseToCalendarViewData(Map<String, List<SleepData>> response) {
+    private List<CalendarViewData> sleepDataResponseToCalendarViewData(Map<String, List<SleepRecordSummary>> response) {
         if (response == null) {
             return null;
         }
         List<CalendarViewData> list = new ArrayList<>();
-        for (Map.Entry<String, List<SleepData>> entry : response.entrySet()) {
+        for (Map.Entry<String, List<SleepRecordSummary>> entry : response.entrySet()) {
             String key = entry.getKey();
             long monthTime = Integer.valueOf(key);
             CalendarViewData calendarViewData = new CalendarViewData();
             calendarViewData.monthTime = monthTime;
 
             LongSparseArray<DayType> map = new LongSparseArray<>();
-//            for (SleepData sleepData : entry.getValue()) {
+//            for (SleepRecordSummary sleepData : entry.getValue()) {
 //                long dateInMillis = sleepData.getDateInMillis();
 //                getDayType(sleepData);
 //            }
@@ -162,7 +190,6 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
 
         return list;
     }
-
 
 
     @Override
@@ -186,4 +213,16 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         return list;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_FILL_SLEEP_RECORD) {
+            if (resultCode == Activity.RESULT_OK) {
+                SleepRecord sleepRecord = FillSleepRecordActivity.resolveResultData(data);
+                mSleepRecordView.setSleepRecord(sleepRecord);
+                ToastUtils.showShort(sleepRecord.toString());
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
