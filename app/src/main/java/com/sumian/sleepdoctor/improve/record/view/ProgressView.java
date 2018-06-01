@@ -55,7 +55,7 @@ public class ProgressView extends View {
         Resources resources = context.getResources();
         initColors();
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ProgressView);
-        float ringWidth = attributes.getFloat(R.styleable.ProgressView_pv_ring_width, resources.getDimension(R.dimen.space_20));
+        float ringWidth = attributes.getDimension(R.styleable.ProgressView_pv_ring_width, resources.getDimension(R.dimen.space_10));
         int ringBgColor = attributes.getColor(R.styleable.ProgressView_pv_ring_bg_color, resources.getColor(R.color.b1_color));
         attributes.recycle();
 
@@ -123,10 +123,10 @@ public class ProgressView extends View {
         canvas.drawArc(mArcRect, -90, mSweepAngle, false, mProgressPaint);
     }
 
-    public void setPercent(int percent) {
-        mPercent = percent;
-        mSweepAngle = percent * (360.0f / 100);
-        int progressLevel = getProgressLevelByPercent(percent);
+    public void setProgress(int progress) {
+        mPercent = progress;
+        mSweepAngle = progress * (360.0f / 100);
+        int progressLevel = getProgressLevelByPercent(progress);
         if (mProgressLevel != progressLevel) {
             mProgressLevel = progressLevel;
             updateSweepGradient();

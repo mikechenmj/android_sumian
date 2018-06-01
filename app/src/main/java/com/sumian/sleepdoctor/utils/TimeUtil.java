@@ -324,6 +324,9 @@ public final class TimeUtil {
     }
 
     public static String getHourMinuteStringFromSecond(int second, String hourString, String minuteString) {
+        if (second == 0) {
+            return "——";
+        }
         int hour = getHourFromSecond(second);
         int min = getMinuteFromSecond(second);
         String hourMinuteStr;

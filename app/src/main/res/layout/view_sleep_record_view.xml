@@ -12,6 +12,7 @@
         android:id="@+id/title_view_sleep_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10"
         app:menu_text="@string/refill"
         app:title_text="@string/sleep_record" />
 
@@ -19,11 +20,9 @@
         android:id="@+id/ll_sleep_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_10"
         android:background="@color/white"
         android:orientation="vertical"
         tools:visibility="visible">
-
 
         <LinearLayout
             android:id="@+id/ll_progress"
@@ -34,7 +33,7 @@
             android:orientation="horizontal"
             tools:visibility="visible">
 
-            <com.sumian.sleepdoctor.improve.record.view.ProgressView
+            <com.sumian.sleepdoctor.improve.record.view.SleepRecordProgressView
                 android:id="@+id/progress_view_sleep"
                 android:layout_width="@dimen/space_150"
                 android:layout_height="@dimen/space_150"

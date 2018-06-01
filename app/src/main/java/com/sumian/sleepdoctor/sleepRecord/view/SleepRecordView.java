@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.sleepRecord.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.improve.record.view.ProgressView;
+import com.sumian.sleepdoctor.improve.record.view.SleepRecordProgressView;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepPill;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordAnswer;
@@ -59,7 +61,7 @@ public class SleepRecordView extends LinearLayout {
     @BindView(R.id.ll_root)
     LinearLayout llRoot;
     @BindView(R.id.progress_view_sleep)
-    ProgressView progressViewSleep;
+    SleepRecordProgressView progressViewSleep;
     @BindView(R.id.tv_sleep_quality)
     TextView tvSleepQuality;
     @BindView(R.id.tv_pills)
@@ -99,7 +101,7 @@ public class SleepRecordView extends LinearLayout {
         llSleepRecord.setVisibility(hasRecord ? VISIBLE: GONE);
         llNoSleepRecord.setVisibility(hasRecord ? GONE : VISIBLE);
         llDoctorEvaluation.setVisibility(hasRecord ? VISIBLE : GONE);
-        titleViewSleepRecord.setTvMenu(null);
+        titleViewSleepRecord.setTvMenuVisibility(hasRecord ? VISIBLE : GONE);
         if (hasRecord) {
             showSleepRecord(sleepRecord);
         }
@@ -109,6 +111,7 @@ public class SleepRecordView extends LinearLayout {
         SleepRecordAnswer answer = sleepRecord.getAnswer();
         tvSleepQuality.setText(getSleepQualityString(answer.getEnergetic()));
         tvPills.setText(getPillsString(answer.getSleep_pills()));
+        tvPills.setClickable(answer.getSleep_pills() == null || answer.getSleep_pills().size() == 0);
         tvWakeupDuration.setText(getDurationString("夜醒：", answer.getWake_minutes()));
         tvLittleSleepDuration.setText(getDurationString("小睡：", answer.getOther_sleep_total_minutes()));
         tvActualWorkAndResetTime.setText(String.format("%s-%s", answer.getBed_at(), answer.getGet_up_at()));
@@ -119,6 +122,7 @@ public class SleepRecordView extends LinearLayout {
         tvSleepDesc.setVisibility(TextUtils.isEmpty(answer.getRemark()) ? GONE : VISIBLE);
         llDoctorEvaluation.setVisibility(TextUtils.isEmpty(sleepRecord.getDoctor_evaluation()) ? GONE : VISIBLE);
         tvDoctorEvaluation.setText(sleepRecord.getDoctor_evaluation());
+        progressViewSleep.setProgress(sleepRecord.getSleep_efficiency());
     }
 
     private String getSleepQualityString(int quality) {
@@ -136,13 +140,7 @@ public class SleepRecordView extends LinearLayout {
     }
 
     private String getDurationString(String label, int minutes) {
-        String wakeupTime;
-        if (minutes == 0) {
-            wakeupTime = "——";
-        } else {
-            wakeupTime = TimeUtil.getHourMinuteStringFromSecondInZh(minutes * 60);
-        }
-        return label + wakeupTime;
+        return label + TimeUtil.getHourMinuteStringFromSecondInZh(minutes * 60);
     }
 
     private String getStringArray(List<String> strings) {
@@ -158,6 +156,9 @@ public class SleepRecordView extends LinearLayout {
     }
 
     private String getPillsString(List<SleepPill> pills) {
+        if (pills == null || pills.size() == 0) {
+            return getResources().getString(R.string.do_not_eat_pills);
+        }
         List<String> strList = new ArrayList<>();
         for (SleepPill pill : pills) {
             strList.add(pill.getName());

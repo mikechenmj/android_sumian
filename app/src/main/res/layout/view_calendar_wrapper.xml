@@ -3,105 +3,117 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_60">
-
-        <TextView
-            android:id="@+id/tv_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@color/t2_color"
-            android:textSize="@dimen/font_14"
-            tools:text="2018/05" />
-
-        <ImageView
-            android:id="@+id/iv_left"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/space_20"
-            android:layout_toStartOf="@id/tv_month"
-            android:contentDescription="@null"
-            android:padding="@dimen/space_10"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_record_icon_left" />
-
-
-        <ImageView
-            android:id="@+id/iv_right"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/space_20"
-            android:layout_toEndOf="@id/tv_month"
-            android:contentDescription="@null"
-            android:padding="@dimen/space_10"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_record_icon_right" />
-
-        <TextView
-            android:id="@+id/tv_go_to_today"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/space_20"
-            android:gravity="center"
-            android:text="@string/go_to_today"
-            android:textColor="@color/b3_color"
-            android:textSize="@dimen/font_14"
-            tools:ignore="RelativeOverlap" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/l1_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_50"
-        android:paddingLeft="@dimen/space_12"
-        android:paddingRight="@dimen/space_12">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <TextView
-            style="@style/CalendarDateText"
-            android:text="@string/sun" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_60">
 
-        <TextView
-            style="@style/CalendarDateText"
-            android:text="@string/mon" />
+            <TextView
+                android:id="@+id/tv_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/t2_color"
+                android:textSize="@dimen/font_14"
+                tools:text="2018/05" />
 
-        <TextView
-            style="@style/CalendarDateText"
-            android:text="@string/tue" />
+            <ImageView
+                android:id="@+id/iv_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/space_20"
+                android:layout_toStartOf="@id/tv_month"
+                android:contentDescription="@null"
+                android:padding="@dimen/space_10"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_record_icon_left" />
 
-        <TextView
-            style="@style/CalendarDateText"
-            android:text="@string/wed" />
 
-        <TextView
-            style="@style/CalendarDateText"
-            android:text="@string/thu" />
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_toEndOf="@id/tv_month"
+                android:contentDescription="@null"
+                android:padding="@dimen/space_10"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_record_icon_right" />
 
-        <TextView
-            style="@style/CalendarDateText"
-            android:text="@string/fri" />
+            <TextView
+                android:id="@+id/tv_go_to_today"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/space_20"
+                android:gravity="center"
+                android:text="@string/go_to_today"
+                android:textColor="@color/b3_color"
+                android:textSize="@dimen/font_14"
+                tools:ignore="RelativeOverlap" />
+        </RelativeLayout>
 
-        <TextView
-            style="@style/CalendarDateText"
-            android:text="@string/sat" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/l1_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_50"
+            android:paddingLeft="@dimen/space_12"
+            android:paddingRight="@dimen/space_12">
+
+            <TextView
+                style="@style/CalendarDateText"
+                android:text="@string/sun" />
+
+            <TextView
+                style="@style/CalendarDateText"
+                android:text="@string/mon" />
+
+            <TextView
+                style="@style/CalendarDateText"
+                android:text="@string/tue" />
+
+            <TextView
+                style="@style/CalendarDateText"
+                android:text="@string/wed" />
+
+            <TextView
+                style="@style/CalendarDateText"
+                android:text="@string/thu" />
+
+            <TextView
+                style="@style/CalendarDateText"
+                android:text="@string/fri" />
+
+            <TextView
+                style="@style/CalendarDateText"
+                android:text="@string/sat" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/l1_color" />
+
+        <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+            android:id="@+id/rvp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <View
+        android:id="@+id/v_bg"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/l1_color" />
-
-    <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
-        android:id="@+id/rvp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:background="@color/black_40" />
 </LinearLayout>

@@ -111,8 +111,8 @@
     </declare-styleable>
 
     <declare-styleable name="ProgressView" >
-        <attr name="pv_ring_width" format="float"/>
-        <attr name="pv_ring_bg_color" format="color"/>
+        <attr name="pv_ring_width" format="float|dimension"/>
+        <attr name="pv_ring_bg_color" format="color|reference"/>
     </declare-styleable>
 
     <declare-styleable name="TitleView" >

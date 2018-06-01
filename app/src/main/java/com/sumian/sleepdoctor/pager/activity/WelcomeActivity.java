@@ -39,9 +39,6 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
             LogUtils.d(token);
             onToken(token);
         });
-        LiveData<Token> liveDataToken = AppManager.getAccountViewModel().getLiveDataToken();
-        Token token = liveDataToken.getValue();
-        onToken(token);
     }
 
     public void onToken(Token token) {

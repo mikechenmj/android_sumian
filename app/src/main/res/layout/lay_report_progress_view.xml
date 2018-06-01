@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.sumian.sleepdoctor.improve.record.view.ProgressView
+        android:id="@+id/progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:pv_ring_width="@dimen/space_10" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/b3_color"
+                android:textSize="@dimen/font_30"
+                tools:text="85" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/percent_mart"
+                android:textColor="@color/b3_color"
+                android:textSize="@dimen/font_18" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_marginTop="@dimen/space_4"
+            android:text="@string/sleep_efficient" />
+    </LinearLayout>
 </FrameLayout>

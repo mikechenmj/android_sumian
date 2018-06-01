@@ -64,20 +64,22 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mDoctorServiceItemView.setTitle("远程睡眠管理服务");
-        mDoctorServiceItemView.setDesc("连续7天监测你的睡眠日记");
-        mDoctorServiceItemView.setPrice(50f);
-        mDoctorServiceItemView.loadImage(R.mipmap.ic_doctor_service_item_view_sleep_diary);
-        mDoctorServiceItemView.setOnClickListener(v -> {
-            ActionLoadingDialog loadingDialog = new ActionLoadingDialog();
-            loadingDialog.show(getFragmentManager());
-        });
+        initDoctorServiceItemView();
         setTvDate(System.currentTimeMillis());
         mSleepRecordView.setOnClickRefillSleepRecordListener(v -> {
             launchFillSleepRecordActivity(mSelectedTime);
         });
         mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> {
             launchFillSleepRecordActivity(mSelectedTime);
+        });
+    }
+
+    private void initDoctorServiceItemView() {
+        mDoctorServiceItemView.setTitle("远程睡眠管理服务");
+        mDoctorServiceItemView.setDesc("连续7天监测你的睡眠日记");
+        mDoctorServiceItemView.setPrice(50f);
+        mDoctorServiceItemView.loadImage(R.mipmap.ic_doctor_service_item_view_sleep_diary);
+        mDoctorServiceItemView.setOnClickListener(v -> {
         });
     }
 
@@ -106,9 +108,10 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         queryAndShowSleepReportAtTime(System.currentTimeMillis());
     }
 
-    @OnClick({R.id.iv_date_arrow, R.id.iv_notification})
+    @OnClick({R.id.tv_date, R.id.iv_date_arrow, R.id.iv_notification})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_date:
             case R.id.iv_date_arrow:
                 turnDateArrow(!mIvDateArrow.isActivated());
                 break;
@@ -133,8 +136,13 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
             mCalendarViewWrapper.setOnDateClickListener(this);
             mCalendarViewWrapper.setData(getCalendarViewDataList());
             mCalendarViewWrapper.scrollToTime(System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 60, false);
+            mCalendarViewWrapper.setOnBgClickListener(v -> {
+                mPopupWindow.dismiss();
+            });
             mPopupWindow.setContentView(mCalendarViewWrapper);
             mPopupWindow.setOutsideTouchable(true);
+            mPopupWindow.setBackgroundDrawable(null);
+            mPopupWindow.setAnimationStyle(0);
             mPopupWindow.setOnDismissListener(() -> {
                 mPopupDismissTime = System.currentTimeMillis();
                 mIvDateArrow.setActivated(false);

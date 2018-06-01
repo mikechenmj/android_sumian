@@ -63,4 +63,8 @@ public class TitleView extends LinearLayout {
     public void setTvMenu(String menu) {
         tvMenu.setText(menu);
     }
+
+    public void setTvMenuVisibility(int visibility) {
+        tvMenu.setVisibility(visibility);
+    }
 }

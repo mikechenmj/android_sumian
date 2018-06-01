@@ -45,6 +45,8 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     TextView tvGoToToday;
     @BindView(R.id.rvp)
     RecyclerViewPager mRecyclerViewPager;
+    @BindView(R.id.v_bg)
+    View vBg;
     private CalendarWrapperAdapter mAdapter;
     private int mCurrentPosition;
     private List<CalendarViewData> mDataList;
@@ -118,5 +120,9 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     public void setData(List<CalendarViewData> dataList) {
         mDataList = dataList;
         mAdapter.setData(dataList);
+    }
+
+    public void setOnBgClickListener(OnClickListener listener) {
+        vBg.setOnClickListener(listener);
     }
 }
