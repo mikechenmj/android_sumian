@@ -375,7 +375,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                 .enqueue(new BaseResponseCallback<String>() {
                     @Override
                     protected void onSuccess(String response) {
-                        LogUtils.d(response);
+//                        LogUtils.d(response);
                         ToastUtils.showShort(R.string.unbind_success);
                         updateSocialites(null);
                     }
@@ -383,7 +383,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     protected void onFailure(ErrorResponse errorResponse) {
                         LogUtils.d(errorResponse.message);
-                        ToastUtils.showShort(R.string.unbind_failed);
+//                        ToastUtils.showShort(R.string.unbind_failed);
                     }
 
                     @Override

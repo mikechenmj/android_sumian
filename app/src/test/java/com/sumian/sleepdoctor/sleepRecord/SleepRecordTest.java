@@ -21,8 +21,9 @@ import java.util.Map;
  *     version: 1.0
  * </pre>
  */
+@SuppressWarnings({"ConstantConditions", "unused"})
 public class SleepRecordTest {
-    @org.junit.Test
+    @Test
     public void testQuerySleepDataResponse() {
         String s = "{\"1525104000\":[{\"id\":258,\"date\":1525363200,\"is_today\":false,\"has_doctors_evaluation\":false},{\"id\":307,\"date\":1525622400,\"is_today\":false,\"has_doctors_evaluation\":false},{\"id\":447,\"date\":1526313600,\"is_today\":false,\"has_doctors_evaluation\":false},{\"id\":536,\"date\":1526832000,\"is_today\":false,\"has_doctors_evaluation\":false}],\"1522512000\":[{\"id\":1,\"date\":1523721600,\"is_today\":false,\"has_doctors_evaluation\":false},{\"id\":18,\"date\":1524672000,\"is_today\":false,\"has_doctors_evaluation\":false},{\"id\":118,\"date\":1524758400,\"is_today\":false,\"has_doctors_evaluation\":false},{\"id\":149,\"date\":1524844800,\"is_today\":false,\"has_doctors_evaluation\":false}],\"1519833600\":[],\"1517414400\":[],\"1514736000\":[],\"1512057600\":[],\"1509465600\":[],\"1506787200\":[],\"1504195200\":[],\"1501516800\":[]}";
 
@@ -32,7 +33,6 @@ public class SleepRecordTest {
             String key = entry.getKey();
             long time = Integer.valueOf(key) * 1000L;
 //            System.out.println(new Date(time));
-
             for (SleepRecordSummary sleepRecordSummary : entry.getValue()) {
                 System.out.println(new Date(sleepRecordSummary.getDateInMillis()));
             }

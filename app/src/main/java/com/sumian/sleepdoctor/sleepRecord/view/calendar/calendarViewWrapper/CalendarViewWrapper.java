@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarVie
 import com.sumian.sleepdoctor.utils.TimeUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -47,9 +48,8 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     @BindView(R.id.v_bg)
     View vBg;
     protected CalendarWrapperAdapter mAdapter;
-    private int mCurrentPosition;
-    private CalendarView.OnDateClickListener mOnDateClickListener;
-    private List<Long> mMonthTimeList;
+    protected int mCurrentPosition;
+    protected CalendarView.OnDateClickListener mOnDateClickListener;
 
     public CalendarViewWrapper(Context context) {
         this(context, null);
@@ -67,7 +67,6 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
         mRecyclerViewPager.setAdapter(mAdapter);
         mRecyclerViewPager.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         mRecyclerViewPager.addOnPageChangedListener(this);
-        updateTvMonth(System.currentTimeMillis());
     }
 
     private void updateTvMonth(long time) {
@@ -82,11 +81,12 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     }
 
     public void scrollToTime(long time, boolean smooth) {
-        if (mMonthTimeList == null) {
+        updateTvMonth(time);
+        if (getMonthTimes() == null) {
             return;
         }
-        for (int i = 0; i < mMonthTimeList.size(); i++) {
-            long monthTime = mMonthTimeList.get(i);
+        for (int i = 0; i < getMonthTimes().size(); i++) {
+            long monthTime = getMonthTimes().get(i);
             if (TimeUtil.isInTheSameMonth(time, monthTime)) {
                 if (smooth) {
                     mRecyclerViewPager.smoothScrollToPosition(i);
@@ -101,9 +101,10 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     @Override
     public void OnPageChanged(int oldPosition, int newPosition) {
         mCurrentPosition = newPosition;
-        updateTvMonth(mMonthTimeList.get(newPosition));
+//        LogUtils.d(newPosition, TimeUtil.formatDateList(getMonthTimes()));
+        updateTvMonth(getMonthTimes().get(newPosition));
         ivRight.setClickable(newPosition != 0);
-        ivLeft.setClickable(newPosition != mMonthTimeList.size() - 1);
+        ivLeft.setClickable(newPosition != getMonthTimes().size() - 1);
     }
 
     @OnClick({R.id.iv_left, R.id.iv_right, R.id.tv_go_to_today})
@@ -122,8 +123,20 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     }
 
     public void setMonthTimes(List<Long> monthTimeList) {
-        mMonthTimeList = monthTimeList;
+        updateTvMonth(monthTimeList.get(0));
         mAdapter.setMonthTimes(monthTimeList);
+    }
+
+    public void addMonthTimes(List<Long> monthTimes) {
+        mAdapter.addMonthTimes(monthTimes);
+//        LogUtils.d(TimeUtil.formatDateList(monthTimes), TimeUtil.formatDateList(getMonthTimes()));
+    }
+
+    public List<Long> getMonthTimes() {
+        if (mAdapter == null) {
+            return new ArrayList<>();
+        }
+        return mAdapter.getMonthTimes();
     }
 
     public void setOnBgClickListener(OnClickListener listener) {
@@ -134,4 +147,5 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     public int getDayTypeByTime(long timeInMillis) {
         return 0;
     }
+
 }

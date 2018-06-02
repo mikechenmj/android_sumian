@@ -54,4 +54,14 @@ public class CalendarWrapperAdapter extends RecyclerView.Adapter<CalendarWrapper
         mMonthTimes = monthTimes;
         notifyDataSetChanged();
     }
+
+    public List<Long> getMonthTimes() {
+        return mMonthTimes;
+    }
+
+    public void addMonthTimes(List<Long> monthTimes) {
+        int size = monthTimes.size();
+        mMonthTimes.addAll(monthTimes);
+        notifyItemRangeInserted(size, monthTimes.size());
+    }
 }

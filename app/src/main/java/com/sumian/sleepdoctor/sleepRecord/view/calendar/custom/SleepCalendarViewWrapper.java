@@ -2,13 +2,17 @@ package com.sumian.sleepdoctor.sleepRecord.view.calendar.custom;
 
 import android.content.Context;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarViewWrapper.CalendarViewWrapper;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <pre>
@@ -20,12 +24,12 @@ import java.util.Map;
  * </pre>
  */
 public class SleepCalendarViewWrapper extends CalendarViewWrapper {
-    private List<SleepRecordSummary> mSleepRecordSummaries = new ArrayList<>();
-    private List<Long> mHasSleepRecordDays = new ArrayList<>();
-    private List<Long> mHasDoctorEvaluationDays = new ArrayList<>();
+    public static final int PRELOAD_THRESHOLD = 5;
+    private Set<Long> mHasSleepRecordDays = new HashSet<>();
+    private Set<Long> mHasDoctorEvaluationDays = new HashSet<>();
     private long mSelectDayTime;
     private long mTodayTime;
-    private long mMonthTime;
+    private LoadMoreListener mLoadMoreListener;
 
     public SleepCalendarViewWrapper(Context context) {
         super(context);
@@ -36,11 +40,7 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
         super.init();
     }
 
-    public void setSleepRecordSummaries(List<SleepRecordSummary> sleepRecordSummaries) {
-        mSleepRecordSummaries = sleepRecordSummaries;
-        if (sleepRecordSummaries == null) {
-            return;
-        }
+    private void addSleepRecordSummaries(List<SleepRecordSummary> sleepRecordSummaries) {
         for (SleepRecordSummary summary : sleepRecordSummaries) {
             long summaryDate = summary.getDateInMillis();
             mHasSleepRecordDays.add(summaryDate);
@@ -52,6 +52,7 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
 
     public void setSelectDayTime(long selectDayTime) {
         mSelectDayTime = TimeUtil.getDayStartTime(selectDayTime);
+        scrollToTime(mSelectDayTime, false);
     }
 
     public void setTodayTime(long todayTime) {
@@ -71,19 +72,41 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
             } else {
                 dayType = SleepDayType.TYPE_HAS_RECORD_NO_DOCTOR_EVALUATION;
             }
-        } else if (timeInMillis == mSelectDayTime) {
+        }
+        if (timeInMillis == mSelectDayTime) {
             dayType = SleepDayType.TYPE_SELECTED_DAY;
         }
         return dayType;
     }
 
-    public void setSleepRecordSummaries(Map<String, List<SleepRecordSummary>> map) {
+    public void addSleepRecordSummaries(Map<String, List<SleepRecordSummary>> map) {
         if (map == null) {
             return;
         }
         for (Map.Entry<String, List<SleepRecordSummary>> entry : map.entrySet()) {
-            mSleepRecordSummaries.addAll(entry.getValue());
+            addSleepRecordSummaries(entry.getValue());
         }
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void OnPageChanged(int oldPosition, int newPosition) {
+        super.OnPageChanged(oldPosition, newPosition);
+        int monthCount = getMonthTimes().size();
+        if (newPosition > monthCount - PRELOAD_THRESHOLD) {
+            if (mLoadMoreListener != null) {
+                Long time = getMonthTimes().get(monthCount - 1);
+//                LogUtils.d(TimeUtil.formatDate("yyyy/MM", time), time);
+                mLoadMoreListener.loadMore(time);
+            }
+        }
+    }
+
+    public void setLoadMoreListener(LoadMoreListener loadMoreListener) {
+        mLoadMoreListener = loadMoreListener;
+    }
+
+    public interface LoadMoreListener {
+        void loadMore(long time);
     }
 }

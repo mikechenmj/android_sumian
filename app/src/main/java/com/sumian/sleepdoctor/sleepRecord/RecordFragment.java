@@ -2,14 +2,12 @@ package com.sumian.sleepdoctor.sleepRecord;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -25,7 +23,6 @@ import com.sumian.sleepdoctor.sleepRecord.view.calendar.custom.SleepCalendarView
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +32,7 @@ import butterknife.OnClick;
 public class RecordFragment extends BaseFragment implements CalendarView.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
+    public static final int PAGE_SIZE = 12;
 
     @BindView(R.id.dsiv)
     DoctorServiceItemView mDoctorServiceItemView;
@@ -105,7 +103,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         switch (view.getId()) {
             case R.id.tv_date:
             case R.id.iv_date_arrow:
-                turnDateArrow(!mIvDateArrow.isActivated());
+                showDatePopup(!mIvDateArrow.isActivated());
                 break;
             case R.id.iv_notification:
 
@@ -117,58 +115,63 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         FillSleepRecordActivity.launchForResult(this, time, REQUEST_CODE_FILL_SLEEP_RECORD);
     }
 
-    private void turnDateArrow(boolean activated) {
+    private void showDatePopup(boolean show) {
         long currentTimeMillis = System.currentTimeMillis();
-        if (currentTimeMillis - mPopupDismissTime < DATE_ARROW_CLICK_COLD_TIME) {
+        long timeGap = currentTimeMillis - mPopupDismissTime;
+        if (timeGap < DATE_ARROW_CLICK_COLD_TIME) {
             return;
         }
-        mIvDateArrow.setActivated(activated);
+        mIvDateArrow.setActivated(show);
         if (mPopupWindow == null) {
             mPopupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             mCalendarViewWrapper = new SleepCalendarViewWrapper(getContext());
             mCalendarViewWrapper.setOnDateClickListener(this);
-            mCalendarViewWrapper.setMonthTimes(getMonthTimes());
             mCalendarViewWrapper.setTodayTime(currentTimeMillis);
-            mCalendarViewWrapper.setSelectDayTime(currentTimeMillis);
             mCalendarViewWrapper.setOnBgClickListener(v -> mPopupWindow.dismiss());
+            mCalendarViewWrapper.setLoadMoreListener(time -> querySleepReportSummaryList(time, false));
             mPopupWindow.setContentView(mCalendarViewWrapper);
             mPopupWindow.setOutsideTouchable(true);
             mPopupWindow.setBackgroundDrawable(null);
             mPopupWindow.setAnimationStyle(0);
             mPopupWindow.setOnDismissListener(() -> {
-                mPopupDismissTime = currentTimeMillis;
+                mPopupDismissTime = System.currentTimeMillis();
                 mIvDateArrow.setActivated(false);
             });
         }
-        if (activated) {
+        if (show) {
             mPopupWindow.showAsDropDown(mToolbar);
-            querySleepReportSummaryList();
+            querySleepReportSummaryList(System.currentTimeMillis(), true);
         } else {
             mPopupWindow.dismiss();
+            mPopupWindow = null;
         }
     }
 
-    private void querySleepReportSummaryList() {
-        AppManager.getHttpService().querySleepDiarySummaryList((int) (System.currentTimeMillis() / 1000), 1, 10, 0)
+    private void querySleepReportSummaryList(long time, boolean isInit) {
+        List<Long> monthTimes = TimeUtil.createMonthTimes(time, PAGE_SIZE, isInit);
+        if (isInit) {
+            mCalendarViewWrapper.setMonthTimes(monthTimes);
+            mCalendarViewWrapper.setSelectDayTime(mSelectedTime);
+        } else {
+            mCalendarViewWrapper.addMonthTimes(monthTimes);
+        }
+        AppManager.getHttpService().querySleepDiarySummaryList((int) (time / 1000), 1, PAGE_SIZE, 0)
                 .enqueue(new BaseResponseCallback<Map<String, List<SleepRecordSummary>>>() {
                     @Override
                     protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
-                        LogUtils.d(response);
-                        mCalendarViewWrapper.setSleepRecordSummaries(response);
+                        mCalendarViewWrapper.addSleepRecordSummaries(response);
                     }
 
                     @Override
                     protected void onFailure(ErrorResponse errorResponse) {
 
                     }
-
                 });
-
     }
 
     @Override
     public void onDateClick(long time) {
-        if (time > getTodayStartTime()) {
+        if (time > TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis())) {
             return;
         }
         mPopupWindow.dismiss();
@@ -193,17 +196,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 });
     }
 
-
-    private List<Long> getMonthTimes() {
-        List<Long> list = new ArrayList<>();
-        long l = System.currentTimeMillis();
-        for (int i = 0; i < 5; i++) {
-            long monthTime = l - DateUtils.DAY_IN_MILLIS * 31 * i;
-            list.add(monthTime);
-        }
-        return list;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FILL_SLEEP_RECORD) {
@@ -216,9 +208,5 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    private long getTodayStartTime() {
-        return TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis());
     }
 }

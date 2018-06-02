@@ -4,8 +4,10 @@ package com.sumian.sleepdoctor.utils;
 import android.text.format.DateUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -283,7 +285,10 @@ public final class TimeUtil {
      * @return 入参时间当天00:00的时间戳
      */
     public static long getStartTimeOfTheDay(long time) {
-        return time - time % DateUtils.DAY_IN_MILLIS;
+        Calendar calendar = getCalendar(time);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DATE), 0, 0, 0);
+        return calendar.getTimeInMillis();
     }
 
     public static int getDayCountInTheMonth(long time) {
@@ -349,5 +354,33 @@ public final class TimeUtil {
 
     public static String getHourMinuteStringFromSecondInEn(int second) {
         return getHourMinuteStringFromSecond(second, "h", "min");
+    }
+
+    public static List<Long> createMonthTimes(long startMonth, int count, boolean includeStartMonth) {
+        List<Long> list = new ArrayList<>();
+        Calendar calendar = TimeUtil.getStartDayOfMonth(startMonth);
+        if (includeStartMonth) {
+            list.add(calendar.getTimeInMillis());
+        }
+        for (int i = 0; i < count; i++) {
+            if (calendar.get(Calendar.MONTH) == 0) {
+                calendar.roll(Calendar.YEAR, -1);
+            }
+            calendar.roll(Calendar.MONTH, -1);
+            list.add(calendar.getTimeInMillis());
+        }
+        if (includeStartMonth) {
+            list.remove(list.size() - 1);
+        }
+        return list;
+    }
+
+    public static List<String> formatDateList(List<Long> timeList) {
+        List<String> list = new ArrayList<>();
+        for (long l : timeList) {
+            String date = TimeUtil.formatDate("yyyy/MM", l);
+            list.add(date);
+        }
+        return list;
     }
 }
