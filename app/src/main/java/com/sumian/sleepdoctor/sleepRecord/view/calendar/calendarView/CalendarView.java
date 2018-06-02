@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.custom.SleepCalendarViewAdapter;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.custom.SleepCalendarViewAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,17 +42,28 @@ public class CalendarView extends FrameLayout {
     private void init(Context context) {
         View inflate = inflate(context, R.layout.view_calendar, this);
         ButterKnife.bind(this, inflate);
-        mAdapter = new SleepCalendarViewAdapter();
         mRecyclerView.setLayoutManager(new GridLayoutManager(context, 7));
+        mAdapter = new SleepCalendarViewAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void setOnDateClickListener(CalendarViewAdapter.OnDateClickListener onDateClickListener) {
+    public void setOnDateClickListener(OnDateClickListener onDateClickListener) {
         mAdapter.setOnDateClickListener(onDateClickListener);
     }
 
-    public void setCalendarViewData(CalendarViewData calendarViewData) {
-        mAdapter.setCalendarViewData(calendarViewData);
+    public void setDayTypeProvider(DayTypeProvider provider) {
+        mAdapter.setDayTypeProvider(provider);
     }
 
+    public void setMonthTime(long monthTimeInMillis) {
+        mAdapter.setMonthTime(monthTimeInMillis);
+    }
+
+    public interface DayTypeProvider{
+        int getDayTypeByTime(long timeInMillis);
+    }
+
+    public interface OnDateClickListener {
+        void onDateClick(long time);
+    }
 }

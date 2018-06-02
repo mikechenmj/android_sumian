@@ -13,6 +13,7 @@ import com.sumian.sleepdoctor.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * <pre>
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
  *     version: 1.0
  * </pre>
  */
-public class CalendarViewVH extends RecyclerView.ViewHolder{
+public class CalendarViewVH extends RecyclerView.ViewHolder {
 
     protected Context mContext;
     @BindView(R.id.tv)
@@ -41,19 +42,18 @@ public class CalendarViewVH extends RecyclerView.ViewHolder{
         ButterKnife.bind(this, itemView);
     }
 
-    public void setDay(int day, DayType textType) {
+    public void setDay(int day, int dayType) {
         String text = day > 0 ? String.valueOf(day) : "";
         mTextView.setText(text);
-        mTextView.setTextColor
-                (getTextColor(textType));
-        mTextView.setBackground(getBgDrawable(textType));
+        mTextView.setTextColor(getTextColor(dayType));
+        mTextView.setBackground(getBgDrawable(dayType));
     }
 
-    protected int getTextColor(DayType textType) {
+    protected int getTextColor(int textType) {
         return Color.DKGRAY;
     }
 
-    protected Drawable getBgDrawable(DayType textType) {
+    protected Drawable getBgDrawable(int textType) {
         return null;
     }
 }

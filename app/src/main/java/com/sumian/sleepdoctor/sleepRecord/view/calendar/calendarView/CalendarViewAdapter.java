@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView;
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.LongSparseArray;
 import android.view.ViewGroup;
 
@@ -25,15 +26,11 @@ import java.util.Map;
  */
 public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
 
-    private CalendarViewData mCalendarViewData;
+    private static final int INVALID_DAY_IN_MONTH = 0;
     private int mWeekdayShift;
-    @SuppressLint("UseSparseArrays")
-    private Map<Integer, DayType> mDayDayTypeMap = new HashMap<>(31); // 存储day的类型， dayOfMonth -- dayType
-    private OnDateClickListener mOnDateClickListener;
-
-    public interface OnDateClickListener {
-        void onDateClick(long time);
-    }
+    private long mMonthTime;
+    private CalendarView.OnDateClickListener mOnDateClickListener;
+    private CalendarView.DayTypeProvider mDayTypeProvider;
 
     @NonNull
     @Override
@@ -43,94 +40,73 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewVH holder, int position) {
-        final int day = getDayByPosition(position);
-        holder.setDay(day, getTextType(position));
+        final int dayInMonth = getDayInMonthByPosition(position);
+        holder.setDay(dayInMonth, getDayType(position));
         holder.mTextView.setOnClickListener(v -> {
-            if (day <= 0) {
+            if (isDayInMonthInvalid(dayInMonth)) {
                 return;
             }
-            Calendar calendar = TimeUtil.getStartDayOfMonth(getMonthTime());
-            calendar.roll(Calendar.DAY_OF_MONTH, day - 1);
-            LogUtils.d(new Date(calendar.getTimeInMillis()));
             if (mOnDateClickListener != null) {
-                mOnDateClickListener.onDateClick(calendar.getTimeInMillis());
+                mOnDateClickListener.onDateClick(getDayTimeByDayInMonth(dayInMonth));
             }
         });
     }
 
+    private long getDayTimeByDayInMonth(int dayInMonth) {
+        return mMonthTime + DateUtils.DAY_IN_MILLIS * (dayInMonth - 1);
+    }
+
     /**
      * @param position adapter position
-     * @return 0(invalid day) or normal day 1-31
+     * @return INVALID_DAY_IN_MONTH or dayInMonth
      */
-    private int getDayByPosition(int position) {
-        int day = position - mWeekdayShift + 1;
-        if (day <= 0) {
-            return 0;
+    private int getDayInMonthByPosition(int position) {
+        int dayInMonth = position - mWeekdayShift + 1;
+        if (dayInMonth <= 0) {
+            return INVALID_DAY_IN_MONTH;
         } else {
-            return day;
+            return dayInMonth;
         }
     }
 
-    private DayType getTextType(int position) {
-        if (position < mWeekdayShift) {
-            return DayType.TYPE_0;
+    private int getDayType(int position) {
+        int dayInMonth = getDayInMonthByPosition(position);
+        if (isDayInMonthInvalid(dayInMonth) || mDayTypeProvider == null) {
+            return 0;
         } else {
-            return getDayTypeByDay(getDayByPosition(position));
+            return mDayTypeProvider.getDayTypeByTime(getDayTimeByDayInMonth(dayInMonth));
         }
+    }
+
+    private boolean isDayInMonthInvalid(int dayInMonth) {
+        return dayInMonth == INVALID_DAY_IN_MONTH;
     }
 
     @Override
     public int getItemCount() {
-        if (getMonthTime() == 0) {
+        if (mMonthTime == 0) {
             return 0;
         }
-        return TimeUtil.getDayCountInTheMonth(getMonthTime()) + mWeekdayShift;
+        return TimeUtil.getDayCountInTheMonth(mMonthTime) + mWeekdayShift;
     }
 
-    private long getMonthTime() {
-        if (mCalendarViewData == null) {
-            return 0;
-        }
-        return mCalendarViewData.monthTime;
-    }
-
-    private DayType getDayTypeByDay(int day) {
-        DayType dayType = mDayDayTypeMap.get(day);
-        if (dayType == null) {
-            return DayType.TYPE_0;
-        } else {
-            return dayType;
-        }
-    }
-
-    public void setOnDateClickListener(OnDateClickListener onDateClickListener) {
+    public void setOnDateClickListener(CalendarView.OnDateClickListener onDateClickListener) {
         mOnDateClickListener = onDateClickListener;
     }
 
-    public void setCalendarViewData(CalendarViewData calendarViewData) {
-        mCalendarViewData = calendarViewData;
-        // init day shift
-        initDayShift();
-        // init emphasize days
-        initEmphasizeDays();
-        // notifyDataSetChanged
-        notifyDataSetChanged();
-    }
-
-    private void initEmphasizeDays() {
-        LongSparseArray<DayType> map = mCalendarViewData.dayDayTypeMap;
-        for (int i = 0; i < map.size(); i++) {
-            long dayTimeInMillis = map.keyAt(i);
-            DayType dayType = map.get(dayTimeInMillis);
-            int dayOfMonth = TimeUtil.getDayOfMonth(dayTimeInMillis);
-            mDayDayTypeMap.put(dayOfMonth, dayType);
-        }
-    }
-
     private void initDayShift() {
-        Calendar startDayOfMonth = TimeUtil.getStartDayOfMonth(getMonthTime());
+        Calendar startDayOfMonth = TimeUtil.getStartDayOfMonth(mMonthTime);
         int dayOfWeek = startDayOfMonth.get(Calendar.DAY_OF_WEEK);
         mWeekdayShift = dayOfWeek - 1;
     }
 
+    public void setDayTypeProvider(CalendarView.DayTypeProvider dayTypeProvider) {
+        mDayTypeProvider = dayTypeProvider;
+    }
+
+    public void setMonthTime(long monthTime) {
+        mMonthTime = TimeUtil.getStartDayOfMonth(monthTime).getTimeInMillis();
+        initDayShift();
+        notifyDataSetChanged();
+    }
 }

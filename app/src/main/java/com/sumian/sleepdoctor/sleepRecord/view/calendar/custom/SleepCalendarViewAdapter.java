@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.custom;
+package com.sumian.sleepdoctor.sleepRecord.view.calendar.custom;
 
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;

@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.custom;
+package com.sumian.sleepdoctor.sleepRecord.view.calendar.custom;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewVH;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.DayType;
 
 /**
  * <pre>
@@ -33,40 +32,42 @@ public class SleepCalendarViewVH extends CalendarViewVH {
     }
 
     @Override
-    protected int getTextColor(DayType textType) {
-        int colorRes;
-        switch (textType) {
-            case TYPE_1:
-                colorRes = R.color.t1_color;
+    protected int getTextColor(int dayType) {
+        int textColor;
+        switch (dayType) {
+            case SleepDayType.TYPE_NORMAL:
+                textColor = R.color.t2_color;
                 break;
-            case TYPE_2:
-                colorRes = R.color.t1_color;
+            case SleepDayType.TYPE_TODAY:
+                textColor = R.color.b3_color;
                 break;
-            case TYPE_3:
-                colorRes = R.color.white;
+            case SleepDayType.TYPE_FEATURE:
+                textColor = R.color.t2_alpha_40_color;
                 break;
-            case TYPE_4:
-                colorRes = R.color.b3_color;
+            case SleepDayType.TYPE_HAS_RECORD_NO_DOCTOR_EVALUATION:
+                textColor = R.color.t1_color;
                 break;
-            case TYPE_5:
-                colorRes = R.color.t2_alpha_40_color;
+            case SleepDayType.TYPE_HAS_RECORD_HAS_DOCTOR_EVALUATION:
+                textColor = R.color.t1_color;
                 break;
-            case TYPE_0:
+            case SleepDayType.TYPE_SELECTED_DAY:
+                textColor = R.color.white;
+                break;
             default:
-                colorRes = R.color.t2_color;
+                textColor = R.color.t2_color;
                 break;
         }
-        return mContext.getResources().getColor(colorRes);
+        return mContext.getResources().getColor(textColor);
     }
 
     @Override
-    protected Drawable getBgDrawable(DayType textType) {
+    protected Drawable getBgDrawable(int dayType) {
         int drawableRes;
-        switch (textType) {
-            case TYPE_2:
+        switch (dayType) {
+            case SleepDayType.TYPE_HAS_RECORD_HAS_DOCTOR_EVALUATION:
                 drawableRes = R.drawable.ring_blue_b5;
                 break;
-            case TYPE_3:
+            case SleepDayType.TYPE_SELECTED_DAY:
                 drawableRes = R.drawable.circle_blue_b3;
                 break;
             default:

@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.sleepRecord;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.format.DateUtils;
-import android.util.LongSparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,11 +20,9 @@ import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.sleepRecord.view.SleepRecordView;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarView;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.custom.SleepCalendarViewWrapper;
 import com.sumian.sleepdoctor.utils.TimeUtil;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewAdapter;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewData;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.DayType;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarViewWrapper.CalendarViewWrapper;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RecordFragment extends BaseFragment implements CalendarViewAdapter.OnDateClickListener {
+public class RecordFragment extends BaseFragment implements CalendarView.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
 
@@ -52,7 +49,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
     SleepRecordView mSleepRecordView;
 
     private long mPopupDismissTime;
-    private CalendarViewWrapper mCalendarViewWrapper;
+    private SleepCalendarViewWrapper mCalendarViewWrapper;
     private long mSelectedTime = System.currentTimeMillis();
 
     @Override
@@ -65,12 +62,8 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         super.initWidget(root);
         initDoctorServiceItemView();
         setTvDate(System.currentTimeMillis());
-        mSleepRecordView.setOnClickRefillSleepRecordListener(v -> {
-            launchFillSleepRecordActivity(mSelectedTime);
-        });
-        mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> {
-            launchFillSleepRecordActivity(mSelectedTime);
-        });
+        mSleepRecordView.setOnClickRefillSleepRecordListener(v -> launchFillSleepRecordActivity(mSelectedTime));
+        mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> launchFillSleepRecordActivity(mSelectedTime));
     }
 
     private void initDoctorServiceItemView() {
@@ -125,25 +118,25 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
     }
 
     private void turnDateArrow(boolean activated) {
-        if (System.currentTimeMillis() - mPopupDismissTime < DATE_ARROW_CLICK_COLD_TIME) {
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis - mPopupDismissTime < DATE_ARROW_CLICK_COLD_TIME) {
             return;
         }
         mIvDateArrow.setActivated(activated);
         if (mPopupWindow == null) {
             mPopupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            mCalendarViewWrapper = new CalendarViewWrapper(getContext());
+            mCalendarViewWrapper = new SleepCalendarViewWrapper(getContext());
             mCalendarViewWrapper.setOnDateClickListener(this);
-            mCalendarViewWrapper.setData(getCalendarViewDataList());
-            mCalendarViewWrapper.scrollToTime(System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 60, false);
-            mCalendarViewWrapper.setOnBgClickListener(v -> {
-                mPopupWindow.dismiss();
-            });
+            mCalendarViewWrapper.setMonthTimes(getMonthTimes());
+            mCalendarViewWrapper.setTodayTime(currentTimeMillis);
+            mCalendarViewWrapper.setSelectDayTime(currentTimeMillis);
+            mCalendarViewWrapper.setOnBgClickListener(v -> mPopupWindow.dismiss());
             mPopupWindow.setContentView(mCalendarViewWrapper);
             mPopupWindow.setOutsideTouchable(true);
             mPopupWindow.setBackgroundDrawable(null);
             mPopupWindow.setAnimationStyle(0);
             mPopupWindow.setOnDismissListener(() -> {
-                mPopupDismissTime = System.currentTimeMillis();
+                mPopupDismissTime = currentTimeMillis;
                 mIvDateArrow.setActivated(false);
             });
         }
@@ -161,7 +154,7 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
                     @Override
                     protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
                         LogUtils.d(response);
-                        sleepDataResponseToCalendarViewData(response);
+                        mCalendarViewWrapper.setSleepRecordSummaries(response);
                     }
 
                     @Override
@@ -173,31 +166,11 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
 
     }
 
-    private List<CalendarViewData> sleepDataResponseToCalendarViewData(Map<String, List<SleepRecordSummary>> response) {
-        if (response == null) {
-            return null;
-        }
-        List<CalendarViewData> list = new ArrayList<>();
-        for (Map.Entry<String, List<SleepRecordSummary>> entry : response.entrySet()) {
-            String key = entry.getKey();
-            long monthTime = Integer.valueOf(key);
-            CalendarViewData calendarViewData = new CalendarViewData();
-            calendarViewData.monthTime = monthTime;
-
-            LongSparseArray<DayType> map = new LongSparseArray<>();
-//            for (SleepRecordSummary sleepData : entry.getValue()) {
-//                long dateInMillis = sleepData.getDateInMillis();
-//                getDayType(sleepData);
-//            }
-//            map.put(monthTime + DateUtils.DAY_IN_MILLIS * 10, DayType.EMPHASIZE_2);
-            calendarViewData.dayDayTypeMap = map;
-            list.add(calendarViewData);
-        }
-        return list;
-    }
-
     @Override
     public void onDateClick(long time) {
+        if (time > getTodayStartTime()) {
+            return;
+        }
         mPopupWindow.dismiss();
         mSelectedTime = time;
         setTvDate(time);
@@ -220,17 +193,13 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
                 });
     }
 
-    private List<CalendarViewData> getCalendarViewDataList() {
-        List<CalendarViewData> list = new ArrayList<>();
+
+    private List<Long> getMonthTimes() {
+        List<Long> list = new ArrayList<>();
         long l = System.currentTimeMillis();
-        for (int i = 0; i < 10; i++) {
-            CalendarViewData calendarViewData = new CalendarViewData();
+        for (int i = 0; i < 5; i++) {
             long monthTime = l - DateUtils.DAY_IN_MILLIS * 31 * i;
-            calendarViewData.monthTime = monthTime;
-            LongSparseArray<DayType> map = new LongSparseArray<>();
-//            map.put(monthTime + DateUtils.DAY_IN_MILLIS * 10, DayType.EMPHASIZE_2);
-            calendarViewData.dayDayTypeMap = map;
-            list.add(calendarViewData);
+            list.add(monthTime);
         }
         return list;
     }
@@ -247,5 +216,9 @@ public class RecordFragment extends BaseFragment implements CalendarViewAdapter.
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private long getTodayStartTime() {
+        return TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis());
     }
 }

@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarView;
 import com.sumian.sleepdoctor.utils.TimeUtil;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewAdapter;
-import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarViewData;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +32,7 @@ import butterknife.OnClick;
  *     version: 1.0
  * </pre>
  */
-public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPager.OnPageChangedListener {
+public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPager.OnPageChangedListener, CalendarView.DayTypeProvider {
 
     @BindView(R.id.tv_month)
     TextView tvMonth;
@@ -47,10 +46,10 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     RecyclerViewPager mRecyclerViewPager;
     @BindView(R.id.v_bg)
     View vBg;
-    private CalendarWrapperAdapter mAdapter;
+    protected CalendarWrapperAdapter mAdapter;
     private int mCurrentPosition;
-    private List<CalendarViewData> mDataList;
-    private CalendarViewAdapter.OnDateClickListener mOnDateClickListener;
+    private CalendarView.OnDateClickListener mOnDateClickListener;
+    private List<Long> mMonthTimeList;
 
     public CalendarViewWrapper(Context context) {
         this(context, null);
@@ -63,8 +62,8 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
         init();
     }
 
-    private void init() {
-        mAdapter = new CalendarWrapperAdapter();
+    protected void init() {
+        mAdapter = new CalendarWrapperAdapter(this);
         mRecyclerViewPager.setAdapter(mAdapter);
         mRecyclerViewPager.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
         mRecyclerViewPager.addOnPageChangedListener(this);
@@ -77,17 +76,17 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
         tvMonth.setText(format);
     }
 
-    public void setOnDateClickListener(CalendarViewAdapter.OnDateClickListener listener) {
+    public void setOnDateClickListener(CalendarView.OnDateClickListener listener) {
         mOnDateClickListener = listener;
         mAdapter.setOnDateClickListener(mOnDateClickListener);
     }
 
     public void scrollToTime(long time, boolean smooth) {
-        if (mDataList == null) {
+        if (mMonthTimeList == null) {
             return;
         }
-        for (int i = 0; i < mDataList.size(); i++) {
-            long monthTime = mDataList.get(i).monthTime;
+        for (int i = 0; i < mMonthTimeList.size(); i++) {
+            long monthTime = mMonthTimeList.get(i);
             if (TimeUtil.isInTheSameMonth(time, monthTime)) {
                 if (smooth) {
                     mRecyclerViewPager.smoothScrollToPosition(i);
@@ -102,9 +101,9 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     @Override
     public void OnPageChanged(int oldPosition, int newPosition) {
         mCurrentPosition = newPosition;
-        updateTvMonth(mDataList.get(newPosition).monthTime);
+        updateTvMonth(mMonthTimeList.get(newPosition));
         ivRight.setClickable(newPosition != 0);
-        ivLeft.setClickable(newPosition != mDataList.size() - 1);
+        ivLeft.setClickable(newPosition != mMonthTimeList.size() - 1);
     }
 
     @OnClick({R.id.iv_left, R.id.iv_right, R.id.tv_go_to_today})
@@ -122,12 +121,17 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
         }
     }
 
-    public void setData(List<CalendarViewData> dataList) {
-        mDataList = dataList;
-        mAdapter.setData(dataList);
+    public void setMonthTimes(List<Long> monthTimeList) {
+        mMonthTimeList = monthTimeList;
+        mAdapter.setMonthTimes(monthTimeList);
     }
 
     public void setOnBgClickListener(OnClickListener listener) {
         vBg.setOnClickListener(listener);
+    }
+
+    @Override
+    public int getDayTypeByTime(long timeInMillis) {
+        return 0;
     }
 }
