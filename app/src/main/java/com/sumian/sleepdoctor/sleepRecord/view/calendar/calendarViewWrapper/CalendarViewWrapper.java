@@ -117,7 +117,7 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
                 mRecyclerViewPager.smoothScrollToPosition(mCurrentPosition - 1);
                 break;
             case R.id.tv_go_to_today:
-                mOnDateClickListener.onDateClick(System.currentTimeMillis());
+                mOnDateClickListener.onDateClick(TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis()));
                 break;
         }
     }
