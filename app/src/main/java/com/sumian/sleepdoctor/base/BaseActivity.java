@@ -41,6 +41,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     protected View mRoot;
 
     protected Presenter mPresenter;
+    protected Activity mActivity;
 
     public static void show(Context context, Class<? extends BaseActivity> clx) {
         show(context, clx, null);
@@ -58,7 +59,14 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     }
 
     public static void showClearTop(Context context, Class<? extends BaseActivity> clx) {
+        showClearTop(context, clx, null);
+    }
+
+    public static void showClearTop(Context context, Class<? extends BaseActivity> clx, Bundle bundle) {
         Intent intent = new Intent(context, clx);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
@@ -74,6 +82,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
         if (initBundle(getIntent().getExtras())) {
             setContentView(getLayoutId());
             initWindow();

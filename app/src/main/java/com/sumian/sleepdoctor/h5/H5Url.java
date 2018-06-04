@@ -12,4 +12,5 @@ package com.sumian.sleepdoctor.h5;
 public interface H5Url {
     String H5_URI_SLEEP_RECORD_RECORD_SLEEP = "question";
     String H5_URI_DOCTOR_SERVICE = "doctor-service/{id}";
+    String H5_URI_ONLINE_REPORT = "online-reports?title={title}&report_url={pdfUrl}";
 }

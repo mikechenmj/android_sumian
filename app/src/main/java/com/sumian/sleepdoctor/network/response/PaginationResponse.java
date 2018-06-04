@@ -7,15 +7,15 @@ import java.util.List;
  * on 2018/1/19.
  * desc:
  */
-
-public class BaseResponse<Data> {
+@SuppressWarnings("WeakerAccess")
+public class PaginationResponse<Data> {
 
     public Data data;
     public Pagination meta;
 
     @Override
     public String toString() {
-        return "BaseResponse{" +
+        return "PaginationResponse{" +
                 "data=" + data +
                 ", meta=" + meta +
                 '}';

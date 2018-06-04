@@ -334,6 +334,6 @@ dependencies {
     implementation('com.github.lzyzsd:jsbridge:1.0.4') {
         exclude module: 'support-annotations'
     }
+
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
 }
-
-

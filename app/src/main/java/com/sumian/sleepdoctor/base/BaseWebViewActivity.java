@@ -91,7 +91,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         }
     }
 
-    private String getCompleteUrl() {
+    protected String getCompleteUrl() {
         StringBuilder stringBuilder = new StringBuilder();
         String urlServerPart = getUrlServerPart();
         String urlContentPart = getUrlContentPart();
@@ -109,7 +109,9 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         return BuildConfig.BASE_H5_URL;
     }
 
-    protected abstract String getUrlContentPart();
+    protected String getUrlContentPart() {
+        return null;
+    }
 
     private String getUrlToken() {
         return "token=" + AppManager.getAccountViewModel().accessToken();
