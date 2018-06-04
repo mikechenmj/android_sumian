@@ -10,6 +10,7 @@ import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.util.Log;
 
+import com.blankj.utilcode.util.Utils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.open.OpenEngine;
 import com.sumian.open.login.OpenLogin;
@@ -98,6 +99,8 @@ public final class AppManager implements Observer<Boolean> {
         ToastHelper.init(context);
         EmojiCompat.Config config = new BundledEmojiCompatConfig(context);
         EmojiCompat.init(config);
+
+        Utils.init(context);
 
         if (Holder.INSTANCE.mAccountViewModel == null) {
             Holder.INSTANCE.mAccountViewModel = new AccountViewModel((Application) context);

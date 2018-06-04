@@ -64,7 +64,7 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
             case PAY_SUCCESS:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_success);
                 mTvPayDesc.setText(R.string.pay_success);
-                mBtJoin.setText(R.string.pay_success);
+                mBtJoin.setText(R.string.complete);
                 break;
             case PAY_FAILED:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_fail);

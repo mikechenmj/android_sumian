@@ -134,6 +134,8 @@
 
         <activity android:name=".sleepRecord.FillSleepRecordActivity" />
         <activity android:name=".sleepRecord.SleepRecordActivity" />
+        <activity android:name=".improve.advisory.activity.AdvisoryListActivity" />
+        <activity android:name=".improve.advisory.activity.AdvisoryDetailActivity" />
     </application>
 
 </manifest>
