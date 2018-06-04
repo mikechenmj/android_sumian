@@ -76,6 +76,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         super.onCreate(savedInstanceState);
         mBundle = getArguments();
         initBundle(mBundle);
+
+        //init presenter
+        initPresenter();
     }
 
     @Override
@@ -89,11 +92,7 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         if (savedInstanceState != null) {
             onRestartInstance(savedInstanceState);
         }
-        //init presenter
-        initPresenter();
 
-        // Init
-        initWidget(rootView);
         this.mRootView = rootView;
         // Log.e("TAG", "onCreateView: ----->" + mRootView);
         return rootView;
@@ -103,6 +102,8 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Init
+        initWidget(view);
         initData();
     }
 
@@ -137,6 +138,12 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
 
     }
 
+    /**
+     * 切记,如果是在 kotlin 当中 使用 kotlinx.android.synthetic.main.{layout}.*  initWidget 其实是在 onViewCreated() 之后执行的
+     * <p>
+     *
+     * @param root rootView
+     */
     protected void initWidget(View root) {
 
     }

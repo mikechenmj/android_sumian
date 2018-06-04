@@ -29,6 +29,6 @@
     <string name="remote_sleep_manage_service">远程睡眠管理服务</string>
     <string name="ask_questions">去提问</string>
     <string name="go_records">去记录</string>
-
+    <string name="buy_count">购买数量</string>
 
 </resources>

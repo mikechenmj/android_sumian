@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.improve.error;
+package com.sumian.sleepdoctor.improve.widget.error;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;

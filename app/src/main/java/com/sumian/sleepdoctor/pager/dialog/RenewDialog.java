@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.pager.dialog;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 
@@ -9,13 +8,10 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.pager.activity.GroupDetailActivity;
-import com.sumian.sleepdoctor.pager.activity.PayGroupActivity;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.sumian.sleepdoctor.pager.activity.PayGroupActivity.ARGS_GROUP_DETAIL;
 
 /**
  * Created by sm
@@ -53,9 +49,9 @@ public class RenewDialog extends QMUIDialog implements View.OnClickListener {
                 if (getOwnerActivity() != null) {
                     groupDetail = ((GroupDetailActivity) getOwnerActivity()).onGetGroupDetail();
                 }
-                Bundle extras = new Bundle();
-                extras.putSerializable(ARGS_GROUP_DETAIL, groupDetail);
-                PayGroupActivity.show(v.getContext(), PayGroupActivity.class, extras);
+                //Bundle extras = new Bundle();
+                //extras.putSerializable(ARGS_DOCTOR_SERVICE, groupDetail);
+                // ShoppingCarActivity.show(v.getContext(), );
                 dismiss();
                 break;
             default:

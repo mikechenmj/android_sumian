@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.improve.error.EmptyErrorView;
+import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

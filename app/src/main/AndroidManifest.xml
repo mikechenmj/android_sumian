@@ -68,7 +68,7 @@
         <activity android:name=".account.userProfile.ImproveUserProfileTwoActivity" />
         <activity android:name=".account.userProfile.UserProfileActivity" />
         <activity android:name=".pager.activity.ConfigActivity" />
-        <activity android:name=".pager.activity.PayGroupActivity" />
+        <activity android:name=".improve.doctor.activity.ShoppingCarActivity" />
         <activity android:name=".pager.activity.ScanGroupResultActivity" />
         <activity android:name=".pager.activity.SettingActivity" />
         <activity android:name=".chat.activity.MsgActivity" />
@@ -114,8 +114,8 @@
             android:exported="false"
             android:screenOrientation="behind" />
 
-        <activity android:name=".improve.doctor.activity.DoctorWebViewActivity" />
-        <activity android:name=".improve.doctor.activity.DoctorServiceActivity" />
+        <activity android:name=".improve.doctor.activity.DoctorWebActivity" />
+        <activity android:name=".improve.doctor.activity.DoctorServiceWebActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
@@ -133,6 +133,7 @@
         <!-- 实时通信模块、推送 END -->
 
         <activity android:name=".sleepRecord.FillSleepRecordActivity" />
+        <activity android:name=".sleepRecord.SleepRecordActivity" />
     </application>
 
 </manifest>

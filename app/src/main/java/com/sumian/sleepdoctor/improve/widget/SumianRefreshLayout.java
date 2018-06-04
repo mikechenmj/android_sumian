@@ -39,6 +39,7 @@ public class SumianRefreshLayout extends SwipeRefreshLayout {
     }
 
     public void hideRefreshAnim() {
+        removeCallbacks(mDismissRunnable);
         setRefreshing(false);
     }
 }

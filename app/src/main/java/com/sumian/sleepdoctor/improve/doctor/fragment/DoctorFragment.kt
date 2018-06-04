@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.improve.doctor.fragment
 
+import android.support.v4.widget.SwipeRefreshLayout
+import android.view.View
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
@@ -15,7 +17,8 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View {
+class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private val TAG: String = DoctorFragment::class.java.javaClass.simpleName
 
@@ -23,8 +26,14 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
         return R.layout.fragment_tab_doctor
     }
 
+    override fun initWidget(root: View?) {
+        super.initWidget(root)
+        doctor_detail_layout.setOnRefreshListener(this)
+    }
+
     override fun initData() {
         super.initData()
+
         if (AppManager.getAccountViewModel()?.userProfile?.isBindDoctor!!) {
             request_scan_qr_code_view.hide()
 
@@ -73,5 +82,9 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
 
     override fun setPresenter(presenter: DoctorContract.Presenter?) {
         this.mPresenter = presenter as DoctorPresenter?
+    }
+
+    override fun onRefresh() {
+        mPresenter.getBindDoctorInfo(AppManager.getAccountViewModel()?.userProfile?.doctor?.id!!)
     }
 }

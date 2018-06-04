@@ -8,11 +8,12 @@ import android.widget.TextView;
 
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.pager.contract.PayGroupContract;
+import com.sumian.sleepdoctor.improve.doctor.contract.PayContract;
 
 import net.qiujuer.genius.ui.widget.Button;
 
 import java.lang.ref.WeakReference;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +40,7 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
     @BindView(R.id.bt_join)
     Button mBtJoin;
 
-    private WeakReference<PayGroupContract.Presenter> mPresenterWeakReference;
+    private WeakReference<PayContract.Presenter> mPresenterWeakReference;
 
     private int mPayStatus;
 
@@ -52,7 +53,7 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
         super(context, styleRes);
     }
 
-    public void bindPresenter(PayGroupContract.Presenter presenter) {
+    public void bindPresenter(PayContract.Presenter presenter) {
         this.mPresenterWeakReference = new WeakReference<>(presenter);
     }
 
@@ -63,7 +64,7 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
             case PAY_SUCCESS:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_success);
                 mTvPayDesc.setText(R.string.pay_success);
-                mBtJoin.setText(R.string.join_group);
+                mBtJoin.setText(R.string.pay_success);
                 break;
             case PAY_FAILED:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_fail);
@@ -91,17 +92,17 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
     @OnClick({R.id.bt_join})
     @Override
     public void onClick(View v) {
-        WeakReference<PayGroupContract.Presenter> presenterWeakReference = this.mPresenterWeakReference;
+        WeakReference<PayContract.Presenter> presenterWeakReference = this.mPresenterWeakReference;
 
-        PayGroupContract.Presenter presenter = presenterWeakReference.get();
+        PayContract.Presenter presenter = presenterWeakReference.get();
         if (presenter == null) return;
 
         switch (v.getId()) {
             case R.id.bt_join:
                 if (mPayStatus == PAY_SUCCESS) {
-                    presenter.CheckPayOrder();
+                    presenter.checkPayOrder();
                 } else if (mPayStatus == PAY_FAILED) {
-                    presenter.doPay(getOwnerActivity());
+                    presenter.doPay(Objects.requireNonNull(getOwnerActivity()));
                 } else if (mPayStatus == PAY_INVALID) {
                     cancel();
                 }

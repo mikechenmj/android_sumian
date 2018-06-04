@@ -49,7 +49,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
     @BindView(R.id.tv_money)
     TextView mTvMoney;
 
-    private int mCurrentDuration = 1;
+    private int mCurrentBuyCount = 1;
 
     private double mDefaultMoney = 0.00f;
     private double mCurrentMoney = 0.00f;
@@ -71,6 +71,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
     private void initView(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_pay_calculate_item_view, this));
+        mIvPayFaq.setVisibility(GONE);
         setGravity(Gravity.CENTER);
         setOrientation(VERTICAL);
     }
@@ -100,22 +101,22 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
                 break;
             case R.id.iv_reduce_duration:
-                if (mCurrentDuration == 1) {
-                    mCurrentDuration = 1;
+                if (mCurrentBuyCount == 1) {
+                    mCurrentBuyCount = 1;
                 } else {
-                    mCurrentDuration--;
+                    mCurrentBuyCount--;
                 }
                 break;
             case R.id.iv_add_duration:
-                if (mCurrentDuration < 6) {
-                    mCurrentDuration++;
+                if (mCurrentBuyCount < 6) {
+                    mCurrentBuyCount++;
                 }
                 break;
             default:
                 break;
         }
 
-        if (mCurrentDuration > 1) {
+        if (mCurrentBuyCount > 1) {
             mIvReduceDuration.setEnabled(true);
             mIvReduceDuration.setImageResource(R.mipmap.ic_group_pay_btn_plus);
         } else {
@@ -123,7 +124,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
             mIvReduceDuration.setImageResource(R.mipmap.ic_group_pay_btn_plus_disabled);
         }
 
-        if (mCurrentDuration < 6) {
+        if (mCurrentBuyCount < 6) {
             mIvAddDuration.setEnabled(true);
             mIvAddDuration.setImageResource(R.mipmap.ic_group_pay_btn_minus);
         } else {
@@ -131,8 +132,8 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
             mIvAddDuration.setImageResource(R.mipmap.ic_group_pay_btn_minus_disabled);
         }
 
-        mTvDuration.setText(String.valueOf(mCurrentDuration));
-        mCurrentMoney = mDefaultMoney * mCurrentDuration;
+        mTvDuration.setText(String.valueOf(mCurrentBuyCount));
+        mCurrentMoney = mDefaultMoney * mCurrentBuyCount;
 
         if (mOnMoneyChangeCallback != null) {
             mOnMoneyChangeCallback.onMoneyChange(mCurrentMoney);
@@ -147,7 +148,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
     public void setDefaultMoney(double defaultMoney) {
         this.mDefaultMoney = defaultMoney;
-        this.mCurrentMoney = mDefaultMoney * mCurrentDuration;
+        this.mCurrentMoney = mDefaultMoney * mCurrentBuyCount;
         formatMoney(mTvMoney, mDefaultMoney);
     }
 
@@ -155,8 +156,8 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         tv.setText(String.format(Locale.getDefault(), "%.2f", money / 100.00f));
     }
 
-    public int getCurrentDuration() {
-        return mCurrentDuration;
+    public int getCurrentBuyCount() {
+        return mCurrentBuyCount;
     }
 
     public double getCurrentMoney() {

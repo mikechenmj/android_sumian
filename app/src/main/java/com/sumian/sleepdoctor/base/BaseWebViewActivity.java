@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.base;
 
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -74,8 +73,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         return null;
     }
 
-    @StringRes
-    protected abstract int initTitle();
+    protected abstract String initTitle();
 
     protected void registerHandler(SWebView sWebView) {
 

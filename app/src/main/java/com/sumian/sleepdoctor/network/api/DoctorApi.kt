@@ -4,6 +4,7 @@ import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
+import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.network.response.BaseResponse
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
@@ -111,4 +112,9 @@ interface DoctorApi {
 
     @DELETE("doctor/binding")
     fun unbindDoctor(): Call<Unit>
+
+    //order
+
+    @POST("orders")
+    fun createOrder(@Body payOrder: PayOrder): Call<Any>
 }

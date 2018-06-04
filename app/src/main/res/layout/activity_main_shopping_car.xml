@@ -16,7 +16,6 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_16"
         android:background="@color/b2_color"
         android:padding="@dimen/space_20">
 
@@ -52,21 +51,6 @@
             tools:text="一个有十二个字符的随访群" />
 
         <TextView
-            android:id="@+id/textView1"
-            style="@style/text_t1_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxEms="10"
-            android:maxLines="1"
-            android:minLines="1"
-            android:singleLine="true"
-            android:text="@string/advisory_one"
-            android:textSize="@dimen/font_14"
-            app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
-            app:layout_constraintLeft_toLeftOf="@id/tv_desc"
-            app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
-
-        <TextView
             android:id="@+id/tv_group_money"
             style="@style/text_t1_style"
             android:layout_width="wrap_content"
@@ -81,24 +65,11 @@
             android:singleLine="true"
             android:textColor="@color/t4_color"
             android:textSize="@dimen/font_14"
-            app:layout_constraintBottom_toBottomOf="@id/textView1"
-            app:layout_constraintLeft_toRightOf="@id/textView1"
+            app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
+            app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-            app:layout_constraintTop_toTopOf="@id/textView1"
             tools:ignore="RtlHardcoded"
-            tools:text="50" />
-
-        <TextView
-            style="@style/text_t1_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_8"
-            android:layout_marginRight="@dimen/space_8"
-            android:text="@string/money_for_month"
-            android:textSize="@dimen/font_14"
-            app:layout_constraintBottom_toBottomOf="@id/tv_group_money"
-            app:layout_constraintLeft_toRightOf="@+id/tv_group_money"
-            app:layout_constraintTop_toTopOf="@+id/tv_group_money" />
+            tools:text="50元/次" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -127,7 +98,7 @@
         android:elevation="@dimen/space_2"
         android:focusable="true"
         android:outlineProvider="background"
-        android:text="@string/join"
+        android:text="@string/pay"
         android:translationZ="@dimen/space_2"
         app:gTouchCornerRadius="@dimen/space_32"
         app:gTouchEffect="ripple" />

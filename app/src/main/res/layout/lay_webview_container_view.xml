@@ -11,7 +11,7 @@
         android:max="100"
         android:progress="0" />
 
-    <com.sumian.sleepdoctor.improve.error.EmptyErrorView
+    <com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView
         android:id="@+id/empty_error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

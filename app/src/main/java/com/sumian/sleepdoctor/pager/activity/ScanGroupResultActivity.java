@@ -19,6 +19,7 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.chat.activity.MsgActivity;
 import com.sumian.sleepdoctor.chat.widget.CustomPopWindow;
 import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity;
+import com.sumian.sleepdoctor.improve.doctor.activity.ShoppingCarActivity;
 import com.sumian.sleepdoctor.pager.contract.GroupDetailContract;
 import com.sumian.sleepdoctor.pager.presenter.GroupDetailPresenter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
@@ -170,8 +171,8 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
 
     private void goPayCenter(GroupDetail<UserProfile, UserProfile> groupDetail) {
         Bundle args = new Bundle();
-        args.putSerializable(PayGroupActivity.ARGS_GROUP_DETAIL, groupDetail);
-        PayGroupActivity.show(this, PayGroupActivity.class, args);
+        //args.putSerializable(ShoppingCarActivity.ARGS_DOCTOR_SERVICE, groupDetail);
+        ShoppingCarActivity.show(this, ShoppingCarActivity.class, args);
     }
 
     private void goMsgCenter(View v) {

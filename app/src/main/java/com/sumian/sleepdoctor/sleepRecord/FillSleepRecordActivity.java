@@ -38,8 +38,8 @@ public class FillSleepRecordActivity extends BaseWebViewActivity {
     }
 
     @Override
-    protected int initTitle() {
-        return R.string.tab_record;
+    protected String initTitle() {
+        return getString(R.string.tab_record);
     }
 
     @Override

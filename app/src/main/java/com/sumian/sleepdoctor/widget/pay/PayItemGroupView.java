@@ -50,9 +50,8 @@ public class PayItemGroupView extends LinearLayout implements PayItemView.OnPayW
 
     }
 
-    public PayItemGroupView setOnSelectPayWayListener(OnSelectPayWayListener onSelectPayWayListener) {
+    public void setOnSelectPayWayListener(OnSelectPayWayListener onSelectPayWayListener) {
         mOnSelectPayWayListener = onSelectPayWayListener;
-        return this;
     }
 
     @Override

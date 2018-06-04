@@ -171,11 +171,11 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     public TitleBar setTitle(@StringRes int titleRes) {
         if (titleRes <= 0x00)
             return this;
-        mTvTitle.setText(titleRes);
+        setTitle(getResources().getString(titleRes));
         return this;
     }
 
-    public void setText(String text) {
+    public void setTitle(String text) {
         mTvTitle.setText(text);
     }
 

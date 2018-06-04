@@ -1,7 +1,9 @@
-package com.sumian.sleepdoctor.pager.activity;
+package com.sumian.sleepdoctor.improve.doctor.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,21 +11,19 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
+import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder;
+import com.sumian.sleepdoctor.improve.doctor.contract.PayContract;
+import com.sumian.sleepdoctor.improve.doctor.presenter.PayPresenter;
 import com.sumian.sleepdoctor.main.MainActivity;
-import com.sumian.sleepdoctor.pager.contract.PayGroupContract;
 import com.sumian.sleepdoctor.pager.dialog.PayDialog;
-import com.sumian.sleepdoctor.pager.presenter.PayGroupPresenter;
-import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.pay.PayCalculateItemView;
 import com.sumian.sleepdoctor.widget.pay.PayItemGroupView;
 
 import net.qiujuer.genius.ui.widget.Button;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,11 +34,11 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackListener, PayCalculateItemView.OnMoneyChangeCallback, PayGroupContract.View {
+public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
 
-    private static final String TAG = PayGroupActivity.class.getSimpleName();
+    private static final String TAG = ShoppingCarActivity.class.getSimpleName();
 
-    public static final String ARGS_GROUP_DETAIL = "args_group_detail";
+    private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -63,22 +63,30 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
 
     private String mPayChannel = "wx";
 
-    private GroupDetail<UserProfile, UserProfile> mGroupDetail;
-
     private ActionLoadingDialog mActionLoadingDialog;
 
     private PayDialog mPayDialog;
 
+    private DoctorService mDoctorService;
+
+    public static void launch(Context context, DoctorService doctorService) {
+        Bundle extras = new Bundle();
+        extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService);
+        show(context, ShoppingCarActivity.class, extras);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     protected boolean initBundle(Bundle bundle) {
-        this.mGroupDetail = (GroupDetail<UserProfile, UserProfile>) bundle.getSerializable(ARGS_GROUP_DETAIL);
+        if (bundle != null) {
+            this.mDoctorService = bundle.getParcelable(ARGS_DOCTOR_SERVICE);
+        }
         return super.initBundle(bundle);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_join_two;
+        return R.layout.activity_main_shopping_car;
     }
 
     @Override
@@ -94,12 +102,17 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     @Override
     protected void initData() {
         super.initData();
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar).getOptions();
-        Glide.with(this).load(mGroupDetail.avatar).apply(options).into(mIvGroupIcon);
-        mTvDesc.setText(mGroupDetail.name);
-        mTvGroupMoney.setText(String.format(Locale.getDefault(), "%.2f", mGroupDetail.monthly_price / 100.00f));
-        mPayCalculateItemView.setDefaultMoney(mGroupDetail.monthly_price);
+        RequestOptions requestOptions = RequestOptions.placeholderOf(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar);
+        Glide.with(this).load(mDoctorService.getIcon()).apply(requestOptions).into(mIvGroupIcon);
+        mTvDesc.setText(mDoctorService.getName());
+        mTvGroupMoney.setText(mDoctorService.getPackages().get(0).getPrice_text());
+        mPayCalculateItemView.setDefaultMoney(mDoctorService.getPackages().get(0).getUnit_price());
+    }
+
+    @Override
+    protected void initPresenter() {
+        super.initPresenter();
+        PayPresenter.Companion.init(this);
     }
 
     @Override
@@ -108,17 +121,12 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
         mPresenter.onPayActivityResultDelegate(requestCode, resultCode, data);
     }
 
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-        PayGroupPresenter.init(this);
-    }
-
     @OnClick({R.id.bt_pay})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                mPresenter.CreatePayOrder(this, mPayChannel, mGroupDetail, (float) mPayCalculateItemView.getCurrentMoney(), mPayCalculateItemView.getCurrentDuration());
+                PayOrder payOrder = new PayOrder(mPayCalculateItemView.getCurrentMoney(), mPayChannel, "cny", mDoctorService.getName(), mDoctorService.getDescription(), mDoctorService.getPackages().get(0).getId(), mPayCalculateItemView.getCurrentBuyCount());
+                mPresenter.createPayOrder(this, payOrder);
                 break;
             default:
                 break;
@@ -160,8 +168,8 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     }
 
     @Override
-    public void setPresenter(PayGroupContract.Presenter presenter) {
-        this.mPresenter = (PayGroupPresenter) presenter;
+    public void setPresenter(PayContract.Presenter presenter) {
+        this.mPresenter = (PayPresenter) presenter;
         this.mPayDialog.bindPresenter(presenter);
     }
 
@@ -189,7 +197,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     }
 
     @Override
-    public void onOrderPaySuccess(String payMsg) {
+    public void onOrderPaySuccess(@NonNull String payMsg) {
         //showToast(R.string.pay_success);
         //mPresenter.clearPayAction();
         if (!mPayDialog.isShowing())
@@ -197,21 +205,21 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     }
 
     @Override
-    public void onOrderPayFailed(String payMsg) {
+    public void onOrderPayFailed(@NonNull String payMsg) {
         showToast(payMsg);
         if (!mPayDialog.isShowing())
             mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show();
     }
 
     @Override
-    public void onOrderPayInvalid(String payMsg) {
+    public void onOrderPayInvalid(@NonNull String payMsg) {
         showToast(payMsg);
         if (!mPayDialog.isShowing())
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
     }
 
     @Override
-    public void onOrderPayCancel(String payMsg) {
+    public void onOrderPayCancel(@NonNull String payMsg) {
         showToast(payMsg);
     }
 
@@ -222,7 +230,7 @@ public class PayGroupActivity extends BaseActivity<PayGroupPresenter> implements
     }
 
     @Override
-    public void onCheckOrderPayIsInvalid(String invalidError) {
+    public void onCheckOrderPayIsInvalid(@NonNull String invalidError) {
         onCheckOrderPayIsOk();
     }
 }

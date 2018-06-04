@@ -88,8 +88,8 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
 
 //        Bundle extras = new Bundle();
 //        //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
-//        extras.putString(DoctorWebViewActivity.ARGS_URL, uriQuery);
-//        DoctorWebViewActivity.show(this, DoctorWebViewActivity.class, extras);
-        DoctorWebViewActivity.launch(this, uriQuery);
+//        extras.putString(DoctorWebActivity.ARGS_URL, uriQuery);
+//        DoctorWebActivity.show(this, DoctorWebActivity.class, extras);
+        DoctorWebActivity.launch(this, uriQuery);
     }
 }

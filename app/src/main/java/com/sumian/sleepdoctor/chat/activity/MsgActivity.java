@@ -123,7 +123,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     @Override
     protected void initData() {
         super.initData();
-        mTitleBar.setText(mGroupDetail.name);
+        mTitleBar.setTitle(mGroupDetail.name);
         mPresenter.syncMsgHistory(mGroupDetail.conversation_id);
         AppManager.getChatEngine().addOnMsgCallback(this);
     }

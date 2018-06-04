@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.improve.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout;
@@ -85,7 +86,7 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
                 doctorServiceLayout.setTag(doctorService);
                 doctorServiceLayout.setOnClickListener(v -> {
                     DoctorService cacheDoctorService = (DoctorService) v.getTag();
-
+                    DoctorServiceWebActivity.show(getContext(), cacheDoctorService);
                     Log.e(TAG, "onClick: -------->" + cacheDoctorService.toString());
 
                 });

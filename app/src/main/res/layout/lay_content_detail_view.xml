@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/b2_color"
+    android:padding="@dimen/space_20"
+    tools:showIn="@layout/activity_main_shopping_car">
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/lay_group_icon"
+        android:layout_width="@dimen/space_92"
+        android:layout_height="@dimen/space_92"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_group_avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:qmui_border_color="@color/b2_color"
+        app:qmui_border_width="@dimen/space_4"
+        app:qmui_corner_radius="@dimen/space_4" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        style="@style/text_t3_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_12"
+        android:ellipsize="marquee"
+        android:maxEms="11"
+        android:minLines="1"
+        android:singleLine="true"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_group_money"
+        app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded"
+        tools:text="一个有十二个字符的随访群" />
+
+    <TextView
+        android:id="@+id/tv_group_money"
+        style="@style/text_t1_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_8"
+        android:layout_marginRight="@dimen/space_8"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxEms="10"
+        android:maxLines="1"
+        android:minLines="1"
+        android:singleLine="true"
+        android:textColor="@color/t4_color"
+        android:textSize="@dimen/font_14"
+        app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
+        app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+        tools:ignore="RtlHardcoded"
+        tools:text="50元/次" />
+
+</android.support.constraint.ConstraintLayout>

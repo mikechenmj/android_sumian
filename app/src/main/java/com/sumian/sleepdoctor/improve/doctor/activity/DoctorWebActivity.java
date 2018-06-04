@@ -24,7 +24,8 @@ import org.jetbrains.annotations.NotNull;
  * on 2018/5/28 11:40
  * desc:
  **/
-public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
+public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
+
     private static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
 
     private String mArgUrl;
@@ -33,7 +34,7 @@ public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresent
         Bundle extras = new Bundle();
         //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
         extras.putString(ARGS_URL, url);
-        DoctorWebViewActivity.show(context, DoctorWebViewActivity.class, extras);
+        DoctorWebActivity.show(context, DoctorWebActivity.class, extras);
     }
 
     @Override
@@ -71,8 +72,8 @@ public class DoctorWebViewActivity extends BaseWebViewActivity<BindDoctorPresent
     }
 
     @Override
-    protected int initTitle() {
-        return R.string.bind_doctor;
+    protected String initTitle() {
+        return getString(R.string.bind_doctor);
     }
 
     @Override
