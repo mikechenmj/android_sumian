@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class OnlineReportListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
-    public static final int PER_PAGE = 15;
+    private static final int PER_PAGE = 15;
     @BindView(R.id.title_bar)
     TitleBar titleBar;
     @BindView(R.id.recycler_view)
@@ -46,10 +46,10 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     @Override
     protected void initData() {
         super.initData();
-        loadOnlineReports(mPage);
+        loadOnlineReports();
     }
 
-    private void loadOnlineReports(int page) {
+    private void loadOnlineReports() {
         AppManager.getHttpService().queryReports(mPage, PER_PAGE)
                 .enqueue(new BaseResponseCallback<PaginationResponse<List<OnlineReport>>>() {
                     @Override
@@ -87,6 +87,6 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
 
     @Override
     public void onLoadMoreRequested() {
-        loadOnlineReports(mPage);
+        loadOnlineReports();
     }
 }
