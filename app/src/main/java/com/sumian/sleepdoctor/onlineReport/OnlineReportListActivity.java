@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
@@ -41,6 +42,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnLoadMoreListener(this, recyclerView);
+        mAdapter.setEmptyView(getEmptyView());
     }
 
     @Override
@@ -88,5 +90,13 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     @Override
     public void onLoadMoreRequested() {
         loadOnlineReports();
+    }
+
+
+    public View getEmptyView() {
+        return EmptyErrorView.create(this,
+                R.mipmap.ic_empty_state_report,
+                R.string.online_report_list_empty_title,
+                R.string.online_report_list_empty_desc);
     }
 }
