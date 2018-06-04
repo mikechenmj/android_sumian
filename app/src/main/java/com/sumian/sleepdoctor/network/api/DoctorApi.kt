@@ -104,7 +104,8 @@ interface DoctorApi {
      * user_id 用户id
      */
     @GET("/online-reports")
-    fun queryReports(@Query("page") page: Int): Call<PaginationResponse<List<OnlineReport>>>
+    fun queryReports(@Query("page") page: Int,
+                     @Query("per_page") perPage: Int): Call<PaginationResponse<List<OnlineReport>>>
 
     //doctor
 

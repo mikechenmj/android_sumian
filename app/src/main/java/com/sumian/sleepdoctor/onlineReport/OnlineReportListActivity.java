@@ -18,12 +18,14 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class OnlineReportListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener {
+public class OnlineReportListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+    public static final int PER_PAGE = 15;
     @BindView(R.id.title_bar)
     TitleBar titleBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private OnlineReportListAdapter mAdapter;
+    private int mPage = 1;
 
     @Override
     protected int getLayoutId() {
@@ -38,22 +40,38 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnLoadMoreListener(this, recyclerView);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        AppManager.getHttpService().queryReports(1)
+        loadOnlineReports(mPage);
+    }
+
+    private void loadOnlineReports(int page) {
+        AppManager.getHttpService().queryReports(mPage, PER_PAGE)
                 .enqueue(new BaseResponseCallback<PaginationResponse<List<OnlineReport>>>() {
                     @Override
                     protected void onSuccess(PaginationResponse<List<OnlineReport>> response) {
                         LogUtils.d(response);
-                        mAdapter.addData(response.data);
+                        List<OnlineReport> reportList = response.data;
+                        mAdapter.addData(reportList);
+                        mPage++;
+                        if (reportList.size() < PER_PAGE) {
+                            mAdapter.setEnableLoadMore(false);
+                        }
                     }
 
                     @Override
                     protected void onFailure(ErrorResponse errorResponse) {
                         LogUtils.d(errorResponse);
+                    }
+
+                    @Override
+                    protected void onFinish() {
+                        super.onFinish();
+                        mAdapter.loadMoreComplete();
                     }
                 });
     }
@@ -65,5 +83,10 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
             return;
         }
         OnlineReportDetailActivity.launch(this, item.getTitle(), item.getReport_url());
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        loadOnlineReports(mPage);
     }
 }
