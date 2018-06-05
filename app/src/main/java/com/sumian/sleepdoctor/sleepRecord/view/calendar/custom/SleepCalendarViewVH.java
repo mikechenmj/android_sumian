@@ -68,7 +68,7 @@ public class SleepCalendarViewVH extends CalendarViewVH {
                 drawableRes = R.drawable.ring_blue_b5;
                 break;
             case SleepDayType.TYPE_SELECTED_DAY:
-                drawableRes = R.drawable.circle_blue_b3;
+                drawableRes = R.drawable.circle_b3;
                 break;
             default:
                 return null;

@@ -88,9 +88,6 @@ public class SleepRecordView extends LinearLayout {
     private void init(Context context) {
         View inflate = inflate(context, R.layout.view_sleep_record_view, this);
         ButterKnife.bind(this, inflate);
-        titleViewSleepRecord.setOnMenuClickListener(v -> {
-
-        });
     }
 
     public void setSleepRecord(SleepRecord sleepRecord) {
@@ -110,7 +107,7 @@ public class SleepRecordView extends LinearLayout {
         SleepRecordAnswer answer = sleepRecord.getAnswer();
         tvSleepQuality.setText(getSleepQualityString(answer.getEnergetic()));
         tvPills.setText(getPillsString(answer.getSleep_pills()));
-        tvPills.setClickable(answer.getSleep_pills() == null || answer.getSleep_pills().size() == 0);
+        tvPills.setClickable(answer.getSleep_pills() != null && answer.getSleep_pills().size() != 0);
         tvWakeupDuration.setText(getDurationString("夜醒：", answer.getWake_minutes()));
         tvLittleSleepDuration.setText(getDurationString("小睡：", answer.getOther_sleep_total_minutes()));
         tvActualWorkAndResetTime.setText(String.format("%s-%s", answer.getBed_at(), answer.getGet_up_at()));
@@ -167,11 +164,15 @@ public class SleepRecordView extends LinearLayout {
 
     @OnClick(R.id.tv_pills)
     public void onViewClicked() {
-        showPillsDialog();
+        showPillsDialogIfNeed();
     }
 
-    private void showPillsDialog() {
-        PillsDialog.show(getContext(), mSleepRecord.getAnswer().getSleep_pills());
+    private void showPillsDialogIfNeed() {
+        List<SleepPill> sleep_pills = mSleepRecord.getAnswer().getSleep_pills();
+        if (sleep_pills.size() == 0) {
+            return;
+        }
+        PillsDialog.show(getContext(), sleep_pills);
     }
 
     public void setOnClickRefillSleepRecordListener(OnClickListener listener) {

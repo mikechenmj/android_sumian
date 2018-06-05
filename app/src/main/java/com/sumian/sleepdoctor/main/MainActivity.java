@@ -28,8 +28,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @SuppressWarnings("unused")
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String KEY_TAB_INDEX = "KEY_TAB_INDEX";
-    private static final int INVALID_TAB_INDEX = -1;
+    private static final String KEY_TAB_INDEX = "key_tab_index";
+    private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
+    private static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
 
     @BindView(R.id.nav_tab)
     BottomNavigationBar mBottomNavigationBar;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private FragmentManager mFragmentManager;
 
     private String[] mFTags = new String[]{RecordFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), MeFragment.class.getSimpleName()};
-    private int mLaunchTabIndex = INVALID_TAB_INDEX; // 进入Activity时高亮的tab index
+    private LaunchData<LaunchSleepTabBean> mLaunchData;
 
     @Override
     protected int getLayoutId() {
@@ -55,24 +56,24 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         showClearTop(context, MainActivity.class, bundle);
     }
 
+    public static void launchSleepRecordTab(Context context, long sleepRecordTime, boolean scrollToBottom) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_TAB_INDEX, 0);
+        bundle.putLong(KEY_SLEEP_RECORD_TIME, sleepRecordTime);
+        bundle.putBoolean(KEY_SCROLL_TO_BOTTOM, scrollToBottom);
+        showClearTop(context, MainActivity.class, bundle);
+    }
+
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-
-        // StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
-
-        // mFragmentManagerDelegate = new FragmentManagerDelegate(this)
-        //        .bindNavTab(mBottomNavigationBar);
-
         mBottomNavigationBar.setOnSelectedTabChangeListener(this);
         this.mFragmentManager = getSupportFragmentManager();
-
     }
 
     @Override
     protected void onRelease() {
         super.onRelease();
-        //mFragmentManagerDelegate.onRelease();
     }
 
     private void initTab(int position) {
@@ -87,7 +88,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 } else {
                     switch (position) {
                         case 0:
-                            fragmentByTag = BaseFragment.newInstance(RecordFragment.class);
+                            if (mLaunchData != null) {
+                                LaunchSleepTabBean data = mLaunchData.data;
+                                fragmentByTag = RecordFragment.newInstance(data.sleepRecordTime, data.needScrollToBottom);
+                            } else {
+                                fragmentByTag = BaseFragment.newInstance(RecordFragment.class);
+                            }
                             break;
                         case 1:
                             fragmentByTag = BaseFragment.newInstance(DoctorFragment.class);
@@ -139,16 +145,42 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     protected void initData() {
         super.initData();
         //commitReplace(WelcomeActivity.class);
-        int position = mLaunchTabIndex == INVALID_TAB_INDEX ? 0 : mLaunchTabIndex;
+        int position = mLaunchData == null ? 0 : mLaunchData.tabIndex;
         initTab(position);
         mBottomNavigationBar.activateItem(position, false);
+        mLaunchData = null;
     }
 
     @Override
     protected boolean initBundle(Bundle bundle) {
         if (bundle != null) {
-            mLaunchTabIndex = bundle.getInt(KEY_TAB_INDEX);
+            int launchTabIndex = bundle.getInt(KEY_TAB_INDEX);
+            mLaunchData = new LaunchData<>(launchTabIndex);
+            if (launchTabIndex == 0) {
+                long launchSleepRecordTime = bundle.getLong(KEY_SLEEP_RECORD_TIME, 0);
+                boolean scrollToBottom = bundle.getBoolean(KEY_SCROLL_TO_BOTTOM, false);
+                mLaunchData.data = new LaunchSleepTabBean(launchSleepRecordTime, scrollToBottom);
+            }
         }
         return super.initBundle(bundle);
+    }
+
+    public static class LaunchSleepTabBean {
+        long sleepRecordTime;
+        boolean needScrollToBottom;
+
+        LaunchSleepTabBean(long sleepRecordTime, boolean needScrollToBottom) {
+            this.sleepRecordTime = sleepRecordTime;
+            this.needScrollToBottom = needScrollToBottom;
+        }
+    }
+
+    public static class LaunchData<T> {
+        public T data;
+        int tabIndex;
+
+        LaunchData(int launchTabIndex) {
+            this.tabIndex = launchTabIndex;
+        }
     }
 }

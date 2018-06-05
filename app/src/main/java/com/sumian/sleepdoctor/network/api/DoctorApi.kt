@@ -7,6 +7,7 @@ import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.network.response.PaginationResponse
+import com.sumian.sleepdoctor.notification.bean.Notification
 import com.sumian.sleepdoctor.onlineReport.OnlineReport
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
@@ -115,9 +116,12 @@ interface DoctorApi {
     fun getServiceList(): Call<DoctorServiceList>
 
     // ---------- notification ----------
-    @GET("notification")
+    @GET("notifications")
     fun getNotificationList(@Query("page") page: Int,
-                            @Query("per_page") perPage: Int): Call<Any>
+                            @Query("per_page") perPage: Int): Call<PaginationResponse<List<Notification>>>
+
+    @PATCH("notifications/{id}")
+    fun readNotification(@Path("id") notificationId: String): Call<Any>
 
     // ---------- doctor ----------
 

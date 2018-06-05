@@ -1,9 +1,12 @@
 <resources>
 
     <!--text-->
-    <style name="text_t1_style">
+    <style name="WrapContent">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="text_t1_style" parent="WrapContent">
         <item name="android:textColor">@color/t1_color</item>
         <item name="android:textSize">@dimen/font_14</item>
     </style>
@@ -16,9 +19,11 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="text_t2_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="text_t1_18" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t2_style" parent="WrapContent">
         <item name="android:textColor">@color/t2_color</item>
         <item name="android:textSize">@dimen/font_16</item>
     </style>
@@ -31,8 +36,41 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="text_t3_style">
+    <style name="text_t2_18" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t3_style" parent="WrapContent">
         <item name="android:textColor">@color/t3_color</item>
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t3_14" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t3_16" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t3_18" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_white" parent="WrapContent">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_white_14" parent="text_white">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_white_16" parent="text_white">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_white_18" parent="text_white">
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 

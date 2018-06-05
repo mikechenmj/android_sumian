@@ -1,12 +1,12 @@
 package com.sumian.sleepdoctor.sleepRecord;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.H5Url;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
@@ -31,10 +31,10 @@ public class FillSleepRecordActivity extends BaseWebViewActivity {
     public static final String SLEEP_RESPONSE = "sleep_response";
     public static final String KEY_TIME = "TIME";
 
-    public static void launchForResult(Fragment fragment, long time, int requestCode) {
-        Intent intent = new Intent(fragment.getActivity(), FillSleepRecordActivity.class);
+    public static void launchForResult(ActivityLauncher launcher, long time, int requestCode) {
+        Intent intent = new Intent(launcher.getActivity(), FillSleepRecordActivity.class);
         intent.putExtra(KEY_TIME, time);
-        fragment.startActivityForResult(intent, requestCode);
+        launcher.startActivityForResult(intent, requestCode);
     }
 
     @Override
