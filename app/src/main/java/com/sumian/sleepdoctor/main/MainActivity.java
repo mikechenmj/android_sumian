@@ -28,8 +28,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @SuppressWarnings("unused")
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final String KEY_TAB_INDEX = "KEY_TAB_INDEX";
-    public static final int INVALID_TAB_INDEX = -1;
+    private static final String KEY_TAB_INDEX = "KEY_TAB_INDEX";
+    private static final int INVALID_TAB_INDEX = -1;
 
     @BindView(R.id.nav_tab)
     BottomNavigationBar mBottomNavigationBar;

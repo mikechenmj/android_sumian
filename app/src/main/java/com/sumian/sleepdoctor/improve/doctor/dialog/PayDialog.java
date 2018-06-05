@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.pager.dialog;
+package com.sumian.sleepdoctor.improve.doctor.dialog;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;

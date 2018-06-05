@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.improve.doctor.presenter.BindDoctorPresenter;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeResult;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
+import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -97,7 +98,7 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
 
     @Override
     public void onBindDoctorSuccess(@NotNull String message) {
-        finish();
+        MainActivity.launch(this, 1);
     }
 
     @Override
