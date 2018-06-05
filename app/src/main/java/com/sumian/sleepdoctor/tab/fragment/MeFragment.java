@@ -13,6 +13,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity;
+import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.pager.activity.SettingActivity;
 
 import butterknife.BindView;
@@ -58,7 +59,7 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
         });
     }
 
-    @OnClick({R.id.dv_user_info_center, R.id.dv_my_consulting, R.id.dv_setting})
+    @OnClick({R.id.dv_user_info_center, R.id.dv_my_consulting, R.id.dv_setting, R.id.dv_electric_report})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dv_user_info_center:
@@ -69,6 +70,9 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
                 break;
             case R.id.dv_setting:
                 SettingActivity.show(getContext(), SettingActivity.class);
+                break;
+            case R.id.dv_electric_report:
+                OnlineReportListActivity.show(getContext(), OnlineReportListActivity.class);
                 break;
         }
     }

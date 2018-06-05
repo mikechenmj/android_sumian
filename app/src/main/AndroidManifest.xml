@@ -113,7 +113,6 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind" />
-
         <activity android:name=".improve.doctor.activity.DoctorWebActivity" />
         <activity android:name=".improve.doctor.activity.DoctorServiceWebActivity" />
 

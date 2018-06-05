@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/b2_color"
+    android:orientation="vertical"
+    tools:layout_marginTop="24dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_t1_16"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        tools:text="匹兹堡睡眠质量指数监测报告如果这条报告名称很长就这样换行" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_t2_14"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10"
+        tools:text="2018/03/29 07:31:12" />
+
+    <View
+        style="@style/HorizontalDividerLine"
+        android:layout_marginTop="@dimen/space_20" />
+</LinearLayout>

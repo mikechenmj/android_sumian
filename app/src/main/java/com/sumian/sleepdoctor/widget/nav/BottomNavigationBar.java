@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by jzz
@@ -22,6 +23,8 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
     private static final int DEFAULT_TAB_COUNT = 3;
     private OnSelectedTabChangeListener mOnSelectedTabChangeListener;
     private List<NavigationItem> mNavigationItems = new ArrayList<>(DEFAULT_TAB_COUNT);
+    private int mActivateItemPosition;
+    private boolean mInitFinished = false;
 
     public BottomNavigationBar(Context context) {
         this(context, null);
@@ -63,6 +66,12 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
                 navigationItem.setOnClickListener(this);
             }
         }
+        mInitFinished = true;
+        onInitFinish();
+    }
+
+    private void onInitFinish() {
+        activateItem(mActivateItemPosition, false);
     }
 
     public void setOnSelectedTabChangeListener(OnSelectedTabChangeListener listener) {
@@ -72,11 +81,25 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
     @Override
     public void onClick(View v) {
         int itemPosition = (int) v.getTag();
+        activateItem(itemPosition, true);
+    }
+
+    public void activateItem(int itemPosition, boolean triggerListener) {
+        // 初始化未完成的时候会记录itemPosition，等到初始化完成自动
+        if (!mInitFinished) {
+            mActivateItemPosition = itemPosition;
+            return;
+        }
+        if (itemPosition >= mNavigationItems.size() || itemPosition < 0) {
+            String format = String.format(Locale.getDefault(),
+                    "Invalid item position: %d", itemPosition);
+            throw new RuntimeException(format);
+        }
         for (int i = 0, size = mNavigationItems.size(); i < size; i++) {
             mNavigationItems.get(i).setActivated(i == itemPosition);
         }
-        if (mOnSelectedTabChangeListener != null) {
-            mOnSelectedTabChangeListener.onSelectedTabChange((NavigationItem) v, itemPosition);
+        if (triggerListener && mOnSelectedTabChangeListener != null) {
+            mOnSelectedTabChangeListener.onSelectedTabChange(mNavigationItems.get(itemPosition), itemPosition);
         }
     }
 

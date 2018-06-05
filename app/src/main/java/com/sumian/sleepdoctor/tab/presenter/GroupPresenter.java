@@ -5,8 +5,8 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.network.response.BaseResponse;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
+import com.sumian.sleepdoctor.network.response.PaginationResponse;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.tab.contract.GroupContract;
 
@@ -29,7 +29,7 @@ public class GroupPresenter implements GroupContract.Presenter {
     private int mNextPage;
     private static final int PER_PAGE = 15;
 
-    private Call<BaseResponse<List<GroupDetail<UserProfile, UserProfile>>>> mCall;
+    private Call<PaginationResponse<List<GroupDetail<UserProfile, UserProfile>>>> mCall;
 
     private GroupPresenter(GroupContract.View view) {
         view.setPresenter(this);
@@ -55,9 +55,9 @@ public class GroupPresenter implements GroupContract.Presenter {
         map.put("per_page", PER_PAGE);
 
         mCall = AppManager.getHttpService().getGroups(map);
-        mCall.enqueue(new BaseResponseCallback<BaseResponse<List<GroupDetail<UserProfile, UserProfile>>>>() {
+        mCall.enqueue(new BaseResponseCallback<PaginationResponse<List<GroupDetail<UserProfile, UserProfile>>>>() {
             @Override
-            protected void onSuccess(BaseResponse<List<GroupDetail<UserProfile, UserProfile>>> response) {
+            protected void onSuccess(PaginationResponse<List<GroupDetail<UserProfile, UserProfile>>> response) {
                 List<GroupDetail<UserProfile, UserProfile>> data = response.data;
 
                 if (data == null) {
@@ -75,7 +75,7 @@ public class GroupPresenter implements GroupContract.Presenter {
                     }
                 }
 
-                BaseResponse.Pagination meta = response.meta;
+                PaginationResponse.Pagination meta = response.meta;
                 if (meta != null) {
                     int tempCurrentPage = meta.current_page;
                     if (meta.total_page - tempCurrentPage > 0) {//说明有下一页

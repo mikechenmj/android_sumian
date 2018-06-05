@@ -56,7 +56,7 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
     @Override
     protected String getUrlContentPart() {
         Uri argUri = Uri.parse(mArgUrl);
-        String originUrl = H5Url.H5_URI_DOCTOR_SERVICE;
+        String originUrl = H5Url.H5_URI_BIND_DOCTOR;
         return originUrl.replace("{id}", argUri.getQueryParameter("id"));
     }
 
