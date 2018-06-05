@@ -15,9 +15,9 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder;
 import com.sumian.sleepdoctor.improve.doctor.contract.PayContract;
+import com.sumian.sleepdoctor.improve.doctor.dialog.PayDialog;
 import com.sumian.sleepdoctor.improve.doctor.presenter.PayPresenter;
 import com.sumian.sleepdoctor.main.MainActivity;
-import com.sumian.sleepdoctor.pager.dialog.PayDialog;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.pay.PayCalculateItemView;
@@ -198,8 +198,6 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
 
     @Override
     public void onOrderPaySuccess(@NonNull String payMsg) {
-        //showToast(R.string.pay_success);
-        //mPresenter.clearPayAction();
         if (!mPayDialog.isShowing())
             mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show();
     }
@@ -225,8 +223,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
 
     @Override
     public void onCheckOrderPayIsOk() {
-        MainActivity.showClearTop(this, MainActivity.class);
-        finish();
+        MainActivity.launch(this, 1);
     }
 
     @Override

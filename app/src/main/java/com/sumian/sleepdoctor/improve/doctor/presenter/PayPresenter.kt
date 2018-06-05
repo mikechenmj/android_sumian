@@ -91,7 +91,6 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onFailure(errorResponse.message)
                 mView?.onCheckOrderPayIsInvalid(errorResponse.message)
             }
 
