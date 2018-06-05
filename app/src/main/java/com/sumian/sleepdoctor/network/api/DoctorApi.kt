@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.network.api
 import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.network.response.PaginationResponse
@@ -108,7 +109,7 @@ interface DoctorApi {
      */
     @GET("/online-reports")
     fun getReports(@Query("page") page: Int,
-                   @Query("per_page") perPage: Int): Call<PaginationResponse<List<OnlineReport>>>
+                     @Query("per_page") perPage: Int): Call<PaginationResponse<List<OnlineReport>>>
 
     @GET("services")
     fun getServiceList(): Call<DoctorServiceList>
@@ -136,4 +137,16 @@ interface DoctorApi {
 
     @POST("orders")
     fun createOrder(@Body payOrder: PayOrder): Call<Any>
+
+    //user advisory
+
+    @GET("advisories")
+    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<ArrayList<Advisory>>
+
+    @GET("advisories/{id}")
+    fun getDoctorAdvisoryDetails(@Path("id") advisoryId: Int, @QueryMap map: MutableMap<String, Any>): Call<Advisory>
+
+    @GET("advisory/latest")
+    fun getLastAdvisoryDetails(@QueryMap map: MutableMap<String, Any>): Call<Advisory>
+
 }

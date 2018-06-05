@@ -18,7 +18,7 @@
     <string name="emtpy_advisory_msg">暂无相关记录</string>
     <string name="emtpy_advisory_desc">绑定医生后，可向主治医生咨询</string>
 
-    <!--doctor-->
+    <!--doctor  service-->
     <string name="bind_doctor">绑定医生</string>
     <string name="bind_other_doctor_state">"您已绑定了其他医生，如需换绑请联系客服"</string>
     <string name="doctor_summary">医生简介</string>
@@ -30,5 +30,10 @@
     <string name="ask_questions">去提问</string>
     <string name="go_records">去记录</string>
     <string name="buy_count">购买数量</string>
+
+    <!-- advisory -->
+    <string name="unused">未使用</string>
+    <string name="used">已使用</string>
+    <string name="my_advisory">我的咨询</string>
 
 </resources>

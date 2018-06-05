@@ -144,4 +144,10 @@
     <style name="VerticalDividerLine" parent="DividerLine">
         <item name="android:layout_height">match_parent</item>
     </style>
+
+    <style name="TabTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
 </resources>

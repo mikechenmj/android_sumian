@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.app
 
 import android.app.Application
 import android.content.Context
-import com.blankj.utilcode.util.Utils
 
 /**
  * Created by jzz
@@ -26,7 +25,6 @@ class App : Application() {
         mAppContext = this
 
         AppManager.init().with(this)
-        Utils.init(this)
     }
 
 }

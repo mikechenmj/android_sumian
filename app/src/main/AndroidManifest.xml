@@ -98,7 +98,7 @@
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- WeChat -->
         <activity-alias
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.sumian.sleepdoctor.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:targetActivity="com.pingplusplus.android.PaymentActivity" />
 
@@ -133,8 +133,8 @@
 
         <activity android:name=".sleepRecord.FillSleepRecordActivity" />
         <activity android:name=".sleepRecord.SleepRecordActivity" />
-        <activity android:name=".onlineReport.OnlineReportListActivity" />
-        <activity android:name=".onlineReport.OnlineReportDetailActivity" />
+        <activity android:name=".improve.advisory.activity.AdvisoryListActivity" />
+        <activity android:name=".improve.advisory.activity.AdvisoryDetailActivity" />
     </application>
 
 </manifest>
