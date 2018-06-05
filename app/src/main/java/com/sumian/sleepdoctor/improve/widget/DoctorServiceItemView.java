@@ -2,14 +2,12 @@ package com.sumian.sleepdoctor.improve.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
@@ -55,7 +53,7 @@ public class DoctorServiceItemView extends FrameLayout {
         ButterKnife.bind(this);
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.DoctorServiceItemView, 0, 0);
-        boolean showPrice = attributes.getBoolean(R.styleable.DoctorServiceItemView_dsiv_show_price, true);
+        boolean showPrice = attributes.getBoolean(R.styleable.DoctorServiceItemView_dsiv_show_price, false);
         float price = attributes.getFloat(R.styleable.DoctorServiceItemView_dsiv_price, 0f);
         String title = attributes.getString(R.styleable.DoctorServiceItemView_dsiv_title);
         String desc = attributes.getString(R.styleable.DoctorServiceItemView_dsiv_desc);
@@ -70,7 +68,7 @@ public class DoctorServiceItemView extends FrameLayout {
     public void showPrice(boolean showPrice) {
         int visibility = showPrice ? VISIBLE : GONE;
         mPriceTv.setVisibility(visibility);
-        mPriceBg.setVisibility(VISIBLE);
+        mPriceBg.setVisibility(visibility);
     }
 
     public void setPrice(float price) {

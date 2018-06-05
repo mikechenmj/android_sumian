@@ -77,10 +77,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView
-                android:id="@+id/dsiv"
+            <LinearLayout
+                android:id="@+id/ll_service_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

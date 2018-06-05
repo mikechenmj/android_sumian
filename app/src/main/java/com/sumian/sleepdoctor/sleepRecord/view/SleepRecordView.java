@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.sleepRecord.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.improve.record.view.ProgressView;
 import com.sumian.sleepdoctor.improve.record.view.SleepRecordProgressView;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepPill;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
@@ -98,9 +96,10 @@ public class SleepRecordView extends LinearLayout {
     public void setSleepRecord(SleepRecord sleepRecord) {
         mSleepRecord = sleepRecord;
         boolean hasRecord = mSleepRecord != null;
-        llSleepRecord.setVisibility(hasRecord ? VISIBLE: GONE);
+        llSleepRecord.setVisibility(hasRecord ? VISIBLE : GONE);
         llNoSleepRecord.setVisibility(hasRecord ? GONE : VISIBLE);
         llDoctorEvaluation.setVisibility(hasRecord ? VISIBLE : GONE);
+        titleViewSleepRecord.setVisibility(VISIBLE);
         titleViewSleepRecord.setTvMenuVisibility(hasRecord ? VISIBLE : GONE);
         if (hasRecord) {
             showSleepRecord(sleepRecord);
