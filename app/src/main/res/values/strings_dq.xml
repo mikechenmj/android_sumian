@@ -36,4 +36,11 @@
     <string name="used">已使用</string>
     <string name="my_advisory">我的咨询</string>
 
+    <string name="waiting_for_reply">待回复</string>
+    <string name="replied">已回复</string>
+    <string name="over">已结束</string>
+    <string name="closed">已关闭</string>
+    <string name="cancelled">已取消</string>
+    <string name="have_a_question">待提问</string>
+
 </resources>
