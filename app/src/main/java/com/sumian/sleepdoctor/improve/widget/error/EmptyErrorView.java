@@ -57,7 +57,7 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
      * desc: 消息中心暂无消息
      */
     public void invalidMsgCenterError() {
-        invalid(R.mipmap.ic_empty_state_news, R.string.empty_msg_center_msg, R.string.empty_msg_center_desc);
+        invalid(R.mipmap.ic_empty_state_alarm, R.string.empty_msg_center_msg, R.string.empty_msg_center_desc);
     }
 
     /**

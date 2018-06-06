@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.AttrRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,14 +33,14 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     ImageView mIvBack;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.iv_more)
-    ImageView mIvMore;
-    @BindView(R.id.tv_more)
-    TextView mTvMore;
+    @BindView(R.id.iv_menu)
+    ImageView mIvMenu;
+    @BindView(R.id.tv_menu)
+    TextView mTvMenu;
 
     private OnSpannerListener mOnSpannerListener;
     private OnBackListener mOnBackListener;
-    private OnMoreListener mOnMoreListener;
+    private OnMoreListener mOnMenuClickListener;
 
     private boolean mIsShow;
 
@@ -69,9 +68,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
         String title = a.getString(R.styleable.TitleBar_text);
         boolean showSpanner = a.getBoolean(R.styleable.TitleBar_show_spanner, false);
-        String moreText = a.getString(R.styleable.TitleBar_more_text);
+        String menuText = a.getString(R.styleable.TitleBar_menu_text);
 
-        Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_more_icon);
+        Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_menu_icon);
 
         a.recycle();
 
@@ -92,24 +91,19 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             mTvTitle.setOnClickListener(this);
         }
 
-        if (!TextUtils.isEmpty(moreText)) {
-            mTvMore.setText(moreText);
-            mTvMore.setVisibility(VISIBLE);
-            mTvMore.setOnClickListener(this);
+        if (!TextUtils.isEmpty(menuText)) {
+            mTvMenu.setText(menuText);
+            mTvMenu.setVisibility(VISIBLE);
+            mTvMenu.setOnClickListener(this);
         }
 
         if (moreDrawable != null) {
-            mIvMore.setImageDrawable(moreDrawable);
-            mIvMore.setVisibility(VISIBLE);
-            mIvMore.setOnClickListener(this);
+            mIvMenu.setImageDrawable(moreDrawable);
+            mIvMenu.setVisibility(VISIBLE);
+            mIvMenu.setOnClickListener(this);
         }
-
-        //4.4版本之后沉浸式
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
-            setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
-        }
-
+        setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
+        setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
         setBackgroundResource(R.color.colorPrimary);
     }
 
@@ -123,8 +117,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return this;
     }
 
-    public TitleBar addOnMoreListener(OnMoreListener onMoreListener) {
-        mOnMoreListener = onMoreListener;
+    public TitleBar setMenuOnClickListener(OnMoreListener onMoreListener) {
+        mOnMenuClickListener = onMoreListener;
         return this;
     }
 
@@ -134,18 +128,18 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     }
 
     public TitleBar showMoreIcon() {
-        mIvMore.setVisibility(VISIBLE);
+        mIvMenu.setVisibility(VISIBLE);
         return this;
     }
 
     public TitleBar showMoreIcon(int resId) {
-        mIvMore.setImageResource(resId);
-        mIvMore.setVisibility(VISIBLE);
+        mIvMenu.setImageResource(resId);
+        mIvMenu.setVisibility(VISIBLE);
         return this;
     }
 
     public TitleBar hideMore() {
-        this.mIvMore.setVisibility(GONE);
+        this.mIvMenu.setVisibility(GONE);
         return this;
     }
 
@@ -164,7 +158,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     }
 
     public TextView getMore() {
-        return mTvMore;
+        return mTvMenu;
     }
 
     @SuppressLint("ResourceType")
@@ -202,10 +196,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
                 onSpannerListener.onSpanner(v, mIsShow);
                 break;
             case R.id.iv_more:
-            case R.id.tv_more:
-                OnMoreListener onMoreListener = this.mOnMoreListener;
-                if (onMoreListener == null) return;
-                onMoreListener.onLoadMore(v);
+            case R.id.tv_menu:
+                if (mOnMenuClickListener != null) {
+                    mOnMenuClickListener.onMenuClick(v);
+                }
                 break;
             default:
                 break;
@@ -220,7 +214,15 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         void onBack(View v);
     }
 
+    public void setMenuText(String menuText) {
+        mTvMenu.setText(menuText);
+    }
+
+    public void setMenuVisibility(int visibility) {
+        mTvMenu.setVisibility(visibility);
+    }
+
     public interface OnMoreListener {
-        void onLoadMore(View v);
+        void onMenuClick(View v);
     }
 }

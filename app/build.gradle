@@ -357,4 +357,5 @@ dependencies {
     implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
         exclude module: 'support-recyclerview'
     }
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

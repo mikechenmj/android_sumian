@@ -38,8 +38,8 @@
         <attr name="text_size" format="dimension|reference" />
         <attr name="show_back" format="boolean|reference" />
         <attr name="show_spanner" format="boolean|reference" />
-        <attr name="more_icon" format="reference" />
-        <attr name="more_text" format="string|reference" />
+        <attr name="menu_icon" format="reference" />
+        <attr name="menu_text" format="string|reference" />
     </declare-styleable>
 
     <!--pay item view-->
@@ -117,6 +117,6 @@
 
     <declare-styleable name="TitleView" >
         <attr name="title_text" format="string|reference"/>
-        <attr name="menu_text" format="string|reference"/>
+        <attr name="content_text" format="string|reference" />
     </declare-styleable>
 </resources>

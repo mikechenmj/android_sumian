@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.notification;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +8,13 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.event.NotificationReadEvent;
+import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.notification.bean.Notification;
 import com.sumian.sleepdoctor.widget.TitleBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -39,12 +42,21 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
     protected void initWidget(View root) {
         super.initWidget(root);
         titleBar.addOnBackListener(v -> finish());
+        titleBar.setMenuOnClickListener(v -> markAllAsRead());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new NotificationListAdapter(this, null);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnLoadMoreListener(this, recyclerView);
+        mAdapter.setEmptyView(getEmptyView());
         queryNotificationSetting();
+    }
+
+    private View getEmptyView() {
+        return EmptyErrorView.create(this,
+                R.mipmap.ic_empty_state_alarm,
+                R.string.notification_list_empty_title,
+                R.string.notification_list_empty_desc);
     }
 
     private void queryNotificationSetting() {
@@ -77,16 +89,24 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
         if (notification == null) {
             return;
         }
-        updateNotificationReadState(notification, position);
+        markAsRead(notification, position);
         launchActivityByNotificationType(notification);
     }
 
-    private void updateNotificationReadState(Notification notification, int position) {
-        // update local read state
+    private void markAsRead(Notification notification, int position) {
+        mPresenter.readNotification(notification.getId());
         notification.setRead_at((int) (System.currentTimeMillis() / 1000L));
         mAdapter.setData(position, notification);
-        // update server read state
-        mPresenter.readNotification(notification.getId());
+    }
+
+    private void markAllAsRead() {
+        mPresenter.readNotification("0");
+        List<Notification> data = mAdapter.getData();
+        long currentTimeMillis = System.currentTimeMillis();
+        for (Notification notification : data) {
+            notification.setRead_at((int) (currentTimeMillis / 1000L));
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     private void launchActivityByNotificationType(Notification notification) {
@@ -106,6 +126,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
 
     @Override
     public void onLoadMore(List<Notification> notificationList, boolean hasMore) {
+        titleBar.setMenuVisibility(mAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
         mAdapter.addData(notificationList);
         mAdapter.loadMoreComplete();
         mAdapter.setEnableLoadMore(hasMore);
@@ -113,9 +134,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
 
     @Override
     public void onReadSuccess() {
-        ViewModelProviders.of(this)
-                .get(NotificationViewModel.class)
-                .updateUnreadCount();
+        EventBus.getDefault().postSticky(new NotificationReadEvent());
     }
 
     @Override

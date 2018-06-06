@@ -11,6 +11,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:menu_text="@string/all_read"
         app:text="@string/notification_center" />
 
     <android.support.v7.widget.RecyclerView

@@ -19,8 +19,8 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
-import com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout;
 import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity;
+import com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout;
 import com.sumian.sleepdoctor.tab.adapter.GroupAdapter;
 import com.sumian.sleepdoctor.tab.bean.GroupDetail;
 import com.sumian.sleepdoctor.tab.bean.GroupItem;
@@ -71,7 +71,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
         setStatusBarColor();
 
-        mTitleBar.addOnMoreListener(this);
+        mTitleBar.setMenuOnClickListener(this);
         mRefresh.setOnRefreshListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -199,7 +199,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
     }
 
     @Override
-    public void onLoadMore(View v) {
+    public void onMenuClick(View v) {
         mRequestScanQrCodeView.requestCodeQRCodePermissions();
     }
 

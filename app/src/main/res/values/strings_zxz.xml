@@ -19,4 +19,13 @@
     <string name="online_report_list_empty_title">暂无测评记录</string>
     <string name="online_report_list_empty_desc">了解您的睡眠健康及心理状况</string>
 
+    <!-- notification -->
+    <string name="notification_center">消息中心</string>
+    <string name="all_read">全部已读</string>
+    <string name="go_open">去开启</string>
+    <string name="open_notification_push">开启消息推送通知</string>
+    <string name="open_notification_push_hint">第一时间接收消息更新通知</string>
+    <string name="notification_list_empty_title">没有消息提醒</string>
+    <string name="notification_list_empty_desc">您收到医生回复、建议或报告更新，\n都会在这里收到消息提醒</string>
+
 </resources>

@@ -190,8 +190,5 @@
     <string name="do_not_eat_pills">未使用药物</string>
     <string name="remote_sleep_management_service">远程睡眠管理服务</string>
     <string name="remote_sleep_management_service_desc">专业医生每天关注您的睡眠情况</string>
-    <string name="notification_center">消息中心</string>
-    <string name="go_open">去开启</string>
-    <string name="open_notification_push">开启消息推送通知</string>
-    <string name="open_notification_push_hint">第一时间接收消息更新通知</string>
+
 </resources>

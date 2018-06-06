@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.main;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +11,15 @@ import android.widget.FrameLayout;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
+import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.sleepRecord.RecordFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar;
 import com.sumian.sleepdoctor.widget.nav.NavigationItem;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 
@@ -182,5 +187,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         LaunchData(int launchTabIndex) {
             this.tabIndex = launchTabIndex;
         }
+    }
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Subscribe(sticky = true)
+    public void onNotificationReadEvent(NotificationReadEvent event) {
+        removeStickyEvent(event);
+        ViewModelProviders.of(this)
+                .get(NotificationViewModel.class)
+                .updateUnreadCount();
     }
 }

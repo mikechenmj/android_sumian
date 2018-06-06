@@ -6,11 +6,21 @@ package com.sumian.sleepdoctor.network.response;
  * desc:
  */
 
+@SuppressWarnings("WeakerAccess")
 public class ErrorResponse {
-    private static final int STATUS_CODE_NOT_FOUND = 404;
+    public static final int STATUS_CODE_ERROR_UNKNOWN = 0;
+    public static final int STATUS_CODE_NOT_FOUND = 404;
 
     public String message;
     public int status_code;
+
+    public ErrorResponse() {
+    }
+
+    public ErrorResponse(int status_code, String message) {
+        this.status_code = status_code;
+        this.message = message;
+    }
 
     @Override
     public String toString() {

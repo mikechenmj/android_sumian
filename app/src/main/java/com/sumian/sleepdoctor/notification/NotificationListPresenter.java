@@ -68,6 +68,9 @@ public class NotificationListPresenter implements NotificationListContract.Prese
                     @Override
                     protected void onFailure(ErrorResponse errorResponse) {
                         LogUtils.d(errorResponse);
+                        if (errorResponse.status_code == ErrorResponse.STATUS_CODE_ERROR_UNKNOWN) {
+                            mView.onReadSuccess(); // 成功的response body 为空，会走到onFail分支-_-||
+                        }
                     }
                 });
     }

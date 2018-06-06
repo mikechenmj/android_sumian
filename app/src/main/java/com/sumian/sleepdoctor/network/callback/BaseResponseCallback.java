@@ -23,6 +23,7 @@ import retrofit2.Response;
 
 public abstract class BaseResponseCallback<T> implements Callback<T> {
 
+
     @Override
     public void onResponse(@NonNull Call<T> call, @NonNull Response<T> response) {
         onFinish();
@@ -32,7 +33,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
         } else {
             ResponseBody errorBody = response.errorBody();
             if (errorBody == null) {
-                onFailure(transformNormalErrorResponse());
+                onFailure(getNormalErrorResponse());
                 return;
             }
 
@@ -40,7 +41,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 String errorJson = errorBody.string();
                 ErrorResponse errorResponse = JSON.parseObject(errorJson, ErrorResponse.class);
                 if (errorResponse == null) {
-                    onFailure(transformNormalErrorResponse());
+                    onFailure(getNormalErrorResponse());
                 } else {
                     onFailure(errorResponse);
                     int statusCode = errorResponse.status_code;
@@ -50,7 +51,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                onFailure(transformNormalErrorResponse());
+                onFailure(getNormalErrorResponse());
             }
         }
     }
@@ -59,15 +60,13 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
     public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
         onFinish();
         t.printStackTrace();
-        onFailure(transformNormalErrorResponse());
+        onFailure(getNormalErrorResponse());
     }
 
     @NonNull
-    private ErrorResponse transformNormalErrorResponse() {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.status_code = 0;
-        errorResponse.message = App.Companion.getAppContext().getString(R.string.error_request_failed_hint);
-        return errorResponse;
+    private ErrorResponse getNormalErrorResponse() {
+        String error = App.Companion.getAppContext().getString(R.string.error_request_failed_hint);
+        return new ErrorResponse(ErrorResponse.STATUS_CODE_ERROR_UNKNOWN, error);
     }
 
     protected abstract void onSuccess(T response);

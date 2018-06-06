@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -95,6 +97,22 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (openEventBus()) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        if (openEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onStop();
     }
 
     @Override
@@ -240,5 +258,13 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
 
     public Activity getActivity() {
         return this;
+    }
+
+    protected boolean openEventBus() {
+        return false;
+    }
+
+    protected void removeStickyEvent(Object object) {
+        EventBus.getDefault().removeStickyEvent(object);
     }
 }

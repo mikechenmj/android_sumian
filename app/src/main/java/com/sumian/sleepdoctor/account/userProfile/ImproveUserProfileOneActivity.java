@@ -40,7 +40,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
         super.initWidget(root);
         // mTitleBar.getTitle().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_16);
         //mTitleBar.getMore().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_14);
-        mTitleBar.addOnBackListener(this).addOnMoreListener(this);
+        mTitleBar.addOnBackListener(this).setMenuOnClickListener(this);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
     }
 
     @Override
-    public void onLoadMore(View v) {
+    public void onMenuClick(View v) {
         ImproveUserProfileTwoActivity.show(this, ImproveUserProfileTwoActivity.class);
     }
 
@@ -89,6 +89,6 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     public void onImproveUserProfileSuccess() {
-        onLoadMore(mRoot);
+        onMenuClick(mRoot);
     }
 }

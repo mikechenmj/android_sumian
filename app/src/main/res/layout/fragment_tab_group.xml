@@ -16,7 +16,7 @@
             android:id="@+id/title_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:more_icon="@mipmap/ic_nav_icon_scan"
+            app:menu_icon="@mipmap/ic_nav_icon_scan"
             app:show_back="false"
             app:text="@string/tab_group" />
 

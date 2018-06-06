@@ -92,7 +92,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
 
-        mTitleBar.addOnBackListener(this).addOnMoreListener(this);
+        mTitleBar.addOnBackListener(this).setMenuOnClickListener(this);
         //  mRefreshView.setOnRefreshListener(this);
 
         if (mGroupDetail.role == 0) {//患者
@@ -284,7 +284,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
     }
 
     @Override
-    public void onLoadMore(View v) {
+    public void onMenuClick(View v) {
         Bundle extras = new Bundle();
         extras.putInt(GroupDetailActivity.ARGS_GROUP_ID, mGroupDetail.id);
         GroupDetailActivity.show(this, GroupDetailActivity.class, extras);

@@ -11,7 +11,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:more_icon="@mipmap/ic_nav_icon_more"
+        app:menu_icon="@mipmap/ic_nav_icon_more"
         app:show_back="true"
         app:text="群信息" />
 

@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.sleepRecord.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,11 +10,8 @@ import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
 
-import java.nio.file.AtomicMoveNotSupportedException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * <pre>
@@ -46,7 +42,7 @@ public class TitleView extends LinearLayout {
         ButterKnife.bind(this, inflate);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleView);
         String title = typedArray.getString(R.styleable.TitleView_title_text);
-        String menu = typedArray.getString(R.styleable.TitleView_menu_text);
+        String menu = typedArray.getString(R.styleable.TitleView_content_text);
         typedArray.recycle();
         tvTitle.setText(title);
         tvMenu.setText(menu);

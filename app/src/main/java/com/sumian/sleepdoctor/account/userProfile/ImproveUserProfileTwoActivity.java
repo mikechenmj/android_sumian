@@ -41,7 +41,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this).addOnMoreListener(this);
+        mTitleBar.addOnBackListener(this).setMenuOnClickListener(this);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
     }
 
     @Override
-    public void onLoadMore(View v) {
+    public void onMenuClick(View v) {
         Token cacheToken = AppManager.getAccountViewModel().getToken();
         cacheToken.is_new = false;
         AppManager.getAccountViewModel().updateToken(cacheToken);

@@ -12,7 +12,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:contentDescription="@null"
-        app:srcCompat="@mipmap/ic_empty_state_news" />
+        app:srcCompat="@mipmap/ic_empty_state_alarm" />
 
     <TextView
         android:id="@+id/tv_empty_msg_title"
@@ -25,9 +25,9 @@
         android:id="@+id/tv_empty_msg_desc"
         style="@style/text_t2_14"
         android:layout_marginTop="10dp"
+        android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:textSize="14sp"
-        tools:text="您收到医生回复、建议或报告更新，
-        都会在这里收到消息提醒" />
+        tools:text="您收到医生回复、建议或报告更新，\n都会在这里收到消息提醒" />
 
 </LinearLayout>
