@@ -1,50 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
-
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
     <ImageView
         android:id="@+id/iv_empty_icon"
         android:layout_width="140dp"
         android:layout_height="140dp"
-        android:layout_gravity="center"
         android:contentDescription="@null"
         app:srcCompat="@mipmap/ic_empty_state_news" />
 
     <TextView
         android:id="@+id/tv_empty_msg_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/text_t1_16"
         android:layout_marginTop="36dp"
         android:gravity="center"
-        android:text="没有消息提醒"
-        android:textSize="16sp"
-        tools:ignore="HardcodedText" />
+        tools:text="没有消息提醒" />
 
     <TextView
         android:id="@+id/tv_empty_msg_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/text_t2_14"
         android:layout_marginTop="10dp"
         android:lineSpacingExtra="4dp"
-        android:text="您收到医生回复、建议或报告更新，
-        都会在这里收到消息提醒"
         android:textSize="14sp"
-        tools:ignore="HardcodedText" />
+        tools:text="您收到医生回复、建议或报告更新，
+        都会在这里收到消息提醒" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-</merge>
+</LinearLayout>

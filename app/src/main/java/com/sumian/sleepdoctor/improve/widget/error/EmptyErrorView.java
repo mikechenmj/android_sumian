@@ -123,4 +123,24 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
 
         void onReload();
     }
+
+    public static EmptyErrorView create(Context context, @DrawableRes int icon, @StringRes int msgTitle, @StringRes int msgDesc) {
+        EmptyErrorView emptyErrorView = new EmptyErrorView(context);
+        emptyErrorView.setIvEmptyIcon(icon);
+        emptyErrorView.setTvEmptyMsgTitle(msgTitle);
+        emptyErrorView.setTvEmptyMsgDesc(msgDesc);
+        return emptyErrorView;
+    }
+
+    public void setIvEmptyIcon(@DrawableRes int icon) {
+        mIvEmptyIcon.setImageResource(icon);
+    }
+
+    public void setTvEmptyMsgTitle(@StringRes int msgTitle) {
+        mTvEmptyMsgTitle.setText(msgTitle);
+    }
+
+    public void setTvEmptyMsgDesc(@StringRes int msgDesc) {
+        mTvEmptyMsgDesc.setText(msgDesc);
+    }
 }

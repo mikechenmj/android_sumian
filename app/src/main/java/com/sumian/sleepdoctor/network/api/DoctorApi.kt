@@ -7,9 +7,11 @@ import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.network.response.PaginationResponse
+import com.sumian.sleepdoctor.notification.bean.Notification
 import com.sumian.sleepdoctor.onlineReport.OnlineReport
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
+import com.sumian.sleepdoctor.sleepRecord.bean.DoctorServiceList
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary
 import com.sumian.sleepdoctor.tab.bean.GroupDetail
@@ -91,13 +93,15 @@ interface DoctorApi {
      * direction 请求方向 0：小于查询时间戳，1：大于查询时间戳 不传默认0
      */
     @GET("diary-month")
-    fun querySleepDiarySummaryList(@Query("date") unixTime: Int,
-                                   @Query("is_include") isInclude: Int,
-                                   @Query("page_size") pageSize: Int,
-                                   @Query("direction") direction: Int): Call<Map<String, List<SleepRecordSummary>>>
+    fun getSleepDiarySummaryList(@Query("date") unixTime: Int,
+                                 @Query("is_include") isInclude: Int,
+                                 @Query("page_size") pageSize: Int,
+                                 @Query("direction") direction: Int): Call<Map<String, List<SleepRecordSummary>>>
 
     @GET("diaries")
-    fun querySleepDiaryDetail(@Query("date") unixTime: Int): Call<SleepRecord>
+    fun getSleepDiaryDetail(@Query("date") unixTime: Int): Call<SleepRecord>
+
+    // ---------- online report ----------
 
     /**
      * page 第几页 Default value: 1
@@ -105,9 +109,21 @@ interface DoctorApi {
      * user_id 用户id
      */
     @GET("/online-reports")
-    fun queryReports(@Query("page") page: Int, @Query("per_page") perPage: Int): Call<PaginationResponse<List<OnlineReport>>>
+    fun getReports(@Query("page") page: Int,
+                     @Query("per_page") perPage: Int): Call<PaginationResponse<List<OnlineReport>>>
 
-    //doctor
+    @GET("services")
+    fun getServiceList(): Call<DoctorServiceList>
+
+    // ---------- notification ----------
+    @GET("notifications")
+    fun getNotificationList(@Query("page") page: Int,
+                            @Query("per_page") perPage: Int): Call<PaginationResponse<List<Notification>>>
+
+    @PATCH("notifications/{id}")
+    fun readNotification(@Path("id") notificationId: String): Call<Any>
+
+    // ---------- doctor ----------
 
     @PATCH("doctor-bind")
     fun bindDoctor(@FieldMap map: MutableMap<String, Any>): Call<Doctor>

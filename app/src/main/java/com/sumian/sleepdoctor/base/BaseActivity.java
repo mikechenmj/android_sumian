@@ -237,4 +237,8 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     protected void showCenterToast(@StringRes int messageId) {
         showCenterToast(getString(messageId));
     }
+
+    public Activity getActivity() {
+        return this;
+    }
 }

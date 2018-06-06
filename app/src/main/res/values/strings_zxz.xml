@@ -15,4 +15,8 @@
     <string name="bind_wechat_message">绑定后，可使用微信账号登录睡眠医生</string>
     <string name="unbind_wechat_message">解绑后，你将无法使用微信账号登录</string>
 
+    <!-- online report -->
+    <string name="online_report_list_empty_title">暂无测评记录</string>
+    <string name="online_report_list_empty_desc">了解您的睡眠健康及心理状况</string>
+
 </resources>
