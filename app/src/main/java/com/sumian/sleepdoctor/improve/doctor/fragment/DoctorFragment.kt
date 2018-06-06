@@ -1,5 +1,8 @@
 package com.sumian.sleepdoctor.improve.doctor.fragment
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
 import com.sumian.sleepdoctor.R
@@ -9,8 +12,11 @@ import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.improve.doctor.contract.DoctorContract
 import com.sumian.sleepdoctor.improve.doctor.presenter.DoctorPresenter
+import com.sumian.sleepdoctor.notification.NotificationListActivity
+import com.sumian.sleepdoctor.notification.NotificationViewModel
 import com.sumian.sleepdoctor.widget.RequestScanQrCodeView
 import kotlinx.android.synthetic.main.fragment_tab_doctor.*
+import java.util.*
 
 /**
  * Created by jzz
@@ -29,6 +35,7 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
     override fun initWidget(root: View?) {
         super.initWidget(root)
         doctor_detail_layout.setOnRefreshListener(this)
+        iv_notification.setOnClickListener { NotificationListActivity.launch(activity) }
     }
 
     override fun initData() {
@@ -46,6 +53,10 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
             doctor_detail_layout.hide()
             request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
         }
+        ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
+                .get(NotificationViewModel::class.java)
+                .getUnreadCount()
+                .observe(this, Observer { count -> iv_notification.isActivated = count != null && count > 0 })
     }
 
     override fun initPresenter() {

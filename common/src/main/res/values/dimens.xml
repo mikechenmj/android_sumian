@@ -278,6 +278,9 @@
     <!--divider size-->
     <dimen name="divider_px_1">1px</dimen>
 
+    <dimen name="status_bar_height">@dimen/space_24</dimen>
+    <dimen name="tool_bar_height">@dimen/space_48</dimen>
+
     <!--default toast for system-->
     <dimen name="toast_space_64">@dimen/space_64</dimen>
     <dimen name="toast_space_100">@dimen/space_100</dimen>

@@ -7,13 +7,13 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_24"
+        android:layout_height="@dimen/status_bar_height"
         android:background="@color/b3_color" />
 
     <RelativeLayout
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_48"
+        android:layout_height="@dimen/tool_bar_height"
         android:background="@color/b3_color">
 
         <TextView
@@ -40,22 +40,16 @@
 
         <ImageView
             android:id="@+id/iv_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/NotificationIcon"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/space_16"
             android:contentDescription="@null"
-            android:scaleType="centerInside"
-            android:src="@mipmap/ic_nav_icon_notification_unread" />
-
+            android:src="@drawable/sel_notification" />
 
         <ImageView
             android:id="@+id/iv_scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/space_16"
             android:layout_toStartOf="@id/iv_notification"
             android:contentDescription="@null"
             android:scaleType="centerInside"

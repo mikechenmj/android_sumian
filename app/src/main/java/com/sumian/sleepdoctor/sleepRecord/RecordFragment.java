@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.sleepRecord;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.notification.NotificationListActivity;
+import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.sleepRecord.bean.DoctorServiceList;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
@@ -33,6 +35,7 @@ import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,6 +60,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     LinearLayout mServiceContainer;
     @BindView(R.id.scroll_view)
     ScrollView mScrollView;
+    @BindView(R.id.iv_notification)
+    ImageView mIvNotification;
 
     private long mPopupDismissTime;
     private SleepCalendarViewWrapper mCalendarViewWrapper;
@@ -146,6 +151,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         super.initData();
         changeSelectTime(mInitTime);
         queryServices();
+        ViewModelProviders.of(Objects.requireNonNull(getActivity()))
+                .get(NotificationViewModel.class)
+                .getUnreadCount()
+                .observe(this, unreadCount -> mIvNotification.setActivated(unreadCount != null && unreadCount > 0));
     }
 
     private void launchFillSleepRecordActivity(long time) {
@@ -214,7 +223,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 showDatePopup(!mIvDateArrow.isActivated());
                 break;
             case R.id.iv_notification:
-                NotificationListActivity.launch(getContext());
+                NotificationListActivity.launch(getActivity());
                 break;
         }
     }

@@ -196,4 +196,14 @@
         <item name="textAllCaps">true</item>
     </style>
 
+    <!-- notification -->
+    <style name="NotificationIcon">
+        <item name="android:layout_width">@dimen/tool_bar_height</item>
+        <item name="android:layout_height">@dimen/tool_bar_height</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:src">@drawable/sel_notification</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
 </resources>

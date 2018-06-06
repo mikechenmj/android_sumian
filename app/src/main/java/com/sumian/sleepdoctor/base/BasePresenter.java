@@ -26,4 +26,7 @@ public interface BasePresenter<T> {
         }
     }
 
+    default void addCall(Call call) {
+        mCalls.add(call);
+    }
 }

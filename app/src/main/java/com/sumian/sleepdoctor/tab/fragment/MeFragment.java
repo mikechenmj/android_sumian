@@ -1,7 +1,9 @@
 package com.sumian.sleepdoctor.tab.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,8 +15,12 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity;
+import com.sumian.sleepdoctor.notification.NotificationListActivity;
+import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.pager.activity.SettingActivity;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,9 +37,10 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
-
     @BindView(R.id.tv_nickname)
     TextView mTvNickname;
+    @BindView(R.id.iv_notification)
+    ImageView mIvNotification;
 
     @Override
     protected int getLayoutId() {
@@ -50,16 +57,24 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
     protected void initData() {
         super.initData();
         UserProfile userProfile = AppManager.getAccountViewModel().getToken().user;
-
         updateUserProfile(userProfile);
-
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
             if (token != null)
                 updateUserProfile(token.user);
         });
+        ViewModelProviders.of(Objects.requireNonNull(getActivity()))
+                .get(NotificationViewModel.class)
+                .getUnreadCount()
+                .observe(this, unreadCount -> mIvNotification.setActivated(unreadCount != null && unreadCount > 0));
     }
 
-    @OnClick({R.id.dv_user_info_center, R.id.dv_my_consulting, R.id.dv_setting, R.id.dv_electric_report})
+    @OnClick({
+            R.id.dv_user_info_center,
+            R.id.dv_my_consulting,
+            R.id.dv_setting,
+            R.id.dv_electric_report,
+            R.id.iv_notification
+    })
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.dv_user_info_center:
@@ -73,6 +88,9 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
                 break;
             case R.id.dv_electric_report:
                 OnlineReportListActivity.show(getContext(), OnlineReportListActivity.class);
+                break;
+            case R.id.iv_notification:
+                NotificationListActivity.launch(getActivity());
                 break;
         }
     }
