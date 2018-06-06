@@ -20,16 +20,14 @@ interface AdvisoryContract {
 
         fun onGetNextAdvisoriesSuccess(advisories: ArrayList<Advisory>)
 
-        fun onGetAdvisoryDetailSuccess(advisory: Advisory)
-
-        fun onGetAdvisoryDetailFailed(error: String)
+        fun onRefreshAdvisoriesSuccess(advisories: ArrayList<Advisory>)
 
     }
 
 
     interface Presenter : BasePresenter<Any> {
 
-        fun  refreshAdvisories()
+        fun refreshAdvisories()
 
         fun getAdvisories(advisoryType: Int = Advisory.UNUSED_TYPE, advisoryId: Int)
 

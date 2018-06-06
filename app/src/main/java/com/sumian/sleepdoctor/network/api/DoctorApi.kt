@@ -145,7 +145,7 @@ interface DoctorApi {
     //user advisory
 
     @GET("advisories")
-    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<ArrayList<Advisory>>
+    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<ArrayList<Advisory>>>
 
     @GET("advisories/{id}")
     fun getDoctorAdvisoryDetails(@Path("id") advisoryId: Int, @QueryMap map: MutableMap<String, Any>): Call<Advisory>

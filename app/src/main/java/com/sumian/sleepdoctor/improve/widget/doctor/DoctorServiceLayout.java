@@ -13,18 +13,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by sm
  * on 2018/5/31 16:50
  * desc:  医生服务容器
  **/
-public class DoctorServiceLayout extends LinearLayout {
+public class DoctorServiceLayout extends LinearLayout implements View.OnClickListener {
 
     @BindView(R.id.iv_service_icon)
     QMUIRadiusImageView ivServiceIcon;
@@ -102,5 +104,26 @@ public class DoctorServiceLayout extends LinearLayout {
         } else {
             Glide.with(this).load(url).into(iv);
         }
+    }
+
+    @OnClick({R.id.tv_service_action})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_service_action:
+                String actionText = tvServiceAction.getText().toString();
+                switch (actionText) {
+                    case "去提问":
+                        ToastHelper.show("去打开图文服务");
+                        break;
+                    case "去记录":
+                        ToastHelper.show("去记录睡眠日记");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+        }
+
     }
 }
