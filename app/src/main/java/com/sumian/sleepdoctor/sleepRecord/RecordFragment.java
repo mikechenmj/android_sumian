@@ -12,10 +12,14 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.sumian.common.utils.NotificationUtil;
+import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.improve.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
@@ -43,6 +47,7 @@ import butterknife.OnClick;
 public class RecordFragment extends BaseFragment implements CalendarView.OnDateClickListener, ActivityLauncher {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
+    public static final int REQUEST_CODE_OPEN_NOTIFICATION = 2;
     private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
     private static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
     public static final int PAGE_SIZE = 12;
@@ -80,6 +85,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         super.initWidget(root);
         mSleepRecordView.setOnClickRefillSleepRecordListener(v -> launchFillSleepRecordActivity(mSelectedTime));
         mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> launchFillSleepRecordActivity(mSelectedTime));
+        showOpenNotificationDialogIfNeeded();
     }
 
     private void setTvDate(long timeInMillis) {
@@ -87,14 +93,20 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     }
 
     @SuppressWarnings("unused")
-    private void showOpenNotificationDialog() {
+    private void showOpenNotificationDialogIfNeeded() {
+        long previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0);
+        boolean alreadyShowed = previousShowTime > 0;
+        if (NotificationUtil.areNotificationsEnabled(getActivity()) || alreadyShowed) {
+            return;
+        }
         SumianAlertDialog.create()
                 .setCloseIconVisible(true)
                 .setTopIconResource(R.mipmap.ic_notification_alert)
                 .setTitle(R.string.open_notification)
                 .setMessage(R.string.open_notification_and_receive_doctor_response)
-                .setRightBtn(R.string.open_notification, v -> openNotification())
+                .setRightBtn(R.string.open_notification, v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION))
                 .show(getFragmentManager());
+        SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis());
     }
 
     private void openNotification() {

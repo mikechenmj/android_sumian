@@ -93,7 +93,7 @@ public class SumianAlertDialog extends DialogFragment {
         if (mLeftBtnTextRes != 0) mBtnLeft.setText(mLeftBtnTextRes);
         mBtnRight.setVisibility(mRightBtnTextRes == 0 ? View.GONE : View.VISIBLE);
         if (mRightBtnTextRes != 0) mBtnRight.setText(mRightBtnTextRes);
-        mSpace.setVisibility(mLeftBtnTextRes != 0 && mRightBtnTextRes != 0 ? View.VISIBLE : View.GONE);
+//        mSpace.setVisibility(mLeftBtnTextRes != 0 && mRightBtnTextRes != 0 ? View.VISIBLE : View.GONE);
         if (mWhitenLeft) {
             mBtnLeft.setBackgroundResource(R.drawable.bg_btn_white);
             mBtnLeft.setTextColor(getResources().getColor(R.color.t5_color));

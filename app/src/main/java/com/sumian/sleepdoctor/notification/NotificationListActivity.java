@@ -1,11 +1,14 @@
 package com.sumian.sleepdoctor.notification;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.sumian.common.utils.NotificationUtil;
+import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
@@ -23,11 +26,13 @@ import butterknife.BindView;
 public class NotificationListActivity extends BaseActivity<NotificationListContract.Presenter>
         implements BaseQuickAdapter.OnItemClickListener, NotificationListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
 
+    public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;
     @BindView(R.id.title_bar)
     TitleBar titleBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private NotificationListAdapter mAdapter;
+    private NotificationListHeadView mHeaderView;
 
     public static void launch(Context context) {
         NotificationListActivity.show(context, NotificationListActivity.class);
@@ -49,7 +54,24 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnLoadMoreListener(this, recyclerView);
         mAdapter.setEmptyView(getEmptyView());
-        queryNotificationSetting();
+        initHeadView();
+    }
+
+    private void initHeadView() {
+        boolean enabled = NotificationUtil.areNotificationsEnabled(this);
+        if (!enabled) {
+            mHeaderView = new NotificationListHeadView(this);
+            mHeaderView.setOnClickListener(v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION));
+            mAdapter.addHeaderView(mHeaderView);
+        }
+    }
+
+    private void removeHeadViewInNeeded() {
+        boolean enabled = NotificationUtil.areNotificationsEnabled(this);
+        if (enabled && mHeaderView != null) {
+            mAdapter.removeHeaderView(mHeaderView);
+            mHeaderView = null;
+        }
     }
 
     private View getEmptyView() {
@@ -59,18 +81,6 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
                 R.string.notification_list_empty_desc);
     }
 
-    private void queryNotificationSetting() {
-        addHeadView();
-    }
-
-    private void addHeadView() {
-        NotificationListHeadView headerView = new NotificationListHeadView(this);
-        headerView.setOnClickListener(v -> goOpenNotification());
-        mAdapter.addHeaderView(headerView);
-    }
-
-    private void goOpenNotification() {
-    }
 
     @Override
     protected void initPresenter() {
@@ -140,5 +150,18 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
     @Override
     public void onLoadMoreRequested() {
         mPresenter.loadMore();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_OPEN_NOTIFICATION) {
+            removeHeadViewInNeeded();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
