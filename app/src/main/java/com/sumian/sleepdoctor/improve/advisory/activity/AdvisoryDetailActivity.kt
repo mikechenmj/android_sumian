@@ -1,18 +1,85 @@
 package com.sumian.sleepdoctor.improve.advisory.activity
 
+import android.content.Context
+import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseActivity
-import com.sumian.sleepdoctor.base.BasePresenter
+import com.sumian.sleepdoctor.improve.advisory.adapter.RecordAdapter
+import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
+import com.sumian.sleepdoctor.improve.advisory.contract.RecordContract
+import com.sumian.sleepdoctor.improve.advisory.presenter.RecordPresenter
+import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
 
 /**
  *
  *Created by sm
  * on 2018/6/4 18:28
- * desc:
+ * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class AdvisoryDetailActivity : BaseActivity<BasePresenter<Any>>() {
+class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordContract.View, SwipeRefreshLayout.OnRefreshListener {
+
+    companion object {
+        private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
+
+        fun launch(context: Context, advisoryId: Int) {
+            val extras = Bundle()
+            extras.putInt(ARGS_ADVISORY_ID, advisoryId)
+            show(context, AdvisoryDetailActivity::class.java, extras)
+        }
+    }
+
+    private var mAdvisoryId: Int = 0
+    private lateinit var mAdapter: RecordAdapter
+
+
+    override fun initBundle(bundle: Bundle?): Boolean {
+        this.mAdvisoryId = bundle?.getInt(ARGS_ADVISORY_ID, 0)!!
+        return super.initBundle(bundle)
+    }
 
     override fun getLayoutId(): Int {
+        return R.layout.activity_main_advisory_detail
+    }
+
+    override fun initPresenter() {
+        super.initPresenter()
+        RecordPresenter.init(this)
+    }
+
+    override fun initWidget(root: View?) {
+        super.initWidget(root)
+        refresh.setOnRefreshListener(this)
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.itemAnimator = DefaultItemAnimator()
+        this.mAdapter = RecordAdapter(this)
+        recycler.adapter = mAdapter
+    }
+
+    override fun initData() {
+        super.initData()
+        mPresenter.getAdvisoryDetail(mAdvisoryId)
+    }
+
+    override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
+        this.mAdapter.setDoctor(advisory.doctor)
+        this.mAdapter.setUser(advisory.user)
+        this.mAdapter.addAll(advisory.records)
+    }
+
+    override fun onGetAdvisoryDetailFailed(error: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setPresenter(presenter: RecordContract.Presenter?) {
+        this.mPresenter = presenter
+    }
+
+    override fun onRefresh() {
+        mPresenter.getAdvisoryDetail(mAdvisoryId)
     }
 
 }

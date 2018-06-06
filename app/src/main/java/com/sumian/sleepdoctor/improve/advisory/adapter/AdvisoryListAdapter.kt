@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
-import java.text.SimpleDateFormat
+import com.sumian.sleepdoctor.utils.TimeUtil
 import java.util.*
 
 /**
@@ -19,7 +19,7 @@ import java.util.*
  * on 2018/6/5 13:43
  * desc:咨询列表 adapter, 包含未使用,已使用2部分
  **/
-class AdvisoryAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(context) {
+class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(context) {
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
         val viewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_item, parent, false))
@@ -42,10 +42,10 @@ class AdvisoryAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(context)
             }
 
             setText(R.id.tv_title, advisoryTitle)
-                    .setText(R.id.tv_advisory_time, if (item.start_at <= 0) {
-                        SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault()).format(Date(item.start_at * 1000L))
+                    .setText(R.id.tv_advisory_time, if (item.start_at > 0) {
+                        TimeUtil.formatYYYYMMDDHHMM(item.start_at)
                     } else {
-                        SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault()).format(Date(item.created_at * 1000L))
+                        TimeUtil.formatYYYYMMDDHHMM(item.created_at)
                     })
                     .setText(R.id.tv_advisory_action_status, when (item.status) {
                         0 -> getString(R.string.waiting_for_reply)

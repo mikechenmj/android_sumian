@@ -19,4 +19,10 @@ data class Record(var id: Int,//记录 ID
                   var question_index: Int,//第几次提问, type为0才返回
                   var images: ArrayList<String>,//图片 URL 列表
                   var reports: ArrayList<Report>//在线报告列表
-) : Parcelable
+) : Parcelable {
+
+    companion object {
+        const val RECORD_QUESTION_TYPE = 0x00
+        const val RECORD_REPLY_TYPE = 0x01
+    }
+}

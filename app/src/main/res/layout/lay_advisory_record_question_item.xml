@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_10"
+    android:background="@color/b2_color"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/lay_record_tips"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_64"
+        android:orientation="horizontal"
+        android:padding="@dimen/space_20">
+
+        <TextView
+            android:id="@+id/tv_question_index"
+            style="@style/text_t1_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:text="@string/first_question"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right"
+            tools:ignore="RtlHardcoded"
+            tools:text="2018/04/03 19:23" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginStart="@dimen/space_20"
+        android:background="@color/b1_color" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_20"
+        tools:text="我又开始失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两种药物，但是感觉对睡眠并没有什么帮助，醒来之后感觉很沮丧，不知道要怎么做才能改善这种状态比较好。" />
+
+    <com.sumian.common.widget.FlowLayout
+        android:id="@+id/flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10" />
+
+    <View
+        android:id="@+id/divide_two"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginStart="@dimen/space_20"
+        android:background="@color/b1_color" />
+
+    <FrameLayout
+        android:id="@+id/record_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_62"
+        android:padding="@dimen/space_20">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:text="@string/view_the_record"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:layout_width="@dimen/space_10"
+            android:layout_height="@dimen/space_16"
+            android:layout_gravity="center|right"
+            android:contentDescription="@null"
+            app:srcCompat="@mipmap/ic_record_icon_right"
+            tools:ignore="RtlHardcoded" />
+    </FrameLayout>
+
+</LinearLayout>

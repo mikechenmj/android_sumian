@@ -10,7 +10,7 @@ import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
  * on 2018/6/4 14:47
  * desc:
  **/
-interface AdvisoryContract {
+interface AdvisoryListContract {
 
     interface View : BaseView<Presenter> {
 

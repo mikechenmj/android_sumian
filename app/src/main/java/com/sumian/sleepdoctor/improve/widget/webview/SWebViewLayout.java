@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * on 2018/5/25 09:54
  * desc:
  **/
-public class SWebViewContainer extends FrameLayout implements SWebView.OnX5WebViewListener, EmptyErrorView.OnEmptyCallback {
+public class SWebViewLayout extends FrameLayout implements SWebView.OnX5WebViewListener, EmptyErrorView.OnEmptyCallback {
 
     @BindView(R.id.web_view_progress)
     ProgressBar mWebViewProgress;
@@ -31,15 +31,15 @@ public class SWebViewContainer extends FrameLayout implements SWebView.OnX5WebVi
 
     private SWebView mSWebView;
 
-    public SWebViewContainer(@NonNull Context context) {
+    public SWebViewLayout(@NonNull Context context) {
         this(context, null);
     }
 
-    public SWebViewContainer(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public SWebViewLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SWebViewContainer(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SWebViewLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
     }

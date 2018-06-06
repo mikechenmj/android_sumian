@@ -3,13 +3,12 @@ package com.sumian.sleepdoctor.improve.advisory.activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
 import android.view.View
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseActivity
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.advisory.fragment.AdvisoryListFragment
-import com.sumian.sleepdoctor.improve.advisory.presenter.AdvisoryPresenter
+import com.sumian.sleepdoctor.improve.advisory.presenter.AdvisoryListPresenter
 import com.sumian.sleepdoctor.widget.TitleBar
 import kotlinx.android.synthetic.main.activity_main_advisory.*
 
@@ -18,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory.*
  * on 2018/6/4 14:20
  * desc: 用户咨询列表
  */
-class AdvisoryListActivity : BaseActivity<AdvisoryPresenter>(), TitleBar.OnBackListener {
+class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackListener {
 
     companion object {
         private const val ARGS_ADVISORY_ID: String = "com.sumian.app.extras.advisory.id"
@@ -67,12 +66,6 @@ class AdvisoryListActivity : BaseActivity<AdvisoryPresenter>(), TitleBar.OnBackL
         }
 
         tab_layout?.setupWithViewPager(view_pager, true)
-        view_pager?.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-            }
-        })
-
     }
 
     override fun onBack(v: View?) {

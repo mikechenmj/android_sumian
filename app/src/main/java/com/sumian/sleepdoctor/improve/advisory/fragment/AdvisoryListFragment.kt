@@ -8,11 +8,12 @@ import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity
-import com.sumian.sleepdoctor.improve.advisory.adapter.AdvisoryAdapter
+import com.sumian.sleepdoctor.improve.advisory.adapter.AdvisoryListAdapter
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
-import com.sumian.sleepdoctor.improve.advisory.contract.AdvisoryContract
-import com.sumian.sleepdoctor.improve.advisory.presenter.AdvisoryPresenter
+import com.sumian.sleepdoctor.improve.advisory.contract.AdvisoryListContract
+import com.sumian.sleepdoctor.improve.advisory.presenter.AdvisoryListPresenter
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:
  **/
-class AdvisoryListFragment : BaseFragment<AdvisoryPresenter>(), AdvisoryContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener {
+class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener {
 
     companion object {
 
@@ -34,7 +35,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryPresenter>(), AdvisoryContract
         }
     }
 
-    private lateinit var mAdapter: AdvisoryAdapter
+    private lateinit var mListAdapter: AdvisoryListAdapter
 
     private var mAdvisoryType: Int = Advisory.UNUSED_TYPE
 
@@ -49,16 +50,16 @@ class AdvisoryListFragment : BaseFragment<AdvisoryPresenter>(), AdvisoryContract
 
     override fun initPresenter() {
         super.initPresenter()
-        AdvisoryPresenter.init(this)
+        AdvisoryListPresenter.init(this)
     }
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
         refresh.setOnRefreshListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
-        mAdapter = AdvisoryAdapter(context!!)
-        recycler.adapter = mAdapter
-        mAdapter.setOnItemClickListener(this)
+        mListAdapter = AdvisoryListAdapter(context!!)
+        recycler.adapter = mListAdapter
+        mListAdapter.setOnItemClickListener(this)
         empty_error_view.invalidAdvisoryError()
     }
 
@@ -67,8 +68,8 @@ class AdvisoryListFragment : BaseFragment<AdvisoryPresenter>(), AdvisoryContract
         this.mPresenter.getAdvisories(mAdvisoryType, (this.mActivity as AdvisoryListActivity).getAdvisoryId())
     }
 
-    override fun setPresenter(presenter: AdvisoryContract.Presenter?) {
-        this.mPresenter = presenter as AdvisoryPresenter
+    override fun setPresenter(presenter: AdvisoryListContract.Presenter?) {
+        this.mPresenter = presenter as AdvisoryListPresenter
     }
 
     override fun onRefresh() {
@@ -76,7 +77,12 @@ class AdvisoryListFragment : BaseFragment<AdvisoryPresenter>(), AdvisoryContract
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (mAdvisoryType == Advisory.USED_TYPE) {
+            val advisory = mListAdapter.getItem(position)
+            AdvisoryDetailActivity.launch(context!!, advisory.id)
+        } else {
+            showCenterToast("去填写图文咨询报告")
+        }
     }
 
     override fun onBegin() {
@@ -94,7 +100,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryPresenter>(), AdvisoryContract
             empty_error_view.invalidAdvisoryError()
             recycler.visibility = View.GONE
         } else {
-            mAdapter.addAll(advisories)
+            mListAdapter.addAll(advisories)
             recycler.visibility = View.VISIBLE
             empty_error_view.hide()
         }
@@ -106,14 +112,14 @@ class AdvisoryListFragment : BaseFragment<AdvisoryPresenter>(), AdvisoryContract
 
     override fun onGetNextAdvisoriesSuccess(advisories: ArrayList<Advisory>) {
         if (advisories.isEmpty()) return
-        mAdapter.addAll(advisories)
+        mListAdapter.addAll(advisories)
         recycler.visibility = View.VISIBLE
         empty_error_view.hide()
     }
 
     override fun onRefreshAdvisoriesSuccess(advisories: ArrayList<Advisory>) {
         if (advisories.isEmpty()) return
-        mAdapter.addAll(advisories)
+        mListAdapter.resetItem(advisories)
         recycler.visibility = View.VISIBLE
         empty_error_view.hide()
     }
