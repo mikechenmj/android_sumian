@@ -156,7 +156,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
 
     private void onBack() {
         if (mActionLoadingDialog != null) {
-            mActionLoadingDialog.dismissAllowingStateLoss();
+            mActionLoadingDialog.dismiss();
         }
         finish();
     }
@@ -176,6 +176,9 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     @Override
     public void onFailure(String error) {
         showToast(error);
+        if (mActionLoadingDialog != null) {
+            mActionLoadingDialog.dismiss();
+        }
     }
 
     @Override
@@ -186,7 +189,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     @Override
     public void onFinish() {
         if (mActionLoadingDialog != null) {
-            mActionLoadingDialog.dismissAllowingStateLoss();
+            mActionLoadingDialog.getDialog().cancel();
         }
     }
 
@@ -219,10 +222,16 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     @Override
     public void onOrderPayCancel(@NonNull String payMsg) {
         showToast(payMsg);
+        if (mActionLoadingDialog != null) {
+            mActionLoadingDialog.dismiss();
+        }
     }
 
     @Override
     public void onCheckOrderPayIsOk() {
+        if (mPayDialog != null && mPayDialog.isShowing()) {
+            mPayDialog.cancel();
+        }
         MainActivity.launch(this, 1);
     }
 

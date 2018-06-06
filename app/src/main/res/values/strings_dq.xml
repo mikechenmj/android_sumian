@@ -42,5 +42,10 @@
     <string name="closed">已关闭</string>
     <string name="cancelled">已取消</string>
     <string name="have_a_question">待提问</string>
+    <string name="first_question">第一次提问</string>
+    <string name="second_question">第二次提问</string>
+    <string name="third_question">第三次提问</string>
+    <string name="view_the_record">查看电子报告</string>
+    <string name="sleep_doctor">睡眠医生</string>
 
 </resources>

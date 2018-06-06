@@ -114,7 +114,7 @@ public class GroupAdapter extends BaseRecyclerAdapter<GroupItem> {
 
     static class ViewHolder extends BaseViewHolder<GroupItem> {
 
-        // private static final String TAG = ViewHolder.class.getSimpleName();
+        // private static final String TAG = QuestionViewHolder.class.getSimpleName();
 
         @BindView(R.id.group_detail_have_dot_view)
         GroupDetailHaveDotView mGroupDetailHaveDotView;

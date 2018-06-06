@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_top_notification"
+        style="@style/TopNotificationText.Blue"
+        tools:text="3小时后结束，期间医生可追加回复" />
+
+    <com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="true"
+                android:clipToPadding="true"
+                android:paddingTop="@dimen/space_10" />
+
+            <TextView
+                android:id="@+id/tv_bottom_notification"
+                style="@style/TopNotificationText"
+                android:layout_height="@dimen/space_64"
+                android:layout_gravity="bottom"
+                android:background="@color/b3_color"
+                android:gravity="center"
+                tools:text="追问（剩余2次机会）" />
+
+        </FrameLayout>
+
+    </com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout>
+
+</LinearLayout>

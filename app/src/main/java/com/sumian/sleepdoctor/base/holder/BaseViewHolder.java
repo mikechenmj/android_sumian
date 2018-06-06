@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.base.holder;
 
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -67,9 +68,9 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     }
 
     protected void load(String url, @DrawableRes int defaultIconId, ImageView iv) {
-        if (TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             mLoader.load(defaultIconId).into(iv);
-        }else {
+        } else {
             mLoader.load(url).into(iv);
         }
     }
@@ -110,5 +111,10 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     protected boolean onItemLongClick(View v) {
         //  Log.e(TAG, "onItemLongClick: ----------->" + v.toString());
         return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> T getView(@IdRes int resId) {
+        return (T) itemView.findViewById(resId);
     }
 }

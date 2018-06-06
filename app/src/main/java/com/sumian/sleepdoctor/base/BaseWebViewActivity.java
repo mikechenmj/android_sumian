@@ -9,7 +9,7 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
-import com.sumian.sleepdoctor.improve.widget.webview.SWebViewContainer;
+import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
@@ -25,7 +25,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     TitleBar mTitleBar;
 
     @BindView(R.id.sm_webview_container)
-    SWebViewContainer mSWebViewContainer;
+    SWebViewLayout mSWebViewLayout;
 
     @Override
     protected int getLayoutId() {
@@ -42,31 +42,31 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     protected void initData() {
         super.initData();
-        registerHandler(mSWebViewContainer.getSWebView());
+        registerHandler(mSWebViewLayout.getSWebView());
     }
 
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
         super.onStart(owner);
-        mSWebViewContainer.loadRequestUrl(getCompleteUrl());
+        mSWebViewLayout.loadRequestUrl(getCompleteUrl());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mSWebViewContainer.resumeWebView();
+        mSWebViewLayout.resumeWebView();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mSWebViewContainer.pauseWebView();
+        mSWebViewLayout.pauseWebView();
     }
 
     @Override
     protected void onRelease() {
         super.onRelease();
-        mSWebViewContainer.destroyWebView();
+        mSWebViewLayout.destroyWebView();
     }
 
     protected String h5HandlerName() {
@@ -86,7 +86,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
 
     @Override
     public void onBackPressed() {
-        if (!mSWebViewContainer.webViewCanGoBack()) {
+        if (!mSWebViewLayout.webViewCanGoBack()) {
             super.onBackPressed();
         }
     }

@@ -7,14 +7,14 @@
         android:id="@+id/web_view_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/space_2"
         android:max="100"
-        android:progress="0" />
+        android:progress="0"
+        android:progressDrawable="@color/b3_color" />
 
     <com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView
         android:id="@+id/empty_error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </merge>

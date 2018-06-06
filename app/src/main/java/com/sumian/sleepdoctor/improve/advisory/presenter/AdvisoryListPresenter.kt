@@ -3,7 +3,7 @@ package com.sumian.sleepdoctor.improve.advisory.presenter
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BasePresenter.mCalls
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
-import com.sumian.sleepdoctor.improve.advisory.contract.AdvisoryContract
+import com.sumian.sleepdoctor.improve.advisory.contract.AdvisoryListContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.network.response.PaginationResponse
@@ -15,9 +15,9 @@ import retrofit2.Callback
  * on 2018/6/4 16:01
  * desc:
  **/
-class AdvisoryPresenter private constructor(view: AdvisoryContract.View) : AdvisoryContract.Presenter {
+class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View) : AdvisoryListContract.Presenter {
 
-    private var mView: AdvisoryContract.View? = null
+    private var mView: AdvisoryListContract.View? = null
 
     private var mPageNumber: Int = 1
     private var mAdvisoryType = Advisory.UNUSED_TYPE
@@ -33,8 +33,8 @@ class AdvisoryPresenter private constructor(view: AdvisoryContract.View) : Advis
 
         const val DEFAULT_PAGES: Int = 15
 
-        fun init(view: AdvisoryContract.View) {
-            AdvisoryPresenter(view)
+        fun init(view: AdvisoryListContract.View) {
+            AdvisoryListPresenter(view)
         }
     }
 
@@ -62,9 +62,11 @@ class AdvisoryPresenter private constructor(view: AdvisoryContract.View) : Advis
             override fun onSuccess(response: PaginationResponse<ArrayList<Advisory>>?) {
                 val data = response?.data
                 if (mIsRefresh) {
+                    mIsRefresh = false
                     mPageNumber = 1
                     mView?.onRefreshAdvisoriesSuccess(data!!)
                 } else {
+                    mIsRefresh = false
                     mView?.onGetAdvisoriesSuccess(data!!)
                 }
                 if (data != null && !data.isEmpty()) {
@@ -73,12 +75,12 @@ class AdvisoryPresenter private constructor(view: AdvisoryContract.View) : Advis
             }
 
             override fun onFailure(errorResponse: ErrorResponse?) {
+                mIsRefresh = false
                 mView?.onGetAdvisoriesFailed(errorResponse?.message!!)
             }
 
             override fun onFinish() {
                 super.onFinish()
-                mIsRefresh = false
                 mView?.onFinish()
             }
 
