@@ -130,6 +130,13 @@ interface DoctorApi {
                      @Query("per_page") perPage: Int,
                      @Query("type") type: String): Call<PaginationResponse<Scale>>
 
+    // ---------- device info ----------
+    @POST("portables")
+    @FormUrlEncoded
+    fun uploadDeviceInfo(@Field("device_type") deviceType: String,
+                         @Field("device_token") deviceToken: String,
+                         @Field("system_version") systemVersion: String): Call<Any>
+
     // ---------- doctor ----------
 
     @PATCH("doctor-bind")

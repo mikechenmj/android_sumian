@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.avos.avoscloud.im.v2.AVIMClientOpenOption;
@@ -59,6 +60,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
 
     public ChatEngine(Context context) {
         this.mHandler = new Handler(Looper.getMainLooper(), this);
+        PushService.setDefaultChannelId(context, "push_channel");
         AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
         AVIMClient.setAutoOpen(false);
@@ -188,6 +190,7 @@ public class ChatEngine implements ChatContract.Presenter, Handler.Callback {
         this.mAVIMClient = AVIMClient.getInstance(leancloudId);
 
         AVIMClientOpenOption options = new AVIMClientOpenOption();
+        //noinspection deprecation
         options.setForceSingleLogin(true);
 
         mAVIMClient.open(options, new AVIMClientCallback() {

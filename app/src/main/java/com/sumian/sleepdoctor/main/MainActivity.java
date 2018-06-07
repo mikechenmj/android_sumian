@@ -13,6 +13,7 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
+import com.sumian.sleepdoctor.leanCloud.LeanCloudManager;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.sleepRecord.RecordFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;
@@ -154,6 +155,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         initTab(position);
         mBottomNavigationBar.activateItem(position, false);
         mLaunchData = null;
+        LeanCloudManager.registerPushService(this);
     }
 
     @Override
