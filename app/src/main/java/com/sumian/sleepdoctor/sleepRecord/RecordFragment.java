@@ -27,6 +27,7 @@ import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
+import com.sumian.sleepdoctor.scale.ScaleListActivity;
 import com.sumian.sleepdoctor.sleepRecord.bean.DoctorServiceList;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
@@ -67,6 +68,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     ScrollView mScrollView;
     @BindView(R.id.iv_notification)
     ImageView mIvNotification;
+    @BindView(R.id.dsiv_sleep_scale)
+    DoctorServiceItemView mSleepScale;
 
     private long mPopupDismissTime;
     private SleepCalendarViewWrapper mCalendarViewWrapper;
@@ -227,7 +230,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 });
     }
 
-    @OnClick({R.id.tv_date, R.id.iv_date_arrow, R.id.iv_notification})
+    @OnClick({
+            R.id.tv_date,
+            R.id.iv_date_arrow,
+            R.id.iv_notification,
+            R.id.dsiv_sleep_scale,
+    })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_date:
@@ -236,6 +244,9 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 break;
             case R.id.iv_notification:
                 NotificationListActivity.launch(getActivity());
+                break;
+            case R.id.dsiv_sleep_scale:
+                ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_ALL);
                 break;
         }
     }

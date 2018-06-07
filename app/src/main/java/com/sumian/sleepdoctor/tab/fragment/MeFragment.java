@@ -83,7 +83,7 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
                 UserProfileActivity.show(getContext(), UserProfileActivity.class);
                 break;
             case R.id.dv_my_evaluation:
-                ScaleListActivity.show(getContext(), ScaleListActivity.class);
+                ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_FILLED);
                 break;
             case R.id.dv_my_consulting:
                 AdvisoryListActivity.show(getActivity(), AdvisoryListActivity.class);

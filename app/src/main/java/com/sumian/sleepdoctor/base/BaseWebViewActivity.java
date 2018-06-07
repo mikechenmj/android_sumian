@@ -36,7 +36,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     protected void initWidget(View root) {
         super.initWidget(root);
         mTitleBar.setTitle(initTitle());
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
     }
 
     @Override

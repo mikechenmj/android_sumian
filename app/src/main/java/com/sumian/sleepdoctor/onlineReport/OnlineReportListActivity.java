@@ -36,7 +36,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        titleBar.addOnBackListener(v -> finish());
+        titleBar.setOnBackListener(v -> finish());
         mAdapter = new OnlineReportListAdapter(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);

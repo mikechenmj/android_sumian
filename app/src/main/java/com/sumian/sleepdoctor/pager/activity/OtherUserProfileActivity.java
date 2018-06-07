@@ -61,7 +61,7 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
         mIvAvatarMore.setVisibility(View.INVISIBLE);
         mDvNickname.hideMoreIcon();
         mDvName.hideMoreIcon();

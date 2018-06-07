@@ -141,7 +141,10 @@
         <activity android:name=".sleepRecord.SleepRecordActivity" />
         <activity android:name=".improve.advisory.activity.AdvisoryListActivity" />
         <activity android:name=".improve.advisory.activity.AdvisoryDetailActivity" />
+
+        <!-- scale -->
         <activity android:name=".scale.ScaleListActivity" />
+        <activity android:name=".scale.ScaleDetailActivity" />
     </application>
 
 </manifest>

@@ -82,7 +82,7 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.addItemDecoration(mDecoration = new MemberDecoration());
@@ -187,6 +187,7 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
           //  }
         }
 
+        //noinspection ConstantConditions
         if (position >= 0) {
             RecyclerView.LayoutManager layoutManager = mRecycler.getLayoutManager();
             if (layoutManager instanceof LinearLayoutManager) {

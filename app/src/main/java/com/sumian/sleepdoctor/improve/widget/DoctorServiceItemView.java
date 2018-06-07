@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.improve.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -57,12 +58,16 @@ public class DoctorServiceItemView extends FrameLayout {
         float price = attributes.getFloat(R.styleable.DoctorServiceItemView_dsiv_price, 0f);
         String title = attributes.getString(R.styleable.DoctorServiceItemView_dsiv_title);
         String desc = attributes.getString(R.styleable.DoctorServiceItemView_dsiv_desc);
+        Drawable drawable = attributes.getDrawable(R.styleable.DoctorServiceItemView_dsiv_image);
         attributes.recycle();
 
         showPrice(showPrice);
         setPrice(price);
         setTitle(title);
         setDesc(desc);
+        if (drawable != null) {
+            mImageView.setImageDrawable(drawable);
+        }
     }
 
     public void showPrice(boolean showPrice) {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_t1_16"
+        android:layout_marginEnd="@dimen/space_20"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        tools:text="焦虑情绪评测表" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_20"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10">
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_t2_14"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            tools:text="填写日期：2018-05-17" />
+
+        <TextView
+            android:id="@+id/tv_doctor"
+            style="@style/text_t2_14"
+            tools:text="王医生" />
+    </LinearLayout>
+
+    <View
+        style="@style/HorizontalDividerLine"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20" />
+</LinearLayout>

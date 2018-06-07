@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -77,6 +78,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
+
+            <com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView
+                android:id="@+id/dsiv_sleep_scale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dsiv_desc="@string/fill_scale_hint"
+                app:dsiv_image="@mipmap/ic_scale"
+                app:dsiv_title="@string/sleep_scale" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

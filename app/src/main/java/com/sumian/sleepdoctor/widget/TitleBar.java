@@ -112,7 +112,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return this;
     }
 
-    public TitleBar addOnBackListener(OnBackListener onBackListener) {
+    public TitleBar setOnBackListener(OnBackListener onBackListener) {
         mOnBackListener = onBackListener;
         return this;
     }

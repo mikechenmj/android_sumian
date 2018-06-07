@@ -11,13 +11,12 @@ import com.sumian.common.utils.NotificationUtil;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.notification.bean.Notification;
 import com.sumian.sleepdoctor.widget.TitleBar;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        titleBar.addOnBackListener(v -> finish());
+        titleBar.setOnBackListener(v -> finish());
         titleBar.setMenuOnClickListener(v -> markAllAsRead());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new NotificationListAdapter(this, null);
@@ -144,7 +143,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
 
     @Override
     public void onReadSuccess() {
-        EventBus.getDefault().postSticky(new NotificationReadEvent());
+        EventBusUtil.postSticky(new NotificationReadEvent());
     }
 
     @Override

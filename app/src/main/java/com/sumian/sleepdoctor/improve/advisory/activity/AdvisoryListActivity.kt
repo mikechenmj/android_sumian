@@ -39,7 +39,7 @@ class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnB
     override fun initWidget(root: View?) {
         super.initWidget(root)
 
-        title_bar?.addOnBackListener(this)
+        title_bar?.setOnBackListener(this)
         view_pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
 
             override fun getItem(position: Int): Fragment {

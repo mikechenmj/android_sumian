@@ -92,7 +92,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
     protected void initWidget(View root) {
         super.initWidget(root);
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackListener(this);
     }
 
     @Override
@@ -191,6 +191,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
         this.mGroupDetail = groupDetail;
         runOnUiThread(() -> {
             RequestOptions options = new RequestOptions();
+            //noinspection ResultOfMethodCallIgnored
             options.placeholder(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar).getOptions();
             Glide.with(this).load(groupDetail.avatar).apply(options).into(mIvGroupIcon);
 

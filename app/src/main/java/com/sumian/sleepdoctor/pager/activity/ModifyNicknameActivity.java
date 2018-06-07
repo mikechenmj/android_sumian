@@ -55,7 +55,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
     }
 
 
