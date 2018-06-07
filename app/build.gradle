@@ -353,9 +353,11 @@ dependencies {
     implementation('com.github.lzyzsd:jsbridge:1.0.4') {
         exclude module: 'support-annotations'
     }
+    // Base Adapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
         exclude module: 'support-recyclerview'
     }
+    // EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
 }
