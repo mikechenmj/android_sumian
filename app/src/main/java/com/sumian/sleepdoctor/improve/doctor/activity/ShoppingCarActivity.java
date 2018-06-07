@@ -92,7 +92,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
         mPayGroupView.setOnSelectPayWayListener(this);
         mPayCalculateItemView.setOnMoneyChangeCallback(this);
         mPayDialog = new PayDialog(root.getContext()).bindContentView(R.layout.dialog_pay);

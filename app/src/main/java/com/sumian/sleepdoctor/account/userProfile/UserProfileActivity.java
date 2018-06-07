@@ -97,7 +97,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
         mDvNickname.setOnShowMoreListener(this);
         mDvName.setOnShowMoreListener(this);
         mDvWechat.setOnCheckedChangeListener(this);

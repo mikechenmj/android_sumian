@@ -92,7 +92,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
 
-        mTitleBar.addOnBackListener(this).setMenuOnClickListener(this);
+        mTitleBar.setOnBackListener(this).setMenuOnClickListener(this);
         //  mRefreshView.setOnRefreshListener(this);
 
         if (mGroupDetail.role == 0) {//患者

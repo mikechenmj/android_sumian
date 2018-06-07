@@ -11,7 +11,7 @@ import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
 import com.sumian.sleepdoctor.onlineReport.OnlineReport
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
-import com.sumian.sleepdoctor.scale.ScaleWrapper
+import com.sumian.sleepdoctor.scale.bean.Scale
 import com.sumian.sleepdoctor.sleepRecord.bean.DoctorServiceList
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary
@@ -128,7 +128,7 @@ interface DoctorApi {
     @GET("scale-distributions")
     fun getScaleList(@Query("page") page: Int,
                      @Query("per_page") perPage: Int,
-                     @Query("type") type: String): Call<PaginationResponse<ScaleWrapper>>
+                     @Query("type") type: String): Call<PaginationResponse<Scale>>
 
     // ---------- doctor ----------
 

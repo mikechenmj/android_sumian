@@ -41,7 +41,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
     }
 
     @Override

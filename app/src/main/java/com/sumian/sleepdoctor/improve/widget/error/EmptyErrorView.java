@@ -132,12 +132,24 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
         return emptyErrorView;
     }
 
+    public static EmptyErrorView createNormalEmptyView(Context context) {
+        return EmptyErrorView.create(context,
+                R.mipmap.ic_empty_state_report,
+                0,
+                R.string.no_data_hint);
+    }
+
     public void setIvEmptyIcon(@DrawableRes int icon) {
         mIvEmptyIcon.setImageResource(icon);
     }
 
     public void setTvEmptyMsgTitle(@StringRes int msgTitle) {
-        mTvEmptyMsgTitle.setText(msgTitle);
+        if (msgTitle == 0) {
+            mTvEmptyMsgTitle.setVisibility(GONE);
+        } else {
+            mTvEmptyMsgTitle.setVisibility(VISIBLE);
+            mTvEmptyMsgTitle.setText(msgTitle);
+        }
     }
 
     public void setTvEmptyMsgDesc(@StringRes int msgDesc) {

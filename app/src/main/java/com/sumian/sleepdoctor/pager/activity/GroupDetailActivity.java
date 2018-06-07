@@ -75,7 +75,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
         mSdvRenewal.setOnShowMoreListener(this);
     }
 

@@ -41,7 +41,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this).setMenuOnClickListener(this);
+        mTitleBar.setOnBackListener(this).setMenuOnClickListener(this);
     }
 
     @Override

@@ -81,7 +81,7 @@ public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListe
         }
 
         mTitleBar.setTitle(resType);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
 
         //防止 webview  内存泄漏  不在 xml 文件中声明
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

@@ -54,7 +54,7 @@ public class GroupQrCodeActivity extends BaseActivity implements TitleBar.OnBack
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackListener(this);
     }
 
     @Override

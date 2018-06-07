@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_88"
         android:layout_margin="@dimen/space_10"
-        android:background="@mipmap/bg_notification_head_view"
+        android:background="@mipmap/ic_bg_notification_head_view"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/space_20">

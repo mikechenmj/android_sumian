@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".onlineReport.OnlineReportListActivity">
 
-
     <com.sumian.sleepdoctor.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
