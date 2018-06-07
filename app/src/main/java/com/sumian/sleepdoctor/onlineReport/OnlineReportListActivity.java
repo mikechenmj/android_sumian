@@ -53,9 +53,9 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
 
     private void loadOnlineReports() {
         AppManager.getHttpService().getReports(mPage, PER_PAGE)
-                .enqueue(new BaseResponseCallback<PaginationResponse<List<OnlineReport>>>() {
+                .enqueue(new BaseResponseCallback<PaginationResponse<OnlineReport>>() {
                     @Override
-                    protected void onSuccess(PaginationResponse<List<OnlineReport>> response) {
+                    protected void onSuccess(PaginationResponse<OnlineReport> response) {
                         LogUtils.d(response);
                         List<OnlineReport> reportList = response.data;
                         mAdapter.addData(reportList);

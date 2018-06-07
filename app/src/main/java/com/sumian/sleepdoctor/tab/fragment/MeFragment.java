@@ -19,6 +19,7 @@ import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.pager.activity.SettingActivity;
+import com.sumian.sleepdoctor.scale.ScaleListActivity;
 
 import java.util.Objects;
 
@@ -70,6 +71,7 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
 
     @OnClick({
             R.id.dv_user_info_center,
+            R.id.dv_my_evaluation,
             R.id.dv_my_consulting,
             R.id.dv_setting,
             R.id.dv_electric_report,
@@ -79,6 +81,9 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
         switch (v.getId()) {
             case R.id.dv_user_info_center:
                 UserProfileActivity.show(getContext(), UserProfileActivity.class);
+                break;
+            case R.id.dv_my_evaluation:
+                ScaleListActivity.show(getContext(), ScaleListActivity.class);
                 break;
             case R.id.dv_my_consulting:
                 AdvisoryListActivity.show(getActivity(), AdvisoryListActivity.class);

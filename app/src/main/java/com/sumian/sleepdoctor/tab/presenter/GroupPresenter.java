@@ -29,7 +29,7 @@ public class GroupPresenter implements GroupContract.Presenter {
     private int mNextPage;
     private static final int PER_PAGE = 15;
 
-    private Call<PaginationResponse<List<GroupDetail<UserProfile, UserProfile>>>> mCall;
+    private Call<PaginationResponse<GroupDetail<UserProfile, UserProfile>>> mCall;
 
     private GroupPresenter(GroupContract.View view) {
         view.setPresenter(this);
@@ -55,9 +55,9 @@ public class GroupPresenter implements GroupContract.Presenter {
         map.put("per_page", PER_PAGE);
 
         mCall = AppManager.getHttpService().getGroups(map);
-        mCall.enqueue(new BaseResponseCallback<PaginationResponse<List<GroupDetail<UserProfile, UserProfile>>>>() {
+        mCall.enqueue(new BaseResponseCallback<PaginationResponse<GroupDetail<UserProfile, UserProfile>>>() {
             @Override
-            protected void onSuccess(PaginationResponse<List<GroupDetail<UserProfile, UserProfile>>> response) {
+            protected void onSuccess(PaginationResponse<GroupDetail<UserProfile, UserProfile>> response) {
                 List<GroupDetail<UserProfile, UserProfile>> data = response.data;
 
                 if (data == null) {

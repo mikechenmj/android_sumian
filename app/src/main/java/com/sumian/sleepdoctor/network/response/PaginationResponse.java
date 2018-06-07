@@ -8,9 +8,9 @@ import java.util.List;
  * desc:
  */
 @SuppressWarnings("WeakerAccess")
-public class PaginationResponse<Data> {
+public class PaginationResponse<T> {
 
-    public Data data;
+    public List<T> data;
     public Pagination meta;
 
     @Override

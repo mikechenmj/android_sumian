@@ -14,13 +14,13 @@ interface AdvisoryListContract {
 
     interface View : BaseView<Presenter> {
 
-        fun onGetAdvisoriesSuccess(advisories: ArrayList<Advisory>)
+        fun onGetAdvisoriesSuccess(advisories: List<Advisory>)
 
         fun onGetAdvisoriesFailed(error: String)
 
-        fun onGetNextAdvisoriesSuccess(advisories: ArrayList<Advisory>)
+        fun onGetNextAdvisoriesSuccess(advisories: List<Advisory>)
 
-        fun onRefreshAdvisoriesSuccess(advisories: ArrayList<Advisory>)
+        fun onRefreshAdvisoriesSuccess(advisories: List<Advisory>)
 
     }
 

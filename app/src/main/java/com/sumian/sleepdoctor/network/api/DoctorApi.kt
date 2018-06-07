@@ -11,6 +11,7 @@ import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
 import com.sumian.sleepdoctor.onlineReport.OnlineReport
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
+import com.sumian.sleepdoctor.scale.ScaleWrapper
 import com.sumian.sleepdoctor.sleepRecord.bean.DoctorServiceList
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary
@@ -60,7 +61,7 @@ interface DoctorApi {
     fun uploadAvatar(): Call<OssResponse>
 
     @GET("user/groups")
-    fun getGroups(@QueryMap map: MutableMap<String, Int>): Call<PaginationResponse<List<GroupDetail<UserProfile, UserProfile>>>>
+    fun getGroups(@QueryMap map: MutableMap<String, Int>): Call<PaginationResponse<GroupDetail<UserProfile, UserProfile>>>
 
     @GET("groups/{id}")
     fun getGroupsDetail(@Path("id") groupId: Int, @Query("include") include: String): Call<GroupDetail<UserProfile, UserProfile>>
@@ -110,7 +111,7 @@ interface DoctorApi {
      */
     @GET("/online-reports")
     fun getReports(@Query("page") page: Int,
-                     @Query("per_page") perPage: Int): Call<PaginationResponse<List<OnlineReport>>>
+                   @Query("per_page") perPage: Int): Call<PaginationResponse<OnlineReport>>
 
     @GET("services")
     fun getServiceList(): Call<DoctorServiceList>
@@ -122,6 +123,12 @@ interface DoctorApi {
 
     @PATCH("notifications/{id}")
     fun readNotification(@Path("id") notificationId: String): Call<Any>
+
+    // ---------- scale ----------
+    @GET("scale-distributions")
+    fun getScaleList(@Query("page") page: Int,
+                     @Query("per_page") perPage: Int,
+                     @Query("type") type: String): Call<PaginationResponse<ScaleWrapper>>
 
     // ---------- doctor ----------
 
@@ -145,7 +152,7 @@ interface DoctorApi {
     //user advisory
 
     @GET("advisories")
-    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<ArrayList<Advisory>>>
+    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Advisory>>
 
     @GET("advisories/{id}")
     fun getDoctorAdvisoryDetails(@Path("id") advisoryId: Int, @QueryMap map: MutableMap<String, Any>): Call<Advisory>

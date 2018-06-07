@@ -306,7 +306,8 @@ dependencies {
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
-    implementation "android.arch.lifecycle:viewmodel:1.1.1" // for ViewModelProviders, since lifecycle:extensions do Not container this class
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    // for ViewModelProviders, since lifecycle:extensions do Not container this class
 
     // Java8 support for Lifecycles
     implementation 'android.arch.lifecycle:common-java8:1.1.1'

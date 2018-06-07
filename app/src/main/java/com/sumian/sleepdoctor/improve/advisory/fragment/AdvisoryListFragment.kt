@@ -95,7 +95,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
         refresh.hideRefreshAnim()
     }
 
-    override fun onGetAdvisoriesSuccess(advisories: ArrayList<Advisory>) {
+    override fun onGetAdvisoriesSuccess(advisories: List<Advisory>) {
         if (advisories.isEmpty()) {
             empty_error_view.invalidAdvisoryError()
             recycler.visibility = View.GONE
@@ -110,14 +110,14 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
         showCenterToast(error)
     }
 
-    override fun onGetNextAdvisoriesSuccess(advisories: ArrayList<Advisory>) {
+    override fun onGetNextAdvisoriesSuccess(advisories: List<Advisory>) {
         if (advisories.isEmpty()) return
         mListAdapter.addAll(advisories)
         recycler.visibility = View.VISIBLE
         empty_error_view.hide()
     }
 
-    override fun onRefreshAdvisoriesSuccess(advisories: ArrayList<Advisory>) {
+    override fun onRefreshAdvisoriesSuccess(advisories: List<Advisory>) {
         if (advisories.isEmpty()) return
         mListAdapter.resetItem(advisories)
         recycler.visibility = View.VISIBLE

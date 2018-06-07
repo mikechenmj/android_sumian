@@ -58,8 +58,8 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
 
         val call = AppManager.getHttpService().getDoctorAdvisories(map)
         mCalls?.add(call)
-        call.enqueue(object : BaseResponseCallback<PaginationResponse<ArrayList<Advisory>>>(), Callback<PaginationResponse<ArrayList<Advisory>>> {
-            override fun onSuccess(response: PaginationResponse<ArrayList<Advisory>>?) {
+        call.enqueue(object : BaseResponseCallback<PaginationResponse<Advisory>>(), Callback<PaginationResponse<Advisory>> {
+            override fun onSuccess(response: PaginationResponse<Advisory>?) {
                 val data = response?.data
                 if (mIsRefresh) {
                     mIsRefresh = false
