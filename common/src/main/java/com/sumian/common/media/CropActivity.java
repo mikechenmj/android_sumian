@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.R;
+import com.sumian.common.media.config.SelectOptions;
 import com.sumian.common.utils.StreamUtil;
 
 import java.io.FileOutputStream;
@@ -50,7 +51,7 @@ public class CropActivity extends AppCompatActivity implements View.OnClickListe
     private void initWidget() {
         setTitle("");
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        mCropLayout = (CropLayout) findViewById(R.id.cropLayout);
+        mCropLayout = findViewById(R.id.cropLayout);
 
         mCrop = findViewById(R.id.tv_crop);
         mCancel = findViewById(R.id.tv_cancel);
@@ -62,11 +63,8 @@ public class CropActivity extends AppCompatActivity implements View.OnClickListe
 
         String url = mOption.getSelectedImages().get(0);
 
-        RequestOptions options = new RequestOptions();
-        options.fitCenter().getOptions();
 
-        Glide.with(this).load(url)
-                .apply(options)
+        Glide.with(this).load(url).apply(RequestOptions.centerCropTransform())
                 .into(mCropLayout.getImageView());
 
         mCropLayout.setCropWidth(mOption.getCropWidth());

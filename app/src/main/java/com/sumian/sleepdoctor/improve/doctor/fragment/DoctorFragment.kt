@@ -80,7 +80,7 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
     }
 
     override fun onGrantedSuccess() {
-        ScanDoctorQrCodeActivity.show(context, ScanDoctorQrCodeActivity::class.java)
+        ScanDoctorQrCodeActivity.show(context!!, ScanDoctorQrCodeActivity::class.java)
     }
 
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {

@@ -21,9 +21,8 @@ import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.common.media.Callback;
-import com.sumian.common.media.ImagePickerActivity;
-import com.sumian.common.media.SelectOptions;
+import com.sumian.common.media.activity.ImageGalleryActivity;
+import com.sumian.common.media.config.SelectOptions;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.chat.contract.MsgContract;
@@ -233,23 +232,18 @@ public class MsgPresenter implements MsgContract.Presenter {
     }
 
     private void picLocal(Activity activity) {
-        ImagePickerActivity.show(activity, new SelectOptions
+        ImageGalleryActivity.show(activity, String.valueOf(new SelectOptions
                 .Builder()
                 .setHasCam(false)
                 .setSelectCount(9)
                 .setSelectedImages(new String[]{})
-                .setCallback(new Callback() {
-
-                    @Override
-                    public void doSelected(String[] images) {
-                        super.doSelected(images);
-                        for (String image : images) {
-                            Log.e(TAG, "doSelected: -------->" + image);
-                            AVIMImageMessage msg = initImageMsg(image);
-                            sendMsg(msg);
-                        }
+                .setCallback(images -> {
+                    for (String image : images) {
+                        Log.e(TAG, "doSelected: -------->" + image);
+                        AVIMImageMessage msg = initImageMsg(image);
+                        sendMsg(msg);
                     }
-                }).build());
+                }).build()));
     }
 
     private File generateImagePath(String userName, Context applicationContext) {

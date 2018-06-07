@@ -14,23 +14,24 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.sumian.common.R;
-import com.sumian.common.base.BaseRecyclerAdapter;
+import com.sumian.common.media.adapter.ImageFolderAdapter;
+import com.sumian.common.media.base.BaseRecyclerAdapter;
+import com.sumian.common.media.bean.ImageFolder;
 
 /**
- * Created by haibin
- * on 17/2/27.
+ * 图片选择器菜单选择界面
  */
-class ImageFolderPopupWindow extends PopupWindow implements
-    View.OnAttachStateChangeListener,
-    BaseRecyclerAdapter.OnItemClickListener {
-    private FolderAdapter mAdapter;
+public class ImageFolderPopupWindow extends PopupWindow implements
+        View.OnAttachStateChangeListener,
+        BaseRecyclerAdapter.OnItemClickListener {
+    private ImageFolderAdapter mAdapter;
     private RecyclerView mFolderView;
     private Callback mCallback;
 
-    @SuppressLint("InflateParams")
-    ImageFolderPopupWindow(Context context, Callback callback) {
+     @SuppressLint("InflateParams")
+     ImageFolderPopupWindow(Context context, Callback callback) {
         super(LayoutInflater.from(context).inflate(R.layout.popup_window_folder, null),
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         mCallback = callback;
 
@@ -42,7 +43,12 @@ class ImageFolderPopupWindow extends PopupWindow implements
 
         // content
         View content = getContentView();
-        content.setOnClickListener(v -> dismiss());
+        content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         content.addOnAttachStateChangeListener(this);
 
         mFolderView = (RecyclerView) content.findViewById(R.id.rv_popup_folder);
@@ -50,7 +56,7 @@ class ImageFolderPopupWindow extends PopupWindow implements
 
     }
 
-    void setAdapter(FolderAdapter adapter) {
+    public void setAdapter(ImageFolderAdapter adapter) {
         this.mAdapter = adapter;
         mFolderView.setAdapter(adapter);
         mAdapter.setOnItemClickListener(this);
@@ -58,12 +64,13 @@ class ImageFolderPopupWindow extends PopupWindow implements
 
     @Override
     public void showAsDropDown(View anchor) {
-        if (Build.VERSION.SDK_INT >= 24) {
+        if(Build.VERSION.SDK_INT >= 24){
             Rect visibleFrame = new Rect();
             anchor.getGlobalVisibleRect(visibleFrame);
             int height = anchor.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
             setHeight(height);
         }
+
         super.showAsDropDown(anchor);
     }
 
@@ -88,8 +95,8 @@ class ImageFolderPopupWindow extends PopupWindow implements
             callback.onSelect(this, mAdapter.getItem(position));
     }
 
-    interface Callback {
-        void onSelect(ImageFolderPopupWindow popupWindow, Folder model);
+    public interface Callback {
+        void onSelect(ImageFolderPopupWindow popupWindow, ImageFolder model);
 
         void onDismiss();
 

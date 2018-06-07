@@ -5,7 +5,7 @@
     android:background="#000000"
     android:orientation="vertical">
 
-    <com.sumian.common.media.CropLayout
+    <com.sumian.sleepdoctor.improve.media.CropLayout
         android:id="@+id/cropLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

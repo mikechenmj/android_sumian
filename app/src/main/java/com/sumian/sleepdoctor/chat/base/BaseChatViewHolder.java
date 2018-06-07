@@ -29,10 +29,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.span.QMUIAlignMiddleImageSpan;
 import com.qmuiteam.qmui.span.QMUIMarginImageSpan;
-import com.sumian.common.media.Image;
-import com.sumian.common.media.ImageGalleryActivity;
 import com.sumian.common.media.MediaUtil;
-import com.sumian.common.media.SelectOptions;
+import com.sumian.common.media.activity.ImageGalleryActivity;
+import com.sumian.common.media.bean.Image;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -59,6 +58,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
+@SuppressWarnings("ALL")
 public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
 
     private static final String TAG = BaseChatViewHolder.class.getSimpleName();
@@ -180,11 +180,11 @@ public abstract class BaseChatViewHolder<Item> extends BaseViewHolder<Item> {
                 .into(glideImageView);
 
         glideImageView.setOnClickListener(v -> {
-            List<Image> mSelectedImage = new ArrayList<>();
+            ArrayList<Image> mSelectedImage = new ArrayList<>();
             Image image = new Image();
             image.setPath(mMediaUrlPath);
             mSelectedImage.add(image);
-            ImageGalleryActivity.show(v.getContext(), new SelectOptions.Builder().setSelectedImages(MediaUtil.toArray(mSelectedImage)).build(), 0);
+            ImageGalleryActivity.show(v.getContext(), MediaUtil.toArray(mSelectedImage), 0);
         });
     }
 

@@ -18,9 +18,9 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.sumian.common.media.Callback;
-import com.sumian.common.media.ImagePickerActivity;
-import com.sumian.common.media.SelectOptions;
+import com.sumian.common.media.SelectImageActivity;
+import com.sumian.common.media.activity.ImageGalleryActivity;
+import com.sumian.common.media.config.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
@@ -242,22 +242,18 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onPicPictureCallback() {
-        ImagePickerActivity.show(this, new SelectOptions
+        SelectImageActivity.show(this, new SelectOptions
                 .Builder()
                 .setHasCam(false)
                 .setSelectCount(1)
                 .setSelectedImages(new String[]{})
-                .setCallback(new Callback() {
-                    @Override
-                    public void doSelected(String[] images) {
-                        super.doSelected(images);
-                        for (String image : images) {
-                            mLocalImagePath = image;
-                            RequestOptions options = new RequestOptions();
-                            options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
-                            Glide.with(getApplicationContext()).load(image).apply(options).into(mIvAvatar);
-                            upload();
-                        }
+                .setCallback(images -> {
+                    for (String image : images) {
+                        mLocalImagePath = image;
+                        RequestOptions options = new RequestOptions();
+                        options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
+                        Glide.with(getApplicationContext()).load(image).apply(options).into(mIvAvatar);
+                        upload();
                     }
                 }).build());
     }

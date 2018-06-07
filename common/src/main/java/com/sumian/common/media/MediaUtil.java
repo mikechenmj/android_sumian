@@ -8,6 +8,8 @@ import android.os.Environment;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.sumian.common.media.bean.Image;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -55,7 +57,7 @@ public class MediaUtil {
      * @return width
      */
     @SuppressWarnings({"ConstantConditions", "deprecation"})
-    static int getScreenWidth(Context context) {
+   public static int getScreenWidth(Context context) {
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
         return display.getWidth();

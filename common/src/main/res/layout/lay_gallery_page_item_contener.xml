@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.common.media.ImagePreviewView
+    <com.sumian.sleepdoctor.improve.media.ImagePreviewView
         android:id="@+id/iv_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

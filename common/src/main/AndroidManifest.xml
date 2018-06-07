@@ -37,8 +37,9 @@
         android:theme="@style/app_default_theme">
 
         <activity android:name=".media.CropActivity" />
-        <activity android:name=".media.ImageGalleryActivity" />
-        <activity android:name=".media.ImagePickerActivity" />
+        <activity android:name=".media.activity.ImageGalleryActivity" />
+        <activity android:name=".media.activity.LargeImageActivity" />
+        <activity android:name=".media.SelectImageActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

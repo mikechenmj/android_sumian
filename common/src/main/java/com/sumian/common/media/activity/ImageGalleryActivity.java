@@ -1,4 +1,4 @@
-package com.sumian.common.media;
+package com.sumian.common.media.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,29 +16,30 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.sumian.common.R;
+import com.sumian.common.base.BaseActivity;
+import com.sumian.common.media.ImagePreviewView;
+import com.sumian.common.media.PreviewerViewPager;
+import com.sumian.common.operator.AppOperator;
 import com.sumian.common.utils.BitmapUtil;
-import com.sumian.common.utils.CollectionUtil;
 import com.sumian.common.utils.StreamUtil;
+import com.sumian.common.widget.Loading;
 
 import java.io.File;
 import java.util.List;
@@ -49,70 +50,97 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * Created by haibin
- * on 17/2/27.
+ * 图片预览Activity
  */
-@SuppressWarnings("unused")
-public class ImageGalleryActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,
-        EasyPermissions.PermissionCallbacks {
+public class ImageGalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener,
+        EasyPermissions.PermissionCallbacks, View.OnClickListener {
+    public static final String KEY_IMAGE = "images";
+    public static final String KEY_POSITION = "position";
+    public static final String KEY_NEED_SAVE = "save";
     private PreviewerViewPager mImagePager;
     private TextView mIndexText;
-    private ImageView mImageSave;
-    private int mCurPosition;
-
     private String[] mImageSources;
-    private boolean[] mImageDownloadStatus;
+    private int mCurPosition;
     private boolean mNeedSaveLocal;
-    private RequestManager mLoader;
+    private boolean[] mImageDownloadStatus;
 
-    public static SelectOptions mOptions;
+    public static void show(Context context, String images) {
+        show(context, images, true);
+    }
 
-
-    public static void show(Context context, SelectOptions options, int position) {
-        if (options == null || options.getSelectedImages() == null && options.getSelectedImages().size() == 0)
+    public static void show(Context context, String images, boolean needSaveLocal) {
+        if (images == null)
             return;
-        mOptions = options;
+        show(context, new String[]{images}, 0, needSaveLocal);
+    }
+
+    public static void show(Context context, String images, boolean needSaveLocal, boolean needCookie) {
+        if (images == null)
+            return;
+        show(context, new String[]{images}, 0, needSaveLocal, needCookie);
+    }
+
+    public static void show(Context context, String[] images, int position) {
+        show(context, images, position, true);
+    }
+
+    public static void show(Context context, String[] images, int position, boolean needSaveLocal) {
+        show(context, images, position, needSaveLocal, false);
+    }
+
+    public static void show(Context context, String[] images, int position, boolean needSaveLocal, boolean needCookie) {
+        if (images == null || images.length == 0)
+            return;
+        if (images.length == 1 && !images[0].endsWith(".gif") && !images[0].endsWith(".GIF") && !needCookie) {
+            LargeImageActivity.show(context, images[0]);
+            return;
+        }
         Intent intent = new Intent(context, ImageGalleryActivity.class);
-        intent.putExtra("position", position);
+        intent.putExtra(KEY_IMAGE, images);
+        intent.putExtra(KEY_POSITION, position);
+        intent.putExtra(KEY_NEED_SAVE, needSaveLocal);
         context.startActivity(intent);
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_Translate);
-        setContentView(R.layout.activity_image_gallery);
-        initBundle(getIntent().getExtras());
-        initWidget();
-        initData();
-    }
-
-
     protected boolean initBundle(Bundle bundle) {
-        if (mOptions != null) {
+        mImageSources = bundle.getStringArray(KEY_IMAGE);
+        mCurPosition = bundle.getInt(KEY_POSITION, 0);
+        mNeedSaveLocal = bundle.getBoolean(KEY_NEED_SAVE, true);
+
+        if (mImageSources != null) {
             // 初始化下载状态
-            mImageSources = CollectionUtil.toArray(mOptions.getSelectedImages(), String.class);
             mImageDownloadStatus = new boolean[mImageSources.length];
-            mNeedSaveLocal = !TextUtils.isEmpty(mOptions.getSavePath());
             return true;
         }
 
         return false;
     }
 
-
-    private void initWidget() {
+    @Override
+    protected void initWindow() {
+        super.initWindow();
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+    }
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_image_gallery;
+    }
+
+    @Override
+    protected void initWidget() {
+        super.initWidget();
         setTitle("");
-        mImageSave = (ImageView) findViewById(R.id.iv_save);
-        mImageSave.setOnClickListener(v -> saveToFileByPermission());
-        mImagePager = (PreviewerViewPager) findViewById(R.id.vp_image);
-        mIndexText = (TextView) findViewById(R.id.tv_index);
+
+        mImagePager = findViewById(R.id.vp_image);
+        mIndexText = findViewById(R.id.tv_index);
         mImagePager.addOnPageChangeListener(this);
     }
 
-    private void initData() {
-        mLoader = Glide.with(this);
+    @Override
+    protected void initData() {
+        super.initData();
         int len = mImageSources.length;
         if (mCurPosition < 0 || mCurPosition >= len)
             mCurPosition = 0;
@@ -129,9 +157,11 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
 
     private void changeSaveButtonStatus(boolean isShow) {
         if (mNeedSaveLocal) {
-            mImageSave.setVisibility(isShow ? View.VISIBLE : View.GONE);
+            ImageView imageView = findViewById(R.id.iv_save);
+            imageView.setOnClickListener(this);
+            imageView.setVisibility(isShow ? View.VISIBLE : View.GONE);
         } else
-            mImageSave.setVisibility(View.GONE);
+            findViewById(R.id.iv_save).setVisibility(View.GONE);
     }
 
     private void updateDownloadStatus(int pos, boolean isOk) {
@@ -155,12 +185,13 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        Toast.makeText(this, R.string.gallery_save_file_not_have_external_storage_permission, Toast.LENGTH_SHORT).show();
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
         }
@@ -168,13 +199,7 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
 
     private void saveToFile() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(this, "没有外部存储", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        String extDir = mOptions.getSavePath();
-        File file = new File(extDir);
-        if (!file.exists()) {
-            Toast.makeText(this, "没有指定存储路径", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.gallery_save_file_not_have_external_storage, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -182,36 +207,37 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
 
         Object urlOrPath;
         // Do load
-       // if (mOptions.getHeaders() != null)
-        //    urlOrPath = getGlideUrlByUser(path);
-        //else
-            urlOrPath = path;
+        urlOrPath = path;
 
         // In this save max image size is source
-        final Future<File> future = mLoader
+        final Future<File> future = getImageLoader()
                 .load(urlOrPath)
                 .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
 
-        try {
-            File sourceFile = future.get();
-            if (sourceFile == null || !sourceFile.exists())
-                return;
-            String extension = MediaUtil.getExtension(sourceFile.getAbsolutePath());
-            File extDirFile = new File(extDir);
-            if (!extDirFile.exists()) {
-                if (!extDirFile.mkdirs()) {
-                    // If mk dir error
-                    callSaveStatus(false, null);
+        AppOperator.runOnThread(() -> {
+            try {
+                File sourceFile = future.get();
+                if (sourceFile == null || !sourceFile.exists())
                     return;
+                String extension = BitmapUtil.getExtension(sourceFile.getAbsolutePath());
+                String extDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        .getAbsolutePath() + File.separator + "开源中国";
+                File extDirFile = new File(extDir);
+                if (!extDirFile.exists()) {
+                    if (!extDirFile.mkdirs()) {
+                        // If mk dir error
+                        callSaveStatus(false, null);
+                        return;
+                    }
                 }
+                final File saveFile = new File(extDirFile, String.format("IMG_%s.%s", System.currentTimeMillis(), extension));
+                final boolean isSuccess = StreamUtil.copyFile(sourceFile, saveFile);
+                callSaveStatus(isSuccess, saveFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+                callSaveStatus(false, null);
             }
-            final File saveFile = new File(extDirFile, String.format("IMG_%s.%s", System.currentTimeMillis(), extension));
-            final boolean isSuccess = StreamUtil.copyFile(sourceFile, saveFile);
-            callSaveStatus(isSuccess, saveFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            callSaveStatus(false, null);
-        }
+        });
     }
 
     private void callSaveStatus(final boolean success, final File savePath) {
@@ -220,9 +246,9 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
                 // notify
                 Uri uri = Uri.fromFile(savePath);
                 sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                Toast.makeText(ImageGalleryActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImageGalleryActivity.this, R.string.gallery_save_file_success, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(ImageGalleryActivity.this, "保存失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImageGalleryActivity.this, R.string.gallery_save_file_failed, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -249,13 +275,14 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
 
     @SuppressLint("ObsoleteSdkInt")
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    @SuppressWarnings({"deprecation", "ConstantConditions"})
+    @SuppressWarnings("deprecation")
     private synchronized Point getDisplayDimens() {
         if (mDisplayDimens != null) {
             return mDisplayDimens;
         }
         Point displayDimens;
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        assert windowManager != null;
         Display display = windowManager.getDefaultDisplay();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             displayDimens = new Point();
@@ -265,11 +292,16 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
         }
 
         // In this we can only get 85% width and 60% height
-        displayDimens.y = (int) (displayDimens.y * 0.60f);
-        displayDimens.x = (int) (displayDimens.x * 0.85f);
+        //displayDimens.y = (int) (displayDimens.y * 0.60f);
+        //displayDimens.x = (int) (displayDimens.x * 0.85f);
 
         mDisplayDimens = displayDimens;
         return mDisplayDimens;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 
     private class ViewPagerAdapter extends PagerAdapter implements ImagePreviewView.OnReachBorderListener {
@@ -289,21 +321,15 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            View view = LayoutInflater.from(container.getContext()).inflate(R.layout.lay_gallery_page_item_contener, container, false);
-            ImagePreviewView previewView = (ImagePreviewView) view.findViewById(R.id.iv_preview);
+            View view = LayoutInflater.from(container.getContext())
+                    .inflate(R.layout.lay_gallery_page_item_contener, container, false);
+            ImagePreviewView previewView = view.findViewById(R.id.iv_preview);
             previewView.setOnReachBorderListener(this);
-            ImageView defaultView = (ImageView) view.findViewById(R.id.iv_default);
+            Loading loading = view.findViewById(R.id.loading);
+            ImageView defaultView = view.findViewById(R.id.iv_default);
 
-            RequestOptions options = new RequestOptions();
-            options.fitCenter().getOptions();
-
-            mLoader.load(mImageSources[position]).apply(options).into(previewView);
-            ProgressBar loading = (ProgressBar) view.findViewById(R.id.progressBar);
-
-           // if (mOptions.getHeaders() != null)
-            //    loadImage(position, getGlideUrlByUser(mImageSources[position]), previewView, defaultView, loading);
-            //else
-                loadImage(position, mImageSources[position], previewView, defaultView, loading);
+            // Do load
+            loadImage(position, mImageSources[position], previewView, defaultView, loading);
 
             previewView.setOnClickListener(getListener());
             container.addView(view);
@@ -328,102 +354,103 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
         }
 
         private <T> void loadImage(final int pos, final T urlOrPath, final ImageView previewView,
-                                   final ImageView defaultView, final ProgressBar loading) {
+                                   final ImageView defaultView, final Loading loading) {
 
             loadImageDoDownAndGetOverrideSize(urlOrPath, (overrideW, overrideH, isTrue) -> {
-                RequestOptions options = new RequestOptions();
 
-                // If download or get option error we not set override
-                if (isTrue && overrideW > 0 && overrideH > 0) {
-                    options.override(overrideW, overrideH).fitCenter().getOptions();
-                }
+                RequestOptions options = RequestOptions.centerCropTransform().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
 
-                mLoader.load(urlOrPath)
+                RequestBuilder builder = getImageLoader()
+                        .load(urlOrPath)
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 if (e != null)
                                     e.printStackTrace();
-//                                    loading.stop();
+                                loading.stop();
                                 loading.setVisibility(View.GONE);
                                 defaultView.setVisibility(View.VISIBLE);
                                 updateDownloadStatus(pos, false);
-
                                 return false;
                             }
 
                             @Override
                             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                loading.stop();
                                 loading.setVisibility(View.GONE);
                                 updateDownloadStatus(pos, true);
                                 return false;
                             }
-                        }).apply(options).into(previewView);
+                        });
+
+                // If download or get option error we not set override
+                if (isTrue && overrideW > 0 && overrideH > 0) {
+                    options = options.override(overrideW, overrideH).fitCenter();
+                }
+                builder.apply(options).into(previewView);
             });
         }
 
-        @SuppressWarnings("deprecation")
         private <T> void loadImageDoDownAndGetOverrideSize(final T urlOrPath, final DoOverrideSizeCallback callback) {
             // In this save max image size is source
-            final Future<File> future = Glide.with(ImageGalleryActivity.this).load(urlOrPath)
+            final Future<File> future = getImageLoader().load(urlOrPath)
                     .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
 
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        File sourceFile = future.get();
+            AppOperator.runOnThread(() -> {
+                try {
+                    File sourceFile = future.get();
 
-                        BitmapFactory.Options options = new BitmapFactory.Options();
-                        // First decode with inJustDecodeBounds=true to checkShare dimensions
-                        options.inJustDecodeBounds = true;
-                        // First decode with inJustDecodeBounds=true to checkShare dimensions
-                        BitmapFactory.decodeFile(sourceFile.getAbsolutePath(), options);
+                    BitmapFactory.Options options = BitmapUtil.createOptions();
+                    // First decode with inJustDecodeBounds=true to checkShare dimensions
+                    options.inJustDecodeBounds = true;
+                    // First decode with inJustDecodeBounds=true to checkShare dimensions
+                    BitmapFactory.decodeFile(sourceFile.getAbsolutePath(), options);
 
-                        int width = options.outWidth;
-                        int height = options.outHeight;
-                        BitmapUtil.resetOptions(options);
+                    int width = options.outWidth;
+                    int height = options.outHeight;
+                    BitmapUtil.resetOptions(options);
 
-                        if (width > 0 && height > 0) {
-                            // Get Screen
-                            final Point point = getDisplayDimens();
+                    if (width > 0 && height > 0) {
+                        // Get Screen
+                        final Point point = getDisplayDimens();
 
-                            // This max size
-                            final int maxLen = Math.min(Math.min(point.y, point.x) * 5, 1366 * 3);
+                        // This max size
+                        final int maxLen = Math.min(Math.min(point.y, point.x) * 5, 1366 * 3);
 
-                            // Init override size
-                            final int overrideW, overrideH;
+                        // Init override size
+                        final int overrideW, overrideH;
 
-                            if ((width / (float) height) > (point.x / (float) point.y)) {
-                                overrideH = Math.min(height, point.y);
-                                overrideW = Math.min(width, maxLen);
-                            } else {
-                                overrideW = Math.min(width, point.x);
-                                overrideH = Math.min(height, maxLen);
-                            }
-
-                            // Call back on main thread
-                            runOnUiThread(() -> callback.onDone(overrideW, overrideH, true));
+                        if ((width / (float) height) > (point.x / (float) point.y)) {
+                            overrideH = Math.min(height, point.y);
+                            overrideW = Math.min(width, maxLen);
                         } else {
-                            // Call back on main thread
-                            runOnUiThread(() -> callback.onDone(0, 0, false));
+                            overrideW = Math.min(width, point.x);
+                            overrideH = Math.min(height, maxLen);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
 
+                        // Call back on main thread
+                        runOnUiThread(() -> callback.onDone(overrideW, overrideH, true));
+                    } else {
                         // Call back on main thread
                         runOnUiThread(() -> callback.onDone(0, 0, false));
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                    // Call back on main thread
+                    runOnUiThread(() -> callback.onDone(0, 0, false));
                 }
-            }.start();
+            });
         }
 
 
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
@@ -431,15 +458,4 @@ public class ImageGalleryActivity extends AppCompatActivity implements ViewPager
     interface DoOverrideSizeCallback {
         void onDone(int overrideW, int overrideH, boolean isTrue);
     }
-
-    @Override
-    protected void onDestroy() {
-        mOptions = null;
-        super.onDestroy();
-    }
-
-    //private GlideUrl getGlideUrlByUser(String url) {
-       //// if (mOptions == null || mOptions.getHeaders() == null) return new GlideUrl(url);
-    //    return new GlideUrl(url, mOptions.getHeaders());
-    //}
 }

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu_text="@string/submit"
+        app:show_back="true"
+        app:text="向张三医生提问" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <android.support.text.emoji.widget.EmojiAppCompatEditText
+            android:id="@+id/et_input"
+            style="@style/text_t1_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_264"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="@string/input_question_hint"
+            android:padding="@dimen/space_20"
+            android:textColorHint="@color/t2_color" />
+
+        <TextView
+            android:id="@+id/tv_input_text_count"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:text="0/500"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/photo_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_120"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/white">
+
+        <com.sumian.sleepdoctor.improve.media.widget.TweetPicturesPreviewer
+            android:id="@+id/recycler_images"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_64"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_t1_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_20"
+            android:text="@string/select_report" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_report_count"
+            style="@style/text_t2_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_20"
+            android:text="已选择1份"
+            android:textColor="@color/t4_color"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:layout_width="@dimen/space_10"
+            android:layout_height="@dimen/space_16"
+            android:layout_gravity="center|right"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:contentDescription="@null"
+            app:srcCompat="@mipmap/ic_record_icon_right"
+            tools:ignore="RtlHardcoded" />
+
+    </LinearLayout>
+
+</LinearLayout>

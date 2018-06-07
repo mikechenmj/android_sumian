@@ -1,145 +1,171 @@
 package com.sumian.common.media;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
+import android.support.v4.content.FileProvider;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.R;
-import com.sumian.common.base.BaseRecyclerAdapter;
-import com.sumian.common.helper.FileProviderHelper;
+import com.sumian.common.base.BaseFragment;
+import com.sumian.common.media.activity.ImageGalleryActivity;
+import com.sumian.common.media.adapter.ImageAdapter;
+import com.sumian.common.media.adapter.ImageFolderAdapter;
+import com.sumian.common.media.base.BaseRecyclerAdapter;
+import com.sumian.common.media.bean.Image;
+import com.sumian.common.media.bean.ImageFolder;
+import com.sumian.common.media.config.ImageLoaderListener;
+import com.sumian.common.media.config.SelectOptions;
+import com.sumian.common.media.contract.SelectImageContract;
+import com.sumian.common.widget.empty.EmptyLayout;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by haibin
- * on 17/2/27.
+ * 图片选择库实现界面
+ * Created by huanghaibin_dev
+ * on 2016/7/13.
+ * <p>
+ * Changed by qiujuer
+ * on 2016/09/01
  */
-public class ImagePickerFragment extends Fragment implements Contract.View, View.OnClickListener,
-        BaseRecyclerAdapter.OnItemClickListener {
-
-    private static final String TAG = ImagePickerFragment.class.getSimpleName();
-
-    private static final String ARGS_OPTIONS = "options";
+@SuppressWarnings("ALL")
+public class SelectFragment extends BaseFragment implements SelectImageContract.View, View.OnClickListener,
+        ImageLoaderListener, BaseRecyclerAdapter.OnItemClickListener {
 
     private RecyclerView mContentView;
-    private TextView mTextFolder;
-    private ImageView mImageArrow;
+    private Button mSelectFolderView;
+    private ImageView mSelectFolderIcon;
     private View mToolbar;
-    private TextView mTextDone;
-    private TextView mTextPreviewView;
+    private Button mDoneView;
+    private Button mPreviewView;
+
+    EmptyLayout mErrorLayout;
 
     private ImageFolderPopupWindow mFolderPopupWindow;
-    private FolderAdapter mImageFolderAdapter;
+    private ImageFolderAdapter mImageFolderAdapter;
     private ImageAdapter mImageAdapter;
 
     private List<Image> mSelectedImage;
 
     private String mCamImageName;
-
     private LoaderListener mCursorLoader = new LoaderListener();
-    private Contract.Presenter mPresenter;
-    private View mRootView;
 
-    private SelectOptions mOption;
-    private File outfile;
+    private SelectImageContract.Operator mOperator;
 
-    public static ImagePickerFragment newInstance(SelectOptions options) {
-        ImagePickerFragment imagePickerFragment = new ImagePickerFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARGS_OPTIONS, options);
-        imagePickerFragment.setArguments(args);
-        return imagePickerFragment;
+    private static SelectOptions mOption;
+
+    public static SelectFragment newInstance(SelectOptions options) {
+        mOption = options;
+        return new SelectFragment();
     }
 
     @Override
     public void onAttach(Context context) {
-        this.mPresenter = (Contract.Presenter) context;
-        this.mPresenter.setDataView(this);
+        this.mOperator = (SelectImageContract.Operator) context;
+        this.mOperator.setDataView(this);
         super.onAttach(context);
-        Bundle arguments = getArguments();
-        if (arguments != null) {
-            this.mOption = arguments.getParcelable(ARGS_OPTIONS);
-        }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_select_image, container, false);
-            initView();
-            initData();
-        } else {
-            ViewGroup parent = (ViewGroup) mRootView.getParent();
-            if (parent != null) parent.removeView(mRootView);
+    protected int getLayoutId() {
+        return R.layout.fragment_select_image;
+    }
+
+    @Override
+    protected void initWidget(View view) {
+        if (mOption == null) {
+            getActivity().finish();
+            return;
         }
-        return mRootView;
-    }
+        findView(R.id.icon_back).setOnClickListener(this);
 
-    private void initView() {
-        mContentView = (RecyclerView) mRootView.findViewById(R.id.rv_image);
-        mTextFolder = (TextView) mRootView.findViewById(R.id.tv_folder_name);
-        mImageArrow = (ImageView) mRootView.findViewById(R.id.iv_arrow);
-        mRootView.findViewById(R.id.iv_back).setOnClickListener(this);
-        mTextDone = (TextView) mRootView.findViewById(R.id.btn_done);
-        mTextDone.setOnClickListener(this);
-        mTextPreviewView = (TextView) mRootView.findViewById(R.id.btn_preview);
-        mTextPreviewView.setOnClickListener(this);
-        mToolbar = mRootView.findViewById(R.id.toolbar);
-        mRootView.findViewById(R.id.fl_folder).setOnClickListener(this);
-    }
+        mContentView = findView(R.id.rv_image);
+        mSelectFolderView = findView(R.id.btn_title_select);
+        mSelectFolderView.setOnClickListener(this);
+        mSelectFolderIcon = findView(R.id.iv_title_select);
+        mToolbar = findView(R.id.toolbar);
+        mDoneView = findView(R.id.btn_done);
+        mDoneView.setOnClickListener(this);
+        mPreviewView = findView(R.id.btn_preview);
+        mPreviewView.setOnClickListener(this);
 
-    private void initData() {
-        mSelectedImage = new ArrayList<>();
+        mErrorLayout = findView(R.id.error_layout);
+
         mContentView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        mContentView.addItemDecoration(new SpaceGridItemDecoration(5));
-        mImageAdapter = new ImageAdapter(getContext());
+        mContentView.addItemDecoration(new SpaceGridItemDecoration((int) Util.dipToPx(getResources(), 1)));
+        mImageAdapter = new ImageAdapter(getContext(), this);
         mImageAdapter.setSingleSelect(mOption.getSelectCount() <= 1);
-        mRootView.findViewById(R.id.lay_button).setVisibility(mOption.getSelectCount() == 1 ? View.GONE : View.VISIBLE);
-        mImageFolderAdapter = new FolderAdapter(getActivity());
+        mRoot.findViewById(R.id.lay_button).setVisibility(mOption.getSelectCount() == 1 ? View.GONE : View.VISIBLE);
+        mImageFolderAdapter = new ImageFolderAdapter(getActivity());
+        mImageFolderAdapter.setLoader(this);
         mContentView.setAdapter(mImageAdapter);
         mContentView.setItemAnimator(null);
         mImageAdapter.setOnItemClickListener(this);
+        mErrorLayout.setOnLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+                getLoaderManager().initLoader(0, null, mCursorLoader);
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        if (mOption == null) {
+            getActivity().finish();
+            return;
+        }
+        mSelectedImage = new ArrayList<>();
+
+        if (mOption.getSelectCount() > 1 && mOption.getSelectedImages() != null) {
+            List<String> images = mOption.getSelectedImages();
+            for (String s : images) {
+                // checkShare file exists
+                if (s != null && new File(s).exists()) {
+                    Image image = new Image();
+                    image.setSelect(true);
+                    image.setPath(s);
+                    mSelectedImage.add(image);
+                }
+            }
+        }
         getLoaderManager().initLoader(0, null, mCursorLoader);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.iv_back) {
-            getActivity().finish();
-        } else if (id == R.id.fl_folder) {
-            showPopupFolderList();
-        } else if (id == R.id.btn_done) {
-            handleResult();
-        } else if (id == R.id.btn_preview) {
+        if (v.getId() == R.id.icon_back) {
+            mOperator.onBack();
+        } else if (v.getId() == R.id.btn_preview) {
             if (mSelectedImage.size() > 0) {
-                ImageGalleryActivity.show(getActivity(), new SelectOptions.Builder().setSelectedImages(MediaUtil.toArray(mSelectedImage)).build(), 0);
+                ImageGalleryActivity.show(getActivity(), Util.toArray(mSelectedImage), 0, false);
             }
+        } else if (v.getId() == R.id.btn_title_select) {
+            showPopupFolderList();
+        } else if (v.getId() == R.id.btn_done) {
+            onSelectComplete();
         }
     }
+
 
     @Override
     public void onItemClick(int position, long itemId) {
@@ -148,7 +174,7 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
                 handleSelectChange(position);
             } else {
                 if (mSelectedImage.size() < mOption.getSelectCount()) {
-                    mPresenter.requestCamera();
+                    mOperator.requestCamera();
                 } else {
                     Toast.makeText(getActivity(), "最多只能选择 " + mOption.getSelectCount() + " 张图片", Toast.LENGTH_SHORT).show();
                 }
@@ -158,31 +184,22 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
         }
     }
 
-    @Override
-    public void onOpenCameraSuccess() {
-        toOpenCamera();
-    }
-
-    @Override
-    public void onCameraPermissionDenied() {
-
-    }
-
     private void handleSelectSizeChange(int size) {
         if (size > 0) {
-            mTextPreviewView.setEnabled(true);
-            mTextDone.setEnabled(true);
-            mTextDone.setText(String.format("%s(%s)", "完成", size));
+            mPreviewView.setEnabled(true);
+            mDoneView.setEnabled(true);
+            mDoneView.setText(String.format("%s(%s)", getText(R.string.image_select_opt_done), size));
         } else {
-            mTextPreviewView.setEnabled(false);
-            mTextDone.setEnabled(false);
-            mTextDone.setText("完成");
+            mPreviewView.setEnabled(false);
+            mDoneView.setEnabled(false);
+            mDoneView.setText(getText(R.string.image_select_opt_done));
         }
     }
 
     private void handleSelectChange(int position) {
         Image image = mImageAdapter.getItem(position);
-        if (image == null) return;
+        if (image == null)
+            return;
         //如果是多选模式
         final int selectCount = mOption.getSelectCount();
         if (selectCount > 1) {
@@ -206,7 +223,6 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void handleResult() {
         if (mSelectedImage.size() != 0) {
             if (mOption.isCrop()) {
@@ -216,10 +232,31 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
                 mSelectedImage.clear();
                 CropActivity.show(this, mOption);
             } else {
-                mOption.getCallback().doSelected(MediaUtil.toArray(mSelectedImage));
+                mOption.getCallback().doSelected(Util.toArray(mSelectedImage));
                 getActivity().finish();
             }
         }
+    }
+
+    /**
+     * 完成选择
+     */
+    public void onSelectComplete() {
+        handleResult();
+    }
+
+    /**
+     * 申请相机权限成功
+     */
+    @Override
+    public void onOpenCameraSuccess() {
+        toOpenCamera();
+    }
+
+
+    @Override
+    public void onCameraPermissionDenied() {
+
     }
 
     /**
@@ -229,21 +266,21 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
         if (mFolderPopupWindow == null) {
             ImageFolderPopupWindow popupWindow = new ImageFolderPopupWindow(getActivity(), new ImageFolderPopupWindow.Callback() {
                 @Override
-                public void onSelect(ImageFolderPopupWindow popupWindow, Folder model) {
+                public void onSelect(ImageFolderPopupWindow popupWindow, ImageFolder model) {
                     addImagesToAdapter(model.getImages());
                     mContentView.scrollToPosition(0);
                     popupWindow.dismiss();
-                    mTextFolder.setText(model.getName());
+                    mSelectFolderView.setText(model.getName());
                 }
 
                 @Override
                 public void onDismiss() {
-                    mImageArrow.setImageResource(R.mipmap.ic_arrow_bottom);
+                    mSelectFolderIcon.setImageResource(R.mipmap.ic_arrow_bottom);
                 }
 
                 @Override
                 public void onShow() {
-                    mImageArrow.setImageResource(R.mipmap.ic_arrow_top);
+                    mSelectFolderIcon.setImageResource(R.mipmap.ic_arrow_top);
                 }
             });
             popupWindow.setAdapter(mImageFolderAdapter);
@@ -255,13 +292,12 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
     /**
      * 打开相机
      */
-    @SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
     private void toOpenCamera() {
         // 判断是否挂载了SD卡
         mCamImageName = null;
         String savePath = "";
-        if (MediaUtil.hasSDCard()) {
-            savePath = MediaUtil.getCameraPath();
+        if (Util.hasSDCard()) {
+            savePath = Util.getCameraPath();
             File saveDir = new File(savePath);
             if (!saveDir.exists()) {
                 saveDir.mkdirs();
@@ -274,40 +310,54 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
             return;
         }
 
-        mCamImageName = MediaUtil.getSaveImageFullName();
-        outfile = new File(savePath, mCamImageName);
+        mCamImageName = Util.getSaveImageFullName();
+        File out = new File(savePath, mCamImageName);
 
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-            Uri fileUri = FileProviderHelper.getUriForFile(getContext(), outfile);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-            startActivityForResult(takePictureIntent, 0x03);
+        /**
+         * android N 系统适配
+         */
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(getContext(), "net.oschina.app.provider", out);
+        } else {
+            uri = Uri.fromFile(out);
         }
-
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent,
+                0x03);
     }
 
-    @SuppressWarnings("ConstantConditions")
+    /**
+     * 拍照完成通知系统添加照片
+     *
+     * @param requestCode requestCode
+     * @param resultCode  resultCode
+     * @param data        data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //if (resultCode == AppCompatActivity.RESULT_OK) {
-        switch (requestCode) {
-            case 0x03:
-                if (mCamImageName == null) return;
-
-                Uri localUri = Uri.fromFile(outfile);
-                Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
-                getActivity().sendBroadcast(localIntent);
-
-                mOption.getCallback().doSelected(new String[]{outfile.getAbsolutePath()});
-                getActivity().finish();
-                break;
-            case 0x04:
-                if (data == null) return;
-                mOption.getCallback().doSelected(new String[]{data.getStringExtra("crop_path")});
-                getActivity().finish();
-                break;
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            switch (requestCode) {
+                case 0x03:
+                    if (mCamImageName == null) return;
+                    Uri localUri = Uri.fromFile(new File(Util.getCameraPath() + mCamImageName));
+                    Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
+                    getActivity().sendBroadcast(localIntent);
+                    break;
+                case 0x04:
+                    if (data == null) return;
+                    mOption.getCallback().doSelected(new String[]{data.getStringExtra("crop_path")});
+                    getActivity().finish();
+                    break;
+            }
         }
-        // }
+    }
+
+    @Override
+    public void displayImage(final ImageView iv, final String path) {
+        getImgLoader().load(path).apply(RequestOptions.centerCropTransform().error(R.mipmap.ic_split_graph))
+                .into(iv);
     }
 
     private class LoaderListener implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -319,7 +369,6 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
                 MediaStore.Images.Media.MINI_THUMB_MAGIC,
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
 
-        @SuppressWarnings("ConstantConditions")
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             if (id == 0) {
@@ -336,9 +385,9 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
             if (data != null) {
 
                 final ArrayList<Image> images = new ArrayList<>();
-                final List<Folder> imageFolders = new ArrayList<>();
+                final List<ImageFolder> imageFolders = new ArrayList<>();
 
-                final Folder defaultFolder = new Folder();
+                final ImageFolder defaultFolder = new ImageFolder();
                 defaultFolder.setName("全部照片");
                 defaultFolder.setPath("");
                 imageFolders.add(defaultFolder);
@@ -349,15 +398,18 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
                     do {
                         String path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
                         String name = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
+                        long dateTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
                         int id = data.getInt(data.getColumnIndexOrThrow(IMAGE_PROJECTION[3]));
+                        String thumbPath = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[4]));
+                        String bucket = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[5]));
 
                         Image image = new Image();
                         image.setPath(path);
                         image.setName(name);
-                        //image.setDate(dateTime);
+                        image.setDate(dateTime);
                         image.setId(id);
-//                        image.setThumbPath(thumbPath);
-//                        image.setFolderName(bucket);
+                        image.setThumbPath(thumbPath);
+                        image.setFolderName(bucket);
 
                         images.add(image);
 
@@ -378,7 +430,7 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
 
                         File imageFile = new File(path);
                         File folderFile = imageFile.getParentFile();
-                        Folder folder = new Folder();
+                        ImageFolder folder = new ImageFolder();
                         folder.setName(folderFile.getName());
                         folder.setPath(folderFile.getAbsolutePath());
                         if (!imageFolders.contains(folder)) {
@@ -387,7 +439,7 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
                             imageFolders.add(folder);
                         } else {
                             // 更新
-                            Folder f = imageFolders.get(imageFolders.indexOf(folder));
+                            ImageFolder f = imageFolders.get(imageFolders.indexOf(folder));
                             f.getImages().add(image);
                         }
 
@@ -415,11 +467,13 @@ public class ImagePickerFragment extends Fragment implements Contract.View, View
                     mSelectedImage.removeAll(rs);
                 }
 
+                // If add new mCamera picture, and we only need one picture, we result it.
                 if (mOption.getSelectCount() == 1 && mCamImageName != null) {
                     handleResult();
                 }
 
                 handleSelectSizeChange(mSelectedImage.size());
+                mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
             }
         }
 

@@ -45,11 +45,11 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     protected Presenter mPresenter;
     protected Activity mActivity;
 
-    public static void show(Context context, Class<? extends BaseActivity> clx) {
+    public static void show(@NonNull Context context, Class<? extends BaseActivity> clx) {
         show(context, clx, null);
     }
 
-    public static void show(Context context, Class<? extends BaseActivity> clx, Bundle extras) {
+    public static void show(@NonNull Context context, Class<? extends BaseActivity> clx, Bundle extras) {
         Intent intent = new Intent(context, clx);
         if (extras != null)
             intent.putExtras(extras);
@@ -60,11 +60,11 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         context.startActivity(intent);
     }
 
-    public static void showClearTop(Context context, Class<? extends BaseActivity> clx) {
+    public static void showClearTop(@NonNull Context context, Class<? extends BaseActivity> clx) {
         showClearTop(context, clx, null);
     }
 
-    public static void showClearTop(Context context, Class<? extends BaseActivity> clx, Bundle bundle) {
+    public static void showClearTop(@NonNull Context context, Class<? extends BaseActivity> clx, Bundle bundle) {
         Intent intent = new Intent(context, clx);
         if (bundle != null) {
             intent.putExtras(bundle);

@@ -1,36 +1,47 @@
-package com.sumian.common.media;
-
+package com.sumian.common.media.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.sumian.common.R;
-import com.sumian.common.base.BaseRecyclerAdapter;
+import com.sumian.common.media.base.BaseRecyclerAdapter;
+import com.sumian.common.media.bean.Image;
+import com.sumian.common.media.config.ImageLoaderListener;
 
 /**
- * Created by haibin
- * on 17/2/27.
+ * 图片列表界面适配器
  */
-class ImageAdapter extends BaseRecyclerAdapter<Image> {
-
+@SuppressWarnings("ALL")
+public class ImageAdapter extends BaseRecyclerAdapter<Image> {
+    private ImageLoaderListener loader;
     private boolean isSingleSelect;
 
-    ImageAdapter(Context context) {
-        super(context);
+    public ImageAdapter(Context context, ImageLoaderListener loader) {
+        super(context, NEITHER);
+        this.loader = loader;
     }
 
-    void setSingleSelect(boolean singleSelect) {
+    public void setSingleSelect(boolean singleSelect) {
         isSingleSelect = singleSelect;
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public int getItemViewType(int position) {
         Image image = getItem(position);
-        return image == null || image.getId() == 0 ? 0 : 1;
+        if (image.getId() == 0)
+            return 0;
+        return 1;
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
+        if (holder instanceof ImageViewHolder) {
+            ImageViewHolder h = (ImageViewHolder) holder;
+        }
     }
 
     @Override
@@ -41,7 +52,7 @@ class ImageAdapter extends BaseRecyclerAdapter<Image> {
     }
 
     @Override
-    protected void onBindViewHolder(RecyclerView.ViewHolder holder, Image item, int position) {
+    protected void onBindDefaultViewHolder(RecyclerView.ViewHolder holder, Image item, int position) {
         if (item.getId() != 0) {
             ImageViewHolder h = (ImageViewHolder) holder;
             h.mCheckView.setSelected(item.isSelect());
@@ -49,9 +60,9 @@ class ImageAdapter extends BaseRecyclerAdapter<Image> {
 
             // Show gif mask
             h.mGifMask.setVisibility(item.getPath().toLowerCase().endsWith("gif") ?
-                View.VISIBLE : View.GONE);
+                    View.VISIBLE : View.GONE);
 
-            mLoader.load(item.getPath()).into(h.mImageView);
+            loader.displayImage(h.mImageView, item.getPath());
             h.mCheckView.setVisibility(isSingleSelect ? View.GONE : View.VISIBLE);
         }
     }
@@ -70,10 +81,10 @@ class ImageAdapter extends BaseRecyclerAdapter<Image> {
 
         ImageViewHolder(View itemView) {
             super(itemView);
-            mImageView = (ImageView) itemView.findViewById(R.id.iv_image);
-            mCheckView = (ImageView) itemView.findViewById(R.id.cb_selected);
+            mImageView = itemView.findViewById(R.id.iv_image);
+            mCheckView = itemView.findViewById(R.id.cb_selected);
             mMaskView = itemView.findViewById(R.id.lay_mask);
-            mGifMask = (ImageView) itemView.findViewById(R.id.iv_is_gif);
+            mGifMask = itemView.findViewById(R.id.iv_is_gif);
         }
     }
 }

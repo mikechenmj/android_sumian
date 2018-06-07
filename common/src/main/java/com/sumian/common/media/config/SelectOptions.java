@@ -1,8 +1,4 @@
-package com.sumian.common.media;
-
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.sumian.common.media.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,43 +6,20 @@ import java.util.List;
 
 /**
  * Created by haibin
- * on 17/2/27.
+ * on 2016/12/5.
  */
-public class SelectOptions implements Parcelable{
+
+public final class SelectOptions {
     private boolean isCrop;
     private int mCropWidth, mCropHeight;
     private Callback mCallback;
     private boolean hasCam;
     private int mSelectCount;
     private List<String> mSelectedImages;
-    private String mSavePath;
 
     private SelectOptions() {
 
     }
-
-    protected SelectOptions(Parcel in) {
-        isCrop = in.readByte() != 0;
-        mCropWidth = in.readInt();
-        mCropHeight = in.readInt();
-        mCallback = in.readParcelable(Callback.class.getClassLoader());
-        hasCam = in.readByte() != 0;
-        mSelectCount = in.readInt();
-        mSelectedImages = in.createStringArrayList();
-        mSavePath = in.readString();
-    }
-
-    public static final Creator<SelectOptions> CREATOR = new Creator<SelectOptions>() {
-        @Override
-        public SelectOptions createFromParcel(Parcel in) {
-            return new SelectOptions(in);
-        }
-
-        @Override
-        public SelectOptions[] newArray(int size) {
-            return new SelectOptions[size];
-        }
-    };
 
     public boolean isCrop() {
         return isCrop;
@@ -76,27 +49,6 @@ public class SelectOptions implements Parcelable{
         return mSelectedImages;
     }
 
-    public String getSavePath() {
-        return mSavePath;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte((byte) (isCrop ? 1 : 0));
-        dest.writeInt(mCropWidth);
-        dest.writeInt(mCropHeight);
-        dest.writeParcelable(mCallback, flags);
-        dest.writeByte((byte) (hasCam ? 1 : 0));
-        dest.writeInt(mSelectCount);
-        dest.writeStringList(mSelectedImages);
-        dest.writeString(mSavePath);
-    }
-
     public static class Builder {
         private boolean isCrop;
         private int cropWidth, cropHeight;
@@ -104,7 +56,6 @@ public class SelectOptions implements Parcelable{
         private boolean hasCam;
         private int selectCount;
         private List<String> selectedImages;
-        private String savePath;
 
         public Builder() {
             selectCount = 1;
@@ -132,7 +83,9 @@ public class SelectOptions implements Parcelable{
         }
 
         public Builder setSelectCount(int selectCount) {
-            this.selectCount = selectCount <= 0 ? 1 : selectCount;
+            if (selectCount <= 0)
+                throw new IllegalArgumentException("selectCount mast be greater than 0 ");
+            this.selectCount = selectCount;
             return this;
         }
 
@@ -149,11 +102,6 @@ public class SelectOptions implements Parcelable{
             return this;
         }
 
-        public Builder setSavaPath(String path) {
-            this.savePath = path;
-            return this;
-        }
-
         public SelectOptions build() {
             SelectOptions options = new SelectOptions();
             options.hasCam = hasCam;
@@ -163,10 +111,11 @@ public class SelectOptions implements Parcelable{
             options.mCallback = callback;
             options.mSelectCount = selectCount;
             options.mSelectedImages = selectedImages;
-            options.mSavePath = savePath;
-            if (isCrop) options.mSelectCount = 1;
             return options;
         }
     }
 
+    public interface Callback {
+        void doSelected(String[] images);
+    }
 }

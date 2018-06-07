@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Build;
 
 import java.io.BufferedInputStream;
@@ -28,7 +29,7 @@ public final class BitmapUtil {
      * A default size to use to increase hit rates when the required size isn't defined.
      * Currently 64KB.
      */
-    public final static int DEFAULT_BUFFER_SIZE = 64 * 1024;
+    private final static int DEFAULT_BUFFER_SIZE = 64 * 1024;
 
     /**
      * 创建一个图片处理Options
@@ -79,17 +80,17 @@ public final class BitmapUtil {
         return mimeType.substring(mimeType.lastIndexOf("/") + 1);
     }
 
-    public static Bitmap decodeBitmap(final File file,
-                                      final int maxWidth,
-                                      final int maxHeight,
-                                      byte[] byteStorage,
-                                      BitmapFactory.Options options,
-                                      boolean exactDecode) {
+    private static Bitmap decodeBitmap(final File file,
+                                       final int maxWidth,
+                                       final int maxHeight,
+                                       byte[] byteStorage,
+                                       BitmapFactory.Options options,
+                                       boolean exactDecode) {
         InputStream is;
         try {
             // In this, we can set the buffer size
             is = new BufferedInputStream(new FileInputStream(file),
-                byteStorage == null ? DEFAULT_BUFFER_SIZE : byteStorage.length);
+                    byteStorage == null ? DEFAULT_BUFFER_SIZE : byteStorage.length);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
@@ -131,7 +132,7 @@ public final class BitmapUtil {
         Bitmap bitmap = BitmapFactory.decodeStream(is, null, options);
 
         // Close the Stream
-        close(is);
+        StreamUtil.close(is);
         // And Reset the option
         resetOptions(options);
 
@@ -150,10 +151,11 @@ public final class BitmapUtil {
      * @param recycleSource 是否释放Bitmap源
      * @return 一个缩小后的Bitmap
      */
-    public static Bitmap scaleBitmap(Bitmap source, float scale, boolean recycleSource) {
+    private static Bitmap scaleBitmap(Bitmap source, float scale, boolean recycleSource, int angle) {
         if (scale <= 0 || scale >= 1)
             return source;
         Matrix m = new Matrix();
+        m.postRotate(angle);
         final int width = source.getWidth();
         final int height = source.getHeight();
         m.setScale(scale, scale);
@@ -173,17 +175,17 @@ public final class BitmapUtil {
      * @param recycleSource   是否释放Bitmap源
      * @return 一个缩小后的Bitmap
      */
-    public static Bitmap scaleBitmap(Bitmap source, int targetMaxWidth, int targetMaxHeight, boolean recycleSource) {
+    static Bitmap scaleBitmap(Bitmap source, int targetMaxWidth, int targetMaxHeight, boolean recycleSource) {
         int sourceWidth = source.getWidth();
         int sourceHeight = source.getHeight();
 
         Bitmap scaledBitmap = source;
         if (sourceWidth > targetMaxWidth || sourceHeight > targetMaxHeight) {
             float minScale = Math.min(targetMaxWidth / (float) sourceWidth,
-                targetMaxHeight / (float) sourceHeight);
+                    targetMaxHeight / (float) sourceHeight);
             scaledBitmap = Bitmap.createScaledBitmap(scaledBitmap,
-                (int) (sourceWidth * minScale),
-                (int) (sourceHeight * minScale), false);
+                    (int) (sourceWidth * minScale),
+                    (int) (sourceHeight * minScale), false);
             if (recycleSource)
                 source.recycle();
         }
@@ -213,7 +215,7 @@ public final class BitmapUtil {
         }
 
         final float maxFloatFactor = Math.max(sourceHeight / (float) requestedMaxHeight,
-            sourceWidth / (float) requestedMaxWidth);
+                sourceWidth / (float) requestedMaxWidth);
         final int maxIntegerFactor = (int) Math.floor(maxFloatFactor);
         final int lesserOrEqualSampleSize = Math.max(1, Integer.highestOneBit(maxIntegerFactor));
 
@@ -245,9 +247,9 @@ public final class BitmapUtil {
             return compressImage(sourceFile, maxSize, minQuality, maxWidth, maxHeight, true);
         }
 
-        public static File compressImage(final File sourceFile, final long maxSize,
-                                         final int minQuality, final int maxWidth,
-                                         final int maxHeight, boolean exactDecode) {
+        static File compressImage(final File sourceFile, final long maxSize,
+                                  final int minQuality, final int maxWidth,
+                                  final int maxHeight, boolean exactDecode) {
             return compressImage(sourceFile, maxSize, minQuality, maxWidth, maxHeight, null, null, exactDecode);
         }
 
@@ -265,21 +267,21 @@ public final class BitmapUtil {
          * @param exactDecode 是否精确解码， TRUE： 在4.4及其以上机器中能更节约内存
          * @return 返回压缩后的图片文件，该图片存储在原图同级目录下，以compress.temp结尾
          */
-        public static File compressImage(final File sourceFile,
-                                         final long maxSize,
-                                         final int minQuality,
-                                         final int maxWidth,
-                                         final int maxHeight,
-                                         byte[] byteStorage,
-                                         BitmapFactory.Options options,
-                                         boolean exactDecode) {
+        static File compressImage(final File sourceFile,
+                                  final long maxSize,
+                                  final int minQuality,
+                                  final int maxWidth,
+                                  final int maxHeight,
+                                  byte[] byteStorage,
+                                  BitmapFactory.Options options,
+                                  boolean exactDecode) {
             // build source file
             if (sourceFile == null || !sourceFile.exists() || !sourceFile.canRead())
                 return null;
 
             // create new temp file
             final File tempFile = new File(sourceFile.getParent(),
-                String.format("compress_%s.temp", System.currentTimeMillis()));
+                    String.format("compress_%s.temp", System.currentTimeMillis()));
 
             if (!tempFile.exists()) {
                 try {
@@ -295,10 +297,15 @@ public final class BitmapUtil {
             Bitmap bitmap = decodeBitmap(sourceFile, maxWidth, maxHeight, byteStorage, options, exactDecode);
             if (bitmap == null)
                 return null;
-
+            int angle = readPictureDegree(sourceFile.getPath());
+            if (angle != 0) {
+                bitmap = rotateBitmap(angle, bitmap);
+            }
+            if (bitmap == null)
+                return null;
             // Get the bitmap format
             Bitmap.CompressFormat compressFormat = bitmap.hasAlpha() ?
-                Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG;
+                    Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG;
 
             // Write to out put file
             boolean isOk = false;
@@ -334,7 +341,7 @@ public final class BitmapUtil {
                 } else {
                     // If not ok, we need scale the Bitmap to small
                     // In this, once subtract 2%, most 20%
-                    bitmap = scaleBitmap(bitmap, 1 - (0.2f * i), true);
+                    bitmap = scaleBitmap(bitmap, 1 - (0.2f * i), true, angle);
                 }
             }
             // recycle bitmap
@@ -347,5 +354,42 @@ public final class BitmapUtil {
             // Rename to out file
             return tempFile;
         }
+    }
+
+    /**
+     * 获取图片的旋转角度
+     *
+     * @param path path
+     * @return 图片的旋转角度
+     */
+    public static int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return degree;
+    }
+
+    private static Bitmap rotateBitmap(int angle, Bitmap bitmap) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+                bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        bitmap.recycle();
+        return resizedBitmap;
     }
 }

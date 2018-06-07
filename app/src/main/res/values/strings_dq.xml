@@ -47,5 +47,8 @@
     <string name="third_question">第三次提问</string>
     <string name="view_the_record">查看电子报告</string>
     <string name="sleep_doctor">睡眠医生</string>
+    <string name="submit">提交</string>
+    <string name="input_question_hint">请描述您的年龄、性别、且详细描述您的症状及就诊经历，便于医生准确分析，我们会保证您的隐私安全。</string>
+    <string name="select_report">选择报告</string>
 
 </resources>

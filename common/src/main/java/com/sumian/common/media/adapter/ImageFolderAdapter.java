@@ -1,5 +1,4 @@
-package com.sumian.common.media;
-
+package com.sumian.common.media.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,16 +8,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.common.R;
-import com.sumian.common.base.BaseRecyclerAdapter;
+import com.sumian.common.media.base.BaseRecyclerAdapter;
+import com.sumian.common.media.bean.ImageFolder;
+import com.sumian.common.media.config.ImageLoaderListener;
+
 
 /**
- * Created by haibin
- * on 17/2/27.
+ * Created by huanghaibin_dev
+ * on 2016/7/13.
+ * <p>
+ * Changed by qiujuer
+ * on 2016/09/01
  */
-class FolderAdapter extends BaseRecyclerAdapter<Folder> {
 
-    FolderAdapter(Context context) {
-        super(context);
+public class ImageFolderAdapter extends BaseRecyclerAdapter<ImageFolder> {
+    private ImageLoaderListener loader;
+
+    public ImageFolderAdapter(Context context) {
+        super(context, NEITHER);
     }
 
     @Override
@@ -27,18 +34,24 @@ class FolderAdapter extends BaseRecyclerAdapter<Folder> {
     }
 
     @Override
-    protected void onBindViewHolder(RecyclerView.ViewHolder holder, Folder item, int position) {
+    protected void onBindDefaultViewHolder(RecyclerView.ViewHolder holder, ImageFolder item, int position) {
         FolderViewHolder h = (FolderViewHolder) holder;
         h.tv_name.setText(item.getName());
         h.tv_size.setText(String.format("(%s)", item.getImages().size()));
-        mLoader.load(item.getAlbumPath()).into(h.iv_image);
+        if (loader != null) {
+            loader.displayImage(h.iv_image, item.getAlbumPath());
+        }
+    }
+
+    public void setLoader(ImageLoaderListener loader) {
+        this.loader = loader;
     }
 
     private static class FolderViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_image;
         TextView tv_name, tv_size;
 
-        FolderViewHolder(View itemView) {
+        public FolderViewHolder(View itemView) {
             super(itemView);
             iv_image = (ImageView) itemView.findViewById(R.id.iv_folder);
             tv_name = (TextView) itemView.findViewById(R.id.tv_folder_name);
