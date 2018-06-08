@@ -65,7 +65,6 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
                 SBridgeResult<DoctorService> sBridgeResult = JsonUtil.fromJson(data, new TypeToken<SBridgeResult<DoctorService>>() {
                 }.getType());
                 if (sBridgeResult.code == 0) {//立即去购买
-
                     ShoppingCarActivity.launch(DoctorServiceWebActivity.this, sBridgeResult.result);
                 } else {//未绑定医生
                     String url = "doctorsleep://doctor?id=" + AppManager.getAccountViewModel().getUserProfile().doctor_id;

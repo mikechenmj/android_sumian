@@ -65,8 +65,8 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     }
 
     override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
-        this.mAdapter.setDoctor(advisory.doctor)
-        this.mAdapter.setUser(advisory.user)
+        this.mAdapter.setDoctor(advisory.doctor!!)
+        this.mAdapter.setUser(advisory.user!!)
         this.mAdapter.addAll(advisory.records)
     }
 

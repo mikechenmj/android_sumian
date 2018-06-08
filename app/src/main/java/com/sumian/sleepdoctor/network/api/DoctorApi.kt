@@ -4,8 +4,10 @@ import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
+import com.sumian.sleepdoctor.improve.advisory.bean.PictureOssSts
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder
+import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
 import com.sumian.sleepdoctor.onlineReport.OnlineReport
@@ -166,5 +168,11 @@ interface DoctorApi {
 
     @GET("advisory/latest")
     fun getLastAdvisoryDetails(@QueryMap map: MutableMap<String, Any>): Call<Advisory>
+
+    @POST("advisory-records")
+    fun publishAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<Advisory>
+
+    @POST("advisory-records/sts")
+    fun publishPicturesAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<PictureOssSts>
 
 }

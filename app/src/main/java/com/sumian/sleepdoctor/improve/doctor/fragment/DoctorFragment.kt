@@ -55,7 +55,7 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
         }
         ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
                 .get(NotificationViewModel::class.java)
-                .getUnreadCount()
+                .unreadCount
                 .observe(this, Observer { count -> iv_notification.isActivated = count != null && count > 0 })
     }
 

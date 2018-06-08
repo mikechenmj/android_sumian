@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.improve.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder;
 import com.sumian.sleepdoctor.improve.doctor.contract.PayContract;
@@ -232,7 +233,12 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         if (mPayDialog != null && mPayDialog.isShowing()) {
             mPayDialog.cancel();
         }
-        MainActivity.launch(this, 1);
+
+        if (mDoctorService.getType() == DoctorService.GRAPHIC_SERVICE_TYPE) {
+            PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
+        } else {
+            MainActivity.launch(this, 1);
+        }
     }
 
     @Override

@@ -21,7 +21,6 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
 
     private var mPageNumber: Int = 1
     private var mAdvisoryType = Advisory.UNUSED_TYPE
-    private var mAdvisoryId = 0
     private var mIsRefresh: Boolean = false
 
     init {
@@ -41,12 +40,11 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
     override fun refreshAdvisories() {
         this.mPageNumber = 1
         this.mIsRefresh = true
-        getAdvisories(mAdvisoryType, mAdvisoryId)
+        getAdvisories(mAdvisoryType)
     }
 
-    override fun getAdvisories(advisoryType: Int, advisoryId: Int) {
+    override fun getAdvisories(advisoryType: Int) {
         this.mAdvisoryType = advisoryType
-        this.mAdvisoryId = advisoryId
 
         mView?.onBegin()
 
@@ -88,7 +86,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
     }
 
     override fun getNextAdvisories() {
-        getAdvisories(mAdvisoryType, mAdvisoryId)
+        getAdvisories(mAdvisoryType)
     }
 
 }

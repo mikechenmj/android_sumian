@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.improve.advisory.activity
 
-import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.View
@@ -15,22 +14,9 @@ import kotlinx.android.synthetic.main.activity_main_advisory.*
 /**
  * Created by sm
  * on 2018/6/4 14:20
- * desc: 用户咨询列表
+ * desc: 用户图文咨询列表
  */
 class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackListener {
-
-    companion object {
-        private const val ARGS_ADVISORY_ID: String = "com.sumian.app.extras.advisory.id"
-    }
-
-    private var mAdvisoryId: Int = 0
-
-    override fun initBundle(bundle: Bundle?): Boolean {
-        this.mAdvisoryId.let {
-            bundle?.getInt(ARGS_ADVISORY_ID, 0)
-        }
-        return super.initBundle(bundle)
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory
@@ -71,10 +57,4 @@ class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnB
     override fun onBack(v: View?) {
         finish()
     }
-
-    fun getAdvisoryId(): Int {
-        return this.mAdvisoryId
-    }
-
-
 }

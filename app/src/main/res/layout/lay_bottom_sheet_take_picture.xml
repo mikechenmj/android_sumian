@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/b2_color"
+    android:background="@color/b1_color"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -10,10 +10,10 @@
         android:id="@+id/tv_take_photo"
         style="@style/text_t1_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_material_ripple"
+        android:layout_height="@dimen/space_62"
+        android:background="@color/white"
+        android:foreground="@drawable/bg_material_ripple"
         android:gravity="center"
-        android:padding="@dimen/space_16"
         android:text="@string/take_photo" />
 
     <View
@@ -25,23 +25,20 @@
         android:id="@+id/tv_pic_photo"
         style="@style/text_t1_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_material_ripple"
+        android:layout_height="@dimen/space_62"
+        android:background="@color/white"
+        android:foreground="@drawable/bg_material_ripple"
         android:gravity="center"
-        android:padding="@dimen/space_16"
         android:text="@string/picture" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_12"
-        android:background="@color/b1_color" />
 
     <TextView
         android:id="@+id/tv_cancel"
         style="@style/text_t1_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_material_ripple"
+        android:layout_height="@dimen/space_62"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/white"
+        android:foreground="@drawable/bg_material_ripple"
         android:gravity="center"
         android:padding="@dimen/space_16"
         android:text="@string/cancel" />

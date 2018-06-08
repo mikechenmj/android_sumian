@@ -51,8 +51,10 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
 
     public static void show(@NonNull Context context, Class<? extends BaseActivity> clx, Bundle extras) {
         Intent intent = new Intent(context, clx);
-        if (extras != null)
+
+        if (extras != null) {
             intent.putExtras(extras);
+        }
 
         if (context instanceof Application || context instanceof Service) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

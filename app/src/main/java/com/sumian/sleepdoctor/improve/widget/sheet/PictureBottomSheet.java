@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.pager.sheet;
+package com.sumian.sleepdoctor.improve.widget.sheet;
 
 import android.view.View;
 
@@ -13,22 +13,22 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class AvatarBottomSheet extends BaseBottomSheetView implements View.OnClickListener {
+public class PictureBottomSheet extends BaseBottomSheetView implements View.OnClickListener {
 
     private OnTakePhotoCallback mOnTakePhotoCallback;
 
-    public static AvatarBottomSheet newInstance() {
-        return new AvatarBottomSheet();
+    public static PictureBottomSheet newInstance() {
+        return new PictureBottomSheet();
     }
 
-    public AvatarBottomSheet addOnTakePhotoCallback(OnTakePhotoCallback onTakePhotoCallback) {
+    public PictureBottomSheet addOnTakePhotoCallback(OnTakePhotoCallback onTakePhotoCallback) {
         mOnTakePhotoCallback = onTakePhotoCallback;
         return this;
     }
 
     @Override
     protected int getLayout() {
-        return R.layout.lay_bottom_sheet_modify_avatar;
+        return R.layout.lay_bottom_sheet_take_picture;
     }
 
     @OnClick({R.id.tv_take_photo, R.id.tv_pic_photo, R.id.tv_cancel})

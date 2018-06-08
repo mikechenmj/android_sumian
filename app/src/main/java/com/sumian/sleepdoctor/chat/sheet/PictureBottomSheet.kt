@@ -11,7 +11,7 @@ import com.sumian.sleepdoctor.widget.BottomSheetView
 class PictureBottomSheet : BottomSheetView() {
 
     override fun getLayout(): Int {
-        return R.layout.lay_bottom_sheet_modify_avatar
+        return R.layout.lay_bottom_sheet_take_picture
     }
 
 }

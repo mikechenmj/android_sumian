@@ -41,7 +41,7 @@ public class SelectPictureBottomSheet extends BottomSheetView implements View.On
 
     @Override
     protected int getLayout() {
-        return R.layout.lay_bottom_sheet_modify_avatar;
+        return R.layout.lay_bottom_sheet_take_picture;
     }
 
     @Override
