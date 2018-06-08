@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +21,8 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.constants.SpKeys;
+import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
@@ -235,6 +238,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
             R.id.iv_date_arrow,
             R.id.iv_notification,
             R.id.dsiv_sleep_scale,
+            R.id.iv_weekly_report,
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -244,6 +248,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 break;
             case R.id.iv_notification:
                 NotificationListActivity.launch(getActivity());
+                break;
+            case R.id.iv_weekly_report:
+                int selectTimeInSecond = (int) (mSelectedTime / 1000);
+                String urlContentPart = H5Url.H5_URI_SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", String.valueOf(selectTimeInSecond));
+                String title = getString(R.string.record_weekly_report);
+                SimpleWebActivity.launch(getActivity(), title, urlContentPart);
                 break;
             case R.id.dsiv_sleep_scale:
                 ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_ALL);

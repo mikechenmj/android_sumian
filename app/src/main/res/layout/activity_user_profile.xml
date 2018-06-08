@@ -64,7 +64,6 @@
         android:id="@+id/dv_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_12"
         app:divider_line_visible="visible"
         app:type_content="@string/none_nickname"
         app:type_desc="@string/nickname" />
@@ -73,6 +72,7 @@
         android:id="@+id/dv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:divider_line_visible="visible"
         app:type_content="@string/martian"
         app:type_desc="@string/name" />
@@ -88,12 +88,14 @@
         android:paddingTop="@dimen/space_16"
         android:text="@string/see_name_for_doctor"
         android:textSize="@dimen/font_12"
+        android:visibility="gone"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <com.sumian.sleepdoctor.widget.divider.SettingDividerView
         android:id="@+id/dv_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_12"
         app:divider_line_visible="visible"
         app:divider_more_visible="gone"
         app:type_desc="@string/register_mobile"

@@ -14,6 +14,8 @@ import com.sumian.sleepdoctor.account.userProfile.UserProfileActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
 import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
@@ -75,7 +77,8 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
             R.id.dv_my_consulting,
             R.id.dv_setting,
             R.id.dv_electric_report,
-            R.id.iv_notification
+            R.id.iv_notification,
+            R.id.dv_my_medical_record,
     })
     public void onClick(View v) {
         switch (v.getId()) {
@@ -96,6 +99,11 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
                 break;
             case R.id.iv_notification:
                 NotificationListActivity.launch(getActivity());
+                break;
+            case R.id.dv_my_medical_record:
+                String title = getString(R.string.me_my_medical_record);
+                String urlContentPart = H5Url.H5_URI_MY_MEDICAL_RECORD;
+                SimpleWebActivity.launch(getContext(), title, urlContentPart);
                 break;
         }
     }

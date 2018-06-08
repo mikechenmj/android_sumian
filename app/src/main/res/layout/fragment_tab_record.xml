@@ -54,7 +54,18 @@
             android:layout_toStartOf="@id/iv_notification"
             android:contentDescription="@null"
             android:scaleType="centerInside"
+            android:visibility="gone"
             android:src="@mipmap/ic_nav_icon_scan" />
+
+        <ImageView
+            android:id="@+id/iv_weekly_report"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/iv_notification"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_nav_statistics" />
     </RelativeLayout>
 
     <ScrollView
