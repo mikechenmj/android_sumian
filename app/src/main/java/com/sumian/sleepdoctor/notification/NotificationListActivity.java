@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.sumian.common.utils.NotificationUtil;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -16,6 +15,7 @@ import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.notification.bean.Notification;
+import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
     }
 
     private void initHeadView() {
-        boolean enabled = NotificationUtil.areNotificationsEnabled(this);
+        boolean enabled = isNotificationEnabled();
         if (!enabled) {
             mHeaderView = new NotificationListHeadView(this);
             mHeaderView.setOnClickListener(v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION));
@@ -65,8 +65,12 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
         }
     }
 
+    private boolean isNotificationEnabled() {
+        return NotificationUtil.Companion.areNotificationsEnabled(this);
+    }
+
     private void removeHeadViewInNeeded() {
-        boolean enabled = NotificationUtil.areNotificationsEnabled(this);
+        boolean enabled = isNotificationEnabled();
         if (enabled && mHeaderView != null) {
             mAdapter.removeHeaderView(mHeaderView);
             mHeaderView = null;

@@ -34,9 +34,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @SuppressWarnings("unused")
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String KEY_TAB_INDEX = "key_tab_index";
-    private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
-    private static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
+    public static final String KEY_TAB_INDEX = "key_tab_index";
+    public static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
+    public static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
 
     @BindView(R.id.nav_tab)
     BottomNavigationBar mBottomNavigationBar;

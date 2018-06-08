@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,7 +13,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.sumian.common.utils.NotificationUtil;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -37,6 +35,7 @@ import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.sleepRecord.view.SleepRecordView;
 import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarView;
 import com.sumian.sleepdoctor.sleepRecord.view.calendar.custom.SleepCalendarViewWrapper;
+import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
@@ -102,7 +101,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     private void showOpenNotificationDialogIfNeeded() {
         long previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0);
         boolean alreadyShowed = previousShowTime > 0;
-        if (NotificationUtil.areNotificationsEnabled(getActivity()) || alreadyShowed) {
+        if (NotificationUtil.Companion.areNotificationsEnabled(getActivity()) || alreadyShowed) {
             return;
         }
         SumianAlertDialog.create()
