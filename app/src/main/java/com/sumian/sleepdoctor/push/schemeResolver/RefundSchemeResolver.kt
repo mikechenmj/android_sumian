@@ -15,14 +15,14 @@ import com.sumian.sleepdoctor.onlineReport.OnlineReportDetailActivity
  *     version: 1.0
  * </pre>
  */
-class OnlineReportSchemeResolver : SchemeResolver {
+class RefundSchemeResolver : SchemeResolver {
 
     /**
-    电子报告更新
-    "scheme" => 'sleepdoctor://online-reports?id=1&url=www.baidu.com&notification_id=9f3f9091-ab98-421c-ac2c-47709c80ba16&user_id=1',   //urlencode后
+    退款成功通知
+    "scheme" => 'sleepdoctor://refund?order_no=1525763199&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
      */
     override fun resolverScheme(context: Context, uri: Uri): Intent {
-        val data = uri.getQueryParameter("url")
+        val data = uri.getQueryParameter("order_no")
         val title = context.resources.getString(R.string.online_report) // td 让服务器在scheme加上title字段
         return OnlineReportDetailActivity.getLaunchIntent(context, title, data)
     }

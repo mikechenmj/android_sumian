@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.main;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -62,12 +63,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         showClearTop(context, MainActivity.class, bundle);
     }
 
-    public static void launchSleepRecordTab(Context context, long sleepRecordTime, boolean scrollToBottom) {
+    public static void launchSleepRecordTab(Context context, long sleepRecordTime) {
+        showClearTop(context, getLaunchSleepRecordTabIntent(context, sleepRecordTime));
+    }
+
+    public static Intent getLaunchSleepRecordTabIntent(Context context, long sleepRecordTime) {
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_TAB_INDEX, 0);
-        bundle.putLong(KEY_SLEEP_RECORD_TIME, sleepRecordTime);
-        bundle.putBoolean(KEY_SCROLL_TO_BOTTOM, scrollToBottom);
-        showClearTop(context, MainActivity.class, bundle);
+        bundle.putInt(MainActivity.KEY_TAB_INDEX, 0);
+        bundle.putLong(MainActivity.KEY_SLEEP_RECORD_TIME, sleepRecordTime);
+        bundle.putBoolean(MainActivity.KEY_SCROLL_TO_BOTTOM, true);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtras(bundle);
+        return intent;
     }
 
     @Override

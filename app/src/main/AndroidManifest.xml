@@ -152,8 +152,8 @@
         <!-- scale -->
         <activity android:name=".scale.ScaleListActivity" />
         <activity android:name=".scale.ScaleDetailActivity" />
-
         <activity android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity" />
+        <activity android:name=".notification.RefundActivity" />
     </application>
 
 </manifest>

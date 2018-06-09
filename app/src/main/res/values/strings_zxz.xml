@@ -20,6 +20,7 @@
     <!-- online report -->
     <string name="online_report_list_empty_title">暂无测评记录</string>
     <string name="online_report_list_empty_desc">了解您的睡眠健康及心理状况</string>
+    <string name="online_report">电子报告</string>
 
     <!-- notification -->
     <string name="notification_center">消息中心</string>
@@ -29,6 +30,8 @@
     <string name="open_notification_push_hint">第一时间接收消息更新通知</string>
     <string name="notification_list_empty_title">没有消息提醒</string>
     <string name="notification_list_empty_desc">您收到医生回复、建议或报告更新，\n都会在这里收到消息提醒</string>
+    <string name="refund_detail">退款详情</string>
+    <string name="refund_count">退款金额</string>
 
     <!-- scale -->
     <string name="scale_scale_not_finish_yet_hint">您还未进行该评测，点击开始测评</string>
@@ -36,5 +39,7 @@
     <string name="scale_sleep_scale">睡眠评测量表</string>
     <string name="no_data">没有数据</string>
     <string name="no_data_hint">这里空空如也~</string>
+    <string name="scale">量表</string>
+    <string name="refund_success_notification">退款成功通知</string>
 
 </resources>

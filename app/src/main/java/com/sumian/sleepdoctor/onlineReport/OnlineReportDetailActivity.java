@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.onlineReport;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
@@ -19,10 +20,15 @@ public class OnlineReportDetailActivity extends BaseWebViewActivity {
     private String mReportUrl;
 
     public static void launch(Context context, String reportName, String reportUrl) {
+        show(context, getLaunchIntent(context, reportName, reportUrl));
+    }
+
+    @NonNull
+    public static Intent getLaunchIntent(Context context, String reportName, String reportUrl) {
         Intent intent = new Intent(context, OnlineReportDetailActivity.class);
         intent.putExtra(KEY_REPORT_NAME, reportName);
         intent.putExtra(KEY_REPORT_URL, reportUrl);
-        context.startActivity(intent);
+        return intent;
     }
 
     @Override

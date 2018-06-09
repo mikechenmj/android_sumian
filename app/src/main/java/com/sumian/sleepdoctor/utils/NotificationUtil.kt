@@ -1,16 +1,15 @@
 package com.sumian.sleepdoctor.utils
 
-import android.content.Context
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
-import com.sumian.sleepdoctor.R
-import android.app.NotificationManager
 import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 import com.blankj.utilcode.util.AppUtils
-import com.umeng.socialize.utils.DeviceConfig.context
+import com.sumian.sleepdoctor.R
 import java.util.*
 
 
@@ -48,18 +47,25 @@ class NotificationUtil {
             }
         }
 
-        fun showNotification(context: Context?, contentText: String, intent: Intent) {
+        fun showNotification(context: Context?, contentText: String, intent: Intent?) {
             if (context == null) return
-            val pendingIntent = PendingIntent.getActivity(context,
-                    100, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             createNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME)
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_sleepdoctor_icon)
                     .setContentTitle(AppUtils.getAppName())
                     .setContentText(contentText)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+            val pendingIntent = getPendingIntent(context, intent)
+            if (pendingIntent != null) builder.setContentIntent(pendingIntent)
             NotificationManagerCompat.from(context).notify(Random().nextInt(), builder.build())
+        }
+
+        private fun getPendingIntent(context: Context?, intent: Intent?): PendingIntent? {
+            if (intent == null) return null
+            val pendingIntent = PendingIntent.getActivity(context,
+                    100, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            return pendingIntent
         }
     }
 }

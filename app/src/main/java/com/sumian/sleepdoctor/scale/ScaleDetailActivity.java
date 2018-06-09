@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.scale;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -19,10 +20,16 @@ public class ScaleDetailActivity extends BaseWebViewActivity {
     private long mScaleId;
 
     public static void launch(Context context, String title, long scaleId) {
+        show(context, getLaunchIntent(context, title, scaleId));
+    }
+
+    public static Intent getLaunchIntent(Context context, String title, long scaleId) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TITLE, title);
         bundle.putLong(KEY_SCALE_ID, scaleId);
-        show(context, ScaleDetailActivity.class, bundle);
+        Intent intent = new Intent(context, ScaleDetailActivity.class);
+        intent.putExtras(bundle);
+        return intent;
     }
 
     @Override

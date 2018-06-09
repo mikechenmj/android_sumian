@@ -51,11 +51,13 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
 
     public static void show(Context context, Class<? extends BaseActivity> clx, Bundle extras) {
         Intent intent = new Intent(context, clx);
-
         if (extras != null) {
             intent.putExtras(extras);
         }
+        show(context, intent);
+    }
 
+    public static void show(Context context, Intent intent) {
         if (context instanceof Application || context instanceof Service) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
@@ -71,6 +73,10 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         if (bundle != null) {
             intent.putExtras(bundle);
         }
+        showClearTop(context, intent);
+    }
+
+    public static void showClearTop(Context context, Intent intent) {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }

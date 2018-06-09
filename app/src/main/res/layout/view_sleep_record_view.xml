@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
-        android:visibility="gone"
+        android:visibility="visible"
         app:menu_text="@string/refill"
         app:title_text="@string/sleep_record"
         tools:visibility="visible" />
@@ -190,7 +190,7 @@
         android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:visibility="visible">
 
         <LinearLayout

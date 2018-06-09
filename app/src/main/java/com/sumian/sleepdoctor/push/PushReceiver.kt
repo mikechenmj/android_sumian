@@ -3,15 +3,8 @@ package com.sumian.sleepdoctor.push
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.support.v4.app.NotificationCompat
 import com.blankj.utilcode.util.LogUtils
-import com.sumian.sleepdoctor.BuildConfig
-import com.sumian.sleepdoctor.R
-import android.support.v4.app.NotificationManagerCompat
-import com.sumian.sleepdoctor.main.MainActivity
 import com.sumian.sleepdoctor.utils.NotificationUtil
-import java.net.URLDecoder
 
 
 /**
@@ -30,11 +23,10 @@ class PushReceiver : BroadcastReceiver() {
         if (context == null) return
         if (intent == null) return
         val pushData: PushData = PushDataResolveUtil.getPushData(intent) ?: return
+        val scheme = pushData.scheme ?: return
+        val notificationIntent = schemeResolver(context, scheme) ?: return
+        val contentText = pushData.alert ?: return
+        NotificationUtil.showNotification(context, contentText, notificationIntent)
         LogUtils.d(pushData)
-        val notificationIntent =
-                PushSchemeResolver.schemeResolver(context, pushData.scheme ?: return) ?: return
-        NotificationUtil.showNotification(context,
-                pushData.alert ?: return,
-                notificationIntent)
     }
 }

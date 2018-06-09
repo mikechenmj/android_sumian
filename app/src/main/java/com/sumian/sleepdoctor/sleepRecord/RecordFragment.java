@@ -114,10 +114,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis());
     }
 
-    private void openNotification() {
-
-    }
-
     public static RecordFragment newInstance(long scrollToTime, boolean needScrollToBottom) {
         Bundle bundle = new Bundle();
         bundle.putLong(KEY_SLEEP_RECORD_TIME, scrollToTime);
