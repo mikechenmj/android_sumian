@@ -49,18 +49,52 @@
     <FrameLayout
         android:id="@+id/photo_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_120"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
-        android:background="@color/white">
+        android:minHeight="@dimen/space_120">
 
-        <com.sumian.sleepdoctor.improve.media.widget.TweetPicturesPreviewer
-            android:id="@+id/recycler_images"
+        <com.sumian.common.media.widget.TweetPicturesPreviewer
+            android:id="@+id/publish_pictures_previewer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:padding="@dimen/space_20"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/lay_picture_place"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_120"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/iv_take_picture"
+                android:layout_width="@dimen/space_80"
+                android:layout_height="@dimen/space_80"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/space_20"
+                android:layout_marginStart="@dimen/space_20"
+                android:contentDescription="@null"
+                app:srcCompat="@mipmap/ic_advisory_btn_uploadphoto" />
+
+            <TextView
+                style="@style/text_t2_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/space_20"
+                android:lineSpacingExtra="@dimen/space_2"
+                android:text="@string/take_picture" />
+
+        </LinearLayout>
 
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/lay_report"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_64"
         android:layout_marginTop="@dimen/space_10"

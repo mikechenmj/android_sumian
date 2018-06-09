@@ -9,7 +9,7 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryDetailActivity
-import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity
+import com.sumian.sleepdoctor.improve.advisory.activity.PublishAdvisoryRecordActivity
 import com.sumian.sleepdoctor.improve.advisory.adapter.AdvisoryListAdapter
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.advisory.contract.AdvisoryListContract
@@ -65,7 +65,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
 
     override fun initData() {
         super.initData()
-        this.mPresenter.getAdvisories(mAdvisoryType, (this.mActivity as AdvisoryListActivity).getAdvisoryId())
+        this.mPresenter.getAdvisories(mAdvisoryType)
     }
 
     override fun setPresenter(presenter: AdvisoryListContract.Presenter?) {
@@ -77,11 +77,11 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
+        val advisory = mListAdapter.getItem(position)
         if (mAdvisoryType == Advisory.USED_TYPE) {
-            val advisory = mListAdapter.getItem(position)
             AdvisoryDetailActivity.launch(context!!, advisory.id)
         } else {
-            showCenterToast("去填写图文咨询报告")
+            PublishAdvisoryRecordActivity.launch(context!!, advisory)
         }
     }
 

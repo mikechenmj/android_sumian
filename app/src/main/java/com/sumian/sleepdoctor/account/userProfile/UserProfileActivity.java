@@ -19,7 +19,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.media.SelectImageActivity;
-import com.sumian.common.media.activity.ImageGalleryActivity;
 import com.sumian.common.media.config.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
@@ -28,12 +27,12 @@ import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.improve.widget.sheet.PictureBottomSheet;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.oss.bean.OssResponse;
 import com.sumian.sleepdoctor.oss.engine.OssEngine;
 import com.sumian.sleepdoctor.pager.activity.ModifyNicknameActivity;
-import com.sumian.sleepdoctor.pager.sheet.AvatarBottomSheet;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
@@ -64,7 +63,7 @@ import static com.sumian.sleepdoctor.pager.activity.ModifyNicknameActivity.MODIF
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserProfileActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
-        SettingDividerView.OnShowMoreListener, AvatarBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks, CompoundButton.OnCheckedChangeListener {
+        SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks, CompoundButton.OnCheckedChangeListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = UserProfileActivity.class.getSimpleName();
@@ -143,8 +142,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(AvatarBottomSheet.newInstance().addOnTakePhotoCallback(this), AvatarBottomSheet.class.getSimpleName())
-                .commitNowAllowingStateLoss();
+                .add(PictureBottomSheet.newInstance().addOnTakePhotoCallback(this), PictureBottomSheet.class.getSimpleName())
+                .commitNow();
     }
 
     @Override

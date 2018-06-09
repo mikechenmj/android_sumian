@@ -19,6 +19,9 @@ import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.chat.engine.ChatEngine;
 import com.sumian.sleepdoctor.chat.player.VoicePlayer;
+import com.sumian.sleepdoctor.improve.advisory.model.AdvisoryViewModel;
+import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
+import com.sumian.sleepdoctor.improve.doctor.model.DoctorViewModel;
 import com.sumian.sleepdoctor.network.api.DoctorApi;
 import com.sumian.sleepdoctor.network.engine.NetEngine;
 import com.sumian.sleepdoctor.tab.model.GroupViewModel;
@@ -36,6 +39,8 @@ public final class AppManager implements Observer<Boolean> {
     private DoctorApi mDoctorApi;
     private AccountViewModel mAccountViewModel;
     private GroupViewModel mGroupViewModel;
+    private AdvisoryViewModel mAdvisoryViewModel;
+    private DoctorViewModel mDoctorViewModel;
 
     private ChatEngine mChatEngine;
 
@@ -77,6 +82,14 @@ public final class AppManager implements Observer<Boolean> {
             Holder.INSTANCE.mGroupViewModel = new GroupViewModel();
         }
         return Holder.INSTANCE.mGroupViewModel;
+    }
+
+    public static synchronized AdvisoryViewModel getAdvisoryViewModel() {
+        return Holder.INSTANCE.mAdvisoryViewModel == null ? Holder.INSTANCE.mAdvisoryViewModel = new AdvisoryViewModel() : Holder.INSTANCE.mAdvisoryViewModel;
+    }
+
+    public static synchronized DoctorViewModel getDoctorViewModel() {
+        return Holder.INSTANCE.mDoctorViewModel == null ? Holder.INSTANCE.mDoctorViewModel = new DoctorViewModel() : Holder.INSTANCE.mDoctorViewModel;
     }
 
     public static synchronized VoicePlayer getVoicePlayer() {

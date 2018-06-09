@@ -52,6 +52,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 图片预览Activity
  */
+@SuppressWarnings("deprecation")
 public class ImageGalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener,
         EasyPermissions.PermissionCallbacks, View.OnClickListener {
     public static final String KEY_IMAGE = "images";
@@ -136,6 +137,7 @@ public class ImageGalleryActivity extends BaseActivity implements ViewPager.OnPa
         mImagePager = findViewById(R.id.vp_image);
         mIndexText = findViewById(R.id.tv_index);
         mImagePager.addOnPageChangeListener(this);
+
     }
 
     @Override
@@ -321,8 +323,7 @@ public class ImageGalleryActivity extends BaseActivity implements ViewPager.OnPa
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            View view = LayoutInflater.from(container.getContext())
-                    .inflate(R.layout.lay_gallery_page_item_contener, container, false);
+            View view = LayoutInflater.from(container.getContext()).inflate(R.layout.lay_gallery_page_item_contener, container, false);
             ImagePreviewView previewView = view.findViewById(R.id.iv_preview);
             previewView.setOnReachBorderListener(this);
             Loading loading = view.findViewById(R.id.loading);
@@ -450,7 +451,6 @@ public class ImageGalleryActivity extends BaseActivity implements ViewPager.OnPa
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }

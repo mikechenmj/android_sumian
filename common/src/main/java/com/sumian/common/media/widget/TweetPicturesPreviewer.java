@@ -25,9 +25,11 @@ import com.sumian.common.media.config.SelectOptions;
  */
 
 public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectImageAdapter.Callback {
+
     private TweetSelectImageAdapter mImageAdapter;
     private ItemTouchHelper mItemTouchHelper;
     private RequestManager mCurImageLoader;
+    private Runnable mDeleteAction;
 
     public TweetPicturesPreviewer(Context context) {
         super(context);
@@ -47,7 +49,7 @@ public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectI
     private void init() {
         mImageAdapter = new TweetSelectImageAdapter(this);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         this.setLayoutManager(layoutManager);
         this.setAdapter(mImageAdapter);
         this.setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -63,12 +65,13 @@ public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectI
             mImageAdapter.add(path);
         }
         mImageAdapter.notifyDataSetChanged();
+        setVisibility(VISIBLE);
     }
 
     @Override
     public void onLoadMoreClick() {
         SelectImageActivity.show(getContext(), new SelectOptions.Builder()
-                .setHasCam(true)
+                .setHasCam(false)
                 .setSelectCount(9)
                 .setSelectedImages(mImageAdapter.getPaths())
                 .setCallback(this::set).build());
@@ -85,6 +88,19 @@ public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectI
     @Override
     public void onStartDrag(ViewHolder viewHolder) {
         mItemTouchHelper.startDrag(viewHolder);
+    }
+
+    @Override
+    public void onDeleteCallback() {
+        if (mDeleteAction != null) {
+            showEmptyView(mDeleteAction);
+        }
+    }
+
+
+    public void showEmptyView(Runnable action) {
+        mDeleteAction = action;
+        action.run();
     }
 
     public String[] getPaths() {

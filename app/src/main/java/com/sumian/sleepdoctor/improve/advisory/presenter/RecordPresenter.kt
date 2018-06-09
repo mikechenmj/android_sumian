@@ -18,6 +18,7 @@ class RecordPresenter private constructor(view: RecordContract.View) : RecordCon
     private var mView: RecordContract.View? = null
 
     init {
+        view.setPresenter(this)
         this.mView = view
     }
 

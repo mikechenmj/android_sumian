@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
+import com.sumian.sleepdoctor.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,10 +115,10 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
                 String actionText = tvServiceAction.getText().toString();
                 switch (actionText) {
                     case "去提问":
-                        ToastHelper.show("去打开图文服务");
+                        AdvisoryListActivity.show(getContext(), AdvisoryListActivity.class);
                         break;
                     case "去记录":
-                        ToastHelper.show("去记录睡眠日记");
+                        MainActivity.launch(getContext(), 0);
                         break;
                     default:
                         break;

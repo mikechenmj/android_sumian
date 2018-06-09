@@ -62,10 +62,12 @@ public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectIma
                         if (pos == -1)
                             return;
                         mModels.remove(pos);
-                        if (mModels.size() > 0)
+                        if (mModels.size() > 0) {
                             notifyItemRemoved(pos);
-                        else
+                        } else {
                             notifyDataSetChanged();
+                            callback.onDeleteCallback();
+                        }
                     }
                 }
 
@@ -186,6 +188,8 @@ public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectIma
          * @param viewHolder The holder of the view to drag.
          */
         void onStartDrag(RecyclerView.ViewHolder viewHolder);
+
+        void onDeleteCallback();
     }
 
     /**
