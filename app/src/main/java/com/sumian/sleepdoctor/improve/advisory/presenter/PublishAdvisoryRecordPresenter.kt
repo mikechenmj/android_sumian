@@ -44,6 +44,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         call.enqueue(object : BaseResponseCallback<Advisory>() {
             override fun onSuccess(response: Advisory?) {
                 AppManager.getAdvisoryViewModel().notifyAdvisory(advisory = response!!)
+                mView?.onPublishAdvisoryRecordSuccess(response)
             }
 
             override fun onFailure(errorResponse: ErrorResponse?) {
@@ -74,7 +75,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         call.enqueue(object : BaseResponseCallback<PictureOssSts>() {
 
             override fun onSuccess(response: PictureOssSts?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
             override fun onFailure(errorResponse: ErrorResponse?) {

@@ -49,7 +49,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         mView?.onBegin()
 
         val map = mutableMapOf<String, Any>()
-        map["include"] = if (advisoryType == Advisory.USED_TYPE) "user,doctor,records" else ""
+        map["include"] = if (advisoryType == Advisory.USED_TYPE) "records" else ""
         map["page"] = mPageNumber
         map["per_page"] = DEFAULT_PAGES
         map["type"] = advisoryType

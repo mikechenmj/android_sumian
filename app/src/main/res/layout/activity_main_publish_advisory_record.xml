@@ -122,9 +122,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/space_20"
-            android:text="已选择1份"
             android:textColor="@color/t4_color"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            tools:text="已选择1份" />
 
         <ImageView
             android:layout_width="@dimen/space_10"

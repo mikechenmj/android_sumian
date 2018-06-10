@@ -4,6 +4,7 @@ package com.sumian.sleepdoctor.improve.advisory.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.sumian.common.media.SelectImageActivity
@@ -73,13 +74,13 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-
-                tv_input_text_count.text = String.format(Locale.getDefault(), "%d%s%d", s?.length, "/", 500)
-
-                if (count < 500) {
-                    tv_input_text_count.setTextColor(resources.getColor(R.color.t2_color))
-                } else {
-                    tv_input_text_count.setTextColor(resources.getColor(R.color.t4_color))
+                et_input.post {
+                    tv_input_text_count.text = String.format(Locale.getDefault(), "%d%s%d", s?.length, "/", 500)
+                    if (count < 500) {
+                        tv_input_text_count.setTextColor(resources.getColor(R.color.t2_color))
+                    } else {
+                        tv_input_text_count.setTextColor(resources.getColor(R.color.t4_color))
+                    }
                 }
             }
         })
@@ -110,14 +111,19 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
     }
 
-    override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter?) {
-        //super.setPresenter(presenter)
+    override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter) {
+       //super.setPresenter(presenter)
         this.mPresenter = presenter
     }
 
     override fun onMenuClick(v: View?) {
 
         val inputContent = et_input.text.toString().trim()
+
+        if (TextUtils.isEmpty(inputContent) || inputContent.length <= 10) {
+            showCenterToast(R.string.more_than_ten_size)
+            return
+        }
 
         if (mPictures == null || mPictures?.isEmpty()!!) {
             this.mPresenter.publishAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = mOnlineRecordIds)
@@ -153,6 +159,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
+        AdvisoryDetailActivity.launch(this, advisoryId = advisory.id)
     }
 
     override fun onPublishAdvisoryRecordFailed(error: String) {
@@ -160,12 +167,24 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
     }
 
     override fun onTakePhotoCallback() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.mPictures = arrayOf()
+        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(true).setSelectCount(1).setSelectedImages(mPictures).setCallback {
+            it.forEach { Log.e(TAG, it) }
+
+            mPictures = it
+
+            if (it.isNotEmpty()) {
+                publish_pictures_previewer.set(it)
+                lay_picture_place.visibility = View.GONE
+            }
+
+        }.build())
+
     }
 
     override fun onPicPictureCallback() {
         this.mPictures = arrayOf()
-        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(true).setSelectCount(9).setSelectedImages(mPictures).setCallback {
+        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(mPictures).setCallback {
             it.forEach { Log.e(TAG, it) }
 
             mPictures = it
