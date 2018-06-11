@@ -57,11 +57,27 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
                 .get(NotificationViewModel::class.java)
                 .unreadCount
                 .observe(this, Observer { count -> iv_notification.isActivated = count != null && count > 0 })
+
+        AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
+            run {
+                onGetDoctorInfoSuccess(doctor)
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onRefresh()
     }
 
     override fun initPresenter() {
         super.initPresenter()
         DoctorPresenter.init(this)
+    }
+
+    override fun onRelease() {
+        super.onRelease()
+        AppManager.getDoctorViewModel().getDoctorLiveData().removeObservers(this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

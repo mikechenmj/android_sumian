@@ -45,6 +45,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
             override fun onSuccess(response: Doctor?) {
                 AppManager.getAccountViewModel().updateBindDoctor(response)
+                AppManager.getDoctorViewModel().notifyDoctor(response)
                 mView?.onGetDoctorInfoSuccess(response)
             }
 

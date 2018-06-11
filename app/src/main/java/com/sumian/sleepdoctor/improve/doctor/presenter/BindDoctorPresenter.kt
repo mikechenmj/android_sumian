@@ -35,6 +35,7 @@ class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : B
                 }
             } else {
                 AppManager.getAccountViewModel().updateBindDoctor(sBridgeResult.result)
+                AppManager.getDoctorViewModel().notifyDoctor(sBridgeResult.result)
                 mView?.onBindDoctorSuccess(sBridgeResult.message)
             }
         } else {
