@@ -11,6 +11,7 @@ import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
 import com.sumian.sleepdoctor.onlineReport.OnlineReport
+import com.sumian.sleepdoctor.order.OrderDetailV2
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail
 import com.sumian.sleepdoctor.scale.bean.Scale
@@ -74,6 +75,9 @@ interface DoctorApi {
 
     @GET("orders/{order_no}")
     fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
+
+    @GET("orders/{order_no}")
+    fun getOrderDetailV2(@Path("order_no") orderNumber: String): Call<OrderDetailV2>
 
     @FormUrlEncoded
     @POST("user/leancloud")
