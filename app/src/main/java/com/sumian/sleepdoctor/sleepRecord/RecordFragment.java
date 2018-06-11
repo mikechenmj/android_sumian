@@ -13,13 +13,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.sumian.common.utils.NotificationUtil;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.constants.SpKeys;
+import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
@@ -34,6 +35,7 @@ import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.sleepRecord.view.SleepRecordView;
 import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarView;
 import com.sumian.sleepdoctor.sleepRecord.view.calendar.custom.SleepCalendarViewWrapper;
+import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
@@ -99,7 +101,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     private void showOpenNotificationDialogIfNeeded() {
         long previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0);
         boolean alreadyShowed = previousShowTime > 0;
-        if (NotificationUtil.areNotificationsEnabled(getActivity()) || alreadyShowed) {
+        if (NotificationUtil.Companion.areNotificationsEnabled(getActivity()) || alreadyShowed) {
             return;
         }
         SumianAlertDialog.create()
@@ -110,10 +112,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 .setRightBtn(R.string.open_notification, v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION))
                 .show(getFragmentManager());
         SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis());
-    }
-
-    private void openNotification() {
-
     }
 
     public static RecordFragment newInstance(long scrollToTime, boolean needScrollToBottom) {
@@ -235,6 +233,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
             R.id.iv_date_arrow,
             R.id.iv_notification,
             R.id.dsiv_sleep_scale,
+            R.id.iv_weekly_report,
     })
     public void onClick(View view) {
         switch (view.getId()) {
@@ -244,6 +243,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 break;
             case R.id.iv_notification:
                 NotificationListActivity.launch(getActivity());
+                break;
+            case R.id.iv_weekly_report:
+                int selectTimeInSecond = (int) (mSelectedTime / 1000);
+                String urlContentPart = H5Url.H5_URI_SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", String.valueOf(selectTimeInSecond));
+                String title = getString(R.string.record_weekly_report);
+                SimpleWebActivity.launch(getActivity(), title, urlContentPart);
                 break;
             case R.id.dsiv_sleep_scale:
                 ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_ALL);

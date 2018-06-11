@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.main;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,9 +35,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @SuppressWarnings("unused")
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String KEY_TAB_INDEX = "key_tab_index";
-    private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
-    private static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
+    public static final String KEY_TAB_INDEX = "key_tab_index";
+    public static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
+    public static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
 
     @BindView(R.id.nav_tab)
     BottomNavigationBar mBottomNavigationBar;
@@ -62,12 +63,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         showClearTop(context, MainActivity.class, bundle);
     }
 
-    public static void launchSleepRecordTab(Context context, long sleepRecordTime, boolean scrollToBottom) {
+    public static void launchSleepRecordTab(Context context, long sleepRecordTime) {
+        showClearTop(context, getLaunchSleepRecordTabIntent(context, sleepRecordTime));
+    }
+
+    public static Intent getLaunchSleepRecordTabIntent(Context context, long sleepRecordTime) {
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_TAB_INDEX, 0);
-        bundle.putLong(KEY_SLEEP_RECORD_TIME, sleepRecordTime);
-        bundle.putBoolean(KEY_SCROLL_TO_BOTTOM, scrollToBottom);
-        showClearTop(context, MainActivity.class, bundle);
+        bundle.putInt(MainActivity.KEY_TAB_INDEX, 0);
+        bundle.putLong(MainActivity.KEY_SLEEP_RECORD_TIME, sleepRecordTime);
+        bundle.putBoolean(MainActivity.KEY_SCROLL_TO_BOTTOM, true);
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtras(bundle);
+        return intent;
     }
 
     @Override

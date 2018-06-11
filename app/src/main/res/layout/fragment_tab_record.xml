@@ -54,7 +54,18 @@
             android:layout_toStartOf="@id/iv_notification"
             android:contentDescription="@null"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_nav_icon_scan" />
+            android:src="@mipmap/ic_nav_icon_scan"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_weekly_report"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/iv_notification"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_nav_statistics" />
     </RelativeLayout>
 
     <ScrollView
@@ -83,9 +94,11 @@
                 android:id="@+id/dsiv_sleep_scale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 app:dsiv_desc="@string/fill_scale_hint"
                 app:dsiv_image="@mipmap/ic_scale"
-                app:dsiv_title="@string/sleep_scale" />
+                app:dsiv_title="@string/sleep_scale"
+                tools:visibility="visible" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

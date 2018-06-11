@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.scale.bean.Scale;
-import com.sumian.sleepdoctor.utils.ResourceUtil;
+import com.sumian.sleepdoctor.utils.ResourceUtilKt;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class ScaleListAdapter extends BaseQuickAdapter<Scale, BaseViewHolder> {
         if (result != null) {
             contentText = TimeUtil.formatDate("填写日期：yyyy-MM-dd", result.getCreateAtInMillis());
         } else {
-            contentText = ResourceUtil.getString(R.string.scale_scale_not_finish_yet_hint);
+            contentText = ResourceUtilKt.getString(R.string.scale_scale_not_finish_yet_hint);
         }
         helper.setText(R.id.tv_content, contentText);
         tvDoctor.setVisibility(doctor != null ? View.VISIBLE : View.GONE);

@@ -11,6 +11,7 @@ package com.sumian.sleepdoctor.notification.bean;
  */
 public class Notification {
 
+    private static final String NOTIFICATION_TYPE_PREFIX = "App\\Notifications\\";
     /**
      * id : 6a1b932e-fb04-4aee-b1e9-5632ba0e8dca
      * type : App\Notifications\DiaryEvaluated
@@ -18,9 +19,13 @@ public class Notification {
      * read_at : null
      * created_at : 1528178108
      */
-    public static final String TYPE_DIARY_EVALUATION = "App\\Notifications\\DiaryEvaluated";
-    public static final String TYPE_SCALE_DISTRIBUTION = "App\\Notifications\\ScaleDistribution";
-    public static final String TYPE_ONLINE_REPORT = "App\\Notifications\\OnlineReportGet";
+    public static final String TYPE_DIARY_EVALUATION = NOTIFICATION_TYPE_PREFIX + "DiaryEvaluated";
+    public static final String TYPE_ONLINE_REPORT = NOTIFICATION_TYPE_PREFIX + "OnlineReportGet";
+    public static final String TYPE_ADVISORY_CANCEL_REFUND = NOTIFICATION_TYPE_PREFIX + "AdvisoryCancelRefund";
+    public static final String TYPE_ADVISORY_REPLIED = NOTIFICATION_TYPE_PREFIX + "AdvisoryReplied";
+    public static final String TYPE_SCALE_DISTRIBUTION = NOTIFICATION_TYPE_PREFIX + "ScaleDistribution";
+    public static final String TYPE_FOLLOW_UP_REFERRAL_NOTICE = NOTIFICATION_TYPE_PREFIX + "FollowUpReferralNotice";
+    public static final String TYPE_FOLLOW_UP_LIFE_NOTICE = NOTIFICATION_TYPE_PREFIX + "FollowUpLifeNotice";
 
     private String id;
     private String type;    //医生反馈：App\Notifications\DiaryEvaluated，电子报告：App\Notifications\DiaryEvaluated）

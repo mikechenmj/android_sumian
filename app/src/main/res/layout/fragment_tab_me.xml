@@ -57,11 +57,18 @@
                 android:id="@+id/dv_user_info_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_10"
-                app:divider_line_visible="gone"
+                app:divider_line_visible="visible"
                 app:type_desc="@string/user_info_center"
                 app:type_icon="@mipmap/ic_info_icon_information" />
 
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_my_medical_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_10"
+                app:divider_line_visible="gone"
+                app:type_desc="@string/me_my_medical_record"
+                app:type_icon="@mipmap/ic_my_medical_record" />
 
             <com.sumian.sleepdoctor.widget.divider.SettingDividerView
                 android:id="@+id/dv_my_evaluation"

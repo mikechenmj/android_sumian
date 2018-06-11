@@ -117,14 +117,13 @@
         <!-- 实时通信模块、推送都要使用 PushService -->
         <service android:name="com.avos.avoscloud.PushService" />
 
-        <receiver android:name=".push.PushReceiver">
+        <receiver
+            android:name=".push.PushReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="com.sumian.sd.action.PUSH" />
             </intent-filter>
         </receiver>
-
         <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -136,6 +135,7 @@
         </receiver>
         <!-- 实时通信模块、推送 END -->
 
+        <activity android:name=".h5.SimpleWebActivity" />
         <!-- online report -->
         <activity android:name=".onlineReport.OnlineReportListActivity" />
         <activity android:name=".onlineReport.OnlineReportDetailActivity" />
@@ -152,8 +152,8 @@
         <!-- scale -->
         <activity android:name=".scale.ScaleListActivity" />
         <activity android:name=".scale.ScaleDetailActivity" />
-
         <activity android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity" />
+        <activity android:name=".notification.RefundActivity" />
     </application>
 
 </manifest>

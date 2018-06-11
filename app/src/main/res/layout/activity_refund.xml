@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".notification.RefundActivity">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/refund_detail" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_height="@dimen/space_62"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:gravity="center_vertical"
+            android:text="@string/refund_success_notification" />
+
+        <View style="@style/HorizontalDividerLineMarginStart20" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_40"
+            android:text="@string/refund_count" />
+
+        <TextView
+            style="@style/text_t3_14"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_10"
+            android:textSize="@dimen/font_30"
+            tools:text="￥50.00" />
+
+        <View
+            style="@style/HorizontalDividerLineMarginStart20"
+            android:layout_marginTop="@dimen/space_40" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            tools:text="退款方式：原路退回" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            tools:text="退款时间：2018/05/07 10:54" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            tools:text="退款原因：退款原因..." />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            tools:text="请以原账户接受退款成功消息为准，如有疑问，请致电：400-618-1318向客服咨询" />
+    </LinearLayout>
+
+</LinearLayout>
