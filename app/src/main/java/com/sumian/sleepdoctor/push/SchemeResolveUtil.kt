@@ -51,7 +51,7 @@ private fun createSchemeResolver(uri: Uri): SchemeResolver? {
 
         }
         "advisories" -> {
-
+            return AdvisoriesSchemeResolver()
         }
         "scale-distributions" -> {
             return ScaleSchemeResolver()
