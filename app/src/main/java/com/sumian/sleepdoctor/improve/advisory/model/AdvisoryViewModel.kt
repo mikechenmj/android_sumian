@@ -28,7 +28,7 @@ class AdvisoryViewModel : ViewModel() {
         var tmpIndex: Int = -1
 
         if (tmpCacheAdvisories.isNotEmpty()) {
-            for (i: Int in 0..tmpCacheAdvisories.size) {
+            for (i: Int in 0 until tmpCacheAdvisories.size) {
                 val tmpAdvisory = tmpCacheAdvisories[i]
                 if (tmpAdvisory.id == advisory.id) {
                     tmpCacheAdvisories[i] = advisory

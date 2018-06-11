@@ -1,7 +1,12 @@
 package com.sumian.sleepdoctor.improve.doctor.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -14,6 +19,7 @@ import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Created by sm
@@ -25,6 +31,7 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     private static final String EXTRA_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
 
     private DoctorService mDoctorService;
+    private BroadcastReceiver mBroadcastReceiver;
 
     public static void show(Context context, DoctorService doctorService) {
         Bundle extras = new Bundle();
@@ -41,6 +48,29 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     }
 
     @Override
+    protected void initWidget(View root) {
+        super.initWidget(root);
+
+        registerFinishBroadcastReceiver();
+    }
+
+    private void registerFinishBroadcastReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (Objects.requireNonNull(intent.getAction())) {
+                    case ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY:
+                        finish();
+                        break;
+                }
+            }
+        }, filter);
+    }
+
+    @Override
     protected String initTitle() {
         return this.mDoctorService.getName();
     }
@@ -53,6 +83,14 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     @Override
     protected String h5HandlerName() {
         return "payDirect";
+    }
+
+    @Override
+    protected void onRelease() {
+        super.onRelease();
+        if (mBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
+        }
     }
 
     @Override

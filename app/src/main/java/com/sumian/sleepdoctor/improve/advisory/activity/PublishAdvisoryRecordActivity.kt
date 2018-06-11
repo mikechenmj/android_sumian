@@ -41,17 +41,18 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
 
+    private val mOnlineRecordIds: ArrayList<Int> by lazy { arrayListOf<Int>() }
+
     private var mAdvisory: Advisory? = null
 
     private var mPictures: Array<String>? = null
-
-    private var mOnlineRecordIds: ArrayList<Int> = arrayListOf()
 
     private var mActionLoadingDialog: ActionLoadingDialog? = null
 
     companion object {
 
         private const val ARGS_ADVISORY = "com.sumian.sleepdoctor.extras.advisory"
+
         private const val PICK_REPORT_REQUEST_CODE = 0x01
 
         fun launch(context: Context, advisory: Advisory?) {
@@ -227,7 +228,6 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
     }
 
     override fun onTakePhotoCallback() {
-        this.mPictures = arrayOf()
         SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(true).setSelectCount(1).setSelectedImages(mPictures).setCallback {
             it.forEach { Log.e(TAG, it) }
 

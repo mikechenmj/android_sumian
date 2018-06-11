@@ -5,7 +5,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.sumian.sleepdoctor.base.BasePresenter
 import com.sumian.sleepdoctor.base.BaseView
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
-import com.sumian.sleepdoctor.improve.advisory.bean.PictureOssSts
 
 /**
  *

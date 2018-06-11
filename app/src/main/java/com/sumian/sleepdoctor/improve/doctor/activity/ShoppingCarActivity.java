@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     private static final String TAG = ShoppingCarActivity.class.getSimpleName();
 
     private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
+    public static final String ACTION_CLOSE_ACTIVE_ACTIVITY = "com.sumian.sleepdoctor.ACTION.close.active.activity";
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -235,8 +237,12 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         }
 
         if (mDoctorService.getType() == DoctorService.GRAPHIC_SERVICE_TYPE) {
+            Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
+            finish();
         } else {
+            finish();
             MainActivity.launch(this, 1);
         }
     }

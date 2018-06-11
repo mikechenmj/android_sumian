@@ -23,6 +23,7 @@ import com.sumian.sleepdoctor.improve.advisory.contract.PublishAdvisoryRecordCon
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
+import com.sumian.sleepdoctor.utils.JsonUtil
 import java.util.*
 
 /**
@@ -188,12 +189,15 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
                     publishImage(sts, mPublishIndex, localFilePath, oSSProgressCallback)
                 } else {
                     mView?.onEndUploadImagesCallback()
-                    // mView?.onPublishAdvisoryRecordSuccess()
+                    val serverCallbackReturnBody = result?.serverCallbackReturnBody
+                    val advisory = JsonUtil.fromJson(serverCallbackReturnBody, Advisory::class.java)
+                    mView?.onPublishAdvisoryRecordSuccess(advisory!!)
                 }
             }
 
             override fun onFailure(request: PutObjectRequest?, clientException: ClientException?, serviceException: ServiceException?) {
                 Log.e(TAG, "上传失败")
+                mView?.onEndUploadImagesCallback()
                 mView?.onPublishAdvisoryRecordFailed("图片上传失败,请重试")
             }
 
