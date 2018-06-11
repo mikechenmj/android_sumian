@@ -43,7 +43,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                 viewHolder
             }
             Record.RECORD_REPLY_TYPE -> {
-                viewHolder = QuestionViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_reply_item, parent, false))
+                viewHolder = ReplyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_reply_item, parent, false))
                 viewHolder.itemView!!.tag = viewHolder
                 viewHolder
             }
@@ -62,7 +62,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                 (holder as ReplyViewHolder).initView(item)
             }
             else -> {
-                //(holder as QuestionViewHolder).initView(item)
+                (holder as QuestionViewHolder).initView(item)
             }
         }
     }

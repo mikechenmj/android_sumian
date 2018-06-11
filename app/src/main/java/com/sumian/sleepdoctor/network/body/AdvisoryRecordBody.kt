@@ -11,7 +11,7 @@ class AdvisoryRecordBody {
     var include: String? = "user,doctor,records"
     var advisory_id: Int = 0
     var content: String? = null
-    var online_report_ids: IntArray? = null
+    var online_report_ids: ArrayList<Int>? = null
     var picture_count: Int = 0
 
 }

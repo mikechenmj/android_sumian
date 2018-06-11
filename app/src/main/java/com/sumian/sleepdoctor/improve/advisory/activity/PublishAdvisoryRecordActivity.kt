@@ -2,20 +2,27 @@
 
 package com.sumian.sleepdoctor.improve.advisory.activity
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
+import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.config.SelectOptions
 import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BaseActivity
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sleepdoctor.improve.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sleepdoctor.improve.widget.adapter.SimpleTextWatchAdapter
 import com.sumian.sleepdoctor.improve.widget.sheet.PictureBottomSheet
+import com.sumian.sleepdoctor.onlineReport.OnlineReport
 import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog
@@ -28,7 +35,9 @@ import java.util.*
  * on 2018/6/8 10:40
  * desc:图文咨询上传
  **/
-class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.Presenter>(), PublishAdvisoryRecordContact.View, TitleBar.OnBackListener, TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback {
+class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.Presenter>(),
+        PublishAdvisoryRecordContact.View, TitleBar.OnBackListener,
+        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, ActivityLauncher {
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
 
@@ -36,13 +45,14 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     private var mPictures: Array<String>? = null
 
-    private var mOnlineRecordIds: IntArray? = null
+    private var mOnlineRecordIds: ArrayList<Int> = arrayListOf()
 
     private var mActionLoadingDialog: ActionLoadingDialog? = null
 
     companion object {
 
         private const val ARGS_ADVISORY = "com.sumian.sleepdoctor.extras.advisory"
+        private const val PICK_REPORT_REQUEST_CODE = 0x01
 
         fun launch(context: Context, advisory: Advisory?) {
             val extras = Bundle()
@@ -80,6 +90,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
                         tv_input_text_count.setTextColor(resources.getColor(R.color.t2_color))
                     } else {
                         tv_input_text_count.setTextColor(resources.getColor(R.color.t4_color))
+                        showCenterToast("字数超过限定值")
                     }
                 }
             }
@@ -99,7 +110,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
 
         lay_report.setOnClickListener {
-            OnlineReportListActivity.show(it.context, OnlineReportListActivity::class.java)
+            OnlineReportListActivity.launchForPick(this, PICK_REPORT_REQUEST_CODE)
         }
 
     }
@@ -111,8 +122,32 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                if (requestCode == PICK_REPORT_REQUEST_CODE) {// pick reports
+
+                    val reports: ArrayList<OnlineReport> = data?.getParcelableArrayListExtra("data")!!
+
+                    if (!reports.isEmpty()) {
+                        tv_report_count.text = "已选择 ${reports.size} 份"
+                        tv_report_count.visibility = View.VISIBLE
+
+                        reports.forEach { onlineReport ->
+                            run {
+                                mOnlineRecordIds.add(onlineReport.id)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter) {
-       //super.setPresenter(presenter)
+        //super.setPresenter(presenter)
         this.mPresenter = presenter
     }
 
@@ -120,7 +155,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
         val inputContent = et_input.text.toString().trim()
 
-        if (TextUtils.isEmpty(inputContent) || inputContent.length <= 10) {
+        if (TextUtils.isEmpty(inputContent) || inputContent.length < 10) {
             showCenterToast(R.string.more_than_ten_size)
             return
         }
@@ -159,11 +194,36 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
+        this.mPresenter.getLastAdvisory()
         AdvisoryDetailActivity.launch(this, advisoryId = advisory.id)
     }
 
     override fun onPublishAdvisoryRecordFailed(error: String) {
         showCenterToast(error)
+    }
+
+    override fun onGetPublishUploadStsFailed(error: String) {
+        showCenterToast(error)
+    }
+
+    override fun onProgress(request: PutObjectRequest?, currentSize: Long, totalSize: Long) {
+        Log.e(TAG, "progress=${currentSize * 1.0f / totalSize * 100.0f}")
+    }
+
+    override fun onGetPublishUploadStsSuccess(successMsg: String) {
+        showCenterToast(successMsg)
+        mPresenter.publishImages(mPictures!!, this)
+    }
+
+    override fun onStartUploadImagesCallback() {
+        this.mActionLoadingDialog = ActionLoadingDialog().show(supportFragmentManager)
+        this.mActionLoadingDialog?.isCancelable = false
+    }
+
+    override fun onEndUploadImagesCallback() {
+        if (this.mActionLoadingDialog?.isAdded!!) {
+            this.mActionLoadingDialog?.dismiss()
+        }
     }
 
     override fun onTakePhotoCallback() {

@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_sleepdoctor_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/BaseAppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name,android:icon,android:theme">
         <meta-data
@@ -39,7 +39,8 @@
 
         <activity
             android:name=".pager.activity.WelcomeActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/BaseAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,22 +60,52 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".account.login.LoginActivity" />
-        <activity android:name=".account.userProfile.ImproveUserProfileOneActivity" />
-        <activity android:name=".account.userProfile.ImproveUserProfileTwoActivity" />
-        <activity android:name=".account.userProfile.UserProfileActivity" />
-        <activity android:name=".pager.activity.ConfigActivity" />
-        <activity android:name=".improve.doctor.activity.ShoppingCarActivity" />
-        <activity android:name=".pager.activity.ScanGroupResultActivity" />
-        <activity android:name=".pager.activity.SettingActivity" />
-        <activity android:name=".chat.activity.MsgActivity" />
-        <activity android:name=".pager.activity.GroupDetailActivity" />
-        <activity android:name=".pager.activity.GroupQrCodeActivity" />
-        <activity android:name=".pager.activity.GroupMembersActivity" />
-        <activity android:name=".pager.activity.ModifyNicknameActivity" />
-        <activity android:name=".pager.activity.OtherUserProfileActivity" />
-        <activity android:name=".account.bindMobile.BindMobileActivity" />
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".account.login.LoginActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".account.userProfile.ImproveUserProfileOneActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".account.userProfile.ImproveUserProfileTwoActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".account.userProfile.UserProfileActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.ConfigActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".improve.doctor.activity.ShoppingCarActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.ScanGroupResultActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.SettingActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".chat.activity.MsgActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.GroupDetailActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.GroupQrCodeActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.GroupMembersActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.ModifyNicknameActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".pager.activity.OtherUserProfileActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".account.bindMobile.BindMobileActivity"
+            android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".improve.doctor.activity.ScanDoctorQrCodeActivity"
             android:theme="@style/scan_qr_theme" />
@@ -146,13 +177,19 @@
         <!-- sleep record -->
         <activity android:name=".sleepRecord.FillSleepRecordActivity" />
         <activity android:name=".sleepRecord.SleepRecordActivity" />
-        <activity android:name=".improve.advisory.activity.AdvisoryListActivity" />
-        <activity android:name=".improve.advisory.activity.AdvisoryDetailActivity" />
+        <activity
+            android:name=".improve.advisory.activity.AdvisoryListActivity"
+            android:theme="@style/BaseAppTheme" />
+        <activity
+            android:name=".improve.advisory.activity.AdvisoryDetailActivity"
+            android:theme="@style/BaseAppTheme" />
 
         <!-- scale -->
         <activity android:name=".scale.ScaleListActivity" />
         <activity android:name=".scale.ScaleDetailActivity" />
-        <activity android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity" />
+        <activity
+            android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity"
+            android:theme="@style/BaseAppTheme" />
         <activity android:name=".notification.RefundActivity" />
     </application>
 
