@@ -29,12 +29,12 @@ import com.sumian.sleepdoctor.BuildConfig;
 public class SWebView extends BridgeWebView {
 
     private static final String TAG = SWebView.class.getSimpleName();
-
     private static final long DEFAULT_DELAY_MILLIS = 30 * 1000L;
 
     private OnWebViewListener mWebViewListener;
-
     private int mErrorCode = -1;
+    private boolean mOnPageFinished;
+    private int mOnReceiveTitleCount;
 
     private Runnable mDismissRunnable = new Runnable() {
         @Override
@@ -44,7 +44,7 @@ public class SWebView extends BridgeWebView {
             }
         }
     };
-    private boolean mOnPageFinished;
+
 
     public void setOnWebViewListener(OnWebViewListener listener) {
         this.mWebViewListener = listener;
@@ -124,14 +124,12 @@ public class SWebView extends BridgeWebView {
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
             LogUtils.d(title);
-            // 加载网页的时候onReceivedTitle会回调2次，第一次在onPageFinished之前，结果是连接，第二次是在onPageFinished之后，结果是正确的title，
-            // 所以这里通过mOnPageFinished做一个过滤
-            if (mOnPageFinished && mWebViewListener != null) {
+            mOnReceiveTitleCount++;
+            // 加载网页的时候onReceivedTitle会回调2次，以第二次为准，
+            if (mOnReceiveTitleCount > 1 && mWebViewListener != null) {
                 mWebViewListener.onReceiveTitle(view, title);
             }
         }
-
-
     }
 
     private class WVClient extends BridgeWebViewClient {
@@ -173,7 +171,7 @@ public class SWebView extends BridgeWebView {
             if (mWebViewListener != null) {
                 mWebViewListener.onPageStarted(webView);
             }
-            mOnPageFinished = false;
+            mOnReceiveTitleCount = 0;
         }
 
         @Override
@@ -190,7 +188,6 @@ public class SWebView extends BridgeWebView {
                     mWebViewListener.onPageFinish(view);
                 }
             }
-            mOnPageFinished = true;
             LogUtils.d(view.getTitle());
         }
     }

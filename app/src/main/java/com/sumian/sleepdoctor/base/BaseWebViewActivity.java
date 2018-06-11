@@ -26,7 +26,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     TitleBar mTitleBar;
 
     @BindView(R.id.sm_webview_container)
-    SWebViewLayout mSWebViewLayout;
+    protected SWebViewLayout mSWebViewLayout;
 
     @Override
     protected int getLayoutId() {

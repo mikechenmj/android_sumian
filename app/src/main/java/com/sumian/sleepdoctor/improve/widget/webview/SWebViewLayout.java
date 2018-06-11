@@ -144,4 +144,8 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
     public interface WebListener {
         void onReceiveTitle(WebView webView, String title);
     }
+
+    public ProgressBar getWebViewProgress() {
+        return mWebViewProgress;
+    }
 }
