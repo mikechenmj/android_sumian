@@ -40,7 +40,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     private OnSpannerListener mOnSpannerListener;
     private OnBackListener mOnBackListener;
-    private OnMoreListener mOnMenuClickListener;
+    private OnMenuClickListener mOnMenuClickListener;
 
     private boolean mIsShow;
 
@@ -117,8 +117,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return this;
     }
 
-    public TitleBar setMenuOnClickListener(OnMoreListener onMoreListener) {
-        mOnMenuClickListener = onMoreListener;
+    public TitleBar setOnMenuClickListener(OnMenuClickListener onMenuClickListener) {
+        mOnMenuClickListener = onMenuClickListener;
         return this;
     }
 
@@ -222,7 +222,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         mTvMenu.setVisibility(visibility);
     }
 
-    public interface OnMoreListener {
+    public interface OnMenuClickListener {
         void onMenuClick(View v);
     }
 }

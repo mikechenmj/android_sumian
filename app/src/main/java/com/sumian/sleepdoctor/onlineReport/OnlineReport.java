@@ -1,5 +1,8 @@
 package com.sumian.sleepdoctor.onlineReport;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * <pre>
  *     author : Zhan Xuzhao
@@ -9,7 +12,7 @@ package com.sumian.sleepdoctor.onlineReport;
  *     version: 1.0
  * </pre>
  */
-public class OnlineReport {
+public class OnlineReport implements Parcelable {
 
     /**
      * id : 2
@@ -30,6 +33,28 @@ public class OnlineReport {
     private Object deleted_at;
     private int created_at;
     private int updated_at;
+
+    public static final Creator<OnlineReport> CREATOR = new Creator<OnlineReport>() {
+        @Override
+        public OnlineReport createFromParcel(Parcel in) {
+            return new OnlineReport(in);
+        }
+
+        @Override
+        public OnlineReport[] newArray(int size) {
+            return new OnlineReport[size];
+        }
+    };
+
+    private OnlineReport(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        conversion_status = in.readInt();
+        task_id = in.readString();
+        report_url = in.readString();
+        created_at = in.readInt();
+        updated_at = in.readInt();
+    }
 
     public int getId() {
         return id;
@@ -111,5 +136,21 @@ public class OnlineReport {
                 ", created_at=" + created_at +
                 ", updated_at=" + updated_at +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeInt(conversion_status);
+        dest.writeString(task_id);
+        dest.writeString(report_url);
+        dest.writeInt(created_at);
+        dest.writeInt(updated_at);
     }
 }

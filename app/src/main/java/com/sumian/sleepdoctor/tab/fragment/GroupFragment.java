@@ -42,7 +42,7 @@ import butterknife.BindView;
  */
 
 public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeDelegate, RequestScanQrCodeView.OnGrantedCallback,
-        GroupContract.View, TitleBar.OnMoreListener, SwipeRefreshLayout.OnRefreshListener, ChatEngine.OnMsgCallback, ChatEngine.OnUpdateUnReadMsgCountCallback {
+        GroupContract.View, TitleBar.OnMenuClickListener, SwipeRefreshLayout.OnRefreshListener, ChatEngine.OnMsgCallback, ChatEngine.OnUpdateUnReadMsgCountCallback {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -71,7 +71,7 @@ public class GroupFragment extends BaseFragment<GroupPresenter> implements HomeD
 
         setStatusBarColor();
 
-        mTitleBar.setMenuOnClickListener(this);
+        mTitleBar.setOnMenuClickListener(this);
         mRefresh.setOnRefreshListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());

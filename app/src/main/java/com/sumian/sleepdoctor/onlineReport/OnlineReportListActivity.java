@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.onlineReport;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +10,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
@@ -15,18 +18,53 @@ import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
 public class OnlineReportListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+    public static final String KEY_LAUNCH_TYPE = "KEY_LAUNCH_TYPE";
+    public static final String KEY_LAUNCH_DATA = "KEY_LAUNCH_DATA";
+    public static final String KEY_RESULT_DATA = "data";
+    public static final String LAUNCH_TYPE_SHOW_ALL = "LAUNCH_TYPE_SHOW_ALL";
+    public static final String LAUNCH_TYPE_SHOW_INPUT_DATA = "LAUNCH_TYPE_SHOW_INPUT_DATA";
+    public static final String LAUNCH_TYPE_PICK = "LAUNCH_TYPE_PICK";
     private static final int PER_PAGE = 15;
+
     @BindView(R.id.title_bar)
     TitleBar titleBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
     private OnlineReportListAdapter mAdapter;
     private int mPage = 1;
+    private ArrayList<OnlineReport> mLaunchOnlineReports;
+    private boolean mIsPickMode;
+    private boolean mIsShowListMode;
+
+    public static void launchForShowAll(ActivityLauncher launcher) {
+        Intent intent = new Intent(launcher.getActivity(), OnlineReportListActivity.class);
+        intent.putExtra(KEY_LAUNCH_TYPE, LAUNCH_TYPE_SHOW_ALL);
+        launcher.startActivity(intent);
+    }
+
+    public static void launchForShowList(ActivityLauncher launcher, ArrayList<OnlineReport> data) {
+        Intent intent = new Intent(launcher.getActivity(), OnlineReportListActivity.class);
+        intent.putExtra(KEY_LAUNCH_TYPE, LAUNCH_TYPE_SHOW_INPUT_DATA);
+        intent.putExtra(KEY_LAUNCH_DATA, data);
+        launcher.startActivity(intent);
+    }
+
+    /**
+     * Get data in onActivityResult:
+     * ArrayList<OnlineReport> reports = data.getParcelableArrayListExtra("data");
+     */
+    public static void launchForPick(ActivityLauncher launcher, int requestCode) {
+        Intent intent = new Intent(launcher.getActivity(), OnlineReportListActivity.class);
+        intent.putExtra(KEY_LAUNCH_TYPE, LAUNCH_TYPE_PICK);
+        launcher.startActivityForResult(intent, requestCode);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -34,9 +72,29 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     }
 
     @Override
+    protected boolean initBundle(Bundle bundle) {
+        if (bundle != null) {
+            String launchType = bundle.getString(KEY_LAUNCH_TYPE);
+            mIsShowListMode = LAUNCH_TYPE_SHOW_INPUT_DATA.equals(launchType);
+            mIsPickMode = LAUNCH_TYPE_PICK.equals(launchType);
+            if (mIsShowListMode) {
+                mLaunchOnlineReports = bundle.getParcelableArrayList(KEY_LAUNCH_DATA);
+            }
+        }
+        return super.initBundle(bundle);
+    }
+
+    @Override
     protected void initWidget(View root) {
         super.initWidget(root);
         titleBar.setOnBackListener(v -> finish());
+        titleBar.setMenuVisibility(mIsPickMode ? View.VISIBLE : View.GONE);
+        titleBar.setOnMenuClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(KEY_RESULT_DATA, mAdapter.getSelectedReports());
+            setResult(RESULT_OK, intent);
+            finish();
+        });
         mAdapter = new OnlineReportListAdapter(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
@@ -48,7 +106,13 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     @Override
     protected void initData() {
         super.initData();
-        loadOnlineReports();
+        mAdapter.setEnableLoadMore(!mIsShowListMode);
+        if (mIsShowListMode) {
+            mAdapter.addData(mLaunchOnlineReports);
+        } else {
+            loadOnlineReports();
+        }
+        mAdapter.setPickMode(mIsPickMode);
     }
 
     private void loadOnlineReports() {
@@ -84,14 +148,17 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
         if (item == null) {
             return;
         }
-        OnlineReportDetailActivity.launch(this, item.getTitle(), item.getReport_url());
+        if (mIsPickMode) {
+            mAdapter.addOrRemoveSelectedItem(position);
+        } else {
+            OnlineReportDetailActivity.launch(this, item.getTitle(), item.getReport_url());
+        }
     }
 
     @Override
     public void onLoadMoreRequested() {
         loadOnlineReports();
     }
-
 
     public View getEmptyView() {
         return EmptyErrorView.create(this,

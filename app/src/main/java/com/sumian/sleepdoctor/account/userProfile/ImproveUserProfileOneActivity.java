@@ -19,7 +19,7 @@ import butterknife.OnClick;
  */
 
 public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener,
-        TitleBar.OnBackListener, TitleBar.OnMoreListener, ImproveUserProfileContract.View {
+        TitleBar.OnBackListener, TitleBar.OnMenuClickListener, ImproveUserProfileContract.View {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -40,7 +40,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
         super.initWidget(root);
         // mTitleBar.getTitle().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_16);
         //mTitleBar.getMore().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_14);
-        mTitleBar.setOnBackListener(this).setMenuOnClickListener(this);
+        mTitleBar.setOnBackListener(this).setOnMenuClickListener(this);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.account.userProfile.UserProfileActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.HomeDelegate;
+import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.h5.H5Url;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
@@ -36,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class MeFragment extends BaseFragment implements HomeDelegate, View.OnClickListener {
+public class MeFragment extends BaseFragment implements HomeDelegate, View.OnClickListener, ActivityLauncher {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -48,12 +49,6 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_tab_me;
-    }
-
-    @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
-        //setStatusBarTranslucent();
     }
 
     @Override
@@ -95,7 +90,7 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
                 SettingActivity.show(getContext(), SettingActivity.class);
                 break;
             case R.id.dv_electric_report:
-                OnlineReportListActivity.show(getContext(), OnlineReportListActivity.class);
+                OnlineReportListActivity.launchForShowAll(this);
                 break;
             case R.id.iv_notification:
                 NotificationListActivity.launch(getActivity());
