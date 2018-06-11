@@ -14,6 +14,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
@@ -31,21 +32,22 @@ public class SWebView extends BridgeWebView {
 
     private static final long DEFAULT_DELAY_MILLIS = 30 * 1000L;
 
-    private OnX5WebViewListener mX5WebViewListener;
+    private OnWebViewListener mWebViewListener;
 
     private int mErrorCode = -1;
 
     private Runnable mDismissRunnable = new Runnable() {
         @Override
         public void run() {
-            if (mX5WebViewListener != null) {
-                mX5WebViewListener.onRequestNetworkErrorCallback(SWebView.this);
+            if (mWebViewListener != null) {
+                mWebViewListener.onRequestNetworkErrorCallback(SWebView.this);
             }
         }
     };
+    private boolean mOnPageFinished;
 
-    public void setOnWebViewListener(OnX5WebViewListener listener) {
-        this.mX5WebViewListener = listener;
+    public void setOnWebViewListener(OnWebViewListener listener) {
+        this.mWebViewListener = listener;
     }
 
     public SWebView(Context context) {
@@ -77,6 +79,29 @@ public class SWebView extends BridgeWebView {
         }
     }
 
+    public void loadRequestUrl(String url) {
+        this.mErrorCode = -1;
+        postDelayed(mDismissRunnable, DEFAULT_DELAY_MILLIS);
+        getSettings().setUserAgentString(" Sumian-Doctor-Android");
+        loadUrl(url);
+    }
+
+    //进度回调接口
+    public interface OnWebViewListener {
+
+        void onPageStarted(WebView view);
+
+        void onProgressChange(WebView view, int newProgress);
+
+        void onPageFinish(WebView view);
+
+        void onRequestErrorCallback(WebView view, int responseCode);
+
+        void onRequestNetworkErrorCallback(WebView view);
+
+        void onReceiveTitle(WebView view, String title);
+    }
+
     //进度显示
     private class WVChromeClient extends WebChromeClient {
 
@@ -85,15 +110,28 @@ public class SWebView extends BridgeWebView {
             super.onProgressChanged(view, newProgress);
             Log.e(TAG, "onProgressChanged: ---------->progress=" + newProgress);
             if (newProgress == 100 && mErrorCode != -1) {
-                if (mX5WebViewListener != null) {
-                    mX5WebViewListener.onRequestErrorCallback(view, mErrorCode);
+                if (mWebViewListener != null) {
+                    mWebViewListener.onRequestErrorCallback(view, mErrorCode);
                 }
             } else {
-                if (mX5WebViewListener != null) {
-                    mX5WebViewListener.onProgressChange(view, newProgress);
+                if (mWebViewListener != null) {
+                    mWebViewListener.onProgressChange(view, newProgress);
                 }
             }
         }
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            LogUtils.d(title);
+            // 加载网页的时候onReceivedTitle会回调2次，第一次在onPageFinished之前，结果是连接，第二次是在onPageFinished之后，结果是正确的title，
+            // 所以这里通过mOnPageFinished做一个过滤
+            if (mOnPageFinished && mWebViewListener != null) {
+                mWebViewListener.onReceiveTitle(view, title);
+            }
+        }
+
+
     }
 
     private class WVClient extends BridgeWebViewClient {
@@ -106,8 +144,8 @@ public class SWebView extends BridgeWebView {
         public void onReceivedError(WebView webView, int i, String s, String s1) {
             super.onReceivedError(webView, i, s, s1);
             Log.e(TAG, "onReceivedError: ------1--->");
-            if (mX5WebViewListener != null) {
-                mX5WebViewListener.onRequestNetworkErrorCallback(webView);
+            if (mWebViewListener != null) {
+                mWebViewListener.onRequestNetworkErrorCallback(webView);
             }
         }
 
@@ -116,8 +154,8 @@ public class SWebView extends BridgeWebView {
             super.onReceivedHttpError(webView, webResourceRequest, webResourceResponse);
             Log.e(TAG, "onReceivedHttpError: ---------3------->");
             mErrorCode = webResourceResponse.getStatusCode();
-//            if (mX5WebViewListener != null) {
-//                mX5WebViewListener.onRequestErrorCallback(webView, webResourceResponse.getStatusCode());
+//            if (mWebViewListener != null) {
+//                mWebViewListener.onRequestErrorCallback(webView, webResourceResponse.getStatusCode());
 //            }
         }
 
@@ -132,9 +170,10 @@ public class SWebView extends BridgeWebView {
         public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
             super.onPageStarted(webView, s, bitmap);
             Log.e(TAG, "onPageStarted: ----------->" + s);
-            if (mX5WebViewListener != null) {
-                mX5WebViewListener.onPageStarted(webView);
+            if (mWebViewListener != null) {
+                mWebViewListener.onPageStarted(webView);
             }
+            mOnPageFinished = false;
         }
 
         @Override
@@ -143,35 +182,16 @@ public class SWebView extends BridgeWebView {
             removeCallbacks(mDismissRunnable);
             Log.e(TAG, "onPageFinished: ---------->" + url);
             if (mErrorCode != -1) {
-                if (mX5WebViewListener != null) {
-                    mX5WebViewListener.onRequestErrorCallback(view, mErrorCode);
+                if (mWebViewListener != null) {
+                    mWebViewListener.onRequestErrorCallback(view, mErrorCode);
                 }
             } else {
-                if (mX5WebViewListener != null) {
-                    mX5WebViewListener.onPageFinish(view);
+                if (mWebViewListener != null) {
+                    mWebViewListener.onPageFinish(view);
                 }
             }
+            mOnPageFinished = true;
+            LogUtils.d(view.getTitle());
         }
-    }
-
-    public void loadRequestUrl(String url) {
-        this.mErrorCode = -1;
-        postDelayed(mDismissRunnable, DEFAULT_DELAY_MILLIS);
-        getSettings().setUserAgentString(" Sumian-Doctor-Android");
-        loadUrl(url);
-    }
-
-    //进度回调接口
-    public interface OnX5WebViewListener {
-
-        void onPageStarted(WebView view);
-
-        void onProgressChange(WebView view, int newProgress);
-
-        void onPageFinish(WebView view);
-
-        void onRequestErrorCallback(WebView view, int responseCode);
-
-        void onRequestNetworkErrorCallback(WebView view);
     }
 }

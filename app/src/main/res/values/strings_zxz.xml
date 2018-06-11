@@ -41,5 +41,7 @@
     <string name="no_data_hint">这里空空如也~</string>
     <string name="scale">量表</string>
     <string name="refund_success_notification">退款成功通知</string>
+    <string name="loading">Loading</string>
+    <string name="loading_dot">Loading&#8230;</string>
 
 </resources>

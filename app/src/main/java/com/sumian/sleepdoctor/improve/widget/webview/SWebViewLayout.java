@@ -21,15 +21,15 @@ import butterknife.ButterKnife;
  * on 2018/5/25 09:54
  * desc:
  **/
-public class SWebViewLayout extends FrameLayout implements SWebView.OnX5WebViewListener, EmptyErrorView.OnEmptyCallback {
+public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewListener, EmptyErrorView.OnEmptyCallback {
 
     @BindView(R.id.web_view_progress)
     ProgressBar mWebViewProgress;
-
     @BindView(R.id.empty_error_view)
     EmptyErrorView mEmptyErrorView;
 
     private SWebView mSWebView;
+    private WebListener mWebListener;
 
     public SWebViewLayout(@NonNull Context context) {
         this(context, null);
@@ -125,7 +125,23 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnX5WebViewL
     }
 
     @Override
+    public void onReceiveTitle(WebView view, String title) {
+        if (mWebListener != null) {
+            mWebListener.onReceiveTitle(view, title);
+        }
+    }
+
+    @Override
     public void onReload() {
         this.mSWebView.reload();
+    }
+
+
+    public void setWebListener(WebListener webListener) {
+        mWebListener = webListener;
+    }
+
+    public interface WebListener {
+        void onReceiveTitle(WebView webView, String title);
     }
 }

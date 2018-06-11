@@ -9,7 +9,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="@string/about_me" />
+        app:text="@string/loading_dot" />
 
     <com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout
         android:id="@+id/sm_webview_container"

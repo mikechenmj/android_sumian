@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.base;
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.webkit.WebView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
@@ -19,7 +20,7 @@ import butterknife.BindView;
  * on 2018/5/25 10:03
  * desc:
  **/
-public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackListener {
+public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackListener, SWebViewLayout.WebListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -35,7 +36,6 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setTitle(initTitle());
         mTitleBar.setOnBackListener(this);
     }
 
@@ -43,6 +43,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     protected void initData() {
         super.initData();
         registerHandler(mSWebViewLayout.getSWebView());
+        mSWebViewLayout.setWebListener(this);
     }
 
     @Override
@@ -73,7 +74,9 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         return null;
     }
 
-    protected abstract String initTitle();
+    protected String initTitle() {
+        return null;
+    }
 
     protected void registerHandler(SWebView sWebView) {
 
@@ -117,4 +120,8 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         return "token=" + AppManager.getAccountViewModel().accessToken();
     }
 
+    @Override
+    public void onReceiveTitle(WebView webView, String title) {
+        mTitleBar.setTitle(title);
+    }
 }
