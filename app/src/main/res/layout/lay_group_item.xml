@@ -150,19 +150,15 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <net.qiujuer.genius.ui.widget.Button
+        <Button
             android:id="@+id/bt_expired"
-            style="@style/bt_t2_group_style"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/space_44"
             android:layout_gravity="center"
+            android:background="@drawable/bg_bt_group"
             android:gravity="center"
             android:paddingLeft="@dimen/space_32"
             android:paddingRight="@dimen/space_32"
-            android:text="@string/expired"
-            app:gTouchCornerRadius="@dimen/space_32"
-            app:gTouchEffect="ripple" />
-
+            android:text="@string/expired" />
     </FrameLayout>
-
 </android.support.v7.widget.CardView>

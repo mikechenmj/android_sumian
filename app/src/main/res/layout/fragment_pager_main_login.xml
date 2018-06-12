@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -62,7 +61,7 @@
             android:id="@+id/et_captcha"
             style="@style/edit_text_t2_style"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
             android:hint="@string/input_captcha"
@@ -70,17 +69,16 @@
             android:textColorHint="@color/t2_color"
             tools:ignore="RtlHardcoded" />
 
-        <net.qiujuer.genius.ui.widget.Button
+        <Button
             android:id="@+id/bt_send_captcha"
-            style="@style/bt_t2_style"
+            style="@style/SumianButton"
             android:layout_width="@dimen/space_120"
-            android:layout_height="@dimen/space_46"
-            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:paddingLeft="@dimen/space_16"
             android:paddingRight="@dimen/space_16"
-            android:text="@string/send_captcha"
-            app:gTouchCornerRadius="@dimen/space_32"
-            app:gTouchEffect="ripple" />
+            android:text="@string/send_captcha" />
 
     </LinearLayout>
 
@@ -91,26 +89,16 @@
         android:layout_marginStart="@dimen/space_32"
         android:background="@color/l3_color" />
 
-    <net.qiujuer.genius.ui.widget.Button
+    <Button
         android:id="@+id/bt_login"
-        style="@style/bt_t1_style"
+        style="@style/SumianButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/space_32"
         android:layout_marginRight="@dimen/space_32"
         android:layout_marginTop="@dimen/space_28"
-        android:elevation="@dimen/space_2"
-        android:gravity="center"
-        android:outlineProvider="background"
-        android:shadowColor="@color/s1_color"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="1"
-        android:text="@string/login"
-        android:translationZ="@dimen/space_2"
-        app:gTouchCornerRadius="@dimen/space_32"
-        app:gTouchEffect="ripple" />
+        android:text="@string/login" />
 
     <com.sumian.sleepdoctor.widget.LoginRuleView
         android:id="@+id/login_rule_view"
@@ -132,6 +120,4 @@
         android:layout_marginBottom="@dimen/space_20"
         android:text="@string/wechat_login"
         android:visibility="visible" />
-
-
 </LinearLayout>

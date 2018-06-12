@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -13,8 +14,6 @@ import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import net.qiujuer.genius.ui.widget.Button;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,9 +34,9 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
     @BindView(R.id.et_captcha)
     EditText mEtCaptcha;
     @BindView(R.id.bt_send_captcha)
-    Button mBtSendCaptcha;
+    TextView mBtSendCaptcha;
     @BindView(R.id.bt_login)
-    Button mBtLogin;
+    TextView mBtLogin;
 
 
     private String mOpenUserInfo;

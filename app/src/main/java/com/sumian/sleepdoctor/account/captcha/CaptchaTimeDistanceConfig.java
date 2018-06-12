@@ -51,16 +51,11 @@ public final class CaptchaTimeDistanceConfig {
 
         //这里获取验证码间隔未超过60s，需要启动后续剩余计时器
         tvCaptcha.setEnabled(false);
-        tvCaptcha.setTextColor(tvCaptcha.getResources().getColor(android.R.color.white));
-        tvCaptcha.setActivated(true);
-
         if (mTimer != null) {
             mTimer.cancel();
             mTimer = null;
         }
-
         mTimer = new CountDownTimer(timeDistance * 1000L, 1000L) {
-
             @Override
             public void onTick(long millisUntilFinished) {
                 int time = (int) (millisUntilFinished / 1000L);
@@ -74,7 +69,6 @@ public final class CaptchaTimeDistanceConfig {
                 tvCaptcha.setEnabled(true);
                 tvCaptcha.setActivated(false);
                 tvCaptcha.setText(R.string.send_captcha);
-                tvCaptcha.setTextColor(tvCaptcha.getResources().getColor(R.color.b2_color));
                 NotifyOrClearCaptchaTimeDistance(tvCaptcha, captchaTimeType);
             }
         }.start();

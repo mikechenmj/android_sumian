@@ -89,33 +89,13 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="bt_t2_style">
-        <item name="android:paddingLeft">@dimen/space_8</item>
-        <item name="android:paddingRight">@dimen/space_8</item>
-        <item name="android:background">@drawable/bg_bt</item>
-        <item name="android:textColor">@color/b2_color</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/font_16</item>
-    </style>
-
-    <style name="bt_t2_group_style">
-        <item name="android:paddingLeft">@dimen/space_12</item>
-        <item name="android:paddingRight">@dimen/space_12</item>
-        <item name="android:paddingTop">@dimen/space_8</item>
-        <item name="android:paddingBottom">@dimen/space_8</item>
-        <item name="android:background">@drawable/bg_bt_group</item>
-        <item name="android:textColor">@color/t2_color</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/font_16</item>
-    </style>
-
     <style name="SumianButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">@dimen/space_8</item>
         <item name="android:paddingRight">@dimen/space_8</item>
-        <item name="android:background">@drawable/bg_btn_blue</item>
-        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:background">@drawable/bg_bt</item>
+        <item name="android:textColor">@color/sel_btn_text</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/font_16</item>
     </style>

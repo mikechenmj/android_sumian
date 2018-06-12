@@ -193,9 +193,9 @@
                 app:gTouchEffect="ripple"
                 tools:targetApi="lollipop" />
 
-            <net.qiujuer.genius.ui.widget.Button
+            <Button
                 android:id="@+id/bt_re_scan"
-                style="@style/bt_t2_group_style"
+                style="@style/SumianButton"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_56"
                 android:layout_marginBottom="@dimen/space_32"
@@ -210,8 +210,6 @@
                 android:textColor="@color/b3_color"
                 android:textSize="@dimen/font_20"
                 android:visibility="gone"
-                app:gTouchCornerRadius="@dimen/space_32"
-                app:gTouchEffect="ripple"
                 tools:targetApi="lollipop"
                 tools:visibility="visible" />
 

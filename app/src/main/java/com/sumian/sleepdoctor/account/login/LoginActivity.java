@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
@@ -21,8 +22,6 @@ import com.sumian.sleepdoctor.widget.LoginRuleView;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import net.qiujuer.genius.ui.widget.Button;
 
 import java.util.Map;
 
@@ -44,9 +43,9 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     @BindView(R.id.et_captcha)
     EditText mEtCaptcha;
     @BindView(R.id.bt_send_captcha)
-    Button mBtSendCaptcha;
+    TextView mBtSendCaptcha;
     @BindView(R.id.bt_login)
-    Button mBtLogin;
+    TextView mBtLogin;
 
     @BindView(R.id.login_rule_view)
     LoginRuleView mLoginRuleView;
@@ -142,9 +141,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
         switch (v.getId()) {
             case R.id.bt_send_captcha:
                 mobile = mEtMobil.getText().toString().trim();
-
                 if (checkMobile(mobile)) return;
-
                 mPresenter.doSendCaptcha(mobile);
                 break;
             case R.id.bt_login:
