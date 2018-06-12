@@ -112,6 +112,17 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
     }
 
     override fun onRefresh() {
-        mPresenter.getBindDoctorInfo(AppManager.getAccountViewModel()?.userProfile?.doctor?.id!!)
+        if (AppManager.getAccountViewModel()?.userProfile?.isBindDoctor!!) {
+            request_scan_qr_code_view.hide()
+
+            val doctor = AppManager.getAccountViewModel()?.userProfile?.doctor
+            doctor_detail_layout.invalidDoctor(doctor)
+            if (doctor?.services == null) {
+                mPresenter.getBindDoctorInfo(doctor?.id!!)
+            }
+        } else {
+            doctor_detail_layout.hide()
+            request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
+        }
     }
 }
