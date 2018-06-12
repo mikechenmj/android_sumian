@@ -58,7 +58,7 @@ public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        titleBar.setOnBackListener(v -> finish());
+        titleBar.setOnBackClickListener(v -> finish());
         titleBar.setTitle(TYPE_ALL.equals(mType) ? R.string.scale_sleep_scale : R.string.scale_self_scale);
         mAdapter = new ScaleListAdapter(null);
         mAdapter.setOnLoadMoreListener(this, recyclerView);

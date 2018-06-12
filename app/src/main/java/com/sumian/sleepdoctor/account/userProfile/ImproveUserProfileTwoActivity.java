@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackListener, TitleBar.OnMenuClickListener, ImproveUserProfileContract.View, Observer<Token> {
+public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, ImproveUserProfileContract.View, Observer<Token> {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -41,7 +41,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this).setOnMenuClickListener(this);
+        mTitleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
     }
 
     @Override

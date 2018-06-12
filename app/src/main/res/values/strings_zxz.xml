@@ -30,8 +30,7 @@
     <string name="open_notification_push_hint">第一时间接收消息更新通知</string>
     <string name="notification_list_empty_title">没有消息提醒</string>
     <string name="notification_list_empty_desc">您收到医生回复、建议或报告更新，\n都会在这里收到消息提醒</string>
-    <string name="refund_detail">退款详情</string>
-    <string name="refund_count">退款金额</string>
+
 
     <!-- scale -->
     <string name="scale_scale_not_finish_yet_hint">您还未进行该评测，点击开始测评</string>
@@ -43,5 +42,15 @@
     <string name="refund_success_notification">退款成功通知</string>
     <string name="loading">Loading</string>
     <string name="loading_dot">Loading&#8230;</string>
+
+    <!-- order -->
+    <string name="refund_hint">请以原账户接受退款成功消息为准，如有疑问，请致电：<u>400-618-1318向客服咨询</u></string>
+    <string name="refund_amount">退款金额</string>
+    <string name="refund_way">退款方式：%s</string>
+    <string name="refund_time">退款原因：%s</string>
+    <string name="refund_reason">退款时间：%s</string>
+    <string name="refund_detail">退款详情</string>
+    <string name="yuan_">￥%s</string>
+
 
 </resources>

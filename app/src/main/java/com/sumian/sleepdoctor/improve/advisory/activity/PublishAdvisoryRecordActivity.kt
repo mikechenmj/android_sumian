@@ -36,7 +36,7 @@ import java.util.*
  * desc:图文咨询上传
  **/
 class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.Presenter>(),
-        PublishAdvisoryRecordContact.View, TitleBar.OnBackListener,
+        PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, ActivityLauncher {
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
@@ -78,7 +78,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
-        title_bar.setOnBackListener(this)
+        title_bar.setOnBackClickListener(this)
         title_bar.setOnMenuClickListener(this)
 
         et_input.addTextChangedListener(object : SimpleTextWatchAdapter() {

@@ -44,7 +44,7 @@ import butterknife.BindView;
 
 public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements MsgContract.View,
         ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback,
-        KeyboardView.onKeyboardActionListener, TitleBar.OnBackListener, ChatEngine.OnMsgCallback,
+        KeyboardView.onKeyboardActionListener, TitleBar.OnBackClickListener, ChatEngine.OnMsgCallback,
         AdapterDelegate.OnReplyCallback, TitleBar.OnMenuClickListener, MsgRecycleView.OnLoadDataCallback, MsgRecycleView.OnCloseKeyboardCallback {
 
     private static final String TAG = MsgActivity.class.getSimpleName();
@@ -92,7 +92,7 @@ public class MsgActivity extends BaseActivity<MsgContract.Presenter> implements 
 
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
 
-        mTitleBar.setOnBackListener(this).setOnMenuClickListener(this);
+        mTitleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
         //  mRefreshView.setOnRefreshListener(this);
 
         if (mGroupDetail.role == 0) {//患者

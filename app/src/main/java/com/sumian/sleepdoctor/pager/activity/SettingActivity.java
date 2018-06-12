@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.pager.activity;
 
-import android.os.Bundle;
 import android.view.View;
 
 import com.sumian.common.operator.AppOperator;
@@ -9,6 +8,8 @@ import com.sumian.sleepdoctor.account.cache.AccountCache;
 import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.h5.H5Uri;
+import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -24,7 +25,7 @@ import kotlin.Unit;
  * desc:
  */
 
-public class SettingActivity extends BaseActivity implements TitleBar.OnBackListener, View.OnClickListener {
+public class SettingActivity extends BaseActivity implements TitleBar.OnBackClickListener, View.OnClickListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -41,7 +42,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
     }
 
     @Override
@@ -57,9 +58,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackList
 
                 break;
             case R.id.about_me:
-                Bundle extras = new Bundle();
-                extras.putInt(ConfigActivity.ARGS_CONFIG_TYPE, ConfigActivity.ABOUT_ME);
-                ConfigActivity.show(this, ConfigActivity.class, extras);
+                SimpleWebActivity.launch(this, H5Uri.ABOUT_US);
                 break;
             case R.id.bt_logout:
                 AppManager.getHttpService().logout().enqueue(new BaseResponseCallback<Unit>() {

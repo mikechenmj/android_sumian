@@ -40,7 +40,7 @@ import butterknife.OnClick;
  */
 
 public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> implements View.OnClickListener,
-        GroupDetailContract.View, TitleBar.OnBackListener {
+        GroupDetailContract.View, TitleBar.OnBackClickListener {
 
     private static final String TAG = ScanGroupResultActivity.class.getSimpleName();
 
@@ -92,7 +92,7 @@ public class ScanGroupResultActivity extends BaseActivity<GroupDetailPresenter> 
     protected void initWidget(View root) {
         super.initWidget(root);
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
-        this.mTitleBar.setOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
     }
 
     @Override

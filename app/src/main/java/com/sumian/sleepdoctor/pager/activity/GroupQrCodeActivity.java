@@ -23,7 +23,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class GroupQrCodeActivity extends BaseActivity implements TitleBar.OnBackListener {
+public class GroupQrCodeActivity extends BaseActivity implements TitleBar.OnBackClickListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -54,7 +54,7 @@ public class GroupQrCodeActivity extends BaseActivity implements TitleBar.OnBack
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
     }
 
     @Override

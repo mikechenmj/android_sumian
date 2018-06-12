@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
+public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
 
     private static final String TAG = ShoppingCarActivity.class.getSimpleName();
 
@@ -95,7 +95,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         mPayGroupView.setOnSelectPayWayListener(this);
         mPayCalculateItemView.setOnMoneyChangeCallback(this);
         mPayDialog = new PayDialog(root.getContext()).bindContentView(R.layout.dialog_pay);

@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
-import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.sleepRecord.bean.FillSleepRecordResponse;
@@ -47,7 +47,7 @@ public class FillSleepRecordActivity extends BaseWebViewActivity {
         long timeInMillis = getIntent().getLongExtra(KEY_TIME, System.currentTimeMillis());
         String dateStr = TimeUtil.formatDate("yyyy-MM-dd", timeInMillis);
         String format = String.format(Locale.getDefault(), "?date=%s", dateStr);
-        return H5Url.H5_URI_SLEEP_RECORD_RECORD_SLEEP + format;
+        return H5Uri.SLEEP_RECORD_RECORD_SLEEP + format;
     }
 
     @Override

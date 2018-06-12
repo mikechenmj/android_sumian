@@ -3,8 +3,7 @@ package com.sumian.sleepdoctor.push.schemeResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.onlineReport.OnlineReportDetailActivity
+import com.sumian.sleepdoctor.notification.RefundActivity
 
 /**
  * <pre>
@@ -23,7 +22,6 @@ class RefundSchemeResolver : SchemeResolver {
      */
     override fun resolverScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("order_no")
-        val title = context.resources.getString(R.string.online_report) // td 让服务器在scheme加上title字段
-        return OnlineReportDetailActivity.getLaunchIntent(context, title, data)
+        return RefundActivity.getLaunchIntent(context, data)
     }
 }

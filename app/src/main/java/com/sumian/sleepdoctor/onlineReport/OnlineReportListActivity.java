@@ -87,7 +87,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        titleBar.setOnBackListener(v -> finish());
+        titleBar.setOnBackClickListener(v -> finish());
         titleBar.setMenuVisibility(mIsPickMode ? View.VISIBLE : View.GONE);
         titleBar.setOnMenuClickListener(v -> {
             Intent intent = new Intent();

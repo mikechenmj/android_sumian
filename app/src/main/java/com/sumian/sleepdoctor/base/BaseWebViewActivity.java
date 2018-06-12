@@ -20,7 +20,7 @@ import butterknife.BindView;
  * on 2018/5/25 10:03
  * desc:
  **/
-public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackListener, SWebViewLayout.WebListener {
+public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -36,7 +36,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
     }
 
     @Override

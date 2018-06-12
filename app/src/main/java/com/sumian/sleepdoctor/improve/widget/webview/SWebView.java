@@ -33,8 +33,6 @@ public class SWebView extends BridgeWebView {
 
     private OnWebViewListener mWebViewListener;
     private int mErrorCode = -1;
-    private boolean mOnPageFinished;
-    private int mOnReceiveTitleCount;
 
     private Runnable mDismissRunnable = new Runnable() {
         @Override
@@ -124,9 +122,10 @@ public class SWebView extends BridgeWebView {
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
             LogUtils.d(title);
-            mOnReceiveTitleCount++;
-            // 加载网页的时候onReceivedTitle会回调2次，以第二次为准，
-            if (mOnReceiveTitleCount > 1 && mWebViewListener != null) {
+            if (title.startsWith("http")) { // 中间出现的无效title，过滤掉
+                return;
+            }
+            if (mWebViewListener != null) {
                 mWebViewListener.onReceiveTitle(view, title);
             }
         }
@@ -171,7 +170,6 @@ public class SWebView extends BridgeWebView {
             if (mWebViewListener != null) {
                 mWebViewListener.onPageStarted(webView);
             }
-            mOnReceiveTitleCount = 0;
         }
 
         @Override
@@ -188,7 +186,6 @@ public class SWebView extends BridgeWebView {
                     mWebViewListener.onPageFinish(view);
                 }
             }
-            LogUtils.d(view.getTitle());
         }
     }
 }

@@ -60,6 +60,8 @@
             tools:ignore="RtlHardcoded,RtlSymmetry" />
     </LinearLayout>
 
+    <View style="@style/HorizontalDividerLine" />
+
     <com.sumian.sleepdoctor.widget.divider.SettingDividerView
         android:id="@+id/dv_nickname"
         android:layout_width="match_parent"

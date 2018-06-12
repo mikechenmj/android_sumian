@@ -48,7 +48,7 @@ private fun createSchemeResolver(uri: Uri): SchemeResolver? {
             return OnlineReportSchemeResolver()
         }
         "refund" -> {
-
+            return RefundSchemeResolver()
         }
         "advisories" -> {
             return AdvisoriesSchemeResolver()

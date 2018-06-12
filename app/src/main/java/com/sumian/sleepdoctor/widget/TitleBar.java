@@ -39,7 +39,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     TextView mTvMenu;
 
     private OnSpannerListener mOnSpannerListener;
-    private OnBackListener mOnBackListener;
+    private OnBackClickListener mOnBackClickListener;
     private OnMenuClickListener mOnMenuClickListener;
 
     private boolean mIsShow;
@@ -112,8 +112,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return this;
     }
 
-    public TitleBar setOnBackListener(OnBackListener onBackListener) {
-        mOnBackListener = onBackListener;
+    public TitleBar setOnBackClickListener(OnBackClickListener onBackClickListener) {
+        mOnBackClickListener = onBackClickListener;
         return this;
     }
 
@@ -179,9 +179,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.iv_back:
-                OnBackListener onBackListener = this.mOnBackListener;
-                if (onBackListener == null) return;
-                onBackListener.onBack(v);
+                OnBackClickListener onBackClickListener = this.mOnBackClickListener;
+                if (onBackClickListener == null) return;
+                onBackClickListener.onBack(v);
                 break;
             case R.id.tv_title:
 //                if (!mIsShow) {
@@ -210,7 +210,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         void onSpanner(View v, boolean isShow);
     }
 
-    public interface OnBackListener {
+    public interface OnBackClickListener {
         void onBack(View v);
     }
 

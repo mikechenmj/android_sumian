@@ -19,7 +19,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.constants.SpKeys;
-import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
@@ -246,7 +246,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 break;
             case R.id.iv_weekly_report:
                 int selectTimeInSecond = (int) (mSelectedTime / 1000);
-                String urlContentPart = H5Url.H5_URI_SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", String.valueOf(selectTimeInSecond));
+                String urlContentPart = H5Uri.SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", String.valueOf(selectTimeInSecond));
                 String title = getString(R.string.record_weekly_report);
                 SimpleWebActivity.launch(getActivity(), title, urlContentPart);
                 break;

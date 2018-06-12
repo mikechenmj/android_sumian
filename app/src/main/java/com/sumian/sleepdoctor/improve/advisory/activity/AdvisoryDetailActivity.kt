@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordContract.View, SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackListener, TitleBar.OnMenuClickListener, View.OnClickListener {
+class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordContract.View, SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
 
     companion object {
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
@@ -63,7 +63,7 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
-        title_bar.setOnBackListener(this)
+        title_bar.setOnBackClickListener(this)
         title_bar.setOnMenuClickListener(this)
         refresh.setOnRefreshListener(this)
         recycler.layoutManager = LinearLayoutManager(this)

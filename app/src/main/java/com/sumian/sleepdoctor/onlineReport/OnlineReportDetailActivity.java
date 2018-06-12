@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
-import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.main.MainActivity;
@@ -45,7 +45,7 @@ public class OnlineReportDetailActivity extends BaseWebViewActivity {
 
     @Override
     protected String getUrlContentPart() {
-        String onlineReport = H5Url.H5_URI_ONLINE_REPORT;
+        String onlineReport = H5Uri.ONLINE_REPORT;
         onlineReport = onlineReport.replace("{title}", mReportName)
                 .replace("{pdfUrl}", mReportUrl);
         return onlineReport;
