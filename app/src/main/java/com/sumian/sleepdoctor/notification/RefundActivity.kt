@@ -18,6 +18,10 @@ import kotlinx.android.synthetic.main.activity_refund.*
 class RefundActivity : BaseActivity<BasePresenter<Any>>() {
     private var mOrderNo: String = ""
 
+    override fun getLayoutId(): Int {
+        return R.layout.activity_refund
+    }
+
     companion object {
         private const val KEY_ORDER_NO = "KEY_ORDER_NO"
 
@@ -32,10 +36,6 @@ class RefundActivity : BaseActivity<BasePresenter<Any>>() {
             intent.putExtras(bundle)
             return intent
         }
-    }
-
-    override fun getLayoutId(): Int {
-        return R.layout.activity_refund
     }
 
     override fun initBundle(bundle: Bundle?): Boolean {

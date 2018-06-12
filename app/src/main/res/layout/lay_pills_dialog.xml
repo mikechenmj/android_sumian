@@ -24,7 +24,8 @@
                 android:layout_marginTop="@dimen/space_40"
                 android:text="@string/taken_pills"
                 android:textColor="@color/t3_color"
-                android:textSize="@dimen/font_18" />
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/iv_close"

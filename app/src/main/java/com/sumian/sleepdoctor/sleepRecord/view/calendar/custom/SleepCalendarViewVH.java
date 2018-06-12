@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.sleepRecord.view.calendar.custom;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -29,6 +30,25 @@ public class SleepCalendarViewVH extends CalendarViewVH {
         Context context = parent.getContext();
         View inflate = LayoutInflater.from(context).inflate(R.layout.item_calendar, parent, false);
         return new SleepCalendarViewVH(inflate);
+    }
+
+    public void setDay(int day, int dayType) {
+        String text = day > 0 ? String.valueOf(day) : "";
+        mTextView.setText(text);
+        mTextView.setTextColor(getTextColor(dayType));
+        mTextView.setBackground(getBgDrawable(dayType));
+        mTextView.setTypeface(Typeface.DEFAULT, isBold(dayType) ? Typeface.BOLD : Typeface.NORMAL);
+    }
+
+    private boolean isBold(int dayType) {
+        switch (dayType) {
+            case SleepDayType.TYPE_HAS_RECORD_NO_DOCTOR_EVALUATION:
+            case SleepDayType.TYPE_HAS_RECORD_HAS_DOCTOR_EVALUATION:
+            case SleepDayType.TYPE_TODAY:
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override

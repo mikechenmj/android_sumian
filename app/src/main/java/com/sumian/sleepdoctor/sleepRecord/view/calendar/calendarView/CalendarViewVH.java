@@ -13,7 +13,6 @@ import com.sumian.sleepdoctor.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * <pre>
@@ -28,7 +27,7 @@ public class CalendarViewVH extends RecyclerView.ViewHolder {
 
     protected Context mContext;
     @BindView(R.id.tv)
-    TextView mTextView;
+    protected TextView mTextView;
 
     public static CalendarViewVH create(ViewGroup parent) {
         Context context = parent.getContext();

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
         android:visibility="visible"
-        app:menu_text="@string/refill"
+        app:content_text="@string/refill"
         app:title_text="@string/sleep_record"
         tools:visibility="visible" />
 
@@ -92,6 +92,7 @@
                 <TextView
                     android:id="@+id/tv_actual_work_and_reset_time"
                     style="@style/SleepRecordTimeTv"
+                    android:textStyle="bold"
                     tools:text="20:00-22:00" />
             </LinearLayout>
 
@@ -114,6 +115,7 @@
                 <TextView
                     android:id="@+id/tv_sleep_time"
                     style="@style/SleepRecordTimeTv"
+                    android:textStyle="bold"
                     tools:text="20:00-22:00" />
             </LinearLayout>
         </LinearLayout>
@@ -143,6 +145,7 @@
                 <TextView
                     android:id="@+id/tv_sleep_duration"
                     style="@style/SleepRecordTimeTv"
+                    android:textStyle="bold"
                     tools:text="6小时15分钟" />
             </LinearLayout>
 
@@ -165,6 +168,7 @@
                 <TextView
                     android:id="@+id/tv_fall_asleep_duration"
                     style="@style/SleepRecordTimeTv"
+                    android:textStyle="bold"
                     tools:text="15分钟" />
             </LinearLayout>
         </LinearLayout>
@@ -215,7 +219,8 @@
                 android:layout_marginTop="@dimen/space_4"
                 android:text="@string/no_record_yet"
                 android:textColor="@color/t2_color"
-                android:textSize="@dimen/font_14" />
+                android:textSize="@dimen/font_14"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView

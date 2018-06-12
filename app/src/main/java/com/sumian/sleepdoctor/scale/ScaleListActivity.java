@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -39,7 +40,7 @@ public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.
     TitleBar titleBar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private ScaleListAdapter mAdapter;
+    private BaseQuickAdapter<Scale, BaseViewHolder> mAdapter;
     private int mPage = 1;
     private String mType;
 
@@ -59,8 +60,9 @@ public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.
     protected void initWidget(View root) {
         super.initWidget(root);
         titleBar.setOnBackClickListener(v -> finish());
-        titleBar.setTitle(TYPE_ALL.equals(mType) ? R.string.scale_sleep_scale : R.string.scale_self_scale);
-        mAdapter = new ScaleListAdapter(null);
+        boolean isTypeAll = TYPE_ALL.equals(mType);
+        titleBar.setTitle(isTypeAll ? R.string.scale_sleep_scale : R.string.scale_self_scale);
+        mAdapter = isTypeAll ? new ScaleListAdapter(null) : new MyScaleListAdapter(null);
         mAdapter.setOnLoadMoreListener(this, recyclerView);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setEmptyView(EmptyErrorView.createNormalEmptyView(this));
@@ -124,6 +126,7 @@ public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.
         return true;
     }
 
+    @SuppressWarnings("unused")
     @Subscribe(sticky = true)
     public void onScaleFinishFillingEvent(ScaleFinishFillingEvent event) {
         // refresh data

@@ -148,15 +148,11 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
                 mobile = mEtMobil.getText().toString().trim();
                 String captcha = mEtCaptcha.getText().toString().trim();
                 if (checkMobile(mobile)) return;
-
                 if (TextUtils.isEmpty(captcha)) return;
-
                 mPresenter.doLogin(mobile, captcha);
                 break;
             case R.id.tv_wechat_login:
-
                 mPresenter.doLoginOpen(SHARE_MEDIA.WEIXIN, this, this);
-
                 break;
             default:
                 break;

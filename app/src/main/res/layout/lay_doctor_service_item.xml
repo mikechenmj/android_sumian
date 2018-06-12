@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/t3_color"
             android:textSize="@dimen/font_18"
+            android:textStyle="bold"
             tools:text="远程睡眠管理服务" />
 
         <TextView

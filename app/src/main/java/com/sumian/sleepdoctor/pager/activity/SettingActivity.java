@@ -1,5 +1,8 @@
 package com.sumian.sleepdoctor.pager.activity;
 
+import android.annotation.SuppressLint;
+import android.support.design.widget.BottomSheetDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.sumian.common.operator.AppOperator;
@@ -61,31 +64,40 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
                 SimpleWebActivity.launch(this, H5Uri.ABOUT_US);
                 break;
             case R.id.bt_logout:
-                AppManager.getHttpService().logout().enqueue(new BaseResponseCallback<Unit>() {
-                    @Override
-                    protected void onSuccess(Unit response) {
-
-                    }
-
-                    @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
-
-                    }
-
-                });
-                //                    ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-//                    if (activityManager != null) {
-//boolean applicationUserData = activityManager.clearApplicationUserData();
-//  if (applicationUserData)
-// }
-                AppOperator.runOnThread(AccountCache::clearCache);
-                AppManager.getGroupViewModel().notifyGroups(null);
-                AppManager.getChatEngine().logoutImServer();
-                AppManager.getAccountViewModel().updateToken(null);
-                LoginActivity.showClearTop(this, LoginActivity.class);
+                showLogoutDialog();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showLogoutDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(this).inflate(R.layout.lay_logout_bottom_sheet, null, false);
+        inflate.findViewById(R.id.tv_logout).setOnClickListener(v -> logout());
+        inflate.findViewById(R.id.tv_cancel).setOnClickListener(v -> dialog.dismiss());
+        dialog.setContentView(inflate);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
+    private void logout() {
+        AppManager.getHttpService().logout().enqueue(new BaseResponseCallback<Unit>() {
+            @Override
+            protected void onSuccess(Unit response) {
+
+            }
+
+            @Override
+            protected void onFailure(ErrorResponse errorResponse) {
+
+            }
+
+        });
+        AppOperator.runOnThread(AccountCache::clearCache);
+        AppManager.getGroupViewModel().notifyGroups(null);
+        AppManager.getChatEngine().logoutImServer();
+        AppManager.getAccountViewModel().updateToken(null);
+        LoginActivity.showClearTop(this, LoginActivity.class);
     }
 }

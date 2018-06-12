@@ -44,13 +44,14 @@
     <string name="loading_dot">Loading&#8230;</string>
 
     <!-- order -->
-    <string name="refund_hint">请以原账户接受退款成功消息为准，如有疑问，请致电：<u>400-618-1318向客服咨询</u></string>
+    <string name="refund_hint">请以原账户接受退款成功消息为准，如有疑问，请致电：<u>400-618-1318</u>向客服咨询</string>
     <string name="refund_amount">退款金额</string>
     <string name="refund_way">退款方式：%s</string>
     <string name="refund_time">退款原因：%s</string>
     <string name="refund_reason">退款时间：%s</string>
     <string name="refund_detail">退款详情</string>
     <string name="yuan_">￥%s</string>
-
+    <string name="score">分</string>
+    <string name="already_finish">已完成</string>
 
 </resources>

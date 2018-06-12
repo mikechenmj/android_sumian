@@ -107,7 +107,7 @@ public class ProgressView extends View {
     }
 
     private void updateSweepGradient() {
-        int[] startEndColors = getStartEndColorsByLevel(getProgressLevelByPercent(mPercent));
+        int[] startEndColors = getStartEndColors(mPercent);
         mSweepGradient = new SweepGradient(mContentX, mContentY, startEndColors[0], startEndColors[1]);
     }
 
@@ -134,11 +134,12 @@ public class ProgressView extends View {
         invalidate();
     }
 
-    private int[] getStartEndColorsByLevel(int level) {
-        return mProgressColors[level];
+    public int[] getStartEndColors(int percent) {
+        int progressLevelByPercent = getProgressLevelByPercent(percent);
+        return mProgressColors[progressLevelByPercent];
     }
 
-    private int getProgressLevelByPercent(int percent) {
+    public int getProgressLevelByPercent(int percent) {
         if (percent >= 85) {
             return 0;
         } else if (percent >= 70) {

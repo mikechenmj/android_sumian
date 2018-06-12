@@ -26,6 +26,7 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/text_t3_16"
+            android:textStyle="bold"
             tools:text="医生建议更新" />
     </LinearLayout>
 

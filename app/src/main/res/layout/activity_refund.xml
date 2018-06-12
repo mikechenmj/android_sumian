@@ -85,6 +85,8 @@
             android:layout_marginEnd="@dimen/space_20"
             android:layout_marginStart="@dimen/space_20"
             android:layout_marginTop="@dimen/space_20"
+            android:autoLink="web|phone"
+            android:textColorLink="@color/b3_color"
             android:text="@string/refund_hint" />
     </LinearLayout>
 
