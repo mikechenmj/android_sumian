@@ -13,7 +13,10 @@
         android:layout_gravity="center|left"
         android:background="@drawable/bg_material_ripple"
         android:contentDescription="@null"
-        android:padding="@dimen/space_16"
+        android:paddingBottom="@dimen/space_16"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20"
+        android:paddingTop="@dimen/space_16"
         android:scaleType="fitCenter"
         android:src="@mipmap/ic_nav_icon_back"
         tools:ignore="RtlHardcoded" />

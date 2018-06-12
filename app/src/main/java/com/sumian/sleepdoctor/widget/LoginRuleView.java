@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.widget;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -9,8 +8,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.pager.activity.ConfigActivity;
+import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,21 +68,13 @@ public class LoginRuleView extends LinearLayout implements View.OnClickListener 
                 }
                 break;
             case R.id.tv_rule_user_agreement:
-                showConfig(v, ConfigActivity.USER_AGREEMENT);
+                SimpleWebActivity.launch(getContext(), BuildConfig.USER_AGREEMENT_URL);
                 break;
             case R.id.tv_privacy_policy:
-                showConfig(v, ConfigActivity.USER_PRIVACY);
+                SimpleWebActivity.launch(getContext(), BuildConfig.USER_POLICY_URL);
                 break;
         }
     }
-
-    private void showConfig(View v, int configType) {
-        Bundle extras;
-        extras = new Bundle();
-        extras.putInt(ConfigActivity.ARGS_CONFIG_TYPE, configType);
-        ConfigActivity.show(v.getContext(), ConfigActivity.class, extras);
-    }
-
 
     public interface OnCheckedListener {
 
