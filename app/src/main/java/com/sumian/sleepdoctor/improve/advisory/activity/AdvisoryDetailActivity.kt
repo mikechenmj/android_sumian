@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.improve.advisory.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
@@ -28,9 +29,15 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
 
         fun launch(context: Context, advisoryId: Int) {
-            val extras = Bundle()
-            extras.putInt(ARGS_ADVISORY_ID, advisoryId)
-            show(context, AdvisoryDetailActivity::class.java, extras)
+            show(context, getLaunchIntent(context, advisoryId))
+        }
+
+        fun getLaunchIntent(context: Context, advisoryId: Int): Intent {
+            val intent = Intent(context, AdvisoryDetailActivity::class.java)
+            val bundle = Bundle()
+            bundle.putInt(ARGS_ADVISORY_ID, advisoryId)
+            intent.putExtras(bundle)
+            return intent
         }
     }
 
