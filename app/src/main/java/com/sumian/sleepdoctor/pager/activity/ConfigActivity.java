@@ -25,7 +25,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListener {
+public class ConfigActivity extends BaseActivity implements TitleBar.OnBackClickListener {
 
     public static final String ARGS_CONFIG_TYPE = "args_config_type";
 
@@ -81,7 +81,7 @@ public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListe
         }
 
         mTitleBar.setTitle(resType);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
 
         //防止 webview  内存泄漏  不在 xml 文件中声明
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

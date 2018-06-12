@@ -62,7 +62,7 @@ import static com.sumian.sleepdoctor.pager.activity.ModifyNicknameActivity.MODIF
  */
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class UserProfileActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
+public class UserProfileActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks, CompoundButton.OnCheckedChangeListener {
 
     @SuppressWarnings("unused")
@@ -96,7 +96,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         mDvNickname.setOnShowMoreListener(this);
         mDvName.setOnShowMoreListener(this);
         mDvWechat.setOnCheckedChangeListener(this);

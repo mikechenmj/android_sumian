@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -149,7 +151,12 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     protected abstract int getLayoutId();
 
     protected void initWidget(View root) {
-
+        if (backable()) {
+            TitleBar toolbar = findViewById(R.id.title_bar);
+            if (toolbar != null) {
+                toolbar.setOnBackClickListener(v -> finish());
+            }
+        }
     }
 
     protected void initPresenter() {
@@ -274,5 +281,9 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
 
     protected void removeStickyEvent(Object object) {
         EventBus.getDefault().removeStickyEvent(object);
+    }
+
+    protected boolean backable() {
+        return false;
     }
 }

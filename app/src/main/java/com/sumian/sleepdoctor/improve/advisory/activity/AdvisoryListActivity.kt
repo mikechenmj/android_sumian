@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory.*
  * on 2018/6/4 14:20
  * desc: 用户图文咨询列表
  */
-class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackListener {
+class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackClickListener {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory
@@ -25,7 +25,7 @@ class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnB
     override fun initWidget(root: View?) {
         super.initWidget(root)
 
-        title_bar?.setOnBackListener(this)
+        title_bar?.setOnBackClickListener(this)
         view_pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
 
             override fun getItem(position: Int): Fragment {

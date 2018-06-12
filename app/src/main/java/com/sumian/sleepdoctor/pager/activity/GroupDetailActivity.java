@@ -34,7 +34,7 @@ import butterknife.OnClick;
  */
 
 public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> implements GroupDetailContract.View,
-        TitleBar.OnBackListener, View.OnClickListener, SettingDividerView.OnShowMoreListener {
+        TitleBar.OnBackClickListener, View.OnClickListener, SettingDividerView.OnShowMoreListener {
 
     public static final String ARGS_GROUP_ID = "group_id";
 
@@ -75,7 +75,7 @@ public class GroupDetailActivity extends BaseActivity<GroupDetailPresenter> impl
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         mSdvRenewal.setOnShowMoreListener(this);
     }
 

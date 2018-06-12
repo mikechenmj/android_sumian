@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.ScaleFinishFillingEvent;
-import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 
@@ -46,7 +46,7 @@ public class ScaleDetailActivity extends BaseWebViewActivity {
 
     @Override
     protected String getUrlContentPart() {
-        String uri = H5Url.H5_URI_FILL_SCALE;
+        String uri = H5Uri.FILL_SCALE;
         uri = uri.replace("{id}", String.valueOf(mScaleId));
         return uri;
     }

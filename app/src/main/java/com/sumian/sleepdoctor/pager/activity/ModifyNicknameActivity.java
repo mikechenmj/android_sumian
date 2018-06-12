@@ -26,7 +26,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ModifyNicknameActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
+public class ModifyNicknameActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener {
 
     public static final String EXTRA_MODIFY_NAME = "EXTRA_MODIFY_NAME";
     public static final int MODIFY_NICKNAME = 0x01;
@@ -55,7 +55,7 @@ public class ModifyNicknameActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
     }
 
 

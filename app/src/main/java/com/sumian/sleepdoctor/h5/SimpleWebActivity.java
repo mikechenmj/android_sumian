@@ -19,6 +19,10 @@ public class SimpleWebActivity extends BaseWebViewActivity {
         show(context, SimpleWebActivity.class, bundle);
     }
 
+    public static void launch(Context context, String urlContentPart) {
+        launch(context, "", urlContentPart);
+    }
+
     @Override
     protected boolean initBundle(Bundle bundle) {
         mTitle = bundle.getString(KEY_TITLE);

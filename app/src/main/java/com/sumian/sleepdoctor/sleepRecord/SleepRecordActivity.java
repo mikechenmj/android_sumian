@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.sleepRecord;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
-import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.H5Uri;
 
 /**
  * <pre>
@@ -22,7 +22,7 @@ public class SleepRecordActivity extends BaseWebViewActivity {
 
     @Override
     protected String getUrlContentPart() {
-        return H5Url.H5_URI_SLEEP_RECORD_RECORD_SLEEP;
+        return H5Uri.SLEEP_RECORD_RECORD_SLEEP;
     }
 
 }

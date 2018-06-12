@@ -11,7 +11,7 @@ import android.view.View;
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
-import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeResult;
@@ -77,7 +77,7 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
 
     @Override
     protected String getUrlContentPart() {
-        return H5Url.H5_URI_DOCTOR_SERVICE.replace("{id}", String.format(Locale.getDefault(), "%d", mDoctorService.getId()));
+        return H5Uri.DOCTOR_SERVICE.replace("{id}", String.format(Locale.getDefault(), "%d", mDoctorService.getId()));
     }
 
     @Override

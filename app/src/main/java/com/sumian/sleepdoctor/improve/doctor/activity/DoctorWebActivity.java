@@ -8,7 +8,7 @@ import android.view.View;
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
-import com.sumian.sleepdoctor.h5.H5Url;
+import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
 import com.sumian.sleepdoctor.improve.doctor.contract.BindDoctorContract;
 import com.sumian.sleepdoctor.improve.doctor.presenter.BindDoctorPresenter;
@@ -57,7 +57,7 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
     @Override
     protected String getUrlContentPart() {
         Uri argUri = Uri.parse(mArgUrl);
-        String originUrl = H5Url.H5_URI_BIND_DOCTOR;
+        String originUrl = H5Uri.BIND_DOCTOR;
         return originUrl.replace("{id}", argUri.getQueryParameter("id"));
     }
 

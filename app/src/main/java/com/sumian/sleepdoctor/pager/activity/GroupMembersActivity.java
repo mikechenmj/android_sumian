@@ -35,7 +35,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBackListener, IndexView.OnIndexTouchListener {
+public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBackClickListener, IndexView.OnIndexTouchListener {
 
     public static final String ARGS_MEMBERS = "group_members";
 
@@ -82,7 +82,7 @@ public class GroupMembersActivity extends BaseActivity implements TitleBar.OnBac
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.addItemDecoration(mDecoration = new MemberDecoration());

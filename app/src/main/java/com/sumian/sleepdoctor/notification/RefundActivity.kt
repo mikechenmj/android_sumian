@@ -45,6 +45,15 @@ class RefundActivity : BaseActivity<BasePresenter<Any>>() {
         return super.initBundle(bundle)
     }
 
+    override fun initWidget(root: View?) {
+        super.initWidget(root)
+        title_bar.setOnBackClickListener({ finish() })
+    }
+
+    override fun backable(): Boolean {
+        return true
+    }
+
     override fun initData() {
         super.initData()
         AppManager.getHttpService().getOrderDetailV2(mOrderNo).enqueue(object : BaseResponseCallback<OrderDetailV2>() {

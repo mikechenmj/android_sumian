@@ -50,7 +50,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        titleBar.setOnBackListener(v -> finish());
+        titleBar.setOnBackClickListener(v -> finish());
         titleBar.setOnMenuClickListener(v -> markAllAsRead());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new NotificationListAdapter(this, null);

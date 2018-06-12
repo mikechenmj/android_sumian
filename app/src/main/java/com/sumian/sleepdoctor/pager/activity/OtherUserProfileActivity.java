@@ -21,7 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-public class OtherUserProfileActivity extends BaseActivity implements TitleBar.OnBackListener {
+public class OtherUserProfileActivity extends BaseActivity implements TitleBar.OnBackClickListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = OtherUserProfileActivity.class.getSimpleName();
@@ -61,7 +61,7 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         mIvAvatarMore.setVisibility(View.INVISIBLE);
         mDvNickname.hideMoreIcon();
         mDvName.hideMoreIcon();
