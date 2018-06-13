@@ -32,7 +32,7 @@ import retrofit2.http.*
 interface DoctorApi {
 
     @PATCH("authorizations/current")
-    fun refreshToken(): Call<Token>
+    fun refreshToken(@Header("Authorization") token: String): Call<Any>
 
     @FormUrlEncoded
     @POST("authorizations")

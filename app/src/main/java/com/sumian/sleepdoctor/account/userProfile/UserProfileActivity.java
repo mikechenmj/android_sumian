@@ -104,18 +104,28 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initData() {
         super.initData();
-        mUserProfile = AppManager.getAccountViewModel().getToken().user;
-        updateUserProfile(mUserProfile);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
             if (token != null) {
-                updateUserProfile(token.user);
-                updateDvWechat(token.user.socialites);
+                UserProfile userProfile = token.user;
+                mUserProfile = userProfile;
+                updateUserProfileUI(userProfile);
             }
         });
+        AppManager.getHttpService().getUserProfile()
+                .enqueue(new BaseResponseCallback<UserProfile>() {
+                    @Override
+                    protected void onSuccess(UserProfile response) {
+                        AppManager.getAccountViewModel().updateUserProfile(response);
+                    }
 
+                    @Override
+                    protected void onFailure(ErrorResponse errorResponse) {
+                        ToastUtils.showShort(errorResponse.message);
+                    }
+                });
     }
 
-    private void updateDvWechat(List<Social> socialites) {
+    private void updateDvWechatUI(List<Social> socialites) {
         boolean hasSocial = socialites != null && socialites.size() > 0;
         mDvWechat.setSwitchCheckedWithoutCallback(hasSocial);
         if (hasSocial) {
@@ -127,13 +137,14 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void updateUserProfile(UserProfile userProfile) {
+    private void updateUserProfileUI(UserProfile userProfile) {
         RequestOptions options = new RequestOptions();
         options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
         Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
         mDvNickname.setContent(userProfile.nickname);
         mDvName.setContent(userProfile.name);
         mDvMobile.setContent(userProfile.mobile);
+        updateDvWechatUI(userProfile.socialites);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -180,7 +191,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                         RequestOptions options = new RequestOptions();
                         options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
                         Glide.with(getApplicationContext()).load(mLocalImagePath).apply(options).into(mIvAvatar);
-                        upload();
+                        uploadAvatar();
                     }
                     break;
                 default:
@@ -252,12 +263,12 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                         RequestOptions options = new RequestOptions();
                         options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
                         Glide.with(getApplicationContext()).load(image).apply(options).into(mIvAvatar);
-                        upload();
+                        uploadAvatar();
                     }
                 }).build());
     }
 
-    private void upload() {
+    private void uploadAvatar() {
         mUserProfile.avatar = mLocalImagePath;
         AppManager.getAccountViewModel().updateUserProfile(mUserProfile);
         AppManager.getHttpService().uploadAvatar().enqueue(new BaseResponseCallback<OssResponse>() {
@@ -268,7 +279,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             protected void onFailure(ErrorResponse errorResponse) {
-                upload();
+                ToastUtils.showShort(errorResponse.message);
             }
 
         });

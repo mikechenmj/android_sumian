@@ -71,7 +71,7 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
     }
 
     private void onInitFinish() {
-        activateItem(mActivateItemPosition, false);
+        selectItem(mActivateItemPosition, false);
     }
 
     public void setOnSelectedTabChangeListener(OnSelectedTabChangeListener listener) {
@@ -81,10 +81,10 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
     @Override
     public void onClick(View v) {
         int itemPosition = (int) v.getTag();
-        activateItem(itemPosition, true);
+        selectItem(itemPosition, true);
     }
 
-    public void activateItem(int itemPosition, boolean triggerListener) {
+    public void selectItem(int itemPosition, boolean triggerListener) {
         // 初始化未完成的时候会记录itemPosition，等到初始化完成自动
         if (!mInitFinished) {
             mActivateItemPosition = itemPosition;

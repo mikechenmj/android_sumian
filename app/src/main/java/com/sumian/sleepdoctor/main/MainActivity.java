@@ -13,6 +13,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
+import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
 import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
 import com.sumian.sleepdoctor.leanCloud.LeanCloudManager;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
@@ -160,7 +161,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         //commitReplace(WelcomeActivity.class);
         int position = mLaunchData == null ? 0 : mLaunchData.tabIndex;
         initTab(position);
-        mBottomNavigationBar.activateItem(position, false);
+        mBottomNavigationBar.selectItem(position, false);
         mLaunchData = null;
         LeanCloudManager.registerPushService(this);
     }
@@ -209,5 +210,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         ViewModelProviders.of(this)
                 .get(NotificationViewModel.class)
                 .updateUnreadCount();
+    }
+
+    @Subscribe
+    public void onSwitchTabEvent(SwitchMainActivityTabEvent event) {
+        mBottomNavigationBar.selectItem(event.index, true);
     }
 }

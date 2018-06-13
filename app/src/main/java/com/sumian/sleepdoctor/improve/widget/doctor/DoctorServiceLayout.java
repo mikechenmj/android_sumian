@@ -14,9 +14,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.event.EventBusUtil;
+import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
 import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
-import com.sumian.sleepdoctor.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,11 +69,11 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
         @DrawableRes int serviceIconId = R.mipmap.ic_img_sleepdiary_avatar;
         @StringRes int nextActionId = R.string.ask_questions;
         switch (doctorService.getType()) {
-            case DoctorService.GRAPHIC_SERVICE_TYPE:
+            case DoctorService.SERVICE_TYPE_ADVISORY:
                 serviceIconId = R.mipmap.ic_img_advisory_avatar;
                 nextActionId = R.string.ask_questions;
                 break;
-            case DoctorService.SLEEP_REPORT_TYPE:
+            case DoctorService.SERVICE_TYPE_SLEEP_REPORT:
                 serviceIconId = R.mipmap.ic_img_sleepdiary_avatar;
                 nextActionId = R.string.go_records;
                 break;
@@ -118,13 +119,12 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
                         AdvisoryListActivity.show(getContext(), AdvisoryListActivity.class);
                         break;
                     case "去记录":
-                        MainActivity.launch(getContext(), 0);
+                        EventBusUtil.post(new SwitchMainActivityTabEvent(0));
                         break;
                     default:
                         break;
                 }
                 break;
         }
-
     }
 }

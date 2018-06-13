@@ -28,7 +28,7 @@ data class DoctorService(var id: Int,
 ) : Parcelable, Serializable {
 
     companion object {
-        const val SLEEP_REPORT_TYPE: Int = 0x00
-        const val GRAPHIC_SERVICE_TYPE: Int = 0x01
+        const val SERVICE_TYPE_SLEEP_REPORT: Int = 0x00
+        const val SERVICE_TYPE_ADVISORY: Int = 0x01
     }
 }

@@ -139,17 +139,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         AppManager.getHttpService().getServiceList().enqueue(new BaseResponseCallback<DoctorServiceList>() {
             @Override
             protected void onSuccess(DoctorServiceList response) {
-                List<DoctorService> serviceList = response.getServiceList();
-                for (DoctorService doctorService : serviceList) {
-                    if (doctorService.getLast_count() == 0) {
-                        DoctorServiceItemView doctorServiceItemView = new DoctorServiceItemView(getContext());
-                        doctorServiceItemView.setTitle(doctorService.getName());
-                        doctorServiceItemView.setDesc(doctorService.getNot_buy_description());
-                        doctorServiceItemView.loadImage(doctorService.getIcon());
-                        doctorServiceItemView.setOnClickListener(v -> launchDoctorServicePage(doctorService));
-                        mServiceContainer.addView(doctorServiceItemView);
-                    }
-                }
+                showServiceList(response);
             }
 
             @Override
@@ -157,6 +147,21 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
 
             }
         });
+    }
+
+    private void showServiceList(DoctorServiceList response) {
+        List<DoctorService> serviceList = response.getServiceList();
+        for (DoctorService doctorService : serviceList) {
+            boolean isNotOwn = doctorService.getLast_count() == 0;
+            if (isNotOwn && doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT) {
+                DoctorServiceItemView doctorServiceItemView = new DoctorServiceItemView(getContext());
+                doctorServiceItemView.setTitle(doctorService.getName());
+                doctorServiceItemView.setDesc(doctorService.getNot_buy_description());
+                doctorServiceItemView.loadImage(doctorService.getIcon());
+                doctorServiceItemView.setOnClickListener(v -> launchDoctorServicePage(doctorService));
+                mServiceContainer.addView(doctorServiceItemView);
+            }
+        }
     }
 
     @Override

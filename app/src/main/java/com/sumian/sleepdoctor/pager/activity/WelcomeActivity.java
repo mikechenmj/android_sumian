@@ -1,13 +1,12 @@
 package com.sumian.sleepdoctor.pager.activity;
 
-import android.arch.lifecycle.LiveData;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.account.login.LoginActivity;
+import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.OtherDelegate;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -20,6 +19,8 @@ import com.sumian.sleepdoctor.main.MainActivity;
  */
 
 public class WelcomeActivity extends BaseActivity implements OtherDelegate {
+
+    public static final int WELCOME_SHOW_TIME = 500;
 
     @Override
     protected int getLayoutId() {
@@ -51,6 +52,6 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
                 MainActivity.show(WelcomeActivity.this, MainActivity.class);
             }
             finish();
-        }, 50);
+        }, WELCOME_SHOW_TIME);
     }
 }

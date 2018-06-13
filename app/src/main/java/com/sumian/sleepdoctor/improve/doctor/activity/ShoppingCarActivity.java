@@ -236,7 +236,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
             mPayDialog.cancel();
         }
 
-        if (mDoctorService.getType() == DoctorService.GRAPHIC_SERVICE_TYPE) {
+        if (mDoctorService.getType() == DoctorService.SERVICE_TYPE_ADVISORY) {
             Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
             PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
