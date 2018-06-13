@@ -53,5 +53,8 @@
     <string name="yuan_">￥%s</string>
     <string name="score">分</string>
     <string name="already_finish">已完成</string>
+    <string name="bind_failed">绑定失败</string>
+    <string name="bind_success">绑定成功</string>
+    <string name="bind_canceled">绑定取消</string>
 
 </resources>

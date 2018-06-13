@@ -23,7 +23,6 @@ import com.sumian.common.media.config.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
-import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -108,14 +107,15 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         mUserProfile = AppManager.getAccountViewModel().getToken().user;
         updateUserProfile(mUserProfile);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
-            if (token != null)
+            if (token != null) {
                 updateUserProfile(token.user);
+                updateDvWechat(token.user.socialites);
+            }
         });
-        updateDvWechat();
+
     }
 
-    private void updateDvWechat() {
-        List<Social> socialites = mUserProfile.socialites;
+    private void updateDvWechat(List<Social> socialites) {
         boolean hasSocial = socialites != null && socialites.size() > 0;
         mDvWechat.setSwitchCheckedWithoutCallback(hasSocial);
         if (hasSocial) {
@@ -331,12 +331,13 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                         .enqueue(new BaseResponseCallback<Social>() {
                             @Override
                             protected void onSuccess(Social response) {
+                                ToastUtils.showShort(R.string.bind_success);
                                 updateSocialites(response);
                             }
 
                             @Override
                             protected void onFailure(ErrorResponse errorResponse) {
-
+                                bindSocialitesFailed(errorResponse.message);
                             }
 
                         });
@@ -344,15 +345,20 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-
+                bindSocialitesFailed(throwable.getMessage());
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
-
+                bindSocialitesFailed(getString(R.string.bind_canceled));
             }
         });
 
+    }
+
+    private void bindSocialitesFailed(String message) {
+        ToastUtils.showShort(message);
+        mDvWechat.setSwitchCheckedWithoutCallback(false);
     }
 
     /**
@@ -370,7 +376,6 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                 .enqueue(new BaseResponseCallback<String>() {
                     @Override
                     protected void onSuccess(String response) {
-//                        LogUtils.d(response);
                         ToastUtils.showShort(R.string.unbind_success);
                         updateSocialites(null);
                     }
@@ -378,7 +383,6 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     protected void onFailure(ErrorResponse errorResponse) {
                         LogUtils.d(errorResponse.message);
-//                        ToastUtils.showShort(R.string.unbind_failed);
                     }
 
                     @Override
@@ -395,8 +399,6 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             socials.add(social);
         }
         mUserProfile.socialites = socials;
-        AccountViewModel accountViewModel = AppManager.getAccountViewModel();
-        accountViewModel.updateUserProfile(mUserProfile);
-        updateDvWechat();
+        AppManager.getAccountViewModel().updateUserProfile(mUserProfile);
     }
 }
