@@ -97,7 +97,8 @@ public class SleepRecordView extends LinearLayout {
         llNoSleepRecord.setVisibility(hasRecord ? GONE : VISIBLE);
         llDoctorEvaluation.setVisibility(hasRecord ? VISIBLE : GONE);
         titleViewSleepRecord.setVisibility(VISIBLE);
-        titleViewSleepRecord.setTvMenuVisibility(hasRecord ? VISIBLE : GONE);
+        boolean showRefill = hasRecord && TextUtils.isEmpty(sleepRecord.getDoctor_evaluation());
+        titleViewSleepRecord.setTvMenuVisibility(showRefill ? VISIBLE : GONE);
         if (hasRecord) {
             showSleepRecord(sleepRecord);
         }
