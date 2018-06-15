@@ -57,7 +57,7 @@ class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(cont
                         else -> {
                             ""
                         }
-                    })
+                    }).setVisible(R.id.tv_advisory_action_status, true)
         }
 
         fun getString(@StringRes textId: Int = 0): String {

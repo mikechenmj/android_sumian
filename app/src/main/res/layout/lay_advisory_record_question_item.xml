@@ -51,9 +51,11 @@
         android:id="@+id/flow_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_20"
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
-        android:layout_marginTop="@dimen/space_10" />
+        app:oscHorizontalSpace="@dimen/space_6"
+        app:oscVerticalSpace="@dimen/space_6" />
 
     <View
         android:id="@+id/divide_two"

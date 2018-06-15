@@ -11,23 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_130">
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/iv_service_icon"
-            android:layout_width="@dimen/space_90"
-            android:layout_height="@dimen/space_90"
+        <android.support.v7.widget.CardView
+            android:id="@+id/iv_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_20"
             android:layout_marginRight="@dimen/space_20"
-            android:contentDescription="@null"
-            android:elevation="@dimen/space_2"
-            android:outlineProvider="background"
-            android:src="@mipmap/ic_img_advisory_avatar"
-            android:translationZ="@dimen/space_2"
+            android:background="@color/b2_color"
+            app:cardCornerRadius="@dimen/space_4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:qmui_border_color="@color/b2_color"
-            app:qmui_border_width="@dimen/space_6"
-            app:qmui_corner_radius="@dimen/space_6" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_service_icon"
+                android:layout_width="@dimen/space_90"
+                android:layout_height="@dimen/space_90"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_img_advisory_avatar"
+                app:qmui_border_color="@color/b2_color"
+                app:qmui_border_width="@dimen/space_6"
+                app:qmui_corner_radius="@dimen/space_6" />
+
+        </android.support.v7.widget.CardView>
 
         <TextView
             android:id="@+id/tv_service_name"
@@ -38,13 +44,11 @@
             android:layout_marginRight="@dimen/space_20"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="11"
-            android:minLines="1"
             android:singleLine="true"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tv_service_desc"
-            app:layout_constraintLeft_toRightOf="@+id/iv_service_icon"
-            app:layout_constraintTop_toTopOf="@id/iv_service_icon"
+            app:layout_constraintLeft_toRightOf="@+id/iv_wrapper"
+            app:layout_constraintTop_toTopOf="@id/iv_wrapper"
             tools:text="张三" />
 
         <TextView
@@ -56,10 +60,10 @@
             android:layout_marginRight="@dimen/space_20"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="11"
             android:minLines="1"
-            app:layout_constraintBottom_toBottomOf="@id/iv_service_icon"
-            app:layout_constraintLeft_toRightOf="@id/iv_service_icon"
+            android:singleLine="true"
+            app:layout_constraintBottom_toBottomOf="@id/iv_wrapper"
+            app:layout_constraintLeft_toRightOf="@id/iv_wrapper"
             app:layout_constraintTop_toBottomOf="@id/tv_service_name"
             tools:text="报告解读、症状咨询等服务" />
 
@@ -79,24 +83,27 @@
             android:id="@+id/tv_service_use_desc"
             style="@style/text_t1_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/space_32"
+            android:gravity="center"
             android:text="已购买，剩余3次提问机会"
             android:textColor="@color/t2_color"
             tools:ignore="HardcodedText" />
 
         <Space
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
         <TextView
-            android:gravity="center"
             android:id="@+id/tv_service_action"
+            style="@style/text_t2_14"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/space_48"
+            android:layout_height="@dimen/space_32"
             android:drawableEnd="@mipmap/ic_advisory_icon_quiz"
             android:drawablePadding="@dimen/space_10"
-            android:text="@string/ask_questions" />
+            android:gravity="center"
+            android:text="@string/ask_questions"
+            android:textColor="@color/b3_color" />
 
     </LinearLayout>
 

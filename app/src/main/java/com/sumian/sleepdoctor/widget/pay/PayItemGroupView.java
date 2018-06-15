@@ -42,7 +42,7 @@ public class PayItemGroupView extends LinearLayout implements PayItemView.OnPayW
     }
 
     private void initView(Context context) {
-       ButterKnife.bind( inflate(context, R.layout.lay_pay_item_group, this));
+        ButterKnife.bind(inflate(context, R.layout.lay_pay_item_group, this));
         setGravity(Gravity.CENTER);
         setOrientation(VERTICAL);
         mWechatPayWay.setOnPayWayCallback(this);
@@ -68,6 +68,8 @@ public class PayItemGroupView extends LinearLayout implements PayItemView.OnPayW
                 if (mOnSelectPayWayListener != null) {
                     mOnSelectPayWayListener.onSelectAlipayWay();
                 }
+                break;
+            default:
                 break;
         }
     }

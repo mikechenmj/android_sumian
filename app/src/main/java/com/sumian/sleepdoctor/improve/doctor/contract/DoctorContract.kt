@@ -22,6 +22,8 @@ class DoctorContract {
 
     interface Presenter : BasePresenter<Any> {
 
-        fun getBindDoctorInfo(doctorId: Int)
+        fun getBindDoctorInfo()
+
+        fun getDoctorServiceInfo(doctorId: Int)
     }
 }

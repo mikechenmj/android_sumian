@@ -58,6 +58,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         this.mView?.onBegin()
 
         val advisoryRecordBody = AdvisoryRecordBody()
+        advisoryRecordBody.include = "records"
         advisoryRecordBody.advisory_id = advisoryId
         advisoryRecordBody.content = content
 
@@ -74,6 +75,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
             }
 
             override fun onFailure(errorResponse: ErrorResponse?) {
+                Log.e(TAG, "上传失败")
                 mView?.onPublishAdvisoryRecordFailed(error = errorResponse?.message!!)
             }
 
@@ -90,6 +92,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         this.mView?.onBegin()
 
         val advisoryRecordBody = AdvisoryRecordBody()
+        advisoryRecordBody.include = "records"
         advisoryRecordBody.advisory_id = advisoryId
         advisoryRecordBody.content = content
         if (onlineReportIds != null) {
@@ -149,9 +152,12 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
 
     }
 
+    private lateinit var mLocalFilePaths: Array<String>
+
     override fun publishImages(localFilePaths: Array<String>, oSSProgressCallback: OSSProgressCallback<PutObjectRequest>) {
         mPublishIndex = 0
         mView?.onStartUploadImagesCallback()
+        this.mLocalFilePaths = localFilePaths
         publishImage(sts = mPictureOssSts!!, imageIndex = mPublishIndex, localFilePath = localFilePaths[mPublishIndex], oSSProgressCallback = oSSProgressCallback)
     }
 
@@ -186,7 +192,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
             override fun onSuccess(request: PutObjectRequest?, result: PutObjectResult?) {
                 mPublishIndex++
                 if (mPublishIndex < sts.objects.size) {
-                    publishImage(sts, mPublishIndex, localFilePath, oSSProgressCallback)
+                    publishImage(sts, mPublishIndex, mLocalFilePaths[mPublishIndex], oSSProgressCallback)
                 } else {
                     mView?.onEndUploadImagesCallback()
                     val serverCallbackReturnBody = result?.serverCallbackReturnBody

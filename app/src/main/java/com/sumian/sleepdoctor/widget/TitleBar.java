@@ -163,8 +163,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     @SuppressLint("ResourceType")
     public TitleBar setTitle(@StringRes int titleRes) {
-        if (titleRes <= 0x00)
+        if (titleRes <= 0x00) {
             return this;
+        }
         setTitle(getResources().getString(titleRes));
         return this;
     }
@@ -180,7 +181,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.iv_back:
                 OnBackClickListener onBackClickListener = this.mOnBackClickListener;
-                if (onBackClickListener == null) return;
+                if (onBackClickListener == null) {
+                    return;
+                }
                 onBackClickListener.onBack(v);
                 break;
             case R.id.tv_title:
@@ -192,10 +195,12 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 //                    mIsShow = false;
 //                }
                 OnSpannerListener onSpannerListener = this.mOnSpannerListener;
-                if (onSpannerListener == null) return;
+                if (onSpannerListener == null) {
+                    return;
+                }
                 onSpannerListener.onSpanner(v, mIsShow);
                 break;
-            case R.id.iv_more:
+            case R.id.iv_menu:
             case R.id.tv_menu:
                 if (mOnMenuClickListener != null) {
                     mOnMenuClickListener.onMenuClick(v);

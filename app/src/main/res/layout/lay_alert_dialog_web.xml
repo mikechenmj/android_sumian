@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:layout_gravity="end"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_12"
+            android:src="@mipmap/ic_close" />
+
+        <com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_500"
+            android:layout_marginTop="@dimen/space_10" />
+
+    </LinearLayout>
+</FrameLayout>

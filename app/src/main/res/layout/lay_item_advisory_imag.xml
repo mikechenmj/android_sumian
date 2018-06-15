@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/iv"
+        android:layout_width="@dimen/space_80"
+        android:layout_height="@dimen/space_80"
+        android:contentDescription="@null"
+        app:qmui_corner_radius="@dimen/space_2"
+        app:qmui_is_circle="false"
+        app:qmui_is_touch_select_mode_enabled="true"
+        tools:ignore="ContentDescription"
+        tools:src="@mipmap/ic_preview_split_graph" />
+
+</FrameLayout>

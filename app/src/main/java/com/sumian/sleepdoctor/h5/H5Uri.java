@@ -20,4 +20,5 @@ public interface H5Uri {
     String FILL_SCALE = "scale-details/{id}";
     String BIND_DOCTOR = "doctor/{id}";
     String ABOUT_US = "about-us";
+    String ADVISORY_GUIDE = "advisory-guide";
 }

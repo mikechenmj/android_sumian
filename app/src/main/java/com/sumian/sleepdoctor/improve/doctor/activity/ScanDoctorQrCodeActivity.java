@@ -58,6 +58,8 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
                     case ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY:
                         finish();
                         break;
+                    default:
+                        break;
                 }
             }
         }, filter);
@@ -119,11 +121,6 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
             showCenterToast("无效的二维码，请重新扫描...");
             return;
         }
-
-//        Bundle extras = new Bundle();
-//        //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
-//        extras.putString(DoctorWebActivity.ARGS_URL, uriQuery);
-//        DoctorWebActivity.show(this, DoctorWebActivity.class, extras);
         DoctorWebActivity.launch(this, uriQuery);
     }
 }

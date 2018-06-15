@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/tv_pay_desc"
-        style="@style/text_t1_style"
+        style="@style/text_t1_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_16"
@@ -31,8 +31,8 @@
 
     <ImageView
         android:id="@+id/iv_pay_select"
-        android:layout_width="@dimen/space_24"
-        android:layout_height="@dimen/space_24"
+        android:layout_width="@dimen/space_26"
+        android:layout_height="@dimen/space_26"
         android:contentDescription="@null"
         android:src="@mipmap/ic_group_pay_selected" />
 

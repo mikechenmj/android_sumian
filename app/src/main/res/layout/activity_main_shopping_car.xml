@@ -13,94 +13,104 @@
         android:layout_height="wrap_content"
         app:text="@string/pay" />
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/b2_color"
-        android:padding="@dimen/space_20">
+        android:layout_height="match_parent">
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/lay_group_icon"
-            android:layout_width="@dimen/space_92"
-            android:layout_height="@dimen/space_92"
-            android:contentDescription="@null"
-            android:src="@mipmap/ic_group_avatar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:qmui_border_color="@color/b2_color"
-            app:qmui_border_width="@dimen/space_4"
-            app:qmui_corner_radius="@dimen/space_4" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_desc"
-            style="@style/text_t3_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_12"
-            android:ellipsize="marquee"
-            android:maxEms="11"
-            android:minLines="1"
-            android:singleLine="true"
-            android:textSize="@dimen/font_16"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/tv_group_money"
-            app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlHardcoded"
-            tools:text="一个有十二个字符的随访群" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/b2_color"
+                android:padding="@dimen/space_20">
 
-        <TextView
-            android:id="@+id/tv_group_money"
-            style="@style/text_t1_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_8"
-            android:layout_marginRight="@dimen/space_8"
-            android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxEms="10"
-            android:maxLines="1"
-            android:minLines="1"
-            android:singleLine="true"
-            android:textColor="@color/t4_color"
-            android:textSize="@dimen/font_14"
-            app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
-            app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
-            app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-            tools:ignore="RtlHardcoded"
-            tools:text="50元/次" />
+                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                    android:id="@+id/lay_group_icon"
+                    android:layout_width="@dimen/space_92"
+                    android:layout_height="@dimen/space_92"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_group_avatar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:qmui_border_color="@color/b2_color"
+                    app:qmui_border_width="@dimen/space_4"
+                    app:qmui_corner_radius="@dimen/space_4" />
 
-    </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_desc"
+                    style="@style/text_t3_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12"
+                    android:ellipsize="marquee"
+                    android:maxEms="11"
+                    android:minLines="1"
+                    android:singleLine="true"
+                    android:textSize="@dimen/font_16"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_group_money"
+                    app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlHardcoded"
+                    tools:text="一个有十二个字符的随访群" />
 
-    <com.sumian.sleepdoctor.widget.pay.PayCalculateItemView
-        android:id="@+id/pay_calculate_item_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_16" />
+                <TextView
+                    android:id="@+id/tv_group_money"
+                    style="@style/text_t1_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_marginRight="@dimen/space_8"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxEms="10"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:singleLine="true"
+                    android:textSize="@dimen/font_14"
+                    app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
+                    app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+                    tools:ignore="RtlHardcoded"
+                    tools:text="服务费用: 50元/次" />
 
-    <com.sumian.sleepdoctor.widget.pay.PayItemGroupView
-        android:id="@+id/pay_group_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_16" />
+            </android.support.constraint.ConstraintLayout>
 
-    <net.qiujuer.genius.ui.widget.Button
-        android:id="@+id/bt_pay"
-        style="@style/bt_t1_style"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_56"
-        android:layout_marginBottom="@dimen/space_36"
-        android:layout_marginLeft="@dimen/space_32"
-        android:layout_marginRight="@dimen/space_32"
-        android:layout_marginTop="@dimen/space_28"
-        android:clickable="true"
-        android:elevation="@dimen/space_2"
-        android:focusable="true"
-        android:outlineProvider="background"
-        android:text="@string/pay"
-        android:translationZ="@dimen/space_2"
-        app:gTouchCornerRadius="@dimen/space_32"
-        app:gTouchEffect="ripple" />
+            <com.sumian.sleepdoctor.widget.pay.PayCalculateItemView
+                android:id="@+id/pay_calculate_item_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16" />
+
+            <com.sumian.sleepdoctor.widget.pay.PayItemGroupView
+                android:id="@+id/pay_group_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16" />
+
+            <Button
+                android:id="@+id/bt_pay"
+                style="@style/bt_t1_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_50"
+                android:layout_marginBottom="@dimen/space_36"
+                android:layout_marginLeft="@dimen/space_32"
+                android:layout_marginRight="@dimen/space_32"
+                android:layout_marginTop="@dimen/space_40"
+                android:clickable="true"
+                android:elevation="@dimen/space_2"
+                android:focusable="true"
+                android:outlineProvider="background"
+                android:text="@string/pay"
+                android:translationZ="@dimen/space_2" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tv_label"
-            style="@style/text_t1_style"
+            style="@style/text_t1_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/tv_duration"
-            style="@style/text_t1_style"
+            style="@style/text_t1_16"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/space_32"
             android:layout_gravity="center"
@@ -91,7 +91,7 @@
         android:paddingTop="@dimen/space_18">
 
         <TextView
-            style="@style/text_t1_style"
+            style="@style/text_t1_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pay_money" />
@@ -103,16 +103,17 @@
 
         <TextView
             android:id="@+id/tv_money"
-            style="@style/text_t1_style"
+            style="@style/text_t1_18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:text="@string/zero_money"
-            android:textColor="@color/t4_color" />
+            android:textColor="@color/t4_color"
+            android:textStyle="bold" />
 
         <TextView
-            style="@style/text_t1_style"
+            style="@style/text_t1_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/yuan" />

@@ -7,8 +7,8 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.improve.doctor.activity.ScanDoctorQrCodeActivity
+import com.sumian.sleepdoctor.improve.doctor.base.BasePagerFragment
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.improve.doctor.contract.DoctorContract
 import com.sumian.sleepdoctor.improve.doctor.presenter.DoctorPresenter
@@ -23,7 +23,7 @@ import java.util.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View,
+class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View,
         SwipeRefreshLayout.OnRefreshListener {
 
     private val TAG: String = DoctorFragment::class.java.javaClass.simpleName
@@ -47,7 +47,7 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
             val doctor = AppManager.getAccountViewModel()?.userProfile?.doctor
             doctor_detail_layout.invalidDoctor(doctor)
             if (doctor?.services == null) {
-                mPresenter.getBindDoctorInfo(doctor?.id!!)
+                mPresenter.getBindDoctorInfo()
             }
         } else {
             doctor_detail_layout.hide()
@@ -108,21 +108,23 @@ class DoctorFragment : BaseFragment<DoctorPresenter>(), RequestScanQrCodeView.On
     }
 
     override fun setPresenter(presenter: DoctorContract.Presenter?) {
-        this.mPresenter = presenter as DoctorPresenter?
+        this.mPresenter = presenter
     }
 
     override fun onRefresh() {
         if (AppManager.getAccountViewModel()?.userProfile?.isBindDoctor!!) {
             request_scan_qr_code_view.hide()
-
             val doctor = AppManager.getAccountViewModel()?.userProfile?.doctor
             doctor_detail_layout.invalidDoctor(doctor)
-            if (doctor?.services == null) {
-                mPresenter.getBindDoctorInfo(doctor?.id!!)
-            }
+            mPresenter.getBindDoctorInfo()
         } else {
             doctor_detail_layout.hide()
             request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
         }
     }
+
+    override fun selectTab(position: Int) {
+        onRefresh()
+    }
+
 }
