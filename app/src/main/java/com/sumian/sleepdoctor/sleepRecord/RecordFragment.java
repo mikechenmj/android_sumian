@@ -79,6 +79,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     private ActionLoadingDialog mActionLoadingDialog;
     private boolean mNeedScrollToBottom;
     private long mInitTime;
+    private boolean mHasSleepReportService;
 
     @Override
     protected int getLayoutId() {
@@ -151,9 +152,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
 
     private void showServiceList(DoctorServiceList response) {
         List<DoctorService> serviceList = response.getServiceList();
+        mHasSleepReportService = false;
         for (DoctorService doctorService : serviceList) {
-            boolean isNotOwn = doctorService.getLast_count() == 0;
-            if (isNotOwn && doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT) {
+            mHasSleepReportService = doctorService.getLast_count() > 0;
+            if (doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT && !mHasSleepReportService) {
                 DoctorServiceItemView doctorServiceItemView = new DoctorServiceItemView(getContext());
                 doctorServiceItemView.setTitle(doctorService.getName());
                 doctorServiceItemView.setDesc(doctorService.getNot_buy_description());
@@ -162,6 +164,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 mServiceContainer.addView(doctorServiceItemView);
             }
         }
+        mSleepRecordView.setForceShowDoctorAdvice(mHasSleepReportService);
     }
 
     @Override

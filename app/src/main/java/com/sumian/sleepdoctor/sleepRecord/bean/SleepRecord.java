@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.sleepRecord.bean;
 
+import android.text.TextUtils;
+
 /**
  * <pre>
  *     author : Zhan Xuzhao
@@ -82,6 +84,10 @@ public class SleepRecord {
 
     public String getDoctor_evaluation() {
         return doctor_evaluation;
+    }
+
+    public boolean hasDoctorEvaluation() {
+        return !TextUtils.isEmpty(doctor_evaluation);
     }
 
     public void setDoctor_evaluation(String doctor_evaluation) {
