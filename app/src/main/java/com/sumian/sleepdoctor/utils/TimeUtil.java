@@ -314,7 +314,7 @@ public final class TimeUtil {
     }
 
     public static boolean isInTheSameDayOfYear(long t1, long t2) {
-        Calendar c1 = getCalendar(t2);
+        Calendar c1 = getCalendar(t1);
         Calendar c2 = getCalendar(t2);
         return c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR)
                 && c1.get(Calendar.DAY_OF_YEAR) == c2.get(Calendar.DAY_OF_YEAR);
