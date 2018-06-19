@@ -75,6 +75,7 @@ public class SleepRecordView extends LinearLayout {
     @BindView(R.id.ll_no_sleep_record)
     LinearLayout llNoSleepRecord;
     private SleepRecord mSleepRecord;
+    private boolean mForceShowDoctorAdvice;
 
     public SleepRecordView(Context context) {
         this(context, null);
@@ -97,7 +98,8 @@ public class SleepRecordView extends LinearLayout {
         llNoSleepRecord.setVisibility(hasRecord ? GONE : VISIBLE);
         llDoctorEvaluation.setVisibility(hasRecord ? VISIBLE : GONE);
         titleViewSleepRecord.setVisibility(VISIBLE);
-        titleViewSleepRecord.setTvMenuVisibility(hasRecord ? VISIBLE : GONE);
+        boolean showRefill = hasRecord && TextUtils.isEmpty(sleepRecord.getDoctor_evaluation());
+        titleViewSleepRecord.setTvMenuVisibility(showRefill ? VISIBLE : GONE);
         if (hasRecord) {
             showSleepRecord(sleepRecord);
         }
@@ -116,8 +118,8 @@ public class SleepRecordView extends LinearLayout {
         tvFallAsleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getFall_asleep_duration()));
         tvSleepDesc.setText(answer.getRemark());
         tvSleepDesc.setVisibility(TextUtils.isEmpty(answer.getRemark()) ? GONE : VISIBLE);
-        llDoctorEvaluation.setVisibility(TextUtils.isEmpty(sleepRecord.getDoctor_evaluation()) ? GONE : VISIBLE);
-        tvDoctorEvaluation.setText(sleepRecord.getDoctor_evaluation());
+        llDoctorEvaluation.setVisibility(sleepRecord.hasDoctorEvaluation() || mForceShowDoctorAdvice ? VISIBLE : GONE);
+        tvDoctorEvaluation.setText(sleepRecord.hasDoctorEvaluation() ? sleepRecord.getDoctor_evaluation() : getContext().getString(R.string.no_doctor_evaluation_hint));
         progressViewSleep.setProgress(sleepRecord.getSleep_efficiency());
     }
 
@@ -185,5 +187,10 @@ public class SleepRecordView extends LinearLayout {
 
     public void setTime(long timeInMillis) {
         tvNoRecordDate.setText(TimeUtil.formatDate("M月d日", timeInMillis));
+    }
+
+    public void setForceShowDoctorAdvice(boolean forceShowDoctorAdvice) {
+        mForceShowDoctorAdvice = forceShowDoctorAdvice;
+        setSleepRecord(mSleepRecord);
     }
 }

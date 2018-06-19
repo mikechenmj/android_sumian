@@ -27,6 +27,8 @@ public class SleepRecordProgressView extends FrameLayout {
     ProgressView progressView;
     @BindView(R.id.tv_percent)
     TextView tvPercent;
+    @BindView(R.id.tv_percent_mark)
+    TextView tvPercentMark;
 
     public SleepRecordProgressView(@NonNull Context context) {
         this(context, null);
@@ -46,9 +48,10 @@ public class SleepRecordProgressView extends FrameLayout {
     public void setProgress(int progress) {
         progressView.setProgress(progress);
         int level = progressView.getProgressLevelByPercent(progress);
-        int[] startEndColors = progressView.getStartEndColors(progress);
         tvPercent.setText(String.valueOf(progress));
-        tvPercent.setTextColor(getColor(level));
+        int color = getColor(level);
+        tvPercent.setTextColor(color);
+        tvPercentMark.setTextColor(color);
     }
 
     public int getColor(int level) {
