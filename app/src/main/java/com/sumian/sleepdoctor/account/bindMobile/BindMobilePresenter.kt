@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.account.bindMobile
 
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
@@ -52,6 +53,7 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
 
                     override fun onFailure(errorResponse: ErrorResponse?) {
                         mView!!.onFailure(errorResponse?.message)
+                        ToastUtils.showShort(errorResponse?.message)
                     }
 
                     override fun onFinish() {
