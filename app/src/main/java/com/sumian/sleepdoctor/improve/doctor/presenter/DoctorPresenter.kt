@@ -30,9 +30,34 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
     }
 
-    override fun getBindDoctorInfo(doctorId: Int) {
+    override fun getBindDoctorInfo() {
 
         mView?.onBegin()
+
+        val doctorInfoCall = AppManager.getHttpService().getBindDoctorInfo()
+
+        mCalls?.add(doctorInfoCall)
+
+        doctorInfoCall.enqueue(object : BaseResponseCallback<Doctor>() {
+            override fun onFailure(errorResponse: ErrorResponse?) {
+                mView?.onFailure(errorResponse?.message)
+            }
+
+            override fun onSuccess(response: Doctor?) {
+                AppManager.getAccountViewModel().updateBindDoctor(response)
+                AppManager.getDoctorViewModel().notifyDoctor(response)
+                mView?.onGetDoctorInfoSuccess(response)
+                getDoctorServiceInfo(response?.id!!)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                mView?.onFinish()
+            }
+        })
+    }
+
+    override fun getDoctorServiceInfo(doctorId: Int) {
 
         val doctorInfoCall = AppManager.getHttpService().getDoctorInfo(doctorId, "services")
 
@@ -48,11 +73,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
                 AppManager.getDoctorViewModel().notifyDoctor(response)
                 mView?.onGetDoctorInfoSuccess(response)
             }
-
-            override fun onFinish() {
-                super.onFinish()
-                mView?.onFinish()
-            }
         })
+
     }
 }

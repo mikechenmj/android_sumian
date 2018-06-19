@@ -197,6 +197,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         this.mAdvisory = advisory
         this.mPresenter.getLastAdvisory()
         AdvisoryDetailActivity.launch(this, advisoryId = advisory.id)
+        finish()
     }
 
     override fun onPublishAdvisoryRecordFailed(error: String) {

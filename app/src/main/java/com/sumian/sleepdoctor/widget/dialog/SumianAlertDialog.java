@@ -23,7 +23,7 @@ import butterknife.Unbinder;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/25 9:18
  *     desc   :
@@ -90,10 +90,15 @@ public class SumianAlertDialog extends DialogFragment {
         mTvMessage.setVisibility(mMessageRes == 0 ? View.GONE : View.VISIBLE);
         mTvMessage.setText(mMessageRes);
         mBtnLeft.setVisibility(mLeftBtnTextRes == 0 ? View.GONE : View.VISIBLE);
-        if (mLeftBtnTextRes != 0) mBtnLeft.setText(mLeftBtnTextRes);
+        if (mLeftBtnTextRes != 0) {
+            mBtnLeft.setText(mLeftBtnTextRes);
+        }
         mBtnRight.setVisibility(mRightBtnTextRes == 0 ? View.GONE : View.VISIBLE);
-        if (mRightBtnTextRes != 0) mBtnRight.setText(mRightBtnTextRes);
-//        mSpace.setVisibility(mLeftBtnTextRes != 0 && mRightBtnTextRes != 0 ? View.VISIBLE : View.GONE);
+        if (mRightBtnTextRes != 0) {
+            mBtnRight.setText(mRightBtnTextRes);
+        }
+        //        mSpace.setVisibility(mLeftBtnTextRes != 0 && mRightBtnTextRes != 0 ? View.VISIBLE : View.GONE);
+
         if (mWhitenLeft) {
             mBtnLeft.setBackgroundResource(R.drawable.bg_btn_white);
             mBtnLeft.setTextColor(getResources().getColor(R.color.t5_color));
@@ -160,6 +165,8 @@ public class SumianAlertDialog extends DialogFragment {
                 if (mRightBtnClickListener != null) {
                     mRightBtnClickListener.onClick(view);
                 }
+                break;
+            default:
                 break;
         }
         dismiss();

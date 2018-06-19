@@ -14,7 +14,9 @@ import com.sumian.sleepdoctor.improve.advisory.adapter.RecordAdapter
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.advisory.contract.RecordContract
 import com.sumian.sleepdoctor.improve.advisory.presenter.RecordPresenter
+import com.sumian.sleepdoctor.main.MainActivity
 import com.sumian.sleepdoctor.widget.TitleBar
+import com.sumian.sleepdoctor.widget.dialog.SumianWebDialog
 import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
 
 /**
@@ -89,15 +91,35 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     }
 
 
+    @Suppress("DEPRECATION")
     @SuppressLint("SetTextI18n")
     override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
+        //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
+        when (advisory.status) {
+            2, 3, 4 -> {
+                tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
+                tv_bottom_notification.text = getString(R.string.continue_ask_question)
+            }
+            else -> {
+                if (advisory.last_count == 0) {
+                    tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
+                    tv_bottom_notification.text = getString(R.string.continue_ask_question)
+                } else {
+                    tv_top_notification.setBackgroundColor(resources.getColor(R.color.b5_color))
+                    tv_bottom_notification.text = "追问 (剩余${advisory.last_count}机会)"
+                }
+            }
+        }
         tv_top_notification.text = advisory.remind_description
         tv_top_notification.visibility = View.VISIBLE
-        tv_bottom_notification.text = "追问 (剩余${advisory.last_count}机会)"
         tv_bottom_notification.visibility = View.VISIBLE
-        this.mAdapter.setDoctor(advisory.doctor!!)
-        this.mAdapter.setUser(advisory.user!!)
+        if (advisory.doctor != null) {
+            this.mAdapter.setDoctor(advisory.doctor!!)
+        }
+        if (advisory.user != null) {
+            this.mAdapter.setUser(advisory.user!!)
+        }
         this.mAdapter.resetItem(advisory.records)
     }
 
@@ -114,11 +136,15 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     }
 
     override fun onClick(v: View?) {
-        PublishAdvisoryRecordActivity.launch(this, mAdvisory)
+        if (mAdvisory.status == 2 || mAdvisory.status == 3 || mAdvisory.status == 4) {
+            MainActivity.launch(this, 1)
+        } else {
+            PublishAdvisoryRecordActivity.launch(this, mAdvisory)
+        }
     }
 
     override fun onMenuClick(v: View?) {
-        showCenterToast("问题详情FAQ")
+        SumianWebDialog.create().show(supportFragmentManager)
     }
 
     override fun onBack(v: View?) {

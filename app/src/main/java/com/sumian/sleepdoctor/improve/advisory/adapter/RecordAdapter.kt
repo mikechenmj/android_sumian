@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.bumptech.glide.request.RequestOptions
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.widget.FlowLayout
 import com.sumian.sleepdoctor.R
@@ -18,6 +20,7 @@ import com.sumian.sleepdoctor.improve.doctor.bean.Doctor
 import com.sumian.sleepdoctor.onlineReport.OnlineReportDetailActivity
 import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity
 import com.sumian.sleepdoctor.utils.TimeUtil
+import com.sumian.sleepdoctor.utils.getAppContext
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -128,7 +131,19 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                 mFlowLayout?.removeAllViewsInLayout()
                 mFlowLayout?.visibility = View.GONE
             } else {//初始化图片列表
-                //TODO add images
+                mFlowLayout?.removeAllViews()
+                item.images.forEach { img ->
+
+                    val rootView = LayoutInflater.from(itemView.context).inflate(R.layout.lay_item_advisory_imag, mFlowLayout, false)
+
+                    val image = rootView.findViewById<QMUIRadiusImageView>(R.id.iv)
+
+                    load(img, RequestOptions.errorOf(R.mipmap.ic_preview_split_graph).fitCenter().override(getAppContext().resources.getDimensionPixelSize(R.dimen.space_80), getAppContext().resources.getDimensionPixelSize(R.dimen.space_80)), image)
+
+                    mFlowLayout?.addView(rootView)
+
+                }
+
                 mFlowLayout?.visibility = View.VISIBLE
             }
 

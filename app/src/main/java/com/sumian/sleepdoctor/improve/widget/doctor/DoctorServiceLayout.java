@@ -27,7 +27,9 @@ import butterknife.OnClick;
  * Created by sm
  * on 2018/5/31 16:50
  * desc:  医生服务容器
- **/
+ *
+ * @author sm
+ */
 public class DoctorServiceLayout extends LinearLayout implements View.OnClickListener {
 
     @BindView(R.id.iv_service_icon)
@@ -124,6 +126,8 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
                     default:
                         break;
                 }
+                break;
+            default:
                 break;
         }
     }

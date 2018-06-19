@@ -26,6 +26,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:qmui_border_color="@color/b2_color"
+                app:qmui_border_width="@dimen/space_4"
                 app:qmui_is_circle="true" />
 
             <TextView
@@ -36,7 +38,7 @@
                 android:layout_marginLeft="@dimen/space_20"
                 android:layout_marginRight="@dimen/space_20"
                 android:ellipsize="marquee"
-                android:maxEms="11"
+                android:marqueeRepeatLimit="marquee_forever"
                 android:minLines="1"
                 android:singleLine="true"
                 android:textColor="@color/b2_color"
@@ -57,11 +59,12 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:maxLines="2"
                 android:minLines="1"
+                android:ellipsize="marquee"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
                 app:layout_constraintLeft_toRightOf="@id/iv_avatar"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
-                tools:text="哈尔滨医科大学附属第一医院 睡眠医学中心睡眠医学中心科室主任医…" />
+                tools:text="哈尔滨医科大学附属第一医院 睡眠医学中心睡眠医学中心科室" />
 
         </android.support.constraint.ConstraintLayout>
 

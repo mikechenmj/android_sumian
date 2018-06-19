@@ -261,6 +261,8 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
             case R.id.dsiv_sleep_scale:
                 ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_ALL);
                 break;
+            default:
+                break;
         }
     }
 
@@ -314,7 +316,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     }
 
     private void launchDoctorServicePage(DoctorService doctorService) {
-        DoctorServiceWebActivity.show(getContext(), doctorService);
+        DoctorServiceWebActivity.show(getContext(), doctorService, true);
     }
 
     @Override
@@ -323,7 +325,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
             if (resultCode == Activity.RESULT_OK) {
                 SleepRecord sleepRecord = FillSleepRecordActivity.resolveResultData(data);
                 updateSleepRecordView(sleepRecord);
-                assert sleepRecord != null;
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

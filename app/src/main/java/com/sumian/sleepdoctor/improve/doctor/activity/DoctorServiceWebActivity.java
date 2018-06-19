@@ -29,9 +29,12 @@ import java.util.Objects;
 public class DoctorServiceWebActivity extends BaseWebViewActivity {
 
     private static final String EXTRA_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
+    private static final String EXTRA_SCAN_2_BIND = "com.sumian.doctorsleep.extra.scan.2.bind";
 
     private DoctorService mDoctorService;
     private BroadcastReceiver mBroadcastReceiver;
+
+    private boolean mIsScan2Bind;
 
     public static void show(Context context, DoctorService doctorService) {
         Bundle extras = new Bundle();
@@ -39,10 +42,18 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
         show(context, DoctorServiceWebActivity.class, extras);
     }
 
+    public static void show(Context context, DoctorService doctorService, boolean isScan2Bind) {
+        Bundle extras = new Bundle();
+        extras.putParcelable(EXTRA_DOCTOR_SERVICE, doctorService);
+        extras.putBoolean(EXTRA_SCAN_2_BIND, isScan2Bind);
+        show(context, DoctorServiceWebActivity.class, extras);
+    }
+
     @Override
     protected boolean initBundle(Bundle bundle) {
         if (bundle != null) {
             this.mDoctorService = bundle.getParcelable(EXTRA_DOCTOR_SERVICE);
+            this.mIsScan2Bind = bundle.getBoolean(EXTRA_SCAN_2_BIND, false);
         }
         return super.initBundle(bundle);
     }
@@ -50,7 +61,6 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-
         registerFinishBroadcastReceiver();
     }
 
@@ -64,6 +74,8 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
                 switch (Objects.requireNonNull(intent.getAction())) {
                     case ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY:
                         finish();
+                        break;
+                    default:
                         break;
                 }
             }
@@ -105,8 +117,12 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
                 if (sBridgeResult.code == 0) {//立即去购买
                     ShoppingCarActivity.launch(DoctorServiceWebActivity.this, sBridgeResult.result);
                 } else {//未绑定医生
-                    String url = "doctorsleep://doctor?id=" + AppManager.getAccountViewModel().getUserProfile().doctor_id;
-                    DoctorWebActivity.launch(DoctorServiceWebActivity.this, url);
+                    if (mIsScan2Bind) {
+                        ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, ScanDoctorQrCodeActivity.class);
+                    } else {
+                        String url = "doctorsleep://doctor?id=" + AppManager.getAccountViewModel().getUserProfile().doctor_id;
+                        DoctorWebActivity.launch(DoctorServiceWebActivity.this, url);
+                    }
                 }
             }
         });

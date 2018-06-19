@@ -5,7 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -24,8 +29,6 @@ import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.pay.PayCalculateItemView;
 import com.sumian.sleepdoctor.widget.pay.PayItemGroupView;
-
-import net.qiujuer.genius.ui.widget.Button;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -108,7 +111,14 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         RequestOptions requestOptions = RequestOptions.placeholderOf(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar);
         Glide.with(this).load(mDoctorService.getIcon()).apply(requestOptions).into(mIvGroupIcon);
         mTvDesc.setText(mDoctorService.getName());
-        mTvGroupMoney.setText(mDoctorService.getPackages().get(0).getPrice_text());
+
+        String priceText = mDoctorService.getPackages().get(0).getPrice_text();
+
+        SpannableString spannableString = new SpannableString(priceText);
+        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.t4_color)), 0, priceText.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mTvGroupMoney.setText(TextUtils.concat("服务费用: ", spannableString));
+
         mPayCalculateItemView.setDefaultMoney(mDoctorService.getPackages().get(0).getUnit_price());
     }
 
@@ -124,6 +134,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         mPresenter.onPayActivityResultDelegate(requestCode, resultCode, data);
     }
 
+    @Override
     @OnClick({R.id.bt_pay})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -204,22 +215,25 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
 
     @Override
     public void onOrderPaySuccess(@NonNull String payMsg) {
-        if (!mPayDialog.isShowing())
+        if (!mPayDialog.isShowing()) {
             mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show();
+        }
     }
 
     @Override
     public void onOrderPayFailed(@NonNull String payMsg) {
         showToast(payMsg);
-        if (!mPayDialog.isShowing())
+        if (!mPayDialog.isShowing()) {
             mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show();
+        }
     }
 
     @Override
     public void onOrderPayInvalid(@NonNull String payMsg) {
         showToast(payMsg);
-        if (!mPayDialog.isShowing())
+        if (!mPayDialog.isShowing()) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
+        }
     }
 
     @Override
