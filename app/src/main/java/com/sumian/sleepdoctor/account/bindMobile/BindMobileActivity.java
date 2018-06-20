@@ -131,8 +131,7 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
         if (response.is_new) {
             ImproveUserProfileOneActivity.show(this, ImproveUserProfileOneActivity.class);
         }else {
-            MainActivity.show(this,MainActivity.class);
+            MainActivity.showClearTop(this,MainActivity.class);
         }
-
     }
 }

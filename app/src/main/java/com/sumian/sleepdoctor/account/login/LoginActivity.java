@@ -87,7 +87,12 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onBegin() {
-        mActionLoadingDialog = new ActionLoadingDialog().show(getSupportFragmentManager());
+        if (mActionLoadingDialog == null) {
+            mActionLoadingDialog = new ActionLoadingDialog();
+        }
+        if (!mActionLoadingDialog.isAdded()) {
+            mActionLoadingDialog.show(getSupportFragmentManager());
+        }
     }
 
     @Override
@@ -126,7 +131,6 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
         extras.putSerializable(BindMobileActivity.EXTRA_SHARE_MEDIA, SHARE_MEDIA.WEIXIN);
         extras.putString(BindMobileActivity.EXTRA_OPEN_USER_INFO, openUserInfo);
         BindMobileActivity.show(this, BindMobileActivity.class, extras);
-        finish();
     }
 
     @Override
