@@ -26,8 +26,9 @@ import com.sumian.sleepdoctor.onlinereport.OnlineReport
 import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog
-import kotlinx.android.synthetic.main.activity_main_publish_advisory_record.*
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.activity_main_publish_advisory_record.*
 
 /**
  *
@@ -41,7 +42,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
 
-    private val mOnlineRecordIds: ArrayList<Int> by lazy { arrayListOf<Int>() }
+    private var mSelectOnlineRecords: ArrayList<OnlineReport>? = null
 
     private var mAdvisory: Advisory? = null
 
@@ -111,7 +112,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
 
         lay_report.setOnClickListener {
-            OnlineReportListActivity.launchForPick(this, PICK_REPORT_REQUEST_CODE)
+            OnlineReportListActivity.launchForPick(this, PICK_REPORT_REQUEST_CODE, mSelectOnlineRecords)
         }
 
     }
@@ -129,22 +130,23 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         when (resultCode) {
             Activity.RESULT_OK -> {
                 if (requestCode == PICK_REPORT_REQUEST_CODE) {// pick reports
-
                     val reports: ArrayList<OnlineReport> = data?.getParcelableArrayListExtra("data")!!
-
+                    mSelectOnlineRecords = reports
                     if (!reports.isEmpty()) {
                         tv_report_count.text = "已选择 ${reports.size} 份"
                         tv_report_count.visibility = View.VISIBLE
-
-                        reports.forEach { onlineReport ->
-                            run {
-                                mOnlineRecordIds.add(onlineReport.id)
-                            }
-                        }
                     }
                 }
             }
         }
+    }
+
+    private fun getSelectReportIds(): ArrayList<Int> {
+        val reportIds = ArrayList<Int>()
+        mSelectOnlineRecords?.forEach {
+            reportIds.add(it.id)
+        }
+        return reportIds
     }
 
     override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter) {
@@ -162,9 +164,9 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
 
         if (mPictures == null || mPictures?.isEmpty()!!) {
-            this.mPresenter.publishAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = mOnlineRecordIds)
+            this.mPresenter.publishAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = getSelectReportIds())
         } else {
-            this.mPresenter.publishPictureAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = mOnlineRecordIds, pictureCount = mPictures?.size!!)
+            this.mPresenter.publishPictureAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures?.size!!)
         }
 
     }

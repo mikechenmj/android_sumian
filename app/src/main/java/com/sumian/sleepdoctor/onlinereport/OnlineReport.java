@@ -153,4 +153,13 @@ public class OnlineReport implements Parcelable {
         dest.writeInt(created_at);
         dest.writeInt(updated_at);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof OnlineReport)) {
+            return false;
+        }
+        OnlineReport report = (OnlineReport) obj;
+        return id == report.id;
+    }
 }

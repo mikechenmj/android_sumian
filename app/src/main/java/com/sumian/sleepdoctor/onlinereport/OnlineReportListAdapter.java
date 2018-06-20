@@ -56,7 +56,11 @@ public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, Base
     }
 
     public void setSelectedReports(ArrayList<OnlineReport> selectedReports) {
-        mSelectedReports = selectedReports;
+        if (selectedReports == null) {
+            mSelectedReports = new ArrayList<>();
+        } else {
+            mSelectedReports = selectedReports;
+        }
     }
 
     public void setMaxSelectCount(int maxSelectCount) {

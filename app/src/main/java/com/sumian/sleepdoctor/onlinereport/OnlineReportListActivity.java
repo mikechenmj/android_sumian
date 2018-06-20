@@ -61,9 +61,10 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
      * Get data in onActivityResult:
      * ArrayList<OnlineReport> reports = data.getParcelableArrayListExtra("data");
      */
-    public static void launchForPick(ActivityLauncher launcher, int requestCode) {
+    public static void launchForPick(ActivityLauncher launcher, int requestCode, ArrayList<OnlineReport> data) {
         Intent intent = new Intent(launcher.getActivity(), OnlineReportListActivity.class);
         intent.putExtra(KEY_LAUNCH_TYPE, LAUNCH_TYPE_PICK);
+        intent.putExtra(KEY_LAUNCH_DATA, data);
         launcher.startActivityForResult(intent, requestCode);
     }
 
@@ -78,9 +79,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
             String launchType = bundle.getString(KEY_LAUNCH_TYPE);
             mIsShowListMode = LAUNCH_TYPE_SHOW_INPUT_DATA.equals(launchType);
             mIsPickMode = LAUNCH_TYPE_PICK.equals(launchType);
-            if (mIsShowListMode) {
-                mLaunchOnlineReports = bundle.getParcelableArrayList(KEY_LAUNCH_DATA);
-            }
+            mLaunchOnlineReports = bundle.getParcelableArrayList(KEY_LAUNCH_DATA);
         }
         return super.initBundle(bundle);
     }
@@ -102,6 +101,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnLoadMoreListener(this, recyclerView);
         mAdapter.setEmptyView(getEmptyView());
+        mAdapter.setSelectedReports(mLaunchOnlineReports);
     }
 
     @Override
