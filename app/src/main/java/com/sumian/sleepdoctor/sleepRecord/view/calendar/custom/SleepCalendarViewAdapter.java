@@ -8,7 +8,7 @@ import com.sumian.sleepdoctor.sleepRecord.view.calendar.calendarView.CalendarVie
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/29 15:58
  *     desc   :

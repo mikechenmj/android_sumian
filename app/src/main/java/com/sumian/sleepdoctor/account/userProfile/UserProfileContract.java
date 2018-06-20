@@ -5,7 +5,7 @@ import com.sumian.sleepdoctor.base.BaseView;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/29 14:36
  *     desc   :

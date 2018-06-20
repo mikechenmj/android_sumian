@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlineReport;
+package com.sumian.sleepdoctor.onlinereport;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/4 10:42
  *     desc   :

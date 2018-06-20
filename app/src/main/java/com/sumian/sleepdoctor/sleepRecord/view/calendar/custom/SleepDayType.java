@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.sleepRecord.view.calendar.custom;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/2 11:18
  *     desc   :

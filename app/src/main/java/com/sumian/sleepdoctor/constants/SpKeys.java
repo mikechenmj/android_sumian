@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.constants;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/6 22:20
  *     desc   : 存放全局 SharedPreferences 的 key， 格式：模块名_KEY_NAME

@@ -20,7 +20,7 @@ import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
-import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity;
+import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.pager.activity.SettingActivity;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
 

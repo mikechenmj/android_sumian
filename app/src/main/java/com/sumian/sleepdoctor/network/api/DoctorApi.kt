@@ -10,7 +10,7 @@ import com.sumian.sleepdoctor.improve.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
-import com.sumian.sleepdoctor.onlineReport.OnlineReport
+import com.sumian.sleepdoctor.onlinereport.OnlineReport
 import com.sumian.sleepdoctor.order.OrderDetailV2
 import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.pager.bean.OrderDetail

@@ -22,8 +22,8 @@ import com.sumian.sleepdoctor.improve.advisory.contract.PublishAdvisoryRecordCon
 import com.sumian.sleepdoctor.improve.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sleepdoctor.improve.widget.adapter.SimpleTextWatchAdapter
 import com.sumian.sleepdoctor.improve.widget.sheet.PictureBottomSheet
-import com.sumian.sleepdoctor.onlineReport.OnlineReport
-import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity
+import com.sumian.sleepdoctor.onlinereport.OnlineReport
+import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog
 import kotlinx.android.synthetic.main.activity_main_publish_advisory_record.*

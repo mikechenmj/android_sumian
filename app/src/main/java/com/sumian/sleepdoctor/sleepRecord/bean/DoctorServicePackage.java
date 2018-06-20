@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.sleepRecord.bean;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/5 9:38
  *     desc   :

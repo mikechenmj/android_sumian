@@ -14,7 +14,7 @@ import com.sumian.sleepdoctor.pager.activity.WelcomeActivity;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/7 16:08
  *     desc   :

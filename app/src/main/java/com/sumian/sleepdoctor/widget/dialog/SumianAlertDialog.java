@@ -23,7 +23,7 @@ import butterknife.Unbinder;
 
 /**
  * <pre>
- *     @author : Zhan Xuzhao
+ *     @@author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/25 9:18
  *     desc   :

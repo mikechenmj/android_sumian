@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/6 22:05
  *     desc   :

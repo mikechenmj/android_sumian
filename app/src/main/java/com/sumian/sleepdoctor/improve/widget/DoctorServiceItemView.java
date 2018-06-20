@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/3 14:45
  *     desc   : 医生服务Item

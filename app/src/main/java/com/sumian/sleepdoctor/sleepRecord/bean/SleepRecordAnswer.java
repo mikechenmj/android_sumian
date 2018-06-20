@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/1 9:47
  *     desc   :

@@ -9,7 +9,7 @@ import com.sumian.sleepdoctor.utils.NotificationUtil
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/8 10:31
  *     desc   :

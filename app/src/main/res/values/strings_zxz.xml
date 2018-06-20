@@ -21,6 +21,7 @@
     <string name="online_report_list_empty_title">暂无测评记录</string>
     <string name="online_report_list_empty_desc">了解您的睡眠健康及心理状况</string>
     <string name="online_report">电子报告</string>
+    <string name="you_can_select_9_reports_at_most_hint">最多只能选择9份报告</string>
 
     <!-- notification -->
     <string name="notification_center">消息中心</string>

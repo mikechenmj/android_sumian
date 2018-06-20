@@ -4,7 +4,7 @@ import org.junit.Test;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/28 20:24
  *     desc   :

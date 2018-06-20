@@ -5,7 +5,7 @@ import com.sumian.sleepdoctor.utils.JsonUtil
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/8 11:17
  *     desc   : 解析 LeanCloud 发送过来的 broadcast 中的数据

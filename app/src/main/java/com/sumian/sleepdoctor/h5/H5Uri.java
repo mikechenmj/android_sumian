@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.h5;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/31 17:56
  *     desc   :

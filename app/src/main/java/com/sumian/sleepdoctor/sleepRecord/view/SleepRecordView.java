@@ -26,7 +26,7 @@ import butterknife.OnClick;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/31 20:02
  *     desc   :

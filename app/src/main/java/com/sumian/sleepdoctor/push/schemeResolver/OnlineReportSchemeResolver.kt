@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.onlineReport.OnlineReportDetailActivity
+import com.sumian.sleepdoctor.onlinereport.OnlineReportDetailActivity
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/8 20:29
  *     desc   :

@@ -20,7 +20,7 @@ import java.util.Locale;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/30 20:00
  *     desc   :

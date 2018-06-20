@@ -7,7 +7,7 @@ import com.sumian.sleepdoctor.improve.advisory.activity.AdvisoryDetailActivity
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/11 16:21
  *     desc   :

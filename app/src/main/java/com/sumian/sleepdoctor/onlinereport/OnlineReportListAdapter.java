@@ -1,9 +1,10 @@
-package com.sumian.sleepdoctor.onlineReport;
+package com.sumian.sleepdoctor.onlinereport;
 
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sleepdoctor.R;
@@ -14,7 +15,7 @@ import java.util.List;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/4 9:27
  *     desc   :
@@ -24,6 +25,8 @@ import java.util.List;
 public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, BaseViewHolder> {
     private boolean mIsPickMode = false;
     private ArrayList<OnlineReport> mSelectedReports = new ArrayList<>();
+
+    private int mMaxSelectCount = 9;
 
     OnlineReportListAdapter(@Nullable List<OnlineReport> data) {
         super(R.layout.item_online_report, data);
@@ -56,11 +59,19 @@ public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, Base
         mSelectedReports = selectedReports;
     }
 
+    public void setMaxSelectCount(int maxSelectCount) {
+        mMaxSelectCount = maxSelectCount;
+    }
+
     public void addOrRemoveSelectedItem(int position) {
         OnlineReport report = getItem(position);
         if (mSelectedReports.contains(report)) {
             mSelectedReports.remove(report);
         } else {
+            if (mSelectedReports.size() == mMaxSelectCount) {
+                ToastUtils.showShort(R.string.you_can_select_9_reports_at_most_hint);
+                return;
+            }
             mSelectedReports.add(report);
         }
         notifyItemChanged(position);

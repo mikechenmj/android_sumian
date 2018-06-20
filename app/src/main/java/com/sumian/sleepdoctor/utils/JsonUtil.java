@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/28 19:58
  *     desc   :

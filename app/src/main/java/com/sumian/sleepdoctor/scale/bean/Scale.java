@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.scale.bean;
 
 /**
  * <pre>
- *     author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/6/7 9:58
  *     desc   :
