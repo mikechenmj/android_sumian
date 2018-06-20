@@ -335,6 +335,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                LogUtils.d(map);
                 map.put("nickname", map.get("name"));
                 String userInfoJson = JsonUtil.toJson(map);
                 AppManager.getHttpService()
