@@ -35,6 +35,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
 
     @BindView(R.id.version)
     SettingDividerView mVersion;
+    private BottomSheetDialog dialog;
 
 
     @Override
@@ -72,13 +73,17 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     }
 
     private void showLogoutDialog() {
-        BottomSheetDialog dialog = new BottomSheetDialog(this);
-        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(this).inflate(R.layout.lay_logout_bottom_sheet, null, false);
-        inflate.findViewById(R.id.tv_logout).setOnClickListener(v -> logout());
-        inflate.findViewById(R.id.tv_cancel).setOnClickListener(v -> dialog.dismiss());
-        dialog.setContentView(inflate);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
+        if (dialog == null) {
+            dialog = new BottomSheetDialog(this);
+            @SuppressLint("InflateParams") View inflate = LayoutInflater.from(this).inflate(R.layout.lay_logout_bottom_sheet, null, false);
+            inflate.findViewById(R.id.tv_logout).setOnClickListener(v -> logout());
+            inflate.findViewById(R.id.tv_cancel).setOnClickListener(v -> dialog.dismiss());
+            dialog.setContentView(inflate);
+            dialog.setCanceledOnTouchOutside(true);
+        }
+        if (dialog != null && !dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     private void logout() {

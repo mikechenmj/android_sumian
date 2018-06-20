@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.onlinereport;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,11 +50,11 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
         launcher.startActivity(intent);
     }
 
-    public static void launchForShowList(ActivityLauncher launcher, ArrayList<OnlineReport> data) {
-        Intent intent = new Intent(launcher.getActivity(), OnlineReportListActivity.class);
+    public static void launchForShowList(Context context, ArrayList<OnlineReport> data) {
+        Intent intent = new Intent(context, OnlineReportListActivity.class);
         intent.putExtra(KEY_LAUNCH_TYPE, LAUNCH_TYPE_SHOW_INPUT_DATA);
         intent.putExtra(KEY_LAUNCH_DATA, data);
-        launcher.startActivity(intent);
+        context.startActivity(intent);
     }
 
     /**

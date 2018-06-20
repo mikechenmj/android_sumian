@@ -339,7 +339,8 @@ dependencies {
     implementation 'com.belerweb:pinyin4j:2.5.1'
 
     //scan qr code
-    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.1'
+    implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.3'
+    //implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.3'
 
     // utils
     implementation 'com.blankj:utilcode:1.16.0'

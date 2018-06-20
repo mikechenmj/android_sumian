@@ -156,7 +156,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                 mReportLayout?.visibility = View.VISIBLE
                 mReportLayout?.setOnClickListener {
                     if (item.reports.size > 1) {
-                        OnlineReportListActivity.show(itemView.context, OnlineReportListActivity::class.java)
+                        OnlineReportListActivity.launchForShowList(itemView.context, item.reports)
                     } else {
                         OnlineReportDetailActivity.launch(itemView.context, item.reports[0].title, item.reports[0].report_url)
                     }

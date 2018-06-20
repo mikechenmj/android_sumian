@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,10 +16,12 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.improve.widget.qr.QrCodeView;
 
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by sm
@@ -26,7 +29,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, QrCodeView.OnShowQrCodeCallback {
+public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, QrCodeView.OnShowQrCodeCallback, EasyPermissions.PermissionCallbacks {
 
     private static final String TAG = ScanDoctorQrCodeActivity.class.getSimpleName();
 
@@ -102,7 +105,7 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mZXingView.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override
@@ -111,6 +114,7 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
 
         if (TextUtils.isEmpty(qrCode)) {
             showCenterToast("无效的二维码，请重新扫描...");
+            Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
             return;
         }
 
@@ -119,8 +123,19 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
         String uriQuery = Uri.decode(uri.getQueryParameter("scheme"));
         if (TextUtils.isEmpty(uriQuery)) {
             showCenterToast("无效的二维码，请重新扫描...");
+            Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
             return;
         }
         DoctorWebActivity.launch(this, uriQuery);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        showToast("扫描二维码需要打开相机和存储权限,权限已被禁止,请在设置中授予app 相关权限");
     }
 }

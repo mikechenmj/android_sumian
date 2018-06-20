@@ -5,20 +5,17 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.sumian.common.helper.ToastHelper;
-
-import java.util.List;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zbar.ZBarView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class QrCodeView extends ZBarView implements QRCodeView.Delegate, EasyPermissions.PermissionCallbacks {
+public class QrCodeView extends ZBarView implements QRCodeView.Delegate {
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
 
@@ -43,7 +40,6 @@ public class QrCodeView extends ZBarView implements QRCodeView.Delegate, EasyPer
             mOnShowQrCodeCallback.onShowQrCode(result);
         }
         vibrate();
-        //StartSpot();
     }
 
     @Override
@@ -53,9 +49,9 @@ public class QrCodeView extends ZBarView implements QRCodeView.Delegate, EasyPer
 
     @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)
     public void requestCodeQRCodePermissions(Activity activity) {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(getContext(), perms)) {
-            StartSpot();
+            beginSpot();
         } else {
             EasyPermissions.requestPermissions(activity, "扫描二维码需要打开相机和闪光灯的权限", REQUEST_CODE_QR_CODE_PERMISSIONS, perms);
         }
@@ -63,16 +59,16 @@ public class QrCodeView extends ZBarView implements QRCodeView.Delegate, EasyPer
 
     @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)
     public void requestCodeQRCodePermissions(Fragment fragment) {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(getContext(), perms)) {
-            StartSpot();
+            beginSpot();
         } else {
             EasyPermissions.requestPermissions(fragment, "扫描二维码需要打开相机和闪光灯的权限", REQUEST_CODE_QR_CODE_PERMISSIONS, perms);
         }
     }
 
-    public void StartSpot() {
-        startSpotAndShowRect();
+    public void beginSpot() {
+        startSpot();
     }
 
     private void vibrate() {
@@ -80,21 +76,6 @@ public class QrCodeView extends ZBarView implements QRCodeView.Delegate, EasyPer
         if (vibrator != null) {
             vibrator.vibrate(200);
         }
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        showToast("扫描二维码需要打开相机和闪光灯的权限,权限已被禁止,请在设置中授予app 相关权限");
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     private void showToast(String content) {

@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.improve.advisory.bean
 
 import android.os.Parcelable
+import com.sumian.sleepdoctor.onlinereport.OnlineReport
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
@@ -19,7 +20,7 @@ data class Record(var id: Int,//记录 ID
                   var update_at: Int,//记录更新时间  Unix 时间戳
                   var question_index: Int,//第几次提问, type为0才返回
                   var images: ArrayList<String>,//图片 URL 列表
-                  var reports: ArrayList<Report>//在线报告列表
+                  var reports: ArrayList<OnlineReport>//在线报告列表
 ) : Parcelable, Serializable {
 
     companion object {
