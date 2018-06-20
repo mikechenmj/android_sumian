@@ -37,7 +37,10 @@ public class OpenLogin {
 
     private void login(Activity activity, SHARE_MEDIA shareMedia, UMAuthListener authListener) {
         umShareAPI.getPlatformInfo(activity, shareMedia, authListener);
-        //umShareAPI.doOauthVerify(activity, shareMedia, authListener);
+    }
+
+    public void deleteWeiXinOauth(Activity activity) {
+        umShareAPI.deleteOauth(activity, SHARE_MEDIA.WEIXIN, null);
     }
 
 }

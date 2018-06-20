@@ -412,5 +412,6 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         }
         mUserProfile.socialites = socials;
         AppManager.getAccountViewModel().updateUserProfile(mUserProfile);
+        AppManager.getOpenLogin().deleteWeiXinOauth(this);
     }
 }

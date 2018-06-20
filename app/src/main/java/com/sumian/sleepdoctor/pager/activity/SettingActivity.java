@@ -104,5 +104,6 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
         AppManager.getChatEngine().logoutImServer();
         AppManager.getAccountViewModel().updateToken(null);
         LoginActivity.showClearTop(this, LoginActivity.class);
+        AppManager.getOpenLogin().deleteWeiXinOauth(this);
     }
 }
