@@ -2,6 +2,7 @@
 
 package com.sumian.sleepdoctor.improve.advisory.presenter
 
+import android.text.TextUtils
 import android.util.Log
 import com.alibaba.sdk.android.oss.ClientException
 import com.alibaba.sdk.android.oss.OSSClient
@@ -24,6 +25,7 @@ import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.utils.JsonUtil
+import org.json.JSONObject
 import java.util.*
 
 /**
@@ -194,6 +196,24 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
                 if (mPublishIndex < sts.objects.size) {
                     publishImage(sts, mPublishIndex, mLocalFilePaths[mPublishIndex], oSSProgressCallback)
                 } else {
+
+                    val returnBody = result?.serverCallbackReturnBody
+                    if (!TextUtils.isEmpty(returnBody)) {
+                        if (returnBody?.contains("error")!!) {
+                            val jsonObject = JSONObject(returnBody)
+                            val errorJson = jsonObject.getString("error")
+                            if (!TextUtils.isEmpty(errorJson)) {
+                                val error = JSONObject(errorJson)
+                                mView?.onEndUploadImagesCallback()
+                                val errorMsg = error.getString("user_message")
+                                if (!TextUtils.isEmpty(errorMsg)) {
+                                    mView?.onPublishAdvisoryRecordFailed(errorMsg)
+                                    return
+                                }
+                            }
+                        }
+                    }
+
                     mView?.onEndUploadImagesCallback()
                     val serverCallbackReturnBody = result?.serverCallbackReturnBody
                     val advisory = JsonUtil.fromJson(serverCallbackReturnBody, Advisory::class.java)
