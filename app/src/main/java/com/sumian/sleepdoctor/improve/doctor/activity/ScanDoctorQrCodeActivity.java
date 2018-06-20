@@ -114,6 +114,7 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
 
         if (TextUtils.isEmpty(qrCode)) {
             showCenterToast("无效的二维码，请重新扫描...");
+            mZXingView.beginSpot();
             Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
             return;
         }
@@ -123,6 +124,7 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
         String uriQuery = Uri.decode(uri.getQueryParameter("scheme"));
         if (TextUtils.isEmpty(uriQuery)) {
             showCenterToast("无效的二维码，请重新扫描...");
+            mZXingView.beginSpot();
             Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
             return;
         }

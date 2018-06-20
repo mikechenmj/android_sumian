@@ -36,6 +36,7 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
 
         fun getLaunchIntent(context: Context, advisoryId: Int): Intent {
             val intent = Intent(context, AdvisoryDetailActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             val bundle = Bundle()
             bundle.putInt(ARGS_ADVISORY_ID, advisoryId)
             intent.putExtras(bundle)
@@ -90,7 +91,6 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
         refresh.hideRefreshAnim()
     }
 
-
     @Suppress("DEPRECATION")
     @SuppressLint("SetTextI18n")
     override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
@@ -136,7 +136,7 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     }
 
     override fun onClick(v: View?) {
-        if (mAdvisory.status == 2 || mAdvisory.status == 3 || mAdvisory.status == 4) {
+        if (mAdvisory.last_count == 0 || mAdvisory.status == 2 || mAdvisory.status == 3 || mAdvisory.status == 4) {
             MainActivity.launch(this, 1)
         } else {
             PublishAdvisoryRecordActivity.launch(this, mAdvisory)

@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.bumptech.glide.request.RequestOptions
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.media.activity.LargeImageActivity
 import com.sumian.common.widget.FlowLayout
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.UserProfile
@@ -137,6 +138,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                     val rootView = LayoutInflater.from(itemView.context).inflate(R.layout.lay_item_advisory_imag, mFlowLayout, false)
 
                     val image = rootView.findViewById<QMUIRadiusImageView>(R.id.iv)
+                    image.setOnClickListener { v -> LargeImageActivity.show(v?.context, img) }
 
                     load(img, RequestOptions.errorOf(R.mipmap.ic_preview_split_graph).fitCenter().override(getAppContext().resources.getDimensionPixelSize(R.dimen.space_80), getAppContext().resources.getDimensionPixelSize(R.dimen.space_80)), image)
 
