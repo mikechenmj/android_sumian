@@ -1,7 +1,9 @@
 package com.sumian.sleepdoctor.base;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -9,6 +11,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.improve.widget.webview.AndroidBug5497Workaround;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -27,6 +30,12 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
 
     @BindView(R.id.sm_webview_container)
     protected SWebViewLayout mSWebViewLayout;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AndroidBug5497Workaround.assistActivity(this);
+    }
 
     @Override
     protected int getLayoutId() {
