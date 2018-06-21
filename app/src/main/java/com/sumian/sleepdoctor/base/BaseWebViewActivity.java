@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.improve.widget.webview.AndroidBug5497Workaround;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
+import com.sumian.sleepdoctor.utils.ScreenUtil;
+import com.sumian.sleepdoctor.utils.SoftKeyBoardListener;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
@@ -23,23 +25,32 @@ import butterknife.BindView;
  * on 2018/5/25 10:03
  * desc:
  **/
-public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener {
+public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener{
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
+    @BindView(R.id.root_view)
+    View mRootView;
     @BindView(R.id.sm_webview_container)
     protected SWebViewLayout mSWebViewLayout;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AndroidBug5497Workaround.assistActivity(this);
-    }
+    private SoftKeyBoardListener mSoftKeyBoardListener;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main_base_webview;
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        monitorKeyboard();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSoftKeyBoardListener.release();
     }
 
     @Override
@@ -132,5 +143,25 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     public void onReceiveTitle(WebView webView, String title) {
         mTitleBar.setTitle(title);
+    }
+
+    private void monitorKeyboard() {
+        mSoftKeyBoardListener = SoftKeyBoardListener.registerListener(this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+                updateRootViewHeight(ScreenUtil.getScreenHeight(mActivity) - height);
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                updateRootViewHeight(ScreenUtil.getScreenHeight(mActivity));
+            }
+        });
+    }
+
+    private void updateRootViewHeight(int height) {
+        ViewGroup.LayoutParams layoutParams = mRootView.getLayoutParams();
+        layoutParams.height = height;
+        mRootView.requestLayout();
     }
 }
