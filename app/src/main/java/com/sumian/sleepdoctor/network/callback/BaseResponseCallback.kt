@@ -61,9 +61,15 @@ abstract class BaseResponseCallback<T> : Callback<T> {
 
     override fun onFailure(call: Call<T>?, t: Throwable?) {
         onFinish()
-        t?.printStackTrace()
-        onFailure(ErrorResponse(0, t?.message
-                ?: App.getAppContext().getString(R.string.error_request_failed_hint)))
+        t?.let {
+
+            it.printStackTrace()
+            if ((it.message === "Socket closed" || it.message === "Canceled")) {
+                return
+            }
+            onFailure(ErrorResponse(0, it.message
+                    ?: App.getAppContext().getString(R.string.error_request_failed_hint)))
+        }
     }
 
     private fun getErrorResponseFromErrorBody(code: Int, errorBody: ResponseBody): ErrorResponse? {

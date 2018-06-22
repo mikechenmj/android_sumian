@@ -156,6 +156,7 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
                 MainActivity.launch(this, 1)
             } else {
                 PublishAdvisoryRecordActivity.launch(this, mAdvisory)
+                finish()
             }
         }
     }

@@ -18,11 +18,11 @@ import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
-import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.improve.doctor.activity.DoctorServiceWebActivity;
+import com.sumian.sleepdoctor.improve.doctor.base.BasePagerFragment;
 import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
@@ -48,7 +48,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class RecordFragment extends BaseFragment implements CalendarView.OnDateClickListener, ActivityLauncher {
+public class RecordFragment extends BasePagerFragment implements CalendarView.OnDateClickListener, ActivityLauncher {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 2;
@@ -153,6 +153,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     private void showServiceList(DoctorServiceList response) {
         List<DoctorService> serviceList = response.getServiceList();
         boolean hasSleepReportService = false;
+        mServiceContainer.removeAllViewsInLayout();
         for (DoctorService doctorService : serviceList) {
             hasSleepReportService = doctorService.getLast_count() > 0;
             if (doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT && !hasSleepReportService) {
@@ -180,6 +181,12 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
 
     private void launchFillSleepRecordActivity(long time) {
         FillSleepRecordActivity.launchForResult(this, time, REQUEST_CODE_FILL_SLEEP_RECORD);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        queryServices();
     }
 
     private void showDatePopup(boolean show) {
@@ -329,5 +336,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void selectTab(int position) {
+        queryServices();
     }
 }

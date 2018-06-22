@@ -85,6 +85,11 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        this.mPresenter.refreshAdvisories()
+    }
+
     override fun onBegin() {
         super.onBegin()
         refresh.showRefreshAnim()
@@ -100,7 +105,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
             empty_error_view.invalidAdvisoryError()
             recycler.visibility = View.GONE
         } else {
-            mListAdapter.addAll(advisories)
+            mListAdapter.resetItem(advisories)
             recycler.visibility = View.VISIBLE
             empty_error_view.hide()
         }
@@ -118,10 +123,14 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
     }
 
     override fun onRefreshAdvisoriesSuccess(advisories: List<Advisory>) {
-        if (advisories.isEmpty()) return
-        mListAdapter.resetItem(advisories)
-        recycler.visibility = View.VISIBLE
-        empty_error_view.hide()
+        mListAdapter.clear()
+        if (advisories.isEmpty()) {
+            empty_error_view.invalidAdvisoryError()
+        } else {
+            mListAdapter.resetItem(advisories)
+            recycler.visibility = View.VISIBLE
+            empty_error_view.hide()
+        }
     }
 
 }
