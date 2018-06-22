@@ -67,8 +67,9 @@ public class AccountViewModel extends AndroidViewModel {
         Token token = getToken();
         token.is_new = false;
         UserProfile userProfile = getUserProfile();
-        userProfile.doctor_id = doctor.getId();
-        userProfile.bound_at = doctor.getId();
+        if (doctor != null) {
+            userProfile.doctor_id = doctor.getId();
+        }
         userProfile.doctor = doctor;
         token.user = userProfile;
         updateUserProfile(userProfile);

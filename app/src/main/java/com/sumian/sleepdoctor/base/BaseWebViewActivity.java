@@ -11,7 +11,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.improve.widget.webview.AndroidBug5497Workaround;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -34,7 +33,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AndroidBug5497Workaround.assistActivity(this);
+        //AndroidBug5497Workaround.assistActivity(this);
     }
 
     @Override

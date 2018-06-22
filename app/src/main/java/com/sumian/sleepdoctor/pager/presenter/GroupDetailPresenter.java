@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.pager.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
@@ -18,7 +20,7 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
     private GroupDetailContract.View mView;
 
 
-    public GroupDetailPresenter(GroupDetailContract.View view) {
+    private GroupDetailPresenter(GroupDetailContract.View view) {
         view.setPresenter(this);
         mView = view;
     }
@@ -43,10 +45,10 @@ public class GroupDetailPresenter implements GroupDetailContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
-                        mView.onFailure(errorResponse.message);
-                        if (errorResponse.status_code == 404) {
-                            mView.onFailure(errorResponse.message);
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.getMessage());
+                        if (errorResponse.getCode() == 404) {
+                            mView.onFailure(errorResponse.getMessage());
                         }
                     }
 

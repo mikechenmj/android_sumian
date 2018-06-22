@@ -26,9 +26,9 @@ import com.sumian.sleepdoctor.onlinereport.OnlineReport
 import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog
+import kotlinx.android.synthetic.main.activity_main_publish_advisory_record.*
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlinx.android.synthetic.main.activity_main_publish_advisory_record.*
 
 /**
  *
@@ -135,6 +135,8 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
                     if (!reports.isEmpty()) {
                         tv_report_count.text = "已选择 ${reports.size} 份"
                         tv_report_count.visibility = View.VISIBLE
+                    } else {
+                        tv_report_count.visibility = View.INVISIBLE
                     }
                 }
             }
@@ -198,7 +200,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
     override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
         this.mPresenter.getLastAdvisory()
-        AdvisoryDetailActivity.launch(this, advisoryId = advisory.id)
+        AdvisoryDetailActivity.launch(this, advisory)
         finish()
     }
 

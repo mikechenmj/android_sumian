@@ -72,13 +72,12 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse?) {
+            override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
-                mView?.onGetAdvisoriesFailed(errorResponse?.message!!)
+                mView?.onGetAdvisoriesFailed(errorResponse.message)
             }
 
             override fun onFinish() {
-                super.onFinish()
                 mView?.onFinish()
             }
 

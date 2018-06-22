@@ -18,6 +18,8 @@ class DoctorContract {
 
         fun onGetDoctorInfoFailed(error: String)
 
+        fun onNotBindDoctor()
+
     }
 
     interface Presenter : BasePresenter<Any> {

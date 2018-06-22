@@ -119,8 +119,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
-                        ToastUtils.showShort(errorResponse.message);
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                        ToastUtils.showShort(errorResponse.getMessage());
                     }
                 });
     }
@@ -278,8 +278,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             }
 
             @Override
-            protected void onFailure(ErrorResponse errorResponse) {
-                ToastUtils.showShort(errorResponse.message);
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                ToastUtils.showShort(errorResponse.getMessage());
             }
 
         });
@@ -348,8 +348,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                             }
 
                             @Override
-                            protected void onFailure(ErrorResponse errorResponse) {
-                                bindSocialitesFailed(errorResponse.message);
+                            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                                bindSocialitesFailed(errorResponse.getMessage());
                             }
 
                         });
@@ -393,8 +393,8 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
-                        LogUtils.d(errorResponse.message);
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                        LogUtils.d(errorResponse.getMessage());
                     }
 
                     @Override

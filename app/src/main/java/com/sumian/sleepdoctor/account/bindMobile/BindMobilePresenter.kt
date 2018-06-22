@@ -32,7 +32,7 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
 
     override fun bindOpenSocial(mobile: String, captcha: String, socialType: Int, socialInfo: String) {
 
-        mView!!.onBegin()
+        mView?.onBegin()
 
         val map = mutableMapOf<String, Any>()
 
@@ -48,17 +48,17 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
 
                     override fun onSuccess(response: Token?) {
                         AppManager.getAccountViewModel().updateToken(response)
-                        mView!!.bindOpenSocialSuccess(response)
+                        mView?.bindOpenSocialSuccess(response)
                     }
 
-                    override fun onFailure(errorResponse: ErrorResponse?) {
-                        mView!!.onFailure(errorResponse?.message)
-                        ToastUtils.showShort(errorResponse?.message)
+                    override fun onFailure(errorResponse: ErrorResponse) {
+                        mView?.onFailure(errorResponse.message)
+                        ToastUtils.showShort(errorResponse.message)
                     }
 
                     override fun onFinish() {
                         super.onFinish()
-                        mView!!.onFinish()
+                        mView?.onFinish()
                     }
 
                 })
@@ -67,20 +67,20 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
 
     override fun doSendCaptcha(mobile: String) {
 
-        mView!!.onBegin()
+        mView?.onBegin()
 
         AppManager.getHttpService().getCaptcha(mobile).enqueue(object : BaseResponseCallback<Unit>() {
-            override fun onFailure(errorResponse: ErrorResponse?) {
-                mView!!.onFailure(errorResponse?.message)
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onFailure(errorResponse.message)
             }
 
             override fun onSuccess(response: Unit?) {
-                mView!!.onSendCaptchaSuccess()
+                mView?.onSendCaptchaSuccess()
             }
 
             override fun onFinish() {
                 super.onFinish()
-                mView!!.onFinish()
+                mView?.onFinish()
             }
 
         })

@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.account.userProfile;
 
+import android.support.annotation.NonNull;
+
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
@@ -54,8 +56,8 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
             }
 
             @Override
-            protected void onFailure(ErrorResponse errorResponse) {
-                mView.onFailure(errorResponse.message);
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.getMessage());
             }
 
             @Override

@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.sumian.sleepdoctor.BuildConfig
 import com.sumian.sleepdoctor.network.api.DoctorApi
 import com.sumian.sleepdoctor.network.interceptor.AuthInterceptor
+import com.sumian.sleepdoctor.network.interceptor.StatusCodeInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -33,6 +34,7 @@ class NetEngine {
                 .addInterceptor(HttpLoggingInterceptor()
                         .setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE))
                 .addInterceptor(AuthInterceptor.create())
+                .addInterceptor(StatusCodeInterceptor.create())
                 .build()
 
         val retrofit = Retrofit.Builder()

@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.pager.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import com.pingplusplus.android.Pingpp;
@@ -77,8 +78,8 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
-                        mView.onFailure(errorResponse.message);
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.getMessage());
                     }
 
                     @Override
@@ -103,9 +104,9 @@ public class PayGroupPresenter implements PayGroupContract.Presenter {
             }
 
             @Override
-            protected void onFailure(ErrorResponse errorResponse) {
-                mView.onFailure(errorResponse.message);
-                mView.onCheckOrderPayIsInvalid(errorResponse.message);
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.getMessage());
+                mView.onCheckOrderPayIsInvalid(errorResponse.getMessage());
             }
 
             @Override

@@ -18,11 +18,10 @@ class AuthInterceptor private constructor() : Interceptor {
 
     companion object {
 
-        // private val TAG = AuthInterceptor::class.java.simpleName
-
         fun create(): AuthInterceptor {
             return AuthInterceptor()
         }
+
     }
 
     private val userAgent: String
@@ -46,12 +45,10 @@ class AuthInterceptor private constructor() : Interceptor {
                 }
                 i++
             }
-            // Log.e(TAG, "getUserAgent: ------>" + sb.toString());
             return sb.toString()
         }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-
         val request = chain
                 .request()
                 .newBuilder()

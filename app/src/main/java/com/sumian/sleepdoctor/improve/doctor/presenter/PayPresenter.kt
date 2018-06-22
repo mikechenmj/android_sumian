@@ -86,7 +86,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
         mView?.onBegin()
 
         AppManager.getHttpService().getOrderDetail(mOrderNo!!).enqueue(object : BaseResponseCallback<OrderDetail>() {
-            override fun onSuccess(response: OrderDetail) {
+            override fun onSuccess(response: OrderDetail?) {
                 mView?.onCheckOrderPayIsOk()
             }
 

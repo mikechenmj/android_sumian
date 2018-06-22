@@ -1,5 +1,7 @@
 package com.sumian.sleepdoctor.tab.presenter;
 
+import android.support.annotation.NonNull;
+
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.app.App;
@@ -93,8 +95,8 @@ public class GroupPresenter implements GroupContract.Presenter {
             }
 
             @Override
-            protected void onFailure(ErrorResponse errorResponse) {
-                mView.onFailure(errorResponse.message);
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.getMessage());
                 List<GroupDetail<UserProfile, UserProfile>> groupDetails = AppManager.getGroupViewModel().getGroupsLiveData().getValue();
                 if (groupDetails == null || !groupDetails.isEmpty()) {
                     mView.onShowErrorGroupView();

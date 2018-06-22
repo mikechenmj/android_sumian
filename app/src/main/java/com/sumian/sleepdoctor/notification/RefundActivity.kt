@@ -47,7 +47,7 @@ class RefundActivity : BaseActivity<BasePresenter<Any>>() {
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
-        title_bar.setOnBackClickListener({ finish() })
+        title_bar.setOnBackClickListener { finish() }
     }
 
     override fun backable(): Boolean {
@@ -62,7 +62,7 @@ class RefundActivity : BaseActivity<BasePresenter<Any>>() {
                 setOrderInfo(response)
             }
 
-            override fun onFailure(errorResponse: ErrorResponse?) {
+            override fun onFailure(errorResponse: ErrorResponse) {
             }
         })
     }

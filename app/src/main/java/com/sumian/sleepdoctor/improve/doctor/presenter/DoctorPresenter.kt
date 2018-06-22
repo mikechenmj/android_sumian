@@ -39,8 +39,14 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
         mCalls?.add(doctorInfoCall)
 
         doctorInfoCall.enqueue(object : BaseResponseCallback<Doctor>() {
-            override fun onFailure(errorResponse: ErrorResponse?) {
-                mView?.onFailure(errorResponse?.message)
+            override fun onFailure(errorResponse: ErrorResponse) {
+                if (errorResponse.code == 1) {
+                    AppManager.getAccountViewModel().updateBindDoctor(null)
+                    AppManager.getDoctorViewModel().notifyDoctor(null)
+                    mView?.onNotBindDoctor()
+                } else {
+                    mView?.onGetDoctorInfoFailed(errorResponse.message)
+                }
             }
 
             override fun onSuccess(response: Doctor?) {
@@ -64,8 +70,8 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
         mCalls?.add(doctorInfoCall)
 
         doctorInfoCall.enqueue(object : BaseResponseCallback<Doctor>() {
-            override fun onFailure(errorResponse: ErrorResponse?) {
-                mView?.onFailure(errorResponse?.message)
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetDoctorInfoFailed(errorResponse.message)
             }
 
             override fun onSuccess(response: Doctor?) {

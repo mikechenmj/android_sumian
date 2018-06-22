@@ -43,12 +43,11 @@ class RecordPresenter private constructor(view: RecordContract.View) : RecordCon
                 mView?.onGetAdvisoryDetailSuccess(response!!)
             }
 
-            override fun onFailure(errorResponse: ErrorResponse?) {
-                mView?.onGetAdvisoryDetailFailed(errorResponse?.message!!)
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetAdvisoryDetailFailed(errorResponse.message)
             }
 
             override fun onFinish() {
-                super.onFinish()
                 mView?.onFinish()
             }
 

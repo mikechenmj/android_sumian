@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.account.login;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -53,8 +54,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
-                        mView.onFailure(errorResponse.message);
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.getMessage());
                     }
 
                     @Override
@@ -81,8 +82,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
-                        mView.onFailure(errorResponse.message);
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                        mView.onFailure(errorResponse.getMessage());
                     }
 
                     @Override
@@ -130,10 +131,10 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            protected void onFailure(ErrorResponse errorResponse) {
-                mView.onFailure(errorResponse.message);
-                if (errorResponse.status_code == 404) {
-                    mView.onNotBindCallback(errorResponse.message, mOpenUserInfo);
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.getMessage());
+                if (errorResponse.getCode() == 404) {
+                    mView.onNotBindCallback(errorResponse.getMessage(), mOpenUserInfo);
                 }
             }
 

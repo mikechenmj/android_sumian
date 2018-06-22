@@ -28,6 +28,8 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
 
     private val TAG: String = DoctorFragment::class.java.javaClass.simpleName
 
+    private var mIsInit = false
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_doctor
     }
@@ -40,6 +42,8 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
 
     override fun initData() {
         super.initData()
+
+        mIsInit = true
 
         if (AppManager.getAccountViewModel()?.userProfile?.isBindDoctor!!) {
             request_scan_qr_code_view.hide()
@@ -60,14 +64,20 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
 
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
-                onGetDoctorInfoSuccess(doctor)
+                if (doctor == null) {
+                    doctor_detail_layout.hide()
+                    request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
+                } else
+                    onGetDoctorInfoSuccess(doctor)
             }
         })
     }
 
     override fun onResume() {
         super.onResume()
-        onRefresh()
+        if (!mIsInit) {
+            onRefresh()
+        }
     }
 
     override fun initPresenter() {
@@ -92,6 +102,7 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
 
     override fun onFinish() {
         super.onFinish()
+        mIsInit = false
         doctor_detail_layout.hideRefreshAnim()
     }
 
@@ -100,7 +111,14 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
     }
 
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {
-        doctor_detail_layout.invalidDoctor(doctor)
+        doctor?.let {
+            doctor_detail_layout.invalidDoctor(doctor)
+        }
+    }
+
+    override fun onNotBindDoctor() {
+        doctor_detail_layout.hide()
+        request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
     }
 
     override fun onGetDoctorInfoFailed(error: String) {

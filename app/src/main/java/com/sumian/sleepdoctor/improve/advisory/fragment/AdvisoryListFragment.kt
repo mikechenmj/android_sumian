@@ -79,7 +79,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
     override fun onItemClick(position: Int, itemId: Long) {
         val advisory = mListAdapter.getItem(position)
         if (mAdvisoryType == Advisory.USED_TYPE) {
-            AdvisoryDetailActivity.launch(context!!, advisory.id)
+            AdvisoryDetailActivity.launch(context!!, advisory)
         } else {
             PublishAdvisoryRecordActivity.launch(context!!, advisory)
         }

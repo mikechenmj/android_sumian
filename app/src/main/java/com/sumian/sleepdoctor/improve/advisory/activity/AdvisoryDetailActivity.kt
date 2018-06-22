@@ -29,9 +29,11 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
 
     companion object {
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
+        private const val ARGS_ADVISORY = "com.sumian.sleepdoctor.extras.advisory"
 
-        fun launch(context: Context, advisoryId: Int) {
-            show(context, getLaunchIntent(context, advisoryId))
+        fun launch(context: Context, advisory: Advisory) {
+            val extras = Bundle().apply { putParcelable(ARGS_ADVISORY, advisory) }
+            show(context, AdvisoryDetailActivity::class.java, extras)
         }
 
         fun getLaunchIntent(context: Context, advisoryId: Int): Intent {
@@ -45,13 +47,15 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     }
 
     private var mAdvisoryId: Int = 0
+
     private lateinit var mAdapter: RecordAdapter
-
-    private lateinit var mAdvisory: Advisory
-
+    private var mAdvisory: Advisory? = null
 
     override fun initBundle(bundle: Bundle?): Boolean {
-        this.mAdvisoryId = bundle?.getInt(ARGS_ADVISORY_ID, 0)!!
+        bundle?.let {
+            this.mAdvisory = it.getParcelable(ARGS_ADVISORY)
+            this.mAdvisoryId = it.getInt(ARGS_ADVISORY_ID, 0)
+        }
         return super.initBundle(bundle)
     }
 
@@ -78,7 +82,15 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
 
     override fun initData() {
         super.initData()
-        mPresenter.getAdvisoryDetail(mAdvisoryId)
+        mAdvisory?.let {
+            onGetAdvisoryDetailSuccess(advisory = it)
+            mPresenter.getAdvisoryDetail(it.id)
+        }
+
+        if (mAdvisory == null) {
+            mPresenter.getAdvisoryDetail(mAdvisoryId)
+        }
+
     }
 
     override fun onBegin() {
@@ -95,32 +107,35 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     @SuppressLint("SetTextI18n")
     override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
-        //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
-        when (advisory.status) {
-            2, 3, 4 -> {
-                tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
-                tv_bottom_notification.text = getString(R.string.continue_ask_question)
-            }
-            else -> {
-                if (advisory.last_count == 0) {
+        mAdvisory?.let {
+            //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
+            when (it.status) {
+                2, 3, 4 -> {
                     tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
                     tv_bottom_notification.text = getString(R.string.continue_ask_question)
-                } else {
-                    tv_top_notification.setBackgroundColor(resources.getColor(R.color.b5_color))
-                    tv_bottom_notification.text = "追问 (剩余${advisory.last_count}机会)"
+                }
+                else -> {
+                    if (it.last_count == 0) {
+                        tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
+                        tv_bottom_notification.text = getString(R.string.continue_ask_question)
+                    } else {
+                        tv_top_notification.setBackgroundColor(resources.getColor(R.color.b5_color))
+                        tv_bottom_notification.text = "追问 (剩余${it.last_count}机会)"
+                    }
                 }
             }
+            tv_top_notification.text = it.remind_description
+            tv_top_notification.visibility = View.VISIBLE
+            tv_bottom_notification.visibility = View.VISIBLE
+            it.doctor?.let {
+                this.mAdapter.setDoctor(it)
+            }
+
+            it.user?.let {
+                this.mAdapter.setUser(it)
+            }
+            this.mAdapter.resetItem(advisory.records)
         }
-        tv_top_notification.text = advisory.remind_description
-        tv_top_notification.visibility = View.VISIBLE
-        tv_bottom_notification.visibility = View.VISIBLE
-        if (advisory.doctor != null) {
-            this.mAdapter.setDoctor(advisory.doctor!!)
-        }
-        if (advisory.user != null) {
-            this.mAdapter.setUser(advisory.user!!)
-        }
-        this.mAdapter.resetItem(advisory.records)
     }
 
     override fun onGetAdvisoryDetailFailed(error: String) {
@@ -136,10 +151,12 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     }
 
     override fun onClick(v: View?) {
-        if (mAdvisory.last_count == 0 || mAdvisory.status == 2 || mAdvisory.status == 3 || mAdvisory.status == 4) {
-            MainActivity.launch(this, 1)
-        } else {
-            PublishAdvisoryRecordActivity.launch(this, mAdvisory)
+        mAdvisory?.let {
+            if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
+                MainActivity.launch(this, 1)
+            } else {
+                PublishAdvisoryRecordActivity.launch(this, mAdvisory)
+            }
         }
     }
 
