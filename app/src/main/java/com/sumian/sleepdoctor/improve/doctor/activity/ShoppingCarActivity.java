@@ -75,7 +75,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
 
     private DoctorService mDoctorService;
 
-    public static void launch(Context context, DoctorService doctorService) {
+    public static void show(Context context, DoctorService doctorService) {
         Bundle extras = new Bundle();
         extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService);
         show(context, ShoppingCarActivity.class, extras);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -79,7 +80,6 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
     private ActionLoadingDialog mActionLoadingDialog;
     private boolean mNeedScrollToBottom;
     private long mInitTime;
-    private boolean mHasSleepReportService;
 
     @Override
     protected int getLayoutId() {
@@ -144,7 +144,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
             }
 
             @Override
-            protected void onFailure(ErrorResponse errorResponse) {
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
 
             }
         });
@@ -152,10 +152,10 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
 
     private void showServiceList(DoctorServiceList response) {
         List<DoctorService> serviceList = response.getServiceList();
-        mHasSleepReportService = false;
+        boolean hasSleepReportService = false;
         for (DoctorService doctorService : serviceList) {
-            mHasSleepReportService = doctorService.getLast_count() > 0;
-            if (doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT && !mHasSleepReportService) {
+            hasSleepReportService = doctorService.getLast_count() > 0;
+            if (doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT && !hasSleepReportService) {
                 DoctorServiceItemView doctorServiceItemView = new DoctorServiceItemView(getContext());
                 doctorServiceItemView.setTitle(doctorService.getName());
                 doctorServiceItemView.setDesc(doctorService.getNot_buy_description());
@@ -164,7 +164,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                 mServiceContainer.addView(doctorServiceItemView);
             }
         }
-        mSleepRecordView.setForceShowDoctorAdvice(mHasSleepReportService);
+        mSleepRecordView.setForceShowDoctorAdvice(hasSleepReportService);
     }
 
     @Override
@@ -230,7 +230,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
 
                     }
                 });
@@ -293,7 +293,7 @@ public class RecordFragment extends BaseFragment implements CalendarView.OnDateC
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
                         updateSleepRecordView(null);
                     }
 

@@ -29,12 +29,12 @@ import java.util.Objects;
 public class DoctorServiceWebActivity extends BaseWebViewActivity {
 
     private static final String EXTRA_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
-    private static final String EXTRA_SCAN_2_BIND = "com.sumian.doctorsleep.extra.scan.2.bind";
+    private static final String EXTRA_FROM_RECORD = "com.sumian.doctorsleep.extra.from.record";
 
     private DoctorService mDoctorService;
     private BroadcastReceiver mBroadcastReceiver;
 
-    private boolean mIsScan2Bind;
+    private boolean mIsFromRecord;
 
     public static void show(Context context, DoctorService doctorService) {
         Bundle extras = new Bundle();
@@ -42,10 +42,10 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
         show(context, DoctorServiceWebActivity.class, extras);
     }
 
-    public static void show(Context context, DoctorService doctorService, boolean isScan2Bind) {
+    public static void show(Context context, DoctorService doctorService, boolean isFromRecord) {
         Bundle extras = new Bundle();
         extras.putParcelable(EXTRA_DOCTOR_SERVICE, doctorService);
-        extras.putBoolean(EXTRA_SCAN_2_BIND, isScan2Bind);
+        extras.putBoolean(EXTRA_FROM_RECORD, isFromRecord);
         show(context, DoctorServiceWebActivity.class, extras);
     }
 
@@ -53,7 +53,7 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     protected boolean initBundle(Bundle bundle) {
         if (bundle != null) {
             this.mDoctorService = bundle.getParcelable(EXTRA_DOCTOR_SERVICE);
-            this.mIsScan2Bind = bundle.getBoolean(EXTRA_SCAN_2_BIND, false);
+            this.mIsFromRecord = bundle.getBoolean(EXTRA_FROM_RECORD, false);
         }
         return super.initBundle(bundle);
     }
@@ -115,13 +115,13 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
                 SBridgeResult<DoctorService> sBridgeResult = JsonUtil.fromJson(data, new TypeToken<SBridgeResult<DoctorService>>() {
                 }.getType());
                 if (sBridgeResult.code == 0) {//立即去购买
-                    ShoppingCarActivity.launch(DoctorServiceWebActivity.this, sBridgeResult.result);
+                    ShoppingCarActivity.show(DoctorServiceWebActivity.this, sBridgeResult.result);
                 } else {//未绑定医生
-                    if (mIsScan2Bind) {
-                        ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, ScanDoctorQrCodeActivity.class);
+                    if (mIsFromRecord) {
+                        ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, mDoctorService, mIsFromRecord);
                     } else {
                         String url = "doctorsleep://doctor?id=" + AppManager.getAccountViewModel().getUserProfile().doctor_id;
-                        DoctorWebActivity.launch(DoctorServiceWebActivity.this, url);
+                        DoctorWebActivity.show(DoctorServiceWebActivity.this, url);
                     }
                 }
             }

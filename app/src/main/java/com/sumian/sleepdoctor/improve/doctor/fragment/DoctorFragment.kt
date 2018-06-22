@@ -29,6 +29,7 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
     private val TAG: String = DoctorFragment::class.java.javaClass.simpleName
 
     private var mIsInit = false
+    private var mIsAutoRefresh = false
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_doctor
@@ -76,6 +77,7 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
     override fun onResume() {
         super.onResume()
         if (!mIsInit) {
+            if (mIsAutoRefresh) return
             onRefresh()
         }
     }
@@ -103,6 +105,7 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
     override fun onFinish() {
         super.onFinish()
         mIsInit = false
+        mIsAutoRefresh = false
         doctor_detail_layout.hideRefreshAnim()
     }
 
@@ -113,6 +116,7 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {
         doctor?.let {
             doctor_detail_layout.invalidDoctor(doctor)
+            request_scan_qr_code_view.setFragment(null).hide()
         }
     }
 
@@ -130,18 +134,12 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
     }
 
     override fun onRefresh() {
-        if (AppManager.getAccountViewModel()?.userProfile?.isBindDoctor!!) {
-            request_scan_qr_code_view.hide()
-            val doctor = AppManager.getAccountViewModel()?.userProfile?.doctor
-            doctor_detail_layout.invalidDoctor(doctor)
-            mPresenter.getBindDoctorInfo()
-        } else {
-            doctor_detail_layout.hide()
-            request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
-        }
+        mIsAutoRefresh = true
+        mPresenter.getBindDoctorInfo()
     }
 
     override fun selectTab(position: Int) {
+        if (mIsAutoRefresh) return
         onRefresh()
     }
 

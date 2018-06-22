@@ -54,15 +54,15 @@ public class SWebView extends BridgeWebView {
 
     public SWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView(context);
+        initView();
     }
 
-    private void initView(Context context) {
+    private void initView() {
         if (BuildConfig.DEBUG) {
             setWebContentsDebuggingEnabled(true);
         }
 
-        initWebSettings(context);
+        initWebSettings();
 
         setDefaultHandler(new DefaultHandler());
         setWebChromeClient(new WVChromeClient());
@@ -70,7 +70,7 @@ public class SWebView extends BridgeWebView {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void initWebSettings(Context context) {
+    private void initWebSettings() {
         WebSettings webSettings = this.getSettings();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
@@ -106,7 +106,7 @@ public class SWebView extends BridgeWebView {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            Log.e(TAG, "onProgressChanged: ---------->progress=" + newProgress);
+            Log.d(TAG, "onProgressChanged: ---------->progress=" + newProgress);
             if (newProgress == 100 && mErrorCode != -1) {
                 if (mWebViewListener != null) {
                     mWebViewListener.onRequestErrorCallback(view, mErrorCode);

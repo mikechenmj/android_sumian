@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
@@ -14,6 +15,7 @@ import android.view.View;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.qr.QrCodeView;
 
 import java.util.List;
@@ -33,10 +35,33 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
 
     private static final String TAG = ScanDoctorQrCodeActivity.class.getSimpleName();
 
+    public static final String EXTRAS_FROM_RECORD = "com.sumian.sleepdoctor.extras.from.record";
+    public static final String EXTRAS_DOCTOR_SERVICE = "com.sumian.sleepdoctor.extras.doctor.service";
+
     @BindView(R.id.zxing_view)
     QrCodeView mZXingView;
 
     private BroadcastReceiver mBroadcastReceiver;
+
+    private boolean mIsFromRecord;
+    private DoctorService mDoctorService;
+
+
+    public static void show(Context context, DoctorService doctorService, boolean isFromRecord) {
+        Bundle extras = new Bundle();
+        extras.putBoolean(EXTRAS_FROM_RECORD, isFromRecord);
+        extras.putParcelable(EXTRAS_DOCTOR_SERVICE, doctorService);
+        show(context, ScanDoctorQrCodeActivity.class, extras);
+    }
+
+    @Override
+    protected boolean initBundle(Bundle bundle) {
+        if (bundle != null) {
+            this.mIsFromRecord = bundle.getBoolean(EXTRAS_FROM_RECORD, false);
+            this.mDoctorService = bundle.getParcelable(EXTRAS_DOCTOR_SERVICE);
+        }
+        return super.initBundle(bundle);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -53,7 +78,6 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
     private void registerFinishBroadcastReceiver() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY);
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -128,7 +152,7 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
             Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
             return;
         }
-        DoctorWebActivity.launch(this, uriQuery);
+        DoctorWebActivity.show(this, uriQuery, mDoctorService, mIsFromRecord);
     }
 
     @Override

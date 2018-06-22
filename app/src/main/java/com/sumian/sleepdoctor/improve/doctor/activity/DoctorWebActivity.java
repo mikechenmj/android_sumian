@@ -10,6 +10,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
+import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.doctor.contract.BindDoctorContract;
 import com.sumian.sleepdoctor.improve.doctor.presenter.BindDoctorPresenter;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
@@ -30,12 +31,34 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
     private static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
 
     private String mArgUrl;
+    private boolean mIsFromRecord;
+    private DoctorService mDoctorService;
 
-    public static void launch(Context context, String url) {
+    public static void show(DoctorServiceWebActivity context, String url) {
         Bundle extras = new Bundle();
         //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
         extras.putString(ARGS_URL, url);
         DoctorWebActivity.show(context, DoctorWebActivity.class, extras);
+    }
+
+    public static void show(Context context, String url, DoctorService doctorService, boolean isFromRecord) {
+        Bundle extras = new Bundle();
+        //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
+        extras.putString(ARGS_URL, url);
+        extras.putParcelable(ScanDoctorQrCodeActivity.EXTRAS_DOCTOR_SERVICE, doctorService);
+        extras.putBoolean(ScanDoctorQrCodeActivity.EXTRAS_FROM_RECORD, isFromRecord);
+        DoctorWebActivity.show(context, DoctorWebActivity.class, extras);
+    }
+
+
+    @Override
+    protected boolean initBundle(Bundle bundle) {
+        if (bundle != null) {
+            this.mIsFromRecord = bundle.getBoolean(ScanDoctorQrCodeActivity.EXTRAS_FROM_RECORD, false);
+            this.mArgUrl = bundle.getString(ARGS_URL);
+            this.mDoctorService = bundle.getParcelable(ScanDoctorQrCodeActivity.EXTRAS_DOCTOR_SERVICE);
+        }
+        return super.initBundle(bundle);
     }
 
     @Override
@@ -46,12 +69,6 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
     @Override
     protected void initData() {
         super.initData();
-    }
-
-    @Override
-    protected boolean initBundle(Bundle bundle) {
-        mArgUrl = bundle.getString(ARGS_URL);
-        return super.initBundle(bundle);
     }
 
     @Override
@@ -98,7 +115,11 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
 
     @Override
     public void onBindDoctorSuccess(@NotNull String message) {
-        MainActivity.launch(this, 1);
+        if (mIsFromRecord) {
+            DoctorServiceWebActivity.show(this, mDoctorService, true);
+        } else {
+            MainActivity.launch(this, 1);
+        }
     }
 
     @Override
