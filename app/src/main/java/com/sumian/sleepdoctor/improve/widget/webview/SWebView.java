@@ -81,7 +81,16 @@ public class SWebView extends BridgeWebView {
         this.mErrorCode = -1;
         postDelayed(mDismissRunnable, DEFAULT_DELAY_MILLIS);
         getSettings().setUserAgentString(" Sumian-Doctor-Android");
-        loadUrl(url);
+        postOnAnimation(() -> loadUrl(url));
+    }
+
+    @Override
+    public void destroy() {
+        setWebViewClient(null);
+        WebSettings settings = getSettings();
+        settings.setJavaScriptEnabled(false);
+        removeAllViews();
+        super.destroy();
     }
 
     //进度回调接口
