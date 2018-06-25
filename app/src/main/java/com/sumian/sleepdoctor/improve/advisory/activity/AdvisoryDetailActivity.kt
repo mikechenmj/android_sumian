@@ -83,7 +83,6 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     override fun initData() {
         super.initData()
         mAdvisory?.let {
-            onGetAdvisoryDetailSuccess(advisory = it)
             mPresenter.getAdvisoryDetail(it.id)
         }
 
