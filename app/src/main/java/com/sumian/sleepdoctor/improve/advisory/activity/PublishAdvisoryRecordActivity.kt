@@ -2,19 +2,28 @@
 
 package com.sumian.sleepdoctor.improve.advisory.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.sumian.common.media.SelectImageActivity
+import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
 import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.app.App
+import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BaseActivity
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
@@ -27,6 +36,9 @@ import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog
 import kotlinx.android.synthetic.main.activity_main_publish_advisory_record.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,7 +50,7 @@ import kotlin.collections.ArrayList
  **/
 class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.Presenter>(),
         PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
-        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, ActivityLauncher {
+        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, ActivityLauncher, EasyPermissions.PermissionCallbacks {
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
 
@@ -46,15 +58,23 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     private var mAdvisory: Advisory? = null
 
-    private var mPictures: Array<String>? = null
+    private var mPictures = mutableListOf<String>()
 
     private var mActionLoadingDialog: ActionLoadingDialog? = null
+
+    private var cameraFile: File? = null
+
+    private val imagePathName = "/image/"
+
+    private var mLocalImagePath: String? = null
 
     companion object {
 
         private const val ARGS_ADVISORY = "com.sumian.sleepdoctor.extras.advisory"
 
-        private const val PICK_REPORT_REQUEST_CODE = 0x01
+        private const val PICK_REPORT_CODE_PHOTO = 0x01
+
+        private const val PIC_REQUEST_CODE_CAMERA = 0x02
 
         fun launch(context: Context, advisory: Advisory?) {
             val extras = Bundle()
@@ -112,7 +132,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
 
         lay_report.setOnClickListener {
-            OnlineReportListActivity.launchForPick(this, PICK_REPORT_REQUEST_CODE, mSelectOnlineRecords)
+            OnlineReportListActivity.launchForPick(this, PICK_REPORT_CODE_PHOTO, mSelectOnlineRecords)
         }
 
     }
@@ -121,25 +141,6 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         super.initData()
         if (mAdvisory == null) {
             this.mPresenter.getLastAdvisory()
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (resultCode) {
-            Activity.RESULT_OK -> {
-                if (requestCode == PICK_REPORT_REQUEST_CODE) {// pick reports
-                    val reports: ArrayList<OnlineReport> = data?.getParcelableArrayListExtra("data")!!
-                    mSelectOnlineRecords = reports
-                    if (!reports.isEmpty()) {
-                        tv_report_count.text = "已选择 ${reports.size} 份"
-                        tv_report_count.visibility = View.VISIBLE
-                    } else {
-                        tv_report_count.visibility = View.INVISIBLE
-                    }
-                }
-            }
         }
     }
 
@@ -165,10 +166,10 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
             return
         }
 
-        if (mPictures == null || mPictures?.isEmpty()!!) {
+        if (mPictures.isEmpty()) {
             this.mPresenter.publishAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = getSelectReportIds())
         } else {
-            this.mPresenter.publishPictureAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures?.size!!)
+            this.mPresenter.publishPictureAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures.size)
         }
 
     }
@@ -218,7 +219,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     override fun onGetPublishUploadStsSuccess(successMsg: String) {
         showCenterToast(successMsg)
-        mPresenter.publishImages(mPictures!!, this)
+        mPresenter.publishImages(Util.toPathArray(mPictures)!!, this)
     }
 
     override fun onStartUploadImagesCallback() {
@@ -232,34 +233,115 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
     }
 
+    @AfterPermissionGranted(PIC_REQUEST_CODE_CAMERA)
     override fun onTakePhotoCallback() {
-        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(true).setSelectCount(1).setSelectedImages(mPictures).setCallback {
-            it.forEach { Log.e(TAG, it) }
+        val perms = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
 
-            mPictures = it
+            cameraFile = File(generateImagePath(AppManager.getAccountViewModel().token.user.id.toString(), App.getAppContext()), (AppManager.getAccountViewModel().token.user.id + System.currentTimeMillis()).toString() + ".jpg")
 
-            if (it.isNotEmpty()) {
-                publish_pictures_previewer.set(it)
-                lay_picture_place.visibility = View.GONE
+            cameraFile?.parentFile?.mkdirs()
+
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+            //android 7.1之后的相机处理方式
+            if (Build.VERSION.SDK_INT < 24) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile))
+                startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA)
+            } else {
+                val contentValues = ContentValues(1)
+                contentValues.put(MediaStore.Images.Media.DATA, cameraFile?.absolutePath)
+                val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA)
             }
-
-        }.build())
-
+        } else {
+            // Request one permission
+            EasyPermissions.requestPermissions(this, resources.getString(R.string.str_request_camera_message), PIC_REQUEST_CODE_CAMERA, *perms)
+        }
     }
 
     override fun onPicPictureCallback() {
-        this.mPictures = arrayOf()
         SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(mPictures).setCallback {
-            it.forEach { Log.e(TAG, it) }
-
-            mPictures = it
-
+            it.forEach {
+                Log.e(TAG, it)
+                if (!mPictures.contains(it)) {
+                    mPictures.add(it)
+                }
+            }
             if (it.isNotEmpty()) {
-                publish_pictures_previewer.set(it)
+                publish_pictures_previewer.set(Util.toPathArray(mPictures))
                 lay_picture_place.visibility = View.GONE
             }
-
         }.build())
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                when (requestCode) {
+                    PICK_REPORT_CODE_PHOTO -> {// pick reports
+                        val reports: ArrayList<OnlineReport> = data?.getParcelableArrayListExtra("data")!!
+                        mSelectOnlineRecords = reports
+                        if (!reports.isEmpty()) {
+                            tv_report_count.text = "已选择 ${reports.size} 份"
+                            tv_report_count.visibility = View.VISIBLE
+                        } else {
+                            tv_report_count.visibility = View.INVISIBLE
+                        }
+                    }
+                    PIC_REQUEST_CODE_CAMERA -> {
+                        if (cameraFile != null && cameraFile?.exists()!!) {                // capture new image
+                            this.mLocalImagePath = cameraFile?.absolutePath
+
+                            if (mPictures.contains(mLocalImagePath)) {
+                                return
+                            }
+
+                            mPictures.add(mLocalImagePath!!)
+                            if (mPictures.isNotEmpty()) {
+                                publish_pictures_previewer.set(Util.toPathArray(mPictures)!!)
+                                lay_picture_place.visibility = View.GONE
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun generateImagePath(userName: String, applicationContext: Context): File {
+        val path: String
+        val pathPrefix = "/Android/data/" + applicationContext.packageName + "/"
+        path = pathPrefix + userName + imagePathName
+        return File(getStorageDir(applicationContext), path)
+    }
+
+    private fun getStorageDir(applicationContext: Context): File {
+        //try to use sd card if possible
+        val sdPath = Environment.getExternalStorageDirectory()
+        if (sdPath.exists()) {
+            return sdPath
+        }
+        //use application internal storage instead
+        val storageDir: File? = applicationContext.filesDir
+        return storageDir!!
     }
 
 }

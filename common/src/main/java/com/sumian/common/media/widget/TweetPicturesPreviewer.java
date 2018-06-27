@@ -14,6 +14,9 @@ import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.adapter.TweetSelectImageAdapter;
 import com.sumian.common.media.config.SelectOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by JuQiu

@@ -61,6 +61,22 @@ public class Util {
         return strings;
     }
 
+    public static String[] toPathArray(List<String> images) {
+        if (images == null)
+            return null;
+        int len = images.size();
+        if (len == 0)
+            return null;
+
+        String[] strings = new String[len];
+        int i = 0;
+        for (String path : images) {
+            strings[i] = path;
+            i++;
+        }
+        return strings;
+    }
+
     /**
      * 获得屏幕的宽度
      *
