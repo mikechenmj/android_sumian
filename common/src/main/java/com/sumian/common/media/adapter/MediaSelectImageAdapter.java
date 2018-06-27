@@ -24,7 +24,7 @@ import java.util.List;
  * on 16/7/15.
  */
 @SuppressWarnings("ALL")
-public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectImageAdapter.TweetSelectImageHolder>
+public class MediaSelectImageAdapter extends RecyclerView.Adapter<MediaSelectImageAdapter.TweetSelectImageHolder>
         implements TweetPicturesPreviewerItemTouchCallback.ItemTouchHelperAdapter {
     private final int MAX_SIZE = 9;
     private final int TYPE_NONE = 0;
@@ -32,7 +32,7 @@ public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectIma
     private final List<Model> mModels = new ArrayList<>();
     private Callback mCallback;
 
-    public TweetSelectImageAdapter(Callback callback) {
+    public MediaSelectImageAdapter(Callback callback) {
         mCallback = callback;
     }
 
@@ -214,8 +214,8 @@ public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectIma
                 public void onClick(View v) {
                     Object obj = v.getTag();
                     final HolderListener holderListener = mListener;
-                    if (holderListener != null && obj != null && obj instanceof TweetSelectImageAdapter.Model) {
-                        holderListener.onDelete((TweetSelectImageAdapter.Model) obj);
+                    if (holderListener != null && obj != null && obj instanceof MediaSelectImageAdapter.Model) {
+                        holderListener.onDelete((MediaSelectImageAdapter.Model) obj);
                     }
                 }
             });
@@ -234,8 +234,8 @@ public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectIma
                 public void onClick(View v) {
                     Object obj = mDelete.getTag();
                     final HolderListener holderListener = mListener;
-                    if (holderListener != null && obj != null && obj instanceof TweetSelectImageAdapter.Model) {
-                        holderListener.onClick((TweetSelectImageAdapter.Model) obj);
+                    if (holderListener != null && obj != null && obj instanceof MediaSelectImageAdapter.Model) {
+                        holderListener.onClick((MediaSelectImageAdapter.Model) obj);
                     }
                 }
             });
@@ -254,7 +254,7 @@ public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectIma
             mImage.setBackgroundDrawable(null);
         }
 
-        public void bind(int position, TweetSelectImageAdapter.Model model, RequestManager loader) {
+        public void bind(int position, MediaSelectImageAdapter.Model model, RequestManager loader) {
             mDelete.setTag(model);
             // In this we need clear before load
 
@@ -291,11 +291,11 @@ public class TweetSelectImageAdapter extends RecyclerView.Adapter<TweetSelectIma
          * Holder 与Adapter之间的桥梁
          */
         interface HolderListener {
-            void onDelete(TweetSelectImageAdapter.Model model);
+            void onDelete(MediaSelectImageAdapter.Model model);
 
             void onDrag(TweetSelectImageHolder holder);
 
-            void onClick(TweetSelectImageAdapter.Model model);
+            void onClick(MediaSelectImageAdapter.Model model);
         }
     }
 

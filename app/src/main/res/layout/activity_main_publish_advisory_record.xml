@@ -62,7 +62,7 @@
                 android:layout_marginTop="@dimen/space_10"
                 android:minHeight="@dimen/space_120">
 
-                <com.sumian.common.media.widget.TweetPicturesPreviewer
+                <com.sumian.common.media.widget.PicturesPreviewer
                     android:id="@+id/publish_pictures_previewer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

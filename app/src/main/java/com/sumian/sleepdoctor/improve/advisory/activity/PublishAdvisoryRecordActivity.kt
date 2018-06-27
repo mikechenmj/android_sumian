@@ -21,6 +21,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
+import com.sumian.common.media.widget.PicturesPreviewer
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
@@ -50,7 +51,8 @@ import kotlin.collections.ArrayList
  **/
 class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.Presenter>(),
         PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
-        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, ActivityLauncher, EasyPermissions.PermissionCallbacks {
+        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, ActivityLauncher, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
+
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
 
@@ -119,16 +121,13 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         })
 
         publish_pictures_previewer.visibility = View.GONE
+        publish_pictures_previewer.setOnPreviewerCallback(this)
         publish_pictures_previewer.showEmptyView {
             lay_picture_place.visibility = View.VISIBLE
             publish_pictures_previewer.visibility = View.GONE
         }
         lay_picture_place.setOnClickListener {
-
-            supportFragmentManager
-                    .beginTransaction()
-                    .add(PictureBottomSheet.newInstance().addOnTakePhotoCallback(this), PictureBottomSheet::class.java.simpleName)
-                    .commitNow()
+            showPictureBottomSheet()
         }
 
         lay_report.setOnClickListener {
@@ -142,14 +141,6 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         if (mAdvisory == null) {
             this.mPresenter.getLastAdvisory()
         }
-    }
-
-    private fun getSelectReportIds(): ArrayList<Int> {
-        val reportIds = ArrayList<Int>()
-        mSelectOnlineRecords?.forEach {
-            reportIds.add(it.id)
-        }
-        return reportIds
     }
 
     override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter) {
@@ -265,15 +256,23 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(mPictures).setCallback {
             it.forEach {
                 Log.e(TAG, it)
-                if (!mPictures.contains(it)) {
-                    mPictures.add(it)
-                }
             }
+            mPictures = it.toMutableList()
             if (it.isNotEmpty()) {
                 publish_pictures_previewer.set(Util.toPathArray(mPictures))
                 lay_picture_place.visibility = View.GONE
             }
         }.build())
+    }
+
+    override fun onLoadMore() {
+        showPictureBottomSheet()
+    }
+
+    override fun onClearPicture() {
+        if (mPictures.isNotEmpty()) {
+            mPictures.clear()
+        }
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
@@ -342,6 +341,21 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         //use application internal storage instead
         val storageDir: File? = applicationContext.filesDir
         return storageDir!!
+    }
+
+    private fun getSelectReportIds(): ArrayList<Int> {
+        val reportIds = ArrayList<Int>()
+        mSelectOnlineRecords?.forEach {
+            reportIds.add(it.id)
+        }
+        return reportIds
+    }
+
+    private fun showPictureBottomSheet() {
+        supportFragmentManager
+                .beginTransaction()
+                .add(PictureBottomSheet.newInstance().addOnTakePhotoCallback(this), PictureBottomSheet::class.java.simpleName)
+                .commitNow()
     }
 
 }

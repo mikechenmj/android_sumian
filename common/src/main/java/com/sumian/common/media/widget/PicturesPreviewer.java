@@ -11,15 +11,12 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.sumian.common.media.SelectImageActivity;
-import com.sumian.common.media.adapter.TweetSelectImageAdapter;
+import com.sumian.common.media.adapter.MediaSelectImageAdapter;
 import com.sumian.common.media.config.SelectOptions;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
- * Created by JuQiu
+ * Created by dq
  * on 16/7/18.
  * <p>
  * 动弹发布界面, 图片预览器
@@ -27,30 +24,36 @@ import java.util.List;
  * 提供图片预览/图片操作 返回选中图片等功能
  */
 
-public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectImageAdapter.Callback {
+public class PicturesPreviewer extends RecyclerView implements MediaSelectImageAdapter.Callback {
 
-    private TweetSelectImageAdapter mImageAdapter;
+    private MediaSelectImageAdapter mImageAdapter;
     private ItemTouchHelper mItemTouchHelper;
     private RequestManager mCurImageLoader;
     private Runnable mDeleteAction;
 
-    public TweetPicturesPreviewer(Context context) {
+    private OnPreviewerCallback mOnPreviewerCallback;
+
+    public PicturesPreviewer(Context context) {
         super(context);
         init();
     }
 
-    public TweetPicturesPreviewer(Context context, @Nullable AttributeSet attrs) {
+    public PicturesPreviewer(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public TweetPicturesPreviewer(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public PicturesPreviewer(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
+    public void setOnPreviewerCallback(OnPreviewerCallback onPreviewerCallback) {
+        mOnPreviewerCallback = onPreviewerCallback;
+    }
+
     private void init() {
-        mImageAdapter = new TweetSelectImageAdapter(this);
+        mImageAdapter = new MediaSelectImageAdapter(this);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 4);
         this.setLayoutManager(layoutManager);
@@ -73,6 +76,12 @@ public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectI
 
     @Override
     public void onLoadMoreClick() {
+
+        if (mOnPreviewerCallback != null) {
+            mOnPreviewerCallback.onLoadMore();
+            return;
+        }
+
         SelectImageActivity.show(getContext(), new SelectOptions.Builder()
                 .setHasCam(false)
                 .setSelectCount(9)
@@ -98,6 +107,9 @@ public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectI
         if (mDeleteAction != null) {
             showEmptyView(mDeleteAction);
         }
+        if (mOnPreviewerCallback != null) {
+            mOnPreviewerCallback.onClearPicture();
+        }
     }
 
 
@@ -108,5 +120,12 @@ public class TweetPicturesPreviewer extends RecyclerView implements TweetSelectI
 
     public String[] getPaths() {
         return mImageAdapter.getPaths();
+    }
+
+    public interface OnPreviewerCallback {
+
+        void onLoadMore();
+
+        void onClearPicture();
     }
 }
