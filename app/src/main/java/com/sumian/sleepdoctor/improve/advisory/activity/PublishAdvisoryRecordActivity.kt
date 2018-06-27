@@ -253,7 +253,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
     }
 
     override fun onPicPictureCallback() {
-        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(mPictures).setCallback {
+        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(publish_pictures_previewer.paths).setCallback {
             it.forEach {
                 Log.e(TAG, it)
             }
@@ -296,24 +296,34 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
             Activity.RESULT_OK -> {
                 when (requestCode) {
                     PICK_REPORT_CODE_PHOTO -> {// pick reports
-                        val reports: ArrayList<OnlineReport> = data?.getParcelableArrayListExtra("data")!!
-                        mSelectOnlineRecords = reports
-                        if (!reports.isEmpty()) {
-                            tv_report_count.text = "已选择 ${reports.size} 份"
-                            tv_report_count.visibility = View.VISIBLE
-                        } else {
-                            tv_report_count.visibility = View.INVISIBLE
+                        data?.let {
+                            val reports: ArrayList<OnlineReport> = it.getParcelableArrayListExtra("data")
+                            mSelectOnlineRecords = reports
+                            if (!reports.isEmpty()) {
+                                tv_report_count.text = "已选择 ${reports.size} 份"
+                                tv_report_count.visibility = View.VISIBLE
+                            } else {
+                                tv_report_count.visibility = View.INVISIBLE
+                            }
                         }
                     }
-                    PIC_REQUEST_CODE_CAMERA -> {
-                        if (cameraFile != null && cameraFile?.exists()!!) {                // capture new image
-                            this.mLocalImagePath = cameraFile?.absolutePath
+                    PIC_REQUEST_CODE_CAMERA -> {// capture new image
+                        cameraFile?.let {
 
-                            if (mPictures.contains(mLocalImagePath)) {
-                                return
+                            if (!it.exists()) {
+                                return@let
                             }
 
-                            mPictures.add(mLocalImagePath!!)
+                            this.mLocalImagePath = it.absolutePath
+
+                            publish_pictures_previewer.paths?.let {
+                                mPictures = it.toMutableList()
+                            }
+
+                            mLocalImagePath?.let {
+                                mPictures.add(it)
+                            }
+
                             if (mPictures.isNotEmpty()) {
                                 publish_pictures_previewer.set(Util.toPathArray(mPictures)!!)
                                 lay_picture_place.visibility = View.GONE

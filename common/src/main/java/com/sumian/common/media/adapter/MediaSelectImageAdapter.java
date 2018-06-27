@@ -137,8 +137,9 @@ public class MediaSelectImageAdapter extends RecyclerView.Adapter<MediaSelectIma
 
     public String[] getPaths() {
         int size = mModels.size();
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         String[] paths = new String[size];
         int i = 0;
         for (Model model : mModels) {
