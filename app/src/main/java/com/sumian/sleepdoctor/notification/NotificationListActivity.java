@@ -15,7 +15,7 @@ import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.notification.bean.Notification;
-import com.sumian.sleepdoctor.push.SchemeResolveUtilKt;
+import com.sumian.sleepdoctor.push.SchemeResolveUtil;
 import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
@@ -134,7 +134,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
             return;
         }
         String scheme = notification.getData().getScheme();
-        Intent intent = SchemeResolveUtilKt.schemeResolver(this, scheme);
+        Intent intent = SchemeResolveUtil.Companion.schemeResolver(this, scheme);
         if (intent == null) {
             LogUtils.d("Unresolved scheme", scheme);
             return;

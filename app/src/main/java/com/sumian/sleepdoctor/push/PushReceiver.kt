@@ -24,7 +24,7 @@ class PushReceiver : BroadcastReceiver() {
         if (intent == null) return
         val pushData: PushData = PushDataResolveUtil.getPushData(intent) ?: return
         val scheme = pushData.scheme ?: return
-        val notificationIntent = schemeResolver(context, scheme) ?: return
+        val notificationIntent = SchemeResolveUtil.schemeResolver(context, scheme) ?: return
         val contentText = pushData.alert ?: return
         NotificationUtil.showNotification(context, contentText, notificationIntent)
         LogUtils.d(pushData)

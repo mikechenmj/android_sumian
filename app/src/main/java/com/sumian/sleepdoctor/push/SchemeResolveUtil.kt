@@ -33,32 +33,36 @@ import java.net.URLDecoder
 医生随访提醒 - 生活提醒
 "scheme" => 'sleepdoctor://life-notice?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c',   //urlencode后
  */
-fun schemeResolver(context: Context, scheme: String): Intent? {
-    val url = URLDecoder.decode(scheme, "UTF-8")
-    val uri = Uri.parse(url)
-    return createSchemeResolver(uri)?.resolveScheme(context, uri) ?: return null
-}
+class SchemeResolveUtil {
+    companion object {
+        fun schemeResolver(context: Context, scheme: String): Intent? {
+            val url = URLDecoder.decode(scheme, "UTF-8")
+            val uri = Uri.parse(url)
+            return createSchemeResolver(uri)?.resolveScheme(context, uri) ?: return null
+        }
 
-private fun createSchemeResolver(uri: Uri): SchemeResolver? {
-    return when (uri.host) {
-        "diaries" -> {
-            DiarySchemeResolver()
+        private fun createSchemeResolver(uri: Uri): SchemeResolver? {
+            return when (uri.host) {
+                "diaries" -> {
+                    DiarySchemeResolver()
+                }
+                "online-reports" -> {
+                    OnlineReportSchemeResolver()
+                }
+                "refund" -> {
+                    RefundSchemeResolver()
+                }
+                "advisories" -> {
+                    AdvisoriesSchemeResolver()
+                }
+                "scale-distributions" -> {
+                    ScaleSchemeResolver()
+                }
+                "referral-notice", "life-notice" -> {
+                    NotificationSchemeResolver()
+                }
+                else -> null
+            }
         }
-        "online-reports" -> {
-            OnlineReportSchemeResolver()
-        }
-        "refund" -> {
-            RefundSchemeResolver()
-        }
-        "advisories" -> {
-            AdvisoriesSchemeResolver()
-        }
-        "scale-distributions" -> {
-            ScaleSchemeResolver()
-        }
-        "referral-notice", "life-notice" -> {
-            NotificationSchemeResolver()
-        }
-        else -> null
     }
 }
