@@ -14,5 +14,5 @@ import android.net.Uri
  * </pre>
  */
 interface SchemeResolver {
-    fun resolverScheme(context : Context,  uri: Uri): Intent
+    fun resolveScheme(context : Context, uri: Uri): Intent
 }

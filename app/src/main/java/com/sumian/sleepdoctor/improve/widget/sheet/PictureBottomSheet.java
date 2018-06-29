@@ -31,6 +31,7 @@ public class PictureBottomSheet extends BaseBottomSheetView implements View.OnCl
         return R.layout.lay_bottom_sheet_take_picture;
     }
 
+    @Override
     @OnClick({R.id.tv_take_photo, R.id.tv_pic_photo, R.id.tv_cancel})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -41,6 +42,8 @@ public class PictureBottomSheet extends BaseBottomSheetView implements View.OnCl
                 mOnTakePhotoCallback.onPicPictureCallback();
                 break;
             case R.id.tv_cancel:
+                break;
+            default:
                 break;
         }
         dismiss();

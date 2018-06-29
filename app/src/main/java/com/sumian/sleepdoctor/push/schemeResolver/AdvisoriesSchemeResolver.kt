@@ -19,7 +19,7 @@ class AdvisoriesSchemeResolver : SchemeResolver {
     图文咨询-医生回复
     "scheme" => 'sleepdoctor://advisories?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
      */
-    override fun resolverScheme(context: Context, uri: Uri): Intent {
+    override fun resolveScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("id")
         return AdvisoryDetailActivity.getLaunchIntent(context, data.toInt())
     }

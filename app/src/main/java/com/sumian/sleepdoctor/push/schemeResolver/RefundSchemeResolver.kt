@@ -20,7 +20,7 @@ class RefundSchemeResolver : SchemeResolver {
     退款成功通知
     "scheme" => 'sleepdoctor://refund?order_no=1525763199&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
      */
-    override fun resolverScheme(context: Context, uri: Uri): Intent {
+    override fun resolveScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("order_no")
         return RefundActivity.getLaunchIntent(context, data)
     }

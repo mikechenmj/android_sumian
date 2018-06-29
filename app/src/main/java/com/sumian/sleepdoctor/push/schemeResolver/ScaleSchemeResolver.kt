@@ -21,7 +21,7 @@ class ScaleSchemeResolver : SchemeResolver {
     医生发送了新的量表
     "scheme" => 'sleepdoctor://scale-distributions?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
      */
-    override fun resolverScheme(context: Context, uri: Uri): Intent {
+    override fun resolveScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("id")
         val title = context.getString(R.string.record_weekly_report) // td 让服务器在 scheme 加上 title 字段
         return ScaleDetailActivity.getLaunchIntent(context, title, data.toLong())

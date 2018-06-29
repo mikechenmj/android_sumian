@@ -36,29 +36,29 @@ import java.net.URLDecoder
 fun schemeResolver(context: Context, scheme: String): Intent? {
     val url = URLDecoder.decode(scheme, "UTF-8")
     val uri = Uri.parse(url)
-    return createSchemeResolver(uri)?.resolverScheme(context, uri) ?: return null
+    return createSchemeResolver(uri)?.resolveScheme(context, uri) ?: return null
 }
 
 private fun createSchemeResolver(uri: Uri): SchemeResolver? {
-    when (uri.host) {
+    return when (uri.host) {
         "diaries" -> {
-            return DiarySchemeResolver()
+            DiarySchemeResolver()
         }
         "online-reports" -> {
-            return OnlineReportSchemeResolver()
+            OnlineReportSchemeResolver()
         }
         "refund" -> {
-            return RefundSchemeResolver()
+            RefundSchemeResolver()
         }
         "advisories" -> {
-            return AdvisoriesSchemeResolver()
+            AdvisoriesSchemeResolver()
         }
         "scale-distributions" -> {
-            return ScaleSchemeResolver()
+            ScaleSchemeResolver()
         }
         "referral-notice", "life-notice" -> {
-            return NotificationSchemeResolver()
+            NotificationSchemeResolver()
         }
+        else -> null
     }
-    return null
 }

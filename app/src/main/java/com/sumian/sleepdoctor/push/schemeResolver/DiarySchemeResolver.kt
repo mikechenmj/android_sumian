@@ -20,7 +20,7 @@ class DiarySchemeResolver : SchemeResolver {
     医生建议更新
     "scheme" => 'sleepdoctor://diaries?date=1525763199&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
      */
-    override fun resolverScheme(context: Context, uri: Uri): Intent {
+    override fun resolveScheme(context: Context, uri: Uri): Intent {
         val date = uri.getQueryParameter("date")
         val dateInMills = date.toInt() * 1000L
         return MainActivity.getLaunchSleepRecordTabIntent(context, dateInMills)

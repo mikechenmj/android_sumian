@@ -21,7 +21,7 @@ class OnlineReportSchemeResolver : SchemeResolver {
     电子报告更新
     "scheme" => 'sleepdoctor://online-reports?id=1&url=www.baidu.com&notification_id=9f3f9091-ab98-421c-ac2c-47709c80ba16&user_id=1',   //urlencode后
      */
-    override fun resolverScheme(context: Context, uri: Uri): Intent {
+    override fun resolveScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("url")
         val title = context.resources.getString(R.string.online_report) // td 让服务器在scheme加上title字段
         return OnlineReportDetailActivity.getLaunchIntent(context, title, data)

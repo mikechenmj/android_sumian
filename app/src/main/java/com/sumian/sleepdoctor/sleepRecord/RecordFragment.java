@@ -98,7 +98,6 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
         mTvDate.setText(TimeUtil.formatDate("yyyy/MM/dd", timeInMillis));
     }
 
-    @SuppressWarnings("unused")
     private void showOpenNotificationDialogIfNeeded() {
         long previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0);
         boolean alreadyShowed = previousShowTime > 0;

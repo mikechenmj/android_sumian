@@ -22,7 +22,7 @@ class NotificationSchemeResolver : SchemeResolver {
     医生随访提醒 - 生活提醒
     "scheme" => 'sleepdoctor://life-notice?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c',   //urlencode后
      */
-    override fun resolverScheme(context: Context, uri: Uri): Intent {
+    override fun resolveScheme(context: Context, uri: Uri): Intent {
         return NotificationListActivity.getLaunchIntent(context)
     }
 }

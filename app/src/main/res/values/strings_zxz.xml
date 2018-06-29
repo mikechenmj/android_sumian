@@ -32,7 +32,6 @@
     <string name="notification_list_empty_title">没有消息提醒</string>
     <string name="notification_list_empty_desc">您收到医生回复、建议或报告更新，\n都会在这里收到消息提醒</string>
 
-
     <!-- scale -->
     <string name="scale_scale_not_finish_yet_hint">您还未进行该评测，点击开始测评</string>
     <string name="scale_self_scale">自我测评</string>
