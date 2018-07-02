@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.sumian.sleepdoctor.BuildConfig;
 
 /**
  * Created by sm
@@ -18,7 +19,9 @@ public abstract class SBridgeHandler implements BridgeHandler {
     @Override
     public void handler(String data, CallBackFunction function) {
         function.onCallBack(data);
-        Log.e(TAG, "handler: -------->" + data);
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "handler: -------->" + data);
+        }
         //  SBridgeResult<Result> sBridgeResult = null;// JSON.parseObject(data, new TypeToken<SBridgeResult<Result>>() {
         //   }.getType());//JsonUtil.fromJson(data, new TypeToken<SBridgeResult<Result>>() {
         //}.getType());
@@ -48,5 +51,6 @@ public abstract class SBridgeHandler implements BridgeHandler {
         //}
     }
 
-    public abstract void handler(String data);
+    public void handler(String data) {
+    }
 }

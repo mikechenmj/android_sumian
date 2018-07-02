@@ -15,7 +15,7 @@
     <string name="unbind_wechat_title">确定解绑微信？</string>
     <string name="bind_wechat_message">绑定后，可使用微信账号登录睡眠医生</string>
     <string name="unbind_wechat_message">解绑后，你将无法使用微信账号登录</string>
-    <string name="me_my_medical_record">我的病历</string>
+    <string name="me_my_sleep_file">睡眠档案</string>
 
     <!-- online report -->
     <string name="online_report_list_empty_title">暂无测评记录</string>

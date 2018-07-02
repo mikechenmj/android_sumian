@@ -191,6 +191,7 @@
             android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity"
             android:theme="@style/BaseAppTheme" />
         <activity android:name=".notification.RefundActivity" />
+        <activity android:name=".h5.SleepFileWebActivity" />
     </application>
 
 </manifest>

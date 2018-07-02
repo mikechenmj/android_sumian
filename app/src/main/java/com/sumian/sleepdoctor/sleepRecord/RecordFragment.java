@@ -152,7 +152,9 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
     private void showServiceList(DoctorServiceList response) {
         List<DoctorService> serviceList = response.getServiceList();
         boolean hasSleepReportService = false;
-        mServiceContainer.removeAllViewsInLayout();
+        if (mServiceContainer != null) {
+            mServiceContainer.removeAllViewsInLayout();
+        }
         for (DoctorService doctorService : serviceList) {
             hasSleepReportService = doctorService.getLast_count() > 0;
             if (doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT && !hasSleepReportService) {
@@ -161,10 +163,14 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
                 doctorServiceItemView.setDesc(doctorService.getNot_buy_description());
                 doctorServiceItemView.loadImage(doctorService.getIcon());
                 doctorServiceItemView.setOnClickListener(v -> launchDoctorServicePage(doctorService));
-                mServiceContainer.addView(doctorServiceItemView);
+                if (mServiceContainer != null) {
+                    mServiceContainer.addView(doctorServiceItemView);
+                }
             }
         }
-        mSleepRecordView.setForceShowDoctorAdvice(hasSleepReportService);
+        if (mSleepRecordView != null) {
+            mSleepRecordView.setForceShowDoctorAdvice(hasSleepReportService);
+        }
     }
 
     @Override
