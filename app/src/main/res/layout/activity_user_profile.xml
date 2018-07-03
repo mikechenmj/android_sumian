@@ -12,105 +12,163 @@
         android:layout_height="wrap_content"
         app:text="@string/user_info_center" />
 
-    <LinearLayout
-        android:id="@+id/lay_avatar"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_12"
-        android:background="@color/b2_color"
-        android:foreground="@drawable/bg_material_ripple"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/space_20"
-        android:paddingLeft="@dimen/space_20"
-        android:paddingRight="@dimen/space_12"
-        android:paddingTop="@dimen/space_20"
-        tools:ignore="RtlHardcoded">
+        android:layout_height="match_parent">
 
-        <TextView
-            style="@style/text_t1_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/avatar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            <LinearLayout
+                android:id="@+id/lay_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                android:background="@color/b2_color"
+                android:foreground="@drawable/bg_material_ripple"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_20"
+                android:paddingLeft="@dimen/space_20"
+                android:paddingRight="@dimen/space_12"
+                android:paddingTop="@dimen/space_20"
+                tools:ignore="RtlHardcoded">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/space_56"
-            android:layout_height="@dimen/space_56"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_10"
-            android:contentDescription="@null"
-            android:src="@mipmap/ic_info_avatar_patient" />
+                <TextView
+                    style="@style/text_t1_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/avatar" />
 
-        <ImageView
-            android:id="@+id/iv_avatar_more"
-            android:layout_width="@dimen/space_32"
-            android:layout_height="@dimen/space_32"
-            android:contentDescription="@null"
-            android:paddingBottom="@dimen/space_8"
-            android:paddingLeft="@dimen/space_8"
-            android:paddingTop="@dimen/space_8"
-            app:srcCompat="@mipmap/ic_info_icon_enter"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
-    </LinearLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
-    <View style="@style/HorizontalDividerLine" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="@dimen/space_56"
+                    android:layout_height="@dimen/space_56"
+                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_info_avatar_patient" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_nickname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="visible"
-        app:type_content="@string/none_nickname"
-        app:type_desc="@string/nickname" />
+                <ImageView
+                    android:id="@+id/iv_avatar_more"
+                    android:layout_width="@dimen/space_32"
+                    android:layout_height="@dimen/space_32"
+                    android:contentDescription="@null"
+                    android:paddingBottom="@dimen/space_8"
+                    android:paddingLeft="@dimen/space_8"
+                    android:paddingTop="@dimen/space_8"
+                    app:srcCompat="@mipmap/ic_info_icon_enter"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+            </LinearLayout>
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:divider_line_visible="visible"
-        app:type_content="@string/martian"
-        app:type_desc="@string/name" />
+            <View style="@style/HorizontalDividerLine" />
 
-    <TextView
-        style="@style/text_t2_style"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_56"
-        android:gravity="center|left"
-        android:paddingBottom="@dimen/space_24"
-        android:paddingLeft="@dimen/space_20"
-        android:paddingRight="@dimen/space_20"
-        android:paddingTop="@dimen/space_16"
-        android:text="@string/see_name_for_doctor"
-        android:textSize="@dimen/font_12"
-        android:visibility="gone"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_nickname"
+                app:type_desc="@string/nickname" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_mobile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_12"
-        app:divider_line_visible="visible"
-        app:divider_more_visible="gone"
-        app:type_desc="@string/register_mobile"
-        tools:type_content="13412345678" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_wechat_bind"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="visible"
-        app:divider_more_visible="gone"
-        app:show_switch="true"
-        app:type_desc="@string/wechat_bind"
-        tools:type_content="微信昵称" />
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/real_name" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/gender" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/birthday" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/height" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/weight" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_edu_level"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/edu_level" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_career"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="invisible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/career" />
+
+            <TextView
+                style="@style/text_t2_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_50"
+                android:paddingLeft="@dimen/space_20"
+                android:paddingRight="@dimen/space_20"
+                android:paddingTop="@dimen/space_10"
+                android:text="@string/extra_user_info" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:divider_more_visible="gone"
+                app:type_desc="@string/register_mobile"
+                tools:type_content="13412345678" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_wechat_bind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:divider_more_visible="invisible"
+                app:show_switch="true"
+                app:type_desc="@string/wechat_bind"
+                tools:type_content="微信昵称" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

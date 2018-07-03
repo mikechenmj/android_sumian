@@ -306,7 +306,8 @@ dependencies {
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    implementation 'android.arch.lifecycle:viewmodel:1.1.1'
+
     // for ViewModelProviders, since lifecycle:extensions do Not container this class
 
     // Java8 support for Lifecycles
@@ -340,6 +341,7 @@ dependencies {
 
     //scan qr code
     implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.3'
+
     //implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.3'
 
     // utils
@@ -351,15 +353,18 @@ dependencies {
     //jsBridge
 
     //implementation 'com.github.wendux:DSBridge-Android:x5-3.0-SNAPSHOT'
-    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
-    implementation('com.github.lzyzsd:jsbridge:1.0.4') {
-        exclude module: 'support-annotations'
-    }
+//    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
+//    implementation('com.github.lzyzsd:jsbridge:1.0.4') {
+//        exclude module: 'support-annotations'
+//    }
+
     // Base Adapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
         exclude module: 'support-recyclerview'
     }
+
     // EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation project(':jsbridge')
 }

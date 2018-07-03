@@ -75,7 +75,7 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                             ByteArrayOutputStream bos = new ByteArrayOutputStream();
                             String image;
                             byte[] bytes;
-                            String imageBase64 = "data:image/jpeg;base64,";
+                            String imageBase64 = "data:image/png;base64,";
                             for (int i = 0; i < images.length; i++) {
                                 image = images[i];
                                 Log.e(TAG, "handler: ----------->position=" + i + "    image=" + image);
@@ -104,15 +104,8 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                                 }
                             }
 
-//                            JSONObject jsonObject = new JSONObject();
-//                            try {
-//                                jsonObject.put("images", mBase64Data);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-
                             String toJson = JsonUtil.toJson(mBase64Data);
-                            Log.e(TAG, "handler: ------>" + toJson);
+                            Log.e(TAG, "handler: ------>" + "123");
 
                             function.onCallBack(toJson);
 

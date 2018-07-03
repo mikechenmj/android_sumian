@@ -20,7 +20,7 @@ public abstract class SBridgeHandler implements BridgeHandler {
     public void handler(String data, CallBackFunction function) {
         function.onCallBack(data);
         if (BuildConfig.DEBUG) {
-            Log.e(TAG, "handler: -------->" + data);
+            Log.e(TAG, "handler: ----hello---->" + data);
         }
         //  SBridgeResult<Result> sBridgeResult = null;// JSON.parseObject(data, new TypeToken<SBridgeResult<Result>>() {
         //   }.getType());//JsonUtil.fromJson(data, new TypeToken<SBridgeResult<Result>>() {

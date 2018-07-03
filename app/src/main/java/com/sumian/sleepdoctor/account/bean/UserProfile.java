@@ -26,7 +26,6 @@ public class UserProfile implements Serializable, Parcelable {
     public String birthday;
     public String height;
     public String weight;
-    public int socialite_id;// 已经绑定的第三方账号,以最后一个为准
     public String leancloud_id;
     public int bound_at;
     public String last_login_at;
@@ -52,7 +51,6 @@ public class UserProfile implements Serializable, Parcelable {
         birthday = in.readString();
         height = in.readString();
         weight = in.readString();
-        socialite_id = in.readInt();
         leancloud_id = in.readString();
         bound_at = in.readInt();
         last_login_at = in.readString();
@@ -76,7 +74,6 @@ public class UserProfile implements Serializable, Parcelable {
         dest.writeString(birthday);
         dest.writeString(height);
         dest.writeString(weight);
-        dest.writeInt(socialite_id);
         dest.writeString(leancloud_id);
         dest.writeInt(bound_at);
         dest.writeString(last_login_at);
@@ -118,7 +115,6 @@ public class UserProfile implements Serializable, Parcelable {
                 ", birthday='" + birthday + '\'' +
                 ", height='" + height + '\'' +
                 ", weight='" + weight + '\'' +
-                ", socialite_id=" + socialite_id +
                 ", leancloud_id='" + leancloud_id + '\'' +
                 ", bound_at=" + bound_at +
                 ", last_login_at='" + last_login_at + '\'' +

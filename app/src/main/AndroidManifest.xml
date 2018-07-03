@@ -71,7 +71,7 @@
             android:name=".account.userProfile.ImproveUserProfileTwoActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".account.userProfile.UserProfileActivity"
+            android:name=".account.userProfile.activity.UserProfileActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".pager.activity.ConfigActivity"

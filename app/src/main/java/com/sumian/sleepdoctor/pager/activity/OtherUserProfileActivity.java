@@ -36,8 +36,8 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
 
     @BindView(R.id.dv_nickname)
     SettingDividerView mDvNickname;
-    @BindView(R.id.dv_name)
-    SettingDividerView mDvName;
+    // @BindView(R.id.dv_name)
+    //SettingDividerView mDvName;
 
     @BindView(R.id.dv_mobile)
     SettingDividerView mDvMobile;
@@ -64,7 +64,7 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
         mTitleBar.setOnBackClickListener(this);
         mIvAvatarMore.setVisibility(View.INVISIBLE);
         mDvNickname.hideMoreIcon();
-        mDvName.hideMoreIcon();
+        // mDvName.hideMoreIcon();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class OtherUserProfileActivity extends BaseActivity implements TitleBar.O
         Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
 
         mDvNickname.setContent(userProfile.nickname);
-        mDvName.setContent(userProfile.name);
+        // mDvName.setContent(userProfile.name);
 
         mDvMobile.setContent(userProfile.mobile);
     }
