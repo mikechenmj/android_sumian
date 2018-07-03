@@ -40,7 +40,8 @@ class SchemeResolveUtil {
             if (TextUtils.isEmpty(scheme)) {
                 return null
             }
-            val uri = Uri.parse(scheme)
+            val decodedScheme = URLDecoder.decode(scheme, "UTF-8")
+            val uri = Uri.parse(decodedScheme)
             return uri.getQueryParameter("user_id")
         }
 
