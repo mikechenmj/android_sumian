@@ -14,7 +14,7 @@ public interface H5Uri {
     String SLEEP_RECORD_RECORD_SLEEP = "question";
     String SLEEP_RECORD_WEEKLY_REPORT = "weekly/{date}";
     // ---------- me ----------
-    String MY_MEDICAL_RECORD = "mine/medical-record";
+    String MY_MEDICAL_RECORD = "mine/medical";
     String DOCTOR_SERVICE = "doctor-service/{id}";
     String ONLINE_REPORT = "online-reports?title={title}&report_url={pdfUrl}";
     String FILL_SCALE = "scale-details/{id}";

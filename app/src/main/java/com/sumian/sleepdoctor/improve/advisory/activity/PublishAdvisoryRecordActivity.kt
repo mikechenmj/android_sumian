@@ -28,6 +28,7 @@ import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BaseActivity
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
+import com.sumian.sleepdoctor.improve.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sleepdoctor.improve.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sleepdoctor.improve.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sleepdoctor.improve.widget.adapter.SimpleTextWatchAdapter
@@ -143,6 +144,21 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val cacheContent = AdvisoryContentCacheUtils.checkAndLoadCacheContent()
+        cacheContent?.let {
+            et_input.setText(it)
+            et_input.setSelection(it.length)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        AdvisoryContentCacheUtils.saveContent2Cache(et_input.text.toString().trim())
+    }
+
     override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter) {
         //super.setPresenter(presenter)
         this.mPresenter = presenter
@@ -190,6 +206,8 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
     }
 
     override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
+        et_input.text = null
+        AdvisoryContentCacheUtils.clearCache()
         this.mAdvisory = advisory
         this.mPresenter.getLastAdvisory()
         AdvisoryDetailActivity.launch(this, advisory)
