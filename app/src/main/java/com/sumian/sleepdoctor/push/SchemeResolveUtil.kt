@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.push
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.TextUtils
 import com.sumian.sleepdoctor.push.schemeResolver.*
 import java.net.URLDecoder
 
@@ -35,6 +36,14 @@ import java.net.URLDecoder
  */
 class SchemeResolveUtil {
     companion object {
+        fun getUserIdFromScheme(scheme: String?): String? {
+            if (TextUtils.isEmpty(scheme)) {
+                return null
+            }
+            val uri = Uri.parse(scheme)
+            return uri.getQueryParameter("user_id")
+        }
+
         fun schemeResolver(context: Context, scheme: String): Intent? {
             val url = URLDecoder.decode(scheme, "UTF-8")
             val uri = Uri.parse(url)

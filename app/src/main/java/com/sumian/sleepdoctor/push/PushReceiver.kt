@@ -3,7 +3,9 @@ package com.sumian.sleepdoctor.push
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.utils.NotificationUtil
 
 
@@ -24,9 +26,26 @@ class PushReceiver : BroadcastReceiver() {
         if (intent == null) return
         val pushData: PushData = PushDataResolveUtil.getPushData(intent) ?: return
         val scheme = pushData.scheme ?: return
+//        if (!isUserIdValid(scheme)) {
+//            return;
+//        }
         val notificationIntent = SchemeResolveUtil.schemeResolver(context, scheme) ?: return
         val contentText = pushData.alert ?: return
         NotificationUtil.showNotification(context, contentText, notificationIntent)
         LogUtils.d(pushData)
+    }
+
+    private fun isUserIdValid(scheme: String): Boolean {
+        val userIdStr = SchemeResolveUtil.getUserIdFromScheme(scheme)
+        if (TextUtils.isEmpty(userIdStr)) {
+            return false
+        }
+        val pushUserId = Integer.valueOf(userIdStr)
+        val id = AppManager.getAccountViewModel().userProfile.id
+        if (pushUserId != id) {
+            LogUtils.d("user id not equal")
+            return false
+        }
+        return true
     }
 }

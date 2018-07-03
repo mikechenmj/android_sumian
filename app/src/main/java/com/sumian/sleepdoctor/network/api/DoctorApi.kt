@@ -39,7 +39,7 @@ interface DoctorApi {
     fun login(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
 
     @DELETE("authorizations/current")
-    fun logout(): Call<Unit>
+    fun logout(@Query("device_token") deviceToken: String): Call<Unit>
 
     @FormUrlEncoded
     @POST("captcha")
@@ -178,5 +178,4 @@ interface DoctorApi {
 
     @POST("advisory-records/sts")
     fun publishPicturesAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<PictureOssSts>
-
 }

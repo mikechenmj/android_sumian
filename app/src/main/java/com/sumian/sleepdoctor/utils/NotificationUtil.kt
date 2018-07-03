@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationManagerCompat
 import com.blankj.utilcode.util.AppUtils
 import com.sumian.sleepdoctor.R
 import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 
 
 /**
@@ -25,9 +26,14 @@ import java.util.*
 class NotificationUtil {
 
     companion object {
-        private const val NOTIFICATION_ID: Int = 1000
         private const val CHANNEL_ID: String = "com.sumian.sleepdoctor"
         private const val CHANNEL_NAME: String = "com.sumian.sleepdoctor"
+        private const val REQUEST_CODE = 100
+        private val ATOMIC_NOTIFICATION_ID = AtomicInteger(0)
+
+        fun getNotificationId(): Int {
+            return ATOMIC_NOTIFICATION_ID.incrementAndGet()
+        }
 
         fun areNotificationsEnabled(context: Context?): Boolean {
             if (context == null) return false
@@ -63,9 +69,17 @@ class NotificationUtil {
 
         private fun getPendingIntent(context: Context?, intent: Intent?): PendingIntent? {
             if (intent == null) return null
-            val pendingIntent = PendingIntent.getActivity(context,
-                    100, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            return pendingIntent
+            return PendingIntent.getActivity(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        fun cancelNotification(context: Context, notificationId: Int) {
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.cancel(notificationId)
+        }
+
+        fun cancelAllNotification(context: Context) {
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.cancelAll()
         }
     }
 }
