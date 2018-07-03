@@ -8,6 +8,7 @@ import android.util.Log;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.config.SelectOptions;
+import com.sumian.common.operator.AppOperator;
 import com.sumian.common.utils.StreamUtil;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.bean.ImageCount;
@@ -38,7 +39,7 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
     private static final String TAG = SleepFileWebActivity.class.getSimpleName();
 
     private List<String> selectedImages = new ArrayList<>(0);
-    private List<String> mBase64Data = new ArrayList<>(0);
+    //private List<String> mBase64Data = new ArrayList<>(0);
 
     @Override
     protected String getUrlContentPart() {
@@ -68,50 +69,74 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                         .Builder()
                         .setHasCam(true)
                         .setCallback(images -> {
-                            //image array ------> base64  array
-                            BitmapFactory.Options options = new BitmapFactory.Options();
-                            options.inSampleSize = 2;
-                            //options.inTempStorage = new byte[16 * 1024 * 1024];
-                            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                            String image;
-                            byte[] bytes;
-                            String imageBase64 = "data:image/png;base64,";
-                            for (int i = 0; i < images.length; i++) {
-                                image = images[i];
-                                Log.e(TAG, "handler: ----------->position=" + i + "    image=" + image);
+                            enCodeBase64(images, (base64Images) -> {
+//                                for (String base64Image : base64Images) {
+//                                    if (mBase64Data.contains(base64Image)) {
+//                                        mBase64Data.remove(base64Image);
+//                                    } else {
+//                                        mBase64Data.add(base64Image);
+//                                    }
+//                                }
+                                String toJson = JsonUtil.toJson(base64Images);
+                                function.onCallBack(toJson);
+                            });
 
-                                Bitmap bitmap = BitmapFactory.decodeFile(image, options);
-                                bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bos);
-                                try {
-                                    bos.flush();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                } finally {
-                                    StreamUtil.close(bos);
-                                }
-
-                                bytes = bos.toByteArray();
-                                bitmap.recycle();
-                                imageBase64 += Base64.encodeToString(bytes, Base64.NO_WRAP);
-
-                                Log.e(TAG, "handler: ------imageBase64------>" + imageBase64);
-                                int indexOf = mBase64Data.indexOf(imageBase64);
-                                if (indexOf == -1) {
-                                    mBase64Data.add(imageBase64);
-                                    Log.e(TAG, "handler: ----------未在数组中,直接加入进去--->");
-                                } else {
-                                    Log.e(TAG, "handler: ------已存在-->");
-                                }
-                            }
-
-                            String toJson = JsonUtil.toJson(mBase64Data);
                             Log.e(TAG, "handler: ------>" + "123");
-
-                            function.onCallBack(toJson);
-
                         }).setSelectCount(9).setSelectedImages(selectedImages).build());
             }
         });
+    }
+
+    private void enCodeBase64(String[] images, OnDecodeBase64Callback onDecodeBase64Callback) {
+
+        AppOperator.runOnThread(() -> {
+            //image array ------> base64  array
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 1;
+            //options.inTempStorage = new byte[16 * 1024 * 1024];
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            String image;
+            byte[] bytes;
+
+            StringBuilder imageBase64 = new StringBuilder();
+            List<String> tmp = new ArrayList<>(0);
+            for (int i = 0; i < images.length; i++) {
+                bos.reset();
+                imageBase64.delete(0, imageBase64.length());
+                image = images[i];
+                Log.e(TAG, "handler: ----------->position=" + i + "    image=" + image);
+
+                Bitmap bitmap = BitmapFactory.decodeFile(image, options);
+                if (bitmap == null) continue;
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+                try {
+                    bos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    StreamUtil.close(bos);
+                }
+
+                bytes = bos.toByteArray();
+                bitmap.recycle();
+                imageBase64.append("data:image/png;base64,").append(Base64.encodeToString(bytes, Base64.NO_WRAP));
+
+                Log.e(TAG, "handler: ------imageBase64------>" + imageBase64);
+                tmp.add(imageBase64.toString());
+            }
+
+            runOnUiThread(() -> {
+                if (onDecodeBase64Callback != null) {
+                    onDecodeBase64Callback.onDecode(tmp);
+                }
+            });
+        });
+    }
+
+
+    interface OnDecodeBase64Callback {
+
+        void onDecode(List<String> base64Images);
     }
 
 }
