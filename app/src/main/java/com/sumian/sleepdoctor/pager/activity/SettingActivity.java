@@ -1,20 +1,24 @@
 package com.sumian.sleepdoctor.pager.activity;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.avos.avoscloud.AVInstallation;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
 import com.sumian.sleepdoctor.account.login.LoginActivity;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
+import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
 
@@ -87,14 +91,15 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     }
 
     private void logout() {
-        AppManager.getHttpService().logout().enqueue(new BaseResponseCallback<Unit>() {
+        AppManager.getHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId())
+                .enqueue(new BaseResponseCallback<Unit>() {
             @Override
             protected void onSuccess(Unit response) {
-
+                NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
             }
 
             @Override
-            protected void onFailure(ErrorResponse errorResponse) {
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
 
             }
 
