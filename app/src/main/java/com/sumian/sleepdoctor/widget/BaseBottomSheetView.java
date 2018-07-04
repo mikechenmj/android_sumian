@@ -49,9 +49,9 @@ public abstract class BaseBottomSheetView extends BottomSheetDialogFragment {
 
     @Override
     public void onDestroyView() {
+        super.onDestroyView();
         mUnbinder.unbind();
         release();
-        super.onDestroyView();
     }
 
     protected void initBundle(Bundle arguments) {

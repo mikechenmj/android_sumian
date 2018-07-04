@@ -16,7 +16,7 @@ import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
 import com.sumian.sleepdoctor.improve.doctor.base.BasePagerFragment;
 import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
-import com.sumian.sleepdoctor.leanCloud.LeanCloudManager;
+import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.sleepRecord.RecordFragment;
 import com.sumian.sleepdoctor.tab.fragment.MeFragment;

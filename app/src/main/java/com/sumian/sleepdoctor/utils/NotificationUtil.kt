@@ -57,7 +57,7 @@ class NotificationUtil {
             if (context == null) return
             createNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME)
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_sleepdoctor_icon)
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
                     .setContentTitle(AppUtils.getAppName())
                     .setContentText(contentText)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)

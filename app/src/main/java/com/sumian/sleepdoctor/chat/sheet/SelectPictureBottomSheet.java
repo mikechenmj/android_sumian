@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.widget.BottomSheetView;
+import com.sumian.sleepdoctor.widget.BaseBottomSheetView;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class SelectPictureBottomSheet extends BottomSheetView implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class SelectPictureBottomSheet extends BaseBottomSheetView implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     // private static final String TAG = PictureBottomSheet.class.getSimpleName();
 

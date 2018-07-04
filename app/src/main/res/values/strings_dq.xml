@@ -60,5 +60,10 @@
     <string name="weight">体重</string>
     <string name="edu_level">教育程度</string>
     <string name="career">职业</string>
+    <string name="input_career_hint">请填写您所从事的职业</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="secrecy">保密</string>
+    <string name="sure">确定</string>
 
 </resources>

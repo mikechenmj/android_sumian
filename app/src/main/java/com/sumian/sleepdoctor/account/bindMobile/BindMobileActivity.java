@@ -10,7 +10,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
-import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
+import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;

@@ -6,7 +6,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.login.LoginActivity;
-import com.sumian.sleepdoctor.account.userProfile.ImproveUserProfileOneActivity;
+import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.delegate.OtherDelegate;
 import com.sumian.sleepdoctor.base.BaseActivity;

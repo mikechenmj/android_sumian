@@ -234,7 +234,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def fileName = "Sleep Doctor_${variant.flavorName}_${formatDate()}.apk"
+            def fileName = "睡眠医生_${variant.flavorName}_${formatDate()}.apk"
 
             println fileName
 
@@ -349,6 +349,8 @@ dependencies {
 
     // RecyclerViewPager
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+
+    implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
 
     //jsBridge
 

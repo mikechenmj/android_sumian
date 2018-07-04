@@ -1,14 +1,14 @@
 package com.sumian.sleepdoctor.chat.sheet
 
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.widget.BottomSheetView
+import com.sumian.sleepdoctor.widget.BaseBottomSheetView
 
 /**
  * Created by sm
  * on 2018/2/22.
  * desc:
  */
-class PictureBottomSheet : BottomSheetView() {
+class PictureBottomSheet : BaseBottomSheetView() {
 
     override fun getLayout(): Int {
         return R.layout.lay_bottom_sheet_take_picture

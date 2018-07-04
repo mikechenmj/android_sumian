@@ -2,15 +2,16 @@ package com.sumian.sleepdoctor.account.userProfile.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
 
@@ -20,14 +21,15 @@ import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.config.SelectOptions;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.account.userProfile.contract.UserInfoContract;
 import com.sumian.sleepdoctor.account.userProfile.presenter.UserInfoPresenter;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.improve.widget.sheet.PictureBottomSheet;
-import com.sumian.sleepdoctor.pager.activity.ModifyNicknameActivity;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
@@ -49,12 +51,12 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * Created by jzz
  * on 2018/1/24.
- * desc:
+ * desc:用户信息
  */
 
 public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
-        CompoundButton.OnCheckedChangeListener, UserInfoContract.View, UMAuthListener {
+        CompoundButton.OnCheckedChangeListener, UserInfoContract.View, UMAuthListener, Observer<Token> {
 
     @SuppressWarnings("unused")
     private static final String TAG = UserProfileActivity.class.getSimpleName();
@@ -103,21 +105,42 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
     protected void initWidget(View root) {
         super.initWidget(root);
         mTitleBar.setOnBackClickListener(this);
+
         mDvNickname.setOnShowMoreListener(this);
+
         mDvName.setOnShowMoreListener(this);
+        mDvGender.setOnShowMoreListener(this);
+        mDvBirthday.setOnShowMoreListener(this);
+        mDvHeight.setOnShowMoreListener(this);
+        mDvWeight.setOnShowMoreListener(this);
+        mDvEduLevel.setOnShowMoreListener(this);
+        mDvCareer.setOnShowMoreListener(this);
+
         mDvWechat.setOnCheckedChangeListener(this);
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
     }
 
     @Override
     protected void initPresenter() {
         super.initPresenter();
-        this.mPresenter = UserInfoPresenter.init(this);
+        UserInfoPresenter.init(this);
     }
 
     @Override
     protected void initData() {
         super.initData();
         mPresenter.getUserInfo();
+    }
+
+    @Override
+    public void setPresenter(UserInfoContract.Presenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+    @Override
+    protected void onRelease() {
+        super.onRelease();
+        AppManager.getAccountViewModel().getLiveDataToken().removeObserver(this);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -171,19 +194,15 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
 
     @Override
     public void onShowMore(View v) {
-        Bundle extras;
         switch (v.getId()) {
             case R.id.dv_nickname:
-                extras = new Bundle();
-                extras.putInt(ModifyNicknameActivity.EXTRA_MODIFY_NAME, ModifyNicknameActivity.MODIFY_NICKNAME);
-                ModifyNicknameActivity.show(this, ModifyNicknameActivity.class, extras);
+                ModifyUserInfoActivity.show(this, ImproveUserProfileContract.IMPROVE_NICKNAME_KEY);
                 break;
             case R.id.dv_name:
-                extras = new Bundle();
-                extras.putInt(ModifyNicknameActivity.EXTRA_MODIFY_NAME, ModifyNicknameActivity.MODIFY_NAME);
-                ModifyNicknameActivity.show(this, ModifyNicknameActivity.class, extras);
+                ModifyUserInfoActivity.show(this, ImproveUserProfileContract.IMPROVE_NAME_KEY);
                 break;
             case R.id.dv_gender:
+
                 break;
             case R.id.dv_birthday:
                 break;
@@ -194,6 +213,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
             case R.id.dv_edu_level:
                 break;
             case R.id.dv_career:
+                ModifyUserInfoActivity.show(this, ImproveUserProfileContract.IMPROVE_CAREER_KEY);
                 break;
             default:
                 break;
@@ -366,7 +386,15 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
         options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
         Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
         mDvNickname.setContent(userProfile.nickname);
+
         mDvName.setContent(userProfile.name);
+        mDvGender.setContent(userProfile.formatGander());
+        mDvBirthday.setContent(userProfile.formatField(userProfile.birthday));
+        mDvHeight.setContent(userProfile.formatField(userProfile.height));
+        mDvWeight.setContent(userProfile.formatField(userProfile.weight));
+        mDvEduLevel.setContent(userProfile.formatField(userProfile.education));
+        mDvCareer.setContent(userProfile.career);
+
         mDvMobile.setContent(userProfile.mobile);
         updateDvWechatUI(userProfile.socialites);
     }
@@ -391,4 +419,9 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
         return storageDir;
     }
 
+    @Override
+    public void onChanged(@Nullable Token token) {
+        if (token == null) return;
+        updateUserProfileUI(token.user);
+    }
 }

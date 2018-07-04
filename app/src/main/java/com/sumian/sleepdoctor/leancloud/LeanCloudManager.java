@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.leanCloud;
+package com.sumian.sleepdoctor.leancloud;
 
 import android.content.Context;
 import android.os.Build;

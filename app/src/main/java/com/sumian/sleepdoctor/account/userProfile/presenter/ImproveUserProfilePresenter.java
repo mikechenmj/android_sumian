@@ -1,8 +1,9 @@
-package com.sumian.sleepdoctor.account.userProfile;
+package com.sumian.sleepdoctor.account.userProfile.presenter;
 
 import android.support.annotation.NonNull;
 
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
@@ -22,7 +23,6 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
 
     private ImproveUserProfileContract.View mView;
     private Call<UserProfile> mCall;
-
 
     private ImproveUserProfilePresenter(ImproveUserProfileContract.View view) {
         view.setPresenter(this);
@@ -71,7 +71,7 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
 
     @Override
     public void release() {
-        if (mCall == null || mCall.isCanceled()) return;
+        if (mCall == null || mCall.isExecuted()) return;
         mCall.cancel();
     }
 }

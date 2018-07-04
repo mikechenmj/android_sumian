@@ -20,9 +20,9 @@
         android:name=".app.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:icon="@mipmap/ic_sleepdoctor_icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_sleepdoctor_icon_round"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
         tools:ignore="GoogleAppIndexingWarning"
@@ -65,10 +65,10 @@
             android:name=".account.login.LoginActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".account.userProfile.ImproveUserProfileOneActivity"
+            android:name=".account.userProfile.activity.ImproveUserProfileOneActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".account.userProfile.ImproveUserProfileTwoActivity"
+            android:name=".account.userProfile.activity.ImproveUserProfileTwoActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".account.userProfile.activity.UserProfileActivity"
@@ -98,7 +98,7 @@
             android:name=".pager.activity.GroupMembersActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".pager.activity.ModifyNicknameActivity"
+            android:name=".account.userProfile.activity.ModifyUserInfoActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".pager.activity.OtherUserProfileActivity"
