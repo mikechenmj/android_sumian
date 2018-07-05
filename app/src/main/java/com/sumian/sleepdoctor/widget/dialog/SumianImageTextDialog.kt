@@ -33,8 +33,6 @@ class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLo
     private var mType = TYPE_TEXT
 
     companion object {
-        private const val ROTATE_DURATION = 1500L
-
         const val TYPE_LOADING = 0
         const val TYPE_SUCCESS = 1
         const val TYPE_FAIL = 2
