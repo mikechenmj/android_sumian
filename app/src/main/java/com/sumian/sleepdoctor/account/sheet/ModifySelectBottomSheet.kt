@@ -74,21 +74,21 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ImproveUserProfileContrac
         super.initData()
 
         val title: String = when (mModifyKey) {
-            ImproveUserProfileContract.IMPROVE_WEIGHT_KEY -> {
-
-            }
-            ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
-
-            }
-            ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
-
-            }
-            ImproveUserProfileContract.IMPROVE_GENDER_KEY -> {
-
-            }
-            ImproveUserProfileContract.IMPROVE_EDUCATION_KEY -> {
-
-            }
+//            ImproveUserProfileContract.IMPROVE_WEIGHT_KEY -> {
+//
+//            }
+//            ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
+//
+//            }
+//            ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
+//
+//            }
+//            ImproveUserProfileContract.IMPROVE_GENDER_KEY -> {
+//
+//            }
+//            ImproveUserProfileContract.IMPROVE_EDUCATION_KEY -> {
+//
+//            }
             else -> {
                 ""
             }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.avos.avoscloud.AVInstallation;
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
@@ -25,6 +26,7 @@ import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import kotlin.Unit;
+import retrofit2.Call;
 
 /**
  * Created by jzz
@@ -80,7 +82,10 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
         if (dialog == null) {
             dialog = new BottomSheetDialog(this);
             @SuppressLint("InflateParams") View inflate = LayoutInflater.from(this).inflate(R.layout.lay_logout_bottom_sheet, null, false);
-            inflate.findViewById(R.id.tv_logout).setOnClickListener(v -> logout());
+            inflate.findViewById(R.id.tv_logout).setOnClickListener(v -> {
+                logout();
+                dialog.dismiss();
+            });
             inflate.findViewById(R.id.tv_cancel).setOnClickListener(v -> dialog.dismiss());
             dialog.setContentView(inflate);
             dialog.setCanceledOnTouchOutside(true);
@@ -91,24 +96,24 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     }
 
     private void logout() {
-        AppManager.getHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId())
+        Call<Unit> call = AppManager.getHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId());
+        call
                 .enqueue(new BaseResponseCallback<Unit>() {
-            @Override
-            protected void onSuccess(Unit response) {
-                NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
-            }
+                    @Override
+                    protected void onSuccess(Unit response) {
+                        NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
+                        AppOperator.runOnThread(AccountCache::clearCache);
+                        AppManager.getGroupViewModel().notifyGroups(null);
+                        AppManager.getChatEngine().logoutImServer();
+                        AppManager.getAccountViewModel().updateToken(null);
+                        LoginActivity.showClearTop(SettingActivity.this, LoginActivity.class);
+                        AppManager.getOpenLogin().deleteWeiXinOauth(SettingActivity.this);
+                    }
 
-            @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
-
-            }
-
-        });
-        AppOperator.runOnThread(AccountCache::clearCache);
-        AppManager.getGroupViewModel().notifyGroups(null);
-        AppManager.getChatEngine().logoutImServer();
-        AppManager.getAccountViewModel().updateToken(null);
-        LoginActivity.showClearTop(this, LoginActivity.class);
-        AppManager.getOpenLogin().deleteWeiXinOauth(this);
+                    @Override
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                        ToastUtils.showShort(R.string.logout_failed_please_check_network);
+                    }
+                });
     }
 }
