@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
+import com.sumian.sleepdoctor.network.StatusCode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,6 +113,9 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
 
     @Override
     public void onRequestErrorCallback(WebView view, int responseCode) {
+        if (responseCode == StatusCode.BUSINESS_ERROR) {
+            return;
+        }
         this.mWebViewProgress.setVisibility(GONE);
         this.mWebViewProgress.setProgress(0);
         this.mEmptyErrorView.invalidRequestError();
