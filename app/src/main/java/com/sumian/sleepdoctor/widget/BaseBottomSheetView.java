@@ -35,15 +35,15 @@ public abstract class BaseBottomSheetView extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayout(), container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
         getView();
-        initView(rootView);
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mUnbinder = ButterKnife.bind(this, view);
+        initView(view);
         initData();
     }
 

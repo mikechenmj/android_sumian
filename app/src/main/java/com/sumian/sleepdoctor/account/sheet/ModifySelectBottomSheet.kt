@@ -1,14 +1,17 @@
 package com.sumian.sleepdoctor.account.sheet
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.OnClick
 import cn.carbswang.android.numberpickerview.library.NumberPickerView
+import com.sumian.common.helper.ToastHelper
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract
-import com.sumian.sleepdoctor.account.userProfile.presenter.ImproveUserProfilePresenter
+import com.sumian.sleepdoctor.account.userProfile.contract.ModifyUserInfoContract
+import com.sumian.sleepdoctor.account.userProfile.presenter.ModifyUserInfoPresenter
 import com.sumian.sleepdoctor.widget.BaseBottomSheetView
 
 /**
@@ -19,8 +22,7 @@ import com.sumian.sleepdoctor.widget.BaseBottomSheetView
  * desc:修改用户数据 e.g. gender/weight/height/birthday/education
  *
  */
-class ModifySelectBottomSheet : BaseBottomSheetView(), ImproveUserProfileContract.View, View.OnClickListener {
-
+class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.View, View.OnClickListener {
 
     @BindView(R.id.tv_title)
     lateinit var mTvTitle: TextView
@@ -34,7 +36,7 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ImproveUserProfileContrac
     @BindView(R.id.tv_sure)
     lateinit var mTvSure: TextView
 
-    private lateinit var mPresenter: ImproveUserProfileContract.Presenter
+    private lateinit var mPresenter: ModifyUserInfoContract.Presenter
     private lateinit var mModifyKey: String
 
     companion object {
@@ -57,69 +59,61 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ImproveUserProfileContrac
         arguments?.let {
             this.mModifyKey = it.getString(EXTRAS_MODIFY)
         }
-        ImproveUserProfilePresenter.init(this)
+        ModifyUserInfoPresenter.init(this)
     }
 
-    override fun setPresenter(presenter: ImproveUserProfileContract.Presenter?) {
-        super.setPresenter(presenter)
-        this.mPresenter = presenter!!
+    override fun setPresenter(presenter: ImproveUserProfileContract.Presenter) {
+        //super.setPresenter(presenter)
+        this.mPresenter = presenter as ModifyUserInfoContract.Presenter
     }
 
     override fun initView(rootView: View?) {
         super.initView(rootView)
-
-    }
-
-    override fun initData() {
-        super.initData()
-
-        val title: String = when (mModifyKey) {
-//            ImproveUserProfileContract.IMPROVE_WEIGHT_KEY -> {
-//
-//            }
-//            ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
-//
-//            }
-//            ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
-//
-//            }
-//            ImproveUserProfileContract.IMPROVE_GENDER_KEY -> {
-//
-//            }
-//            ImproveUserProfileContract.IMPROVE_EDUCATION_KEY -> {
-//
-//            }
-            else -> {
-                ""
-            }
-        }
-        mTvTitle.text = title
+        mPresenter.transformTitle(mModifyKey)
     }
 
     @OnClick(R.id.tv_sure)
     override fun onClick(v: View?) {
-
-        val modifyInfo: String = when (mModifyKey) {
-            ImproveUserProfileContract.IMPROVE_WEIGHT_KEY,
-            ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
-                "${mPickerOne.contentByCurrValue}.${mPickerTwo.contentByCurrValue}"
-            }
-            ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
-                "${mPickerOne.contentByCurrValue}${mPickerTwo.contentByCurrValue}"
-            }
-            ImproveUserProfileContract.IMPROVE_GENDER_KEY,
-            ImproveUserProfileContract.IMPROVE_EDUCATION_KEY -> {
-                mPickerOne.contentByCurrValue
-            }
-            else -> {
-                ""
-            }
-        }
-
+        val modifyInfo = mPresenter.transformModify(mModifyKey, mPickerOne, mPickerTwo)
         mPresenter.improveUserProfile(mModifyKey, modifyInfo)
+    }
+
+    override fun transformOneDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String>) {
+        runUiThread {
+            mPickerOne.refreshByNewDisplayedValues(displayedValues)
+            mPickerOne.pickedIndexRelativeToRaw = currentPosition
+            mPickerOne.setHintText(hintText)
+            mPickerOne.visibility = View.VISIBLE
+        }
+    }
+
+    override fun transformTwoDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String>) {
+        runUiThread {
+            mPickerTwo.refreshByNewDisplayedValues(displayedValues)
+            mPickerTwo.pickedIndexRelativeToRaw = currentPosition
+            mPickerTwo.setHintText(hintText)
+            mPickerTwo.visibility = View.VISIBLE
+        }
+    }
+
+    override fun showOnePicker(visible: Int) {
+        mPickerOne.visibility = visible
+    }
+
+    override fun showTwoPicker(visible: Int) {
+        mPickerTwo.visibility = visible
+    }
+
+    override fun transformTitle(title: String) {
+        mTvTitle.text = title
     }
 
     override fun onImproveUserProfileSuccess() {
         dismissAllowingStateLoss()
+    }
+
+    override fun onFailure(error: String?) {
+        super.onFailure(error)
+        ToastHelper.show(context, error, Gravity.CENTER)
     }
 }

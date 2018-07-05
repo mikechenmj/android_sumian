@@ -32,10 +32,13 @@
 
             <TextView
                 android:id="@+id/tv_nickname"
+                style="@style/text_t1_18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|bottom"
                 android:layout_marginBottom="@dimen/space_40"
+                android:drawableEnd="@mipmap/ic_info_icon_edit"
+                android:drawablePadding="@dimen/space_12"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/font_18"
@@ -53,10 +56,15 @@
             android:background="@color/b1_color"
             android:orientation="vertical">
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10" />
+
             <com.sumian.sleepdoctor.widget.divider.SettingDividerView
                 android:id="@+id/dv_user_info_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/user_info_center"
                 app:type_icon="@mipmap/ic_info_icon_information" />
@@ -65,10 +73,13 @@
                 android:id="@+id/dv_my_sleep_file"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_10"
                 app:divider_line_visible="gone"
                 app:type_desc="@string/me_my_sleep_file"
                 app:type_icon="@mipmap/ic_my_medical_record" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10" />
 
             <com.sumian.sleepdoctor.widget.divider.SettingDividerView
                 android:id="@+id/dv_my_evaluation"
@@ -90,10 +101,13 @@
                 android:id="@+id/dv_electric_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/space_10"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/electric_report"
                 app:type_icon="@mipmap/ic_electric_report" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10" />
 
             <com.sumian.sleepdoctor.widget.divider.SettingDividerView
                 android:id="@+id/dv_setting"

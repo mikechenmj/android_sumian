@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="gender">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="edu_level">
+        <item>本科或以上</item>
+        <item>大专</item>
+        <item>高中</item>
+        <item>初中或以下</item>
+        <item>其他</item>
+    </string-array>
+
+</resources>

@@ -189,4 +189,50 @@ public class UserProfile implements Serializable, Parcelable {
                 '}';
     }
 
+    private int[] getBirthday(String birthdayStr) {
+        int[] yearMonth = new int[2];
+        if (TextUtils.isEmpty(birthdayStr)) {
+            return yearMonth;
+        }
+        String[] split = birthdayStr.split("-");
+        try {
+            if (split.length == 2) {
+                yearMonth[0] = Integer.valueOf(split[0]);
+                yearMonth[1] = Integer.valueOf(split[1]);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return yearMonth;
+    }
+
+    public int getBirthdayYear() {
+        return getBirthday(birthday)[0];
+    }
+
+    public int getBirthdayMonth() {
+        return getBirthday(birthday)[1];
+    }
+
+    public float getHeightValue() {
+        return formatFloat(height);
+    }
+
+    public float getWeightValue() {
+        return formatFloat(weight);
+    }
+
+    private float formatFloat(String floatStr) {
+        if (TextUtils.isEmpty(floatStr)) {
+            return 0f;
+        }
+        float value = 0f;
+        try {
+            value = Float.valueOf(floatStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return value;
+    }
+
 }

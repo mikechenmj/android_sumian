@@ -15,7 +15,7 @@
         android:background="@color/b2_color"
         android:foreground="@drawable/bg_material_ripple"
         android:gravity="center"
-        android:text="@string/take_photo" />
+        tools:text="@string/take_photo" />
 
     <LinearLayout
         android:layout_width="match_parent"
