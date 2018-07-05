@@ -104,13 +104,13 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
         if (NotificationUtil.Companion.areNotificationsEnabled(getActivity()) || alreadyShowed) {
             return;
         }
-        SumianAlertDialog.create()
+        new SumianAlertDialog(getActivity())
                 .setCloseIconVisible(true)
                 .setTopIconResource(R.mipmap.ic_notification_alert)
                 .setTitle(R.string.open_notification)
                 .setMessage(R.string.open_notification_and_receive_doctor_response)
                 .setRightBtn(R.string.open_notification, v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION))
-                .show(getFragmentManager());
+                .show();
         SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis());
     }
 

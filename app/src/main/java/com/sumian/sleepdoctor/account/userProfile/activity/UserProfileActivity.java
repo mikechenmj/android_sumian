@@ -340,7 +340,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
         int message = isChecked ? R.string.bind_wechat_message : R.string.unbind_wechat_message;
         int leftBtn = R.string.cancel;
         int rightBtn = isChecked ? R.string.bind : R.string.unbind;
-        SumianAlertDialog.create()
+        new SumianAlertDialog(this)
                 .setTitle(title)
                 .setMessage(message)
                 .whitenLeft()
@@ -357,7 +357,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
                         mPresenter.unBindWechat(social.id);
                     }
                 })
-                .show(getSupportFragmentManager());
+                .show();
     }
 
     private void updateSocialites(Social social) {
@@ -433,7 +433,9 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
 
     @Override
     public void onChanged(@Nullable Token token) {
-        if (token == null) return;
+        if (token == null) {
+            return;
+        }
         updateUserProfileUI(token.user);
     }
 }

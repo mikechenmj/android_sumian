@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.network.callback
 
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
@@ -8,6 +9,7 @@ import com.sumian.sleepdoctor.network.response.ErrorInfo400
 import com.sumian.sleepdoctor.network.response.ErrorInfo499
 import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.utils.JsonUtil
+import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,9 +49,10 @@ abstract class BaseResponseCallback<T> : Callback<T> {
                     onFailure(UNKNOWN_ERROR_RESPONSE)
                 } else {
                     onFailure(errorResponse)
-                    val statusCode = errorResponse.code
-                    if (statusCode == 401) { //token 鉴权失败
-                        AppManager.getAccountViewModel().updateTokenInvalidState(true)
+                    when (errorResponse.code) {
+                    //token 鉴权失败
+                        401 -> AppManager.getAccountViewModel().updateTokenInvalidState(true)
+                        503 -> showSystemIsMaintainDialog()
                     }
                 }
             } catch (e: IOException) {
@@ -81,6 +84,14 @@ abstract class BaseResponseCallback<T> : Callback<T> {
             val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorInfo400::class.java)
             ErrorResponse.createFromErrorInfo(errorInfo400)
         }
+    }
+
+    private fun showSystemIsMaintainDialog() {
+        SumianAlertDialog(ActivityUtils.getTopActivity())
+                .setTitle(R.string.system_maintain)
+                .setMessage(R.string.system_maintain_desc)
+                .setRightBtn(R.string.confirm, null)
+                .show()
     }
 
     protected abstract fun onSuccess(response: T?)

@@ -1,17 +1,15 @@
 package com.sumian.sleepdoctor.widget.dialog;
 
-import android.os.Bundle;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.AppCompatButton;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Space;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
@@ -19,7 +17,6 @@ import com.sumian.sleepdoctor.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * <pre>
@@ -30,8 +27,9 @@ import butterknife.Unbinder;
  *     version: 1.0
  * </pre>
  */
-public class SumianAlertDialog extends DialogFragment {
+public class SumianAlertDialog {
 
+    private final Context mContext;
     @BindView(R.id.iv_top)
     ImageView mIvTop;
     @BindView(R.id.iv_close)
@@ -41,54 +39,38 @@ public class SumianAlertDialog extends DialogFragment {
     @BindView(R.id.tv_message)
     TextView mTvMessage;
     @BindView(R.id.btn_left)
-    AppCompatButton mBtnLeft;
-    @BindView(R.id.space)
-    Space mSpace;
+    Button mBtnLeft;
     @BindView(R.id.btn_right)
-    AppCompatButton mBtnRight;
+    Button mBtnRight;
 
-    private Unbinder mBind;
     private boolean mIsCloseBtnVisible;
     private int mIconRes;
     private int mTitleRes;
-    private int mMessageRes;
     private int mLeftBtnTextRes;
     private View.OnClickListener mLeftBtnClickListener;
     private int mRightBtnTextRes;
     private View.OnClickListener mRightBtnClickListener;
     private boolean mWhitenLeft;
     private boolean mWhitenRight;
+    private final Dialog mDialog;
+    private String mMessage;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.SumianDialog);
+    public SumianAlertDialog(Context context) {
+        mContext = context;
+        mDialog = new Dialog(context, R.style.SumianDialog);
+        @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.lay_alert_dialog, null, false);
+        ButterKnife.bind(this, inflate);
+        mDialog.setContentView(inflate);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.lay_alert_dialog, container, false);
-        mBind = ButterKnife.bind(this, inflate);
-        return inflate;
-    }
-
-    @Override
-    public void onDestroyView() {
-        mBind.unbind();
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void updateView() {
         mIvClose.setVisibility(mIsCloseBtnVisible ? View.VISIBLE : View.GONE);
         mIvTop.setVisibility(mIconRes == 0 ? View.GONE : View.VISIBLE);
         mIvTop.setImageResource(mIconRes);
         mTvTitle.setVisibility(mTitleRes == 0 ? View.GONE : View.VISIBLE);
         mTvTitle.setText(mTitleRes);
-        mTvMessage.setVisibility(mMessageRes == 0 ? View.GONE : View.VISIBLE);
-        mTvMessage.setText(mMessageRes);
+        mTvMessage.setVisibility(TextUtils.isEmpty(mMessage) ? View.GONE : View.VISIBLE);
+        mTvMessage.setText(mMessage);
         mBtnLeft.setVisibility(mLeftBtnTextRes == 0 ? View.GONE : View.VISIBLE);
         if (mLeftBtnTextRes != 0) {
             mBtnLeft.setText(mLeftBtnTextRes);
@@ -97,15 +79,13 @@ public class SumianAlertDialog extends DialogFragment {
         if (mRightBtnTextRes != 0) {
             mBtnRight.setText(mRightBtnTextRes);
         }
-        //        mSpace.setVisibility(mLeftBtnTextRes != 0 && mRightBtnTextRes != 0 ? View.VISIBLE : View.GONE);
-
         if (mWhitenLeft) {
             mBtnLeft.setBackgroundResource(R.drawable.bg_btn_white);
-            mBtnLeft.setTextColor(getResources().getColor(R.color.t5_color));
+            mBtnLeft.setTextColor(mContext.getResources().getColor(R.color.t5_color));
         }
         if (mWhitenRight) {
             mBtnRight.setBackgroundResource(R.drawable.bg_btn_white);
-            mBtnRight.setTextColor(getResources().getColor(R.color.t5_color));
+            mBtnRight.setTextColor(mContext.getResources().getColor(R.color.t5_color));
         }
     }
 
@@ -125,7 +105,12 @@ public class SumianAlertDialog extends DialogFragment {
     }
 
     public SumianAlertDialog setMessage(@StringRes int messageRes) {
-        mMessageRes = messageRes;
+        mMessage = mContext.getString(messageRes);
+        return this;
+    }
+
+    public SumianAlertDialog setMessage(String message) {
+        mMessage = message;
         return this;
     }
 
@@ -143,12 +128,14 @@ public class SumianAlertDialog extends DialogFragment {
         return this;
     }
 
-    public static SumianAlertDialog create() {
-        return new SumianAlertDialog();
+    public void show() {
+        updateView();
+        mDialog.show();
     }
 
-    public void show(android.support.v4.app.FragmentManager fragmentManager) {
-        show(fragmentManager, getClass().getSimpleName());
+    public SumianAlertDialog setCancelable() {
+        mDialog.setCancelable(false);
+        return this;
     }
 
     @OnClick({R.id.iv_close, R.id.btn_left, R.id.btn_right})
@@ -169,7 +156,7 @@ public class SumianAlertDialog extends DialogFragment {
             default:
                 break;
         }
-        dismiss();
+        mDialog.dismiss();
     }
 
     public SumianAlertDialog whitenLeft() {
