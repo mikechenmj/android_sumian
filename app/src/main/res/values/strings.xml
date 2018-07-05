@@ -197,5 +197,7 @@
     <string name="no_doctor_evaluation_hint">医生建议尚未更新，请耐心等待，更新后，我们会在消息中心通知您查看</string>
     <string name="extra_user_info">以上个人信息仅供医生参考，不予公开。</string>
     <string name="logout_failed_please_check_network">退出登录失败，请检查网络</string>
-
+    <string name="operation_warning">操作警告</string>
+    <string name="operation_success">操作成功</string>
+    <string name="operation_fail">操作失败</string>
 </resources>

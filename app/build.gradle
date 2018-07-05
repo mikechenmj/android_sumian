@@ -151,9 +151,6 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
-            buildConfigField("String", "ABOUT_ME_URL", DEV_ABOUT_ME_URL)
-            buildConfigField("String", "USER_AGREEMENT_URL", DEV_USER_AGREEMENT_URL)
-            buildConfigField("String", "USER_POLICY_URL", DEV_USER_PRIVACY_URL)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -181,9 +178,6 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
-            buildConfigField("String", "ABOUT_ME_URL", TEST_ABOUT_ME_URL)
-            buildConfigField("String", "USER_AGREEMENT_URL", TEST_USER_AGREEMENT_URL)
-            buildConfigField("String", "USER_POLICY_URL", TEST_USER_PRIVACY_URL)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -208,9 +202,6 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
 
             buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
-            buildConfigField("String", "ABOUT_ME_URL", OFFICIAL_ABOUT_ME_URL)
-            buildConfigField("String", "USER_AGREEMENT_URL", OFFICIAL_USER_AGREEMENT_URL)
-            buildConfigField("String", "USER_POLICY_URL", OFFICIAL_USER_PRIVACY_URL)
 
             resValue "string", "app_name", app_name
             println("${app_name}")

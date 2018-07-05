@@ -60,12 +60,4 @@
         <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
     </style>
 
-    <style name="SumianDialog">
-        <item name="android:windowMinWidthMinor">90%</item> <!-- 宽度屏占比 -->
-        <!-- 默认背景是白色的圆角矩形，改为透明 -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
-        <item name="android:windowCloseOnTouchOutside">true</item>
-    </style>
-
 </resources>

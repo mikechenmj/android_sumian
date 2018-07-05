@@ -21,4 +21,6 @@ public interface H5Uri {
     String BIND_DOCTOR = "doctor/{id}";
     String ABOUT_US = "about-us";
     String ADVISORY_GUIDE = "advisory-guide";
+    String USER_AGREEMENT_URL = "user-agreement";
+    String USER_POLICY_URL = "privacy-policy";
 }

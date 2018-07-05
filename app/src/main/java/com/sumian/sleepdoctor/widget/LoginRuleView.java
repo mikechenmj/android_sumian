@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 
 import butterknife.BindView;
@@ -68,10 +69,12 @@ public class LoginRuleView extends LinearLayout implements View.OnClickListener 
                 }
                 break;
             case R.id.tv_rule_user_agreement:
-                SimpleWebActivity.launch(getContext(), BuildConfig.USER_AGREEMENT_URL);
+                SimpleWebActivity.launch(getContext(), H5Uri.USER_AGREEMENT_URL);
                 break;
             case R.id.tv_privacy_policy:
-                SimpleWebActivity.launch(getContext(), BuildConfig.USER_POLICY_URL);
+                SimpleWebActivity.launch(getContext(), H5Uri.USER_POLICY_URL);
+                break;
+            default:
                 break;
         }
     }

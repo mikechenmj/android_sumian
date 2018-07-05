@@ -12,11 +12,15 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.h5.bean.H5ShowToastData;
+import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
+import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.utils.ScreenUtil;
 import com.sumian.sleepdoctor.utils.SoftKeyBoardListener;
 import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.dialog.SumianImageTextDialog;
 
 import butterknife.BindView;
 
@@ -25,7 +29,7 @@ import butterknife.BindView;
  * on 2018/5/25 10:03
  * desc:
  **/
-public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener{
+public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -33,8 +37,8 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     View mRootView;
     @BindView(R.id.sm_webview_container)
     protected SWebViewLayout mSWebViewLayout;
-
     private SoftKeyBoardListener mSoftKeyBoardListener;
+    private SumianImageTextDialog mSumianImageTextDialog;
 
     @Override
     protected int getLayoutId() {
@@ -62,8 +66,59 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     @Override
     protected void initData() {
         super.initData();
-        registerHandler(mSWebViewLayout.getSWebView());
+        SWebView sWebView = mSWebViewLayout.getSWebView();
+        registerHandler(sWebView);
         mSWebViewLayout.setWebListener(this);
+        registerDialogHandler(sWebView);
+    }
+
+    private void registerDialogHandler(SWebView sWebView) {
+        sWebView.registerHandler("showToast", new SBridgeHandler() {
+            @SuppressWarnings("ConstantConditions")
+            @Override
+            public void handler(String data) {
+                LogUtils.d(data);
+                H5ShowToastData toastData = JsonUtil.fromJson(data, H5ShowToastData.class);
+                //1.text 2.success 3.error 4.loading 5.warning
+                if (mSumianImageTextDialog != null && mSumianImageTextDialog.isShowing()) {
+                    mSumianImageTextDialog.dismiss();
+                }
+                mSumianImageTextDialog = new SumianImageTextDialog(mActivity);
+                switch (toastData.getType()) {
+                    case "text":
+                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_TEXT).setText(toastData.getMessage());
+                        break;
+                    case "success":
+                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_SUCCESS);
+                        break;
+                    case "error":
+                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_FAIL);
+                        break;
+                    case "loading":
+                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_LOADING);
+                        break;
+                    case "warning":
+                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_WARNING);
+                        break;
+                    default:
+                        break;
+                }
+                if (mSumianImageTextDialog != null) {
+                    mSumianImageTextDialog.show(toastData.getDelay(), toastData.getDuration());
+                }
+            }
+        });
+        sWebView.registerHandler("hideToast", new SBridgeHandler() {
+            @SuppressWarnings("ConstantConditions")
+            @Override
+            public void handler(String data) {
+                LogUtils.d(data);
+                H5ShowToastData toastData = JsonUtil.fromJson(data, H5ShowToastData.class);
+                if (mSumianImageTextDialog != null && mSumianImageTextDialog.isShowing()) {
+                    mSumianImageTextDialog.dismiss(toastData.getDelay());
+                }
+            }
+        });
     }
 
     @Override
