@@ -38,8 +38,7 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
 
     private static final String TAG = SleepFileWebActivity.class.getSimpleName();
 
-    private List<String> selectedImages = new ArrayList<>(0);
-    //private List<String> mBase64Data = new ArrayList<>(0);
+    private String[] selectedImages;
 
     @Override
     protected String getUrlContentPart() {
@@ -61,28 +60,24 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                 //super.handler(data, function);
                 ImageCount imageCount = JsonUtil.fromJson(data, ImageCount.class);
 
-                if (imageCount != null) {
-                    Log.e(TAG, "handler: ----1---->" + imageCount.toString());
+                if (imageCount == null) {
+                    return;
                 }
+
+                Log.e(TAG, "handler: ----1---->" + imageCount.toString());
 
                 SelectImageActivity.show(SleepFileWebActivity.this, new SelectOptions
                         .Builder()
                         .setHasCam(true)
                         .setCallback(images -> {
+                            selectedImages = images;
                             enCodeBase64(images, (base64Images) -> {
-//                                for (String base64Image : base64Images) {
-//                                    if (mBase64Data.contains(base64Image)) {
-//                                        mBase64Data.remove(base64Image);
-//                                    } else {
-//                                        mBase64Data.add(base64Image);
-//                                    }
-//                                }
                                 String toJson = JsonUtil.toJson(base64Images);
                                 function.onCallBack(toJson);
                             });
 
                             Log.e(TAG, "handler: ------>" + "123");
-                        }).setSelectCount(9).setSelectedImages(selectedImages).build());
+                        }).setSelectCount(imageCount.selectQuantity).setSelectedImages(selectedImages).build());
             }
         });
     }

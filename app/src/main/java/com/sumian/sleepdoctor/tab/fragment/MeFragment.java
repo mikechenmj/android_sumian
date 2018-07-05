@@ -66,7 +66,9 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
     }
 
     @OnClick({
+            R.id.iv_avatar,
             R.id.dv_user_info_center,
+            R.id.tv_nickname,
             R.id.dv_my_evaluation,
             R.id.dv_my_consulting,
             R.id.dv_setting,
@@ -76,7 +78,13 @@ public class MeFragment extends BaseFragment implements HomeDelegate, View.OnCli
     })
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_avatar:
+                UserProfileActivity.show(getContext(), UserProfileActivity.class);
+                break;
             case R.id.dv_user_info_center:
+                UserProfileActivity.show(getContext(), UserProfileActivity.class);
+                break;
+            case R.id.tv_nickname:
                 UserProfileActivity.show(getContext(), UserProfileActivity.class);
                 break;
             case R.id.dv_my_evaluation:

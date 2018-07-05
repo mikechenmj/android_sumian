@@ -147,16 +147,20 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
     override fun onResume() {
         super.onResume()
 
-        val cacheContent = AdvisoryContentCacheUtils.checkAndLoadCacheContent()
-        cacheContent?.let {
-            et_input.setText(it)
-            et_input.setSelection(it.length)
+        mAdvisory?.let {
+            val cacheContent = AdvisoryContentCacheUtils.checkAndLoadCacheContent(it.id)
+            cacheContent?.let {
+                et_input.setText(it)
+                et_input.setSelection(it.length)
+            }
         }
     }
 
     override fun onStop() {
         super.onStop()
-        AdvisoryContentCacheUtils.saveContent2Cache(et_input.text.toString().trim())
+        mAdvisory?.let {
+            AdvisoryContentCacheUtils.saveContent2Cache(it.id, et_input.text.toString().trim())
+        }
     }
 
     override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter) {
@@ -207,7 +211,7 @@ class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.
 
     override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
         et_input.text = null
-        AdvisoryContentCacheUtils.clearCache()
+        AdvisoryContentCacheUtils.clearCache(advisoryId = advisory.id)
         this.mAdvisory = advisory
         this.mPresenter.getLastAdvisory()
         AdvisoryDetailActivity.launch(this, advisory)

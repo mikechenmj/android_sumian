@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.improve.advisory.utils
 
 import com.sumian.common.utils.StreamUtil
 import com.sumian.sleepdoctor.app.App
+import com.sumian.sleepdoctor.utils.JsonUtil.toJson
 import java.io.*
 
 /**
@@ -13,7 +14,7 @@ import java.io.*
  *
  *     version: 1.0
  *
- *     desc:图文咨询缓存,目前主要用来缓存未提交的文本信息
+ *     desc:图文咨询缓存,目前主要用来缓存未提交的图文咨询文本信息
  *
  * </pre>
  */
@@ -21,24 +22,32 @@ class AdvisoryContentCacheUtils {
 
     companion object {
 
-        fun saveContent2Cache(content: String) {
+        private const val cacheFileName = "cacheContent.tmp"
+
+        fun saveContent2Cache(advisoryId: Int, content: String) {
             synchronized(this) {
-                val cacheContent = File(App.getAppContext().cacheDir, "cacheContent.tmp")
+                val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
                 if (cacheContent.exists()) {
-                    writeCache(cacheContent, content)
+                    if (cacheContent.length() > 0) {
+                        writeCache(advisoryId, cacheContent, content)
+                    } else {
+
+                    }
                 } else {
                     val createNewFile = cacheContent.createNewFile()
                     if (createNewFile) {
-                        writeCache(cacheContent, content)
+                        writeCache(advisoryId, cacheContent, content)
                     }
                 }
             }
         }
 
-        private fun writeCache(cacheContent: File, content: String) {
-            val bw = BufferedWriter(OutputStreamWriter(FileOutputStream(cacheContent)))
+        private fun writeCache(advisoryId: Int, cacheContentFile: File, content: String) {
+            val tmpMap = mutableMapOf<Int, String>()
+            tmpMap[advisoryId] = content
+            val bw = BufferedWriter(OutputStreamWriter(FileOutputStream(cacheContentFile)))
             try {
-                bw.write(content)
+                bw.write(toJson(tmpMap))
                 bw.flush()
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -47,8 +56,8 @@ class AdvisoryContentCacheUtils {
             }
         }
 
-        fun checkAndLoadCacheContent(): String? {
-            val cacheContent = File(App.getAppContext().cacheDir, "cacheContent.tmp")
+        fun checkAndLoadCacheContent(advisoryId: Int): String? {
+            val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
             if (cacheContent.exists() && cacheContent.length() > 0) {
                 val br = BufferedReader(InputStreamReader(FileInputStream(cacheContent)))
                 var line: String?
@@ -70,9 +79,9 @@ class AdvisoryContentCacheUtils {
             }
         }
 
-        fun clearCache() {
+        fun clearCache(advisoryId: Int) {
             synchronized(this) {
-                val cacheContent = File(App.getAppContext().cacheDir, "cacheContent.tmp")
+                val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
                 if (cacheContent.exists()) {
                     cacheContent.delete()
                 }

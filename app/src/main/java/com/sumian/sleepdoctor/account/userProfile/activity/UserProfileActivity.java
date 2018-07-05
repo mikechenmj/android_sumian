@@ -23,6 +23,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.sheet.ModifySelectBottomSheet;
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.account.userProfile.contract.UserInfoContract;
 import com.sumian.sleepdoctor.account.userProfile.presenter.UserInfoPresenter;
@@ -202,15 +203,19 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
                 ModifyUserInfoActivity.show(this, ImproveUserProfileContract.IMPROVE_NAME_KEY);
                 break;
             case R.id.dv_gender:
-
+                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_GENDER_KEY);
                 break;
             case R.id.dv_birthday:
+                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY);
                 break;
             case R.id.dv_height:
+                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_HEIGHT_KEY);
                 break;
             case R.id.dv_weight:
+                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_WEIGHT_KEY);
                 break;
             case R.id.dv_edu_level:
+                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_EDUCATION_KEY);
                 break;
             case R.id.dv_career:
                 ModifyUserInfoActivity.show(this, ImproveUserProfileContract.IMPROVE_CAREER_KEY);
@@ -218,6 +223,13 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
             default:
                 break;
         }
+    }
+
+    private void commitModifySelectBottomSheet(String modifyKey) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(ModifySelectBottomSheet.Companion.newInstance(modifyKey), ModifySelectBottomSheet.class.getSimpleName())
+                .commitNow();
     }
 
     @AfterPermissionGranted(PIC_REQUEST_CODE_CAMERA)
@@ -390,8 +402,8 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
         mDvName.setContent(userProfile.name);
         mDvGender.setContent(userProfile.formatGander());
         mDvBirthday.setContent(userProfile.formatField(userProfile.birthday));
-        mDvHeight.setContent(userProfile.formatField(userProfile.height));
-        mDvWeight.setContent(userProfile.formatField(userProfile.weight));
+        mDvHeight.setContent(userProfile.formatField(userProfile.height) + "cm");
+        mDvWeight.setContent(userProfile.formatField(userProfile.weight + "kg"));
         mDvEduLevel.setContent(userProfile.formatField(userProfile.education));
         mDvCareer.setContent(userProfile.career);
 
