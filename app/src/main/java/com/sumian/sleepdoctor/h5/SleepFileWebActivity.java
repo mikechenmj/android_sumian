@@ -83,25 +83,31 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
     }
 
     private void enCodeBase64(String[] images, OnDecodeBase64Callback onDecodeBase64Callback) {
-
         AppOperator.runOnThread(() -> {
             //image array ------> base64  array
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 1;
-            //options.inTempStorage = new byte[16 * 1024 * 1024];
+            options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+            // options.inTempStorage = new byte[16 * 1024 * 1024];
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             String image;
             byte[] bytes;
 
+            Bitmap bitmap = null;
+
             StringBuilder imageBase64 = new StringBuilder();
-            List<String> tmp = new ArrayList<>(0);
+            List<String> tmp = new ArrayList<>(images.length);
             for (int i = 0; i < images.length; i++) {
+                if (bitmap != null) {
+                    //   options.inBitmap = bitmap;
+                }
                 bos.reset();
                 imageBase64.delete(0, imageBase64.length());
                 image = images[i];
                 Log.e(TAG, "handler: ----------->position=" + i + "    image=" + image);
-
-                Bitmap bitmap = BitmapFactory.decodeFile(image, options);
+                // options.inJustDecodeBounds = true;
+                bitmap = BitmapFactory.decodeFile(image, options);
+                //options.inJustDecodeBounds = false;
                 if (bitmap == null) continue;
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
                 try {
@@ -113,7 +119,9 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                 }
 
                 bytes = bos.toByteArray();
-                bitmap.recycle();
+                if (!bitmap.isRecycled()) {
+                    bitmap.recycle();
+                }
                 imageBase64.append("data:image/png;base64,").append(Base64.encodeToString(bytes, Base64.NO_WRAP));
 
                 Log.e(TAG, "handler: ------imageBase64------>" + imageBase64);

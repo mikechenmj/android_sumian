@@ -54,7 +54,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_main_login;
+        return R.layout.activity_main_login;
     }
 
     @Override

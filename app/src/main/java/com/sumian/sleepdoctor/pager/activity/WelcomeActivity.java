@@ -24,7 +24,7 @@ public class WelcomeActivity extends BaseActivity implements OtherDelegate {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_welcome;
+        return R.layout.activity_main_welcome;
     }
 
     @Override

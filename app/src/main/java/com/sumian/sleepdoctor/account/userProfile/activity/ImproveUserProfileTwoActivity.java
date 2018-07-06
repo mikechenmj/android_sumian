@@ -38,7 +38,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_improve_user_profile_two;
+        return R.layout.activity_main_improve_user_profile_two;
     }
 
     @Override

@@ -14,7 +14,7 @@ import com.sumian.sleepdoctor.improve.advisory.adapter.AdvisoryListAdapter
 import com.sumian.sleepdoctor.improve.advisory.bean.Advisory
 import com.sumian.sleepdoctor.improve.advisory.contract.AdvisoryListContract
 import com.sumian.sleepdoctor.improve.advisory.presenter.AdvisoryListPresenter
-import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
+import kotlinx.android.synthetic.main.activity_main_advisory_list.*
 
 /**
  *
@@ -45,7 +45,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_main_advisory_list
+        return R.layout.activity_main_advisory_list
     }
 
     override fun initPresenter() {

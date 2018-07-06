@@ -34,7 +34,7 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_improve_user_profile_one;
+        return R.layout.activity_main_improve_user_profile_one;
     }
 
     @Override
@@ -57,12 +57,12 @@ public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfi
 
         String nickname = mEtCaptcha.getText().toString().trim();
         if (TextUtils.isEmpty(nickname)) {
-            showToast(R.string.improve_user_profile_one_part_two);
+            showCenterToast(R.string.improve_user_profile_one_part_two);
             return;
         }
 
         if (nickname.length() <= 0 || nickname.length() > 10) {
-            showToast(R.string.error_nickname);
+            showCenterToast(R.string.error_nickname);
             return;
         }
 

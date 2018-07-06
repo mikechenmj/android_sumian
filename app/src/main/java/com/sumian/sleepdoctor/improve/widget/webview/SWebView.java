@@ -3,11 +3,13 @@ package com.sumian.sleepdoctor.improve.widget.webview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.webkit.SslErrorHandler;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -32,6 +34,7 @@ public class SWebView extends BridgeWebView {
     private static final long DEFAULT_DELAY_MILLIS = 30 * 1000L;
 
     private OnWebViewListener mWebViewListener;
+    private OnRequestFileCallback mOnRequestFileCallback;
     private int mErrorCode = -1;
 
     private Runnable mDismissRunnable = new Runnable() {
@@ -46,6 +49,10 @@ public class SWebView extends BridgeWebView {
 
     public void setOnWebViewListener(OnWebViewListener listener) {
         this.mWebViewListener = listener;
+    }
+
+    public void setOnRequestFileCallback(OnRequestFileCallback onRequestFileCallback) {
+        mOnRequestFileCallback = onRequestFileCallback;
     }
 
     public SWebView(Context context) {
@@ -93,6 +100,11 @@ public class SWebView extends BridgeWebView {
         super.destroy();
     }
 
+    public interface OnRequestFileCallback {
+
+        boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams);
+    }
+
     //进度回调接口
     public interface OnWebViewListener {
 
@@ -137,6 +149,12 @@ public class SWebView extends BridgeWebView {
             if (mWebViewListener != null) {
                 mWebViewListener.onReceiveTitle(view, title);
             }
+        }
+
+        @Override
+        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+            Log.e(TAG, "onShowFileChooser: ---------->");
+            return mOnRequestFileCallback != null && mOnRequestFileCallback.onShowFileChooser(webView, filePathCallback, fileChooserParams);
         }
     }
 

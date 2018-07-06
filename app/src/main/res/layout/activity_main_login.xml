@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_32"
-            android:text="@string/hello_comment_mark" />
+            android:text="@string/hello_comment_mark"
+            android:textSize="@dimen/font_30" />
 
         <TextView
             style="@style/text_t2_style"

@@ -51,7 +51,7 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_main_bind_mobile;
+        return R.layout.activity_main_bind_mobile;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_setting;
+        return R.layout.activity_main_setting;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.version:
-
+                VersionActivity.show(this, VersionActivity.class);
                 break;
             case R.id.about_me:
                 SimpleWebActivity.launch(this, H5Uri.ABOUT_US);

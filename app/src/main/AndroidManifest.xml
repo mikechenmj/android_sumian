@@ -192,6 +192,7 @@
             android:theme="@style/BaseAppTheme" />
         <activity android:name=".notification.RefundActivity" />
         <activity android:name=".h5.SleepFileWebActivity" />
+        <activity android:name=".pager.activity.VersionActivity" />
     </application>
 
 </manifest>

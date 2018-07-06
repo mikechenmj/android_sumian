@@ -53,7 +53,7 @@ public class ModifyUserInfoActivity extends BaseActivity<ImproveUserProfileContr
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pager_modify_nickname;
+        return R.layout.activity_main_modify_nickname;
     }
 
     @Override
