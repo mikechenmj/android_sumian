@@ -39,6 +39,6 @@ public class NotificationListAdapter extends BaseQuickAdapter<Notification, Base
         helper.setText(R.id.tv_title, data.getTitle());
         helper.setText(R.id.tv_content, data.getContent());
         long time = item.getCreateAtInMillis();
-        helper.setText(R.id.tv_time, TimeUtil.formatDate("yyyy/MM/dd hh:mm", time));
+        helper.setText(R.id.tv_time, TimeUtil.formatDate("yyyy/MM/dd HH:mm", time));
     }
 }
