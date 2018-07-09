@@ -399,13 +399,13 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
         Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
         mDvNickname.setContent(userProfile.nickname);
 
-        mDvName.setContent(userProfile.name);
+        mDvName.setContent(userProfile.formatField(userProfile.name));
         mDvGender.setContent(userProfile.formatGander());
         mDvBirthday.setContent(userProfile.formatField(userProfile.birthday));
-        mDvHeight.setContent(userProfile.formatField(userProfile.height) + "cm");
-        mDvWeight.setContent(userProfile.formatField(userProfile.weight + "kg"));
+        mDvHeight.setContent(userProfile.formatHeight(userProfile.formatField(userProfile.height)));
+        mDvWeight.setContent(userProfile.formatWeight(userProfile.formatField(userProfile.weight)));
         mDvEduLevel.setContent(userProfile.formatField(userProfile.education));
-        mDvCareer.setContent(userProfile.career);
+        mDvCareer.setContent(userProfile.formatField(userProfile.career));
 
         mDvMobile.setContent(userProfile.mobile);
         updateDvWechatUI(userProfile.socialites);

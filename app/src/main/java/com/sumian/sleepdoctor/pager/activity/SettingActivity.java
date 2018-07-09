@@ -65,7 +65,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.version:
-                VersionActivity.show(this, VersionActivity.class);
+                // VersionActivity.show(this, VersionActivity.class);
                 break;
             case R.id.about_me:
                 SimpleWebActivity.launch(this, H5Uri.ABOUT_US);
@@ -97,23 +97,22 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
 
     private void logout() {
         Call<Unit> call = AppManager.getHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId());
-        call
-                .enqueue(new BaseResponseCallback<Unit>() {
-                    @Override
-                    protected void onSuccess(Unit response) {
-                        NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
-                        AppOperator.runOnThread(AccountCache::clearCache);
-                        AppManager.getGroupViewModel().notifyGroups(null);
-                        AppManager.getChatEngine().logoutImServer();
-                        AppManager.getAccountViewModel().updateToken(null);
-                        LoginActivity.showClearTop(SettingActivity.this, LoginActivity.class);
-                        AppManager.getOpenLogin().deleteWeiXinOauth(SettingActivity.this);
-                    }
+        call.enqueue(new BaseResponseCallback<Unit>() {
+            @Override
+            protected void onSuccess(Unit response) {
+                NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
+                AppOperator.runOnThread(AccountCache::clearCache);
+                AppManager.getGroupViewModel().notifyGroups(null);
+                AppManager.getChatEngine().logoutImServer();
+                AppManager.getAccountViewModel().updateToken(null);
+                LoginActivity.showClearTop(SettingActivity.this, LoginActivity.class);
+                AppManager.getOpenLogin().deleteWeiXinOauth(SettingActivity.this);
+            }
 
-                    @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                        ToastUtils.showShort(R.string.logout_failed_please_check_network);
-                    }
-                });
+            @Override
+            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                ToastUtils.showShort(R.string.logout_failed_please_check_network);
+            }
+        });
     }
 }

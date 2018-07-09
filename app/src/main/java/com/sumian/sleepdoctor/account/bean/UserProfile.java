@@ -155,6 +155,14 @@ public class UserProfile implements Serializable, Parcelable {
         return TextUtils.isEmpty(field) ? App.Companion.getAppContext().getString(R.string.none_edit) : field;
     }
 
+    public String formatWeight(String weight) {
+        return App.Companion.getAppContext().getString(R.string.none_edit).equals(weight) ? weight : weight + "kg";
+    }
+
+    public String formatHeight(String height) {
+        return App.Companion.getAppContext().getString(R.string.none_edit).equals(height) ? height : height + "cm";
+    }
+
     @Override
     public String toString() {
         return "UserProfile{" +

@@ -2,7 +2,9 @@ package com.sumian.sleepdoctor.improve.advisory.utils
 
 import com.sumian.common.utils.StreamUtil
 import com.sumian.sleepdoctor.app.App
+import com.sumian.sleepdoctor.utils.JsonUtil
 import com.sumian.sleepdoctor.utils.JsonUtil.toJson
+import org.json.JSONObject
 import java.io.*
 
 /**
@@ -73,7 +75,9 @@ class AdvisoryContentCacheUtils {
                 } finally {
                     StreamUtil.close(br)
                 }
-                return buff.toString()
+                val json = buff.toString()
+                val jsonObject = JSONObject(json)
+                return jsonObject.getString(advisoryId.toString())
             } else {
                 return null
             }

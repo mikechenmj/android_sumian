@@ -13,6 +13,7 @@ import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileCon
 import com.sumian.sleepdoctor.account.userProfile.contract.ModifyUserInfoContract
 import com.sumian.sleepdoctor.account.userProfile.presenter.ModifyUserInfoPresenter
 import com.sumian.sleepdoctor.widget.BaseBottomSheetView
+import java.util.*
 
 /**
  * Created by sm
@@ -22,7 +23,29 @@ import com.sumian.sleepdoctor.widget.BaseBottomSheetView
  * desc:修改用户数据 e.g. gender/weight/height/birthday/education
  *
  */
-class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.View, View.OnClickListener {
+class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.View, View.OnClickListener, NumberPickerView.OnValueChangeListener {
+    override fun onValueChange(picker: NumberPickerView?, oldVal: Int, newVal: Int) {
+        val year: Int
+        when (mModifyKey) {
+            ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
+                year = Integer.parseInt(picker?.contentByCurrValue, 10)
+                if (year == Calendar.getInstance().get(Calendar.YEAR)) {
+                    val monthCount = Calendar.getInstance().get(Calendar.MONTH) + 1
+                    val months = arrayOfNulls<String>(monthCount)
+                    for (i in months.indices) {
+                        months[i] = String.format(Locale.getDefault(), "%02d", i + 1)
+                    }
+                    mPickerTwo.refreshByNewDisplayedValues(months)
+                } else {
+                    val months = arrayOfNulls<String>(12)
+                    for (i in months.indices) {
+                        months[i] = String.format(Locale.getDefault(), "%02d", i + 1)
+                    }
+                    mPickerTwo.refreshByNewDisplayedValues(months)
+                }
+            }
+        }
+    }
 
     @BindView(R.id.tv_title)
     lateinit var mTvTitle: TextView
@@ -69,6 +92,8 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.Vi
 
     override fun initView(rootView: View?) {
         super.initView(rootView)
+        mPickerOne.setOnValueChangedListener(this)
+
         mPresenter.transformTitle(mModifyKey)
     }
 

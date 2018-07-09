@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.h5;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.util.Log;
 
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.sumian.common.media.SelectImageActivity;
@@ -64,8 +63,6 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                     return;
                 }
 
-                Log.e(TAG, "handler: ----1---->" + imageCount.toString());
-
                 SelectImageActivity.show(SleepFileWebActivity.this, new SelectOptions
                         .Builder()
                         .setHasCam(true)
@@ -76,7 +73,6 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                                 function.onCallBack(toJson);
                             });
 
-                            Log.e(TAG, "handler: ------>" + "123");
                         }).setSelectCount(imageCount.selectQuantity).setSelectedImages(selectedImages).build());
             }
         });
@@ -86,30 +82,26 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
         AppOperator.runOnThread(() -> {
             //image array ------> base64  array
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 1;
-            options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+            options.inSampleSize = 2;
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
             // options.inTempStorage = new byte[16 * 1024 * 1024];
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             String image;
             byte[] bytes;
 
-            Bitmap bitmap = null;
+            Bitmap bitmap;
 
             StringBuilder imageBase64 = new StringBuilder();
             List<String> tmp = new ArrayList<>(images.length);
-            for (int i = 0; i < images.length; i++) {
-                if (bitmap != null) {
-                    //   options.inBitmap = bitmap;
-                }
+            for (String tmpImage : images) {
                 bos.reset();
                 imageBase64.delete(0, imageBase64.length());
-                image = images[i];
-                Log.e(TAG, "handler: ----------->position=" + i + "    image=" + image);
+                image = tmpImage;
                 // options.inJustDecodeBounds = true;
                 bitmap = BitmapFactory.decodeFile(image, options);
                 //options.inJustDecodeBounds = false;
                 if (bitmap == null) continue;
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
                 try {
                     bos.flush();
                 } catch (IOException e) {
@@ -124,11 +116,11 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                 }
                 imageBase64.append("data:image/png;base64,").append(Base64.encodeToString(bytes, Base64.NO_WRAP));
 
-                Log.e(TAG, "handler: ------imageBase64------>" + imageBase64);
                 tmp.add(imageBase64.toString());
             }
 
             runOnUiThread(() -> {
+                showCenterToast("图片正在上传中...");
                 if (onDecodeBase64Callback != null) {
                     onDecodeBase64Callback.onDecode(tmp);
                 }
