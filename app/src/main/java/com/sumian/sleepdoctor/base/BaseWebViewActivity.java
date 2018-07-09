@@ -78,7 +78,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
             @Override
             public void handler(String data) {
                 LogUtils.d(data);
-                H5ShowToastData toastData = JsonUtil.fromJson(data, H5ShowToastData.class);
+                H5ShowToastData toastData = H5ShowToastData.Companion.fromJson(data);
                 //1.text 2.success 3.error 4.loading 5.warning
                 if (mSumianImageTextDialog != null && mSumianImageTextDialog.isShowing()) {
                     mSumianImageTextDialog.dismiss();
@@ -113,7 +113,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
             @Override
             public void handler(String data) {
                 LogUtils.d(data);
-                H5ShowToastData toastData = JsonUtil.fromJson(data, H5ShowToastData.class);
+                H5ShowToastData toastData = H5ShowToastData.Companion.fromJson(data);
                 if (mSumianImageTextDialog != null && mSumianImageTextDialog.isShowing()) {
                     mSumianImageTextDialog.dismiss(toastData.getDelay());
                 }
