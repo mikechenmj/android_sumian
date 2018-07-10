@@ -16,7 +16,6 @@ import com.sumian.sleepdoctor.h5.bean.H5ShowToastData;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
-import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.utils.ScreenUtil;
 import com.sumian.sleepdoctor.utils.SoftKeyBoardListener;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -70,6 +69,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         registerHandler(sWebView);
         mSWebViewLayout.setWebListener(this);
         registerDialogHandler(sWebView);
+        mSWebViewLayout.loadRequestUrl(getCompleteUrl());
     }
 
     private void registerDialogHandler(SWebView sWebView) {
@@ -121,10 +121,10 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         });
     }
 
+
     @Override
     public void onStart(@NonNull LifecycleOwner owner) {
         super.onStart(owner);
-        mSWebViewLayout.loadRequestUrl(getCompleteUrl());
     }
 
     @Override

@@ -3,14 +3,14 @@ package com.sumian.sleepdoctor.h5;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.sumian.common.media.SelectImageActivity;
-import com.sumian.common.media.config.SelectOptions;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.common.utils.StreamUtil;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.bean.ImageCount;
+import com.sumian.sleepdoctor.improve.widget.sheet.SelectPictureBottomSheet;
 import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.utils.JsonUtil;
@@ -63,17 +63,15 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                     return;
                 }
 
-                SelectImageActivity.show(SleepFileWebActivity.this, new SelectOptions
-                        .Builder()
-                        .setHasCam(true)
-                        .setCallback(images -> {
-                            selectedImages = images;
-                            enCodeBase64(images, (base64Images) -> {
-                                String toJson = JsonUtil.toJson(base64Images);
-                                function.onCallBack(toJson);
-                            });
-
-                        }).setSelectCount(imageCount.selectQuantity).setSelectedImages(selectedImages).build());
+                SelectPictureBottomSheet.show(getSupportFragmentManager(), images -> {
+                    selectedImages = images;
+                    Log.e(TAG, "handler: -------->");
+                    enCodeBase64(images, (base64Images) -> {
+                        String toJson = JsonUtil.toJson(base64Images);
+                        function.onCallBack(toJson);
+                    });
+                    return images == null || images.length <= 0;
+                }, imageCount.selectQuantity, selectedImages);
             }
         });
     }
@@ -120,14 +118,12 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
             }
 
             runOnUiThread(() -> {
-                showCenterToast("图片正在上传中...");
                 if (onDecodeBase64Callback != null) {
                     onDecodeBase64Callback.onDecode(tmp);
                 }
             });
         });
     }
-
 
     interface OnDecodeBase64Callback {
 

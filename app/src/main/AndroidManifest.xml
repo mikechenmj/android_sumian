@@ -73,9 +73,7 @@
         <activity
             android:name=".account.userProfile.activity.UserProfileActivity"
             android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name=".pager.activity.ConfigActivity"
-            android:theme="@style/BaseAppTheme" />
+
         <activity
             android:name=".improve.doctor.activity.ShoppingCarActivity"
             android:theme="@style/BaseAppTheme" />
@@ -191,7 +189,9 @@
             android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity"
             android:theme="@style/BaseAppTheme" />
         <activity android:name=".notification.RefundActivity" />
-        <activity android:name=".h5.SleepFileWebActivity" />
+        <activity
+            android:name=".h5.SleepFileWebActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".pager.activity.VersionActivity" />
     </application>
 

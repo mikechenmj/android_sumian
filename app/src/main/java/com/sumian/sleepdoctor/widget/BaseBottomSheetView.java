@@ -22,10 +22,12 @@ import butterknife.Unbinder;
 public abstract class BaseBottomSheetView extends BottomSheetDialogFragment {
 
     private Unbinder mUnbinder;
+    protected Context mContext;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.mContext = context;
         Bundle arguments = getArguments();
         if (arguments == null) return;
         initBundle(arguments);
