@@ -202,4 +202,9 @@
     <string name="operation_fail">操作失败</string>
     <string name="system_maintain">系统维护</string>
     <string name="system_maintain_desc">系统正在维护中，请稍后重试</string>
+    <string name="cbti_title">失眠的认知行为治疗 CBTi</string>
+    <string name="cbti_desc">失眠认知行为治疗是世界上公认的、非药物治疗失眠的最佳疗法，能使各年龄段的失眠人群获益。</string>
+    <string name="cbti_progress_ratio">总进度：第2周/共7周</string>
+    <string name="see_more"><![CDATA[了解更多 >]]></string>
+    <string name="finished">已完成</string>
 </resources>
