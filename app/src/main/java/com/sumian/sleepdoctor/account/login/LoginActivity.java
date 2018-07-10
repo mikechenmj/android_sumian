@@ -145,14 +145,20 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
         switch (v.getId()) {
             case R.id.bt_send_captcha:
                 mobile = mEtMobil.getText().toString().trim();
-                if (checkMobile(mobile)) return;
+                if (checkMobile(mobile)) {
+                    return;
+                }
                 mPresenter.doSendCaptcha(mobile);
                 break;
             case R.id.bt_login:
                 mobile = mEtMobil.getText().toString().trim();
                 String captcha = mEtCaptcha.getText().toString().trim();
-                if (checkMobile(mobile)) return;
-                if (TextUtils.isEmpty(captcha)) return;
+                if (checkMobile(mobile)) {
+                    return;
+                }
+                if (TextUtils.isEmpty(captcha)) {
+                    return;
+                }
                 mPresenter.doLogin(mobile, captcha);
                 break;
             case R.id.tv_wechat_login:
@@ -170,38 +176,41 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     }
 
     @Override
-    public void onStart(SHARE_MEDIA share_media) {
-        Log.e(TAG, "onBegin: -------->" + share_media);
-        switch (share_media) {
+    public void onStart(SHARE_MEDIA shareMedia) {
+        Log.e(TAG, "onBegin: -------->" + shareMedia);
+        switch (shareMedia) {
             case WEIXIN:
                 ToastHelper.show(R.string.opening_wechat);
                 break;
+            default:
+                break;
         }
     }
 
     @Override
-    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-        Log.e(TAG, "onComplete: --------->" + share_media + "  i=" + i + "   map=" + map.toString());
-        mPresenter.checkOpenIsBind(share_media, map);
+    public void onComplete(SHARE_MEDIA shareMedia, int i, Map<String, String> map) {
+        Log.e(TAG, "onComplete: --------->" + shareMedia + "  i=" + i + "   map=" + map.toString());
+        mPresenter.checkOpenIsBind(shareMedia, map);
         onFinish();
     }
 
     @Override
-    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-        Log.e(TAG, "onError: ----------->" + share_media + "  i=" + i + "  " + throwable.getMessage());
+    public void onError(SHARE_MEDIA shareMedia, int i, Throwable throwable) {
+        Log.e(TAG, "onError: ----------->" + shareMedia + "  i=" + i + "  " + throwable.getMessage());
         onFinish();
         // if (i == UMAuthListener.ACTION_AUTHORIZE) {
-        switch (share_media) {
+        switch (shareMedia) {
             case WEIXIN:
                 ToastHelper.show(R.string.no_have_wechat);
                 break;
+            default:
+                break;
         }
-        // }
     }
 
     @Override
-    public void onCancel(SHARE_MEDIA share_media, int i) {
-        Log.e(TAG, "onCancel: --------->" + share_media + "  i=" + i);
+    public void onCancel(SHARE_MEDIA shareMedia, int i) {
+        Log.e(TAG, "onCancel: --------->" + shareMedia + "  i=" + i);
         onFinish();
     }
 
