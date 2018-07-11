@@ -148,8 +148,8 @@
 
         <activity android:name=".h5.SimpleWebActivity" />
         <!-- online report -->
-        <activity android:name=".onlineReport.OnlineReportListActivity" />
-        <activity android:name=".onlineReport.OnlineReportDetailActivity" />
+        <activity android:name=".onlinereport.OnlineReportListActivity" />
+        <activity android:name=".onlinereport.OnlineReportDetailActivity" />
 
         <!-- notification -->
         <activity android:name=".notification.NotificationListActivity" />
@@ -178,7 +178,7 @@
         <activity android:name=".cbti.activity.CBTICurriculumActivity" />
         <activity android:name=".cbti.activity.CBTIIntroductionWebActivity" />
         <activity android:name=".cbti.activity.CBTIWeekPartActivity" />
-        <activity android:name=".sleepRecord.SleepRecordDetailActivity" />
+        <activity android:name=".record.SleepRecordDetailActivity" />
     </application>
 
 </manifest>

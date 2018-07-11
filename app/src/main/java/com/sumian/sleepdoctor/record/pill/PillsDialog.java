@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.record.pill;
+package com.sumian.sleepdoctor.record.pill;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

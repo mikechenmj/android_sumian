@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.record.calendar.calendarViewWrapper;
+package com.sumian.sleepdoctor.record.calendar.calendarViewWrapper;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.widget.record.calendar.calendarView.CalendarView;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

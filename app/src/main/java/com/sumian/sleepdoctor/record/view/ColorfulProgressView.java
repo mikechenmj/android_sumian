@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.sleepRecord.view;
+package com.sumian.sleepdoctor.record.view;
 
 import android.content.Context;
 import android.content.res.Resources;

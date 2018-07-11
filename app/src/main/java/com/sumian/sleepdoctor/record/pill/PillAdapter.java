@@ -1,9 +1,10 @@
-package com.sumian.sleepdoctor.widget.record.pill;
+package com.sumian.sleepdoctor.record.pill;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.sumian.sleepdoctor.record.PillVH;
 import com.sumian.sleepdoctor.record.bean.SleepPill;
 
 import java.util.List;

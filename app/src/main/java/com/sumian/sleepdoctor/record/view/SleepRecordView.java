@@ -1,11 +1,10 @@
-package com.sumian.sleepdoctor.sleepRecord.view;
+package com.sumian.sleepdoctor.record.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,7 +13,7 @@ import com.sumian.sleepdoctor.record.bean.SleepPill;
 import com.sumian.sleepdoctor.record.bean.SleepRecord;
 import com.sumian.sleepdoctor.record.bean.SleepRecordAnswer;
 import com.sumian.sleepdoctor.utils.TimeUtil;
-import com.sumian.sleepdoctor.widget.record.pill.PillsDialog;
+import com.sumian.sleepdoctor.record.pill.PillsDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +69,7 @@ public class SleepRecordView extends LinearLayout {
     @BindView(R.id.tv_no_record_date)
     TextView tvNoRecordDate;
     @BindView(R.id.btn_go_record)
-    Button btnGoRecord;
+    TextView btnGoRecord;
     @BindView(R.id.ll_no_sleep_record)
     LinearLayout llNoSleepRecord;
     private SleepRecord mSleepRecord;

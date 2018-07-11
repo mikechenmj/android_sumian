@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.sleepRecord
+package com.sumian.sleepdoctor.record
 
 import com.sumian.common.base.BaseActivity
 import com.sumian.sleepdoctor.R

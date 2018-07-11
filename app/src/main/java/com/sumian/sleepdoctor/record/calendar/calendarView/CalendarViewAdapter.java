@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.record.calendar.calendarView;
+package com.sumian.sleepdoctor.record.calendar.calendarView;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

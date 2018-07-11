@@ -1,10 +1,10 @@
-package com.sumian.sleepdoctor.widget.record.calendar.custom;
+package com.sumian.sleepdoctor.record.calendar.custom;
 
 import android.content.Context;
 
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.utils.TimeUtil;
-import com.sumian.sleepdoctor.widget.record.calendar.calendarViewWrapper.CalendarViewWrapper;
+import com.sumian.sleepdoctor.record.calendar.calendarViewWrapper.CalendarViewWrapper;
 
 import java.util.HashSet;
 import java.util.List;

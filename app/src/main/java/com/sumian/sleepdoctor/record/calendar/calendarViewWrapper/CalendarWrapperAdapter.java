@@ -1,10 +1,10 @@
-package com.sumian.sleepdoctor.widget.record.calendar.calendarViewWrapper;
+package com.sumian.sleepdoctor.record.calendar.calendarViewWrapper;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.sumian.sleepdoctor.widget.record.calendar.calendarView.CalendarView;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarView;
 
 import java.util.ArrayList;
 import java.util.List;

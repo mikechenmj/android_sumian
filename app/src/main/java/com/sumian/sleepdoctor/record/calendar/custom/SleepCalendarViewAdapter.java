@@ -1,10 +1,10 @@
-package com.sumian.sleepdoctor.widget.record.calendar.custom;
+package com.sumian.sleepdoctor.record.calendar.custom;
 
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 
-import com.sumian.sleepdoctor.widget.record.calendar.calendarView.CalendarViewAdapter;
-import com.sumian.sleepdoctor.widget.record.calendar.calendarView.CalendarViewVH;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarViewAdapter;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarViewVH;
 
 
 /**

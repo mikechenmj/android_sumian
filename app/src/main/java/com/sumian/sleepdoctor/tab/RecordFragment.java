@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.tab;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,25 +25,22 @@ import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.notification.NotificationListActivity;
-import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.record.FillSleepRecordActivity;
 import com.sumian.sleepdoctor.record.bean.DoctorServiceList;
 import com.sumian.sleepdoctor.record.bean.SleepRecord;
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
+import com.sumian.sleepdoctor.record.view.SleepRecordView;
 import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 import com.sumian.sleepdoctor.widget.doctor.DoctorServiceItemView;
-import com.sumian.sleepdoctor.widget.record.TitleView.SleepRecordView;
-import com.sumian.sleepdoctor.widget.record.calendar.calendarView.CalendarView;
-import com.sumian.sleepdoctor.widget.record.calendar.custom.SleepCalendarViewWrapper;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarView;
+import com.sumian.sleepdoctor.record.calendar.custom.SleepCalendarViewWrapper;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;

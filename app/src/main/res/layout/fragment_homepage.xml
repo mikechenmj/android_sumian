@@ -49,7 +49,7 @@
             android:layout_height="wrap_content" />
 
 
-        <com.sumian.sleepdoctor.sleepRecord.view.SimpleSleepRecordView
+        <com.sumian.sleepdoctor.record.view.SimpleSleepRecordView
             android:id="@+id/sleep_record_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -6,7 +6,7 @@ import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.record.FillSleepRecordActivity
-import com.sumian.sleepdoctor.sleepRecord.SleepRecordDetailActivity
+import com.sumian.sleepdoctor.record.SleepRecordDetailActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
 
 /**

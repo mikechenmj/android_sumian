@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.sleepRecord.view.TitleView
+    <com.sumian.sleepdoctor.record.view.TitleView
         android:id="@+id/title_view_sleep_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <com.sumian.sleepdoctor.sleepRecord.view.SleepRecordProgressView
+        <com.sumian.sleepdoctor.record.view.SleepRecordProgressView
             android:id="@+id/progress_view_sleep"
             android:layout_width="@dimen/space_150"
             android:layout_height="@dimen/space_210" />

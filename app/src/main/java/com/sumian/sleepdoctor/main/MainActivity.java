@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private FragmentManager mFragmentManager;
 
-    private String[] mFTags = new String[]{RecordFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), MeFragment.class.getSimpleName()};
+    private String[] mFTags = new String[]{HomepageFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), MeFragment.class.getSimpleName()};
     private LaunchData<LaunchSleepTabBean> mLaunchData;
 
     public static void launch(Context context, int tabIndex) {
@@ -104,12 +104,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 } else {
                     switch (position) {
                         case 0:
-                            if (mLaunchData != null) {
-                                LaunchSleepTabBean data = mLaunchData.data;
-                                fragmentByTag = RecordFragment.newInstance(data.sleepRecordTime, data.needScrollToBottom);
-                            } else {
-                                fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
-                            }
+//                            if (mLaunchData != null) {
+//                                LaunchSleepTabBean data = mLaunchData.data;
+//                                fragmentByTag = RecordFragment.newInstance(data.sleepRecordTime, data.needScrollToBottom);
+//                            } else {
+//                                fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
+//                            }
+                            fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
                             break;
                         case 1:
                             fragmentByTag = BaseFragment.newInstance(DoctorFragment.class);
@@ -147,9 +148,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void addFragment(Fragment f, String fTag) {
         mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(() -> autoSelectDoctorTab(f)).commit();
-        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(() -> {
-            autoSelectDoctorTab(f);
-        }).commit();
     }
 
     private void autoSelectDoctorTab(Fragment f) {

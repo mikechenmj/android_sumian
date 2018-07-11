@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.record.calendar.custom;
+package com.sumian.sleepdoctor.record.calendar.custom;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.widget.record.calendar.calendarView.CalendarViewVH;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarViewVH;
 
 /**
  * <pre>
@@ -32,6 +32,7 @@ public class SleepCalendarViewVH extends CalendarViewVH {
         return new SleepCalendarViewVH(inflate);
     }
 
+    @Override
     public void setDay(int day, int dayType) {
         String text = day > 0 ? String.valueOf(day) : "";
         mTextView.setText(text);

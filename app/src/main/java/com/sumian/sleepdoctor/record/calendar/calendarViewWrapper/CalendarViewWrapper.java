@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.record.calendar.calendarViewWrapper;
+package com.sumian.sleepdoctor.record.calendar.calendarViewWrapper;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.utils.TimeUtil;
-import com.sumian.sleepdoctor.widget.record.calendar.calendarView.CalendarView;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.record.pill;
+package com.sumian.sleepdoctor.record;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

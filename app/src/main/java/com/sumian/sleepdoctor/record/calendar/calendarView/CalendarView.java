@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.widget.record.calendar.calendarView;
+package com.sumian.sleepdoctor.record.calendar.calendarView;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.widget.record.calendar.custom.SleepCalendarViewAdapter;
+import com.sumian.sleepdoctor.record.calendar.custom.SleepCalendarViewAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
