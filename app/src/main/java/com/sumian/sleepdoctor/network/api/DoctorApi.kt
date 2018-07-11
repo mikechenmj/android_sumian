@@ -10,14 +10,14 @@ import com.sumian.sleepdoctor.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
-import com.sumian.sleepdoctor.onlineReport.OnlineReport
+import com.sumian.sleepdoctor.onlinereport.OnlineReport
+import com.sumian.sleepdoctor.order.OrderDetail
 import com.sumian.sleepdoctor.order.OrderDetailV2
 import com.sumian.sleepdoctor.oss.bean.OssResponse
-import com.sumian.sleepdoctor.order.OrderDetail
-import com.sumian.sleepdoctor.scale.bean.Scale
 import com.sumian.sleepdoctor.record.bean.DoctorServiceList
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary
+import com.sumian.sleepdoctor.scale.bean.Scale
 import retrofit2.Call
 import retrofit2.http.*
 

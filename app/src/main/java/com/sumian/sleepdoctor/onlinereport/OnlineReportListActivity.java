@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlineReport;
+package com.sumian.sleepdoctor.onlinereport;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
+import com.sumian.sleepdoctor.onlineReport.OnlineReportListAdapter;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.error.EmptyErrorView;
 
@@ -38,7 +39,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private OnlineReportListAdapter mAdapter;
+    private com.sumian.sleepdoctor.onlineReport.OnlineReportListAdapter mAdapter;
     private int mPage = 1;
     private ArrayList<OnlineReport> mLaunchOnlineReports;
     private boolean mIsPickMode;

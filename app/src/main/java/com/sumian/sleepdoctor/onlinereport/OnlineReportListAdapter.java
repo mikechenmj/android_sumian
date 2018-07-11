@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.onlinereport.OnlineReport;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, Base
 
     private int mMaxSelectCount = 9;
 
-    OnlineReportListAdapter(@Nullable List<OnlineReport> data) {
+    public OnlineReportListAdapter(@Nullable List<OnlineReport> data) {
         super(R.layout.item_online_report, data);
     }
 
