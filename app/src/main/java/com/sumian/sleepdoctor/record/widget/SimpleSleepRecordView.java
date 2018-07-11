@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.record.view;
+package com.sumian.sleepdoctor.record.widget;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

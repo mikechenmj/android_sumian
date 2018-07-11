@@ -30,7 +30,7 @@ import com.sumian.sleepdoctor.record.bean.DoctorServiceList;
 import com.sumian.sleepdoctor.record.bean.SleepRecord;
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
-import com.sumian.sleepdoctor.record.view.SleepRecordView;
+import com.sumian.sleepdoctor.record.widget.SleepRecordView;
 import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
