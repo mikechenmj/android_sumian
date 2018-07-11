@@ -110,13 +110,26 @@
         <attr name="dsiv_image" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="ColorfulProgressView">
+        <attr name="cpv_ring_width" format="float|dimension" />
+        <attr name="cpv_ring_bg_color" format="color|reference" />
+    </declare-styleable>
+
     <declare-styleable name="ProgressView">
         <attr name="pv_ring_width" format="float|dimension" />
         <attr name="pv_ring_bg_color" format="color|reference" />
+        <attr name="pv_progress_color" format="color|reference" />
+        <attr name="pv_progress" format="integer|reference" />
+        <attr name="pv_max_progress" format="integer|reference" />
     </declare-styleable>
 
     <declare-styleable name="TitleView">
         <attr name="title_text" format="string|reference" />
         <attr name="content_text" format="string|reference" />
+        <attr name="tv_show_right_arrow" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="WithLineProgressView">
+        <attr name="wlpv_show_line" format="boolean|reference" />
     </declare-styleable>
 </resources>

@@ -13,12 +13,13 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
-import com.sumian.sleepdoctor.tab.DoctorFragment;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
+import com.sumian.sleepdoctor.homepage.HomepageFragment;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
-import com.sumian.sleepdoctor.tab.RecordFragment;
+import com.sumian.sleepdoctor.tab.DoctorFragment;
 import com.sumian.sleepdoctor.tab.MeFragment;
+import com.sumian.sleepdoctor.tab.RecordFragment;
 import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar;
 import com.sumian.sleepdoctor.widget.nav.NavigationItem;
 
@@ -107,7 +108,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                                 LaunchSleepTabBean data = mLaunchData.data;
                                 fragmentByTag = RecordFragment.newInstance(data.sleepRecordTime, data.needScrollToBottom);
                             } else {
-                                fragmentByTag = BaseFragment.newInstance(RecordFragment.class);
+                                fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
                             }
                             break;
                         case 1:
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                             fragmentByTag = BaseFragment.newInstance(MeFragment.class);
                             break;
                         default:
-                            fragmentByTag = BaseFragment.newInstance(RecordFragment.class);
+                            fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
                             break;
                     }
                     addFragment(fragmentByTag, fTag);
@@ -141,12 +142,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void showFragment(Fragment f) {
-        mFragmentManager.beginTransaction().show(f).runOnCommit(() -> {
-            autoSelectDoctorTab(f);
-        }).commit();
+        mFragmentManager.beginTransaction().show(f).runOnCommit(() -> autoSelectDoctorTab(f)).commit();
     }
 
     private void addFragment(Fragment f, String fTag) {
+        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(() -> autoSelectDoctorTab(f)).commit();
         mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(() -> {
             autoSelectDoctorTab(f);
         }).commit();

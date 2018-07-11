@@ -3,6 +3,7 @@
 
     <!--main tab-->
     <string name="tab_record">记录</string>
+    <string name="tab_homepage">首页</string>
     <string name="tab_doctor">医生</string>
     <string name="tab_me">我的</string>
     <string name="tab_group">群组</string>
@@ -173,6 +174,7 @@
     <string name="sat">六</string>
     <string name="go_to_today">回到今天</string>
     <string name="sleep_record">睡眠记录</string>
+    <string name="sleep_diary">睡眠日记</string>
     <string name="refill">重填</string>
     <string name="actual_work_and_reset">实际作息</string>
     <string name="record_sleep_time">睡眠时间</string>
@@ -202,9 +204,15 @@
     <string name="operation_fail">操作失败</string>
     <string name="system_maintain">系统维护</string>
     <string name="system_maintain_desc">系统正在维护中，请稍后重试</string>
+    <string name="today_no_record">今日暂无记录</string>
+    <string name="today_no_record_hint">您今天还没有填写睡眠日记</string>
     <string name="cbti_title">失眠的认知行为治疗 CBTi</string>
     <string name="cbti_desc">失眠认知行为治疗是世界上公认的、非药物治疗失眠的最佳疗法，能使各年龄段的失眠人群获益。</string>
     <string name="cbti_progress_ratio">总进度：第2周/共7周</string>
     <string name="see_more"><![CDATA[了解更多 >]]></string>
     <string name="finished">已完成</string>
+    <string name="cbti_ing">失眠的认知行为治疗进行中</string>
+    <string name="cbti_ing_describe">建议在开课当天完成本周课程学习，自完成之日起7天后开放下阶段课程。</string>
+    <string name="current_progress_colon">当前进度：</string>
+    <string name="enter_and_learn">进入学习</string>
 </resources>

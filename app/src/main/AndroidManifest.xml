@@ -178,6 +178,7 @@
         <activity android:name=".cbti.activity.CBTICurriculumActivity" />
         <activity android:name=".cbti.activity.CBTIIntroductionWebActivity" />
         <activity android:name=".cbti.activity.CBTIWeekPartActivity" />
+        <activity android:name=".sleepRecord.SleepRecordDetailActivity" />
     </application>
 
 </manifest>

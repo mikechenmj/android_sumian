@@ -31,7 +31,7 @@
             android:id="@+id/tb_record"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/tab_record_icon"
-            app:tab_text="@string/tab_record" />
+            app:tab_text="@string/tab_homepage" />
 
         <include layout="@layout/lay_nav_tab_divider" />
 

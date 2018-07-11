@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.sleepRecord.view.TitleView
+        android:id="@+id/title_view_sleep_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10"
+        android:visibility="visible"
+        app:title_text="@string/sleep_record"
+        app:tv_show_right_arrow="true"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_sleep_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.sumian.sleepdoctor.sleepRecord.view.SleepRecordProgressView
+            android:id="@+id/progress_view_sleep"
+            android:layout_width="@dimen/space_150"
+            android:layout_height="@dimen/space_210" />
+
+        <Space
+            android:layout_width="@dimen/space_20"
+            android:layout_height="0dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SimpleSleepRecordGreyIconTv"
+                android:drawableStart="@mipmap/ic_record_icon_clock"
+                android:text="@string/record_sleep_duration" />
+
+            <TextView
+                android:id="@+id/tv_sleep_duration"
+                style="@style/text_t1_16"
+                android:textStyle="bold"
+                tools:text="6小时15分钟" />
+
+            <View
+                style="@style/HorizontalDividerLine"
+                android:layout_marginBottom="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_20" />
+
+            <TextView
+                style="@style/SimpleSleepRecordGreyIconTv"
+                android:layout_marginBottom="5dp"
+                android:drawableStart="@mipmap/ic_record_icon_sleep"
+                android:text="@string/fall_asleep_duration" />
+
+            <TextView
+                android:id="@+id/tv_fall_asleep_duration"
+                style="@style/text_t1_16"
+                android:textStyle="bold"
+                tools:text="15分钟" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_no_sleep_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:layout_marginTop="@dimen/space_1"
+        tools:visibility="visible">
+
+        <TextView
+            style="@style/text_t1_18"
+            android:layout_marginTop="@dimen/space_40"
+            android:text="@string/today_no_record"
+            android:textColor="@color/b3_color"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_marginTop="@dimen/space_5"
+            android:text="@string/today_no_record_hint" />
+
+        <TextView
+            android:id="@+id/btn_go_record"
+            style="@style/SumianButton"
+            android:layout_marginBottom="@dimen/space_30"
+            android:layout_marginEnd="@dimen/space_36"
+            android:layout_marginStart="@dimen/space_36"
+            android:layout_marginTop="@dimen/space_24"
+            android:text="@string/go_record" />
+    </LinearLayout>
+
+</LinearLayout>
