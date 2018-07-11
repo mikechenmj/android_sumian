@@ -174,7 +174,6 @@
 
         <!-- sleep record -->
         <activity android:name=".sleepRecord.FillSleepRecordActivity" />
-        <activity android:name=".sleepRecord.SleepRecordActivity" />
         <activity
             android:name=".improve.advisory.activity.AdvisoryListActivity"
             android:theme="@style/BaseAppTheme" />
@@ -185,6 +184,7 @@
         <!-- scale -->
         <activity android:name=".scale.ScaleListActivity" />
         <activity android:name=".scale.ScaleDetailActivity" />
+        <activity android:name=".sleepRecord.SleepRecordDetailActivity" />
         <activity
             android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity"
             android:theme="@style/BaseAppTheme" />

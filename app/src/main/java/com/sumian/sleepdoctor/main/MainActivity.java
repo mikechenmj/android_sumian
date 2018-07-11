@@ -14,6 +14,7 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
+import com.sumian.sleepdoctor.homepage.HomepageFragment;
 import com.sumian.sleepdoctor.improve.doctor.base.BasePagerFragment;
 import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
 import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
@@ -109,7 +110,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                                 LaunchSleepTabBean data = mLaunchData.data;
                                 fragmentByTag = RecordFragment.newInstance(data.sleepRecordTime, data.needScrollToBottom);
                             } else {
-                                fragmentByTag = BaseFragment.newInstance(RecordFragment.class);
+                                fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
                             }
                             break;
                         case 1:
@@ -143,15 +144,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void showFragment(Fragment f) {
-        mFragmentManager.beginTransaction().show(f).runOnCommit(() -> {
-            autoSelectDoctorTab(f);
-        }).commit();
+        mFragmentManager.beginTransaction().show(f).runOnCommit(() -> autoSelectDoctorTab(f)).commit();
     }
 
     private void addFragment(Fragment f, String fTag) {
-        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(()->{
-            autoSelectDoctorTab(f);
-        }).commit();
+        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(() -> autoSelectDoctorTab(f)).commit();
     }
 
     private void autoSelectDoctorTab(Fragment f) {

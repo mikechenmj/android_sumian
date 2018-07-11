@@ -5,14 +5,12 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:layout_marginTop="24dp">
+    android:orientation="vertical">
 
     <com.sumian.sleepdoctor.sleepRecord.view.TitleView
         android:id="@+id/title_view_sleep_record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_10"
         android:visibility="visible"
         app:content_text="@string/refill"
         app:title_text="@string/sleep_record"
@@ -36,7 +34,7 @@
             android:orientation="horizontal"
             tools:visibility="visible">
 
-            <com.sumian.sleepdoctor.improve.record.view.SleepRecordProgressView
+            <com.sumian.sleepdoctor.sleepRecord.view.SleepRecordProgressView
                 android:id="@+id/progress_view_sleep"
                 android:layout_width="@dimen/space_150"
                 android:layout_height="@dimen/space_150"
@@ -229,7 +227,7 @@
             android:layout_margin="@dimen/space_20"
             android:text="@string/no_sleep_record_hint" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_go_record"
             style="@style/SumianButton"
             android:layout_marginBottom="@dimen/space_30"

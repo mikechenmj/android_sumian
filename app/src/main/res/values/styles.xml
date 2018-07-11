@@ -105,7 +105,7 @@
 
     <style name="SumianButton">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/space_48</item>
         <item name="android:paddingLeft">@dimen/space_8</item>
         <item name="android:paddingRight">@dimen/space_8</item>
         <item name="android:background">@drawable/bg_bt</item>
@@ -170,6 +170,11 @@
 
     <style name="SleepRecordGreyIconTv" parent="text_t2_14">
         <item name="android:layout_marginBottom">@dimen/space_10</item>
+        <item name="android:drawablePadding">@dimen/space_10</item>
+    </style>
+
+    <style name="SimpleSleepRecordGreyIconTv" parent="SleepRecordGreyIconTv">
+        <item name="android:layout_marginBottom">@dimen/space_5</item>
         <item name="android:drawablePadding">@dimen/space_10</item>
     </style>
 

@@ -101,10 +101,9 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     @Override
     public void OnPageChanged(int oldPosition, int newPosition) {
         mCurrentPosition = newPosition;
-//        LogUtils.d(newPosition, TimeUtil.formatDateList(getMonthTimes()));
         updateTvMonth(getMonthTimes().get(newPosition));
-        ivRight.setClickable(newPosition != 0);
-        ivLeft.setClickable(newPosition != getMonthTimes().size() - 1);
+        ivRight.setVisibility(newPosition != 0 ? VISIBLE : GONE);
+        ivLeft.setVisibility(newPosition != getMonthTimes().size() - 1 ? VISIBLE : GONE);
     }
 
     @OnClick({R.id.iv_left, R.id.iv_right, R.id.tv_go_to_today})
@@ -119,6 +118,8 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
             case R.id.tv_go_to_today:
                 mOnDateClickListener.onDateClick(TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis()));
                 break;
+            default:
+                break;
         }
     }
 
@@ -129,7 +130,6 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
 
     public void addMonthTimes(List<Long> monthTimes) {
         mAdapter.addMonthTimes(monthTimes);
-//        LogUtils.d(TimeUtil.formatDateList(monthTimes), TimeUtil.formatDateList(getMonthTimes()));
     }
 
     public List<Long> getMonthTimes() {

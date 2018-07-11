@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.improve.record.view.SleepRecordProgressView;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepPill;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecordAnswer;
@@ -71,7 +70,7 @@ public class SleepRecordView extends LinearLayout {
     @BindView(R.id.tv_no_record_date)
     TextView tvNoRecordDate;
     @BindView(R.id.btn_go_record)
-    Button btnGoRecord;
+    TextView btnGoRecord;
     @BindView(R.id.ll_no_sleep_record)
     LinearLayout llNoSleepRecord;
     private SleepRecord mSleepRecord;

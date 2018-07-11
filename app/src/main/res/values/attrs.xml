@@ -29,7 +29,7 @@
             <enum name="visible" value="0x00000000" />
             <enum name="invisible" value="0x00000004" />
         </attr>
-        <attr name="show_switch" format="boolean"/>
+        <attr name="show_switch" format="boolean" />
     </declare-styleable>
 
     <!--title bar-->
@@ -103,20 +103,33 @@
     </declare-styleable>
 
     <declare-styleable name="DoctorServiceItemView">
-        <attr name="dsiv_title" format="string"/>
-        <attr name="dsiv_desc" format="string"/>
-        <attr name="dsiv_show_price" format="boolean"/>
-        <attr name="dsiv_price" format="float"/>
-        <attr name="dsiv_image" format="reference"/>
+        <attr name="dsiv_title" format="string" />
+        <attr name="dsiv_desc" format="string" />
+        <attr name="dsiv_show_price" format="boolean" />
+        <attr name="dsiv_price" format="float" />
+        <attr name="dsiv_image" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="ProgressView" >
-        <attr name="pv_ring_width" format="float|dimension"/>
-        <attr name="pv_ring_bg_color" format="color|reference"/>
+    <declare-styleable name="ColorfulProgressView">
+        <attr name="cpv_ring_width" format="float|dimension" />
+        <attr name="cpv_ring_bg_color" format="color|reference" />
     </declare-styleable>
 
-    <declare-styleable name="TitleView" >
-        <attr name="title_text" format="string|reference"/>
+    <declare-styleable name="ProgressView">
+        <attr name="pv_ring_width" format="float|dimension" />
+        <attr name="pv_ring_bg_color" format="color|reference" />
+        <attr name="pv_progress_color" format="color|reference" />
+        <attr name="pv_progress" format="integer|reference" />
+        <attr name="pv_max_progress" format="integer|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="WithLineProgressView">
+        <attr name="wlpv_show_line" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleView">
+        <attr name="title_text" format="string|reference" />
         <attr name="content_text" format="string|reference" />
+        <attr name="tv_show_right_arrow" format="boolean|reference" />
     </declare-styleable>
 </resources>

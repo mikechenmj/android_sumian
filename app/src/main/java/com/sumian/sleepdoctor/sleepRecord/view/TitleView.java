@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class TitleView extends LinearLayout {
     TextView tvTitle;
     @BindView(R.id.tv_menu)
     TextView tvMenu;
+    @BindView(R.id.iv_right_arrow)
+    ImageView ivRightArrow;
 
     public TitleView(Context context) {
         this(context, null);
@@ -43,13 +46,19 @@ public class TitleView extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleView);
         String title = typedArray.getString(R.styleable.TitleView_title_text);
         String menu = typedArray.getString(R.styleable.TitleView_content_text);
+        boolean showRightArrow = typedArray.getBoolean(R.styleable.TitleView_tv_show_right_arrow, false);
         typedArray.recycle();
         tvTitle.setText(title);
         tvMenu.setText(menu);
+        ivRightArrow.setVisibility(showRightArrow ? VISIBLE : GONE);
     }
 
     public void setOnMenuClickListener(OnClickListener listener) {
         tvMenu.setOnClickListener(listener);
+    }
+
+    public void setOnRightArrowClickListener(OnClickListener listener) {
+        ivRightArrow.setOnClickListener(listener);
     }
 
     public void setTvTitle(String title) {

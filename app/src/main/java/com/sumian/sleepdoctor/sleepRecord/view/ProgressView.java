@@ -1,13 +1,11 @@
-package com.sumian.sleepdoctor.improve.record.view;
+package com.sumian.sleepdoctor.sleepRecord.view;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.SweepGradient;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -25,20 +23,15 @@ import com.sumian.sleepdoctor.R;
  */
 public class ProgressView extends View {
 
+    private static final int DEFAULT_MAX_PROGRESS = 100;
     private Paint mProgressPaint;
     private Paint mBgRingPaint;
     private int mRadius;
     private int mWidth;
     private int mHeight;
     private RectF mArcRect;
-    private int mPercent;
-    private float mSweepAngle = 0.0f;
-    private int[][] mProgressColors;
-    private Matrix mMatrix;
-    private SweepGradient mSweepGradient;
-    private int mProgressLevel;
-    private int mContentX;
-    private int mContentY;
+    private int mProgress;
+    private int mMaxProgress;
 
     public ProgressView(Context context) {
         this(context, null);
@@ -50,17 +43,16 @@ public class ProgressView extends View {
     }
 
     private void init(Context context, AttributeSet attrs) {
-//        inflate(context, R.layout.lay_progress_view, this);
-
         Resources resources = context.getResources();
-        initColors();
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ProgressView);
         float ringWidth = attributes.getDimension(R.styleable.ProgressView_pv_ring_width, resources.getDimension(R.dimen.space_10));
         int ringBgColor = attributes.getColor(R.styleable.ProgressView_pv_ring_bg_color, resources.getColor(R.color.b1_color));
+        int progressColor = attributes.getColor(R.styleable.ProgressView_pv_progress_color, resources.getColor(R.color.b3_color));
+        mProgress = attributes.getInt(R.styleable.ProgressView_pv_progress, 0);
+        mMaxProgress = attributes.getInt(R.styleable.ProgressView_pv_max_progress, DEFAULT_MAX_PROGRESS);
         attributes.recycle();
 
         mArcRect = new RectF();
-        mMatrix = new Matrix();
         // init background ring paint
         mBgRingPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mBgRingPaint.setStyle(Paint.Style.STROKE);
@@ -70,24 +62,13 @@ public class ProgressView extends View {
         mProgressPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mProgressPaint.setStyle(Paint.Style.STROKE);
         mProgressPaint.setStrokeWidth(ringWidth);
-    }
-
-    private void initColors() {
-        Resources resources = getResources();
-        int highStartColor = resources.getColor(R.color.sleep_record_progress_high_start);
-        int highEndColor = resources.getColor(R.color.sleep_record_progress_high_end);
-        int middleStartColor = resources.getColor(R.color.sleep_record_progress_middle_start);
-        int middleEndColor = resources.getColor(R.color.sleep_record_progress_middle_end);
-        int lowStartColor = resources.getColor(R.color.sleep_record_progress_low_start);
-        int lowEndColor = resources.getColor(R.color.sleep_record_progress_low_end);
-        mProgressColors = new int[][]{{highStartColor, highEndColor}, {middleStartColor, middleEndColor}, {lowStartColor, lowEndColor}};
+        mProgressPaint.setColor(progressColor);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         updateSizeInfo(w, h);
-        updateSweepGradient();
     }
 
     private void updateSizeInfo(int w, int h) {
@@ -97,18 +78,13 @@ public class ProgressView extends View {
         int paddingBottom = getPaddingBottom();
         mWidth = w;
         mHeight = h;
-        mContentX = (w - paddingLeft - paddingRight) >> 1;
-        mContentY = (h - paddingTop - paddingBottom) >> 1;
+        int contentX = (w - paddingLeft - paddingRight) >> 1;
+        int contentY = (h - paddingTop - paddingBottom) >> 1;
         mRadius = (int) ((Math.min(w, h) >> 1) - (mProgressPaint.getStrokeWidth() / 2));
-        mArcRect.left = mContentX - mRadius;
-        mArcRect.top = mContentY - mRadius;
-        mArcRect.right = mContentX + mRadius;
-        mArcRect.bottom = mContentY + mRadius;
-    }
-
-    private void updateSweepGradient() {
-        int[] startEndColors = getStartEndColors(mPercent);
-        mSweepGradient = new SweepGradient(mContentX, mContentY, startEndColors[0], startEndColors[1]);
+        mArcRect.left = contentX - mRadius;
+        mArcRect.top = contentY - mRadius;
+        mArcRect.right = contentX + mRadius;
+        mArcRect.bottom = contentY + mRadius;
     }
 
     @Override
@@ -117,39 +93,28 @@ public class ProgressView extends View {
         // draw ring bg
         canvas.drawCircle(mWidth >> 1, mHeight >> 1, mRadius, mBgRingPaint);
         // draw progress
-        mMatrix.setRotate(-90f, canvas.getWidth() / 2, canvas.getHeight() / 2);
-        mSweepGradient.setLocalMatrix(mMatrix);
-        mProgressPaint.setShader(mSweepGradient);
-        canvas.drawArc(mArcRect, -90, mSweepAngle, false, mProgressPaint);
+        canvas.drawArc(mArcRect, -90, getSweepAngle(), false, mProgressPaint);
     }
 
     public void setProgress(int progress) {
-        mPercent = progress;
-        mSweepAngle = progress * (360.0f / 100);
-        int progressLevel = getProgressLevelByPercent(progress);
-        if (mProgressLevel != progressLevel) {
-            mProgressLevel = progressLevel;
-            updateSweepGradient();
-        }
+        mProgress = progress;
         invalidate();
     }
 
-    public int[] getStartEndColors(int percent) {
-        int progressLevelByPercent = getProgressLevelByPercent(percent);
-        return mProgressColors[progressLevelByPercent];
+    private float getSweepAngle() {
+        return 360.0f * mProgress / mMaxProgress;
     }
 
-    public int getProgressLevelByPercent(int percent) {
-        if (percent >= 85) {
-            return 0;
-        } else if (percent >= 70) {
-            return 1;
-        } else {
-            return 2;
-        }
+    public int getProgress() {
+        return mProgress;
     }
 
-    public int getPercent() {
-        return mPercent;
+
+    public int getMaxProgress() {
+        return mMaxProgress;
+    }
+
+    public void setMaxProgress(int maxProgress) {
+        mMaxProgress = maxProgress;
     }
 }

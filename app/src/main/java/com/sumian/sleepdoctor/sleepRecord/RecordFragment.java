@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.sleepRecord;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,8 +26,6 @@ import com.sumian.sleepdoctor.improve.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.notification.NotificationListActivity;
-import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
 import com.sumian.sleepdoctor.sleepRecord.bean.DoctorServiceList;
 import com.sumian.sleepdoctor.sleepRecord.bean.SleepRecord;
@@ -43,7 +40,6 @@ import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -69,8 +65,6 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
     LinearLayout mServiceContainer;
     @BindView(R.id.scroll_view)
     ScrollView mScrollView;
-    @BindView(R.id.iv_notification)
-    ImageView mIvNotification;
     @BindView(R.id.dsiv_sleep_scale)
     DoctorServiceItemView mSleepScale;
 
@@ -177,21 +171,10 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
     protected void initData() {
         super.initData();
         changeSelectTime(mInitTime);
-        queryServices();
-        ViewModelProviders.of(Objects.requireNonNull(getActivity()))
-                .get(NotificationViewModel.class)
-                .getUnreadCount()
-                .observe(this, unreadCount -> mIvNotification.setActivated(unreadCount != null && unreadCount > 0));
     }
 
     private void launchFillSleepRecordActivity(long time) {
         FillSleepRecordActivity.launchForResult(this, time, REQUEST_CODE_FILL_SLEEP_RECORD);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        queryServices();
     }
 
     private void showDatePopup(boolean show) {
@@ -218,7 +201,7 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
             });
         }
         if (show) {
-            mPopupWindow.showAsDropDown(mToolbar);
+            mPopupWindow.showAsDropDown(mToolbar, 0, (int) getResources().getDimension(R.dimen.space_10));
             querySleepReportSummaryList(System.currentTimeMillis(), true);
         } else {
             mPopupWindow.dismiss();
@@ -251,7 +234,6 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
     @OnClick({
             R.id.tv_date,
             R.id.iv_date_arrow,
-            R.id.iv_notification,
             R.id.dsiv_sleep_scale,
             R.id.iv_weekly_report,
     })
@@ -260,9 +242,6 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
             case R.id.tv_date:
             case R.id.iv_date_arrow:
                 showDatePopup(!mIvDateArrow.isActivated());
-                break;
-            case R.id.iv_notification:
-                NotificationListActivity.launch(getActivity());
                 break;
             case R.id.iv_weekly_report:
                 int selectTimeInSecond = (int) (mSelectedTime / 1000);
