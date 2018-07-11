@@ -9,8 +9,8 @@ import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.ScaleFinishFillingEvent;
 import com.sumian.sleepdoctor.h5.H5Uri;
-import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
-import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
+import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
+import com.sumian.sleepdoctor.widget.webview.SWebView;
 
 public class ScaleDetailActivity extends BaseWebViewActivity {
 

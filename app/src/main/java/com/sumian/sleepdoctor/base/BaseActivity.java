@@ -40,12 +40,10 @@ import butterknife.Unbinder;
 public abstract class BaseActivity<Presenter extends BasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
-    private Unbinder mBind;
-
     protected View mRoot;
-
     protected Presenter mPresenter;
     protected Activity mActivity;
+    private Unbinder mBind;
 
     public static void show(Context context, Class<? extends BaseActivity> clx) {
         show(context, clx, null);
@@ -81,6 +79,50 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     public static void showClearTop(Context context, Intent intent) {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
+    }
+
+    /**
+     * 设置状态栏颜色
+     *
+     * @param activity 需要设置的activity
+     * @param color    状态栏颜色值
+     */
+    public static void setColor(Activity activity, int color) {
+        // 设置状态栏透明
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // 生成一个状态栏大小的矩形
+        View statusView = createStatusView(activity, color);
+        // 添加 statusView 到布局中
+        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        decorView.addView(statusView);
+        // 设置根布局的参数
+        ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+        rootView.setFitsSystemWindows(true);
+        rootView.setClipToPadding(true);
+    }
+
+    /**
+     * 生成一个和状态栏大小相同的矩形条
+     *
+     * @param activity 需要设置的activity
+     * @param color    状态栏颜色值
+     * @return 状态栏矩形条
+     */
+    private static View createStatusView(Activity activity, int color) {
+        // 获得状态栏高度
+        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        float dimension = activity.getResources().getDimension(resourceId);
+
+        int statusBarHeight = (int) (dimension <= 66.0f ? dimension + 4.0f : dimension + 0.5f);
+
+        // 绘制一个和状态栏一样高的矩形
+        View statusView = new View(activity);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                statusBarHeight);
+        statusView.setLayoutParams(params);
+        statusView.setBackgroundColor(color);
+        return statusView;
     }
 
     @Override
@@ -201,50 +243,6 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onDestroy: ----------->");
-    }
-
-    /**
-     * 设置状态栏颜色
-     *
-     * @param activity 需要设置的activity
-     * @param color    状态栏颜色值
-     */
-    public static void setColor(Activity activity, int color) {
-        // 设置状态栏透明
-        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        // 生成一个状态栏大小的矩形
-        View statusView = createStatusView(activity, color);
-        // 添加 statusView 到布局中
-        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-        decorView.addView(statusView);
-        // 设置根布局的参数
-        ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-        rootView.setFitsSystemWindows(true);
-        rootView.setClipToPadding(true);
-    }
-
-    /**
-     * 生成一个和状态栏大小相同的矩形条
-     *
-     * @param activity 需要设置的activity
-     * @param color    状态栏颜色值
-     * @return 状态栏矩形条
-     */
-    private static View createStatusView(Activity activity, int color) {
-        // 获得状态栏高度
-        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
-
-        float dimension = activity.getResources().getDimension(resourceId);
-
-        int statusBarHeight = (int) (dimension <= 66.0f ? dimension + 4.0f : dimension + 0.5f);
-
-        // 绘制一个和状态栏一样高的矩形
-        View statusView = new View(activity);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                statusBarHeight);
-        statusView.setLayoutParams(params);
-        statusView.setBackgroundColor(color);
-        return statusView;
     }
 
     protected void showToast(String message) {

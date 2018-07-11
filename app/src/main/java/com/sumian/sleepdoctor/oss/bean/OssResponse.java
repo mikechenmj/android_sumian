@@ -93,15 +93,15 @@ public class OssResponse {
     @Override
     public String toString() {
         return "OssResponse{" +
-            "access_key_id='" + access_key_id + '\'' +
-            ", access_key_secret='" + access_key_secret + '\'' +
-            ", security_token='" + security_token + '\'' +
-            ", expiration='" + expiration + '\'' +
-            ", bucket='" + bucket + '\'' +
-            ", endpoint='" + endpoint + '\'' +
-            ", callback_url='" + callback_url + '\'' +
-            ", callback_body='" + callback_body + '\'' +
-            ", object='" + object + '\'' +
-            '}';
+                "access_key_id='" + access_key_id + '\'' +
+                ", access_key_secret='" + access_key_secret + '\'' +
+                ", security_token='" + security_token + '\'' +
+                ", expiration='" + expiration + '\'' +
+                ", bucket='" + bucket + '\'' +
+                ", endpoint='" + endpoint + '\'' +
+                ", callback_url='" + callback_url + '\'' +
+                ", callback_body='" + callback_body + '\'' +
+                ", object='" + object + '\'' +
+                '}';
     }
 }

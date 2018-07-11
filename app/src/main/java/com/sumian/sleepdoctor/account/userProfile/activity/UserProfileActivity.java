@@ -30,11 +30,11 @@ import com.sumian.sleepdoctor.account.userProfile.presenter.UserInfoPresenter;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.improve.widget.sheet.PictureBottomSheet;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
+import com.sumian.sleepdoctor.widget.sheet.PictureBottomSheet;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 

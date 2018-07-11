@@ -8,7 +8,7 @@ package com.sumian.sleepdoctor.widget.cbti
  * desc:
  *
  */
-data class CBTIPart(var title: String?="请先完成上周课程",
+data class CBTIPart(var title: String? = "请先完成上周课程",
                     var progress: Int,
                     var status: Int) {
 

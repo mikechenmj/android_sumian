@@ -12,7 +12,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.sumian.sleepdoctor.R
-import kotlinx.android.synthetic.main.layout_sumian_dialog.*
+import kotlinx.android.synthetic.main.lay_dialog_common_sumian.*
 
 @Suppress("MemberVisibilityCanBePrivate")
 /**
@@ -42,7 +42,7 @@ class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_sumian_dialog)
+        setContentView(R.layout.lay_dialog_common_sumian)
         updateImageAndText()
     }
 

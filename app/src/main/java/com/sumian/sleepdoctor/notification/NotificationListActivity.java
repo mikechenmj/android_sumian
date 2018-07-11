@@ -13,11 +13,11 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
-import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.notification.bean.Notification;
-import com.sumian.sleepdoctor.push.SchemeResolveUtil;
+import com.sumian.sleepdoctor.notification.push.SchemeResolveUtil;
 import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.error.EmptyErrorView;
 
 import java.util.List;
 

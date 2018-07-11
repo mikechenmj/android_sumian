@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:text="@string/loading_dot" />
 
-    <com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout
+    <com.sumian.sleepdoctor.widget.webview.SWebViewLayout
         android:id="@+id/sm_webview_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

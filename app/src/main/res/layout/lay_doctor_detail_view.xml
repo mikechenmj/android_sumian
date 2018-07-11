@@ -55,11 +55,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_20"
                 android:layout_marginRight="@dimen/space_20"
+                android:ellipsize="marquee"
                 android:lineSpacingExtra="@dimen/space_4"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:maxLines="2"
                 android:minLines="1"
-                android:ellipsize="marquee"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
                 app:layout_constraintLeft_toRightOf="@id/iv_avatar"
@@ -94,7 +94,7 @@
                 android:background="@color/l1_color"
                 tools:ignore="RtlHardcoded" />
 
-            <com.sumian.sleepdoctor.improve.widget.fold.FoldLayout
+            <com.sumian.sleepdoctor.widget.fold.FoldLayout
                 android:id="@+id/fold_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

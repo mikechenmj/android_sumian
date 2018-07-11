@@ -17,12 +17,17 @@ import java.lang.annotation.RetentionPolicy;
 @SuppressWarnings("WeakerAccess")
 public class Social implements Parcelable, Serializable {
     public static final int SOCIAL_TYPE_WECHAT = 0;
+    public static final Creator<Social> CREATOR = new Creator<Social>() {
+        @Override
+        public Social createFromParcel(Parcel in) {
+            return new Social(in);
+        }
 
-    @IntDef({SOCIAL_TYPE_WECHAT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface SocialType {
-    }
-
+        @Override
+        public Social[] newArray(int size) {
+            return new Social[size];
+        }
+    };
     /**
      * type : 0
      * open_id : ouV7E1SWfPLo3pzHtflGSXpS3Xl4
@@ -56,18 +61,6 @@ public class Social implements Parcelable, Serializable {
         updated_at = in.readInt();
     }
 
-    public static final Creator<Social> CREATOR = new Creator<Social>() {
-        @Override
-        public Social createFromParcel(Parcel in) {
-            return new Social(in);
-        }
-
-        @Override
-        public Social[] newArray(int size) {
-            return new Social[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -97,6 +90,11 @@ public class Social implements Parcelable, Serializable {
                 ", created_at=" + created_at +
                 ", updated_at=" + updated_at +
                 '}';
+    }
+
+    @IntDef({SOCIAL_TYPE_WECHAT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SocialType {
     }
 
 }

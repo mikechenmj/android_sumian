@@ -13,13 +13,13 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.h5.bean.H5ShowToastData;
-import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
-import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
-import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
 import com.sumian.sleepdoctor.utils.ScreenUtil;
 import com.sumian.sleepdoctor.utils.SoftKeyBoardListener;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.SumianImageTextDialog;
+import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
+import com.sumian.sleepdoctor.widget.webview.SWebView;
+import com.sumian.sleepdoctor.widget.webview.SWebViewLayout;
 
 import butterknife.BindView;
 
@@ -30,12 +30,12 @@ import butterknife.BindView;
  **/
 public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener {
 
+    @BindView(R.id.sm_webview_container)
+    protected SWebViewLayout mSWebViewLayout;
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.root_view)
     View mRootView;
-    @BindView(R.id.sm_webview_container)
-    protected SWebViewLayout mSWebViewLayout;
     private SoftKeyBoardListener mSoftKeyBoardListener;
     private SumianImageTextDialog mSumianImageTextDialog;
 

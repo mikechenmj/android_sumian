@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 基础模块 END -->
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -38,7 +37,7 @@
             android:value="true" />
 
         <activity
-            android:name=".pager.activity.WelcomeActivity"
+            android:name=".main.WelcomeActivity"
             android:label="@string/app_name"
             android:theme="@style/BaseAppTheme">
             <intent-filter>
@@ -75,41 +74,24 @@
             android:theme="@style/BaseAppTheme" />
 
         <activity
-            android:name=".improve.doctor.activity.ShoppingCarActivity"
+            android:name=".doctor.activity.ShoppingCarActivity"
             android:theme="@style/BaseAppTheme" />
+
         <activity
-            android:name=".pager.activity.ScanGroupResultActivity"
+            android:name=".setting.SettingActivity"
             android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name=".pager.activity.SettingActivity"
-            android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name=".chat.activity.MsgActivity"
-            android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name=".pager.activity.GroupDetailActivity"
-            android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name=".pager.activity.GroupQrCodeActivity"
-            android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name=".pager.activity.GroupMembersActivity"
-            android:theme="@style/BaseAppTheme" />
+
         <activity
             android:name=".account.userProfile.activity.ModifyUserInfoActivity"
-            android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name=".pager.activity.OtherUserProfileActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".account.bindMobile.BindMobileActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".improve.doctor.activity.ScanDoctorQrCodeActivity"
+            android:name=".doctor.activity.ScanDoctorQrCodeActivity"
             android:theme="@style/scan_qr_theme" />
 
         <!-- third  login -->
-
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -139,15 +121,15 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind" />
-        <activity android:name=".improve.doctor.activity.DoctorWebActivity" />
-        <activity android:name=".improve.doctor.activity.DoctorServiceWebActivity" />
+        <activity android:name=".doctor.activity.DoctorWebActivity" />
+        <activity android:name=".doctor.activity.DoctorServiceWebActivity" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
         <service android:name="com.avos.avoscloud.PushService" />
 
         <receiver
-            android:name=".push.PushReceiver"
+            android:name=".notification.push.PushReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.sumian.sd.action.PUSH" />
@@ -166,35 +148,36 @@
 
         <activity android:name=".h5.SimpleWebActivity" />
         <!-- online report -->
-        <activity android:name=".onlinereport.OnlineReportListActivity" />
-        <activity android:name=".onlinereport.OnlineReportDetailActivity" />
+        <activity android:name=".onlineReport.OnlineReportListActivity" />
+        <activity android:name=".onlineReport.OnlineReportDetailActivity" />
 
         <!-- notification -->
         <activity android:name=".notification.NotificationListActivity" />
 
         <!-- sleep record -->
-        <activity android:name=".sleepRecord.FillSleepRecordActivity" />
-        <activity android:name=".sleepRecord.SleepRecordActivity" />
+        <activity android:name=".record.FillSleepRecordActivity" />
+        <activity android:name=".record.SleepRecordActivity" />
         <activity
-            android:name=".improve.advisory.activity.AdvisoryListActivity"
+            android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".improve.advisory.activity.AdvisoryDetailActivity"
+            android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryDetailActivity"
             android:theme="@style/BaseAppTheme" />
 
         <!-- scale -->
         <activity android:name=".scale.ScaleListActivity" />
         <activity android:name=".scale.ScaleDetailActivity" />
         <activity
-            android:name=".improve.advisory.activity.PublishAdvisoryRecordActivity"
+            android:name="com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity"
             android:theme="@style/BaseAppTheme" />
         <activity android:name=".notification.RefundActivity" />
         <activity
             android:name=".h5.SleepFileWebActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".pager.activity.VersionActivity" />
+        <activity android:name=".setting.version.VersionActivity" />
         <activity android:name=".cbti.activity.CBTICurriculumActivity" />
         <activity android:name=".cbti.activity.CBTIIntroductionWebActivity" />
+        <activity android:name=".cbti.activity.CBTIWeekPartActivity" />
     </application>
 
 </manifest>

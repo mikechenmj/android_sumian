@@ -14,12 +14,12 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.ScaleFinishFillingEvent;
-import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
 import com.sumian.sleepdoctor.scale.bean.Scale;
 import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.error.EmptyErrorView;
 
 import org.greenrobot.eventbus.Subscribe;
 

@@ -22,7 +22,7 @@
         tools:text="3小时后结束，期间医生可追加回复"
         tools:visibility="visible" />
 
-    <com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout
+    <com.sumian.sleepdoctor.widget.refresh.SumianRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -53,6 +53,6 @@
 
         </FrameLayout>
 
-    </com.sumian.sleepdoctor.improve.widget.SumianRefreshLayout>
+    </com.sumian.sleepdoctor.widget.refresh.SumianRefreshLayout>
 
 </LinearLayout>

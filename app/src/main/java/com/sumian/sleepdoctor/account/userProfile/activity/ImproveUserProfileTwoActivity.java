@@ -100,7 +100,6 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
 
     @Override
     public void onImproveUserProfileSuccess() {
-        AppManager.getChatEngine().loginImServer();
         MainActivity.showClearTop(this, MainActivity.class);
     }
 

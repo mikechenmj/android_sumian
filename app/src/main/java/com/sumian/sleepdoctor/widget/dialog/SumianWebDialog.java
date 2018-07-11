@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.h5.H5Uri;
-import com.sumian.sleepdoctor.improve.widget.webview.SWebViewLayout;
+import com.sumian.sleepdoctor.widget.webview.SWebViewLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +29,10 @@ public class SumianWebDialog extends DialogFragment implements View.OnClickListe
     SWebViewLayout mWebView;
 
     private Unbinder mBind;
+
+    public static SumianWebDialog create() {
+        return new SumianWebDialog();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,10 +74,6 @@ public class SumianWebDialog extends DialogFragment implements View.OnClickListe
         super.onDestroyView();
         mWebView.destroyWebView();
         mBind.unbind();
-    }
-
-    public static SumianWebDialog create() {
-        return new SumianWebDialog();
     }
 
     public void show(FragmentManager fragmentManager) {

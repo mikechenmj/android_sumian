@@ -36,14 +36,11 @@ import butterknife.Unbinder;
 public abstract class BaseFragment<Presenter extends BasePresenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
-
+    public Bundle mBundle;
     protected Activity mActivity;
     protected View mRootView;
-    public Bundle mBundle;
-
-    private Unbinder mUnBinder;
-
     protected Presenter mPresenter;
+    private Unbinder mUnBinder;
 
     public static Fragment newInstance(Class<? extends Fragment> clx) {
         return newInstance(clx, null);

@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract
 import com.sumian.sleepdoctor.account.userProfile.contract.ModifyUserInfoContract
 import com.sumian.sleepdoctor.account.userProfile.presenter.ModifyUserInfoPresenter
-import com.sumian.sleepdoctor.widget.BaseBottomSheetView
+import com.sumian.sleepdoctor.widget.base.BaseBottomSheetView
 import java.util.*
 
 /**

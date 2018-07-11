@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.sumian.sleepdoctor.sleepRecord.view.SleepRecordView
+            <com.sumian.sleepdoctor.widget.record.TitleView.SleepRecordView
                 android:id="@+id/sleep_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-            <com.sumian.sleepdoctor.improve.widget.DoctorServiceItemView
+            <com.sumian.sleepdoctor.widget.doctor.DoctorServiceItemView
                 android:id="@+id/dsiv_sleep_scale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

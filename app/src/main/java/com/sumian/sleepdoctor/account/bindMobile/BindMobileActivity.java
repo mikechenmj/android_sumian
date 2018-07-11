@@ -130,8 +130,8 @@ public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implem
     public void bindOpenSocialSuccess(Token response) {
         if (response.is_new) {
             ImproveUserProfileOneActivity.show(this, ImproveUserProfileOneActivity.class);
-        }else {
-            MainActivity.showClearTop(this,MainActivity.class);
+        } else {
+            MainActivity.showClearTop(this, MainActivity.class);
         }
     }
 }

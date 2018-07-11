@@ -27,6 +27,12 @@ public class SoftKeyBoardListener implements ViewTreeObserver.OnGlobalLayoutList
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
     }
 
+    public static SoftKeyBoardListener registerListener(Activity activity, OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
+        SoftKeyBoardListener softKeyBoardListener = new SoftKeyBoardListener(activity);
+        softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener);
+        return softKeyBoardListener;
+    }
+
     private void setOnSoftKeyBoardChangeListener(OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
         this.onSoftKeyBoardChangeListener = onSoftKeyBoardChangeListener;
     }
@@ -63,6 +69,10 @@ public class SoftKeyBoardListener implements ViewTreeObserver.OnGlobalLayoutList
         }
     }
 
+    public void release() {
+        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+    }
+
     public interface OnSoftKeyBoardChangeListener {
         /**
          * @param height 键盘高度
@@ -73,15 +83,5 @@ public class SoftKeyBoardListener implements ViewTreeObserver.OnGlobalLayoutList
          * @param height 键盘高度
          */
         void keyBoardHide(int height);
-    }
-
-    public static SoftKeyBoardListener registerListener(Activity activity, OnSoftKeyBoardChangeListener onSoftKeyBoardChangeListener) {
-        SoftKeyBoardListener softKeyBoardListener = new SoftKeyBoardListener(activity);
-        softKeyBoardListener.setOnSoftKeyBoardChangeListener(onSoftKeyBoardChangeListener);
-        return softKeyBoardListener;
-    }
-
-    public void release() {
-        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
 }

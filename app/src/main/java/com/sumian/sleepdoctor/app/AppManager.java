@@ -17,14 +17,11 @@ import com.sumian.open.login.OpenLogin;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
-import com.sumian.sleepdoctor.chat.engine.ChatEngine;
-import com.sumian.sleepdoctor.chat.player.VoicePlayer;
-import com.sumian.sleepdoctor.improve.advisory.model.AdvisoryViewModel;
-import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
-import com.sumian.sleepdoctor.improve.doctor.model.DoctorViewModel;
+import com.sumian.sleepdoctor.advisory.model.AdvisoryViewModel;
+import com.sumian.sleepdoctor.doctor.model.DoctorViewModel;
+import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 import com.sumian.sleepdoctor.network.api.DoctorApi;
 import com.sumian.sleepdoctor.network.engine.NetEngine;
-import com.sumian.sleepdoctor.tab.model.GroupViewModel;
 
 /**
  * Created by jzz
@@ -38,13 +35,9 @@ public final class AppManager implements Observer<Boolean> {
 
     private DoctorApi mDoctorApi;
     private AccountViewModel mAccountViewModel;
-    private GroupViewModel mGroupViewModel;
     private AdvisoryViewModel mAdvisoryViewModel;
     private DoctorViewModel mDoctorViewModel;
 
-    private ChatEngine mChatEngine;
-
-    private VoicePlayer mVoicePlayer;
     private LiveData<Boolean> mTokenInvalidStateLiveData;
     private OpenEngine mOpenEngine;
 
@@ -53,10 +46,6 @@ public final class AppManager implements Observer<Boolean> {
 
     public static AppManager init() {
         return Holder.INSTANCE;
-    }
-
-    public static synchronized ChatEngine getChatEngine() {
-        return Holder.INSTANCE.mChatEngine;
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -77,23 +66,12 @@ public final class AppManager implements Observer<Boolean> {
         return Holder.INSTANCE.mAccountViewModel;
     }
 
-    public static synchronized GroupViewModel getGroupViewModel() {
-        if (Holder.INSTANCE.mGroupViewModel == null) {
-            Holder.INSTANCE.mGroupViewModel = new GroupViewModel();
-        }
-        return Holder.INSTANCE.mGroupViewModel;
-    }
-
     public static synchronized AdvisoryViewModel getAdvisoryViewModel() {
         return Holder.INSTANCE.mAdvisoryViewModel == null ? Holder.INSTANCE.mAdvisoryViewModel = new AdvisoryViewModel() : Holder.INSTANCE.mAdvisoryViewModel;
     }
 
     public static synchronized DoctorViewModel getDoctorViewModel() {
         return Holder.INSTANCE.mDoctorViewModel == null ? Holder.INSTANCE.mDoctorViewModel = new DoctorViewModel() : Holder.INSTANCE.mDoctorViewModel;
-    }
-
-    public static synchronized VoicePlayer getVoicePlayer() {
-        return Holder.INSTANCE.mVoicePlayer == null ? Holder.INSTANCE.mVoicePlayer = new VoicePlayer() : Holder.INSTANCE.mVoicePlayer;
     }
 
     public static synchronized DoctorApi getHttpService() {
@@ -123,9 +101,7 @@ public final class AppManager implements Observer<Boolean> {
         mTokenInvalidStateLiveData = Holder.INSTANCE.mAccountViewModel.getLiveDataTokenInvalidState();
         mTokenInvalidStateLiveData.observeForever(this);
 
-        if (mChatEngine == null) {
-            this.mChatEngine = new ChatEngine(context);
-        }
+        LeanCloudManager.registerPushService(context);
 
         if (mOpenEngine == null) {
             this.mOpenEngine = new OpenEngine().register(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);

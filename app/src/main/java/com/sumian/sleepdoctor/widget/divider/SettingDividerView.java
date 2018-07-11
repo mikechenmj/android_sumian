@@ -54,10 +54,6 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
     private OnShowMoreListener mOnShowMoreListener;
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
 
-    public void setOnShowMoreListener(OnShowMoreListener onShowMoreListener) {
-        mOnShowMoreListener = onShowMoreListener;
-    }
-
     public SettingDividerView(Context context) {
         this(context, null);
     }
@@ -69,6 +65,10 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
     public SettingDividerView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
+    }
+
+    public void setOnShowMoreListener(OnShowMoreListener onShowMoreListener) {
+        mOnShowMoreListener = onShowMoreListener;
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -137,12 +137,6 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         mTvTypeDesc.setText(label);
     }
 
-
-    public interface OnShowMoreListener {
-
-        void onShowMore(View v);
-    }
-
     public void setOnCheckedChangeListener(@Nullable CompoundButton.OnCheckedChangeListener listener) {
         mOnCheckedChangeListener = listener;
         mSwitch.setOnCheckedChangeListener(listener);
@@ -159,5 +153,10 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         mSwitch.setOnCheckedChangeListener(null);
         mSwitch.setChecked(checked);
         mSwitch.setOnCheckedChangeListener(mOnCheckedChangeListener);
+    }
+
+    public interface OnShowMoreListener {
+
+        void onShowMore(View v);
     }
 }

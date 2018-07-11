@@ -1,9 +1,8 @@
 package com.sumian.sleepdoctor.push
 
-import android.net.Uri
 import android.os.Bundle
+import com.sumian.sleepdoctor.notification.push.PushData
 import org.junit.Test
-import java.net.URL
 import java.net.URLDecoder
 
 @Suppress("CanBeVal")

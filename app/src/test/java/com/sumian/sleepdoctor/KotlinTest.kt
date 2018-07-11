@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor
 
 import org.junit.Test
-import java.util.ArrayList
+import java.util.*
 
 /**
  * <pre>
@@ -12,7 +12,7 @@ import java.util.ArrayList
  *     version: 1.0
  * </pre>
  */
-class KotlinTest{
+class KotlinTest {
     @Test
     fun test() {
         val list = ArrayList<Int>()

@@ -70,8 +70,8 @@
                 android:layout_weight="1"
                 tools:background="@drawable/bg_btn_white"
                 tools:text="@string/confirm"
-                tools:visibility="gone"
-                tools:textColor="@color/t5_color" />
+                tools:textColor="@color/t5_color"
+                tools:visibility="gone" />
 
             <Space
                 android:id="@+id/space"

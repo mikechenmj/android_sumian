@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.notification;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -40,7 +41,7 @@ public class NotificationViewModel extends ViewModel {
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
                         LogUtils.d(errorResponse);
                     }
 

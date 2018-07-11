@@ -2,15 +2,21 @@ package com.sumian.sleepdoctor.leancloud;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.WelcomeActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.pager.activity.WelcomeActivity;
 
 /**
  * <pre>
@@ -23,7 +29,31 @@ import com.sumian.sleepdoctor.pager.activity.WelcomeActivity;
  */
 public class LeanCloudManager {
 
+    private static final String TAG = LeanCloudManager.class.getSimpleName();
+
     public static void registerPushService(Context context) {
+        PushService.setDefaultChannelId(context, "push_channel");
+        AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
+        AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
+        AVIMClient.setAutoOpen(false);
+        AVIMClient.setClientEventHandler(new AVIMClientEventHandler() {
+            @Override
+            public void onConnectionPaused(AVIMClient avimClient) {
+                Log.e(TAG, "onConnectionPaused: ----------->");
+            }
+
+            @Override
+            public void onConnectionResume(AVIMClient avimClient) {
+                Log.e(TAG, "onConnectionResume: ------------->");
+            }
+
+            @Override
+            public void onClientOffline(AVIMClient avimClient, int i) {
+                Log.e(TAG, "onClientOffline: ------------------->");
+            }
+        });
+
+
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             public void done(AVException e) {
                 if (e == null) {
@@ -49,7 +79,7 @@ public class LeanCloudManager {
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
 
                     }
                 });

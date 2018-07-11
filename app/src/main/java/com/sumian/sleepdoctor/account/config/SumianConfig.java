@@ -17,12 +17,10 @@ import com.sumian.sleepdoctor.app.App;
 
 public final class SumianConfig {
 
-    private static final String TAG = SumianConfig.class.getSimpleName();
-
-    private static final String SETTING_NAME = "sumian_doctor_setting";
-
     public static final String LOGIN_CAPTCHA_TYPE = "login_captcha_type";
     public static final String BIND_SOCIAL_CAPTCHA_TYPE = "bind_social_captcha_type";
+    private static final String TAG = SumianConfig.class.getSimpleName();
+    private static final String SETTING_NAME = "sumian_doctor_setting";
 
     public static void updateCaptchaTimeDistance(CaptchaTime captchaTime, String captchaTimeType) {
         String json = JSON.toJSONString(captchaTime);

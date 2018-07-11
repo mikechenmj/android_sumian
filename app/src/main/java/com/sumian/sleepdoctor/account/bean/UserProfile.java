@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
+import com.sumian.sleepdoctor.doctor.bean.Doctor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +19,17 @@ import java.util.List;
 
 public class UserProfile implements Serializable, Parcelable {
 
+    public static final Creator<UserProfile> CREATOR = new Creator<UserProfile>() {
+        @Override
+        public UserProfile createFromParcel(Parcel in) {
+            return new UserProfile(in);
+        }
+
+        @Override
+        public UserProfile[] newArray(int size) {
+            return new UserProfile[size];
+        }
+    };
     public int id;
     public String mobile;
     public String nickname;
@@ -81,18 +92,6 @@ public class UserProfile implements Serializable, Parcelable {
         doctor = in.readParcelable(Doctor.class.getClassLoader());
         role = in.readInt();
     }
-
-    public static final Creator<UserProfile> CREATOR = new Creator<UserProfile>() {
-        @Override
-        public UserProfile createFromParcel(Parcel in) {
-            return new UserProfile(in);
-        }
-
-        @Override
-        public UserProfile[] newArray(int size) {
-            return new UserProfile[size];
-        }
-    };
 
     @Override
     public int describeContents() {

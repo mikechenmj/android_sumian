@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sumian.sleepdoctor.improve.widget.qr.QrCodeView
+    <com.sumian.sleepdoctor.widget.qr.QrCodeView
         android:id="@+id/zxing_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

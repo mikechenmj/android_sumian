@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:text="医生详情" />
 
-    <com.sumian.sleepdoctor.improve.widget.SmWebView
+    <com.sumian.sleepdoctor.widget.SmWebView
         android:id="@+id/sm_web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sumian.sleepdoctor.improve.widget.doctor.DoctorDetailLayout
+        <com.sumian.sleepdoctor.widget.doctor.DoctorDetailLayout
             android:id="@+id/doctor_detail_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

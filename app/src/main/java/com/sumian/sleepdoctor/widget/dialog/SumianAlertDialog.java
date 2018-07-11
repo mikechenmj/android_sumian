@@ -30,6 +30,7 @@ import butterknife.OnClick;
 public class SumianAlertDialog {
 
     private final Context mContext;
+    private final Dialog mDialog;
     @BindView(R.id.iv_top)
     ImageView mIvTop;
     @BindView(R.id.iv_close)
@@ -42,7 +43,6 @@ public class SumianAlertDialog {
     Button mBtnLeft;
     @BindView(R.id.btn_right)
     Button mBtnRight;
-
     private boolean mIsCloseBtnVisible;
     private int mIconRes;
     private int mTitleRes;
@@ -52,7 +52,6 @@ public class SumianAlertDialog {
     private View.OnClickListener mRightBtnClickListener;
     private boolean mWhitenLeft;
     private boolean mWhitenRight;
-    private final Dialog mDialog;
     private String mMessage;
 
     public SumianAlertDialog(Context context) {

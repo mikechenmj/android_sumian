@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
-import com.sumian.sleepdoctor.improve.doctor.bean.Doctor;
+import com.sumian.sleepdoctor.doctor.bean.Doctor;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;

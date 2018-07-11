@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlinereport;
+package com.sumian.sleepdoctor.onlineReport;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,11 +13,11 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.improve.widget.error.EmptyErrorView;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
 import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.error.EmptyErrorView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -157,6 +157,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return mTvTitle;
     }
 
+    public void setTitle(String text) {
+        mTvTitle.setText(text);
+    }
+
     public TextView getMore() {
         return mTvMenu;
     }
@@ -168,10 +172,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         }
         setTitle(getResources().getString(titleRes));
         return this;
-    }
-
-    public void setTitle(String text) {
-        mTvTitle.setText(text);
     }
 
     @SuppressWarnings("deprecation")
@@ -211,20 +211,20 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         }
     }
 
-    public interface OnSpannerListener {
-        void onSpanner(View v, boolean isShow);
-    }
-
-    public interface OnBackClickListener {
-        void onBack(View v);
-    }
-
     public void setMenuText(String menuText) {
         mTvMenu.setText(menuText);
     }
 
     public void setMenuVisibility(int visibility) {
         mTvMenu.setVisibility(visibility);
+    }
+
+    public interface OnSpannerListener {
+        void onSpanner(View v, boolean isShow);
+    }
+
+    public interface OnBackClickListener {
+        void onBack(View v);
     }
 
     public interface OnMenuClickListener {

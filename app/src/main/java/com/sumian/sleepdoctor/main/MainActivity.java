@@ -12,14 +12,13 @@ import android.widget.FrameLayout;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
+import com.sumian.sleepdoctor.tab.DoctorFragment;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
-import com.sumian.sleepdoctor.improve.doctor.base.BasePagerFragment;
-import com.sumian.sleepdoctor.improve.doctor.fragment.DoctorFragment;
-import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
-import com.sumian.sleepdoctor.sleepRecord.RecordFragment;
-import com.sumian.sleepdoctor.tab.fragment.MeFragment;
+import com.sumian.sleepdoctor.tab.RecordFragment;
+import com.sumian.sleepdoctor.tab.MeFragment;
 import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar;
 import com.sumian.sleepdoctor.widget.nav.NavigationItem;
 
@@ -35,12 +34,11 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements BottomNavigationBar.OnSelectedTabChangeListener {
 
-    @SuppressWarnings("unused")
-    private static final String TAG = MainActivity.class.getSimpleName();
     public static final String KEY_TAB_INDEX = "key_tab_index";
     public static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
     public static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
-
+    @SuppressWarnings("unused")
+    private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.nav_tab)
     BottomNavigationBar mBottomNavigationBar;
 
@@ -53,11 +51,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private String[] mFTags = new String[]{RecordFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), MeFragment.class.getSimpleName()};
     private LaunchData<LaunchSleepTabBean> mLaunchData;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
 
     public static void launch(Context context, int tabIndex) {
         Bundle bundle = new Bundle();
@@ -77,6 +70,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtras(bundle);
         return intent;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -149,7 +147,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void addFragment(Fragment f, String fTag) {
-        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(()->{
+        mFragmentManager.beginTransaction().add(R.id.lay_tab_container, f, fTag).runOnCommit(() -> {
             autoSelectDoctorTab(f);
         }).commit();
     }
@@ -176,7 +174,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         initTab(position);
         mBottomNavigationBar.selectItem(position, false);
         mLaunchData = null;
-        LeanCloudManager.registerPushService(this);
     }
 
     @Override
@@ -191,6 +188,24 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             }
         }
         return super.initBundle(bundle);
+    }
+
+    @Override
+    protected boolean openEventBus() {
+        return true;
+    }
+
+    @Subscribe(sticky = true)
+    public void onNotificationReadEvent(NotificationReadEvent event) {
+        removeStickyEvent(event);
+        ViewModelProviders.of(this)
+                .get(NotificationViewModel.class)
+                .updateUnreadCount();
+    }
+
+    @Subscribe
+    public void onSwitchTabEvent(SwitchMainActivityTabEvent event) {
+        mBottomNavigationBar.selectItem(event.index, true);
     }
 
     public static class LaunchSleepTabBean {
@@ -210,23 +225,5 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         LaunchData(int launchTabIndex) {
             this.tabIndex = launchTabIndex;
         }
-    }
-
-    @Override
-    protected boolean openEventBus() {
-        return true;
-    }
-
-    @Subscribe(sticky = true)
-    public void onNotificationReadEvent(NotificationReadEvent event) {
-        removeStickyEvent(event);
-        ViewModelProviders.of(this)
-                .get(NotificationViewModel.class)
-                .updateUnreadCount();
-    }
-
-    @Subscribe
-    public void onSwitchTabEvent(SwitchMainActivityTabEvent event) {
-        mBottomNavigationBar.selectItem(event.index, true);
     }
 }

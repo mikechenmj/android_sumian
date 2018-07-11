@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.chat.widget.CustomPopWindow;
 
 import java.util.Locale;
 
@@ -86,18 +85,18 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         switch (v.getId()) {
             case R.id.iv_faq:
 
-                @SuppressLint("InflateParams") View rootView = LayoutInflater.from(v.getContext()).inflate(R.layout.lay_pop_pay_faq, null, false);
-
-                CustomPopWindow popWindow = new CustomPopWindow.PopupWindowBuilder(v.getContext())
-                        .setView(rootView)//显示的布局，还可以通过设置一个View
-                        //     .size(600,400) //设置显示的大小，不设置就默认包裹内容
-                        .setFocusable(true)//是否获取焦点，默认为ture
-                        .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
-                        .create()//创建PopupWindow
-                        .showAsDropDown(mIvPayFaq, -3 * (mIvPayFaq.getWidth()), (int) (-4.4 * mIvPayFaq.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
-
-                v.postDelayed(popWindow::dismiss, 3000);
-                rootView.setOnClickListener(v1 -> popWindow.dismiss());
+//                @SuppressLint("InflateParams") View rootView = LayoutInflater.from(v.getContext()).inflate(R.layout.lay_pop_pay_faq, null, false);
+//
+//                CustomPopWindow popWindow = new CustomPopWindow.PopupWindowBuilder(v.getContext())
+//                        .setView(rootView)//显示的布局，还可以通过设置一个View
+//                        //     .size(600,400) //设置显示的大小，不设置就默认包裹内容
+//                        .setFocusable(true)//是否获取焦点，默认为ture
+//                        .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
+//                        .create()//创建PopupWindow
+//                        .showAsDropDown(mIvPayFaq, -3 * (mIvPayFaq.getWidth()), (int) (-4.4 * mIvPayFaq.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
+//
+//                v.postDelayed(popWindow::dismiss, 3000);
+//                rootView.setOnClickListener(v1 -> popWindow.dismiss());
 
                 break;
             case R.id.iv_reduce_duration:
@@ -146,12 +145,6 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
         formatMoney(mTvMoney, mCurrentMoney);
     }
 
-    public void setDefaultMoney(double defaultMoney) {
-        this.mDefaultMoney = defaultMoney;
-        this.mCurrentMoney = mDefaultMoney * mCurrentBuyCount;
-        formatMoney(mTvMoney, mDefaultMoney);
-    }
-
     private void formatMoney(TextView tv, double money) {
         tv.setText(String.format(Locale.getDefault(), "%.2f", money / 100.00f));
     }
@@ -166,6 +159,12 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
 
     public double getDefaultMoney() {
         return mDefaultMoney;
+    }
+
+    public void setDefaultMoney(double defaultMoney) {
+        this.mDefaultMoney = defaultMoney;
+        this.mCurrentMoney = mDefaultMoney * mCurrentBuyCount;
+        formatMoney(mTvMoney, mDefaultMoney);
     }
 
     public interface OnMoneyChangeCallback {

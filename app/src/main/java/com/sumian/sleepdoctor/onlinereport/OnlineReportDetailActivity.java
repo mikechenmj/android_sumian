@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlinereport;
+package com.sumian.sleepdoctor.onlineReport;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +8,9 @@ import android.support.annotation.NonNull;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
-import com.sumian.sleepdoctor.improve.widget.webview.SBridgeHandler;
-import com.sumian.sleepdoctor.improve.widget.webview.SWebView;
 import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
+import com.sumian.sleepdoctor.widget.webview.SWebView;
 
 public class OnlineReportDetailActivity extends BaseWebViewActivity {
 

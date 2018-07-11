@@ -72,7 +72,7 @@ public class OrderTest {
 
 
         Gson gson = new Gson();
-       String fromJson = gson.fromJson(json, String.class);
+        String fromJson = gson.fromJson(json, String.class);
         System.out.println("2    fromJson=" + fromJson);
 
 

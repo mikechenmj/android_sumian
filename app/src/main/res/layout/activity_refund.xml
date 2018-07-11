@@ -16,12 +16,12 @@
 
     <LinearLayout
         android:id="@+id/ll_order"
-        android:visibility="gone"
-        tools:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             style="@style/text_t1_16"
@@ -86,8 +86,8 @@
             android:layout_marginStart="@dimen/space_20"
             android:layout_marginTop="@dimen/space_20"
             android:autoLink="web|phone"
-            android:textColorLink="@color/b3_color"
-            android:text="@string/refund_hint" />
+            android:text="@string/refund_hint"
+            android:textColorLink="@color/b3_color" />
     </LinearLayout>
 
 </LinearLayout>

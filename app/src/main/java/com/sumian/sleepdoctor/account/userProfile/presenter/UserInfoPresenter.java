@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.account.userProfile.contract.UserInfoContract;

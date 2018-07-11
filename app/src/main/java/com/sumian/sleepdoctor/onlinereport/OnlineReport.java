@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlinereport;
+package com.sumian.sleepdoctor.onlineReport;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,6 +14,17 @@ import android.os.Parcelable;
  */
 public class OnlineReport implements Parcelable {
 
+    public static final Creator<OnlineReport> CREATOR = new Creator<OnlineReport>() {
+        @Override
+        public OnlineReport createFromParcel(Parcel in) {
+            return new OnlineReport(in);
+        }
+
+        @Override
+        public OnlineReport[] newArray(int size) {
+            return new OnlineReport[size];
+        }
+    };
     /**
      * id : 2
      * title : 睡眠监测报告
@@ -33,18 +44,6 @@ public class OnlineReport implements Parcelable {
     private Object deleted_at;
     private int created_at;
     private int updated_at;
-
-    public static final Creator<OnlineReport> CREATOR = new Creator<OnlineReport>() {
-        @Override
-        public OnlineReport createFromParcel(Parcel in) {
-            return new OnlineReport(in);
-        }
-
-        @Override
-        public OnlineReport[] newArray(int size) {
-            return new OnlineReport[size];
-        }
-    };
 
     private OnlineReport(Parcel in) {
         id = in.readInt();
