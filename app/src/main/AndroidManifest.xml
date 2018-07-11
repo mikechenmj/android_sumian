@@ -194,6 +194,7 @@
             android:launchMode="singleTop" />
         <activity android:name=".pager.activity.VersionActivity" />
         <activity android:name=".cbti.activity.CBTICurriculumActivity" />
+        <activity android:name=".cbti.activity.CBTIIntroductionWebActivity" />
     </application>
 
 </manifest>

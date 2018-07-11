@@ -125,7 +125,8 @@ android {
         def application_id = rootProject.ext.applicationId
         def version_name = rootProject.ext.versionName
 
-        yingyongbao {
+        //应用宝
+        yyb {
             dimension "market"
         }
 
@@ -226,7 +227,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def fileName = "睡眠医生_${variant.flavorName}_${formatDate()}.apk"
+            def fileName = "睡眠医生-患者版${variant.flavorName}_${formatDate()}.apk"
 
             println fileName
 
@@ -344,13 +345,7 @@ dependencies {
 
     implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
 
-    //jsBridge
-
     //implementation 'com.github.wendux:DSBridge-Android:x5-3.0-SNAPSHOT'
-//    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
-//    implementation('com.github.lzyzsd:jsbridge:1.0.4') {
-//        exclude module: 'support-annotations'
-//    }
 
     // Base Adapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'

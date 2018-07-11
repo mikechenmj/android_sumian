@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cbti_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/b1_color"
@@ -69,6 +70,7 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
+                        android:id="@+id/tv_see_more"
                         style="@style/text_b3_14"
                         android:layout_gravity="center|right"
                         android:text="@string/see_more"
@@ -81,9 +83,8 @@
 
     </FrameLayout>
 
-    <com.sumian.sleepdoctor.widget.cbti.CBTIPartView
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_94"
-        android:layout_marginTop="@dimen/space_10" />
+        android:layout_height="@dimen/space_10" />
 
 </LinearLayout>

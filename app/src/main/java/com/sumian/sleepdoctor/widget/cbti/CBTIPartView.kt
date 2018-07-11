@@ -25,17 +25,33 @@ class CBTIPartView : ConstraintLayout {
     }
 
     private fun initView(context: Context) {
-        val itemView = View.inflate(context, R.layout.lay_cbti_part_view, this)
+        View.inflate(context, R.layout.lay_cbti_part_view, this)
 //        val params = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 //        itemView.layoutParams = params
         setBackgroundColor(resources.getColor(R.color.b2_color))
     }
 
-    fun invalid(cbti: Any) {
-
-        tv_title.text = "123"
-        tv_status.text = "2323"
-
+    fun invalid(cbtiPart: CBTIPart?) {
+        if (cbtiPart == null) {
+            hide()
+        } else {
+            tv_title.text = cbtiPart.title
+            tv_status.text = when (cbtiPart.status) {
+                0 -> {
+                    "请先完成上周课程"
+                }
+                1 -> {
+                    "进度 45%"
+                }
+                2 -> {
+                    "已完成"
+                }
+                else -> {
+                    "请先完成上周课程"
+                }
+            }
+            show()
+        }
     }
 
     fun show() {

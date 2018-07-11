@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.cbti.activity.CBTICurriculumActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
@@ -65,6 +66,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.version:
+                CBTICurriculumActivity.show(this, CBTICurriculumActivity.class);
                 // VersionActivity.show(this, VersionActivity.class);
                 break;
             case R.id.about_me:
