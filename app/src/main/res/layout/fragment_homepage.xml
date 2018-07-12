@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_name_avatar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_144"
             android:background="@color/white"
@@ -44,14 +45,71 @@
                 tools:src="@mipmap/ic_info_avatar_patient" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_home_bg_sleepprescription"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/space_30"
+            android:paddingStart="@dimen/space_30">
+
+            <TextView
+                style="@style/text_white_16"
+                android:text="@string/my_sleep_prescription" />
+
+            <TextView
+                style="@style/text_white_14"
+                android:layout_marginTop="@dimen/space_5"
+                android:text="@string/my_sleep_prescription_desc" />
+        </LinearLayout>
+
         <com.sumian.sleepdoctor.homepage.widget.CbtiProgressView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            tools:visibility="gone" />
 
         <com.sumian.sleepdoctor.record.widget.SimpleSleepRecordView
             android:id="@+id/sleep_record_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:visibility="gone" />
+
+        <com.sumian.sleepdoctor.widget.doctor.DoctorServiceItemView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dsiv_desc="@string/service_desc_cbti"
+            app:dsiv_image="@drawable/ic_service_icon_cbti"
+            app:dsiv_title="@string/service_title_cbti" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/white"
+            android:paddingEnd="@dimen/space_3"
+            android:paddingStart="@dimen/space_3"
+            android:paddingTop="@dimen/space_6">
+
+            <TextView
+                style="@style/text_white_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_img_scale"
+                android:gravity="center"
+                android:text="@string/scale_evaluation" />
+
+            <TextView
+                style="@style/text_white_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_home_img_scale"
+                android:gravity="center"
+                android:text="@string/sleep_health" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

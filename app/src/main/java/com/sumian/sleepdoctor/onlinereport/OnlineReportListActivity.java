@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.onlinereport;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,7 +17,6 @@ import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
-import com.sumian.sleepdoctor.onlineReport.OnlineReportListAdapter;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.error.EmptyErrorView;
 
@@ -96,7 +96,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
             setResult(RESULT_OK, intent);
             finish();
         });
-        mAdapter = new OnlineReportListAdapter(null);
+        mAdapter = new com.sumian.sleepdoctor.onlineReport.OnlineReportListAdapter(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -132,7 +132,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
                         LogUtils.d(errorResponse);
                     }
 

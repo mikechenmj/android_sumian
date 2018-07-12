@@ -215,4 +215,10 @@
     <string name="cbti_ing_describe">建议在开课当天完成本周课程学习，自完成之日起7天后开放下阶段课程。</string>
     <string name="current_progress_colon">当前进度：</string>
     <string name="enter_and_learn">进入学习</string>
+    <string name="my_sleep_prescription">我的睡眠处方</string>
+    <string name="my_sleep_prescription_desc">解读睡眠日记，定制睡眠处方</string>
+    <string name="service_title_cbti">失眠认知行为治疗(CBTi)</string>
+    <string name="service_desc_cbti">非药物治疗失眠的最佳疗法</string>
+    <string name="scale_evaluation">量表评估</string>
+    <string name="sleep_health">睡眠卫生</string>
 </resources>
