@@ -27,8 +27,12 @@ import com.sumian.sleepdoctor.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
 
 /**
  * Created by jzz
@@ -44,6 +48,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     protected Presenter mPresenter;
     protected Activity mActivity;
     private Unbinder mBind;
+    private Set<Call> mCalls = new HashSet<>();
 
     public static void show(Context context, Class<? extends BaseActivity> clx) {
         show(context, clx, null);
@@ -174,6 +179,11 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         getLifecycle().removeObserver(this);
         //this.mBind.unbind();
         this.mRoot = null;
+        for (Call call : mCalls) {
+            if (!call.isExecuted() || !call.isExecuted()) {
+                call.cancel();
+            }
+        }
     }
 
     public void setStatusBar() {
@@ -283,5 +293,13 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
 
     protected boolean backable() {
         return false;
+    }
+
+    protected void addCall(Call call) {
+        mCalls.add(call);
+    }
+
+    protected void removeCall(Call call) {
+        mCalls.remove(call);
     }
 }

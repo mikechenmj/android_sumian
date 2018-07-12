@@ -44,6 +44,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 public class RecordFragment extends BasePagerFragment implements CalendarView.OnDateClickListener, ActivityLauncher {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
@@ -129,7 +130,9 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
     }
 
     private void queryServices() {
-        AppManager.getHttpService().getServiceList().enqueue(new BaseResponseCallback<DoctorServiceList>() {
+        Call<DoctorServiceList> call = AppManager.getHttpService().getServiceList();
+        addCall(call);
+        call.enqueue(new BaseResponseCallback<DoctorServiceList>() {
             @Override
             protected void onSuccess(DoctorServiceList response) {
                 showServiceList(response);
@@ -216,7 +219,9 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
         } else {
             mCalendarViewWrapper.addMonthTimes(monthTimes);
         }
-        AppManager.getHttpService().getSleepDiarySummaryList((int) (time / 1000), 1, PAGE_SIZE, 0)
+        Call<Map<String, List<SleepRecordSummary>>> call = AppManager.getHttpService().getSleepDiarySummaryList((int) (time / 1000), 1, PAGE_SIZE, 0);
+        addCall(call);
+        call
                 .enqueue(new BaseResponseCallback<Map<String, List<SleepRecordSummary>>>() {
                     @Override
                     protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
@@ -275,7 +280,9 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
         mSleepRecordView.setTime(time);
         mActionLoadingDialog = new ActionLoadingDialog();
         mActionLoadingDialog.show(getFragmentManager());
-        AppManager.getHttpService().getSleepDiaryDetail((int) (time / 1000L))
+        Call<SleepRecord> call = AppManager.getHttpService().getSleepDiaryDetail((int) (time / 1000L));
+        addCall(call);
+        call
                 .enqueue(new BaseResponseCallback<SleepRecord>() {
                     @Override
                     protected void onSuccess(SleepRecord response) {

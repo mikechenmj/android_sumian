@@ -41,9 +41,11 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
         map["type"] = socialType
         map["info"] = socialInfo
 
-        AppManager
+        val call = AppManager
                 .getHttpService()
                 .bindSocial(map)
+        addCall(call)
+        call
                 .enqueue(object : BaseResponseCallback<Token>() {
 
                     override fun onSuccess(response: Token?) {
@@ -69,7 +71,9 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
 
         mView?.onBegin()
 
-        AppManager.getHttpService().getCaptcha(mobile).enqueue(object : BaseResponseCallback<Unit>() {
+        val call = AppManager.getHttpService().getCaptcha(mobile)
+        addCall(call)
+        call.enqueue(object : BaseResponseCallback<Unit>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onFailure(errorResponse.message)
             }

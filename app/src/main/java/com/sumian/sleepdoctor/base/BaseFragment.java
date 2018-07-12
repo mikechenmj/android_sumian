@@ -21,10 +21,13 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
 
 /**
  * created by jzz
@@ -41,6 +44,7 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     protected View mRootView;
     protected Presenter mPresenter;
     private Unbinder mUnBinder;
+    private Set<Call> mCalls = new HashSet<>();
 
     public static Fragment newInstance(Class<? extends Fragment> clx) {
         return newInstance(clx, null);
@@ -63,8 +67,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (mActivity == null)
+        if (mActivity == null) {
             mActivity = (Activity) context;
+        }
         getLifecycle().addObserver(this);
     }
 
@@ -161,7 +166,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
 
     protected void runOnUiThread(Runnable run, long delay) {
         View rootView = this.mRootView;
-        if (rootView == null) return;
+        if (rootView == null) {
+            return;
+        }
         rootView.postDelayed(run, delay);
     }
 
@@ -227,4 +234,11 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         StatusBarUtil.hideFakeStatusBarView(Objects.requireNonNull(getActivity()));
     }
 
+    protected void addCall(Call call) {
+        mCalls.add(call);
+    }
+
+    protected void removeCall(Call call) {
+        mCalls.remove(call);
+    }
 }

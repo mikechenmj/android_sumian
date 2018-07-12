@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
 
 /**
  * <pre>
@@ -127,7 +128,9 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     }
 
     private void loadOnlineReports() {
-        AppManager.getHttpService().getReports(mPage, PER_PAGE)
+        Call<PaginationResponse<OnlineReport>> call = AppManager.getHttpService().getReports(mPage, PER_PAGE);
+        addCall(call);
+        call
                 .enqueue(new BaseResponseCallback<PaginationResponse<OnlineReport>>() {
                     @Override
                     protected void onSuccess(PaginationResponse<OnlineReport> response) {

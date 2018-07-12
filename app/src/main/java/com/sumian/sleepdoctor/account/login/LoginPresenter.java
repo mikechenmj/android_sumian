@@ -39,12 +39,16 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void doLogin(String mobile, String captcha) {
-        if (mView == null) return;
+        if (mView == null) {
+            return;
+        }
 
         mView.onBegin();
 
-        AppManager.getHttpService()
-                .login(mobile, captcha)
+        Call<Token> call = AppManager.getHttpService()
+                .login(mobile, captcha);
+        addCall(call);
+        call
                 .enqueue(new BaseResponseCallback<Token>() {
 
                     @Override
@@ -68,12 +72,16 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void doSendCaptcha(String mobile) {
-        if (mView == null) return;
+        if (mView == null) {
+            return;
+        }
 
         mView.onBegin();
 
-        AppManager.getHttpService()
-                .getCaptcha(mobile)
+        Call<Unit> call = AppManager.getHttpService()
+                .getCaptcha(mobile);
+        addCall(call);
+        call
                 .enqueue(new BaseResponseCallback<Unit>() {
 
                     @Override
@@ -122,7 +130,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         map.put("type", openType);
         map.put("union_id", openMap.get("unionid"));
         Call<Token> call = AppManager.getHttpService().loginOpenPlatform(map);
-
+        addCall(call);
         call.enqueue(new BaseResponseCallback<Token>() {
             @Override
             protected void onSuccess(Token response) {

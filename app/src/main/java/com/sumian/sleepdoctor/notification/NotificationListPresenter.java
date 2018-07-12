@@ -35,6 +35,7 @@ public class NotificationListPresenter implements NotificationListContract.Prese
     public void loadMore() {
         mView.onBegin();
         Call<QueryNotificationResponse> call = AppManager.getHttpService().getNotificationList(mPage, PER_PAGE);
+        addCall(call);
         call.enqueue(new BaseResponseCallback<QueryNotificationResponse>() {
             @Override
             protected void onSuccess(QueryNotificationResponse response) {
@@ -59,7 +60,9 @@ public class NotificationListPresenter implements NotificationListContract.Prese
      */
     @Override
     public void readNotification(String notificationId) {
-        AppManager.getHttpService().readNotification(notificationId)
+        Call<Object> call = AppManager.getHttpService().readNotification(notificationId);
+        addCall(call);
+        call
                 .enqueue(new BaseResponseCallback<Object>() {
                     @Override
                     protected void onSuccess(Object response) {
