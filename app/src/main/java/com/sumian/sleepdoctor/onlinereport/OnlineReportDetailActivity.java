@@ -12,6 +12,15 @@ import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.widget.webview.SWebView;
 
+/**
+ * <pre>
+ *     @author : Zhan Xuzhao
+ *     e-mail : xuzhao.z@sumian.com
+ *     time   : 2018/6/4 10:25
+ *     desc   :
+ *     version: 1.0
+ * </pre>
+ */
 public class OnlineReportDetailActivity extends BaseWebViewActivity {
 
     public static final String KEY_REPORT_URL = "report_url";

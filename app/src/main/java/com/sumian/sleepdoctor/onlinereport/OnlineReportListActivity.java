@@ -25,6 +25,15 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * <pre>
+ *     @author : Zhan Xuzhao
+ *     e-mail : xuzhao.z@sumian.com
+ *     time   : 2018/6/4 10:25
+ *     desc   :
+ *     version: 1.0
+ * </pre>
+ */
 public class OnlineReportListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
     public static final String KEY_LAUNCH_TYPE = "KEY_LAUNCH_TYPE";
     public static final String KEY_LAUNCH_DATA = "KEY_LAUNCH_DATA";
