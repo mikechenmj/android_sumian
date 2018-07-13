@@ -24,6 +24,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.widget.TitleBar;
+import com.sumian.sleepdoctor.widget.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,6 +50,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     protected Activity mActivity;
     private Unbinder mBind;
     private Set<Call> mCalls = new HashSet<>();
+    private LoadingDialog mLoadingDialog;
 
     public static void show(Context context, Class<? extends BaseActivity> clx) {
         show(context, clx, null);
@@ -301,5 +303,20 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
 
     protected void removeCall(Call call) {
         mCalls.remove(call);
+    }
+
+    public void showLoading() {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new LoadingDialog(this);
+        }
+        if (!mLoadingDialog.isShowing()) {
+            mLoadingDialog.show();
+        }
+    }
+
+    public void dismissLoading() {
+        if (mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
     }
 }

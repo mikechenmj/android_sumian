@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor
 
+import com.sumian.sleepdoctor.account.bean.UserProfile
 import org.junit.Test
 import java.util.*
 
@@ -15,10 +16,11 @@ import java.util.*
 class KotlinTest {
     @Test
     fun test() {
-        val list = ArrayList<Int>()
-        list.add(1)
-        list.forEach {
-            System.out.println(it)
-        }
+//        val u: UserProfile? = UserProfile()
+        val u: UserProfile? = null
+        val isMale = u?.isMale
+        System.out.println(isMale)
+        System.out.println(isMale == false)
+        System.out.println(isMale == true)
     }
 }

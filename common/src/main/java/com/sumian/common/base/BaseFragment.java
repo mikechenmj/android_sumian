@@ -2,6 +2,7 @@ package com.sumian.common.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -52,12 +53,13 @@ public abstract class BaseFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (mRoot != null) {
             ViewGroup parent = (ViewGroup) mRoot.getParent();
-            if (parent != null)
+            if (parent != null) {
                 parent.removeView(mRoot);
+            }
         } else {
             mRoot = inflater.inflate(getLayoutId(), container, false);
             mInflater = inflater;
@@ -66,8 +68,9 @@ public abstract class BaseFragment extends Fragment {
             // Bind view
             ButterKnife.bind(this, mRoot);
             // Get savedInstanceState
-            if (savedInstanceState != null)
+            if (savedInstanceState != null) {
                 onRestartInstance(savedInstanceState);
+            }
             // Init
             initWidget(mRoot);
             initData();
@@ -118,8 +121,9 @@ public abstract class BaseFragment extends Fragment {
      * @return RequestManager
      */
     public synchronized RequestManager getImgLoader() {
-        if (mImgLoader == null)
+        if (mImgLoader == null) {
             mImgLoader = Glide.with(this);
+        }
         return mImgLoader;
     }
 
@@ -163,7 +167,7 @@ public abstract class BaseFragment extends Fragment {
      * @param placeholder 图片地址为空时的资源
      */
     protected void setImageFromNet(ImageView imageView, String imageUrl, int placeholder) {
-        ImageLoader.loadImage(getImgLoader(), imageView, imageUrl, placeholder);
+        ImageLoader.loadImage(this, imageView, imageUrl, placeholder);
     }
 
 

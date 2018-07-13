@@ -17,7 +17,7 @@ class PushDataResolveUtil {
     companion object {
         private const val KEY_PREFIX = "com.avos.avoscloud"
         private const val KEY_CHANNEL = "$KEY_PREFIX.Channel"
-        private const val KEY_DATA = "$KEY_PREFIX.Data"
+        private const val KEY_DATA = "$KEY_PREFIX.CbtiChapterData"
 
         fun getPushAction(intent: Intent?): String? {
             return intent?.action

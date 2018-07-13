@@ -17,6 +17,7 @@ import java.util.List;
  * desc:
  */
 
+@SuppressWarnings("WeakerAccess")
 public class UserProfile implements Serializable, Parcelable {
 
     public static final Creator<UserProfile> CREATOR = new Creator<UserProfile>() {
@@ -242,4 +243,7 @@ public class UserProfile implements Serializable, Parcelable {
         return value;
     }
 
+    public boolean isMale() {
+        return "male".equals(gender);
+    }
 }

@@ -6,7 +6,9 @@ import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.bean.PictureOssSts
 import com.sumian.sleepdoctor.doctor.bean.Doctor
+import com.sumian.sleepdoctor.doctor.bean.DoctorService
 import com.sumian.sleepdoctor.doctor.bean.PayOrder
+import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
@@ -115,6 +117,15 @@ interface DoctorApi {
     @GET("services")
     fun getServiceList(): Call<DoctorServiceList>
 
+    @GET("services/{id}")
+    fun getServiceDetailById(@Path("id") id:Int):Call<DoctorService>
+
+    /**
+     * type 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     */
+    @GET("services")
+    fun getServiceDetailByType(@Query("type") type:Int):Call<Any>
+
     // ---------- notification ----------
     @GET("notifications")
     fun getNotificationList(@Query("page") page: Int,
@@ -178,5 +189,5 @@ interface DoctorApi {
      * courses.exercise 课后练习
      */
     @GET("cbti-chapters")
-    fun getCbtiChapters(@Query("include") include: String): Call<Any>
+    fun getCbtiChapters(@Query("include") include: String?): Call<GetCbtiChaptersResponse>
 }

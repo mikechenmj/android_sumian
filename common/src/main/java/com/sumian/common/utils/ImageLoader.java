@@ -1,9 +1,13 @@
 package com.sumian.common.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,22 +25,39 @@ public class ImageLoader {
     private ImageLoader() {
     }
 
+    public static void loadImage(Activity activity, ImageView view, String url, int placeholder) {
+        loadImage(Glide.with(activity), view, url, placeholder, placeholder);
+    }
+
+    public static void loadImage(Activity activity, ImageView view, String url, int placeholder, int error) {
+        loadImage(Glide.with(activity), view, url, placeholder, error);
+    }
+
+    public static void loadImage(Fragment fragment, ImageView view, String url, int placeholder) {
+        loadImage(Glide.with(fragment), view, url, placeholder, placeholder);
+    }
+
+    public static void loadImage(Fragment fragment, ImageView view, String url, int placeholder, int error) {
+        loadImage(Glide.with(fragment), view, url, placeholder, error);
+    }
+
     public static void loadImage(RequestManager loader, ImageView view, String url) {
         loadImage(loader, view, url, 0);
     }
 
-    public static void loadImage(RequestManager loader, ImageView view, String url, int placeholder) {
+    private static void loadImage(RequestManager loader, ImageView view, String url, int placeholder) {
         loadImage(loader, view, url, placeholder, placeholder);
     }
 
-    public static void loadImage(RequestManager loader, ImageView view, String url, int placeholder, int error) {
+    private static void loadImage(RequestManager loader, ImageView view, String url, int placeholder, int error) {
         boolean isCenterCrop = false;
-        if (view instanceof CircleImageView)
+        if (view instanceof CircleImageView) {
             isCenterCrop = true;
+        }
         loadImage(loader, view, url, placeholder, error, isCenterCrop);
     }
 
-    public static void loadImage(RequestManager loader, final ImageView view, String url, int placeholder, int error, boolean isCenterCrop) {
+    private static void loadImage(RequestManager loader, final ImageView view, String url, int placeholder, int error, boolean isCenterCrop) {
         if (TextUtils.isEmpty(url)) {
             view.setImageResource(placeholder);
         } else {

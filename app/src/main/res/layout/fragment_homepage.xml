@@ -37,6 +37,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_name"
                         style="@style/text_t3_18"
                         android:textSize="@dimen/font_20"
                         tools:text="张三" />
@@ -44,18 +45,22 @@
                     <TextView
                         style="@style/text_t2_14"
                         android:layout_marginTop="@dimen/space_10"
-                        tools:text="好的睡眠离不开您一点一滴的努力" />
+                        android:text="@string/homepage_sleep_slogan" />
                 </LinearLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
                     android:layout_width="@dimen/space_60"
                     android:layout_height="@dimen/space_60"
+                    android:elevation="@dimen/space_4"
+                    android:translationZ="@dimen/space_4"
                     app:civ_border_color="@color/white"
                     app:civ_border_width="@dimen/space_5"
                     tools:src="@mipmap/ic_info_avatar_patient" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_sleep_prescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_home_bg_sleepprescription"
@@ -74,18 +79,21 @@
                     android:text="@string/my_sleep_prescription_desc" />
             </LinearLayout>
 
-            <com.sumian.sleepdoctor.homepage.widget.CbtiProgressView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
             <com.sumian.sleepdoctor.record.widget.SimpleSleepRecordView
                 android:id="@+id/sleep_record_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
+
+            <com.sumian.sleepdoctor.homepage.widget.CbtiProgressView
+                android:id="@+id/cbti_progress_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                tools:visibility="visible" />
 
             <com.sumian.sleepdoctor.widget.doctor.DoctorServiceItemView
+                android:id="@+id/doctor_service_item_view_cbti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:dsiv_desc="@string/service_desc_cbti"
@@ -103,6 +111,7 @@
                 android:paddingTop="@dimen/space_6">
 
                 <TextView
+                    android:id="@+id/tv_scale"
                     style="@style/text_white_16"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -112,6 +121,7 @@
                     android:text="@string/scale_evaluation" />
 
                 <TextView
+                    android:id="@+id/tv_sleep_health"
                     style="@style/text_white_16"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

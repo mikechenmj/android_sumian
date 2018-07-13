@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.widget.dialog.LoadingDialog;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
@@ -45,6 +47,7 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     protected Presenter mPresenter;
     private Unbinder mUnBinder;
     private Set<Call> mCalls = new HashSet<>();
+    private LoadingDialog mLoadingDialog;
 
     public static Fragment newInstance(Class<? extends Fragment> clx) {
         return newInstance(clx, null);
@@ -240,5 +243,20 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
 
     protected void removeCall(Call call) {
         mCalls.remove(call);
+    }
+
+    public void showLoading() {
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new LoadingDialog(mActivity);
+        }
+        if (!mLoadingDialog.isShowing()) {
+            mLoadingDialog.show();
+        }
+    }
+
+    public void dismissLoading() {
+        if (mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
     }
 }
