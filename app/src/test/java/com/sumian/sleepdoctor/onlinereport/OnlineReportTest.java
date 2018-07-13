@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlineReport;
+package com.sumian.sleepdoctor.onlinereport;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;

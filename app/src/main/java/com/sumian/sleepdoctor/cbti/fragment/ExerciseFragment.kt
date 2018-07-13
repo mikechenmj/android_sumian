@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.cbti.fragment
 
+import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.base.BasePresenter
 
@@ -14,6 +15,6 @@ import com.sumian.sleepdoctor.base.BasePresenter
 class ExerciseFragment : BaseFragment<BasePresenter<*>>() {
 
     override fun getLayoutId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return R.layout.fragment_tab_practice
     }
 }

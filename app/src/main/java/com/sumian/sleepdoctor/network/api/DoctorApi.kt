@@ -5,6 +5,7 @@ import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.bean.PictureOssSts
+import com.sumian.sleepdoctor.cbti.bean.Courses
 import com.sumian.sleepdoctor.doctor.bean.Doctor
 import com.sumian.sleepdoctor.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
@@ -171,4 +172,12 @@ interface DoctorApi {
 
     @POST("advisory-records/sts")
     fun publishPicturesAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<PictureOssSts>
+
+    //cbti
+
+    @GET("cbti-chapter/{chapter-id}/courses")
+    fun getCBTILessonWeekPart(@Path("chapter-id") id: Int): Call<Courses>
+
+    @GET("cbti-chapter/{chapter-id}/exercises")
+    fun getCBTIExerciseWeekPart(@Path("chapter-id") id: Int): Call<Any>
 }

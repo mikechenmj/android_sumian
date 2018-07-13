@@ -48,7 +48,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private com.sumian.sleepdoctor.onlineReport.OnlineReportListAdapter mAdapter;
+    private OnlineReportListAdapter mAdapter;
     private int mPage = 1;
     private ArrayList<OnlineReport> mLaunchOnlineReports;
     private boolean mIsPickMode;
@@ -105,7 +105,7 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
             setResult(RESULT_OK, intent);
             finish();
         });
-        mAdapter = new com.sumian.sleepdoctor.onlineReport.OnlineReportListAdapter(null);
+        mAdapter = new OnlineReportListAdapter(null);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);

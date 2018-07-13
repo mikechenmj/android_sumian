@@ -89,18 +89,18 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
     }
 
     protected void gone(View v) {
-        gone(true, v);
+        Gone(true, v);
     }
 
-    protected void gone(boolean isGone, View v) {
+    protected void Gone(boolean isGone, View v) {
         v.setVisibility(isGone ? View.GONE : View.VISIBLE);
     }
 
-    protected void visible(View v) {
-        gone(false, v);
+    protected void show(View v) {
+        Gone(false, v);
     }
 
-    protected void invisible(View v) {
+    protected void hide(View v) {
         v.setVisibility(View.INVISIBLE);
     }
 

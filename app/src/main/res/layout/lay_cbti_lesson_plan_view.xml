@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20">
+
+    <TextView
+        android:id="@+id/tv_lesson_finished"
+        style="@style/text_b3_14"
+        android:layout_gravity="center|left"
+        android:drawablePadding="@dimen/space_10"
+        android:drawableStart="@mipmap/ic_cbti_icon_coursecomplete"
+        android:text="@string/finished"
+        android:visibility="gone"
+        tools:ignore="RtlHardcoded"
+        tools:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/lay_lesson_progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/space_10"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_b2_14"
+                android:layout_gravity="left|center"
+                android:text="@string/lesson_progress_title"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/tv_percent"
+                style="@style/text_b2_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:text="0%"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+        </FrameLayout>
+
+        <ProgressBar
+            android:id="@+id/lesson_pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_4"
+            android:layout_marginTop="@dimen/space_6"
+            android:progress="0"
+            android:progressDrawable="@drawable/dw_progress" />
+    </LinearLayout>
+
+</merge>
