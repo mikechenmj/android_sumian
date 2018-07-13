@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlineReport;
+package com.sumian.sleepdoctor.onlinereport;
 
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -29,7 +29,7 @@ public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, Base
 
     private int mMaxSelectCount = 9;
 
-    public OnlineReportListAdapter(@Nullable List<OnlineReport> data) {
+    OnlineReportListAdapter(@Nullable List<OnlineReport> data) {
         super(R.layout.item_online_report, data);
     }
 

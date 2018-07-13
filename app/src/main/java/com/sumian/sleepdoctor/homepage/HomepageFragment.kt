@@ -2,9 +2,13 @@ package com.sumian.sleepdoctor.homepage
 
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.LogUtils
 import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
+import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.record.FillSleepRecordActivity
 import com.sumian.sleepdoctor.record.SleepRecordDetailActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
@@ -31,5 +35,21 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         super.initWidget(root)
         sleep_record_view.setOnClickRightArrowListener { ActivityUtils.startActivity(SleepRecordDetailActivity::class.java) }
         sleep_record_view.setOnClickFillSleepRecordBtnListener { FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD) }
+    }
+
+    override fun initData() {
+        super.initData()
+        val call = AppManager.getHttpService().getCbtiChapters("courses")
+        addCall(call)
+        call.enqueue(object:BaseResponseCallback<Any>(){
+            override fun onSuccess(response: Any?) {
+                LogUtils.d(response)
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+
+            }
+
+        })
     }
 }

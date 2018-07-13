@@ -171,4 +171,12 @@ interface DoctorApi {
 
     @POST("advisory-records/sts")
     fun publishPicturesAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<PictureOssSts>
+
+    /**
+     * include
+     * courses 课程
+     * courses.exercise 课后练习
+     */
+    @GET("cbti-chapters")
+    fun getCbtiChapters(@Query("include") include: String): Call<Any>
 }
