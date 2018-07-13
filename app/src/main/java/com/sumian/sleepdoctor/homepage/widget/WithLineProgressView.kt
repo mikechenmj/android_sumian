@@ -17,13 +17,13 @@ import kotlinx.android.synthetic.main.view_with_line_progress.view.*
  *     version: 1.0
  * </pre>
  */
-class WithLineProgressView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
+class WithLineProgressView(context: Context, attributeSet: AttributeSet?) : LinearLayout(context, attributeSet) {
     init {
         LayoutInflater.from(context).inflate(R.layout.view_with_line_progress, this, true)
         val a = context.obtainStyledAttributes(attributeSet, R.styleable.WithLineProgressView)
         val showLine = a.getBoolean(R.styleable.WithLineProgressView_wlpv_show_line, true)
         a.recycle()
-        showLine(showLine)
+        showLeftLine(showLine)
         setProgress(0)
     }
 
@@ -32,7 +32,7 @@ class WithLineProgressView(context: Context, attributeSet: AttributeSet) : Linea
         v_line.setBackgroundColor(resources.getColor(if (progress > 0) R.color.b5_color else R.color.l3_color))
     }
 
-    private fun showLine(show: Boolean) {
+    fun showLeftLine(show: Boolean) {
         v_line.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

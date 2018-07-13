@@ -1,115 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/ll_name_avatar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_144"
-            android:background="@color/white"
-            android:gravity="bottom"
-            android:paddingBottom="@dimen/space_20"
-            android:paddingEnd="@dimen/space_20"
-            android:paddingStart="@dimen/space_20">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:id="@+id/ll_name_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_144"
+                android:background="@color/white"
+                android:gravity="bottom"
+                android:paddingBottom="@dimen/space_20"
+                android:paddingEnd="@dimen/space_20"
+                android:paddingStart="@dimen/space_20">
 
-                <TextView
-                    style="@style/text_t3_18"
-                    android:textSize="@dimen/font_20"
-                    tools:text="张三" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    style="@style/text_t2_14"
-                    android:layout_marginTop="@dimen/space_10"
-                    tools:text="好的睡眠离不开您一点一滴的努力" />
+                    <TextView
+                        android:id="@+id/tv_name"
+                        style="@style/text_t3_18"
+                        android:textSize="@dimen/font_20"
+                        tools:text="张三" />
+
+                    <TextView
+                        style="@style/text_t2_14"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:text="@string/homepage_sleep_slogan" />
+                </LinearLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="@dimen/space_60"
+                    android:layout_height="@dimen/space_60"
+                    android:elevation="@dimen/space_4"
+                    android:translationZ="@dimen/space_4"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="@dimen/space_5"
+                    tools:src="@mipmap/ic_info_avatar_patient" />
             </LinearLayout>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="@dimen/space_60"
-                android:layout_height="@dimen/space_60"
-                app:civ_border_color="@color/white"
-                app:civ_border_width="@dimen/space_5"
-                tools:src="@mipmap/ic_info_avatar_patient" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_home_bg_sleepprescription"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/space_30"
-            android:paddingStart="@dimen/space_30">
-
-            <TextView
-                style="@style/text_white_16"
-                android:text="@string/my_sleep_prescription" />
-
-            <TextView
-                style="@style/text_white_14"
-                android:layout_marginTop="@dimen/space_5"
-                android:text="@string/my_sleep_prescription_desc" />
-        </LinearLayout>
-
-        <com.sumian.sleepdoctor.homepage.widget.CbtiProgressView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:visibility="gone" />
-
-        <com.sumian.sleepdoctor.record.widget.SimpleSleepRecordView
-            android:id="@+id/sleep_record_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:visibility="gone" />
-
-        <com.sumian.sleepdoctor.widget.doctor.DoctorServiceItemView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dsiv_desc="@string/service_desc_cbti"
-            app:dsiv_image="@drawable/ic_service_icon_cbti"
-            app:dsiv_title="@string/service_title_cbti" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_10"
-            android:layout_marginTop="@dimen/space_10"
-            android:background="@color/white"
-            android:paddingEnd="@dimen/space_3"
-            android:paddingStart="@dimen/space_3"
-            android:paddingTop="@dimen/space_6">
-
-            <TextView
-                style="@style/text_white_16"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/ll_sleep_prescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_home_img_scale"
-                android:gravity="center"
-                android:text="@string/scale_evaluation" />
+                android:background="@drawable/bg_home_bg_sleepprescription"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/space_30"
+                android:paddingStart="@dimen/space_30">
 
-            <TextView
-                style="@style/text_white_16"
-                android:layout_width="0dp"
+                <TextView
+                    style="@style/text_white_16"
+                    android:text="@string/my_sleep_prescription" />
+
+                <TextView
+                    style="@style/text_white_14"
+                    android:layout_marginTop="@dimen/space_5"
+                    android:text="@string/my_sleep_prescription_desc" />
+            </LinearLayout>
+
+            <com.sumian.sleepdoctor.record.widget.SimpleSleepRecordView
+                android:id="@+id/sleep_record_view"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_home_img_scale"
-                android:gravity="center"
-                android:text="@string/sleep_health" />
+                tools:visibility="visible" />
 
+            <com.sumian.sleepdoctor.homepage.widget.CbtiProgressView
+                android:id="@+id/cbti_progress_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                tools:visibility="visible" />
+
+            <com.sumian.sleepdoctor.widget.doctor.DoctorServiceItemView
+                android:id="@+id/doctor_service_item_view_cbti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dsiv_desc="@string/service_desc_cbti"
+                app:dsiv_image="@drawable/ic_service_icon_cbti"
+                app:dsiv_title="@string/service_title_cbti" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_10"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="@color/white"
+                android:paddingEnd="@dimen/space_3"
+                android:paddingStart="@dimen/space_3"
+                android:paddingTop="@dimen/space_6">
+
+                <TextView
+                    android:id="@+id/tv_scale"
+                    style="@style/text_white_16"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_home_img_scale"
+                    android:gravity="center"
+                    android:text="@string/scale_evaluation" />
+
+                <TextView
+                    android:id="@+id/tv_sleep_health"
+                    style="@style/text_white_16"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_home_img_scale"
+                    android:gravity="center"
+                    android:text="@string/sleep_health" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

@@ -99,6 +99,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
 
     private void logout() {
         Call<Unit> call = AppManager.getHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId());
+        addCall(call);
         call.enqueue(new BaseResponseCallback<Unit>() {
             @Override
             protected void onSuccess(Unit response) {

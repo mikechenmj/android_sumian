@@ -56,7 +56,9 @@ class RefundActivity : BaseActivity<BasePresenter<Any>>() {
 
     override fun initData() {
         super.initData()
-        AppManager.getHttpService().getOrderDetailV2(mOrderNo).enqueue(object : BaseResponseCallback<OrderDetailV2>() {
+        val call = AppManager.getHttpService().getOrderDetailV2(mOrderNo)
+        addCall(call)
+        call.enqueue(object : BaseResponseCallback<OrderDetailV2>() {
             override fun onSuccess(response: OrderDetailV2?) {
                 if (response == null) return
                 setOrderInfo(response)

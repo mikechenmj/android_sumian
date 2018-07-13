@@ -29,7 +29,7 @@ public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, Base
 
     private int mMaxSelectCount = 9;
 
-    public OnlineReportListAdapter(@Nullable List<OnlineReport> data) {
+    OnlineReportListAdapter(@Nullable List<OnlineReport> data) {
         super(R.layout.item_online_report, data);
     }
 

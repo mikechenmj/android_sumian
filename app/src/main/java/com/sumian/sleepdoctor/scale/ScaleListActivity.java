@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.scale;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
 
 public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener, BaseQuickAdapter.OnItemClickListener {
 
@@ -82,8 +84,9 @@ public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.
     }
 
     private void loadMoreData() {
-        AppManager.getHttpService()
-                .getScaleList(mPage, PER_PAGE, mType)
+        Call<PaginationResponse<Scale>> call = AppManager.getHttpService().getScaleList(mPage, PER_PAGE, mType);
+        addCall(call);
+        call
                 .enqueue(new BaseResponseCallback<PaginationResponse<Scale>>() {
                     @Override
                     protected void onSuccess(PaginationResponse<Scale> response) {
@@ -96,7 +99,7 @@ public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.
                     }
 
                     @Override
-                    protected void onFailure(ErrorResponse errorResponse) {
+                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
 
                     }
 

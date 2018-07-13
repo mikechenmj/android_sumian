@@ -3,6 +3,8 @@ package com.sumian.sleepdoctor.main;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +21,7 @@ import com.sumian.sleepdoctor.homepage.HomepageFragment;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.tab.DoctorFragment;
 import com.sumian.sleepdoctor.tab.MeFragment;
-import com.sumian.sleepdoctor.tab.RecordFragment;
+import com.sumian.sleepdoctor.utils.StatusBarUtil;
 import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar;
 import com.sumian.sleepdoctor.widget.nav.NavigationItem;
 
@@ -132,6 +134,21 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             }
         }
         mCurrentPosition = position;
+        changeStatusBarColorByPosition(position);
+    }
+
+    private void changeStatusBarColorByPosition(int position) {
+        if (position == 0) {
+            StatusBarUtil.Companion.setStatusBarColor(this, Color.WHITE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                StatusBarUtil.Companion.setStatusBarTextColor(this, false);
+            }
+        } else {
+            StatusBarUtil.Companion.setStatusBarColor(this, Color.TRANSPARENT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                StatusBarUtil.Companion.setStatusBarTextColor(this, true);
+            }
+        }
     }
 
     private Fragment getFragmentByTag(String fTag) {

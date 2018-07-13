@@ -51,6 +51,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
         mView.onBegin();
 
         Call<UserProfile> call = AppManager.getHttpService().getUserProfile();
+        addCall(call);
         call.enqueue(new BaseResponseCallback<UserProfile>() {
             @Override
             protected void onSuccess(@Nullable UserProfile response) {

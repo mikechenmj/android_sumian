@@ -221,4 +221,7 @@
     <string name="service_desc_cbti">非药物治疗失眠的最佳疗法</string>
     <string name="scale_evaluation">量表评估</string>
     <string name="sleep_health">睡眠卫生</string>
+    <string name="cbti_chapters_progress">第%d章-已学习 %d%%</string>
+    <string name="homepage_sleep_slogan">好的睡眠离不开您一点一滴的努力</string>
+    <string name="not_open_yet_please_wait">暂未开放，敬请期待</string>
 </resources>

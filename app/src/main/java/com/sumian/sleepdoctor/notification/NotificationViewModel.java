@@ -11,6 +11,8 @@ import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse;
 
+import retrofit2.Call;
+
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -33,7 +35,8 @@ public class NotificationViewModel extends ViewModel {
     }
 
     public void updateUnreadCount() {
-        AppManager.getHttpService().getNotificationList(1, 1)
+        Call<QueryNotificationResponse> call = AppManager.getHttpService().getNotificationList(1, 1);
+        call
                 .enqueue(new BaseResponseCallback<QueryNotificationResponse>() {
                     @Override
                     protected void onSuccess(QueryNotificationResponse response) {

@@ -18,6 +18,8 @@ import com.sumian.sleepdoctor.main.WelcomeActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 
+import retrofit2.Call;
+
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -55,6 +57,7 @@ public class LeanCloudManager {
 
 
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            @Override
             public void done(AVException e) {
                 if (e == null) {
                     String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
@@ -69,9 +72,10 @@ public class LeanCloudManager {
     }
 
     private static void uploadDeviceInfo(String installationId) {
-        AppManager
+        Call<Object> call = AppManager
                 .getHttpService()
-                .uploadDeviceInfo("0", installationId, String.valueOf(Build.VERSION.SDK_INT))
+                .uploadDeviceInfo("0", installationId, String.valueOf(Build.VERSION.SDK_INT));
+        call
                 .enqueue(new BaseResponseCallback<Object>() {
                     @Override
                     protected void onSuccess(Object response) {
