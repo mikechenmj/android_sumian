@@ -6,6 +6,7 @@ import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.bean.PictureOssSts
 import com.sumian.sleepdoctor.cbti.bean.Courses
+import com.sumian.sleepdoctor.cbti.bean.Exercises
 import com.sumian.sleepdoctor.doctor.bean.Doctor
 import com.sumian.sleepdoctor.doctor.bean.DoctorService
 import com.sumian.sleepdoctor.doctor.bean.PayOrder
@@ -119,13 +120,13 @@ interface DoctorApi {
     fun getServiceList(): Call<DoctorServiceList>
 
     @GET("services/{id}")
-    fun getServiceDetailById(@Path("id") id:Int):Call<DoctorService>
+    fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>
 
     /**
      * type 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
      */
     @GET("services")
-    fun getServiceDetailByType(@Query("type") type:Int):Call<Any>
+    fun getServiceDetailByType(@Query("type") type: Int): Call<Any>
 
     // ---------- notification ----------
     @GET("notifications")
@@ -198,5 +199,5 @@ interface DoctorApi {
     fun getCBTILessonWeekPart(@Path("chapter-id") id: Int): Call<Courses>
 
     @GET("cbti-chapter/{chapter-id}/exercises")
-    fun getCBTIExerciseWeekPart(@Path("chapter-id") id: Int): Call<Any>
+    fun getCBTIExerciseWeekPart(@Path("chapter-id") id: Int): Call<Exercises>
 }

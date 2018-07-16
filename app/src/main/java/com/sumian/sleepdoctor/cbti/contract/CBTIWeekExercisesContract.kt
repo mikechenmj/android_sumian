@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.cbti.contract
 
 import com.sumian.sleepdoctor.base.BasePresenter
 import com.sumian.sleepdoctor.base.BaseView
+import com.sumian.sleepdoctor.cbti.bean.Exercise
 import com.sumian.sleepdoctor.cbti.bean.Exercises
 
 /**

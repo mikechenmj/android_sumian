@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.sumian.sleepdoctor.cbti.bean.Courses
-import com.sumian.sleepdoctor.cbti.bean.Exercises
+import com.sumian.sleepdoctor.cbti.bean.Exercise
 import com.sumian.sleepdoctor.cbti.bean.Lesson
 
 /**
@@ -25,8 +25,8 @@ class CbtiChapterViewModel : ViewModel() {
         MutableLiveData<Lesson>()
     }
 
-    private val mCBTIExercisesLiveData: MutableLiveData<Exercises> by lazy {
-        MutableLiveData<Exercises>()
+    private val mCBTIExercisesLiveData: MutableLiveData<Exercise> by lazy {
+        MutableLiveData<Exercise>()
     }
 
     fun notifyCBTICoures(courses: Courses) {

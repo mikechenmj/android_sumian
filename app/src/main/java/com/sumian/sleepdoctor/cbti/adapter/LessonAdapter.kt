@@ -24,7 +24,7 @@ import com.sumian.sleepdoctor.cbti.bean.Lesson
 class LessonAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context) {
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lay_cbti_item_view, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lay_cbti_item_lesson, parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: Lesson, position: Int) {

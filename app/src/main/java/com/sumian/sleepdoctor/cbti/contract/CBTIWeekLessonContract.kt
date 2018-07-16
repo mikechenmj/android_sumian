@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.cbti.contract
 import com.sumian.sleepdoctor.base.BasePresenter
 import com.sumian.sleepdoctor.base.BaseView
 import com.sumian.sleepdoctor.cbti.bean.Courses
-import com.sumian.sleepdoctor.cbti.bean.Exercises
 
 /**
  * Created by dq

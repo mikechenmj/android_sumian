@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.cbti.presenter
 
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BasePresenter.mCalls
+import com.sumian.sleepdoctor.cbti.bean.Exercises
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekExercisesContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
@@ -34,11 +35,11 @@ class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.Vie
         mView.onBegin()
 
         val call = AppManager.getHttpService().getCBTIExerciseWeekPart(id)
-        call.enqueue(object : BaseResponseCallback<Any>() {
+        call.enqueue(object : BaseResponseCallback<Exercises>() {
 
-            override fun onSuccess(response: Any?) {
+            override fun onSuccess(response: Exercises?) {
                 response?.let {
-                    //mView.onGetCBTIWeekPracticeSuccess(response)
+                    mView.onGetCBTIWeekPracticeSuccess(response)
                 }
 
             }
