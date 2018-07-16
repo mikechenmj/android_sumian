@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.account.bindMobile.BindMobileActivity;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
+import com.sumian.sleepdoctor.account.userProfile.activity.MyTargetAndInformationActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
@@ -37,6 +38,7 @@ import butterknife.OnClick;
 public final class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, LoginContract.View, LoginRuleView.OnCheckedListener, UMAuthListener {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
+    public static final int REQUEST_CODE_SET_USER_INFO = 100;
 
     @BindView(R.id.et_mobil)
     EditText mEtMobil;
@@ -106,12 +108,16 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     public void onLoginSuccess(boolean isNewAccount) {
         runOnUiThread(() -> {
             if (isNewAccount) {
-                ImproveUserProfileOneActivity.show(mEtMobil.getContext(), ImproveUserProfileOneActivity.class);
+                MyTargetAndInformationActivity.Companion.launchFromNewUser(this, REQUEST_CODE_SET_USER_INFO);
             } else {
-                MainActivity.show(mEtMobil.getContext(), MainActivity.class);
-                finish();
+                launchMainAndFinish();
             }
         });
+    }
+
+    private void launchMainAndFinish() {
+        finish();
+        MainActivity.show(this, MainActivity.class);
     }
 
     @Override
@@ -121,8 +127,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onBindOpenSuccess(Token token) {
-        MainActivity.show(mEtMobil.getContext(), MainActivity.class);
-        finish();
+        launchMainAndFinish();
     }
 
     @Override
@@ -172,7 +177,11 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SET_USER_INFO) {
+            launchMainAndFinish();
+        } else {
+            AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

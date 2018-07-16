@@ -109,6 +109,8 @@ public class LoginPresenter implements LoginContract.Presenter {
             case WEIXIN:
                 AppManager.getOpenLogin().weChatLogin(activity, authListener);
                 break;
+            default:
+                break;
         }
     }
 
@@ -123,6 +125,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         switch (shareMedia) {
             case WEIXIN:
                 openType = 0;
+                break;
+            default:
                 break;
         }
 

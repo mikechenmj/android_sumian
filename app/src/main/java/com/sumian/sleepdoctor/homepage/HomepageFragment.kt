@@ -6,10 +6,8 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ImageLoader
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.R.id.*
-import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.account.userProfile.activity.MyTargetAndInformationActivity
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.doctor.activity.ShoppingCarActivity
 import com.sumian.sleepdoctor.doctor.bean.DoctorService
@@ -46,9 +44,17 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         sleep_record_view.setOnClickRightArrowListener { ActivityUtils.startActivity(SleepRecordDetailActivity::class.java) }
         sleep_record_view.setOnClickFillSleepRecordBtnListener { FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD) }
         ll_sleep_prescription.setOnClickListener { onSleepPrescriptionClick() }
-        cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { run { ToastUtils.showShort("todo") } })
-        doctor_service_item_view_cbti.setOnClickListener { ToastUtils.showShort("todo") }
-        tv_sleep_health.setOnClickListener { ToastUtils.showShort(R.string.not_open_yet_please_wait) }
+        cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener {
+            run { ToastUtils.showShort("todo") }
+            MyTargetAndInformationActivity.launch(activity!!, false) // todo remove
+        })
+        doctor_service_item_view_cbti.setOnClickListener {
+            ToastUtils.showShort("todo")
+        }
+        tv_sleep_health.setOnClickListener {
+            ToastUtils.showShort(R.string.not_open_yet_please_wait)
+            MyTargetAndInformationActivity.launch(activity!!, true) // todo remove
+        }
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
     }
 

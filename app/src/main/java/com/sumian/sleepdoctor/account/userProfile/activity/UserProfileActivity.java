@@ -145,13 +145,25 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
     }
 
     @SuppressWarnings("ConstantConditions")
-    @OnClick(R.id.lay_avatar)
+    @OnClick({
+            R.id.lay_avatar,
+            R.id.dv_my_target,
+    })
     @Override
     public void onClick(View v) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(PictureBottomSheet.newInstance().addOnTakePhotoCallback(this), PictureBottomSheet.class.getSimpleName())
-                .commitNow();
+        switch (v.getId()) {
+            case R.id.lay_avatar:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(PictureBottomSheet.newInstance().addOnTakePhotoCallback(this), PictureBottomSheet.class.getSimpleName())
+                        .commitNow();
+                break;
+            case R.id.dv_my_target:
+                MyTargetAndInformationActivity.Companion.launch(this, true);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

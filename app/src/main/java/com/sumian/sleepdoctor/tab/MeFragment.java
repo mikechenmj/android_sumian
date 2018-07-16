@@ -108,6 +108,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 // String urlContentPart = H5Uri.MY_MEDICAL_RECORD;
                 SleepFileWebActivity.show(getContext(), SleepFileWebActivity.class);
                 break;
+            default:
+                break;
         }
     }
 

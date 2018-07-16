@@ -250,8 +250,7 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
             case R.id.iv_weekly_report:
                 int selectTimeInSecond = (int) (mSelectedTime / 1000);
                 String urlContentPart = H5Uri.SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", String.valueOf(selectTimeInSecond));
-                String title = getString(R.string.record_weekly_report);
-                SimpleWebActivity.launch(getActivity(), title, urlContentPart);
+                SimpleWebActivity.launch(getActivity(), urlContentPart);
                 break;
             case R.id.dsiv_sleep_scale:
                 ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_ALL);

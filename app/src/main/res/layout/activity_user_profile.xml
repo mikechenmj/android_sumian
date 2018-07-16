@@ -84,6 +84,17 @@
                 android:layout_height="@dimen/space_10" />
 
             <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_my_target"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/my_target" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
                 android:id="@+id/dv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

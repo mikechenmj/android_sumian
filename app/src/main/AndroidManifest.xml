@@ -182,6 +182,7 @@
             android:theme="@style/BaseAppTheme" />
 
         <activity android:name=".record.SleepRecordDetailActivity" />
+        <activity android:name=".account.userProfile.activity.MyTargetAndInformationActivity" />
     </application>
 
 </manifest>

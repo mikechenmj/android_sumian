@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.widget.webview;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.sumian.sleepdoctor.BuildConfig;
@@ -19,36 +20,8 @@ public abstract class SBridgeHandler implements BridgeHandler {
     @Override
     public void handler(String data, CallBackFunction function) {
         function.onCallBack(data);
-        if (BuildConfig.DEBUG) {
-            Log.e(TAG, "handler: ----hello---->" + data);
-        }
-        //  SBridgeResult<Result> sBridgeResult = null;// JSON.parseObject(data, new TypeToken<SBridgeResult<Result>>() {
-        //   }.getType());//JsonUtil.fromJson(data, new TypeToken<SBridgeResult<Result>>() {
-        //}.getType());
-//        TypeAdapter<SBridgeResult<Result>> adapter = new GsonBuilder().create().getAdapter(new TypeToken<SBridgeResult<Result>>() {
-//        });
-//        try {
-//            sBridgeResult = adapter.fromJson(data);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        //JsonReader jsonReader = new GsonBuilder().create().newJsonReader(value.charStream());
-//        try {
-//            T result = adapter.read(jsonReader);
-//            if (jsonReader.peek() != JsonToken.END_DOCUMENT) {
-//                throw new JsonIOException("JSON document was not fully consumed.");
-//            }
-//            return result;
-//        } finally {
-//            value.close();
-//        }
-
-
-        // Log.e(TAG, "handler: --------->" + sBridgeResult.toString());
-        // if (sBridgeResult != null) {
+        LogUtils.d(data);
         handler(data);
-        //}
     }
 
     public void handler(String data) {

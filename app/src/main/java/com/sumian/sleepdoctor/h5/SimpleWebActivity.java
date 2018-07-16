@@ -1,8 +1,11 @@
 package com.sumian.sleepdoctor.h5;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
+import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 
 public class SimpleWebActivity extends BaseWebViewActivity {
@@ -12,15 +15,23 @@ public class SimpleWebActivity extends BaseWebViewActivity {
     private String mTitle;
     private String mUrlContentPart;
 
-    public static void launch(Context context, String title, String urlContentPart) {
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_TITLE, title);
-        bundle.putString(KEY_URL_CONTENT_PART, urlContentPart);
-        show(context, SimpleWebActivity.class, bundle);
+    public static void launch(Context context, String urlContentPart) {
+        Intent intent = getIntent(context, urlContentPart);
+        context.startActivity(intent);
     }
 
-    public static void launch(Context context, String urlContentPart) {
-        launch(context, "", urlContentPart);
+    public static void launchForResult(ActivityLauncher launcher, String urlContentPart, int requestCode) {
+        Intent intent = getIntent(launcher.getActivity(), urlContentPart);
+        launcher.startActivityForResult(intent, requestCode);
+    }
+
+    @NonNull
+    private static Intent getIntent(Context context, String urlContentPart) {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_URL_CONTENT_PART, urlContentPart);
+        Intent intent = new Intent(context, SimpleWebActivity.class);
+        intent.putExtras(bundle);
+        return intent;
     }
 
     @Override
