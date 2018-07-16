@@ -125,8 +125,7 @@ android {
         def application_id = rootProject.ext.applicationId
         def version_name = rootProject.ext.versionName
 
-        //应用宝
-        yyb {
+        yyb {//应用宝
             dimension "market"
         }
 
