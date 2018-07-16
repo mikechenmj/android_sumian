@@ -1,13 +1,9 @@
 package com.sumian.sleepdoctor.cbti.activity
 
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseActivity
 import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.widget.cbti.CBTIPart
-import com.sumian.sleepdoctor.widget.cbti.CBTIPartView
 import kotlinx.android.synthetic.main.activity_main_cbti_curriculum_center.*
 
 /**
@@ -32,16 +28,13 @@ class CBTICurriculumActivity : BaseActivity<BasePresenter<*>>(), View.OnClickLis
     override fun initWidget(root: View?) {
         super.initWidget(root)
         tv_see_more.setOnClickListener(this)
-
     }
 
     override fun initData() {
         super.initData()
-        val cbtiPart = CBTIPart("请完成上周课程", 0, 1)
-        val cbtiPartView = CBTIPartView(context = this)
-        cbtiPartView.invalid(cbtiPart)
-        cbtiPartView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, resources.getDimensionPixelOffset(R.dimen.space_94))
-        cbti_container.addView(cbtiPartView)
+        //cbtiPartView.invalid(cbtiPart)
+        //cbtiPartView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, resources.getDimensionPixelOffset(R.dimen.space_94))
+        //cbti_container.addView(cbtiPartView)
     }
 
     override fun onClick(v: View?) {

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="第一周 认识睡眠" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/trans">
+
+            <com.sumian.sleepdoctor.widget.cbti.CBTIWeekLessonBannerView
+                android:id="@+id/cbti_week_lesson_banner_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_180"
+                android:layout_marginBottom="@dimen/space_10"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_40"
+                app:tabBackground="@color/b2_color"
+                app:tabIndicatorColor="@color/b3_color"
+                app:tabIndicatorHeight="@dimen/space_1"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/b3_color"
+                app:tabTextAppearance="@style/TabTextAppearance"
+                app:tabTextColor="@color/t2_color">
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tab_item_scan_qr_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lesson"
+                    tools:ignore="HardcodedText" />
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tab_item_input_sn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/practice"
+                    tools:ignore="HardcodedText" />
+
+            </android.support.design.widget.TabLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1"
+            android:background="@color/l1_color" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
