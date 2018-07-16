@@ -38,7 +38,7 @@ import retrofit2.Call;
  * <p>
  * desc: base fragment
  */
-public abstract class BaseFragment<Presenter extends BasePresenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
+public abstract class BaseFragment<Presenter extends BasePresenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner, ActivityLauncher {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
     public Bundle mBundle;

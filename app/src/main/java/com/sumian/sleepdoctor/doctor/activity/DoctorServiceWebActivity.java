@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.doctor.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +10,12 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
+import com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.h5.H5Uri;
+import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.widget.webview.SBridgeResult;
@@ -27,9 +30,10 @@ import java.util.Objects;
  * desc:
  **/
 public class DoctorServiceWebActivity extends BaseWebViewActivity {
-
+    public static final String ACTION_CLOSE_ACTIVE_ACTIVITY = "com.sumian.sleepdoctor.ACTION.close.active.activity";
     private static final String EXTRA_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
     private static final String EXTRA_FROM_RECORD = "com.sumian.doctorsleep.extra.from.record";
+    private static final int REQUEST_CODE_BUY_SERVICE = 1000;
 
     private DoctorService mDoctorService;
     private BroadcastReceiver mBroadcastReceiver;
@@ -59,30 +63,6 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
-        registerFinishBroadcastReceiver();
-    }
-
-    private void registerFinishBroadcastReceiver() {
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY);
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                switch (Objects.requireNonNull(intent.getAction())) {
-                    case ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY:
-                        finish();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }, filter);
-    }
-
-    @Override
     protected String initTitle() {
         return this.mDoctorService.getName();
     }
@@ -90,11 +70,6 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     @Override
     protected String getUrlContentPart() {
         return H5Uri.DOCTOR_SERVICE.replace("{id}", String.format(Locale.getDefault(), "%d", mDoctorService.getId()));
-    }
-
-    @Override
-    protected String h5HandlerName() {
-        return "payDirect";
     }
 
     @Override
@@ -108,14 +83,15 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     @Override
     protected void registerHandler(SWebView sWebView) {
         super.registerHandler(sWebView);
-        sWebView.registerHandler(h5HandlerName(), new SBridgeHandler() {
+        sWebView.registerHandler("payDirect", new SBridgeHandler() {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void handler(String data) {
                 SBridgeResult<DoctorService> sBridgeResult = JsonUtil.fromJson(data, new TypeToken<SBridgeResult<DoctorService>>() {
                 }.getType());
-                if (sBridgeResult.code == 0) {//立即去购买
-                    ShoppingCarActivity.show(DoctorServiceWebActivity.this, sBridgeResult.result);
+                //0：立即购买； -1：未绑定医生
+                if (sBridgeResult.code == 0) {
+                    ShoppingCarActivity.startForResult(DoctorServiceWebActivity.this, sBridgeResult.result, REQUEST_CODE_BUY_SERVICE);
                 } else {//未绑定医生
                     if (mIsFromRecord) {
                         ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, mDoctorService, mIsFromRecord);
@@ -126,6 +102,21 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
                 }
             }
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_BUY_SERVICE && resultCode == RESULT_OK) {
+            if (mDoctorService.getType() == DoctorService.SERVICE_TYPE_ADVISORY) {
+                Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
+                finish();
+            } else {
+                finish();
+                MainActivity.launch(this, 1);
+            }
+        }
     }
 }

@@ -51,7 +51,7 @@ import kotlin.collections.ArrayList
  **/
 class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.Presenter>(),
         PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
-        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, ActivityLauncher, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
+        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
 
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName

@@ -25,10 +25,12 @@ data class DoctorService(var id: Int,
                          var type: Int/*0：睡眠日记，1：图文咨询*/,
                          var remaining_description: String/*剩余描述*/,
                          var packages: ArrayList<DoctorServicePackage> /*参数include=services出现，否则不展示*/
-) : Parcelable, Serializable {
+) : Parcelable {
 
     companion object {
-        const val SERVICE_TYPE_SLEEP_REPORT: Int = 0x00
-        const val SERVICE_TYPE_ADVISORY: Int = 0x01
+        const val SERVICE_TYPE_SLEEP_REPORT: Int = 0
+        const val SERVICE_TYPE_ADVISORY: Int = 1
+        const val SERVICE_TYPE_PHONE_ADVISORY: Int = 2
+        const val SERVICE_TYPE_CBTI: Int = 3
     }
 }

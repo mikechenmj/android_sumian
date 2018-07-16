@@ -84,18 +84,13 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
     }
 
     @Override
-    protected String h5HandlerName() {
-        return "bindDoctorResult";
-    }
-
-    @Override
     protected String initTitle() {
         return getString(R.string.bind_doctor);
     }
 
     @Override
     protected void registerHandler(SWebView sWebView) {
-        sWebView.registerHandler(h5HandlerName(), new SBridgeHandler() {
+        sWebView.registerHandler("bindDoctorResult", new SBridgeHandler() {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void handler(String data) {

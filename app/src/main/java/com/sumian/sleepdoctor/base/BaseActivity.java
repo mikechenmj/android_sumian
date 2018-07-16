@@ -42,7 +42,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public abstract class BaseActivity<Presenter extends BasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
+public abstract class BaseActivity<Presenter extends BasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver,ActivityLauncher {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     protected View mRoot;
@@ -281,6 +281,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         showCenterToast(getString(messageId));
     }
 
+    @Override
     public Activity getActivity() {
         return this;
     }

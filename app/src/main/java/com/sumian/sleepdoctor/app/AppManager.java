@@ -9,7 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.util.Log;
+import android.view.Gravity;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.open.OpenEngine;
@@ -91,7 +93,7 @@ public final class AppManager implements Observer<Boolean> {
         EmojiCompat.Config config = new BundledEmojiCompatConfig(context);
         EmojiCompat.init(config);
 
-        Utils.init(context);
+        initUtils(context);
 
         if (Holder.INSTANCE.mAccountViewModel == null) {
             Holder.INSTANCE.mAccountViewModel = new AccountViewModel((Application) context);
@@ -107,6 +109,11 @@ public final class AppManager implements Observer<Boolean> {
             this.mOpenEngine = new OpenEngine().register(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
         }
 
+    }
+
+    private void initUtils(Context context) {
+        Utils.init(context);
+        ToastUtils.setGravity(Gravity.CENTER, 0, 0);
     }
 
     public void release() {

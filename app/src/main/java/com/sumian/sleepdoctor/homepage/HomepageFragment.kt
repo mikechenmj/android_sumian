@@ -11,6 +11,8 @@ import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.doctor.activity.ShoppingCarActivity
+import com.sumian.sleepdoctor.doctor.bean.DoctorService
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
@@ -29,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_homepage.*
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageContract.View, ActivityLauncher {
+class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageContract.View {
     override fun getLayoutId(): Int {
         return R.layout.fragment_homepage
     }
@@ -104,27 +106,17 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun onSleepPrescriptionClick() {
-//        AppManager.getHttpService().getServiceDetailById(17)
-//                .enqueue(object : BaseResponseCallback<DoctorService>() {
-//                    override fun onSuccess(response: DoctorService?) {
-//                        LogUtils.d(response)
-//                    }
-//
-//                    override fun onFailure(errorResponse: ErrorResponse) {
-//
-//                    }
-//
-//                })
-//        AppManager.getHttpService().getServiceDetailByType(3)
-//                .enqueue(object : BaseResponseCallback<Any>() {
-//                    override fun onSuccess(response: Any?) {
-//                        LogUtils.d(response)
-//                    }
-//
-//                    override fun onFailure(errorResponse: ErrorResponse) {
-//
-//                    }
-//
-//                })
+        AppManager.getHttpService().getServiceDetailById(5)
+                .enqueue(object : BaseResponseCallback<DoctorService>() {
+                    override fun onSuccess(response: DoctorService?) {
+                        LogUtils.d(response)
+                        ShoppingCarActivity.startForResult(this@HomepageFragment, response, 1)
+                    }
+
+                    override fun onFailure(errorResponse: ErrorResponse) {
+
+                    }
+
+                })
     }
 }

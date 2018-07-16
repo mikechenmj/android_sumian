@@ -46,7 +46,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 
-public class RecordFragment extends BasePagerFragment implements CalendarView.OnDateClickListener, ActivityLauncher {
+public class RecordFragment extends BasePagerFragment implements CalendarView.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 2;

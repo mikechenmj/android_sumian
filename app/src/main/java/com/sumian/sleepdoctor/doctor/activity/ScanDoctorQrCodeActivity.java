@@ -75,12 +75,12 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
 
     private void registerFinishBroadcastReceiver() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY);
+        filter.addAction(DoctorServiceWebActivity.ACTION_CLOSE_ACTIVE_ACTIVITY);
         LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 switch (Objects.requireNonNull(intent.getAction())) {
-                    case ShoppingCarActivity.ACTION_CLOSE_ACTIVE_ACTIVITY:
+                    case DoctorServiceWebActivity.ACTION_CLOSE_ACTIVE_ACTIVITY:
                         finish();
                         break;
                     default:

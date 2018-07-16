@@ -35,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class MeFragment extends BaseFragment implements View.OnClickListener, ActivityLauncher {
+public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -55,8 +55,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Ac
         UserProfile userProfile = AppManager.getAccountViewModel().getToken().user;
         updateUserProfile(userProfile);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
-            if (token != null)
+            if (token != null) {
                 updateUserProfile(token.user);
+            }
         });
         ViewModelProviders.of(Objects.requireNonNull(getActivity()))
                 .get(NotificationViewModel.class)
@@ -64,6 +65,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Ac
                 .observe(this, unreadCount -> mIvNotification.setActivated(unreadCount != null && unreadCount > 0));
     }
 
+    @Override
     @OnClick({
             R.id.iv_avatar,
             R.id.dv_user_info_center,

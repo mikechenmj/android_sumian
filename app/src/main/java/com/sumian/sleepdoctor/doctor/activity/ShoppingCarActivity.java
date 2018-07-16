@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.doctor.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity;
+import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.doctor.bean.PayOrder;
@@ -40,8 +42,6 @@ import butterknife.OnClick;
  */
 
 public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
-
-    public static final String ACTION_CLOSE_ACTIVE_ACTIVITY = "com.sumian.sleepdoctor.ACTION.close.active.activity";
     private static final String TAG = ShoppingCarActivity.class.getSimpleName();
     private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
     @BindView(R.id.title_bar)
@@ -73,10 +73,10 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
 
     private DoctorService mDoctorService;
 
-    public static void show(Context context, DoctorService doctorService) {
-        Bundle extras = new Bundle();
-        extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService);
-        show(context, ShoppingCarActivity.class, extras);
+    public static void startForResult(ActivityLauncher launcher, DoctorService doctorService, int requestCode) {
+        Intent intent = new Intent(launcher.getActivity(), ShoppingCarActivity.class);
+        intent.putExtra(ARGS_DOCTOR_SERVICE, doctorService);
+        launcher.startActivityForResult(intent, requestCode);
     }
 
     @SuppressWarnings("unchecked")
@@ -247,16 +247,8 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         if (mPayDialog != null && mPayDialog.isShowing()) {
             mPayDialog.cancel();
         }
-
-        if (mDoctorService.getType() == DoctorService.SERVICE_TYPE_ADVISORY) {
-            Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-            PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
-            finish();
-        } else {
-            finish();
-            MainActivity.launch(this, 1);
-        }
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     @Override
