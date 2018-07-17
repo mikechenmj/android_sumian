@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
@@ -81,7 +82,7 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     }
 
     @Override
-    protected void registerHandler(SWebView sWebView) {
+    protected void registerHandler(@NonNull SWebView sWebView) {
         super.registerHandler(sWebView);
         sWebView.registerHandler("payDirect", new SBridgeHandler() {
             @SuppressWarnings("ConstantConditions")

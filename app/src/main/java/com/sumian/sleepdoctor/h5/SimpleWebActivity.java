@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.widget.webview.SWebView;
 
 public class SimpleWebActivity extends BaseWebViewActivity {
 
@@ -50,4 +52,5 @@ public class SimpleWebActivity extends BaseWebViewActivity {
     protected String getUrlContentPart() {
         return mUrlContentPart;
     }
+
 }

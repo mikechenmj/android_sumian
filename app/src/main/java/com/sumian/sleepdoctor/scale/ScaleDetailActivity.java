@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.scale;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
@@ -52,7 +53,7 @@ public class ScaleDetailActivity extends BaseWebViewActivity {
     }
 
     @Override
-    protected void registerHandler(SWebView sWebView) {
+    protected void registerHandler(@NonNull SWebView sWebView) {
         sWebView.registerHandler("scaleFinishFilling", new SBridgeHandler() {
             @Override
             public void handler(String data) {

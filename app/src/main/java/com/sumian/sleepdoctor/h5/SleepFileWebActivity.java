@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.h5;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
 
@@ -50,7 +51,7 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
     }
 
     @Override
-    protected void registerHandler(SWebView sWebView) {
+    protected void registerHandler(@NonNull SWebView sWebView) {
         super.registerHandler(sWebView);
         sWebView.registerHandler(h5HandlerName(), new SBridgeHandler() {
 
@@ -98,7 +99,9 @@ public class SleepFileWebActivity extends BaseWebViewActivity {
                 // options.inJustDecodeBounds = true;
                 bitmap = BitmapFactory.decodeFile(image, options);
                 //options.inJustDecodeBounds = false;
-                if (bitmap == null) continue;
+                if (bitmap == null) {
+                    continue;
+                }
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bos);
                 try {
                     bos.flush();

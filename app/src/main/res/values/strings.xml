@@ -225,4 +225,5 @@
     <string name="homepage_sleep_slogan">好的睡眠离不开您一点一滴的努力</string>
     <string name="not_open_yet_please_wait">暂未开放，敬请期待</string>
     <string name="my_target">我的目标</string>
+    <string name="save_success">保存成功</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.record;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -59,7 +60,7 @@ public class FillSleepRecordActivity extends BaseWebViewActivity {
     }
 
     @Override
-    protected void registerHandler(SWebView sWebView) {
+    protected void registerHandler(@NonNull SWebView sWebView) {
         sWebView.registerHandler("diaryFinishFilling", new SBridgeHandler() {
             @Override
             public void handler(String data) {

@@ -66,10 +66,10 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     protected void initData() {
         super.initData();
         SWebView sWebView = mSWebViewLayout.getSWebView();
-        registerHandler(sWebView);
         mSWebViewLayout.setWebListener(this);
-        registerDialogHandler(sWebView);
         mSWebViewLayout.loadRequestUrl(getCompleteUrl());
+        registerHandler(sWebView);
+        registerDialogHandler(sWebView);
     }
 
     private void registerDialogHandler(SWebView sWebView) {
@@ -153,8 +153,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         return null;
     }
 
-    protected void registerHandler(SWebView sWebView) {
-
+    protected void registerHandler(@NonNull SWebView sWebView) {
     }
 
     @Override

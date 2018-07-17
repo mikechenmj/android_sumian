@@ -159,7 +159,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
                         .commitNow();
                 break;
             case R.id.dv_my_target:
-                MyTargetAndInformationActivity.Companion.launch(this, true);
+                MyTargetAndInformationActivity.Companion.launchFromMine(this);
                 break;
             default:
                 break;

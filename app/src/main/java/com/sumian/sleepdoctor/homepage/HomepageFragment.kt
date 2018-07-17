@@ -46,14 +46,14 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         ll_sleep_prescription.setOnClickListener { onSleepPrescriptionClick() }
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener {
             run { ToastUtils.showShort("todo") }
-            MyTargetAndInformationActivity.launch(activity!!, false) // todo remove
+            MyTargetAndInformationActivity.launchFromMine(activity!!) // todo remove
         })
         doctor_service_item_view_cbti.setOnClickListener {
             ToastUtils.showShort("todo")
         }
         tv_sleep_health.setOnClickListener {
             ToastUtils.showShort(R.string.not_open_yet_please_wait)
-            MyTargetAndInformationActivity.launch(activity!!, true) // todo remove
+            MyTargetAndInformationActivity.launchFromNewUser(this, 1) // todo remove
         }
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
     }

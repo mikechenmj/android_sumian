@@ -19,8 +19,8 @@ public abstract class SBridgeHandler implements BridgeHandler {
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     @Override
     public void handler(String data, CallBackFunction function) {
-        function.onCallBack(data);
         LogUtils.d(data);
+        function.onCallBack(data);
         handler(data);
     }
 

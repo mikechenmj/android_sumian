@@ -61,7 +61,7 @@ public class OnlineReportDetailActivity extends BaseWebViewActivity {
     }
 
     @Override
-    protected void registerHandler(SWebView sWebView) {
+    protected void registerHandler(@NonNull SWebView sWebView) {
         super.registerHandler(sWebView);
         sWebView.registerHandler("analyseReport", new SBridgeHandler() {
             @Override

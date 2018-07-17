@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.doctor.activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
@@ -89,7 +90,7 @@ public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> 
     }
 
     @Override
-    protected void registerHandler(SWebView sWebView) {
+    protected void registerHandler(@NonNull SWebView sWebView) {
         sWebView.registerHandler("bindDoctorResult", new SBridgeHandler() {
             @SuppressWarnings("ConstantConditions")
             @Override
