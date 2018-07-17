@@ -59,25 +59,10 @@
                     tools:src="@mipmap/ic_info_avatar_patient" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_sleep_prescription"
+            <com.sumian.sleepdoctor.homepage.widget.SleepPrescriptionView
+                android:id="@+id/sleep_prescription_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_home_bg_sleepprescription"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingEnd="@dimen/space_30"
-                android:paddingStart="@dimen/space_30">
-
-                <TextView
-                    style="@style/text_white_16"
-                    android:text="@string/my_sleep_prescription" />
-
-                <TextView
-                    style="@style/text_white_14"
-                    android:layout_marginTop="@dimen/space_5"
-                    android:text="@string/my_sleep_prescription_desc" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
             <com.sumian.sleepdoctor.record.widget.SimpleSleepRecordView
                 android:id="@+id/sleep_record_view"
@@ -129,7 +114,6 @@
                     android:background="@drawable/bg_home_img_scale"
                     android:gravity="center"
                     android:text="@string/sleep_health" />
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +20,8 @@ import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.widget.dialog.LoadingDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
@@ -113,6 +114,22 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (openEventBus()) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        if (openEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onStop();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         this.mUnBinder.unbind();
@@ -123,6 +140,10 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         super.onDetach();
         getLifecycle().removeObserver(this);
         onRelease();
+    }
+
+    protected boolean openEventBus() {
+        return false;
     }
 
     protected void onRestartInstance(Bundle savedInstanceState) {

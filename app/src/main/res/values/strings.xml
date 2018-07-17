@@ -226,4 +226,16 @@
     <string name="not_open_yet_please_wait">暂未开放，敬请期待</string>
     <string name="my_target">我的目标</string>
     <string name="save_success">保存成功</string>
+    <string name="sleep_time">就寝时间</string>
+    <string name="getUpTime">起床时间</string>
+    <string name="sleep_data_no_enough">睡眠数据不足</string>
+    <string name="sleep_data_no_enough_hint">您近三周的睡眠数据不足，无法为您提供睡眠处方，请坚持填写睡眠日记</string>
+    <string name="last_week_tired_enquire">上周日间疲劳情况调查</string>
+    <string name="last_week_tired_enquire_hint">过去一周你常常会感到日间疲惫吗？</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="update_sleep_prescription">更新睡眠处方</string>
+    <string name="update_sleep_prescription_hint">已为您调整新的睡眠处方，是否更新？</string>
+    <string name="update">更新</string>
+    <string name="i_got_it">我知道了</string>
 </resources>

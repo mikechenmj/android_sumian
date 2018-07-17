@@ -1,11 +1,9 @@
 package com.sumian.sleepdoctor.doctor.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -18,15 +16,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
+import com.sumian.sleepdoctor.doctor.bean.DoctorServicePackage;
+import com.sumian.sleepdoctor.doctor.bean.DoctorServiceShopData;
 import com.sumian.sleepdoctor.doctor.bean.PayOrder;
 import com.sumian.sleepdoctor.doctor.contract.PayContract;
 import com.sumian.sleepdoctor.doctor.dialog.PayDialog;
 import com.sumian.sleepdoctor.doctor.presenter.PayPresenter;
-import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.sumian.sleepdoctor.widget.pay.PayCalculateItemView;
@@ -44,6 +42,7 @@ import butterknife.OnClick;
 public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
     private static final String TAG = ShoppingCarActivity.class.getSimpleName();
     private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
+    private static final String ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId";
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
@@ -72,11 +71,22 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     private PayDialog mPayDialog;
 
     private DoctorService mDoctorService;
+    private int mPackageId;
+    private DoctorServicePackage mServicePackage;
 
-    public static void startForResult(ActivityLauncher launcher, DoctorService doctorService, int requestCode) {
+    private static void startForResult(ActivityLauncher launcher, DoctorService doctorService, int packageId, int requestCode) {
         Intent intent = new Intent(launcher.getActivity(), ShoppingCarActivity.class);
         intent.putExtra(ARGS_DOCTOR_SERVICE, doctorService);
+        intent.putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId);
         launcher.startActivityForResult(intent, requestCode);
+    }
+
+    public static void startForResult(ActivityLauncher launcher, DoctorService doctorService, int requestCode) {
+        startForResult(launcher, doctorService, doctorService.getPackages().get(0).getId(), requestCode);
+    }
+
+    public static void startForResult(ActivityLauncher launcher, DoctorServiceShopData doctorServiceShopData, int requestCode) {
+        startForResult(launcher, doctorServiceShopData.getService(), doctorServiceShopData.getPackageId(), requestCode);
     }
 
     @SuppressWarnings("unchecked")
@@ -84,6 +94,12 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     protected boolean initBundle(Bundle bundle) {
         if (bundle != null) {
             this.mDoctorService = bundle.getParcelable(ARGS_DOCTOR_SERVICE);
+            this.mPackageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID);
+            for (DoctorServicePackage servicePackage : mDoctorService.getPackages()) {
+                if (servicePackage.getId() == mPackageId) {
+                    mServicePackage = servicePackage;
+                }
+            }
         }
         return super.initBundle(bundle);
     }
@@ -109,15 +125,11 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         RequestOptions requestOptions = RequestOptions.placeholderOf(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar);
         Glide.with(this).load(mDoctorService.getIcon()).apply(requestOptions).into(mIvGroupIcon);
         mTvDesc.setText(mDoctorService.getName());
-
-        String priceText = mDoctorService.getPackages().get(0).getPrice_text();
-
+        String priceText = getDoctorServicePackage().getPrice_text();
         SpannableString spannableString = new SpannableString(priceText);
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.t4_color)), 0, priceText.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         mTvGroupMoney.setText(TextUtils.concat("服务费用: ", spannableString));
-
-        mPayCalculateItemView.setDefaultMoney(mDoctorService.getPackages().get(0).getUnit_price());
+        mPayCalculateItemView.setDefaultMoney(getDoctorServicePackage().getUnit_price());
     }
 
     @Override
@@ -137,12 +149,16 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                PayOrder payOrder = new PayOrder(mPayCalculateItemView.getCurrentMoney(), mPayChannel, "cny", mDoctorService.getName(), mDoctorService.getDescription(), mDoctorService.getPackages().get(0).getId(), mPayCalculateItemView.getCurrentBuyCount());
+                PayOrder payOrder = new PayOrder(mPayCalculateItemView.getCurrentMoney(), mPayChannel, "cny", mDoctorService.getName(), mDoctorService.getDescription(), getDoctorServicePackage().getId(), mPayCalculateItemView.getCurrentBuyCount());
                 mPresenter.createPayOrder(this, payOrder);
                 break;
             default:
                 break;
         }
+    }
+
+    private DoctorServicePackage getDoctorServicePackage() {
+        return mServicePackage;
     }
 
     @Override

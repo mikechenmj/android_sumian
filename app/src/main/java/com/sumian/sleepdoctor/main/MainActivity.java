@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
+import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
 import com.sumian.sleepdoctor.homepage.HomepageFragment;
@@ -212,7 +213,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     @Subscribe(sticky = true)
     public void onNotificationReadEvent(NotificationReadEvent event) {
-        removeStickyEvent(event);
+        EventBusUtil.removeStickyEvent(event);
         ViewModelProviders.of(this)
                 .get(NotificationViewModel.class)
                 .updateUnreadCount();

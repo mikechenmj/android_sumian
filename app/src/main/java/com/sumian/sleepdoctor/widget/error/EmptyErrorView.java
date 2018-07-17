@@ -128,7 +128,7 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (mOnEmptyCallback != null) {
-            this.mOnEmptyCallback.onReload();
+            this.mOnEmptyCallback.reload();
         }
         hide();
     }
@@ -152,6 +152,6 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
 
     public interface OnEmptyCallback {
 
-        void onReload();
+        void reload();
     }
 }

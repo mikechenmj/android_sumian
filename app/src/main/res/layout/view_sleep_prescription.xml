@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_no_sleep_prescription_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_home_bg_sleepprescription"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/space_30"
+        android:paddingStart="@dimen/space_30"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            style="@style/text_white_16"
+            android:text="@string/my_sleep_prescription" />
+
+        <TextView
+            style="@style/text_white_14"
+            android:layout_marginTop="@dimen/space_5"
+            android:text="@string/my_sleep_prescription_desc" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_sleep_prescription"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_110"
+        android:background="@drawable/home_img_sleepprescription_bg1"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_white_14"
+                android:layout_marginTop="@dimen/space_5"
+                android:drawablePadding="@dimen/space_10"
+                android:drawableStart="@drawable/home_icon_fallasleep_white"
+                android:text="@string/sleep_time" />
+
+            <TextView
+                android:id="@+id/tv_sleep_time"
+                style="@style/text_white_14"
+                android:drawablePadding="@dimen/space_10"
+                android:textSize="@dimen/font_20"
+                tools:text="22:35" />
+        </LinearLayout>
+
+        <View
+            style="@style/VerticalDividerLine"
+            android:layout_marginBottom="@dimen/space_32"
+            android:layout_marginTop="@dimen/space_32" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_white_14"
+                android:layout_marginTop="@dimen/space_5"
+                android:drawablePadding="@dimen/space_10"
+                android:drawableStart="@drawable/home_icon_workschedule_white"
+                android:text="@string/getUpTime" />
+
+            <TextView
+                android:id="@+id/tv_get_up_time"
+                style="@style/text_white_14"
+                android:drawablePadding="@dimen/space_10"
+                android:textSize="@dimen/font_20"
+                tools:text="06:35" />
+        </LinearLayout>
+    </LinearLayout>
+</merge>

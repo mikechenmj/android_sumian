@@ -26,4 +26,5 @@ public interface H5Uri {
     String MY_TARGET = "my-target?from=";// from=mine 表示从我的目标进入，from=newUser 表示新用户登录时进入
     String MY_TARGET_FROM_MINE = MY_TARGET + "mine";
     String MY_TARGET_FROM_NEW_USER = MY_TARGET + "newUser";
+    String CBTI_INTRODUCTION = "cbti";
 }

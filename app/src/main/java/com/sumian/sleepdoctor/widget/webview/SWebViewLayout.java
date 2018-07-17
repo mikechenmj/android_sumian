@@ -136,7 +136,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
     }
 
     @Override
-    public void onReload() {
+    public void reload() {
         this.mSWebView.reload();
     }
 

@@ -11,6 +11,8 @@ import com.sumian.sleepdoctor.doctor.bean.Doctor
 import com.sumian.sleepdoctor.doctor.bean.DoctorService
 import com.sumian.sleepdoctor.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
+import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
+import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
@@ -184,6 +186,14 @@ interface DoctorApi {
 
     @POST("advisory-records/sts")
     fun publishPicturesAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<PictureOssSts>
+
+    // ---------- homepage ----------
+
+    @GET("sleep-prescriptions")
+    fun getSleepPrescriptions(): Call<SleepPrescriptionWrapper>
+
+    @POST("sleep-prescriptions")
+    fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
 
     /**
      * include

@@ -218,4 +218,8 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         layoutParams.height = height;
         mRootView.requestLayout();
     }
+
+    protected void reload() {
+        mSWebViewLayout.reload();
+    }
 }

@@ -42,7 +42,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public abstract class BaseActivity<Presenter extends BasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver,ActivityLauncher {
+public abstract class BaseActivity<Presenter extends BasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver, ActivityLauncher {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     protected View mRoot;
@@ -288,10 +288,6 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
 
     protected boolean openEventBus() {
         return false;
-    }
-
-    protected void removeStickyEvent(Object object) {
-        EventBus.getDefault().removeStickyEvent(object);
     }
 
     protected boolean backable() {
