@@ -37,7 +37,7 @@ class CBTIWeekLessonPartActivity : BaseActivity<CBTIWeekLessonContract.Presenter
     override fun initWidget(root: View?) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
-        ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICouresLiveData().observe(this, this)
+        ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICoursesLiveData().observe(this, this)
     }
 
     override fun initData() {
@@ -75,7 +75,7 @@ class CBTIWeekLessonPartActivity : BaseActivity<CBTIWeekLessonContract.Presenter
 
     override fun onChanged(t: Courses?) {
         t?.let {
-            cbti_week_lesson_banner_view.invalidateBanner("", "", "", t.meta.chapter_progress)
+            cbti_week_lesson_banner_view.invalidateBanner(t.meta.chapter.title, t.meta.chapter.introduction, t.meta.chapter.banner, t.meta.chapter_progress)
         }
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_40"
+    android:background="#7f000000"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iv_player_status"
+        android:layout_width="@dimen/space_40"
+        android:layout_height="@dimen/space_40"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_10"
+        android:src="@drawable/ic_cbti_icon_play_s" />
+
+    <SeekBar
+        android:id="@+id/sb_progress"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:progress="100"
+        android:thumb="@drawable/ic_cbti_btn_progress_l" />
+
+    <TextView
+        android:id="@+id/tv_duration"
+        style="@style/text_b2_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_14"
+        android:layout_marginStart="@dimen/space_6"
+        android:text="00:00/00:00"
+        android:textSize="@dimen/font_10"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_lesson_list"
+            style="@style/text_b2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/list"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_scale"
+            android:layout_width="@dimen/space_40"
+            android:layout_height="@dimen/space_40"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_10"
+            android:src="@drawable/ic_cbti_icon_cutover" />
+
+    </FrameLayout>
+
+</LinearLayout>

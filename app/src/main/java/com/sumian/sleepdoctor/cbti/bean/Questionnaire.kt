@@ -1,5 +1,9 @@
 package com.sumian.sleepdoctor.cbti.bean
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
+
 /**
  * Created by dq
  *
@@ -7,5 +11,7 @@ package com.sumian.sleepdoctor.cbti.bean
  *
  * desc:   CBTI 每节课的调查问卷/题目
  */
+@Parcelize
 data class Questionnaire(var question: String,//题目/问题
                          var selection: List<String>)// 选项
+    : Serializable, Parcelable

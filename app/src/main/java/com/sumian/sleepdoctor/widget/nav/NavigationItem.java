@@ -56,9 +56,14 @@ public class NavigationItem extends LinearLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NavigationItem);
         String text = typedArray.getString(R.styleable.NavigationItem_tab_text);
         @DrawableRes int iconId = typedArray.getResourceId(R.styleable.NavigationItem_tab_icon, 0);
+
+        float textSize = typedArray.getDimension(R.styleable.NavigationItem_tab_text_size, 16);
+
         typedArray.recycle();
+
         mIvIcon.setImageResource(iconId);
         mTvText.setText(text);
+        mTvText.setTextSize(textSize);
     }
 
     @Override

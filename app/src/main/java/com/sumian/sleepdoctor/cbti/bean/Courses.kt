@@ -10,5 +10,13 @@ package com.sumian.sleepdoctor.cbti.bean
 data class Courses(var data: List<Lesson>,
                    var meta: Meta) {
 
-    data class Meta(var chapter_progress: Int)
+    data class Meta(var chapter_progress: Int,
+                    var chapter: Chapter)
+
+    data class Chapter(var id: Int,
+                       var title: String,
+                       var banner: String,
+                       var introduction: String,
+                       var summary: String,
+                       var index: Int)
 }

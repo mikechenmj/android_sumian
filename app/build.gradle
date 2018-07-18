@@ -297,7 +297,7 @@ dependencies {
 
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    annotationProcessor 'android.arch.lifecycle:compiler:1.1.1'
+    kapt 'android.arch.lifecycle:compiler:1.1.1'
     implementation 'android.arch.lifecycle:viewmodel:1.1.1'
 
     // for ViewModelProviders, since lifecycle:extensions do Not container this class
@@ -341,7 +341,6 @@ dependencies {
 
     // RecyclerViewPager
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
-
     implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
 
     //implementation 'com.github.wendux:DSBridge-Android:x5-3.0-SNAPSHOT'
@@ -355,4 +354,8 @@ dependencies {
     // EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation project(':jsbridge')
+
+    //aliyun  player sdk
+    implementation project(':player')
+
 }
