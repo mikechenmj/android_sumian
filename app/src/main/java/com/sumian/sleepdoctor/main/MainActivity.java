@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.main;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
-import com.sumian.sleepdoctor.event.SwitchMainActivityTabEvent;
 import com.sumian.sleepdoctor.homepage.HomepageFragment;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.tab.DoctorFragment;
@@ -62,20 +60,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         showClearTop(context, MainActivity.class, bundle);
     }
 
-    public static void launchSleepRecordTab(Context context, long sleepRecordTime) {
-        showClearTop(context, getLaunchSleepRecordTabIntent(context, sleepRecordTime));
-    }
-
-    public static Intent getLaunchSleepRecordTabIntent(Context context, long sleepRecordTime) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(MainActivity.KEY_TAB_INDEX, 0);
-        bundle.putLong(MainActivity.KEY_SLEEP_RECORD_TIME, sleepRecordTime);
-        bundle.putBoolean(MainActivity.KEY_SCROLL_TO_BOTTOM, true);
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtras(bundle);
-        return intent;
-    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -107,12 +91,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 } else {
                     switch (position) {
                         case 0:
-//                            if (mLaunchData != null) {
-//                                LaunchSleepTabBean data = mLaunchData.data;
-//                                fragmentByTag = RecordFragment.newInstance(data.sleepRecordTime, data.needScrollToBottom);
-//                            } else {
-//                                fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
-//                            }
                             fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
                             break;
                         case 1:
@@ -217,11 +195,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         ViewModelProviders.of(this)
                 .get(NotificationViewModel.class)
                 .updateUnreadCount();
-    }
-
-    @Subscribe
-    public void onSwitchTabEvent(SwitchMainActivityTabEvent event) {
-        mBottomNavigationBar.selectItem(event.index, true);
     }
 
     public static class LaunchSleepTabBean {

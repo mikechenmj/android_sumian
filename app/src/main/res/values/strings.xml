@@ -235,7 +235,7 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="update_sleep_prescription">更新睡眠处方</string>
-    <string name="update_sleep_prescription_hint">已为您调整新的睡眠处方，是否更新？</string>
+    <string name="update_sleep_prescription_hint">系统根据您近7天数据为您更新睡眠处方</string>
     <string name="update">更新</string>
     <string name="i_got_it">我知道了</string>
 </resources>

@@ -156,7 +156,6 @@
 
         <!-- sleep record -->
         <activity android:name=".record.FillSleepRecordActivity" />
-        <activity android:name=".record.SleepRecordActivity" />
         <activity
             android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity"
             android:theme="@style/BaseAppTheme" />

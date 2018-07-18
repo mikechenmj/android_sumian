@@ -49,7 +49,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     override fun initWidget(root: View) {
         super.initWidget(root)
         initUserInfo()
-        sleep_record_view.setOnClickRightArrowListener { ActivityUtils.startActivity(SleepRecordDetailActivity::class.java) }
+        sleep_record_view.setOnClickRightArrowListener { SleepRecordDetailActivity.launch(activity!!) }
         sleep_record_view.setOnClickFillSleepRecordBtnListener { FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD) }
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
         doctor_service_item_view_cbti.setOnClickListener { launchCbtiActivity() }
@@ -115,7 +115,6 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
 
     private fun showSleepUpdatedDialog() {
         SumianAlertDialog(activity)
-                .setTitle(R.string.update_sleep_prescription)
                 .setMessage(R.string.update_sleep_prescription_hint)
                 .setLeftBtn(R.string.i_got_it, null)
                 .show()
