@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.cbti.bean.Lesson
  *
  * on 2018/7/13
  *
- * desc:
+ * desc:  CBTI viewModel
  */
 
 class CbtiChapterViewModel : ViewModel() {
@@ -29,7 +29,7 @@ class CbtiChapterViewModel : ViewModel() {
         MutableLiveData<Exercise>()
     }
 
-    fun notifyCBTICoures(courses: Courses) {
+    fun notifyCBTICourses(courses: Courses) {
         mCBTICoursesLiveData.postValue(courses)
     }
 
@@ -43,7 +43,7 @@ class CbtiChapterViewModel : ViewModel() {
         mCBTICoursesLiveData.postValue(courses)
     }
 
-    fun getCBTICouresLiveData(): LiveData<Courses> {
+    fun getCBTICoursesLiveData(): LiveData<Courses> {
         return mCBTICoursesLiveData
     }
 

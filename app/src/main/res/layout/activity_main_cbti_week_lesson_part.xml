@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans">
 
-            <com.sumian.sleepdoctor.widget.cbti.CBTIWeekLessonBannerView
+            <com.sumian.sleepdoctor.cbti.widget.CBTIWeekLessonBannerView
                 android:id="@+id/cbti_week_lesson_banner_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_180"

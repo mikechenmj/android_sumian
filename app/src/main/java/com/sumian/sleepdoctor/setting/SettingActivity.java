@@ -66,7 +66,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.version:
-                //CBTICurriculumActivity.Gone(this, CBTICurriculumActivity.class);
+                //CBTILessonDetailActivity.Gone(this, CBTILessonDetailActivity.class);
                 CBTIWeekLessonPartActivity.show(this, CBTIWeekLessonPartActivity.class);
                 break;
             case R.id.about_me:
@@ -83,7 +83,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     private void showLogoutDialog() {
         if (dialog == null) {
             dialog = new BottomSheetDialog(this);
-            @SuppressLint("InflateParams") View inflate = LayoutInflater.from(this).inflate(R.layout.lay_logout_bottom_sheet, null, false);
+            @SuppressLint("InflateParams") View inflate = LayoutInflater.from(this).inflate(R.layout.lay_bottom_sheet_logout, null, false);
             inflate.findViewById(R.id.tv_logout).setOnClickListener(v -> {
                 logout();
                 dialog.dismiss();

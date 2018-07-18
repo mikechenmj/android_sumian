@@ -12,6 +12,7 @@ import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder
+import com.sumian.sleepdoctor.cbti.activity.CBTILessonDetailActivity
 import com.sumian.sleepdoctor.cbti.bean.Lesson
 
 /**
@@ -66,6 +67,14 @@ class LessonAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context) {
                 Gone(item.is_lock, this@run)
             }
 
+        }
+
+        override fun onItemClick(v: View?) {
+            super.onItemClick(v)
+            v?.let {
+                if (mItem.is_lock) return@let
+                CBTILessonDetailActivity.show(it.context, mItem.id)
+            }
         }
 
     }

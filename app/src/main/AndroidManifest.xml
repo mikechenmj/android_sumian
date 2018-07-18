@@ -165,22 +165,36 @@
 
         <!-- scale -->
         <activity android:name=".scale.ScaleListActivity" />
+
         <activity android:name=".scale.ScaleDetailActivity" />
+
         <activity
             android:name="com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity"
             android:theme="@style/BaseAppTheme" />
         <activity android:name=".notification.RefundActivity" />
+
         <activity
             android:name=".h5.SleepFileWebActivity"
             android:launchMode="singleTop" />
         <activity android:name=".setting.version.VersionActivity" />
-        <activity android:name=".cbti.activity.CBTICurriculumActivity" />
+
+        <activity
+            android:name=".cbti.activity.CBTILessonDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme" />
+
         <activity android:name=".cbti.activity.CBTIIntroductionWebActivity" />
+
         <activity
             android:name=".cbti.activity.CBTIWeekLessonPartActivity"
             android:theme="@style/BaseAppTheme" />
 
-        <activity android:name=".record.SleepRecordDetailActivity" />
+        <activity
+            android:name=".record.SleepRecordDetailActivity"
+            android:launchMode="singleTop" />
+
         <activity android:name=".account.userProfile.activity.MyTargetAndInformationActivity" />
         <activity android:name=".homepage.SleepPrescriptionSettingActivity" />
     </application>

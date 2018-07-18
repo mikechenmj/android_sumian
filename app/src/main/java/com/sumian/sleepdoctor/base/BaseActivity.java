@@ -149,8 +149,8 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
             initWindow();
             this.mBind = ButterKnife.bind(this);
             this.mRoot = getWindow().getDecorView();
-            initWidget(mRoot);
             initPresenter();
+            initWidget(mRoot);
             initData();
             getLifecycle().addObserver(this);
         } else {

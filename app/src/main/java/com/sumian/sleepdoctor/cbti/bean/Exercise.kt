@@ -10,12 +10,19 @@ package com.sumian.sleepdoctor.cbti.bean
 data class Exercise(var id: Int,
                     var cbti_course_id: Int,
                     var title: String,
-                    var guide: Any,
+                    var guide: Guide,
                     var type: Int,//练习类型 0：判断题 1：勾选题 2：量表题 3：跳转题
-                    var data: Any,
+                    var data: Data,//type=0 判断题 注意：这是对象数组
                     var final_words: String,
                     var is_lock: Boolean,
-                    var done: Boolean) {
+                    var done: Boolean,
+                    var type_string: String) {
 
     data class Meta(var chapter_progress: Int)
+
+    data class Guide(var title: String,
+                     var description: String,
+                     var button: String)
+
+    data class Data(var destination: Int)
 }
