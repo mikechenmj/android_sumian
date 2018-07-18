@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_refund.*
  *     version: 1.0
  * </pre>
  */
-class SleepRecordDetailActivity : BaseActivity() {
+class SleepRecordActivity : BaseActivity() {
     override fun getContentView(): Int {
         return R.layout.activity_sleep_record_detail
     }
@@ -30,7 +30,7 @@ class SleepRecordDetailActivity : BaseActivity() {
             val bundle = Bundle()
             bundle.putLong(KEY_SLEEP_RECORD_TIME, sleepRecordTime)
             bundle.putBoolean(KEY_SCROLL_TO_BOTTOM, true)
-            val intent = Intent(context, SleepRecordDetailActivity::class.java)
+            val intent = Intent(context, SleepRecordActivity::class.java)
             intent.putExtras(bundle)
             return intent
         }

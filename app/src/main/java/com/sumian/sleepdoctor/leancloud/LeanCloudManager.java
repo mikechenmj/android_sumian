@@ -12,6 +12,7 @@ import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.main.WelcomeActivity;
@@ -61,6 +62,7 @@ public class LeanCloudManager {
             public void done(AVException e) {
                 if (e == null) {
                     String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+                    LogUtils.d("LeanCloud push installationId", installationId);
                     uploadDeviceInfo(installationId);
                 }
             }

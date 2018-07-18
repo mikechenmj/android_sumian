@@ -16,7 +16,7 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
-import com.sumian.sleepdoctor.record.SleepRecordDetailActivity;
+import com.sumian.sleepdoctor.record.SleepRecordActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +120,7 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
                         AdvisoryListActivity.show(getContext(), AdvisoryListActivity.class);
                         break;
                     case "去记录":
-                        SleepRecordDetailActivity.Companion.launch(getContext());
+                        SleepRecordActivity.Companion.launch(getContext());
                         break;
                     default:
                         break;

@@ -1,14 +1,11 @@
 package com.sumian.sleepdoctor.doctor.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity;
@@ -16,14 +13,13 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.h5.H5Uri;
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.record.SleepRecordActivity;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.widget.webview.SBridgeResult;
 import com.sumian.sleepdoctor.widget.webview.SWebView;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Created by sm
@@ -109,15 +105,19 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_BUY_SERVICE && resultCode == RESULT_OK) {
-            if (mDoctorService.getType() == DoctorService.SERVICE_TYPE_ADVISORY) {
-                Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
-                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-                PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
-                finish();
-            } else {
-                finish();
-                MainActivity.launch(this, 1);
+            switch (mDoctorService.getType()) {
+                case DoctorService.SERVICE_TYPE_ADVISORY:
+                    Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                    PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
+                    break;
+                case DoctorService.SERVICE_TYPE_SLEEP_REPORT:
+                    SleepRecordActivity.Companion.launch(this);
+                    break;
+                default:
+                    break;
             }
+            finish();
         }
     }
 }

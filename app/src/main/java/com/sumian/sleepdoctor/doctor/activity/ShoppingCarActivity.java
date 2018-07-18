@@ -117,6 +117,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         mPayCalculateItemView.setOnMoneyChangeCallback(this);
         mPayDialog = new PayDialog(root.getContext()).bindContentView(R.layout.dialog_pay);
         mPayDialog.setOwnerActivity(this);
+        mPayDialog.bindPresenter(mPresenter);
     }
 
     @Override
@@ -198,7 +199,6 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     @Override
     public void setPresenter(PayContract.Presenter presenter) {
         this.mPresenter = (PayPresenter) presenter;
-        this.mPayDialog.bindPresenter(presenter);
     }
 
     @Override

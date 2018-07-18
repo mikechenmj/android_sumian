@@ -192,7 +192,7 @@
             android:theme="@style/BaseAppTheme" />
 
         <activity
-            android:name=".record.SleepRecordDetailActivity"
+            android:name=".record.SleepRecordActivity"
             android:launchMode="singleTop" />
 
         <activity android:name=".account.userProfile.activity.MyTargetAndInformationActivity" />
