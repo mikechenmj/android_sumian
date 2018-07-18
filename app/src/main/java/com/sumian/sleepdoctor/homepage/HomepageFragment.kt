@@ -97,14 +97,9 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun showSleepPrescriptionDialogIfNeed(response: SleepPrescriptionWrapper) {
-        if (response.showStopServiceDialog) {
-//            showStopPrescriptionDialog()
-        } else if (response.showUpdateDialog) {
-            SumianAlertDialog(activity)
-                    .setTitle(R.string.update_sleep_prescription)
-                    .setMessage(R.string.update_sleep_prescription_hint)
-                    .setLeftBtn(R.string.i_got_it, null)
-                    .show()
+//        response.showEnquireDialog = true //test code
+        if (response.showUpdateDialog) {
+            showSleepUpdatedDialog()
         } else if (response.showEnquireDialog) {
             SumianAlertDialog(activity)
                     .setTitle(R.string.last_week_tired_enquire)
@@ -112,21 +107,27 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                     .setLeftBtn(R.string.no, null)
                     .whitenLeft()
                     .setRightBtn(R.string.yes) {
-                        val sleepPrescription: SleepPrescription = response.sleepPrescription!!
-                        val targetDuration = sleepPrescription.sleepDurationAvg + 60 * 15   //疲劳增加15分钟睡眠时间
-                        sleepPrescription.sleepDurationAvg = Math.min(targetDuration, 3600 * 10)    // 最长10h
-                        updateSleepPrescription(sleepPrescription)
+                        updateSleepPrescription(response.sleepPrescription!!)
                     }
                     .show()
         }
     }
 
+    private fun showSleepUpdatedDialog() {
+        SumianAlertDialog(activity)
+                .setTitle(R.string.update_sleep_prescription)
+                .setMessage(R.string.update_sleep_prescription_hint)
+                .setLeftBtn(R.string.i_got_it, null)
+                .show()
+    }
+
     private fun updateSleepPrescription(sleepPrescription: SleepPrescription) {
-        val call = mHttpService.updateSleepPrescriptions(sleepPrescription)
+        val call = mHttpService.updateSleepPrescriptionsWhenFatigue(sleepPrescription)
         addCall(call)
         call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
             override fun onSuccess(response: SleepPrescriptionWrapper?) {
                 sleep_prescription_view.setPrescriptionData(response)
+                showSleepUpdatedDialog()
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -175,8 +176,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun onSleepPrescriptionClick() {
-        if (mSleepPrescriptionWrapper == null || !mSleepPrescriptionWrapper?.isServiceStopped!!) {
-//        if (false) {
+        if (mSleepPrescriptionWrapper == null || mSleepPrescriptionWrapper?.isServiceStopped!!) {
             showStopPrescriptionDialog()
         } else {
             SimpleWebActivity.launch(activity, H5Uri.ABOUT_US) // todo change uri

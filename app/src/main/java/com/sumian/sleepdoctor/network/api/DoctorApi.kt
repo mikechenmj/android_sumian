@@ -195,6 +195,9 @@ interface DoctorApi {
     @POST("sleep-prescriptions")
     fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
 
+    @POST("sleep-prescriptions/fatigue")
+    fun updateSleepPrescriptionsWhenFatigue(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
+
     /**
      * include
      * courses 课程
