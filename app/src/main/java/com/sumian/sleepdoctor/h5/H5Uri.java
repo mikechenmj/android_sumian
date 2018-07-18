@@ -27,4 +27,5 @@ public interface H5Uri {
     String MY_TARGET_FROM_MINE = MY_TARGET + "mine";
     String MY_TARGET_FROM_NEW_USER = MY_TARGET + "newUser";
     String CBTI_INTRODUCTION = "cbti";
+    String SLEEP_PRESCRIPTION = "prescription?data={data}";
 }

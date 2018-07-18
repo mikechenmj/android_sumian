@@ -10,8 +10,7 @@ import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sleepdoctor.event.CbtiServiceBoughtEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
-import com.sumian.sleepdoctor.h5.H5Uri
-import com.sumian.sleepdoctor.h5.SimpleWebActivity
+import com.sumian.sleepdoctor.event.SleepPrescriptionUpdatedEvent
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
@@ -82,8 +81,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         addCall(call)
         call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
             override fun onSuccess(response: SleepPrescriptionWrapper?) {
-                sleep_prescription_view.setPrescriptionData(response)
-                mSleepPrescriptionWrapper = response
+                updateSleepPrescription(response)
                 if (response != null) {
                     showSleepPrescriptionDialogIfNeed(response)
                 }
@@ -94,6 +92,11 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
             }
         })
 
+    }
+
+    private fun updateSleepPrescription(response: SleepPrescriptionWrapper?) {
+        sleep_prescription_view.setPrescriptionData(response)
+        mSleepPrescriptionWrapper = response
     }
 
     private fun showSleepPrescriptionDialogIfNeed(response: SleepPrescriptionWrapper) {
@@ -178,7 +181,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         if (mSleepPrescriptionWrapper == null || mSleepPrescriptionWrapper?.isServiceStopped!!) {
             showStopPrescriptionDialog()
         } else {
-            SimpleWebActivity.launch(activity, H5Uri.ABOUT_US) // todo change uri
+            SleepPrescriptionSettingActivity.launch(mSleepPrescriptionWrapper!!)
         }
     }
 
@@ -195,8 +198,14 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     @Subscribe(sticky = true)
-    fun onCbtiBoughtEvent(cbtiServiceBoughtEvent: CbtiServiceBoughtEvent) {
+    fun onCbtiBoughtEvent(event: CbtiServiceBoughtEvent) {
         queryCbti()
-        EventBusUtil.removeStickyEvent(cbtiServiceBoughtEvent)
+        EventBusUtil.removeStickyEvent(event)
+    }
+
+    @Subscribe(sticky = true)
+    fun onSleepSubscriptionUpdatedEvent(event: SleepPrescriptionUpdatedEvent) {
+        EventBusUtil.removeStickyEvent(event)
+        updateSleepPrescription(event.sleepPrescriptionWrapper)
     }
 }

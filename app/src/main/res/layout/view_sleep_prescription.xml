@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:paddingEnd="@dimen/space_30"
         android:paddingStart="@dimen/space_30"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:visibility="visible">
 
         <TextView

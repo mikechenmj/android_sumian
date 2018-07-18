@@ -182,6 +182,7 @@
 
         <activity android:name=".record.SleepRecordDetailActivity" />
         <activity android:name=".account.userProfile.activity.MyTargetAndInformationActivity" />
+        <activity android:name=".homepage.SleepPrescriptionSettingActivity" />
     </application>
 
 </manifest>
