@@ -6,14 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.sumian.common.utils.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserProfile;
 import com.sumian.sleepdoctor.account.userProfile.activity.UserProfileActivity;
 import com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.h5.SleepFileWebActivity;
 import com.sumian.sleepdoctor.notification.NotificationListActivity;
@@ -114,10 +112,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void updateUserProfile(UserProfile userProfile) {
-        RequestOptions options = new RequestOptions();
-        options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
-        Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
-
+        ImageLoader.loadImage(this, mIvAvatar, userProfile.avatar, R.mipmap.ic_info_avatar_patient);
         String nickname = userProfile.nickname;
         mTvNickname.setText(TextUtils.isEmpty(nickname) ? userProfile.mobile : nickname);
     }

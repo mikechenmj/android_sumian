@@ -1,10 +1,14 @@
 package com.sumian.sleepdoctor.homepage
 
+import android.arch.lifecycle.Observer
+import android.text.format.DateUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ImageLoader
 import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.cbti.activity.CBTIIntroductionWebActivity
@@ -44,6 +48,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
 
     companion object {
         const val REQUEST_CODE_FILL_SLEEP_RECORD = 1
+        const val SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME = "update_sleep_prescription_time"
     }
 
     override fun initWidget(root: View) {
@@ -63,11 +68,14 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun initUserInfo() {
-        val userProfile = AppManager.getAccountViewModel().userProfile
-        tv_name.text = userProfile.nickname
-//        val defaultAvatar = if (userProfile.isMale) R.drawable.login_icon_gender_man_selected else R.drawable.login_icon_gender_woman_selected
-        val defaultAvatar = R.mipmap.ic_info_avatar_patient
-        ImageLoader.loadImage(this, iv_avatar, userProfile.avatar, defaultAvatar)
+        AppManager.getAccountViewModel().liveDataToken.observe(this, object : Observer<Token> {
+            override fun onChanged(t: Token?) {
+                val userProfile = t?.user ?: return
+                tv_name.text = userProfile.nickname
+                val defaultAvatar = R.mipmap.ic_info_avatar_patient
+                ImageLoader.loadImage(activity, iv_avatar, userProfile.avatar, defaultAvatar)
+            }
+        })
     }
 
     override fun initData() {
@@ -75,6 +83,11 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         queryCbti()
         querySleepRecord()
         querySleepPrescription()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        updateSleepPrescriptionIfNeed()
     }
 
     private fun querySleepPrescription() {
@@ -96,8 +109,19 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun updateSleepPrescription(response: SleepPrescriptionWrapper?) {
+        SPUtils.getInstance().getLong(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, System.currentTimeMillis())
         sleep_prescription_view.setPrescriptionData(response)
         mSleepPrescriptionWrapper = response
+    }
+
+    /**
+     * 当距离上次请求超过3小时，再次回到该页面时，刷新SleepPrescription数据
+     */
+    private fun updateSleepPrescriptionIfNeed() {
+        val lastUpdateTime = SPUtils.getInstance().getLong(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, 0)
+        if (System.currentTimeMillis() - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 3) {
+            querySleepPrescription()
+        }
     }
 
     private fun showSleepPrescriptionDialogIfNeed(response: SleepPrescriptionWrapper) {
@@ -111,7 +135,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                     .setLeftBtn(R.string.no, null)
                     .whitenLeft()
                     .setRightBtn(R.string.yes) {
-                        updateSleepPrescription(response.sleepPrescription!!)
+                        updateSleepPrescriptionWhenTired(response.sleepPrescription!!)
                     }
                     .show()
         }
@@ -124,7 +148,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                 .show()
     }
 
-    private fun updateSleepPrescription(sleepPrescription: SleepPrescription) {
+    private fun updateSleepPrescriptionWhenTired(sleepPrescription: SleepPrescription) {
         val call = mHttpService.updateSleepPrescriptionsWhenFatigue(sleepPrescription)
         addCall(call)
         call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
@@ -206,7 +230,6 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
 
     @Subscribe(sticky = true)
     fun onCBTIProgressChangeEvent(event: CBTIProgressChangeEvent) {
-//        EventBusUtil.postSticky(CBTIProgressChangeEvent())
         EventBusUtil.removeStickyEvent(event)
         queryCbti()
     }

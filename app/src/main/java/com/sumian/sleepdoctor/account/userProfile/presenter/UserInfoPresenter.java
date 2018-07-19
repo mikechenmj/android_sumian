@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.account.userProfile.presenter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.account.bean.Social;
@@ -16,6 +17,8 @@ import com.umeng.socialize.UMAuthListener;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 
@@ -47,9 +50,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
 
     @Override
     public void getUserInfo() {
-
         mView.onBegin();
-
         Call<UserProfile> call = AppManager.getHttpService().getUserProfile();
         addCall(call);
         call.enqueue(new BaseResponseCallback<UserProfile>() {
@@ -76,30 +77,44 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
 
     @Override
     public void uploadAvatar(String imageUrl) {
-
         mView.onBegin();
-
         Call<OssResponse> call = AppManager.getHttpService().uploadAvatar();
-
         addCall(call);
-
         call.enqueue(new BaseResponseCallback<OssResponse>() {
             @Override
-            protected void onSuccess(OssResponse response) {
-                new OssEngine().uploadFile(response, imageUrl);
+            protected void onSuccess(OssResponse ossResponse) {
+                OssEngine.Companion.uploadFile(ossResponse, imageUrl, new OssEngine.UploadCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.onFinish();
+                        try {
+                            if (!TextUtils.isEmpty(response)) {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String avatarUrl = jsonObject.getString("avatar");
+                                if (!TextUtils.isEmpty(avatarUrl)) {
+                                    UserProfile userProfile = AppManager.getAccountViewModel().getUserProfile();
+                                    userProfile.avatar = avatarUrl;
+                                    AppManager.getAccountViewModel().updateUserProfile(userProfile);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String errorCode, String serviceExceptionMessage) {
+                        mView.onFinish();
+                    }
+                });
             }
 
             @Override
             protected void onFailure(@NonNull ErrorResponse errorResponse) {
                 ToastUtils.showShort(errorResponse.getMessage());
-            }
-
-            @Override
-            protected void onFinish() {
-                super.onFinish();
+                mView.onFinish();
             }
         });
-
     }
 
     @Override
@@ -154,7 +169,5 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
                 mView.onFinish();
             }
         });
-
     }
-
 }

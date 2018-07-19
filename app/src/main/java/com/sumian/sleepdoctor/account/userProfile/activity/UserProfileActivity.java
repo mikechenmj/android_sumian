@@ -15,10 +15,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.config.SelectOptions;
+import com.sumian.common.utils.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -388,9 +387,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
     }
 
     private void uploadAvatar(String imageUrl) {
-        mUserProfile.avatar = imageUrl;
-        AppManager.getAccountViewModel().updateUserProfile(mUserProfile);
-        mPresenter.uploadAvatar(mUserProfile.avatar);
+        mPresenter.uploadAvatar(imageUrl);
     }
 
     private void updateDvWechatUI(List<Social> socialites) {
@@ -406,9 +403,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void updateUserProfileUI(UserProfile userProfile) {
-        RequestOptions options = new RequestOptions();
-        options.error(R.mipmap.ic_info_avatar_patient).placeholder(R.mipmap.ic_info_avatar_patient).getOptions();
-        Glide.with(this).load(userProfile.avatar).apply(options).into(mIvAvatar);
+        ImageLoader.loadImage(this, mIvAvatar, userProfile.avatar, R.mipmap.ic_info_avatar_patient);
         mDvNickname.setContent(userProfile.nickname);
 
         mDvName.setContent(userProfile.formatField(userProfile.name));
@@ -449,5 +444,15 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
             return;
         }
         updateUserProfileUI(token.user);
+    }
+
+    @Override
+    public void onBegin() {
+        showLoading();
+    }
+
+    @Override
+    public void onFinish() {
+        dismissLoading();
     }
 }
