@@ -11,6 +11,7 @@ import com.aliyun.vodplayer.media.IAliyunVodPlayer;
 
 import java.io.FileDescriptor;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 /**
  * Created by dq
@@ -28,9 +29,10 @@ public class AliyunPlayer extends AbstractMediaPlayer {
 
     public AliyunPlayer(Context context) {
         this.mAliyunPlayer = new AliyunVodPlayer(context);
-        this.mAliyunPlayer.enableNativeLog();
+        //this.mAliyunPlayer.enableNativeLog();
+        this.mAliyunPlayer.setThreadExecutorService(Executors.newSingleThreadExecutor());
         this.mAliyunPlayer.setVideoScalingMode(IAliyunVodPlayer.VideoScalingMode.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
-        this.mAliyunPlayer.setUiPlayer(true);
+        // this.mAliyunPlayer.setUiPlayer(true);
     }
 
     @Override

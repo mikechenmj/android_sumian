@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
  * desc:
  */
 
-public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder implements View.OnClickListener {
+public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder {
 
     //private static final String TAG = BaseViewHolder.class.getSimpleName();
 
-    protected final RequestManager mLoader;
+    private final RequestManager mLoader;
 
     protected Item mItem;
 
@@ -39,16 +39,11 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
 
     public void initView(Item item) {
         this.mItem = item;
-        itemView.setOnClickListener(this::onItemClick);
+        //itemView.setOnClickListener(this::onItemClick);
         itemView.setOnLongClickListener(v -> {
             onItemLongClick(v);
             return true;
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        // Log.d(TAG, "onClick: ---------->" + v.toString());
     }
 
     protected void load(String url, ImageView iv) {
@@ -104,9 +99,9 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder imple
         v.setVisibility(View.INVISIBLE);
     }
 
-    protected void onItemClick(View v) {
-        // Log.d(TAG, "onItemClick: -------->" + v.toString());
-    }
+//    protected void onItemClick(View v) {
+//        // Log.d(TAG, "onItemClick: -------->" + v.toString());
+//    }
 
     protected boolean onItemLongClick(View v) {
         //  Log.e(TAG, "onItemLongClick: ----------->" + v.toString());

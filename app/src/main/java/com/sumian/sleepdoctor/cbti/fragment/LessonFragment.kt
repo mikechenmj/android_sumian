@@ -2,11 +2,15 @@ package com.sumian.sleepdoctor.cbti.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.cbti.activity.CBTILessonDetailActivity
+import com.sumian.sleepdoctor.cbti.activity.CBTIWeekLessonPartActivity.Companion.CHAPTER_ID
 import com.sumian.sleepdoctor.cbti.adapter.LessonAdapter
 import com.sumian.sleepdoctor.cbti.bean.Courses
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonContract
@@ -22,9 +26,28 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<Courses> {
+class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<Courses>, BaseRecyclerAdapter.OnItemClickListener {
 
     private lateinit var mLessonAdapter: LessonAdapter
+
+    private var mChapterId = 0
+
+    companion object {
+        fun newInstance(chapterId: Int): LessonFragment {
+            val args = Bundle().apply {
+                putInt(CHAPTER_ID, chapterId)
+            }
+            return newInstance(LessonFragment::class.java, args) as LessonFragment
+        }
+
+    }
+
+    override fun initBundle(bundle: Bundle?) {
+        super.initBundle(bundle)
+        bundle?.let {
+            this.mChapterId = it.getInt(CHAPTER_ID, 0)
+        }
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_lesson
@@ -38,6 +61,7 @@ class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
     override fun initWidget(root: View?) {
         super.initWidget(root)
         mLessonAdapter = LessonAdapter(context!!)
+        mLessonAdapter.setOnItemClickListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.itemAnimator = DefaultItemAnimator()
         recycler.adapter = mLessonAdapter
@@ -46,7 +70,11 @@ class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
     override fun initData() {
         super.initData()
         ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).getCBTICoursesLiveData().observe(this, this)
-        this.mPresenter.getCBTIWeekLesson()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        this.mPresenter.getCBTIWeekLesson(mChapterId)
     }
 
     override fun onRelease() {
@@ -57,6 +85,14 @@ class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
     override fun setPresenter(presenter: CBTIWeekLessonContract.Presenter) {
         // super.setPresenter(presenter)
         this.mPresenter = presenter
+    }
+
+    override fun onItemClick(position: Int, itemId: Long) {
+        val lesson = mLessonAdapter.getItem(position)
+        if (lesson.is_lock) {
+            return
+        }
+        CBTILessonDetailActivity.show(activity!!, lesson.id)
     }
 
     override fun onGetCBTIWeekLessonSuccess(courses: Courses) {

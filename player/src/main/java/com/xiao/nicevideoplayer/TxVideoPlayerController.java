@@ -22,15 +22,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
 /**
  * Created by XiaoJianjun on 2017/6/21.
  * 仿腾讯视频热点列表页播放器控制器.
  */
-public class TxVideoPlayerController
-        extends NiceVideoPlayerController
-        implements View.OnClickListener,
-        SeekBar.OnSeekBarChangeListener,
+public class TxVideoPlayerController extends NiceVideoPlayerController implements View.OnClickListener, SeekBar.OnSeekBarChangeListener,
         ChangeClarityDialog.OnClarityChangedListener {
+
+    private static final String TAG = TxVideoPlayerController.class.getSimpleName();
 
     private Context mContext;
     private ImageView mImage;
@@ -50,8 +50,6 @@ public class TxVideoPlayerController
     private SeekBar mSeek;
     private TextView mClarity;
     private ImageView mFullScreen;
-
-    private TextView mLength;
 
     private LinearLayout mLoading;
     private TextView mLoadText;
@@ -93,44 +91,43 @@ public class TxVideoPlayerController
     private void init() {
         LayoutInflater.from(mContext).inflate(R.layout.tx_video_palyer_controller, this, true);
 
-        mCenterStart = (ImageView) findViewById(R.id.center_start);
-        mImage = (ImageView) findViewById(R.id.image);
+        mCenterStart = findViewById(R.id.center_start);
+        mImage = findViewById(R.id.image);
 
-        mTop = (LinearLayout) findViewById(R.id.top);
-        mBack = (ImageView) findViewById(R.id.back);
-        mTitle = (TextView) findViewById(R.id.title);
-        mBatteryTime = (LinearLayout) findViewById(R.id.battery_time);
-        mBattery = (ImageView) findViewById(R.id.battery);
-        mTime = (TextView) findViewById(R.id.time);
+        mTop = findViewById(R.id.top);
+        mBack = findViewById(R.id.back);
+        mTitle = findViewById(R.id.title);
+        mBatteryTime = findViewById(R.id.battery_time);
+        mBattery = findViewById(R.id.battery);
+        mTime = findViewById(R.id.time);
 
-        mBottom = (LinearLayout) findViewById(R.id.bottom);
-        mRestartPause = (ImageView) findViewById(R.id.restart_or_pause);
-        mPosition = (TextView) findViewById(R.id.position);
-        mDuration = (TextView) findViewById(R.id.duration);
-        mSeek = (SeekBar) findViewById(R.id.seek);
-        mFullScreen = (ImageView) findViewById(R.id.full_screen);
-        mClarity = (TextView) findViewById(R.id.clarity);
-        mLength = (TextView) findViewById(R.id.length);
+        mBottom = findViewById(R.id.bottom);
+        mRestartPause = findViewById(R.id.restart_or_pause);
+        mPosition = findViewById(R.id.position);
+        mDuration = findViewById(R.id.duration);
+        mSeek = findViewById(R.id.seek);
+        mFullScreen = findViewById(R.id.full_screen);
+        mClarity = findViewById(R.id.clarity);
 
-        mLoading = (LinearLayout) findViewById(R.id.loading);
-        mLoadText = (TextView) findViewById(R.id.load_text);
+        mLoading = findViewById(R.id.loading);
+        mLoadText = findViewById(R.id.load_text);
 
-        mChangePosition = (LinearLayout) findViewById(R.id.change_position);
-        mChangePositionCurrent = (TextView) findViewById(R.id.change_position_current);
-        mChangePositionProgress = (ProgressBar) findViewById(R.id.change_position_progress);
+        mChangePosition = findViewById(R.id.change_position);
+        mChangePositionCurrent = findViewById(R.id.change_position_current);
+        mChangePositionProgress = findViewById(R.id.change_position_progress);
 
-        mChangeBrightness = (LinearLayout) findViewById(R.id.change_brightness);
-        mChangeBrightnessProgress = (ProgressBar) findViewById(R.id.change_brightness_progress);
+        mChangeBrightness = findViewById(R.id.change_brightness);
+        mChangeBrightnessProgress = findViewById(R.id.change_brightness_progress);
 
-        mChangeVolume = (LinearLayout) findViewById(R.id.change_volume);
-        mChangeVolumeProgress = (ProgressBar) findViewById(R.id.change_volume_progress);
+        mChangeVolume = findViewById(R.id.change_volume);
+        mChangeVolumeProgress = findViewById(R.id.change_volume_progress);
 
-        mError = (LinearLayout) findViewById(R.id.error);
-        mRetry = (TextView) findViewById(R.id.retry);
+        mError = findViewById(R.id.error);
+        mRetry = findViewById(R.id.retry);
 
-        mCompleted = (LinearLayout) findViewById(R.id.completed);
-        mReplay = (TextView) findViewById(R.id.replay);
-        mShare = (TextView) findViewById(R.id.share);
+        mCompleted = findViewById(R.id.completed);
+        mReplay = findViewById(R.id.replay);
+        mShare = findViewById(R.id.share);
 
         mCenterStart.setOnClickListener(this);
         mBack.setOnClickListener(this);
@@ -160,8 +157,8 @@ public class TxVideoPlayerController
     }
 
     @Override
-    public void setLenght(long length) {
-        mLength.setText(NiceUtil.formatTime(length));
+    public void setLength(long length) {
+        //mLength.setText(NiceUtil.formatTime(length));
     }
 
     @Override
@@ -213,7 +210,6 @@ public class TxVideoPlayerController
                 mTop.setVisibility(View.GONE);
                 mBottom.setVisibility(View.GONE);
                 mCenterStart.setVisibility(View.GONE);
-                mLength.setVisibility(View.GONE);
                 break;
             case NiceVideoPlayer.STATE_PREPARED:
                 startUpdateProgressTimer();
@@ -337,7 +333,7 @@ public class TxVideoPlayerController
         mBottom.setVisibility(View.GONE);
         mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
 
-        mLength.setVisibility(View.VISIBLE);
+        // mLength.setVisibility(View.VISIBLE);
 
         mTop.setVisibility(View.VISIBLE);
         mBack.setVisibility(View.GONE);
@@ -377,7 +373,7 @@ public class TxVideoPlayerController
             }
         } else if (v == mClarity) {
             setTopBottomVisible(false); // 隐藏top、bottom
-             mLessonListDialog.show();     // 显示清晰度对话框
+            mLessonListDialog.show();     // 显示清晰度对话框
         } else if (v == mRetry) {
             mNiceVideoPlayer.restart();
         } else if (v == mReplay) {
@@ -435,7 +431,7 @@ public class TxVideoPlayerController
     private void startDismissTopBottomTimer() {
         cancelDismissTopBottomTimer();
         if (mDismissTopBottomCountDownTimer == null) {
-            mDismissTopBottomCountDownTimer = new CountDownTimer(8000, 8000) {
+            mDismissTopBottomCountDownTimer = new CountDownTimer(4000, 4000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
@@ -461,7 +457,6 @@ public class TxVideoPlayerController
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
     }
 
     @Override
@@ -491,6 +486,8 @@ public class TxVideoPlayerController
         mDuration.setText(NiceUtil.formatTime(duration));
         // 更新时间
         mTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(new Date()));
+
+        mNiceVideoPlayer.onFrameChange(position / 1000L, duration / 1000L);
     }
 
     @Override

@@ -184,4 +184,6 @@ public interface INiceVideoPlayer {
      * 并且控制器的UI也应该恢复到最初始的状态.
      */
     void release();
+
+    void onFrameChange(long currentFrame, long totalFrame);
 }

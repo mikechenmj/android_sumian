@@ -5,9 +5,7 @@ import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.bean.PictureOssSts
-import com.sumian.sleepdoctor.cbti.bean.Courses
-import com.sumian.sleepdoctor.cbti.bean.Exercises
-import com.sumian.sleepdoctor.cbti.bean.LessonDetail
+import com.sumian.sleepdoctor.cbti.bean.*
 import com.sumian.sleepdoctor.doctor.bean.Doctor
 import com.sumian.sleepdoctor.doctor.bean.DoctorService
 import com.sumian.sleepdoctor.doctor.bean.PayOrder
@@ -215,9 +213,11 @@ interface DoctorApi {
     @GET("cbti-courses/{id}")
     fun getCBTILessonDetail(@Path("id") id: Int): Call<LessonDetail>
 
+    @FormUrlEncoded
     @POST("cbti-course/{id}/logs")
-    fun uploadCBTICourseLogs(@Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<Any>
+    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<LessonLog>
 
+    @FormUrlEncoded
     @POST("cbti-course/{id}/questionnaires")
     fun uploadCBTIQuestionnaires(@Path("id") id: Int): Call<Any>
 }

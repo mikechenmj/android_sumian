@@ -5,7 +5,6 @@ import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.h5.bean.H5BaseResponse
 import com.sumian.sleepdoctor.utils.JsonUtil
 import org.junit.Test
-import java.util.*
 
 /**
  * <pre>
@@ -33,5 +32,15 @@ class KotlinTest {
         val typeToken = object : TypeToken<H5BaseResponse<UserProfile>>() {}
         val response: H5BaseResponse<UserProfile>? = JsonUtil.fromJson(data, typeToken.type)
         System.out.println(response)
+    }
+
+    @Test
+    fun testHex() {
+
+        val binaryHex = "11111111111111111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011111111111110000000111111110000000000001111111111111"
+
+        System.currentTimeMillis() / 1000L
+        println("hexStr=${binaryHex.toBigInteger(2).toString(16)}")
+
     }
 }

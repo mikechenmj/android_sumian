@@ -30,7 +30,6 @@ class LessonListAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context)
         (holder as ViewHolder).initView(item)
     }
 
-
     class ViewHolder(itemView: View) : BaseViewHolder<Lesson>(itemView) {
 
         @BindView(R.id.tv_title)
@@ -44,17 +43,15 @@ class LessonListAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context)
                     setTextColor(resources.getColor(R.color.b3_color))
                     true
                 } else {
-                    setTextColor(resources.getColor(R.color.t2_color))
+                    if (item.is_lock) {
+                        setTextColor(resources.getColor(R.color.t2_alpha_40_color))
+                    } else {
+                        setTextColor(resources.getColor(R.color.t2_color))
+                    }
                     false
                 }
                 text = item.title
             }
         }
-
-        override fun onItemClick(v: View?) {
-            super.onItemClick(v)
-
-        }
-
     }
 }

@@ -1,10 +1,12 @@
 package com.sumian.sleepdoctor.cbti.fragment
 
+import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.cbti.activity.CBTIWeekLessonPartActivity.Companion.CHAPTER_ID
 import com.sumian.sleepdoctor.cbti.adapter.ExerciseAdapter
 import com.sumian.sleepdoctor.cbti.bean.Exercises
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekExercisesContract
@@ -22,6 +24,24 @@ import kotlinx.android.synthetic.main.fragment_tab_practice.*
 class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CBTIWeekExercisesContract.View {
 
     private lateinit var mExerciseAdapter: ExerciseAdapter
+
+    private var mChapterId = 0
+
+    companion object {
+        fun newInstance(chapterId: Int): LessonFragment {
+            val args = Bundle().apply {
+                putInt(CHAPTER_ID, chapterId)
+            }
+            return newInstance(LessonFragment::class.java, args) as LessonFragment
+        }
+    }
+
+    override fun initBundle(bundle: Bundle?) {
+        super.initBundle(bundle)
+        bundle?.let {
+            this.mChapterId = it.getInt(CHAPTER_ID, 0)
+        }
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_practice
@@ -41,9 +61,9 @@ class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CB
         recycler.adapter = mExerciseAdapter
     }
 
-    override fun initData() {
-        super.initData()
-        this.mPresenter.getCBTIWeekExercises()
+    override fun onResume() {
+        super.onResume()
+        this.mPresenter.getCBTIWeekExercises(mChapterId)
     }
 
     override fun setPresenter(presenter: CBTIWeekExercisesContract.Presenter?) {
@@ -52,7 +72,7 @@ class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CB
     }
 
     override fun onGetCBTIWeekPracticeSuccess(exercises: Exercises) {
-        mExerciseAdapter.addAll(exercises.data)
+        mExerciseAdapter.resetItem(exercises.data)
     }
 
     override fun onGetCBTIWeekPracticeFailed(error: String) {

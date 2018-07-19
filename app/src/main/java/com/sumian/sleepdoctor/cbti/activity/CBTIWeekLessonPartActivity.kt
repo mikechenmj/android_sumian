@@ -2,6 +2,8 @@ package com.sumian.sleepdoctor.cbti.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
@@ -26,8 +28,25 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  */
 class CBTIWeekLessonPartActivity : BaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener, Observer<Courses> {
 
-    override fun onBack(v: View?) {
-        finish()
+    private var mChapterId = 0
+
+    companion object {
+
+         const val CHAPTER_ID = "com.sumian.sleepdoctor.extras.chapter.id"
+
+        fun show(context: Context, chapterId: Int) {
+            val extras = Bundle().apply {
+                putInt(CHAPTER_ID, chapterId)
+            }
+            show(context, CBTIWeekLessonPartActivity::class.java, extras)
+        }
+    }
+
+    override fun initBundle(bundle: Bundle?): Boolean {
+        bundle?.let {
+            mChapterId = it.getInt(CHAPTER_ID, 0)
+        }
+        return super.initBundle(bundle)
     }
 
     override fun getLayoutId(): Int {
@@ -71,6 +90,10 @@ class CBTIWeekLessonPartActivity : BaseActivity<CBTIWeekLessonContract.Presenter
                 //TODO  主动同步课程和联系的对应节的状态
             }
         })
+    }
+
+    override fun onBack(v: View?) {
+        finish()
     }
 
     override fun onChanged(t: Courses?) {

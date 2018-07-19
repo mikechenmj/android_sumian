@@ -197,6 +197,7 @@
             android:launchMode="singleTop" />
 
         <activity android:name=".account.userProfile.activity.MyTargetAndInformationActivity" />
+        <activity android:name=".cbti.activity.CBTIExerciseWebActivity" />
     </application>
 
 </manifest>

@@ -14,34 +14,6 @@ import com.aliyun.vodplayer.media.IAliyunVodPlayer
  */
 class MediaPlayer private constructor(context: Context) : IAliyunVodPlayer.OnPreparedListener, IAliyunVodPlayer.OnFirstFrameStartListener, IAliyunVodPlayer.OnErrorListener, IAliyunVodPlayer.OnCompletionListener, IAliyunVodPlayer.OnSeekCompleteListener, IAliyunVodPlayer.OnStoppedListener, IAliyunVodPlayer.OnUrlTimeExpiredListener {
 
-    override fun onUrlTimeExpired(p0: String?, p1: String?) {
-
-    }
-
-    override fun onStopped() {
-
-    }
-
-    override fun onSeekComplete() {
-
-    }
-
-    override fun onCompletion() {
-
-    }
-
-    override fun onError(p0: Int, p1: Int, p2: String?) {
-
-    }
-
-    override fun onFirstFrameStart() {
-
-    }
-
-    override fun onPrepared() {
-
-    }
-
     private var mCurrentPostion = 0
 
     private val mMediaPlayer: AliyunVodPlayer by lazy {
@@ -71,6 +43,34 @@ class MediaPlayer private constructor(context: Context) : IAliyunVodPlayer.OnPre
         fun create(context: Context): MediaPlayer {
             return MediaPlayer(context)
         }
+    }
+
+    override fun onUrlTimeExpired(p0: String?, p1: String?) {
+
+    }
+
+    override fun onStopped() {
+
+    }
+
+    override fun onSeekComplete() {
+
+    }
+
+    override fun onCompletion() {
+
+    }
+
+    override fun onError(p0: Int, p1: Int, p2: String?) {
+
+    }
+
+    override fun onFirstFrameStart() {
+
+    }
+
+    override fun onPrepared() {
+
     }
 
 

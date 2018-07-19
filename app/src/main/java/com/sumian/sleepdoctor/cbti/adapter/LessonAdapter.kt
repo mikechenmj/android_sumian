@@ -69,14 +69,6 @@ class LessonAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context) {
 
         }
 
-        override fun onItemClick(v: View?) {
-            super.onItemClick(v)
-            v?.let {
-                if (mItem.is_lock) return@let
-                CBTILessonDetailActivity.show(it.context, mItem.id)
-            }
-        }
-
     }
 
 }

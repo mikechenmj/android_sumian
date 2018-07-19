@@ -70,11 +70,6 @@
 
             </LinearLayout>
 
-            <com.sumian.sleepdoctor.cbti.widget.CBTILessonListView
-                android:id="@+id/cbti_lesson_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -82,12 +77,34 @@
                 android:background="@color/b2_color"
                 android:orientation="vertical">
 
-                <TextView
-                    style="@style/text_t1_16"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_20"
-                    android:text="@string/lesson_summary" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lesson_summary" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_lesson_list"
+                        style="@style/text_b3_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@mipmap/ic_cbti_icon_list"
+                        android:drawablePadding="@dimen/space_10"
+                        android:text="@string/lesson_list"
+                        android:textSize="@dimen/font_16" />
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
