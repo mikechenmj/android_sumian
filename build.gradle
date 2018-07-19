@@ -42,7 +42,7 @@ ext {
     applicationId = "com.sumian.sleepdoctor"
     minSdkVersion = 21
     targetSdkVersion = 27
-    versionCode = 120150
+    versionCode = new Date().format('yyyyMMddHH').toInteger()
     versionName = "1.5.0"
 
     applicationIdSuffix = null
