@@ -7,7 +7,7 @@ import com.sumian.sleepdoctor.base.BasePresenter
 import com.sumian.sleepdoctor.base.BaseWebViewActivity
 import com.sumian.sleepdoctor.doctor.activity.PaymentActivity
 import com.sumian.sleepdoctor.doctor.bean.DoctorServiceShopData
-import com.sumian.sleepdoctor.event.CbtiServiceBoughtEvent
+import com.sumian.sleepdoctor.event.CBTIServiceBoughtEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.h5.bean.H5BaseResponse
@@ -63,7 +63,7 @@ class CBTIIntroductionWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            EventBusUtil.postSticky(CbtiServiceBoughtEvent())
+            EventBusUtil.postSticky(CBTIServiceBoughtEvent())
             reload()
         }
     }

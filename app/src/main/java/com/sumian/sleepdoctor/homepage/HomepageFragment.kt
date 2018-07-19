@@ -8,7 +8,8 @@ import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.cbti.activity.CBTIIntroductionWebActivity
-import com.sumian.sleepdoctor.event.CbtiServiceBoughtEvent
+import com.sumian.sleepdoctor.event.CBTIProgressChangeEvent
+import com.sumian.sleepdoctor.event.CBTIServiceBoughtEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.event.SleepPrescriptionUpdatedEvent
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
@@ -198,9 +199,16 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     @Subscribe(sticky = true)
-    fun onCbtiBoughtEvent(event: CbtiServiceBoughtEvent) {
-        queryCbti()
+    fun onCBTIBoughtEvent(event: CBTIServiceBoughtEvent) {
         EventBusUtil.removeStickyEvent(event)
+        queryCbti()
+    }
+
+    @Subscribe(sticky = true)
+    fun onCBTIProgressChangeEvent(event: CBTIProgressChangeEvent) {
+//        EventBusUtil.postSticky(CBTIProgressChangeEvent())
+        EventBusUtil.removeStickyEvent(event)
+        queryCbti()
     }
 
     @Subscribe(sticky = true)
