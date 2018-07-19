@@ -1,19 +1,20 @@
 package com.sumian.sleepdoctor.account.userProfile.activity
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import com.blankj.utilcode.util.ActivityUtils
 import com.google.gson.reflect.TypeToken
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.ActivityLauncher
+import com.sumian.sleepdoctor.base.BasePresenter
+import com.sumian.sleepdoctor.base.BaseWebViewActivity
 import com.sumian.sleepdoctor.h5.H5Uri
-import com.sumian.sleepdoctor.h5.SimpleWebActivity
 import com.sumian.sleepdoctor.h5.bean.H5BaseResponse
 import com.sumian.sleepdoctor.utils.JsonUtil
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler
 import com.sumian.sleepdoctor.widget.webview.SWebView
+
 
 /**
  * <pre>
@@ -24,35 +25,22 @@ import com.sumian.sleepdoctor.widget.webview.SWebView
  *     version: 1.0
  * </pre>
  */
-open class MyTargetAndInformationActivity : SimpleWebActivity() {
+open class MyTargetAndInformationActivity : BaseWebViewActivity<BasePresenter<Any>>() {
+    private var mIsFromMine = true
 
     companion object {
+        private const val KEY_IS_FROM_MINE = "IS_FROM_MINE"
 
-        fun launchFromMine(context: Context) {
-            launch(context, H5Uri.MY_TARGET_FROM_MINE)
-        }
-
-        fun launchFromNewUser(launcher: ActivityLauncher, requestCode: Int) {
-            launchForResult(launcher, H5Uri.MY_TARGET_FROM_NEW_USER, requestCode)
-        }
-
-        private fun launch(context: Context, urlContentPart: String) {
-            val intent = getIntent(context, urlContentPart)
-            context.startActivity(intent)
-        }
-
-        private fun launchForResult(launcher: ActivityLauncher, urlContentPart: String, requestCode: Int) {
-            val intent = getIntent(launcher.activity, urlContentPart)
-            launcher.startActivityForResult(intent, requestCode)
-        }
-
-        private fun getIntent(context: Context, urlContentPart: String): Intent {
+        fun launchForResult(launcher: ActivityLauncher, isFromMine: Boolean, requestCode: Int = 0) {
             val bundle = Bundle()
-            bundle.putString(KEY_URL_CONTENT_PART, urlContentPart)
-            val intent = Intent(context, MyTargetAndInformationActivity::class.java)
-            intent.putExtras(bundle)
-            return intent
+            bundle.putBoolean(KEY_IS_FROM_MINE, isFromMine)
+            ActivityUtils.startActivityForResult(bundle, launcher.activity, MyTargetAndInformationActivity::class.java, requestCode)
         }
+    }
+
+    override fun getUrlContentPart(): String {
+        mIsFromMine = intent.getBooleanExtra(KEY_IS_FROM_MINE, true)
+        return if (mIsFromMine) H5Uri.MY_TARGET_FROM_MINE else H5Uri.MY_TARGET_FROM_NEW_USER
     }
 
     override fun registerHandler(sWebView: SWebView) {
@@ -71,6 +59,9 @@ open class MyTargetAndInformationActivity : SimpleWebActivity() {
 
         sWebView.registerHandler("saveMyTarget", object : SBridgeHandler() {
             override fun handler(data: String?) {
+                if (mIsFromMine) {
+                    finish()
+                }
             }
         })
     }

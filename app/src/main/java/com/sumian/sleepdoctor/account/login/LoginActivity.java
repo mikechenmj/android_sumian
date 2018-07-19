@@ -14,7 +14,6 @@ import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bindMobile.BindMobileActivity;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
-import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.account.userProfile.activity.MyTargetAndInformationActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -108,7 +107,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     public void onLoginSuccess(boolean isNewAccount) {
         runOnUiThread(() -> {
             if (isNewAccount) {
-                MyTargetAndInformationActivity.Companion.launchFromNewUser(this, REQUEST_CODE_SET_USER_INFO);
+                MyTargetAndInformationActivity.Companion.launchForResult(this, false,REQUEST_CODE_SET_USER_INFO);
             } else {
                 launchMainAndFinish();
             }
