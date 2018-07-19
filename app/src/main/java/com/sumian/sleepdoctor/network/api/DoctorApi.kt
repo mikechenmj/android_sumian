@@ -207,18 +207,30 @@ interface DoctorApi {
 
     //cbti
 
+    /**
+     * 获取该章节下的所有课程
+     */
     @GET("cbti-chapter/{chapter-id}/courses")
-    fun getCBTILessonWeekPart(@Path("chapter-id") id: Int): Call<Courses>
+    fun getCBTICourseWeekPart(@Path("chapter-id") id: Int): Call<CBTIDataResponse<Course>>
 
+    /**
+     * 获取该章节下的所有练习
+     */
     @GET("cbti-chapter/{chapter-id}/exercises")
-    fun getCBTIExerciseWeekPart(@Path("chapter-id") id: Int): Call<Exercises>
+    fun getCBTIExerciseWeekPart(@Path("chapter-id") id: Int): Call<CBTIDataResponse<Exercise>>
 
+    /**
+     * 获取该章节下的单独课时详情信息,包括视频播放权限,及相关信息
+     */
     @GET("cbti-courses/{id}")
-    fun getCBTILessonDetail(@Path("id") id: Int): Call<LessonDetail>
+    fun getCBTIPLayAuth(@Path("id") id: Int): Call<CoursePlayAuth>
 
+    /**
+     * 上传当前课时的视频播放 log 日志
+     */
     @FormUrlEncoded
     @POST("cbti-course/{id}/logs")
-    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<LessonLog>
+    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
     @FormUrlEncoded
     @POST("cbti-course/{id}/questionnaires")

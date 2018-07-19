@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.lay_cbti_lesson_banner_view.view.*
  *
  * desc: CBTI  a week lesson banner view
  */
-class CBTIWeekLessonBannerView : LinearLayout {
+class CBTIWeekCourseBannerView : LinearLayout {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

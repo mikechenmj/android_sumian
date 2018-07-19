@@ -2,8 +2,8 @@ package com.sumian.sleepdoctor.cbti.contract
 
 import com.sumian.sleepdoctor.base.BasePresenter
 import com.sumian.sleepdoctor.base.BaseView
-import com.sumian.sleepdoctor.cbti.bean.LessonDetail
-import com.sumian.sleepdoctor.cbti.bean.LessonLog
+import com.sumian.sleepdoctor.cbti.bean.CoursePlayAuth
+import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
 
 /**
  * Created by dq
@@ -16,11 +16,11 @@ interface CBTIWeekLessonDetailContract {
 
     interface View : BaseView<Presenter> {
 
-        fun onGetCBTIDetailSuccess(lessonDetail: LessonDetail)
+        fun onGetCBTIDetailSuccess(coursePlayAuth: CoursePlayAuth)
 
         fun onGetCBTIDetailFailed(error: String)
 
-        fun onUploadLessonLogSuccess(lessonLog: LessonLog)
+        fun onUploadLessonLogSuccess(coursePlayLog: CoursePlayLog)
 
         fun onUploadLessonLogFailed(error: String)
 

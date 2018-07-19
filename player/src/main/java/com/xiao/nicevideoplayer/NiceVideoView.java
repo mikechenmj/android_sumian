@@ -19,9 +19,9 @@ import java.util.Map;
  * Created by XiaoJianjun on 2017/4/28.
  * 播放器
  */
-public class NiceVideoPlayer extends FrameLayout implements INiceVideoPlayer, TextureView.SurfaceTextureListener {
+public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, TextureView.SurfaceTextureListener {
 
-    private static final String TAG = NiceVideoPlayer.class.getSimpleName();
+    private static final String TAG = NiceVideoView.class.getSimpleName();
 
     /**
      * 播放错误
@@ -109,11 +109,11 @@ public class NiceVideoPlayer extends FrameLayout implements INiceVideoPlayer, Te
 
     private long mOldFrame;
 
-    public NiceVideoPlayer(Context context) {
+    public NiceVideoView(Context context) {
         this(context, null);
     }
 
-    public NiceVideoPlayer(Context context, AttributeSet attrs) {
+    public NiceVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         init();
@@ -213,12 +213,21 @@ public class NiceVideoPlayer extends FrameLayout implements INiceVideoPlayer, Te
             mCurrentState = STATE_BUFFERING_PLAYING;
             mController.onPlayStateChanged(mCurrentState);
             LogUtil.d("STATE_BUFFERING_PLAYING");
-        } else if (mCurrentState == STATE_COMPLETED || mCurrentState == STATE_ERROR) {
+        } else if (mCurrentState == STATE_COMPLETED) {
+            mMediaPlayer.replay();
+            mCurrentState = STATE_PLAYING;
+            mController.onPlayStateChanged(mCurrentState);
+        } else if (mCurrentState == STATE_ERROR) {
             mMediaPlayer.reset();
             openMediaPlayer();
         } else {
             LogUtil.d("NiceVideoPlayer在mCurrentState == " + mCurrentState + "时不能调用restart()方法.");
         }
+    }
+
+    @Override
+    public void replay() {
+        mMediaPlayer.replay();
     }
 
     @Override
@@ -508,6 +517,7 @@ public class NiceVideoPlayer extends FrameLayout implements INiceVideoPlayer, Te
             if (what != -38 && what != -2147483648 && extra != -38 && extra != -2147483648) {
                 mCurrentState = STATE_ERROR;
                 mController.onPlayStateChanged(mCurrentState);
+                mOnVideoViewEvent.onPlayErrorCallback();
                 LogUtil.d("onError ——> STATE_ERROR ———— what：" + what + ", extra: " + extra);
             }
             return true;
@@ -727,7 +737,7 @@ public class NiceVideoPlayer extends FrameLayout implements INiceVideoPlayer, Te
 
     @Override
     public void onFrameChange(long currentFrame, long totalFrame) {
-        mOnVideoViewEvent.onFrameChangeCallback(currentFrame, mOldFrame,totalFrame);
+        mOnVideoViewEvent.onFrameChangeCallback(currentFrame, mOldFrame, totalFrame);
         this.mOldFrame = currentFrame;
     }
 }

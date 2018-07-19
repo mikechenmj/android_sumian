@@ -140,6 +140,11 @@ public class AliyunPlayer extends AbstractMediaPlayer {
     }
 
     @Override
+    public void replay() {
+        this.mAliyunPlayer.replay();
+    }
+
+    @Override
     public void setVolume(float var1, float var2) {
         this.mAliyunPlayer.setVolume((int) var1);
     }

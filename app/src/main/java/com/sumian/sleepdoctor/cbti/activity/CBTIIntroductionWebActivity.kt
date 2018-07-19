@@ -55,7 +55,7 @@ class CBTIIntroductionWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
                 val response = JsonUtil.fromJson<H5BaseResponse<Map<String, Int>>>(data, type.type)
                         ?: return
                 val chapterId = response.result?.get("chapterId") ?: return
-                CBTIWeekLessonPartActivity.show(mActivity, chapterId)
+                CBTIWeekCoursePartActivity.show(mActivity, chapterId)
             }
         })
     }

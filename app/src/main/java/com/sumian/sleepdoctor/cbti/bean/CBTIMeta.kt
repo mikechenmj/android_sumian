@@ -3,15 +3,12 @@ package com.sumian.sleepdoctor.cbti.bean
 /**
  * Created by dq
  *
- * on 2018/7/13
+ * on 2018/7/19
  *
- * desc:CBTI 章节
+ * desc:CBTI  额外附带信息
  */
-data class Courses(var data: List<Lesson>,
-                   var meta: Meta) {
-
-    data class Meta(var chapter_progress: Int,
-                    var chapter: Chapter)
+data class CBTIMeta(val chapter_progress: Int,
+                    val chapter: Chapter) {
 
     data class Chapter(var id: Int,
                        var title: String,

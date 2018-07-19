@@ -84,6 +84,8 @@ public interface IMediaPlayer {
 
     void reset();
 
+    void replay();
+
     void setVolume(float var1, float var2);
 
     int getAudioSessionId();

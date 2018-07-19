@@ -1,0 +1,129 @@
+package com.sumian.sleepdoctor.cbti.sheet
+
+import android.os.Bundle
+import android.support.v4.app.FragmentManager
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import com.sumian.common.helper.ToastHelper
+import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.cbti.adapter.CourseListAdapter
+import com.sumian.sleepdoctor.cbti.bean.CBTIMeta
+import com.sumian.sleepdoctor.cbti.bean.Course
+import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonContract
+import com.sumian.sleepdoctor.cbti.presenter.CBTIWeekCoursePresenter
+import com.sumian.sleepdoctor.widget.base.BaseBottomSheetView
+import kotlinx.android.synthetic.main.lay_bottom_sheet_lesson_list.*
+
+/**
+ * Created by dq
+ *
+ * on 2018/7/17
+ *
+ * desc:
+ */
+class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.View {
+
+    private var mChapterId: Int = 1
+    private var mPosition = 0
+
+    companion object {
+
+        private const val ARGS_CHAPTER_ID = "com.sumian.sleepdoctor.args.chapter.id"
+        private const val ARGS_SELECT_POSITION = "com.sumian.sleepdoctor.args.select.position"
+
+        fun show(fragmentManager: FragmentManager, ChapterId: Int, position: Int, onCBTILessonListCallback: OnCBTILessonListCallback) {
+            val cbtiLessonListBottomSheet = CBTICourseListBottomSheet().setOnCbtiLessonListCallback(onCBTILessonListCallback)
+
+            cbtiLessonListBottomSheet.arguments = Bundle().apply {
+                putInt(ARGS_CHAPTER_ID, ChapterId)
+                putInt(ARGS_SELECT_POSITION, position)
+            }
+
+            fragmentManager
+                    .beginTransaction()
+                    .add(cbtiLessonListBottomSheet, CBTICourseListBottomSheet::class.java.simpleName)
+                    .commitNowAllowingStateLoss()
+        }
+    }
+
+    private var cbtiLessonListCallback: OnCBTILessonListCallback? = null
+
+    fun setOnCbtiLessonListCallback(onCBTILessonListCallback: OnCBTILessonListCallback): CBTICourseListBottomSheet {
+        this.cbtiLessonListCallback = onCBTILessonListCallback
+        return this
+    }
+
+    override fun initBundle(arguments: Bundle?) {
+        super.initBundle(arguments)
+        arguments?.let {
+            mChapterId = it.getInt(ARGS_CHAPTER_ID, 0)
+            mPosition = it.getInt(ARGS_SELECT_POSITION, 0)
+        }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.lay_bottom_sheet_lesson_list
+    }
+
+    override fun initView(rootView: View?) {
+        super.initView(rootView)
+    }
+
+    override fun initData() {
+        super.initData()
+        CBTIWeekCoursePresenter.init(this).getCBTIWeekLesson(mChapterId)
+    }
+
+    override fun onGetCBTIWeekLessonSuccess(courses: List<Course>) {
+        invalidateItem(mPosition, courses)
+    }
+
+    override fun onGetCBTIMetaSuccess(cbtiMeta: CBTIMeta) {
+
+    }
+
+    override fun onGetCBTIWeekLessonFailed(error: String) {
+        ToastHelper.show(context, error, Gravity.CENTER)
+    }
+
+    private fun invalidateItem(position: Int, courses: List<Course>?) {
+        flow_layout.removeAllViews()
+        courses?.let {
+            it.forEachIndexed { index, lesson ->
+                run {
+                    val viewHolder = CourseListAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.lay_item_cbti_lesson_item, flow_layout, false))
+                    courses[position].current_course = true
+                    viewHolder.initView(lesson)
+                    viewHolder.itemView?.tag = index
+                    viewHolder.itemView?.setOnClickListener {
+                        val p = it.tag as Int
+                        val tmpCourse = courses[p]
+                        Log.e("TAG", "$p")
+                        if (tmpCourse.is_lock) {
+                            ToastHelper.show(it.context, "请先完成上一节课程", Gravity.CENTER)
+                            return@setOnClickListener
+                        }
+                        courses.forEachIndexed { index, _ ->
+                            run {
+                                courses[index].current_course = p == index
+                            }
+                        }
+                        invalidateItem(p, courses)
+                        val currentLesson = courses[p]
+                        if (cbtiLessonListCallback?.onSelectLesson(p, currentLesson)!!) {
+                            dismissAllowingStateLoss()
+                        }
+                    }
+                    flow_layout.addView(viewHolder.itemView)
+                }
+            }
+        }
+    }
+
+    interface OnCBTILessonListCallback {
+
+        fun onSelectLesson(position: Int, course: Course): Boolean
+    }
+}

@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.cbti.contract
 import com.sumian.sleepdoctor.base.BasePresenter
 import com.sumian.sleepdoctor.base.BaseView
 import com.sumian.sleepdoctor.cbti.bean.Exercise
-import com.sumian.sleepdoctor.cbti.bean.Exercises
 
 /**
  * Created by dq
@@ -16,7 +15,7 @@ interface CBTIWeekExercisesContract {
 
     interface View : BaseView<Presenter> {
 
-        fun onGetCBTIWeekPracticeSuccess(exercises: Exercises)
+        fun onGetCBTIWeekPracticeSuccess(exercises: List<Exercise>)
 
         fun onGetCBTIWeekPracticeFailed(error: String)
     }

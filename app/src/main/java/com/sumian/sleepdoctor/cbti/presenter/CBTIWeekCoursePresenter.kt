@@ -2,7 +2,8 @@ package com.sumian.sleepdoctor.cbti.presenter
 
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BasePresenter.mCalls
-import com.sumian.sleepdoctor.cbti.bean.Courses
+import com.sumian.sleepdoctor.cbti.bean.CBTIDataResponse
+import com.sumian.sleepdoctor.cbti.bean.Course
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
@@ -14,7 +15,7 @@ import com.sumian.sleepdoctor.network.response.ErrorResponse
  *
  * desc:
  */
-class CBTIWeekLessonPresenter constructor(view: CBTIWeekLessonContract.View) : CBTIWeekLessonContract.Presenter {
+class CBTIWeekCoursePresenter constructor(view: CBTIWeekLessonContract.View) : CBTIWeekLessonContract.Presenter {
 
     private val mView: CBTIWeekLessonContract.View
 
@@ -26,7 +27,7 @@ class CBTIWeekLessonPresenter constructor(view: CBTIWeekLessonContract.View) : C
     companion object {
 
         fun init(view: CBTIWeekLessonContract.View): CBTIWeekLessonContract.Presenter {
-            return CBTIWeekLessonPresenter(view)
+            return CBTIWeekCoursePresenter(view)
         }
     }
 
@@ -34,12 +35,13 @@ class CBTIWeekLessonPresenter constructor(view: CBTIWeekLessonContract.View) : C
 
         mView.onBegin()
 
-        val call = AppManager.getHttpService().getCBTILessonWeekPart(id)
+        val call = AppManager.getHttpService().getCBTICourseWeekPart(id)
 
-        call.enqueue(object : BaseResponseCallback<Courses>() {
-            override fun onSuccess(response: Courses?) {
+        call.enqueue(object : BaseResponseCallback<CBTIDataResponse<Course>>() {
+            override fun onSuccess(response: CBTIDataResponse<Course>?) {
                 response?.let {
-                    mView.onGetCBTIWeekLessonSuccess(response)
+                    mView.onGetCBTIWeekLessonSuccess(response.data)
+                    mView.onGetCBTIMetaSuccess(response.meta)
                 }
             }
 

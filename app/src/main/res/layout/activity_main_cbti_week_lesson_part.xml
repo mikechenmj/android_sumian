@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans">
 
-            <com.sumian.sleepdoctor.cbti.widget.CBTIWeekLessonBannerView
+            <com.sumian.sleepdoctor.cbti.widget.CBTIWeekCourseBannerView
                 android:id="@+id/cbti_week_lesson_banner_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_180"
@@ -45,7 +45,7 @@
                     android:id="@+id/tab_item_scan_qr_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/lesson"
+                    android:text="@string/course"
                     tools:ignore="HardcodedText" />
 
                 <android.support.design.widget.TabItem

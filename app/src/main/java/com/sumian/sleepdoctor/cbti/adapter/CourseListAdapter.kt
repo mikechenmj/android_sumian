@@ -10,7 +10,7 @@ import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder
-import com.sumian.sleepdoctor.cbti.bean.Lesson
+import com.sumian.sleepdoctor.cbti.bean.Course
 
 @Suppress("DEPRECATION")
 /**
@@ -18,24 +18,24 @@ import com.sumian.sleepdoctor.cbti.bean.Lesson
  *
  * on 2018/7/17
  *
- * desc:
+ * desc:  横向滑动,选择的 course list adapter
  */
-class LessonListAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context) {
+class CourseListAdapter(context: Context) : BaseRecyclerAdapter<Course>(context) {
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_item_cbti_lesson_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Lesson, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Course, position: Int) {
         (holder as ViewHolder).initView(item)
     }
 
-    class ViewHolder(itemView: View) : BaseViewHolder<Lesson>(itemView) {
+    class ViewHolder(itemView: View) : BaseViewHolder<Course>(itemView) {
 
         @BindView(R.id.tv_title)
         lateinit var mTvTitle: TextView
 
-        override fun initView(item: Lesson) {
+        override fun initView(item: Course) {
             super.initView(item)
 
             mTvTitle.run {

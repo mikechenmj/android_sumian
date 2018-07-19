@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseFragment
-import com.sumian.sleepdoctor.cbti.activity.CBTIWeekLessonPartActivity.Companion.CHAPTER_ID
+import com.sumian.sleepdoctor.cbti.activity.CBTIExerciseWebActivity
+import com.sumian.sleepdoctor.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
 import com.sumian.sleepdoctor.cbti.adapter.ExerciseAdapter
-import com.sumian.sleepdoctor.cbti.bean.Exercises
+import com.sumian.sleepdoctor.cbti.bean.Exercise
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekExercisesContract
 import com.sumian.sleepdoctor.cbti.presenter.CBTIWeekExercisesPresenter
 import kotlinx.android.synthetic.main.fragment_tab_practice.*
@@ -21,18 +23,18 @@ import kotlinx.android.synthetic.main.fragment_tab_practice.*
  * desc: CBTI 练习tab
  *
  */
-class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CBTIWeekExercisesContract.View {
+class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CBTIWeekExercisesContract.View, BaseRecyclerAdapter.OnItemClickListener {
 
     private lateinit var mExerciseAdapter: ExerciseAdapter
 
     private var mChapterId = 1
 
     companion object {
-        fun newInstance(chapterId: Int): LessonFragment {
+        fun newInstance(chapterId: Int): ExerciseFragment {
             val args = Bundle().apply {
                 putInt(CHAPTER_ID, chapterId)
             }
-            return newInstance(LessonFragment::class.java, args) as LessonFragment
+            return newInstance(ExerciseFragment::class.java, args) as ExerciseFragment
         }
     }
 
@@ -56,6 +58,7 @@ class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CB
         super.initWidget(root)
 
         mExerciseAdapter = ExerciseAdapter(context!!)
+        mExerciseAdapter.setOnItemClickListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.itemAnimator = DefaultItemAnimator()
         recycler.adapter = mExerciseAdapter
@@ -71,12 +74,16 @@ class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CB
         this.mPresenter = presenter
     }
 
-    override fun onGetCBTIWeekPracticeSuccess(exercises: Exercises) {
-        mExerciseAdapter.resetItem(exercises.data)
+    override fun onGetCBTIWeekPracticeSuccess(exercises: List<Exercise>) {
+        mExerciseAdapter.resetItem(exercises)
     }
 
     override fun onGetCBTIWeekPracticeFailed(error: String) {
         showCenterToast(error)
+    }
+
+    override fun onItemClick(position: Int, itemId: Long) {
+        CBTIExerciseWebActivity.show(activity!!, mExerciseAdapter.getItem(position).cbti_course_id)
     }
 
 }

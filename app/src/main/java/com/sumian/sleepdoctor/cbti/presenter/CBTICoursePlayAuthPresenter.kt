@@ -2,8 +2,8 @@ package com.sumian.sleepdoctor.cbti.presenter
 
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BasePresenter.mCalls
-import com.sumian.sleepdoctor.cbti.bean.LessonDetail
-import com.sumian.sleepdoctor.cbti.bean.LessonLog
+import com.sumian.sleepdoctor.cbti.bean.CoursePlayAuth
+import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonDetailContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
@@ -15,7 +15,7 @@ import com.sumian.sleepdoctor.network.response.ErrorResponse
  *
  * desc:
  */
-class CBTIWeekLessonDetailPresenter(view: CBTIWeekLessonDetailContract.View) : CBTIWeekLessonDetailContract.Presenter {
+class CBTICoursePlayAuthPresenter(view: CBTIWeekLessonDetailContract.View) : CBTIWeekLessonDetailContract.Presenter {
 
     private var mView: CBTIWeekLessonDetailContract.View? = null
 
@@ -27,7 +27,7 @@ class CBTIWeekLessonDetailPresenter(view: CBTIWeekLessonDetailContract.View) : C
     companion object {
 
         fun init(view: CBTIWeekLessonDetailContract.View): CBTIWeekLessonDetailContract.Presenter {
-            return CBTIWeekLessonDetailPresenter(view)
+            return CBTICoursePlayAuthPresenter(view)
         }
     }
 
@@ -35,10 +35,10 @@ class CBTIWeekLessonDetailPresenter(view: CBTIWeekLessonDetailContract.View) : C
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().getCBTILessonDetail(id = id)
-        call.enqueue(object : BaseResponseCallback<LessonDetail>() {
+        val call = AppManager.getHttpService().getCBTIPLayAuth(id = id)
+        call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
 
-            override fun onSuccess(response: LessonDetail?) {
+            override fun onSuccess(response: CoursePlayAuth?) {
                 response?.let {
                     mView?.onGetCBTIDetailSuccess(response)
                 }
@@ -63,9 +63,9 @@ class CBTIWeekLessonDetailPresenter(view: CBTIWeekLessonDetailContract.View) : C
 
         val call = AppManager.getHttpService().uploadCBTICourseLogs(id, videoProgress.toUpperCase(),endpoint )
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<LessonLog>() {
+        call.enqueue(object : BaseResponseCallback<CoursePlayLog>() {
 
-            override fun onSuccess(response: LessonLog?) {
+            override fun onSuccess(response: CoursePlayLog?) {
                 response?.let {
                     mView?.onUploadLessonLogSuccess(response)
                 }

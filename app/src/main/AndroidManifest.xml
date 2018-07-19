@@ -179,7 +179,7 @@
         <activity android:name=".setting.version.VersionActivity" />
 
         <activity
-            android:name=".cbti.activity.CBTILessonDetailActivity"
+            android:name=".cbti.activity.CBTICoursePlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -188,7 +188,7 @@
         <activity android:name=".cbti.activity.CBTIIntroductionWebActivity" />
 
         <activity
-            android:name=".cbti.activity.CBTIWeekLessonPartActivity"
+            android:name=".cbti.activity.CBTIWeekCoursePartActivity"
             android:theme="@style/BaseAppTheme" />
 
         <activity

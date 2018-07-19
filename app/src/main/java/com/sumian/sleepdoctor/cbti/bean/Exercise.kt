@@ -7,8 +7,8 @@ package com.sumian.sleepdoctor.cbti.bean
  *
  * desc:  CBTI  练习
  */
-data class Exercise(var id: Int,
-                    var cbti_course_id: Int,
+data class Exercise(var id: Int,//练习 id
+                    var cbti_course_id: Int,//练习所属课程id
                     var title: String,
                     var guide: Guide,
                     var type: Int,//练习类型 0：判断题 1：勾选题 2：量表题 3：跳转题
@@ -17,8 +17,6 @@ data class Exercise(var id: Int,
                     var is_lock: Boolean,
                     var done: Boolean,
                     var type_string: String) {
-
-    data class Meta(var chapter_progress: Int)
 
     data class Guide(var title: String,
                      var description: String,

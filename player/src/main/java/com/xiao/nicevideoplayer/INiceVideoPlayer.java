@@ -35,6 +35,8 @@ public interface INiceVideoPlayer {
      */
     void restart();
 
+    void replay();
+
     /**
      * 暂停播放
      */

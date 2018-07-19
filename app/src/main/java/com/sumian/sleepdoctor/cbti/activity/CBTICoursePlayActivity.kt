@@ -9,17 +9,17 @@ import android.view.View
 import com.sumian.common.utils.ImageLoader
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseActivity
-import com.sumian.sleepdoctor.cbti.bean.Lesson
-import com.sumian.sleepdoctor.cbti.bean.LessonDetail
-import com.sumian.sleepdoctor.cbti.bean.LessonLog
+import com.sumian.sleepdoctor.cbti.bean.Course
+import com.sumian.sleepdoctor.cbti.bean.CoursePlayAuth
+import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonDetailContract
-import com.sumian.sleepdoctor.cbti.presenter.CBTIWeekLessonDetailPresenter
-import com.sumian.sleepdoctor.cbti.sheet.CBTILessonListBottomSheet
+import com.sumian.sleepdoctor.cbti.presenter.CBTICoursePlayAuthPresenter
+import com.sumian.sleepdoctor.cbti.sheet.CBTICourseListBottomSheet
 import com.sumian.sleepdoctor.event.CBTIProgressChangeEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.widget.TitleBar
-import com.xiao.nicevideoplayer.NiceVideoPlayer
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager
+import com.xiao.nicevideoplayer.NiceVideoView
 import com.xiao.nicevideoplayer.OnVideoViewEvent
 import com.xiao.nicevideoplayer.TxVideoPlayerController
 import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
@@ -34,15 +34,16 @@ import java.util.regex.Pattern
  * desc:CBTI 一个课时详情中心,包含播放视频,课程列表,以及课程总结等模块
  *
  */
-class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekLessonDetailContract.View, CBTILessonListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent {
+class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekLessonDetailContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent {
 
-    private val TAG = CBTILessonDetailActivity::class.java.simpleName
+    private val TAG = CBTICoursePlayActivity::class.java.simpleName
 
-    private var mId: Int = 0
+    private var mCourse: Course? = null
 
-    private var mLessonDetail: LessonDetail? = null
+    private var mCoursePlayAuth: CoursePlayAuth? = null
 
-    private var mCurrentLesson: Lesson? = null
+    private var mCurrentCourse: Course? = null
+    private var mCurrentPosition = 0
 
     private val mBrowseFrame: StringBuilder by lazy {
         StringBuilder()
@@ -54,20 +55,23 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
 
     companion object {
 
-        private const val EXTRA_CBTI_LESSON_ID = "com.sumian.sleepdoctor.extras.cbti.lesson.id"
+        private const val EXTRA_CBTI_COURSE = "com.sumian.sleepdoctor.extras.cbti.course"
+        private const val EXTRA_SELECT_POSITION = "com.sumian.sleepdoctor.extras.select.position"
 
-        fun show(context: Context, id: Int) {
+        fun show(context: Context, course: Course, position: Int) {
 
             val extras = Bundle().apply {
-                putInt(EXTRA_CBTI_LESSON_ID, id)
+                putParcelable(EXTRA_CBTI_COURSE, course)
+                putInt(EXTRA_SELECT_POSITION, position)
             }
-            show(context, CBTILessonDetailActivity::class.java, extras)
+            show(context, CBTICoursePlayActivity::class.java, extras)
         }
     }
 
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
-            this.mId = it.getInt(EXTRA_CBTI_LESSON_ID, 0)
+            this.mCourse = it.getParcelable(EXTRA_CBTI_COURSE)
+            this.mCurrentPosition = it.getInt(EXTRA_SELECT_POSITION, 0)
         }
 
         return super.initBundle(bundle)
@@ -84,16 +88,18 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
 
     override fun initPresenter() {
         super.initPresenter()
-        CBTIWeekLessonDetailPresenter.init(this)
+        CBTICoursePlayAuthPresenter.init(this)
     }
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
         tv_lesson_list.setOnClickListener(this)
+        nav_tab_lesson_practice.setOnClickListener(this)
+        nav_tab_lesson_review_last_week.setOnClickListener(this)
         aliyun_player.setOnVideoViewEvent(this)
         aliyun_player.apply {
-            setPlayerType(NiceVideoPlayer.TYPE_ALIYUN)
+            setPlayerType(NiceVideoView.TYPE_ALIYUN)
             //setUp(null, null)
             setController(mController)
         }
@@ -106,15 +112,22 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
 
     override fun initData() {
         super.initData()
-        this.mPresenter.getCBTIDetailInfo(mId)
+        this.mPresenter.getCBTIDetailInfo(mCourse?.cbti_chapter_id!!)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.tv_lesson_list -> {
-                mLessonDetail?.let {
-                    CBTILessonListBottomSheet.show(supportFragmentManager, it.courses, this)
+                mCoursePlayAuth?.let {
+                    CBTICourseListBottomSheet.show(supportFragmentManager, mCourse?.cbti_chapter_id!!, mCurrentPosition, this)
                 }
+            }
+            R.id.nav_tab_lesson_practice -> {
+                CBTIExerciseWebActivity.show(v.context, mCurrentCourse?.id!!)
+
+            }
+            R.id.nav_tab_lesson_review_last_week -> {
+
             }
         }
     }
@@ -140,28 +153,28 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
         super.onBackPressed()
     }
 
-    override fun onGetCBTIDetailSuccess(lessonDetail: LessonDetail) {
+    override fun onGetCBTIDetailSuccess(coursePlayAuth: CoursePlayAuth) {
 
-        mLessonDetail = lessonDetail
-        mCurrentLesson = lessonDetail.courses[0]
+        mCoursePlayAuth = coursePlayAuth
+        mCurrentCourse = coursePlayAuth.courses[mCurrentPosition]
 
-        title_bar.setTitle(mCurrentLesson?.title)
+        title_bar.setTitle(mCurrentCourse?.title)
 
-        tv_summary.text = lessonDetail.summary
+        tv_summary.text = coursePlayAuth.summary
 
-        mController.setTitle(mCurrentLesson?.title)
+        mController.setTitle(mCurrentCourse?.title)
 
         val titles = ArrayList<String>()
-        lessonDetail.courses.forEach {
+        coursePlayAuth.courses.forEach {
             titles.add(it.title)
         }
 
         mController.setLessonList(titles)
 
-        ImageLoader.loadImage(this, mController.imageView(), lessonDetail.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+        ImageLoader.loadImage(this, mController.imageView(), coursePlayAuth.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
         aliyun_player?.apply {
-            setPlayerType(NiceVideoPlayer.TYPE_ALIYUN)
-            setSourceData(lessonDetail.meta.video_id, lessonDetail.meta.play_auth)
+            setPlayerType(NiceVideoView.TYPE_ALIYUN)
+            setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
         }
 
     }
@@ -175,17 +188,18 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
         Log.e(TAG, "onConfigurationChanged-------->")
     }
 
-    override fun onUploadLessonLogSuccess(lessonLog: LessonLog) {
-        Log.e(TAG, lessonLog.toString())
+    override fun onUploadLessonLogSuccess(coursePlayLog: CoursePlayLog) {
+        Log.e(TAG, coursePlayLog.toString())
     }
 
     override fun onUploadLessonLogFailed(error: String) {
         onGetCBTIDetailFailed(error)
     }
 
-    override fun onSelectLesson(position: Int, lesson: Lesson): Boolean {
-        this.mCurrentLesson = lesson
-        this.mPresenter.getCBTIDetailInfo(lesson.id)
+    override fun onSelectLesson(position: Int, course: Course): Boolean {
+        this.mCurrentCourse = course
+        this.mCurrentPosition = position
+        this.mPresenter.getCBTIDetailInfo(course.id)
         return true
     }
 
@@ -205,8 +219,12 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onRePlayCallbck() {
+        aliyun_player.replay()
+    }
+
     override fun onPlayErrorCallback() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.mPresenter.getCBTIDetailInfo(mCurrentCourse?.id!!)
     }
 
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
@@ -234,8 +252,12 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
 
         if (fl >= 0.7f) {
             Log.e(TAG, "看超过了70%")
-            mPresenter.uploadCBTIVideoLog(mCurrentLesson?.id!!, hexPlayFrame, currentFrame.toInt())
         }
+
+        if (currentFrame.toInt() % 10 == 0 || currentFrame == totalFrame) {
+            mPresenter.uploadCBTIVideoLog(mCurrentCourse?.id!!, hexPlayFrame, currentFrame.toInt())
+        }
+
         // Log.e(TAG, "finalFrame=$hexPlayFrame   fl=$fl")
     }
 

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.lay_cbti_lesson_plan_view.view.*
  *
  * desc: 一周课时进度计划  view
  */
-class CBTIWeekLessonPlanView : FrameLayout {
+class CBTIWeekCoursePlanView : FrameLayout {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attributes: AttributeSet?) : this(context, attributes, 0)

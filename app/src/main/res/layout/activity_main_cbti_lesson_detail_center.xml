@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:text="1-1 睡眠的奥秘" />
 
-    <com.xiao.nicevideoplayer.NiceVideoPlayer
+    <com.xiao.nicevideoplayer.NiceVideoView
         android:id="@+id/aliyun_player"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_212" />
@@ -117,6 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/space_20"
+                    android:lineSpacingExtra="@dimen/space_4"
                     android:text="这个 CBTI 课程一共包括 65 节课，每周一节，这是希望每学完一节课你能够有一个星期的的时间去实践每节课所提到的内容和技巧。而且，我们会根据你每个星期的睡眠日记给你提供个性化的意见。睡眠改善是需要时间的，所以，在接下来的6周，你将会了解更多关于改善失眠的技巧和策略。
 
 整个过程中，记录睡眠日记是一个非常重要的指标，也是睡眠改善的重要评估工具。谨记每天早上都填写你的睡眠日记，这将会大大增加成功的机会。"

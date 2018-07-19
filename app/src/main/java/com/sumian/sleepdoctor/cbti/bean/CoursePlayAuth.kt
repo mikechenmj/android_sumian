@@ -5,17 +5,17 @@ package com.sumian.sleepdoctor.cbti.bean
  *
  * on 2018/7/16
  *
- * desc: 课程详情
+ * desc: CBTI 视频播放鉴权 bean,即获取到的视频播放权限,及该课时下的其他相关信息
  */
-data class LessonDetail(var id: Int,
-                        var title: String,
-                        var banner: String,
-                        var introduction: String,
-                        var summary: String,
-                        var index: Int,
-                        var last_chapter_summary: String,
-                        var courses: List<Lesson>,
-                        var meta: Meta) {
+data class CoursePlayAuth(var id: Int,
+                          var title: String,
+                          var banner: String,
+                          var introduction: String,
+                          var summary: String,
+                          var index: Int,
+                          var last_chapter_summary: String,
+                          var courses: List<Course>,
+                          var meta: Meta) {
 
     data class Meta(var play_auth: String,//播放凭证 填入aliyun播放器
                     var video_id: String,//video-id

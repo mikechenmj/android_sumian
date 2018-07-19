@@ -199,9 +199,9 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     @Override
     protected void onPlayStateChanged(int playState) {
         switch (playState) {
-            case NiceVideoPlayer.STATE_IDLE:
+            case NiceVideoView.STATE_IDLE:
                 break;
-            case NiceVideoPlayer.STATE_PREPARING:
+            case NiceVideoView.STATE_PREPARING:
                 mImage.setVisibility(View.GONE);
                 mLoading.setVisibility(View.VISIBLE);
                 mLoadText.setText("正在准备...");
@@ -211,38 +211,38 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 mBottom.setVisibility(View.GONE);
                 mCenterStart.setVisibility(View.GONE);
                 break;
-            case NiceVideoPlayer.STATE_PREPARED:
+            case NiceVideoView.STATE_PREPARED:
                 startUpdateProgressTimer();
                 break;
-            case NiceVideoPlayer.STATE_PLAYING:
+            case NiceVideoView.STATE_PLAYING:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 startDismissTopBottomTimer();
                 break;
-            case NiceVideoPlayer.STATE_PAUSED:
+            case NiceVideoView.STATE_PAUSED:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 cancelDismissTopBottomTimer();
                 break;
-            case NiceVideoPlayer.STATE_BUFFERING_PLAYING:
+            case NiceVideoView.STATE_BUFFERING_PLAYING:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 mLoadText.setText("正在缓冲...");
                 startDismissTopBottomTimer();
                 break;
-            case NiceVideoPlayer.STATE_BUFFERING_PAUSED:
+            case NiceVideoView.STATE_BUFFERING_PAUSED:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 mLoadText.setText("正在缓冲...");
                 cancelDismissTopBottomTimer();
                 break;
-            case NiceVideoPlayer.STATE_ERROR:
+            case NiceVideoView.STATE_ERROR:
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mTop.setVisibility(View.VISIBLE);
                 mError.setVisibility(View.VISIBLE);
                 break;
-            case NiceVideoPlayer.STATE_COMPLETED:
+            case NiceVideoView.STATE_COMPLETED:
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mImage.setVisibility(View.VISIBLE);
@@ -254,7 +254,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     @Override
     protected void onPlayModeChanged(int playMode) {
         switch (playMode) {
-            case NiceVideoPlayer.MODE_NORMAL:
+            case NiceVideoView.MODE_NORMAL:
                 mBack.setVisibility(View.GONE);
                 mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
                 mFullScreen.setVisibility(View.VISIBLE);
@@ -265,7 +265,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                     hasRegisterBatteryReceiver = false;
                 }
                 break;
-            case NiceVideoPlayer.MODE_FULL_SCREEN:
+            case NiceVideoView.MODE_FULL_SCREEN:
                 mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setVisibility(View.GONE);
                 mFullScreen.setImageResource(R.drawable.ic_player_shrink);
@@ -279,7 +279,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                     hasRegisterBatteryReceiver = true;
                 }
                 break;
-            case NiceVideoPlayer.MODE_TINY_WINDOW:
+            case NiceVideoView.MODE_TINY_WINDOW:
                 mBack.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
                 break;
@@ -377,7 +377,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         } else if (v == mRetry) {
             mNiceVideoPlayer.restart();
         } else if (v == mReplay) {
-            mRetry.performClick();
+            mNiceVideoPlayer.replay();
         } else if (v == mShare) {
             Toast.makeText(mContext, "分享", Toast.LENGTH_SHORT).show();
         } else if (v == this) {

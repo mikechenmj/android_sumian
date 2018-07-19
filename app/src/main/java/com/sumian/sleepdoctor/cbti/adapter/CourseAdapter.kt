@@ -12,8 +12,7 @@ import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder
-import com.sumian.sleepdoctor.cbti.activity.CBTILessonDetailActivity
-import com.sumian.sleepdoctor.cbti.bean.Lesson
+import com.sumian.sleepdoctor.cbti.bean.Course
 
 /**
  * Created by dq
@@ -22,17 +21,17 @@ import com.sumian.sleepdoctor.cbti.bean.Lesson
  *
  * desc:课程 adapter
  */
-class LessonAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context) {
+class CourseAdapter(context: Context) : BaseRecyclerAdapter<Course>(context) {
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lay_cbti_item_lesson, parent, false))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: Lesson, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: Course, position: Int) {
         (holder as ViewHolder).initView(item)
     }
 
-    class ViewHolder(itemView: View) : BaseViewHolder<Lesson>(itemView) {
+    class ViewHolder(itemView: View) : BaseViewHolder<Course>(itemView) {
 
         @BindView(R.id.tv_title)
         lateinit var mTvTitle: TextView
@@ -48,7 +47,7 @@ class LessonAdapter(context: Context) : BaseRecyclerAdapter<Lesson>(context) {
         lateinit var mDivider: View
 
         @SuppressLint("SetTextI18n")
-        override fun initView(item: Lesson) {
+        override fun initView(item: Course) {
             super.initView(item)
 
             mTvTitle.text = item.title

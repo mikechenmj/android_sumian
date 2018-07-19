@@ -6,7 +6,7 @@ package com.xiao.nicevideoplayer;
  */
 public class NiceVideoPlayerManager {
 
-    private NiceVideoPlayer mVideoPlayer;
+    private NiceVideoView mVideoPlayer;
 
     private NiceVideoPlayerManager() {
     }
@@ -20,11 +20,11 @@ public class NiceVideoPlayerManager {
         return sInstance;
     }
 
-    public NiceVideoPlayer getCurrentNiceVideoPlayer() {
+    public NiceVideoView getCurrentNiceVideoPlayer() {
         return mVideoPlayer;
     }
 
-    public void setCurrentNiceVideoPlayer(NiceVideoPlayer videoPlayer) {
+    public void setCurrentNiceVideoPlayer(NiceVideoView videoPlayer) {
         if (mVideoPlayer != videoPlayer) {
             releaseNiceVideoPlayer();
             mVideoPlayer = videoPlayer;

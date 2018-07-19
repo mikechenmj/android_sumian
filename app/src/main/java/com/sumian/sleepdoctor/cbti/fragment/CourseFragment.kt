@@ -9,13 +9,14 @@ import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseFragment
-import com.sumian.sleepdoctor.cbti.activity.CBTILessonDetailActivity
-import com.sumian.sleepdoctor.cbti.activity.CBTIWeekLessonPartActivity.Companion.CHAPTER_ID
-import com.sumian.sleepdoctor.cbti.adapter.LessonAdapter
-import com.sumian.sleepdoctor.cbti.bean.Courses
+import com.sumian.sleepdoctor.cbti.activity.CBTICoursePlayActivity
+import com.sumian.sleepdoctor.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
+import com.sumian.sleepdoctor.cbti.adapter.CourseAdapter
+import com.sumian.sleepdoctor.cbti.bean.CBTIMeta
+import com.sumian.sleepdoctor.cbti.bean.Course
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sleepdoctor.cbti.model.CbtiChapterViewModel
-import com.sumian.sleepdoctor.cbti.presenter.CBTIWeekLessonPresenter
+import com.sumian.sleepdoctor.cbti.presenter.CBTIWeekCoursePresenter
 import kotlinx.android.synthetic.main.fragment_tab_lesson.*
 
 /**
@@ -26,18 +27,18 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<Courses>, BaseRecyclerAdapter.OnItemClickListener {
+class CourseFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener {
 
-    private lateinit var mLessonAdapter: LessonAdapter
+    private lateinit var mCourseAdapter: CourseAdapter
 
     private var mChapterId = 1
 
     companion object {
-        fun newInstance(chapterId: Int): LessonFragment {
+        fun newInstance(chapterId: Int): CourseFragment {
             val args = Bundle().apply {
                 putInt(CHAPTER_ID, chapterId)
             }
-            return newInstance(LessonFragment::class.java, args) as LessonFragment
+            return newInstance(CourseFragment::class.java, args) as CourseFragment
         }
     }
 
@@ -54,16 +55,16 @@ class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
 
     override fun initPresenter() {
         super.initPresenter()
-        CBTIWeekLessonPresenter.init(this)
+        CBTIWeekCoursePresenter.init(this)
     }
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
-        mLessonAdapter = LessonAdapter(context!!)
-        mLessonAdapter.setOnItemClickListener(this)
+        mCourseAdapter = CourseAdapter(context!!)
+        mCourseAdapter.setOnItemClickListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.itemAnimator = DefaultItemAnimator()
-        recycler.adapter = mLessonAdapter
+        recycler.adapter = mCourseAdapter
     }
 
     override fun initData() {
@@ -87,26 +88,31 @@ class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
-        val lesson = mLessonAdapter.getItem(position)
+        val lesson = mCourseAdapter.getItem(position)
         if (lesson.is_lock) {
+            showCenterToast("请先完成上一节课程")
             return
         }
-        CBTILessonDetailActivity.show(activity!!, lesson.id)
+        CBTICoursePlayActivity.show(activity!!, lesson, position)
     }
 
-    override fun onGetCBTIWeekLessonSuccess(courses: Courses) {
-        ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyCBTICourses(courses)
+    override fun onGetCBTIWeekLessonSuccess(courses: List<Course>) {
+        ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyCourses(courses)
+    }
+
+    override fun onGetCBTIMetaSuccess(cbtiMeta: CBTIMeta) {
+        ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyCBTICourseMeta(cbtiMeta)
     }
 
     override fun onGetCBTIWeekLessonFailed(error: String) {
         showCenterToast(error)
     }
 
-    override fun onChanged(t: Courses?) {
+    override fun onChanged(t: List<Course>?) {
         if (t == null) {
-            mLessonAdapter.clear()
+            mCourseAdapter.clear()
         } else {
-            mLessonAdapter.resetItem(t.data)
+            mCourseAdapter.resetItem(t)
         }
     }
 }

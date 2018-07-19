@@ -19,5 +19,7 @@ public interface OnVideoViewEvent {
 
     void onPlayErrorCallback();
 
+    void onRePlayCallbck();
+
     void onFrameChangeCallback(long currentFrame, long oldFrame, long totalFrame);
 }
