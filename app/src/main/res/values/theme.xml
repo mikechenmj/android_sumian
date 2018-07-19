@@ -25,6 +25,10 @@
         <item name="android:windowAnimationStyle">@style/AnimationStyle</item>
     </style>
 
+    <style name="BaseActivity" parent="@style/BaseAppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
     <style name="keyboardTheme" parent="Theme.Design.Light.NoActionBar">
         <item name="android:configChanges">keyboardHidden|orientation</item>
         <item name="android:launchMode">singleTop</item>

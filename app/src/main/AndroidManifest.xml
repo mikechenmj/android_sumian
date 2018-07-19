@@ -183,7 +183,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme" />
+            android:theme="@style/BaseActivity" />
 
         <activity android:name=".cbti.activity.CBTIIntroductionWebActivity" />
 

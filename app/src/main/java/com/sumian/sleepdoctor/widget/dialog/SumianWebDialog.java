@@ -29,9 +29,18 @@ public class SumianWebDialog extends DialogFragment implements View.OnClickListe
     SWebViewLayout mWebView;
 
     private Unbinder mBind;
+    private String mUrl;
 
-    public static SumianWebDialog create() {
-        return new SumianWebDialog();
+    public SumianWebDialog(String url) {
+        mUrl = url;
+    }
+
+    public static SumianWebDialog createWithCompleteUrl(String completeUrl) {
+        return new SumianWebDialog(completeUrl);
+    }
+
+    public static SumianWebDialog createWithPartUrl(String partUrl) {
+        return createWithCompleteUrl(BuildConfig.BASE_H5_URL + partUrl);
     }
 
     @Override
@@ -54,7 +63,7 @@ public class SumianWebDialog extends DialogFragment implements View.OnClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String h5Url = BuildConfig.BASE_H5_URL + H5Uri.ADVISORY_GUIDE;
-        mWebView.loadRequestUrl(h5Url);
+        mWebView.loadRequestUrl(mUrl);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     protected void initWidget(View root) {
         super.initWidget(root);
         mBottomNavigationBar.setOnSelectedTabChangeListener(this);
-        this.mFragmentManager = getSupportFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
     }
 
     @Override

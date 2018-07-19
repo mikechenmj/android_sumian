@@ -14,6 +14,7 @@ import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.contract.RecordContract
 import com.sumian.sleepdoctor.advisory.presenter.RecordPresenter
 import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.main.MainActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.SumianWebDialog
@@ -161,7 +162,7 @@ class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordC
     }
 
     override fun onMenuClick(v: View?) {
-        SumianWebDialog.create().show(supportFragmentManager)
+        SumianWebDialog.createWithPartUrl(H5Uri.ADVISORY_GUIDE).show(supportFragmentManager)
     }
 
     override fun onBack(v: View?) {

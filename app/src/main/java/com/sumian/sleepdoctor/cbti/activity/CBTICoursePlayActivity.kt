@@ -17,7 +17,9 @@ import com.sumian.sleepdoctor.cbti.presenter.CBTICoursePlayAuthPresenter
 import com.sumian.sleepdoctor.cbti.sheet.CBTICourseListBottomSheet
 import com.sumian.sleepdoctor.event.CBTIProgressChangeEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
+import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.widget.TitleBar
+import com.sumian.sleepdoctor.widget.dialog.SumianWebDialog
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager
 import com.xiao.nicevideoplayer.NiceVideoView
 import com.xiao.nicevideoplayer.OnVideoViewEvent
@@ -103,6 +105,9 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Present
             //setUp(null, null)
             setController(mController)
         }
+        nav_tab_lesson_review_last_week.setOnClickListener {
+            SumianWebDialog.createWithPartUrl(H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", mCoursePlayAuth!!.summary!!)).show(supportFragmentManager)
+        }
     }
 
     override fun setPresenter(presenter: CBTIWeekLessonDetailContract.Presenter?) {
@@ -177,6 +182,8 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Present
             setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
         }
 
+        nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.summary != null) View.VISIBLE else View.GONE
+        v_divider.visibility = if (coursePlayAuth.summary != null) View.VISIBLE else View.GONE
     }
 
     override fun onGetCBTIDetailFailed(error: String) {
