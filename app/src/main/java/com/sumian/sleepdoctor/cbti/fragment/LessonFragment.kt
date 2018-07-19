@@ -30,7 +30,7 @@ class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
 
     private lateinit var mLessonAdapter: LessonAdapter
 
-    private var mChapterId = 0
+    private var mChapterId = 1
 
     companion object {
         fun newInstance(chapterId: Int): LessonFragment {
@@ -39,7 +39,6 @@ class LessonFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
             }
             return newInstance(LessonFragment::class.java, args) as LessonFragment
         }
-
     }
 
     override fun initBundle(bundle: Bundle?) {

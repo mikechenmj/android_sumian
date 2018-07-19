@@ -28,11 +28,11 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  */
 class CBTIWeekLessonPartActivity : BaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener, Observer<Courses> {
 
-    private var mChapterId = 0
+    private var mChapterId = 1
 
     companion object {
 
-         const val CHAPTER_ID = "com.sumian.sleepdoctor.extras.chapter.id"
+        const val CHAPTER_ID = "com.sumian.sleepdoctor.extras.chapter.id"
 
         fun show(context: Context, chapterId: Int) {
             val extras = Bundle().apply {
@@ -64,8 +64,8 @@ class CBTIWeekLessonPartActivity : BaseActivity<CBTIWeekLessonContract.Presenter
         view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
                 when (position) {
-                    0 -> return LessonFragment()
-                    1 -> return ExerciseFragment()
+                    0 -> return LessonFragment.newInstance(mChapterId)
+                    1 -> return ExerciseFragment.newInstance(mChapterId)
                 }
                 return LessonFragment()
             }

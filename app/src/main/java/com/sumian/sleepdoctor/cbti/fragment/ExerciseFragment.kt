@@ -25,7 +25,7 @@ class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CB
 
     private lateinit var mExerciseAdapter: ExerciseAdapter
 
-    private var mChapterId = 0
+    private var mChapterId = 1
 
     companion object {
         fun newInstance(chapterId: Int): LessonFragment {
