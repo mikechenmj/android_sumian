@@ -18,7 +18,7 @@ import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
 import com.sumian.sleepdoctor.onlinereport.OnlineReport
 import com.sumian.sleepdoctor.order.OrderDetail
 import com.sumian.sleepdoctor.order.OrderDetailV2
-import com.sumian.sleepdoctor.oss.bean.OssResponse
+import com.sumian.sleepdoctor.oss.OssResponse
 import com.sumian.sleepdoctor.record.bean.DoctorServiceList
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary

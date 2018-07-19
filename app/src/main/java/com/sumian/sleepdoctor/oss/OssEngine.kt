@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.oss.engine
+package com.sumian.sleepdoctor.oss
 
 import com.alibaba.sdk.android.oss.ClientException
 import com.alibaba.sdk.android.oss.OSSClient
@@ -12,7 +12,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.sleepdoctor.BuildConfig
 import com.sumian.sleepdoctor.app.App
-import com.sumian.sleepdoctor.oss.bean.OssResponse
 import com.sumian.sleepdoctor.utils.SumianExecutor
 import java.util.*
 

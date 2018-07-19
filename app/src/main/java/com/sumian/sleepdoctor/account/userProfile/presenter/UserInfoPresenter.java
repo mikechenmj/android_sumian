@@ -11,8 +11,8 @@ import com.sumian.sleepdoctor.account.userProfile.contract.UserInfoContract;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.oss.bean.OssResponse;
-import com.sumian.sleepdoctor.oss.engine.OssEngine;
+import com.sumian.sleepdoctor.oss.OssResponse;
+import com.sumian.sleepdoctor.oss.OssEngine;
 import com.umeng.socialize.UMAuthListener;
 
 import org.jetbrains.annotations.NotNull;
