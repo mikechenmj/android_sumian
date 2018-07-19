@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bindMobile.BindMobileActivity;
@@ -53,6 +54,8 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     private ActionLoadingDialog mActionLoadingDialog;
 
+    private VersionDelegate mVersionDelegate;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main_login;
@@ -67,6 +70,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     @Override
     protected void initData() {
         super.initData();
+        mVersionDelegate = VersionDelegate.Companion.init();
         runOnUiThread(() -> CaptchaTimeDistanceConfig.showTimer(mBtSendCaptcha, false, SumianConfig.LOGIN_CAPTCHA_TYPE));
     }
 
@@ -85,6 +89,14 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     protected void onRelease() {
         super.onRelease();
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mVersionDelegate.checkVersion(this);
+    }
+
 
     @Override
     public void onBegin() {
@@ -107,7 +119,7 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     public void onLoginSuccess(boolean isNewAccount) {
         runOnUiThread(() -> {
             if (isNewAccount) {
-                MyTargetAndInformationActivity.Companion.launchForResult(this, false,REQUEST_CODE_SET_USER_INFO);
+                MyTargetAndInformationActivity.Companion.launchForResult(this, false, REQUEST_CODE_SET_USER_INFO);
             } else {
                 launchMainAndFinish();
             }

@@ -43,6 +43,7 @@ import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
+@Suppress("DEPRECATION")
 /**
  *
  *Created by sm

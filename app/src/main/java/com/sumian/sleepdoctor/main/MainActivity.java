@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.base.BaseFragment;
@@ -54,10 +55,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     private String[] mFTags = new String[]{HomepageFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), MeFragment.class.getSimpleName()};
     private LaunchData<LaunchSleepTabBean> mLaunchData;
 
+    private VersionDelegate mVersionDelegate;
+
     public static void launch(Context context, int tabIndex) {
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_TAB_INDEX, tabIndex);
         showClearTop(context, MainActivity.class, bundle);
+    }
+
+    @Override
+    protected boolean initBundle(Bundle bundle) {
+        if (bundle != null) {
+            int launchTabIndex = bundle.getInt(KEY_TAB_INDEX);
+            mLaunchData = new LaunchData<>(launchTabIndex);
+            if (launchTabIndex == 0) {
+                long launchSleepRecordTime = bundle.getLong(KEY_SLEEP_RECORD_TIME, 0);
+                boolean scrollToBottom = bundle.getBoolean(KEY_SCROLL_TO_BOTTOM, false);
+                mLaunchData.data = new LaunchSleepTabBean(launchSleepRecordTime, scrollToBottom);
+            }
+        }
+        return super.initBundle(bundle);
     }
 
     @Override
@@ -70,6 +87,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         super.initWidget(root);
         mBottomNavigationBar.setOnSelectedTabChangeListener(this);
         mFragmentManager = getSupportFragmentManager();
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        this.mVersionDelegate = VersionDelegate.Companion.init();
+        //commitReplace(WelcomeActivity.class);
+        int position = mLaunchData == null ? 0 : mLaunchData.tabIndex;
+        initTab(position);
+        mBottomNavigationBar.selectItem(position, false);
+        mLaunchData = null;
     }
 
     @Override
@@ -161,32 +189,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        //commitReplace(WelcomeActivity.class);
-        int position = mLaunchData == null ? 0 : mLaunchData.tabIndex;
-        initTab(position);
-        mBottomNavigationBar.selectItem(position, false);
-        mLaunchData = null;
-    }
-
-    @Override
-    protected boolean initBundle(Bundle bundle) {
-        if (bundle != null) {
-            int launchTabIndex = bundle.getInt(KEY_TAB_INDEX);
-            mLaunchData = new LaunchData<>(launchTabIndex);
-            if (launchTabIndex == 0) {
-                long launchSleepRecordTime = bundle.getLong(KEY_SLEEP_RECORD_TIME, 0);
-                boolean scrollToBottom = bundle.getBoolean(KEY_SCROLL_TO_BOTTOM, false);
-                mLaunchData.data = new LaunchSleepTabBean(launchSleepRecordTime, scrollToBottom);
-            }
-        }
-        return super.initBundle(bundle);
-    }
-
-    @Override
     protected boolean openEventBus() {
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mVersionDelegate.checkVersion(this);
     }
 
     @Subscribe(sticky = true)

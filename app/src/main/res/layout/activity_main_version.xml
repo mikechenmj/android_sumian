@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <com.sumian.sleepdoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/soft_upgrade" />
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="@dimen/space_74"
+        android:layout_height="@dimen/space_80"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_60"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        app:srcCompat="@mipmap/ic_start_logo" />
+
+    <TextView
+        android:id="@+id/tv_current_app_version"
+        style="@style/text_t2_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_60"
+        android:textSize="@dimen/font_16"
+        tools:text="当前版本号：1.0.1" />
+
+    <TextView
+        android:id="@+id/tv_new_app_version"
+        style="@style/text_t2_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/space_60"
+        android:layout_marginTop="@dimen/space_10"
+        android:gravity="center"
+        android:textSize="@dimen/font_16"
+        tools:text="最新版本号：1.1.0" />
+
+    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_go_market"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:show_switch="false"
+        app:type_desc="@string/version_upgrade"
+        tools:visibility="visible" />
+
+</LinearLayout>

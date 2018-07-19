@@ -1,76 +1,81 @@
 package com.sumian.sleepdoctor.setting.version
 
-import android.net.Uri
-import android.util.Log
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import com.github.lzyzsd.jsbridge.CallBackFunction
-import com.sumian.common.media.SelectImageActivity
-import com.sumian.common.media.config.SelectOptions
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseWebViewActivity
-import com.sumian.sleepdoctor.h5.bean.ImageCount
-import com.sumian.sleepdoctor.utils.JsonUtil
-import com.sumian.sleepdoctor.widget.webview.SBridgeHandler
-import com.sumian.sleepdoctor.widget.webview.SWebView
+import android.annotation.SuppressLint
+import android.view.View
+import com.sumian.sleepdoctor.setting.version.bean.Version
+import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.setting.version.contract.VersionContract
+import com.sumian.sleepdoctor.setting.version.presenter.VersionPresenter
+import com.sumian.sleepdoctor.utils.UiUtils
+import kotlinx.android.synthetic.main.activity_main_version.*
+import java.util.*
 
 /**
- * Created by sm
+ * <pre>
+ *     @author : sm
  *
- * on 2018/7/6
+ *     e-mail : yaoqi.y@sumian.com
+ *     time   : 2018/6/29 14:15
  *
- * desc:
+ *     version: 1.0
  *
+ *     desc   :
+ *
+ * </pre>
  */
-class VersionActivity : BaseWebViewActivity<BasePresenter<Any>>(), SWebView.OnRequestFileCallback {
+class VersionActivity : BaseActivity<VersionContract.Presenter>(), VersionContract.View, View.OnClickListener {
 
+    private var mIsHaveUpgrade = false
 
-    private val TAG = VersionActivity::class.java.simpleName
-
-    override fun getUrlContentPart(): String? {
-        return "toast-demo"
+    override fun getLayoutId(): Int {
+        return R.layout.activity_main_version
     }
 
-    override fun h5HandlerName(): String? {
-        return "getImgUrl"
+    override fun initPresenter() {
+        super.initPresenter()
+        this.mPresenter = VersionPresenter.init(this)
     }
 
-    override fun registerHandler(sWebView: SWebView) {
-        super.registerHandler(sWebView)
-        sWebView.setOnRequestFileCallback(this)
-        sWebView.registerHandler(h5HandlerName(), object : SBridgeHandler() {
-
-            override fun handler(data: String, function: CallBackFunction) {
-                //super.handler(data, function);
-                val imageCount = JsonUtil.fromJson(data, ImageCount::class.java) ?: return
-
-                Log.e(TAG, "handler: ----1---->" + imageCount.toString())
-
-                SelectImageActivity.show(this@VersionActivity, SelectOptions.Builder()
-                        .setHasCam(true)
-                        .setCallback {
-                            Log.e(TAG, "handler: ------>" + it.toString())
-                        }.setSelectCount(imageCount.selectQuantity).setSelectedImages(arrayListOf()).build())
-            }
-        })
+    override fun initWidget(root:View) {
+        super.initWidget(root)
+        title_bar.setOnBackClickListener { finish() }
+        sdv_go_market.setOnClickListener(this)
     }
 
-    override fun onShowFileChooser(webView: WebView?, filePathCallback: ValueCallback<Array<Uri>>?, fileChooserParams: WebChromeClient.FileChooserParams?): Boolean {
-        SelectImageActivity.show(this@VersionActivity, SelectOptions.Builder()
-                .setHasCam(true)
-                .setCallback {
-                    val uris = arrayOfNulls<Uri>(it.size)
+    @SuppressLint("SetTextI18n")
+    override fun initData() {
+        super.initData()
+        tv_current_app_version.text = formatVersion(getString(R.string.current_version), UiUtils.getPackageInfo(this).versionName)
+        tv_new_app_version.text = formatVersion(getString(R.string.new_version), UiUtils.getPackageInfo(this).versionName)
+        onHaveUpgrade(false, false)
+        this.mPresenter?.getVersion()
+    }
 
-                    it.forEachIndexed { index, imagesPath ->
-                        run {
-                            uris[index] = Uri.parse(imagesPath)
-                        }
-                    }
+    @SuppressLint("SetTextI18n")
+    override fun onGetVersionSuccess(version: Version) {
+        tv_current_app_version.text = formatVersion(getString(R.string.current_version), UiUtils.getPackageInfo(this).versionName)
+        tv_new_app_version.text = formatVersion(getString(R.string.new_version), version.version!!)
+    }
 
-                    filePathCallback?.onReceiveValue(uris.requireNoNulls())
-                    Log.e(TAG, "handler: ------>" + uris.toString())
-                }.setSelectCount(9).setSelectedImages(arrayListOf()).build())
-        return true
+    override fun onGetVersionFailed(error: String) {
+        showCenterToast(error)
+    }
+
+    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean) {
+        mIsHaveUpgrade = isHaveUpgrade
+        sdv_go_market.visibility = View.VISIBLE//if (isHaveUpgrade) View.VISIBLE else View.GONE
+    }
+
+    override fun onClick(v: View?) {
+        if (mIsHaveUpgrade) {
+            UiUtils.openAppInMarket(this)
+        } else {
+            showCenterToast(getString(R.string.this_is_last_version))
+        }
+    }
+
+    private fun formatVersion(versionLabel: String, version: String): String {
+        return String.format(Locale.getDefault(), "%s%s%s", versionLabel, " ", version)
     }
 }

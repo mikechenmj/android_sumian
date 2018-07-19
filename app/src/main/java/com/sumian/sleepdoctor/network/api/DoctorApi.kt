@@ -1,5 +1,6 @@
 package com.sumian.sleepdoctor.network.api
 
+import com.sumian.sleepdoctor.setting.version.bean.Version
 import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
@@ -232,7 +233,6 @@ interface DoctorApi {
     @POST("cbti-course/{id}/logs")
     fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
-    @FormUrlEncoded
-    @POST("cbti-course/{id}/questionnaires")
-    fun uploadCBTIQuestionnaires(@Path("id") id: Int): Call<Any>
+    @GET("app-version/latest")
+    fun getAppVersion(@Query("type") type: Int = 1, @Query("current_version") currentVersion: String): Call<Version>
 }

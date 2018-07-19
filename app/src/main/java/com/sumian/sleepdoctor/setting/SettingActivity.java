@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.setting;
 
 import android.annotation.SuppressLint;
+import android.content.pm.PackageInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.view.LayoutInflater;
@@ -19,7 +20,9 @@ import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
+import com.sumian.sleepdoctor.setting.version.VersionActivity;
 import com.sumian.sleepdoctor.utils.NotificationUtil;
+import com.sumian.sleepdoctor.utils.UiUtils;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
 
@@ -40,7 +43,8 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     TitleBar mTitleBar;
 
     @BindView(R.id.version)
-    SettingDividerView mVersion;
+    SettingDividerView mSdvVersion;
+
     private BottomSheetDialog dialog;
 
 
@@ -56,6 +60,12 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        invalidVersion();
+    }
+
+    @Override
     public void onBack(View v) {
         finish();
     }
@@ -65,6 +75,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.version:
+                VersionActivity.show(v.getContext(), VersionActivity.class);
                 break;
             case R.id.about_me:
                 SimpleWebActivity.launch(this, H5Uri.ABOUT_US);
@@ -75,6 +86,12 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
             default:
                 break;
         }
+    }
+
+    private void invalidVersion() {
+        PackageInfo packageInfo = UiUtils.getPackageInfo(this);
+        String versionName = packageInfo.versionName;
+        mSdvVersion.setContent(versionName);
     }
 
     private void showLogoutDialog() {

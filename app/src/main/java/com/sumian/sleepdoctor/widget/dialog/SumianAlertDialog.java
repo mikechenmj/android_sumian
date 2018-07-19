@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.widget.dialog;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
@@ -134,6 +135,11 @@ public class SumianAlertDialog {
 
     public SumianAlertDialog setCancelable() {
         mDialog.setCancelable(false);
+        return this;
+    }
+
+    public SumianAlertDialog setOnKeyListener(DialogInterface.OnKeyListener onKeyListener) {
+        mDialog.setOnKeyListener(onKeyListener);
         return this;
     }
 

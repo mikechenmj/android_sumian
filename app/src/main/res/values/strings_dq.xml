@@ -76,4 +76,14 @@
     <string name="lesson_review_last_week">上周回顾</string>
     <string name="list">列表</string>
 
+    <!--version-->
+    <string name="none_market">"您的手机没有安装应用市场!"</string>
+    <string name="soft_upgrade">软件升级</string>
+    <string name="version_upgrade">版本更新</string>
+    <string name="current_version">当前版本号:</string>
+    <string name="new_version">最新版本号:</string>
+    <string name="this_is_last_version">当前已是最新版本</string>
+    <string name="have_a_new_version">有新版本，请立即体验吧</string>
+    <string name="force_upgrade_version">当前版本太低，请到应用市场升级后再使用</string>
+
 </resources>

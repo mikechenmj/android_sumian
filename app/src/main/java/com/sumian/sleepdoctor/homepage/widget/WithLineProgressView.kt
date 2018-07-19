@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import com.sumian.sleepdoctor.R
 import kotlinx.android.synthetic.main.view_with_line_progress.view.*
 
+@Suppress("DEPRECATION")
 /**
  * <pre>
  *     @author : Zhan Xuzhao
