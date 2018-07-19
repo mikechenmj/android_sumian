@@ -88,7 +88,7 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
                 }.getType());
                 //0：立即购买； -1：未绑定医生
                 if (sBridgeResult.code == 0) {
-                    ShoppingCarActivity.startForResult(DoctorServiceWebActivity.this, sBridgeResult.result, REQUEST_CODE_BUY_SERVICE);
+                    PaymentActivity.startForResult(DoctorServiceWebActivity.this, sBridgeResult.result, REQUEST_CODE_BUY_SERVICE);
                 } else {//未绑定医生
                     if (mIsFromRecord) {
                         ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, mDoctorService, mIsFromRecord);
