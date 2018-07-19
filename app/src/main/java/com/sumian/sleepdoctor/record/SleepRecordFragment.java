@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.tab;
+package com.sumian.sleepdoctor.record;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import com.blankj.utilcode.util.SPUtils;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
@@ -25,7 +24,6 @@ import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.record.FillSleepRecordActivity;
 import com.sumian.sleepdoctor.record.bean.DoctorServiceList;
 import com.sumian.sleepdoctor.record.bean.SleepRecord;
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary;
@@ -46,7 +44,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 
-public class RecordFragment extends BasePagerFragment implements CalendarView.OnDateClickListener {
+public class SleepRecordFragment extends BasePagerFragment implements CalendarView.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 2;
@@ -75,18 +73,18 @@ public class RecordFragment extends BasePagerFragment implements CalendarView.On
     private boolean mNeedScrollToBottom;
     private long mInitTime;
 
-    public static RecordFragment newInstance(long scrollToTime, boolean needScrollToBottom) {
+    public static SleepRecordFragment newInstance(long scrollToTime, boolean needScrollToBottom) {
         Bundle bundle = new Bundle();
         bundle.putLong(KEY_SLEEP_RECORD_TIME, scrollToTime);
         bundle.putBoolean(KEY_SCROLL_TO_BOTTOM, needScrollToBottom);
-        RecordFragment recordFragment = new RecordFragment();
-        recordFragment.setArguments(bundle);
-        return recordFragment;
+        SleepRecordFragment sleepRecordFragment = new SleepRecordFragment();
+        sleepRecordFragment.setArguments(bundle);
+        return sleepRecordFragment;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_tab_record;
+        return R.layout.fragment_sleep_record;
     }
 
     @Override

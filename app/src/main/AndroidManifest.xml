@@ -74,7 +74,7 @@
             android:theme="@style/BaseAppTheme" />
 
         <activity
-            android:name=".doctor.activity.ShoppingCarActivity"
+            android:name=".doctor.activity.PaymentActivity"
             android:theme="@style/BaseAppTheme" />
 
         <activity
@@ -156,7 +156,6 @@
 
         <!-- sleep record -->
         <activity android:name=".record.FillSleepRecordActivity" />
-        <activity android:name=".record.SleepRecordActivity" />
         <activity
             android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity"
             android:theme="@style/BaseAppTheme" />
@@ -193,10 +192,11 @@
             android:theme="@style/BaseAppTheme" />
 
         <activity
-            android:name=".record.SleepRecordDetailActivity"
+            android:name=".record.SleepRecordActivity"
             android:launchMode="singleTop" />
 
         <activity android:name=".account.userProfile.activity.MyTargetAndInformationActivity" />
+        <activity android:name=".homepage.SleepPrescriptionSettingActivity" />
         <activity android:name=".cbti.activity.CBTIExerciseWebActivity" />
     </application>
 

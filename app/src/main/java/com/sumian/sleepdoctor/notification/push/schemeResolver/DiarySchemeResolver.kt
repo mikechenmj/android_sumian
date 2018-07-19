@@ -3,7 +3,7 @@ package com.sumian.sleepdoctor.notification.push.schemeResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.sleepdoctor.main.MainActivity
+import com.sumian.sleepdoctor.record.SleepRecordActivity
 
 /**
  * <pre>
@@ -23,6 +23,6 @@ class DiarySchemeResolver : SchemeResolver {
     override fun resolveScheme(context: Context, uri: Uri): Intent {
         val date = uri.getQueryParameter("date")
         val dateInMills = date.toInt() * 1000L
-        return MainActivity.getLaunchSleepRecordTabIntent(context, dateInMills)
+        return SleepRecordActivity.getLaunchIntent(context, dateInMills)
     }
 }

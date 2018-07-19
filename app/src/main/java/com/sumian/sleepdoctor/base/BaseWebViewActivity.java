@@ -79,33 +79,12 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
             public void handler(String data) {
                 LogUtils.d(data);
                 H5ShowToastData toastData = H5ShowToastData.Companion.fromJson(data);
-                //1.text 2.success 3.error 4.loading 5.warning
-                if (mSumianImageTextDialog != null && mSumianImageTextDialog.isShowing()) {
-                    mSumianImageTextDialog.dismiss();
-                }
-                mSumianImageTextDialog = new SumianImageTextDialog(mActivity);
-                switch (toastData.getType()) {
-                    case "text":
-                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_TEXT).setText(toastData.getMessage());
-                        break;
-                    case "success":
-                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_SUCCESS);
-                        break;
-                    case "error":
-                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_FAIL);
-                        break;
-                    case "loading":
-                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_LOADING);
-                        break;
-                    case "warning":
-                        mSumianImageTextDialog.setType(SumianImageTextDialog.TYPE_WARNING);
-                        break;
-                    default:
-                        break;
-                }
                 if (mSumianImageTextDialog != null) {
-                    mSumianImageTextDialog.show(toastData.getDelay(), toastData.getDuration());
+                    mSumianImageTextDialog.dismiss();
+                } else {
+                    mSumianImageTextDialog = new SumianImageTextDialog(mActivity);
                 }
+                mSumianImageTextDialog.show(toastData);
             }
         });
         sWebView.registerHandler("hideToast", new SBridgeHandler() {
@@ -114,7 +93,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
             public void handler(String data) {
                 LogUtils.d(data);
                 H5ShowToastData toastData = H5ShowToastData.Companion.fromJson(data);
-                if (mSumianImageTextDialog != null && mSumianImageTextDialog.isShowing()) {
+                if (mSumianImageTextDialog != null) {
                     mSumianImageTextDialog.dismiss(toastData.getDelay());
                 }
             }
@@ -143,6 +122,14 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     protected void onRelease() {
         super.onRelease();
         mSWebViewLayout.destroyWebView();
+    }
+
+    @Override
+    protected void onStop() {
+        if (mSumianImageTextDialog != null) {
+            mSumianImageTextDialog.release();
+        }
+        super.onStop();
     }
 
     protected String h5HandlerName() {

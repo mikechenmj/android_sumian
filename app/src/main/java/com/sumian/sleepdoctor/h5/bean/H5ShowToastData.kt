@@ -6,8 +6,8 @@ import com.sumian.sleepdoctor.utils.JsonUtil
 data class H5ShowToastData(
         @SerializedName("type") var type: String = "text",   //1.text 2.success 3.error 4.loading 5.warning
         @SerializedName("message") var message: String = "",
-        @SerializedName("delay") var delay: Int = 0,
-        @SerializedName("duration") var duration: Int = 0
+        @SerializedName("delay") var delay: Long = 0,
+        @SerializedName("duration") var duration: Long = 0
 ) {
     companion object {
         fun fromJson(json: String?): H5ShowToastData {

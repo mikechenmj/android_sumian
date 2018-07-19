@@ -11,7 +11,9 @@ import android.text.TextUtils
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.h5.bean.H5ShowToastData
 import kotlinx.android.synthetic.main.lay_dialog_common_sumian.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -128,8 +130,13 @@ class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLo
     }
 
     fun dismiss(delay: Long): SumianImageTextDialog {
+        if (!isShowing) {
+            return this
+        }
         mHandler.postDelayed({
-            dismiss()
+            if(isShowing) {
+                dismiss()
+            }
         }, delay)
         return this
     }
@@ -139,5 +146,30 @@ class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLo
             mHandler.removeCallbacksAndMessages(null)
             listener?.onDismiss(it)
         }
+    }
+
+    fun show(toastData: H5ShowToastData) {
+        if (toastData.type.equals("text")) {
+            ToastUtils.showShort(toastData.message)
+            return
+        }
+        when (toastData.type) {
+//            "text" -> setType(SumianImageTextDialog.TYPE_TEXT).setText(toastData.message);
+            "success" -> setType(SumianImageTextDialog.TYPE_SUCCESS)
+            "error" -> setType(SumianImageTextDialog.TYPE_FAIL)
+            "loading" -> setType(SumianImageTextDialog.TYPE_LOADING)
+            "warning" -> setType(SumianImageTextDialog.TYPE_WARNING)
+            else -> {
+                return
+            }
+        }
+        show(toastData.delay, toastData.duration)
+    }
+
+    /**
+     * 清除所有延时任务
+     */
+    fun release() {
+        mHandler.removeCallbacksAndMessages(null)
     }
 }

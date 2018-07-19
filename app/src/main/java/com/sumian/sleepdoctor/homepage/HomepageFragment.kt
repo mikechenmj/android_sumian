@@ -10,15 +10,14 @@ import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sleepdoctor.event.CbtiServiceBoughtEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
-import com.sumian.sleepdoctor.h5.H5Uri
-import com.sumian.sleepdoctor.h5.SimpleWebActivity
+import com.sumian.sleepdoctor.event.SleepPrescriptionUpdatedEvent
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.record.FillSleepRecordActivity
-import com.sumian.sleepdoctor.record.SleepRecordDetailActivity
+import com.sumian.sleepdoctor.record.SleepRecordActivity
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.scale.ScaleListActivity
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
@@ -49,7 +48,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     override fun initWidget(root: View) {
         super.initWidget(root)
         initUserInfo()
-        sleep_record_view.setOnClickRightArrowListener { ActivityUtils.startActivity(SleepRecordDetailActivity::class.java) }
+        sleep_record_view.setOnClickRightArrowListener { SleepRecordActivity.launch(activity!!) }
         sleep_record_view.setOnClickFillSleepRecordBtnListener { FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD) }
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
         doctor_service_item_view_cbti.setOnClickListener { launchCbtiActivity() }
@@ -82,8 +81,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         addCall(call)
         call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
             override fun onSuccess(response: SleepPrescriptionWrapper?) {
-                sleep_prescription_view.setPrescriptionData(response)
-                mSleepPrescriptionWrapper = response
+                updateSleepPrescription(response)
                 if (response != null) {
                     showSleepPrescriptionDialogIfNeed(response)
                 }
@@ -96,15 +94,15 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
 
     }
 
+    private fun updateSleepPrescription(response: SleepPrescriptionWrapper?) {
+        sleep_prescription_view.setPrescriptionData(response)
+        mSleepPrescriptionWrapper = response
+    }
+
     private fun showSleepPrescriptionDialogIfNeed(response: SleepPrescriptionWrapper) {
-        if (response.showStopServiceDialog) {
-//            showStopPrescriptionDialog()
-        } else if (response.showUpdateDialog) {
-            SumianAlertDialog(activity)
-                    .setTitle(R.string.update_sleep_prescription)
-                    .setMessage(R.string.update_sleep_prescription_hint)
-                    .setLeftBtn(R.string.i_got_it, null)
-                    .show()
+//        response.showEnquireDialog = true //test code
+        if (response.showUpdateDialog) {
+            showSleepUpdatedDialog()
         } else if (response.showEnquireDialog) {
             SumianAlertDialog(activity)
                     .setTitle(R.string.last_week_tired_enquire)
@@ -112,21 +110,26 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                     .setLeftBtn(R.string.no, null)
                     .whitenLeft()
                     .setRightBtn(R.string.yes) {
-                        val sleepPrescription: SleepPrescription = response.sleepPrescription!!
-                        val targetDuration = sleepPrescription.sleepDurationAvg + 60 * 15   //疲劳增加15分钟睡眠时间
-                        sleepPrescription.sleepDurationAvg = Math.min(targetDuration, 3600 * 10)    // 最长10h
-                        updateSleepPrescription(sleepPrescription)
+                        updateSleepPrescription(response.sleepPrescription!!)
                     }
                     .show()
         }
     }
 
+    private fun showSleepUpdatedDialog() {
+        SumianAlertDialog(activity)
+                .setMessage(R.string.update_sleep_prescription_hint)
+                .setLeftBtn(R.string.i_got_it, null)
+                .show()
+    }
+
     private fun updateSleepPrescription(sleepPrescription: SleepPrescription) {
-        val call = mHttpService.updateSleepPrescriptions(sleepPrescription)
+        val call = mHttpService.updateSleepPrescriptionsWhenFatigue(sleepPrescription)
         addCall(call)
         call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
             override fun onSuccess(response: SleepPrescriptionWrapper?) {
                 sleep_prescription_view.setPrescriptionData(response)
+                showSleepUpdatedDialog()
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -175,11 +178,10 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun onSleepPrescriptionClick() {
-        if (mSleepPrescriptionWrapper == null || !mSleepPrescriptionWrapper?.isServiceStopped!!) {
-//        if (false) {
+        if (mSleepPrescriptionWrapper == null || mSleepPrescriptionWrapper?.isServiceStopped!!) {
             showStopPrescriptionDialog()
         } else {
-            SimpleWebActivity.launch(activity, H5Uri.ABOUT_US) // todo change uri
+            SleepPrescriptionSettingActivity.launch(mSleepPrescriptionWrapper!!)
         }
     }
 
@@ -196,8 +198,14 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     @Subscribe(sticky = true)
-    fun onCbtiBoughtEvent(cbtiServiceBoughtEvent: CbtiServiceBoughtEvent) {
+    fun onCbtiBoughtEvent(event: CbtiServiceBoughtEvent) {
         queryCbti()
-        EventBusUtil.removeStickyEvent(cbtiServiceBoughtEvent)
+        EventBusUtil.removeStickyEvent(event)
+    }
+
+    @Subscribe(sticky = true)
+    fun onSleepSubscriptionUpdatedEvent(event: SleepPrescriptionUpdatedEvent) {
+        EventBusUtil.removeStickyEvent(event)
+        updateSleepPrescription(event.sleepPrescriptionWrapper)
     }
 }

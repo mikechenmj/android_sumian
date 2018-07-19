@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
@@ -34,13 +33,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by sm
+ * @author sm
  * on 2018/1/22.
  * desc:
  */
 
-public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
-    private static final String TAG = ShoppingCarActivity.class.getSimpleName();
+public class PaymentActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
+    private static final String TAG = PaymentActivity.class.getSimpleName();
     private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
     private static final String ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId";
     @BindView(R.id.title_bar)
@@ -75,7 +74,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     private DoctorServicePackage mServicePackage;
 
     private static void startForResult(ActivityLauncher launcher, DoctorService doctorService, int packageId, int requestCode) {
-        Intent intent = new Intent(launcher.getActivity(), ShoppingCarActivity.class);
+        Intent intent = new Intent(launcher.getActivity(), PaymentActivity.class);
         intent.putExtra(ARGS_DOCTOR_SERVICE, doctorService);
         intent.putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId);
         launcher.startActivityForResult(intent, requestCode);
@@ -117,6 +116,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         mPayCalculateItemView.setOnMoneyChangeCallback(this);
         mPayDialog = new PayDialog(root.getContext()).bindContentView(R.layout.dialog_pay);
         mPayDialog.setOwnerActivity(this);
+        mPayDialog.bindPresenter(mPresenter);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
         String priceText = getDoctorServicePackage().getPrice_text();
         SpannableString spannableString = new SpannableString(priceText);
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.t4_color)), 0, priceText.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTvGroupMoney.setText(TextUtils.concat("服务费用: ", spannableString));
+        mTvGroupMoney.setText(mDoctorService.getDescription());
         mPayCalculateItemView.setDefaultMoney(getDoctorServicePackage().getUnit_price());
     }
 
@@ -198,7 +198,6 @@ public class ShoppingCarActivity extends BaseActivity<PayPresenter> implements V
     @Override
     public void setPresenter(PayContract.Presenter presenter) {
         this.mPresenter = (PayPresenter) presenter;
-        this.mPayDialog.bindPresenter(presenter);
     }
 
     @Override
