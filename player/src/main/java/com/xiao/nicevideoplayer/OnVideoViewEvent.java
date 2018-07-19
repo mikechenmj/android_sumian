@@ -22,4 +22,6 @@ public interface OnVideoViewEvent {
     void onRePlayCallbck();
 
     void onFrameChangeCallback(long currentFrame, long oldFrame, long totalFrame);
+
+    void showExtraContent();
 }

@@ -1,12 +1,14 @@
 package com.sumian.sleepdoctor.cbti.presenter
 
+import android.util.Log
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BasePresenter.mCalls
 import com.sumian.sleepdoctor.cbti.bean.CoursePlayAuth
 import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
-import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonDetailContract
+import com.sumian.sleepdoctor.cbti.contract.CBTIWeekPlayContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
+import java.util.regex.Pattern
 
 /**
  * Created by dq
@@ -15,9 +17,15 @@ import com.sumian.sleepdoctor.network.response.ErrorResponse
  *
  * desc:
  */
-class CBTICoursePlayAuthPresenter(view: CBTIWeekLessonDetailContract.View) : CBTIWeekLessonDetailContract.Presenter {
+class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPlayContract.Presenter {
 
-    private var mView: CBTIWeekLessonDetailContract.View? = null
+    private var mView: CBTIWeekPlayContract.View? = null
+
+    private val TAG = CBTICoursePlayAuthPresenter::class.java.simpleName
+
+    private val mBrowseFrame: StringBuilder by lazy {
+        StringBuilder()
+    }
 
     init {
         view.setPresenter(this)
@@ -26,7 +34,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekLessonDetailContract.View) : CBT
 
     companion object {
 
-        fun init(view: CBTIWeekLessonDetailContract.View): CBTIWeekLessonDetailContract.Presenter {
+        fun init(view: CBTIWeekPlayContract.View): CBTIWeekPlayContract.Presenter {
             return CBTICoursePlayAuthPresenter(view)
         }
     }
@@ -61,7 +69,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekLessonDetailContract.View) : CBT
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().uploadCBTICourseLogs(id, videoProgress.toUpperCase(),endpoint )
+        val call = AppManager.getHttpService().uploadCBTICourseLogs(id, videoProgress.toUpperCase(), endpoint)
         mCalls.add(call)
         call.enqueue(object : BaseResponseCallback<CoursePlayLog>() {
 
@@ -81,6 +89,54 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekLessonDetailContract.View) : CBT
             }
 
         })
+    }
 
+    override fun calculatePlayFrame(currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long) {
+
+        if (currentFrame.toInt() == 0) {
+            mBrowseFrame.delete(0, mBrowseFrame.length)
+        }
+
+        val jumpFrame = currentFrame - oldFrame
+        if (jumpFrame > 1) {//补0,表示跳过了jumpFrame,未观看该帧数
+            for (i in 0 until jumpFrame) {
+                mBrowseFrame.append("0")
+            }
+        } else {
+            mBrowseFrame.append("1")
+        }
+        //  Log.e(TAG, "tmpFrame=$mBrowseFrame")
+
+        val hexPlayFrame = mBrowseFrame.toString().toBigInteger(2).toString(16)
+
+        val appearNumber = appearNumber(mBrowseFrame.toString(), "1")
+
+        val fl = appearNumber * 1.0f / totalFrame
+
+        if (fl == 0.7f) {
+            Log.e(TAG, "看超过了70%")
+        }
+
+        // playFrame=0.7f/jump Frame/ 60frame/s /play finished 都上传一次
+        if (fl == 0.7f || jumpFrame > 1 || currentFrame.toInt() % 60 == 0 || currentFrame == totalFrame) {
+            uploadCBTIVideoLog(currentCourseId, hexPlayFrame, currentFrame.toInt())
+        }
+    }
+
+    /**
+     * 获取指定字符串出现的次数
+     *
+     * @param srcText 源字符串
+     * @param findText 要查找的字符串
+     * @return
+     */
+    private fun appearNumber(srcText: String, findText: String): Int {
+        var count = 0
+        val p = Pattern.compile(findText)
+        val m = p.matcher(srcText)
+        while (m.find()) {
+            count++
+        }
+        return count
     }
 }

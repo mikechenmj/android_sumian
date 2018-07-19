@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.base.BaseActivity
 import com.sumian.sleepdoctor.cbti.bean.Course
 import com.sumian.sleepdoctor.cbti.bean.CoursePlayAuth
 import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
-import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonDetailContract
+import com.sumian.sleepdoctor.cbti.contract.CBTIWeekPlayContract
 import com.sumian.sleepdoctor.cbti.presenter.CBTICoursePlayAuthPresenter
 import com.sumian.sleepdoctor.cbti.sheet.CBTICourseListBottomSheet
 import com.sumian.sleepdoctor.event.CBTIProgressChangeEvent
@@ -25,7 +25,6 @@ import com.xiao.nicevideoplayer.NiceVideoView
 import com.xiao.nicevideoplayer.OnVideoViewEvent
 import com.xiao.nicevideoplayer.TxVideoPlayerController
 import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
-import java.util.regex.Pattern
 
 
 /**
@@ -36,7 +35,7 @@ import java.util.regex.Pattern
  * desc:CBTI 一个课时详情中心,包含播放视频,课程列表,以及课程总结等模块
  *
  */
-class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekLessonDetailContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent {
+class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent {
 
     private val TAG = CBTICoursePlayActivity::class.java.simpleName
 
@@ -46,10 +45,6 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Present
 
     private var mCurrentCourse: Course? = null
     private var mCurrentPosition = 0
-
-    private val mBrowseFrame: StringBuilder by lazy {
-        StringBuilder()
-    }
 
     private val mController: TxVideoPlayerController by lazy {
         TxVideoPlayerController(this)
@@ -110,7 +105,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Present
         }
     }
 
-    override fun setPresenter(presenter: CBTIWeekLessonDetailContract.Presenter?) {
+    override fun setPresenter(presenter: CBTIWeekPlayContract.Presenter?) {
         //    super.setPresenter(presenter)
         this.mPresenter = presenter
     }
@@ -196,7 +191,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Present
     }
 
     override fun onUploadLessonLogSuccess(coursePlayLog: CoursePlayLog) {
-        Log.e(TAG, coursePlayLog.toString())
+
     }
 
     override fun onUploadLessonLogFailed(error: String) {
@@ -211,19 +206,19 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Present
     }
 
     override fun onPlayReadyCallback() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPauseCallback() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPlayPositionCallback(position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onResetPlayCallback() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onRePlayCallbck() {
@@ -237,51 +232,11 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekLessonDetailContract.Present
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
         Log.e(TAG, "currentFrame=$currentFrame    oldFrame=$oldFrame   totalFrame=$totalFrame")
 
-        if (currentFrame.toInt() == 0) {
-            mBrowseFrame.delete(0, mBrowseFrame.length)
-        }
-
-        val jumpFrame = currentFrame - oldFrame
-        if (jumpFrame > 1) {//补0,表示跳过了jumpFrame,未观看该帧数
-            for (i in 0 until jumpFrame) {
-                mBrowseFrame.append("0")
-            }
-        } else {
-            mBrowseFrame.append("1")
-        }
-        //  Log.e(TAG, "tmpFrame=$mBrowseFrame")
-
-        val hexPlayFrame = mBrowseFrame.toString().toBigInteger(2).toString(16)
-
-        val appearNumber = appearNumber(mBrowseFrame.toString(), "1")
-
-        val fl = appearNumber * 1.0f / totalFrame
-
-        if (fl >= 0.7f) {
-            Log.e(TAG, "看超过了70%")
-        }
-
-        if (currentFrame.toInt() % 10 == 0 || currentFrame == totalFrame) {
-            mPresenter.uploadCBTIVideoLog(mCurrentCourse?.id!!, hexPlayFrame, currentFrame.toInt())
-        }
-
+        mPresenter.calculatePlayFrame(mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
         // Log.e(TAG, "finalFrame=$hexPlayFrame   fl=$fl")
     }
 
-    /**
-     * 获取指定字符串出现的次数
-     *
-     * @param srcText 源字符串
-     * @param findText 要查找的字符串
-     * @return
-     */
-    private fun appearNumber(srcText: String, findText: String): Int {
-        var count = 0
-        val p = Pattern.compile(findText)
-        val m = p.matcher(srcText)
-        while (m.find()) {
-            count++
-        }
-        return count
+    override fun showExtraContent() {
+        CBTIExerciseWebActivity.show(this, mCurrentCourse?.id!!)
     }
 }

@@ -188,4 +188,6 @@ public interface INiceVideoPlayer {
     void release();
 
     void onFrameChange(long currentFrame, long totalFrame);
+
+    void showExtraContent();
 }

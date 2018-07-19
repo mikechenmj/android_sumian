@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
  *
  * desc:
  */
-interface CBTIWeekLessonDetailContract {
+interface CBTIWeekPlayContract {
 
     interface View : BaseView<Presenter> {
 
@@ -32,5 +32,7 @@ interface CBTIWeekLessonDetailContract {
         fun getCBTIDetailInfo(id: Int)
 
         fun uploadCBTIVideoLog(id: Int, videoProgress: String, endpoint: Int)
+
+        fun calculatePlayFrame(currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long)
     }
 }

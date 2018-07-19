@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -377,9 +376,10 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         } else if (v == mRetry) {
             mNiceVideoPlayer.restart();
         } else if (v == mReplay) {
+            reset();
             mNiceVideoPlayer.replay();
         } else if (v == mShare) {
-            Toast.makeText(mContext, "分享", Toast.LENGTH_SHORT).show();
+            mNiceVideoPlayer.showExtraContent();
         } else if (v == this) {
             if (mNiceVideoPlayer.isPlaying()
                     || mNiceVideoPlayer.isPaused()

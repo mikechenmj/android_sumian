@@ -214,9 +214,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             mController.onPlayStateChanged(mCurrentState);
             LogUtil.d("STATE_BUFFERING_PLAYING");
         } else if (mCurrentState == STATE_COMPLETED) {
-            mMediaPlayer.replay();
             mCurrentState = STATE_PLAYING;
             mController.onPlayStateChanged(mCurrentState);
+            //mMediaPlayer.replay();
         } else if (mCurrentState == STATE_ERROR) {
             mMediaPlayer.reset();
             openMediaPlayer();
@@ -227,7 +227,14 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     @Override
     public void replay() {
-        mMediaPlayer.replay();
+        if (mSurface != null) {
+            mMediaPlayer.setSurface(mSurface);
+        }
+        mCurrentState = STATE_PREPARING;
+        mController.onPlayStateChanged(mCurrentState);
+        continueFromLastPosition = false;
+        skipToPosition = 1;
+        mMediaPlayer.prepareAsync();
     }
 
     @Override
@@ -413,16 +420,6 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         mContainer.addView(mTextureView, 0, params);
     }
 
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
-        if (mSurfaceTexture == null) {
-            mSurfaceTexture = surfaceTexture;
-            openMediaPlayer();
-        } else {
-            mTextureView.setSurfaceTexture(mSurfaceTexture);
-        }
-    }
-
     private void openMediaPlayer() {
         // 屏幕常亮
         mContainer.setKeepScreenOn(true);
@@ -451,6 +448,16 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     }
 
     @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
+        if (mSurfaceTexture == null) {
+            mSurfaceTexture = surfaceTexture;
+            openMediaPlayer();
+        } else {
+            mTextureView.setSurfaceTexture(mSurfaceTexture);
+        }
+    }
+
+    @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
         Log.e(TAG, "onSurfaceTextureSizeChanged: --------->width=" + width + "   height=" + height);
         mTextureView.adaptVideoSize(width, height);
@@ -467,8 +474,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         // Log.e(TAG, "onSurfaceTextureUpdated: ------------>position=" + mMediaPlayer.getCurrentPosition() + "  duration=" + mMediaPlayer.getDuration());
     }
 
-    private IMediaPlayer.OnPreparedListener mOnPreparedListener
-            = new IMediaPlayer.OnPreparedListener() {
+    private IMediaPlayer.OnPreparedListener mOnPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer mp) {
             mCurrentState = STATE_PREPARED;
@@ -487,18 +493,15 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         }
     };
 
-    private IMediaPlayer.OnVideoSizeChangedListener mOnVideoSizeChangedListener
-            = new IMediaPlayer.OnVideoSizeChangedListener() {
+    private IMediaPlayer.OnVideoSizeChangedListener mOnVideoSizeChangedListener = new IMediaPlayer.OnVideoSizeChangedListener() {
         @Override
         public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
             mTextureView.adaptVideoSize(width, height);
             Log.e(TAG, "onVideoSizeChanged: ----------->width=" + width + "   height=" + height);
-            LogUtil.d("onVideoSizeChanged ——> width：" + width + "， height：" + height);
         }
     };
 
-    private IMediaPlayer.OnCompletionListener mOnCompletionListener
-            = new IMediaPlayer.OnCompletionListener() {
+    private IMediaPlayer.OnCompletionListener mOnCompletionListener = new IMediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(IMediaPlayer mp) {
             mCurrentState = STATE_COMPLETED;
@@ -509,8 +512,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         }
     };
 
-    private IMediaPlayer.OnErrorListener mOnErrorListener
-            = new IMediaPlayer.OnErrorListener() {
+    private IMediaPlayer.OnErrorListener mOnErrorListener = new IMediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(IMediaPlayer mp, int what, int extra) {
             // 直播流播放时去调用mediaPlayer.getDuration会导致-38和-2147483648错误，忽略该错误
@@ -524,8 +526,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         }
     };
 
-    private IMediaPlayer.OnInfoListener mOnInfoListener
-            = new IMediaPlayer.OnInfoListener() {
+    private IMediaPlayer.OnInfoListener mOnInfoListener = new IMediaPlayer.OnInfoListener() {
         @Override
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
             if (what == IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
@@ -570,8 +571,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         }
     };
 
-    private IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener
-            = new IMediaPlayer.OnBufferingUpdateListener() {
+    private IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
             mBufferPercentage = percent;
@@ -739,5 +739,10 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     public void onFrameChange(long currentFrame, long totalFrame) {
         mOnVideoViewEvent.onFrameChangeCallback(currentFrame, mOldFrame, totalFrame);
         this.mOldFrame = currentFrame;
+    }
+
+    @Override
+    public void showExtraContent() {
+        mOnVideoViewEvent.showExtraContent();
     }
 }
