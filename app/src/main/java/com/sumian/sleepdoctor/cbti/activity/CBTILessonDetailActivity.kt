@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.cbti.activity
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import com.sumian.common.utils.ImageLoader
@@ -14,6 +15,8 @@ import com.sumian.sleepdoctor.cbti.bean.LessonLog
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonDetailContract
 import com.sumian.sleepdoctor.cbti.presenter.CBTIWeekLessonDetailPresenter
 import com.sumian.sleepdoctor.cbti.sheet.CBTILessonListBottomSheet
+import com.sumian.sleepdoctor.event.CBTIProgressChangeEvent
+import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.xiao.nicevideoplayer.NiceVideoPlayer
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager
@@ -68,6 +71,11 @@ class CBTILessonDetailActivity : BaseActivity<CBTIWeekLessonDetailContract.Prese
         }
 
         return super.initBundle(bundle)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        EventBusUtil.postSticky(CBTIProgressChangeEvent())
     }
 
     override fun getLayoutId(): Int {
