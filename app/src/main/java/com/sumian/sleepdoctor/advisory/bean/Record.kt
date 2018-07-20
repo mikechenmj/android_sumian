@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.advisory.bean
 
 import android.os.Parcelable
-import com.sumian.sleepdoctor.onlinereport.OnlineReport
+import com.sumian.sleepdoctor.onlineReport.OnlineReport
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 

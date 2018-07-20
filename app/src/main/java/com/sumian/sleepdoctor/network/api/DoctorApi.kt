@@ -1,6 +1,5 @@
 package com.sumian.sleepdoctor.network.api
 
-import com.sumian.sleepdoctor.setting.version.bean.Version
 import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
@@ -16,7 +15,7 @@ import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
-import com.sumian.sleepdoctor.onlinereport.OnlineReport
+import com.sumian.sleepdoctor.onlineReport.OnlineReport
 import com.sumian.sleepdoctor.order.OrderDetail
 import com.sumian.sleepdoctor.order.OrderDetailV2
 import com.sumian.sleepdoctor.oss.OssResponse
@@ -24,6 +23,7 @@ import com.sumian.sleepdoctor.record.bean.DoctorServiceList
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary
 import com.sumian.sleepdoctor.scale.bean.Scale
+import com.sumian.sleepdoctor.setting.version.bean.Version
 import retrofit2.Call
 import retrofit2.http.*
 

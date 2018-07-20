@@ -16,7 +16,7 @@ import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.h5.SleepFileWebActivity;
 import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
-import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity;
+import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
 import com.sumian.sleepdoctor.setting.SettingActivity;
 
