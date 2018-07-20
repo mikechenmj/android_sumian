@@ -24,13 +24,10 @@ import com.sumian.sleepdoctor.widget.webview.SWebView
  *
  */
 class CBTIIntroductionWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
+    private var mStopped = false;
 
     companion object {
         private const val REQUEST_CODE_BUY_SERVICE = 1000
-    }
-
-    override fun initTitle(): String {
-        return "CBTI详细介绍, web页面"
     }
 
     override fun getUrlContentPart(): String? {
@@ -66,5 +63,18 @@ class CBTIIntroductionWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
             EventBusUtil.postStickyEvent(CBTIServiceBoughtEvent())
             reload()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (mStopped) {
+            reload()
+        }
+        mStopped = false
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mStopped = true
     }
 }
