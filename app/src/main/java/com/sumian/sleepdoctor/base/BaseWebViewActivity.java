@@ -69,10 +69,10 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
         mSWebViewLayout.setWebListener(this);
         mSWebViewLayout.loadRequestUrl(getCompleteUrl());
         registerHandler(sWebView);
-        registerDialogHandler(sWebView);
+        registerBaseHandler(sWebView);
     }
 
-    private void registerDialogHandler(SWebView sWebView) {
+    private void registerBaseHandler(SWebView sWebView) {
         sWebView.registerHandler("showToast", new SBridgeHandler() {
             @SuppressWarnings("ConstantConditions")
             @Override
@@ -96,6 +96,12 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
                 if (mSumianImageTextDialog != null) {
                     mSumianImageTextDialog.dismiss(toastData.getDelay());
                 }
+            }
+        });
+        sWebView.registerHandler("finish", new SBridgeHandler() {
+            @Override
+            public void handler(String data) {
+                finish();
             }
         });
     }

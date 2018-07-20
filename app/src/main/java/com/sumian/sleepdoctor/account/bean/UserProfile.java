@@ -246,4 +246,8 @@ public class UserProfile implements Serializable, Parcelable {
     public boolean isMale() {
         return "male".equals(gender);
     }
+
+    public String getNameOrNickname() {
+        return !TextUtils.isEmpty(name) ? name : nickname;
+    }
 }
