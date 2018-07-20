@@ -69,7 +69,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         AppManager.getAccountViewModel().liveDataToken.observe(this, object : Observer<Token> {
             override fun onChanged(t: Token?) {
                 val userProfile = t?.user ?: return
-                tv_name.text = userProfile.nickname
+                tv_name.text = userProfile.nameOrNickname
                 val defaultAvatar = R.mipmap.ic_info_avatar_patient
                 ImageLoader.loadImage(activity, iv_avatar, userProfile.avatar, defaultAvatar)
             }
