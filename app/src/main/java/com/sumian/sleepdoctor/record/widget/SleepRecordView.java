@@ -36,14 +36,14 @@ public class SleepRecordView extends LinearLayout {
     TitleView titleViewSleepRecord;
     @BindView(R.id.ll_progress)
     LinearLayout llProgress;
-    @BindView(R.id.tv_actual_work_and_reset_time)
-    TextView tvActualWorkAndResetTime;
-    @BindView(R.id.tv_sleep_time)
-    TextView tvSleepTime;
+    @BindView(R.id.tv_on_bed_duration)
+    TextView tvOnBedDuration;
     @BindView(R.id.tv_sleep_duration)
     TextView tvSleepDuration;
     @BindView(R.id.tv_fall_asleep_duration)
     TextView tvFallAsleepDuration;
+    @BindView(R.id.tv_night_wake_up_duration)
+    TextView tvWakeupDuration;
     @BindView(R.id.tv_sleep_desc)
     TextView tvSleepDesc;
     @BindView(R.id.ll_sleep_record)
@@ -62,8 +62,6 @@ public class SleepRecordView extends LinearLayout {
     TextView tvSleepQuality;
     @BindView(R.id.tv_pills)
     TextView tvPills;
-    @BindView(R.id.tv_wakeup_duration)
-    TextView tvWakeupDuration;
     @BindView(R.id.tv_little_sleep_duration)
     TextView tvLittleSleepDuration;
     @BindView(R.id.tv_no_record_date)
@@ -108,12 +106,13 @@ public class SleepRecordView extends LinearLayout {
         tvSleepQuality.setText(getSleepQualityString(answer.getEnergetic()));
         tvPills.setText(getPillsString(answer.getSleep_pills()));
         tvPills.setClickable(answer.getSleep_pills() != null && answer.getSleep_pills().size() != 0);
-        tvWakeupDuration.setText(getDurationString("夜醒：", answer.getWake_minutes()));
         tvLittleSleepDuration.setText(getDurationString("小睡：", answer.getOther_sleep_total_minutes()));
-        tvActualWorkAndResetTime.setText(String.format("%s-%s", answer.getBed_at(), answer.getGet_up_at()));
-        tvSleepTime.setText(String.format("%s-%s", answer.getSleep_at(), answer.getWake_up_at()));
+
+        tvOnBedDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getSleep_duration()));
         tvSleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getSleep_duration()));
         tvFallAsleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getFall_asleep_duration()));
+        tvWakeupDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(answer.getWake_minutes()));
+
         tvSleepDesc.setText(answer.getRemark());
         tvSleepDesc.setVisibility(TextUtils.isEmpty(answer.getRemark()) ? GONE : VISIBLE);
         llDoctorEvaluation.setVisibility(sleepRecord.hasDoctorEvaluation() || mForceShowDoctorAdvice ? VISIBLE : GONE);

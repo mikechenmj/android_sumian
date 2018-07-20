@@ -12,10 +12,7 @@ import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
 import com.sumian.sleepdoctor.cbti.activity.CBTIIntroductionWebActivity
-import com.sumian.sleepdoctor.event.CBTIProgressChangeEvent
-import com.sumian.sleepdoctor.event.CBTIServiceBoughtEvent
-import com.sumian.sleepdoctor.event.EventBusUtil
-import com.sumian.sleepdoctor.event.SleepPrescriptionUpdatedEvent
+import com.sumian.sleepdoctor.event.*
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
@@ -26,7 +23,6 @@ import com.sumian.sleepdoctor.record.SleepRecordActivity
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.scale.ScaleListActivity
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
-import com.sumian.sleepdoctor.widget.dialog.SumianImageTextDialog
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -121,7 +117,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
      */
     private fun updateSleepPrescriptionIfNeed() {
         val lastUpdateTime = SPUtils.getInstance().getLong(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, 0)
-        if (System.currentTimeMillis() - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 3) {
+        if (System.currentTimeMillis() - lastUpdateTime > DateUtils.MINUTE_IN_MILLIS * 5) {
             querySleepPrescription()
         }
     }
@@ -240,6 +236,13 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     fun onSleepSubscriptionUpdatedEvent(event: SleepPrescriptionUpdatedEvent) {
         EventBusUtil.removeStickyEvent(event)
         updateSleepPrescription(event.sleepPrescriptionWrapper)
+    }
+
+    @Subscribe(sticky = true)
+    fun onSleepRecordFilledEvent(event: SleepRecordFilledEvent) {
+        EventBusUtil.removeStickyEvent(event)
+        querySleepRecord()
+        querySleepPrescription()
     }
 
     private fun onAvatarClick() {

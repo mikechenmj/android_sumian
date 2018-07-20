@@ -76,7 +76,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        EventBusUtil.postSticky(CBTIProgressChangeEvent())
+        EventBusUtil.postStickyEvent(CBTIProgressChangeEvent())
     }
 
     override fun getLayoutId(): Int {

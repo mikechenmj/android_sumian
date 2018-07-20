@@ -12,11 +12,11 @@ import org.greenrobot.eventbus.EventBus;
  * </pre>
  */
 public class EventBusUtil {
-    public static void post(Object event) {
+    public static void postEvent(Object event) {
         EventBus.getDefault().post(event);
     }
 
-    public static void postSticky(Object event) {
+    public static void postStickyEvent(Object event) {
         EventBus.getDefault().postSticky(event);
     }
 

@@ -15,7 +15,7 @@ import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
-import com.sumian.sleepdoctor.onlineReport.OnlineReport
+import com.sumian.sleepdoctor.onlinereport.OnlineReport
 import com.sumian.sleepdoctor.order.OrderDetail
 import com.sumian.sleepdoctor.order.OrderDetailV2
 import com.sumian.sleepdoctor.oss.OssResponse

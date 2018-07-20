@@ -57,10 +57,10 @@
                     style="@style/SleepRecordMedicineTv"
                     tools:text="咪达唑仑、氟西泮、咪达唑仑、氟西泮、咪达唑仑、氟西泮、咪达唑仑、氟西泮、" />
 
-                <TextView
-                    android:id="@+id/tv_wakeup_duration"
-                    style="@style/SleepRecordMedicineTv"
-                    tools:text="夜醒：2h45min" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_wakeup_duration"-->
+                    <!--style="@style/SleepRecordMedicineTv"-->
+                    <!--tools:text="夜醒：2h45min" />-->
 
                 <TextView
                     android:id="@+id/tv_little_sleep_duration"
@@ -85,13 +85,13 @@
                 <TextView
                     style="@style/SleepRecordGreyIconTv"
                     android:drawableStart="@mipmap/ic_record_icon_wakeup"
-                    android:text="@string/actual_work_and_reset" />
+                    android:text="@string/on_bed_duration" />
 
                 <TextView
-                    android:id="@+id/tv_actual_work_and_reset_time"
+                    android:id="@+id/tv_on_bed_duration"
                     style="@style/SleepRecordTimeTv"
                     android:textStyle="bold"
-                    tools:text="20:00-22:00" />
+                    tools:text="6小时15分钟" />
             </LinearLayout>
 
             <View
@@ -107,14 +107,14 @@
 
                 <TextView
                     style="@style/SleepRecordGreyIconTv"
-                    android:drawableStart="@mipmap/ic_record_icon_sleep"
-                    android:text="@string/record_sleep_time" />
+                    android:drawableStart="@drawable/weeklyreport_icon_sleepduration"
+                    android:text="@string/sleep_duration" />
 
                 <TextView
-                    android:id="@+id/tv_sleep_time"
+                    android:id="@+id/tv_sleep_duration"
                     style="@style/SleepRecordTimeTv"
                     android:textStyle="bold"
-                    tools:text="20:00-22:00" />
+                    tools:text="6小时15分钟" />
             </LinearLayout>
         </LinearLayout>
 
@@ -137,11 +137,11 @@
 
                 <TextView
                     style="@style/SleepRecordGreyIconTv"
-                    android:drawableStart="@mipmap/ic_record_icon_clock"
-                    android:text="@string/record_sleep_duration" />
+                    android:drawableStart="@drawable/weeklyreport_icon_fallasleep"
+                    android:text="@string/fall_asleep_duration" />
 
                 <TextView
-                    android:id="@+id/tv_sleep_duration"
+                    android:id="@+id/tv_fall_asleep_duration"
                     style="@style/SleepRecordTimeTv"
                     android:textStyle="bold"
                     tools:text="6小时15分钟" />
@@ -161,10 +161,10 @@
                 <TextView
                     style="@style/SleepRecordGreyIconTv"
                     android:drawableStart="@mipmap/ic_record_icon_sleep"
-                    android:text="@string/fall_asleep_duration" />
+                    android:text="@string/night_wake_up_duration" />
 
                 <TextView
-                    android:id="@+id/tv_fall_asleep_duration"
+                    android:id="@+id/tv_night_wake_up_duration"
                     style="@style/SleepRecordTimeTv"
                     android:textStyle="bold"
                     tools:text="15分钟" />

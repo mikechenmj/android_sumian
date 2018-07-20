@@ -49,7 +49,7 @@ class SleepPrescriptionSettingActivity : BaseWebViewActivity<BasePresenter<*>>()
                 val type = object : TypeToken<H5BaseResponse<SleepPrescriptionWrapper>>() {}.type
                 val response = JsonUtil.fromJson<H5BaseResponse<SleepPrescriptionWrapper>>(data, type)
                         ?: return
-                EventBusUtil.postSticky(SleepPrescriptionUpdatedEvent(response.result ?: return))
+                EventBusUtil.postStickyEvent(SleepPrescriptionUpdatedEvent(response.result ?: return))
                 finish()
             }
         })

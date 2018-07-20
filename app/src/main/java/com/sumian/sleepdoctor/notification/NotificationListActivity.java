@@ -152,7 +152,7 @@ public class NotificationListActivity extends BaseActivity<NotificationListContr
 
     @Override
     public void onReadSuccess() {
-        EventBusUtil.postSticky(new NotificationReadEvent());
+        EventBusUtil.postStickyEvent(new NotificationReadEvent());
     }
 
     @Override

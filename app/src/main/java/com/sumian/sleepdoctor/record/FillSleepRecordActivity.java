@@ -9,6 +9,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.event.EventBusUtil;
+import com.sumian.sleepdoctor.event.SleepRecordFilledEvent;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.record.bean.FillSleepRecordResponse;
 import com.sumian.sleepdoctor.record.bean.SleepRecord;
@@ -75,6 +77,7 @@ public class FillSleepRecordActivity extends BaseWebViewActivity {
     }
 
     private void returnResult(String response) {
+        EventBusUtil.postStickyEvent(new SleepRecordFilledEvent());
         Intent intent = new Intent();
         intent.putExtra(SLEEP_RESPONSE, response);
         setResult(RESULT_OK, intent);

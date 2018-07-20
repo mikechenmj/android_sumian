@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.onlineReport.OnlineReportDetailActivity
+import com.sumian.sleepdoctor.onlinereport.OnlineReportDetailActivity
 
 /**
  * <pre>

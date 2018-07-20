@@ -58,7 +58,7 @@ public class ScaleDetailActivity extends BaseWebViewActivity {
             @Override
             public void handler(String data) {
                 LogUtils.d(data);
-                EventBusUtil.postSticky(new ScaleFinishFillingEvent());
+                EventBusUtil.postStickyEvent(new ScaleFinishFillingEvent());
             }
         });
     }

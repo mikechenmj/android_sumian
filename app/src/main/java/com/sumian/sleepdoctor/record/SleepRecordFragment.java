@@ -96,7 +96,7 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
     }
 
     private void setTvDate(long timeInMillis) {
-        mTvDate.setText(TimeUtil.formatDate("yyyy/MM/dd", timeInMillis));
+        mTvDate.setText(TimeUtil.formatDate("yyyy.MM.dd", timeInMillis));
     }
 
     private void showOpenNotificationDialogIfNeeded() {

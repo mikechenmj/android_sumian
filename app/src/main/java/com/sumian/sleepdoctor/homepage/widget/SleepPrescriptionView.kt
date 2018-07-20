@@ -24,10 +24,9 @@ class SleepPrescriptionView(context: Context, attributeSet: AttributeSet) : Fram
     }
 
     fun setPrescriptionData(data: SleepPrescriptionWrapper?) {
-//        ll_no_sleep_prescription_hint.visibility = if (data == null || data.isServiceStopped) View.VISIBLE else View.GONE
-//        ll_sleep_prescription.visibility = if (data != null && !data.isServiceStopped) View.VISIBLE else View.GONE
-        ll_no_sleep_prescription_hint.visibility = if (data == null || data.sleepPrescription == null) View.VISIBLE else View.GONE
-        ll_sleep_prescription.visibility = if (data != null && data.sleepPrescription != null) View.VISIBLE else View.GONE
+        val prescriptionIsNull = data?.sleepPrescription?.getUpAt == null
+        ll_no_sleep_prescription_hint.visibility = if (prescriptionIsNull) View.VISIBLE else View.GONE
+        ll_sleep_prescription.visibility = if (!prescriptionIsNull) View.VISIBLE else View.GONE
         if (data?.sleepPrescription != null) {
             tv_sleep_time.text = data.sleepPrescription.sleepAt
             tv_get_up_time.text = data.sleepPrescription.getUpAt

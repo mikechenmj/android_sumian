@@ -28,8 +28,8 @@ import com.sumian.sleepdoctor.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseActivity
-import com.sumian.sleepdoctor.onlineReport.OnlineReport
-import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity
+import com.sumian.sleepdoctor.onlinereport.OnlineReport
+import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.adapter.SimpleTextWatchAdapter
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog

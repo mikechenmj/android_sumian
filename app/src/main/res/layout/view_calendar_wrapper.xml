@@ -22,7 +22,7 @@
                 android:layout_centerInParent="true"
                 android:textColor="@color/t2_color"
                 android:textSize="@dimen/font_14"
-                tools:text="2018/05" />
+                tools:text="2018.05.01" />
 
             <ImageView
                 android:id="@+id/iv_left"

@@ -70,7 +70,7 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     }
 
     private void updateTvMonth(long time) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM", Locale.getDefault());
         String format = simpleDateFormat.format(new Date(time));
         tvMonth.setText(format);
     }
