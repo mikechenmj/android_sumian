@@ -3,13 +3,11 @@ package com.sumian.sleepdoctor.account.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bindMobile.BindMobileActivity;
@@ -19,6 +17,7 @@ import com.sumian.sleepdoctor.account.userProfile.activity.MyTargetAndInformatio
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.widget.LoginRuleView;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
 import com.umeng.socialize.UMAuthListener;
@@ -38,6 +37,7 @@ import butterknife.OnClick;
 public final class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, LoginContract.View, LoginRuleView.OnCheckedListener, UMAuthListener {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
+
     public static final int REQUEST_CODE_SET_USER_INFO = 100;
 
     @BindView(R.id.et_mobil)
@@ -127,8 +127,8 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
     }
 
     private void launchMainAndFinish() {
-        finish();
         MainActivity.show(this, MainActivity.class);
+        finish();
     }
 
     @Override
@@ -197,7 +197,6 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onStart(SHARE_MEDIA shareMedia) {
-        Log.e(TAG, "onBegin: -------->" + shareMedia);
         switch (shareMedia) {
             case WEIXIN:
                 ToastHelper.show(R.string.opening_wechat);
@@ -209,14 +208,12 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onComplete(SHARE_MEDIA shareMedia, int i, Map<String, String> map) {
-        Log.e(TAG, "onComplete: --------->" + shareMedia + "  i=" + i + "   map=" + map.toString());
         mPresenter.checkOpenIsBind(shareMedia, map);
         onFinish();
     }
 
     @Override
     public void onError(SHARE_MEDIA shareMedia, int i, Throwable throwable) {
-        Log.e(TAG, "onError: ----------->" + shareMedia + "  i=" + i + "  " + throwable.getMessage());
         onFinish();
         // if (i == UMAuthListener.ACTION_AUTHORIZE) {
         switch (shareMedia) {
@@ -230,7 +227,6 @@ public final class LoginActivity extends BaseActivity<LoginPresenter> implements
 
     @Override
     public void onCancel(SHARE_MEDIA shareMedia, int i) {
-        Log.e(TAG, "onCancel: --------->" + shareMedia + "  i=" + i);
         onFinish();
     }
 

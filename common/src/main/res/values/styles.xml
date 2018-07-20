@@ -24,7 +24,7 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="scan_qr_theme" parent="Base.ThemeOverlay.AppCompat">
+    <style name="Scan_qr_theme" parent="Base.ThemeOverlay.AppCompat">
         <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
