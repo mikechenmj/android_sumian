@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
@@ -128,7 +129,8 @@ public class PaymentActivity extends BaseActivity<PayPresenter> implements View.
         String priceText = getDoctorServicePackage().getPrice_text();
         SpannableString spannableString = new SpannableString(priceText);
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.t4_color)), 0, priceText.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTvGroupMoney.setText(mDoctorService.getDescription());
+        mTvGroupMoney.setText(TextUtils.concat("服务费用: ", spannableString));
+//        mTvGroupMoney.setText(mDoctorService.getDescription());
         mPayCalculateItemView.setDefaultMoney(getDoctorServicePackage().getUnit_price());
     }
 

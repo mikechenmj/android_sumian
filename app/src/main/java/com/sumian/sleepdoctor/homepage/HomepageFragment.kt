@@ -26,6 +26,7 @@ import com.sumian.sleepdoctor.record.SleepRecordActivity
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.scale.ScaleListActivity
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
+import com.sumian.sleepdoctor.widget.dialog.SumianImageTextDialog
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -61,6 +62,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         tv_sleep_health.setOnClickListener { ToastUtils.showShort(R.string.not_open_yet_please_wait) }
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
         sleep_prescription_view.setOnClickListener { onSleepPrescriptionClick() }
+        iv_avatar.setOnClickListener { onAvatarClick() }
     }
 
     private fun launchCbtiActivity() {
@@ -238,5 +240,13 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     fun onSleepSubscriptionUpdatedEvent(event: SleepPrescriptionUpdatedEvent) {
         EventBusUtil.removeStickyEvent(event)
         updateSleepPrescription(event.sleepPrescriptionWrapper)
+    }
+
+    private fun onAvatarClick() {
+//        SumianImageTextDialog(activity!!)
+//                .setType(SumianImageTextDialog.TYPE_TEXT)
+//                .setText("dialog")
+//                .show()
+//        ToastUtils.showShort("toast")
     }
 }
