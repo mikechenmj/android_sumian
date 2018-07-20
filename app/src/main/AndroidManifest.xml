@@ -148,8 +148,8 @@
 
         <activity android:name=".h5.SimpleWebActivity" />
         <!-- online report -->
-        <activity android:name=".onlinereport.OnlineReportListActivity" />
-        <activity android:name=".onlinereport.OnlineReportDetailActivity" />
+        <activity android:name=".onlineReport.OnlineReportListActivity" />
+        <activity android:name=".onlineReport.OnlineReportDetailActivity" />
 
         <!-- notification -->
         <activity android:name=".notification.NotificationListActivity" />
@@ -198,6 +198,7 @@
         <activity android:name=".account.userProfile.activity.MyTargetAndInformationActivity" />
         <activity android:name=".homepage.SleepPrescriptionSettingActivity" />
         <activity android:name=".cbti.activity.CBTIExerciseWebActivity" />
+
     </application>
 
 </manifest>

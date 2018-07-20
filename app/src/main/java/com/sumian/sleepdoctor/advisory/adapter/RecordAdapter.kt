@@ -18,8 +18,8 @@ import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.advisory.bean.Record
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder
 import com.sumian.sleepdoctor.doctor.bean.Doctor
-import com.sumian.sleepdoctor.onlinereport.OnlineReportDetailActivity
-import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
+import com.sumian.sleepdoctor.onlineReport.OnlineReportDetailActivity
+import com.sumian.sleepdoctor.onlineReport.OnlineReportListActivity
 import com.sumian.sleepdoctor.utils.TimeUtil
 import com.sumian.sleepdoctor.utils.getAppContext
 import de.hdodenhof.circleimageview.CircleImageView

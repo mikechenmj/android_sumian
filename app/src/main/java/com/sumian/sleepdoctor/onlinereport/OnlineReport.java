@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlinereport;
+package com.sumian.sleepdoctor.onlineReport;
 
 import android.os.Parcel;
 import android.os.Parcelable;

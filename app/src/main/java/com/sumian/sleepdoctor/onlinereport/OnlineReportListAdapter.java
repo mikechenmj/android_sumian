@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.onlinereport;
+package com.sumian.sleepdoctor.onlineReport;
 
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,7 +8,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.onlinereport.OnlineReport;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 
 import java.util.ArrayList;
