@@ -15,7 +15,7 @@
         android:paddingEnd="@dimen/space_30"
         android:paddingStart="@dimen/space_30"
         android:visibility="visible"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <TextView
             style="@style/text_white_16"
@@ -30,59 +30,77 @@
     <LinearLayout
         android:id="@+id/ll_sleep_prescription"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_110"
-        android:background="@drawable/home_img_sleepprescription_bg1"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:background="@drawable/home_img_sleepprescription_bg2"
+        android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_6"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_10"
+            android:drawablePadding="@dimen/space_10"
+            android:drawableStart="@drawable/home_icon_sleepprescription"
+            android:text="@string/my_sleep_prescription" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_110"
+            android:background="@drawable/home_img_sleepprescription_bg1"
+            android:orientation="horizontal">
 
-            <TextView
-                style="@style/text_white_14"
-                android:layout_marginTop="@dimen/space_5"
-                android:drawablePadding="@dimen/space_10"
-                android:drawableStart="@drawable/home_icon_fallasleep_white"
-                android:text="@string/sleep_time" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_sleep_time"
-                style="@style/text_white_14"
-                android:drawablePadding="@dimen/space_10"
-                android:textSize="@dimen/font_20"
-                tools:text="22:35" />
-        </LinearLayout>
+                <TextView
+                    style="@style/text_white_14"
+                    android:layout_marginTop="@dimen/space_5"
+                    android:drawablePadding="@dimen/space_10"
+                    android:drawableStart="@drawable/home_icon_fallasleep_white"
+                    android:text="@string/sleep_time" />
 
-        <View
-            style="@style/VerticalDividerLine"
-            android:layout_marginBottom="@dimen/space_32"
-            android:layout_marginTop="@dimen/space_32" />
+                <TextView
+                    android:id="@+id/tv_sleep_time"
+                    style="@style/text_white_14"
+                    android:drawablePadding="@dimen/space_10"
+                    android:textSize="@dimen/font_20"
+                    tools:text="22:35" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <View
+                style="@style/VerticalDividerLine"
+                android:layout_marginBottom="@dimen/space_32"
+                android:layout_marginTop="@dimen/space_32" />
 
-            <TextView
-                style="@style/text_white_14"
-                android:layout_marginTop="@dimen/space_5"
-                android:drawablePadding="@dimen/space_10"
-                android:drawableStart="@drawable/home_icon_workschedule_white"
-                android:text="@string/getUpTime" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_get_up_time"
-                style="@style/text_white_14"
-                android:drawablePadding="@dimen/space_10"
-                android:textSize="@dimen/font_20"
-                tools:text="06:35" />
+                <TextView
+                    style="@style/text_white_14"
+                    android:layout_marginTop="@dimen/space_5"
+                    android:drawablePadding="@dimen/space_10"
+                    android:drawableStart="@drawable/home_icon_workschedule_white"
+                    android:text="@string/getUpTime" />
+
+                <TextView
+                    android:id="@+id/tv_get_up_time"
+                    style="@style/text_white_14"
+                    android:drawablePadding="@dimen/space_10"
+                    android:textSize="@dimen/font_20"
+                    tools:text="06:35" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </merge>
