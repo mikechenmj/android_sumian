@@ -27,6 +27,7 @@ public class SleepRecord {
     private int id;
     private int date;
     private SleepRecordAnswer answer;
+    private int on_bed_duration;
     private int sleep_duration;
     private int fall_asleep_duration;
     private int sleep_efficiency;
@@ -108,6 +109,14 @@ public class SleepRecord {
 
     public void setUpdated_at(int updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getOn_bed_duration() {
+        return on_bed_duration;
+    }
+
+    public void setOn_bed_duration(int on_bed_duration) {
+        this.on_bed_duration = on_bed_duration;
     }
 
     @Override

@@ -108,10 +108,10 @@ public class SleepRecordView extends LinearLayout {
         tvPills.setClickable(answer.getSleep_pills() != null && answer.getSleep_pills().size() != 0);
         tvLittleSleepDuration.setText(getDurationString("小睡：", answer.getOther_sleep_total_minutes()));
 
-        tvOnBedDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getSleep_duration()));
+        tvOnBedDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getOn_bed_duration()));
         tvSleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getSleep_duration()));
         tvFallAsleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getFall_asleep_duration()));
-        tvWakeupDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(answer.getWake_minutes()));
+        tvWakeupDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(answer.getWake_minutes() * 60));
 
         tvSleepDesc.setText(answer.getRemark());
         tvSleepDesc.setVisibility(TextUtils.isEmpty(answer.getRemark()) ? GONE : VISIBLE);
