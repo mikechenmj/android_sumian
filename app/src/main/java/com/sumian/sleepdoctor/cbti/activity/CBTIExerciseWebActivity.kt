@@ -48,16 +48,24 @@ class CBTIExerciseWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
     }
 
     override fun getUrlContentPart(): String {
-        return H5Uri.CBTI_EXERCISES.replace("course-id", String.format(Locale.getDefault(), "%d", courseId))
+        return H5Uri.CBTI_EXERCISES.replace("{course-id}", String.format(Locale.getDefault(), "%d", courseId))
     }
 
     override fun registerHandler(sWebView: SWebView) {
         super.registerHandler(sWebView)
         sWebView.registerHandler("onQuestionFinished", object : SBridgeHandler() {
             override fun handler(data: String) {
+
                 val sBridgeResult = JsonUtil.fromJson<SBridgeResult<Any>>(data, object : TypeToken<SBridgeResult<Any>>() {
 
                 }.type)
+
+                sBridgeResult?.let {
+                    if (it.code == 0) {
+                        finish()
+                    }
+                }
+
             }
         })
     }
