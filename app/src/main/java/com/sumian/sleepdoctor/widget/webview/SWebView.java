@@ -177,7 +177,7 @@ public class SWebView extends BridgeWebView {
         public void onReceivedHttpError(WebView webView, WebResourceRequest webResourceRequest, WebResourceResponse webResourceResponse) {
             super.onReceivedHttpError(webView, webResourceRequest, webResourceResponse);
             Log.e(TAG, "onReceivedHttpError: ---------3------->");
-            mErrorCode = webResourceResponse.getStatusCode();
+//            mErrorCode = webResourceResponse.getStatusCode();
 //            if (mWebViewListener != null) {
 //                mWebViewListener.onRequestErrorCallback(webView, webResourceResponse.getStatusCode());
 //            }
