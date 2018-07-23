@@ -21,7 +21,7 @@ import butterknife.OnClick;
 
 /**
  * <pre>
- *     @@author : Zhan Xuzhao
+ *     @author : Zhan Xuzhao
  *     e-mail : xuzhao.z@sumian.com
  *     time   : 2018/5/25 9:18
  *     desc   :
@@ -68,7 +68,9 @@ public class SumianAlertDialog {
         mIvTop.setVisibility(mIconRes == 0 ? View.GONE : View.VISIBLE);
         mIvTop.setImageResource(mIconRes);
         mTvTitle.setVisibility(mTitleRes == 0 ? View.GONE : View.VISIBLE);
-        mTvTitle.setText(mTitleRes);
+        if (mTitleRes != 0) {
+            mTvTitle.setText(mTitleRes);
+        }
         mTvMessage.setVisibility(TextUtils.isEmpty(mMessage) ? View.GONE : View.VISIBLE);
         mTvMessage.setText(mMessage);
         mBtnLeft.setVisibility(mLeftBtnTextRes == 0 ? View.GONE : View.VISIBLE);

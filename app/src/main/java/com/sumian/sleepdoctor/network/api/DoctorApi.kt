@@ -12,6 +12,7 @@ import com.sumian.sleepdoctor.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
+import com.sumian.sleepdoctor.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import com.sumian.sleepdoctor.notification.bean.QueryNotificationResponse
@@ -206,7 +207,7 @@ interface DoctorApi {
     fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
 
     @POST("sleep-prescriptions/fatigue")
-    fun updateSleepPrescriptionsWhenFatigue(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
+    fun updateSleepPrescriptionsWhenFatigue(@Body data: UpdateSleepPrescriptionWhenFatiguedData): Call<SleepPrescriptionWrapper>
 
     /**
      * include

@@ -16,6 +16,7 @@ import com.sumian.sleepdoctor.event.*
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
+import com.sumian.sleepdoctor.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.record.FillSleepRecordActivity
@@ -89,6 +90,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun querySleepPrescription() {
+        SPUtils.getInstance().put(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, System.currentTimeMillis())
         val call = AppManager.getHttpService().getSleepPrescriptions()
         addCall(call)
         call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
@@ -107,7 +109,6 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun updateSleepPrescription(response: SleepPrescriptionWrapper?) {
-        SPUtils.getInstance().getLong(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, System.currentTimeMillis())
         sleep_prescription_view.setPrescriptionData(response)
         mSleepPrescriptionWrapper = response
     }
@@ -123,20 +124,25 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun showSleepPrescriptionDialogIfNeed(response: SleepPrescriptionWrapper) {
-//        response.showEnquireDialog = true //test code
         if (response.showUpdateDialog) {
             showSleepUpdatedDialog()
         } else if (response.showEnquireDialog) {
-            SumianAlertDialog(activity)
-                    .setTitle(R.string.last_week_tired_enquire)
-                    .setMessage(R.string.last_week_tired_enquire)
-                    .setLeftBtn(R.string.no, null)
-                    .whitenLeft()
-                    .setRightBtn(R.string.yes) {
-                        updateSleepPrescriptionWhenTired(response.sleepPrescription!!)
-                    }
-                    .show()
+            showSleepPrescriptionFatiguedDialog(response)
         }
+    }
+
+    private fun showSleepPrescriptionFatiguedDialog(response: SleepPrescriptionWrapper) {
+        SumianAlertDialog(activity)
+                .setTitle(R.string.last_week_tired_enquire)
+                .setMessage(R.string.last_week_tired_enquire_hint)
+                .setLeftBtn(R.string.no) {
+                    updateSleepPrescriptionWhenTired(response.sleepPrescription!!, false)
+                }
+                .whitenLeft()
+                .setRightBtn(R.string.yes) {
+                    updateSleepPrescriptionWhenTired(response.sleepPrescription!!, true)
+                }
+                .show()
     }
 
     private fun showSleepUpdatedDialog() {
@@ -146,8 +152,9 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                 .show()
     }
 
-    private fun updateSleepPrescriptionWhenTired(sleepPrescription: SleepPrescription) {
-        val call = mHttpService.updateSleepPrescriptionsWhenFatigue(sleepPrescription)
+    private fun updateSleepPrescriptionWhenTired(sleepPrescription: SleepPrescription, confirm: Boolean) {
+        val data = UpdateSleepPrescriptionWhenFatiguedData.create(sleepPrescription, confirm)
+        val call = mHttpService.updateSleepPrescriptionsWhenFatigue(data)
         addCall(call)
         call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
             override fun onSuccess(response: SleepPrescriptionWrapper?) {
