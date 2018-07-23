@@ -121,6 +121,12 @@ interface DoctorApi {
     @GET("services")
     fun getServiceList(): Call<DoctorServiceList>
 
+    /**
+     * 服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     */
+    @GET("service")
+    fun getServiceByType(@Query("type")type:Int): Call<DoctorService>
+
     @GET("services/{id}")
     fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>
 

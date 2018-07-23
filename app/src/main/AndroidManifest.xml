@@ -148,8 +148,7 @@
 
         <activity android:name=".h5.SimpleWebActivity" />
         <!-- online report -->
-        <activity android:name=".onlineReport.OnlineReportListActivity" />
-        <activity android:name=".onlineReport.OnlineReportDetailActivity" />
+        <activity android:name=".onlinereport.OnlineReportListActivity" />
 
         <!-- notification -->
         <activity android:name=".notification.NotificationListActivity" />

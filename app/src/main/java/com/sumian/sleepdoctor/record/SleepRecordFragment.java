@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.base.BaseFragment;
 import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
@@ -44,7 +45,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 
-public class SleepRecordFragment extends BasePagerFragment implements CalendarView.OnDateClickListener {
+public class SleepRecordFragment extends BaseFragment implements CalendarView.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 2;
@@ -59,12 +60,8 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
     TextView mTvDate;
     @BindView(R.id.sleep_record)
     SleepRecordView mSleepRecordView;
-    @BindView(R.id.ll_service_container)
-    LinearLayout mServiceContainer;
     @BindView(R.id.scroll_view)
     ScrollView mScrollView;
-    @BindView(R.id.dsiv_sleep_scale)
-    DoctorServiceItemView mSleepScale;
     private PopupWindow mPopupWindow;
     private long mPopupDismissTime;
     private SleepCalendarViewWrapper mCalendarViewWrapper;
@@ -128,12 +125,15 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
     }
 
     private void queryServices() {
-        Call<DoctorServiceList> call = AppManager.getHttpService().getServiceList();
+        Call<DoctorService> call = AppManager.getHttpService().getServiceByType(DoctorService.SERVICE_TYPE_ADVISORY);
         addCall(call);
-        call.enqueue(new BaseResponseCallback<DoctorServiceList>() {
+        call.enqueue(new BaseResponseCallback<DoctorService>() {
             @Override
-            protected void onSuccess(DoctorServiceList response) {
-                showServiceList(response);
+            protected void onSuccess(DoctorService response) {
+                boolean hasSleepReportService = response != null && response.getLast_count() > 0;
+                if (mSleepRecordView != null) {
+                    mSleepRecordView.setForceShowDoctorAdvice(hasSleepReportService);
+                }
             }
 
             @Override
@@ -143,34 +143,11 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
         });
     }
 
-    private void showServiceList(DoctorServiceList response) {
-        List<DoctorService> serviceList = response.getServiceList();
-        boolean hasSleepReportService = false;
-        if (mServiceContainer != null) {
-            mServiceContainer.removeAllViewsInLayout();
-        }
-        for (DoctorService doctorService : serviceList) {
-            hasSleepReportService = doctorService.getLast_count() > 0;
-            if (doctorService.getType() == DoctorService.SERVICE_TYPE_SLEEP_REPORT && !hasSleepReportService) {
-                DoctorServiceItemView doctorServiceItemView = new DoctorServiceItemView(getContext());
-                doctorServiceItemView.setTitle(doctorService.getName());
-                doctorServiceItemView.setDesc(doctorService.getNot_buy_description());
-                doctorServiceItemView.loadImage(doctorService.getIcon());
-                doctorServiceItemView.setOnClickListener(v -> launchDoctorServicePage(doctorService));
-                if (mServiceContainer != null) {
-                    mServiceContainer.addView(doctorServiceItemView);
-                }
-            }
-        }
-        if (mSleepRecordView != null) {
-            mSleepRecordView.setForceShowDoctorAdvice(hasSleepReportService);
-        }
-    }
-
     @Override
     protected void initData() {
         super.initData();
         changeSelectTime(mInitTime);
+        queryServices();
     }
 
     private void launchFillSleepRecordActivity(long time) {
@@ -236,7 +213,6 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
     @OnClick({
             R.id.tv_date,
             R.id.iv_date_arrow,
-            R.id.dsiv_sleep_scale,
             R.id.iv_weekly_report,
     })
     public void onClick(View view) {
@@ -249,9 +225,6 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
                 int selectTimeInSecond = (int) (mSelectedTime / 1000);
                 String urlContentPart = H5Uri.SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", String.valueOf(selectTimeInSecond));
                 SimpleWebActivity.launch(getActivity(), urlContentPart);
-                break;
-            case R.id.dsiv_sleep_scale:
-                ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_ALL);
                 break;
             default:
                 break;
@@ -309,10 +282,6 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
         }
     }
 
-    private void launchDoctorServicePage(DoctorService doctorService) {
-        DoctorServiceWebActivity.show(getContext(), doctorService, true);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FILL_SLEEP_RECORD) {
@@ -323,10 +292,5 @@ public class SleepRecordFragment extends BasePagerFragment implements CalendarVi
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    @Override
-    public void selectTab(int position) {
-        queryServices();
     }
 }
