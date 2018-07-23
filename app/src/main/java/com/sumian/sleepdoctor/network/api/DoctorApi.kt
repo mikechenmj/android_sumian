@@ -151,6 +151,10 @@ interface DoctorApi {
                      @Query("type") type: String): Call<PaginationResponse<Scale>>
 
     // ---------- device info ----------
+    /**
+     *
+     * device_type 设备类型，0：Android，1：iOS
+     */
     @POST("portables")
     @FormUrlEncoded
     fun uploadDeviceInfo(@Field("device_type") deviceType: String,
