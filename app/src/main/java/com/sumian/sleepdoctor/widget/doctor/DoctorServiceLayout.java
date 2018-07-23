@@ -87,7 +87,7 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
         tvServiceName.setText(doctorService.getName());
         tvServiceDesc.setText(doctorService.getNot_buy_description());
 
-        if (doctorService.getLast_count() == 0 && doctorService.getDay_last() == 0 && doctorService.getExpired_at() == 0) {
+        if (doctorService.getLast_count() == 0) {
             layServiceAction.setVisibility(View.GONE);
         } else {
             layServiceAction.setVisibility(View.VISIBLE);
@@ -98,7 +98,6 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
         tvServiceAction.setText(nextActionId);
 
         bottomDivider.setVisibility(isGoneDivider ? View.GONE : View.VISIBLE);
-
     }
 
     private void load(String url, @DrawableRes int defaultIconId, ImageView iv) {
