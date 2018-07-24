@@ -15,15 +15,15 @@ import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekPlayContract
 import com.sumian.sleepdoctor.cbti.presenter.CBTICoursePlayAuthPresenter
 import com.sumian.sleepdoctor.cbti.sheet.CBTICourseListBottomSheet
+import com.sumian.sleepdoctor.cbti.video.NiceVideoPlayerManager
+import com.sumian.sleepdoctor.cbti.video.NiceVideoView
+import com.sumian.sleepdoctor.cbti.video.OnVideoViewEvent
+import com.sumian.sleepdoctor.cbti.video.TxVideoPlayerController
 import com.sumian.sleepdoctor.event.CBTIProgressChangeEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.SumianWebDialog
-import com.xiao.nicevideoplayer.NiceVideoPlayerManager
-import com.xiao.nicevideoplayer.NiceVideoView
-import com.xiao.nicevideoplayer.OnVideoViewEvent
-import com.xiao.nicevideoplayer.TxVideoPlayerController
 import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
 
 
@@ -164,13 +164,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
         mController.setTitle(mCurrentCourse?.title)
 
-        val titles = ArrayList<String>()
-
-        coursePlayAuth.courses.forEach {
-            titles.add(it.title)
-        }
-
-        mController.setLessonList(titles)
+        mController.setChapterId(mCourse?.cbti_chapter_id!!)
 
         ImageLoader.loadImage(this, mController.imageView(), coursePlayAuth.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
         aliyun_player?.apply {
@@ -236,7 +230,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
     }
 
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
-        Log.e(TAG, "currentFrame=$currentFrame    oldFrame=$oldFrame   totalFrame=$totalFrame")
+        //Log.e(TAG, "currentFrame=$currentFrame    oldFrame=$oldFrame   totalFrame=$totalFrame")
 
         mPresenter.calculatePlayFrame(mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
         // Log.e(TAG, "finalFrame=$hexPlayFrame   fl=$fl")

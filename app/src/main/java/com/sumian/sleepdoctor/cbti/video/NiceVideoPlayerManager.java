@@ -1,4 +1,4 @@
-package com.xiao.nicevideoplayer;
+package com.sumian.sleepdoctor.cbti.video;
 
 /**
  * Created by XiaoJianjun on 2017/5/5.

@@ -1,4 +1,4 @@
-package com.xiao.nicevideoplayer;
+package com.sumian.sleepdoctor.cbti.video;
 
 /**
  * Created by dq
@@ -9,14 +9,14 @@ package com.xiao.nicevideoplayer;
  */
 public abstract class AbstractMediaPlayer implements IMediaPlayer {
 
-    private IMediaPlayer.OnPreparedListener mOnPreparedListener;
-    private IMediaPlayer.OnCompletionListener mOnCompletionListener;
-    private IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener;
-    private IMediaPlayer.OnSeekCompleteListener mOnSeekCompleteListener;
-    private IMediaPlayer.OnVideoSizeChangedListener mOnVideoSizeChangedListener;
-    private IMediaPlayer.OnErrorListener mOnErrorListener;
-    private IMediaPlayer.OnInfoListener mOnInfoListener;
-    private IMediaPlayer.OnTimedTextListener mOnTimedTextListener;
+    private OnPreparedListener mOnPreparedListener;
+    private OnCompletionListener mOnCompletionListener;
+    private OnBufferingUpdateListener mOnBufferingUpdateListener;
+    private OnSeekCompleteListener mOnSeekCompleteListener;
+    private OnVideoSizeChangedListener mOnVideoSizeChangedListener;
+    private OnErrorListener mOnErrorListener;
+    private OnInfoListener mOnInfoListener;
+    private OnTimedTextListener mOnTimedTextListener;
 
     public AbstractMediaPlayer() {
     }

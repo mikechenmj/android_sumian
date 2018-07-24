@@ -1,4 +1,4 @@
-package com.xiao.nicevideoplayer;
+package com.sumian.sleepdoctor.cbti.video;
 
 import android.content.Context;
 import android.view.TextureView;

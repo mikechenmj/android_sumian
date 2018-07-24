@@ -1,4 +1,4 @@
-package com.xiao.nicevideoplayer;
+package com.sumian.sleepdoctor.cbti.video;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,19 +10,20 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sumian.sleepdoctor.R;
+
 import java.util.List;
 
 /**
  * Created by XiaoJianjun on 2017/7/6.
  * 切换清晰度对话框（仿腾讯视频切换清晰度的对话框）.
  */
-public class LessonListDialog extends Dialog {
+public class ChangeClarityDialog extends Dialog {
 
     private LinearLayout mLinearLayout;
     private int mCurrentCheckedIndex;
-    private List<String> mLessonList;
 
-    public LessonListDialog(Context context) {
+    public ChangeClarityDialog(Context context) {
         super(context, R.style.dialog_change_clarity);
         init(context);
     }
@@ -37,7 +38,7 @@ public class LessonListDialog extends Dialog {
                 if (mListener != null) {
                     mListener.onClarityNotChanged();
                 }
-                LessonListDialog.this.dismiss();
+                ChangeClarityDialog.this.dismiss();
             }
         });
 
@@ -52,9 +53,14 @@ public class LessonListDialog extends Dialog {
         getWindow().setAttributes(windowParams);
     }
 
-    public void setLessonList(List<String> items) {
-        mLessonList = items;
-        mCurrentCheckedIndex = 0;
+    /**
+     * 设置清晰度等级
+     *
+     * @param items          清晰度等级items
+     * @param defaultChecked 默认选中的清晰度索引
+     */
+    public void setClarityGrade(List<String> items, int defaultChecked) {
+        mCurrentCheckedIndex = defaultChecked;
         for (int i = 0; i < items.size(); i++) {
             TextView itemView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_change_clarity, mLinearLayout, false);
             itemView.setTag(i);
@@ -73,11 +79,11 @@ public class LessonListDialog extends Dialog {
                             mListener.onClarityNotChanged();
                         }
                     }
-                    LessonListDialog.this.dismiss();
+                    ChangeClarityDialog.this.dismiss();
                 }
             });
             itemView.setText(items.get(i));
-            itemView.setSelected(i == mCurrentCheckedIndex);
+            itemView.setSelected(i == defaultChecked);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)
                     itemView.getLayoutParams();
             params.topMargin = (i == 0) ? 0 : NiceUtil.dp2px(getContext(), 16f);

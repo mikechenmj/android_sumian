@@ -1,4 +1,4 @@
-package com.xiao.nicevideoplayer;
+package com.sumian.sleepdoctor.cbti.video;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.sumian.sleepdoctor.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -527,9 +529,12 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         mChangeBrightness.setVisibility(View.GONE);
     }
 
-    public void setLessonList(List<String> title) {
+    public void setChapterId(int chapterId) {
         mLessonListDialog = new LessonListDialog(mContext);
-        mLessonListDialog.setLessonList(title);
+        //  mLessonListDialog.setCourses(courses);
         mClarity.setText("列表");
+        CoursesPopWindow coursesPopWindow = new CoursesPopWindow(getContext()).setChapterId(chapterId);
+        coursesPopWindow.setContentView(new LinearLayout(mContext));
+        coursesPopWindow.show(mClarity);
     }
 }

@@ -1,4 +1,4 @@
-package com.xiao.nicevideoplayer;
+package com.sumian.sleepdoctor.cbti.video;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -650,7 +650,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         ViewGroup contentView = (ViewGroup) NiceUtil.scanForActivity(mContext)
                 .findViewById(android.R.id.content);
         // 小窗口的宽度为屏幕宽度的60%，长宽比默认为16:9，右边距、下边距为8dp。
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+        LayoutParams params = new LayoutParams(
                 (int) (NiceUtil.getScreenWidth(mContext) * 0.6f),
                 (int) (NiceUtil.getScreenWidth(mContext) * 0.6f * 9f / 16f));
         params.gravity = Gravity.BOTTOM | Gravity.END;
@@ -737,6 +737,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     @Override
     public void onFrameChange(long currentFrame, long totalFrame) {
+        if (currentFrame <= 1) {
+            this.mOldFrame = currentFrame;
+        }
         mOnVideoViewEvent.onFrameChangeCallback(currentFrame, mOldFrame, totalFrame);
         this.mOldFrame = currentFrame;
     }
