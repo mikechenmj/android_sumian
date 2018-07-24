@@ -32,7 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="@drawable/bg_material"
         android:contentDescription="@null"
         android:paddingEnd="@dimen/space_20"
         android:paddingStart="@dimen/space_20"

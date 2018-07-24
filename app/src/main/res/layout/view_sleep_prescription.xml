@@ -19,7 +19,8 @@
 
         <TextView
             style="@style/text_white_16"
-            android:text="@string/my_sleep_prescription" />
+            android:text="@string/my_sleep_prescription"
+            android:textStyle="bold" />
 
         <TextView
             style="@style/text_white_14"
@@ -72,6 +73,7 @@
                     style="@style/text_white_14"
                     android:drawablePadding="@dimen/space_10"
                     android:textSize="@dimen/font_20"
+                    android:textStyle="bold"
                     tools:text="22:35" />
             </LinearLayout>
 
@@ -99,6 +101,7 @@
                     style="@style/text_white_14"
                     android:drawablePadding="@dimen/space_10"
                     android:textSize="@dimen/font_20"
+                    android:textStyle="bold"
                     tools:text="06:35" />
             </LinearLayout>
         </LinearLayout>
