@@ -164,13 +164,11 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
         mController.setTitle(mCurrentCourse?.title)
 
-        mController.setChapterId(mCourse?.cbti_chapter_id!!)
+        mController.setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
 
         ImageLoader.loadImage(this, mController.imageView(), coursePlayAuth.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
-        aliyun_player?.apply {
-            setPlayerType(NiceVideoView.TYPE_ALIYUN)
-            setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
-        }
+
+        aliyun_player.setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
 
         nav_tab_lesson_practice.visibility = if (coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 

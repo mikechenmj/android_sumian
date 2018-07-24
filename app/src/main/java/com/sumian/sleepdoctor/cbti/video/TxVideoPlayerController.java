@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,11 +17,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.cbti.activity.CBTICoursePlayActivity;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -75,10 +75,6 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     private boolean topBottomVisible;
     private CountDownTimer mDismissTopBottomCountDownTimer;
 
-    private List<Clarity> clarities;
-    private int defaultClarityIndex;
-
-    private ChangeClarityDialog mClarityDialog;
     private LessonListDialog mLessonListDialog;
 
     private boolean hasRegisterBatteryReceiver; // 是否已经注册了电池广播
@@ -165,36 +161,6 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     @Override
     public void setNiceVideoPlayer(INiceVideoPlayer niceVideoPlayer) {
         super.setNiceVideoPlayer(niceVideoPlayer);
-        // 给播放器配置视频链接地址
-        if (clarities != null && clarities.size() > 1) {
-            mNiceVideoPlayer.setUp(clarities.get(defaultClarityIndex).videoUrl, null);
-        }
-    }
-
-    /**
-     * 设置清晰度
-     *
-     * @param clarities 清晰度及链接
-     */
-    public void setClarity(List<Clarity> clarities, int defaultClarityIndex) {
-        if (clarities != null && clarities.size() > 1) {
-            this.clarities = clarities;
-            this.defaultClarityIndex = defaultClarityIndex;
-
-            List<String> clarityGrades = new ArrayList<>();
-            for (Clarity clarity : clarities) {
-                clarityGrades.add(clarity.grade + " " + clarity.p);
-            }
-            mClarity.setText(clarities.get(defaultClarityIndex).grade);
-            // 初始化切换清晰度对话框
-            mClarityDialog = new ChangeClarityDialog(mContext);
-            mClarityDialog.setClarityGrade(clarityGrades, defaultClarityIndex);
-            mClarityDialog.setOnClarityCheckedListener(this);
-            // 给播放器配置视频链接地址
-            if (mNiceVideoPlayer != null) {
-                mNiceVideoPlayer.setUp(clarities.get(defaultClarityIndex).videoUrl, null);
-            }
-        }
     }
 
     @Override
@@ -395,11 +361,8 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     @Override
     public void onClarityChanged(int clarityIndex) {
         // 根据切换后的清晰度索引值，设置对应的视频链接地址，并从当前播放位置接着播放
-        Clarity clarity = clarities.get(clarityIndex);
-        mClarity.setText(clarity.grade);
         long currentPosition = mNiceVideoPlayer.getCurrentPosition();
         mNiceVideoPlayer.releasePlayer();
-        mNiceVideoPlayer.setUp(clarity.videoUrl, null);
         mNiceVideoPlayer.start(currentPosition);
     }
 
@@ -529,12 +492,14 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         mChangeBrightness.setVisibility(View.GONE);
     }
 
-    public void setChapterId(int chapterId) {
-        mLessonListDialog = new LessonListDialog(mContext);
-        //  mLessonListDialog.setCourses(courses);
+    public void setChapterId(AppCompatActivity appCompatActivity, int chapterId, int position) {
+        mLessonListDialog = new LessonListDialog();
         mClarity.setText("列表");
-        CoursesPopWindow coursesPopWindow = new CoursesPopWindow(getContext()).setChapterId(chapterId);
-        coursesPopWindow.setContentView(new LinearLayout(mContext));
-        coursesPopWindow.show(mClarity);
+        mLessonListDialog.setup(appCompatActivity).setChapterId(chapterId, position).setListener((position1, course) -> {
+            if (appCompatActivity instanceof CBTICoursePlayActivity) {
+                return ((CBTICoursePlayActivity) appCompatActivity).onSelectLesson(position1, course);
+            }
+            return false;
+        });
     }
 }

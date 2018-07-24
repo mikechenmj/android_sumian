@@ -139,6 +139,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     @Override
     public void setSourceData(String vid, String playAuth) {
+        mCurrentState = STATE_IDLE;
+        mMediaPlayer.reset();
+        mController.reset();
         mMediaPlayer.setDataSource(vid, playAuth);
     }
 
@@ -147,9 +150,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         mController = controller;
         mController.reset();
         mController.setNiceVideoPlayer(this);
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mContainer.addView(mController, params);
     }
 
@@ -190,8 +191,13 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             initMediaPlayer();
             initTextureView();
             addTextureView();
+            continueFromLastPosition = false;
+            skipToPosition = 1;
+            mCurrentState = STATE_PREPARING;
+            mController.onPlayStateChanged(mCurrentState);
+            mMediaPlayer.prepareAsync();
         } else {
-            LogUtil.d("NiceVideoPlayer只有在mCurrentState == STATE_IDLE时才能调用start方法.");
+            Log.e(TAG, "NiceVideoPlayer只有在mCurrentState == STATE_IDLE时才能调用start方法.");
         }
     }
 
@@ -413,10 +419,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     private void addTextureView() {
         mContainer.removeView(mTextureView);
-        LayoutParams params = new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                Gravity.CENTER);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         mContainer.addView(mTextureView, 0, params);
     }
 

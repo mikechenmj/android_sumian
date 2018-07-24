@@ -2,16 +2,15 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/space_250"
     android:layout_height="@dimen/space_60"
     android:foreground="@drawable/bg_material_ripple">
 
     <TextView
         android:id="@+id/tv_title"
-        style="@style/text_t1_16"
+        style="@style/text_b2_14"
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
-        android:textColor="@color/b2_color"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1"
         android:layout_marginStart="@dimen/space_20"
-        android:background="@color/l1_color"
+        android:background="@color/l1_alpha_10_color"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
