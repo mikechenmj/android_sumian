@@ -32,12 +32,13 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
         }
         val dataList = chaptersData.data
         updateProgressViewList(dataList)
-        for ((index, data) in dataList.withIndex()) {
-            if (data.chapterProgress != 100) {
-                tv_progress.text = mContext.getString(R.string.cbti_chapters_progress, index + 1, data.chapterProgress)
-                break
-            }
-        }
+        tv_progress.text = chaptersData.meta.currentStatus
+//        for ((index, data) in dataList.withIndex()) {
+//            if (data.chapterProgress != 100) {
+//                tv_progress.text = mContext.getString(R.string.cbti_chapters_progress, index + 1, data.chapterProgress)
+//                break
+//            }
+//        }
     }
 
     private fun updateProgressViewList(dataList: List<CbtiChapterData>) {

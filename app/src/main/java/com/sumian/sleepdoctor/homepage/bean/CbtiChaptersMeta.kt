@@ -14,5 +14,6 @@ data class CbtiChaptersMeta(
         @SerializedName("is_lock") val isLock: Boolean,
         @SerializedName("unlock_count") val unlockCount: Int,
         @SerializedName("count") val count: Int,
-        @SerializedName("total_progress_text") val totalProgressText: String
+        @SerializedName("total_progress_text") val totalProgressText: String,
+        @SerializedName("current_status") val currentStatus: String
 )
