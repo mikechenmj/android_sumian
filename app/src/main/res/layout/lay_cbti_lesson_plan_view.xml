@@ -12,6 +12,7 @@
         android:layout_gravity="center|left"
         android:drawablePadding="@dimen/space_10"
         android:drawableStart="@mipmap/ic_cbti_icon_course_complete"
+        android:paddingTop="@dimen/space_10"
         android:text="@string/finished"
         android:visibility="gone"
         tools:ignore="RtlHardcoded"

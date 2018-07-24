@@ -83,7 +83,14 @@ class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CB
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
-        CBTIExerciseWebActivity.show(activity!!, mExerciseAdapter.getItem(position).cbti_course_id)
+
+        val exercise = mExerciseAdapter.getItem(position)
+        if (exercise.is_lock) {
+            showCenterToast(R.string.see_lesson_2_unlock)
+            return
+        }
+
+        CBTIExerciseWebActivity.show(activity!!, exercise.cbti_course_id)
     }
 
 }

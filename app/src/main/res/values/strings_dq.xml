@@ -75,6 +75,8 @@
     <string name="lesson_summary">课程总结</string>
     <string name="lesson_review_last_week">上周回顾</string>
     <string name="list">列表</string>
+    <string name="see_lesson_2_unlock">观看课程后解锁</string>
+    <string name="finished_pre_lesson_2_unlock">完成上节课程后解锁</string>
 
     <!--version-->
     <string name="none_market">"您的手机没有安装应用市场!"</string>

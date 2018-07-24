@@ -90,7 +90,7 @@ class CourseFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWee
     override fun onItemClick(position: Int, itemId: Long) {
         val lesson = mCourseAdapter.getItem(position)
         if (lesson.is_lock) {
-            showCenterToast("请先完成上一节课程")
+            showCenterToast(R.string.see_lesson_2_unlock)
             return
         }
         CBTICoursePlayActivity.show(activity!!, lesson, position)
