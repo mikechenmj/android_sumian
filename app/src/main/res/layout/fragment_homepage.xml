@@ -40,6 +40,7 @@
                         android:id="@+id/tv_name"
                         style="@style/text_t3_18"
                         android:textSize="@dimen/font_20"
+                        android:textStyle="bold"
                         tools:text="张三" />
 
                     <TextView
@@ -103,7 +104,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_home_img_scale"
                     android:gravity="center"
-                    android:text="@string/scale_evaluation" />
+                    android:text="@string/scale_evaluation"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_sleep_health"
@@ -113,7 +115,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_home_img_scale"
                     android:gravity="center"
-                    android:text="@string/sleep_health" />
+                    android:text="@string/sleep_health"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

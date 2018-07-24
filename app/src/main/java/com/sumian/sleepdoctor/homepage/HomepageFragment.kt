@@ -52,6 +52,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     override fun initWidget(root: View) {
         super.initWidget(root)
         initUserInfo()
+        sleep_record_view.setOnLabelClickListener { SleepRecordActivity.launch(activity!!) }
         sleep_record_view.setOnClickRightArrowListener { SleepRecordActivity.launch(activity!!) }
         sleep_record_view.setOnClickFillSleepRecordBtnListener { FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD) }
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
@@ -87,6 +88,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     override fun onStart() {
         super.onStart()
         updateSleepPrescriptionIfNeed()
+//        SumianImageTextToast.showToast(activity!!)
     }
 
     private fun querySleepPrescription() {
