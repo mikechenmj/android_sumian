@@ -112,7 +112,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
     override fun initData() {
         super.initData()
-        this.mPresenter.getCBTIDetailInfo(mCourse?.cbti_chapter_id!!)
+        this.mPresenter.getCBTIDetailInfo(mCourse?.id!!)
     }
 
     override fun onClick(v: View?) {
@@ -160,11 +160,12 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
         title_bar.setTitle(mCurrentCourse?.title)
 
-        tv_summary.text = coursePlayAuth.summary
+        tv_summary.text = mCurrentCourse?.summary
 
         mController.setTitle(mCurrentCourse?.title)
 
         val titles = ArrayList<String>()
+
         coursePlayAuth.courses.forEach {
             titles.add(it.title)
         }
@@ -177,8 +178,13 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
             setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
         }
 
-        nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.summary != null) View.VISIBLE else View.GONE
-        v_divider.visibility = if (coursePlayAuth.summary != null) View.VISIBLE else View.GONE
+        nav_tab_lesson_practice.visibility = if (coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+
+        v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+
+        nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
+
+        lay_lesson_tips.visibility = if (coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
     }
 
     override fun onGetCBTIDetailFailed(error: String) {

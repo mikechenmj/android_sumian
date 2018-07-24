@@ -28,8 +28,10 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/lay_lesson_tips"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_62"
+                android:layout_marginBottom="@dimen/space_10"
                 android:background="@color/b2_color"
                 android:orientation="horizontal">
 
@@ -64,7 +66,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/space_10"
                 android:background="@color/b2_color"
                 android:orientation="vertical">
 

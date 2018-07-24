@@ -13,7 +13,7 @@ data class CoursePlayAuth(var id: Int,
                           var introduction: String,
                           var summary: String?,
                           var index: Int,
-                          var last_chapter_summary: String,
+                          var last_chapter_summary: String?,
                           var courses: List<Course>,
                           var meta: Meta) {
 

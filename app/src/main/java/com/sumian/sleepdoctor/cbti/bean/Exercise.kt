@@ -12,7 +12,7 @@ data class Exercise(var id: Int,//练习 id
                     var title: String,
                     var guide: Guide,
                     var type: Int,//练习类型 0：判断题 1：勾选题 2：量表题 3：跳转题
-                    var data: Data,//type=0 判断题 注意：这是对象数组
+        //var data: Any,//type=0 判断题   type=1 选择题 注意：这是对象数组   type=2  量表 type=3 跳转题  后面2种类型都是对象  cry
                     var final_words: String,
                     var is_lock: Boolean,
                     var done: Boolean,
@@ -22,5 +22,4 @@ data class Exercise(var id: Int,//练习 id
                      var description: String,
                      var button: String)
 
-    data class Data(var destination: Int)
 }

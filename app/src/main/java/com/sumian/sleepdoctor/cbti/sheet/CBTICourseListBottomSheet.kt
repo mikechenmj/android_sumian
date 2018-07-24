@@ -102,7 +102,7 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
                         val tmpCourse = courses[p]
                         Log.e("TAG", "$p")
                         if (tmpCourse.is_lock) {
-                            ToastHelper.show(it.context, "请先完成上一节课程", Gravity.CENTER)
+                            ToastHelper.show(it.context, it.context.getString(R.string.finished_pre_lesson_2_unlock), Gravity.CENTER)
                             return@setOnClickListener
                         }
                         courses.forEachIndexed { index, _ ->

@@ -26,7 +26,12 @@
                 android:id="@+id/cbti_week_lesson_banner_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_180"
-                android:layout_marginBottom="@dimen/space_10"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10"
+                android:background="@color/b1_color"
                 app:layout_scrollFlags="scroll|enterAlways" />
 
             <android.support.design.widget.TabLayout

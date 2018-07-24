@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/space_180"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:ignore="UselessParent">
 
@@ -12,8 +12,8 @@
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
         android:layout_marginTop="@dimen/space_44"
-        android:text="第1周 认识睡眠"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        tools:text="第1周 认识睡眠" />
 
     <TextView
         android:id="@+id/tv_cbti_week_lesson_desc"
@@ -23,9 +23,12 @@
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
         android:layout_marginTop="@dimen/space_10"
+        android:ellipsize="end"
         android:lineSpacingExtra="@dimen/space_4"
-        android:text="这节课将会带你学习睡眠的科学和与失眠有关的定义和引起失眠的因素，赶紧打开视频一起学习吧。"
-        tools:ignore="HardcodedText" />
+        android:lines="2"
+        android:marqueeRepeatLimit="marquee_forever"
+        tools:ignore="HardcodedText"
+        tools:text="这节课将会带你学习睡眠的科学和与失眠有关的定义和引起失眠的因素，赶紧打开视频一起学习吧。" />
 
     <com.sumian.sleepdoctor.cbti.widget.CBTIWeekCoursePlanView
         android:id="@+id/cbti_lesson_plan_view"
