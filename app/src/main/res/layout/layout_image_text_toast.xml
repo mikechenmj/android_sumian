@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:src="@drawable/ic_dialog_fail" />
+            tools:src="@drawable/ic_dialog_fail" />
 
         <TextView
             android:id="@+id/tv_desc"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:text="@string/operation_fail"
+            tools:text="@string/operation_fail"
             android:visibility="gone"
             tools:visibility="visible" />
     </LinearLayout>

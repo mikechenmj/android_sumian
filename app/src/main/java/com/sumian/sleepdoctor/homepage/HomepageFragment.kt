@@ -24,6 +24,7 @@ import com.sumian.sleepdoctor.record.SleepRecordActivity
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.scale.ScaleListActivity
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
+import com.sumian.sleepdoctor.widget.dialog.SumianImageTextToast
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -88,7 +89,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     override fun onStart() {
         super.onStart()
         updateSleepPrescriptionIfNeed()
-//        SumianImageTextToast.showToast(activity!!)
+//        SumianImageTextToast.showWindow(activity!!, R.drawable.ic_dialog_fail, R.string.operation_fail, true)
     }
 
     private fun querySleepPrescription() {
