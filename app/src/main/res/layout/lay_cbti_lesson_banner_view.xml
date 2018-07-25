@@ -12,6 +12,10 @@
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
         android:layout_marginTop="@dimen/space_44"
+        android:ellipsize="end"
+        android:lines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         tools:ignore="HardcodedText"
         tools:text="第1周 认识睡眠" />
 

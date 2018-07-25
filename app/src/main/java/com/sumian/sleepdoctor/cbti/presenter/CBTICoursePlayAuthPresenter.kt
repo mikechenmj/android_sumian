@@ -39,7 +39,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         }
     }
 
-    override fun getCBTIDetailInfo(id: Int) {
+    override fun getCBTIPlayAuthInfo(id: Int) {
 
         mView?.onBegin()
 
@@ -48,12 +48,12 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
 
             override fun onSuccess(response: CoursePlayAuth?) {
                 response?.let {
-                    mView?.onGetCBTIDetailSuccess(response)
+                    mView?.onGetCBTIPlayAuthSuccess(response)
                 }
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetCBTIDetailFailed(error = errorResponse.message)
+                mView?.onGetCBTIPlayAuthFailed(error = errorResponse.message)
             }
 
             override fun onFinish() {
@@ -65,11 +65,11 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         mCalls.add(call)
     }
 
-    override fun uploadCBTIVideoLog(id: Int, videoProgress: String, endpoint: Int) {
+    override fun uploadCBTIVideoLog(courseId: Int, videoProgress: String, endpoint: Int) {
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().uploadCBTICourseLogs(id, videoProgress.toUpperCase(), endpoint)
+        val call = AppManager.getHttpService().uploadCBTICourseLogs(courseId, videoProgress.toUpperCase(), endpoint)
         mCalls.add(call)
         call.enqueue(object : BaseResponseCallback<CoursePlayLog>() {
 
@@ -105,7 +105,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         } else {
             mBrowseFrame.append("1")
         }
-        //  Log.e(TAG, "tmpFrame=$mBrowseFrame")
+        //  PlayLog.e(TAG, "tmpFrame=$mBrowseFrame")
 
         val hexPlayFrame = mBrowseFrame.toString().toBigInteger(2).toString(16)
 
@@ -118,9 +118,38 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         }
 
         // playFrame=0.7f/jump Frame/ 60frame/s /play finished 都上传一次
-        if (fl == 0.7f || jumpFrame > 1 || currentFrame.toInt() % 60 == 0 || currentFrame == totalFrame) {
+        if (currentFrame.toInt() <= 1 || (fl > 0.68f && fl <= 0.70f) || jumpFrame > 1 || currentFrame.toInt() % 60 == 0 || currentFrame == totalFrame) {
             uploadCBTIVideoLog(currentCourseId, hexPlayFrame, currentFrame.toInt())
         }
+    }
+
+    override fun playNextCBTIVideo(courseId: Int) {
+
+        mView?.onBegin()
+
+        val call = AppManager.getHttpService().getCBTIPLayAuth(id = courseId)
+        call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
+
+            override fun onSuccess(response: CoursePlayAuth?) {
+                response?.let {
+                    if (!it.isHavePractice() || it.isFinishedPractice()) {
+                        mView?.onGetCBTINextPlayAuthSuccess(response)
+                    }
+                }
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetCBTINextPlayAuthFailed(error = errorResponse.message)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                mView?.onFinish()
+            }
+
+        })
+        mCalls.add(call)
+
     }
 
     /**

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.cbti.bean.CBTIMeta;
 import com.sumian.sleepdoctor.cbti.bean.Course;
@@ -109,6 +111,7 @@ public class LessonListDialog extends DialogFragment implements CBTIWeekLessonCo
     }
 
     private void updateCourses(int position, @NotNull List<Course> courses) {
+        this.mCurrentPosition = position;
         mLayContainer.removeAllViews();
         for (int i = 0; i < courses.size(); i++) {
             Course course = courses.get(i);
@@ -135,7 +138,17 @@ public class LessonListDialog extends DialogFragment implements CBTIWeekLessonCo
 
             rootView.setOnClickListener(v -> {
                 int p = (int) v.getTag();
+
+                if (position == p) {
+                    return;
+                }
+
                 Course tmpCourse = mCourses.get(p);
+
+                if (tmpCourse.is_lock()) {
+                    ToastHelper.show(v.getContext(), "请先观看上节课程", Gravity.CENTER);
+                    return;
+                }
 
                 if (mListener != null) {
                     if (mListener.showCBTICourse(p, tmpCourse)) {

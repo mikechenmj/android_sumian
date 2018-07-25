@@ -99,6 +99,9 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
                     viewHolder.itemView?.tag = index
                     viewHolder.itemView?.setOnClickListener {
                         val p = it.tag as Int
+                        if (position == p) {
+                            return@setOnClickListener
+                        }
                         val tmpCourse = courses[p]
                         Log.e("TAG", "$p")
                         if (tmpCourse.is_lock) {

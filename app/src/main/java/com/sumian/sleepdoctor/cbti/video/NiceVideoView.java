@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import java.util.Map;
 
 /**
- * Created by XiaoJianjun on 2017/4/28.
+ * Created by sm on 2018/7/21.
  * 播放器
  */
 public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, TextureView.SurfaceTextureListener {
@@ -107,6 +107,8 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     private OnVideoViewEvent mOnVideoViewEvent;
 
+    private String mCurrentVid;
+
     private long mOldFrame;
 
     public NiceVideoView(Context context) {
@@ -140,6 +142,12 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     @Override
     public void setSourceData(String vid, String playAuth) {
         mCurrentState = STATE_IDLE;
+        if (!vid.equals(mCurrentVid)) {
+            continueFromLastPosition = false;
+            skipToPosition = 0;
+        }
+        this.mCurrentVid = vid;
+        mMediaPlayer.stop();
         mMediaPlayer.reset();
         mController.reset();
         mMediaPlayer.setDataSource(vid, playAuth);
@@ -191,8 +199,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             initMediaPlayer();
             initTextureView();
             addTextureView();
-            continueFromLastPosition = false;
-            skipToPosition = 1;
+            continueFromLastPosition = true;
             mCurrentState = STATE_PREPARING;
             mController.onPlayStateChanged(mCurrentState);
             mMediaPlayer.prepareAsync();
@@ -239,7 +246,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         mCurrentState = STATE_PREPARING;
         mController.onPlayStateChanged(mCurrentState);
         continueFromLastPosition = false;
-        skipToPosition = 1;
+        skipToPosition = 0;
         mMediaPlayer.prepareAsync();
     }
 
@@ -474,7 +481,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        // Log.e(TAG, "onSurfaceTextureUpdated: ------------>position=" + mMediaPlayer.getCurrentPosition() + "  duration=" + mMediaPlayer.getDuration());
+        // PlayLog.e(TAG, "onSurfaceTextureUpdated: ------------>position=" + mMediaPlayer.getCurrentPosition() + "  duration=" + mMediaPlayer.getDuration());
     }
 
     private IMediaPlayer.OnPreparedListener mOnPreparedListener = new IMediaPlayer.OnPreparedListener() {
@@ -486,7 +493,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             mp.start();
             // 从上次的保存位置播放
             if (continueFromLastPosition) {
-                long savedPlayPosition = NiceUtil.getSavedPlayPosition(mContext, mUrl);
+                long savedPlayPosition = NiceUtil.getSavedPlayPosition(mContext, mCurrentVid);
                 mp.seekTo(savedPlayPosition);
             }
             // 跳到指定位置播放
@@ -512,6 +519,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             LogUtil.d("onCompletion ——> STATE_COMPLETED");
             // 清除屏幕常亮
             mContainer.setKeepScreenOn(false);
+            NiceUtil.savePlayPosition(mContext, mCurrentVid, 0);
         }
     };
 
@@ -715,9 +723,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     public void release() {
         // 保存播放位置
         if (isPlaying() || isBufferingPlaying() || isBufferingPaused() || isPaused()) {
-            NiceUtil.savePlayPosition(mContext, mUrl, getCurrentPosition());
+            NiceUtil.savePlayPosition(mContext, mCurrentVid, getCurrentPosition());
         } else if (isCompleted()) {
-            NiceUtil.savePlayPosition(mContext, mUrl, 0);
+            NiceUtil.savePlayPosition(mContext, mCurrentVid, 0);
         }
         // 退出全屏或小窗口
         if (isFullScreen()) {
@@ -750,5 +758,10 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     @Override
     public void showExtraContent() {
         mOnVideoViewEvent.showExtraContent();
+    }
+
+    @Override
+    public void showPracticeDialog() {
+        mOnVideoViewEvent.showPracticeDialog();
     }
 }

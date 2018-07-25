@@ -180,6 +180,9 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         onRelease();
         getLifecycle().removeObserver(this);
         //this.mBind.unbind();
+        if (mPresenter != null) {
+            mPresenter.release();
+        }
         this.mRoot = null;
         for (Call call : mCalls) {
             if (!call.isExecuted() || !call.isExecuted()) {

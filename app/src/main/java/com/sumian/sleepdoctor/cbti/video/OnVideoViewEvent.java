@@ -24,4 +24,6 @@ public interface OnVideoViewEvent {
     void onFrameChangeCallback(long currentFrame, long oldFrame, long totalFrame);
 
     void showExtraContent();
+
+    void showPracticeDialog();
 }

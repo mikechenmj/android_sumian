@@ -190,4 +190,6 @@ public interface INiceVideoPlayer {
     void onFrameChange(long currentFrame, long totalFrame);
 
     void showExtraContent();
+
+    void showPracticeDialog();
 }

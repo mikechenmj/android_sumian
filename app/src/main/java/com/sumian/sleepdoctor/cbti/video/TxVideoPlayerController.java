@@ -8,6 +8,7 @@ import android.os.BatteryManager;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,9 @@ import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.cbti.activity.CBTICoursePlayActivity;
+import com.sumian.sleepdoctor.cbti.bean.CoursePlayAuth;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,7 +74,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
 
     private LinearLayout mCompleted;
     private TextView mReplay;
-    private TextView mShare;
+    private TextView mHavePractice;
 
     private boolean topBottomVisible;
     private CountDownTimer mDismissTopBottomCountDownTimer;
@@ -78,6 +82,12 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     private LessonListDialog mLessonListDialog;
 
     private boolean hasRegisterBatteryReceiver; // 是否已经注册了电池广播
+
+    private CoursePlayAuth mPlayAuth;
+    private AppCompatActivity mAppCompatActivity;
+
+    private OnControllerCallback mControllerCallback;
+    private int mCurrentPosition;
 
     public TxVideoPlayerController(Context context) {
         super(context);
@@ -124,7 +134,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
 
         mCompleted = findViewById(R.id.completed);
         mReplay = findViewById(R.id.replay);
-        mShare = findViewById(R.id.share);
+        mHavePractice = findViewById(R.id.share);
 
         mCenterStart.setOnClickListener(this);
         mBack.setOnClickListener(this);
@@ -133,9 +143,13 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         mClarity.setOnClickListener(this);
         mRetry.setOnClickListener(this);
         mReplay.setOnClickListener(this);
-        mShare.setOnClickListener(this);
+        mHavePractice.setOnClickListener(this);
         mSeek.setOnSeekBarChangeListener(this);
         this.setOnClickListener(this);
+    }
+
+    public void setControllerCallback(OnControllerCallback controllerCallback) {
+        mControllerCallback = controllerCallback;
     }
 
     @Override
@@ -214,6 +228,24 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 setTopBottomVisible(false);
                 mImage.setVisibility(View.VISIBLE);
                 mCompleted.setVisibility(View.VISIBLE);
+                Log.e(TAG, "onPlayStateChanged: ------播放完成---->");
+                // mHavePractice.setVisibility(VISIBLE);
+                mReplay.setVisibility(VISIBLE);
+
+                if (mPlayAuth.isHavePractice() && !mPlayAuth.isFinishedPractice()) {
+                    mHavePractice.setVisibility(VISIBLE);
+                    Log.e(TAG, "onPlayStateChanged: 有课程练习,并且课程未做....");
+                } else {
+                    mHavePractice.setVisibility(GONE);
+                    //没有练习,直接尝试播放下一个视频
+
+                    Log.e(TAG, "onPlayStateChanged: 没有课程练习,或者练习已经做完.直接进入播放下一个视频....");
+
+                    if (mControllerCallback != null) {
+                        mControllerCallback.onPlayNext();
+                    }
+                }
+
                 break;
         }
     }
@@ -344,9 +376,24 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         } else if (v == mRetry) {
             mNiceVideoPlayer.restart();
         } else if (v == mReplay) {
-            reset();
-            mNiceVideoPlayer.replay();
-        } else if (v == mShare) {
+
+            mHavePractice.setVisibility(GONE);
+            //没有练习,直接尝试播放下一个视频
+
+            Log.e(TAG, "onClick: 没有课程练习,或者练习已经做完.直接进入播放下一个视频....");
+
+            if (mCurrentPosition == mPlayAuth.getCourses().size() - 1) {
+                reset();
+                mNiceVideoPlayer.replay();
+                return;
+            }
+
+            if (mControllerCallback != null) {
+                mControllerCallback.onPlayNext();
+            }
+
+        } else if (v == mHavePractice) {
+            mNiceVideoPlayer.exitFullScreen();
             mNiceVideoPlayer.showExtraContent();
         } else if (v == this) {
             if (mNiceVideoPlayer.isPlaying()
@@ -494,12 +541,28 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
 
     public void setChapterId(AppCompatActivity appCompatActivity, int chapterId, int position) {
         mLessonListDialog = new LessonListDialog();
+        this.mCurrentPosition = position;
         mClarity.setText("列表");
-        mLessonListDialog.setup(appCompatActivity).setChapterId(chapterId, position).setListener((position1, course) -> {
-            if (appCompatActivity instanceof CBTICoursePlayActivity) {
-                return ((CBTICoursePlayActivity) appCompatActivity).onSelectLesson(position1, course);
-            }
-            return false;
-        });
+        mLessonListDialog.
+                setup(appCompatActivity)
+                .setChapterId(chapterId, position)
+                .setListener((position1, course) -> appCompatActivity instanceof CBTICoursePlayActivity && ((CBTICoursePlayActivity) appCompatActivity)
+                        .onSelectLesson(position1, course));
+    }
+
+    public void setPlayAuth(@NotNull CoursePlayAuth coursePlayAuth) {
+        this.mPlayAuth = coursePlayAuth;
+    }
+
+    @NotNull
+    public TxVideoPlayerController setup(@NotNull AppCompatActivity appCompatActivity) {
+        this.mAppCompatActivity = appCompatActivity;
+        return this;
+    }
+
+
+    public interface OnControllerCallback {
+
+        void onPlayNext();
     }
 }

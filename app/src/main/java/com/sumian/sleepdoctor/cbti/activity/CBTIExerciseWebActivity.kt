@@ -1,12 +1,17 @@
 package com.sumian.sleepdoctor.cbti.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
+import android.view.View
 import com.google.gson.reflect.TypeToken
+import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BasePresenter
 import com.sumian.sleepdoctor.base.BaseWebViewActivity
 import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.utils.JsonUtil
+import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler
 import com.sumian.sleepdoctor.widget.webview.SBridgeResult
 import com.sumian.sleepdoctor.widget.webview.SWebView
@@ -23,7 +28,7 @@ class CBTIExerciseWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
 
     private var courseId: Int = 0
 
-    private var isFinished: Boolean = false
+    private var mCode: Int = 0xff
 
     companion object {
 
@@ -47,6 +52,40 @@ class CBTIExerciseWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
         return super.initBundle(bundle)
     }
 
+    private var sumianAlertDialog: SumianAlertDialog? = null
+
+    override fun onBack(v: View?) {
+        when (mCode) {
+            0 -> {
+
+                val intent = Intent().apply {
+                    action = "finished"
+                }
+
+                LocalBroadcastManager.getInstance(this@CBTIExerciseWebActivity).sendBroadcastSync(intent)
+                finish()
+            }
+            0xff -> {
+                sumianAlertDialog = SumianAlertDialog(this)
+                        .whitenLeft()
+                        .setTitle(R.string.are_you_exit_practice)
+                        .setMessage("退出后将不会保存此次填写记录")
+                        .setLeftBtn(R.string.cancel, null)
+                        .setRightBtn(R.string.sure) { finish() }
+
+                sumianAlertDialog?.show()
+            }
+            else -> {
+                finish()
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        onBack(null)
+    }
+
     override fun getUrlContentPart(): String {
         return H5Uri.CBTI_EXERCISES.replace("{course-id}", String.format(Locale.getDefault(), "%d", courseId))
     }
@@ -62,6 +101,10 @@ class CBTIExerciseWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
 
                 sBridgeResult?.let {
                     if (it.code == 0) {
+                        mCode = it.code
+                        LocalBroadcastManager.getInstance(this@CBTIExerciseWebActivity).sendBroadcastSync(Intent().apply {
+                            action = "finished"
+                        })
                         finish()
                     }
                 }

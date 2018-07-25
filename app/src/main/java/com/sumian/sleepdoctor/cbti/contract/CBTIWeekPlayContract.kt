@@ -16,23 +16,29 @@ interface CBTIWeekPlayContract {
 
     interface View : BaseView<Presenter> {
 
-        fun onGetCBTIDetailSuccess(coursePlayAuth: CoursePlayAuth)
+        fun onGetCBTIPlayAuthSuccess(coursePlayAuth: CoursePlayAuth)
 
-        fun onGetCBTIDetailFailed(error: String)
+        fun onGetCBTIPlayAuthFailed(error: String)
 
         fun onUploadLessonLogSuccess(coursePlayLog: CoursePlayLog)
 
         fun onUploadLessonLogFailed(error: String)
+
+        fun onGetCBTINextPlayAuthSuccess(coursePlayAuth: CoursePlayAuth)
+
+        fun onGetCBTINextPlayAuthFailed(error: String)
 
     }
 
 
     interface Presenter : BasePresenter<Any> {
 
-        fun getCBTIDetailInfo(id: Int)
+        fun getCBTIPlayAuthInfo(courseId: Int)
 
-        fun uploadCBTIVideoLog(id: Int, videoProgress: String, endpoint: Int)
+        fun uploadCBTIVideoLog(courseId: Int, videoProgress: String, endpoint: Int)
 
         fun calculatePlayFrame(currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long)
+
+        fun playNextCBTIVideo(courseId: Int)
     }
 }

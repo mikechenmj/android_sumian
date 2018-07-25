@@ -100,7 +100,7 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         }
 
         this.mRootView = rootView;
-        // Log.e("TAG", "onCreateView: ----->" + mRootView);
+        // PlayLog.e("TAG", "onCreateView: ----->" + mRootView);
         return rootView;
     }
 

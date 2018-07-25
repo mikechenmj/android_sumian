@@ -87,5 +87,8 @@
     <string name="this_is_last_version">当前已是最新版本</string>
     <string name="have_a_new_version">有新版本，请立即体验吧</string>
     <string name="force_upgrade_version">当前版本太低，请到应用市场升级后再使用</string>
+    <string name="practice_dialog_title">下节课程待开放</string>
+    <string name="good">好的</string>
+    <string name="are_you_exit_practice">是否确定退出练习？</string>
 
 </resources>

@@ -37,7 +37,7 @@ public final class AccountCache {
             return;
         }
 
-        //  Log.e(TAG, "saveUserCache: ------------->" + obj.toString());
+        //  PlayLog.e(TAG, "saveUserCache: ------------->" + obj.toString());
         SharedPreferences.Editor edit = initEdit();
         String json = JsonUtil.toJson(obj);
         edit.putString(KEY_USER, json);
@@ -49,7 +49,7 @@ public final class AccountCache {
             clearCache();
             return;
         }
-        // Log.e(TAG, "saveTokenCache: ------------->" + obj.toString());
+        // PlayLog.e(TAG, "saveTokenCache: ------------->" + obj.toString());
         SharedPreferences.Editor edit = initEdit();
         String json = JsonUtil.toJson(obj);
         edit.putString(KEY_TOKEN, json);
@@ -59,20 +59,20 @@ public final class AccountCache {
     public static <T> T getUserCache(Class<T> clx) {
         String cacheJSon = initSp().getString(KEY_USER, null);
         if (TextUtils.isEmpty(cacheJSon)) {
-            //  Log.e(TAG, "getCache: ------------->user cache is null");
+            //  PlayLog.e(TAG, "getCache: ------------->user cache is null");
             return null;
         }
-        // Log.e(TAG, "getCache: ------------->" + cacheJSon);
+        // PlayLog.e(TAG, "getCache: ------------->" + cacheJSon);
         return JsonUtil.fromJson(cacheJSon, clx);
     }
 
     public static <T> T getTokenCache(Class<T> clx) {
         String cacheJSon = initSp().getString(KEY_TOKEN, null);
         if (TextUtils.isEmpty(cacheJSon)) {
-            // Log.e(TAG, "getCache: ------------->token cache is null");
+            // PlayLog.e(TAG, "getCache: ------------->token cache is null");
             return null;
         }
-        // Log.e(TAG, "getCache: ------------->" + cacheJSon);
+        // PlayLog.e(TAG, "getCache: ------------->" + cacheJSon);
         return JsonUtil.fromJson(cacheJSon, clx);
     }
 

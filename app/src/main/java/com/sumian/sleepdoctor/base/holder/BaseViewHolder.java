@@ -100,11 +100,11 @@ public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder {
     }
 
 //    protected void onItemClick(View v) {
-//        // Log.d(TAG, "onItemClick: -------->" + v.toString());
+//        // PlayLog.d(TAG, "onItemClick: -------->" + v.toString());
 //    }
 
     protected boolean onItemLongClick(View v) {
-        //  Log.e(TAG, "onItemLongClick: ----------->" + v.toString());
+        //  PlayLog.e(TAG, "onItemLongClick: ----------->" + v.toString());
         return false;
     }
 
