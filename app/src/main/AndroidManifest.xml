@@ -233,6 +233,7 @@
         <activity
             android:name=".cbti.activity.CBTIExerciseWebActivity"
             android:theme="@style/BaseAppTheme" />
+        <activity android:name=".test.TestActivity" />
 
     </application>
 

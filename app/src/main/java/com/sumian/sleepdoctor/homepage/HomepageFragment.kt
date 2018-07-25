@@ -259,10 +259,5 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     }
 
     private fun onAvatarClick() {
-//        SumianImageTextDialog(activity!!)
-//                .setType(SumianImageTextDialog.TYPE_TEXT)
-//                .setText("dialog")
-//                .show()
-//        ToastUtils.showShort("toast")
     }
 }
