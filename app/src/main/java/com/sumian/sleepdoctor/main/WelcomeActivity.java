@@ -9,6 +9,7 @@ import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 
 /**
  * Created by jzz
@@ -51,5 +52,8 @@ public class WelcomeActivity extends BaseActivity {
             }
             finish();
         }, WELCOME_SHOW_TIME);
+        if (token != null) {
+            LeanCloudManager.getAndUploadCurrentInstallation();
+        }
     }
 }

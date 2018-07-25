@@ -24,7 +24,6 @@ import com.sumian.sleepdoctor.record.SleepRecordActivity
 import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.scale.ScaleListActivity
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
-import com.sumian.sleepdoctor.widget.dialog.SumianImageTextToast
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -48,6 +47,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     companion object {
         const val REQUEST_CODE_FILL_SLEEP_RECORD = 1
         const val SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME = "update_sleep_prescription_time"
+        const val REFRESH_DATA_INTERVAL = DateUtils.MINUTE_IN_MILLIS * 1
     }
 
     override fun initWidget(root: View) {
@@ -121,7 +121,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
      */
     private fun updateSleepPrescriptionIfNeed() {
         val lastUpdateTime = SPUtils.getInstance().getLong(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, 0)
-        if (System.currentTimeMillis() - lastUpdateTime > DateUtils.MINUTE_IN_MILLIS * 5) {
+        if (System.currentTimeMillis() - lastUpdateTime > REFRESH_DATA_INTERVAL) {
             querySleepPrescription()
         }
     }
@@ -150,6 +150,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
 
     private fun showSleepUpdatedDialog() {
         SumianAlertDialog(activity)
+                .setTitle(R.string.update_sleep_prescription)
                 .setMessage(R.string.update_sleep_prescription_hint)
                 .setLeftBtn(R.string.i_got_it, null)
                 .show()

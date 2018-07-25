@@ -46,6 +46,7 @@
             android:layout_marginTop="@dimen/space_20"
             android:textColor="@color/t3_color"
             android:textSize="@dimen/font_18"
+            android:textStyle="bold"
             tools:text="Title" />
 
         <TextView
@@ -55,9 +56,9 @@
             android:layout_marginEnd="@dimen/space_20"
             android:layout_marginStart="@dimen/space_20"
             android:layout_marginTop="@dimen/space_10"
+            android:gravity="center"
             android:textColor="@color/t1_color"
             android:textSize="@dimen/font_14"
-            android:gravity="center"
             tools:text="MessageMessageMessageMessageMessageMessageMessageMessageMessage" />
 
         <LinearLayout

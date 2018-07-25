@@ -55,8 +55,13 @@ public class LeanCloudManager {
                 Log.e(TAG, "onClientOffline: ------------------->");
             }
         });
+        //设置后台自动重启
+        PushService.setAutoWakeUp(true);
+        // 设置默认打开的 Activity
+        PushService.setDefaultPushCallback(context, WelcomeActivity.class);
+    }
 
-
+    public static void getAndUploadCurrentInstallation() {
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
@@ -67,10 +72,6 @@ public class LeanCloudManager {
                 }
             }
         });
-        //设置后台自动重启
-        PushService.setAutoWakeUp(true);
-        // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(context, WelcomeActivity.class);
     }
 
     private static void uploadDeviceInfo(String installationId) {
