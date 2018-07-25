@@ -48,7 +48,6 @@ import retrofit2.Call;
 public class SleepRecordFragment extends BaseFragment implements CalendarView.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
-    public static final int REQUEST_CODE_OPEN_NOTIFICATION = 2;
     public static final int PAGE_SIZE = 12;
     private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
     private static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
@@ -89,27 +88,10 @@ public class SleepRecordFragment extends BaseFragment implements CalendarView.On
         super.initWidget(root);
         mSleepRecordView.setOnClickRefillSleepRecordListener(v -> launchFillSleepRecordActivity(mSelectedTime));
         mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> launchFillSleepRecordActivity(mSelectedTime));
-        showOpenNotificationDialogIfNeeded();
     }
 
     private void setTvDate(long timeInMillis) {
         mTvDate.setText(TimeUtil.formatDate("yyyy.MM.dd", timeInMillis));
-    }
-
-    private void showOpenNotificationDialogIfNeeded() {
-        long previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0);
-        boolean alreadyShowed = previousShowTime > 0;
-        if (NotificationUtil.Companion.areNotificationsEnabled(getActivity()) || alreadyShowed) {
-            return;
-        }
-        new SumianAlertDialog(getActivity())
-                .setCloseIconVisible(true)
-                .setTopIconResource(R.mipmap.ic_notification_alert)
-                .setTitle(R.string.open_notification)
-                .setMessage(R.string.open_notification_and_receive_doctor_response)
-                .setRightBtn(R.string.open_notification, v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION))
-                .show();
-        SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis());
     }
 
     @Override

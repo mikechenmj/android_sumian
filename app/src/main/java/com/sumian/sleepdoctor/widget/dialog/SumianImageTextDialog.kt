@@ -5,9 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
-import android.text.TextUtils
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -28,13 +25,11 @@ import kotlinx.android.synthetic.main.lay_dialog_common_sumian.*
  */
 class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLoadingDialog_NotDim) {
     private val mContext = context
-    private var mRotateImage = true
-    private var mImageRes: Int? = null
-    private var mText: String? = null
     private val mHandler = Handler()
     private var mType = TYPE_TEXT
 
     companion object {
+        const val TYPE_INVALID = -1
         const val TYPE_LOADING = 0
         const val TYPE_SUCCESS = 1
         const val TYPE_FAIL = 2
@@ -50,73 +45,20 @@ class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLo
 
     private fun updateImageAndText() {
         ll_iv_tv_container.visibility = if (mType == TYPE_TEXT) GONE else VISIBLE
-        tv_toast.visibility = if (mType != TYPE_TEXT) GONE else VISIBLE
-
-        if (mType != TYPE_TEXT) {
-            if (mImageRes != null) {
-                iv.setImageResource(mImageRes!!)
-                iv.visibility = View.VISIBLE
-            } else {
-                iv.visibility = GONE
-            }
-            if (!TextUtils.isEmpty(mText)) {
-                tv_desc.text = mText
-                tv_desc.visibility = VISIBLE
-            } else {
-                tv_desc.visibility = GONE
-            }
+        val imageRes = getImageRes(mType)
+        val textRes = getTextRes(mType)
+        if (imageRes != 0) {
+            iv.setImageResource(imageRes)
+            iv.visibility = View.VISIBLE
         } else {
-            tv_toast.text = mText
+            iv.visibility = GONE
         }
-    }
-
-    fun setImage(@DrawableRes imageRes: Int) {
-        mImageRes = imageRes
-    }
-
-    fun setText(@StringRes textRes: Int): SumianImageTextDialog {
-        mText = mContext.getString(textRes)
-        return this
-    }
-
-    fun setText(text: String): SumianImageTextDialog {
-        mText = text
-        return this
-    }
-
-    fun setType(type: Int): SumianImageTextDialog {
-        mType = type
-        when (type) {
-            TYPE_LOADING -> {
-                setImage(R.drawable.dialog_loading_animation)
-                mRotateImage = true
-            }
-
-            TYPE_SUCCESS -> {
-                setImage(R.drawable.ic_dialog_success)
-                setText(R.string.operation_success)
-                mRotateImage = false
-            }
-            TYPE_FAIL -> {
-                setImage(R.drawable.ic_dialog_fail)
-                setText(R.string.operation_fail)
-                mRotateImage = false
-            }
-            TYPE_WARNING -> {
-                setImage(R.drawable.ic_dialog_warning)
-                setText(R.string.operation_warning)
-                mRotateImage = false
-            }
-            TYPE_TEXT -> {
-                setImage(R.drawable.ic_dialog_warning)
-                setText(R.string.operation_warning)
-                mRotateImage = false
-            }
-            else -> {
-                setType(TYPE_TEXT)
-            }
+        if (textRes != 0) {
+            tv_desc.setText(textRes)
+            tv_desc.visibility = VISIBLE
+        } else {
+            tv_desc.visibility = GONE
         }
-        return this
     }
 
     fun show(delay: Long, duration: Long): SumianImageTextDialog {
@@ -134,7 +76,7 @@ class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLo
             return this
         }
         mHandler.postDelayed({
-            if(isShowing) {
+            if (isShowing) {
                 dismiss()
             }
         }, delay)
@@ -149,21 +91,60 @@ class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLo
     }
 
     fun show(toastData: H5ShowToastData) {
-        if (toastData.type.equals("text")) {
+        val type = getType(toastData.type)
+        if (type == TYPE_INVALID) {
+            return
+        }
+        if (type == TYPE_TEXT) {
             ToastUtils.showShort(toastData.message)
             return
         }
-        when (toastData.type) {
-//            "text" -> setType(SumianImageTextDialog.TYPE_TEXT).setText(toastData.message);
-            "success" -> setType(SumianImageTextDialog.TYPE_SUCCESS)
-            "error" -> setType(SumianImageTextDialog.TYPE_FAIL)
-            "loading" -> setType(SumianImageTextDialog.TYPE_LOADING)
-            "warning" -> setType(SumianImageTextDialog.TYPE_WARNING)
+        if (toastData.duration > 0) {
+            val textRes = getTextRes(type)
+            val imageRes = getImageRes(type)
+            SumianImageTextToast.showToast(mContext, imageRes, textRes, toastData.duration > 2000)
+            return
+        }
+        mType = type
+        show(toastData.delay, toastData.duration)
+    }
+
+    private fun getType(typeString: String): Int {
+        return when (typeString) {
+            "text" -> SumianImageTextDialog.TYPE_TEXT
+            "success" -> TYPE_SUCCESS
+            "error" -> TYPE_FAIL
+            "loading" -> TYPE_LOADING
+            "warning" -> TYPE_WARNING
             else -> {
-                return
+                TYPE_INVALID
             }
         }
-        show(toastData.delay, toastData.duration)
+    }
+
+    private fun getTextRes(type: Int): Int {
+        return when (type) {
+            TYPE_TEXT -> 0
+            TYPE_SUCCESS -> R.string.operation_success
+            TYPE_FAIL -> R.string.operation_fail
+            TYPE_WARNING -> R.string.operation_warning
+            TYPE_LOADING -> 0
+            else -> {
+                0
+            }
+        }
+    }
+
+    private fun getImageRes(type: Int): Int {
+        return when (type) {
+            TYPE_SUCCESS -> R.drawable.ic_dialog_success
+            TYPE_FAIL -> R.drawable.ic_dialog_fail
+            TYPE_WARNING -> R.drawable.ic_dialog_warning
+            TYPE_LOADING -> R.drawable.dialog_loading_animation
+            else -> {
+                0
+            }
+        }
     }
 
     /**

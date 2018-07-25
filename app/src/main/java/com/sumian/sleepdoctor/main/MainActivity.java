@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.sumian.common.utils.SettingsUtil;
+import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -21,7 +24,9 @@ import com.sumian.sleepdoctor.homepage.HomepageFragment;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.tab.DoctorFragment;
 import com.sumian.sleepdoctor.tab.MeFragment;
+import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.StatusBarUtil;
+import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
 import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar;
 import com.sumian.sleepdoctor.widget.nav.NavigationItem;
 
@@ -40,6 +45,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     public static final String KEY_TAB_INDEX = "key_tab_index";
     public static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
     public static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
+    public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;
+
     @SuppressWarnings("unused")
     private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.nav_tab)
@@ -98,6 +105,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         initTab(position);
         mBottomNavigationBar.selectItem(position, false);
         mLaunchData = null;
+        showOpenNotificationDialogIfNeeded();
     }
 
     @Override
@@ -224,5 +232,21 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         LaunchData(int launchTabIndex) {
             this.tabIndex = launchTabIndex;
         }
+    }
+
+    private void showOpenNotificationDialogIfNeeded() {
+        long previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0);
+        boolean alreadyShowed = previousShowTime > 0;
+        if (NotificationUtil.Companion.areNotificationsEnabled(getActivity()) || alreadyShowed) {
+            return;
+        }
+        new SumianAlertDialog(getActivity())
+                .setCloseIconVisible(true)
+                .setTopIconResource(R.mipmap.ic_notification_alert)
+                .setTitle(R.string.open_notification)
+                .setMessage(R.string.open_notification_and_receive_doctor_response)
+                .setRightBtn(R.string.open_notification, v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION))
+                .show();
+        SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis());
     }
 }
