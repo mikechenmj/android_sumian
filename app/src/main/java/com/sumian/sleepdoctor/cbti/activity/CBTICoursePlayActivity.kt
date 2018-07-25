@@ -102,7 +102,6 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
                 onPlayNext()
             }
         }
-
     }
 
     override fun initWidget(root: View?) {
@@ -203,13 +202,13 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
             Log.e(TAG, "无调查问卷")
         }
 
-        nav_tab_lesson_practice.visibility = if (coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+        nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
 
         v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 
         nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
 
-        lay_lesson_tips.visibility = if (coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+        lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
     }
 
     override fun onGetCBTIPlayAuthFailed(error: String) {
@@ -295,7 +294,9 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
             setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
 
-            ImageLoader.loadImage(this@CBTICoursePlayActivity, imageView(), coursePlayAuth.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+            if (!isDestroyed) {
+                ImageLoader.loadImage(this@CBTICoursePlayActivity, imageView(), coursePlayAuth.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+            }
 
         }
 
@@ -303,13 +304,13 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
         aliyun_player.start()
 
-        nav_tab_lesson_practice.visibility = if (coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+        nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
 
         v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 
         nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
 
-        lay_lesson_tips.visibility = if (coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+        lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 
     }
 

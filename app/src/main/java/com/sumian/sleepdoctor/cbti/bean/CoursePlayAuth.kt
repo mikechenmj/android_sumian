@@ -1,7 +1,5 @@
 package com.sumian.sleepdoctor.cbti.bean
 
-import android.util.Log
-
 /**
  * Created by dq
  *

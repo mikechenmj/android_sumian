@@ -132,9 +132,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
 
             override fun onSuccess(response: CoursePlayAuth?) {
                 response?.let {
-                    if (!it.isHavePractice() || it.isFinishedPractice()) {
-                        mView?.onGetCBTINextPlayAuthSuccess(response)
-                    }
+                    mView?.onGetCBTINextPlayAuthSuccess(response)
                 }
             }
 

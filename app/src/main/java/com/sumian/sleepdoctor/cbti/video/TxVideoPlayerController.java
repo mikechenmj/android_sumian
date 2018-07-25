@@ -254,7 +254,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     protected void onPlayModeChanged(int playMode) {
         switch (playMode) {
             case NiceVideoView.MODE_NORMAL:
-                mBack.setVisibility(View.GONE);
+                mBack.setVisibility(View.VISIBLE);
                 mFullScreen.setImageResource(R.drawable.ic_player_enlarge);
                 mFullScreen.setVisibility(View.VISIBLE);
                 mClarity.setVisibility(View.GONE);
@@ -335,7 +335,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         // mLength.setVisibility(View.VISIBLE);
 
         mTop.setVisibility(View.VISIBLE);
-        mBack.setVisibility(View.GONE);
+        mBack.setVisibility(View.VISIBLE);
 
         mLoading.setVisibility(View.GONE);
         mError.setVisibility(View.GONE);
