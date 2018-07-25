@@ -54,8 +54,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 
                     @Override
                     protected void onSuccess(Token response) {
-                        AppManager.getAccountViewModel().updateToken(response);
-                        onLoginSuccess();
+                        updateTokenAndUploadInstallationId(response);
+
                         mView.onLoginSuccess(response.is_new);
                     }
 
@@ -140,8 +140,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         call.enqueue(new BaseResponseCallback<Token>() {
             @Override
             protected void onSuccess(Token response) {
-                AppManager.getAccountViewModel().updateToken(response);
-                onLoginSuccess();
+                updateTokenAndUploadInstallationId(response);
                 mView.onBindOpenSuccess(response);
             }
 
@@ -161,7 +160,12 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
     }
 
-    private void onLoginSuccess() {
+    private void updateTokenAndUploadInstallationId(Token response) {
+        AppManager.getAccountViewModel().updateToken(response);
+        uploadPushInstallationIdToServerd();
+    }
+
+    private void uploadPushInstallationIdToServerd() {
         LeanCloudManager.getAndUploadCurrentInstallation();
     }
 }

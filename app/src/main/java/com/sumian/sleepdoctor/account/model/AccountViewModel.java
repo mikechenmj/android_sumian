@@ -76,7 +76,7 @@ public class AccountViewModel extends AndroidViewModel {
     }
 
     public void updateToken(Token token) {
-        mTokenLiveData.postValue(token);
+        mTokenLiveData.setValue(token);
         updateTokenInvalidState(token == null);
         AccountCache.updateTokenCache(token);
     }
