@@ -275,7 +275,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
     }
 
     override fun showPracticeDialog() {
-        SumianAlertDialog(this).setTitle(R.string.practice_dialog_title).setMessage("完成本节课程学习后自动解锁下节内容").setRightBtn(R.string.good) { showExtraContent() }.show()
+        SumianAlertDialog(this).setTitle(R.string.practice_dialog_title).setMessage("完成本节课程学习后自动解锁下节内容").setRightBtn(R.string.good) { aliyun_player.replay() }.show()
     }
 
     override fun onGetCBTINextPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
@@ -314,6 +314,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
     }
 
     override fun onGetCBTINextPlayAuthFailed(error: String) {
+        mCurrentPosition -= 1
         showPracticeDialog()
     }
 
@@ -332,5 +333,10 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
                 onPlayNext()
             }
         }
+    }
+
+    override fun onRelease() {
+        super.onRelease()
+        aliyun_player.release()
     }
 }

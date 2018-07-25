@@ -735,6 +735,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             exitTinyWindow();
         }
         mCurrentMode = MODE_NORMAL;
+        skipToPosition = 0;
 
         // 释放播放器
         releasePlayer();
