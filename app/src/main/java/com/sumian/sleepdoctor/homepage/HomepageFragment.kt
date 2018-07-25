@@ -233,6 +233,8 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     @Subscribe(sticky = true)
     fun onCBTIBoughtEvent(event: CBTIServiceBoughtEvent) {
         EventBusUtil.removeStickyEvent(event)
+        doctor_service_item_view_cbti.visibility = View.GONE
+        cbti_progress_view.visibility = View.VISIBLE
         queryCbti()
     }
 
