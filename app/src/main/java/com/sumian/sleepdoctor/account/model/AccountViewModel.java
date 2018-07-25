@@ -75,8 +75,16 @@ public class AccountViewModel extends AndroidViewModel {
         updateUserProfile(userProfile);
     }
 
-    public void updateToken(Token token) {
-        mTokenLiveData.setValue(token);
+    public void updateTokenSync(Token token) {
+        updateTokenAsync(token, false);
+    }
+
+    private void updateTokenAsync(Token token, boolean async) {
+        if (async) {
+            mTokenLiveData.postValue(token);
+        } else {
+            mTokenLiveData.setValue(token);
+        }
         updateTokenInvalidState(token == null);
         AccountCache.updateTokenCache(token);
     }
@@ -86,7 +94,7 @@ public class AccountViewModel extends AndroidViewModel {
         token.is_new = false;
         token.user = userProfile;
         AccountCache.updateUserCache(userProfile);
-        updateToken(token);
+        updateTokenSync(token);
     }
 
     public String accessToken() {

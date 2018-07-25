@@ -89,7 +89,7 @@ public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfi
     public void onMenuClick(View v) {
         Token cacheToken = AppManager.getAccountViewModel().getToken();
         cacheToken.is_new = false;
-        AppManager.getAccountViewModel().updateToken(cacheToken);
+        AppManager.getAccountViewModel().updateTokenSync(cacheToken);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
     }
 

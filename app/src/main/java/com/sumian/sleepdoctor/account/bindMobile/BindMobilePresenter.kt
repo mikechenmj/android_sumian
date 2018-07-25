@@ -49,7 +49,7 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
                 .enqueue(object : BaseResponseCallback<Token>() {
 
                     override fun onSuccess(response: Token?) {
-                        AppManager.getAccountViewModel().updateToken(response)
+                        AppManager.getAccountViewModel().updateTokenSync(response)
                         mView?.bindOpenSocialSuccess(response)
                     }
 

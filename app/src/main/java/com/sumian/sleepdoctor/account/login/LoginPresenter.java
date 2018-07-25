@@ -161,7 +161,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     private void updateTokenAndUploadInstallationId(Token response) {
-        AppManager.getAccountViewModel().updateToken(response);
+        AppManager.getAccountViewModel().updateTokenSync(response);
         uploadPushInstallationIdToServerd();
     }
 
