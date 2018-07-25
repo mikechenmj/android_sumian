@@ -355,7 +355,9 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation project(':jsbridge')
 
-    //aliyun  player sdk
-    implementation project(':player')
+    //aliyun player sdk
+    implementation(name: 'AlivcReporter-1.2', ext: 'aar')
+    implementation(name: 'AlivcPlayer-3.4.6', ext: 'aar')
+    implementation(name: 'AliyunVodPlayer-3.4.6', ext: 'aar')
 
 }

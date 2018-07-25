@@ -18,7 +18,6 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.main.WelcomeActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
-import com.xiao.nicevideoplayer.LogUtil;
 
 import retrofit2.Call;
 

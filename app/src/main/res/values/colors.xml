@@ -15,12 +15,14 @@
 
     <!--line color-->
     <color name="l1_color">#ffedeff0</color>
+    <color name="l1_alpha_10_color">#19edeff0</color>
     <color name="l2_color">#ffcbcbcb</color>
     <color name="l3_color">#ffe3e5e6</color>
 
     <!--bg color-->
     <color name="b1_color">#fff2f3f5</color>
     <color name="b2_color">#ffffffff</color>
+    <color name="b2_alpha_50_color">#7fffffff</color>
     <color name="b3_color">#ff6595f4</color>
     <color name="b4_color">#fff1ba5c</color>
     <color name="b5_color">#ff9cbdff</color>
@@ -36,6 +38,7 @@
     <color name="s4_color">#4c000000</color>
 
     <color name="loading_bg_color">#96000000</color>
+    <color name="dialog_bg_color">#7f000000</color>
 
     <color name="black_alpha_48">#30000000</color>
     <!--sleep record progress-->
