@@ -22,7 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.R;
 import com.sumian.common.base.BaseFragment;
 import com.sumian.common.helper.FileProviderHelper;
-import com.sumian.common.media.activity.ImageGalleryActivity;
+import com.sumian.common.media.ImageGalleryActivity;
 import com.sumian.common.media.adapter.ImageAdapter;
 import com.sumian.common.media.adapter.ImageFolderAdapter;
 import com.sumian.common.media.base.BaseRecyclerAdapter;
@@ -156,7 +156,7 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
             mOperator.onBack();
         } else if (v.getId() == R.id.btn_preview) {
             if (mSelectedImage.size() > 0) {
-                ImageGalleryActivity.show(getActivity(), Util.toArray(mSelectedImage), 0, false);
+//                ImageGalleryActivity.show(getActivity(), Util.toArray(mSelectedImage), 0, false);
             }
         } else if (v.getId() == R.id.btn_title_select) {
             showPopupFolderList();
@@ -229,7 +229,7 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
                 selectedImage.clear();
                 selectedImage.add(mSelectedImage.get(0).getPath());
                 mSelectedImage.clear();
-                CropActivity.show(this, mOption);
+//                CropActivity.show(this, mOption);
             } else {
                 mOption.getCallback().doSelected(Util.toArray(mSelectedImage));
                 getActivity().finish();
@@ -262,30 +262,30 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
      * 创建弹出的相册
      */
     private void showPopupFolderList() {
-        if (mFolderPopupWindow == null) {
-            ImageFolderPopupWindow popupWindow = new ImageFolderPopupWindow(getActivity(), new ImageFolderPopupWindow.Callback() {
-                @Override
-                public void onSelect(ImageFolderPopupWindow popupWindow, ImageFolder model) {
-                    addImagesToAdapter(model.getImages());
-                    mContentView.scrollToPosition(0);
-                    popupWindow.dismiss();
-                    mSelectFolderView.setText(model.getName());
-                }
-
-                @Override
-                public void onDismiss() {
-                    mSelectFolderIcon.setImageResource(R.mipmap.ic_arrow_bottom);
-                }
-
-                @Override
-                public void onShow() {
-                    mSelectFolderIcon.setImageResource(R.mipmap.ic_arrow_top);
-                }
-            });
-            popupWindow.setAdapter(mImageFolderAdapter);
-            mFolderPopupWindow = popupWindow;
-        }
-        mFolderPopupWindow.showAsDropDown(mToolbar);
+//        if (mFolderPopupWindow == null) {
+//            ImageFolderPopupWindow popupWindow = new ImageFolderPopupWindow(getActivity(), new ImageFolderPopupWindow.Callback() {
+//                @Override
+//                public void onSelect(ImageFolderPopupWindow popupWindow, ImageFolder model) {
+//                    addImagesToAdapter(model.getImages());
+//                    mContentView.scrollToPosition(0);
+//                    popupWindow.dismiss();
+//                    mSelectFolderView.setText(model.getName());
+//                }
+//
+//                @Override
+//                public void onDismiss() {
+//                    mSelectFolderIcon.setImageResource(R.mipmap.ic_arrow_bottom);
+//                }
+//
+//                @Override
+//                public void onShow() {
+//                    mSelectFolderIcon.setImageResource(R.mipmap.ic_arrow_top);
+//                }
+//            });
+//            popupWindow.setAdapter(mImageFolderAdapter);
+//            mFolderPopupWindow = popupWindow;
+//        }
+//        mFolderPopupWindow.showAsDropDown(mToolbar);
     }
 
     /**

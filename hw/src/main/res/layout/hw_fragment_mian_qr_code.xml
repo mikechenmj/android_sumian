@@ -19,7 +19,6 @@
         app:qrcv_cornerSize="3dp"
         app:qrcv_customScanLineDrawable="@mipmap/group_scan_code_line"
         app:qrcv_isBarcode="false"
-        app:qrcv_isCenterVertical="false"
         app:qrcv_isOnlyDecodeScanBoxArea="false"
         app:qrcv_isScanLineReverse="true"
         app:qrcv_isShowDefaultGridScanLineDrawable="false"

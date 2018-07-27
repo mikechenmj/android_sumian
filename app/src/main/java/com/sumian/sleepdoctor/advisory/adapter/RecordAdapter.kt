@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.bumptech.glide.request.RequestOptions
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView
 import com.sumian.common.base.BaseRecyclerAdapter
-import com.sumian.common.media.activity.LargeImageActivity
+import com.sumian.common.media.LargeImageActivity
 import com.sumian.common.widget.FlowLayout
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.UserProfile

@@ -38,7 +38,7 @@
 
         <activity android:name=".media.CropActivity" />
         <activity android:name=".media.activity.ImageGalleryActivity" />
-        <activity android:name=".media.activity.LargeImageActivity" />
+        <activity android:name=".media.LargeImageActivity" />
         <activity android:name=".media.SelectImageActivity" />
 
         <provider

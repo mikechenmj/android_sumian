@@ -8,8 +8,6 @@ import android.os.Environment;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.sumian.common.media.bean.Image;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +32,7 @@ public class MediaUtil {
         return "IMG_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";// 照片命名
     }
 
-    public static String[] toArray(List<Image> images) {
+    static String[] toArray(List<Image> images) {
         if (images == null)
             return null;
         int len = images.size();
@@ -57,7 +55,7 @@ public class MediaUtil {
      * @return width
      */
     @SuppressWarnings({"ConstantConditions", "deprecation"})
-   public static int getScreenWidth(Context context) {
+    static int getScreenWidth(Context context) {
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
         return display.getWidth();

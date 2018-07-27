@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.sumian.common.R;
-import com.sumian.common.media.activity.ImageGalleryActivity;
+import com.sumian.common.media.ImageGalleryActivity;
 import com.sumian.common.media.widget.TweetPicturesPreviewerItemTouchCallback;
 import com.sumian.common.utils.CollectionUtil;
 
@@ -82,7 +82,7 @@ public class MediaSelectImageAdapter extends RecyclerView.Adapter<MediaSelectIma
 
                 @Override
                 public void onClick(Model model) {
-                    ImageGalleryActivity.show(mCallback.getContext(), model.path, false);
+//                    ImageGalleryActivity.show(mCallback.getContext(), model.path, false);
                 }
             });
         } else {
