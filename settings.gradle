@@ -1,1 +1,1 @@
-include ':app', ':common', ':open', ':jsbridge'
+include ':hw', ':common', ':open', ':jsbridge'
