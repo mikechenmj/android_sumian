@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/light_content_bg_color"
+    app:cardCornerRadius="@dimen/space_10"
+    app:cardElevation="@dimen/space_2">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_mood_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8"
+            android:gravity="center"
+            android:text="苏醒情绪:"
+            android:textColor="@color/full_general_color"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintBottom_toBottomOf="@id/tv_mood_status"
+            app:layout_constraintRight_toLeftOf="@id/iv_mood"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/iv_mood"
+            android:layout_width="@dimen/space_28"
+            android:layout_height="@dimen/space_28"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_10"
+            android:contentDescription="@null"
+            android:visibility="gone"
+            app:layout_constraintRight_toLeftOf="@id/tv_mood_status"
+            app:layout_constraintStart_toEndOf="@id/tv_mood_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_report_good_selected"
+            tools:ignore="RtlHardcoded"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_mood_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_10"
+            android:gravity="bottom"
+            android:hint="----"
+            android:textColor="@color/full_general_color"
+            android:textColorHint="@color/full_general_color"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_mood"
+            app:layout_constraintLeft_toRightOf="@id/iv_mood"
+            app:layout_constraintStart_toEndOf="@id/iv_mood"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/iv_modify_note"
+            android:layout_width="@dimen/space_28"
+            android:layout_height="@dimen/space_28"
+            android:clickable="true"
+            android:contentDescription="@null"
+            android:focusable="true"
+            android:foreground="@drawable/bg_material_ripple"
+            android:paddingBottom="@dimen/space_4"
+            android:paddingLeft="@dimen/space_4"
+            android:paddingRight="@dimen/space_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/report_icon_modifydiary" />
+
+        <TextView
+            android:id="@+id/tv_sleep_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_14"
+            android:gravity="center|left"
+            android:hint="睡前状态:  ----"
+            android:textColor="@color/full_general_color"
+            android:textColorHint="@color/full_general_color"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintLeft_toLeftOf="@id/tv_mood_label"
+            app:layout_constraintTop_toBottomOf="@id/tv_mood_status"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_14"
+            android:gravity="center|left"
+            android:hint="睡前备注:  ----"
+            android:lineSpacingExtra="@dimen/space_4"
+            android:textColor="@color/full_general_color"
+            android:textColorHint="@color/full_general_color"
+            android:textSize="@dimen/font_14"
+            app:layout_constraintLeft_toLeftOf="@id/tv_sleep_status"
+            app:layout_constraintTop_toBottomOf="@id/tv_sleep_status"
+            tools:ignore="HardcodedText,RtlHardcoded" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</merge>

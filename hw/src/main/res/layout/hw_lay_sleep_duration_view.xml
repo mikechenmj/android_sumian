@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/light_content_bg_color"
+    app:cardCornerRadius="@dimen/space_10"
+    app:cardElevation="@dimen/space_2"
+    app:contentPaddingBottom="@dimen/space_20"
+    app:contentPaddingLeft="@dimen/space_20"
+    app:contentPaddingRight="@dimen/space_20"
+    app:contentPaddingTop="@dimen/space_24">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/text_view_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/space_9"
+            android:drawableStart="@mipmap/report_icon_lensleep"
+            android:gravity="center"
+            android:text="@string/all_today_duration"
+            android:textSize="@dimen/font_12"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sleep_today_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/short_none_duration_hint"
+            android:textSize="@dimen/font_22"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_view_1" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_px_1"
+            android:layout_marginTop="@dimen/space_24"
+            android:background="@color/light_line_bg_color"
+            app:layout_constraintTop_toBottomOf="@id/text_view_1" />
+
+        <com.sumian.app.improve.widget.SleepStateDurationView
+            android:id="@+id/light_sleep_duration_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="@dimen/space_20"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/divider" />
+
+        <com.sumian.app.improve.widget.SleepStateDurationView
+            android:id="@+id/deep_sleep_duration_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="60dp"
+            android:layout_marginTop="@dimen/space_20"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider" />
+
+    </android.support.constraint.ConstraintLayout>
+</merge>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff212329"
+    android:orientation="vertical">
+
+    <com.sumian.app.improve.widget.ripple.RippleScanningView
+        android:id="@+id/ripple"
+        android:layout_width="@dimen/space_200"
+        android:layout_height="@dimen/space_200"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="@dimen/space_62"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="@dimen/space_160"
+            android:layout_height="@dimen/space_160"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:visibility="invisible"
+            app:srcCompat="@mipmap/equip_icon_monitor"
+            tools:visibility="visible" />
+
+    </com.sumian.app.improve.widget.ripple.RippleScanningView>
+
+    <Button
+        android:id="@+id/bt_bind"
+        android:layout_width="@dimen/space_120"
+        android:layout_height="@dimen/space_48"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_60"
+        android:background="@drawable/bt_circle_bg"
+        android:gravity="center"
+        android:text="@string/sure_bind"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_16"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/lay_show_error_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_77"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_16"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_this_device"
+            android:textColor="@color/full_general_color"
+            android:textSize="@dimen/font_12"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_re_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/space_4"
+            android:contentDescription="@null"
+            android:paddingBottom="@dimen/space_8"
+            android:paddingEnd="@dimen/space_8"
+            android:paddingTop="@dimen/space_8"
+            android:text="@string/re_scan_u"
+            android:textColor="@color/bt_hole_color"
+            android:textSize="@dimen/font_12"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+
+</LinearLayout>

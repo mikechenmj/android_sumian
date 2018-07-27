@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_content_bg_color"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/pg_loading"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="@dimen/space_14"
+            android:layout_height="@dimen/space_14"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/progress_loading"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_loading_indicator"
+            android:layout_width="@dimen/space_14"
+            android:layout_height="@dimen/space_14"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_report_dropdown" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pull_down_refresh_data"
+        android:textColor="@color/full_general_color"
+        android:textSize="@dimen/font_16" />
+</LinearLayout>

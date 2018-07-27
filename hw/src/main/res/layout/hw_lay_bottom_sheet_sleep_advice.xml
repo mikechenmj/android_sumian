@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/space_32"
+            android:gravity="center"
+            android:text="@string/sleep_data_less_hint"
+            android:textColor="@color/bt_hole_color"
+            android:textSize="@dimen/font_20" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded,UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/space_16"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_report_factor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:gravity="center"
+                android:text="@string/sleep_advice_element"
+                android:textColor="@color/bt_hole_color"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_sleep_advice_element"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_20"
+            android:textColor="@color/general_color"
+            tools:text="您本周未进行连续的睡眠监测,有4天未记录睡眠数据." />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_px_1"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:background="@color/general_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded,UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/space_16"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_report_explanation" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:gravity="center"
+                android:text="@string/sleep_advice_explain"
+                android:textColor="@color/bt_hole_color"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_sleep_data_less"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_20"
+            android:textColor="@color/general_color"
+            tools:text="长期连续的睡眠监测有助于更准确地分析你的健康状况,发现睡眠健康问题,改善睡眠质量.间断监测可能会造成分析的误差" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_px_1"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:background="@color/general_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded,UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/space_16"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_report_suggest" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:gravity="center"
+                android:text="@string/sleep_note_advice_hint"
+                android:textColor="@color/bt_hole_color"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_sleep_advice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_20"
+            android:textColor="@color/general_color"
+            tools:text="建议至少保证一周5天的睡眠监测,最好是连续的时间" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_px_1"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:background="@color/general_color" />
+
+        <Button
+            android:id="@+id/bt_get"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/space_20"
+            android:background="@drawable/bg_material_ripple"
+            android:text="@string/sleep_advice_cancel"
+            android:textColor="@color/bt_hole_color"
+            android:textSize="@dimen/font_18" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

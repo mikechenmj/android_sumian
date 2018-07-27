@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <com.sumian.app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/tel_me_hint" />
+
+    <FrameLayout
+        android:id="@+id/lay_call_me"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_12"
+        android:paddingStart="@dimen/space_24"
+        android:paddingTop="@dimen/space_12"
+        android:visibility="visible"
+        tools:ignore="RtlSymmetry"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:text="@string/setting_call_me_hint"
+            android:textColor="@color/general_color"
+            android:textSize="@dimen/font_16"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:layout_width="@dimen/space_32"
+            android:layout_height="@dimen/space_32"
+            android:layout_gravity="right|center"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_10"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_show_redirect"
+            tools:ignore="RtlHardcoded" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:layout_marginStart="@dimen/space_24"
+        android:background="@color/light_line_bg_color"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/lay_send_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_12"
+        android:paddingStart="@dimen/space_24"
+        android:paddingTop="@dimen/space_12"
+        tools:ignore="RtlSymmetry">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:text="@string/setting_send_msg_hint"
+            android:textColor="@color/general_color"
+            android:textSize="@dimen/font_16"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:layout_width="@dimen/space_32"
+            android:layout_height="@dimen/space_32"
+            android:layout_gravity="right|center"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_10"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_show_redirect"
+            tools:ignore="RtlHardcoded" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:background="@color/light_line_bg_color" />
+
+</LinearLayout>

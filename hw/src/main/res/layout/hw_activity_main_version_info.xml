@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <com.sumian.app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/firmware_update_notice_hint" />
+
+    <com.sumian.app.widget.refresh.BlueRefreshView
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_firmware"
+                android:layout_width="@dimen/space_120"
+                android:layout_height="@dimen/space_90"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_100"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_login_logo" />
+
+            <TextView
+                android:id="@+id/tv_app_version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_32"
+                android:gravity="center"
+                android:textSize="@dimen/font_16"
+                tools:text="APP 版本: 0.0.1" />
+
+            <TextView
+                android:id="@+id/tv_monitor_version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center"
+                android:textSize="@dimen/font_16"
+                tools:text="监测仪版本: 未连接" />
+
+            <TextView
+                android:id="@+id/tv_sleepy_version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center"
+                android:textSize="@dimen/font_16"
+                tools:text="速眠仪版本: 未连接" />
+
+            <View
+                android:id="@+id/v_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginTop="@dimen/space_32"
+                android:background="@color/light_line_bg_color"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.sumian.app.widget.VersionInfoView
+                android:id="@+id/app_version_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:upgrade_label="@string/app_upgrade" />
+
+            <com.sumian.app.widget.VersionInfoView
+                android:id="@+id/monitor_version_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:upgrade_label="@string/monitor_upgrade" />
+
+            <com.sumian.app.widget.VersionInfoView
+                android:id="@+id/sleepy_version_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:upgrade_label="@string/sleepy_upgrade" />
+
+        </LinearLayout>
+
+    </com.sumian.app.widget.refresh.BlueRefreshView>
+
+
+</LinearLayout>

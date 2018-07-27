@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff212329"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/space_30"
+    android:paddingTop="@dimen/space_16"
+    tools:ignore="RtlSymmetry">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/space_10"
+        android:drawableStart="@mipmap/equip_icon_1"
+        android:text="@string/scan_error_one"
+        android:textColor="@color/full_general_color"
+        android:textSize="@dimen/font_16" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_40"
+        android:drawablePadding="@dimen/space_10"
+        android:drawableStart="@mipmap/equip_icon_2"
+        android:text="@string/scan_error_two"
+        android:textColor="@color/full_general_color"
+        android:textSize="@dimen/font_16" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_40"
+        android:drawablePadding="@dimen/space_10"
+        android:drawableStart="@mipmap/equip_icon_3"
+        android:text="@string/scan_error_three"
+        android:textColor="@color/full_general_color"
+        android:textSize="@dimen/font_16" />
+
+    <Button
+        android:id="@+id/bt_go_connect"
+        android:layout_width="@dimen/space_120"
+        android:layout_height="@dimen/space_48"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_80"
+        android:background="@drawable/bt_circle_bg"
+        android:gravity="center"
+        android:text="@string/re_scan"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_16" />
+
+</LinearLayout>

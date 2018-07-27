@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.app.improve.widget.SwitchDateView
+        android:id="@+id/sdv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <com.sumian.app.improve.widget.report.LoadViewPagerRecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never" />
+
+            <ImageView
+                android:id="@+id/iv_float_diary"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_gravity="right|bottom"
+                android:contentDescription="@null"
+                android:src="@mipmap/report_button_diary"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded"
+                tools:visibility="visible" />
+
+        </FrameLayout>
+
+        <com.sumian.app.improve.widget.report.SyncingReportView
+            android:id="@+id/syncing_report_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

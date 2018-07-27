@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_tab_ripple"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_4">
+
+        <ImageView
+            android:id="@+id/iv_tab_icon"
+            android:layout_width="@dimen/space_32"
+            android:layout_height="@dimen/space_32"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_4"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/tab_report_icon" />
+
+        <View
+            android:id="@+id/tab_dot"
+            android:layout_width="@dimen/space_8"
+            android:layout_height="@dimen/space_8"
+            android:layout_gravity="right|top"
+            android:layout_marginEnd="@dimen/space_4"
+            android:layout_marginTop="@dimen/space_4"
+            android:background="@drawable/bg_tab_dot"
+            android:visibility="gone"
+            tools:ignore="RtlHardcoded"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_tab_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/space_8"
+        android:gravity="center"
+        android:text="@string/tab_device_hint"
+        android:textColor="@color/tab_color"
+        android:textSize="@dimen/font_12" />
+</LinearLayout>

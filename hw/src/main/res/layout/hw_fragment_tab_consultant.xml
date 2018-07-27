@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <com.sumian.app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/tab_consultant_hint" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_200"
+        android:layout_weight="1"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:srcCompat="@mipmap/ic_advisory_banner" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_8"
+        android:layout_marginRight="@dimen/space_8"
+        android:layout_marginTop="@dimen/space_24"
+        android:layout_weight="2"
+        app:cardBackgroundColor="@color/consultant_bg_color"
+        app:cardCornerRadius="@dimen/space_4"
+        app:cardElevation="@dimen/space_4"
+        app:cardMaxElevation="@dimen/space_4"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:id="@+id/lay_doctor_service"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights,RtlHardcoded">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:text="@string/consultant_doctor"
+                    android:textColor="@color/bt_hole_color"
+                    android:textSize="@dimen/font_18" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginTop="@dimen/space_16"
+                    android:text="@string/consultant_doctor_advice_desc"
+                    android:textSize="@dimen/font_12" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/space_48"
+                android:layout_height="@dimen/space_56"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginRight="@dimen/space_16">
+
+                <ImageView
+                    android:layout_width="@dimen/space_48"
+                    android:layout_height="@dimen/space_48"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@mipmap/ic_advisory_icon_doctor" />
+
+                <View
+                    android:id="@+id/doctor_service_dot"
+                    android:layout_width="@dimen/space_8"
+                    android:layout_height="@dimen/space_8"
+                    android:layout_gravity="right|top"
+                    android:background="@drawable/bg_tab_dot"
+                    android:visibility="gone"
+                    tools:ignore="RtlHardcoded"
+                    tools:visibility="visible" />
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_16"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_8"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/consultant_bg_color"
+            app:cardCornerRadius="@dimen/space_4"
+            app:cardElevation="@dimen/space_4"
+            app:cardMaxElevation="@dimen/space_4"
+            app:cardPreventCornerOverlap="true"
+            tools:ignore="NestedWeights,RtlHardcoded">
+
+            <LinearLayout
+                android:id="@+id/lay_customer_call_service"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="NestedWeights">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/space_20"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@string/consultant_customer_call_service"
+                        android:textColor="@color/bt_hole_color"
+                        android:textSize="@dimen/font_18" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="@dimen/space_32"
+                        android:layout_height="@dimen/space_32"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/space_16"
+                        android:layout_marginRight="@dimen/space_16"
+                        android:contentDescription="@null"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@mipmap/ic_advisory_icon_phone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_20"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_weight="1"
+                    android:text="@string/consultant_customer_service_call_desc"
+                    android:textSize="@dimen/font_12" />
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_8"
+            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/consultant_bg_color"
+            app:cardCornerRadius="@dimen/space_4"
+            app:cardElevation="@dimen/space_4"
+            app:cardMaxElevation="@dimen/space_4"
+            app:cardPreventCornerOverlap="true"
+            tools:ignore="NestedWeights,RtlHardcoded">
+
+            <LinearLayout
+                android:id="@+id/lay_customer_online_service"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights,RtlHardcoded">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="NestedWeights">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|top"
+                        android:layout_marginLeft="@dimen/space_20"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@string/consultant_customer_service"
+                        android:textColor="@color/bt_hole_color"
+                        android:textSize="@dimen/font_18" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <FrameLayout
+                        android:layout_width="@dimen/space_48"
+                        android:layout_height="@dimen/space_40"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/space_16"
+                        android:layout_marginRight="@dimen/space_16">
+
+                        <ImageView
+                            android:layout_width="@dimen/space_32"
+                            android:layout_height="@dimen/space_32"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@mipmap/ic_advisory_icon_online_service" />
+
+                        <View
+                            android:id="@+id/customer_service_dot"
+                            android:layout_width="@dimen/space_8"
+                            android:layout_height="@dimen/space_8"
+                            android:layout_gravity="right|top"
+                            android:background="@drawable/bg_tab_dot"
+                            android:visibility="gone"
+                            tools:ignore="RtlHardcoded"
+                            tools:visibility="visible" />
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_16"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_weight="1"
+                    android:text="@string/consultant_customer_service_online_desc"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/change_binding" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_50"
+        app:tabBackground="@color/colorPrimary"
+        app:tabIndicatorColor="#ff7ea5f4"
+        app:tabIndicatorHeight="1dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#ff7ea5f4"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabTextColor="#ff7d8fb3">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_item_scan_qr_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫码"
+            tools:ignore="HardcodedText" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_item_input_sn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="输入"
+            tools:ignore="HardcodedText" />
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

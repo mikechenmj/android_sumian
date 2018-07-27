@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.sumian.app.widget.device.DeviceIndicatorView
+            android:id="@+id/div"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.sumian.app.widget.device.DeviceStateItemView
+            android:id="@+id/div_monitor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:device_name="@string/monitor_name_hint" />
+
+        <com.sumian.app.widget.device.DeviceStateItemView
+            android:id="@+id/div_quick_sleeping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:device_name="@string/sleeping_name_hint" />
+
+        <com.sumian.app.widget.device.SwitchPowerView
+            android:id="@+id/switch_power_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.sumian.app.widget.device.SwitchModeView
+            android:id="@+id/switch_pa_mode_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

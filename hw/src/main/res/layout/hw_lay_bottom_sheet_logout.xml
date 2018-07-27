@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_content_bg_color"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/space_16"
+        android:text="@string/logout_title_hint"
+        android:textSize="@dimen/font_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:background="@color/light_line_bg_color" />
+
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:padding="@dimen/space_16"
+        android:text="@string/setting_logout_hint"
+        android:textColor="@color/warn_color"
+        android:textSize="@dimen/font_18" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:background="@color/light_line_bg_color" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:padding="@dimen/space_16"
+        android:text="@string/cancel_hint"
+        android:textColor="@color/bt_hole_color"
+        android:textSize="@dimen/font_18" />
+
+</LinearLayout>

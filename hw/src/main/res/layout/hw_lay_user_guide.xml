@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/lay_guide_one"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_100"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="@null"
+                app:srcCompat="@mipmap/ic_beginner_guide_img" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/pull_down_sync_sleep_data"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lay_guide_two"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:ignore="UseCompoundDrawables"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="117dp"
+                android:layout_height="163dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/space_12"
+                android:layout_marginTop="33dp"
+                android:contentDescription="@null"
+                app:srcCompat="@mipmap/noviceguide_icon_calendar"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="8"
+                android:lineSpacingExtra="@dimen/space_4"
+                android:text="@string/guide_step_two"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lay_guide_three"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/guide_step_left"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="@dimen/space_100"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginTop="@dimen/space_16"
+                android:contentDescription="@null"
+                app:srcCompat="@mipmap/noviceguide_icon_leftarrow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="89dp"
+                android:gravity="center"
+                android:text="@string/guide_step_right"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:layout_width="@dimen/space_100"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginTop="@dimen/space_16"
+                android:contentDescription="@null"
+                app:srcCompat="@mipmap/noviceguide_icon_rightarrow" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/bt_action"
+        android:layout_width="@dimen/space_120"
+        android:layout_height="@dimen/space_48"
+        android:background="@drawable/bt_circle_bg"
+        android:text="@string/go_next_step"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_16" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

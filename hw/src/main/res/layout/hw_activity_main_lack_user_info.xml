@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+    <com.sumian.app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/user_info_hint" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lay_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/space_24"
+                tools:ignore="RtlSymmetry">
+
+                <TextView
+                    android:layout_width="@dimen/space_48"
+                    android:layout_height="@dimen/space_48"
+                    android:contentDescription="@null"
+                    android:gravity="center|left"
+                    android:text="@string/nickname_hint"
+                    android:textSize="@dimen/font_16"
+                    tools:ignore="RtlHardcoded" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <EditText
+                    android:id="@+id/et_nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/space_56"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/new_nickname_hint"
+                    android:inputType="text"
+                    android:maxLength="24"
+                    android:textColor="@color/general_color"
+                    android:textColorHint="@color/general_color"
+                    android:textCursorDrawable="@drawable/bg_cursor"
+                    android:textSize="@dimen/font_16" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginStart="@dimen/space_18"
+                android:background="@color/light_line_bg_color" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_32"
+                android:layout_marginRight="@dimen/space_32"
+                android:layout_marginTop="@dimen/space_12"
+                android:contentDescription="@null"
+                android:text="昵称需保证在2-24个字符内，且不能与他人重复."
+                android:textSize="@dimen/font_14"
+                tools:ignore="HardcodedText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginTop="@dimen/space_14"
+                android:background="@color/light_line_bg_color" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginTop="@dimen/space_20"
+                android:background="@color/light_line_bg_color" />
+
+            <LinearLayout
+                android:id="@+id/lay_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_material_ripple"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_20"
+                android:paddingStart="@dimen/space_24"
+                android:paddingTop="@dimen/space_20"
+                tools:ignore="RtlSymmetry">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_sex_hint"
+                    android:textColor="@color/general_color" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_none_default_select_hint"
+                    android:textColor="@color/general_color"
+                    tools:text="男" />
+
+                <ImageView
+                    android:layout_width="@dimen/space_32"
+                    android:layout_height="@dimen/space_32"
+                    android:layout_gravity="right|center"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/space_10"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@mipmap/ic_show_redirect"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginStart="@dimen/space_24"
+                android:background="@color/light_line_bg_color" />
+
+            <LinearLayout
+                android:id="@+id/lay_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_material_ripple"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_20"
+                android:paddingStart="@dimen/space_24"
+                android:paddingTop="@dimen/space_20"
+                tools:ignore="RtlSymmetry">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_birthday_hint"
+                    android:textColor="@color/general_color" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_none_default_select_hint"
+                    android:textColor="@color/general_color"
+                    tools:text="1990-06" />
+
+                <ImageView
+                    android:layout_width="@dimen/space_32"
+                    android:layout_height="@dimen/space_32"
+                    android:layout_gravity="right|center"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/space_10"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@mipmap/ic_show_redirect"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginStart="@dimen/space_24"
+                android:background="@color/light_line_bg_color" />
+
+            <LinearLayout
+                android:id="@+id/lay_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_material_ripple"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_20"
+                android:paddingStart="@dimen/space_24"
+                android:paddingTop="@dimen/space_20"
+                tools:ignore="RtlSymmetry">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_height_hint"
+                    android:textColor="@color/general_color" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_none_default_hint"
+                    android:textColor="@color/general_color"
+                    tools:text="175.2cm" />
+
+                <ImageView
+                    android:layout_width="@dimen/space_32"
+                    android:layout_height="@dimen/space_32"
+                    android:layout_gravity="right|center"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/space_10"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@mipmap/ic_show_redirect"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginStart="@dimen/space_24"
+                android:background="@color/light_line_bg_color" />
+
+            <LinearLayout
+                android:id="@+id/lay_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_material_ripple"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_20"
+                android:paddingStart="@dimen/space_24"
+                android:paddingTop="@dimen/space_20"
+                tools:ignore="RtlSymmetry">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_weight_hint"
+                    android:textColor="@color/general_color" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_none_default_hint"
+                    android:textColor="@color/general_color"
+                    tools:text="56.0kg" />
+
+                <ImageView
+                    android:layout_width="@dimen/space_32"
+                    android:layout_height="@dimen/space_32"
+                    android:layout_gravity="right|center"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/space_10"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@mipmap/ic_show_redirect"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_px_1"
+                android:layout_marginStart="@dimen/space_24"
+                android:background="@color/light_line_bg_color" />
+
+            <Button
+                android:id="@+id/bt_save"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_52"
+                android:layout_marginLeft="@dimen/space_32"
+                android:layout_marginRight="@dimen/space_32"
+                android:layout_marginTop="@dimen/space_20"
+                android:background="@drawable/bt_circle_bg"
+                android:text="@string/setting_save_hint"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18" />
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

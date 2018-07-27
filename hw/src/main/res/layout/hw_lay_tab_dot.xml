@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/space_14"
+    android:paddingTop="@dimen/space_32">
+
+    <TextView
+        android:id="@+id/tv_tab_text"
+        android:layout_width="@dimen/space_20"
+        android:layout_height="@dimen/space_28"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/tab_indicator_color"
+        android:textSize="@dimen/font_20"
+        tools:text="@string/week_hint" />
+
+    <ImageView
+        android:id="@+id/iv_calendar"
+        android:layout_width="@dimen/space_32"
+        android:layout_height="@dimen/space_32"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_4"
+        android:visibility="gone"
+        app:srcCompat="@mipmap/report_calendar"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/v_tab_dot"
+        android:layout_width="@dimen/space_8"
+        android:layout_height="@dimen/space_8"
+        android:layout_gravity="right|top"
+        android:background="@drawable/bg_tab_dot"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        tools:ignore="RtlHardcoded"
+        tools:visibility="visible" />
+
+</FrameLayout>

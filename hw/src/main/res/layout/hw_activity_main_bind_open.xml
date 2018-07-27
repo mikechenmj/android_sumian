@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <com.sumian.app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/bind_mobile" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_32"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/space_28"
+        android:paddingStart="@dimen/space_28">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_12"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_login_phone" />
+
+        <View
+            android:layout_width="@dimen/divider_px_1"
+            android:layout_height="@dimen/space_28"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/login_line_color" />
+
+        <EditText
+            android:id="@+id/et_mobile"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_56"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/login_mobile_hint"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textColor="@color/general_color"
+            android:textColorHint="@color/general_color"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="@dimen/font_16" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:layout_marginEnd="@dimen/space_18"
+        android:layout_marginStart="@dimen/space_18"
+        android:background="@color/login_line_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/space_28"
+        android:paddingStart="@dimen/space_28">
+
+        <ImageView
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_12"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_login_pwd" />
+
+        <View
+            android:layout_width="@dimen/divider_px_1"
+            android:layout_height="@dimen/space_28"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/login_line_color" />
+
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_56"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center|left"
+            android:hint="@string/bind_set_pwd"
+            android:inputType="textPassword"
+            android:textColor="@color/general_color"
+            android:textColorHint="@color/general_color"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="@dimen/font_16"
+            tools:ignore="RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/iv_pwd_show"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_12"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:srcCompat="@mipmap/ic_pwd_hide"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:layout_marginEnd="@dimen/space_18"
+        android:layout_marginStart="@dimen/space_18"
+        android:background="@color/login_line_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/space_28"
+        android:paddingStart="@dimen/space_28">
+
+        <ImageView
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:contentDescription="@null"
+            android:padding="@dimen/space_12"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_captcha" />
+
+        <View
+            android:layout_width="@dimen/divider_px_1"
+            android:layout_height="@dimen/space_28"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/login_line_color" />
+
+        <EditText
+            android:id="@+id/et_captcha"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_56"
+            android:layout_marginStart="@dimen/space_8"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center|left"
+            android:hint="@string/input_captcha_hint"
+            android:inputType="number"
+            android:textColor="@color/general_color"
+            android:textColorHint="@color/general_color"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="@dimen/font_16"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_captcha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/captcha_light_bg"
+            android:gravity="center"
+            android:paddingBottom="@dimen/space_6"
+            android:paddingLeft="@dimen/space_12"
+            android:paddingRight="@dimen/space_12"
+            android:paddingTop="@dimen/space_6"
+            android:text="@string/captcha_hint"
+            android:textColor="@color/bt_hole_color"
+            android:textSize="@dimen/font_12" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:layout_marginEnd="@dimen/space_120"
+        android:layout_marginStart="@dimen/space_18"
+        android:background="@color/login_line_color" />
+
+    <Button
+        android:id="@+id/bt_bind"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_56"
+        android:layout_marginEnd="@dimen/space_28"
+        android:layout_marginStart="@dimen/space_28"
+        android:layout_marginTop="@dimen/space_20"
+        android:background="@drawable/bt_circle_bg"
+        android:gravity="center"
+        android:text="@string/bind"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_20" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.sumian.app.widget.RegisterRuleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

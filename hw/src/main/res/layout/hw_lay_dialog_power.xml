@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_32"
+    android:background="@drawable/shape_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_version_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/space_32"
+        android:gravity="center"
+        android:text="@string/ring_power_less_hint"
+        android:textSize="@dimen/font_18" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:background="@color/general_color" />
+
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:paddingBottom="@dimen/space_16"
+        android:paddingTop="@dimen/space_32"
+        android:text="@string/ok_hint"
+        android:textColor="@color/bt_hole_color"
+        android:textSize="@dimen/font_20"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

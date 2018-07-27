@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_sleep_doctor_advice_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/space_10"
+    android:layout_marginRight="@dimen/space_10"
+    android:layout_marginTop="@dimen/space_10"
+    android:orientation="vertical"
+    android:visibility="gone"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="@dimen/space_4"
+    app:cardElevation="@dimen/space_4"
+    tools:visibility="visible">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_16"
+            android:gravity="center"
+            android:text="@string/doctor_advice"
+            android:textColor="@color/bt_hole_color"
+            android:textSize="@dimen/font_14"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_sleep_evaluate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_14"
+            android:lineSpacingExtra="@dimen/space_4"
+            android:textColor="@color/general_color"
+            android:textColorHint="@color/general_color"
+            tools:text="建议少喝酒,喝酒会导致睡眠质量下降,可通过运动等方式来缓解压力." />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

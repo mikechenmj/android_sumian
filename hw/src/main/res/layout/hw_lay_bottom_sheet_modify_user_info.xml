@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/deep_content_bg_color">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:layout_gravity="center|left"
+            android:background="@drawable/bg_material_ripple"
+            android:gravity="center"
+            android:text="@string/cancel_hint"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="@dimen/space_48"
+            android:layout_height="@dimen/space_48"
+            android:layout_gravity="center|right"
+            android:background="@drawable/bg_material_ripple"
+            android:gravity="center"
+            android:text="@string/ensure_hint"
+            android:textColor="@color/bt_hole_color"
+            tools:ignore="RtlHardcoded" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/picker_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:npv_DividerColor="@color/light_line_bg_color"
+            app:npv_ItemPaddingHorizontal="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_RespondChangeOnDetached="true"
+            app:npv_ShowCount="5"
+            app:npv_TextColorHint="@color/bt_hole_color"
+            app:npv_TextColorNormal="@color/general_color"
+            app:npv_TextColorSelected="@color/bt_hole_color"
+            app:npv_TextSizeHint="@dimen/font_20"
+            app:npv_TextSizeNormal="16sp"
+            app:npv_TextSizeSelected="20sp"
+            app:npv_WrapSelectorWheel="true"
+            tools:visibility="visible" />
+
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/picker_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="@dimen/space_2"
+            android:paddingStart="@dimen/space_2"
+            android:visibility="gone"
+            app:npv_DividerColor="@color/light_line_bg_color"
+            app:npv_ItemPaddingHorizontal="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_RespondChangeOnDetached="true"
+            app:npv_ShowCount="5"
+            app:npv_TextColorHint="@color/bt_hole_color"
+            app:npv_TextColorNormal="@color/general_color"
+            app:npv_TextColorSelected="@color/bt_hole_color"
+            app:npv_TextSizeHint="@dimen/font_20"
+            app:npv_TextSizeNormal="16sp"
+            app:npv_TextSizeSelected="20sp"
+            app:npv_WrapSelectorWheel="true"
+            tools:visibility="visible" />
+
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
+            android:id="@+id/picker_three"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:npv_DividerColor="@color/light_line_bg_color"
+            app:npv_ItemPaddingHorizontal="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_RespondChangeOnDetached="true"
+            app:npv_ShowCount="5"
+            app:npv_TextColorHint="@color/bt_hole_color"
+            app:npv_TextColorNormal="@color/general_color"
+            app:npv_TextColorSelected="@color/bt_hole_color"
+            app:npv_TextSizeHint="@dimen/font_20"
+            app:npv_TextSizeNormal="16sp"
+            app:npv_TextSizeSelected="20sp"
+            app:npv_WrapSelectorWheel="true"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+</LinearLayout>
