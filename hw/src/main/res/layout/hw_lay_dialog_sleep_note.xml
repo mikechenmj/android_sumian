@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_dialog"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/sleep_note_hint"
+                android:textSize="@dimen/font_20" />
+
+            <TextView
+                android:id="@+id/tv_ignore"
+                android:layout_width="@dimen/space_48"
+                android:layout_height="@dimen/space_48"
+                android:layout_gravity="center|right"
+                android:background="@drawable/bg_material_ripple"
+                android:gravity="center"
+                android:padding="@dimen/space_4"
+                android:text="×"
+                android:textColor="@color/bt_hole_color"
+                android:textSize="@dimen/font_16"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded,UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/space_16"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_report_mood" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:gravity="center"
+                android:text="醒来感觉怎么样?"
+                android:textColor="@color/bt_hole_color"
+                android:textSize="@dimen/font_16"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_px_1"
+            android:layout_marginLeft="@dimen/space_20"
+            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_14"
+            android:background="@color/light_line_bg_color" />
+
+        <com.sumian.app.improve.widget.note.WakeUpMoodView
+            android:id="@+id/wake_up_mood_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/lay_sleep_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded,UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/space_16"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_report_status" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:gravity="center"
+                android:text="@string/report_sleep_state"
+                android:textColor="@color/bt_hole_color"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+
+        <com.sumian.app.widget.FlowLayout
+            android:id="@+id/lay_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_32"
+            android:layout_marginStart="@dimen/space_32"
+            android:layout_marginTop="@dimen/space_20"
+            app:horizontalSpace="@dimen/space_12"
+            app:verticalSpace="@dimen/space_12" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_px_1"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:background="@color/light_line_bg_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded,UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/space_16"
+                android:layout_height="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/ic_report_remark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_8"
+                android:gravity="center"
+                android:text="@string/report_sleep_remark"
+                android:textColor="@color/bt_hole_color"
+                android:textSize="@dimen/font_16" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_sleep_remark"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_100"
+                android:layout_marginBottom="@dimen/space_20"
+                android:layout_marginEnd="@dimen/space_36"
+                android:layout_marginStart="@dimen/space_36"
+                android:layout_marginTop="@dimen/space_20"
+                android:background="@drawable/bg_chat_input"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="@dimen/space_2"
+                android:padding="@dimen/space_8"
+                android:singleLine="false"
+                android:textColor="@color/general_color"
+                android:textColorHint="@color/general_color"
+                android:textCursorDrawable="@drawable/bg_cursor"
+                tools:ignore="LabelFor,RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/tv_input_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="@dimen/space_24"
+                android:layout_marginLeft="@dimen/space_36"
+                android:layout_marginRight="@dimen/space_40"
+                android:layout_marginTop="@dimen/space_20"
+                android:text="@string/zero_percent"
+                android:textColor="@color/translucent_general_color"
+                tools:ignore="RtlHardcoded" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:text="您所记录的睡眠信息，有助于改善您的睡眠习惯，同时也可以作为医生提供建议的依据~"
+            android:textColor="@color/general_color"
+            tools:ignore="HardcodedText" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_px_1"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@color/light_line_bg_color" />
+
+        <Button
+            android:id="@+id/bt_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/space_20"
+            android:background="@drawable/bg_material_ripple"
+            android:text="@string/finish"
+            android:textColor="@color/bt_hole_color"
+            android:textSize="@dimen/font_20" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
