@@ -56,14 +56,14 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initWidget() {
         super.initWidget();
-        this.mTitleBar.addOnBackListener(this);
         mTitleBar = findViewById(R.id.title_bar);
         mEtMobile = findViewById(R.id.et_mobile);
         mEtCaptcha = findViewById(R.id.et_captcha);
         mTvCaptcha = findViewById(R.id.tv_captcha);
-
         findViewById(R.id.tv_captcha).setOnClickListener(this);
         findViewById(R.id.bt_ok).setOnClickListener(this);
+
+        this.mTitleBar.addOnBackListener(this);
     }
 
     @Override

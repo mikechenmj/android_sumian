@@ -65,15 +65,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initWidget() {
         super.initWidget();
-        this.mTitleBar.addOnBackListener(this);
-        this.mEtPwd.addTextChangedListener(new OnTextWatcherAdapter() {
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                super.onTextChanged(s, start, before, count);
-                mIvPwdShow.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
-            }
-        });
         mTitleBar = findViewById(R.id.title_bar);
         mEtMobile = findViewById(R.id.et_mobile);
         mEtPwd = findViewById(R.id.et_pwd);
@@ -85,6 +76,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.bt_register).setOnClickListener(this);
         findViewById(R.id.iv_pwd_show).setOnClickListener(this);
         findViewById(R.id.tv_captcha).setOnClickListener(this);
+
+        this.mTitleBar.addOnBackListener(this);
+        this.mEtPwd.addTextChangedListener(new OnTextWatcherAdapter() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                super.onTextChanged(s, start, before, count);
+                mIvPwdShow.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override

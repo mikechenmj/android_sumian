@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.DrawableTypeRequest;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.sumian.app.R;
 import com.sumian.app.account.contract.AvatarContract;
@@ -109,7 +110,7 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
 
 
         String imageSource = mImageSources[0];
-        RequestManager requestManager = App.getRequestManager();
+        RequestManager requestManager = Glide.with(this);
         DrawableTypeRequest load;
         if (TextUtils.isEmpty(imageSource)) {
             load = requestManager.load(R.mipmap.ic_default_avatar);
@@ -216,8 +217,7 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
 
     @Override
     public void uploadSuccess(String url) {
-        runUiThread(() -> App
-                .getRequestManager()
+        runUiThread(() -> Glide.with(this)
                 .load(url).asBitmap()
                 .error(R.mipmap.ic_default_avatar)
                 .placeholder(R.mipmap.ic_default_avatar)

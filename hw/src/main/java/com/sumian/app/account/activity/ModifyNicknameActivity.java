@@ -71,6 +71,13 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mAdapterPop= findViewById(R.id.lay_pop);
+        mTvPopError= findViewById(R.id.tv_pop_error);
+        mEtMobile= findViewById(R.id.et_nickname);
+        mTvModifyLabel= findViewById(R.id.tv_modify_label);
+        mTvWarnLabel= findViewById(R.id.tv_warn_label);
+
         if (mType == NICKNAME_TYPE) {
             this.mEtMobile.setHint(R.string.new_nickname_hint);
             this.mTvModifyLabel.setText(R.string.nickname_hint);
@@ -84,13 +91,6 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
             this.mEtMobile.setMaxEms(12);
         }
         this.mTitleBar.showMoreIcon(R.mipmap.ic_nav_ok).addOnMoreListener(this).addOnBackListener(this);
-
-        mTitleBar = findViewById(R.id.title_bar);
-        mAdapterPop= findViewById(R.id.lay_pop);
-        mTvPopError= findViewById(R.id.tv_pop_error);
-        mEtMobile= findViewById(R.id.et_nickname);
-        mTvModifyLabel= findViewById(R.id.tv_modify_label);
-        mTvWarnLabel= findViewById(R.id.tv_warn_label);
     }
 
     @Override

@@ -54,18 +54,18 @@ public class SleepReminderActivity extends BaseActivity implements TitleBar.OnBa
     @Override
     protected void initWidget() {
         super.initWidget();
-        SleepReminderPresenter.init(this);
-        this.mTitleBar.addOnBackListener(this);
-        this.mTbReminder.setOnToggleChanged(this);
-        this.mPickerOne.setOnValueChangedListener(this);
-        this.mPickerTwo.setOnValueChangedListener(this);
-
         mTitleBar = findViewById(R.id.title_bar);
         mTbReminder = findViewById(R.id.tb_reminder);
         mTvReminderNote = findViewById(R.id.tv_reminder_note);
         mLayTimerContainer = findViewById(R.id.lay_timer_container);
         mPickerOne = findViewById(R.id.picker_one);
         mPickerTwo = findViewById(R.id.picker_two);
+
+        SleepReminderPresenter.init(this);
+        this.mTitleBar.addOnBackListener(this);
+        this.mTbReminder.setOnToggleChanged(this);
+        this.mPickerOne.setOnValueChangedListener(this);
+        this.mPickerTwo.setOnValueChangedListener(this);
     }
 
     @Override

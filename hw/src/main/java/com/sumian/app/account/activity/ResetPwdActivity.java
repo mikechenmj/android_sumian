@@ -76,16 +76,15 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initWidget() {
         super.initWidget();
-        this.mTitleBar.addOnBackListener(this);
-
         mTitleBar = findViewById(R.id.title_bar);
         mLayPwdPop = findViewById(R.id.lay_pwd_pop);
         mTvErrorPop = findViewById(R.id.tv_error_pop);
         mEtNewPwd = findViewById(R.id.et_new_pwd);
         mEtNewPwdVerify = findViewById(R.id.et_new_pwd_verify);
         mBtSave = findViewById(R.id.bt_save);
-
         mBtSave.setOnClickListener(this);
+
+        this.mTitleBar.addOnBackListener(this);
     }
 
     @Override

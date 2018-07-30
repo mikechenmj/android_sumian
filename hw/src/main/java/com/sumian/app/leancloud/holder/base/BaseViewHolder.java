@@ -17,6 +17,7 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -87,8 +88,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
             mipmapId = mIsLeft ? R.mipmap.ic_chat_left_default : R.mipmap.ic_chat_right_default;
         }
 
-        App
-            .getRequestManager()
+        Glide.with(civIcon.getContext())
             .load(mIsLeft ? mipmapId : AppManager.getAccountModel().getUserInfo().getAvatar())
             .asBitmap()
             .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -151,7 +151,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
             });
         });
 
-        App.getRequestManager()
+        Glide.with(bubbleImageView.getContext())
             .load(mMediaUrlPath)
             .asBitmap()
             .priority(Priority.HIGH)

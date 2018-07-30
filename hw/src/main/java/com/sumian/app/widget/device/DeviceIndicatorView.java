@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sumian.app.R;
 import com.sumian.app.app.App;
 
@@ -62,9 +63,9 @@ public class DeviceIndicatorView extends LinearLayout implements View.OnClickLis
 
     public void showLoading(boolean isLoading) {
         if (isLoading) {
-            App.getRequestManager().load(R.mipmap.ic_loading).asGif().into(mLoading);
+            Glide.with(getContext()).load(R.mipmap.ic_loading).asGif().into(mLoading);
         } else {
-            App.getRequestManager().load(R.mipmap.ic_more).asBitmap().into(mLoading);
+            Glide.with(getContext()).load(R.mipmap.ic_more).asBitmap().into(mLoading);
         }
         this.mLoading.setVisibility(isLoading ? VISIBLE : GONE);
         this.mBtSync.setText(R.string.sync);

@@ -235,6 +235,8 @@ public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeList
             }
         }
         mCurrentPosition = position;
+        if (position == 3) {
+        }
     }
 
     @Override

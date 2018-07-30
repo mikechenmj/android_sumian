@@ -93,7 +93,7 @@ public final class LeanCloudHelper {
         // 初始化参数依次为 context, AppId, AppKey
         PushService.setDefaultChannelId(context, "push_channel");
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
-        AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
+//        AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
         this.mCustomerMessages = new ArrayList<>();
         this.mDoctorMessages = new ArrayList<>();
         this.mSysMessages = new ArrayList<>();

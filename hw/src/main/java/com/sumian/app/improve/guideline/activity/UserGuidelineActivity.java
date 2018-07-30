@@ -181,22 +181,22 @@ public class UserGuidelineActivity extends BaseActivity {
             int heightPixels = displayMetrics.heightPixels;
             int widthPixels = displayMetrics.widthPixels;
 
-            Glide
-                    .with(itemView.getContext())
-                    .load(guideline.iconId)
-                    .asBitmap()
-                    .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG, 100))
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .override(widthPixels, heightPixels)
-                    .centerCrop()
-                    //.into(mIvGuidelineIcon);
-                    .into(new SimpleTarget<Bitmap>(mIvGuidelineIcon.getWidth(), mIvGuidelineIcon.getHeight()) {
-                        @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                            mIvGuidelineIcon.setImageBitmap(resource);
-                        }
-                    });
+//            Glide
+//                    .with(itemView.getContext())
+//                    .load(guideline.iconId)
+//                    .asBitmap()
+//                    .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG, 100))
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                    .skipMemoryCache(true)
+//                    .override(widthPixels, heightPixels)
+//                    .centerCrop()
+//                    //.into(mIvGuidelineIcon);
+//                    .into(new SimpleTarget<Bitmap>(mIvGuidelineIcon.getWidth(), mIvGuidelineIcon.getHeight()) {
+//                        @Override
+//                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                            mIvGuidelineIcon.setImageBitmap(resource);
+//                        }
+//                    });
 
             if (guideline.indicatorPosition == 4) {
                 mBtAction.setOnClickListener(this);

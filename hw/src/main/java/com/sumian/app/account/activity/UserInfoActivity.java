@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sumian.app.R;
 import com.sumian.app.account.contract.ModifyUserInfoContract;
 import com.sumian.app.account.contract.UserInfoContract;
@@ -61,9 +62,6 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     @Override
     protected void initWidget() {
         super.initWidget();
-        UserInfoPresenter.init(this);
-        mTitleBar.addOnBackListener(this);
-        mBlueRefreshView.setOnRefreshListener(this);
         mTitleBar = findViewById(R.id.title_bar);
         mBlueRefreshView = findViewById(R.id.refresh);
         mIvAvatar = findViewById(R.id.iv_avatar);
@@ -84,6 +82,11 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
         findViewById(R.id.lay_height).setOnClickListener(this);
         findViewById(R.id.lay_weight).setOnClickListener(this);
         findViewById(R.id.lay_career).setOnClickListener(this);
+
+        UserInfoPresenter.init(this);
+        mTitleBar.addOnBackListener(this);
+        mBlueRefreshView.setOnRefreshListener(this);
+
     }
 
     @Override
@@ -132,7 +135,7 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     @Override
     public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
         runUiThread(() -> {
-            App.getRequestManager()
+            Glide.with(UserInfoActivity.this)
                     .load(userInfo.getAvatar())
                     .asBitmap()
                     .placeholder(R.mipmap.ic_default_avatar) //设置占位图，在加载之前显示

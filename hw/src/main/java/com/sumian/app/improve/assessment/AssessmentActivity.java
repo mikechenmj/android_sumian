@@ -72,7 +72,6 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void initWidget() {
         super.initWidget();
-        mTitleBar.addOnBackListener(this);
         mTitleBar = findViewById(R.id.title_bar);
         mPopContainer = findViewById(R.id.pop_container);
         mTvStepOne = findViewById(R.id.tv_step_one);
@@ -92,6 +91,8 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.lay_show_sleep_assessment_table).setOnClickListener(this);
         findViewById(R.id.bt_user_info_table).setOnClickListener(this);
         findViewById(R.id.bt_assessment_table).setOnClickListener(this);
+
+        mTitleBar.addOnBackListener(this);
     }
 
     @Override

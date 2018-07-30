@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sumian.app.BuildConfig;
 import com.sumian.app.R;
 import com.sumian.app.account.activity.SleepReminderActivity;
@@ -167,13 +168,12 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
         runOnUiThread(() -> {
             String avatar = userInfo.getAvatar();
             if (!TextUtils.isEmpty(avatar)) {
-                App.
-                        getRequestManager()
-                        .load(avatar)
-                        .asBitmap()
-                        .error(R.mipmap.ic_default_avatar)
-                        .placeholder(R.mipmap.ic_default_avatar)
-                        .into(mIvAvatar);
+//                Glide.with(getActivity())
+//                        .load(avatar)
+//                        .asBitmap()
+//                        .error(R.mipmap.ic_default_avatar)
+//                        .placeholder(R.mipmap.ic_default_avatar)
+//                        .into(mIvAvatar);
             }
             this.mTvAgeAndGender.setText(formatGender(userInfo.getGender()));
             this.mTvNickname.setText(userInfo.getNickname());

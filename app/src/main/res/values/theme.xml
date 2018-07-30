@@ -18,7 +18,6 @@
         <item name="android:windowOverscan">true</item>
         <item name="android:windowBackground">@color/b1_color</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:launchMode">singleTop</item>
         <item name="android:navigationBarColor">@android:color/black</item>

@@ -77,19 +77,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void initWidget() {
         super.initWidget();
-        if (mIsLauncher) {
-            this.mTitleBar.addOnBackListener(this);
-        } else {
-            this.mTitleBar.hideBack();
-        }
         mTitleBar = findViewById(R.id.title_bar);
         mEtMobile = findViewById(R.id.et_mobile);
         mEtPwd = findViewById(R.id.et_pwd);
         mBtLogin = findViewById(R.id.bt_login);
         mTvForgetPwd = findViewById(R.id.tv_forget_pwd);
-
         findViewById(R.id.bt_login).setOnClickListener(this);
         findViewById(R.id.tv_forget_pwd).setOnClickListener(this);
+
+        if (mIsLauncher) {
+            this.mTitleBar.addOnBackListener(this);
+        } else {
+            this.mTitleBar.hideBack();
+        }
     }
 
     @Override
