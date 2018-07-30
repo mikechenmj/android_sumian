@@ -235,6 +235,12 @@
             android:theme="@style/BaseAppTheme" />
         <activity android:name=".test.TestActivity" />
 
+        <receiver android:name=".receiver.ModuleCommunicationReceiver">
+            <intent-filter>
+                <action android:name="com.sumian.hw.LAUNCH_SLEEP_DOCTOR_MAIN" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

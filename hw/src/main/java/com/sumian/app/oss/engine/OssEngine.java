@@ -15,7 +15,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.app.BuildConfig;
 import com.sumian.app.app.App;
 import com.sumian.app.app.AppManager;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.oss.bean.OssResponse;
 
 import org.json.JSONException;
@@ -72,7 +72,7 @@ public class OssEngine {
                         e.printStackTrace();
                     }
                 }
-                UserInfo userInfo = AppManager.getAccountModel().getUserInfo();
+                HwUserInfo userInfo = AppManager.getAccountModel().getUserInfo();
                 userInfo.setAvatar(avatarUrl);
                 AppManager.getAccountModel().updateUserCache(userInfo);
             }

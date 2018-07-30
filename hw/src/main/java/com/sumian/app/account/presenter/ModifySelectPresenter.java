@@ -13,7 +13,7 @@ import com.sumian.app.common.operator.AppOperator;
 import com.sumian.app.common.util.StreamUtil;
 import com.sumian.app.network.api.SleepyApi;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -46,20 +46,20 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
     private static final int DEFAULT_HEIGHT = 170;
 
 
-    private WeakReference<ModifySelectContract.View<UserInfo>> mViewWeakReference;
+    private WeakReference<ModifySelectContract.View<HwUserInfo>> mViewWeakReference;
     private Call mCall;
 
     private List<Province> mProvinces;
     //private Map<Province, List<City>> mMapCities;
     private Map<City, List<String>> mMapArea;
-    private UserInfo mUserInfo;
+    private HwUserInfo mUserInfo;
 
-    private ModifySelectPresenter(ModifySelectContract.View<UserInfo> view) {
+    private ModifySelectPresenter(ModifySelectContract.View<HwUserInfo> view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
     }
 
-    public static void init(ModifySelectContract.View<UserInfo> view) {
+    public static void init(ModifySelectContract.View<HwUserInfo> view) {
         new ModifySelectPresenter(view);
     }
 
@@ -72,7 +72,7 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
     }
 
     @Override
-    public void transformFormKey(String formKey, UserInfo userInfo) {
+    public void transformFormKey(String formKey, HwUserInfo userInfo) {
         mUserInfo = userInfo;
         switch (formKey) {
             case ModifyUserInfoContract.KEY_AREA:
@@ -131,8 +131,8 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
 
     @Override
     public void doModifyUserInfo(String formKey, Object formValue) {
-        WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = this.mViewWeakReference;
-        ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
+        WeakReference<ModifySelectContract.View<HwUserInfo>> viewWeakReference = this.mViewWeakReference;
+        ModifySelectContract.View<HwUserInfo> view = viewWeakReference.get();
         if (view == null) return;
 
         SleepyApi sleepyApi = AppManager.getNetEngine().getHttpService();
@@ -141,10 +141,10 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
 
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
-        Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
-        call.enqueue(new BaseResponseCallback<UserInfo>() {
+        Call<HwUserInfo> call = sleepyApi.doModifyUserInfo(map);
+        call.enqueue(new BaseResponseCallback<HwUserInfo>() {
             @Override
-            protected void onSuccess(UserInfo response) {
+            protected void onSuccess(HwUserInfo response) {
                 view.onModifySuccess(response);
                 AppManager.getAccountModel().updateUserCache(response);
             }
@@ -194,7 +194,7 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
         return formValue;
     }
 
-    private void transformWeight(int minWeight, int maxWeight, UserInfo userInfo) {
+    private void transformWeight(int minWeight, int maxWeight, HwUserInfo userInfo) {
 
         int count = maxWeight - minWeight;
 
@@ -223,14 +223,14 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
             }
         }
 
-        WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = this.mViewWeakReference;
-        ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
+        WeakReference<ModifySelectContract.View<HwUserInfo>> viewWeakReference = this.mViewWeakReference;
+        ModifySelectContract.View<HwUserInfo> view = viewWeakReference.get();
         if (view == null) return;
         view.transformOneDisplayedValues(numberOnePosition, ".", weights);
         view.transformTwoDisplayedValues(numberTwoPosition, "kg", decimalWeights);
     }
 
-    private void transformHeight(int minHeight, int maxHeight, UserInfo userInfo) {
+    private void transformHeight(int minHeight, int maxHeight, HwUserInfo userInfo) {
         int count = maxHeight - minHeight;
         String[] heights = new String[count];
         String[] decimalHeights = new String[10];
@@ -248,14 +248,14 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
             }
         }
 
-        WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = this.mViewWeakReference;
-        ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
+        WeakReference<ModifySelectContract.View<HwUserInfo>> viewWeakReference = this.mViewWeakReference;
+        ModifySelectContract.View<HwUserInfo> view = viewWeakReference.get();
         if (view == null) return;
         view.transformOneDisplayedValues(numberOnePosition, ".", heights);
         view.transformTwoDisplayedValues(numberTwoPosition, "cm", decimalHeights);
     }
 
-    private void transformBirthday(int minYear, UserInfo userInfo) {
+    private void transformBirthday(int minYear, HwUserInfo userInfo) {
         int year = Calendar.getInstance().get(Calendar.YEAR) + 1;
         int count = year - minYear;
         String[] years = new String[count];
@@ -280,8 +280,8 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
         for (int i = 0; i < months.length; i++) {
             months[i] = String.format(Locale.getDefault(), "%02d", i + 1);
         }
-        WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = this.mViewWeakReference;
-        ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
+        WeakReference<ModifySelectContract.View<HwUserInfo>> viewWeakReference = this.mViewWeakReference;
+        ModifySelectContract.View<HwUserInfo> view = viewWeakReference.get();
         if (view == null) return;
         view.transformOneDisplayedValues(numberOnePosition, "年", years);
         view.transformTwoDisplayedValues(numberTwoPosition, "月", months);
@@ -315,8 +315,8 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
                     }
                 }
             }
-            WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = mViewWeakReference;
-            ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
+            WeakReference<ModifySelectContract.View<HwUserInfo>> viewWeakReference = mViewWeakReference;
+            ModifySelectContract.View<HwUserInfo> view = viewWeakReference.get();
             if (view == null) return;
             view.transformOneDisplayedValues(position, null, provinceNames);
             transformCity(provinces.get(position));
@@ -339,8 +339,8 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
             if ("其他".equals(cityName) || "其他市".equals(cityName)) continue;
             cityNames.add(cityName);
         }
-        WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = mViewWeakReference;
-        ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
+        WeakReference<ModifySelectContract.View<HwUserInfo>> viewWeakReference = mViewWeakReference;
+        ModifySelectContract.View<HwUserInfo> view = viewWeakReference.get();
         if (view == null) return;
         view.transformTwoDisplayedValues(position, null, cityNames.toArray(new String[]{}));
         transformArea(cities.get(position).area);
@@ -359,8 +359,8 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
             }
             if ("其他".equals(areaName)) areas.remove(areaName);
         }
-        WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = mViewWeakReference;
-        ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
+        WeakReference<ModifySelectContract.View<HwUserInfo>> viewWeakReference = mViewWeakReference;
+        ModifySelectContract.View<HwUserInfo> view = viewWeakReference.get();
         if (view == null) return;
         view.transformThreeDisplayedValues(position, null, areas.toArray(new String[]{}));
     }

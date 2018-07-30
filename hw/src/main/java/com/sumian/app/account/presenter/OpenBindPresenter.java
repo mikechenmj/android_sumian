@@ -6,7 +6,7 @@ import com.sumian.app.app.AppManager;
 import com.sumian.app.network.api.SleepyApi;
 import com.sumian.app.network.callback.BaseResponseCallback;
 import com.sumian.app.network.request.CaptchaBody;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.lang.ref.WeakReference;
@@ -65,12 +65,12 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
         map.put("type", openType);
         map.put("info", openUserInfo);
 
-        Call<Token> call = sleepyApi.bindOpenPlatform(map);
+        Call<HwToken> call = sleepyApi.bindOpenPlatform(map);
         this.mCalls.add(call);
 
-        call.enqueue(new BaseResponseCallback<Token>() {
+        call.enqueue(new BaseResponseCallback<HwToken>() {
             @Override
-            protected void onSuccess(Token response) {
+            protected void onSuccess(HwToken response) {
                 AppManager.getAccountModel().updateTokenCache(response);
                 view.onBindSuccess(response);
                 SyncUserInfoService.startService(SyncUserInfoService.OPEN_LOGIN_TYPE);

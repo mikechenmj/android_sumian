@@ -12,9 +12,9 @@ import com.sumian.app.common.cache.BluePeripheralCache;
 import com.sumian.app.common.config.SumianConfig;
 import com.sumian.app.common.operator.AppOperator;
 import com.sumian.app.leancloud.LeanCloudHelper;
+import com.sumian.app.network.response.HwToken;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.network.response.Reminder;
-import com.sumian.app.network.response.Token;
-import com.sumian.app.network.response.UserInfo;
 import com.sumian.blue.manager.BlueManager;
 
 import java.util.ArrayList;
@@ -31,8 +31,8 @@ public class AccountModel {
 
     private static final String TAG = AccountModel.class.getSimpleName();
 
-    private volatile Token mToken;
-    private volatile UserInfo mUserInfo;
+    private volatile HwToken mToken;
+    private volatile HwUserInfo mUserInfo;
 
     private List<UserInfoCallback> mUserInfoCallbacks;
     private OnSleepReminderCallback mOnSleepReminderCallback;
@@ -40,8 +40,8 @@ public class AccountModel {
     private OnLogoutCallback mOnLogoutCallback;
 
     public AccountModel() {
-        this.mToken = AccountCache.getTokenCache(Token.class);
-        this.mUserInfo = AccountCache.getUserCache(UserInfo.class);
+        this.mToken = AccountCache.getTokenCache(HwToken.class);
+        this.mUserInfo = AccountCache.getUserCache(HwUserInfo.class);
     }
 
     public void addOnLogoutCallback(OnLogoutCallback onLogoutCallback) {
@@ -71,7 +71,7 @@ public class AccountModel {
     }
 
     public boolean isLogin() {
-        Token token = this.mToken;
+        HwToken token = this.mToken;
         return token != null && !TextUtils.isEmpty(token.getToken());// && token.getExpired_at() * 1000L > System.currentTimeMillis();
     }
 
@@ -88,27 +88,31 @@ public class AccountModel {
     }
 
     public String getLeanCloudId() {
-        UserInfo userInfo = this.mUserInfo;
+        HwUserInfo userInfo = this.mUserInfo;
         return userInfo == null ? null : userInfo.getLeancloud_id();
     }
 
     public String accessToken() {
-        Token token = this.mToken;
+        HwToken token = this.mToken;
         return token == null ? null : token.getToken();
     }
 
-    public UserInfo getUserInfo() {
+    public HwUserInfo getUserInfo() {
         return this.mUserInfo;
     }
 
-    public void updateTokenCache(Token token) {
+    public HwToken getToken() {
+        return mToken;
+    }
+
+    public void updateTokenCache(HwToken token) {
         this.mToken = token;
         if (token == null) return;
         this.mUserInfo = token.getUserInfo();
         AccountCache.updateTokenCache(token);
     }
 
-    public void updateUserCache(UserInfo userInfo) {
+    public void updateUserCache(HwUserInfo userInfo) {
         this.mUserInfo = userInfo;
         if (userInfo != null) {
             AccountCache.updateUserCache(userInfo);
@@ -206,9 +210,9 @@ public class AccountModel {
         }
     }
 
-    public void bindSocialCache(UserInfo.Social social) {
-        UserInfo userInfo = this.mUserInfo;
-        List<UserInfo.Social> socialites = this.mUserInfo.getSocialites();
+    public void bindSocialCache(HwUserInfo.Social social) {
+        HwUserInfo userInfo = this.mUserInfo;
+        List<HwUserInfo.Social> socialites = this.mUserInfo.getSocialites();
         if (socialites == null) {
             socialites = new ArrayList<>();
         }
@@ -230,8 +234,8 @@ public class AccountModel {
     }
 
     public void unbindOpenPlatform(int socialType) {
-        UserInfo userInfo = this.mUserInfo;
-        List<UserInfo.Social> socialites = this.mUserInfo.getSocialites();
+        HwUserInfo userInfo = this.mUserInfo;
+        List<HwUserInfo.Social> socialites = this.mUserInfo.getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             return;
         }

@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.app.R;
+import com.sumian.app.account.model.AccountModel;
 import com.sumian.app.app.App;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.base.BaseActivity;
@@ -24,10 +25,12 @@ import com.sumian.app.improve.report.ReportFragment;
 import com.sumian.app.leancloud.LeanCloudHelper;
 import com.sumian.app.network.callback.BaseResponseCallback;
 import com.sumian.app.network.response.AppUpgradeInfo;
+import com.sumian.app.network.response.HwToken;
 import com.sumian.app.push.ReportPushManager;
 import com.sumian.app.setting.dialog.UpgradeDialog;
 import com.sumian.app.upgrade.model.VersionModel;
 import com.sumian.app.upgrade.presenter.VersionPresenter;
+import com.sumian.app.utils.JsonUtil;
 import com.sumian.app.widget.nav.NavTab;
 import com.sumian.app.widget.nav.TabButton;
 import com.sumian.blue.model.BluePeripheral;
@@ -35,7 +38,6 @@ import com.sumian.blue.model.BluePeripheral;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.BindView;
 import retrofit2.Call;
 
 public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeListener,
@@ -236,7 +238,19 @@ public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeList
         }
         mCurrentPosition = position;
         if (position == 3) {
+            launchSleepDoctor();
         }
+    }
+
+    private void launchSleepDoctor() {
+        Intent intent = new Intent();
+        intent.setAction("com.sumian.hw.LAUNCH_SLEEP_DOCTOR_MAIN");
+        AccountModel accountModel = AppManager.getAccountModel();
+        HwToken token = accountModel.getToken();
+        token.setUserInfo(accountModel.getUserInfo());
+        String json = JsonUtil.toJson(token);
+        intent.putExtra("token_info", json);
+        sendBroadcast(intent);
     }
 
     @Override

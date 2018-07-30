@@ -7,18 +7,18 @@ package com.sumian.app.network.response;
  * desc:
  */
 
-public class Token {
+public class HwToken {
 
     private String token;
     private int expired_at;
     private int refresh_expired_at;
-    private UserInfo mUserInfo;
+    private HwUserInfo mUserInfo;
 
     public String getToken() {
         return token;
     }
 
-    public Token setToken(String token) {
+    public HwToken setToken(String token) {
         this.token = token;
         return this;
     }
@@ -27,7 +27,7 @@ public class Token {
         return expired_at;
     }
 
-    public Token setExpired_at(int expired_at) {
+    public HwToken setExpired_at(int expired_at) {
         this.expired_at = expired_at;
         return this;
     }
@@ -36,23 +36,23 @@ public class Token {
         return refresh_expired_at;
     }
 
-    public Token setRefresh_expired_at(int refresh_expired_at) {
+    public HwToken setRefresh_expired_at(int refresh_expired_at) {
         this.refresh_expired_at = refresh_expired_at;
         return this;
     }
 
-    public UserInfo getUserInfo() {
+    public HwUserInfo getUserInfo() {
         return mUserInfo;
     }
 
-    public Token setUserInfo(UserInfo userInfo) {
+    public HwToken setUserInfo(HwUserInfo userInfo) {
         this.mUserInfo = userInfo;
         return this;
     }
 
     @Override
     public String toString() {
-        return "Token{" +
+        return "HwToken{" +
             "token='" + token + '\'' +
             ", expired_at=" + expired_at +
             ", refresh_expired_at=" + refresh_expired_at +

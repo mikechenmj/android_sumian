@@ -16,15 +16,12 @@ import com.sumian.app.app.App;
 import com.sumian.app.app.delegate.ApplicationDelegate;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.common.helper.ToastHelper;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 import com.sumian.app.widget.refresh.ActionLoadingDialog;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by jzz
@@ -171,7 +168,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onBindOpenSuccess(Token token) {
+    public void onBindOpenSuccess(HwToken token) {
         ApplicationDelegate.goHome(this);
         onFinish();
         finish();

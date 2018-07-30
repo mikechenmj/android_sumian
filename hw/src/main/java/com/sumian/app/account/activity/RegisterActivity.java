@@ -23,13 +23,10 @@ import com.sumian.app.improve.assessment.AssessmentActivity;
 import com.sumian.app.improve.main.HomeActivity;
 import com.sumian.app.network.request.CaptchaBody;
 import com.sumian.app.network.request.RegisterBody;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 import com.sumian.app.widget.TitleBar;
 import com.sumian.app.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.app.widget.refresh.ActionLoadingDialog;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by jzz
@@ -134,7 +131,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onRegisterSuccess(Token token) {
+    public void onRegisterSuccess(HwToken token) {
         runUiThread(() -> {
             ToastHelper.show(R.string.register_success_hint);
             if (!AppManager.getAccountModel().isHaveUserInfoAndSleepBarrierTest()) {

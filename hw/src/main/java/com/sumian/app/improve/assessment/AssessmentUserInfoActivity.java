@@ -22,15 +22,12 @@ import com.sumian.app.app.AppManager;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.widget.BottomSheetView;
 import com.sumian.app.widget.TitleBar;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by sm
@@ -53,7 +50,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     TextView mTvWeight;
     Button mBtSave;
 
-    private UserInfo mUserInfo;
+    private HwUserInfo mUserInfo;
 
     private Boolean[] mIsBoss = new Boolean[5];
 
@@ -99,7 +96,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (ACTION_MODIFY_ASSESSMENT_USER_INFO.equals(intent.getAction())) {
-                    UserInfo userInfo = (UserInfo) intent.getSerializableExtra(EXTRA_ASSESSMENT_USER_INFO);
+                    HwUserInfo userInfo = (HwUserInfo) intent.getSerializableExtra(EXTRA_ASSESSMENT_USER_INFO);
                     onSyncCacheUserInfoSuccess(userInfo);
                 }
             }
@@ -180,9 +177,9 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
             map.put("birthday", mUserInfo.getBirthday());
             map.put("height", mUserInfo.getHeight());
             map.put("weight", mUserInfo.getWeight());
-            AppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
+            AppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<HwUserInfo>() {
                 @Override
-                protected void onSuccess(UserInfo response) {
+                protected void onSuccess(HwUserInfo response) {
                     onSyncCacheUserInfoSuccess(response);
                     AppManager.getAccountModel().updateUserCache(response);
                     finish();
@@ -226,7 +223,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     }
 
     @Override
-    public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
+    public void onSyncCacheUserInfoSuccess(HwUserInfo userInfo) {
         setText(userInfo.getNickname(), mEtNickname);
         mIsBoss[0] = TextUtils.isEmpty(userInfo.getNickname());
         mIsBoss[1] = TextUtils.isEmpty(userInfo.getGender()) || userInfo.getGender().equals("secrecy");
@@ -265,7 +262,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     }
 
     @Override
-    public void onSyncUserInfoSuccess(UserInfo userInfo) {
+    public void onSyncUserInfoSuccess(HwUserInfo userInfo) {
         onSyncCacheUserInfoSuccess(userInfo);
     }
 

@@ -16,11 +16,9 @@ import com.sumian.app.app.AppManager;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.common.util.UiUtil;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.widget.TitleBar;
 import com.sumian.app.widget.refresh.ActionLoadingDialog;
-
-import butterknife.BindView;
 
 
 /**
@@ -31,7 +29,7 @@ import butterknife.BindView;
  */
 
 public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnMoreListener, TitleBar.OnBackListener,
-    ModifyUserInfoContract.View<UserInfo> {
+    ModifyUserInfoContract.View<HwUserInfo> {
 
     public static final String MODIFY_TYPE = "modify_type";
 
@@ -171,7 +169,7 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
     }
 
     @Override
-    public void onModifySuccess(UserInfo userInfo) {
+    public void onModifySuccess(HwUserInfo userInfo) {
         runUiThread(() -> {
             ToastHelper.show(R.string.modify_user_info_success);
             AppManager.getAccountModel().updateUserCache(userInfo);

@@ -9,7 +9,7 @@ import com.sumian.app.network.api.SleepyApi;
 import com.sumian.app.network.callback.BaseResponseCallback;
 import com.sumian.app.network.request.CaptchaBody;
 import com.sumian.app.network.request.RegisterBody;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -56,12 +56,12 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
         view.onBegin();
 
-        Call<Token> call = sleepyApi.doRegister(registerBody);
+        Call<HwToken> call = sleepyApi.doRegister(registerBody);
         this.mCalls.add(call);
 
-        call.enqueue(new BaseResponseCallback<Token>() {
+        call.enqueue(new BaseResponseCallback<HwToken>() {
             @Override
-            protected void onSuccess(Token response) {
+            protected void onSuccess(HwToken response) {
                 AppManager.getAccountModel().updateTokenCache(response);
                 view.onRegisterSuccess(response);
                 SyncUserInfoService.startService(SyncUserInfoService.SUMIAN_LOGIN_TYPE);

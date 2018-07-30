@@ -14,15 +14,13 @@ import com.sumian.app.account.presenter.ModifySelectPresenter;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.improve.assessment.AssessmentUserInfoActivity;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.widget.BottomSheetView;
 import com.sumian.app.widget.refresh.ActionLoadingDialog;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 /**
@@ -34,7 +32,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 @SuppressWarnings("ConstantConditions")
 public class SelectBottomSheet extends BottomSheetView implements View.OnClickListener,
-        ModifySelectContract.View<UserInfo>, NumberPickerView.OnValueChangeListener, NumberPickerView.OnScrollListener {
+        ModifySelectContract.View<HwUserInfo>, NumberPickerView.OnValueChangeListener, NumberPickerView.OnScrollListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = SelectBottomSheet.class.getSimpleName();
@@ -52,12 +50,12 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     private String mFormKey;
 
     private ModifySelectContract.Presenter mPresenter;
-    private UserInfo mUserInfo;
+    private HwUserInfo mUserInfo;
     private ActionLoadingDialog mActionLoadingDialog;
 
     private boolean mIsAssessment = false;
 
-    public static SelectBottomSheet newInstance(String formKey, UserInfo userInfo) {
+    public static SelectBottomSheet newInstance(String formKey, HwUserInfo userInfo) {
         SelectBottomSheet selectBottomSheet = new SelectBottomSheet();
         Bundle args = new Bundle();
         args.putString(FORM_KEY, formKey);
@@ -66,7 +64,7 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
         return selectBottomSheet;
     }
 
-    public static SelectBottomSheet newInstance(String formKey, UserInfo userInfo, boolean isAssessment) {
+    public static SelectBottomSheet newInstance(String formKey, HwUserInfo userInfo, boolean isAssessment) {
         SelectBottomSheet selectBottomSheet = new SelectBottomSheet();
         Bundle args = new Bundle();
         args.putString(FORM_KEY, formKey);
@@ -80,7 +78,7 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     protected void initBundle(Bundle arguments) {
         super.initBundle(arguments);
         this.mFormKey = arguments.getString(FORM_KEY);
-        this.mUserInfo = (UserInfo) arguments.getSerializable(USER_KEY);
+        this.mUserInfo = (HwUserInfo) arguments.getSerializable(USER_KEY);
         this.mIsAssessment = arguments.getBoolean(IS_ASSESSMENT_KEY, false);
     }
 
@@ -183,7 +181,7 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     }
 
     @Override
-    public void onModifySuccess(UserInfo userInfo) {
+    public void onModifySuccess(HwUserInfo userInfo) {
         runUiThread(this::dismiss);
         AppManager.getAccountModel().updateUserCache(userInfo);
     }

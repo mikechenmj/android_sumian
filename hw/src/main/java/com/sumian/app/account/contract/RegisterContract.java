@@ -4,7 +4,7 @@ import com.sumian.app.base.BaseNetView;
 import com.sumian.app.base.BasePresenter;
 import com.sumian.app.network.request.CaptchaBody;
 import com.sumian.app.network.request.RegisterBody;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 
 /**
  * Created by jzz
@@ -17,7 +17,7 @@ public interface RegisterContract {
 
     interface View extends BaseNetView<Presenter> {
 
-        void onRegisterSuccess(Token token);
+        void onRegisterSuccess(HwToken token);
 
         void onRegisterFailed(String error);
 

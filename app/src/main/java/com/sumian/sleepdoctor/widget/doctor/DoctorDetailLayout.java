@@ -66,7 +66,7 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
         this.mDoctor = doctor;
 
         RequestOptions requestOptions = RequestOptions.errorOf(R.mipmap.ic_info_avatar_doctor).placeholder(R.mipmap.ic_info_avatar_doctor);
-        Glide.with(this).load(doctor.getAvatar()).apply(requestOptions).into(ivAvatar);
+//        Glide.with(this).load(doctor.getAvatar()).apply(requestOptions).into(ivAvatar);
         this.tvName.setText(doctor.getName());
         this.tvDepartment.setText(String.format(Locale.getDefault(), "%s %s", doctor.getHospital(), doctor.getDepartment()));
         this.foldLayout.setText(doctor.getIntroduction_no_tag());

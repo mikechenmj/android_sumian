@@ -20,13 +20,10 @@ import com.sumian.app.common.config.SumianConfig;
 import com.sumian.app.common.util.CheckUtils;
 import com.sumian.app.common.util.UiUtil;
 import com.sumian.app.network.request.CaptchaBody;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 import com.sumian.app.widget.TitleBar;
 import com.sumian.app.widget.adapter.OnTextWatcherAdapter;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by jzz
@@ -143,7 +140,7 @@ public class OpenBindActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onBindSuccess(Token token) {
+    public void onBindSuccess(HwToken token) {
         runUiThread(() -> ToastHelper.show(R.string.register_success_hint));
         ApplicationDelegate.goHome(this);
     }

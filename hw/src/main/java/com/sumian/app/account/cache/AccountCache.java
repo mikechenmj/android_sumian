@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.app.common.util.SpUtil;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 
 /**
  * Created by jzz
@@ -47,7 +47,7 @@ public final class AccountCache {
         if (obj == null) throw new NullPointerException("obj is null...");
         // Log.e(TAG, "saveTokenCache: ------------->" + obj.toString());
         SharedPreferences.Editor edit = initEdit();
-        if (obj instanceof Token) {
+        if (obj instanceof HwToken) {
             String json = JSON.toJSONString(obj);
             edit.putString(KEY_TOKEN, json);
             apply(edit);

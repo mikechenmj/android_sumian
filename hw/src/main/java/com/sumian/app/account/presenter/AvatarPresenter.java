@@ -14,7 +14,7 @@ import com.sumian.app.account.contract.AvatarContract;
 import com.sumian.app.app.App;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.oss.bean.OssResponse;
 import com.sumian.app.oss.engine.OssEngine;
 
@@ -143,7 +143,7 @@ public class AvatarPresenter implements AvatarContract.Presenter {
             mView.loadLocalImageSuccess(mLocalImagePath);
         }
 
-        UserInfo userInfo = AppManager.getAccountModel().getUserInfo();
+        HwUserInfo userInfo = AppManager.getAccountModel().getUserInfo();
         userInfo.setAvatar(mLocalImagePath);
         AppManager.getAccountModel().updateUserCache(userInfo);
     }

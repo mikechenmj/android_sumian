@@ -14,16 +14,13 @@ import com.sumian.app.account.contract.UserInfoContract;
 import com.sumian.app.account.presenter.UserInfoPresenter;
 import com.sumian.app.account.sheet.SelectBottomSheet;
 import com.sumian.app.account.sheet.SelectGenderBottomSheet;
-import com.sumian.app.app.App;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.common.helper.ToastHelper;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.widget.BottomSheetView;
 import com.sumian.app.widget.TitleBar;
 import com.sumian.app.widget.refresh.BlueRefreshView;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -48,7 +45,7 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     TextView mTvCareer;
 
     private UserInfoContract.Presenter mPresenter;
-    private UserInfo mUserInfo;
+    private HwUserInfo mUserInfo;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, UserInfoActivity.class));
@@ -133,7 +130,7 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     }
 
     @Override
-    public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
+    public void onSyncCacheUserInfoSuccess(HwUserInfo userInfo) {
         runUiThread(() -> {
             Glide.with(UserInfoActivity.this)
                     .load(userInfo.getAvatar())

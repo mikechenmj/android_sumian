@@ -8,7 +8,7 @@ import com.sumian.app.account.service.SyncUserInfoService;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.network.api.SleepyApi;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.Token;
+import com.sumian.app.network.response.HwToken;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -78,11 +78,11 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
         Map<String, Object> map = new HashMap<>();
         map.put("type", openType);
         map.put("union_id", OpenMap.get("unionid"));
-        Call<Token> call = this.mSleepyApi.loginOpenPlatform(map);
+        Call<HwToken> call = this.mSleepyApi.loginOpenPlatform(map);
 
-        call.enqueue(new BaseResponseCallback<Token>() {
+        call.enqueue(new BaseResponseCallback<HwToken>() {
             @Override
-            protected void onSuccess(Token response) {
+            protected void onSuccess(HwToken response) {
                 AppManager.getAccountModel().updateTokenCache(response);
                 view.onBindOpenSuccess(response);
                 SyncUserInfoService.startService(SyncUserInfoService.OPEN_LOGIN_TYPE);

@@ -13,14 +13,14 @@ import com.sumian.app.network.response.ConfigInfo;
 import com.sumian.app.network.response.DaySleepReport;
 import com.sumian.app.network.response.FileLength;
 import com.sumian.app.network.response.FirmwareInfo;
+import com.sumian.app.network.response.HwToken;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.network.response.RawData;
 import com.sumian.app.network.response.Reminder;
 import com.sumian.app.network.response.ResultResponse;
 import com.sumian.app.network.response.SleepDetailReport;
 import com.sumian.app.network.response.SleepDurationReport;
 import com.sumian.app.network.response.Ticket;
-import com.sumian.app.network.response.Token;
-import com.sumian.app.network.response.UserInfo;
 import com.sumian.app.network.response.UserSetting;
 import com.sumian.app.oss.bean.OssResponse;
 
@@ -57,10 +57,10 @@ public interface SleepyApi {
     //user authorization module
 
     @PUT("authorizations/current")
-    Call<Token> doRefreshToken();
+    Call<HwToken> doRefreshToken();
 
     @POST("authorizations")
-    Call<Token> doLogin(@Body LoginBody loginBody);
+    Call<HwToken> doLogin(@Body LoginBody loginBody);
 
     @DELETE("authorizations/current")
     Call<Object> doLogout(@Query("device_token") String deviceToken);
@@ -68,14 +68,14 @@ public interface SleepyApi {
     //account module
 
     @POST("users")
-    Call<Token> doRegister(@Body RegisterBody registerBody);
+    Call<HwToken> doRegister(@Body RegisterBody registerBody);
 
     @GET("user/profile")
-    Call<UserInfo> syncUserInfo();
+    Call<HwUserInfo> syncUserInfo();
 
     @FormUrlEncoded
     @PATCH("user/profile")
-    Call<UserInfo> doModifyUserInfo(@FieldMap Map<String, Object> map);
+    Call<HwUserInfo> doModifyUserInfo(@FieldMap Map<String, Object> map);
 
     @PATCH("user/reset-password")
     Call<Object> doResetPwd(@Body ResetPwdBody resetPwdBody);
@@ -154,15 +154,15 @@ public interface SleepyApi {
 
     @POST("socialite/authorizations")
     @FormUrlEncoded
-    Call<Token> loginOpenPlatform(@FieldMap Map<String, Object> map);
+    Call<HwToken> loginOpenPlatform(@FieldMap Map<String, Object> map);
 
     @POST("socialite/users")
     @FormUrlEncoded
-    Call<Token> bindOpenPlatform(@FieldMap Map<String, Object> map);
+    Call<HwToken> bindOpenPlatform(@FieldMap Map<String, Object> map);
 
     @POST("socialites")
     @FormUrlEncoded
-    Call<UserInfo.Social> bindOpenPlatform(@Field("type") int platformType, @Field("info") String openInfo);
+    Call<HwUserInfo.Social> bindOpenPlatform(@Field("type") int platformType, @Field("info") String openInfo);
 
     @DELETE("socialites/{id}")
     Call<Object> unBindOpenPlatform(@Path("id") int id);

@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.sumian.app.BuildConfig;
 import com.sumian.app.R;
 import com.sumian.app.account.activity.SleepReminderActivity;
@@ -23,17 +22,14 @@ import com.sumian.app.improve.guideline.activity.ManualActivity;
 import com.sumian.app.leancloud.LeanCloudHelper;
 import com.sumian.app.leancloud.activity.MsgActivity;
 import com.sumian.app.log.LogManager;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.network.response.Reminder;
-import com.sumian.app.network.response.UserInfo;
 import com.sumian.app.setting.activity.SettingActivity;
 import com.sumian.app.upgrade.activity.VersionNoticeActivity;
 import com.sumian.app.upgrade.model.VersionModel;
 
-import java.io.FileDescriptor;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -164,7 +160,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     }
 
     @Override
-    public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
+    public void onSyncCacheUserInfoSuccess(HwUserInfo userInfo) {
         runOnUiThread(() -> {
             String avatar = userInfo.getAvatar();
             if (!TextUtils.isEmpty(avatar)) {
@@ -197,7 +193,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     }
 
     @Override
-    public void onSyncUserInfoSuccess(UserInfo userInfo) {
+    public void onSyncUserInfoSuccess(HwUserInfo userInfo) {
         onSyncCacheUserInfoSuccess(userInfo);
     }
 

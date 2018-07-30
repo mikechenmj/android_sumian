@@ -84,7 +84,7 @@ android {
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix rootProject.ext.applicationIdSuffix
+//            applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
         }
 
@@ -96,7 +96,7 @@ android {
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix rootProject.ext.applicationIdSuffix
+//            applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
         }
 
@@ -111,8 +111,8 @@ android {
     }
 
     //product flavors
-    flavorDimensions "market", "environment"
-
+//    flavorDimensions "market", "environment"
+//
 //    productFlavors {
 //
 //        def app_name = "速眠"

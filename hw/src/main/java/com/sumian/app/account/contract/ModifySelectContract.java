@@ -1,6 +1,6 @@
 package com.sumian.app.account.contract;
 
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 
 /**
  * Created by jzz
@@ -26,7 +26,7 @@ public interface ModifySelectContract {
 
     interface Presenter extends ModifyUserInfoContract.Presenter {
 
-        void transformFormKey(String formKey, UserInfo userInfo);
+        void transformFormKey(String formKey, HwUserInfo userInfo);
 
         Object transformFormValue(String formKey, String oneValue, String twoValue, String threeValue);
 

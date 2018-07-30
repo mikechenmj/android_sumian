@@ -4,7 +4,7 @@ import com.sumian.app.account.contract.ModifyUserInfoContract;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.network.api.SleepyApi;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -23,11 +23,11 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
 
     private static final String TAG = ModifyGenderPresenter.class.getSimpleName();
 
-    private WeakReference<ModifyUserInfoContract.View<UserInfo>> mViewWeakReference;
+    private WeakReference<ModifyUserInfoContract.View<HwUserInfo>> mViewWeakReference;
     private WeakReference<SleepyApi> mApiWeakReference;
     private Call mCall;
 
-    private ModifyGenderPresenter(ModifyUserInfoContract.View<UserInfo> view) {
+    private ModifyGenderPresenter(ModifyUserInfoContract.View<HwUserInfo> view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         this.mApiWeakReference = new WeakReference<>(AppManager
@@ -35,7 +35,7 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
             .getHttpService());
     }
 
-    public static void init(ModifyUserInfoContract.View<UserInfo> view) {
+    public static void init(ModifyUserInfoContract.View<HwUserInfo> view) {
         new ModifyGenderPresenter(view);
     }
 
@@ -50,8 +50,8 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
     @Override
     public void doModifyUserInfo(String formKey, Object formValue) {
 
-        WeakReference<ModifyUserInfoContract.View<UserInfo>> viewWeakReference = this.mViewWeakReference;
-        ModifyUserInfoContract.View<UserInfo> view = viewWeakReference.get();
+        WeakReference<ModifyUserInfoContract.View<HwUserInfo>> viewWeakReference = this.mViewWeakReference;
+        ModifyUserInfoContract.View<HwUserInfo> view = viewWeakReference.get();
         if (view == null) return;
 
         WeakReference<SleepyApi> apiWeakReference = this.mApiWeakReference;
@@ -62,10 +62,10 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
 
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
-        Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
-        call.enqueue(new BaseResponseCallback<UserInfo>() {
+        Call<HwUserInfo> call = sleepyApi.doModifyUserInfo(map);
+        call.enqueue(new BaseResponseCallback<HwUserInfo>() {
             @Override
-            protected void onSuccess(UserInfo response) {
+            protected void onSuccess(HwUserInfo response) {
                 view.onModifySuccess(response);
                 AppManager.getAccountModel().updateUserCache(response);
             }

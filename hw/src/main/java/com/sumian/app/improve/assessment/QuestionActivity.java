@@ -20,10 +20,7 @@ import com.sumian.app.R;
 import com.sumian.app.account.bean.Answer;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.base.BaseActivity;
-import com.sumian.app.network.response.UserInfo;
-
-import butterknife.BindView;
-import butterknife.OnClick;
+import com.sumian.app.network.response.HwUserInfo;
 
 /**
  * Created by sm
@@ -124,7 +121,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
                 if (url.startsWith("sumian://sleep_quality_result?data=")) {
                     String json = url.substring(url.indexOf("{"));
                     Answer answer = JSON.parseObject(json, Answer.class);
-                    UserInfo userInfo = AppManager.getAccountModel().getUserInfo();
+                    HwUserInfo userInfo = AppManager.getAccountModel().getUserInfo();
                     userInfo.setAnswers(answer);
                     AppManager.getAccountModel().updateUserCache(userInfo);
                     finish();

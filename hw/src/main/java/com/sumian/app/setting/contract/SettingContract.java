@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.sumian.app.base.BaseNetView;
 import com.sumian.app.base.BasePresenter;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.network.response.UserSetting;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -23,7 +23,7 @@ public interface SettingContract {
 
         void syncSleepDiaryCallback(UserSetting userSetting);
 
-        void onBindOpenSuccess(UserInfo.Social social);
+        void onBindOpenSuccess(HwUserInfo.Social social);
 
         void onBindOpenFailed(String error);
 

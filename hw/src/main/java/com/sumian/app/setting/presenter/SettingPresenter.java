@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.alibaba.fastjson.JSON;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.network.response.UserSetting;
 import com.sumian.app.setting.contract.SettingContract;
 import com.umeng.socialize.UMAuthListener;
@@ -141,11 +141,11 @@ public class SettingPresenter implements SettingContract.Presenter {
         openMap.put("nickname", openMap.get("screen_name"));
         String openUserInfo = JSON.toJSONString(openMap);
 
-        Call<UserInfo.Social> call = AppManager.getNetEngine().getHttpService().bindOpenPlatform(openType, openUserInfo);
+        Call<HwUserInfo.Social> call = AppManager.getNetEngine().getHttpService().bindOpenPlatform(openType, openUserInfo);
         this.mCalls.add(call);
-        call.enqueue(new BaseResponseCallback<UserInfo.Social>() {
+        call.enqueue(new BaseResponseCallback<HwUserInfo.Social>() {
             @Override
-            protected void onSuccess(UserInfo.Social response) {
+            protected void onSuccess(HwUserInfo.Social response) {
                 AppManager.getAccountModel().bindSocialCache(response);
                 view.onBindOpenSuccess(response);
             }

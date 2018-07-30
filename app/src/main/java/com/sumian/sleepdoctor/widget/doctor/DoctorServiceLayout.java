@@ -101,11 +101,11 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
     }
 
     private void load(String url, @DrawableRes int defaultIconId, ImageView iv) {
-        if (TextUtils.isEmpty(url)) {
-            Glide.with(this).load(defaultIconId).into(iv);
-        } else {
-            Glide.with(this).load(url).into(iv);
-        }
+//        if (TextUtils.isEmpty(url)) {
+//            Glide.with(this).load(defaultIconId).into(iv);
+//        } else {
+//            Glide.with(this).load(url).into(iv);
+//        }
     }
 
     @OnClick({R.id.tv_service_action})

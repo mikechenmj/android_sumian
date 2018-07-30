@@ -1,6 +1,6 @@
 package com.sumian.app.account.callback;
 
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 
 /**
  * Created by jzz
@@ -12,7 +12,7 @@ public interface UserInfoCallback {
 
     void onStartSyncUserInfo();
 
-    void onSyncUserInfoSuccess(UserInfo userInfo);
+    void onSyncUserInfoSuccess(HwUserInfo userInfo);
 
     void onSyncUserInfoFailed(String error);
 

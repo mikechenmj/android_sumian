@@ -4,7 +4,7 @@ import android.support.annotation.StringRes;
 
 import com.sumian.app.base.BaseNetView;
 import com.sumian.app.base.BasePresenter;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 
 /**
  * Created by jzz
@@ -16,7 +16,7 @@ public interface UserInfoContract {
 
     interface View extends BaseNetView<Presenter> {
 
-        void onSyncCacheUserInfoSuccess(UserInfo userInfo);
+        void onSyncCacheUserInfoSuccess(HwUserInfo userInfo);
 
         void onSyncCacheUserInfoFailed(String error);
 

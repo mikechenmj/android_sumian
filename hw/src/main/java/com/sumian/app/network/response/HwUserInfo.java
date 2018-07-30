@@ -21,7 +21,7 @@ import java.util.Locale;
  */
 
 @SuppressWarnings("unused")
-public class UserInfo implements Serializable, Cloneable {
+public class HwUserInfo implements Serializable, Cloneable {
 
     private long id;
     private String mobile;//getLeanCloudId
@@ -301,7 +301,7 @@ public class UserInfo implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "UserInfo{" +
+        return "HwUserInfo{" +
             "id=" + id +
             ", mobile='" + mobile + '\'' +
             ", nickname='" + nickname + '\'' +
@@ -436,8 +436,8 @@ public class UserInfo implements Serializable, Cloneable {
     }
 
     @Override
-    public UserInfo clone() throws CloneNotSupportedException {
-        return (UserInfo) super.clone();//只对string 和基本数据类型进行 clone  不需要对新的引用类型进行拷贝  所以是相对来说的深拷贝,如果需要完全深拷贝需要为其引用对象也实现 clone, 并调用拷贝
+    public HwUserInfo clone() throws CloneNotSupportedException {
+        return (HwUserInfo) super.clone();//只对string 和基本数据类型进行 clone  不需要对新的引用类型进行拷贝  所以是相对来说的深拷贝,如果需要完全深拷贝需要为其引用对象也实现 clone, 并调用拷贝
     }
 
     public String[] getAddressArray() {

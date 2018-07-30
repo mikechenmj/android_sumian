@@ -39,7 +39,7 @@ import com.sumian.app.app.App;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.improve.main.HomeActivity;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -191,7 +191,7 @@ public final class LeanCloudHelper {
     private static void loginEasemob(Runnable run) {
         //未登录，需要登录后，再进入会话界面
 
-        UserInfo userInfo = AppManager.getAccountModel().getUserInfo();
+        HwUserInfo userInfo = AppManager.getAccountModel().getUserInfo();
         if (userInfo == null) {
             return;
         }

@@ -26,27 +26,27 @@ public class ImageLoader {
     }
 
     public static void loadImage(Activity activity, ImageView view, String url, int placeholder) {
-        loadImage(Glide.with(activity), view, url, placeholder, placeholder);
+//        loadImage(Glide.with(activity), view, url, placeholder, placeholder);
     }
 
     public static void loadImage(Activity activity, ImageView view, String url, int placeholder, int error) {
-        loadImage(Glide.with(activity), view, url, placeholder, error);
+//        loadImage(Glide.with(activity), view, url, placeholder, error);
     }
 
     public static void loadImage(Fragment fragment, ImageView view, String url, int placeholder) {
-        loadImage(Glide.with(fragment), view, url, placeholder, placeholder);
+//        loadImage(Glide.with(fragment), view, url, placeholder, placeholder);
     }
 
     public static void loadImage(Fragment fragment, ImageView view, String url, int placeholder, int error) {
-        loadImage(Glide.with(fragment), view, url, placeholder, error);
+//        loadImage(Glide.with(fragment), view, url, placeholder, error);
     }
 
     public static void loadImage(RequestManager loader, ImageView view, String url) {
-        loadImage(loader, view, url, 0);
+//        loadImage(loader, view, url, 0);
     }
 
     private static void loadImage(RequestManager loader, ImageView view, String url, int placeholder) {
-        loadImage(loader, view, url, placeholder, placeholder);
+//        loadImage(loader, view, url, placeholder, placeholder);
     }
 
     private static void loadImage(RequestManager loader, ImageView view, String url, int placeholder, int error) {

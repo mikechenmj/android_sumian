@@ -4,7 +4,7 @@ import com.sumian.app.R;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.app.App;
 import com.sumian.app.network.callback.BaseResponseCallback;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.setting.contract.SocialContract;
 
 import java.lang.ref.WeakReference;
@@ -54,7 +54,7 @@ public class SocialPresenter implements SocialContract.Presenter {
 
         view.onBegin();
 
-        List<UserInfo.Social> socialites = AppManager.getAccountModel().getUserInfo().getSocialites();
+        List<HwUserInfo.Social> socialites = AppManager.getAccountModel().getUserInfo().getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             view.onFinish();
             view.onFailure(App.getAppContext().getString(R.string.unbind_open_platform_failed));

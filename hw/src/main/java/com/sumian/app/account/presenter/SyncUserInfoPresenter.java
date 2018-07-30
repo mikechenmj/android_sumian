@@ -3,9 +3,9 @@ package com.sumian.app.account.presenter;
 import com.sumian.app.account.contract.SyncUserInfoContract;
 import com.sumian.app.app.AppManager;
 import com.sumian.app.network.callback.BaseResponseCallback;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.network.response.Reminder;
 import com.sumian.app.network.response.ResultResponse;
-import com.sumian.app.network.response.UserInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,13 +40,13 @@ public class SyncUserInfoPresenter implements SyncUserInfoContract.Presenter {
 
         AppManager.getAccountModel().startUpdateUserCache();
 
-        Call<UserInfo> call = AppManager
+        Call<HwUserInfo> call = AppManager
             .getNetEngine()
             .getHttpService().syncUserInfo();
 
-        call.enqueue(new BaseResponseCallback<UserInfo>() {
+        call.enqueue(new BaseResponseCallback<HwUserInfo>() {
             @Override
-            protected void onSuccess(UserInfo response) {
+            protected void onSuccess(HwUserInfo response) {
                 AppManager.getAccountModel().updateUserCache(response);
                 AppManager.getAccountModel().login(isOnlySync,loginType);
             }

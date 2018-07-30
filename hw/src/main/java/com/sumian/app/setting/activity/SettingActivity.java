@@ -11,7 +11,7 @@ import com.sumian.app.base.BaseActivity;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.improve.feedback.FeedbackActivity;
 import com.sumian.app.improve.qrcode.activity.QrCodeActivity;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 import com.sumian.app.network.response.UserSetting;
 import com.sumian.app.setting.contract.SettingContract;
 import com.sumian.app.setting.presenter.SettingPresenter;
@@ -27,9 +27,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by jzz
@@ -107,15 +104,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.initData();
         mIsInit = true;
         mPresenter.syncSleepDiary();
-        UserInfo userInfo = AppManager.getAccountModel().getUserInfo();
+        HwUserInfo userInfo = AppManager.getAccountModel().getUserInfo();
         if (userInfo == null) {
             return;
         }
-        List<UserInfo.Social> socialites = userInfo.getSocialites();
+        List<HwUserInfo.Social> socialites = userInfo.getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             return;
         }
-        UserInfo.Social social = socialites.get(0);
+        HwUserInfo.Social social = socialites.get(0);
         mTvWechatNickname.setText(social.getNickname());
         mBtBindWechat.setToggleOn();
     }
@@ -164,7 +161,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onBindOpenSuccess(UserInfo.Social social) {
+    public void onBindOpenSuccess(HwUserInfo.Social social) {
         runUiThread(() -> {
             mBtBindWechat.setToggleOn();
             mTvWechatNickname.setText(social.getNickname());

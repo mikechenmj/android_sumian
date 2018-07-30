@@ -7,7 +7,7 @@ import com.sumian.app.account.callback.UserInfoCallback;
 import com.sumian.app.account.contract.UserInfoContract;
 import com.sumian.app.account.service.SyncUserInfoService;
 import com.sumian.app.app.AppManager;
-import com.sumian.app.network.response.UserInfo;
+import com.sumian.app.network.response.HwUserInfo;
 
 import java.lang.ref.WeakReference;
 
@@ -37,7 +37,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
         UserInfoContract.View view = viewWeakReference.get();
         if (view == null) return;
 
-        UserInfo userInfo = AppManager.getAccountModel().getUserInfo();
+        HwUserInfo userInfo = AppManager.getAccountModel().getUserInfo();
 
         if (userInfo == null) {
             doRefreshUserInfo();
@@ -91,7 +91,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
     }
 
     @Override
-    public void onSyncUserInfoSuccess(UserInfo userInfo) {
+    public void onSyncUserInfoSuccess(HwUserInfo userInfo) {
         WeakReference<UserInfoContract.View> viewWeakReference = this.mViewWeakReference;
         UserInfoContract.View view = viewWeakReference.get();
         if (view == null) return;
