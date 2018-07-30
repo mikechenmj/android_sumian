@@ -34,7 +34,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 @SuppressWarnings("ConstantConditions")
 public class SelectBottomSheet extends BottomSheetView implements View.OnClickListener,
-    ModifySelectContract.View<UserInfo>, NumberPickerView.OnValueChangeListener, NumberPickerView.OnScrollListener {
+        ModifySelectContract.View<UserInfo>, NumberPickerView.OnValueChangeListener, NumberPickerView.OnScrollListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = SelectBottomSheet.class.getSimpleName();
@@ -44,14 +44,9 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     private static final String IS_ASSESSMENT_KEY = "is_assessment_key";
 
 
-    @BindView(R.id.picker_one)
     NumberPickerView mPickerViewOne;
-    @BindView(R.id.picker_two)
     NumberPickerView mPickerViewTwo;
-    @BindView(R.id.picker_three)
     NumberPickerView mPickerViewThree;
-
-    @BindView(R.id.tv_ok)
     TextView mTvOk;
 
     private String mFormKey;
@@ -98,12 +93,18 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
+        mPickerViewOne = rootView.findViewById(R.id.picker_one);
+        mPickerViewTwo = rootView.findViewById(R.id.picker_two);
+        mPickerViewThree = rootView.findViewById(R.id.picker_three);
+        mTvOk = rootView.findViewById(R.id.tv_ok);
+
+        rootView.findViewById(R.id.tv_ok).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+
         mPickerViewOne.setOnValueChangedListener(this);
         mPickerViewOne.setOnScrollListener(this);
-
         mPickerViewTwo.setOnValueChangedListener(this);
         mPickerViewTwo.setOnScrollListener(this);
-
         mPickerViewThree.setOnScrollListener(this);
         ModifySelectPresenter.init(this);
     }
@@ -115,46 +116,48 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     }
 
 
-    @SuppressWarnings("MalformedFormatString")
-    @OnClick({R.id.tv_cancel, R.id.tv_ok})
+    @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_cancel:
-                dismiss();
-                break;
-            case R.id.tv_ok:
+        int id = view.getId();
+        if (id == R.id.tv_cancel) {
+            dismiss();
+        } else if (id == R.id.tv_ok) {
+            String oneValue = mPickerViewOne.getContentByCurrValue();
+            if (TextUtils.isEmpty(oneValue)) {
+                return;
+            }
+            String twoValue = mPickerViewTwo.getContentByCurrValue();
+            if (TextUtils.isEmpty(twoValue)) {
+                return;
+            }
+            String threeValue = mPickerViewThree.getContentByCurrValue();
+            //if (TextUtils.isEmpty(threeValue)) return;
 
-                String oneValue = mPickerViewOne.getContentByCurrValue();
-                if (TextUtils.isEmpty(oneValue)) return;
-                String twoValue = mPickerViewTwo.getContentByCurrValue();
-                if (TextUtils.isEmpty(twoValue)) return;
-                String threeValue = mPickerViewThree.getContentByCurrValue();
-                //if (TextUtils.isEmpty(threeValue)) return;
-
-                if (mIsAssessment) {
-                    Object value = mPresenter.transformFormValue(mFormKey, oneValue, twoValue, threeValue);
-                    switch (mFormKey) {
-                        case ModifyUserInfoContract.KEY_BIRTHDAY:
-                            mUserInfo.setBirthday((String) value);
-                            break;
-                        case ModifyUserInfoContract.KEY_HEIGHT:
-                            mUserInfo.setHeight(String.format(Locale.getDefault(), "%.1f", value));
-                            break;
-                        case ModifyUserInfoContract.KEY_WEIGHT:
-                            mUserInfo.setWeight(String.format(Locale.getDefault(), "%.1f", value));
-                            break;
-                    }
-
-                    Intent intent = new Intent(AssessmentUserInfoActivity.ACTION_MODIFY_ASSESSMENT_USER_INFO);
-                    intent.putExtra(AssessmentUserInfoActivity.EXTRA_ASSESSMENT_USER_INFO, mUserInfo);
-                    boolean sendBroadcast = LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-                    if (sendBroadcast) {
-                        dismiss();
-                    }
-                } else {
-                    mPresenter.doModifyUserInfo(mFormKey, mPresenter.transformFormValue(mFormKey, oneValue, twoValue, threeValue));
+            if (mIsAssessment) {
+                Object value = mPresenter.transformFormValue(mFormKey, oneValue, twoValue, threeValue);
+                switch (mFormKey) {
+                    case ModifyUserInfoContract.KEY_BIRTHDAY:
+                        mUserInfo.setBirthday((String) value);
+                        break;
+                    case ModifyUserInfoContract.KEY_HEIGHT:
+                        mUserInfo.setHeight(String.format(Locale.getDefault(), "%.1f", value));
+                        break;
+                    case ModifyUserInfoContract.KEY_WEIGHT:
+                        mUserInfo.setWeight(String.format(Locale.getDefault(), "%.1f", value));
+                        break;
+                    default:
+                        break;
                 }
-                break;
+
+                Intent intent = new Intent(AssessmentUserInfoActivity.ACTION_MODIFY_ASSESSMENT_USER_INFO);
+                intent.putExtra(AssessmentUserInfoActivity.EXTRA_ASSESSMENT_USER_INFO, mUserInfo);
+                boolean sendBroadcast = LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+                if (sendBroadcast) {
+                    dismiss();
+                }
+            } else {
+                mPresenter.doModifyUserInfo(mFormKey, mPresenter.transformFormValue(mFormKey, oneValue, twoValue, threeValue));
+            }
         }
     }
 
@@ -192,7 +195,7 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
 
     @Override
     public void transformOneDisplayedValues(int currentPosition, String hintText, String[]
-        displayedValues) {
+            displayedValues) {
         runUiThread(() -> {
             mPickerViewOne.refreshByNewDisplayedValues(displayedValues);
             mPickerViewOne.setPickedIndexRelativeToRaw(currentPosition);
@@ -224,40 +227,36 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
 
     @Override
     public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+        int id = picker.getId();
         switch (mFormKey) {
             case ModifyUserInfoContract.KEY_BIRTHDAY:
                 int year;
-                switch (picker.getId()) {
-                    case R.id.picker_one:
-                        year = Integer.parseInt(picker.getContentByCurrValue(), 10);
-                        if (year == Calendar.getInstance().get(Calendar.YEAR)) {
-                            int monthCount = Calendar.getInstance().get(Calendar.MONTH) + 1;
-                            String[] months = new String[monthCount];
-                            for (int i = 0; i < months.length; i++) {
-                                months[i] = String.format(Locale.getDefault(), "%02d", i + 1);
-                            }
-                            mPickerViewTwo.refreshByNewDisplayedValues(months);
-                        } else {
-                            String[] months = new String[12];
-                            for (int i = 0; i < months.length; i++) {
-                                months[i] = String.format(Locale.getDefault(), "%02d", i + 1);
-                            }
-                            mPickerViewTwo.refreshByNewDisplayedValues(months);
+                if (id == R.id.picker_one) {
+                    year = Integer.parseInt(picker.getContentByCurrValue(), 10);
+                    if (year == Calendar.getInstance().get(Calendar.YEAR)) {
+                        int monthCount = Calendar.getInstance().get(Calendar.MONTH) + 1;
+                        String[] months = new String[monthCount];
+                        for (int i = 0; i < months.length; i++) {
+                            months[i] = String.format(Locale.getDefault(), "%02d", i + 1);
                         }
-                        break;
+                        mPickerViewTwo.refreshByNewDisplayedValues(months);
+                    } else {
+                        String[] months = new String[12];
+                        for (int i = 0; i < months.length; i++) {
+                            months[i] = String.format(Locale.getDefault(), "%02d", i + 1);
+                        }
+                        mPickerViewTwo.refreshByNewDisplayedValues(months);
+                    }
                 }
                 break;
             case ModifyUserInfoContract.KEY_AREA:
                 String province;
-                switch (picker.getId()) {
-                    case R.id.picker_one:
-                        province = picker.getContentByCurrValue();
-                        mPresenter.transformCityForProvince(province);
-                        break;
-                    case R.id.picker_two:
-                        String city = picker.getContentByCurrValue();
-                        mPresenter.transformAreaForCity(city);
-                        break;
+                if (id == R.id.picker_one) {
+                    province = picker.getContentByCurrValue();
+                    mPresenter.transformCityForProvince(province);
+                } else if (id == R.id.picker_one) {
+                    String city = picker.getContentByCurrValue();
+                    mPresenter.transformAreaForCity(city);
                 }
                 break;
             default:
@@ -268,16 +267,13 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     @Override
     public void onScrollStateChange(NumberPickerView view, int scrollState) {
         runUiThread(() -> {
-            switch (view.getId()) {
-                case R.id.picker_one:
-                case R.id.picker_two:
-                case R.id.picker_three:
-                    if (scrollState != 0) {
-                        mTvOk.setVisibility(View.INVISIBLE);
-                    } else {
-                        mTvOk.setVisibility(View.VISIBLE);
-                    }
-                    break;
+            int id = view.getId();
+            if (id == R.id.picker_one || id == R.id.picker_two || id == R.id.picker_three) {
+                if (scrollState != 0) {
+                    mTvOk.setVisibility(View.INVISIBLE);
+                } else {
+                    mTvOk.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

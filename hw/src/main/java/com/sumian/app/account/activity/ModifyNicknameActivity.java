@@ -38,26 +38,16 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
     public static final int NICKNAME_TYPE = 0x01;
     public static final int CAREER_TYPE = 0x02;
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.lay_pop)
     FrameLayout mAdapterPop;
-    @BindView(R.id.tv_pop_error)
     TextView mTvPopError;
-    @BindView(R.id.et_nickname)
     EditText mEtMobile;
-    @BindView(R.id.tv_modify_label)
     TextView mTvModifyLabel;
-    @BindView(R.id.tv_warn_label)
     TextView mTvWarnLabel;
 
-
     private ModifyUserInfoContract.Presenter mPresenter;
-
     private ActionLoadingDialog mActionLoadingDialog;
-
     private int mType = NICKNAME_TYPE;
-
 
     public static void show(Context context, int type) {
 
@@ -94,6 +84,13 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
             this.mEtMobile.setMaxEms(12);
         }
         this.mTitleBar.showMoreIcon(R.mipmap.ic_nav_ok).addOnMoreListener(this).addOnBackListener(this);
+
+        mTitleBar = findViewById(R.id.title_bar);
+        mAdapterPop= findViewById(R.id.lay_pop);
+        mTvPopError= findViewById(R.id.tv_pop_error);
+        mEtMobile= findViewById(R.id.et_nickname);
+        mTvModifyLabel= findViewById(R.id.tv_modify_label);
+        mTvWarnLabel= findViewById(R.id.tv_warn_label);
     }
 
     @Override

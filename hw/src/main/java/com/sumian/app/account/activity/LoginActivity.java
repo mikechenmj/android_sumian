@@ -30,22 +30,15 @@ import butterknife.OnClick;
  */
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
-    LoginContract.View {
+        LoginContract.View {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
 
     public static final String KEY_LAUNCHER = "extra_launcher";
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.et_mobile)
     EditText mEtMobile;
-    @BindView(R.id.et_pwd)
     EditText mEtPwd;
-
-    @BindView(R.id.bt_login)
     Button mBtLogin;
-    @BindView(R.id.tv_forget_pwd)
     TextView mTvForgetPwd;
 
     private boolean mIsLauncher;
@@ -89,41 +82,37 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         } else {
             this.mTitleBar.hideBack();
         }
+        mTitleBar = findViewById(R.id.title_bar);
+        mEtMobile = findViewById(R.id.et_mobile);
+        mEtPwd = findViewById(R.id.et_pwd);
+        mBtLogin = findViewById(R.id.bt_login);
+        mTvForgetPwd = findViewById(R.id.tv_forget_pwd);
+
+        findViewById(R.id.bt_login).setOnClickListener(this);
+        findViewById(R.id.tv_forget_pwd).setOnClickListener(this);
     }
 
-    @OnClick({R.id.bt_login, R.id.tv_forget_pwd})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_login:
-
-                String mobile = this.mEtMobile.getText().toString().trim();
-
-                if (TextUtils.isEmpty(mobile)) {
-                    ToastHelper.show(R.string.mobile_error_hint);
-                    return;
-                }
-
-                String pwd = this.mEtPwd.getText().toString().trim();
-
-                if (TextUtils.isEmpty(pwd)) {
-                    ToastHelper.show(R.string.pwd_error_hint);
-                    return;
-                }
-
-                LoginBody loginBody = new LoginBody()
+        int id = v.getId();
+        if (id == R.id.bt_login) {
+            String mobile = this.mEtMobile.getText().toString().trim();
+            if (TextUtils.isEmpty(mobile)) {
+                ToastHelper.show(R.string.mobile_error_hint);
+                return;
+            }
+            String pwd = this.mEtPwd.getText().toString().trim();
+            if (TextUtils.isEmpty(pwd)) {
+                ToastHelper.show(R.string.pwd_error_hint);
+                return;
+            }
+            LoginBody loginBody = new LoginBody()
                     .setMobile(mobile)
                     .setPassword(pwd);
-                this.mPresenter.doLogin(loginBody);
-
-                break;
-            case R.id.tv_forget_pwd:
-                ForgetPwdActivity.show(this);
-                break;
-            default:
-                break;
+            this.mPresenter.doLogin(loginBody);
+        } else if (id == R.id.tv_forget_pwd) {
+            ForgetPwdActivity.show(this);
         }
-
     }
 
     @Override

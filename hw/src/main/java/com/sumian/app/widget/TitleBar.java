@@ -29,11 +29,8 @@ import butterknife.OnClick;
 
 public class TitleBar extends FrameLayout implements View.OnClickListener {
 
-    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.iv_more)
     ImageView mIvMore;
 
     private OnBackListener mOnBackListener;
@@ -62,7 +59,14 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         String title = a.getString(R.styleable.TitleBar_text);
         a.recycle();
 
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_title_bar, this));
+        View inflate = inflate(context, R.layout.hw_lay_title_bar, this);
+//        ButterKnife.bind(inflate);
+        mIvBack = inflate.findViewById(R.id.iv_back);
+        mTvTitle = inflate.findViewById(R.id.tv_title);
+        mIvMore = inflate.findViewById(R.id.iv_more);
+
+        mIvBack.setOnClickListener(this);
+        mIvMore.setOnClickListener(this);
 
         if (!TextUtils.isEmpty(title)) {
             mTvTitle.setText(title);
@@ -114,7 +118,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     }
 
     public TitleBar setTitle(@StringRes int titleRes) {
-        if (titleRes <= 0) {
+        if (titleRes == 0) {
             return this;
         }
         mTvTitle.setText(titleRes);
@@ -125,23 +129,21 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         mTvTitle.setText(text);
     }
 
-    @SuppressWarnings("deprecation")
-    @OnClick({R.id.iv_back, R.id.iv_more})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                OnBackListener onBackListener = this.mOnBackListener;
-                if (onBackListener == null) return;
-                onBackListener.onBack(v);
-                break;
-            case R.id.iv_more:
-                OnMoreListener onMoreListener = this.mOnMoreListener;
-                if (onMoreListener == null) return;
-                onMoreListener.onMore(v);
-                break;
-            default:
-                break;
+        int id = v.getId();
+        if (id == R.id.iv_back) {
+            OnBackListener onBackListener = this.mOnBackListener;
+            if (onBackListener == null) {
+                return;
+            }
+            onBackListener.onBack(v);
+        } else if (id == R.id.iv_more) {
+            OnMoreListener onMoreListener = this.mOnMoreListener;
+            if (onMoreListener == null) {
+                return;
+            }
+            onMoreListener.onMore(v);
         }
     }
 

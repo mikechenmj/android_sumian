@@ -29,36 +29,19 @@ import butterknife.OnClick;
 
 public class AssessmentActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.pop_container)
     FrameLayout mPopContainer;
-
-    @BindView(R.id.tv_step_one)
     TextView mTvStepOne;
-    @BindView(R.id.iv_user_info)
     ImageView mIvUserInfo;
-    @BindView(R.id.lay_show_user_info_table)
     LinearLayout mLayShowUserInfoTable;
-    @BindView(R.id.tv_step_two)
     TextView mTvStepTwo;
-    @BindView(R.id.tv_step_three)
     TextView mTvStepThree;
-    @BindView(R.id.iv_sleep_assessment)
     ImageView mIvSleepAssessment;
-    @BindView(R.id.lay_show_sleep_assessment_table)
     LinearLayout mLayShowSleepAssessmentTable;
-    @BindView(R.id.tv_step_four)
     TextView mTvStepFour;
-    @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
-
-    @BindView(R.id.bt_user_info_table)
     Button mBtUserInfoTable;
-    @BindView(R.id.bt_assessment_table)
     Button mBtAssessmentTable;
-    @BindView(R.id.lay_container)
     LinearLayout mLayContainer;
 
     private boolean mIsRegister;
@@ -90,6 +73,25 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
     protected void initWidget() {
         super.initWidget();
         mTitleBar.addOnBackListener(this);
+        mTitleBar = findViewById(R.id.title_bar);
+        mPopContainer = findViewById(R.id.pop_container);
+        mTvStepOne = findViewById(R.id.tv_step_one);
+        mIvUserInfo = findViewById(R.id.iv_user_info);
+        mLayShowUserInfoTable = findViewById(R.id.lay_show_user_info_table);
+        mTvStepTwo = findViewById(R.id.tv_step_two);
+        mTvStepThree = findViewById(R.id.tv_step_three);
+        mIvSleepAssessment = findViewById(R.id.iv_sleep_assessment);
+        mLayShowSleepAssessmentTable = findViewById(R.id.lay_show_sleep_assessment_table);
+        mTvStepFour = findViewById(R.id.tv_step_four);
+        mLayMsgContainer = findViewById(R.id.lay_msg_container);
+        mBtUserInfoTable = findViewById(R.id.bt_user_info_table);
+        mBtAssessmentTable = findViewById(R.id.bt_assessment_table);
+        mLayContainer = findViewById(R.id.lay_container);
+
+        findViewById(R.id.lay_show_user_info_table).setOnClickListener(this);
+        findViewById(R.id.lay_show_sleep_assessment_table).setOnClickListener(this);
+        findViewById(R.id.bt_user_info_table).setOnClickListener(this);
+        findViewById(R.id.bt_assessment_table).setOnClickListener(this);
     }
 
     @Override
@@ -117,7 +119,7 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    @OnClick({R.id.lay_show_user_info_table, R.id.lay_show_sleep_assessment_table, R.id.bt_user_info_table, R.id.bt_assessment_table})
+    @Override
     public void onClick(View v) {
         if (!NetUtil.hasInternet()) {
             mPopContainer.setVisibility(View.VISIBLE);
@@ -126,21 +128,15 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
             mPopContainer.setVisibility(View.GONE);
         }
 
-        switch (v.getId()) {
-            case R.id.lay_show_user_info_table:
-                AssessmentUserInfoActivity.show(this);
-                break;
-            case R.id.lay_show_sleep_assessment_table:
-                QuestionActivity.show(this);
-                break;
-            case R.id.bt_user_info_table:
-                AssessmentUserInfoActivity.show(this);
-                break;
-            case R.id.bt_assessment_table:
-                QuestionActivity.show(this);
-                break;
-            default:
-                break;
+        int id = v.getId();
+        if (id == R.id.lay_show_user_info_table) {
+            AssessmentUserInfoActivity.show(this);
+        } else if (id == R.id.lay_show_sleep_assessment_table) {
+            QuestionActivity.show(this);
+        } else if (id == R.id.bt_user_info_table) {
+            AssessmentUserInfoActivity.show(this);
+        } else if (id == R.id.bt_assessment_table) {
+            QuestionActivity.show(this);
         }
     }
 

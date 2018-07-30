@@ -32,21 +32,11 @@ public class SleepReminderActivity extends BaseActivity implements TitleBar.OnBa
 
     private static final String TAG = SleepReminderActivity.class.getSimpleName();
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.tb_reminder)
     ToggleButton mTbReminder;
-
-    @BindView(R.id.tv_reminder_note)
     TextView mTvReminderNote;
-
-    @BindView(R.id.lay_timer_container)
     LinearLayout mLayTimerContainer;
-
-    @BindView(R.id.picker_one)
     NumberPickerView mPickerOne;
-    @BindView(R.id.picker_two)
     NumberPickerView mPickerTwo;
 
     private SleepReminderContract.Presenter mPresenter;
@@ -69,6 +59,13 @@ public class SleepReminderActivity extends BaseActivity implements TitleBar.OnBa
         this.mTbReminder.setOnToggleChanged(this);
         this.mPickerOne.setOnValueChangedListener(this);
         this.mPickerTwo.setOnValueChangedListener(this);
+
+        mTitleBar = findViewById(R.id.title_bar);
+        mTbReminder = findViewById(R.id.tb_reminder);
+        mTvReminderNote = findViewById(R.id.tv_reminder_note);
+        mLayTimerContainer = findViewById(R.id.lay_timer_container);
+        mPickerOne = findViewById(R.id.picker_one);
+        mPickerTwo = findViewById(R.id.picker_two);
     }
 
     @Override
@@ -162,12 +159,18 @@ public class SleepReminderActivity extends BaseActivity implements TitleBar.OnBa
     private void updateReminder(Reminder reminder) {
         runUiThread(() -> {
             int enable = reminder.getEnable();
-            if (enable == 1) mTbReminder.setToggleOn();
-            else mTbReminder.setToggleOff();
+            if (enable == 1) {
+                mTbReminder.setToggleOn();
+            } else {
+                mTbReminder.setToggleOff();
+            }
             mLayTimerContainer.setVisibility(enable == 1 ? View.VISIBLE : View.GONE);
-            if (!mIsInit)
+            if (!mIsInit) {
                 ToastHelper.show(R.string.reminder_add_success_hint);
-            if (enable == 0) return;
+            }
+            if (enable == 0) {
+                return;
+            }
             int hour = reminder.getReminderHour();
             mPickerOne.setMinValue(0);
             mPickerOne.setMaxValue(23);

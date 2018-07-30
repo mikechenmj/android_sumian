@@ -31,23 +31,17 @@ import butterknife.OnClick;
  */
 
 public class ResetPwdActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
-    ResetPwdContract.View {
+        ResetPwdContract.View {
 
     public static final String MOBILE_KEY = "mobile";
     private static final String TAG = ResetPwdActivity.class.getSimpleName();
     private static final String TICKET_KEY = "ticket";
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.lay_pwd_pop)
     FrameLayout mLayPwdPop;
-    @BindView(R.id.tv_error_pop)
     TextView mTvErrorPop;
-    @BindView(R.id.et_new_pwd)
     EditText mEtNewPwd;
-    @BindView(R.id.et_new_pwd_verify)
     EditText mEtNewPwdVerify;
-    @BindView(R.id.bt_save)
     Button mBtSave;
 
 
@@ -83,6 +77,15 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
     protected void initWidget() {
         super.initWidget();
         this.mTitleBar.addOnBackListener(this);
+
+        mTitleBar = findViewById(R.id.title_bar);
+        mLayPwdPop = findViewById(R.id.lay_pwd_pop);
+        mTvErrorPop = findViewById(R.id.tv_error_pop);
+        mEtNewPwd = findViewById(R.id.et_new_pwd);
+        mEtNewPwdVerify = findViewById(R.id.et_new_pwd_verify);
+        mBtSave = findViewById(R.id.bt_save);
+
+        mBtSave.setOnClickListener(this);
     }
 
     @Override
@@ -96,46 +99,38 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
         this.mPresenter = presenter;
     }
 
-    @OnClick({R.id.bt_save})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_save:
 
-                String newPwd = this.mEtNewPwd.getText().toString().trim();
+        String newPwd = this.mEtNewPwd.getText().toString().trim();
 
-                if (!CheckUtils.isValidPassword(newPwd)) {
-                    ToastHelper.show(R.string.pwd_error_hint);
-                    return;
-                }
-
-                String verifyNewPwd = this.mEtNewPwdVerify.getText().toString().trim();
-
-                if (!CheckUtils.isValidPassword(verifyNewPwd)) {
-                    ToastHelper.show(R.string.pwd_error_hint);
-                    return;
-                }
-
-                if (!newPwd.equals(verifyNewPwd)) {
-                    mLayPwdPop.setVisibility(View.VISIBLE);
-                    mTvErrorPop.setText(R.string.verify_pwd_error_hint);
-                    return;
-                }
-
-                mLayPwdPop.setVisibility(View.GONE);
-
-                ResetPwdBody resetPwdBody = new ResetPwdBody()
-                    .setMobile(TextUtils.isEmpty(mMobile) ? "" : mMobile)
-                    .setPassword(newPwd)
-                    .setPassword_confirmation(verifyNewPwd)
-                    .setTicket(TextUtils.isEmpty(mTicket) ? "" : mTicket);
-
-                this.mPresenter.doResetPwd(resetPwdBody);
-
-                break;
-            default:
-                break;
+        if (!CheckUtils.isValidPassword(newPwd)) {
+            ToastHelper.show(R.string.pwd_error_hint);
+            return;
         }
+
+        String verifyNewPwd = this.mEtNewPwdVerify.getText().toString().trim();
+
+        if (!CheckUtils.isValidPassword(verifyNewPwd)) {
+            ToastHelper.show(R.string.pwd_error_hint);
+            return;
+        }
+
+        if (!newPwd.equals(verifyNewPwd)) {
+            mLayPwdPop.setVisibility(View.VISIBLE);
+            mTvErrorPop.setText(R.string.verify_pwd_error_hint);
+            return;
+        }
+
+        mLayPwdPop.setVisibility(View.GONE);
+
+        ResetPwdBody resetPwdBody = new ResetPwdBody()
+                .setMobile(TextUtils.isEmpty(mMobile) ? "" : mMobile)
+                .setPassword(newPwd)
+                .setPassword_confirmation(verifyNewPwd)
+                .setTicket(TextUtils.isEmpty(mTicket) ? "" : mTicket);
+
+        this.mPresenter.doResetPwd(resetPwdBody);
 
     }
 

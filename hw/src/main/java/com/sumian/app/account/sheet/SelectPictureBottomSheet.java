@@ -32,17 +32,21 @@ public class SelectPictureBottomSheet extends BottomSheetView implements View.On
         return R.layout.hw_lay_bottom_sheet_modify_avatar;
     }
 
-    @OnClick({R.id.tv_take_photo, R.id.tv_pic_photo, R.id.tv_cancel})
+    @Override
+    protected void initView(View rootView) {
+        super.initView(rootView);
+        rootView.findViewById(R.id.tv_take_photo).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_pic_photo).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+    }
+
+    @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tv_take_photo:
-                mOnTakePhotoCallback.onTakePhotoCallback();
-                break;
-            case R.id.tv_pic_photo:
-                mOnTakePhotoCallback.onPicPictureCallback();
-                break;
-            case R.id.tv_cancel:
-                break;
+        int id = view.getId();
+        if (id == R.id.tv_take_photo) {
+            mOnTakePhotoCallback.onTakePhotoCallback();
+        } else if (id == R.id.tv_pic_photo) {
+            mOnTakePhotoCallback.onPicPictureCallback();
         }
         dismiss();
     }

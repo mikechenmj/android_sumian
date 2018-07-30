@@ -36,28 +36,19 @@ import butterknife.OnClick;
  */
 
 public class OpenBindActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
-    OpenBindContract.View {
+        OpenBindContract.View {
 
     private static final String TAG = OpenBindActivity.class.getSimpleName();
 
     private static final String EXTRA_OPEN_USER_INFO = "open_user_info";
     private static final String EXTRA_SHARE_MEDIA = "share_media";
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.et_mobile)
     EditText mEtMobile;
-    @BindView(R.id.et_pwd)
     EditText mEtPwd;
-    @BindView(R.id.iv_pwd_show)
     ImageView mIvPwdShow;
-    @BindView(R.id.et_captcha)
     EditText mEtCaptcha;
-    @BindView(R.id.tv_captcha)
     TextView mTvCaptcha;
-
-    @BindView(R.id.bt_bind)
     Button mBtBind;
 
     private OpenBindContract.Presenter mPresenter;
@@ -96,6 +87,18 @@ public class OpenBindActivity extends BaseActivity implements View.OnClickListen
                 mIvPwdShow.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
             }
         });
+        mTitleBar = findViewById(R.id.title_bar);
+        mEtMobile = findViewById(R.id.et_mobile);
+        mEtPwd = findViewById(R.id.et_pwd);
+        mIvPwdShow = findViewById(R.id.iv_pwd_show);
+        mEtCaptcha = findViewById(R.id.et_captcha);
+        mTvCaptcha = findViewById(R.id.tv_captcha);
+        mBtBind = findViewById(R.id.bt_bind);
+
+        findViewById(R.id.bt_bind).setOnClickListener(this);
+        findViewById(R.id.iv_pwd_show).setOnClickListener(this);
+        findViewById(R.id.tv_captcha).setOnClickListener(this);
+
     }
 
     @Override
@@ -110,51 +113,33 @@ public class OpenBindActivity extends BaseActivity implements View.OnClickListen
         this.mPresenter = presenter;
     }
 
-    @OnClick({R.id.bt_bind, R.id.iv_pwd_show, R.id.tv_captcha})
     @Override
     public void onClick(View v) {
         String mobile;
-        switch (v.getId()) {
-            case R.id.bt_bind:
-
-                mobile = this.mEtMobile.getText().toString().trim();
-
-                if (!CheckUtils.isPhoneNum(mobile)) {
-                    ToastHelper.show(R.string.mobile_error_hint);
-                    return;
-                }
-
-                String pwd = this.mEtPwd.getText().toString().trim();
-
-                if (!CheckUtils.isValidPassword(pwd)) {
-                    ToastHelper.show(R.string.pwd_error_hint);
-                    return;
-                }
-
-                String captcha = this.mEtCaptcha.getText().toString().trim();
-
-                this.mPresenter.doBind(mobile, pwd, captcha, mShareMedia, mOpenUserInfo);
-
-                break;
-            case R.id.iv_pwd_show:
-                UiUtil.notifyInputType(mIvPwdShow, mEtPwd);
-                break;
-            case R.id.tv_captcha:
-
-                mobile = this.mEtMobile.getText().toString().trim();
-
-                if (!CheckUtils.isPhoneNum(mobile)) {
-                    ToastHelper.show(R.string.mobile_error_hint);
-                    return;
-                }
-
-                this.mPresenter.doCaptcha(new CaptchaBody().setMobile(mobile));
-
-                break;
-            default:
-                break;
+        int id = v.getId();
+        if (id == R.id.bt_bind) {
+            mobile = this.mEtMobile.getText().toString().trim();
+            if (!CheckUtils.isPhoneNum(mobile)) {
+                ToastHelper.show(R.string.mobile_error_hint);
+                return;
+            }
+            String pwd = this.mEtPwd.getText().toString().trim();
+            if (!CheckUtils.isValidPassword(pwd)) {
+                ToastHelper.show(R.string.pwd_error_hint);
+                return;
+            }
+            String captcha = this.mEtCaptcha.getText().toString().trim();
+            this.mPresenter.doBind(mobile, pwd, captcha, mShareMedia, mOpenUserInfo);
+        } else if (id == R.id.iv_pwd_show) {
+            UiUtil.notifyInputType(mIvPwdShow, mEtPwd);
+        } else if (id == R.id.tv_captcha) {
+            mobile = this.mEtMobile.getText().toString().trim();
+            if (!CheckUtils.isPhoneNum(mobile)) {
+                ToastHelper.show(R.string.mobile_error_hint);
+                return;
+            }
+            this.mPresenter.doCaptcha(new CaptchaBody().setMobile(mobile));
         }
-
     }
 
     @Override

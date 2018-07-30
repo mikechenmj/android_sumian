@@ -77,7 +77,9 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
-
+        rootView.findViewById(R.id.tv_male).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_female).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
     }
 
     @Override
@@ -122,28 +124,20 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
     }
 
 
-    @SuppressWarnings("ConstantConditions")
-    @OnClick({R.id.tv_male, R.id.tv_female, R.id.tv_cancel})
+    @Override
     public void onClick(View view) {
         String gender = null;
-        switch (view.getId()) {
-            case R.id.tv_male:
-                gender = "male";
-                break;
-            case R.id.tv_female:
-                gender = "female";
-                break;
-            // case R.id.tv_secrecy:
-            //    gender = "secrecy";
-            //   break;
-            case R.id.tv_cancel:
-                dismiss();
-                break;
-            default:
-                break;
+        int id = view.getId();
+        if (id == R.id.tv_male) {
+            gender = "male";
+        } else if (id == R.id.tv_female) {
+            gender = "female";
+        } else if (id == R.id.tv_cancel) {
+            dismiss();
         }
-        if (TextUtils.isEmpty(gender)) return;
-
+        if (TextUtils.isEmpty(gender)) {
+            return;
+        }
         if (mIsAssessment) {
             mUserInfo.setGender(gender);
             Intent intent = new Intent(AssessmentUserInfoActivity.ACTION_MODIFY_ASSESSMENT_USER_INFO);

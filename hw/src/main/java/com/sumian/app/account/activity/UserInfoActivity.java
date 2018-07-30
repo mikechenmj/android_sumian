@@ -32,31 +32,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackListener
-    , SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, UserInfoContract.View {
+        , SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, UserInfoContract.View {
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.refresh)
     BlueRefreshView mBlueRefreshView;
-
-    @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
-    @BindView(R.id.tv_nickname)
     TextView mTvNickname;
-    @BindView(R.id.tv_mobile)
     TextView mTvMobile;
-    @BindView(R.id.tv_area)
     TextView mTvArea;
-    @BindView(R.id.tv_gender)
     TextView mTvGender;
-    @BindView(R.id.tv_birthday)
     TextView mTvBirthday;
-    @BindView(R.id.tv_height)
     TextView mTvHeight;
-    @BindView(R.id.tv_weight)
     TextView mTvWeight;
-    @BindView(R.id.tv_career)
     TextView mTvCareer;
 
     private UserInfoContract.Presenter mPresenter;
@@ -77,6 +64,26 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
         UserInfoPresenter.init(this);
         mTitleBar.addOnBackListener(this);
         mBlueRefreshView.setOnRefreshListener(this);
+        mTitleBar = findViewById(R.id.title_bar);
+        mBlueRefreshView = findViewById(R.id.refresh);
+        mIvAvatar = findViewById(R.id.iv_avatar);
+        mTvNickname = findViewById(R.id.tv_nickname);
+        mTvMobile = findViewById(R.id.tv_mobile);
+        mTvArea = findViewById(R.id.tv_area);
+        mTvGender = findViewById(R.id.tv_gender);
+        mTvBirthday = findViewById(R.id.tv_birthday);
+        mTvHeight = findViewById(R.id.tv_height);
+        mTvWeight = findViewById(R.id.tv_weight);
+        mTvCareer = findViewById(R.id.tv_career);
+
+        findViewById(R.id.lay_avatar).setOnClickListener(this);
+        findViewById(R.id.lay_nickname).setOnClickListener(this);
+        findViewById(R.id.lay_area).setOnClickListener(this);
+        findViewById(R.id.lay_gender).setOnClickListener(this);
+        findViewById(R.id.lay_birthday).setOnClickListener(this);
+        findViewById(R.id.lay_height).setOnClickListener(this);
+        findViewById(R.id.lay_weight).setOnClickListener(this);
+        findViewById(R.id.lay_career).setOnClickListener(this);
     }
 
     @Override
@@ -90,39 +97,30 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
         finish();
     }
 
-    @OnClick({R.id.lay_avatar, R.id.lay_nickname, R.id.lay_area, R.id.lay_gender, R.id.lay_birthday,
-        R.id.lay_height, R.id.lay_weight, R.id.lay_career})
+    @Override
     public void onClick(View v) {
         String formKey = null;
-        switch (v.getId()) {
-            case R.id.lay_avatar:
-                AvatarImageActivity.show(v.getContext(), mUserInfo.getAvatar());
-                break;
-            case R.id.lay_nickname:
-                ModifyNicknameActivity.show(this, ModifyNicknameActivity.NICKNAME_TYPE);
-                break;
-            case R.id.lay_gender:
-                commitBottomSheet(SelectGenderBottomSheet.newInstance(ModifyUserInfoContract.KEY_GENDER));
-                break;
-            case R.id.lay_area:
-                formKey = ModifyUserInfoContract.KEY_AREA;
-                break;
-            case R.id.lay_birthday:
-                formKey = ModifyUserInfoContract.KEY_BIRTHDAY;
-                break;
-            case R.id.lay_height:
-                formKey = ModifyUserInfoContract.KEY_HEIGHT;
-                break;
-            case R.id.lay_weight:
-                formKey = ModifyUserInfoContract.KEY_WEIGHT;
-                break;
-            case R.id.lay_career:
-                ModifyNicknameActivity.show(this, ModifyNicknameActivity.CAREER_TYPE);
-                break;
-            default:
-                break;
+        int id = v.getId();
+        if (id == R.id.lay_avatar) {
+            AvatarImageActivity.show(v.getContext(), mUserInfo.getAvatar());
+        } else if (id == R.id.lay_nickname) {
+            ModifyNicknameActivity.show(this, ModifyNicknameActivity.NICKNAME_TYPE);
+        } else if (id == R.id.lay_gender) {
+            commitBottomSheet(SelectGenderBottomSheet.newInstance(ModifyUserInfoContract.KEY_GENDER));
+        } else if (id == R.id.lay_area) {
+            formKey = ModifyUserInfoContract.KEY_AREA;
+        } else if (id == R.id.lay_birthday) {
+            formKey = ModifyUserInfoContract.KEY_BIRTHDAY;
+        } else if (id == R.id.lay_height) {
+            formKey = ModifyUserInfoContract.KEY_HEIGHT;
+        } else if (id == R.id.lay_weight) {
+            formKey = ModifyUserInfoContract.KEY_WEIGHT;
+        } else if (id == R.id.lay_career) {
+            ModifyNicknameActivity.show(this, ModifyNicknameActivity.CAREER_TYPE);
         }
-        if (TextUtils.isEmpty(formKey)) return;
+        if (TextUtils.isEmpty(formKey)) {
+            return;
+        }
         commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo));
     }
 
@@ -135,11 +133,11 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
         runUiThread(() -> {
             App.getRequestManager()
-                .load(userInfo.getAvatar())
-                .asBitmap()
-                .placeholder(R.mipmap.ic_default_avatar) //设置占位图，在加载之前显示
-                .error(R.mipmap.ic_default_avatar) //在图像加载失败时显示
-                .into(mIvAvatar);
+                    .load(userInfo.getAvatar())
+                    .asBitmap()
+                    .placeholder(R.mipmap.ic_default_avatar) //设置占位图，在加载之前显示
+                    .error(R.mipmap.ic_default_avatar) //在图像加载失败时显示
+                    .into(mIvAvatar);
 
             setText(userInfo.getNickname(), mTvNickname);
             setText(userInfo.getMobile(), mTvMobile);
@@ -148,13 +146,15 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
             setText(userInfo.getBirthday(), mTvBirthday);
             String height = userInfo.getHeight();
             setText(height, mTvHeight);
-            if (!TextUtils.isEmpty(height))
+            if (!TextUtils.isEmpty(height)) {
                 mTvHeight.append(" cm");
+            }
 
             String weight = userInfo.getWeight();
             setText(weight, mTvWeight);
-            if (!TextUtils.isEmpty(weight))
+            if (!TextUtils.isEmpty(weight)) {
                 mTvWeight.append(" kg");
+            }
             mTvCareer.setText(!TextUtils.isEmpty(userInfo.getCareer()) ? userInfo.getCareer() : getResources().getString(R.string.user_none_default_hint));
             this.mUserInfo = userInfo;
         });
@@ -207,8 +207,8 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
 
     private void commitBottomSheet(BottomSheetView bottomSheetView) {
         getSupportFragmentManager()
-            .beginTransaction()
-            .add(bottomSheetView, bottomSheetView.getClass().getSimpleName())
-            .commit();
+                .beginTransaction()
+                .add(bottomSheetView, bottomSheetView.getClass().getSimpleName())
+                .commit();
     }
 }

@@ -33,14 +33,12 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 图片预览Activity
  */
 public class AvatarImageActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks,
-    TitleBar.OnBackListener, TitleBar.OnMoreListener, SelectPictureBottomSheet.OnTakePhotoCallback, AvatarContract.View {
+        TitleBar.OnBackListener, TitleBar.OnMoreListener, SelectPictureBottomSheet.OnTakePhotoCallback, AvatarContract.View {
     public static final String KEY_IMAGE = "images";
     public static final String KEY_POSITION = "position";
     public static final String KEY_NEED_SAVE = "save";
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.vp_image)
     ImageView mImagePager;
 
     private String[] mImageSources;
@@ -102,10 +100,12 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mImagePager = findViewById(R.id.vp_image);
         setTitle("");
         mTitleBar.addOnBackListener(this)
-            .showMoreIcon()
-            .addOnMoreListener(this);
+                .showMoreIcon()
+                .addOnMoreListener(this);
 
 
         String imageSource = mImageSources[0];
@@ -117,10 +117,10 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
             load = requestManager.load(imageSource);
         }
         load
-            .asBitmap()
-            .error(R.mipmap.ic_default_avatar)
-            .placeholder(R.mipmap.ic_default_avatar)
-            .into(mImagePager);
+                .asBitmap()
+                .error(R.mipmap.ic_default_avatar)
+                .placeholder(R.mipmap.ic_default_avatar)
+                .into(mImagePager);
     }
 
     @Override
@@ -172,9 +172,9 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
     public void onMore(View v) {
 
         getSupportFragmentManager()
-            .beginTransaction()
-            .add(SelectPictureBottomSheet.newInstance().addOnTakePhotoCallback(this), SelectPictureBottomSheet.class.getSimpleName())
-            .commit();
+                .beginTransaction()
+                .add(SelectPictureBottomSheet.newInstance().addOnTakePhotoCallback(this), SelectPictureBottomSheet.class.getSimpleName())
+                .commit();
 
     }
 
@@ -217,11 +217,11 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
     @Override
     public void uploadSuccess(String url) {
         runUiThread(() -> App
-            .getRequestManager()
-            .load(url).asBitmap()
-            .error(R.mipmap.ic_default_avatar)
-            .placeholder(R.mipmap.ic_default_avatar)
-            .into(mImagePager));
+                .getRequestManager()
+                .load(url).asBitmap()
+                .error(R.mipmap.ic_default_avatar)
+                .placeholder(R.mipmap.ic_default_avatar)
+                .into(mImagePager));
     }
 
     @Override

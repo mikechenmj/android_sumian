@@ -37,12 +37,8 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
 
     private static final String TAG = LoginRouterActivity.class.getSimpleName();
 
-    @BindView(R.id.iv_logo)
     ImageView mIvLogo;
-
-    @BindView(R.id.bt_login)
     Button mBtLogin;
-    @BindView(R.id.tv_register)
     Button mBtRegister;
 
     private OpenLoginContract.Presenter mPresenter;
@@ -70,26 +66,32 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
+    protected void initWidget() {
+        super.initWidget();
+        mIvLogo = findViewById(R.id.iv_logo);
+        mBtLogin = findViewById(R.id.bt_login);
+        mBtRegister = findViewById(R.id.tv_register);
+
+        findViewById(R.id.bt_login).setOnClickListener(this);
+        findViewById(R.id.tv_register).setOnClickListener(this);
+        findViewById(R.id.bt_wechat).setOnClickListener(this);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         OpenLoginPresenter.init(this);
     }
 
-    @OnClick({R.id.bt_login, R.id.tv_register, R.id.bt_wechat})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_login:
-                LoginActivity.show(this, true);
-                break;
-            case R.id.tv_register:
-                RegisterActivity.show(this);
-                break;
-            case R.id.bt_wechat:
-                mPresenter.doLoginOpen(SHARE_MEDIA.WEIXIN, this, this);
-                break;
-            default:
-                break;
+        int id = v.getId();
+        if (id == R.id.bt_login) {
+            LoginActivity.show(this, true);
+        } else if (id == R.id.tv_register) {
+            RegisterActivity.show(this);
+        } else if (id == R.id.bt_wechat) {
+            mPresenter.doLoginOpen(SHARE_MEDIA.WEIXIN, this, this);
         }
     }
 

@@ -31,28 +31,17 @@ import butterknife.OnClick;
  */
 
 public class ForgetPwdActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
-    ValidationCaptchaContract.View {
+        ValidationCaptchaContract.View {
 
     private static final String TAG = ForgetPwdActivity.class.getSimpleName();
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.et_mobile)
     EditText mEtMobile;
-    @BindView(R.id.et_captcha)
     EditText mEtCaptcha;
-
-    @BindView(R.id.tv_captcha)
     TextView mTvCaptcha;
 
-    @BindView(R.id.bt_ok)
-    Button mBtOk;
-
     private String mMobile;
-
     private ValidationCaptchaContract.Presenter mPresenter;
-
     private ActionLoadingDialog mActionLoadingDialog;
 
     public static void show(Context context) {
@@ -68,6 +57,13 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
     protected void initWidget() {
         super.initWidget();
         this.mTitleBar.addOnBackListener(this);
+        mTitleBar = findViewById(R.id.title_bar);
+        mEtMobile = findViewById(R.id.et_mobile);
+        mEtCaptcha = findViewById(R.id.et_captcha);
+        mTvCaptcha = findViewById(R.id.tv_captcha);
+
+        findViewById(R.id.tv_captcha).setOnClickListener(this);
+        findViewById(R.id.bt_ok).setOnClickListener(this);
     }
 
     @Override
@@ -82,39 +78,27 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
         this.mPresenter = presenter;
     }
 
-    @OnClick({R.id.tv_captcha, R.id.bt_ok})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_captcha:
-
-                mMobile = this.mEtMobile.getText().toString().trim();
-                if (TextUtils.isEmpty(mMobile)) {
-                    ToastHelper.show(R.string.mobile_error_hint);
-                    return;
-                }
-
-                this.mPresenter.doCaptcha(new CaptchaBody().setMobile(mMobile));
-
-                break;
-            case R.id.bt_ok:
-
-                String captcha = this.mEtCaptcha.getText().toString().trim();
-                if (TextUtils.isEmpty(captcha)) {
-                    ToastHelper.show(R.string.captcha_error_hint);
-                    return;
-                }
-
-                ValidationCaptchaBody validationCaptchaBody = new ValidationCaptchaBody()
+        int id = v.getId();
+        if (id == R.id.tv_captcha) {
+            mMobile = this.mEtMobile.getText().toString().trim();
+            if (TextUtils.isEmpty(mMobile)) {
+                ToastHelper.show(R.string.mobile_error_hint);
+                return;
+            }
+            this.mPresenter.doCaptcha(new CaptchaBody().setMobile(mMobile));
+        } else if (id == R.id.bt_ok) {
+            String captcha = this.mEtCaptcha.getText().toString().trim();
+            if (TextUtils.isEmpty(captcha)) {
+                ToastHelper.show(R.string.captcha_error_hint);
+                return;
+            }
+            ValidationCaptchaBody validationCaptchaBody = new ValidationCaptchaBody()
                     .setMobile(mMobile)
                     .setCaptcha(captcha);
-
-                mPresenter.doValidationCaptcha(validationCaptchaBody);
-                break;
-            default:
-                break;
+            mPresenter.doValidationCaptcha(validationCaptchaBody);
         }
-
     }
 
     @Override
