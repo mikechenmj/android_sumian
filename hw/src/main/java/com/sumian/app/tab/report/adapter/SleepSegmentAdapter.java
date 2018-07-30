@@ -37,7 +37,7 @@ public class SleepSegmentAdapter extends RecyclerView.Adapter<SleepSegmentAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate
-            (R.layout.hw_lay_sleep_segment_item, parent, false));
+                (R.layout.hw_lay_sleep_segment_item, parent, false));
         viewHolder.itemView.setTag(viewHolder);
         return viewHolder;
     }
@@ -70,17 +70,11 @@ public class SleepSegmentAdapter extends RecyclerView.Adapter<SleepSegmentAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.iv_point)
         ImageView mIvPoint;
-        @BindView(R.id.tv_month)
         TextView mTvMonth;
-        @BindView(R.id.tv_week)
         TextView mTvWeek;
-        @BindView(R.id.tv_time_segment)
         TextView mTvTimeSegment;
-        @BindView(R.id.tv_sleep_duration_hour)
         TextView mTvSleepyDurationHour;
-        @BindView(R.id.tv_sleep_duration_min)
         TextView mTvSleepyDurationMin;
 
         private DaySleepReport mSleepDetailReport;
@@ -89,7 +83,12 @@ public class SleepSegmentAdapter extends RecyclerView.Adapter<SleepSegmentAdapte
         ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            ButterKnife.bind(this, itemView);
+            mIvPoint = itemView.findViewById(R.id.iv_point);
+            mTvMonth = itemView.findViewById(R.id.tv_month);
+            mTvWeek = itemView.findViewById(R.id.tv_week);
+            mTvTimeSegment = itemView.findViewById(R.id.tv_time_segment);
+            mTvSleepyDurationHour = itemView.findViewById(R.id.tv_sleep_duration_hour);
+            mTvSleepyDurationMin = itemView.findViewById(R.id.tv_sleep_duration_min);
         }
 
         public void init(DaySleepReport item) {

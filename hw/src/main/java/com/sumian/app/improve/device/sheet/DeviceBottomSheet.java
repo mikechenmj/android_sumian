@@ -24,18 +24,12 @@ import butterknife.OnClick;
 public class DeviceBottomSheet extends BottomSheetView implements View.OnClickListener {
 
     private static final String TAG = DeviceBottomSheet.class.getSimpleName();
-
     public static final String ARGS_MONITOR = "args_monitor";
-
     public static final String ACTION_TURN_MONITORING_MODE = "com.sumian.app.action.TURN_MONITORING_MODE";
     public static final String ACTION_UNBIND = "com.sumian.app.action.UNBIND_DEVICE";
-
     public static final String EXTRA_MONITORING_MODE = "com.sumian.app.extra.MONITORING_MODE";
 
-    @BindView(R.id.tv_monitor_monitoring_mode)
     TextView mTvMonitoringMode;
-
-    @BindView(R.id.v_divider_one)
     View mVDividerOne;
 
     private BlueDevice mMonitor;
@@ -56,6 +50,17 @@ public class DeviceBottomSheet extends BottomSheetView implements View.OnClickLi
     }
 
     @Override
+    protected void initView(View rootView) {
+        super.initView(rootView);
+        mTvMonitoringMode = rootView.findViewById(R.id.tv_monitor_monitoring_mode);
+        mVDividerOne = rootView.findViewById(R.id.v_divider_one);
+
+        rootView.findViewById(R.id.tv_monitor_monitoring_mode).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_unbind_device).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         if (mMonitor != null) {
@@ -70,6 +75,8 @@ public class DeviceBottomSheet extends BottomSheetView implements View.OnClickLi
                     case 0x05:
                         mTvMonitoringMode.setText(R.string.turn_off_snoop_mode);
                         mTvMonitoringMode.setTextColor(getResources().getColor(R.color.dot_red_color));
+                        break;
+                    default:
                         break;
                 }
                 mTvMonitoringMode.setVisibility(View.VISIBLE);
@@ -86,29 +93,29 @@ public class DeviceBottomSheet extends BottomSheetView implements View.OnClickLi
         }
     }
 
-    @OnClick({R.id.tv_monitor_monitoring_mode, R.id.tv_unbind_device, R.id.tv_cancel})
+
+    @Override
     public void onClick(View view) {
         Intent intent = new Intent();
-        switch (view.getId()) {
-            case R.id.tv_monitor_monitoring_mode:
-                String text = mTvMonitoringMode.getText().toString().trim();
-                intent.setAction(ACTION_TURN_MONITORING_MODE);
-                if (getString(R.string.turn_on_snoop_mode).equals(text)) {//未开启监测模式情况
-                    intent.putExtra(EXTRA_MONITORING_MODE, 0x01);
-                    LogManager.appendUserOperationLog("打开监测仪的监测模式");
-                } else {//已开启监测模式情况
-                    intent.putExtra(EXTRA_MONITORING_MODE, 0x00);
-                    LogManager.appendUserOperationLog("关闭监测仪的监测模式");
-                }
-                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
-                break;
-            case R.id.tv_unbind_device:
-                intent.setAction(ACTION_UNBIND);
-                LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
-                LogManager.appendUserOperationLog("解绑已连接的蓝牙设备");
-                break;
-            case R.id.tv_cancel:
-                break;
+        int i = view.getId();
+        if (i == R.id.tv_monitor_monitoring_mode) {
+            String text = mTvMonitoringMode.getText().toString().trim();
+            intent.setAction(ACTION_TURN_MONITORING_MODE);
+            if (getString(R.string.turn_on_snoop_mode).equals(text)) {//未开启监测模式情况
+                intent.putExtra(EXTRA_MONITORING_MODE, 0x01);
+                LogManager.appendUserOperationLog("打开监测仪的监测模式");
+            } else {//已开启监测模式情况
+                intent.putExtra(EXTRA_MONITORING_MODE, 0x00);
+                LogManager.appendUserOperationLog("关闭监测仪的监测模式");
+            }
+            LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
+
+        } else if (i == R.id.tv_unbind_device) {
+            intent.setAction(ACTION_UNBIND);
+            LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
+            LogManager.appendUserOperationLog("解绑已连接的蓝牙设备");
+
+        } else if (i == R.id.tv_cancel) {
         }
         dismiss();
     }

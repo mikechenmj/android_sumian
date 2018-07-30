@@ -32,25 +32,15 @@ import com.sumian.app.widget.adapter.OnTextWatcherAdapter;
 
 public class ModifyPwdActivity extends BaseActivity implements TitleBar.OnBackListener, View.OnClickListener, ModifyPwdContract.View {
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.tv_error_pop)
     TextView mTvErrorPop;
-    @BindView(R.id.lay_pwd_pop)
     FrameLayout mLayPwdPop;
-    @BindView(R.id.et_old_pwd)
     EditText mEtOldPwd;
-    @BindView(R.id.iv_old_pwd_show)
     ImageView mIvOldPwdShow;
-    @BindView(R.id.et_new_pwd)
     EditText mEtNewPwd;
-    @BindView(R.id.iv_new_pwd_show)
     ImageView mIvNewPwdShow;
-    @BindView(R.id.et_re_new_pwd)
     EditText mEtReNewPwd;
-    @BindView(R.id.iv_re_new_pwd_show)
     ImageView mIvReNewPwdShow;
-    @BindView(R.id.bt_save)
     Button mBtSave;
 
     private ModifyPwdContract.Presenter mPresenter;
@@ -67,6 +57,21 @@ public class ModifyPwdActivity extends BaseActivity implements TitleBar.OnBackLi
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mTvErrorPop = findViewById(R.id.tv_error_pop);
+        mLayPwdPop = findViewById(R.id.lay_pwd_pop);
+        mEtOldPwd = findViewById(R.id.et_old_pwd);
+        mIvOldPwdShow = findViewById(R.id.iv_old_pwd_show);
+        mEtNewPwd = findViewById(R.id.et_new_pwd);
+        mIvNewPwdShow = findViewById(R.id.iv_new_pwd_show);
+        mEtReNewPwd = findViewById(R.id.et_re_new_pwd);
+        mIvReNewPwdShow = findViewById(R.id.iv_re_new_pwd_show);
+        mBtSave = findViewById(R.id.bt_save);
+        findViewById(R.id.iv_old_pwd_show).setOnClickListener(this);
+        findViewById(R.id.iv_new_pwd_show).setOnClickListener(this);
+        findViewById(R.id.iv_re_new_pwd_show).setOnClickListener(this);
+        findViewById(R.id.bt_save).setOnClickListener(this);
+
         this.mTitleBar.addOnBackListener(this);
         this.mEtOldPwd.addTextChangedListener(new OnTextWatcherAdapter() {
 
@@ -107,54 +112,43 @@ public class ModifyPwdActivity extends BaseActivity implements TitleBar.OnBackLi
         runUiThread(this::finish);
     }
 
-    @OnClick({R.id.iv_old_pwd_show, R.id.iv_new_pwd_show, R.id.iv_re_new_pwd_show, R.id.bt_save})
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_old_pwd_show:
-                UiUtil.notifyInputType(mIvOldPwdShow, mEtOldPwd);
-                break;
-            case R.id.iv_new_pwd_show:
-                UiUtil.notifyInputType(mIvNewPwdShow, mEtNewPwd);
-                break;
-            case R.id.iv_re_new_pwd_show:
-                UiUtil.notifyInputType(mIvReNewPwdShow, mEtReNewPwd);
-                break;
-            case R.id.bt_save:
-
-                String oldPwd = this.mEtOldPwd.getText().toString().trim();
-                String newPwd = this.mEtNewPwd.getText().toString().trim();
-                String reNewPwd = this.mEtReNewPwd.getText().toString().trim();
-
-                mLayPwdPop.setVisibility(View.GONE);
-
-                if (!CheckUtils.isValidPassword(oldPwd)) {
-                    ToastHelper.show(R.string.pwd_error_hint);
-                    return;
-                }
-
-                if (!CheckUtils.isValidPassword(newPwd)) {
-                    ToastHelper.show(R.string.pwd_error_hint);
-                    return;
-                }
-
-                if (!CheckUtils.isValidPassword(reNewPwd)) {
-                    ToastHelper.show(R.string.pwd_error_hint);
-                    return;
-                }
-
-                if (!newPwd.equals(reNewPwd)) {
-                    mTvErrorPop.setText(R.string.verify_pwd_error_hint);
-                    mLayPwdPop.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                ModifyPwdBody modifyBody = new ModifyPwdBody()
+        int i = v.getId();
+        if (i == R.id.iv_old_pwd_show) {
+            UiUtil.notifyInputType(mIvOldPwdShow, mEtOldPwd);
+        } else if (i == R.id.iv_new_pwd_show) {
+            UiUtil.notifyInputType(mIvNewPwdShow, mEtNewPwd);
+        } else if (i == R.id.iv_re_new_pwd_show) {
+            UiUtil.notifyInputType(mIvReNewPwdShow, mEtReNewPwd);
+        } else if (i == R.id.bt_save) {
+            String oldPwd = this.mEtOldPwd.getText().toString().trim();
+            String newPwd = this.mEtNewPwd.getText().toString().trim();
+            String reNewPwd = this.mEtReNewPwd.getText().toString().trim();
+            mLayPwdPop.setVisibility(View.GONE);
+            if (!CheckUtils.isValidPassword(oldPwd)) {
+                ToastHelper.show(R.string.pwd_error_hint);
+                return;
+            }
+            if (!CheckUtils.isValidPassword(newPwd)) {
+                ToastHelper.show(R.string.pwd_error_hint);
+                return;
+            }
+            if (!CheckUtils.isValidPassword(reNewPwd)) {
+                ToastHelper.show(R.string.pwd_error_hint);
+                return;
+            }
+            if (!newPwd.equals(reNewPwd)) {
+                mTvErrorPop.setText(R.string.verify_pwd_error_hint);
+                mLayPwdPop.setVisibility(View.VISIBLE);
+                return;
+            }
+            ModifyPwdBody modifyBody = new ModifyPwdBody()
                     .setOld_password(oldPwd)
                     .setPassword(newPwd)
                     .setPassword_confirmation(reNewPwd);
-
-                mPresenter.doResetPwd(modifyBody);
-                break;
+            mPresenter.doResetPwd(modifyBody);
         }
     }
 

@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,10 +27,7 @@ import butterknife.ButterKnife;
  **/
 public class SyncingReportView extends LinearLayout {
 
-    @BindView(R.id.progress)
     ProgressBar mProgress;
-
-    @BindView(R.id.tv_syncing_report)
     TextView mTvSyncingReport;
 
     private Runnable mDismissErrorRunnable;
@@ -52,7 +50,9 @@ public class SyncingReportView extends LinearLayout {
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_sync_report_status_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_sync_report_status_view, this);
+        mProgress = inflate.findViewById(R.id.progress);
+        mTvSyncingReport = inflate.findViewById(R.id.tv_syncing_report);
     }
 
     public void showSyncing() {

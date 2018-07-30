@@ -52,27 +52,16 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
 
     static final int SYNC_SUCCESS_DELAY_TIME = 300;
 
-    @BindView(R.id.monitor)
     DeviceChaView mMonitor;
-    @BindView(R.id.speed_sleeper)
     DeviceChaView mSpeedSleeper;
-    @BindView(R.id.device_ripple_connecting_view)
     DeviceRippleConnectingView mDeviceRippleConnectingView;
-    @BindView(R.id.iv_equip_sync_bg)
     ImageView mIvEquipSync;
-    @BindView(R.id.iv_device)
     ImageView mIvDevice;
-    @BindView(R.id.iv_more)
     ImageView mIvMore;
-    @BindView(R.id.tv_label_one)
     TextView mTvLabelOne;
-    @BindView(R.id.tv_label_two)
     TextView mTvLabelTwo;
-    @BindView(R.id.tv_label_three)
     TextView mTvLabelThree;
-    @BindView(R.id.bt_switch_pa)
     Button mBtSwitchPa;
-    @BindView(R.id.device_sync_callback_view)
     DeviceSyncCallbackView mDeviceSyncCallbackView;
 
     private boolean mIsSyncing;
@@ -100,8 +89,25 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
     }
 
     private void inflateView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_device_cha_container, this));
+        View inflate = inflate(context, R.layout.hw_lay_device_cha_container, this);
+        mMonitor = inflate.findViewById(R.id.monitor);
+        mSpeedSleeper = inflate.findViewById(R.id.speed_sleeper);
+        mDeviceRippleConnectingView = inflate.findViewById(R.id.device_ripple_connecting_view);
+        mIvEquipSync = inflate.findViewById(R.id.iv_equip_sync_bg);
+        mIvDevice = inflate.findViewById(R.id.iv_device);
+        mIvMore = inflate.findViewById(R.id.iv_more);
+        mTvLabelOne = inflate.findViewById(R.id.tv_label_one);
+        mTvLabelTwo = inflate.findViewById(R.id.tv_label_two);
+        mTvLabelThree = inflate.findViewById(R.id.tv_label_three);
+        mBtSwitchPa = inflate.findViewById(R.id.bt_switch_pa);
+        mDeviceSyncCallbackView = inflate.findViewById(R.id.device_sync_callback_view);
+
+        inflate.findViewById(R.id.iv_device).setOnClickListener(this);
+        inflate.findViewById(R.id.iv_more).setOnClickListener(this);
+        inflate.findViewById(R.id.bt_switch_pa).setOnClickListener(this);
+
         mMonitor.setOnSyncSleepChaListener(v -> syncSleepDataWithPermissionCheck());
+
     }
 
     @AfterPermissionGranted(DeviceFragment.REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION)
@@ -132,22 +138,18 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
         mCallback = callback;
     }
 
-    @OnClick({R.id.iv_device, R.id.iv_more, R.id.bt_switch_pa})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_device:
-                if (getMonitor().status >= 0x01) {
-                    return;
-                }
-                mCallback.doConnect(getMonitor());
-                break;
-            case R.id.iv_more:
-                mCallback.doMoreAction(v);
-                break;
-            case R.id.bt_switch_pa:
-                mCallback.doTurnOnSleep();
-                break;
+        int i = v.getId();
+        if (i == R.id.iv_device) {
+            if (getMonitor().status >= 0x01) {
+                return;
+            }
+            mCallback.doConnect(getMonitor());
+        } else if (i == R.id.iv_more) {
+            mCallback.doMoreAction(v);
+        } else if (i == R.id.bt_switch_pa) {
+            mCallback.doTurnOnSleep();
         }
     }
 
@@ -433,8 +435,8 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
 
     public void updateProgress(int packageNumber, int currentPosition, int total) {
         String text = String.format(Locale.getDefault(),
-            getContext().getString(R.string.sync_sleep_data_progress),
-            packageNumber, currentPosition, total);
+                getContext().getString(R.string.sync_sleep_data_progress),
+                packageNumber, currentPosition, total);
         mTvLabelThree.setText(text);
     }
 }

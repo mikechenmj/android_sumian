@@ -2,6 +2,7 @@ package com.sumian.sleepdoctor.main;
 
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -30,6 +31,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void initWidget(View root) {
         super.initWidget(root);
         setStatusBar();
+
     }
 
     @Override

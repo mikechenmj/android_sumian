@@ -48,15 +48,9 @@ public class FeedbackActivity extends BaseActivity {
 
     private static final String TAG = FeedbackActivity.class.getSimpleName();
 
-    @BindView(R.id.iv_back)
     ImageView mTitleBar;
-    @BindView(R.id.et_input)
     EditText mEtInput;
-
-    @BindView(R.id.tv_content_length)
     TextView mTvContentLength;
-
-    @BindView(R.id.tv_submit)
     TextView mTvSubmit;
 
     private int mRetryCount;
@@ -73,6 +67,11 @@ public class FeedbackActivity extends BaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.iv_back);
+        mEtInput = findViewById(R.id.et_input);
+        mTvContentLength = findViewById(R.id.tv_content_length);
+        mTvSubmit = findViewById(R.id.tv_submit);
+
         mTitleBar.setOnClickListener(v -> finish());
         mEtInput.addTextChangedListener(new OnTextWatcherAdapter() {
 
@@ -103,22 +102,22 @@ public class FeedbackActivity extends BaseActivity {
             LogManager.appendPhoneUSerAgentLog();
 
             AppManager.getV1HttpService()
-                .feedback(input, "txt")
-                .enqueue(new BaseResponseCallback<OssResponse>() {
+                    .feedback(input, "txt")
+                    .enqueue(new BaseResponseCallback<OssResponse>() {
 
-                    @Override
-                    protected void onSuccess(OssResponse response) {
-                        showCenterToast("您的反馈已提交成功");
-                        finish();
-                        // File logFile = new File(App.getAppContext().getCacheDir(), LogManager.LOG_FILE_NAME);
-                        // uploadFile(response, logFile.getAbsolutePath());
-                    }
+                        @Override
+                        protected void onSuccess(OssResponse response) {
+                            showCenterToast("您的反馈已提交成功");
+                            finish();
+                            // File logFile = new File(App.getAppContext().getCacheDir(), LogManager.LOG_FILE_NAME);
+                            // uploadFile(response, logFile.getAbsolutePath());
+                        }
 
-                    @Override
-                    protected void onFailure(String error) {
-                        showToast(error);
-                    }
-                });
+                        @Override
+                        protected void onFailure(String error) {
+                            showToast(error);
+                        }
+                    });
         });
 
     }

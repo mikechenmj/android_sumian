@@ -25,22 +25,23 @@ public class MsgImageViewHolder extends BaseViewHolder<AVIMImageMessage> impleme
 
     private static final String TAG = MsgImageViewHolder.class.getSimpleName();
 
-    @BindView(R.id.tv_time_line)
     TextView mTvTimeLine;
-    @BindView(R.id.iv_icon)
     CircleImageView mIvIcon;
-    @BindView(R.id.biv_image)
     BubbleImageView mBivImage;
-    @BindView(R.id.tv_loading_indicator)
     TextView mTvLoadingIndicator;
-    @BindView(R.id.iv_msg_failed)
     ImageView mIvMsgFailed;
-    @BindView(R.id.loading)
     ProgressBar mLoading;
 
     public MsgImageViewHolder(ViewGroup parent, boolean isLeft) {
         super(parent, isLeft ? R.layout.hw_lay_item_left_image_chat : R.layout.hw_lay_item_right_image_chat);
         this.mIsLeft = isLeft;
+
+        mTvTimeLine = itemView.findViewById(R.id.tv_time_line);
+        mIvIcon = itemView.findViewById(R.id.iv_icon);
+        mBivImage = itemView.findViewById(R.id.biv_image);
+        mTvLoadingIndicator = itemView.findViewById(R.id.tv_loading_indicator);
+        mIvMsgFailed = itemView.findViewById(R.id.iv_msg_failed);
+        mLoading = itemView.findViewById(R.id.loading);
     }
 
     @Override
@@ -58,16 +59,11 @@ public class MsgImageViewHolder extends BaseViewHolder<AVIMImageMessage> impleme
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.biv_image://点击再次加载
-                showImage(mBivImage, mTvLoadingIndicator, mCacheMsg);
-                break;
-            case R.id.iv_msg_failed://自己发送失败,再次发送
-                LeanCloudHelper.sendImageMsg(mServiceType, mMediaUrlPath);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.biv_image) {
+            showImage(mBivImage, mTvLoadingIndicator, mCacheMsg);
+        } else if (i == R.id.iv_msg_failed) {
+            LeanCloudHelper.sendImageMsg(mServiceType, mMediaUrlPath);
         }
     }
-
 }

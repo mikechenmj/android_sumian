@@ -35,9 +35,8 @@ import butterknife.BindView;
 
 @SuppressWarnings("ConstantConditions")
 public class WeeklyReportFragment extends BasePagerFragment<WeeklyReportPresenter> implements
-    WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback {
+        WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback {
 
-    @BindView(R.id.recycler)
     LoadViewPagerRecyclerView mRecycler;
 
     private static final int PRELOAD_THRESHOLD = 5;
@@ -61,6 +60,7 @@ public class WeeklyReportFragment extends BasePagerFragment<WeeklyReportPresente
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mRecycler = root.findViewById(R.id.recycler);
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
         mRecycler.addOnPageChangedListener(this);
@@ -131,7 +131,7 @@ public class WeeklyReportFragment extends BasePagerFragment<WeeklyReportPresente
 
     private WeeklyReportAdapter.ViewHolder getViewHolder(int position) {
         return (WeeklyReportAdapter.ViewHolder)
-            mRecycler.findViewHolderForAdapterPosition(position);
+                mRecycler.findViewHolderForAdapterPosition(position);
     }
 
     @Override
@@ -238,17 +238,13 @@ public class WeeklyReportFragment extends BasePagerFragment<WeeklyReportPresente
 
     @Override
     public void onSwitchWeek(View v, int position, SleepDurationReport item) {
-        switch (v.getId()) {
-            case R.id.iv_pre:
-                if (position > 0) {
-                    mRecycler.scrollToPosition(position - 1);
-                }
-                break;
-            case R.id.iv_next:
-                mRecycler.scrollToPosition(position + 1);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.iv_pre) {
+            if (position > 0) {
+                mRecycler.scrollToPosition(position - 1);
+            }
+        } else if (i == R.id.iv_next) {
+            mRecycler.scrollToPosition(position + 1);
         }
     }
 
@@ -260,9 +256,9 @@ public class WeeklyReportFragment extends BasePagerFragment<WeeklyReportPresente
     @Override
     public void onShowSleepAdvice(View v, int position, SleepDurationReport item) {
         getFragmentManager()
-            .beginTransaction()
-            .add(SleepAdviceBottomSheet.newInstance(item.getAdvice()), SleepAdviceBottomSheet.class.getSimpleName())
-            .commit();
+                .beginTransaction()
+                .add(SleepAdviceBottomSheet.newInstance(item.getAdvice()), SleepAdviceBottomSheet.class.getSimpleName())
+                .commit();
     }
 
     @Override

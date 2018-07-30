@@ -38,7 +38,6 @@ public class CalendarDialog extends BaseDialogFragment implements CalendarView.O
     public static final String EXTRA_DATE = "com.sumian.app.intent.extra.SELECT_DATE";
     public static final String CURRENT_SHOW_MILLIS = "CURRENT_SHOW_MILLIS";
 
-    @BindView(R.id.calendar_pager)
     LoadViewPagerRecyclerView mCalendarPager;
 
     private Calendar mDefaultCalendar;
@@ -63,6 +62,8 @@ public class CalendarDialog extends BaseDialogFragment implements CalendarView.O
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
+        mCalendarPager = rootView.findViewById(R.id.calendar_pager);
+
         Bundle arguments = getArguments();
         if (arguments != null) {
             mCurrentShowMillis = arguments.getLong(CURRENT_SHOW_MILLIS, 0L);
@@ -106,6 +107,8 @@ public class CalendarDialog extends BaseDialogFragment implements CalendarView.O
                         if (mCalendarPager != null) {
                             mCalendarPager.smoothScrollToPosition(position);
                         }
+                        break;
+                    default:
                         break;
                 }
             }
@@ -185,7 +188,9 @@ public class CalendarDialog extends BaseDialogFragment implements CalendarView.O
     @Override
     public void loadPre() {
         PagerCalendarItem item = mAdapter.getItem(0);
-        if (item.monthTimeUnix <= item.initTimeUnix) return;
+        if (item.monthTimeUnix <= item.initTimeUnix) {
+            return;
+        }
         Calendar instance = Calendar.getInstance();
         instance.setTimeInMillis(item.monthTimeUnix * 1000L);
         mPresenter.getOneCalendarReportInfo(instance.getTimeInMillis() / 1000L, false);

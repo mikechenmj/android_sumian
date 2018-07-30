@@ -22,10 +22,7 @@ import butterknife.OnClick;
 
 public class SwitchModeView extends LinearLayout implements View.OnClickListener {
 
-    @BindView(R.id.lay_monitor_warn)
     LinearLayout mLayMonitorWarn;
-
-    @BindView(R.id.bt_switch_pa)
     Button mBtSwitchPa;
 
     private int mPaModeState;// 0x00 关闭  0x01开启
@@ -46,23 +43,20 @@ public class SwitchModeView extends LinearLayout implements View.OnClickListener
     }
 
     private void init(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_sleepy_pa_mode, this));
+        View inflate = inflate(context, R.layout.hw_lay_sleepy_pa_mode, this);
+        ButterKnife.bind(inflate);
+        mLayMonitorWarn = inflate.findViewById(R.id.lay_monitor_warn);
+        mBtSwitchPa = inflate.findViewById(R.id.bt_switch_pa);
+        inflate.findViewById(R.id.bt_switch_pa).setOnClickListener(this);
     }
 
     public void setOnSwitchPaModeListener(OnSwitchPaModeListener onSwitchPaModeListener) {
         mOnSwitchPaModeListener = onSwitchPaModeListener;
     }
 
-    @OnClick(R.id.bt_switch_pa)
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_switch_pa:
-                mOnSwitchPaModeListener.switchPaMode((this.mPaModeState == 0x00) ? 0x01 : 0x00);
-                break;
-            default:
-                break;
-        }
+        mOnSwitchPaModeListener.switchPaMode((this.mPaModeState == 0x00) ? 0x01 : 0x00);
     }
 
     public void rollbackView() {

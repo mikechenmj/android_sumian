@@ -26,22 +26,24 @@ public class MsgVoiceViewHolder extends BaseViewHolder<AVIMAudioMessage> impleme
 
     private static final String TAG = MsgVoiceViewHolder.class.getSimpleName();
 
-    @BindView(R.id.tv_time_line)
-    TextView mTvTimeLine;
-    @BindView(R.id.iv_icon)
-    CircleImageView mIvIcon;
-    @BindView(R.id.vp_progress)
-    VoiceProgress mVpProgress;
-    @BindView(R.id.tv_voice_duration)
-    TextView mTvVoiceDuration;
-    @BindView(R.id.iv_msg_failed)
-    ImageView mIvMsgFailed;
-    @BindView(R.id.loading)
-    ProgressBar mLoading;
+    private TextView mTvTimeLine;
+    private CircleImageView mIvIcon;
+    private VoiceProgress mVpProgress;
+    private TextView mTvVoiceDuration;
+    private ImageView mIvMsgFailed;
+    private ProgressBar mLoading;
 
     public MsgVoiceViewHolder(ViewGroup parent, boolean isLeft) {
         super(parent, isLeft ? R.layout.hw_lay_item_left_voice_chat : R.layout.hw_lay_item_right_voice_chat);
         this.mIsLeft = isLeft;
+
+        mTvTimeLine = itemView.findViewById(R.id.tv_time_line);
+        mIvIcon = itemView.findViewById(R.id.iv_icon);
+        mVpProgress = itemView.findViewById(R.id.vp_progress);
+        mTvVoiceDuration = itemView.findViewById(R.id.tv_voice_duration);
+        mIvMsgFailed = itemView.findViewById(R.id.iv_msg_failed);
+        mLoading = itemView.findViewById(R.id.loading);
+
     }
 
     @Override

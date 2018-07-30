@@ -35,30 +35,16 @@ import butterknife.OnClick;
  */
 
 public class VersionNoticeActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
-    TitleBar.OnBackListener, VersionContract.View, VersionModel.ShowDotCallback {
+        TitleBar.OnBackListener, VersionContract.View, VersionModel.ShowDotCallback {
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.refresh)
     BlueRefreshView mRefresh;
-
-    @BindView(R.id.tv_app_version_name)
     TextView mTvAppVersionName;
-    @BindView(R.id.tv_monitor_version_name)
     TextView mTvMonitorVersionName;
-    @BindView(R.id.tv_sleepy_version_name)
     TextView mTvSleepyVersionName;
-
-    @BindView(R.id.v_divider)
     View mDivider;
-
-    @BindView(R.id.app_version_info)
     VersionInfoView mAppVersionInfo;
-
-    @BindView(R.id.monitor_version_info)
     VersionInfoView mMonitorVersionInfo;
-
-    @BindView(R.id.sleepy_version_info)
     VersionInfoView mSleepVersionInfo;
 
     private VersionContract.Presenter mPresenter;
@@ -75,6 +61,20 @@ public class VersionNoticeActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mRefresh = findViewById(R.id.refresh);
+        mTvAppVersionName = findViewById(R.id.tv_app_version_name);
+        mTvMonitorVersionName = findViewById(R.id.tv_monitor_version_name);
+        mTvSleepyVersionName = findViewById(R.id.tv_sleepy_version_name);
+        mDivider = findViewById(R.id.v_divider);
+        mAppVersionInfo = findViewById(R.id.app_version_info);
+        mMonitorVersionInfo = findViewById(R.id.monitor_version_info);
+        mSleepVersionInfo = findViewById(R.id.sleepy_version_info);
+
+        findViewById(R.id.app_version_info).setOnClickListener(this);
+        findViewById(R.id.monitor_version_info).setOnClickListener(this);
+        findViewById(R.id.sleepy_version_info).setOnClickListener(this);
+
         mTitleBar.addOnBackListener(this);
         mRefresh.setOnRefreshListener(this);
         AppManager.getVersionModel().registerShowDotCallback(this);
@@ -95,20 +95,15 @@ public class VersionNoticeActivity extends BaseActivity implements View.OnClickL
         super.onRelease();
     }
 
-    @OnClick({R.id.app_version_info, R.id.monitor_version_info, R.id.sleepy_version_info})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.app_version_info:
-                UiUtil.openAppInMarket(v.getContext());
-                //VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_APP, AppManager.getVersionModel().isShowAppVersionDot());
-                break;
-            case R.id.monitor_version_info:
-                VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
-                break;
-            case R.id.sleepy_version_info:
-                VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
-                break;
+        int i = v.getId();
+        if (i == R.id.app_version_info) {
+            UiUtil.openAppInMarket(v.getContext());
+        } else if (i == R.id.monitor_version_info) {
+            VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
+        } else if (i == R.id.sleepy_version_info) {
+            VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
         }
     }
 
@@ -130,19 +125,19 @@ public class VersionNoticeActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onSyncMonitorCallback(VersionInfo versionInfo) {
         setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-            getString(R.string.monitor), versionInfo.getVersion()));
+                getString(R.string.monitor), versionInfo.getVersion()));
     }
 
     @Override
     public void onSyncSleepyCallback(VersionInfo versionInfo) {
         setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-            getString(R.string.speed_sleeper), versionInfo.getVersion()));
+                getString(R.string.speed_sleeper), versionInfo.getVersion()));
     }
 
     @Override
     public void onSyncAppVersionCallback(AppUpgradeInfo appUpgradeInfo) {
         setText(mTvAppVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-            "APP", appUpgradeInfo.version));
+                "APP", appUpgradeInfo.version));
     }
 
     @Override
@@ -151,9 +146,9 @@ public class VersionNoticeActivity extends BaseActivity implements View.OnClickL
             BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral == null || !bluePeripheral.isConnected()) {
                 setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                    getString(R.string.monitor), App.getAppContext().getString(R.string.none_connected_state_hint)));
+                        getString(R.string.monitor), App.getAppContext().getString(R.string.none_connected_state_hint)));
                 setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                    getString(R.string.speed_sleeper), App.getAppContext().getString(R.string.none_connected_state_hint)));
+                        getString(R.string.speed_sleeper), App.getAppContext().getString(R.string.none_connected_state_hint)));
             }
             mDivider.setVisibility(isShowAppDot || isShowMonitorDot || isShowSleepyDot ? View.VISIBLE : View.GONE);
             mAppVersionInfo.updateUpgradeInfo(isShowAppDot, null);

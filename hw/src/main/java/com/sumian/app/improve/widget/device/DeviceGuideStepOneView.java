@@ -41,15 +41,9 @@ public class DeviceGuideStepOneView extends LinearLayout implements View.OnClick
 
     private static final String TAG = DeviceGuideStepOneView.class.getSimpleName();
 
-    @BindView(R.id.tv_label_h1)
     TextView mTvLabelH1;
-    @BindView(R.id.tv_label_h2)
     TextView mTvLabelH2;
-
-    @BindView(R.id.iv_icon)
     ImageView mIvIcon;
-
-    @BindView(R.id.tv_label_go_connect)
     TextView mTvLabelGoConnect;
 
     private BlueManager mBlueManager;
@@ -92,7 +86,13 @@ public class DeviceGuideStepOneView extends LinearLayout implements View.OnClick
     }
 
     private void inflateView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_device_guide_step_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_device_guide_step_view, this);
+        mTvLabelH1 = inflate.findViewById(R.id.tv_label_h1);
+        mTvLabelH2 = inflate.findViewById(R.id.tv_label_h2);
+        mIvIcon = inflate.findViewById(R.id.iv_icon);
+        mTvLabelGoConnect = inflate.findViewById(R.id.tv_label_go_connect);
+
+        inflate.findViewById(R.id.iv_icon).setOnClickListener(this);
     }
 
     @Override
@@ -107,7 +107,6 @@ public class DeviceGuideStepOneView extends LinearLayout implements View.OnClick
         mBlueManager.removeBlueAdapterCallback(this);
     }
 
-    @OnClick(R.id.iv_icon)
     @Override
     public void onClick(View v) {
         if (mBlueManager.isEnable()) {
@@ -153,8 +152,8 @@ public class DeviceGuideStepOneView extends LinearLayout implements View.OnClick
 
     public void onActivityResultDelegate(int requestCode, int resultCode, Intent data) {
 //        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
-            // Do something after user returned from app settings screen, like showing a Toast.
-            // Log.e(TAG, "onActivityResult: ---------->");
+        // Do something after user returned from app settings screen, like showing a Toast.
+        // Log.e(TAG, "onActivityResult: ---------->");
 //        }
     }
 

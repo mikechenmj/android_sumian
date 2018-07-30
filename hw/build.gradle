@@ -58,6 +58,8 @@ android {
 
         buildConfigField("String", "WECHAT_APP_ID", HW_OFFICIAL_WECHAT_APP_ID)
         buildConfigField("String", "WECHAT_APP_SECRET", HW_OFFICIAL_WECHAT_APP_SECRET)
+        //todo flavor 动态改变取值
+        buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
         //
 
         // Enabling multidex support.

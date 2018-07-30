@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,11 +23,8 @@ import butterknife.ButterKnife;
 
 public class RefreshHeaderView extends LinearLayout {
 
-    @BindView(R.id.iv_loading_indicator)
     ImageView mIvLoadingIndicator;
-    @BindView(R.id.pg_loading)
     ProgressBar mPgLoading;
-    @BindView(R.id.tv_msg)
     TextView mTvMsg;
 
     public RefreshHeaderView(Context context) {
@@ -43,7 +41,10 @@ public class RefreshHeaderView extends LinearLayout {
     }
 
     private void init(Context context) {
-        ButterKnife.bind(LayoutInflater.from(context).inflate(R.layout.hw_lay_refresh_header_view, this, true));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.hw_lay_refresh_header_view, this, true);
+        mIvLoadingIndicator = inflate.findViewById(R.id.iv_loading_indicator);
+        mPgLoading = inflate.findViewById(R.id.pg_loading);
+        mTvMsg = inflate.findViewById(R.id.tv_msg);
     }
 
     public void updatePullStatus(int distance) {

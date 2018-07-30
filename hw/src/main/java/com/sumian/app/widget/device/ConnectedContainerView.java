@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.sumian.app.R;
@@ -20,20 +21,11 @@ import butterknife.ButterKnife;
 
 public class ConnectedContainerView extends LinearLayout {
 
-    @BindView(R.id.div)
     DeviceIndicatorView mDiv;
-
-    @BindView(R.id.div_monitor)
     DeviceStateItemView mDivMonitor;
-
-    @BindView(R.id.div_quick_sleeping)
     DeviceStateItemView mDivQuickSleeping;
-
-    @BindView(R.id.switch_power_view)
     SwitchPowerView mSwitchPowerView;
-    @BindView(R.id.switch_pa_mode_view)
     SwitchModeView mSwitchModeView;
-
 
     public ConnectedContainerView(Context context) {
         this(context, null);
@@ -49,7 +41,12 @@ public class ConnectedContainerView extends LinearLayout {
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(LayoutInflater.from(context).inflate(R.layout.hw_lay_device_connected, this, true));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.hw_lay_device_connected, this, true);
+        mDiv = inflate.findViewById(R.id.div);
+        mDivMonitor = inflate.findViewById(R.id.div_monitor);
+        mDivQuickSleeping = inflate.findViewById(R.id.div_quick_sleeping);
+        mSwitchPowerView = inflate.findViewById(R.id.switch_power_view);
+        mSwitchModeView = inflate.findViewById(R.id.switch_pa_mode_view);
     }
 
     public void addOnSwitchPowerListener(SwitchPowerView.OnSwitchPowerListener onSwitchPowerListener) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,13 +22,8 @@ import butterknife.ButterKnife;
 
 public class SleepStateDurationView extends LinearLayout {
 
-    @BindView(R.id.tv_label)
     TextView mTvLabel;
-
-    @BindView(R.id.tv_sleep_duration_percent)
     SleepPercentTextView mTvSleepDurationPercent;
-
-    @BindView(R.id.tv_sleep_duration_count)
     TextView mTvSleepDurationCount;
 
     public SleepStateDurationView(Context context) {
@@ -46,12 +42,15 @@ public class SleepStateDurationView extends LinearLayout {
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_sleep_state_duration_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_sleep_state_duration_view, this);
+        mTvLabel = inflate.findViewById(R.id.tv_label);
+        mTvSleepDurationPercent = inflate.findViewById(R.id.tv_sleep_duration_percent);
+        mTvSleepDurationCount = inflate.findViewById(R.id.tv_sleep_duration_count);
     }
 
     public void setData(String label, int duration, int percent) {
         mTvLabel.setText(label);
-        mTvSleepDurationCount.setText(TimeUtil.formatSleepDurationText(getContext(),duration));
+        mTvSleepDurationCount.setText(TimeUtil.formatSleepDurationText(getContext(), duration));
         mTvSleepDurationPercent.setPercent(percent);
     }
 }

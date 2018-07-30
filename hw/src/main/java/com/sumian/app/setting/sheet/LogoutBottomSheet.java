@@ -40,33 +40,32 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
     }
 
     @Override
+    protected void initView(View rootView) {
+        super.initView(rootView);
+        rootView.findViewById(R.id.tv_logout).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         LogoutPresenter.init(this);
     }
 
-    @OnClick({R.id.tv_logout, R.id.tv_cancel})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_logout:
-
-                BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-                if (bluePeripheral != null && bluePeripheral.isConnected()) {
-                    bluePeripheral.disconnect();
-                    bluePeripheral.close();
-                }
-
-                mPresenter.doLogout();
-                dismiss();
-                break;
-            case R.id.tv_cancel:
-                dismiss();
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_logout) {
+            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
+            if (bluePeripheral != null && bluePeripheral.isConnected()) {
+                bluePeripheral.disconnect();
+                bluePeripheral.close();
+            }
+            mPresenter.doLogout();
+            dismiss();
+        } else if (i == R.id.tv_cancel) {
+            dismiss();
         }
-
     }
 
     @Override
@@ -99,7 +98,8 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
 
     @Override
     public void onFinish() {
-        if (mActionLoadingDialog != null)
+        if (mActionLoadingDialog != null) {
             mActionLoadingDialog.dismiss();
+        }
     }
 }

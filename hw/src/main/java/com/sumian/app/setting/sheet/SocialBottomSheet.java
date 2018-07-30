@@ -27,7 +27,6 @@ public class SocialBottomSheet extends BottomSheetView implements View.OnClickLi
 
     private static final String ARGS_TYPE = "social_type";
 
-    @BindView(R.id.tv_title)
     TextView mTvTitle;
 
     private ActionLoadingDialog mActionLoadingDialog;
@@ -65,6 +64,10 @@ public class SocialBottomSheet extends BottomSheetView implements View.OnClickLi
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
+        mTvTitle = rootView.findViewById(R.id.tv_title);
+        rootView.findViewById(R.id.tv_action).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+
         String title;
         String socialPlatform = getString(R.string.wechat);
         switch (mSocialType) {
@@ -96,20 +99,14 @@ public class SocialBottomSheet extends BottomSheetView implements View.OnClickLi
         super.release();
     }
 
-    @OnClick({R.id.tv_action, R.id.tv_cancel})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_action:
-                mPresenter.unbindSocial(mSocialType);
-                break;
-            case R.id.tv_cancel:
-                dismiss();
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_action) {
+            mPresenter.unbindSocial(mSocialType);
+        } else if (i == R.id.tv_cancel) {
+            dismiss();
         }
-
     }
 
     @Override
@@ -132,8 +129,9 @@ public class SocialBottomSheet extends BottomSheetView implements View.OnClickLi
 
     @Override
     public void onFinish() {
-        if (mActionLoadingDialog != null)
+        if (mActionLoadingDialog != null) {
             mActionLoadingDialog.dismiss();
+        }
         dismiss();
     }
 
@@ -142,7 +140,7 @@ public class SocialBottomSheet extends BottomSheetView implements View.OnClickLi
         if (mUnbindSocialCallback != null) {
             mUnbindSocialCallback.unbindSocial(mSocialType, true);
         }
-        runUiThread(()->{
+        runUiThread(() -> {
             ToastHelper.show(getString(R.string.unbind_open_platform_success));
         });
         dismiss();

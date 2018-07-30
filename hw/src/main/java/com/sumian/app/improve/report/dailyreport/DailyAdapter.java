@@ -107,7 +107,9 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.ViewHolder> 
     }
 
     public void updateItem(int position, DailyReport dailyReport) {
-        if (position == -1) return;
+        if (position == -1) {
+            return;
+        }
         mData.set(position, dailyReport);
         notifyItemChanged(position);
     }
@@ -132,28 +134,13 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements SwipeRefreshLayout.OnRefreshListener {
 
-        @BindView(R.id.switch_date_view)
         SwitchDateView mSwitchDateView;
-
-        @BindView(R.id.refresh)
         BlueRefreshView mBlueRefreshView;
-
-        @BindView(R.id.nested_scroll_view)
         NestedScrollView mNestedScrollView;
-
-        @BindView(R.id.day_sleep_histogram_view)
         TouchDailySleepHistogramView mDaySleepHistogramView;
-
-        @BindView(R.id.report_sleep_duration_view)
         ReportSleepDurationView mReportSleepDurationView;
-
-        @BindView(R.id.sleep_note_view)
         SleepNoteView mSleepNoteView;
-
-        @BindView(R.id.doctor_evaluate)
         CardView mDoctorEvaluate;
-
-        @BindView(R.id.tv_doctor_evaluate)
         TextView mTvDoctorEvaluate;
 
         private DailyReport mDailyReport;
@@ -163,6 +150,15 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.ViewHolder> 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            mSwitchDateView = itemView.findViewById(R.id.switch_date_view);
+            mBlueRefreshView = itemView.findViewById(R.id.refresh);
+            mNestedScrollView = itemView.findViewById(R.id.nested_scroll_view);
+            mDaySleepHistogramView = itemView.findViewById(R.id.day_sleep_histogram_view);
+            mReportSleepDurationView = itemView.findViewById(R.id.report_sleep_duration_view);
+            mSleepNoteView = itemView.findViewById(R.id.sleep_note_view);
+            mDoctorEvaluate = itemView.findViewById(R.id.doctor_evaluate);
+            mTvDoctorEvaluate = itemView.findViewById(R.id.tv_doctor_evaluate);
         }
 
         public void initView(DailyReport dailyReport, SwitchDateView.OnSwitchDateListener switchDateListener, View.OnClickListener clickListener, OnRefreshCallback onRefreshCallback) {

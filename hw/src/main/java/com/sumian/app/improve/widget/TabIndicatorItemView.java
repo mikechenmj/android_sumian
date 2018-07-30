@@ -24,12 +24,8 @@ import butterknife.ButterKnife;
 
 public class TabIndicatorItemView extends FrameLayout implements View.OnClickListener {
 
-    @BindView(R.id.tv_tab_text)
     TextView mTvTabText;
-    @BindView(R.id.v_tab_dot)
     View mIvTabDot;
-
-    @BindView(R.id.iv_calendar)
     ImageView mIvCalendar;
 
     private OnSelectTabCallback mOnSelectTabCallback;
@@ -49,7 +45,12 @@ public class TabIndicatorItemView extends FrameLayout implements View.OnClickLis
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_tab_dot, this));
+        View inflate = inflate(context, R.layout.hw_lay_tab_dot, this);
+        ButterKnife.bind(inflate);
+        mTvTabText = inflate.findViewById(R.id.tv_tab_text);
+        mIvTabDot = inflate.findViewById(R.id.v_tab_dot);
+        mIvCalendar = inflate.findViewById(R.id.iv_calendar);
+
         mTvTabText.setVisibility(GONE);
         mIvCalendar.setVisibility(GONE);
         mIvTabDot.setVisibility(GONE);

@@ -90,13 +90,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         static final String CALENDER_GO_BACK_TODAY_ACTION = "com.sumian.app.action.GO_BACK_TODAY";
         static final String EXTRA_POSITION = "com.sumian.app.extra.POSITION";
 
-        @BindView(R.id.iv_pre)
         ImageView mIvPre;
-        @BindView(R.id.tv_date)
         TextView mTvDate;
-        @BindView(R.id.iv_next)
         ImageView mIvNext;
-        @BindView(R.id.calender)
         CalendarView mCalenderView;
 
         private PagerCalendarItem mItem;
@@ -105,7 +101,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             List<CalendarItemSleepReport> calendarItemSleepReports = mItem.mCalendarItemSleepReports;
             for (CalendarItemSleepReport report : calendarItemSleepReports) {
                 LogManager.appendFormatPhoneLog("getReportByTime: %s --- %s", new Date(report.getDateInMillis()), new Date(timeInMillis));
-                if (report.getDateInMillis() == timeInMillis) return report;
+                if (report.getDateInMillis() == timeInMillis) {
+                    return report;
+                }
             }
             return null;
         }
@@ -140,7 +138,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+//            ButterKnife.bind(this, itemView);
+            mIvPre = itemView.findViewById(R.id.iv_pre);
+            mTvDate = itemView.findViewById(R.id.tv_date);
+            mIvNext = itemView.findViewById(R.id.iv_next);
+            mCalenderView = itemView.findViewById(R.id.calender);
+            itemView.findViewById(R.id.tv_go_today).setOnClickListener(this);
+            itemView.findViewById(R.id.iv_pre).setOnClickListener(this);
+            itemView.findViewById(R.id.iv_next).setOnClickListener(this);
+            itemView.findViewById(R.id.tv_all_read).setOnClickListener(this);
         }
 
         public void initView(PagerCalendarItem pagerCalendarItem) {
@@ -218,51 +224,44 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 }
             }
             mCalenderView.setHighlightDays(highlightDays)
-                .setDrawUnderlineDays(drawUnderlineDays)
-                .setDrawDotDays(drawDotDays)
-                .setDrawBgDays(drawBgDays);
+                    .setDrawUnderlineDays(drawUnderlineDays)
+                    .setDrawDotDays(drawDotDays)
+                    .setDrawBgDays(drawBgDays);
         }
 
-        @OnClick({R.id.tv_go_today, R.id.iv_pre, R.id.iv_next, R.id.tv_all_read})
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            switch (v.getId()) {
-                case R.id.tv_go_today:
-                    intent.setAction(CALENDER_GO_BACK_TODAY_ACTION);
-                    intent.putExtra(EXTRA_POSITION, getItemCount() - 1);
-                    LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
-                    break;
-                case R.id.iv_pre:
-                    intent.setAction(CALENDAR_GO_PRE_ACTION);
-                    intent.putExtra(EXTRA_POSITION, getAdapterPosition() - 1);
-                    LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
-                    break;
-                case R.id.iv_next:
-                    intent.setAction(CALENDAR_GO_NEXT_ACTION);
-                    intent.putExtra(EXTRA_POSITION, getAdapterPosition() + 1);
-                    LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
-                    break;
-                case R.id.tv_all_read:
-                    if (mItem.mCalendarItemSleepReports == null || mItem.mCalendarItemSleepReports.size() <= 0) {
-                        return;
+            int i = v.getId();
+            if (i == R.id.tv_go_today) {
+                intent.setAction(CALENDER_GO_BACK_TODAY_ACTION);
+                intent.putExtra(EXTRA_POSITION, getItemCount() - 1);
+                LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
+            } else if (i == R.id.iv_pre) {
+                intent.setAction(CALENDAR_GO_PRE_ACTION);
+                intent.putExtra(EXTRA_POSITION, getAdapterPosition() - 1);
+                LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
+            } else if (i == R.id.iv_next) {
+                intent.setAction(CALENDAR_GO_NEXT_ACTION);
+                intent.putExtra(EXTRA_POSITION, getAdapterPosition() + 1);
+                LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
+            } else if (i == R.id.tv_all_read) {
+                if (mItem.mCalendarItemSleepReports == null || mItem.mCalendarItemSleepReports.size() <= 0) {
+                    return;
+                }
+                setCalendarViewData(mItem);
+                Map<String, Object> map = new HashMap<>(0);
+                AppManager.getV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
+
+                    @Override
+                    protected void onSuccess(Boolean response) {
                     }
-                    setCalendarViewData(mItem);
-                    Map<String, Object> map = new HashMap<>(0);
-                    AppManager.getV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
 
-                        @Override
-                        protected void onSuccess(Boolean response) {
-                        }
+                    @Override
+                    protected void onFailure(String error) {
 
-                        @Override
-                        protected void onFailure(String error) {
-
-                        }
-                    });
-                    break;
-                default:
-                    break;
+                    }
+                });
             }
         }
     }

@@ -28,17 +28,10 @@ import butterknife.ButterKnife;
 
 public class SleepAvgAndCompareView extends ConstraintLayout {
 
-    @BindView(R.id.tv_label)
     TextView mTvLabel;
-    @BindView(R.id.tv_duration)
     TextView mTvDuration;
-
-    @BindView(R.id.tv_compare_label)
     TextView mTvCompareLabel;
-    @BindView(R.id.tv_compare_duration)
     TextView mTvCompareDuration;
-
-    @BindView(R.id.v_divider)
     View mDivider;
 
     private String mLabel;
@@ -65,7 +58,13 @@ public class SleepAvgAndCompareView extends ConstraintLayout {
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_sleep_week_count_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_sleep_week_count_view, this);
+        mTvLabel = inflate.findViewById(R.id.tv_label);
+        mTvDuration = inflate.findViewById(R.id.tv_duration);
+        mTvCompareLabel = inflate.findViewById(R.id.tv_compare_label);
+        mTvCompareDuration = inflate.findViewById(R.id.tv_compare_duration);
+        mDivider = inflate.findViewById(R.id.v_divider);
+
         CharSequence charSequence = QMUISpanHelper.generateSideIconText(true, getResources().getDimensionPixelSize(R.dimen.space_12), mLabel, mLabelDrawable);
         mTvLabel.setText(charSequence);
         mDivider.setVisibility(mIsGoneDivider ? GONE : VISIBLE);
@@ -80,7 +79,9 @@ public class SleepAvgAndCompareView extends ConstraintLayout {
     public void setCompareDuration(Integer duration) {
         CharSequence formatDuration = TimeUtil.formatSleepDurationText(getContext(), duration);
         mTvCompareDuration.setText(formatDuration);
-        if (duration == null || duration == 0) return;
+        if (duration == null || duration == 0) {
+            return;
+        }
 
         Drawable leftDrawable = getResources().getDrawable(duration > 0 ? R.mipmap.ic_report_up : R.mipmap.ic_report_down);
 

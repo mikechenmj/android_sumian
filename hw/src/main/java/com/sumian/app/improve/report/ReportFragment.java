@@ -20,6 +20,8 @@ import com.sumian.app.improve.report.weeklyreport.WeeklyReportFragment;
 import com.sumian.app.improve.widget.TabIndicatorView;
 import com.sumian.app.log.LogManager;
 
+import java.io.FileDescriptor;
+
 import butterknife.BindView;
 
 /**
@@ -30,7 +32,6 @@ import butterknife.BindView;
 
 public class ReportFragment extends BasePagerFragment implements TabIndicatorView.OnSwitchIndicatorCallback {
 
-    @BindView(R.id.tab_indicator_view)
     TabIndicatorView mTabIndicatorView;
 
     private BasePagerFragment[] mBaseFragments;
@@ -86,6 +87,7 @@ public class ReportFragment extends BasePagerFragment implements TabIndicatorVie
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mTabIndicatorView = root.findViewById(R.id.tab_indicator_view);
         mTabIndicatorView.setOnSwitchIndicatorCallback(this);
         mBaseFragments = new BasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
     }

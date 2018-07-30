@@ -4,11 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.app.R;
 import com.sumian.app.common.util.TimeUtil;
 import com.sumian.app.improve.widget.base.BaseBlueCardView;
+import com.umeng.commonsdk.internal.utils.InfoPreferenceAgent;
 
 import butterknife.BindView;
 
@@ -20,11 +22,8 @@ import butterknife.BindView;
 
 public class ReportSleepDurationView extends BaseBlueCardView {
 
-    @BindView(R.id.tv_sleep_today_duration)
     TextView mTvSleepTodayDuration;
-    @BindView(R.id.light_sleep_duration_view)
     SleepStateDurationView mLightSleepDurationView;
-    @BindView(R.id.deep_sleep_duration_view)
     SleepStateDurationView mDeepSleepDurationView;
 
     public ReportSleepDurationView(@NonNull Context context) {
@@ -42,6 +41,15 @@ public class ReportSleepDurationView extends BaseBlueCardView {
     @Override
     protected int getLayoutRes() {
         return R.layout.hw_lay_sleep_duration_view;
+    }
+
+    @Override
+    protected void initView(View inflate) {
+        super.initView(inflate);
+
+        mTvSleepTodayDuration = inflate.findViewById(R.id.tv_sleep_today_duration);
+        mLightSleepDurationView = inflate.findViewById(R.id.light_sleep_duration_view);
+        mDeepSleepDurationView = inflate.findViewById(R.id.deep_sleep_duration_view);
     }
 
     public void setSleepTodayDuration(int sleepTodayDuration) {

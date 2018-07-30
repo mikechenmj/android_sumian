@@ -26,9 +26,7 @@ import butterknife.BindView;
 
 public class ManualActivity extends BaseActivity implements TitleBar.OnBackListener {
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.webview)
     WebView mWebView;
 
     public static void show(Context context) {
@@ -44,6 +42,9 @@ public class ManualActivity extends BaseActivity implements TitleBar.OnBackListe
     @Override
     protected void initWidget() {
         super.initWidget();
+
+        mTitleBar = findViewById(R.id.title_bar);
+        mWebView = findViewById(R.id.webview);
 
         mTitleBar.addOnBackListener(this);
 

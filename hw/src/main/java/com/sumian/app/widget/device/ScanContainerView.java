@@ -32,10 +32,7 @@ import butterknife.OnClick;
 
 public class ScanContainerView extends LinearLayout implements View.OnClickListener {
 
-    @BindView(R.id.ib_device_refresh)
     ImageButton mIbDeviceRefresh;
-
-    @BindView(R.id.recycler)
     RecyclerView mDeviceRecyclerView;
 
     private DeviceAdapter mAdapter;
@@ -58,7 +55,11 @@ public class ScanContainerView extends LinearLayout implements View.OnClickListe
     }
 
     private void init(Context context) {
-        ButterKnife.bind(LayoutInflater.from(context).inflate(R.layout.hw_lay_device_list, this, true));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.hw_lay_device_list, this, true);
+        mIbDeviceRefresh = inflate.findViewById(R.id.ib_device_refresh);
+        mDeviceRecyclerView = inflate.findViewById(R.id.recycler);
+        inflate.findViewById(R.id.ib_device_refresh).setOnClickListener(this);
+
         this.mAdapter = new DeviceAdapter();
         this.mDeviceRecyclerView.setAdapter(mAdapter);
         this.mDeviceRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -87,16 +88,8 @@ public class ScanContainerView extends LinearLayout implements View.OnClickListe
         mIbDeviceRefresh.clearAnimation();
     }
 
-    @OnClick(R.id.ib_device_refresh)
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ib_device_refresh:
-                AppManager.getBlueManager().doScan();
-                break;
-            default:
-                break;
-        }
-
+        AppManager.getBlueManager().doScan();
     }
 }

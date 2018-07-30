@@ -39,7 +39,7 @@ import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
 
 @SuppressWarnings("ConstantConditions")
 public class VersionUpgradeActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener
-    , VersionUpgradeContract.View, DfuProgressListener {
+        , VersionUpgradeContract.View, DfuProgressListener {
 
     private static final String TAG = VersionUpgradeActivity.class.getSimpleName();
 
@@ -52,19 +52,10 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
     public static final int VERSION_TYPE_MONITOR = 0x02;
     public static final int VERSION_TYPE_SLEEPY = 0x03;
 
-
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.iv_upgrade)
     ImageView mIvUpgrade;
-
-    @BindView(R.id.tv_version_latest)
     TextView mTvVersionLatest;
-    @BindView(R.id.tv_version_current)
     TextView mTvVersionCurrent;
-
-    @BindView(R.id.bt_download)
     Button mBtDownload;
 
     private VersionUpgradeContract.Presenter mPresenter;
@@ -110,6 +101,13 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mIvUpgrade = findViewById(R.id.iv_upgrade);
+        mTvVersionLatest = findViewById(R.id.tv_version_latest);
+        mTvVersionCurrent = findViewById(R.id.tv_version_current);
+        mBtDownload = findViewById(R.id.bt_download);
+        findViewById(R.id.bt_download).setOnClickListener(this);
+
         this.mTitleBar.addOnBackListener(this);
         if (mVersionType != VERSION_TYPE_APP) {
             mPresenter.showDfuProgressNotification(this);
@@ -135,6 +133,8 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
                 newVersion = AppManager.getVersionModel().getSleepyVersion().getVersion();
                 currentVersion = AppManager.getDeviceModel().getSleepyVersion();
                 break;
+            default:
+                break;
         }
 
         mIvUpgrade.setImageResource(mIsLatestVersion ? R.mipmap.ic_firmware_upgrade_icon_download : R.mipmap.ic_upgrade_icon_newest);
@@ -145,47 +145,45 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
     }
 
 
-    @OnClick({R.id.bt_download})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_download:
-                if (mBtDownload.getText().equals(getString(R.string.firmware_upgrade_hint))) {
-                    if (mVersionType != VERSION_TYPE_APP) {
-                        if (this.mobileBatteryLow()) {
-                            ToastHelper.show("手机电量不足50%，请连接电源再升级");
-                            LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级");
-                            return;
-                        }
-                        if (mVersionType == VERSION_TYPE_MONITOR && this.monitorBatteryLow()) {
-                            ToastHelper.show("监测仪电量不足50%，请确保电量充足再升级");
-                            LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
-                            return;
-                        }
-                        if (mVersionType == VERSION_TYPE_SLEEPY && this.sleepyBatterLow()) {
-                            ToastHelper.show("速眠仪电量不足50%，请确保电量充足再升级");
-                            LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
-                            return;
-                        }
-
-                        ToastHelper.show(R.string.firmware_upgrade_ing_hint);
-                        initDialog(0x01);
-                    }
-                    mDfuCount++;
-                    mPresenter.upgrade(mVersionType);
-                } else {
-                    initDialog(0x00);
-                    if (mVersionType == VERSION_TYPE_APP) {
-                        UiUtil.openAppInMarket(v.getContext());
+        int i = v.getId();
+        if (i == R.id.bt_download) {
+            if (mBtDownload.getText().equals(getString(R.string.firmware_upgrade_hint))) {
+                if (mVersionType != VERSION_TYPE_APP) {
+                    if (this.mobileBatteryLow()) {
+                        ToastHelper.show("手机电量不足50%，请连接电源再升级");
+                        LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级");
                         return;
-                    } else {
-                        ToastHelper.show(R.string.firmware_downloading_hint);
-                        mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? AppManager.getVersionModel().getMonitorVersion() : AppManager.getVersionModel().getSleepyVersion());
                     }
+                    if (mVersionType == VERSION_TYPE_MONITOR && this.monitorBatteryLow()) {
+                        ToastHelper.show("监测仪电量不足50%，请确保电量充足再升级");
+                        LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
+                        return;
+                    }
+                    if (mVersionType == VERSION_TYPE_SLEEPY && this.sleepyBatterLow()) {
+                        ToastHelper.show("速眠仪电量不足50%，请确保电量充足再升级");
+                        LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
+                        return;
+                    }
+
+                    ToastHelper.show(R.string.firmware_upgrade_ing_hint);
+                    initDialog(0x01);
                 }
-                break;
-            default:
-                break;
+                mDfuCount++;
+                mPresenter.upgrade(mVersionType);
+            } else {
+                initDialog(0x00);
+                if (mVersionType == VERSION_TYPE_APP) {
+                    UiUtil.openAppInMarket(v.getContext());
+                    return;
+                } else {
+                    ToastHelper.show(R.string.firmware_downloading_hint);
+                    mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? AppManager.getVersionModel().getMonitorVersion() : AppManager.getVersionModel().getSleepyVersion());
+                }
+            }
+
+        } else {
         }
     }
 
@@ -373,7 +371,7 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
 
     private void initDialog(int dialogType) {
         VersionDialog versionDialog = VersionDialog.newInstance(dialogType,
-            mVersionType == VERSION_TYPE_APP ? getString(R.string.app_download_title_hint) : getString(R.string.firmware_download_title_hint));
+                mVersionType == VERSION_TYPE_APP ? getString(R.string.app_download_title_hint) : getString(R.string.firmware_download_title_hint));
         versionDialog.show(getSupportFragmentManager(), versionDialog.getClass().getSimpleName());
         this.mVersionDialog = versionDialog;
     }

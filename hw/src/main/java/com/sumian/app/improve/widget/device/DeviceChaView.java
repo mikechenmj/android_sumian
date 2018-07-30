@@ -26,18 +26,10 @@ import butterknife.ButterKnife;
 
 public class DeviceChaView extends LinearLayout {
 
-    @BindView(R.id.tv_name)
     TextView mTvName;
-    @BindView(R.id.tv_status)
     TextView mTvStatus;
-
-    @BindView(R.id.tv_sync)
     TextView mTvSync;
-
-    @BindView(R.id.bv)
     BatteryView mBv;
-
-    @BindView(R.id.v_divider)
     View mVDivider;
 
     private int mStatus;//0x00  未连接  0x01  连接中  0x02  在线  0x03 同步数据状态  0x04 工作中
@@ -70,9 +62,15 @@ public class DeviceChaView extends LinearLayout {
     private void initView(Context context) {
         setGravity(Gravity.CENTER);
         setOrientation(VERTICAL);
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_device_cha_view, this));
-        mTvName.setText(mName);
+        View inflate = inflate(context, R.layout.hw_lay_device_cha_view, this);
 
+        mTvName = inflate.findViewById(R.id.tv_name);
+        mTvStatus = inflate.findViewById(R.id.tv_status);
+        mTvSync = inflate.findViewById(R.id.tv_sync);
+        mBv = inflate.findViewById(R.id.bv);
+        mVDivider = inflate.findViewById(R.id.v_divider);
+
+        mTvName.setText(mName);
         if (mTvName.getText().toString().trim().equals(getResources().getString(R.string.monitor))) {
 //            mTvSync.setVisibility(VISIBLE);
             mVDivider.setVisibility(VISIBLE);
@@ -96,7 +94,9 @@ public class DeviceChaView extends LinearLayout {
 
     @SuppressWarnings({"unused", "UnusedAssignment"})
     public void invalidDeice(BlueDevice blueDevice) {
-        if (blueDevice == null) return;
+        if (blueDevice == null) {
+            return;
+        }
         mTvName.setText(blueDevice.name);
         mBlueDevice = blueDevice;
         @ColorRes int statusColor;

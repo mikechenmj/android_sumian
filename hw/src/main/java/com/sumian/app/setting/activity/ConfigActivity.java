@@ -34,13 +34,8 @@ public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListe
     public static final int REGISTER_USER_AGREEMENT_TYPE = 0x02;
     public static final int REGISTER_PRIVACY_POLICY_TYPE = 0x03;
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.refresh)
     BlueRefreshView mRefresh;
-
-    @BindView(R.id.web)
     WebView mWeb;
 
     private int mConfigType;
@@ -67,6 +62,10 @@ public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListe
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mRefresh = findViewById(R.id.refresh);
+        mWeb = findViewById(R.id.web);
+
         ConfigPresenter.init(this);
         this.mTitleBar.addOnBackListener(this);
         @StringRes int resType;
@@ -136,7 +135,6 @@ public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListe
     @Override
     public void onSyncUrl(String url) {
         runUiThread(() -> mWeb.loadUrl(url));
-
     }
 
     @Override

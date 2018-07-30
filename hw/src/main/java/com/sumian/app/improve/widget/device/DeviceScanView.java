@@ -2,6 +2,7 @@ package com.sumian.app.improve.widget.device;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.Layout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,19 +31,10 @@ import butterknife.OnClick;
 
 public class DeviceScanView extends LinearLayout implements OnClickListener {
 
-    @BindView(R.id.iv_icon)
     ImageView mIvIcon;
-
-    @BindView(R.id.ripple)
     RippleScanningView mRipple;
-
-    @BindView(R.id.bt_bind)
     Button mBtBind;
-
-    @BindView(R.id.tv_re_scan)
     TextView mTvReScan;
-
-    @BindView(R.id.lay_show_error_container)
     LinearLayout mLayShowErrorContainer;
 
     private BlueDevice mBlueDevice;
@@ -68,22 +60,25 @@ public class DeviceScanView extends LinearLayout implements OnClickListener {
     }
 
     private void inflateView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_scan_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_scan_view, this);
+        mIvIcon = inflate.findViewById(R.id.iv_icon);
+        mRipple = inflate.findViewById(R.id.ripple);
+        mBtBind = inflate.findViewById(R.id.bt_bind);
+        mTvReScan = inflate.findViewById(R.id.tv_re_scan);
+        mLayShowErrorContainer = inflate.findViewById(R.id.lay_show_error_container);
+
+        inflate.findViewById(R.id.bt_bind).setOnClickListener(this);
+        inflate.findViewById(R.id.tv_re_scan).setOnClickListener(this);
     }
 
-    @OnClick({R.id.bt_bind, R.id.tv_re_scan})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_bind:
-                mCallback.doBindDevice(mBlueDevice);
-                break;
-            case R.id.tv_re_scan:
-                showScanningStatus();
-                mCallback.doReScan();
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.bt_bind) {
+            mCallback.doBindDevice(mBlueDevice);
+        } else if (i == R.id.tv_re_scan) {
+            showScanningStatus();
+            mCallback.doReScan();
         }
     }
 

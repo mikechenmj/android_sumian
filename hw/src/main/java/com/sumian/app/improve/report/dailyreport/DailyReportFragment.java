@@ -40,21 +40,15 @@ import butterknife.OnClick;
 
 @SuppressWarnings("ConstantConditions")
 public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter> implements DailyReportContract.View,
-    SwitchDateView.OnSwitchDateListener, View.OnClickListener, RecyclerViewPager.OnPageChangedListener,
-    NoteDialog.OnWriteNoteCallback, DailyAdapter.OnRefreshCallback, ReportModel.OnSyncCallback {
+        SwitchDateView.OnSwitchDateListener, View.OnClickListener, RecyclerViewPager.OnPageChangedListener,
+        NoteDialog.OnWriteNoteCallback, DailyAdapter.OnRefreshCallback, ReportModel.OnSyncCallback {
 
     public static final String EXTRA_SCROLL = "com.sumian.app.extra.SCROLL";
     private static final int PRELOAD_THRESHOLD = 5;
 
-    @BindView(R.id.syncing_report_view)
     SyncingReportView mSyncingReportView;
-
-    @BindView(R.id.sdv)
     SwitchDateView mSwitchDateView;
-
-    @BindView(R.id.recycler)
     LoadViewPagerRecyclerView mRecycler;
-    @BindView(R.id.iv_float_diary)
     ImageView mIvFloatDiary;
 
     private DailyAdapter mDailyAdapter;
@@ -78,6 +72,12 @@ public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter>
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mSyncingReportView = root.findViewById(R.id.syncing_report_view);
+        mSwitchDateView = root.findViewById(R.id.sdv);
+        mRecycler = root.findViewById(R.id.recycler);
+        mIvFloatDiary = root.findViewById(R.id.iv_float_diary);
+        root.findViewById(R.id.iv_float_diary).setOnClickListener(this);
+
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
         mRecycler.setAdapter(mDailyAdapter = new DailyAdapter().setOnSwitchDateListener(this).setOnClickListener(v -> initNoteDialog()).setOnRefreshCallback(this));
@@ -152,7 +152,9 @@ public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter>
 
     @Override
     public void setReportsData(List<DailyReport> dailyReports) {
-        if (dailyReports == null || dailyReports.isEmpty()) return;
+        if (dailyReports == null || dailyReports.isEmpty()) {
+            return;
+        }
         mDailyAdapter.initAddAll(dailyReports);
     }
 
@@ -202,16 +204,10 @@ public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter>
         mPresenter.getPreloadReports(mDailyAdapter.getItemDate(0));
     }
 
-    @OnClick(R.id.iv_float_diary)
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_float_diary:
-                initNoteDialog();
-                break;
-            default:
-                break;
-        }
+        initNoteDialog();
     }
 
     private void initNoteDialog() {
@@ -242,10 +238,10 @@ public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter>
 
     private void updateFloatDiaryVisibility() {
         mIvFloatDiary.setVisibility(mCurrentDailyReport.packages != null
-            && mCurrentDailyReport.packages != null && mCurrentDailyReport.packages.size() > 0
-            && mCurrentDailyReport.light_duration_percent != 0
-            && TextUtils.isEmpty(mCurrentDailyReport.wrote_diary_at)
-            ? View.VISIBLE : View.GONE);
+                && mCurrentDailyReport.packages != null && mCurrentDailyReport.packages.size() > 0
+                && mCurrentDailyReport.light_duration_percent != 0
+                && TextUtils.isEmpty(mCurrentDailyReport.wrote_diary_at)
+                ? View.VISIBLE : View.GONE);
     }
 
     @Override

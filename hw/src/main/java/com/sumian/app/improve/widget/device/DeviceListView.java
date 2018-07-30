@@ -29,7 +29,7 @@ import butterknife.OnClick;
 
 public class DeviceListView extends LinearLayout implements View.OnClickListener, DeviceAdapter.OnItemClickListener {
 
-    @BindView(R.id.recycler)
+
     RecyclerView mRecycler;
 
     private DeviceAdapter mDeviceAdapter;
@@ -50,29 +50,26 @@ public class DeviceListView extends LinearLayout implements View.OnClickListener
     }
 
     private void inflateView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_scanning_device_list_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_scanning_device_list_view, this);
+        ButterKnife.bind(inflate);
+        mRecycler = inflate.findViewById(R.id.recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setAdapter(mDeviceAdapter = new DeviceAdapter());
         mDeviceAdapter.setOnItemClickListener(this);
+
+        inflate.findViewById(R.id.tv_re_scan).setOnClickListener(this);
     }
 
     public void setOnDeviceListViewCallback(OnDeviceListViewCallback callback) {
         mCallback = callback;
     }
 
-    @OnClick(R.id.tv_re_scan)
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_re_scan:
-                mDeviceAdapter.clear();
-                mCallback.doReScan();
-                hide();
-                break;
-            default:
-                break;
-        }
+        mDeviceAdapter.clear();
+        mCallback.doReScan();
+        hide();
     }
 
 

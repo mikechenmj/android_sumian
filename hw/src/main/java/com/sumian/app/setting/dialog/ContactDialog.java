@@ -26,10 +26,7 @@ import butterknife.OnClick;
  */
 
 public class ContactDialog extends BaseDialogFragment implements View.OnClickListener, ConfigContract.View {
-
-    @BindView(R.id.tv_message)
     TextView mTvTel;
-
     private ConfigContract.Presenter mPresenter;
 
     @Override
@@ -41,6 +38,9 @@ public class ContactDialog extends BaseDialogFragment implements View.OnClickLis
     protected void initView(View rootView) {
         super.initView(rootView);
         ConfigPresenter.init(this);
+        mTvTel = rootView.findViewById(R.id.tv_message);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_call).setOnClickListener(this);
     }
 
     @Override
@@ -89,19 +89,15 @@ public class ContactDialog extends BaseDialogFragment implements View.OnClickLis
 
     }
 
-    @OnClick({R.id.tv_cancel, R.id.tv_call})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_cancel:
-                dismiss();
-                break;
-            case R.id.tv_call:
-                call(mTvTel.getText().toString().trim());
-                dismiss();
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_cancel) {
+            dismiss();
+        } else if (i == R.id.tv_call) {
+            call(mTvTel.getText().toString().trim());
+            dismiss();
         }
-
     }
 
     /**
@@ -110,7 +106,9 @@ public class ContactDialog extends BaseDialogFragment implements View.OnClickLis
      * @param phone 电话号码
      */
     private void call(String phone) {
-        if (TextUtils.isEmpty(phone)) return;
+        if (TextUtils.isEmpty(phone)) {
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

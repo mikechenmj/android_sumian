@@ -39,21 +39,15 @@ import butterknife.BindView;
 import retrofit2.Call;
 
 public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeListener,
-    LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+        LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
-    @BindView(R.id.main_container)
     FrameLayout mMainContainer;
-    @BindView(R.id.tab_device)
     TabButton mTabDevice;
-    @BindView(R.id.tab_report)
     TabButton mTabReport;
-    @BindView(R.id.tab_consultant)
     TabButton mTabConsultant;
-    @BindView(R.id.tab_me)
     TabButton mTabMe;
-    @BindView(R.id.tab_main)
     NavTab mTabMain;
 
     private BasePagerFragment[] mPagerFragments;
@@ -105,13 +99,20 @@ public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeList
     @Override
     protected void initWidget() {
         super.initWidget();
+        mMainContainer = findViewById(R.id.main_container);
+        mTabDevice = findViewById(R.id.tab_device);
+        mTabReport = findViewById(R.id.tab_report);
+        mTabConsultant = findViewById(R.id.tab_consultant);
+        mTabMe = findViewById(R.id.tab_me);
+        mTabMain = findViewById(R.id.tab_main);
+
         mTabMain.setOnTabChangeListener(this);
         //注册站内信消息接收容器
         LeanCloudHelper.addOnAdminMsgCallback(this);
         AppManager.getVersionModel().registerShowDotCallback(this);
         if (mPagerFragments == null) {
             mPagerFragments = new BasePagerFragment[]{DeviceFragment.newInstance(),
-                ReportFragment.newInstance(), ConsultantFragment.newInstance(), MeFragment.newInstance()};
+                    ReportFragment.newInstance(), ConsultantFragment.newInstance(), MeFragment.newInstance()};
         }
 
         PushReport pushReport = ReportPushManager.getInstance().getPushReport();
@@ -262,7 +263,7 @@ public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeList
     public void onHideMsgCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
         runUiThread(() -> {
             this.mTabConsultant.showDot(doctorMsgLen + customerMsgLen > 0 ? android.view.View.VISIBLE :
-                android.view.View.GONE);
+                    android.view.View.GONE);
             this.mTabMe.showDot(adminMsgLen > 0 ? android.view.View.VISIBLE : android.view.View.GONE);
         });
     }

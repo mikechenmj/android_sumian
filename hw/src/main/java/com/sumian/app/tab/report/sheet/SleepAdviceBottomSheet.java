@@ -22,11 +22,8 @@ public class SleepAdviceBottomSheet extends BottomSheetView implements View.OnCl
 
     private static final String ARGS_SLEEP_ADVICE = "args_sleep_advice";
 
-    @BindView(R.id.tv_sleep_advice_element)
     TextView mTvSleepAdviceElement;
-    @BindView(R.id.tv_sleep_data_less)
     TextView mTvSleepDataLess;
-    @BindView(R.id.tv_sleep_advice)
     TextView mTvSleepAdvice;
 
     private SleepAdvice mSleepAdvice;
@@ -53,6 +50,15 @@ public class SleepAdviceBottomSheet extends BottomSheetView implements View.OnCl
     }
 
     @Override
+    protected void initView(View rootView) {
+        super.initView(rootView);
+        mTvSleepAdviceElement = rootView.findViewById(R.id.tv_sleep_advice_element);
+        mTvSleepDataLess = rootView.findViewById(R.id.tv_sleep_data_less);
+        mTvSleepAdvice = rootView.findViewById(R.id.tv_sleep_advice);
+        rootView.findViewById(R.id.bt_get).setOnClickListener(this);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         mTvSleepAdviceElement.setText(mSleepAdvice.getFactor_detail());
@@ -60,7 +66,6 @@ public class SleepAdviceBottomSheet extends BottomSheetView implements View.OnCl
         mTvSleepAdvice.setText(mSleepAdvice.getAdvice());
     }
 
-    @OnClick(R.id.bt_get)
     @Override
     public void onClick(View v) {
         dismiss();

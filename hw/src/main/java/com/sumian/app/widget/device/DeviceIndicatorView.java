@@ -24,12 +24,8 @@ import butterknife.OnClick;
 
 public class DeviceIndicatorView extends LinearLayout implements View.OnClickListener {
 
-    @BindView(R.id.tv_device_name)
     TextView mTvDeviceName;
-
-    @BindView(R.id.loading)
     ImageView mLoading;
-    @BindView(R.id.bt_sync)
     Button mBtSync;
 
     private OnDeviceIndicatorCallback mOnDeviceIndicatorCallback;
@@ -49,7 +45,11 @@ public class DeviceIndicatorView extends LinearLayout implements View.OnClickLis
 
     private void initView(Context context) {
         setOrientation(VERTICAL);
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_device_indicator, this));
+        View inflate = inflate(context, R.layout.hw_lay_device_indicator, this);
+        mTvDeviceName = inflate.findViewById(R.id.tv_device_name);
+        mLoading = inflate.findViewById(R.id.loading);
+        mBtSync = inflate.findViewById(R.id.bt_sync);
+        inflate.findViewById(R.id.bt_sync).setOnClickListener(this);
     }
 
     public void setOnDeviceIndicatorCallback(OnDeviceIndicatorCallback onDeviceIndicatorCallback) {
@@ -69,23 +69,18 @@ public class DeviceIndicatorView extends LinearLayout implements View.OnClickLis
         this.mLoading.setVisibility(isLoading ? VISIBLE : GONE);
         this.mBtSync.setText(R.string.sync);
         this.mBtSync.setVisibility(isLoading ? GONE : VISIBLE);
-        if (!isLoading)
+        if (!isLoading) {
             this.mBtSync.postDelayed(() -> mBtSync.setVisibility(VISIBLE), 2000);
+        }
     }
 
-    @OnClick({R.id.bt_sync})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_sync:
-                if (mOnDeviceIndicatorCallback != null) {
-                    this.mOnDeviceIndicatorCallback.requestSync();
-                }
-                doSync();
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (mOnDeviceIndicatorCallback != null) {
+            this.mOnDeviceIndicatorCallback.requestSync();
         }
+        doSync();
     }
 
     public void doSync() {

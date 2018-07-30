@@ -22,9 +22,7 @@ import butterknife.OnClick;
 
 public class SwitchPowerView extends LinearLayout implements View.OnClickListener {
 
-    @BindView(R.id.iv_power_indicator)
     ImageView mIvPowerIndicator;
-    @BindView(R.id.iv_switch_sleepy_power)
     ImageView mIvSwitchSleepyPower;
 
     private int mPower = 0x00;//0x00 off 0x01 weak  0x02 strong
@@ -47,29 +45,27 @@ public class SwitchPowerView extends LinearLayout implements View.OnClickListene
     private void init(Context context) {
         setVisibility(GONE);
         setOrientation(VERTICAL);
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_switch_power, this));
+        View inflate = inflate(context, R.layout.hw_lay_switch_power, this);
+        ButterKnife.bind(inflate);
+        mIvPowerIndicator = inflate.findViewById(R.id.iv_power_indicator);
+        mIvSwitchSleepyPower = inflate.findViewById(R.id.iv_switch_sleepy_power);
+        inflate.findViewById(R.id.iv_switch_sleepy_power).setOnClickListener(this);
     }
 
     public void setOnSwitchPowerListener(OnSwitchPowerListener onSwitchPowerListener) {
         mOnSwitchPowerListener = onSwitchPowerListener;
     }
 
-    @OnClick(R.id.iv_switch_sleepy_power)
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_switch_sleepy_power:
-                int power = this.mPower;
-                if (power == 0x01) {
-                    mOnSwitchPowerListener.switchPower(power = 0x02);
-                } else {
-                    mOnSwitchPowerListener.switchPower(power = 0x01);
-                }
-                updatePower(power);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        int power = this.mPower;
+        if (power == 0x01) {
+            mOnSwitchPowerListener.switchPower(power = 0x02);
+        } else {
+            mOnSwitchPowerListener.switchPower(power = 0x01);
         }
+        updatePower(power);
     }
 
     public void rollbackPower() {

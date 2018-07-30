@@ -29,36 +29,19 @@ import butterknife.ButterKnife;
 
 public class SleepNoteView extends LinearLayout {
 
-    @BindView(R.id.iv_report_sleep_mood)
     ImageView mIvReportSleepMood;
-    @BindView(R.id.tv_report_sleep_mood)
     TextView mTvReportSleepMood;
-    @BindView(R.id.lay_flow)
     FlowLayout mLayFlow;
-    @BindView(R.id.tv_sleep_remark)
     TextView mTvSleepRemark;
-    @BindView(R.id.tv_sleep_evaluate)
     TextView mTvSleepEvaluate;
-
-    @BindView(R.id.v_line_one)
     View mVLineOne;
-    @BindView(R.id.v_line_two)
     View mVLineTwo;
-    @BindView(R.id.v_line_three)
     View mVLineThree;
-    @BindView(R.id.v_line_four)
     View mVLineFour;
-
-    @BindView(R.id.lay_sleep_note_mood)
     LinearLayout mLaySleepNoteMood;
-    @BindView(R.id.lay_sleep_status)
     LinearLayout mLaySleepStatus;
-    @BindView(R.id.lay_sleep_remark)
     LinearLayout mLaySleepRemark;
-
-    @BindView(R.id.tv_doctor_evaluate)
     TextView mTvDoctorEvaluate;
-
 
     public SleepNoteView(Context context) {
         this(context, null);
@@ -74,8 +57,21 @@ public class SleepNoteView extends LinearLayout {
     }
 
     private void init(Context context) {
-        ButterKnife.bind(LayoutInflater.from(context).inflate(R.layout.hw_lay_sleep_note, this, true));
         setVisibility(GONE);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.hw_lay_sleep_note, this, true);
+        mIvReportSleepMood = inflate.findViewById(R.id.iv_report_sleep_mood);
+        mTvReportSleepMood = inflate.findViewById(R.id.tv_report_sleep_mood);
+        mLayFlow = inflate.findViewById(R.id.lay_flow);
+        mTvSleepRemark = inflate.findViewById(R.id.tv_sleep_remark);
+        mTvSleepEvaluate = inflate.findViewById(R.id.tv_sleep_evaluate);
+        mVLineOne = inflate.findViewById(R.id.v_line_one);
+        mVLineTwo = inflate.findViewById(R.id.v_line_two);
+        mVLineThree = inflate.findViewById(R.id.v_line_three);
+        mVLineFour = inflate.findViewById(R.id.v_line_four);
+        mLaySleepNoteMood = inflate.findViewById(R.id.lay_sleep_note_mood);
+        mLaySleepStatus = inflate.findViewById(R.id.lay_sleep_status);
+        mLaySleepRemark = inflate.findViewById(R.id.lay_sleep_remark);
+        mTvDoctorEvaluate = inflate.findViewById(R.id.tv_doctor_evaluate);
     }
 
     public void addSleepNoteData(SleepDetailReport sleepDetailReport) {
@@ -115,7 +111,7 @@ public class SleepNoteView extends LinearLayout {
                 } else {
                     for (String bedTime : bedtimeState) {
                         View view = LayoutInflater.from(getContext()).inflate(R.layout.hw_lay_options,
-                            mLayFlow, false);
+                                mLayFlow, false);
                         TextView TvOption = view.findViewById(R.id.tv_option);
                         TvOption.setText(bedTime);
                         mLayFlow.addView(view);

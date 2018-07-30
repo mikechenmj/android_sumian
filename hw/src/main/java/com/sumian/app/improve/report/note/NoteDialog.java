@@ -23,6 +23,7 @@ import com.sumian.app.widget.BaseDialogFragment;
 import com.sumian.app.widget.FlowLayout;
 import com.sumian.app.widget.adapter.OnTextWatcherAdapter;
 
+import java.io.FileDescriptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -39,20 +40,11 @@ import butterknife.OnClick;
 
 public class NoteDialog extends BaseDialogFragment implements View.OnClickListener, SleepNoteContract.View, WakeUpMoodView.OnSelectCallback {
 
-    @BindView(R.id.lay_sleep_state)
     LinearLayout mLaySleepState;
-
-    @BindView(R.id.wake_up_mood_view)
     WakeUpMoodView mWakeUpMoodView;
-
-    @BindView(R.id.lay_flow)
     FlowLayout mLayFlow;
-    @BindView(R.id.et_sleep_remark)
     EditText mEtSleepRemark;
-    @BindView(R.id.tv_input_count)
     TextView mTvInputCount;
-
-    @BindView(R.id.bt_submit)
     Button mBtSubmit;
 
     private SleepNoteContract.Presenter mPresenter;
@@ -92,6 +84,15 @@ public class NoteDialog extends BaseDialogFragment implements View.OnClickListen
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
+        mLaySleepState = rootView.findViewById(R.id.lay_sleep_state);
+        mWakeUpMoodView = rootView.findViewById(R.id.wake_up_mood_view);
+        mLayFlow = rootView.findViewById(R.id.lay_flow);
+        mEtSleepRemark = rootView.findViewById(R.id.et_sleep_remark);
+        mTvInputCount = rootView.findViewById(R.id.tv_input_count);
+        mBtSubmit = rootView.findViewById(R.id.bt_submit);
+        rootView.findViewById(R.id.tv_ignore).setOnClickListener(this);
+        rootView.findViewById(R.id.bt_submit).setOnClickListener(this);
+
         mWakeUpMoodView.setOnSelectCallback(this);
         mEtSleepRemark.addTextChangedListener(new OnTextWatcherAdapter() {
 
@@ -130,31 +131,23 @@ public class NoteDialog extends BaseDialogFragment implements View.OnClickListen
         mPresenter.syncSleepNoteOptions();
     }
 
-    @OnClick({R.id.tv_ignore, R.id.bt_submit})
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_ignore:
-                dismiss();
-                break;
-            case R.id.bt_submit:
-
-                String remark = mEtSleepRemark.getText().toString().trim();
-
-                if (mMoodState == -1 && mBedTimeStates.size() <= 0 && TextUtils.isEmpty(remark)) {
-                    ToastHelper.show(R.string.note_not_null);
-                    return;
-                }
-
-                if (remark.length() > 200) {
-                    ToastHelper.show(R.string.sleep_note_error_three);
-                    return;
-                }
-
-                mPresenter.uploadDiary(mSleepNote.sleepId, mMoodState, mBedTimeStates, remark);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_ignore) {
+            dismiss();
+        } else if (i == R.id.bt_submit) {
+            String remark = mEtSleepRemark.getText().toString().trim();
+            if (mMoodState == -1 && mBedTimeStates.size() <= 0 && TextUtils.isEmpty(remark)) {
+                ToastHelper.show(R.string.note_not_null);
+                return;
+            }
+            if (remark.length() > 200) {
+                ToastHelper.show(R.string.sleep_note_error_three);
+                return;
+            }
+            mPresenter.uploadDiary(mSleepNote.sleepId, mMoodState, mBedTimeStates, remark);
         }
     }
 
@@ -184,12 +177,16 @@ public class NoteDialog extends BaseDialogFragment implements View.OnClickListen
                 if (textView.isActivated()) {
                     textView.setActivated(false);
                     text = textView.getText().toString().trim();
-                    if (TextUtils.isEmpty(text)) return;
+                    if (TextUtils.isEmpty(text)) {
+                        return;
+                    }
                     mBedTimeStates.remove(text);
                 } else {
                     textView.setActivated(true);
                     text = textView.getText().toString().trim();
-                    if (TextUtils.isEmpty(text)) return;
+                    if (TextUtils.isEmpty(text)) {
+                        return;
+                    }
                     mBedTimeStates.add(text);
                 }
             });

@@ -22,15 +22,9 @@ public class TabIndicatorView extends FrameLayout implements TabIndicatorItemVie
 
     private static final String TAG = TabIndicatorView.class.getSimpleName();
 
-    @BindView(R.id.day_tab_indicator_item_view)
     TabIndicatorItemView mDayTabIndicatorItemView;
-
-    @BindView(R.id.week_tab_indicator_item_view)
     TabIndicatorItemView mWeekTabIndicatorItemView;
-
-    @BindView(R.id.calendar_tab_indicator_item_view)
     TabIndicatorItemView mCalendarTabIndicatorItemView;
-
 
     private OnSwitchIndicatorCallback mOnSwitchIndicatorCallback;
 
@@ -52,7 +46,11 @@ public class TabIndicatorView extends FrameLayout implements TabIndicatorItemVie
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_tab_indicator_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_tab_indicator_view, this);
+        mDayTabIndicatorItemView = inflate.findViewById(R.id.day_tab_indicator_item_view);
+        mWeekTabIndicatorItemView = inflate.findViewById(R.id.day_tab_indicator_item_view);
+        mCalendarTabIndicatorItemView = inflate.findViewById(R.id.day_tab_indicator_item_view);
+
         mDayTabIndicatorItemView.setIndicatorText("日");
         mDayTabIndicatorItemView.setOnSelectTabCallback(this);
         mDayTabIndicatorItemView.select();
@@ -71,34 +69,35 @@ public class TabIndicatorView extends FrameLayout implements TabIndicatorItemVie
             case 1:
                 onSelect(mWeekTabIndicatorItemView, true);
                 break;
+            default:
+                break;
         }
     }
 
     @Override
     public void onSelect(View v, boolean isSelect) {
         int position = 0;
-        switch (v.getId()) {
-            case R.id.day_tab_indicator_item_view:
-                mWeekTabIndicatorItemView.unSelect();
-                position = 0;
-                if (mOnSwitchIndicatorCallback != null) {
-                    mOnSwitchIndicatorCallback.onSwitchIndicator(v, position);
-                }
-                break;
-            case R.id.week_tab_indicator_item_view:
-                mDayTabIndicatorItemView.unSelect();
-                position = 1;
-                if (mOnSwitchIndicatorCallback != null) {
-                    mOnSwitchIndicatorCallback.onSwitchIndicator(v, position);
-                }
-                break;
-            case R.id.calendar_tab_indicator_item_view:
-                if (mOnSwitchIndicatorCallback != null) {
-                    mOnSwitchIndicatorCallback.onShowCalendar(v);
-                }
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.day_tab_indicator_item_view) {
+            mWeekTabIndicatorItemView.unSelect();
+            position = 0;
+            if (mOnSwitchIndicatorCallback != null) {
+                mOnSwitchIndicatorCallback.onSwitchIndicator(v, position);
+            }
+
+        } else if (i == R.id.week_tab_indicator_item_view) {
+            mDayTabIndicatorItemView.unSelect();
+            position = 1;
+            if (mOnSwitchIndicatorCallback != null) {
+                mOnSwitchIndicatorCallback.onSwitchIndicator(v, position);
+            }
+
+        } else if (i == R.id.calendar_tab_indicator_item_view) {
+            if (mOnSwitchIndicatorCallback != null) {
+                mOnSwitchIndicatorCallback.onShowCalendar(v);
+            }
+
+        } else {
         }
         updateTabsUiBySelectPosition(position);
     }

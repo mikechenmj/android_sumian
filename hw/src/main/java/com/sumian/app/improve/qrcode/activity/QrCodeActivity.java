@@ -26,12 +26,8 @@ public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackListe
 
     private static final String TAG = QrCodeActivity.class.getSimpleName();
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.table)
     TabLayout mTabLayout;
-    @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
     private BluePeripheral mBluePeripheral;
@@ -72,6 +68,10 @@ public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackListe
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mTabLayout = findViewById(R.id.table);
+        mViewPager = findViewById(R.id.view_pager);
+
         this.mTitleBar.addOnBackListener(this);
         this.mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -81,6 +81,8 @@ public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackListe
                         return new QrCodeFragment();
                     case 1:
                         return new InputSnFragment();
+                    default:
+                        break;
                 }
                 return new QrCodeFragment();
             }

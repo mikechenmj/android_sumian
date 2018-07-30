@@ -43,21 +43,15 @@ import butterknife.OnClick;
  */
 
 public class DeviceLogActivity extends BaseActivity implements View.OnClickListener,
-    ViewTreeObserver.OnGlobalLayoutListener, TitleBar.OnBackListener, BluePeripheralCallback, BluePeripheralDataCallback {
+        ViewTreeObserver.OnGlobalLayoutListener, TitleBar.OnBackListener, BluePeripheralCallback, BluePeripheralDataCallback {
 
     private static final String TAG = DeviceLogActivity.class.getSimpleName();
 
-    @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
-    @BindView(R.id.iv_keyboard_image)
     ImageView mIvKeyboardImage;
-    @BindView(R.id.et_input)
     EditText mEtInput;
-    @BindView(R.id.iv_keyboard_send)
     ImageView mIvKeyboardSend;
 
     private LogAdapter mLogAdapter;
@@ -85,9 +79,17 @@ public class DeviceLogActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void initWidget() {
         super.initWidget();
+        mLayMsgContainer = findViewById(R.id.lay_msg_container);
+        mTitleBar = findViewById(R.id.title_bar);
+        mRecyclerView = findViewById(R.id.recycler);
+        mIvKeyboardImage = findViewById(R.id.iv_keyboard_image);
+        mEtInput = findViewById(R.id.et_input);
+        mIvKeyboardSend = findViewById(R.id.iv_keyboard_send);
+        findViewById(R.id.iv_back).setOnClickListener(this);
+        findViewById(R.id.iv_keyboard_image).setOnClickListener(this);
+        findViewById(R.id.iv_keyboard_send).setOnClickListener(this);
 
         this.mTitleBar.addOnBackListener(this);
-
         this.mLayMsgContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
         this.mRecyclerView.setAdapter(mLogAdapter = new LogAdapter());
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
@@ -103,7 +105,9 @@ public class DeviceLogActivity extends BaseActivity implements View.OnClickListe
         super.initData();
 
         BluePeripheral peripheral = AppManager.getBlueManager().getBluePeripheral();
-        if (peripheral == null) return;
+        if (peripheral == null) {
+            return;
+        }
         peripheral.addPeripheralCallback(this);
         peripheral.addPeripheralDataCallback(this);
 
@@ -112,44 +116,29 @@ public class DeviceLogActivity extends BaseActivity implements View.OnClickListe
         //mPresenter.syncMsgHistory();
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_keyboard_image, R.id.iv_keyboard_send})
+
+    @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.iv_keyboard_image:
-                break;
-            case R.id.iv_keyboard_send:
-
-                String command = this.mEtInput.getText().toString().trim();
-                if (TextUtils.isEmpty(command)) {
-                    ToastHelper.show("数据不能为 null");
-                    return;
-                }
-
-                if (!CheckUtils.isCommand(command)) {
-                    ToastHelper.show("只能输入英文字母和数字");
-                    return;
-                }
-
-                if (this.mPeripheral == null || !this.mPeripheral.isConnected()) {
-                    ToastHelper.show("当前设备未连接,请先连接设备,再发送数据");
-                    return;
-                }
-
-                mEtInput.setText("");
-                //AVIMTextMessage textMessage = new AVIMTextMessage();
-                //textMessage.setText(command);
-                //textMessage.setFrom(AccountModel.getLeanCloudId());
-                //mLogAdapter.addMsg(textMessage);
-                //this.mRecyclerView.scrollToPosition(mLogAdapter.getItemCount() - 1);
-                this.mPeripheral.write(BlueByteUtil.hex2byte(command));
-                break;
-//            case R.id.space:
-//                UiUtil.closeKeyboard(mEtInput);
-//                Log.e(TAG, "onClick: ------->");
-//                break;
+        int i = view.getId();
+        if (i == R.id.iv_back) {
+            finish();
+        } else if (i == R.id.iv_keyboard_image) {
+        } else if (i == R.id.iv_keyboard_send) {
+            String command = this.mEtInput.getText().toString().trim();
+            if (TextUtils.isEmpty(command)) {
+                ToastHelper.show("数据不能为 null");
+                return;
+            }
+            if (!CheckUtils.isCommand(command)) {
+                ToastHelper.show("只能输入英文字母和数字");
+                return;
+            }
+            if (this.mPeripheral == null || !this.mPeripheral.isConnected()) {
+                ToastHelper.show("当前设备未连接,请先连接设备,再发送数据");
+                return;
+            }
+            mEtInput.setText("");
+            this.mPeripheral.write(BlueByteUtil.hex2byte(command));
         }
     }
 

@@ -28,6 +28,7 @@ import com.sumian.app.setting.activity.SettingActivity;
 import com.sumian.app.upgrade.activity.VersionNoticeActivity;
 import com.sumian.app.upgrade.model.VersionModel;
 
+import java.io.FileDescriptor;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -43,33 +44,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ConstantConditions")
 public class MeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
-    LeanCloudHelper.OnShowMsgDotCallback, OnSleepReminderCallback, UserInfoCallback, VersionModel.ShowDotCallback {
+        LeanCloudHelper.OnShowMsgDotCallback, OnSleepReminderCallback, UserInfoCallback, VersionModel.ShowDotCallback {
 
-    // private static final String TAG = MeFragment.class.getSimpleName();
-
-    @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
-
-    @BindView(R.id.tv_nickname)
     TextView mTvNickname;
-
-    @BindView(R.id.tv_age_and_gender)
     TextView mTvAgeAndGender;
-
-    @BindView(R.id.tv_sleep_answer_state)
     TextView mTvSleepAnswerState;
-
-    @BindView(R.id.tv_sleep_notice_state)
     TextView mTvSleepNoticeState;
-    @BindView(R.id.v_dot_msg_notice)
     View mVDotMsgNotice;
-
-    @BindView(R.id.v_dot_version_notice)
     View mVDotVersionNotice;
-
-    @BindView(R.id.lay_sleepy_answer)
     LinearLayout mLaySleepyAnswer;
-    @BindView(R.id.view_divider_two)
     View mViewDividerTwo;
 
     private UserInfoContract.Presenter mPresenter;
@@ -86,6 +70,25 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mIvAvatar = root.findViewById(R.id.iv_avatar);
+        mTvNickname = root.findViewById(R.id.tv_nickname);
+        mTvAgeAndGender = root.findViewById(R.id.tv_age_and_gender);
+        mTvSleepAnswerState = root.findViewById(R.id.tv_sleep_answer_state);
+        mTvSleepNoticeState = root.findViewById(R.id.tv_sleep_notice_state);
+        mVDotMsgNotice = root.findViewById(R.id.v_dot_msg_notice);
+        mVDotVersionNotice = root.findViewById(R.id.v_dot_version_notice);
+        mLaySleepyAnswer = root.findViewById(R.id.lay_sleepy_answer);
+        mViewDividerTwo = root.findViewById(R.id.view_divider_two);
+
+        root.findViewById(R.id.iv_avatar).setOnClickListener(this);
+        root.findViewById(R.id.lay_go_to_info_center).setOnClickListener(this);
+        root.findViewById(R.id.lay_sleepy_answer).setOnClickListener(this);
+        root.findViewById(R.id.lay_sleepy_notice).setOnClickListener(this);
+        root.findViewById(R.id.lay_my_msg_notice).setOnClickListener(this);
+        root.findViewById(R.id.lay_firmware_update).setOnClickListener(this);
+        root.findViewById(R.id.lay_user_guide).setOnClickListener(this);
+        root.findViewById(R.id.lay_setting).setOnClickListener(this);
+
         UserInfoPresenter.init(this);
         if (BuildConfig.IS_CLINICAL_VERSION) {
             mViewDividerTwo.setVisibility(View.GONE);
@@ -118,35 +121,31 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     }
 
 
-    @OnClick({R.id.iv_avatar, R.id.lay_go_to_info_center, R.id.lay_sleepy_answer, R.id.lay_sleepy_notice, R.id.lay_my_msg_notice,
-        R.id.lay_firmware_update, R.id.lay_user_guide, R.id.lay_setting})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.lay_sleepy_answer://睡眠障碍评估表
-                QuestionActivity.show(v.getContext());
-                break;
-            case R.id.iv_avatar:
-            case R.id.lay_go_to_info_center://用户个人信息
-                UserInfoActivity.show(getContext());
-                break;
-            case R.id.lay_sleepy_notice://睡眠提醒中心
-                SleepReminderActivity.show(getContext());
-                break;
-            case R.id.lay_my_msg_notice://我的消息中心
-                MsgActivity.show(v.getContext(), LeanCloudHelper.SERVICE_TYPE_MAIL);
-                break;
-            case R.id.lay_firmware_update://版本升级中心
-                VersionNoticeActivity.show(getContext());
-                break;
-            case R.id.lay_user_guide://新手指南
-                ManualActivity.show(getContext());
-                break;
-            case R.id.lay_setting://设置中心
-                SettingActivity.show(getContext());
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.lay_sleepy_answer) {
+            QuestionActivity.show(v.getContext());
+
+        } else if (i == R.id.iv_avatar || i == R.id.lay_go_to_info_center) {
+            UserInfoActivity.show(getContext());
+
+        } else if (i == R.id.lay_sleepy_notice) {
+            SleepReminderActivity.show(getContext());
+
+        } else if (i == R.id.lay_my_msg_notice) {
+            MsgActivity.show(v.getContext(), LeanCloudHelper.SERVICE_TYPE_MAIL);
+
+        } else if (i == R.id.lay_firmware_update) {
+            VersionNoticeActivity.show(getContext());
+
+        } else if (i == R.id.lay_user_guide) {
+            ManualActivity.show(getContext());
+
+        } else if (i == R.id.lay_setting) {
+            SettingActivity.show(getContext());
+
+        } else {
         }
     }
 
@@ -169,12 +168,12 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
             String avatar = userInfo.getAvatar();
             if (!TextUtils.isEmpty(avatar)) {
                 App.
-                    getRequestManager()
-                    .load(avatar)
-                    .asBitmap()
-                    .error(R.mipmap.ic_default_avatar)
-                    .placeholder(R.mipmap.ic_default_avatar)
-                    .into(mIvAvatar);
+                        getRequestManager()
+                        .load(avatar)
+                        .asBitmap()
+                        .error(R.mipmap.ic_default_avatar)
+                        .placeholder(R.mipmap.ic_default_avatar)
+                        .into(mIvAvatar);
             }
             this.mTvAgeAndGender.setText(formatGender(userInfo.getGender()));
             this.mTvNickname.setText(userInfo.getNickname());

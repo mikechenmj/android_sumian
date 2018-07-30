@@ -32,47 +32,24 @@ import butterknife.BindView;
  */
 
 public class DaySleepDetailReportActivity extends BaseActivity implements DaySleepDetailContract.View,
-    SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackListener {
+        SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackListener {
 
     private static final String ARGS_SLEEP_DETAIL_REPORT = "args_sleep_detail_report";
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.refresh)
     BlueRefreshView mRefresh;
-
-    @BindView(R.id.day_sleep_histogram_view)
     DaySleepHistogramView mDaySleepHistogramView;
-
-    @BindView(R.id.tv_sleep_duration_hour)
     TextView mTvSleepDurationHour;
-    @BindView(R.id.tv_sleep_duration_min)
     TextView mTvSleepDurationMin;
-
-    @BindView(R.id.tv_sleep_awake_duration_hour)
     TextView mTvSleepAwakeDurationHour;
-    @BindView(R.id.tv_sleep_awake_duration_min)
     TextView mTvSleepAwakeDurationMin;
-
-    @BindView(R.id.tv_sleep_from_time)
     TextView mTvGoToSleepTime;
-    @BindView(R.id.tv_sleep_awake_up_time)
     TextView mTvSleepWakedUpTime;
-
-    @BindView(R.id.tv_sleep_deep_duration_hour)
     TextView mTvSleepDeepDurationHour;
-    @BindView(R.id.tv_sleep_deep_duration_min)
     TextView mTvSleepDeepDurationMin;
-
-    @BindView(R.id.tv_sleep_light_duration_hour)
     TextView mTvSleepLightDurationHour;
-    @BindView(R.id.tv_sleep_light_duration_min)
     TextView mTvSleepLightDurationMin;
-
-    @BindView(R.id.sleepNoteView)
     SleepNoteView mSleepNoteView;
-
 
     private long mSleepId;
 
@@ -99,6 +76,21 @@ public class DaySleepDetailReportActivity extends BaseActivity implements DaySle
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mRefresh = findViewById(R.id.refresh);
+        mDaySleepHistogramView = findViewById(R.id.day_sleep_histogram_view);
+        mTvSleepDurationHour = findViewById(R.id.tv_sleep_duration_hour);
+        mTvSleepDurationMin = findViewById(R.id.tv_sleep_duration_min);
+        mTvSleepAwakeDurationHour = findViewById(R.id.tv_sleep_awake_duration_hour);
+        mTvSleepAwakeDurationMin = findViewById(R.id.tv_sleep_awake_duration_min);
+        mTvGoToSleepTime = findViewById(R.id.tv_sleep_from_time);
+        mTvSleepWakedUpTime = findViewById(R.id.tv_sleep_awake_up_time);
+        mTvSleepDeepDurationHour = findViewById(R.id.tv_sleep_deep_duration_hour);
+        mTvSleepDeepDurationMin = findViewById(R.id.tv_sleep_deep_duration_min);
+        mTvSleepLightDurationHour = findViewById(R.id.tv_sleep_light_duration_hour);
+        mTvSleepLightDurationMin = findViewById(R.id.tv_sleep_light_duration_min);
+        mSleepNoteView = findViewById(R.id.sleepNoteView);
+
         this.mTitleBar.addOnBackListener(this);
         this.mRefresh.setOnRefreshListener(this);
         this.mTvSleepDurationHour.setTypeface(UiUtil.getTypeface());

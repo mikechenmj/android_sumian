@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 
 public class FloatGroupView extends LinearLayout implements View.OnClickListener {
 
-    @BindView(R.id.tv_label)
     TextView mTvLabel;
 
     private int mDefaultWidth;
@@ -43,11 +42,9 @@ public class FloatGroupView extends LinearLayout implements View.OnClickListener
     }
 
     private void initView(Context context) {
-        //   setOrientation(HORIZONTAL);
-        // setGravity(Gravity.CENTER);
-        // setBackground(getResources().getDrawable(R.drawable.bg_float_shape));
         setOnClickListener(this);
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_float_container_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_float_container_view, this);
+        mTvLabel = inflate.findViewById(R.id.tv_label);
         mTvLabel.setText("当前未匹配\n为默认模式");
     }
 

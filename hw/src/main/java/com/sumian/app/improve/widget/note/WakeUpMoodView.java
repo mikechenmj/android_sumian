@@ -26,13 +26,9 @@ public class WakeUpMoodView extends LinearLayout implements View.OnClickListener
 
     private static final String TAG = WakeUpMoodView.class.getSimpleName();
 
-    @BindView(R.id.tv_bad)
     TextView mTvBad;
-    @BindView(R.id.tv_general)
     TextView mTvGeneral;
-    @BindView(R.id.tv_good)
     TextView mTvGood;
-    @BindView(R.id.tv_very_good)
     TextView mTvVeryGood;
 
     private int mWakeUpState = -1;
@@ -53,63 +49,65 @@ public class WakeUpMoodView extends LinearLayout implements View.OnClickListener
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_wake_up_mood_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_wake_up_mood_view, this);
+        mTvBad = inflate.findViewById(R.id.tv_bad);
+        mTvGeneral = inflate.findViewById(R.id.tv_general);
+        mTvGood = inflate.findViewById(R.id.tv_good);
+        mTvVeryGood = inflate.findViewById(R.id.tv_very_good);
+        inflate.findViewById(R.id.tv_bad).setOnClickListener(this);
+        inflate.findViewById(R.id.tv_general).setOnClickListener(this);
+        inflate.findViewById(R.id.tv_good).setOnClickListener(this);
+        inflate.findViewById(R.id.tv_very_good).setOnClickListener(this);
     }
 
     public void setOnSelectCallback(OnSelectCallback onSelectCallback) {
         mOnSelectCallback = onSelectCallback;
     }
 
-    @OnClick({R.id.tv_bad, R.id.tv_general, R.id.tv_good, R.id.tv_very_good})
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_bad:
-                setSelected(mTvBad, R.mipmap.ic_report_bad_selected, R.mipmap.ic_report_bad, mTvGeneral, mTvGood, mTvVeryGood);
-                setUnSelected(mTvGeneral, R.mipmap.ic_report_general);
-                setUnSelected(mTvGood, R.mipmap.ic_report_good);
-                setUnSelected(mTvVeryGood, R.mipmap.ic_report_very);
-                if (mTvBad.getTag() == null) {
-                    mWakeUpState = -1;
-                } else {
-                    mWakeUpState = 0;
-                }
-                break;
-            case R.id.tv_general:
-                setSelected(mTvGeneral, R.mipmap.ic_report_general_selected, R.mipmap.ic_report_general, mTvBad, mTvGood, mTvVeryGood);
-                setUnSelected(mTvBad, R.mipmap.ic_report_bad);
-                setUnSelected(mTvGood, R.mipmap.ic_report_good);
-                setUnSelected(mTvVeryGood, R.mipmap.ic_report_very);
-                if (mTvGeneral.getTag() == null) {
-                    mWakeUpState = -1;
-                } else {
-                    mWakeUpState = 1;
-                }
-                break;
-            case R.id.tv_good:
-                setSelected(mTvGood, R.mipmap.ic_report_good_selected, R.mipmap.ic_report_good, mTvBad, mTvGeneral, mTvVeryGood);
-                setUnSelected(mTvBad, R.mipmap.ic_report_bad);
-                setUnSelected(mTvGeneral, R.mipmap.ic_report_general);
-                setUnSelected(mTvVeryGood, R.mipmap.ic_report_very);
-                if (mTvGood.getTag() == null) {
-                    mWakeUpState = -1;
-                } else {
-                    mWakeUpState = 2;
-                }
-                break;
-            case R.id.tv_very_good:
-                setSelected(mTvVeryGood, R.mipmap.ic_report_very_selected, R.mipmap.ic_report_very, mTvBad, mTvGeneral, mTvGood);
-                setUnSelected(mTvBad, R.mipmap.ic_report_bad);
-                setUnSelected(mTvGeneral, R.mipmap.ic_report_general);
-                setUnSelected(mTvGood, R.mipmap.ic_report_good);
-                if (mTvVeryGood.getTag() == null) {
-                    mWakeUpState = -1;
-                } else {
-                    mWakeUpState = 3;
-                }
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_bad) {
+            setSelected(mTvBad, R.mipmap.ic_report_bad_selected, R.mipmap.ic_report_bad, mTvGeneral, mTvGood, mTvVeryGood);
+            setUnSelected(mTvGeneral, R.mipmap.ic_report_general);
+            setUnSelected(mTvGood, R.mipmap.ic_report_good);
+            setUnSelected(mTvVeryGood, R.mipmap.ic_report_very);
+            if (mTvBad.getTag() == null) {
+                mWakeUpState = -1;
+            } else {
+                mWakeUpState = 0;
+            }
+        } else if (i == R.id.tv_general) {
+            setSelected(mTvGeneral, R.mipmap.ic_report_general_selected, R.mipmap.ic_report_general, mTvBad, mTvGood, mTvVeryGood);
+            setUnSelected(mTvBad, R.mipmap.ic_report_bad);
+            setUnSelected(mTvGood, R.mipmap.ic_report_good);
+            setUnSelected(mTvVeryGood, R.mipmap.ic_report_very);
+            if (mTvGeneral.getTag() == null) {
+                mWakeUpState = -1;
+            } else {
+                mWakeUpState = 1;
+            }
+        } else if (i == R.id.tv_good) {
+            setSelected(mTvGood, R.mipmap.ic_report_good_selected, R.mipmap.ic_report_good, mTvBad, mTvGeneral, mTvVeryGood);
+            setUnSelected(mTvBad, R.mipmap.ic_report_bad);
+            setUnSelected(mTvGeneral, R.mipmap.ic_report_general);
+            setUnSelected(mTvVeryGood, R.mipmap.ic_report_very);
+            if (mTvGood.getTag() == null) {
+                mWakeUpState = -1;
+            } else {
+                mWakeUpState = 2;
+            }
+        } else if (i == R.id.tv_very_good) {
+            setSelected(mTvVeryGood, R.mipmap.ic_report_very_selected, R.mipmap.ic_report_very, mTvBad, mTvGeneral, mTvGood);
+            setUnSelected(mTvBad, R.mipmap.ic_report_bad);
+            setUnSelected(mTvGeneral, R.mipmap.ic_report_general);
+            setUnSelected(mTvGood, R.mipmap.ic_report_good);
+            if (mTvVeryGood.getTag() == null) {
+                mWakeUpState = -1;
+            } else {
+                mWakeUpState = 3;
+            }
         }
 
         if (mOnSelectCallback != null) {

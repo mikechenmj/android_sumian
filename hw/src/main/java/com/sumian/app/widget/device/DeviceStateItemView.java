@@ -23,16 +23,9 @@ import butterknife.ButterKnife;
 
 public class DeviceStateItemView extends LinearLayout {
 
-    @BindView(R.id.tv_device)
     TextView mTvDevice;
-
-    @BindView(R.id.working_indicator)
     View mWorkingIndicator;
-
-    @BindView(R.id.bv)
     BatteryView mBv;
-
-    @BindView(R.id.v_divider)
     View mVDivider;
 
     private int mDeviceConnected;
@@ -62,7 +55,13 @@ public class DeviceStateItemView extends LinearLayout {
     private void initView(Context context) {
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_device_state_item, this));
+
+        View inflate = inflate(context, R.layout.hw_lay_device_state_item, this);
+        mTvDevice = inflate.findViewById(R.id.tv_device);
+        mWorkingIndicator = inflate.findViewById(R.id.working_indicator);
+        mBv = inflate.findViewById(R.id.bv);
+        mVDivider = inflate.findViewById(R.id.v_divider);
+
         String sleepyState = this.mDeviceName + " ";
         sleepyState += (mDeviceConnected == 0x01 ? StringUtils.getText(R.string.connected_state_hint) : StringUtils.getText(R.string.none_connected_state_hint));
         this.mTvDevice.setText(sleepyState);
@@ -96,12 +95,9 @@ public class DeviceStateItemView extends LinearLayout {
                 sleepyState += StringUtils.getText(mDeviceConnected == 0x00 ? R.string.none_connected_state_hint : R.string.connected_state_hint);
                 break;
         }
-
         this.mVDivider.setVisibility(mDeviceConnected == 0x01 || power >= 0x00 ? VISIBLE : GONE);
         this.mTvDevice.setText(sleepyState);
-        //this.mBv.setVisibility(power > 0x00 ? VISIBLE : INVISIBLE);
     }
-
 
     public void hide() {
         setVisibility(GONE);

@@ -48,7 +48,6 @@ import butterknife.ButterKnife;
 
 public class UserGuidelineActivity extends BaseActivity {
 
-    @BindView(R.id.guideline_viewpager)
     ViewPager mGuidelineViewpager;
 
     private PagerAdapter mAdapter;
@@ -67,6 +66,7 @@ public class UserGuidelineActivity extends BaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
+        mGuidelineViewpager = findViewById(R.id.guideline_viewpager);
         mGuidelineViewpager.setAdapter(mAdapter = new PagerAdapter() {
             @Override
             public int getCount() {
@@ -152,15 +152,10 @@ public class UserGuidelineActivity extends BaseActivity {
 
     class ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.tv_guideline_one)
         TextView mTvGuidelineOne;
-        @BindView(R.id.tv_guideline_two)
         TextView mTvGuidelineTwo;
-        @BindView(R.id.iv_guideline_icon)
         ImageView mIvGuidelineIcon;
-        @BindView(R.id.bt_action)
         Button mBtAction;
-        @BindView(R.id.guideline_indicator)
         GuidelineIndicator mGuidelineIndicator;
 
         private View itemView;
@@ -169,6 +164,12 @@ public class UserGuidelineActivity extends BaseActivity {
         public ViewHolder() {
             itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.hw_lay_guideline_container, null, false);
             ButterKnife.bind(this, itemView);
+
+            mTvGuidelineOne = itemView.findViewById(R.id.tv_guideline_one);
+            mTvGuidelineTwo = itemView.findViewById(R.id.tv_guideline_two);
+            mIvGuidelineIcon = itemView.findViewById(R.id.iv_guideline_icon);
+            mBtAction = itemView.findViewById(R.id.bt_action);
+            mGuidelineIndicator = itemView.findViewById(R.id.guideline_indicator);
         }
 
         public void initView(Guideline guideline) {
@@ -181,21 +182,21 @@ public class UserGuidelineActivity extends BaseActivity {
             int widthPixels = displayMetrics.widthPixels;
 
             Glide
-                .with(itemView.getContext())
-                .load(guideline.iconId)
-                .asBitmap()
-                .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG, 100))
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .override(widthPixels, heightPixels)
-                .centerCrop()
-                //.into(mIvGuidelineIcon);
-                .into(new SimpleTarget<Bitmap>(mIvGuidelineIcon.getWidth(), mIvGuidelineIcon.getHeight()) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        mIvGuidelineIcon.setImageBitmap(resource);
-                    }
-                });
+                    .with(itemView.getContext())
+                    .load(guideline.iconId)
+                    .asBitmap()
+                    .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG, 100))
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .override(widthPixels, heightPixels)
+                    .centerCrop()
+                    //.into(mIvGuidelineIcon);
+                    .into(new SimpleTarget<Bitmap>(mIvGuidelineIcon.getWidth(), mIvGuidelineIcon.getHeight()) {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            mIvGuidelineIcon.setImageBitmap(resource);
+                        }
+                    });
 
             if (guideline.indicatorPosition == 4) {
                 mBtAction.setOnClickListener(this);

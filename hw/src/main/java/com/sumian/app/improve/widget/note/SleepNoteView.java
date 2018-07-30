@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,17 +26,11 @@ import butterknife.BindView;
 
 public class SleepNoteView extends BaseBlueCardView {
 
-    @BindView(R.id.tv_mood_label)
     TextView mTvMoodLabel;
-    @BindView(R.id.iv_mood)
     ImageView mIvMood;
-    @BindView(R.id.tv_mood_status)
     TextView mTvMoodStatus;
-    @BindView(R.id.iv_modify_note)
     ImageView mIvModifyNote;
-    @BindView(R.id.tv_sleep_status)
     TextView mTvSleepStatus;
-    @BindView(R.id.tv_remark)
     TextView mTvRemark;
 
     public SleepNoteView(@NonNull Context context) {
@@ -53,6 +48,17 @@ public class SleepNoteView extends BaseBlueCardView {
     @Override
     protected int getLayoutRes() {
         return R.layout.hw_lay_sleep_note_view;
+    }
+
+    @Override
+    protected void initView(View inflate) {
+        super.initView(inflate);
+        mTvMoodLabel = inflate.findViewById(R.id.tv_mood_label);
+        mIvMood = inflate.findViewById(R.id.iv_mood);
+        mTvMoodStatus = inflate.findViewById(R.id.tv_mood_status);
+        mIvModifyNote = inflate.findViewById(R.id.iv_modify_note);
+        mTvSleepStatus = inflate.findViewById(R.id.tv_sleep_status);
+        mTvRemark = inflate.findViewById(R.id.tv_remark);
     }
 
     public void setSleepNote(SleepNote sleepNote) {

@@ -22,7 +22,6 @@ import butterknife.OnClick;
 
 public class ContactActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
     public static void show(Context context) {
@@ -37,18 +36,20 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        findViewById(R.id.lay_call_me).setOnClickListener(this);
+        findViewById(R.id.lay_send_msg).setOnClickListener(this);
         this.mTitleBar.addOnBackListener(this);
     }
 
-    @OnClick({R.id.lay_call_me, R.id.lay_send_msg})
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.lay_call_me:
-                new ContactDialog().show(getSupportFragmentManager(), ContactDialog.class.getSimpleName());
-                break;
-            case R.id.lay_send_msg:
-                MsgActivity.show(this, LeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR);
-                break;
+        int i = v.getId();
+        if (i == R.id.lay_call_me) {
+            new ContactDialog().show(getSupportFragmentManager(), ContactDialog.class.getSimpleName());
+        } else if (i == R.id.lay_send_msg) {
+            MsgActivity.show(this, LeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR);
         }
     }
 

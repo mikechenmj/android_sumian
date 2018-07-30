@@ -21,13 +21,9 @@ import butterknife.OnClick;
 
 public class UpgradeDialog extends BaseDialogFragment implements View.OnClickListener {
 
-    @BindView(R.id.tv_desc)
     TextView mTvDesc;
-    @BindView(R.id.tv_cancel)
     TextView mTvCancel;
-    @BindView(R.id.tv_upgrade)
     TextView mTvUpgrade;
-    @BindView(R.id.divider)
     View mDivider;
 
     private AppUpgradeInfo mAppUpgradeInfo;
@@ -48,7 +44,12 @@ public class UpgradeDialog extends BaseDialogFragment implements View.OnClickLis
     @Override
     protected void initView(View rootView) {
         super.initView(rootView);
-
+        mTvDesc = rootView.findViewById(R.id.tv_desc);
+        mTvCancel = rootView.findViewById(R.id.tv_cancel);
+        mTvUpgrade = rootView.findViewById(R.id.tv_upgrade);
+        mDivider = rootView.findViewById(R.id.divider);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_upgrade).setOnClickListener(this);
     }
 
     @Override
@@ -64,18 +65,14 @@ public class UpgradeDialog extends BaseDialogFragment implements View.OnClickLis
         }
     }
 
-    @OnClick({R.id.tv_cancel, R.id.tv_upgrade})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_cancel:
-                dismiss();
-                break;
-            case R.id.tv_upgrade:
-                VersionNoticeActivity.show(v.getContext());
-                dismiss();
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_cancel) {
+            dismiss();
+        } else if (i == R.id.tv_upgrade) {
+            VersionNoticeActivity.show(v.getContext());
+            dismiss();
         }
-
     }
 }

@@ -1,6 +1,7 @@
 package com.sumian.app.upgrade.dialog;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,11 +23,8 @@ public class VersionDialog extends BaseDialogFragment {
 
     private static final String TAG = VersionDialog.class.getSimpleName();
 
-    @BindView(R.id.tv_version_title)
     TextView mTvFirmwareTitle;
-    @BindView(R.id.tv_progress)
     TextView mTvProgress;
-    @BindView(R.id.progressBar)
     ProgressBar mProgressBar;
 
     private int mDialogType;
@@ -52,6 +50,14 @@ public class VersionDialog extends BaseDialogFragment {
     protected int getLayout() {
         setCancelable(false);
         return R.layout.hw_lay_dialog_version;
+    }
+
+    @Override
+    protected void initView(View rootView) {
+        super.initView(rootView);
+        mTvFirmwareTitle = rootView.findViewById(R.id.tv_version_title);
+        mTvProgress = rootView.findViewById(R.id.tv_progress);
+        mProgressBar = rootView.findViewById(R.id.progressBar);
     }
 
     @Override

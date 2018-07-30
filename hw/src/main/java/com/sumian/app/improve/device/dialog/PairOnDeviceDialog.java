@@ -55,23 +55,12 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
     public static final String ACTION_BIND = "com.sumian.app.intent.action.BIND_DEVICE";
     public static final String EXTRA_DEVICE = "com.sumian.app.intent.extra_DEVICE";
 
-    @BindView(R.id.tv_label_h1)
-    TextView mTvLabelH1;
-
-    @BindView(R.id.tv_label_h2)
-    TextView mTvLabelH2;
-
-    @BindView(R.id.iv_dismiss)
-    ImageView mIvDismiss;
-
-    @BindView(R.id.device_scan_error_view)
-    DeviceScanErrorView mDeviceScanErrorView;
-
-    @BindView(R.id.device_list_view)
-    DeviceListView mDeviceListView;
-
-    @BindView(R.id.device_scanning_view)
-    DeviceScanView mDeviceScanView;
+    private TextView mTvLabelH1;
+    private TextView mTvLabelH2;
+    private ImageView mIvDismiss;
+    private DeviceScanErrorView mDeviceScanErrorView;
+    private DeviceListView mDeviceListView;
+    private DeviceScanView mDeviceScanView;
 
     private List<BlueDevice> mScanDevices = new ArrayList<>(0);
 
@@ -111,6 +100,14 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
         @SuppressLint("InflateParams") View rootView = LayoutInflater.from(getContext()).inflate(R.layout.hw_lay_device_pair_view, null, false);
         ButterKnife.bind(this, rootView);
         setContentView(rootView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mTvLabelH1 = rootView.findViewById(R.id.tv_label_h1);
+        mTvLabelH2 = rootView.findViewById(R.id.tv_label_h2);
+        mIvDismiss = rootView.findViewById(R.id.iv_dismiss);
+        DeviceScanErrorView mDeviceScanErrorView = rootView.findViewById(R.id.device_scan_error_view);
+        DeviceListView mDeviceListView = rootView.findViewById(R.id.device_list_view);
+        DeviceScanView mDeviceScanView = rootView.findViewById(R.id.device_scanning_view);
+
+        rootView.findViewById(R.id.iv_dismiss).setOnClickListener(this);
 
         mDeviceScanErrorView.setOnCallback(this);
         mDeviceListView.setOnDeviceListViewCallback(this);
@@ -125,38 +122,35 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
         LogManager.appendBluetoothLog("第一次进入搜索界面,开始进行蓝牙搜索");
     }
 
-    @OnClick({R.id.iv_dismiss})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_dismiss:
-                this.mBlueManager.removeBlueScanCallback(this);
-                this.mBlueManager.removeBlueAdapterCallback(this);
-                this.mBlueManager.doStopScan();
-                LogManager.appendBluetoothLog("退出搜索界面,停止蓝牙搜索");
-                cancel();
-                break;
-            default:
-                break;
-        }
+        this.mBlueManager.removeBlueScanCallback(this);
+        this.mBlueManager.removeBlueAdapterCallback(this);
+        this.mBlueManager.doStopScan();
+        LogManager.appendBluetoothLog("退出搜索界面,停止蓝牙搜索");
+        cancel();
     }
 
     @Override
     public void onLeScanCallback(BluetoothDevice device, int rssi, byte[] scanRecord) {
-        if (rssi <= -80) return;
+        if (rssi <= -80) {
+            return;
+        }
         BlueDevice blueDevice = new BlueDevice();
         blueDevice.name = device.getName();
         blueDevice.mac = device.getAddress();
         blueDevice.rssi = rssi;
         boolean isDeviceVersionValid = isDeviceValid(scanRecord);
         LogManager.appendBluetoothLog(
-            String.format(Locale.getDefault(),
-                "搜索到 %s %s, isVersionValid: %b",
-                device.getName(),
-                device.getAddress(),
-                isDeviceVersionValid));
+                String.format(Locale.getDefault(),
+                        "搜索到 %s %s, isVersionValid: %b",
+                        device.getName(),
+                        device.getAddress(),
+                        isDeviceVersionValid));
         if (isDeviceVersionValid) {
-            if (mScanDevices.contains(blueDevice)) return;
+            if (mScanDevices.contains(blueDevice)) {
+                return;
+            }
             mScanDevices.add(blueDevice);
         }
     }

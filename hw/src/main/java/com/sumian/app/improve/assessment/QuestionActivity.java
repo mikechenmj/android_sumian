@@ -35,17 +35,10 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
 
     private static final String TAG = QuestionActivity.class.getSimpleName();
 
-    @BindView(R.id.iv_back)
     ImageView mIvBack;
-    @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.iv_re_do)
     TextView mIvReDo;
-
-    @BindView(R.id.web)
     WebView mWebView;
-
-    @BindView(R.id.finish_container)
     LinearLayout mFinishContainer;
 
     public static void show(Context context) {
@@ -60,6 +53,16 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void initWidget() {
         super.initWidget();
+        mIvBack = findViewById(R.id.iv_back);
+        mTvTitle = findViewById(R.id.tv_title);
+        mIvReDo = findViewById(R.id.iv_re_do);
+        mWebView = findViewById(R.id.web);
+        mFinishContainer = findViewById(R.id.finish_container);
+
+        findViewById(R.id.iv_back).setOnClickListener(this);
+        findViewById(R.id.iv_re_do).setOnClickListener(this);
+        findViewById(R.id.bt_finish).setOnClickListener(this);
+
         boolean haveAnswers = AppManager.getAccountModel().isHaveAnswers();
         if (!haveAnswers) {
             initWebView();
@@ -133,19 +136,15 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-    @OnClick({R.id.iv_back, R.id.iv_re_do, R.id.bt_finish})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.iv_re_do:
-                initWebView();
-                break;
-            case R.id.bt_finish:
-                finish();
-                break;
+        int i = v.getId();
+        if (i == R.id.iv_back) {
+            finish();
+        } else if (i == R.id.iv_re_do) {
+            initWebView();
+        } else if (i == R.id.bt_finish) {
+            finish();
         }
     }
 }

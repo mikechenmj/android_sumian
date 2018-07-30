@@ -36,23 +36,17 @@ public class DeviceScanErrorView extends LinearLayout implements View.OnClickLis
     }
 
     private void inflateView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_device_scan_error_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_device_scan_error_view, this);
+        inflate.findViewById(R.id.bt_go_connect).setOnClickListener(this);
     }
 
     public void setOnCallback(OnDeviceScanErrorCallback callback) {
         mCallback = callback;
     }
 
-    @OnClick(R.id.bt_go_connect)
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_go_connect:
-                mCallback.doReScan();
-                break;
-            default:
-                break;
-        }
+        mCallback.doReScan();
     }
 
     public void show() {

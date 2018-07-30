@@ -25,15 +25,10 @@ import butterknife.OnClick;
 
 public class KeyboardView extends LinearLayout implements View.OnClickListener {
 
-    @BindView(R.id.iv_keyboard_or_voice)
     ImageView mIvKeyboardOrVoice;
-    @BindView(R.id.bt_voice)
     LCIMRecordButton mBtRecordVoice;
-    @BindView(R.id.et_input)
     EditText mEtInput;
-    @BindView(R.id.iv_keyboard_image)
     ImageView mIvKeyboardImage;
-    @BindView(R.id.iv_keyboard_send)
     ImageView mIvKeyboardSend;
 
     private onKeyboardActionListener mOnKeyboardActionListener;
@@ -52,7 +47,16 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
     }
 
     private void init(Context context) {
-        ButterKnife.bind(LayoutInflater.from(context).inflate(R.layout.hw_lay_keybord_container, this, true));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.hw_lay_keybord_container, this, true);
+        mIvKeyboardOrVoice = inflate.findViewById(R.id.iv_keyboard_or_voice);
+        mBtRecordVoice = inflate.findViewById(R.id.bt_voice);
+        mEtInput = inflate.findViewById(R.id.et_input);
+        mIvKeyboardImage = inflate.findViewById(R.id.iv_keyboard_image);
+        mIvKeyboardSend = inflate.findViewById(R.id.iv_keyboard_send);
+        inflate.findViewById(R.id.iv_keyboard_or_voice).setOnClickListener(this);
+        inflate.findViewById(R.id.iv_keyboard_image).setOnClickListener(this);
+        inflate.findViewById(R.id.iv_keyboard_send).setOnClickListener(this);
+
         mBtRecordVoice.setSavePath(LCIMPathUtils.getRecordPathByCurrentTime(getContext()));
 
     }
@@ -76,44 +80,38 @@ public class KeyboardView extends LinearLayout implements View.OnClickListener {
         return mEtInput;
     }
 
-    @OnClick({R.id.iv_keyboard_or_voice, R.id.iv_keyboard_image, R.id.iv_keyboard_send})
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_keyboard_or_voice:
-                Object tag = this.mIvKeyboardOrVoice.getTag();
-                mEtInput.setVisibility(tag == null ? GONE : VISIBLE);
-                mIvKeyboardOrVoice.setImageResource(tag == null ? R.mipmap.ic_advisory_icon_keyboard : R.mipmap.ic_advisory_icon_voice);
-                mBtRecordVoice.setVisibility(tag == null ? VISIBLE : GONE);
-                if (mOnKeyboardActionListener != null) {
-                    mOnKeyboardActionListener.onSoftKeyboardCallback(tag == null);
+        int i = v.getId();
+        if (i == R.id.iv_keyboard_or_voice) {
+            Object tag = this.mIvKeyboardOrVoice.getTag();
+            mEtInput.setVisibility(tag == null ? GONE : VISIBLE);
+            mIvKeyboardOrVoice.setImageResource(tag == null ? R.mipmap.ic_advisory_icon_keyboard : R.mipmap.ic_advisory_icon_voice);
+            mBtRecordVoice.setVisibility(tag == null ? VISIBLE : GONE);
+            if (mOnKeyboardActionListener != null) {
+                mOnKeyboardActionListener.onSoftKeyboardCallback(tag == null);
+            }
+            mIvKeyboardOrVoice.setTag(tag == null ? true : null);
+        } else if (i == R.id.bt_voice) {
+            if (mOnKeyboardActionListener != null) {
+                // mOnKeyboardActionListener.onRecordVoiceCallback();
+            }
+        } else if (i == R.id.iv_keyboard_image) {
+            if (mOnKeyboardActionListener != null) {
+                this.mOnKeyboardActionListener.sendPic();
+            }
+        } else if (i == R.id.iv_keyboard_send) {
+            if (mOnKeyboardActionListener != null) {
+                String input = this.mEtInput.getText().toString().trim();
+                if (TextUtils.isEmpty(input)) {
+                    return;
                 }
-                mIvKeyboardOrVoice.setTag(tag == null ? true : null);
-                break;
-            case R.id.bt_voice://录音
-                if (mOnKeyboardActionListener != null) {
-                    // mOnKeyboardActionListener.onRecordVoiceCallback();
+                boolean isSendText = this.mOnKeyboardActionListener.sendText(input);
+                if (isSendText) {
+                    mEtInput.setText("");
                 }
-                break;
-            case R.id.iv_keyboard_image:
-                if (mOnKeyboardActionListener != null) {
-                    this.mOnKeyboardActionListener.sendPic();
-                }
-                break;
-            case R.id.iv_keyboard_send:
-                if (mOnKeyboardActionListener != null) {
-
-                    String input = this.mEtInput.getText().toString().trim();
-
-                    if (TextUtils.isEmpty(input)) {
-                        return;
-                    }
-
-                    boolean isSendText = this.mOnKeyboardActionListener.sendText(input);
-                    if (isSendText) {
-                        mEtInput.setText("");
-                    }
-                }
-                break;
+            }
         }
     }
 

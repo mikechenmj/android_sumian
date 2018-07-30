@@ -35,19 +35,18 @@ public class RegisterRuleView extends LinearLayout implements View.OnClickListen
     }
 
     private void init(Context context) {
-        ButterKnife.bind(LayoutInflater.from(context).inflate(R.layout.hw_lay_register_rule, this, true));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.hw_lay_register_rule, this, true);
+        inflate.findViewById(R.id.tv_rule_user_agreement).setOnClickListener(this);
+        inflate.findViewById(R.id.tv_privacy_policy).setOnClickListener(this);
     }
 
-    @OnClick({R.id.tv_rule_user_agreement, R.id.tv_privacy_policy})
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_rule_user_agreement:
-                ConfigActivity.show(v.getContext(), ConfigActivity.REGISTER_USER_AGREEMENT_TYPE);
-                break;
-            case R.id.tv_privacy_policy:
-                ConfigActivity.show(v.getContext(), ConfigActivity.REGISTER_PRIVACY_POLICY_TYPE);
-                break;
+        int i = v.getId();
+        if (i == R.id.tv_rule_user_agreement) {
+            ConfigActivity.show(v.getContext(), ConfigActivity.REGISTER_USER_AGREEMENT_TYPE);
+        } else if (i == R.id.tv_privacy_policy) {
+            ConfigActivity.show(v.getContext(), ConfigActivity.REGISTER_PRIVACY_POLICY_TYPE);
         }
     }
 }

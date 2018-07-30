@@ -61,11 +61,8 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
     public static final int REQUEST_OPEN_LOCATION_SERVICE_FOR_SCAN_BIND_MONITOR = 0x05; // DeviceFragment 用到
     public static final int POPUP_WINDOW_DISMISS_TIME = 150;
 
-    @BindView(R.id.device_guide_step_view)
     DeviceGuideStepOneView mDeviceGuideStepView;
-    @BindView(R.id.device_status_view)
     DeviceStatusView mDeviceStatusView;
-    @BindView(R.id.float_group_view)
     FloatGroupView mFloatGroupView;
 
     private BroadcastReceiver mReceiver;
@@ -88,6 +85,8 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
                     LogManager.appendUserOperationLog("app  从后台切换到前台,并且屏幕被用户解锁了");
                     autoSyncSleepData();
                     break;
+                default:
+                    break;
             }
         }
     };
@@ -108,6 +107,10 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.TRANSPARENT);
         super.initWidget(root);
+
+        mDeviceGuideStepView = root.findViewById(R.id.device_guide_step_view);
+        mDeviceStatusView = root.findViewById(R.id.device_status_view);
+        mFloatGroupView = root.findViewById(R.id.float_group_view);
 
         mDeviceGuideStepView.setFragment(this);
         mDeviceGuideStepView.setOnDeviceGuideCallback(this);
@@ -250,7 +253,9 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
     @Override
     public void doBindMonitor() {
         boolean isLocationServiceEnable = checkLocationService(REQUEST_OPEN_LOCATION_SERVICE_FOR_SCAN_BIND_MONITOR);
-        if (!isLocationServiceEnable) return;
+        if (!isLocationServiceEnable) {
+            return;
+        }
         PairOnDeviceDialog pairOnDeviceDialog = new PairOnDeviceDialog(getContext());
         pairOnDeviceDialog.show();
     }
@@ -346,7 +351,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
         BlueDevice monitor = mPresenter.getCurrentMonitor();
         int status = monitor.getStatus();
         int tvTurnMonitorAndSynchronizeVisibility =
-            (status != BlueDevice.STATUS_UNCONNECTED && status != BlueDevice.STATUS_CONNECTING) ? View.VISIBLE : View.GONE;
+                (status != BlueDevice.STATUS_UNCONNECTED && status != BlueDevice.STATUS_CONNECTING) ? View.VISIBLE : View.GONE;
         tvTurnMonitor.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
         tvSynchronize.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
         dividerOne.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
@@ -397,7 +402,9 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
 
     public void scanAndConnectWithPermissionCheck(BlueDevice monitor) {
         mMonitor = monitor;
-        if (!checkLocationService(REQUEST_OPEN_LOCATION_SERVICE_FOR_SCAN_AND_CONNECT)) return;
+        if (!checkLocationService(REQUEST_OPEN_LOCATION_SERVICE_FOR_SCAN_AND_CONNECT)) {
+            return;
+        }
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION};
         if (EasyPermissions.hasPermissions(getContext(), perms)) {
             mPresenter.doScan2Connect(monitor);
@@ -418,10 +425,10 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
             return true;
         } else {
             SumianDialog.create(getContext())
-                .setTitleText(R.string.open_location_service_for_blue_scan_hint)
-                .setLeftText(R.string.cancel, null)
-                .setRightText(R.string.confirm, v -> LocationManagerUtil.startLocationSettingActivityForResult(DeviceFragment.this, requestCode))
-                .show();
+                    .setTitleText(R.string.open_location_service_for_blue_scan_hint)
+                    .setLeftText(R.string.cancel, null)
+                    .setRightText(R.string.confirm, v -> LocationManagerUtil.startLocationSettingActivityForResult(DeviceFragment.this, requestCode))
+                    .show();
             return false;
         }
     }
@@ -434,10 +441,10 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this)
-                .setTitle(R.string.require_permission)
-                .setRationale(R.string.require_location_permission_for_bluetooth_connection_rationale)
-                .build()
-                .show();
+                    .setTitle(R.string.require_permission)
+                    .setRationale(R.string.require_location_permission_for_bluetooth_connection_rationale)
+                    .build()
+                    .show();
         }
     }
 

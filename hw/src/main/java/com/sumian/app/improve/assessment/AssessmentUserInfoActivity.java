@@ -45,21 +45,12 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     public static final String ACTION_MODIFY_ASSESSMENT_USER_INFO = "com.sumian.app.action_MODIFY_ASSESSMENT_USER_INFO";
     public static final String EXTRA_ASSESSMENT_USER_INFO = "com.sumian.app.extra.ASSESSMENT_USER_INFO";
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.et_nickname)
     EditText mEtNickname;
-    @BindView(R.id.tv_gender)
     TextView mTvGender;
-    @BindView(R.id.tv_birthday)
     TextView mTvBirthday;
-    @BindView(R.id.tv_height)
     TextView mTvHeight;
-    @BindView(R.id.tv_weight)
     TextView mTvWeight;
-
-    @BindView(R.id.bt_save)
     Button mBtSave;
 
     private UserInfo mUserInfo;
@@ -80,6 +71,20 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mEtNickname = findViewById(R.id.et_nickname);
+        mTvGender = findViewById(R.id.tv_gender);
+        mTvBirthday = findViewById(R.id.tv_birthday);
+        mTvHeight = findViewById(R.id.tv_height);
+        mTvWeight = findViewById(R.id.tv_weight);
+        mBtSave = findViewById(R.id.bt_save);
+
+        findViewById(R.id.lay_gender).setOnClickListener(this);
+        findViewById(R.id.lay_birthday).setOnClickListener(this);
+        findViewById(R.id.lay_height).setOnClickListener(this);
+        findViewById(R.id.lay_weight).setOnClickListener(this);
+        findViewById(R.id.bt_save).setOnClickListener(this);
+
         mTitleBar.addOnBackListener(this);
         AppManager.getAccountModel().addOnSyncUserInfoCallback(this);
     }
@@ -107,93 +112,90 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
         UserInfoPresenter.init(this);
     }
 
-    @OnClick({R.id.lay_gender, R.id.lay_birthday, R.id.lay_height, R.id.lay_weight, R.id.bt_save})
     public void onClick(View v) {
         String formKey;
-        switch (v.getId()) {
-            case R.id.lay_gender:
-                commitBottomSheet(SelectGenderBottomSheet.newInstance(ModifyUserInfoContract.KEY_GENDER, mUserInfo, true));
-                break;
-            case R.id.lay_birthday:
-                formKey = ModifyUserInfoContract.KEY_BIRTHDAY;
-                if (TextUtils.isEmpty(formKey)) return;
-                commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
-                break;
-            case R.id.lay_height:
-                formKey = ModifyUserInfoContract.KEY_HEIGHT;
-                if (TextUtils.isEmpty(formKey)) return;
-                commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
-                break;
-            case R.id.lay_weight:
-                formKey = ModifyUserInfoContract.KEY_WEIGHT;
-                if (TextUtils.isEmpty(formKey)) return;
-                commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
-                break;
-            case R.id.bt_save:
+        int i1 = v.getId();
+        if (i1 == R.id.lay_gender) {
+            commitBottomSheet(SelectGenderBottomSheet.newInstance(ModifyUserInfoContract.KEY_GENDER, mUserInfo, true));
 
-                int count = 0;
-                int index = -1;
-                for (int i = 0; i < mIsBoss.length; i++) {
-                    Boolean isBoss = mIsBoss[i];
-                    if (isBoss) {
-                        count++;
-                        index = i;
-                    }
+        } else if (i1 == R.id.lay_birthday) {
+            formKey = ModifyUserInfoContract.KEY_BIRTHDAY;
+            if (TextUtils.isEmpty(formKey)) return;
+            commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
+
+        } else if (i1 == R.id.lay_height) {
+            formKey = ModifyUserInfoContract.KEY_HEIGHT;
+            if (TextUtils.isEmpty(formKey)) return;
+            commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
+
+        } else if (i1 == R.id.lay_weight) {
+            formKey = ModifyUserInfoContract.KEY_WEIGHT;
+            if (TextUtils.isEmpty(formKey)) return;
+            commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
+
+        } else if (i1 == R.id.bt_save) {
+            int count = 0;
+            int index = -1;
+            for (int i = 0; i < mIsBoss.length; i++) {
+                Boolean isBoss = mIsBoss[i];
+                if (isBoss) {
+                    count++;
+                    index = i;
                 }
+            }
 
-                if (count >= 2) {
-                    ToastHelper.show("请完成以上信息的填写");
+            if (count >= 2) {
+                ToastHelper.show("请完成以上信息的填写");
+                return;
+            } else {
+                if (index != -1) {
+                    switch (index) {
+                        case 0:
+                            ToastHelper.show("请完成昵称信息的填写");
+                            break;
+                        case 1:
+                            ToastHelper.show("请选择性别");
+                            break;
+                        case 2:
+                            ToastHelper.show("请选择生日信息");
+                            break;
+                        case 3:
+                            ToastHelper.show("请选择身高信息");
+                            break;
+                        case 4:
+                            ToastHelper.show("请选择体重信息");
+                            break;
+                    }
                     return;
-                } else {
-                    if (index != -1) {
-                        switch (index) {
-                            case 0:
-                                ToastHelper.show("请完成昵称信息的填写");
-                                break;
-                            case 1:
-                                ToastHelper.show("请选择性别");
-                                break;
-                            case 2:
-                                ToastHelper.show("请选择生日信息");
-                                break;
-                            case 3:
-                                ToastHelper.show("请选择身高信息");
-                                break;
-                            case 4:
-                                ToastHelper.show("请选择体重信息");
-                                break;
-                        }
-                        return;
-                    }
+                }
+            }
+
+            mUserInfo.setNickname(mEtNickname.getText().toString().trim());
+            onSyncCacheUserInfoSuccess(mUserInfo);
+
+            Map<String, Object> map = new HashMap<>(0);
+
+            map.put("nickname", mUserInfo.getNickname());
+            map.put("gender", mUserInfo.getGender());
+            map.put("birthday", mUserInfo.getBirthday());
+            map.put("height", mUserInfo.getHeight());
+            map.put("weight", mUserInfo.getWeight());
+            AppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
+                @Override
+                protected void onSuccess(UserInfo response) {
+                    onSyncCacheUserInfoSuccess(response);
+                    AppManager.getAccountModel().updateUserCache(response);
+                    finish();
                 }
 
-                mUserInfo.setNickname(mEtNickname.getText().toString().trim());
-                onSyncCacheUserInfoSuccess(mUserInfo);
+                @Override
+                protected void onFailure(String error) {
+                    ToastHelper.show(error);
+                }
+            });
 
-                Map<String, Object> map = new HashMap<>(0);
 
-                map.put("nickname", mUserInfo.getNickname());
-                map.put("gender", mUserInfo.getGender());
-                map.put("birthday", mUserInfo.getBirthday());
-                map.put("height", mUserInfo.getHeight());
-                map.put("weight", mUserInfo.getWeight());
-                AppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
-                    @Override
-                    protected void onSuccess(UserInfo response) {
-                        onSyncCacheUserInfoSuccess(response);
-                        AppManager.getAccountModel().updateUserCache(response);
-                        finish();
-                    }
-
-                    @Override
-                    protected void onFailure(String error) {
-                        ToastHelper.show(error);
-                    }
-                });
-
-                break;
-            default:
-                break;
+        } else {
         }
 
     }
@@ -213,9 +215,9 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
 
     private void commitBottomSheet(BottomSheetView bottomSheetView) {
         getSupportFragmentManager()
-            .beginTransaction()
-            .add(bottomSheetView, bottomSheetView.getClass().getSimpleName())
-            .commit();
+                .beginTransaction()
+                .add(bottomSheetView, bottomSheetView.getClass().getSimpleName())
+                .commit();
     }
 
     private void setText(String text, TextView textView) {

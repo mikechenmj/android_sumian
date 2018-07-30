@@ -27,22 +27,22 @@ public class MsgTextViewHolder extends BaseViewHolder<AVIMTextMessage> implement
 
     private static final String TAG = MsgTextViewHolder.class.getSimpleName();
 
-    @BindView(R.id.tv_time_line)
     TextView mTvTimeLine;
-
-    @BindView(R.id.iv_icon)
     CircleImageView mIvIcon;
-    @BindView(R.id.tv_content)
     TextView mTvContent;
-
-    @BindView(R.id.iv_msg_failed)
     ImageView mIvMsgFailed;
-    @BindView(R.id.loading)
     ProgressBar mLoading;
 
     public MsgTextViewHolder(ViewGroup parent, boolean isLeft) {
         super(parent, isLeft ? R.layout.hw_lay_item_left_text_chat : R.layout.hw_lay_item_right_text_chat);
         this.mIsLeft = isLeft;
+
+        mTvTimeLine = itemView.findViewById(R.id.tv_time_line);
+        mIvIcon = itemView.findViewById(R.id.iv_icon);
+        mTvContent = itemView.findViewById(R.id.tv_content);
+        mIvMsgFailed = itemView.findViewById(R.id.iv_msg_failed);
+        mLoading = itemView.findViewById(R.id.loading);
+        itemView.findViewById(R.id.iv_msg_failed).setOnClickListener(this);
     }
 
     @Override
@@ -55,19 +55,17 @@ public class MsgTextViewHolder extends BaseViewHolder<AVIMTextMessage> implement
         showSendState(mIvMsgFailed, mLoading, msg);
     }
 
-    @OnClick({R.id.iv_msg_failed})
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_msg_failed://发送失败,再次发送
-                if (mCacheMsg == null) return;
-                String tempContent = mCacheMsg.getText();
-
-                if (TextUtils.isEmpty(tempContent)) return;
-                LeanCloudHelper.sendTextMsg(LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER, tempContent);
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (mCacheMsg == null) {
+            return;
         }
+        String tempContent = mCacheMsg.getText();
+        if (TextUtils.isEmpty(tempContent)) {
+            return;
+        }
+        LeanCloudHelper.sendTextMsg(LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER, tempContent);
     }
 }

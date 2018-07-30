@@ -16,55 +16,41 @@ import com.sumian.app.common.operator.AppOperator;
  * desc:
  */
 
-public class App extends Application {
+public class App {
 
     public static final String TAG = App.class.getSimpleName();
 
     @SuppressLint("StaticFieldLeak")
     private static volatile RequestManager mRequestManager;
-
-    private ApplicationDelegate mDelegate;
-
-    @SuppressLint("StaticFieldLeak")
-    private static volatile Context mContext;
+    private static volatile Application mContext;
+    private static volatile ApplicationDelegate mDelegate;
 
     public static RequestManager getRequestManager() {
         return mRequestManager;
     }
 
-    public static Context getAppContext() {
-        return mContext;
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        // MultiDex.install(this);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        AppManager.create(this);
+    public static void init(Application context) {
+        mContext = context;
+        AppManager.create(context);
         AppOperator.runOnThread(() -> {
             if (mContext == null) {
-                mContext = getApplicationContext();
+                mContext = context;
             }
-
-            if (mRequestManager == null)
-                mRequestManager = Glide.with(this);
-
+            if (mRequestManager == null) {
+                mRequestManager = Glide.with(context);
+            }
             if (mDelegate == null) {
-                this.mDelegate = ApplicationDelegate.init().registerActivityLifecycleCallback(this);
+                mDelegate = ApplicationDelegate.init().registerActivityLifecycleCallback(mContext);
             }
         });
     }
 
-    @Override
-    public void unregisterActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
-        super.unregisterActivityLifecycleCallbacks(callback);
-        this.mDelegate.unRegisterActivityLifecycleCallback(this);
-        this.mDelegate = null;
+    public void unregisterActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback) {
+        mDelegate.unRegisterActivityLifecycleCallback(mContext);
+        mDelegate = null;
     }
 
+    public static Context getAppContext() {
+        return mContext;
+    }
 }

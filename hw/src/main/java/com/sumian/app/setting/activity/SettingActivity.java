@@ -41,15 +41,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     //private static final String TAG = SettingActivity.class.getSimpleName();
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.tb_reminder)
     ToggleButton mTbReminder;
-
-    @BindView(R.id.tv_wechat_nickname)
     TextView mTvWechatNickname;
-    @BindView(R.id.bt_bind_wechat)
     ToggleButton mBtBindWechat;
 
     private int mCount;
@@ -72,6 +66,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void initWidget() {
         super.initWidget();
+        mTitleBar = findViewById(R.id.title_bar);
+        mTvWechatNickname = findViewById(R.id.tv_wechat_nickname);
+        mTbReminder = findViewById(R.id.tb_reminder);
+        mBtBindWechat = findViewById(R.id.bt_bind_wechat);
+        findViewById(R.id.lay_about_me).setOnClickListener(this);
+        findViewById(R.id.lay_modify_pwd).setOnClickListener(this);
+        findViewById(R.id.lay_unbind_sleepy).setOnClickListener(this);
+        findViewById(R.id.lay_feedback).setOnClickListener(this);
+        findViewById(R.id.tv_logout).setOnClickListener(this);
+
         this.mTitleBar.addOnSpannerListener(v -> {
             mCount++;
             BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
@@ -85,9 +89,9 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             if (!on) {
                 SocialBottomSheet socialBottomSheet = SocialBottomSheet.newInstance(SocialPresenter.SOCIAL_WECHAT).setUnbindSocialCallback(this);
                 getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(socialBottomSheet, SocialBottomSheet.class.getSimpleName())
-                    .commit();
+                        .beginTransaction()
+                        .add(socialBottomSheet, SocialBottomSheet.class.getSimpleName())
+                        .commit();
             } else {
                 mPresenter.doLoginOpen(SHARE_MEDIA.WEIXIN, this, this);
             }
@@ -104,9 +108,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         mIsInit = true;
         mPresenter.syncSleepDiary();
         UserInfo userInfo = AppManager.getAccountModel().getUserInfo();
-        if (userInfo == null) return;
+        if (userInfo == null) {
+            return;
+        }
         List<UserInfo.Social> socialites = userInfo.getSocialites();
-        if (socialites == null || socialites.isEmpty()) return;
+        if (socialites == null || socialites.isEmpty()) {
+            return;
+        }
         UserInfo.Social social = socialites.get(0);
         mTvWechatNickname.setText(social.getNickname());
         mBtBindWechat.setToggleOn();
@@ -131,14 +139,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onBegin() {
-        if (!mIsInit)
+        if (!mIsInit) {
             this.mActionLoadingDialog = new ActionLoadingDialog().show(getSupportFragmentManager());
+        }
     }
 
     @Override
     public void onFinish() {
-        if (!mIsInit)
+        if (!mIsInit) {
             this.mActionLoadingDialog.dismiss();
+        }
     }
 
     @Override
@@ -168,32 +178,28 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         onFailure(error);
     }
 
-    @OnClick({R.id.lay_about_me, R.id.lay_modify_pwd, R.id.lay_unbind_sleepy, R.id.lay_feedback, R.id.tv_logout})
+    @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.lay_about_me:
-                ConfigActivity.show(v.getContext(), ConfigActivity.ABOUT_TYPE);
-                break;
-            case R.id.lay_modify_pwd:
-                ModifyPwdActivity.show(v.getContext());
-                break;
-            case R.id.lay_unbind_sleepy:
-                BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-                if (bluePeripheral == null || !bluePeripheral.isConnected()) {
-                    ToastHelper.show(getString(R.string.not_show_monitor_todo));
-                    return;
-                }
-                QrCodeActivity.show(this);
-                break;
-            case R.id.lay_feedback://意见反馈
-                FeedbackActivity.show(v.getContext());
-                break;
-            case R.id.tv_logout:
-                getSupportFragmentManager()
+        int i = v.getId();
+        if (i == R.id.lay_about_me) {
+            ConfigActivity.show(v.getContext(), ConfigActivity.ABOUT_TYPE);
+        } else if (i == R.id.lay_modify_pwd) {
+            ModifyPwdActivity.show(v.getContext());
+        } else if (i == R.id.lay_unbind_sleepy) {
+            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
+            if (bluePeripheral == null || !bluePeripheral.isConnected()) {
+                ToastHelper.show(getString(R.string.not_show_monitor_todo));
+                return;
+            }
+            QrCodeActivity.show(this);
+        } else if (i == R.id.lay_feedback) {
+            FeedbackActivity.show(v.getContext());
+
+        } else if (i == R.id.tv_logout) {
+            getSupportFragmentManager()
                     .beginTransaction()
                     .add(LogoutBottomSheet.newInstance(), LogoutBottomSheet.class.getSimpleName())
                     .commit();
-                break;
         }
     }
 

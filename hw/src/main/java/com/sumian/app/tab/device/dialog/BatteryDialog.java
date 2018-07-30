@@ -26,7 +26,6 @@ public class BatteryDialog extends BaseDialogFragment implements View.OnClickLis
     private static final String ARGS_BATTERY_TYPE = "batteryType";
     private static final String ARGS_BATTERY = "battery";
 
-    @BindView(R.id.tv_version_title)
     TextView mTvFirmwareTitle;
 
     private String mBatteryType;
@@ -54,18 +53,20 @@ public class BatteryDialog extends BaseDialogFragment implements View.OnClickLis
     }
 
     @Override
+    protected void initView(View rootView) {
+        super.initView(rootView);
+        mTvFirmwareTitle = rootView.findViewById(R.id.tv_version_title);
+        rootView.findViewById(R.id.tv_submit).setOnClickListener(this);
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         mTvFirmwareTitle.setText(String.format(Locale.getDefault(), getString(R.string.ring_power_less_hint), mBatteryType, mBattery, "%"));
     }
 
-    @OnClick(R.id.tv_submit)
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_submit:
-                dismiss();
-                break;
-        }
+        dismiss();
     }
 }

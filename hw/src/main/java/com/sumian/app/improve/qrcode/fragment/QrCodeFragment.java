@@ -2,6 +2,7 @@ package com.sumian.app.improve.qrcode.fragment;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -23,15 +24,9 @@ public class QrCodeFragment extends BaseFragment implements View.OnClickListener
 
     private static final String TAG = QrCodeFragment.class.getSimpleName();
 
-    @BindView(R.id.request_qr_code_view)
     RequestQrCodeView zxingView;
-
-    @BindView(R.id.lay_scan_action_container)
     LinearLayout mLayScanActionContainer;
-
-    @BindView(R.id.bt_re_scan)
     Button btReScan;
-    @BindView(R.id.bt_action)
     Button btAction;
 
     private String mQrCode;
@@ -44,6 +39,15 @@ public class QrCodeFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+
+        zxingView = root.findViewById(R.id.request_qr_code_view);
+        mLayScanActionContainer = root.findViewById(R.id.lay_scan_action_container);
+        btReScan = root.findViewById(R.id.bt_re_scan);
+        btAction = root.findViewById(R.id.bt_action);
+
+        root.findViewById(R.id.bt_re_scan).setOnClickListener(this);
+        root.findViewById(R.id.bt_action).setOnClickListener(this);
+
         zxingView.bindFragment(this);
         zxingView.setOnShowQrCodeCallback(this);
     }
@@ -117,31 +121,31 @@ public class QrCodeFragment extends BaseFragment implements View.OnClickListener
         mLayScanActionContainer.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.bt_re_scan, R.id.bt_action})
+    @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_re_scan:
-                hideActionButton();
-                zxingView.showTipText("扫描助眠仪上的二维码");
-                zxingView.startSpotAndShowRect();
-                break;
-            case R.id.bt_action:
-                BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-                if (bluePeripheral == null || !bluePeripheral.isConnected()) {
-                    showToast("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
-                    return;
-                }
+        int i = v.getId();
+        if (i == R.id.bt_re_scan) {
+            hideActionButton();
+            zxingView.showTipText("扫描助眠仪上的二维码");
+            zxingView.startSpotAndShowRect();
 
-                switch (btAction.getText().toString()) {
-                    case "确定":
-                        ((QrCodeActivity) getActivity()).bindSn(mQrCode);
-                        break;
-                    case "手动输入":
-                        ((QrCodeActivity) getActivity()).showInputTab();
-                        break;
-                }
+        } else if (i == R.id.bt_action) {
+            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
+            if (bluePeripheral == null || !bluePeripheral.isConnected()) {
+                showToast("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
+                return;
+            }
 
-                break;
+            switch (btAction.getText().toString()) {
+                case "确定":
+                    ((QrCodeActivity) getActivity()).bindSn(mQrCode);
+                    break;
+                case "手动输入":
+                    ((QrCodeActivity) getActivity()).showInputTab();
+                    break;
+            }
+
+
         }
     }
 

@@ -21,13 +21,9 @@ import butterknife.ButterKnife;
 
 public class VersionInfoView extends LinearLayout {
 
-    @BindView(R.id.tv_desc)
     TextView mTvDesc;
-    @BindView(R.id.v_upgrade_dot)
     View mUpgradeDot;
-    @BindView(R.id.tv_sn)
     TextView mTvSn;
-    @BindView(R.id.line)
     View mLine;
 
     public VersionInfoView(Context context) {
@@ -41,13 +37,15 @@ public class VersionInfoView extends LinearLayout {
     public VersionInfoView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.VersionInfoView, defStyleAttr, 0);
-
         String upgradeLabel = typedArray.getString(R.styleable.VersionInfoView_upgrade_label);
         typedArray.recycle();
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_version_info_item, this));
+        View inflate = inflate(context, R.layout.hw_lay_version_info_item, this);
+        mUpgradeDot = inflate.findViewById(R.id.v_upgrade_dot);
+        mLine = inflate.findViewById(R.id.line);
+        mTvDesc = inflate.findViewById(R.id.tv_desc);
+        mTvSn = inflate.findViewById(R.id.tv_sn);
 
         mTvDesc.setText(upgradeLabel);
-
         setVisibility(GONE);
     }
 

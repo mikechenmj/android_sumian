@@ -106,12 +106,11 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_device)
         TextView mTvDeviceName;
 
         ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mTvDeviceName = itemView.findViewById(R.id.tv_device);
         }
 
         void initView(BlueDevice blueDevice, OnItemClickListener onItemClickListener) {

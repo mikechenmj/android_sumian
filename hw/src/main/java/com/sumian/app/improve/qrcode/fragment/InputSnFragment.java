@@ -21,12 +21,8 @@ import butterknife.OnClick;
 @SuppressWarnings("ConstantConditions")
 public class InputSnFragment extends BaseFragment implements View.OnClickListener {
 
-    @BindView(R.id.tv_pop_error)
     TextView tvPopError;
-    @BindView(R.id.lay_pop)
     FrameLayout layPop;
-
-    @BindView(R.id.et_sn)
     EditText etSn;
 
     @Override
@@ -37,6 +33,12 @@ public class InputSnFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        tvPopError = root.findViewById(R.id.tv_pop_error);
+        layPop = root.findViewById(R.id.lay_pop);
+        etSn = root.findViewById(R.id.et_sn);
+
+        root.findViewById(R.id.bt_action).setOnClickListener(this);
+
         etSn.addTextChangedListener(new OnTextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -47,7 +49,6 @@ public class InputSnFragment extends BaseFragment implements View.OnClickListene
     }
 
     @SuppressLint("SetTextI18n")
-    @OnClick(R.id.bt_action)
     @Override
     public void onClick(View v) {
         UiUtil.closeKeyboard(etSn);

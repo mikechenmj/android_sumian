@@ -3,6 +3,7 @@ package com.sumian.app.improve.widget.device;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 public class DeviceSyncCallbackView extends FrameLayout implements Runnable {
 
     public static final int SHOW_SYNC_RESULT_DURATION = 3000;
-    @BindView(R.id.tv_loading)
+
     TextView mTvLoading;
 
     public DeviceSyncCallbackView(Context context) {
@@ -39,7 +40,8 @@ public class DeviceSyncCallbackView extends FrameLayout implements Runnable {
     }
 
     private void init(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_syncing_sleep_cha_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_syncing_sleep_cha_view, this);
+        mTvLoading = inflate.findViewById(R.id.tv_loading);
     }
 
     public void showSyncSuccess() {

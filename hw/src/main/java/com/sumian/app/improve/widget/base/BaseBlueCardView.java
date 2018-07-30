@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.sumian.app.R;
 
@@ -33,7 +34,12 @@ public abstract class BaseBlueCardView extends CardView {
         setRadius(getResources().getDimension(R.dimen.space_10));
         setElevation(getResources().getDimension(R.dimen.space_2));
         setContentPadding(getResources().getDimensionPixelOffset(R.dimen.space_20), getResources().getDimensionPixelOffset(R.dimen.space_20), getResources().getDimensionPixelOffset(R.dimen.space_20), getResources().getDimensionPixelOffset(R.dimen.space_20));
-        ButterKnife.bind(inflate(context, getLayoutRes(), this));
+        View inflate = inflate(context, getLayoutRes(), this);
+        initView(inflate);
+    }
+
+    protected void initView(View inflate) {
+
     }
 
     @LayoutRes

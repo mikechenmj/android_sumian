@@ -74,7 +74,7 @@ public final class AppManager {
 
     public static synchronized OpenLogin getOpenLogin() {
         if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            INSTANCE.mOpenEngine = new OpenEngine().register(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
             return INSTANCE.mOpenEngine.getOpenLogin();
         } else {
             return INSTANCE.mOpenEngine.getOpenLogin();
@@ -83,7 +83,7 @@ public final class AppManager {
 
     public static synchronized OpenAnalytics getOpenAnalytics() {
         if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            INSTANCE.mOpenEngine = new OpenEngine().register(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
             return INSTANCE.mOpenEngine.getOpenAnalytics();
         } else {
             return INSTANCE.mOpenEngine.getOpenAnalytics();
@@ -92,12 +92,12 @@ public final class AppManager {
 
     public static synchronized VersionModel getVersionModel() {
         return INSTANCE.mVersionModel == null ? INSTANCE.mVersionModel = new VersionModel() : INSTANCE
-            .mVersionModel;
+                .mVersionModel;
     }
 
     public static synchronized DeviceModel getDeviceModel() {
         return INSTANCE.mDeviceModel == null ? INSTANCE.mDeviceModel = new DeviceModel() : INSTANCE
-            .mDeviceModel;
+                .mDeviceModel;
     }
 
     public static synchronized ReportModel getReportModel() {
@@ -110,7 +110,7 @@ public final class AppManager {
 
     public static synchronized JobScheduler getJobScheduler() {
         return INSTANCE.mJobScheduler == null ? INSTANCE.mJobScheduler = new JobScheduler(App.getAppContext()) : INSTANCE
-            .mJobScheduler;
+                .mJobScheduler;
     }
 
     public static synchronized VoicePlayer getVoicePlayer() {
@@ -136,7 +136,7 @@ public final class AppManager {
         LeanCloudHelper.init(context);
 
         //Umeng
-        OpenEngine.init(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET);
+        new OpenEngine().register(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_PUSH_SECRET);
 
         // Kefu SDK 初始化
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,12 +22,8 @@ import butterknife.ButterKnife;
 
 public class LoadingHeaderView extends LinearLayout {
 
-    @BindView(R.id.loading)
     ProgressBar mLoading;
-
-    @BindView(R.id.tv_loading)
     TextView mTvLoading;
-
 
     public LoadingHeaderView(Context context) {
         this(context, null);
@@ -43,7 +40,10 @@ public class LoadingHeaderView extends LinearLayout {
     }
 
     private void init(Context context) {
-        ButterKnife.bind(LayoutInflater.from(context).inflate(R.layout.hw_lay_syncing_sleep_cha_view, this, true));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.hw_lay_syncing_sleep_cha_view, this, true);
+        ButterKnife.bind(inflate);
+        mLoading = inflate.findViewById(R.id.loading);
+        mTvLoading = inflate.findViewById(R.id.tv_loading);
     }
 
 

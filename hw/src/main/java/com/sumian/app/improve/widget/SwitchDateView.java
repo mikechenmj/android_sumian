@@ -27,11 +27,8 @@ import butterknife.OnClick;
 
 public class SwitchDateView extends FrameLayout implements View.OnClickListener {
 
-    @BindView(R.id.iv_pre)
     ImageView mIvPre;
-    @BindView(R.id.tv_date)
     TextView mTvDate;
-    @BindView(R.id.iv_next)
     ImageView mIvNext;
 
     private long mUnixTime;
@@ -54,29 +51,30 @@ public class SwitchDateView extends FrameLayout implements View.OnClickListener 
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.hw_lay_switch_date_view, this));
+        View inflate = inflate(context, R.layout.hw_lay_switch_date_view, this);
+        mIvPre = inflate.findViewById(R.id.iv_pre);
+        mTvDate = inflate.findViewById(R.id.tv_date);
+        mIvNext = inflate.findViewById(R.id.iv_next);
+        inflate.findViewById(R.id.iv_pre).setOnClickListener(this);
+        inflate.findViewById(R.id.iv_next).setOnClickListener(this);
     }
 
     public void setOnSwitchDateListener(OnSwitchDateListener onSwitchDateListener) {
         mOnSwitchDateListener = onSwitchDateListener;
     }
 
-    @OnClick({R.id.iv_pre, R.id.iv_next})
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_pre:
-                if (mOnSwitchDateListener != null) {
-                    mOnSwitchDateListener.scrollToTime(mUnixTime - 60 * 60 * 24);
-                }
-                break;
-            case R.id.iv_next:
-                if (mOnSwitchDateListener != null) {
-                    mOnSwitchDateListener.scrollToTime(mUnixTime + 60 * 60 * 24);
-                }
-                break;
-            default:
-                break;
+        int i = v.getId();
+        if (i == R.id.iv_pre) {
+            if (mOnSwitchDateListener != null) {
+                mOnSwitchDateListener.scrollToTime(mUnixTime - 60 * 60 * 24);
+            }
+        } else if (i == R.id.iv_next) {
+            if (mOnSwitchDateListener != null) {
+                mOnSwitchDateListener.scrollToTime(mUnixTime + 60 * 60 * 24);
+            }
         }
     }
 

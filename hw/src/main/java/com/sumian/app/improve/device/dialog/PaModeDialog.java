@@ -32,17 +32,10 @@ import butterknife.OnClick;
 @SuppressWarnings("ConstantConditions")
 public class PaModeDialog extends AppCompatDialog implements View.OnClickListener {
 
-    @BindView(R.id.iv_icon)
-    ImageView mIvIcon;
-
-    @BindView(R.id.tv_content)
-    TextView mTvContent;
-
-    @BindView(R.id.v_divider)
-    View mDivider;
-
-    @BindView(R.id.tv_submit)
-    TextView mTvSubmit;
+    private ImageView mIvIcon;
+    private TextView mTvContent;
+    private View mDivider;
+    private TextView mTvSubmit;
 
     private int mType;
     private @StringRes
@@ -89,20 +82,22 @@ public class PaModeDialog extends AppCompatDialog implements View.OnClickListene
         setCanceledOnTouchOutside(false);
 
         @SuppressLint("InflateParams") View rootView = LayoutInflater.from(getContext()).inflate(R.layout.hw_lay_dialog_pa_mode, null, false);
-        ButterKnife.bind(this, rootView);
         setContentView(rootView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mIvIcon = rootView.findViewById(R.id.iv_icon);
+        mTvContent = rootView.findViewById(R.id.tv_content);
+        mDivider = rootView.findViewById(R.id.v_divider);
+        mTvSubmit = rootView.findViewById(R.id.tv_submit);
 
+        rootView.findViewById(R.id.tv_submit).setOnClickListener(this);
         showError();
     }
 
-    @OnClick(R.id.tv_submit)
     @Override
     public void onClick(View v) {
         dismiss();
     }
 
     public void showError() {
-
         switch (mType) {
             case 0x01:
                 mIvIcon.setVisibility(View.VISIBLE);
@@ -113,6 +108,9 @@ public class PaModeDialog extends AppCompatDialog implements View.OnClickListene
                 mIvIcon.setVisibility(View.GONE);
                 mDivider.setVisibility(View.VISIBLE);
                 mTvSubmit.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
         }
 
         mTvContent.setText(mContentId);

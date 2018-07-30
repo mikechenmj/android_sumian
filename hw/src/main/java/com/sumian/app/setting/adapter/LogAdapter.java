@@ -82,6 +82,8 @@ public class LogAdapter extends RecyclerView.Adapter<ViewHolder> {
                 RightTextViewHolder rightTextViewHolder = (RightTextViewHolder) holder;
                 rightTextViewHolder.initView(showTime, message);
                 break;
+            default:
+                break;
         }
 
     }
@@ -139,24 +141,24 @@ public class LogAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     static class LeftTextViewHolder extends ViewHolder {
 
-        @BindView(R.id.tv_time_line)
         TextView mTvTimeLine;
-
-        @BindView(R.id.iv_icon)
         CircleImageView mIvIcon;
-        @BindView(R.id.tv_content)
         TextView mTvContent;
 
         LeftTextViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mTvTimeLine = itemView.findViewById(R.id.tv_time_line);
+            mIvIcon = itemView.findViewById(R.id.iv_icon);
+            mTvContent = itemView.findViewById(R.id.tv_content);
         }
 
         void initView(boolean showTime, AVIMMessage msg) {
             if (msg instanceof AVIMTextMessage) {
                 AVIMTextMessage textMessage = (AVIMTextMessage) msg;
                 String text = textMessage.getText().trim();
-                if (TextUtils.isEmpty(text) || "".equals(text)) return;
+                if (TextUtils.isEmpty(text) || "".equals(text)) {
+                    return;
+                }
                 mTvContent.setText(text);
 
                 if (showTime) {
@@ -171,24 +173,24 @@ public class LogAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     static class RightTextViewHolder extends ViewHolder {
 
-        @BindView(R.id.tv_time_line)
         TextView mTvTimeLine;
-
-        @BindView(R.id.tv_content)
         TextView mTvContent;
-        @BindView(R.id.iv_icon)
         CircleImageView mIvIcon;
 
         RightTextViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            mTvTimeLine = itemView.findViewById(R.id.tv_time_line);
+            mTvContent = itemView.findViewById(R.id.tv_content);
+            mIvIcon = itemView.findViewById(R.id.iv_icon);
         }
 
         void initView(boolean showTime, AVIMMessage msg) {
             if (msg instanceof AVIMTextMessage) {
                 AVIMTextMessage textMessage = (AVIMTextMessage) msg;
                 String text = textMessage.getText().trim();
-                if (TextUtils.isEmpty(text) || "".equals(text)) return;
+                if (TextUtils.isEmpty(text) || "".equals(text)) {
+                    return;
+                }
                 mTvContent.setText(text);
 
                 if (showTime) {

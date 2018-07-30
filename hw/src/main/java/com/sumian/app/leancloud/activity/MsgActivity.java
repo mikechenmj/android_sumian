@@ -48,8 +48,8 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 public class MsgActivity extends BaseActivity implements View.OnClickListener, MsgContract.View,
-    ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
-    KeyboardView.onKeyboardActionListener, LCIMRecordButton.RecordEventListener, LCIMRecordButton.OnCheckRecordPermission {
+        ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
+        KeyboardView.onKeyboardActionListener, LCIMRecordButton.RecordEventListener, LCIMRecordButton.OnCheckRecordPermission {
 
     private static final String TAG = MsgActivity.class.getSimpleName();
 
@@ -58,26 +58,13 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
 
     private static final String EXTRA_SERVICE_TYPE = "service_type";
 
-    @BindView(R.id.lay_msg_container)
     LinearLayout mLayMsgContainer;
-
-    @BindView(R.id.title_bar)
     View mTitleBar;
-    @BindView(R.id.tv_title)
     TextView mTvTitle;
-
-    @BindView(R.id.adapter_pop)
     FrameLayout mAdapterPop;
-
-    @BindView(R.id.refresh)
     BlueRefreshView mRefreshView;
-    @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
-
-    @BindView(R.id.keyboardView)
     KeyboardView mKeyboardView;
-
-    @BindView(R.id.msg_empty_view)
     MsgEmptyView mMsgEmptyView;
 
     private MsgAdapter mMsgAdapter;
@@ -113,23 +100,33 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     protected void initWidget() {
         super.initWidget();
-        MsgPresenter.init(this);
+        mLayMsgContainer = findViewById(R.id.lay_msg_container);
+        mTitleBar = findViewById(R.id.title_bar);
+        mTvTitle = findViewById(R.id.tv_title);
+        mAdapterPop = findViewById(R.id.adapter_pop);
+        mRefreshView = findViewById(R.id.refresh);
+        mRecyclerView = findViewById(R.id.recycler);
+        mKeyboardView = findViewById(R.id.keyboardView);
+        mMsgEmptyView = findViewById(R.id.msg_empty_view);
+        findViewById(R.id.iv_back).setOnClickListener(this);
+        findViewById(R.id.tv_title).setOnClickListener(this);
 
+        MsgPresenter.init(this);
         @StringRes int textId = R.string.setting_send_msg_hint;
         switch (mServiceType) {
             case LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER:
                 textId = R.string.setting_send_msg_hint;
                 mKeyboardView.setOnKeyboardActionListener(this)
-                    .setRecordEventListener(this)
-                    .setCheckRecordPermission(this)
-                    .setVisibility(View.VISIBLE);
+                        .setRecordEventListener(this)
+                        .setCheckRecordPermission(this)
+                        .setVisibility(View.VISIBLE);
                 break;
             case LeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR:
                 textId = R.string.consultant_doctor;
                 mKeyboardView.setOnKeyboardActionListener(this)
-                    .setRecordEventListener(this)
-                    .setCheckRecordPermission(this)
-                    .setVisibility(View.VISIBLE);
+                        .setRecordEventListener(this)
+                        .setCheckRecordPermission(this)
+                        .setVisibility(View.VISIBLE);
                 break;
             case LeanCloudHelper.SERVICE_TYPE_MAIL:
                 textId = R.string.msg_notice_hint;
@@ -275,14 +272,14 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     public void onPrepareLogin() {
         runUiThread(() -> mTvTitle.setText(mServiceType == LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ?
-            "在线客服(连接中)" : "速眠医生(连接中)"));
+                "在线客服(连接中)" : "速眠医生(连接中)"));
     }
 
     @Override
     public void onLoginSuccess() {
         mIsLogin = true;
         runUiThread(() -> mTvTitle.setText(mServiceType == LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ?
-            "在线客服" : "速眠医生"));
+                "在线客服" : "速眠医生"));
     }
 
     @Override
@@ -297,24 +294,22 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         this.mPresenter = presenter;
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_title})
+
+    @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.tv_title:
-                LeanCloudHelper.establishConversationWithService(mServiceType);
-                break;
-            default:
-                break;
+        int i = view.getId();
+        if (i == R.id.iv_back) {
+            finish();
+        } else if (i == R.id.tv_title) {
+            LeanCloudHelper.establishConversationWithService(mServiceType);
         }
     }
 
     @Override
     protected void onRelease() {
-        if (mServiceType != LeanCloudHelper.SERVICE_TYPE_MAIL)
+        if (mServiceType != LeanCloudHelper.SERVICE_TYPE_MAIL) {
             mTitleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        }
         mPresenter.release();
         super.onRelease();
     }
@@ -383,7 +378,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         } else {
             // Request one permission
             EasyPermissions.requestPermissions(this,
-                getResources().getString(R.string.str_request_camera_message), CAMERA_PERM, perms);
+                    getResources().getString(R.string.str_request_camera_message), CAMERA_PERM, perms);
         }
     }
 
@@ -395,7 +390,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         } else {
             // Request one permission
             EasyPermissions.requestPermissions(this,
-                getResources().getString(R.string.str_request_record_message), RECORD_PERM, perms);
+                    getResources().getString(R.string.str_request_record_message), RECORD_PERM, perms);
             return false;
         }
     }
@@ -414,11 +409,11 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     public void sendPic() {
         getSupportFragmentManager()
-            .beginTransaction()
-            .add(SelectPictureBottomSheet
-                .newInstance()
-                .addOnTakePhotoCallback(this), SelectBottomSheet.class.getSimpleName())
-            .commit();
+                .beginTransaction()
+                .add(SelectPictureBottomSheet
+                        .newInstance()
+                        .addOnTakePhotoCallback(this), SelectBottomSheet.class.getSimpleName())
+                .commit();
     }
 
     @Override
