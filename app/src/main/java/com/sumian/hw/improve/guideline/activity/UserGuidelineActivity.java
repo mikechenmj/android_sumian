@@ -25,7 +25,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
-import com.sumian.hw.improve.main.HomeActivity;
+import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.improve.widget.GuidelineIndicator;
 
 import java.util.ArrayList;
@@ -209,7 +209,7 @@ public class UserGuidelineActivity extends BaseActivity {
             GuidelineUtils.putBoolean(GuidelineUtils.SP_KEY_NEED_SHOW_WELCOME_USER_GUIDE, false);
             boolean login = HwAppManager.getAccountModel().isLogin();
             if (login) {
-                HomeActivity.show(App.getAppContext());
+                HwMainActivity.show(App.getAppContext());
             } else {
                 LoginRouterActivity.show(UserGuidelineActivity.this);
             }

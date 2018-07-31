@@ -20,10 +20,10 @@ import com.sumian.hw.log.LogManager;
  * desc:
  */
 
-public class WelcomeActivity extends BaseActivity {
+public class HwWelcomeActivity extends BaseActivity {
 
     public static void show(Context context) {
-        context.startActivity(new Intent(context, WelcomeActivity.class));
+        context.startActivity(new Intent(context, HwWelcomeActivity.class));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class WelcomeActivity extends BaseActivity {
             } else {
                 boolean login = HwAppManager.getAccountModel().isLogin();
                 if (login) {
-                    HomeActivity.show(App.getAppContext());
+                    HwMainActivity.show(App.getAppContext());
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);
                     if (launchCustomerServiceActivity) {
                         LeanCloudHelper.checkLoginEasemob(LeanCloudHelper::startEasemobChatRoom);

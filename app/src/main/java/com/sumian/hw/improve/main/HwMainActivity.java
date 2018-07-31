@@ -46,10 +46,10 @@ import java.util.Map;
 
 import retrofit2.Call;
 
-public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeListener,
+public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeListener,
         LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
-    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = HwMainActivity.class.getSimpleName();
 
     FrameLayout mMainContainer;
     TabButton mTabDevice;
@@ -63,7 +63,7 @@ public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeList
     private static final String KEY_PUSH_REPORT_SCHEME = "key_push_report_scheme";
 
     public static void show(Context context) {
-        Intent intent = new Intent(context, HomeActivity.class);
+        Intent intent = new Intent(context, HwMainActivity.class);
         if (context instanceof Application || context instanceof Service) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
@@ -71,7 +71,7 @@ public class HomeActivity extends BaseActivity implements NavTab.OnTabChangeList
     }
 
     public static Intent getLaunchIntentForPushReport(Context context, String scheme) {
-        Intent intent = new Intent(context, HomeActivity.class);
+        Intent intent = new Intent(context, HwMainActivity.class);
         intent.putExtra(KEY_PUSH_REPORT_SCHEME, scheme);
         return intent;
     }

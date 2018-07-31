@@ -3,7 +3,7 @@ package com.sumian.hw.push.schemerecolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.hw.improve.main.HomeActivity
+import com.sumian.hw.improve.main.HwMainActivity
 
 /**
  * <pre>
@@ -16,6 +16,6 @@ import com.sumian.hw.improve.main.HomeActivity
  */
 class ReportSchemeResolver : ISchemeResolver {
     override fun resolverScheme(context: Context, uri: Uri): Intent? {
-        return HomeActivity.getLaunchIntentForPushReport(context, uri.toString())
+        return HwMainActivity.getLaunchIntentForPushReport(context, uri.toString())
     }
 }

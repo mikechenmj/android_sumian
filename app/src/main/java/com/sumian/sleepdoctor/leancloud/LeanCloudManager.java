@@ -15,7 +15,7 @@ import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.WelcomeActivity;
+import com.sumian.sleepdoctor.main.SdWelcomeActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
 
@@ -58,7 +58,7 @@ public class LeanCloudManager {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(context, WelcomeActivity.class);
+        PushService.setDefaultPushCallback(context, SdWelcomeActivity.class);
     }
 
     public static void getAndUploadCurrentInstallation() {

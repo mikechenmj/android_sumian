@@ -67,9 +67,9 @@
             android:value="true" />
 
         <activity
-            android:name=".main.WelcomeActivity"
+            android:name="com.sumian.hw.improve.main.HwWelcomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/BaseAppTheme">
+            android:theme="@style/HwAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -272,130 +272,130 @@
         </receiver>
 
         <!-- Hw -->
-        <activity
-            android:name="com.sumian.hw.improve.main.WelcomeActivity"
-            android:theme="@style/TranslucentWindow">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <!--<activity-->
+            <!--android:name="com.sumian.hw.improve.main.HwWelcomeActivity"-->
+            <!--android:theme="@style/TranslucentWindow">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
         <activity
-            android:name="com.sumian.hw.improve.main.HomeActivity"
+            android:name="com.sumian.hw.improve.main.HwMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme" />
 
         <activity
             android:name="com.sumian.hw.account.activity.LoginActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <activity
             android:name="com.sumian.hw.account.activity.RegisterActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <activity
             android:name="com.sumian.hw.account.activity.LoginRouterActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <activity
             android:name="com.sumian.hw.tab.report.activity.DaySleepDetailReportActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.account.activity.UserInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.setting.activity.SettingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.setting.activity.ContactActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.setting.activity.ConfigActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.leancloud.activity.MsgActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.setting.activity.ModifyPwdActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.account.activity.ResetPwdActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.account.activity.ForgetPwdActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <activity
             android:name="com.sumian.hw.account.activity.ModifyNicknameActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.account.activity.SleepReminderActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.upgrade.activity.VersionUpgradeActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.upgrade.activity.VersionNoticeActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.setting.activity.DeviceLogActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.sumian.hw.account.activity.OpenBindActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.account.activity.AvatarImageActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.improve.assessment.QuestionActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.improve.assessment.AssessmentUserInfoActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.improve.assessment.AssessmentActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.improve.feedback.FeedbackActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.improve.guideline.activity.UserGuidelineActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name="com.sumian.hw.improve.guideline.activity.ManualActivity"
-            android:theme="@style/HwAppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <service
             android:name="com.sumian.hw.account.service.SyncUserInfoService"
@@ -414,9 +414,9 @@
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:theme="@style/HwAppTheme"
             android:name="com.sumian.hw.improve.qrcode.activity.QrCodeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->

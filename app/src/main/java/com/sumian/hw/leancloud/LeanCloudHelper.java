@@ -35,7 +35,7 @@ import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.improve.main.HomeActivity;
+import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.HwUserInfo;
 
@@ -316,7 +316,7 @@ public final class LeanCloudHelper {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(App.getAppContext(), HomeActivity.class);
+        PushService.setDefaultPushCallback(App.getAppContext(), HwMainActivity.class);
     }
 
     private static void uploadDeviceInfo(String installationId) {

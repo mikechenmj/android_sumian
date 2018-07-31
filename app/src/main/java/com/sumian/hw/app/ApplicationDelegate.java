@@ -8,8 +8,8 @@ import android.os.Process;
 
 import com.sumian.hw.account.activity.LoginActivity;
 import com.sumian.hw.account.activity.SleepReminderActivity;
-import com.sumian.hw.improve.main.HomeActivity;
-import com.sumian.hw.improve.main.WelcomeActivity;
+import com.sumian.hw.improve.main.HwMainActivity;
+import com.sumian.hw.improve.main.HwWelcomeActivity;
 import com.sumian.hw.tab.report.activity.DaySleepDetailReportActivity;
 
 import java.util.ArrayList;
@@ -48,14 +48,14 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
     public static void goHome(Context context) {
 
         if (!mIsHomeActivity) {
-            HomeActivity.show(context);
+            HwMainActivity.show(context);
         }
 
         List<Activity> activities = ApplicationDelegate.mActivities;
 
         for (int i = activities.size() - 1; i >= 0; i--) {
             Activity activity = activities.get(i);
-            if (activity instanceof HomeActivity) {
+            if (activity instanceof HwMainActivity) {
                 continue;
             }
             activity.finish();
@@ -99,7 +99,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
             mActivities = new ArrayList<>();
         }
 
-        if (activity instanceof WelcomeActivity) {
+        if (activity instanceof HwWelcomeActivity) {
             return;
         }
 
@@ -108,7 +108,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
             //Log.e(TAG, "------------loginWithService  is top----->");
         }
 
-        if (activity instanceof HomeActivity) {
+        if (activity instanceof HwMainActivity) {
             mIsHomeActivity = true;
         }
 
@@ -122,7 +122,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
 
     @Override
     public void onActivityResumed(Activity activity) {
-        if (activity instanceof HomeActivity ||
+        if (activity instanceof HwMainActivity ||
             activity instanceof DaySleepDetailReportActivity ||
             activity instanceof SleepReminderActivity) {
 
@@ -140,7 +140,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
 
     @Override
     public void onActivityPaused(Activity activity) {
-        if (activity instanceof HomeActivity ||
+        if (activity instanceof HwMainActivity ||
             activity instanceof DaySleepDetailReportActivity ||
             activity instanceof SleepReminderActivity) {
 
@@ -175,7 +175,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
             mIsLoginActivity = false;
         }
 
-        if (activity instanceof HomeActivity) {
+        if (activity instanceof HwMainActivity) {
             mIsHomeActivity = false;
         }
     }

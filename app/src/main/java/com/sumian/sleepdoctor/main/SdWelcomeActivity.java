@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.hw.improve.main.HwWelcomeActivity;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.login.LoginActivity;
@@ -18,7 +19,7 @@ import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
  * desc:
  */
 
-public class WelcomeActivity extends BaseActivity {
+public class SdWelcomeActivity extends BaseActivity {
 
     public static final int WELCOME_SHOW_TIME = 500;
 
@@ -31,7 +32,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void initWidget(View root) {
         super.initWidget(root);
         setStatusBar();
-        ActivityUtils.startActivity(com.sumian.hw.improve.main.WelcomeActivity.class);
+        ActivityUtils.startActivity(HwWelcomeActivity.class);
         finish();
     }
 
@@ -47,11 +48,11 @@ public class WelcomeActivity extends BaseActivity {
     public void onToken(Token token) {
         mRoot.postDelayed(() -> {
             if (token == null) {
-                LoginActivity.show(WelcomeActivity.this, LoginActivity.class);
+                LoginActivity.show(SdWelcomeActivity.this, LoginActivity.class);
             } else if (token.is_new) {
-                ImproveUserProfileOneActivity.show(WelcomeActivity.this, ImproveUserProfileOneActivity.class);
+                ImproveUserProfileOneActivity.show(SdWelcomeActivity.this, ImproveUserProfileOneActivity.class);
             } else {
-                MainActivity.show(WelcomeActivity.this, MainActivity.class);
+                MainActivity.show(SdWelcomeActivity.this, MainActivity.class);
             }
             finish();
         }, WELCOME_SHOW_TIME);

@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.sumian.hw.improve.main.HomeActivity;
+import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
     protected void initData() {
         super.initData();
         this.mVersionDelegate = VersionDelegate.Companion.init();
-        //commitReplace(WelcomeActivity.class);
+        //commitReplace(HwWelcomeActivity.class);
         int position = mLaunchData == null ? 0 : mLaunchData.tabIndex;
         initTab(position);
         mBottomNavigationBar.selectItem(position, false);
@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         mCurrentPosition = position;
         changeStatusBarColorByPosition(position);
         if (position == 2) {
-            ActivityUtils.startActivity(HomeActivity.class);
+            ActivityUtils.startActivity(HwMainActivity.class);
         }
     }
 

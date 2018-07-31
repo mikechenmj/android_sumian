@@ -20,7 +20,7 @@ import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.assessment.AssessmentActivity;
-import com.sumian.hw.improve.main.HomeActivity;
+import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.RegisterBody;
 import com.sumian.hw.network.response.HwToken;
@@ -137,7 +137,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             if (!HwAppManager.getAccountModel().isHaveUserInfoAndSleepBarrierTest()) {
                 AssessmentActivity.show(this, true);
             } else {
-                HomeActivity.show(App.getAppContext());
+                HwMainActivity.show(App.getAppContext());
             }
         });
     }
