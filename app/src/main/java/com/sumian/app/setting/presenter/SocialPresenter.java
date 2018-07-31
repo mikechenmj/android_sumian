@@ -1,6 +1,6 @@
 package com.sumian.app.setting.presenter;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.app.App;
 import com.sumian.app.network.callback.BaseResponseCallback;

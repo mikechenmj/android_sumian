@@ -1,6 +1,6 @@
 package com.sumian.app.setting.presenter;
 
-import com.sumian.app.BuildConfig;
+import com.sumian.app.constant.AppUrl;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.network.callback.BaseResponseCallback;
 import com.sumian.app.network.response.ConfigInfo;
@@ -89,7 +89,7 @@ public class ConfigPresenter implements ConfigContract.Presenter {
         } else {
             if (view == null) return;
             view.onFinish();
-            view.onSyncUrl(configType == ConfigActivity.REGISTER_USER_AGREEMENT_TYPE ? BuildConfig.USER_AGREEMENT_URL : BuildConfig.PRIVACY_POLICY_URL);
+            view.onSyncUrl(configType == ConfigActivity.REGISTER_USER_AGREEMENT_TYPE ? AppUrl.USER_AGREEMENT_URL : AppUrl.PRIVACY_POLICY_URL);
         }
 
     }

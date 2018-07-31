@@ -1,1 +1,1 @@
-include ':app', ':common', ':open', ':jsbridge',':hw', ':blue', ':kefu-easeui'
+include ':app', ':common', ':open', ':jsbridge', ':blue', ':kefu-easeui'

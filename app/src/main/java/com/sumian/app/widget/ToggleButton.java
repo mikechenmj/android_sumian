@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by jzz

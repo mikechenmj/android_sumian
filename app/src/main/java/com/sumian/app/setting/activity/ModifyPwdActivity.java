@@ -12,7 +12,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.activity.LoginActivity;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.base.BaseActivity;

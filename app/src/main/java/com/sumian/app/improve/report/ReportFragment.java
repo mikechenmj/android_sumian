@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.base.BasePagerFragment;
 import com.sumian.app.improve.guideline.dialog.ReportGuidelineDialog;

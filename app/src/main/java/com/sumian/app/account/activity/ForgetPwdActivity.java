@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.contract.ValidationCaptchaContract;
 import com.sumian.app.account.presenter.ValidationCaptchaPresenter;
 import com.sumian.app.base.BaseActivity;

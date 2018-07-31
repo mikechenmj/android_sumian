@@ -8,7 +8,7 @@ import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 import butterknife.ButterKnife;
 

@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.easeui.UIProvider;
-import com.sumian.app.BuildConfig;
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.app.account.model.AccountModel;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.common.operator.AppOperator;

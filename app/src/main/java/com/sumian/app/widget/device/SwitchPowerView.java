@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

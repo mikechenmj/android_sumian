@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.im.v2.audio.AVIMAudioRecorder;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.leancloud.utils.LCIMAudioHelper;
 import com.sumian.app.leancloud.utils.LCIMPathUtils;

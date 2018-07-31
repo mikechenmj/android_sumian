@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.widget.report.SleepAvgAndCompareView;
 import com.sumian.app.log.LogManager;
 import com.sumian.app.network.response.SleepAdvice;

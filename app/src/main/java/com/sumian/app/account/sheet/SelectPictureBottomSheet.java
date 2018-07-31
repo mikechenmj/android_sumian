@@ -2,7 +2,7 @@ package com.sumian.app.account.sheet;
 
 import android.view.View;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.widget.BottomSheetView;
 
 import butterknife.OnClick;

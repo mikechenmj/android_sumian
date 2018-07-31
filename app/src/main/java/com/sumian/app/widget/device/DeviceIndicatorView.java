@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.App;
 
 import butterknife.BindView;

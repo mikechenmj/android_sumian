@@ -9,7 +9,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.App;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.command.BlueCmd;

@@ -9,7 +9,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.assessment.AssessmentActivity;
 
 import butterknife.BindView;

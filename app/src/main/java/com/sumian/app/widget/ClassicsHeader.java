@@ -38,7 +38,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.internal.ProgressDrawable;
 import com.scwang.smartrefresh.layout.internal.pathview.PathsDrawable;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

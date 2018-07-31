@@ -9,7 +9,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.blankj.utilcode.util.AppUtils
-import com.sumian.app.R
+import com.sumian.sleepdoctor.R
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -55,11 +55,11 @@ class NotificationUtil {
         fun showNotification(context: Context, contentText: String, intent: Intent?): Int {
             createNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME)
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(AppUtils.getAppName())
-                .setContentText(contentText)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(AppUtils.getAppName())
+                    .setContentText(contentText)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true)
             val pendingIntent = getPendingIntent(context, intent)
             if (pendingIntent != null) builder.setContentIntent(pendingIntent)
             val notificationId = getNotificationId()

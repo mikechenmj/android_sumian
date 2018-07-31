@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.contract.ModifyUserInfoContract;
 import com.sumian.app.account.presenter.ModifyNickNamePresenter;
 import com.sumian.app.app.HwAppManager;

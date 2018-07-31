@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.contract.ModifySelectContract;
 import com.sumian.app.account.contract.ModifyUserInfoContract;
 import com.sumian.app.account.presenter.ModifySelectPresenter;

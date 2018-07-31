@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.common.util.TimeUtil;
 

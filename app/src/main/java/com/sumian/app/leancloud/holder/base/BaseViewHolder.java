@@ -15,7 +15,7 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.common.util.TimeUtil;
 import com.sumian.app.leancloud.LeanCloudHelper;
 import com.sumian.app.widget.BubbleImageView;

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.contract.OpenLoginContract;
 import com.sumian.app.account.presenter.OpenLoginPresenter;
 import com.sumian.app.app.HwAppManager;

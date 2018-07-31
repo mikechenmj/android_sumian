@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.model.AccountModel;
 import com.sumian.app.app.App;
 import com.sumian.app.app.HwAppManager;

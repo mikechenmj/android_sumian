@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.App;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.improve.report.dailyreport.DailyReport;

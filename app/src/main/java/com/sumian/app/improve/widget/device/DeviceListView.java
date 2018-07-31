@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.device.adapter.DeviceAdapter;
 import com.sumian.app.improve.device.bean.BlueDevice;
 

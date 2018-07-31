@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by sm

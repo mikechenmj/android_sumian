@@ -16,7 +16,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.sumian.app.BuildConfig;
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.app.app.App;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.common.util.NetUtil;

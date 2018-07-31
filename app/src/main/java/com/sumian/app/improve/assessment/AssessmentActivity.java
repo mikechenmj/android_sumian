@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.app.App;
 import com.sumian.app.app.delegate.ApplicationDelegate;

@@ -15,8 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.sumian.app.BuildConfig;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.bean.Answer;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.base.BaseActivity;
@@ -104,7 +104,12 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
         //Android 5.0上Webview默认不允许加载Http与Https混合内容,所以需要兼容混合模式(比如 src 中图片 url 为 http)
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
-        mWebView.loadUrl(BuildConfig.QUESTION_URL + "?token=" + HwAppManager.getAccountModel().accessToken());
+        // todo in gradle pro
+        String HW_DEV_QUESTION_URL="http://sumian-question-h5-dev.oss-cn-shenzhen.aliyuncs.com/index.html";
+        String HW_TEST_QUESTION_URL="http://sumian-question-h5-test.oss-cn-shenzhen.aliyuncs.com/index.html";
+        String HW_OFFICIAL_QUESTION_URL="http://sumian-question-h5-production.oss-cn-shenzhen.aliyuncs.com/index.html";
+        String HW_CLINIC_OFFICIAL_QUESTION_URL="http://sumian-question-h5-clinic.oss-cn-shenzhen.aliyuncs.com/index.html";
+        mWebView.loadUrl(HW_DEV_QUESTION_URL + "?token=" + HwAppManager.getAccountModel().accessToken());
 
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {

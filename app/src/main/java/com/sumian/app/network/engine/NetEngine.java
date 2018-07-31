@@ -1,7 +1,7 @@
 package com.sumian.app.network.engine;
 
 import com.google.gson.GsonBuilder;
-import com.sumian.app.BuildConfig;
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.app.network.api.SleepyApi;
 import com.sumian.app.network.api.SleepyV1Api;
 import com.sumian.app.network.interceptor.AuthInterceptor;

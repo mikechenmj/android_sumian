@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.qmuiteam.qmui.span.QMUIAlignMiddleImageSpan;
 import com.qmuiteam.qmui.span.QMUIMarginImageSpan;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

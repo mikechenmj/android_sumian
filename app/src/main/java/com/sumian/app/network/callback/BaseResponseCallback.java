@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.activity.LoginActivity;
 import com.sumian.app.app.App;
 import com.sumian.app.app.delegate.ApplicationDelegate;

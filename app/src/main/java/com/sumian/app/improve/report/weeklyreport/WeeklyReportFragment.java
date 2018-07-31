@@ -11,7 +11,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.base.BasePagerFragment;
 import com.sumian.app.push.ReportPushManager;

@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.sheet.SelectBottomSheet;
 import com.sumian.app.account.sheet.SelectPictureBottomSheet;
 import com.sumian.app.base.BaseActivity;

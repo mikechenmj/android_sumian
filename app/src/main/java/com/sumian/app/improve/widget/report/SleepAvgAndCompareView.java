@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.common.util.TimeUtil;
 
 import butterknife.BindView;

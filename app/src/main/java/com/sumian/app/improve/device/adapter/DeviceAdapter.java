@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.device.bean.BlueDevice;
 
 import java.util.ArrayList;

@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.contract.ResetPwdContract;
 import com.sumian.app.account.presenter.RestPwdPresenter;
 import com.sumian.app.base.BaseActivity;

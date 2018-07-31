@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.leancloud.LeanCloudHelper;
 import com.sumian.app.leancloud.holder.base.BaseViewHolder;

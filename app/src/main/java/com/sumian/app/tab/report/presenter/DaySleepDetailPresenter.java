@@ -1,6 +1,6 @@
 package com.sumian.app.tab.report.presenter;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.network.api.SleepyApi;

@@ -3,7 +3,7 @@ package com.sumian.app.setting.sheet;
 import android.view.Gravity;
 import android.view.View;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.activity.LoginRouterActivity;
 import com.sumian.app.app.App;
 import com.sumian.app.app.HwAppManager;

@@ -2,7 +2,7 @@ package com.sumian.app.account.presenter;
 
 import android.text.TextUtils;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.callback.UserInfoCallback;
 import com.sumian.app.account.contract.UserInfoContract;
 import com.sumian.app.account.service.SyncUserInfoService;

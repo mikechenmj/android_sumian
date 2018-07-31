@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.App;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.command.BlueCmd;

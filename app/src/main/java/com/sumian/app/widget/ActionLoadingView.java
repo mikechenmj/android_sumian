@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by jzz

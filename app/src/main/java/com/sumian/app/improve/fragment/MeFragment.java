@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.app.BuildConfig;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.activity.SleepReminderActivity;
 import com.sumian.app.account.activity.UserInfoActivity;
 import com.sumian.app.account.callback.OnSleepReminderCallback;

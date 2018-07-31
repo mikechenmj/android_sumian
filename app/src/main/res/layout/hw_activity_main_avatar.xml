@@ -10,7 +10,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:more_icon="@mipmap/ic_more"
+        app:menu_icon="@mipmap/ic_more"
         app:text="@string/avatar_hint" />
 
     <com.sumian.common.media.ImagePreviewView

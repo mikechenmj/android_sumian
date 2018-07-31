@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.contract.ModifyUserInfoContract;
 import com.sumian.app.account.contract.UserInfoContract;
 import com.sumian.app.account.presenter.UserInfoPresenter;

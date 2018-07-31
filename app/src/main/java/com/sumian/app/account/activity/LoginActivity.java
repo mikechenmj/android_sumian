@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.contract.LoginContract;
 import com.sumian.app.account.presenter.LoginPresenter;
 import com.sumian.app.app.delegate.ApplicationDelegate;

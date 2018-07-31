@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.device.bean.BlueDevice;
 import com.sumian.app.improve.device.fragment.DeviceFragment;
 import com.sumian.app.improve.device.model.DeviceModel;

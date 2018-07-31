@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -13,17 +12,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.sumian.app.R;
 import com.sumian.app.account.contract.AvatarContract;
 import com.sumian.app.account.presenter.AvatarPresenter;
 import com.sumian.app.account.sheet.SelectPictureBottomSheet;
-import com.sumian.app.app.App;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.widget.TitleBar;
+import com.sumian.sleepdoctor.R;
 
 import java.util.List;
 
-import butterknife.BindView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;

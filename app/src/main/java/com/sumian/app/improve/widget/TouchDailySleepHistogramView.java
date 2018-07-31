@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.report.bean.SleepPackage;
 import com.sumian.app.improve.report.dailyreport.DailyReport;
 import com.sumian.app.improve.widget.report.bean.SleepSegment;

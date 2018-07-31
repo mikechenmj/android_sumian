@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.leancloud.LeanCloudHelper;
 import com.sumian.app.leancloud.activity.MsgActivity;

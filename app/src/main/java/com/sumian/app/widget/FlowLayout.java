@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 /**
  * 自动换行布局

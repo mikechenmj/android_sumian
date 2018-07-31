@@ -19,8 +19,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.app.BuildConfig;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.improve.device.bean.BlueDevice;

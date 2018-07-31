@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

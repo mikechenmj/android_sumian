@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 
 /**

@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.command.BlueCmd;

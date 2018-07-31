@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.setting.contract.SocialContract;
 import com.sumian.app.setting.presenter.SocialPresenter;

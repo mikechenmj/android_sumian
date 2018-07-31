@@ -14,7 +14,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.improve.device.adapter.DeviceAdapter;
 import com.sumian.app.tab.device.bean.BlueDevice;

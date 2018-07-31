@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.callback.UserInfoCallback;
 import com.sumian.app.account.contract.ModifyUserInfoContract;
 import com.sumian.app.account.contract.UserInfoContract;

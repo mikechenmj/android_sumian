@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.network.response.AppUpgradeInfo;
 import com.sumian.app.upgrade.activity.VersionNoticeActivity;
 import com.sumian.app.widget.BaseDialogFragment;

@@ -8,7 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.base.BaseActivity;
 import com.sumian.app.common.helper.ToastHelper;
 import com.sumian.app.network.response.ConfigInfo;

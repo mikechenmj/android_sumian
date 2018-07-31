@@ -16,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.guideline.utils.GuidelineUtils;
 
 import static com.sumian.app.improve.guideline.utils.GuidelineUtils.SP_KEY_NEED_SHOW_DAILY_REPORT_USER_GUIDE;

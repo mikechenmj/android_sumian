@@ -3,7 +3,7 @@ package com.sumian.app.improve.main;
 import android.content.Context;
 import android.content.Intent;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.account.activity.LoginRouterActivity;
 import com.sumian.app.app.HwAppManager;
 import com.sumian.app.app.App;

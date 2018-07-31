@@ -6,7 +6,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 import com.sumian.app.improve.device.bean.BlueDevice;
 import com.sumian.app.log.LogManager;
 import com.sumian.app.widget.BottomSheetView;

@@ -20,7 +20,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 
 /**

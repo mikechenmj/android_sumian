@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.sumian.app.R;
+import com.sumian.sleepdoctor.R;
 
 import java.util.Locale;
 
@@ -112,7 +112,7 @@ public class BatteryView extends View {
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics()));
 
             this.mTextColor = a.getColor(R.styleable.BatteryView_text_color, Color.WHITE);
-            this.mTextWidth = a.getDimension(R.styleable.BatteryView_text_size,
+            this.mTextWidth = a.getDimension(R.styleable.BatteryView_bv_text_size,
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12.0f, getResources().getDisplayMetrics()));
 
             this.mBorderRadius = a.getDimension(R.styleable.BatteryView_border_radius, TypedValue
