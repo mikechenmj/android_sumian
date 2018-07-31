@@ -1,0 +1,22 @@
+@startuml
+App -> App : user click sync button
+App -> App: show sync animation ???
+App -> Device: 0x4f request data
+
+alt have data
+    Device -> App: 554f020188 have data
+    App -> App: show sync animation ***
+    Device -> App: 558e1000015af561d7386cd300  request buffer
+    Device -> App:0x8f
+    Device -> App: ...
+    Device -> App: 0x8f
+    Device -> App: 558e10000f5af561d7 data end
+    Device -> App:hide sync animation
+else have no data
+    Device -> App: 554f020100 have no data
+    App -> App:hide sync animation
+else decode failed
+    Device -> App: 554f0201ff decode failed
+    App -> App:hide sync animation
+end
+@enduml

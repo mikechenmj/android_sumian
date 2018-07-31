@@ -1,0 +1,15 @@
+@startuml
+participant  App as a
+participant  Device as d
+a -> d: get data;
+
+alt have data
+    d -> a: have data
+    a -> a: show sync animation / enter sync state
+    a -> d: ready to receive data
+    d -> a: send data
+else have no data
+    d -> a: have no data
+    a -> a: show have no data toast
+end
+@enduml
