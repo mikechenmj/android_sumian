@@ -101,9 +101,9 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
         mTvLabelH1 = rootView.findViewById(R.id.tv_label_h1);
         mTvLabelH2 = rootView.findViewById(R.id.tv_label_h2);
         mIvDismiss = rootView.findViewById(R.id.iv_dismiss);
-        DeviceScanErrorView mDeviceScanErrorView = rootView.findViewById(R.id.device_scan_error_view);
-        DeviceListView mDeviceListView = rootView.findViewById(R.id.device_list_view);
-        DeviceScanView mDeviceScanView = rootView.findViewById(R.id.device_scanning_view);
+        mDeviceScanErrorView = rootView.findViewById(R.id.device_scan_error_view);
+        mDeviceListView = rootView.findViewById(R.id.device_list_view);
+        mDeviceScanView = rootView.findViewById(R.id.device_scanning_view);
 
         rootView.findViewById(R.id.iv_dismiss).setOnClickListener(this);
 

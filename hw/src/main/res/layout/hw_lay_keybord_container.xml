@@ -3,7 +3,7 @@
     android:id="@+id/keyboardView"
     android:layout_width="match_parent"
     android:layout_height="@dimen/space_56"
-    android:background="@color/colorPrimary"
+    android:background="@color/hw_colorPrimary"
     android:gravity="center"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/space_4"

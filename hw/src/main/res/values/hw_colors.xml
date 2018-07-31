@@ -6,7 +6,8 @@
 
     <color name="colorPrimary">@color/light_content_bg_color</color>
     <color name="colorPrimaryDark">@color/deep_content_bg_color</color>
-
+    <color name="hw_colorPrimary">@color/light_content_bg_color</color>
+    <color name="hw_colorPrimaryDark">@color/deep_content_bg_color</color>
     <!--content color-->
     <color name="light_content_bg_color">#ff2c2f37</color>
     <color name="deep_content_bg_color">#ff212329</color>

@@ -11,6 +11,36 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 基础模块 END -->
 
+    <!-- Hw start-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--leancloud-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -240,6 +270,172 @@
                 <action android:name="com.sumian.hw.LAUNCH_SLEEP_DOCTOR_MAIN" />
             </intent-filter>
         </receiver>
+
+        <!-- Hw -->
+        <activity
+            android:name="com.sumian.app.improve.main.WelcomeActivity"
+            android:theme="@style/TranslucentWindow">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.sumian.app.improve.main.HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme" />
+
+        <activity
+            android:name="com.sumian.app.account.activity.LoginActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.sumian.app.account.activity.RegisterActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.sumian.app.account.activity.LoginRouterActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.sumian.app.tab.report.activity.DaySleepDetailReportActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.account.activity.UserInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.setting.activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.setting.activity.ContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.setting.activity.ConfigActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.leancloud.activity.MsgActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.setting.activity.ModifyPwdActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.account.activity.ResetPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.account.activity.ForgetPwdActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.sumian.app.account.activity.ModifyNicknameActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.account.activity.SleepReminderActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.upgrade.activity.VersionUpgradeActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.upgrade.activity.VersionNoticeActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.setting.activity.DeviceLogActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.account.activity.OpenBindActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.account.activity.AvatarImageActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.improve.assessment.QuestionActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.improve.assessment.AssessmentUserInfoActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.improve.assessment.AssessmentActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.improve.feedback.FeedbackActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.improve.guideline.activity.UserGuidelineActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sumian.app.improve.guideline.activity.ManualActivity"
+            android:theme="@style/HwAppTheme"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name="com.sumian.app.account.service.SyncUserInfoService"
+            android:exported="false" />
+
+        <service android:name="com.sumian.app.tab.device.service.UploadSleepDataService" />
+
+        <service
+            android:name="com.sumian.app.upgrade.service.DfuService"
+            android:exported="true"
+            tools:ignore="ExportedService" />
+
+        <activity
+            android:name="com.sumian.app.clinical.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:theme="@style/HwAppTheme"
+            android:name="com.sumian.app.improve.qrcode.activity.QrCodeActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 实时通信模块、推送（均需要加入以下声明） START -->
+        <!-- 实时通信模块、推送都要使用 PushService -->
+        <service android:name="com.avos.avoscloud.PushService" />
+
+        <service
+            android:name="com.sumian.app.log.LogJobIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver
+            android:name="com.sumian.app.push.PushReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.tech.sumian.action.PUSH" />
+            </intent-filter>
+        </receiver>
+        <!-- Hw end-->
 
     </application>
 

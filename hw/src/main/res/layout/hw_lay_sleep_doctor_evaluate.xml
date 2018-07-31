@@ -10,7 +10,7 @@
     android:layout_marginTop="@dimen/space_10"
     android:orientation="vertical"
     android:visibility="gone"
-    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardBackgroundColor="@color/hw_colorPrimary"
     app:cardCornerRadius="@dimen/space_4"
     app:cardElevation="@dimen/space_4"
     tools:visibility="visible">

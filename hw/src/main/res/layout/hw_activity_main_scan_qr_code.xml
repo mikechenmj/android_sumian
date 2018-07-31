@@ -16,7 +16,7 @@
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_50"
-        app:tabBackground="@color/colorPrimary"
+        app:tabBackground="@color/hw_colorPrimary"
         app:tabIndicatorColor="#ff7ea5f4"
         app:tabIndicatorHeight="1dp"
         app:tabMode="fixed"

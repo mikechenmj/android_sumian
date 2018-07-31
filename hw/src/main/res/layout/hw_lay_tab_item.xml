@@ -46,6 +46,6 @@
         android:layout_marginBottom="@dimen/space_8"
         android:gravity="center"
         android:text="@string/tab_device_hint"
-        android:textColor="@color/tab_color"
+        android:textColor="@color/hw_tab_color"
         android:textSize="@dimen/font_12" />
 </LinearLayout>

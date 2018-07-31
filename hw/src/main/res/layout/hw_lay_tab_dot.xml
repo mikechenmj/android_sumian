@@ -13,7 +13,7 @@
         android:layout_height="@dimen/space_28"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="@color/tab_indicator_color"
+        android:textColor="@color/hw_tab_indicator_color"
         android:textSize="@dimen/font_20"
         tools:text="@string/week_hint" />
 

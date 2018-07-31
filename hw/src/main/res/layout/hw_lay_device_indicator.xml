@@ -58,7 +58,7 @@
                 android:layout_height="@dimen/space_28"
                 android:background="@drawable/bg_bt_sync_sleep_data"
                 android:text="@string/sync"
-                android:textColor="@color/bt_sync_sleep_data_color"
+                android:textColor="@color/hw_bt_sync_sleep_data_color"
                 android:textSize="@dimen/font_12"
                 android:visibility="gone"
                 tools:visibility="visible" />
