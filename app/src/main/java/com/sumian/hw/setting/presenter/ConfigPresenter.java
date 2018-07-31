@@ -1,11 +1,11 @@
 package com.sumian.hw.setting.presenter;
 
-import com.sumian.hw.constant.AppUrl;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.ConfigInfo;
 import com.sumian.hw.setting.activity.ConfigActivity;
 import com.sumian.hw.setting.contract.ConfigContract;
+import com.sumian.sleepdoctor.BuildConfig;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -89,7 +89,7 @@ public class ConfigPresenter implements ConfigContract.Presenter {
         } else {
             if (view == null) return;
             view.onFinish();
-            view.onSyncUrl(configType == ConfigActivity.REGISTER_USER_AGREEMENT_TYPE ? AppUrl.USER_AGREEMENT_URL : AppUrl.PRIVACY_POLICY_URL);
+            view.onSyncUrl(configType == ConfigActivity.REGISTER_USER_AGREEMENT_TYPE ? BuildConfig.HW_USER_AGREEMENT_URL : BuildConfig.HW_PRIVACY_POLICY_URL);
         }
 
     }

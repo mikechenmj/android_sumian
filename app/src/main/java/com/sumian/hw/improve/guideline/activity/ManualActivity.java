@@ -10,7 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.sumian.hw.constant.AppUrl;
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.widget.TitleBar;
@@ -77,7 +77,7 @@ public class ManualActivity extends BaseActivity implements TitleBar.OnBackListe
     @Override
     protected void initData() {
         super.initData();
-        mWebView.loadUrl(AppUrl.USER_GUIDELINE_URL);
+        mWebView.loadUrl(BuildConfig.HW_USER_GUIDELINE_URL);
         mWebView.setWebChromeClient(new WebChromeClient() {
         });
         mWebView.setWebViewClient(new WebViewClient() {

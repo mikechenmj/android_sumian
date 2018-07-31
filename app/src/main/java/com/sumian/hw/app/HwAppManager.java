@@ -17,7 +17,7 @@ import com.sumian.hw.job.JobScheduler;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.player.VoicePlayer;
 import com.sumian.hw.network.api.SleepyV1Api;
-import com.sumian.hw.network.engine.NetEngine;
+import com.sumian.hw.network.engine.HwNetEngine;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.open.OpenEngine;
@@ -45,7 +45,7 @@ public final class HwAppManager {
     private volatile AccountModel mAccountModel;
     private volatile ReportModel mReportModel;
 
-    private NetEngine mNetEngine;
+    private HwNetEngine mNetEngine;
     private JobScheduler mJobScheduler;
     private OpenEngine mOpenEngine;
     private VoicePlayer mVoicePlayer;
@@ -64,8 +64,8 @@ public final class HwAppManager {
         }
     }
 
-    public static synchronized NetEngine getNetEngine() {
-        return INSTANCE.mNetEngine == null ? INSTANCE.mNetEngine = new NetEngine() : INSTANCE.mNetEngine;
+    public static synchronized HwNetEngine getNetEngine() {
+        return INSTANCE.mNetEngine == null ? INSTANCE.mNetEngine = new HwNetEngine() : INSTANCE.mNetEngine;
     }
 
     public static synchronized SleepyV1Api getV1HttpService() {

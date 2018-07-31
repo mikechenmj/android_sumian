@@ -23,14 +23,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * desc:
  */
 
-public class NetEngine {
+public class HwNetEngine {
 
     private static final int TIMEOUT = 3;
     private SleepyApi mSleepyApi;
 
     private SleepyV1Api mSleepyV1Api;
 
-    public NetEngine() {
+    public HwNetEngine() {
 
         List<Protocol> protocols = new ArrayList<>();
         protocols.add(Protocol.HTTP_1_1);
@@ -48,8 +48,7 @@ public class NetEngine {
 
         Retrofit retrofit = new Retrofit
                 .Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-//            .addConverterFactory(FastJsonConverterFactory.create())
+                .baseUrl(BuildConfig.HW_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
                 .callFactory(okHttpClient)
                 .build();
