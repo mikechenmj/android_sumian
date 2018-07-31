@@ -89,7 +89,7 @@
                 tools:ignore="RtlHardcoded"
                 tools:text="1''" />
 
-            <com.sumian.app.widget.VoiceProgress
+            <com.sumian.hw.widget.VoiceProgress
                 android:id="@+id/vp_progress"
                 android:layout_width="@dimen/space_32"
                 android:layout_height="@dimen/space_32"

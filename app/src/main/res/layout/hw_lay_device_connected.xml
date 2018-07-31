@@ -10,31 +10,31 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.sumian.app.widget.device.DeviceIndicatorView
+        <com.sumian.hw.widget.device.DeviceIndicatorView
             android:id="@+id/div"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.sumian.app.widget.device.DeviceStateItemView
+        <com.sumian.hw.widget.device.DeviceStateItemView
             android:id="@+id/div_monitor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:device_name="@string/monitor_name_hint" />
 
-        <com.sumian.app.widget.device.DeviceStateItemView
+        <com.sumian.hw.widget.device.DeviceStateItemView
             android:id="@+id/div_quick_sleeping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:device_name="@string/sleeping_name_hint" />
 
-        <com.sumian.app.widget.device.SwitchPowerView
+        <com.sumian.hw.widget.device.SwitchPowerView
             android:id="@+id/switch_power_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <com.sumian.app.widget.device.SwitchModeView
+        <com.sumian.hw.widget.device.SwitchModeView
             android:id="@+id/switch_pa_mode_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

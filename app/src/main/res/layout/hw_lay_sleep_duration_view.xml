@@ -44,7 +44,7 @@
             android:background="@color/light_line_bg_color"
             app:layout_constraintTop_toBottomOf="@id/text_view_1" />
 
-        <com.sumian.app.improve.widget.SleepStateDurationView
+        <com.sumian.hw.improve.widget.SleepStateDurationView
             android:id="@+id/light_sleep_duration_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/divider" />
 
-        <com.sumian.app.improve.widget.SleepStateDurationView
+        <com.sumian.hw.improve.widget.SleepStateDurationView
             android:id="@+id/deep_sleep_duration_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

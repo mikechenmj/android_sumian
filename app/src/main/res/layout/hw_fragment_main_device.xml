@@ -6,12 +6,12 @@
     android:background="@color/deep_content_bg_color"
     android:orientation="vertical">
 
-    <com.sumian.app.improve.widget.device.DeviceGuideStepOneView
+    <com.sumian.hw.improve.widget.device.DeviceGuideStepOneView
         android:id="@+id/device_guide_step_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.sumian.app.improve.widget.device.DeviceStatusView
+    <com.sumian.hw.improve.widget.device.DeviceStatusView
         android:id="@+id/device_status_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
         tools:visibility="visible" />
 
 
-    <com.sumian.app.improve.widget.device.FloatGroupView
+    <com.sumian.hw.improve.widget.device.FloatGroupView
         android:id="@+id/float_group_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

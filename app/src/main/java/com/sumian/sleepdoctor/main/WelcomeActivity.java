@@ -31,7 +31,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void initWidget(View root) {
         super.initWidget(root);
         setStatusBar();
-        ActivityUtils.startActivity(com.sumian.app.improve.main.WelcomeActivity.class);
+        ActivityUtils.startActivity(com.sumian.hw.improve.main.WelcomeActivity.class);
         finish();
     }
 

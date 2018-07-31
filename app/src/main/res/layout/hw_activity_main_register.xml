@@ -7,7 +7,7 @@
     android:background="@color/hw_colorPrimary"
     android:orientation="vertical">
 
-    <com.sumian.app.widget.TitleBar
+    <com.sumian.hw.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <com.sumian.app.widget.RegisterRuleView
+    <com.sumian.hw.widget.RegisterRuleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

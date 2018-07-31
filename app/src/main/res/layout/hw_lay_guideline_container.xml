@@ -60,7 +60,7 @@
             android:visibility="invisible"
             tools:visibility="visible" />
 
-        <com.sumian.app.improve.widget.GuidelineIndicator
+        <com.sumian.hw.improve.widget.GuidelineIndicator
             android:id="@+id/guideline_indicator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_8"

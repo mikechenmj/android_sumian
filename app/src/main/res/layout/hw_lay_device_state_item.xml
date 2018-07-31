@@ -41,7 +41,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.sumian.app.widget.device.BatteryView
+        <com.sumian.hw.widget.device.BatteryView
             android:id="@+id/bv"
             android:layout_width="@dimen/space_68"
             android:layout_height="@dimen/space_42"

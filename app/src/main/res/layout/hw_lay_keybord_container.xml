@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <com.sumian.app.widget.LCIMRecordButton
+        <com.sumian.hw.widget.LCIMRecordButton
             android:id="@+id/bt_voice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

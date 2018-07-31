@@ -7,7 +7,7 @@
     android:background="@color/hw_colorPrimaryDark"
     android:orientation="vertical">
 
-    <com.sumian.app.widget.TitleBar
+    <com.sumian.hw.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:textColor="@color/full_general_color"
                 tools:ignore="RtlHardcoded" />
 
-            <com.sumian.app.widget.ToggleButton
+            <com.sumian.hw.widget.ToggleButton
                 android:id="@+id/tb_reminder"
                 android:layout_width="@dimen/space_56"
                 android:layout_height="@dimen/space_28"
@@ -130,7 +130,7 @@
             tools:ignore="RtlHardcoded"
             tools:text="hello" />
 
-        <com.sumian.app.widget.ToggleButton
+        <com.sumian.hw.widget.ToggleButton
             android:id="@+id/bt_bind_wechat"
             android:layout_width="@dimen/space_56"
             android:layout_height="@dimen/space_28"

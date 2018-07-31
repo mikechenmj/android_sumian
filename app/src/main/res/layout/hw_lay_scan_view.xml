@@ -7,7 +7,7 @@
     android:background="#ff212329"
     android:orientation="vertical">
 
-    <com.sumian.app.improve.widget.ripple.RippleScanningView
+    <com.sumian.hw.improve.widget.ripple.RippleScanningView
         android:id="@+id/ripple"
         android:layout_width="@dimen/space_200"
         android:layout_height="@dimen/space_200"
@@ -26,7 +26,7 @@
             app:srcCompat="@mipmap/equip_icon_monitor"
             tools:visibility="visible" />
 
-    </com.sumian.app.improve.widget.ripple.RippleScanningView>
+    </com.sumian.hw.improve.widget.ripple.RippleScanningView>
 
     <Button
         android:id="@+id/bt_bind"

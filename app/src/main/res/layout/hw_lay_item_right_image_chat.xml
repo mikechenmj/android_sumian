@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <com.sumian.app.widget.BubbleImageView
+                <com.sumian.hw.widget.BubbleImageView
                     android:id="@+id/biv_image"
                     android:layout_width="@dimen/space_100"
                     android:layout_height="@dimen/space_160"

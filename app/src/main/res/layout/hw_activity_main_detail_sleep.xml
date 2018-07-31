@@ -7,13 +7,13 @@
     android:background="@color/hw_colorPrimaryDark"
     android:orientation="vertical">
 
-    <com.sumian.app.widget.TitleBar
+    <com.sumian.hw.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:text="2017/09/13" />
 
-    <com.sumian.app.widget.refresh.BlueRefreshView
+    <com.sumian.hw.widget.refresh.BlueRefreshView
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.sumian.app.improve.widget.TouchDaySleepHistogramView
+                <com.sumian.hw.improve.widget.TouchDaySleepHistogramView
                     android:id="@+id/day_sleep_histogram_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -532,7 +532,7 @@
                     android:layout_height="@dimen/space_1"
                     android:background="@color/deep_line_bg_color" />
 
-                <com.sumian.app.widget.SleepNoteView
+                <com.sumian.hw.widget.SleepNoteView
                     android:id="@+id/sleepNoteView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -543,7 +543,7 @@
 
         </android.support.v4.widget.NestedScrollView>
 
-    </com.sumian.app.widget.refresh.BlueRefreshView>
+    </com.sumian.hw.widget.refresh.BlueRefreshView>
 
 </LinearLayout>
 

@@ -17,36 +17,36 @@
         android:layout_height="@dimen/divider_px_1"
         android:background="@color/deep_content_bg_color" />
 
-    <com.sumian.app.widget.nav.NavTab
+    <com.sumian.hw.widget.nav.NavTab
         android:id="@+id/tab_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/hw_colorPrimary">
 
-        <com.sumian.app.widget.nav.TabButton
+        <com.sumian.hw.widget.nav.TabButton
             android:id="@+id/tab_device"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <com.sumian.app.widget.nav.TabButton
+        <com.sumian.hw.widget.nav.TabButton
             android:id="@+id/tab_report"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <com.sumian.app.widget.nav.TabButton
+        <com.sumian.hw.widget.nav.TabButton
             android:id="@+id/tab_consultant"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <com.sumian.app.widget.nav.TabButton
+        <com.sumian.hw.widget.nav.TabButton
             android:id="@+id/tab_me"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-    </com.sumian.app.widget.nav.NavTab>
+    </com.sumian.hw.widget.nav.NavTab>
 
 </LinearLayout>

@@ -112,7 +112,7 @@
             android:textSize="@dimen/font_16" />
     </LinearLayout>
 
-    <com.sumian.app.widget.FlowLayout
+    <com.sumian.hw.widget.FlowLayout
         android:id="@+id/lay_flow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

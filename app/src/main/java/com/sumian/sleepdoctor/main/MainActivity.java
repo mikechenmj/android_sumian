@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.sumian.app.improve.main.HomeActivity;
+import com.sumian.hw.improve.main.HomeActivity;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;

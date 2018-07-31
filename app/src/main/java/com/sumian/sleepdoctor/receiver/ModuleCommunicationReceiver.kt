@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.app.network.response.HwToken
+import com.sumian.hw.network.response.HwToken
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserProfile
 import com.sumian.sleepdoctor.app.AppManager

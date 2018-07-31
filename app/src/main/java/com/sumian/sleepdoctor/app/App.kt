@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.app
 
 import android.app.Application
 import android.content.Context
-import com.sumian.app.app.App
+import com.sumian.hw.app.App
 
 /**
  * Created by jzz

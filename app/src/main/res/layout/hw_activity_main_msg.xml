@@ -33,7 +33,7 @@
 
     </FrameLayout>
 
-    <com.sumian.app.widget.refresh.BlueRefreshView
+    <com.sumian.hw.widget.refresh.BlueRefreshView
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.sumian.app.widget.MsgEmptyView
+            <com.sumian.hw.widget.MsgEmptyView
                 android:id="@+id/msg_empty_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -54,10 +54,10 @@
                 android:layout_height="match_parent" />
         </FrameLayout>
 
-    </com.sumian.app.widget.refresh.BlueRefreshView>
+    </com.sumian.hw.widget.refresh.BlueRefreshView>
 
     <!-- 底部输入框区域 -->
-    <com.sumian.app.widget.KeyboardView
+    <com.sumian.hw.widget.KeyboardView
         android:id="@+id/keyboardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

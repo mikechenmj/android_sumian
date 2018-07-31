@@ -73,7 +73,7 @@
             android:layout_marginTop="@dimen/space_14"
             android:background="@color/light_line_bg_color" />
 
-        <com.sumian.app.improve.widget.note.WakeUpMoodView
+        <com.sumian.hw.improve.widget.note.WakeUpMoodView
             android:id="@+id/wake_up_mood_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -104,7 +104,7 @@
                 android:textSize="@dimen/font_16" />
         </LinearLayout>
 
-        <com.sumian.app.widget.FlowLayout
+        <com.sumian.hw.widget.FlowLayout
             android:id="@+id/lay_flow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

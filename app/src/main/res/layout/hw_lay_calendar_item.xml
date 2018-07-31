@@ -73,7 +73,7 @@
     </LinearLayout>
 
 
-    <com.sumian.app.improve.report.calendar.CalendarView
+    <com.sumian.hw.improve.report.calendar.CalendarView
         android:id="@+id/calender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
