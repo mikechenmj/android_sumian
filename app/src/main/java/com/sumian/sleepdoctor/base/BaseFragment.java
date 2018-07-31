@@ -224,6 +224,13 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onDestroy: ----------->" + this.toString());
+        for (Call call : mCalls) {
+            if (call.isExecuted() || call.isCanceled()) {
+                continue;
+            }
+            call.cancel();
+        }
+        mCalls.clear();
     }
 
     protected void showToast(String message) {

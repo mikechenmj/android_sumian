@@ -260,6 +260,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(':common')
     implementation project(':open')
+    implementation project(":hw")
+    implementation project(':blue')
+    implementation project(':kefu-easeui')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
@@ -359,6 +363,7 @@ dependencies {
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')
     implementation(name: 'AlivcPlayer-3.4.6', ext: 'aar')
     implementation(name: 'AliyunVodPlayer-3.4.6', ext: 'aar')
-
-    implementation project(":hw")
+    //hw
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
+    implementation 'no.nordicsemi.android:dfu:1.6.1'
 }
