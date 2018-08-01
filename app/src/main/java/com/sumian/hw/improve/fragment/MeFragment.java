@@ -1,5 +1,7 @@
 package com.sumian.hw.improve.fragment;
 
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -26,7 +28,9 @@ import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.Locale;
 
@@ -41,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ConstantConditions")
 public class MeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
-        LeanCloudHelper.OnShowMsgDotCallback, OnSleepReminderCallback, UserInfoCallback, VersionModel.ShowDotCallback {
+        LeanCloudHelper.OnShowMsgDotCallback, OnSleepReminderCallback, VersionModel.ShowDotCallback {
 
     CircleImageView mIvAvatar;
     TextView mTvNickname;
@@ -95,8 +99,13 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
             mLaySleepyAnswer.setVisibility(View.VISIBLE);
         }
         HwAppManager.getAccountModel().addOnReminderCallback(this);
-        HwAppManager.getAccountModel().addOnSyncUserInfoCallback(this);
         HwAppManager.getVersionModel().registerShowDotCallback(this);
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
+            @Override
+            public void onChanged(@Nullable Token token) {
+                updateUserInfoUI(token.user);
+            }
+        });
     }
 
     @Override
@@ -161,6 +170,10 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
 
     @Override
     public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
+        updateUserInfoUI(userInfo);
+    }
+
+    private void updateUserInfoUI(UserInfo userInfo) {
         runOnUiThread(() -> {
             String avatar = userInfo.getAvatar();
             if (!TextUtils.isEmpty(avatar)) {
@@ -189,16 +202,6 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
 
     @Override
     public void onStartSyncUserInfo() {
-
-    }
-
-    @Override
-    public void onSyncUserInfoSuccess(UserInfo userInfo) {
-        onSyncCacheUserInfoSuccess(userInfo);
-    }
-
-    @Override
-    public void onSyncUserInfoFailed(String error) {
 
     }
 

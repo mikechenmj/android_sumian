@@ -1,9 +1,11 @@
 package com.sumian.hw.improve.assessment;
 
+import android.arch.lifecycle.Observer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sumian.hw.account.callback.UserInfoCallback;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
@@ -24,7 +25,9 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +38,7 @@ import java.util.Map;
  * desc:
  */
 
-public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackListener, UserInfoContract.View, UserInfoCallback {
+public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackListener, UserInfoContract.View {
 
     private static final String TAG = AssessmentUserInfoActivity.class.getSimpleName();
 
@@ -83,7 +86,12 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
         findViewById(R.id.bt_save).setOnClickListener(this);
 
         mTitleBar.addOnBackListener(this);
-        HwAppManager.getAccountModel().addOnSyncUserInfoCallback(this);
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
+            @Override
+            public void onChanged(@Nullable Token token) {
+                updateUserInfoUI(token.user);
+            }
+        });
     }
 
     @Override
@@ -231,6 +239,10 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
 
     @Override
     public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
+        updateUserInfoUI(userInfo);
+    }
+
+    private void updateUserInfoUI(UserInfo userInfo) {
         setText(userInfo.getNickname(), mEtNickname);
         mIsBoss[0] = TextUtils.isEmpty(userInfo.getNickname());
         mIsBoss[1] = TextUtils.isEmpty(userInfo.getGender()) || userInfo.getGender().equals("secrecy");
@@ -267,16 +279,6 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
 
     @Override
     public void onStartSyncUserInfo() {
-
-    }
-
-    @Override
-    public void onSyncUserInfoSuccess(UserInfo userInfo) {
-        onSyncCacheUserInfoSuccess(userInfo);
-    }
-
-    @Override
-    public void onSyncUserInfoFailed(String error) {
 
     }
 
