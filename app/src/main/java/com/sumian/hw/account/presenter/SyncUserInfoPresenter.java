@@ -3,9 +3,9 @@ package com.sumian.hw.account.presenter;
 import com.sumian.hw.account.contract.SyncUserInfoContract;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.network.response.ResultResponse;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,13 +40,13 @@ public class SyncUserInfoPresenter implements SyncUserInfoContract.Presenter {
 
         HwAppManager.getAccountModel().startUpdateUserCache();
 
-        Call<HwUserInfo> call = HwAppManager
+        Call<UserInfo> call = HwAppManager
             .getNetEngine()
             .getHttpService().syncUserInfo();
 
-        call.enqueue(new BaseResponseCallback<HwUserInfo>() {
+        call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
-            protected void onSuccess(HwUserInfo response) {
+            protected void onSuccess(UserInfo response) {
                 HwAppManager.getAccountModel().updateUserCache(response);
                 HwAppManager.getAccountModel().login(isOnlySync,loginType);
             }
@@ -96,7 +96,9 @@ public class SyncUserInfoPresenter implements SyncUserInfoContract.Presenter {
     @Override
     public void release() {
         List<Call> calls = this.mCalls;
-        if (calls == null || calls.isEmpty()) return;
+        if (calls == null || calls.isEmpty()) {
+            return;
+        }
         for (Call call : calls) {
             if (!call.isCanceled()) {
                 call.cancel();

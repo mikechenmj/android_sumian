@@ -9,20 +9,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.OpenBindContract;
 import com.sumian.hw.account.presenter.OpenBindPresenter;
 import com.sumian.hw.app.ApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.config.SumianConfig;
+import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.request.CaptchaBody;
-import com.sumian.hw.network.response.HwToken;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 /**
@@ -140,7 +140,7 @@ public class OpenBindActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onBindSuccess(HwToken token) {
+    public void onBindSuccess(Token token) {
         runUiThread(() -> ToastHelper.show(R.string.register_success_hint));
         ApplicationDelegate.goHome(this);
     }

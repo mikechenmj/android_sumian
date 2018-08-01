@@ -8,16 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.ApplicationDelegate;
+import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
-import com.sumian.hw.network.response.HwToken;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -168,7 +168,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onBindOpenSuccess(HwToken token) {
+    public void onBindOpenSuccess(Token token) {
         ApplicationDelegate.goHome(this);
         onFinish();
         finish();

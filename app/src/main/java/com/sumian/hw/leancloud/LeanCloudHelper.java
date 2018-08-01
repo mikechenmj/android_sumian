@@ -32,12 +32,12 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
-import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwUserInfo;
+import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -119,13 +119,17 @@ public final class LeanCloudHelper {
             onMsgCallbacks = new ArrayList<>();
             INSTANCE.mOnMsgCallbacks = onMsgCallbacks;
         }
-        if (onMsgCallbacks.contains(onMsgCallback)) return;
+        if (onMsgCallbacks.contains(onMsgCallback)) {
+            return;
+        }
         onMsgCallbacks.add(onMsgCallback);
     }
 
     public static void removeOnMsgCallback(OnMsgCallback onMsgCallback) {
         List<OnMsgCallback> onMsgCallbacks = INSTANCE.mOnMsgCallbacks;
-        if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) return;
+        if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) {
+            return;
+        }
         onMsgCallbacks.remove(onMsgCallback);
     }
 
@@ -135,13 +139,17 @@ public final class LeanCloudHelper {
             onShowMsgDotCallbacks = new ArrayList<>();
             INSTANCE.mOnShowMsgDotCallbacks = onShowMsgDotCallbacks;
         }
-        if (onShowMsgDotCallbacks.contains(onShowMsgDotCallback)) return;
+        if (onShowMsgDotCallbacks.contains(onShowMsgDotCallback)) {
+            return;
+        }
         onShowMsgDotCallbacks.add(onShowMsgDotCallback);
     }
 
     public static void removeOnAdminMsgCallback(OnShowMsgDotCallback onShowMsgDotCallback) {
         List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
-        if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) return;
+        if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) {
+            return;
+        }
         onShowMsgDotCallbacks.remove(onShowMsgDotCallback);
     }
 
@@ -157,7 +165,9 @@ public final class LeanCloudHelper {
         loginEasemob(null);
         // Tom 用自己的名字作为clientId，获取AVIMClient对象实例
         String clientId = HwAppManager.getAccountModel().getLeanCloudId();
-        if (TextUtils.isEmpty(clientId)) return;
+        if (TextUtils.isEmpty(clientId)) {
+            return;
+        }
 
         INSTANCE.mAVIMClient = AVIMClient.getInstance(clientId);
         // 与服务器连接
@@ -189,7 +199,7 @@ public final class LeanCloudHelper {
     private static void loginEasemob(Runnable run) {
         //未登录，需要登录后，再进入会话界面
 
-        HwUserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+        UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
         if (userInfo == null) {
             return;
         }
@@ -228,9 +238,9 @@ public final class LeanCloudHelper {
 
     public static Intent getChatRoomLaunchIntent() {
         VisitorInfo visitorInfo = ContentFactory.createVisitorInfo(null)
-            .nickName(HwAppManager.getAccountModel().getUserInfo().getNickname())
-            .name(HwAppManager.getAccountModel().getUserInfo().getNickname())
-            .phone(HwAppManager.getAccountModel().getUserInfo().getMobile());
+                .nickName(HwAppManager.getAccountModel().getUserInfo().getNickname())
+                .name(HwAppManager.getAccountModel().getUserInfo().getNickname())
+                .phone(HwAppManager.getAccountModel().getUserInfo().getMobile());
 
         UIProvider.getInstance().setUserProfileProvider((context, message, userAvatarView, usernickView) -> {
             if (Message.Direct.SEND == message.direct()) {
@@ -242,15 +252,15 @@ public final class LeanCloudHelper {
         });
 
         return new IntentBuilder(App.getAppContext())
-            .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
-            .setShowUserNick(false)
-            .setVisitorInfo(visitorInfo).build();
+                .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
+                .setShowUserNick(false)
+                .setVisitorInfo(visitorInfo).build();
     }
 
     public static void establishConversationWithService(int serviceType) {
 
         String conversationMembers = serviceType == SERVICE_TYPE_ONLINE_DOCTOR ? BuildConfig.LEANCLOUD_DOCTOR_SERVICE_ID
-            : BuildConfig.LEANCLOUD_ONLINE_SERVICE_ID;
+                : BuildConfig.LEANCLOUD_ONLINE_SERVICE_ID;
         String conversationTag = HwAppManager.getAccountModel().getLeanCloudId() + " & " + conversationMembers;
 
         AVIMClient avimClient = INSTANCE.mAVIMClient;
@@ -260,31 +270,31 @@ public final class LeanCloudHelper {
         }
         // 创建与server之间的对话
         avimClient.createConversation(Collections.singletonList(conversationMembers), conversationTag
-            , null, false, true,
-            new AVIMConversationCreatedCallback() {
+                , null, false, true,
+                new AVIMConversationCreatedCallback() {
 
-                @Override
-                public void done(AVIMConversation conversation, AVIMException e) {
-                    if (e == null) {
-                        Log.d(TAG, "done: ------建立会话成功------>" + serviceType);
-                        if (serviceType == SERVICE_TYPE_ONLINE_CUSTOMER) {
-                            INSTANCE.mCustomerConversations = conversation;
+                    @Override
+                    public void done(AVIMConversation conversation, AVIMException e) {
+                        if (e == null) {
+                            Log.d(TAG, "done: ------建立会话成功------>" + serviceType);
+                            if (serviceType == SERVICE_TYPE_ONLINE_CUSTOMER) {
+                                INSTANCE.mCustomerConversations = conversation;
+                            } else {
+                                INSTANCE.mDoctorConversations = conversation;
+                            }
+
+                            if (INSTANCE.mOnConversationCallback != null) {
+                                INSTANCE.mOnConversationCallback.onEstablishConversationSuccessCallback();
+                            }
+
                         } else {
-                            INSTANCE.mDoctorConversations = conversation;
-                        }
-
-                        if (INSTANCE.mOnConversationCallback != null) {
-                            INSTANCE.mOnConversationCallback.onEstablishConversationSuccessCallback();
-                        }
-
-                    } else {
-                        Log.d(TAG, "done: ------建立会话失败----->" + serviceType);
-                        if (INSTANCE.mOnConversationCallback != null) {
-                            INSTANCE.mOnConversationCallback.onEstablishConversationFailedCallback();
+                            Log.d(TAG, "done: ------建立会话失败----->" + serviceType);
+                            if (INSTANCE.mOnConversationCallback != null) {
+                                INSTANCE.mOnConversationCallback.onEstablishConversationFailedCallback();
+                            }
                         }
                     }
-                }
-            });
+                });
     }
 
     public static AVIMConversation getConversation(int serviceType) {
@@ -326,9 +336,9 @@ public final class LeanCloudHelper {
         map.put("system_version", Build.VERSION.SDK_INT);
 
         Call<Object> call = HwAppManager
-            .getNetEngine()
-            .getHttpService()
-            .uploadDeviceInfo(map);
+                .getNetEngine()
+                .getHttpService()
+                .uploadDeviceInfo(map);
 
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override
@@ -354,7 +364,9 @@ public final class LeanCloudHelper {
     public static void haveCustomerMsg(int msgLength) {
         INSTANCE.mHaveCuostomrMsg = msgLength > 0;
         List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
-        if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) return;
+        if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) {
+            return;
+        }
         for (OnShowMsgDotCallback onShowMsgDotCallback : onShowMsgDotCallbacks) {
             onShowMsgDotCallback.onShowMsgDotCallback(INSTANCE.mSysMessages.size(), INSTANCE.mDoctorMessages.size(), msgLength);
         }
@@ -364,18 +376,24 @@ public final class LeanCloudHelper {
         switch (serviceType) {
             case SERVICE_TYPE_MAIL:
                 List<AVIMMessage> sysMessages = INSTANCE.mSysMessages;
-                if (sysMessages == null || sysMessages.isEmpty()) return;
+                if (sysMessages == null || sysMessages.isEmpty()) {
+                    return;
+                }
                 sysMessages.clear();
                 break;
             case SERVICE_TYPE_ONLINE_CUSTOMER:
                 List<AVIMMessage> customerMessages = INSTANCE.mCustomerMessages;
                 INSTANCE.mHaveCuostomrMsg = false;
-                if (customerMessages == null) return;
+                if (customerMessages == null) {
+                    return;
+                }
                 customerMessages.clear();
                 break;
             case SERVICE_TYPE_ONLINE_DOCTOR:
                 List<AVIMMessage> doctorMessages = INSTANCE.mDoctorMessages;
-                if (doctorMessages == null || doctorMessages.isEmpty()) return;
+                if (doctorMessages == null || doctorMessages.isEmpty()) {
+                    return;
+                }
                 doctorMessages.clear();
                 break;
             default:
@@ -383,7 +401,9 @@ public final class LeanCloudHelper {
         }
 
         List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
-        if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) return;
+        if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) {
+            return;
+        }
         for (OnShowMsgDotCallback onShowMsgDotCallback : onShowMsgDotCallbacks) {
             onShowMsgDotCallback.onHideMsgCallback(INSTANCE.mSysMessages.size(), INSTANCE.mDoctorMessages.size(), INSTANCE.mCustomerMessages.size());
         }
@@ -439,7 +459,9 @@ public final class LeanCloudHelper {
 
                     @Override
                     public void done(AVIMException e) {
-                        if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) return;
+                        if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) {
+                            return;
+                        }
                         for (OnMsgCallback onMsgCallback : onMsgCallbacks) {
                             if (e == null) {
                                 Log.d(TAG, "done: ------->发送成功----->msgStatus=" + finalMsg.getMessageStatus() + "     timestamp=" + finalMsg.getTimestamp());
@@ -483,10 +505,12 @@ public final class LeanCloudHelper {
                     Log.d(TAG, "onMessage: ---系统消息,站内信下发的消息------>" + mSysMessages.toString());
 
                     List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
-                    if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) return;
+                    if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) {
+                        return;
+                    }
                     for (OnShowMsgDotCallback onShowMsgDotCallback : onShowMsgDotCallbacks) {
                         onShowMsgDotCallback.onShowMsgDotCallback(mSysMessages.size(), mDoctorMessages.size(),
-                            mCustomerMessages.size());
+                                mCustomerMessages.size());
                     }
                     return;
                 }
@@ -513,7 +537,9 @@ public final class LeanCloudHelper {
                 }
 
                 List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
-                if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) return;
+                if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) {
+                    return;
+                }
                 for (OnShowMsgDotCallback onShowMsgDotCallback : onShowMsgDotCallbacks) {
                     onShowMsgDotCallback.onShowMsgDotCallback(mSysMessages.size(), mDoctorMessages.size(), mCustomerMessages.size());
                 }
@@ -525,7 +551,9 @@ public final class LeanCloudHelper {
                 super.onMessageReceipt(message, conversation, client);
                 Log.d(TAG, "onMessageReceipt: ---消息被成功接收-------->msgStatus=" + message.getMessageStatus());
                 List<OnMsgCallback> onMsgCallbacks = INSTANCE.mOnMsgCallbacks;
-                if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) return;
+                if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) {
+                    return;
+                }
                 for (OnMsgCallback onMsgCallback : onMsgCallbacks) {
                     onMsgCallback.onRemoteReceipt(message);
                 }

@@ -8,7 +8,7 @@ import com.sumian.hw.account.service.SyncUserInfoService;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwToken;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -51,7 +51,9 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
     @Override
     public void doLoginOpen(SHARE_MEDIA shareMedia, Activity activity, UMAuthListener authListener) {
         OpenLoginContract.View view = mViewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         view.onBegin();
         switch (shareMedia) {
             case WEIXIN:
@@ -65,7 +67,9 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
         OpenMap.put("nickname", OpenMap.get("screen_name"));
         this.mOpenUserInfo = JSON.toJSONString(OpenMap);
         OpenLoginContract.View view = mViewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         view.onBegin();
 
@@ -78,11 +82,11 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
         Map<String, Object> map = new HashMap<>();
         map.put("type", openType);
         map.put("union_id", OpenMap.get("unionid"));
-        Call<HwToken> call = this.mSleepyApi.loginOpenPlatform(map);
+        Call<Token> call = this.mSleepyApi.loginOpenPlatform(map);
 
-        call.enqueue(new BaseResponseCallback<HwToken>() {
+        call.enqueue(new BaseResponseCallback<Token>() {
             @Override
-            protected void onSuccess(HwToken response) {
+            protected void onSuccess(Token response) {
                 HwAppManager.getAccountModel().updateTokenCache(response);
                 view.onBindOpenSuccess(response);
                 SyncUserInfoService.startService(SyncUserInfoService.OPEN_LOGIN_TYPE);

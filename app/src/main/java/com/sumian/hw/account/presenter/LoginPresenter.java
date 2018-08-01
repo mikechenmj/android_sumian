@@ -8,7 +8,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.LoginBody;
-import com.sumian.hw.network.response.HwToken;
+import com.sumian.sleepdoctor.account.bean.Token;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -44,20 +44,24 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void doLogin(LoginBody loginBody) {
 
         LoginContract.View view = checkView();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         SleepyApi sleepyApi = HwAppManager
             .getNetEngine()
             .getHttpService();
-        if (sleepyApi == null) return;
+        if (sleepyApi == null) {
+            return;
+        }
 
         view.onBegin();
 
-        Call<HwToken> call = sleepyApi.doLogin(loginBody);
+        Call<Token> call = sleepyApi.doLogin(loginBody);
         this.mCalls.add(call);
-        call.enqueue(new BaseResponseCallback<HwToken>() {
+        call.enqueue(new BaseResponseCallback<Token>() {
             @Override
-            protected void onSuccess(HwToken response) {
+            protected void onSuccess(Token response) {
                 HwAppManager.getAccountModel().updateTokenCache(response);
                 view.loginSuccess();
                 SyncUserInfoService.startService(SyncUserInfoService.SUMIAN_LOGIN_TYPE);
@@ -90,7 +94,9 @@ public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.View checkView() {
         WeakReference<LoginContract.View> viewWeakReference = this.mViewWeakReference;
         LoginContract.View view = viewWeakReference.get();
-        if (view == null) return null;
+        if (view == null) {
+            return null;
+        }
         return view;
     }
 

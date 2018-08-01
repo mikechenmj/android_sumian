@@ -1,6 +1,6 @@
 package com.sumian.hw.account.contract;
 
-import com.sumian.hw.network.response.HwUserInfo;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 /**
  * Created by jzz
@@ -26,7 +26,7 @@ public interface ModifySelectContract {
 
     interface Presenter extends ModifyUserInfoContract.Presenter {
 
-        void transformFormKey(String formKey, HwUserInfo userInfo);
+        void transformFormKey(String formKey, UserInfo userInfo);
 
         Object transformFormValue(String formKey, String oneValue, String twoValue, String threeValue);
 

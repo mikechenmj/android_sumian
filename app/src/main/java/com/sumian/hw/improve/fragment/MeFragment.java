@@ -5,8 +5,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.activity.SleepReminderActivity;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.callback.OnSleepReminderCallback;
@@ -22,11 +20,13 @@ import com.sumian.hw.improve.guideline.activity.ManualActivity;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.setting.activity.SettingActivity;
 import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
+import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.util.Locale;
 
@@ -160,7 +160,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     }
 
     @Override
-    public void onSyncCacheUserInfoSuccess(HwUserInfo userInfo) {
+    public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
         runOnUiThread(() -> {
             String avatar = userInfo.getAvatar();
             if (!TextUtils.isEmpty(avatar)) {
@@ -173,7 +173,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
             }
             this.mTvAgeAndGender.setText(formatGender(userInfo.getGender()));
             this.mTvNickname.setText(userInfo.getNickname());
-            String age = userInfo.getAge();
+            String age = userInfo.getAge() == null ? null : userInfo.getAge().toString();
             if (!TextUtils.isEmpty(age)) {
                 this.mTvAgeAndGender.append(String.format(Locale.getDefault(), "%s%s%s", "  丨  ", age, App.getAppContext().getString(R.string.age_hint)));
             }
@@ -193,7 +193,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     }
 
     @Override
-    public void onSyncUserInfoSuccess(HwUserInfo userInfo) {
+    public void onSyncUserInfoSuccess(UserInfo userInfo) {
         onSyncCacheUserInfoSuccess(userInfo);
     }
 

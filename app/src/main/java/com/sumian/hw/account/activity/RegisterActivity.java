@@ -8,11 +8,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.RegisterContract;
 import com.sumian.hw.account.presenter.RegisterPresenter;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
@@ -23,10 +22,11 @@ import com.sumian.hw.improve.assessment.AssessmentActivity;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.RegisterBody;
-import com.sumian.hw.network.response.HwToken;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Token;
 
 /**
  * Created by jzz
@@ -131,7 +131,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onRegisterSuccess(HwToken token) {
+    public void onRegisterSuccess(Token token) {
         runUiThread(() -> {
             ToastHelper.show(R.string.register_success_hint);
             if (!HwAppManager.getAccountModel().isHaveUserInfoAndSleepBarrierTest()) {

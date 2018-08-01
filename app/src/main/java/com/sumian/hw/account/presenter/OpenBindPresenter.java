@@ -6,7 +6,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;
-import com.sumian.hw.network.response.HwToken;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.lang.ref.WeakReference;
@@ -45,7 +45,9 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
     public void doBind(String mobile, String pwd, String captcha, SHARE_MEDIA shareMedia, String openUserInfo) {
         WeakReference<OpenBindContract.View> viewWeakReference = this.mViewWeakReference;
         OpenBindContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         view.onBegin();
 
@@ -65,12 +67,12 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
         map.put("type", openType);
         map.put("info", openUserInfo);
 
-        Call<HwToken> call = sleepyApi.bindOpenPlatform(map);
+        Call<Token> call = sleepyApi.bindOpenPlatform(map);
         this.mCalls.add(call);
 
-        call.enqueue(new BaseResponseCallback<HwToken>() {
+        call.enqueue(new BaseResponseCallback<Token>() {
             @Override
-            protected void onSuccess(HwToken response) {
+            protected void onSuccess(Token response) {
                 HwAppManager.getAccountModel().updateTokenCache(response);
                 view.onBindSuccess(response);
                 SyncUserInfoService.startService(SyncUserInfoService.OPEN_LOGIN_TYPE);
@@ -93,7 +95,9 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
 
         WeakReference<OpenBindContract.View> viewWeakReference = this.mViewWeakReference;
         OpenBindContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         view.onBegin();
 

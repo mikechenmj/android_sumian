@@ -2,12 +2,12 @@ package com.sumian.hw.account.presenter;
 
 import android.text.TextUtils;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.callback.UserInfoCallback;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.service.SyncUserInfoService;
 import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.network.response.HwUserInfo;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.lang.ref.WeakReference;
 
@@ -35,9 +35,11 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
     public void doLoadCacheUserInfo() {
         WeakReference<UserInfoContract.View> viewWeakReference = this.mViewWeakReference;
         UserInfoContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
-        HwUserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+        UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
 
         if (userInfo == null) {
             doRefreshUserInfo();
@@ -86,15 +88,19 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
     public void onStartSyncUserInfo() {
         WeakReference<UserInfoContract.View> viewWeakReference = this.mViewWeakReference;
         UserInfoContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         view.onStartSyncUserInfo();
     }
 
     @Override
-    public void onSyncUserInfoSuccess(HwUserInfo userInfo) {
+    public void onSyncUserInfoSuccess(UserInfo userInfo) {
         WeakReference<UserInfoContract.View> viewWeakReference = this.mViewWeakReference;
         UserInfoContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         view.onSyncCacheUserInfoSuccess(userInfo);
     }
 
@@ -102,7 +108,9 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
     public void onSyncUserInfoFailed(String error) {
         WeakReference<UserInfoContract.View> viewWeakReference = this.mViewWeakReference;
         UserInfoContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         view.onSyncCacheUserInfoFailed(error);
     }
 
@@ -110,7 +118,9 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
     public void onCompletedUserInfo() {
         WeakReference<UserInfoContract.View> viewWeakReference = this.mViewWeakReference;
         UserInfoContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         view.onCompletedUserInfo();
     }
 }

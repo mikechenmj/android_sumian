@@ -97,4 +97,67 @@ public class Social implements Parcelable, Serializable {
     public @interface SocialType {
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getOpen_id() {
+        return open_id;
+    }
+
+    public void setOpen_id(String open_id) {
+        this.open_id = open_id;
+    }
+
+    public String getUnion_id() {
+        return union_id;
+    }
+
+    public void setUnion_id(String union_id) {
+        this.union_id = union_id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(int created_at) {
+        this.created_at = created_at;
+    }
+
+    public int getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(int updated_at) {
+        this.updated_at = updated_at;
+    }
 }

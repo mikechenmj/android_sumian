@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.hw.common.util.SpUtil;
-import com.sumian.hw.network.response.HwToken;
+import com.sumian.sleepdoctor.account.bean.Token;
 
 /**
  * Created by jzz
@@ -44,10 +44,12 @@ public final class AccountCache {
     }
 
     private static void saveTokenCache(Object obj) {
-        if (obj == null) throw new NullPointerException("obj is null...");
+        if (obj == null) {
+            throw new NullPointerException("obj is null...");
+        }
         // Log.e(TAG, "saveTokenCache: ------------->" + obj.toString());
         SharedPreferences.Editor edit = initEdit();
-        if (obj instanceof HwToken) {
+        if (obj instanceof Token) {
             String json = JSON.toJSONString(obj);
             edit.putString(KEY_TOKEN, json);
             apply(edit);

@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.feedback.FeedbackActivity;
 import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.hw.setting.contract.SettingContract;
 import com.sumian.hw.setting.presenter.SettingPresenter;
@@ -21,7 +20,9 @@ import com.sumian.hw.setting.sheet.SocialBottomSheet;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.ToggleButton;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Social;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -104,15 +105,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.initData();
         mIsInit = true;
         mPresenter.syncSleepDiary();
-        HwUserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+        UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
         if (userInfo == null) {
             return;
         }
-        List<HwUserInfo.Social> socialites = userInfo.getSocialites();
+        List<Social> socialites = userInfo.getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             return;
         }
-        HwUserInfo.Social social = socialites.get(0);
+        Social social = socialites.get(0);
         mTvWechatNickname.setText(social.getNickname());
         mBtBindWechat.setToggleOn();
     }
@@ -161,7 +162,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void onBindOpenSuccess(HwUserInfo.Social social) {
+    public void onBindOpenSuccess(Social social) {
         runUiThread(() -> {
             mBtBindWechat.setToggleOn();
             mTvWechatNickname.setText(social.getNickname());

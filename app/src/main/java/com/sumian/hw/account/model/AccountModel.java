@@ -2,6 +2,7 @@ package com.sumian.hw.account.model;
 
 import android.text.TextUtils;
 
+import com.sumian.blue.manager.BlueManager;
 import com.sumian.hw.account.cache.AccountCache;
 import com.sumian.hw.account.callback.OnLogoutCallback;
 import com.sumian.hw.account.callback.OnSleepReminderCallback;
@@ -12,10 +13,10 @@ import com.sumian.hw.common.cache.BluePeripheralCache;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.common.operator.AppOperator;
 import com.sumian.hw.leancloud.LeanCloudHelper;
-import com.sumian.hw.network.response.HwToken;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.network.response.Reminder;
-import com.sumian.blue.manager.BlueManager;
+import com.sumian.sleepdoctor.account.bean.Social;
+import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,8 @@ public class AccountModel {
 
     private static final String TAG = AccountModel.class.getSimpleName();
 
-    private volatile HwToken mToken;
-    private volatile HwUserInfo mUserInfo;
+    private volatile Token mToken;
+    private volatile UserInfo mUserInfo;
 
     private List<UserInfoCallback> mUserInfoCallbacks;
     private OnSleepReminderCallback mOnSleepReminderCallback;
@@ -40,8 +41,8 @@ public class AccountModel {
     private OnLogoutCallback mOnLogoutCallback;
 
     public AccountModel() {
-        this.mToken = AccountCache.getTokenCache(HwToken.class);
-        this.mUserInfo = AccountCache.getUserCache(HwUserInfo.class);
+        this.mToken = AccountCache.getTokenCache(Token.class);
+        this.mUserInfo = AccountCache.getUserCache(UserInfo.class);
     }
 
     public void addOnLogoutCallback(OnLogoutCallback onLogoutCallback) {
@@ -52,13 +53,17 @@ public class AccountModel {
         if (mUserInfoCallbacks == null) {
             mUserInfoCallbacks = new ArrayList<>();
         }
-        if (mUserInfoCallbacks.contains(userInfoCallback)) return;
+        if (mUserInfoCallbacks.contains(userInfoCallback)) {
+            return;
+        }
         mUserInfoCallbacks.add(userInfoCallback);
     }
 
     public void removeOnSyncUserInfoCallback(UserInfoCallback userInfoCallback) {
         List<UserInfoCallback> userInfoCallbacks = this.mUserInfoCallbacks;
-        if (userInfoCallbacks == null) return;
+        if (userInfoCallbacks == null) {
+            return;
+        }
         userInfoCallbacks.remove(userInfoCallback);
     }
 
@@ -71,7 +76,7 @@ public class AccountModel {
     }
 
     public boolean isLogin() {
-        HwToken token = this.mToken;
+        Token token = this.mToken;
         return token != null && !TextUtils.isEmpty(token.getToken());// && token.getExpired_at() * 1000L > System.currentTimeMillis();
     }
 
@@ -88,31 +93,33 @@ public class AccountModel {
     }
 
     public String getLeanCloudId() {
-        HwUserInfo userInfo = this.mUserInfo;
-        return userInfo == null ? null : userInfo.getLeancloud_id();
+        UserInfo userInfo = this.mUserInfo;
+        return userInfo == null ? null : userInfo.leancloud_id;
     }
 
     public String accessToken() {
-        HwToken token = this.mToken;
-        return token == null ? null : token.getToken();
+        Token token = this.mToken;
+        return token == null ? null : token.token;
     }
 
-    public HwUserInfo getUserInfo() {
+    public UserInfo getUserInfo() {
         return this.mUserInfo;
     }
 
-    public HwToken getToken() {
+    public Token getToken() {
         return mToken;
     }
 
-    public void updateTokenCache(HwToken token) {
+    public void updateTokenCache(Token token) {
         this.mToken = token;
-        if (token == null) return;
-        this.mUserInfo = token.getUserInfo();
+        if (token == null) {
+            return;
+        }
+        this.mUserInfo = token.user;
         AccountCache.updateTokenCache(token);
     }
 
-    public void updateUserCache(HwUserInfo userInfo) {
+    public void updateUserCache(UserInfo userInfo) {
         this.mUserInfo = userInfo;
         if (userInfo != null) {
             AccountCache.updateUserCache(userInfo);
@@ -210,9 +217,9 @@ public class AccountModel {
         }
     }
 
-    public void bindSocialCache(HwUserInfo.Social social) {
-        HwUserInfo userInfo = this.mUserInfo;
-        List<HwUserInfo.Social> socialites = this.mUserInfo.getSocialites();
+    public void bindSocialCache(Social social) {
+        UserInfo userInfo = this.mUserInfo;
+        List<Social> socialites = this.mUserInfo.getSocialites();
         if (socialites == null) {
             socialites = new ArrayList<>();
         }
@@ -234,8 +241,8 @@ public class AccountModel {
     }
 
     public void unbindOpenPlatform(int socialType) {
-        HwUserInfo userInfo = this.mUserInfo;
-        List<HwUserInfo.Social> socialites = this.mUserInfo.getSocialites();
+        UserInfo userInfo = this.mUserInfo;
+        List<Social> socialites = this.mUserInfo.getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             return;
         }

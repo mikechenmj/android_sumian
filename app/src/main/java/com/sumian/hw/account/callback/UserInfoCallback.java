@@ -1,6 +1,6 @@
 package com.sumian.hw.account.callback;
 
-import com.sumian.hw.network.response.HwUserInfo;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 /**
  * Created by jzz
@@ -12,7 +12,7 @@ public interface UserInfoCallback {
 
     void onStartSyncUserInfo();
 
-    void onSyncUserInfoSuccess(HwUserInfo userInfo);
+    void onSyncUserInfoSuccess(UserInfo userInfo);
 
     void onSyncUserInfoFailed(String error);
 

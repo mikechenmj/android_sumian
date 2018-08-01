@@ -5,9 +5,9 @@ import android.app.Activity;
 import com.alibaba.fastjson.JSON;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.hw.setting.contract.SettingContract;
+import com.sumian.sleepdoctor.account.bean.Social;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -57,7 +57,9 @@ public class SettingPresenter implements SettingContract.Presenter {
 
         WeakReference<SettingContract.View> viewWeakReference = this.mViewWeakReference;
         SettingContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         view.onBegin();
 
@@ -87,7 +89,9 @@ public class SettingPresenter implements SettingContract.Presenter {
 
         WeakReference<SettingContract.View> viewWeakReference = this.mViewWeakReference;
         SettingContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         view.onBegin();
 
@@ -114,11 +118,15 @@ public class SettingPresenter implements SettingContract.Presenter {
     @Override
     public void doLoginOpen(SHARE_MEDIA shareMedia, Activity activity, UMAuthListener authListener) {
         SettingContract.View view = mViewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         view.onBegin();
         switch (shareMedia) {
             case WEIXIN:
                 HwAppManager.getOpenLogin().weChatLogin(activity, authListener);
+                break;
+            default:
                 break;
         }
     }
@@ -127,7 +135,9 @@ public class SettingPresenter implements SettingContract.Presenter {
     public void bindOpen(SHARE_MEDIA shareMedia, Map<String, String> openMap) {
 
         SettingContract.View view = mViewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         view.onBegin();
 
@@ -136,16 +146,18 @@ public class SettingPresenter implements SettingContract.Presenter {
             case WEIXIN:
                 openType = SocialPresenter.SOCIAL_WECHAT;
                 break;
+            default:
+                break;
         }
 
         openMap.put("nickname", openMap.get("screen_name"));
         String openUserInfo = JSON.toJSONString(openMap);
 
-        Call<HwUserInfo.Social> call = HwAppManager.getNetEngine().getHttpService().bindOpenPlatform(openType, openUserInfo);
+        Call<Social> call = HwAppManager.getNetEngine().getHttpService().bindOpenPlatform(openType, openUserInfo);
         this.mCalls.add(call);
-        call.enqueue(new BaseResponseCallback<HwUserInfo.Social>() {
+        call.enqueue(new BaseResponseCallback<Social>() {
             @Override
-            protected void onSuccess(HwUserInfo.Social response) {
+            protected void onSuccess(Social response) {
                 HwAppManager.getAccountModel().bindSocialCache(response);
                 view.onBindOpenSuccess(response);
             }

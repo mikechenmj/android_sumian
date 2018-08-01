@@ -9,7 +9,7 @@ import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.RegisterBody;
-import com.sumian.hw.network.response.HwToken;
+import com.sumian.sleepdoctor.account.bean.Token;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,19 +49,23 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     public void doRegister(RegisterBody registerBody) {
 
         RegisterContract.View view = checkView();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         SleepyApi sleepyApi = checkApi();
-        if (sleepyApi == null) return;
+        if (sleepyApi == null) {
+            return;
+        }
 
         view.onBegin();
 
-        Call<HwToken> call = sleepyApi.doRegister(registerBody);
+        Call<Token> call = sleepyApi.doRegister(registerBody);
         this.mCalls.add(call);
 
-        call.enqueue(new BaseResponseCallback<HwToken>() {
+        call.enqueue(new BaseResponseCallback<Token>() {
             @Override
-            protected void onSuccess(HwToken response) {
+            protected void onSuccess(Token response) {
                 HwAppManager.getAccountModel().updateTokenCache(response);
                 view.onRegisterSuccess(response);
                 SyncUserInfoService.startService(SyncUserInfoService.SUMIAN_LOGIN_TYPE);
@@ -83,10 +87,14 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     public void doCaptcha(CaptchaBody captchaBody) {
 
         RegisterContract.View view = checkView();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         SleepyApi sleepyApi = checkApi();
-        if (sleepyApi == null) return;
+        if (sleepyApi == null) {
+            return;
+        }
 
         view.onBegin();
 
@@ -128,7 +136,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     private RegisterContract.View checkView() {
         WeakReference<RegisterContract.View> viewWeakReference = this.mViewWeakReference;
         RegisterContract.View view = viewWeakReference.get();
-        if (view == null) return null;
+        if (view == null) {
+            return null;
+        }
         return view;
     }
 
@@ -136,7 +146,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     private SleepyApi checkApi() {
         WeakReference<SleepyApi> apiWeakReference = this.mApiWeakReference;
         SleepyApi sleepyApi = apiWeakReference.get();
-        if (sleepyApi == null) return null;
+        if (sleepyApi == null) {
+            return null;
+        }
         return sleepyApi;
     }
 

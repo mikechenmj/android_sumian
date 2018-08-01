@@ -15,11 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.sumian.sleepdoctor.R;
-import com.sumian.hw.account.bean.Answer;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.network.response.HwUserInfo;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Answers;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 /**
  * Created by sm
@@ -124,8 +124,8 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
                 String url = request.getUrl().toString();
                 if (url.startsWith("sumian://sleep_quality_result?data=")) {
                     String json = url.substring(url.indexOf("{"));
-                    Answer answer = JSON.parseObject(json, Answer.class);
-                    HwUserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+                    Answers answer = JSON.parseObject(json, Answers.class);
+                    UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
                     userInfo.setAnswers(answer);
                     HwAppManager.getAccountModel().updateUserCache(userInfo);
                     finish();

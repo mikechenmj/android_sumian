@@ -4,7 +4,7 @@ import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwUserInfo;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -23,11 +23,11 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
 
     private static final String TAG = ModifyGenderPresenter.class.getSimpleName();
 
-    private WeakReference<ModifyUserInfoContract.View<HwUserInfo>> mViewWeakReference;
+    private WeakReference<ModifyUserInfoContract.View<UserInfo>> mViewWeakReference;
     private WeakReference<SleepyApi> mApiWeakReference;
     private Call mCall;
 
-    private ModifyGenderPresenter(ModifyUserInfoContract.View<HwUserInfo> view) {
+    private ModifyGenderPresenter(ModifyUserInfoContract.View<UserInfo> view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         this.mApiWeakReference = new WeakReference<>(HwAppManager
@@ -35,23 +35,27 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
             .getHttpService());
     }
 
-    public static void init(ModifyUserInfoContract.View<HwUserInfo> view) {
+    public static void init(ModifyUserInfoContract.View<UserInfo> view) {
         new ModifyGenderPresenter(view);
     }
 
     @Override
     public void release() {
         Call call = this.mCall;
-        if (call == null) return;
-        if (call.isCanceled()) return;
+        if (call == null) {
+            return;
+        }
+        if (call.isCanceled()) {
+            return;
+        }
         call.cancel();
     }
 
     @Override
     public void doModifyUserInfo(String formKey, Object formValue) {
 
-        WeakReference<ModifyUserInfoContract.View<HwUserInfo>> viewWeakReference = this.mViewWeakReference;
-        ModifyUserInfoContract.View<HwUserInfo> view = viewWeakReference.get();
+        WeakReference<ModifyUserInfoContract.View<UserInfo>> viewWeakReference = this.mViewWeakReference;
+        ModifyUserInfoContract.View<UserInfo> view = viewWeakReference.get();
         if (view == null) return;
 
         WeakReference<SleepyApi> apiWeakReference = this.mApiWeakReference;
@@ -62,10 +66,10 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
 
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
-        Call<HwUserInfo> call = sleepyApi.doModifyUserInfo(map);
-        call.enqueue(new BaseResponseCallback<HwUserInfo>() {
+        Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
+        call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
-            protected void onSuccess(HwUserInfo response) {
+            protected void onSuccess(UserInfo response) {
                 view.onModifySuccess(response);
                 HwAppManager.getAccountModel().updateUserCache(response);
             }

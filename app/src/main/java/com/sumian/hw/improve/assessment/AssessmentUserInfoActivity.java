@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.callback.UserInfoCallback;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.contract.UserInfoContract;
@@ -22,9 +21,10 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     TextView mTvWeight;
     Button mBtSave;
 
-    private HwUserInfo mUserInfo;
+    private UserInfo mUserInfo;
 
     private Boolean[] mIsBoss = new Boolean[5];
 
@@ -96,7 +96,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (ACTION_MODIFY_ASSESSMENT_USER_INFO.equals(intent.getAction())) {
-                    HwUserInfo userInfo = (HwUserInfo) intent.getSerializableExtra(EXTRA_ASSESSMENT_USER_INFO);
+                    UserInfo userInfo = (UserInfo) intent.getSerializableExtra(EXTRA_ASSESSMENT_USER_INFO);
                     onSyncCacheUserInfoSuccess(userInfo);
                 }
             }
@@ -117,17 +117,23 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
 
         } else if (i1 == R.id.lay_birthday) {
             formKey = ModifyUserInfoContract.KEY_BIRTHDAY;
-            if (TextUtils.isEmpty(formKey)) return;
+            if (TextUtils.isEmpty(formKey)) {
+                return;
+            }
             commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
 
         } else if (i1 == R.id.lay_height) {
             formKey = ModifyUserInfoContract.KEY_HEIGHT;
-            if (TextUtils.isEmpty(formKey)) return;
+            if (TextUtils.isEmpty(formKey)) {
+                return;
+            }
             commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
 
         } else if (i1 == R.id.lay_weight) {
             formKey = ModifyUserInfoContract.KEY_WEIGHT;
-            if (TextUtils.isEmpty(formKey)) return;
+            if (TextUtils.isEmpty(formKey)) {
+                return;
+            }
             commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
 
         } else if (i1 == R.id.bt_save) {
@@ -167,19 +173,19 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
                 }
             }
 
-            mUserInfo.setNickname(mEtNickname.getText().toString().trim());
+            mUserInfo.nickname = mEtNickname.getText().toString().trim();
             onSyncCacheUserInfoSuccess(mUserInfo);
 
             Map<String, Object> map = new HashMap<>(0);
 
-            map.put("nickname", mUserInfo.getNickname());
-            map.put("gender", mUserInfo.getGender());
-            map.put("birthday", mUserInfo.getBirthday());
-            map.put("height", mUserInfo.getHeight());
-            map.put("weight", mUserInfo.getWeight());
-            HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<HwUserInfo>() {
+            map.put("nickname", mUserInfo.nickname);
+            map.put("gender", mUserInfo.gender);
+            map.put("birthday", mUserInfo.birthday);
+            map.put("height", mUserInfo.height);
+            map.put("weight", mUserInfo.weight);
+            HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
                 @Override
-                protected void onSuccess(HwUserInfo response) {
+                protected void onSuccess(UserInfo response) {
                     onSyncCacheUserInfoSuccess(response);
                     HwAppManager.getAccountModel().updateUserCache(response);
                     finish();
@@ -218,12 +224,13 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     }
 
     private void setText(String text, TextView textView) {
-        if (textView != null)
+        if (textView != null) {
             textView.setText(TextUtils.isEmpty(text) || "".equals(text) ? getString(R.string.user_none_default_select_hint) : text);
+        }
     }
 
     @Override
-    public void onSyncCacheUserInfoSuccess(HwUserInfo userInfo) {
+    public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
         setText(userInfo.getNickname(), mEtNickname);
         mIsBoss[0] = TextUtils.isEmpty(userInfo.getNickname());
         mIsBoss[1] = TextUtils.isEmpty(userInfo.getGender()) || userInfo.getGender().equals("secrecy");
@@ -235,13 +242,15 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
         setText(userInfo.getBirthday(), mTvBirthday);
         String height = userInfo.getHeight();
         setText(height, mTvHeight);
-        if (!TextUtils.isEmpty(height))
+        if (!TextUtils.isEmpty(height)) {
             mTvHeight.append(" cm");
+        }
 
         String weight = userInfo.getWeight();
         setText(weight, mTvWeight);
-        if (!TextUtils.isEmpty(weight))
+        if (!TextUtils.isEmpty(weight)) {
             mTvWeight.append(" kg");
+        }
         try {
             if (mUserInfo == null) {
                 mUserInfo = userInfo.clone();
@@ -262,7 +271,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     }
 
     @Override
-    public void onSyncUserInfoSuccess(HwUserInfo userInfo) {
+    public void onSyncUserInfoSuccess(UserInfo userInfo) {
         onSyncCacheUserInfoSuccess(userInfo);
     }
 
@@ -280,4 +289,5 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     public void setPresenter(UserInfoContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
+
 }

@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
@@ -15,10 +14,11 @@ import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectGenderBottomSheet;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,7 +44,7 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     TextView mTvCareer;
 
     private UserInfoContract.Presenter mPresenter;
-    private HwUserInfo mUserInfo;
+    private UserInfo mUserInfo;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, UserInfoActivity.class));
@@ -129,7 +129,7 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     }
 
     @Override
-    public void onSyncCacheUserInfoSuccess(HwUserInfo userInfo) {
+    public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
         runUiThread(() -> {
 //            Glide.with(UserInfoActivity.this)
 //                    .load(userInfo.getAvatar())

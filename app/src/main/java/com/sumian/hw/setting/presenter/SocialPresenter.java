@@ -1,11 +1,12 @@
 package com.sumian.hw.setting.presenter;
 
-import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.setting.contract.SocialContract;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Social;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -40,7 +41,9 @@ public class SocialPresenter implements SocialContract.Presenter {
 
     @Override
     public void release() {
-        if (mCall == null || !mCall.isCanceled()) return;
+        if (mCall == null || !mCall.isCanceled()) {
+            return;
+        }
         mCall.cancel();
         mCall = null;
     }
@@ -50,11 +53,13 @@ public class SocialPresenter implements SocialContract.Presenter {
 
         WeakReference<SocialContract.View> viewWeakReference = this.mViewWeakReference;
         SocialContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
 
         view.onBegin();
 
-        List<HwUserInfo.Social> socialites = HwAppManager.getAccountModel().getUserInfo().getSocialites();
+        List<Social> socialites = HwAppManager.getAccountModel().getUserInfo().getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             view.onFinish();
             view.onFailure(App.getAppContext().getString(R.string.unbind_open_platform_failed));

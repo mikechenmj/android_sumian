@@ -24,4 +24,44 @@ public class Token {
                 ", is_new=" + is_new +
                 '}';
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public int getExpired_at() {
+        return expired_at;
+    }
+
+    public void setExpired_at(int expired_at) {
+        this.expired_at = expired_at;
+    }
+
+    public int getRefresh_expired_at() {
+        return refresh_expired_at;
+    }
+
+    public void setRefresh_expired_at(int refresh_expired_at) {
+        this.refresh_expired_at = refresh_expired_at;
+    }
+
+    public UserInfo getUser() {
+        return user;
+    }
+
+    public void setUser(UserInfo user) {
+        this.user = user;
+    }
+
+    public boolean isIs_new() {
+        return is_new;
+    }
+
+    public void setIs_new(boolean is_new) {
+        this.is_new = is_new;
+    }
 }

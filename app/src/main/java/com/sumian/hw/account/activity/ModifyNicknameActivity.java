@@ -9,16 +9,16 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.presenter.ModifyNickNamePresenter;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 
 /**
@@ -29,7 +29,7 @@ import com.sumian.hw.widget.refresh.ActionLoadingDialog;
  */
 
 public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnMoreListener, TitleBar.OnBackListener,
-    ModifyUserInfoContract.View<HwUserInfo> {
+    ModifyUserInfoContract.View<UserInfo> {
 
     public static final String MODIFY_TYPE = "modify_type";
 
@@ -169,7 +169,7 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
     }
 
     @Override
-    public void onModifySuccess(HwUserInfo userInfo) {
+    public void onModifySuccess(UserInfo userInfo) {
         runUiThread(() -> {
             ToastHelper.show(R.string.modify_user_info_success);
             HwAppManager.getAccountModel().updateUserCache(userInfo);

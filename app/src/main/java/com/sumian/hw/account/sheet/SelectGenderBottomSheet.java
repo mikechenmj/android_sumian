@@ -6,15 +6,15 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.presenter.ModifyGenderPresenter;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.assessment.AssessmentUserInfoActivity;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 /**
  * Created by jzz
@@ -23,7 +23,7 @@ import com.sumian.hw.widget.refresh.ActionLoadingDialog;
  * desc:
  */
 
-public class SelectGenderBottomSheet extends BottomSheetView implements View.OnClickListener, ModifyUserInfoContract.View<HwUserInfo> {
+public class SelectGenderBottomSheet extends BottomSheetView implements View.OnClickListener, ModifyUserInfoContract.View<UserInfo> {
 
     private static final String TAG = SelectGenderBottomSheet.class.getSimpleName();
 
@@ -36,7 +36,7 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
     private ActionLoadingDialog mActionLoadingDialog;
 
     private String mFormKey;
-    private HwUserInfo mUserInfo;
+    private UserInfo mUserInfo;
     private boolean mIsAssessment = false;
 
     public static SelectGenderBottomSheet newInstance(String formKey) {
@@ -47,11 +47,11 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
         return selectBottomSheet;
     }
 
-    public static BottomSheetView newInstance(String formKey, HwUserInfo userInfo, boolean isAssessment) {
+    public static BottomSheetView newInstance(String formKey, UserInfo userInfo, boolean isAssessment) {
         SelectGenderBottomSheet selectBottomSheet = new SelectGenderBottomSheet();
         Bundle args = new Bundle();
         args.putString(FORM_KEY, formKey);
-        args.putSerializable(USER_KEY, userInfo);
+        args.putParcelable(USER_KEY, userInfo);
         args.putBoolean(IS_ASSESSMENT_KEY, isAssessment);
         selectBottomSheet.setArguments(args);
         return selectBottomSheet;
@@ -62,7 +62,7 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
         super.initBundle(arguments);
         this.mFormKey = arguments.getString(FORM_KEY);
         this.mFormKey = arguments.getString(FORM_KEY);
-        this.mUserInfo = (HwUserInfo) arguments.getSerializable(USER_KEY);
+        this.mUserInfo = (UserInfo) arguments.getSerializable(USER_KEY);
         this.mIsAssessment = arguments.getBoolean(IS_ASSESSMENT_KEY, false);
     }
 
@@ -108,7 +108,7 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
     }
 
     @Override
-    public void onModifySuccess(HwUserInfo userInfo) {
+    public void onModifySuccess(UserInfo userInfo) {
         runUiThread(() -> {
             //ToastHelper.show(R.string.modify_user_info_success);
             HwAppManager.getAccountModel().updateUserCache(userInfo);

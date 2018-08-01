@@ -1,9 +1,11 @@
 package com.sumian.hw.command;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.BlueByteUtil;
+import com.sumian.sleepdoctor.account.bean.Answers;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -219,10 +221,51 @@ public final class BlueCmd {
         bytes[0] = Cmd.CMD_APP_HEADER;
         bytes[1] = Cmd.CMD_SET_USER_INFO;
         bytes[2] = 0x04;
-        bytes[3] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? HwAppManager.getAccountModel().getUserInfo().getGenderType() : 0xff);//性别特征
-        bytes[4] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? HwAppManager.getAccountModel().getUserInfo().getFormatAge() : 0xff);//年龄
-        bytes[5] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? HwAppManager.getAccountModel().getUserInfo().getFormatBmi() : 0xff);//身高体重比
-        bytes[6] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? HwAppManager.getAccountModel().getUserInfo().getInsomnia() : 0xff);//失眠程度
+        bytes[3] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getGenderType(HwAppManager.getAccountModel().getUserInfo().getGender()) : 0xff);//性别特征
+        bytes[4] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getFormatAge(HwAppManager.getAccountModel().getUserInfo().getAge()) : 0xff);//年龄
+        bytes[5] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getFormatBmi(HwAppManager.getAccountModel().getUserInfo().getBmi()) : 0xff);//身高体重比
+        bytes[6] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getInsomnia(HwAppManager.getAccountModel().getUserInfo().getAnswers()) : 0xff);//失眠程度
         return bytes;
+    }
+
+    public static int getGenderType(String gender) {
+        int genderType;
+        switch (gender) {
+            case "male":
+                genderType = 0x00;
+                break;
+            case "female":
+                genderType = 0x01;
+                break;
+            case "secrecy":
+            default:
+                genderType = 0xff;
+                break;
+        }
+        return genderType;
+    }
+
+    public static int getFormatAge(Integer age) {
+        if (age == null) {
+            return 0xff;
+        } else {
+            return age;
+        }
+    }
+
+    public static int getFormatBmi(String bmi) {
+        if (TextUtils.isEmpty(bmi)) {
+            return 0xff;
+        } else {
+            return (int) (Double.parseDouble(bmi) * 5.0f);
+        }
+    }
+
+    public static int getInsomnia(Answers answers) {
+        if (answers == null) {
+            return 0xff;
+        } else {
+            return answers.level;
+        }
     }
 }

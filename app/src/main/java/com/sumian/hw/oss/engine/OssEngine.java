@@ -12,11 +12,11 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.network.response.HwUserInfo;
 import com.sumian.hw.oss.bean.OssResponse;
+import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,7 +72,7 @@ public class OssEngine {
                         e.printStackTrace();
                     }
                 }
-                HwUserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+                UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
                 userInfo.setAvatar(avatarUrl);
                 HwAppManager.getAccountModel().updateUserCache(userInfo);
             }

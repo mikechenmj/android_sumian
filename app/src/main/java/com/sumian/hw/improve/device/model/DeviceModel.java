@@ -6,7 +6,7 @@ import com.sumian.hw.account.model.AccountModel;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.HwUserInfo;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -128,7 +128,7 @@ public class DeviceModel {
 
         AccountModel accountModel = HwAppManager.getAccountModel();
 
-        HwUserInfo userInfo = accountModel.getUserInfo();
+        UserInfo userInfo = accountModel.getUserInfo();
         userInfo.setSleeper_sn(sleepySn);
         userInfo.setMonitor_sn(monitorSn);
 
@@ -140,9 +140,9 @@ public class DeviceModel {
             map.put("sleeper_sn", userInfo.getSleeper_sn());
         }
 
-        HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<HwUserInfo>() {
+        HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
-            protected void onSuccess(HwUserInfo response) {
+            protected void onSuccess(UserInfo response) {
                 HwAppManager.getAccountModel().updateUserCache(response);
             }
 
