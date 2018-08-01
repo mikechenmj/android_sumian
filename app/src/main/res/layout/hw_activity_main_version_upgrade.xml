@@ -11,7 +11,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/hw_colorPrimary"
         android:gravity="center"
         app:text="@string/firmware_update_notice_hint" />
 
