@@ -5,6 +5,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.network.response.ResultResponse;
+import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public class SyncUserInfoPresenter implements SyncUserInfoContract.Presenter {
             @Override
             protected void onSuccess(ResultResponse<Reminder> response) {
                 List<Reminder> data = response.getData();
-                HwAppManager.getAccountModel().updateReminder(data == null || data.isEmpty() ? null : (data.get(0)));
+                ReminderManager.updateReminder(data == null || data.isEmpty() ? null : (data.get(0)));
             }
 
             @Override

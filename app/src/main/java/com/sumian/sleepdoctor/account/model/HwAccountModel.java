@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.hw.account.cache.HwAccountCache;
 import com.sumian.hw.account.callback.OnLogoutCallback;
-import com.sumian.hw.account.callback.OnSleepReminderCallback;
 import com.sumian.hw.account.callback.UserInfoCallback;
 import com.sumian.hw.account.service.SyncUserInfoService;
 import com.sumian.hw.app.HwAppManager;
@@ -13,7 +12,7 @@ import com.sumian.hw.common.cache.BluePeripheralCache;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.common.operator.AppOperator;
 import com.sumian.hw.leancloud.LeanCloudHelper;
-import com.sumian.hw.network.response.Reminder;
+import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
@@ -36,7 +35,6 @@ public class HwAccountModel {
     private volatile UserInfo mUserInfo;
 
     private List<UserInfoCallback> mUserInfoCallbacks;
-    private OnSleepReminderCallback mOnSleepReminderCallback;
 
     private OnLogoutCallback mOnLogoutCallback;
 
@@ -65,14 +63,6 @@ public class HwAccountModel {
             return;
         }
         userInfoCallbacks.remove(userInfoCallback);
-    }
-
-    public void addOnReminderCallback(OnSleepReminderCallback onSleepReminderCallback) {
-        this.mOnSleepReminderCallback = onSleepReminderCallback;
-    }
-
-    public void removeOnReminderCallback(OnSleepReminderCallback onSleepReminderCallback) {
-        this.mOnSleepReminderCallback = onSleepReminderCallback;
     }
 
     public boolean isLogin() {
@@ -161,7 +151,7 @@ public class HwAccountModel {
             //     activityManager.clearApplicationUserData();
             //  }
             // } else {
-            updateReminder(null);
+            ReminderManager.updateReminder(null);
             HwAccountCache.clearCache();
             SumianConfig.clear();
             BluePeripheralCache.clear();
@@ -173,15 +163,6 @@ public class HwAccountModel {
             return;
         }
         onLogoutCallback.onLogoutSuccess();
-    }
-
-    public void updateReminder(Reminder reminder) {
-        OnSleepReminderCallback onSleepReminderCallback = this.mOnSleepReminderCallback;
-        if (onSleepReminderCallback == null) {
-            return;
-        }
-        onSleepReminderCallback.onSleepReminderChange(reminder);
-        SumianConfig.updateReminder(reminder);
     }
 
     public void startUpdateUserCache() {

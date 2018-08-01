@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 
 import com.sumian.hw.common.helper.ToastHelper;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -39,8 +41,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (mHostActivity == null)
+        if (mHostActivity == null) {
             mHostActivity = (Activity) context;
+        }
     }
 
     @Override
@@ -74,6 +77,22 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         super.onViewCreated(view, savedInstanceState);
         initPresenter();
         initData();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (openEventBus()) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (openEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -121,7 +140,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
 
     protected void runOnUiThread(Runnable runnable, long delay) {
         View rootView = this.mRootView;
-        if (rootView == null) return;
+        if (rootView == null) {
+            return;
+        }
         if (Looper.myLooper() != Looper.getMainLooper()) {
             rootView.postDelayed(runnable, delay);
         } else {
@@ -153,4 +174,7 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         showCenterToast(getString(messageId));
     }
 
+    protected boolean openEventBus() {
+        return false;
+    }
 }

@@ -9,14 +9,13 @@ import android.widget.TextView;
 
 import com.sumian.hw.account.activity.SleepReminderActivity;
 import com.sumian.hw.account.activity.UserInfoActivity;
-import com.sumian.hw.account.callback.OnSleepReminderCallback;
-import com.sumian.hw.account.callback.UserInfoCallback;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.SyncUserInfoPresenter;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.event.ReminderChangeEvent;
 import com.sumian.hw.improve.assessment.QuestionActivity;
 import com.sumian.hw.improve.guideline.activity.ManualActivity;
 import com.sumian.hw.leancloud.LeanCloudHelper;
@@ -31,6 +30,9 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.event.EventBusUtil;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Locale;
 
@@ -45,7 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ConstantConditions")
 public class MeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
-        LeanCloudHelper.OnShowMsgDotCallback, OnSleepReminderCallback, VersionModel.ShowDotCallback {
+        LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     CircleImageView mIvAvatar;
     TextView mTvNickname;
@@ -98,7 +100,6 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
             mViewDividerTwo.setVisibility(View.VISIBLE);
             mLaySleepyAnswer.setVisibility(View.VISIBLE);
         }
-        HwAppManager.getAccountModel().addOnReminderCallback(this);
         HwAppManager.getVersionModel().registerShowDotCallback(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
             @Override
@@ -158,7 +159,6 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     @Override
     protected void onRelease() {
         LeanCloudHelper.removeOnAdminMsgCallback(this);
-        HwAppManager.getAccountModel().removeOnReminderCallback(this);
         HwAppManager.getVersionModel().unRegisterShowDotCallback(this);
         super.onRelease();
     }
@@ -210,9 +210,10 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
 
     }
 
-    @Override
-    public void onSleepReminderChange(Reminder reminder) {
-        updateReminder(reminder);
+    @Subscribe(sticky = true)
+    public void onSleepReminderChange(ReminderChangeEvent event) {
+        updateReminder(event.mReminder);
+        EventBusUtil.removeStickyEvent(event);
     }
 
     @Override

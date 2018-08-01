@@ -7,6 +7,7 @@ import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.network.response.ResultResponse;
+import com.sumian.hw.reminder.ReminderManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
             protected void onSuccess(ResultResponse<Reminder> response) {
                 List<Reminder> data = response.getData();
                 view.onSyncReminderSuccess(data);
-                HwAppManager.getAccountModel().updateReminder(data == null || data.isEmpty() ? null : (mCurrentReminder = data.get(0)));
+                ReminderManager.updateReminder(data == null || data.isEmpty() ? null : (mCurrentReminder = data.get(0)));
             }
 
             @Override
@@ -144,7 +145,7 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
             protected void onSuccess(Reminder response) {
                 mCurrentReminder = response;
                 view.onAddReminderSuccess();
-                AppOperator.runOnThread(() -> HwAppManager.getAccountModel().updateReminder(response));
+                AppOperator.runOnThread(() -> ReminderManager.updateReminder(response));
             }
 
             @Override
@@ -186,7 +187,7 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
             protected void onSuccess(Reminder response) {
                 mCurrentReminder = response;
                 view.onModifyReminderSuccess(response);
-                HwAppManager.getAccountModel().updateReminder(response);
+                ReminderManager.updateReminder(response);
             }
 
             @Override
