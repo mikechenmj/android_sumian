@@ -55,7 +55,7 @@ class AuthInterceptor private constructor() : Interceptor {
                 .addHeader("Accept", "application/vnd.sumianapi+json")
                 .addHeader("Content-Type", "application/json")
                 .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android")
-                .addHeader("Authorization", "Bearer " + AppManager.getAccountViewModel().accessToken())
+                .addHeader("Authorization", "Bearer " + AppManager.getAccountViewModel().getTokenString())
                 .build()
 
         return chain.proceed(request)

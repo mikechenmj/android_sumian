@@ -3,7 +3,7 @@ package com.sumian.sleepdoctor.account.model;
 import android.text.TextUtils;
 
 import com.sumian.blue.manager.BlueManager;
-import com.sumian.hw.account.cache.AccountCache;
+import com.sumian.hw.account.cache.HwAccountCache;
 import com.sumian.hw.account.callback.OnLogoutCallback;
 import com.sumian.hw.account.callback.OnSleepReminderCallback;
 import com.sumian.hw.account.callback.UserInfoCallback;
@@ -41,8 +41,8 @@ public class HwAccountModel {
     private OnLogoutCallback mOnLogoutCallback;
 
     public HwAccountModel() {
-        this.mToken = AccountCache.getTokenCache(Token.class);
-        this.mUserInfo = AccountCache.getUserCache(UserInfo.class);
+        this.mToken = HwAccountCache.getTokenCache(Token.class);
+        this.mUserInfo = HwAccountCache.getUserCache(UserInfo.class);
     }
 
     public void addOnLogoutCallback(OnLogoutCallback onLogoutCallback) {
@@ -116,13 +116,13 @@ public class HwAccountModel {
             return;
         }
         this.mUserInfo = token.user;
-        AccountCache.updateTokenCache(token);
+        HwAccountCache.updateTokenCache(token);
     }
 
     public void updateUserCache(UserInfo userInfo) {
         this.mUserInfo = userInfo;
         if (userInfo != null) {
-            AccountCache.updateUserCache(userInfo);
+            HwAccountCache.updateUserCache(userInfo);
 
             List<UserInfoCallback> userInfoCallbacks = this.mUserInfoCallbacks;
             if (userInfoCallbacks == null || userInfoCallbacks.isEmpty()) {
@@ -162,7 +162,7 @@ public class HwAccountModel {
             //  }
             // } else {
             updateReminder(null);
-            AccountCache.clearCache();
+            HwAccountCache.clearCache();
             SumianConfig.clear();
             BluePeripheralCache.clear();
             BlueManager.init().doStopScan();

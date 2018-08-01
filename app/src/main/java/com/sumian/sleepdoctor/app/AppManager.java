@@ -97,7 +97,7 @@ public final class AppManager implements Observer<Boolean> {
 
         if (Holder.INSTANCE.mAccountViewModel == null) {
             Holder.INSTANCE.mAccountViewModel = new AccountViewModel((Application) context);
-            Holder.INSTANCE.mAccountViewModel.LoadToken();
+            Holder.INSTANCE.mAccountViewModel.loadTokenFromSp();
         }
 
         mTokenInvalidStateLiveData = Holder.INSTANCE.mAccountViewModel.getLiveDataTokenInvalidState();

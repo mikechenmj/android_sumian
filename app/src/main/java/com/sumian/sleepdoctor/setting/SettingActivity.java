@@ -118,8 +118,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
             @Override
             protected void onSuccess(Unit response) {
                 NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
-                AppOperator.runOnThread(AccountCache::clearCache);
-                AppManager.getAccountViewModel().updateTokenSync(null);
+                AppManager.getAccountViewModel().updateToken(null);
                 LoginActivity.showClearTop(SettingActivity.this, LoginActivity.class);
                 AppManager.getOpenLogin().deleteWeiXinOauth(SettingActivity.this);
             }

@@ -42,7 +42,7 @@ class ModuleCommunicationReceiver : BroadcastReceiver() {
             token.is_new = false
 
             token.user = userProfile
-            AppManager.getAccountViewModel().updateTokenSync(token)
+            AppManager.getAccountViewModel().updateToken(token)
             ActivityUtils.startActivity(MainActivity::class.java)
         }
     }

@@ -34,7 +34,7 @@ class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : B
                     mView?.onBindDoctorFailed(App.getAppContext().getString(R.string.bind_other_doctor_state))
                 }
             } else {
-                AppManager.getAccountViewModel().updateBindDoctor(sBridgeResult.result)
+                AppManager.getAccountViewModel().updateBoundDoctor(sBridgeResult.result)
                 AppManager.getDoctorViewModel().notifyDoctor(sBridgeResult.result)
                 mView?.onBindDoctorSuccess(sBridgeResult.message)
             }

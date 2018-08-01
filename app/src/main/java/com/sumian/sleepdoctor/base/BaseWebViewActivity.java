@@ -184,7 +184,7 @@ public abstract class BaseWebViewActivity<Presenter extends BasePresenter> exten
     }
 
     private String getUrlToken() {
-        return "token=" + AppManager.getAccountViewModel().accessToken();
+        return "token=" + AppManager.getAccountViewModel().getTokenString();
     }
 
     @Override

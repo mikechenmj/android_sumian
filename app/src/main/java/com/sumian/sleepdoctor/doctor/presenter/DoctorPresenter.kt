@@ -41,7 +41,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
         doctorInfoCall.enqueue(object : BaseResponseCallback<Doctor>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 if (errorResponse.code == 1) {
-                    AppManager.getAccountViewModel().updateBindDoctor(null)
+                    AppManager.getAccountViewModel().updateBoundDoctor(null)
                     AppManager.getDoctorViewModel().notifyDoctor(null)
                     mView?.onNotBindDoctor()
                 } else {
@@ -50,7 +50,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
             }
 
             override fun onSuccess(response: Doctor?) {
-                AppManager.getAccountViewModel().updateBindDoctor(response)
+                AppManager.getAccountViewModel().updateBoundDoctor(response)
                 AppManager.getDoctorViewModel().notifyDoctor(response)
                 mView?.onGetDoctorInfoSuccess(response)
                 getDoctorServiceInfo(response?.id!!)
@@ -75,7 +75,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
             }
 
             override fun onSuccess(response: Doctor?) {
-                AppManager.getAccountViewModel().updateBindDoctor(response)
+                AppManager.getAccountViewModel().updateBoundDoctor(response)
                 AppManager.getDoctorViewModel().notifyDoctor(response)
                 mView?.onGetDoctorInfoSuccess(response)
             }

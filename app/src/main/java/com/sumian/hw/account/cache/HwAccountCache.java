@@ -14,11 +14,11 @@ import com.sumian.sleepdoctor.account.bean.Token;
  * desc:
  */
 
-public final class AccountCache {
+public final class HwAccountCache {
 
-    private static final String TAG = AccountCache.class.getSimpleName();
+    private static final String TAG = HwAccountCache.class.getSimpleName();
 
-    private static final String CACHE_NAME = AccountCache.class.getSimpleName();
+    private static final String CACHE_NAME = HwAccountCache.class.getSimpleName();
 
     private static final String KEY_USER = "userInfo";
     private static final String KEY_TOKEN = "userToken";

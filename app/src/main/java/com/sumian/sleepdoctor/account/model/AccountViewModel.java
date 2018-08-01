@@ -6,14 +6,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.account.cache.AccountCache;
 import com.sumian.sleepdoctor.doctor.bean.Doctor;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import com.sumian.sleepdoctor.utils.JsonUtil;
 
 /**
  * Created by jzz
@@ -23,32 +20,18 @@ import java.util.concurrent.Future;
 
 public class AccountViewModel extends AndroidViewModel {
 
-    private static final String TAG = AccountViewModel.class.getSimpleName();
-
-    private MutableLiveData<Token> mTokenLiveData;
-
-    private MutableLiveData<Boolean> mTokenIsInvalid;
+    private static final String SP_KEY_TOKEN = "token";
+    private MutableLiveData<Token> mTokenLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> mTokenIsInvalid = new MutableLiveData<>();
 
     public AccountViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void LoadToken() {
-        if (mTokenLiveData == null) {
-            mTokenLiveData = new MutableLiveData<>();
-        }
-
-        if (mTokenLiveData.getValue() == null) {
-            Future<Token> future = Executors.newSingleThreadExecutor().submit(() -> AccountCache.getTokenCache(Token.class));
-            try {
-                Token t = future.get();
-                //updateTokenInvalidState(t == null);
-
-                mTokenLiveData.postValue(t);
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
+    public void loadTokenFromSp() {
+        String tokenJson = SPUtils.getInstance().getString(SP_KEY_TOKEN, null);
+        Token token = JsonUtil.fromJson(tokenJson, Token.class);
+        mTokenLiveData.setValue(token);
     }
 
     public LiveData<Token> getLiveDataToken() {
@@ -63,7 +46,7 @@ public class AccountViewModel extends AndroidViewModel {
         return getToken().user;
     }
 
-    public void updateBindDoctor(Doctor doctor) {
+    public void updateBoundDoctor(Doctor doctor) {
         Token token = getToken();
         token.is_new = false;
         UserInfo userProfile = getUserProfile();
@@ -75,43 +58,32 @@ public class AccountViewModel extends AndroidViewModel {
         updateUserProfile(userProfile);
     }
 
-    public void updateTokenSync(Token token) {
-        updateTokenAsync(token, false);
-    }
-
-    private void updateTokenAsync(Token token, boolean async) {
-        if (async) {
-            mTokenLiveData.postValue(token);
-        } else {
-            mTokenLiveData.setValue(token);
-        }
+    public void updateToken(Token token) {
+        mTokenLiveData.setValue(token);
         updateTokenInvalidState(token == null);
-        AccountCache.updateTokenCache(token);
+        persistentTokenInSp();
     }
 
     public void updateUserProfile(UserInfo userProfile) {
         Token token = getToken();
         token.is_new = false;
         token.user = userProfile;
-        AccountCache.updateUserCache(userProfile);
-        updateTokenSync(token);
+        updateToken(token);
     }
 
-    public String accessToken() {
+    public String getTokenString() {
         return getToken() == null ? null : getToken().token;
     }
 
     public void updateTokenInvalidState(boolean tokenIsInvalid) {
-        if (mTokenIsInvalid == null) {
-            mTokenIsInvalid = new MutableLiveData<>();
-        }
-        mTokenIsInvalid.postValue(tokenIsInvalid);
+        mTokenIsInvalid.setValue(tokenIsInvalid);
     }
 
     public LiveData<Boolean> getLiveDataTokenInvalidState() {
-        if (mTokenIsInvalid == null) {
-            mTokenIsInvalid = new MutableLiveData<>();
-        }
         return mTokenIsInvalid;
+    }
+
+    private void persistentTokenInSp() {
+        SPUtils.getInstance().put(SP_KEY_TOKEN, JsonUtil.toJson(mTokenLiveData.getValue()));
     }
 }

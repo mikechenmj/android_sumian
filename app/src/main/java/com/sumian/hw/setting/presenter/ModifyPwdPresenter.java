@@ -1,6 +1,6 @@
 package com.sumian.hw.setting.presenter;
 
-import com.sumian.hw.account.cache.AccountCache;
+import com.sumian.hw.account.cache.HwAccountCache;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
@@ -54,7 +54,7 @@ public class ModifyPwdPresenter implements ModifyPwdContract.Presenter {
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override
             protected void onSuccess(Object response) {
-                AccountCache.clearCache();
+                HwAccountCache.clearCache();
                 HwAppManager.getAccountModel().updateUserCache(null);
                 HwAppManager.getAccountModel().updateTokenCache(null);
                 view.onModifyPwdSuccess();

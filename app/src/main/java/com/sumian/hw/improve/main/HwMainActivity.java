@@ -267,8 +267,8 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         token.expired_at = hwToken.expired_at;
         token.is_new = false;
         token.user = userProfile;
-        AppManager.getAccountViewModel().updateTokenSync(token);
-        com.sumian.sleepdoctor.app.AppManager.getAccountViewModel().updateTokenSync(token);
+        AppManager.getAccountViewModel().updateToken(token);
+        com.sumian.sleepdoctor.app.AppManager.getAccountViewModel().updateToken(token);
         ActivityUtils.startActivity(MainActivity.class);
     }
 
