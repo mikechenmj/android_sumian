@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
 
     private FragmentManager mFragmentManager;
 
-    private String[] mFTags = new String[]{HomepageFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), MeFragment.class.getSimpleName()};
+    private String[] mFTags = new String[]{HomepageFragment.class.getSimpleName(), DoctorFragment.class.getSimpleName(), "DeviceFragment", MeFragment.class.getSimpleName()};
     private LaunchData<LaunchSleepTabBean> mLaunchData;
 
     private VersionDelegate mVersionDelegate;
