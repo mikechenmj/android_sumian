@@ -21,7 +21,7 @@ import com.sumian.common.utils.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.sheet.ModifySelectBottomSheet;
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.account.userProfile.contract.UserInfoContract;
@@ -90,7 +90,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
     @BindView(R.id.dv_wechat_bind)
     SettingDividerView mDvWechat;
 
-    private UserProfile mUserProfile;
+    private UserInfo mUserProfile;
 
     private File cameraFile;
     private File storageDir = null;
@@ -293,7 +293,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
     }
 
     @Override
-    public void onGetUserInfoSuccess(UserProfile userProfile) {
+    public void onGetUserInfoSuccess(UserInfo userProfile) {
         this.mUserProfile = userProfile;
         updateUserProfileUI(userProfile);
     }
@@ -402,7 +402,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void updateUserProfileUI(UserProfile userProfile) {
+    private void updateUserProfileUI(UserInfo userProfile) {
         ImageLoader.loadImage(this, mIvAvatar, userProfile.avatar, R.mipmap.ic_info_avatar_patient);
         mDvNickname.setContent(userProfile.nickname);
 

@@ -37,7 +37,7 @@ import com.sumian.hw.widget.nav.NavTab;
 import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.main.MainActivity;
 
@@ -259,7 +259,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         intent.putExtra("token_info", json);
 
         HwUserInfo userInfo = hwToken.getUserInfo();
-        UserProfile userProfile = new UserProfile();
+        UserInfo userProfile = new UserInfo();
         userProfile.id = (int) userInfo.getId();
         userProfile.mobile = userInfo.getMobile();
         userProfile.avatar = userInfo.getAvatar();

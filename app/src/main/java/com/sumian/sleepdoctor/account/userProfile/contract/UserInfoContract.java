@@ -3,7 +3,7 @@ package com.sumian.sleepdoctor.account.userProfile.contract;
 import android.app.Activity;
 
 import com.sumian.sleepdoctor.account.bean.Social;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.base.BasePresenter;
 import com.sumian.sleepdoctor.base.BaseView;
 import com.umeng.socialize.UMAuthListener;
@@ -25,7 +25,7 @@ public interface UserInfoContract {
 
     interface View extends BaseView<Presenter> {
 
-        void onGetUserInfoSuccess(UserProfile userProfile);
+        void onGetUserInfoSuccess(UserInfo userProfile);
 
         void onGetUserInfoFailed(String error);
 

@@ -7,7 +7,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.cache.AccountCache;
 import com.sumian.sleepdoctor.doctor.bean.Doctor;
 
@@ -59,14 +59,14 @@ public class AccountViewModel extends AndroidViewModel {
         return mTokenLiveData.getValue();
     }
 
-    public UserProfile getUserProfile() {
+    public UserInfo getUserProfile() {
         return getToken().user;
     }
 
     public void updateBindDoctor(Doctor doctor) {
         Token token = getToken();
         token.is_new = false;
-        UserProfile userProfile = getUserProfile();
+        UserInfo userProfile = getUserProfile();
         if (doctor != null) {
             userProfile.doctor_id = doctor.getId();
         }
@@ -89,7 +89,7 @@ public class AccountViewModel extends AndroidViewModel {
         AccountCache.updateTokenCache(token);
     }
 
-    public void updateUserProfile(UserProfile userProfile) {
+    public void updateUserProfile(UserInfo userProfile) {
         Token token = getToken();
         token.is_new = false;
         token.user = userProfile;

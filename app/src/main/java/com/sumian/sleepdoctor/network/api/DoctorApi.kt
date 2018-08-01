@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.network.api
 
 import com.sumian.sleepdoctor.account.bean.Social
 import com.sumian.sleepdoctor.account.bean.Token
-import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.bean.PictureOssSts
 import com.sumian.sleepdoctor.cbti.bean.*
@@ -52,7 +52,7 @@ interface DoctorApi {
     fun getCaptcha(@Field("mobile") mobile: String): Call<Unit>
 
     @GET("user/profile")
-    fun getUserProfile(): Call<UserProfile>
+    fun getUserProfile(): Call<UserInfo>
 
     @FormUrlEncoded
     @POST("authorizations/socialite-bound")
@@ -64,7 +64,7 @@ interface DoctorApi {
 
     @FormUrlEncoded
     @PATCH("user/profile")
-    fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserProfile>
+    fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserInfo>
 
     @PATCH("user/avatar")
     fun uploadAvatar(): Call<OssResponse>

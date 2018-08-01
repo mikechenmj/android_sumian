@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.advisory.bean
 
 import android.os.Parcelable
-import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.doctor.bean.Doctor
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
@@ -28,7 +28,7 @@ data class Advisory(var id: Int, //咨询 ID
                     var remind_description: String,//顶部提示条文案
                     var last_count: Int,//剩余次数
                     var records: ArrayList<Record>?,//提问或回复记录
-                    var user: UserProfile?,//用户信息
+                    var user: UserInfo?,//用户信息
                     var doctor: Doctor?//医生信息
 ) : Parcelable, Serializable {
     companion object {

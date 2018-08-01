@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.account.bean.Social;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.userProfile.contract.UserInfoContract;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
@@ -51,11 +51,11 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
     @Override
     public void getUserInfo() {
         mView.onBegin();
-        Call<UserProfile> call = AppManager.getHttpService().getUserProfile();
+        Call<UserInfo> call = AppManager.getHttpService().getUserProfile();
         addCall(call);
-        call.enqueue(new BaseResponseCallback<UserProfile>() {
+        call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
-            protected void onSuccess(@Nullable UserProfile response) {
+            protected void onSuccess(@Nullable UserInfo response) {
                 AppManager.getAccountViewModel().updateUserProfile(response);
                 mView.onGetUserInfoSuccess(response);
             }
@@ -92,7 +92,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
                                 JSONObject jsonObject = new JSONObject(response);
                                 String avatarUrl = jsonObject.getString("avatar");
                                 if (!TextUtils.isEmpty(avatarUrl)) {
-                                    UserProfile userProfile = AppManager.getAccountViewModel().getUserProfile();
+                                    UserInfo userProfile = AppManager.getAccountViewModel().getUserProfile();
                                     userProfile.avatar = avatarUrl;
                                     AppManager.getAccountViewModel().updateUserProfile(userProfile);
                                 }

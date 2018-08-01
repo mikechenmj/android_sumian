@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor;
 
 import com.google.gson.reflect.TypeToken;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.h5.bean.H5BaseResponse;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 
@@ -21,7 +21,7 @@ public class LittleTest {
     @Test
     public void test() {
         String data = "";
-        H5BaseResponse<UserProfile> o = JsonUtil.fromJson(data, new TypeToken<H5BaseResponse<UserProfile>>() {
+        H5BaseResponse<UserInfo> o = JsonUtil.fromJson(data, new TypeToken<H5BaseResponse<UserInfo>>() {
         }.getType());
     }
 }

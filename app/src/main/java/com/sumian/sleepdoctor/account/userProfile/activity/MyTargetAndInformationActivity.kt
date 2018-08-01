@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.gson.reflect.TypeToken
-import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.ActivityLauncher
 import com.sumian.sleepdoctor.base.BasePresenter
@@ -47,8 +47,8 @@ open class MyTargetAndInformationActivity : BaseWebViewActivity<BasePresenter<An
         super.registerHandler(sWebView)
         sWebView.registerHandler("setPersonalInformation", object : SBridgeHandler() {
             override fun handler(data: String?) {
-                val typeToken = object : TypeToken<H5BaseResponse<UserProfile>>() {}
-                val response: H5BaseResponse<UserProfile>? = JsonUtil.fromJson(data, typeToken.type)
+                val typeToken = object : TypeToken<H5BaseResponse<UserInfo>>() {}
+                val response: H5BaseResponse<UserInfo>? = JsonUtil.fromJson(data, typeToken.type)
                 if (response != null && response.isSuccess()) {
                     AppManager.getAccountViewModel().updateUserProfile(response.result)
                     setResult(Activity.RESULT_OK)

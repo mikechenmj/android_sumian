@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import cn.carbswang.android.numberpickerview.library.NumberPickerView
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract
 import com.sumian.sleepdoctor.account.userProfile.contract.ModifyUserInfoContract
 import com.sumian.sleepdoctor.app.App
@@ -59,8 +59,8 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
         val call = AppManager.getHttpService().modifyUserProfile(map)
 
-        call.enqueue(object : BaseResponseCallback<UserProfile>() {
-            override fun onSuccess(response: UserProfile?) {
+        call.enqueue(object : BaseResponseCallback<UserInfo>() {
+            override fun onSuccess(response: UserInfo?) {
                 AppManager.getAccountViewModel().updateUserProfile(response)
                 mView.onImproveUserProfileSuccess()
             }
@@ -179,7 +179,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         }
     }
 
-    private fun transformBirthday(minYear: Int, userInfo: UserProfile) {
+    private fun transformBirthday(minYear: Int, userInfo: UserInfo) {
         val year = Calendar.getInstance().get(Calendar.YEAR) + 1
         val count = year - minYear
         val years = arrayOfNulls<String>(count)
@@ -209,7 +209,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     }
 
 
-    private fun transformWeight(minWeight: Int, maxWeight: Int, userInfo: UserProfile) {
+    private fun transformWeight(minWeight: Int, maxWeight: Int, userInfo: UserInfo) {
 
         val count = maxWeight - minWeight
 
@@ -242,7 +242,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         mView.transformTwoDisplayedValues(numberTwoPosition, "kg", decimalWeights)
     }
 
-    private fun transformHeight(minHeight: Int, maxHeight: Int, userInfo: UserProfile) {
+    private fun transformHeight(minHeight: Int, maxHeight: Int, userInfo: UserInfo) {
         val count = maxHeight - minHeight
         val heights = arrayOfNulls<String>(count)
         val decimalHeights = arrayOfNulls<String>(10)

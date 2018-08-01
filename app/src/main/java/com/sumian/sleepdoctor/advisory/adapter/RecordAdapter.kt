@@ -14,7 +14,7 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.media.LargeImageActivity
 import com.sumian.common.widget.FlowLayout
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.account.bean.UserProfile
+import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.advisory.bean.Record
 import com.sumian.sleepdoctor.base.holder.BaseViewHolder
 import com.sumian.sleepdoctor.doctor.bean.Doctor
@@ -36,7 +36,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
 
     private lateinit var mDoctor: Doctor
 
-    private lateinit var mUser: UserProfile
+    private lateinit var mUser: UserInfo
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
         var viewHolder: BaseViewHolder<Record>? = null
@@ -83,7 +83,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
         this.mDoctor = doctor
     }
 
-    fun setUser(userProfile: UserProfile) {
+    fun setUser(userProfile: UserInfo) {
         this.mUser = userProfile
     }
 

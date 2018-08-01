@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.sumian.common.utils.ImageLoader;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.userProfile.activity.UserProfileActivity;
 import com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -50,7 +50,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initData() {
         super.initData();
-        UserProfile userProfile = AppManager.getAccountViewModel().getToken().user;
+        UserInfo userProfile = AppManager.getAccountViewModel().getToken().user;
         updateUserProfile(userProfile);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
             if (token != null) {
@@ -111,7 +111,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    private void updateUserProfile(UserProfile userProfile) {
+    private void updateUserProfile(UserInfo userProfile) {
         ImageLoader.loadImage(this, mIvAvatar, userProfile.avatar, R.mipmap.ic_info_avatar_patient);
         String nickname = userProfile.nickname;
         mTvNickname.setText(TextUtils.isEmpty(nickname) ? userProfile.mobile : nickname);

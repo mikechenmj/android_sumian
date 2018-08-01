@@ -11,7 +11,7 @@ public class Token {
     public String token;
     public int expired_at;
     public int refresh_expired_at;
-    public UserProfile user;
+    public UserInfo user;
     public boolean is_new;//true:新用户，false:旧用户
 
     @Override

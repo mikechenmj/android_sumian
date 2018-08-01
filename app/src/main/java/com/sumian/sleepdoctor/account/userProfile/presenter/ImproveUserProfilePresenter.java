@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.account.userProfile.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.sumian.sleepdoctor.account.bean.UserProfile;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
@@ -22,7 +22,7 @@ import retrofit2.Call;
 public class ImproveUserProfilePresenter implements ImproveUserProfileContract.Presenter {
 
     private ImproveUserProfileContract.View mView;
-    private Call<UserProfile> mCall;
+    private Call<UserInfo> mCall;
 
     private ImproveUserProfilePresenter(ImproveUserProfileContract.View view) {
         view.setPresenter(this);
@@ -43,14 +43,14 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
 
         map.put(improveKey, newUserProfile);
 
-        Call<UserProfile> call = AppManager
+        Call<UserInfo> call = AppManager
                 .getHttpService()
                 .modifyUserProfile(map);
 
         this.mCall = call;
-        call.enqueue(new BaseResponseCallback<UserProfile>() {
+        call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
-            protected void onSuccess(UserProfile response) {
+            protected void onSuccess(UserInfo response) {
                 AppManager.getAccountViewModel().updateUserProfile(response);
                 mView.onImproveUserProfileSuccess();
             }
