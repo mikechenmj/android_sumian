@@ -51,7 +51,7 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
         call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
             protected void onSuccess(UserInfo response) {
-                AppManager.getAccountViewModel().updateUserProfile(response);
+                AppManager.getAccountViewModel().updateUserInfo(response);
                 mView.onImproveUserProfileSuccess();
             }
 

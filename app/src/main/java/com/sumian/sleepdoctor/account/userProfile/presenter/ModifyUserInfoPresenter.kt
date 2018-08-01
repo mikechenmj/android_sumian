@@ -61,7 +61,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
         call.enqueue(object : BaseResponseCallback<UserInfo>() {
             override fun onSuccess(response: UserInfo?) {
-                AppManager.getAccountViewModel().updateUserProfile(response)
+                AppManager.getAccountViewModel().updateUserInfo(response)
                 mView.onImproveUserProfileSuccess()
             }
 

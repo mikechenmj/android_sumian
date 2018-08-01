@@ -377,7 +377,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
             socials.add(social);
         }
         mUserProfile.socialites = socials;
-        AppManager.getAccountViewModel().updateUserProfile(mUserProfile);
+        AppManager.getAccountViewModel().updateUserInfo(mUserProfile);
         AppManager.getOpenLogin().deleteWeiXinOauth(this);
     }
 

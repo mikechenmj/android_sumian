@@ -50,7 +50,7 @@ open class MyTargetAndInformationActivity : BaseWebViewActivity<BasePresenter<An
                 val typeToken = object : TypeToken<H5BaseResponse<UserInfo>>() {}
                 val response: H5BaseResponse<UserInfo>? = JsonUtil.fromJson(data, typeToken.type)
                 if (response != null && response.isSuccess()) {
-                    AppManager.getAccountViewModel().updateUserProfile(response.result)
+                    AppManager.getAccountViewModel().updateUserInfo(response.result)
                     setResult(Activity.RESULT_OK)
                     finish()
                 }

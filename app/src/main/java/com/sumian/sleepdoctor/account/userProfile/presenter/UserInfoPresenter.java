@@ -56,7 +56,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
         call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
             protected void onSuccess(@Nullable UserInfo response) {
-                AppManager.getAccountViewModel().updateUserProfile(response);
+                AppManager.getAccountViewModel().updateUserInfo(response);
                 mView.onGetUserInfoSuccess(response);
             }
 
@@ -94,7 +94,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
                                 if (!TextUtils.isEmpty(avatarUrl)) {
                                     UserInfo userProfile = AppManager.getAccountViewModel().getUserProfile();
                                     userProfile.avatar = avatarUrl;
-                                    AppManager.getAccountViewModel().updateUserProfile(userProfile);
+                                    AppManager.getAccountViewModel().updateUserInfo(userProfile);
                                 }
                             }
                         } catch (JSONException e) {

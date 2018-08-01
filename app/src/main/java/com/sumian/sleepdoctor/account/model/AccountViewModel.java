@@ -55,7 +55,7 @@ public class AccountViewModel extends AndroidViewModel {
         }
         userProfile.doctor = doctor;
         token.user = userProfile;
-        updateUserProfile(userProfile);
+        updateUserInfo(userProfile);
     }
 
     public void updateToken(Token token) {
@@ -64,10 +64,10 @@ public class AccountViewModel extends AndroidViewModel {
         persistentTokenInSp();
     }
 
-    public void updateUserProfile(UserInfo userProfile) {
+    public void updateUserInfo(UserInfo userInfo) {
         Token token = getToken();
         token.is_new = false;
-        token.user = userProfile;
+        token.user = userInfo;
         updateToken(token);
     }
 
