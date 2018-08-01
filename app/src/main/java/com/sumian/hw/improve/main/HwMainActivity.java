@@ -222,7 +222,11 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
 
     @Override
     public void tab(TabButton tabButton, int position) {
-//        if (mCurrentPosition == position) return;
+        if (position == 2) {
+            launchSleepDoctor();
+            finish();
+            return;
+        }
         BasePagerFragment pagerFragment;
         BasePagerFragment fragmentByTag;
         String tag;
@@ -243,9 +247,6 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
             }
         }
         mCurrentPosition = position;
-        if (position == 2) {
-            launchSleepDoctor();
-        }
     }
 
     private void launchSleepDoctor() {
@@ -256,7 +257,6 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         hwToken.setUserInfo(accountModel.getUserInfo());
         String json = JsonUtil.toJson(hwToken);
         intent.putExtra("token_info", json);
-        sendBroadcast(intent);
 
         HwUserInfo userInfo = hwToken.getUserInfo();
         UserProfile userProfile = new UserProfile();

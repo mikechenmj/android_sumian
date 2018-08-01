@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:tab_icon="@drawable/tab_record_icon"
+            app:tab_icon="@drawable/sd_sel_tab_record_icon"
             app:tab_text="@string/tab_record" />
 
         <View
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:tab_icon="@drawable/tab_doctor_icon"
+            app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
             app:tab_text="@string/tab_doctor" />
 
         <View
@@ -48,7 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:tab_icon="@drawable/tab_me_icon"
+            app:tab_icon="@drawable/sd_sel_tab_me_icon"
             app:tab_text="@string/tab_me" />
 
     </LinearLayout>

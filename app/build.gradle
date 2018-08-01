@@ -56,6 +56,7 @@ android {
         buildConfigField("String", "HW_USER_AGREEMENT_URL", HW_USER_AGREEMENT_URL)
         buildConfigField("String", "HW_PRIVACY_POLICY_URL", HW_PRIVACY_POLICY_URL)
         buildConfigField("String", "HW_USER_GUIDELINE_URL", HW_USER_GUIDELINE_URL)
+        buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -147,7 +148,6 @@ android {
             versionName = version_name
             versionNameSuffix = "-dev"
 
-            buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
             buildConfigField("String", "BASE_URL", BASE_DEV_URL)
             buildConfigField("String", "BASE_H5_URL", BASE_DEV_H5_URL)
             buildConfigField("String", "LEANCLOUD_APP_ID", DEV_LEANCLOUD_APP_ID)

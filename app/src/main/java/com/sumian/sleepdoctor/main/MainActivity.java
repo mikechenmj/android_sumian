@@ -119,6 +119,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (mCurrentPosition == position) {
             return;
         }
+        if (position == 2) {
+            ActivityUtils.startActivity(HwMainActivity.class);
+            finish();
+            return;
+        }
         for (int i = 0, len = mFTags.length; i < len; i++) {
             Fragment fragmentByTag;
             String fTag = mFTags[i];
@@ -134,7 +139,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                         case 1:
                             fragmentByTag = BaseFragment.newInstance(DoctorFragment.class);
                             break;
-                        case 2:
+                        case 3:
                             fragmentByTag = BaseFragment.newInstance(MeFragment.class);
                             break;
                         default:
@@ -152,9 +157,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
         mCurrentPosition = position;
         changeStatusBarColorByPosition(position);
-        if (position == 2) {
-            ActivityUtils.startActivity(HwMainActivity.class);
-        }
     }
 
     private void changeStatusBarColorByPosition(int position) {

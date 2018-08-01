@@ -30,7 +30,7 @@
         <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_record"
             style="@style/HorizontalWeight"
-            app:tab_icon="@drawable/tab_record_icon"
+            app:tab_icon="@drawable/sd_sel_tab_record_icon"
             app:tab_text="@string/tab_homepage" />
 
         <include layout="@layout/lay_nav_tab_divider" />
@@ -38,15 +38,23 @@
         <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_doctor"
             style="@style/HorizontalWeight"
-            app:tab_icon="@drawable/tab_doctor_icon"
+            app:tab_icon="@drawable/sd_sel_tab_device_icon"
             app:tab_text="@string/tab_doctor" />
+
+        <include layout="@layout/lay_nav_tab_divider" />
+
+        <com.sumian.sleepdoctor.widget.nav.NavigationItem
+            android:id="@+id/tb_device"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
+            app:tab_text="@string/device" />
 
         <include layout="@layout/lay_nav_tab_divider" />
 
         <com.sumian.sleepdoctor.widget.nav.NavigationItem
             android:id="@+id/tb_me"
             style="@style/HorizontalWeight"
-            app:tab_icon="@drawable/tab_me_icon"
+            app:tab_icon="@drawable/sd_sel_tab_me_icon"
             app:tab_text="@string/tab_me" />
     </com.sumian.sleepdoctor.widget.nav.BottomNavigationBar>
 

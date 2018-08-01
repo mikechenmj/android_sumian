@@ -70,7 +70,9 @@ public class NavTab extends LinearLayout implements View.OnClickListener {
                         tabButton.init(R.drawable.tab_consultant_icon, R.string.tab_consultant_hint);
                         break;
                     case 3:
-                        tabButton.init(R.drawable.tab_me_icon, R.string.tab_me_hint);
+                        tabButton.init(R.drawable.sd_sel_tab_me_icon, R.string.tab_me_hint);
+                        break;
+                    default:
                         break;
                 }
             }

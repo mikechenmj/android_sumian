@@ -45,8 +45,8 @@ public class TabIndicatorView extends FrameLayout implements TabIndicatorItemVie
     private void initView(Context context) {
         View inflate = inflate(context, R.layout.hw_lay_tab_indicator_view, this);
         mDayTabIndicatorItemView = inflate.findViewById(R.id.day_tab_indicator_item_view);
-        mWeekTabIndicatorItemView = inflate.findViewById(R.id.day_tab_indicator_item_view);
-        mCalendarTabIndicatorItemView = inflate.findViewById(R.id.day_tab_indicator_item_view);
+        mWeekTabIndicatorItemView = inflate.findViewById(R.id.week_tab_indicator_item_view);
+        mCalendarTabIndicatorItemView = inflate.findViewById(R.id.calendar_tab_indicator_item_view);
 
         mDayTabIndicatorItemView.setIndicatorText("日");
         mDayTabIndicatorItemView.setOnSelectTabCallback(this);
