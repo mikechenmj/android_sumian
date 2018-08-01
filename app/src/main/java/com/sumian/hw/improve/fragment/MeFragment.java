@@ -22,6 +22,7 @@ import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.response.Reminder;
+import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.activity.SettingActivity;
 import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
@@ -152,7 +153,6 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
         } else if (i == R.id.lay_setting) {
             SettingActivity.show(getContext());
 
-        } else {
         }
     }
 
@@ -192,7 +192,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
             }
             this.mTvSleepAnswerState.setVisibility(!userInfo.isHaveAnswers() ? View.VISIBLE : View.INVISIBLE);
         });
-        SyncUserInfoPresenter.init().doSyncReminder();
+        ReminderManager.getReminder();
     }
 
     @Override

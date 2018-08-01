@@ -9,6 +9,7 @@ import android.util.Log;
 import com.sumian.hw.account.contract.SyncUserInfoContract;
 import com.sumian.hw.account.presenter.SyncUserInfoPresenter;
 import com.sumian.hw.app.App;
+import com.sumian.hw.reminder.ReminderManager;
 
 /**
  * Created by jzz
@@ -63,7 +64,7 @@ public class SyncUserInfoService extends IntentService {
             isSync = intent.getBooleanExtra(ARGS_IS_ONLY_SYNC, false);
         }
         this.mPresenter.doSyncUserInfo(isSync, loginType);
-        this.mPresenter.doSyncReminder();
+        ReminderManager.getReminder();
         Log.e(TAG, "onHandleIntent: ------>");
     }
 

@@ -72,7 +72,7 @@ public interface SleepyApi {
     Call<Token> doRegister(@Body RegisterBody registerBody);
 
     @GET("user/profile")
-    Call<UserInfo> syncUserInfo();
+    Call<UserInfo> getUserInfo();
 
     @FormUrlEncoded
     @PATCH("user/profile")
@@ -123,7 +123,7 @@ public interface SleepyApi {
     Call<FirmwareInfo> syncFirmwareInfo();
 
     @GET("reminders/subscriptions")
-    Call<ResultResponse<Reminder>> syncReminder(@QueryMap Map<String, Object> map);
+    Call<ResultResponse<Reminder>> getReminder(@QueryMap Map<String, Object> map);
 
     @FormUrlEncoded
     @PATCH("reminders/subscriptions/{id}")

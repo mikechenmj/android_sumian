@@ -13,8 +13,5 @@ public interface SyncUserInfoContract {
     interface Presenter extends BasePresenter {
 
         void doSyncUserInfo(boolean isOnlySync,int loginType);
-
-        void doSyncReminder();
-
     }
 }

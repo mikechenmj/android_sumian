@@ -3,15 +3,10 @@ package com.sumian.hw.account.presenter;
 import com.sumian.hw.account.contract.SyncUserInfoContract;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.Reminder;
-import com.sumian.hw.network.response.ResultResponse;
-import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 
@@ -43,7 +38,7 @@ public class SyncUserInfoPresenter implements SyncUserInfoContract.Presenter {
 
         Call<UserInfo> call = HwAppManager
             .getNetEngine()
-            .getHttpService().syncUserInfo();
+            .getHttpService().getUserInfo();
 
         call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
@@ -64,34 +59,6 @@ public class SyncUserInfoPresenter implements SyncUserInfoContract.Presenter {
         });
 
         this.mCalls.add(call);
-    }
-
-    @Override
-    public void doSyncReminder() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("page", 1);
-        map.put("per_page", 20);
-        map.put("type", 1);
-
-        Call<ResultResponse<Reminder>> call = HwAppManager
-            .getNetEngine()
-            .getHttpService().syncReminder(map);
-
-        call.enqueue(new BaseResponseCallback<ResultResponse<Reminder>>() {
-            @Override
-            protected void onSuccess(ResultResponse<Reminder> response) {
-                List<Reminder> data = response.getData();
-                ReminderManager.updateReminder(data == null || data.isEmpty() ? null : (data.get(0)));
-            }
-
-            @Override
-            protected void onFailure(String error) {
-            }
-
-            @Override
-            protected void onFinish() {
-            }
-        });
     }
 
     @Override

@@ -78,7 +78,7 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
         map.put("per_page", 15);
         map.put("type", 1);
 
-        Call<ResultResponse<Reminder>> call = sleepyApi.syncReminder(map);
+        Call<ResultResponse<Reminder>> call = sleepyApi.getReminder(map);
         this.mCalls.add(call);
         call.enqueue(new BaseResponseCallback<ResultResponse<Reminder>>() {
             @Override
