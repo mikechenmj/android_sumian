@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.hw.account.model.AccountModel;
+import com.sumian.sleepdoctor.account.model.HwAccountModel;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.operator.AppOperator;
 import com.sumian.hw.common.util.StreamUtil;
@@ -42,7 +42,7 @@ public final class HwAppManager {
 
     private volatile VersionModel mVersionModel;
     private volatile DeviceModel mDeviceModel;
-    private volatile AccountModel mAccountModel;
+    private volatile HwAccountModel mAccountModel;
     private volatile ReportModel mReportModel;
 
     private HwNetEngine mNetEngine;
@@ -104,8 +104,8 @@ public final class HwAppManager {
         return INSTANCE.mReportModel == null ? INSTANCE.mReportModel = new ReportModel() : INSTANCE.mReportModel;
     }
 
-    public static synchronized AccountModel getAccountModel() {
-        return INSTANCE.mAccountModel == null ? INSTANCE.mAccountModel = new AccountModel() : INSTANCE.mAccountModel;
+    public static synchronized HwAccountModel getAccountModel() {
+        return INSTANCE.mAccountModel == null ? INSTANCE.mAccountModel = new HwAccountModel() : INSTANCE.mAccountModel;
     }
 
     public static synchronized JobScheduler getJobScheduler() {

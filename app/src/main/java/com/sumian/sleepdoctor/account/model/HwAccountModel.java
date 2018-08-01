@@ -1,4 +1,4 @@
-package com.sumian.hw.account.model;
+package com.sumian.sleepdoctor.account.model;
 
 import android.text.TextUtils;
 
@@ -28,9 +28,9 @@ import java.util.List;
  * desc:  个人账户信息管理模块
  */
 
-public class AccountModel {
+public class HwAccountModel {
 
-    private static final String TAG = AccountModel.class.getSimpleName();
+    private static final String TAG = HwAccountModel.class.getSimpleName();
 
     private volatile Token mToken;
     private volatile UserInfo mUserInfo;
@@ -40,7 +40,7 @@ public class AccountModel {
 
     private OnLogoutCallback mOnLogoutCallback;
 
-    public AccountModel() {
+    public HwAccountModel() {
         this.mToken = AccountCache.getTokenCache(Token.class);
         this.mUserInfo = AccountCache.getUserCache(UserInfo.class);
     }

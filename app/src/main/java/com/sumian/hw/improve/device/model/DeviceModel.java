@@ -2,7 +2,7 @@ package com.sumian.hw.improve.device.model;
 
 import android.text.TextUtils;
 
-import com.sumian.hw.account.model.AccountModel;
+import com.sumian.sleepdoctor.account.model.HwAccountModel;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.network.callback.BaseResponseCallback;
@@ -126,7 +126,7 @@ public class DeviceModel {
     private void uploadBindSn(String sleepySn, String monitorSn) {
         Map<String, Object> map = new HashMap<>();
 
-        AccountModel accountModel = HwAppManager.getAccountModel();
+        HwAccountModel accountModel = HwAppManager.getAccountModel();
 
         UserInfo userInfo = accountModel.getUserInfo();
         userInfo.setSleeper_sn(sleepySn);

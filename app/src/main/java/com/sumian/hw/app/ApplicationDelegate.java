@@ -169,7 +169,9 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
     @Override
     public void onActivityDestroyed(Activity activity) {
         List<Activity> activities = mActivities;
-        if (activities == null || activities.isEmpty()) return;
+        if (activities == null || activities.isEmpty()) {
+            return;
+        }
         activities.remove(activity);
         if (activity instanceof LoginActivity) {
             mIsLoginActivity = false;
