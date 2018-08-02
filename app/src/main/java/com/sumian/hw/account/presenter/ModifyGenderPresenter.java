@@ -67,6 +67,7 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
 
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
+        map.put("include", "doctor");
         Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
         call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override

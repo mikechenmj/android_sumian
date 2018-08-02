@@ -140,7 +140,7 @@ public class DeviceModel {
         if (!TextUtils.isEmpty(userInfo.getSleeper_sn())) {
             map.put("sleeper_sn", userInfo.getSleeper_sn());
         }
-
+        map.put("include", "doctor");
         HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
             protected void onSuccess(UserInfo response) {

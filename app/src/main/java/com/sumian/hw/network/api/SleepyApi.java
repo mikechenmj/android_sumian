@@ -71,8 +71,13 @@ public interface SleepyApi {
     @POST("users")
     Call<Token> doRegister(@Body RegisterBody registerBody);
 
+    /**
+     *
+     * @param include "doctor"
+     * @return
+     */
     @GET("user/profile")
-    Call<UserInfo> getUserInfo();
+    Call<UserInfo> getUserInfo(@Query("include") String include);
 
     @FormUrlEncoded
     @PATCH("user/profile")

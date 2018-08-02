@@ -137,13 +137,11 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
         WeakReference<ModifySelectContract.View<UserInfo>> viewWeakReference = this.mViewWeakReference;
         ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
         if (view == null) return;
-
-        SleepyApi sleepyApi = HwAppManager.getNetEngine().getHttpService();
-
         view.onBegin();
-
+        SleepyApi sleepyApi = HwAppManager.getNetEngine().getHttpService();
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
+        map.put("include", "doctor");
         Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
         call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override

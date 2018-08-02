@@ -184,6 +184,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
             map.put("birthday", mUserInfo.birthday);
             map.put("height", mUserInfo.height);
             map.put("weight", mUserInfo.weight);
+            map.put("include", "doctor");
             HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
                 @Override
                 protected void onSuccess(UserInfo response) {
