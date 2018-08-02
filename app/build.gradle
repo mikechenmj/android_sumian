@@ -51,7 +51,7 @@ android {
         buildConfigField("String", "UMENG_APP_KEY", OFFICIAL_UMENG_APP_KEY)
         buildConfigField("String", "UMENG_PUSH_SECRET", UMENG_PUSH_SECRET)
         buildConfigField("String", "EASEMOB_APP_KEY", HW_EASEMOB_APP_KEY)
-        buildConfigField("String", "EASEMOB_TENANT_ID", DEFAULT_APK_DOWNLOAD_URL)
+        buildConfigField("String", "EASEMOB_TENANT_ID", HW_EASEMOB_TENANT_ID)
         buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", HW_EASEMOB_CUSTOMER_SERVICE_ID)
         buildConfigField("String", "HW_USER_AGREEMENT_URL", HW_USER_AGREEMENT_URL)
         buildConfigField("String", "HW_PRIVACY_POLICY_URL", HW_PRIVACY_POLICY_URL)
@@ -265,9 +265,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation project(':jsbridge')
-    implementation project(':kefu-easeui')
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
@@ -355,4 +352,6 @@ dependencies {
     //sumian component
     implementation 'com.sumian.sd:common:1.0.13'
     implementation 'com.sumian.sd:blue:1.0.0'
+    implementation 'com.sumian.sd:kefu-easeui:1.0.0'
+    implementation 'com.sumian.sd:jsbridge:1.0.0'
 }

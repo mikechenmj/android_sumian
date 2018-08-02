@@ -23,12 +23,10 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {
-            url "https://dl.bintray.com/sumiantech/common"
-        }
-        maven {
-            url  "https://dl.bintray.com/sumiantech/blue"
-        }
+        maven { url "https://dl.bintray.com/sumiantech/common" }
+        maven { url "https://dl.bintray.com/sumiantech/blue" }
+        maven { url "https://dl.bintray.com/sumiantech/kefu-easeui" }
+        maven { url "https://dl.bintray.com/sumiantech/sm-jsbridge" }
         maven { url "https://jitpack.io" }
         maven { url 'http://mvn.leancloud.cn/nexus/content/repositories/public' }
         flatDir {//用于 load aliyun player sdk/model

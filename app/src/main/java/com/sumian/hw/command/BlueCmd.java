@@ -3,7 +3,6 @@ package com.sumian.hw.command;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.BlueByteUtil;
 import com.sumian.sleepdoctor.account.bean.Answers;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -234,17 +233,21 @@ public final class BlueCmd {
             gender = "";
         }
         int genderType;
-        switch (gender) {
-            case "male":
-                genderType = 0x00;
-                break;
-            case "female":
-                genderType = 0x01;
-                break;
-            case "secrecy":
-            default:
-                genderType = 0xff;
-                break;
+        if (TextUtils.isEmpty(gender)) {
+            genderType = 0xff;
+        } else {
+            switch (gender) {
+                case "male":
+                    genderType = 0x00;
+                    break;
+                case "female":
+                    genderType = 0x01;
+                    break;
+                case "secrecy":
+                default:
+                    genderType = 0xff;
+                    break;
+            }
         }
         return genderType;
     }
