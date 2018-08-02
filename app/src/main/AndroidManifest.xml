@@ -89,6 +89,7 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".account.login.LoginActivity"
@@ -283,7 +284,7 @@
 
         <activity
             android:name="com.sumian.hw.improve.main.HwMainActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme" />
 

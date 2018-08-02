@@ -29,6 +29,7 @@ import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.setting.dialog.UpgradeDialog;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.hw.upgrade.presenter.VersionPresenter;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.nav.NavTab;
 import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.sleepdoctor.R;
@@ -247,7 +248,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
 
     @Override
     public void onBackPressed() {
-        UiUtil.exitApp(this);
+        AppUtil.exitApp(this);
     }
 
     @Override

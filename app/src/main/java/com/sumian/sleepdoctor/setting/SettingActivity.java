@@ -119,9 +119,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
             protected void onSuccess(Unit response) {
                 NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
                 AppManager.getAccountViewModel().updateToken(null);
-                ActivityUtils.finishAllActivities();
-                ActivityUtils.startActivity(HwLoginActivity.class);
-                LoginActivity.showClearTop(SettingActivity.this, LoginActivity.class);
+                showClearTop(SettingActivity.this, HwLoginActivity.class);
                 AppManager.getOpenLogin().deleteWechatTokenCache(SettingActivity.this, null);
             }
 
