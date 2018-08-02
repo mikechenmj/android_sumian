@@ -15,12 +15,11 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
-import com.sumian.hw.app.App;
-import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.leancloud.LeanCloudHelper;
-import com.sumian.hw.leancloud.contract.MsgContract;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
+import com.sumian.hw.app.App;
+import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.contract.MsgContract;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.File;
@@ -143,20 +142,20 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
 //            activity.startActivityForResult(intent, PIC_REQUEST_CODE_LOCAL);
 
             ImagePickerActivity.show(activity, new SelectOptions
-                .Builder()
-                .setHasCam(true)
-                .setSelectCount(9)
-                .setSelectedImages(new String[]{})
-                .setCallback(images -> {
-                    for (String image : images) {
-                        Log.e(TAG, "doSelected: ---------->" + image);
-                        LeanCloudHelper.sendImageMsg(mServiceType, image);
-                    }
-                }).build());
+                    .Builder()
+                    .setHasCam(true)
+                    .setSelectCount(9)
+                    .setSelectedImages(new String[]{})
+                    .setCallback(images -> {
+                        for (String image : images) {
+                            Log.e(TAG, "doSelected: ---------->" + image);
+                            LeanCloudHelper.sendImageMsg(mServiceType, image);
+                        }
+                    }).build());
 
         } else {//pic camera
             cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), App.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
-                + System.currentTimeMillis() + ".jpg");
+                    + System.currentTimeMillis() + ".jpg");
 
             //noinspection ResultOfMethodCallIgnored
             cameraFile.getParentFile().mkdirs();

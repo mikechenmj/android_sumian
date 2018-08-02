@@ -5,10 +5,12 @@ import android.text.TextUtils;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.easeui.UIProvider;
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.account.model.AccountViewModel;
+import com.sumian.blue.manager.BlueManager;
+import com.sumian.common.operator.AppOperator;
+import com.sumian.common.social.OpenEngine;
+import com.sumian.common.social.analytics.OpenAnalytics;
+import com.sumian.common.social.login.OpenLogin;
 import com.sumian.hw.common.helper.ToastHelper;
-import com.sumian.hw.common.operator.AppOperator;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.improve.device.model.DeviceModel;
@@ -19,10 +21,7 @@ import com.sumian.hw.leancloud.player.VoicePlayer;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.engine.HwNetEngine;
 import com.sumian.hw.upgrade.model.VersionModel;
-import com.sumian.blue.manager.BlueManager;
-import com.sumian.open.OpenEngine;
-import com.sumian.open.analytics.OpenAnalytics;
-import com.sumian.open.login.OpenLogin;
+import com.sumian.sleepdoctor.BuildConfig;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -71,7 +70,7 @@ public final class HwAppManager {
 
     public static synchronized OpenLogin getOpenLogin() {
         if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().register(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            INSTANCE.mOpenEngine = new OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
             return INSTANCE.mOpenEngine.getOpenLogin();
         } else {
             return INSTANCE.mOpenEngine.getOpenLogin();
@@ -80,7 +79,7 @@ public final class HwAppManager {
 
     public static synchronized OpenAnalytics getOpenAnalytics() {
         if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().register(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            INSTANCE.mOpenEngine = new OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
             return INSTANCE.mOpenEngine.getOpenAnalytics();
         } else {
             return INSTANCE.mOpenEngine.getOpenAnalytics();
@@ -133,7 +132,7 @@ public final class HwAppManager {
         LeanCloudHelper.init(context);
 
         //Umeng
-        new OpenEngine().register(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_PUSH_SECRET);
+        new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_PUSH_SECRET);
 
         // Kefu SDK 初始化
 

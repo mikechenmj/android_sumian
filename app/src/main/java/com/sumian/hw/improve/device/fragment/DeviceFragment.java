@@ -36,8 +36,8 @@ import com.sumian.hw.improve.widget.device.FloatGroupView;
 import com.sumian.hw.improve.widget.dialog.SumianDialog;
 import com.sumian.hw.job.JobTask;
 import com.sumian.hw.log.LogManager;
-import com.sumian.common.utils.LocationManagerUtil;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.hw.utils.LocationManagerUtil;
 
 import java.util.List;
 

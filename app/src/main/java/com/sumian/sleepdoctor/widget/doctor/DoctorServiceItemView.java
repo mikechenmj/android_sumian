@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.sleepdoctor.R;
 
 import java.util.Locale;
@@ -95,8 +95,6 @@ public class DoctorServiceItemView extends FrameLayout {
 
     @SuppressWarnings("unused")
     public void loadImage(String uri) {
-        Glide.with(this)
-                .load(uri)
-                .into(mImageView);
+        ImageLoader.loadImage(uri, mImageView);
     }
 }

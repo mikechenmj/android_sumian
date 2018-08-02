@@ -1,8 +1,8 @@
 package com.sumian.hw.account.presenter;
 
+import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.account.contract.SleepReminderContract;
 import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.common.operator.AppOperator;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.Reminder;
@@ -38,8 +38,8 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         this.mApiWeakReference = new WeakReference<>(HwAppManager
-            .getNetEngine()
-            .getHttpService());
+                .getNetEngine()
+                .getHttpService());
         this.mCalls = new ArrayList<>();
     }
 

@@ -4,12 +4,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.account.bean.City;
 import com.sumian.hw.account.bean.Province;
 import com.sumian.hw.account.contract.ModifySelectContract;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.common.operator.AppOperator;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;

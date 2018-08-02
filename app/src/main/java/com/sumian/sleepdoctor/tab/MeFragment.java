@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.common.utils.ImageLoader;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.userProfile.activity.UserProfileActivity;
@@ -112,7 +112,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void updateUserProfile(UserInfo userProfile) {
-        ImageLoader.loadImage(this, mIvAvatar, userProfile.avatar, R.mipmap.ic_info_avatar_patient);
+        ImageLoader.loadImage(userProfile.avatar, mIvAvatar, R.mipmap.ic_info_avatar_patient);
         String nickname = userProfile.nickname;
         mTvNickname.setText(TextUtils.isEmpty(nickname) ? userProfile.mobile : nickname);
     }

@@ -3,7 +3,7 @@ package com.sumian.hw.gather;
 import android.os.Environment;
 import android.util.Log;
 
-import com.sumian.hw.common.operator.AppOperator;
+import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.common.util.TimeUtil;
 

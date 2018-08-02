@@ -11,17 +11,21 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.GetDataCallback;
+import com.avos.avoscloud.ProgressCallback;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.sleepdoctor.R;
+import com.bumptech.glide.Glide;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.widget.BubbleImageView;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
@@ -41,7 +45,6 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
     protected boolean mIsLeft;
     protected int mServiceType;
     protected String mMediaUrlPath;
-    private String mNewUrl;
 
     public BaseViewHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
@@ -77,13 +80,10 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
             mipmapId = mIsLeft ? R.mipmap.ic_chat_left_default : R.mipmap.ic_chat_right_default;
         }
 
-//        Glide.with(civIcon.getContext())
-//            .load(mIsLeft ? mipmapId : AppManager.getAccountViewModel().getUserInfo().getAvatar())
-//            .asBitmap()
-//            .diskCacheStrategy(DiskCacheStrategy.RESULT)
-//            .placeholder(mipmapId)
-//            .error(mipmapId)
-//            .into(civIcon);
+        Glide.with(civIcon.getContext())
+                .load(mIsLeft ? mipmapId : AppManager.getAccountViewModel().getUserInfo().getAvatar())
+                .into(civIcon);
+        //ImageLoader.loadImage(mIsLeft ? mipmapId : AppManager.getAccountViewModel().getUserInfo().getAvatar(), civIcon,mipmapId,mipmapId);
     }
 
     protected void showSendState(ImageView ivMsgFailed, ProgressBar loading, AVIMMessage msg) {
@@ -120,67 +120,27 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
             return;
         }
 
-        try {//由于 okHttp 拦截器当中,直接忽略了 url 大小写.但是 leancloud消息中的返回的host 却是大小写区分的,故要转一下
-            URI uri = new URI(localFilePath);
-            String oldHost = uri.getHost();
-            if (!TextUtils.isEmpty(oldHost)) {
-                String newHost = oldHost.toLowerCase();
-                this.mNewUrl = localFilePath.replace(oldHost, newHost);
+        tvLoadingIndicator.setText(R.string.percent_zero);
+        tvLoadingIndicator.setVisibility(View.VISIBLE);
+
+        bubbleImageView.setVisibility(View.VISIBLE);
+
+        msg.getAVFile().getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] bytes, AVException e) {
+
             }
+        }, new ProgressCallback() {
+            @Override
+            public void done(Integer integer) {
+                runOnUiThread(() -> {
+                    tvLoadingIndicator.setText(String.format(Locale.getDefault(), "%d%s", integer, "%"));
+                    tvLoadingIndicator.setVisibility(integer >= 98 ? View.GONE : View.VISIBLE);
+                });
+            }
+        });
 
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-//        MyGlideModule.addProgressListener(mNewUrl, (url, progress) -> {
-//            // Log.e(TAG, "showImage: ---------->progress=" + String.format("%03d", progress) + "  url=" + url);
-//            runOnUiThread(() -> {
-//                tvLoadingIndicator.setText(String.format(Locale.getDefault(), "%d%s", progress, "%"));
-//                tvLoadingIndicator.setVisibility(progress >= 98 ? View.GONE : View.VISIBLE);
-//            });
-//        });
-//
-//        Glide.with(bubbleImageView.getContext())
-//            .load(mMediaUrlPath)
-//            .asBitmap()
-//            .priority(Priority.HIGH)
-//            .diskCacheStrategy(DiskCacheStrategy.ALL)
-//            //.thumbnail(0.2f)
-//            .placeholder(mIsLeft ? R.color.colorP : R.color.colorP)
-//            .error(mIsLeft ? R.mipmap.ic_advisory_chatbubble_mask_l : R.mipmap.ic_advisory_chatbubble_mask_r)
-//            .override((int) bubbleImageView.getContext().getResources().getDimension(R.dimen.space_100),
-//                (int) bubbleImageView.getContext().getResources().getDimension(R.dimen.space_160))
-//            //.crossFade()
-//            .into(new GlideDrawableImageViewTarget(bubbleImageView) {
-//
-//                @Override
-//                public void onLoadStarted(Drawable placeholder) {
-//                    super.onLoadStarted(placeholder);
-//                    runOnUiThread(() -> {
-//                        tvLoadingIndicator.setText(R.string.percent_zero);
-//                        tvLoadingIndicator.setVisibility(View.VISIBLE);
-//                    });
-//                    Log.e(TAG, "onLoadStarted: ----------->");
-//                }
-//
-//                @Override
-//                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-//                    super.onResourceReady(resource, glideAnimation);
-//                    Log.e(TAG, "onResourceReady: --------->");
-//                    runOnUiThread(() -> bubbleImageView.setImageDrawable(resource));
-//                    removeProgressListener(tvLoadingIndicator);
-//                }
-//
-//                @Override
-//                public void onLoadFailed(Exception e, Drawable errorDrawable) {
-//                    super.onLoadFailed(e, errorDrawable);
-//                    Log.e(TAG, "onLoadFailed: -------->");
-//                    removeProgressListener(tvLoadingIndicator);
-//                    //bubbleImageView.setImageDrawable(errorDrawable);
-//                    showImage(bubbleImageView, tvLoadingIndicator, msg);
-//                }
-//
-//            }.getView());
+        ImageLoader.loadImage(mMediaUrlPath, bubbleImageView, mIsLeft ? R.mipmap.ic_advisory_chatbubble_mask_l : R.mipmap.ic_advisory_chatbubble_mask_r, mIsLeft ? R.mipmap.ic_advisory_chatbubble_mask_l : R.mipmap.ic_advisory_chatbubble_mask_r);
     }
 
     protected void showVoiceAndDuration(TextView tvVoiceDuration, AVIMAudioMessage msg) {
@@ -190,14 +150,6 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
         }
         this.mMediaUrlPath = localFilePath;
         tvVoiceDuration.setText(String.format(Locale.getDefault(), "%02d%s%s", Math.round(msg.getDuration() + 0.5), " ", "''"));
-    }
-
-    private void removeProgressListener(TextView tvLoadingIndicator) {
-        runOnUiThread(() -> {
-            tvLoadingIndicator.setText(R.string.percent_zero);
-            tvLoadingIndicator.setVisibility(View.GONE);
-        });
-        // MyGlideModule.removeProgressListener(mNewUrl);
     }
 
     private void hide(View... view) {

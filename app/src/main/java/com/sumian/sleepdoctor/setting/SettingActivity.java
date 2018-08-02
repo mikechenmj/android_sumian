@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -118,10 +119,10 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
             protected void onSuccess(Unit response) {
                 NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
                 AppManager.getAccountViewModel().updateToken(null);
-                AppManager.getOpenLogin().deleteWeiXinOauth(SettingActivity.this);
-//                HwLoginActivity.showClearTop(SettingActivity.this, HwLoginActivity.class);
                 ActivityUtils.finishAllActivities();
                 ActivityUtils.startActivity(HwLoginActivity.class);
+                LoginActivity.showClearTop(SettingActivity.this, LoginActivity.class);
+                AppManager.getOpenLogin().deleteWechatTokenCache(SettingActivity.this, null);
             }
 
             @Override

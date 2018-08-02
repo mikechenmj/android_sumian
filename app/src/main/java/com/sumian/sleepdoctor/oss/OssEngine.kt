@@ -45,7 +45,7 @@ class OssEngine {
             callbackParam["callbackUrl"] = ossResponse.callbackUrl
             callbackParam["callbackBody"] = ossResponse.callbackBody
             putObjectRequest.callbackParam = callbackParam
-            putObjectRequest.setProgressCallback { request, currentSize, totalSize ->
+            putObjectRequest.setProgressCallback { _, currentSize, totalSize ->
                 LogUtils.d(currentSize, totalSize, (100 * currentSize / totalSize).toString() + "%")
                 if (progressListener != null) {
                     SumianExecutor.runOnUiThread({ progressListener.onProgressChange(currentSize, totalSize) })

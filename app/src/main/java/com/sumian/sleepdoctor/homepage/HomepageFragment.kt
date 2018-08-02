@@ -6,7 +6,7 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.utils.ImageLoader
+import com.sumian.common.image.ImageLoader
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.app.AppManager
@@ -74,7 +74,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                 val userProfile = t?.user ?: return
                 tv_name.text = userProfile.nameOrNickname
                 val defaultAvatar = R.mipmap.ic_info_avatar_patient
-                ImageLoader.loadImage(activity, iv_avatar, userProfile.avatar, defaultAvatar)
+                ImageLoader.loadImage(userProfile.avatar, iv_avatar, defaultAvatar)
             }
         })
     }

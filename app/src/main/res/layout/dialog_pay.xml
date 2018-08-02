@@ -25,13 +25,11 @@
         android:layout_marginTop="@dimen/space_24"
         android:text="@string/pay_success" />
 
-    <net.qiujuer.genius.ui.widget.Button
+    <Button
         android:id="@+id/bt_join"
         style="@style/bt_t1_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_32"
-        app:gTouchCornerRadius="@dimen/space_32"
-        app:gTouchEffect="auto"
         tools:text="@string/join_group" />
 </LinearLayout>

@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/space_10"
         android:background="@color/b2_color"
         android:padding="@dimen/space_20"
-        app:oscHorizontalSpace="@dimen/space_10"
-        app:oscVerticalSpace="@dimen/space_10" />
+        app:sd_HorizontalSpace="@dimen/space_10"
+        app:sd_VerticalSpace="@dimen/space_10" />
 
 </LinearLayout>

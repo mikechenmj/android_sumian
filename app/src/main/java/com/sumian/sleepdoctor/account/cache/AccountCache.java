@@ -3,9 +3,9 @@ package com.sumian.sleepdoctor.account.cache;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.sumian.common.utils.SpUtil;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.utils.JsonUtil;
+import com.sumian.sleepdoctor.utils.SpUtil;
 
 /**
  * Created by jzz

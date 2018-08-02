@@ -29,7 +29,7 @@
         app:divider_line_visible="gone"
         app:type_desc="@string/about_us" />
 
-    <net.qiujuer.genius.ui.widget.Button
+    <Button
         android:id="@+id/bt_logout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_64"
@@ -40,8 +40,6 @@
         android:gravity="center"
         android:text="@string/logout"
         android:textColor="@color/t4_color"
-        android:textSize="@dimen/font_16"
-        app:gTouchCornerRadius="0dp"
-        app:gTouchEffect="auto" />
+        android:textSize="@dimen/font_16" />
 
 </LinearLayout>

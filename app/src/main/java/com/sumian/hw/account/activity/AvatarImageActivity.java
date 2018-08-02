@@ -10,8 +10,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.contract.AvatarContract;
 import com.sumian.hw.account.presenter.AvatarPresenter;
 import com.sumian.hw.account.sheet.SelectPictureBottomSheet;
@@ -104,20 +103,9 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
                 .showMoreIcon()
                 .addOnMoreListener(this);
 
-
         String imageSource = mImageSources[0];
-        RequestManager requestManager = Glide.with(this);
-//        DrawableTypeRequest load;
-//        if (TextUtils.isEmpty(imageSource)) {
-//            load = requestManager.load(R.mipmap.ic_default_avatar);
-//        } else {
-//            load = requestManager.load(imageSource);
-//        }
-//        load
-//                .asBitmap()
-//                .error(R.mipmap.ic_default_avatar)
-//                .placeholder(R.mipmap.ic_default_avatar)
-//                .into(mImagePager);
+        ImageLoader.loadImage(imageSource, mImagePager, R.mipmap.ic_default_avatar, R.mipmap.ic_default_avatar);
+
     }
 
     @Override
@@ -213,11 +201,7 @@ public class AvatarImageActivity extends BaseActivity implements EasyPermissions
 
     @Override
     public void uploadSuccess(String url) {
-//        runUiThread(() -> Glide.with(this)
-//                .load(url).asBitmap()
-//                .error(R.mipmap.ic_default_avatar)
-//                .placeholder(R.mipmap.ic_default_avatar)
-//                .into(mImagePager));
+        ImageLoader.loadImage(url, mImagePager, R.mipmap.ic_default_avatar, R.mipmap.ic_default_avatar);
     }
 
     @Override

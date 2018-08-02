@@ -12,9 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.BaseActivity;
@@ -123,8 +122,7 @@ public class PaymentActivity extends BaseActivity<PayPresenter> implements View.
     @Override
     protected void initData() {
         super.initData();
-        RequestOptions requestOptions = RequestOptions.placeholderOf(R.mipmap.ic_group_avatar).error(R.mipmap.ic_group_avatar);
-        Glide.with(this).load(mDoctorService.getIcon()).apply(requestOptions).into(mIvGroupIcon);
+        ImageLoader.loadImage(mDoctorService.getIcon(), mIvGroupIcon);
         mTvDesc.setText(mDoctorService.getName());
         String priceText = getDoctorServicePackage().getPrice_text();
         SpannableString spannableString = new SpannableString(priceText);

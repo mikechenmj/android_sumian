@@ -4,15 +4,14 @@ import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
@@ -101,11 +100,7 @@ public class DoctorServiceLayout extends LinearLayout implements View.OnClickLis
     }
 
     private void load(String url, @DrawableRes int defaultIconId, ImageView iv) {
-//        if (TextUtils.isEmpty(url)) {
-//            Glide.with(this).load(defaultIconId).into(iv);
-//        } else {
-//            Glide.with(this).load(url).into(iv);
-//        }
+        ImageLoader.loadImage(url, iv, defaultIconId, defaultIconId);
     }
 
     @OnClick({R.id.tv_service_action})
