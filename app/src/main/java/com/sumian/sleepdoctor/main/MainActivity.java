@@ -121,7 +121,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
         if (position == 2) {
             ActivityUtils.startActivity(HwMainActivity.class);
-            finish();
             return;
         }
         for (int i = 0, len = mFTags.length; i < len; i++) {
