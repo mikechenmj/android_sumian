@@ -39,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class MeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
+public class HwMeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
         LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     @BindView(R.id.iv_avatar)
@@ -51,8 +51,8 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     @BindView(R.id.siv_upgrade)
     HwSettingItemView mSivUpgrade;
 
-    public static MeFragment newInstance() {
-        return new MeFragment();
+    public static HwMeFragment newInstance() {
+        return new HwMeFragment();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
 
     @Override
     public void onEnterTab() {
-        HwAppManager.getOpenAnalytics().onClickEvent(getContext(), "me_tabbar_Ry");
+//        HwAppManager.getOpenAnalytics().onClickEvent(getContext(), "me_tabbar_Ry");
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
     }
 

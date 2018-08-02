@@ -20,7 +20,7 @@ import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.consultant.ConsultantFragment;
 import com.sumian.hw.improve.device.fragment.DeviceFragment;
-import com.sumian.hw.improve.fragment.MeFragment;
+import com.sumian.hw.improve.fragment.HwMeFragment;
 import com.sumian.hw.improve.main.bean.PushReport;
 import com.sumian.hw.improve.report.ReportFragment;
 import com.sumian.hw.leancloud.LeanCloudHelper;
@@ -117,7 +117,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         HwAppManager.getVersionModel().registerShowDotCallback(this);
         if (mPagerFragments == null) {
             mPagerFragments = new BasePagerFragment[]{DeviceFragment.newInstance(),
-                    ReportFragment.newInstance(), ConsultantFragment.newInstance(), MeFragment.newInstance()};
+                    ReportFragment.newInstance(), ConsultantFragment.newInstance(), HwMeFragment.newInstance()};
         }
 
         PushReport pushReport = ReportPushManager.getInstance().getPushReport();

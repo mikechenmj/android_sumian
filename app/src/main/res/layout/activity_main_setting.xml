@@ -29,7 +29,7 @@
         app:divider_line_visible="gone"
         app:type_desc="@string/about_us" />
 
-    <Button
+    <TextView
         android:id="@+id/bt_logout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_64"
