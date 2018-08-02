@@ -39,7 +39,7 @@ ext {
 
     compileSdkVersion = 27
     buildToolsVersion = "27.0.3"
-    applicationId = "com.sumian.sleepdoctor"
+    applicationId = "com.sumian.sd"
     minSdkVersion = 21
     targetSdkVersion = 27
     versionCode = new Date().format('yyyyMMddHH').toInteger()

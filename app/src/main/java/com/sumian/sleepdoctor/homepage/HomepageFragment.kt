@@ -58,14 +58,15 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
         sleep_record_view.setOnClickFillSleepRecordBtnListener { FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD) }
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
         doctor_service_item_view_cbti.setOnClickListener { launchCbtiActivity() }
-        tv_sleep_health.setOnClickListener { ToastUtils.showShort(R.string.not_open_yet_please_wait) }
+        tv_sleep_health.setOnClickListener { ToastUtils.showShort(R.string.comming_soon) }
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
         sleep_prescription_view.setOnClickListener { onSleepPrescriptionClick() }
         iv_avatar.setOnClickListener { onAvatarClick() }
     }
 
     private fun launchCbtiActivity() {
-        ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
+        ToastUtils.showShort(R.string.comming_soon)
+//        ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
     }
 
     private fun initUserInfo() {
