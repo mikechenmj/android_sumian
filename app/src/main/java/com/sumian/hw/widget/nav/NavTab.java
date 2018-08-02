@@ -109,8 +109,9 @@ public class NavTab extends LinearLayout implements View.OnClickListener {
             if (v.getId() == child.getId()) {
                 child.setActivated(true);
                 OnTabChangeListener onTabChangeListener = this.mOnTabChangeListener;
-                if (onTabChangeListener != null)
+                if (onTabChangeListener != null) {
                     onTabChangeListener.tab((TabButton) v, i);
+                }
             } else {
                 child.setActivated(false);
             }

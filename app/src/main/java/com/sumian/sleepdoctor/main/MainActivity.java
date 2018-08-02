@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         this.mVersionDelegate = VersionDelegate.Companion.init();
         //commitReplace(HwWelcomeActivity.class);
         int position = mLaunchData == null ? 0 : mLaunchData.tabIndex;
-        initTab(position);
+        selectTab(position);
         mBottomNavigationBar.selectItem(position, false);
         mLaunchData = null;
         showOpenNotificationDialogIfNeeded();
@@ -115,12 +115,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         super.onRelease();
     }
 
-    private void initTab(int position) {
+    private void selectTab(int position) {
         if (mCurrentPosition == position) {
             return;
         }
         if (position == 2) {
-            ActivityUtils.startActivity(HwMainActivity.class);
+            selectTab(0);
+            launchAnotherMainActivity();
             return;
         }
         for (int i = 0, len = mFTags.length; i < len; i++) {
@@ -156,6 +157,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         }
         mCurrentPosition = position;
         changeStatusBarColorByPosition(position);
+    }
+
+    private void launchAnotherMainActivity() {
+        ActivityUtils.startActivity(HwMainActivity.class);
     }
 
     private void changeStatusBarColorByPosition(int position) {
@@ -199,7 +204,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
         if (mCurrentPosition == position) {
             return;
         }
-        initTab(position);
+        selectTab(position);
     }
 
     @Override

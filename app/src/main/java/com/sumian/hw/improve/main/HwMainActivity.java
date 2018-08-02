@@ -11,7 +11,6 @@ import android.widget.FrameLayout;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
@@ -30,12 +29,9 @@ import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.setting.dialog.UpgradeDialog;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.hw.upgrade.presenter.VersionPresenter;
-import com.sumian.hw.utils.JsonUtil;
 import com.sumian.hw.widget.nav.NavTab;
 import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.main.MainActivity;
 
@@ -220,7 +216,8 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     @Override
     public void tab(TabButton tabButton, int position) {
         if (position == 2) {
-            launchSleepDoctor();
+            mTabMain.onClick(mTabDevice);
+            launchAnotherMainActivity();
             return;
         }
         BasePagerFragment pagerFragment;
@@ -244,7 +241,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         }
     }
 
-    private void launchSleepDoctor() {
+    private void launchAnotherMainActivity() {
         ActivityUtils.startActivity(MainActivity.class);
     }
 
