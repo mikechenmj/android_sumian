@@ -133,6 +133,13 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     public void onDestroyView() {
         super.onDestroyView();
         this.mUnBinder.unbind();
+        for (Call call : mCalls) {
+            if (call.isCanceled()) {
+                continue;
+            }
+            call.cancel();
+        }
+        mCalls.clear();
     }
 
     @Override
@@ -196,6 +203,7 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         rootView.postDelayed(run, delay);
     }
 
+
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onCreate: -------->" + this.toString());
@@ -224,13 +232,6 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onDestroy: ----------->" + this.toString());
-        for (Call call : mCalls) {
-            if (call.isExecuted() || call.isCanceled()) {
-                continue;
-            }
-            call.cancel();
-        }
-        mCalls.clear();
     }
 
     protected void showToast(String message) {
