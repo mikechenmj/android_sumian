@@ -230,6 +230,9 @@ public final class BlueCmd {
     }
 
     public static int getGenderType(String gender) {
+        if (TextUtils.isEmpty(gender)) {
+            gender = "";
+        }
         int genderType;
         switch (gender) {
             case "male":
