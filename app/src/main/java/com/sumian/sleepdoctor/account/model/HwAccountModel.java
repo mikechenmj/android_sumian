@@ -5,8 +5,6 @@ import android.text.TextUtils;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.hw.account.cache.HwAccountCache;
 import com.sumian.hw.account.callback.OnLogoutCallback;
-import com.sumian.hw.account.callback.UserInfoCallback;
-import com.sumian.hw.account.service.SyncUserInfoService;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.cache.BluePeripheralCache;
 import com.sumian.hw.common.config.SumianConfig;
@@ -34,35 +32,9 @@ public class HwAccountModel {
     private volatile Token mToken;
     private volatile UserInfo mUserInfo;
 
-    private List<UserInfoCallback> mUserInfoCallbacks;
-
-    private OnLogoutCallback mOnLogoutCallback;
-
     public HwAccountModel() {
         this.mToken = HwAccountCache.getTokenCache(Token.class);
         this.mUserInfo = HwAccountCache.getUserCache(UserInfo.class);
-    }
-
-    public void addOnLogoutCallback(OnLogoutCallback onLogoutCallback) {
-        this.mOnLogoutCallback = onLogoutCallback;
-    }
-
-    public void addOnSyncUserInfoCallback(UserInfoCallback userInfoCallback) {
-        if (mUserInfoCallbacks == null) {
-            mUserInfoCallbacks = new ArrayList<>();
-        }
-        if (mUserInfoCallbacks.contains(userInfoCallback)) {
-            return;
-        }
-        mUserInfoCallbacks.add(userInfoCallback);
-    }
-
-    public void removeOnSyncUserInfoCallback(UserInfoCallback userInfoCallback) {
-        List<UserInfoCallback> userInfoCallbacks = this.mUserInfoCallbacks;
-        if (userInfoCallbacks == null) {
-            return;
-        }
-        userInfoCallbacks.remove(userInfoCallback);
     }
 
     public boolean isLogin() {
@@ -111,90 +83,12 @@ public class HwAccountModel {
 
     public void updateUserCache(UserInfo userInfo) {
         this.mUserInfo = userInfo;
-        if (userInfo != null) {
-            HwAccountCache.updateUserCache(userInfo);
-
-            List<UserInfoCallback> userInfoCallbacks = this.mUserInfoCallbacks;
-            if (userInfoCallbacks == null || userInfoCallbacks.isEmpty()) {
-                return;
-            }
-
-            for (UserInfoCallback userInfoCallback : userInfoCallbacks) {
-                userInfoCallback.onSyncUserInfoSuccess(userInfo);
-            }
-        }
     }
 
     public void login(boolean isOnlySync, int loginType) {
         if (!isOnlySync) {
-            if (loginType == SyncUserInfoService.OPEN_LOGIN_TYPE) {
-                HwAppManager.getOpenAnalytics().onProfileSignIn("wechat", String.valueOf(mUserInfo.getId()));
-            } else {
-                HwAppManager.getOpenAnalytics().onProfileSignIn(String.valueOf(mUserInfo.getId()));
-            }
-
-            //注册 leancloud
             LeanCloudHelper.loginLeanCloud();
             LeanCloudHelper.registerPushService();
-        }
-    }
-
-
-    public void logout() {
-        this.mUserInfo = null;
-        this.mToken = null;
-        HwAppManager.getOpenAnalytics().onProfileSignOff();
-        AppOperator.runOnThread(() -> {
-            // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // ActivityManager activityManager = (ActivityManager) BaseApp.getAppContext().getSystemService(Context.ACTIVITY_SERVICE);
-            // if (activityManager != null) {
-            //     activityManager.clearApplicationUserData();
-            //  }
-            // } else {
-            ReminderManager.updateReminder(null);
-            HwAccountCache.clearCache();
-            SumianConfig.clear();
-            BluePeripheralCache.clear();
-            BlueManager.init().doStopScan();
-            // }
-        });
-        OnLogoutCallback onLogoutCallback = this.mOnLogoutCallback;
-        if (onLogoutCallback == null) {
-            return;
-        }
-        onLogoutCallback.onLogoutSuccess();
-    }
-
-    public void startUpdateUserCache() {
-        List<UserInfoCallback> userInfoCallbacks = this.mUserInfoCallbacks;
-        if (userInfoCallbacks == null || userInfoCallbacks.isEmpty()) {
-            return;
-        }
-
-        for (UserInfoCallback userInfoCallback : userInfoCallbacks) {
-            userInfoCallback.onStartSyncUserInfo();
-        }
-    }
-
-    public void updateUserCacheFailed(String error) {
-        List<UserInfoCallback> userInfoCallbacks = this.mUserInfoCallbacks;
-        if (userInfoCallbacks == null || userInfoCallbacks.isEmpty()) {
-            return;
-        }
-
-        for (UserInfoCallback userInfoCallback : userInfoCallbacks) {
-            userInfoCallback.onSyncUserInfoFailed(error);
-        }
-    }
-
-    public void updateUserCacheCompleted() {
-        List<UserInfoCallback> userInfoCallbacks = this.mUserInfoCallbacks;
-        if (userInfoCallbacks == null || userInfoCallbacks.isEmpty()) {
-            return;
-        }
-
-        for (UserInfoCallback userInfoCallback : userInfoCallbacks) {
-            userInfoCallback.onCompletedUserInfo();
         }
     }
 
@@ -235,7 +129,6 @@ public class HwAccountModel {
                 break;
             }
         }
-
         this.mUserInfo.setSocialites(socialites);
         updateUserCache(userInfo);
     }

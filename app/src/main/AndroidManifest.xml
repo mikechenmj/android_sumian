@@ -397,10 +397,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme" />
 
-        <service
-            android:name="com.sumian.hw.account.service.SyncUserInfoService"
-            android:exported="false" />
-
         <service android:name="com.sumian.hw.tab.device.service.UploadSleepDataService" />
 
         <service

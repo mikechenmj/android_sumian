@@ -1,7 +1,9 @@
 package com.sumian.hw.account.activity;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,7 +20,9 @@ import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -88,7 +92,13 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
     @Override
     protected void initData() {
         super.initData();
-        this.mPresenter.doLoadCacheUserInfo();
+//        this.mPresenter.doLoadCacheUserInfo();
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
+            @Override
+            public void onChanged(@Nullable Token token) {
+                updateUserInfoUI(token.user);
+            }
+        });
     }
 
     @Override
@@ -130,6 +140,10 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
 
     @Override
     public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
+        updateUserInfoUI(userInfo);
+    }
+
+    private void updateUserInfoUI(UserInfo userInfo) {
         runUiThread(() -> {
 //            Glide.with(UserInfoActivity.this)
 //                    .load(userInfo.getAvatar())
@@ -166,7 +180,6 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
 
     @Override
     public void onRefresh() {
-        this.mPresenter.doRefreshUserInfo();
     }
 
     @Override

@@ -3,13 +3,13 @@ package com.sumian.hw.account.presenter;
 import android.support.annotation.Nullable;
 
 import com.sumian.hw.account.contract.RegisterContract;
-import com.sumian.hw.account.service.SyncUserInfoService;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.RegisterBody;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             protected void onSuccess(Token response) {
                 HwAppManager.getAccountModel().updateTokenCache(response);
                 view.onRegisterSuccess(response);
-                SyncUserInfoService.startService(SyncUserInfoService.SUMIAN_LOGIN_TYPE);
+                AppManager.getAccountViewModel().updateToken(response);
             }
 
             @Override

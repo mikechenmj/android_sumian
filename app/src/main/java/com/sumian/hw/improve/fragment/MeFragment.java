@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.sumian.hw.account.activity.SleepReminderActivity;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.hw.account.presenter.SyncUserInfoPresenter;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
@@ -114,16 +113,17 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     protected void initData() {
         super.initData();
         LeanCloudHelper.addOnAdminMsgCallback(this);
-        this.mPresenter.doLoadCacheUserInfo();
         HwAppManager.getVersionModel().syncAppVersion();
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
+            @Override
+            public void onChanged(@Nullable Token token) {
+                updateUserInfoUI(token.user);
+            }
+        });
     }
 
     @Override
     public void onEnterTab() {
-        // Log.e(TAG, "onEnterTab: -------MeFragment------->");
-        if (isResumed()) {
-            this.mPresenter.doLoadCacheUserInfo();
-        }
         HwAppManager.getOpenAnalytics().onClickEvent(getContext(), "me_tabbar_Ry");
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
     }

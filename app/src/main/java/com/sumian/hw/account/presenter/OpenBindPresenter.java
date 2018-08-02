@@ -1,12 +1,12 @@
 package com.sumian.hw.account.presenter;
 
 import com.sumian.hw.account.contract.OpenBindContract;
-import com.sumian.hw.account.service.SyncUserInfoService;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.lang.ref.WeakReference;
@@ -25,8 +25,6 @@ import retrofit2.Call;
  */
 
 public class OpenBindPresenter implements OpenBindContract.Presenter {
-
-    //private static final String TAG = OpenBindPresenter.class.getSimpleName();
 
     private WeakReference<OpenBindContract.View> mViewWeakReference;
     private List<Call> mCalls;
@@ -75,7 +73,7 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
             protected void onSuccess(Token response) {
                 HwAppManager.getAccountModel().updateTokenCache(response);
                 view.onBindSuccess(response);
-                SyncUserInfoService.startService(SyncUserInfoService.OPEN_LOGIN_TYPE);
+                AppManager.getAccountViewModel().updateToken(response);
             }
 
             @Override

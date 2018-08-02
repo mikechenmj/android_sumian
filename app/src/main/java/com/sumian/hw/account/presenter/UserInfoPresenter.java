@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.sumian.hw.account.callback.UserInfoCallback;
 import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.hw.account.service.SyncUserInfoService;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
@@ -24,33 +23,10 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
     private UserInfoPresenter(UserInfoContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        HwAppManager.getAccountModel().addOnSyncUserInfoCallback(this);
     }
 
     public static void init(UserInfoContract.View view) {
         new UserInfoPresenter(view);
-    }
-
-    @Override
-    public void doLoadCacheUserInfo() {
-        WeakReference<UserInfoContract.View> viewWeakReference = this.mViewWeakReference;
-        UserInfoContract.View view = viewWeakReference.get();
-        if (view == null) {
-            return;
-        }
-
-        UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
-
-        if (userInfo == null) {
-            doRefreshUserInfo();
-        } else {
-            view.onSyncCacheUserInfoSuccess(userInfo);
-        }
-    }
-
-    @Override
-    public void doRefreshUserInfo() {
-        SyncUserInfoService.startService(true);
     }
 
     @Override
@@ -81,7 +57,6 @@ public class UserInfoPresenter implements UserInfoContract.Presenter, UserInfoCa
 
     @Override
     public void release() {
-        HwAppManager.getAccountModel().removeOnSyncUserInfoCallback(this);
     }
 
     @Override

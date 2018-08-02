@@ -97,18 +97,12 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     @Override
     protected void initData() {
         super.initData();
-        this.mPresenter.doLoadCacheUserInfo();
-        IntentFilter filter = new IntentFilter(ACTION_MODIFY_ASSESSMENT_USER_INFO);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver = new BroadcastReceiver() {
-
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
             @Override
-            public void onReceive(Context context, Intent intent) {
-                if (ACTION_MODIFY_ASSESSMENT_USER_INFO.equals(intent.getAction())) {
-                    UserInfo userInfo = (UserInfo) intent.getSerializableExtra(EXTRA_ASSESSMENT_USER_INFO);
-                    onSyncCacheUserInfoSuccess(userInfo);
-                }
+            public void onChanged(@Nullable Token token) {
+                updateUserInfoUI(token.user);
             }
-        }, filter);
+        });
     }
 
     @Override

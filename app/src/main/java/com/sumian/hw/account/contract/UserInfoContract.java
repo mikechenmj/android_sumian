@@ -29,9 +29,9 @@ public interface UserInfoContract {
 
     interface Presenter extends BasePresenter {
 
-        void doLoadCacheUserInfo();
+//        void doLoadCacheUserInfo();
 
-        void doRefreshUserInfo();
+//        void doRefreshUserInfo();
 
         @StringRes
         int formatGender(String gender);
