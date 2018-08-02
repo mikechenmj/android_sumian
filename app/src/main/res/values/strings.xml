@@ -64,7 +64,7 @@
     <string name="setting">设置</string>
     <string name="martian">火星人</string>
     <string name="current_app_version">当前版本</string>
-    <string name="about_me">关于我们</string>
+    <string name="about_us">关于我们</string>
     <string name="logout">退出登录</string>
     <string name="brief">简介</string>
     <string name="advisory">咨询费用</string>
@@ -676,7 +676,7 @@
     <string name="tel_hint">400–878–9088</string>
     <string name="call_hint">拨打</string>
     <string name="msg_notice_setting_hint">消息通知</string>
-    <string name="unbind_sleepy_hint">更换绑定</string>
+    <string name="change_bind">更换绑定</string>
     <string name="logout_title_hint">退出后不会删除任何历史数据,下次登录依然可以使用此账号.</string>
 
     <string name="setting_call_me_hint">电话咨询</string>
@@ -915,5 +915,6 @@
     <string name="last_see">以后再说</string>
     <string name="device">设备</string>
     <string name="hw_setting_customer_service_7x24">7x24小时客服</string>
+    <string name="hw_setting_bind_wechat_hint">你可以使用已绑定的账号登录速眠医生。</string>
     <!-- Hw end-->
 </resources>

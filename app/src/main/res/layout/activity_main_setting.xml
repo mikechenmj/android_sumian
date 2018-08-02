@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:divider_line_visible="gone"
-        app:type_desc="@string/about_me" />
+        app:type_desc="@string/about_us" />
 
     <net.qiujuer.genius.ui.widget.Button
         android:id="@+id/bt_logout"

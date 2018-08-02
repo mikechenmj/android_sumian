@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="54dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,9 +18,9 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="@dimen/space_10"
             android:contentDescription="@null"
-            tools:src="@drawable/weeklyreport_icon_fallasleep"
             android:visibility="gone"
-            tools:visibility="visible" />
+            tools:src="@drawable/weeklyreport_icon_fallasleep"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_label"
@@ -58,9 +58,7 @@
 
     <View
         android:id="@+id/v_bottom_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_px_1"
+        style="@style/HwHorizontalDividerLine"
         android:layout_gravity="bottom"
-        android:layout_marginStart="@dimen/space_30"
-        android:background="@color/light_line_bg_color" />
+        android:layout_marginStart="@dimen/space_30" />
 </FrameLayout>

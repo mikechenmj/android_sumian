@@ -59,8 +59,6 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     @BindView(R.id.siv_upgrade)
     HwSettingItemView mSivUpgrade;
 
-    private UserInfoContract.Presenter mPresenter;
-
     public static MeFragment newInstance() {
         return new MeFragment();
     }
