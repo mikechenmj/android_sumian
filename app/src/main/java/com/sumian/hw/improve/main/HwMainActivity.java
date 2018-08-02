@@ -221,7 +221,6 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     public void tab(TabButton tabButton, int position) {
         if (position == 2) {
             launchSleepDoctor();
-            finish();
             return;
         }
         BasePagerFragment pagerFragment;

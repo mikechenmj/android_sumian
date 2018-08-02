@@ -25,6 +25,7 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.blankj.utilcode.util.LogUtils;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.callback.Callback;
@@ -41,6 +42,7 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.cbti.video.LogUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -224,12 +226,12 @@ public final class LeanCloudHelper {
 
             @Override
             public void onError(int code, String error) {
-                //ToastHelper.show(App.getAppContext(), error, Gravity.CENTER);
+                LogUtils.d(error);
             }
 
             @Override
             public void onProgress(int progress, String status) {
-
+                LogUtils.d(progress);
             }
         });
     }
