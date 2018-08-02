@@ -30,6 +30,5 @@ public class AppUtil {
         FileHelper.closeUploadThread();
         LogManager.appendUserOperationLog("用户退出 app.......");
         ActivityUtils.finishAllActivities();
-        AppUtils.exitApp();
     }
 }
