@@ -3,7 +3,6 @@ package com.sumian.sleepdoctor.homepage
 import android.arch.lifecycle.Observer
 import android.text.format.DateUtils
 import android.view.View
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.image.ImageLoader
@@ -11,7 +10,6 @@ import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.BaseFragment
-import com.sumian.sleepdoctor.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sleepdoctor.event.*
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
@@ -176,20 +174,19 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
     private fun querySleepRecord() {
         val call = AppManager.getHttpService().getSleepDiaryDetail((System.currentTimeMillis() / 1000L).toInt())
         addCall(call)
-        call
-                .enqueue(object : BaseResponseCallback<SleepRecord>() {
-                    override fun onSuccess(response: SleepRecord?) {
-                        sleep_record_view.setSleepRecord(response)
-                    }
+        call.enqueue(object : BaseResponseCallback<SleepRecord>() {
+            override fun onSuccess(response: SleepRecord?) {
+                sleep_record_view.setSleepRecord(response)
+            }
 
-                    override fun onFailure(errorResponse: ErrorResponse) {
-                        sleep_record_view.setSleepRecord(null)
-                    }
+            override fun onFailure(errorResponse: ErrorResponse) {
+                sleep_record_view.setSleepRecord(null)
+            }
 
-                    override fun onFinish() {
-                        super.onFinish()
-                    }
-                })
+            override fun onFinish() {
+                super.onFinish()
+            }
+        })
     }
 
     private fun queryCbti() {
