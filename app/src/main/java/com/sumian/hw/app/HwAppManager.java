@@ -36,8 +36,6 @@ import java.io.FileReader;
 @SuppressWarnings("unused")
 public final class HwAppManager {
 
-    // private static final String TAG = HwAppManager.class.getSimpleName();
-
     private static volatile HwAppManager INSTANCE = null;
 
     private volatile VersionModel mVersionModel;
