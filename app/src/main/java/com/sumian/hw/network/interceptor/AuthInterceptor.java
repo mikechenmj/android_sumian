@@ -43,7 +43,7 @@ public class AuthInterceptor implements Interceptor {
             .addHeader("Content-Type", "application/json")
             .addHeader("UserInfo-Agent", getUserAgent())
             .addHeader("Accept-Language", SystemUtil.getSystemLanguage())
-            .addHeader("Authorization", "Bearer " + HwAppManager.getAccountModel().accessToken())
+            .addHeader("Authorization", "Bearer " + HwAppManager.getAccountModel().getTokenString())
             .addHeader("Device-Info", Uri.encode(formatDeviceInfo(), "utf-8"))
             .build();
 

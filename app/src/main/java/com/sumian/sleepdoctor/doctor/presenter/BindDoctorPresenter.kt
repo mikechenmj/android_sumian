@@ -26,9 +26,9 @@ class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : B
 
     override fun checkBindDoctorState(sBridgeResult: SBridgeResult<Doctor>) {
         if (sBridgeResult.code == 0) {
-            if (AppManager.getAccountViewModel().userProfile.isBindDoctor) {
+            if (AppManager.getAccountViewModel().userInfo.isBindDoctor) {
                 val doctor = sBridgeResult.result
-                if (AppManager.getAccountViewModel().userProfile.isSameDoctor(doctor.id)) {
+                if (AppManager.getAccountViewModel().userInfo.isSameDoctor(doctor.id)) {
                     mView?.onIsSameDoctorCallback(sBridgeResult.message)
                 } else {
                     mView?.onBindDoctorFailed(App.getAppContext().getString(R.string.bind_other_doctor_state))

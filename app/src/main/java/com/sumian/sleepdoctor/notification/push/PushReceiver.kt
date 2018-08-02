@@ -43,7 +43,7 @@ class PushReceiver : BroadcastReceiver() {
             return false
         }
         val pushUserId = Integer.valueOf(userIdStr)
-        val id = AppManager.getAccountViewModel().userProfile.id
+        val id = AppManager.getAccountViewModel().userInfo.id
         if (pushUserId != id) {
             LogUtils.d("user id not equal")
             return false

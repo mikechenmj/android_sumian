@@ -92,7 +92,7 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
                                 JSONObject jsonObject = new JSONObject(response);
                                 String avatarUrl = jsonObject.getString("avatar");
                                 if (!TextUtils.isEmpty(avatarUrl)) {
-                                    UserInfo userProfile = AppManager.getAccountViewModel().getUserProfile();
+                                    UserInfo userProfile = AppManager.getAccountViewModel().getUserInfo();
                                     userProfile.avatar = avatarUrl;
                                     AppManager.getAccountViewModel().updateUserInfo(userProfile);
                                 }

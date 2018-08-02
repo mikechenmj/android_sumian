@@ -59,7 +59,7 @@ public class HwAccountModel {
         return userInfo == null ? null : userInfo.leancloud_id;
     }
 
-    public String accessToken() {
+    public String getTokenString() {
         Token token = this.mToken;
         return token == null ? null : token.token;
     }
@@ -72,7 +72,7 @@ public class HwAccountModel {
         return mToken;
     }
 
-    public void updateTokenCache(Token token) {
+    public void updateToken(Token token) {
         this.mToken = token;
         if (token == null) {
             return;
@@ -81,55 +81,7 @@ public class HwAccountModel {
         HwAccountCache.updateTokenCache(token);
     }
 
-    public void updateUserCache(UserInfo userInfo) {
+    public void updateUserInfo(UserInfo userInfo) {
         this.mUserInfo = userInfo;
-    }
-
-    public void login(boolean isOnlySync, int loginType) {
-        if (!isOnlySync) {
-            LeanCloudHelper.loginLeanCloud();
-            LeanCloudHelper.registerPushService();
-        }
-    }
-
-    public void bindSocialCache(Social social) {
-        UserInfo userInfo = this.mUserInfo;
-        List<Social> socialites = this.mUserInfo.getSocialites();
-        if (socialites == null) {
-            socialites = new ArrayList<>();
-        }
-
-        if (socialites.isEmpty()) {
-            socialites.add(social);
-        } else {
-            for (int i = 0; i < socialites.size(); i++) {
-                int type = socialites.get(i).getType();
-                if (type == social.getType()) {
-                    socialites.set(i, social);
-                    break;
-                }
-
-            }
-        }
-        this.mUserInfo.setSocialites(socialites);
-        updateUserCache(userInfo);
-    }
-
-    public void unbindOpenPlatform(int socialType) {
-        UserInfo userInfo = this.mUserInfo;
-        List<Social> socialites = this.mUserInfo.getSocialites();
-        if (socialites == null || socialites.isEmpty()) {
-            return;
-        }
-
-        for (int i = 0; i < socialites.size(); i++) {
-            int type = socialites.get(i).getType();
-            if (type == socialType) {
-                socialites.remove(i);
-                break;
-            }
-        }
-        this.mUserInfo.setSocialites(socialites);
-        updateUserCache(userInfo);
     }
 }

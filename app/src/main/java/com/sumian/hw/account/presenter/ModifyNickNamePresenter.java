@@ -71,7 +71,7 @@ public class ModifyNickNamePresenter implements ModifyUserInfoContract.Presenter
             @Override
             protected void onSuccess(UserInfo response) {
                 view.onModifySuccess(response);
-                HwAppManager.getAccountModel().updateUserCache(response);
+                HwAppManager.getAccountModel().updateUserInfo(response);
             }
 
             @Override

@@ -79,7 +79,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     }
 
     override fun transformTitle(modifyKey: String) {
-        val userInfo = AppManager.getAccountViewModel().userProfile
+        val userInfo = AppManager.getAccountViewModel().userInfo
 
         mView.transformTitle(when (modifyKey) {
             ImproveUserProfileContract.IMPROVE_WEIGHT_KEY -> {

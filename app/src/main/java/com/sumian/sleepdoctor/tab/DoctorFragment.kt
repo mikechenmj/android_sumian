@@ -46,10 +46,10 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
 
         mIsInit = true
 
-        if (AppManager.getAccountViewModel()?.userProfile?.isBindDoctor!!) {
+        if (AppManager.getAccountViewModel()?.userInfo?.isBindDoctor!!) {
             request_scan_qr_code_view.hide()
 
-            val doctor = AppManager.getAccountViewModel()?.userProfile?.doctor
+            val doctor = AppManager.getAccountViewModel()?.userInfo?.doctor
             doctor_detail_layout.invalidDoctor(doctor)
             if (doctor?.services == null) {
                 mPresenter.getBindDoctorInfo()

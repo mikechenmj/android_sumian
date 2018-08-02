@@ -93,7 +93,7 @@ public class DoctorServiceWebActivity extends BaseWebViewActivity {
                     if (mIsFromRecord) {
                         ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, mDoctorService, mIsFromRecord);
                     } else {
-                        String url = "doctorsleep://doctor?id=" + AppManager.getAccountViewModel().getUserProfile().doctor_id;
+                        String url = "doctorsleep://doctor?id=" + AppManager.getAccountViewModel().getUserInfo().doctor_id;
                         DoctorWebActivity.show(DoctorServiceWebActivity.this, url);
                     }
                 }

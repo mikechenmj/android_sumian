@@ -183,7 +183,7 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     @Override
     public void onModifySuccess(UserInfo userInfo) {
         runUiThread(this::dismiss);
-        HwAppManager.getAccountModel().updateUserCache(userInfo);
+        HwAppManager.getAccountModel().updateUserInfo(userInfo);
     }
 
     @Override

@@ -111,7 +111,7 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
     public void onModifySuccess(UserInfo userInfo) {
         runUiThread(() -> {
             //ToastHelper.show(R.string.modify_user_info_success);
-            HwAppManager.getAccountModel().updateUserCache(userInfo);
+            HwAppManager.getAccountModel().updateUserInfo(userInfo);
             dismiss();
         });
     }

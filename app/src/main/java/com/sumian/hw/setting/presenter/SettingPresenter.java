@@ -8,6 +8,8 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.hw.setting.contract.SettingContract;
 import com.sumian.sleepdoctor.account.bean.Social;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -158,7 +160,27 @@ public class SettingPresenter implements SettingContract.Presenter {
         call.enqueue(new BaseResponseCallback<Social>() {
             @Override
             protected void onSuccess(Social response) {
-                HwAppManager.getAccountModel().bindSocialCache(response);
+                UserInfo user = AppManager.getAccountViewModel().getToken().user;
+                UserInfo userInfo = user;
+                List<Social> socialites = user.getSocialites();
+                if (socialites == null) {
+                    socialites = new ArrayList<>();
+                }
+
+                if (socialites.isEmpty()) {
+                    socialites.add(response);
+                } else {
+                    for (int i = 0; i < socialites.size(); i++) {
+                        int type = socialites.get(i).getType();
+                        if (type == response.getType()) {
+                            socialites.set(i, response);
+                            break;
+                        }
+
+                    }
+                }
+                user.setSocialites(socialites);
+                AppManager.getAccountViewModel().updateUserInfo(user);
                 view.onBindOpenSuccess(response);
             }
 

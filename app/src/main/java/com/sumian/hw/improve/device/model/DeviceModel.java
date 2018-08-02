@@ -143,7 +143,7 @@ public class DeviceModel {
         HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
             protected void onSuccess(UserInfo response) {
-                HwAppManager.getAccountModel().updateUserCache(response);
+                HwAppManager.getAccountModel().updateUserInfo(response);
             }
 
             @Override

@@ -88,17 +88,17 @@ public class ModifyUserInfoActivity extends BaseActivity<ImproveUserProfileContr
             case ImproveUserProfileContract.IMPROVE_NICKNAME_KEY:
                 title = R.string.nickname;
                 hint = R.string.input_nickname;
-                input = AppManager.getAccountViewModel().getUserProfile().nickname;
+                input = AppManager.getAccountViewModel().getUserInfo().nickname;
                 break;
             case ImproveUserProfileContract.IMPROVE_NAME_KEY:
                 title = R.string.real_name;
                 hint = R.string.input_real_name;
-                input = AppManager.getAccountViewModel().getUserProfile().name;
+                input = AppManager.getAccountViewModel().getUserInfo().name;
                 break;
             case ImproveUserProfileContract.IMPROVE_CAREER_KEY:
                 title = R.string.career;
                 hint = R.string.input_career_hint;
-                input = AppManager.getAccountViewModel().getUserProfile().career;
+                input = AppManager.getAccountViewModel().getUserInfo().career;
                 break;
             default:
                 break;

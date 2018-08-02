@@ -55,8 +55,8 @@ public class ModifyPwdPresenter implements ModifyPwdContract.Presenter {
             @Override
             protected void onSuccess(Object response) {
                 HwAccountCache.clearCache();
-                HwAppManager.getAccountModel().updateUserCache(null);
-                HwAppManager.getAccountModel().updateTokenCache(null);
+                HwAppManager.getAccountModel().updateUserInfo(null);
+                HwAppManager.getAccountModel().updateToken(null);
                 view.onModifyPwdSuccess();
             }
 

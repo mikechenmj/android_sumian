@@ -74,7 +74,7 @@ public class OssEngine {
                 }
                 UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
                 userInfo.setAvatar(avatarUrl);
-                HwAppManager.getAccountModel().updateUserCache(userInfo);
+                HwAppManager.getAccountModel().updateUserInfo(userInfo);
             }
 
             @Override

@@ -108,7 +108,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
         String HW_TEST_QUESTION_URL="http://sumian-question-h5-test.oss-cn-shenzhen.aliyuncs.com/index.html";
         String HW_OFFICIAL_QUESTION_URL="http://sumian-question-h5-production.oss-cn-shenzhen.aliyuncs.com/index.html";
         String HW_CLINIC_OFFICIAL_QUESTION_URL="http://sumian-question-h5-clinic.oss-cn-shenzhen.aliyuncs.com/index.html";
-        mWebView.loadUrl(HW_DEV_QUESTION_URL + "?token=" + HwAppManager.getAccountModel().accessToken());
+        mWebView.loadUrl(HW_DEV_QUESTION_URL + "?token=" + HwAppManager.getAccountModel().getTokenString());
 
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
@@ -127,7 +127,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
                     Answers answer = JSON.parseObject(json, Answers.class);
                     UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
                     userInfo.setAnswers(answer);
-                    HwAppManager.getAccountModel().updateUserCache(userInfo);
+                    HwAppManager.getAccountModel().updateUserInfo(userInfo);
                     finish();
                 }
                 return super.shouldInterceptRequest(view, request);

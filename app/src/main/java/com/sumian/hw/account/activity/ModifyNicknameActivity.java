@@ -172,7 +172,7 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
     public void onModifySuccess(UserInfo userInfo) {
         runUiThread(() -> {
             ToastHelper.show(R.string.modify_user_info_success);
-            HwAppManager.getAccountModel().updateUserCache(userInfo);
+            HwAppManager.getAccountModel().updateUserInfo(userInfo);
             UiUtil.closeKeyboard(mEtMobile);
             finish();
         });

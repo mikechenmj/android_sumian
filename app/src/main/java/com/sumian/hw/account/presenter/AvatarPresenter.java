@@ -145,7 +145,7 @@ public class AvatarPresenter implements AvatarContract.Presenter {
 
         UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
         userInfo.setAvatar(mLocalImagePath);
-        HwAppManager.getAccountModel().updateUserCache(userInfo);
+        HwAppManager.getAccountModel().updateUserInfo(userInfo);
     }
 
     /**

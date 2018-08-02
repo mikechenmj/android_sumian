@@ -7,6 +7,8 @@ import com.sumian.hw.setting.contract.SocialContract;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.account.model.AccountViewModel;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -86,7 +88,23 @@ public class SocialPresenter implements SocialContract.Presenter {
             @Override
             protected void onSuccess(Object response) {
                 view.onUnbindSocialSuccess();
-                HwAppManager.getAccountModel().unbindOpenPlatform(socialType);
+                AccountViewModel accountViewModel = AppManager.getAccountViewModel();
+                UserInfo user = accountViewModel.getToken().user;
+                UserInfo userInfo = user;
+                List<Social> socialites = user.getSocialites();
+                if (socialites == null || socialites.isEmpty()) {
+                    return;
+                }
+
+                for (int i = 0; i < socialites.size(); i++) {
+                    int type = socialites.get(i).getType();
+                    if (type == socialType) {
+                        socialites.remove(i);
+                        break;
+                    }
+                }
+                user.setSocialites(socialites);
+                accountViewModel.updateUserInfo(userInfo);
             }
 
             @Override

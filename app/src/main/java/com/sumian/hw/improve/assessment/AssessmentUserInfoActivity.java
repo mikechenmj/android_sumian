@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
@@ -189,7 +188,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
                 @Override
                 protected void onSuccess(UserInfo response) {
                     onSyncCacheUserInfoSuccess(response);
-                    HwAppManager.getAccountModel().updateUserCache(response);
+                    HwAppManager.getAccountModel().updateUserInfo(response);
                     finish();
                 }
 

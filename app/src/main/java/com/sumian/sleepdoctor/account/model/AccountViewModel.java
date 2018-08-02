@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -42,14 +43,18 @@ public class AccountViewModel extends AndroidViewModel {
         return mTokenLiveData.getValue();
     }
 
-    public UserInfo getUserProfile() {
-        return getToken().user;
+    public UserInfo getUserInfo() {
+        Token token = getToken();
+        if (token == null) {
+            return null;
+        }
+        return token.user;
     }
 
     public void updateBoundDoctor(Doctor doctor) {
         Token token = getToken();
         token.is_new = false;
-        UserInfo userProfile = getUserProfile();
+        UserInfo userProfile = getUserInfo();
         if (doctor != null) {
             userProfile.doctor_id = doctor.getId();
         }
@@ -85,5 +90,37 @@ public class AccountViewModel extends AndroidViewModel {
 
     private void persistentTokenInSp() {
         SPUtils.getInstance().put(SP_KEY_TOKEN, JsonUtil.toJson(mTokenLiveData.getValue()));
+    }
+
+    public String getLeanCloudId() {
+        Token token = getToken();
+        if (token == null) {
+            return null;
+        }
+        UserInfo user = token.user;
+        if (user == null) {
+            return null;
+        }
+        return user.leancloud_id;
+    }
+
+    public boolean isLogin() {
+        Token token = getToken();
+        return token != null && !TextUtils.isEmpty(token.getToken());// && token.getExpired_at() * 1000L > System.currentTimeMillis();
+    }
+
+    public boolean isHaveUserInfoAndSleepBarrierTest() {
+        UserInfo userInfo = getUserInfo();
+        return userInfo != null && userInfo.isHaveUserInfoAndSleepBarrierTest();
+    }
+
+    public boolean isHaveAnswers() {
+        UserInfo userInfo = getUserInfo();
+        return userInfo != null && userInfo.isHaveAnswers();
+    }
+
+    public boolean isHaveFullUserInfo() {
+        UserInfo userInfo = getUserInfo();
+        return userInfo != null && userInfo.isHaveFullUserInfo();
     }
 }
