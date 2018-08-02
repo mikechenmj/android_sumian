@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.hw.account.activity.SleepReminderActivity;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
@@ -16,13 +15,12 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.event.ReminderChangeEvent;
 import com.sumian.hw.improve.assessment.QuestionActivity;
-import com.sumian.hw.improve.guideline.activity.ManualActivity;
 import com.sumian.hw.leancloud.LeanCloudHelper;
-import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.activity.SettingActivity;
+import com.sumian.hw.setting.widget.HwSettingItemView;
 import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.BuildConfig;
@@ -36,6 +34,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -49,15 +50,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
         LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
+    @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
+    @BindView(R.id.tv_nickname)
     TextView mTvNickname;
+    @BindView(R.id.tv_age_and_gender)
     TextView mTvAgeAndGender;
-    TextView mTvSleepAnswerState;
-    TextView mTvSleepNoticeState;
-    View mVDotMsgNotice;
-    View mVDotVersionNotice;
-    LinearLayout mLaySleepyAnswer;
-    View mViewDividerTwo;
+    @BindView(R.id.siv_upgrade)
+    HwSettingItemView mSivUpgrade;
 
     private UserInfoContract.Presenter mPresenter;
 
@@ -71,49 +71,11 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
-        mIvAvatar = root.findViewById(R.id.iv_avatar);
-        mTvNickname = root.findViewById(R.id.tv_nickname);
-        mTvAgeAndGender = root.findViewById(R.id.tv_age_and_gender);
-        mTvSleepAnswerState = root.findViewById(R.id.tv_sleep_answer_state);
-        mTvSleepNoticeState = root.findViewById(R.id.tv_sleep_notice_state);
-        mVDotMsgNotice = root.findViewById(R.id.v_dot_msg_notice);
-        mVDotVersionNotice = root.findViewById(R.id.v_dot_version_notice);
-        mLaySleepyAnswer = root.findViewById(R.id.lay_sleepy_answer);
-        mViewDividerTwo = root.findViewById(R.id.view_divider_two);
-
-        root.findViewById(R.id.iv_avatar).setOnClickListener(this);
-        root.findViewById(R.id.lay_go_to_info_center).setOnClickListener(this);
-        root.findViewById(R.id.lay_sleepy_answer).setOnClickListener(this);
-        root.findViewById(R.id.lay_sleepy_notice).setOnClickListener(this);
-        root.findViewById(R.id.lay_my_msg_notice).setOnClickListener(this);
-        root.findViewById(R.id.lay_firmware_update).setOnClickListener(this);
-        root.findViewById(R.id.lay_user_guide).setOnClickListener(this);
-        root.findViewById(R.id.lay_setting).setOnClickListener(this);
-
-        UserInfoPresenter.init(this);
-        if (BuildConfig.IS_CLINICAL_VERSION) {
-            mViewDividerTwo.setVisibility(View.GONE);
-            mLaySleepyAnswer.setVisibility(View.GONE);
-        } else {
-            mViewDividerTwo.setVisibility(View.VISIBLE);
-            mLaySleepyAnswer.setVisibility(View.VISIBLE);
-        }
-        HwAppManager.getVersionModel().registerShowDotCallback(this);
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
-            @Override
-            public void onChanged(@Nullable Token token) {
-                updateUserInfoUI(token.user);
-            }
-        });
-    }
-
-    @Override
     protected void initData() {
         super.initData();
         LeanCloudHelper.addOnAdminMsgCallback(this);
         HwAppManager.getVersionModel().syncAppVersion();
+        HwAppManager.getVersionModel().registerShowDotCallback(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
             @Override
             public void onChanged(@Nullable Token token) {
@@ -128,32 +90,41 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
     }
 
-
+    @OnClick({R.id.ll_user_info_container, R.id.siv_customer_service, R.id.siv_upgrade, R.id.siv_setting})
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.lay_sleepy_answer) {
-            QuestionActivity.show(v.getContext());
+        switch (v.getId()) {
+            case R.id.ll_user_info_container:
+                UserInfoActivity.show(getContext());
+                break;
+            case R.id.siv_customer_service:
 
-        } else if (i == R.id.iv_avatar || i == R.id.lay_go_to_info_center) {
-            UserInfoActivity.show(getContext());
-
-        } else if (i == R.id.lay_sleepy_notice) {
-            SleepReminderActivity.show(getContext());
-
-        } else if (i == R.id.lay_my_msg_notice) {
-            MsgActivity.show(v.getContext(), LeanCloudHelper.SERVICE_TYPE_MAIL);
-
-        } else if (i == R.id.lay_firmware_update) {
-            VersionNoticeActivity.show(getContext());
-
-        } else if (i == R.id.lay_user_guide) {
-            ManualActivity.show(getContext());
-
-        } else if (i == R.id.lay_setting) {
-            SettingActivity.show(getContext());
-
+                break;
+            case R.id.siv_upgrade:
+                VersionNoticeActivity.show(getContext());
+                break;
+            case R.id.siv_setting:
+                SettingActivity.show(getContext());
+                break;
+            default:
+                break;
         }
+//        if (i == R.id.lay_sleepy_answer) {
+//            QuestionActivity.show(v.getContext());
+//        } else if (i == R.id.iv_avatar || i == R.id.ll_user_info_container) {
+//            UserInfoActivity.show(getContext());
+//        } else if (i == R.id.lay_sleepy_notice) {
+//            SleepReminderActivity.show(getContext());
+//        } else if (i == R.id.lay_my_msg_notice) {
+//            MsgActivity.show(v.getContext(), LeanCloudHelper.SERVICE_TYPE_MAIL);
+//        } else if (i == R.id.lay_firmware_update) {
+//            VersionNoticeActivity.show(getContext());
+//        } else if (i == R.id.lay_user_guide) {
+//            ManualActivity.show(getContext());
+//        } else if (i == R.id.lay_setting) {
+//            SettingActivity.show(getContext());
+//        }
     }
 
     @Override
@@ -190,7 +161,6 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
             if (!TextUtils.isEmpty(age)) {
                 this.mTvAgeAndGender.append(String.format(Locale.getDefault(), "%s%s%s", "  丨  ", age, App.getAppContext().getString(R.string.age_hint)));
             }
-            this.mTvSleepAnswerState.setVisibility(!userInfo.isHaveAnswers() ? View.VISIBLE : View.INVISIBLE);
         });
         ReminderManager.getReminder();
     }
@@ -210,16 +180,9 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
 
     }
 
-    @Subscribe(sticky = true)
-    public void onSleepReminderChange(ReminderChangeEvent event) {
-        updateReminder(event.mReminder);
-        EventBusUtil.removeStickyEvent(event);
-    }
-
     @Override
     public void showDot(boolean isShowAppDot, boolean isShowMonitorDot, boolean isShowSleepyDot) {
-        // Log.e(TAG, "showDot: ------>" + isShowAppDot + "   " + (Looper.myLooper() == Looper.getMainLooper()));
-        showDot(mVDotVersionNotice, isShowAppDot || isShowMonitorDot || isShowSleepyDot);
+        mSivUpgrade.showDot(isShowAppDot || isShowMonitorDot || isShowSleepyDot);
     }
 
     @Override
@@ -229,25 +192,18 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
 
     @Override
     public void onHideMsgCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
-        showDot(mVDotMsgNotice, adminMsgLen > 0);
+//        showDot(mVDotMsgNotice, adminMsgLen > 0);
     }
 
     private void showDot(View dot, boolean isShow) {
         runOnUiThread(() -> dot.setVisibility(isShow ? View.VISIBLE : View.GONE));
     }
 
-    private void updateReminder(Reminder reminder) {
-        runOnUiThread(() -> mTvSleepNoticeState.setText(reminder == null || reminder.getEnable() == 0 ? App.getAppContext().getString(R.string.sleepy_notice_state_off_hint) : reminder.getReminderFormatTime()));
-    }
-
     private String formatGender(String gender) {
-
         String genderText = App.getAppContext().getString(R.string.gender_secrecy_hint);
-
         if (TextUtils.isEmpty(gender)) {
             return genderText;
         }
-
         switch (gender) {
             case "male":
                 genderText = App.getAppContext().getString(R.string.gender_male_hint);

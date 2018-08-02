@@ -8,12 +8,12 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/lay_go_to_info_center"
+        android:id="@+id/ll_user_info_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/space_56"
-        android:paddingTop="@dimen/space_90">
+        android:layout_marginBottom="@dimen/space_60"
+        android:layout_marginTop="@dimen/space_64"
+        android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avatar"
@@ -41,13 +41,13 @@
                 android:layout_marginRight="@dimen/space_24"
                 android:ellipsize="marquee"
                 android:focusable="true"
-                android:lines="2"
                 android:maxEms="22"
+                android:maxLines="2"
                 android:text="@string/user_none_default_hint"
                 android:textColor="@color/bt_hole_color"
                 android:textSize="@dimen/font_18"
                 tools:ignore="RtlHardcoded"
-                tools:text="我搜奥大所大所大所多撒大所大" />
+                tools:text="张三" />
 
             <TextView
                 android:id="@+id/tv_age_and_gender"
@@ -60,9 +60,7 @@
                 android:textColor="@color/general_color"
                 android:textSize="@dimen/font_14"
                 tools:ignore="HardcodedText,RtlHardcoded" />
-
         </LinearLayout>
-
     </LinearLayout>
 
     <View
@@ -70,321 +68,28 @@
         android:layout_height="@dimen/divider_px_1"
         android:background="@color/light_line_bg_color" />
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.sumian.hw.setting.widget.HwSettingItemView
+            android:id="@+id/siv_customer_service"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            app:hw_siv_label="@string/hw_setting_customer_service_7x24" />
 
-            <LinearLayout
-                android:id="@+id/lay_sleepy_answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_material_ripple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/space_12"
-                android:paddingStart="@dimen/space_24"
-                android:paddingTop="@dimen/space_12"
-                tools:ignore="RtlSymmetry">
+        <com.sumian.hw.setting.widget.HwSettingItemView
+            android:id="@+id/siv_upgrade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hw_siv_label="@string/firmware_update_notice_hint" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="睡眠障碍评估表"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_sleep_answer_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="未填写"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    android:visibility="invisible"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
-
-                <ImageView
-                    android:layout_width="@dimen/space_32"
-                    android:layout_height="@dimen/space_32"
-                    android:layout_gravity="right|center"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/space_10"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@mipmap/ic_show_redirect"
-                    tools:ignore="RtlHardcoded" />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/view_divider_two"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_px_1"
-                android:layout_marginStart="@dimen/space_24"
-                android:background="@color/light_line_bg_color" />
-
-            <LinearLayout
-                android:id="@+id/lay_sleepy_notice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_material_ripple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/space_12"
-                android:paddingStart="@dimen/space_24"
-                android:paddingTop="@dimen/space_12"
-                tools:ignore="RtlSymmetry">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="@string/sleepy_notice_hint"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    tools:ignore="RtlHardcoded" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/tv_sleep_notice_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="@string/sleepy_notice_state_off_hint"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    tools:ignore="RtlHardcoded" />
-
-                <ImageView
-                    android:layout_width="@dimen/space_32"
-                    android:layout_height="@dimen/space_32"
-                    android:layout_gravity="right|center"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/space_10"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@mipmap/ic_show_redirect"
-                    tools:ignore="RtlHardcoded" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_px_1"
-                android:layout_marginStart="@dimen/space_24"
-                android:background="@color/light_line_bg_color" />
-
-            <LinearLayout
-                android:id="@+id/lay_my_msg_notice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_material_ripple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/space_12"
-                android:paddingStart="@dimen/space_24"
-                android:paddingTop="@dimen/space_12"
-                tools:ignore="RtlSymmetry">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="@string/msg_notice_hint"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    tools:ignore="RtlHardcoded" />
-
-                <View
-                    android:id="@+id/v_dot_msg_notice"
-                    android:layout_width="@dimen/space_6"
-                    android:layout_height="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_4"
-                    android:layout_marginRight="@dimen/space_4"
-                    android:background="@drawable/bg_dot"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="@dimen/space_32"
-                    android:layout_height="@dimen/space_32"
-                    android:layout_gravity="right|center"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/space_10"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@mipmap/ic_show_redirect"
-                    tools:ignore="RtlHardcoded" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_px_1"
-                android:layout_marginStart="@dimen/space_24"
-                android:background="@color/light_line_bg_color" />
-
-            <LinearLayout
-                android:id="@+id/lay_firmware_update"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_material_ripple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/space_12"
-                android:paddingStart="@dimen/space_24"
-                android:paddingTop="@dimen/space_12"
-                android:visibility="visible"
-                tools:ignore="RtlSymmetry"
-                tools:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="@string/firmware_update_notice_hint"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    tools:ignore="RtlHardcoded" />
-
-                <View
-                    android:id="@+id/v_dot_version_notice"
-                    android:layout_width="@dimen/space_6"
-                    android:layout_height="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_4"
-                    android:layout_marginRight="@dimen/space_4"
-                    android:background="@drawable/bg_dot"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="@dimen/space_32"
-                    android:layout_height="@dimen/space_32"
-                    android:layout_gravity="right|center"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/space_10"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@mipmap/ic_show_redirect"
-                    tools:ignore="RtlHardcoded" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_px_1"
-                android:layout_marginStart="@dimen/space_24"
-                android:background="@color/light_line_bg_color"
-                android:visibility="visible"
-                tools:visibility="visible" />
-
-
-            <FrameLayout
-                android:id="@+id/lay_user_guide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_material_ripple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/space_12"
-                android:paddingStart="@dimen/space_24"
-                android:paddingTop="@dimen/space_12"
-                tools:ignore="RtlSymmetry">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="@string/user_guide"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    tools:ignore="RtlHardcoded" />
-
-                <ImageView
-                    android:layout_width="@dimen/space_32"
-                    android:layout_height="@dimen/space_32"
-                    android:layout_gravity="right|center"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/space_10"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@mipmap/ic_show_redirect"
-                    tools:ignore="RtlHardcoded" />
-
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_px_1"
-                android:layout_marginStart="@dimen/space_24"
-                android:background="@color/light_line_bg_color"
-                android:visibility="visible"
-                tools:visibility="visible" />
-
-            <FrameLayout
-                android:id="@+id/lay_setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_material_ripple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/space_12"
-                android:paddingStart="@dimen/space_24"
-                android:paddingTop="@dimen/space_12"
-                tools:ignore="RtlSymmetry">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:text="@string/setting_hint"
-                    android:textColor="@color/general_color"
-                    android:textSize="@dimen/font_16"
-                    tools:ignore="RtlHardcoded" />
-
-                <ImageView
-                    android:layout_width="@dimen/space_32"
-                    android:layout_height="@dimen/space_32"
-                    android:layout_gravity="right|center"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/space_10"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@mipmap/ic_show_redirect"
-                    tools:ignore="RtlHardcoded" />
-
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_px_1"
-                android:layout_marginStart="@dimen/space_24"
-                android:background="@color/light_line_bg_color" />
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
+        <com.sumian.hw.setting.widget.HwSettingItemView
+            android:id="@+id/siv_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hw_siv_label="@string/setting" />
+    </LinearLayout>
 
 </LinearLayout>

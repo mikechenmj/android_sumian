@@ -914,5 +914,6 @@
     <string name="go_upgrade">立即更新</string>
     <string name="last_see">以后再说</string>
     <string name="device">设备</string>
+    <string name="hw_setting_customer_service_7x24">7x24小时客服</string>
     <!-- Hw end-->
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HwSettingItemView">
+        <attr name="hw_siv_icon" format="reference" />
+        <attr name="hw_siv_label" format="string|reference" />
+        <attr name="hw_siv_content" format="string|reference" />
+        <attr name="hw_siv_show_arrow" format="boolean" />
+        <attr name="hw_siv_show_red_dot" format="boolean" />
+        <attr name="hw_siv_show_bottom_line" format="boolean" />
+    </declare-styleable>
+</resources>

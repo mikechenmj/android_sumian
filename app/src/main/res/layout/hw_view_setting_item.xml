@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="54dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/space_30"
+        android:paddingStart="@dimen/space_30">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/space_10"
+            android:contentDescription="@null"
+            tools:src="@drawable/weeklyreport_icon_fallasleep"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_label"
+            style="@style/text_grey_blue_16"
+            tools:text="版本升级" />
+
+        <ImageView
+            android:id="@+id/iv_red_dot"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="@dimen/space_10"
+            android:contentDescription="@null"
+            android:src="@drawable/circle_red" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_grey_blue_16"
+            android:layout_marginEnd="@dimen/space_20"
+            tools:ignore="RelativeOverlap"
+            tools:text="content content" />
+
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_show_redirect" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_px_1"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/space_30"
+        android:background="@color/light_line_bg_color" />
+</FrameLayout>

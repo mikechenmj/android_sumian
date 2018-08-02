@@ -94,6 +94,22 @@
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
+    <style name="text_grey_blue" parent="BaseText">
+        <item name="android:textColor">@color/general_color</item>
+    </style>
+
+    <style name="text_grey_blue_14" parent="text_grey_blue">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_grey_blue_16" parent="text_grey_blue">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_grey_blue_18" parent="text_grey_blue">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
     <!--button-->
     <style name="bt_t1_style">
         <item name="android:padding">@dimen/space_16</item>
