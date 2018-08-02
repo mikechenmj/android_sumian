@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sumian.common.image.ImageLoader;
 import com.sumian.sleepdoctor.R;
 
 /**
@@ -56,11 +57,8 @@ public class DeviceIndicatorView extends LinearLayout implements View.OnClickLis
     }
 
     public void showLoading(boolean isLoading) {
-//        if (isLoading) {
-//            Glide.with(getContext()).load(R.mipmap.ic_loading).asGif().into(mLoading);
-//        } else {
-//            Glide.with(getContext()).load(R.mipmap.ic_more).asBitmap().into(mLoading);
-//        }
+
+        ImageLoader.loadImage(isLoading ? R.mipmap.ic_loading : R.mipmap.ic_more, mLoading);
         this.mLoading.setVisibility(isLoading ? VISIBLE : GONE);
         this.mBtSync.setText(R.string.sync);
         this.mBtSync.setVisibility(isLoading ? GONE : VISIBLE);
@@ -71,7 +69,6 @@ public class DeviceIndicatorView extends LinearLayout implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        int i = v.getId();
         if (mOnDeviceIndicatorCallback != null) {
             this.mOnDeviceIndicatorCallback.requestSync();
         }

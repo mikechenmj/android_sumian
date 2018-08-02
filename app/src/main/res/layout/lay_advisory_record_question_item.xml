@@ -54,8 +54,8 @@
         android:layout_marginBottom="@dimen/space_20"
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
-        app:oscHorizontalSpace="@dimen/space_6"
-        app:oscVerticalSpace="@dimen/space_6" />
+        app:sd_HorizontalSpace="@dimen/space_6"
+        app:sd_VerticalSpace="@dimen/space_6" />
 
     <View
         android:id="@+id/divide_two"

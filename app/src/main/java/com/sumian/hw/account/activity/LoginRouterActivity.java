@@ -118,7 +118,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-        HwAppManager.getOpenLogin().deleteWeiXinOauth(this);
+        HwAppManager.getOpenLogin().deleteWechatTokenCache(this, null);
         //Log.e(TAG, "onComplete: --------->" + share_media + "  i=" + i + "   map=" + map.toString());
         onFinish();
         mPresenter.bindOpen(share_media, map);

@@ -4,39 +4,30 @@ import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
-import com.sumian.hw.event.ReminderChangeEvent;
-import com.sumian.hw.improve.assessment.QuestionActivity;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.activity.SettingActivity;
 import com.sumian.hw.setting.widget.HwSettingItemView;
 import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
-import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.event.EventBusUtil;
-
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Locale;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -92,7 +83,6 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
     @OnClick({R.id.ll_user_info_container, R.id.siv_customer_service, R.id.siv_upgrade, R.id.siv_setting})
     @Override
     public void onClick(View v) {
-        int i = v.getId();
         switch (v.getId()) {
             case R.id.ll_user_info_container:
                 UserInfoActivity.show(getContext());
@@ -146,15 +136,7 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
 
     private void updateUserInfoUI(UserInfo userInfo) {
         runOnUiThread(() -> {
-            String avatar = userInfo.getAvatar();
-            if (!TextUtils.isEmpty(avatar)) {
-//                Glide.with(getActivity())
-//                        .load(avatar)
-//                        .asBitmap()
-//                        .error(R.mipmap.ic_default_avatar)
-//                        .placeholder(R.mipmap.ic_default_avatar)
-//                        .into(mIvAvatar);
-            }
+            ImageLoader.loadImage(userInfo.getAvatar(), mIvAvatar, R.mipmap.ic_default_avatar, R.mipmap.ic_default_avatar);
             this.mTvAgeAndGender.setText(formatGender(userInfo.getGender()));
             this.mTvNickname.setText(userInfo.getNickname());
             String age = userInfo.getAge() == null ? null : userInfo.getAge().toString();

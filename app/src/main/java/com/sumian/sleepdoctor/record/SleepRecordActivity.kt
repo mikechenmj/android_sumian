@@ -18,7 +18,12 @@ import kotlinx.android.synthetic.main.activity_refund.*
  * </pre>
  */
 class SleepRecordActivity : BaseActivity() {
-    override fun getContentView(): Int {
+
+    override fun initData() {
+
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_sleep_record_detail
     }
 
@@ -41,7 +46,6 @@ class SleepRecordActivity : BaseActivity() {
     }
 
     override fun initWidget() {
-        super.initWidget()
         title_bar.setOnBackClickListener { onBackPressed() }
 
         val sleepRecordFragment = SleepRecordFragment.newInstance(intent?.getLongExtra(KEY_SLEEP_RECORD_TIME, 0L)

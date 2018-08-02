@@ -39,11 +39,11 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         }
     }
 
-    override fun getCBTIPlayAuthInfo(id: Int) {
+    override fun getCBTIPlayAuthInfo(courseId: Int) {
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().getCBTIPLayAuth(id = id)
+        val call = AppManager.getHttpService().getCBTIPLayAuth(id = courseId)
         call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
 
             override fun onSuccess(response: CoursePlayAuth?) {

@@ -15,11 +15,10 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.social.OpenEngine;
+import com.sumian.common.social.login.OpenLogin;
 import com.sumian.hw.account.activity.HwLoginActivity;
-import com.sumian.open.OpenEngine;
-import com.sumian.open.login.OpenLogin;
 import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.advisory.model.AdvisoryViewModel;
 import com.sumian.sleepdoctor.doctor.model.DoctorViewModel;
@@ -109,7 +108,7 @@ public final class AppManager implements Observer<Boolean> {
         LeanCloudManager.registerPushService(context);
 
         if (mOpenEngine == null) {
-            this.mOpenEngine = new OpenEngine().register(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            this.mOpenEngine = new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
         }
 
     }

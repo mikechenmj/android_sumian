@@ -5,6 +5,7 @@ import android.content.Context
 import com.sumian.sleepdoctor.R
 import kotlinx.android.synthetic.main.lay_loading_dialog.*
 
+@Suppress("DEPRECATION", "PLUGIN_WARNING")
 /**
  * <pre>
  *     @author : Zhan Xuzhao

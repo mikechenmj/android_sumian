@@ -15,9 +15,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.sumian.common.image.ImageLoader;
 import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.config.SelectOptions;
-import com.sumian.common.utils.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -378,7 +378,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
         }
         mUserProfile.socialites = socials;
         AppManager.getAccountViewModel().updateUserInfo(mUserProfile);
-        AppManager.getOpenLogin().deleteWeiXinOauth(this);
+        AppManager.getOpenLogin().deleteWechatTokenCache(this, null);
     }
 
     private void bindSocialitesFailed(String message) {
@@ -403,7 +403,7 @@ public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void updateUserProfileUI(UserInfo userProfile) {
-        ImageLoader.loadImage(this, mIvAvatar, userProfile.avatar, R.mipmap.ic_info_avatar_patient);
+        ImageLoader.loadImage(userProfile.avatar, mIvAvatar, R.mipmap.ic_info_avatar_patient);
         mDvNickname.setContent(userProfile.nickname);
 
         mDvName.setContent(userProfile.formatField(userProfile.name));

@@ -8,9 +8,8 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sleepdoctor.doctor.bean.Doctor;
@@ -65,8 +64,7 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
         // hideRefreshAnim();
         this.mDoctor = doctor;
 
-        RequestOptions requestOptions = RequestOptions.errorOf(R.mipmap.ic_info_avatar_doctor).placeholder(R.mipmap.ic_info_avatar_doctor);
-//        Glide.with(this).load(doctor.getAvatar()).apply(requestOptions).into(ivAvatar);
+        ImageLoader.loadImage(doctor.getAvatar(), ivAvatar, R.mipmap.ic_info_avatar_doctor, R.mipmap.ic_info_avatar_doctor);
         this.tvName.setText(doctor.getName());
         this.tvDepartment.setText(String.format(Locale.getDefault(), "%s %s", doctor.getHospital(), doctor.getDepartment()));
         this.foldLayout.setText(doctor.getIntroduction_no_tag());

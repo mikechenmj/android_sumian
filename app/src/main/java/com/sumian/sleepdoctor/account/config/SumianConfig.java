@@ -4,9 +4,9 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.sumian.common.utils.SpUtil;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTime;
 import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.utils.SpUtil;
 
 /**
  * Created by jzz

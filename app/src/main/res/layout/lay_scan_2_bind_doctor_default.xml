@@ -44,8 +44,8 @@
         android:id="@+id/ib_scan"
         android:layout_width="@dimen/space_324"
         android:layout_height="@dimen/space_324"
-        android:layout_marginLeft="@dimen/len_24"
-        android:layout_marginRight="@dimen/len_24"
+        android:layout_marginLeft="@dimen/space_24"
+        android:layout_marginRight="@dimen/space_24"
         android:background="@drawable/bg_iv"
         android:contentDescription="@null"
         android:src="@mipmap/ic_group_btn_scan_code" />

@@ -18,15 +18,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.app.App;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.improve.widget.GuidelineIndicator;
+import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
@@ -174,6 +174,9 @@ public class UserGuidelineActivity extends BaseActivity {
             DisplayMetrics displayMetrics = itemView.getResources().getDisplayMetrics();
             int heightPixels = displayMetrics.heightPixels;
             int widthPixels = displayMetrics.widthPixels;
+
+
+            ImageLoader.loadImage("", mIvGuidelineIcon, guideline.iconId, guideline.iconId, true);
 
 //            Glide
 //                    .with(itemView.getContext())

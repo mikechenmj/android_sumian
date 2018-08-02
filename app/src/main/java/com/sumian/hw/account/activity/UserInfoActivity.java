@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
@@ -145,12 +146,7 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackLis
 
     private void updateUserInfoUI(UserInfo userInfo) {
         runUiThread(() -> {
-//            Glide.with(UserInfoActivity.this)
-//                    .load(userInfo.getAvatar())
-//                    .asBitmap()
-//                    .placeholder(R.mipmap.ic_default_avatar) //设置占位图，在加载之前显示
-//                    .error(R.mipmap.ic_default_avatar) //在图像加载失败时显示
-//                    .into(mIvAvatar);
+            ImageLoader.loadImage(userInfo.getAvatar(), mIvAvatar, R.mipmap.ic_default_avatar, R.mipmap.ic_default_avatar);
 
             setText(userInfo.getNickname(), mTvNickname);
             setText(userInfo.getMobile(), mTvMobile);

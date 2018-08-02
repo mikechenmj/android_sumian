@@ -32,11 +32,13 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
+import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
 
@@ -245,10 +247,7 @@ public final class LeanCloudHelper {
 
         UIProvider.getInstance().setUserProfileProvider((context, message, userAvatarView, usernickView) -> {
             if (Message.Direct.SEND == message.direct()) {
-//                Glide.with(context).load(AppManager.getAccountViewModel().getUserInfo().getAvatar())
-//                    .placeholder(R.mipmap.ic_chat_right_default)
-//                    .error(R.mipmap.ic_chat_right_default)
-//                    .into(userAvatarView);
+                ImageLoader.loadImage(AppManager.getAccountViewModel().getUserInfo().getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default);
             }
         });
 

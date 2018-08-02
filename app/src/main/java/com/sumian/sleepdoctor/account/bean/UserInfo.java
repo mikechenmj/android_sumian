@@ -104,6 +104,11 @@ public class UserInfo implements Parcelable, Cloneable {
     }
 
     public String formatGander() {
+
+        if (TextUtils.isEmpty(gender)) {
+            return App.Companion.getAppContext().getString(R.string.none_edit);
+        }
+
         switch (gender) {
             case "male":
                 return App.Companion.getAppContext().getString(R.string.male);

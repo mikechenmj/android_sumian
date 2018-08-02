@@ -3,14 +3,13 @@ package com.sumian.sleepdoctor.doctor.dialog;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.doctor.contract.PayContract;
-
-import net.qiujuer.genius.ui.widget.Button;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;

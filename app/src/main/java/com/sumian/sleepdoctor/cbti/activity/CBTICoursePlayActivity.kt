@@ -11,7 +11,7 @@ import android.os.PersistableBundle
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.View
-import com.sumian.common.utils.ImageLoader
+import com.sumian.common.image.ImageLoader
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseActivity
 import com.sumian.sleepdoctor.cbti.bean.Course
@@ -184,7 +184,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
 
             setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
 
-            ImageLoader.loadImage(this@CBTICoursePlayActivity, imageView(), coursePlayAuth.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+            ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
 
         }
 
@@ -295,7 +295,7 @@ class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), V
             setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
 
             if (!isDestroyed) {
-                ImageLoader.loadImage(this@CBTICoursePlayActivity, imageView(), coursePlayAuth.banner, R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+                ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
             }
 
         }
