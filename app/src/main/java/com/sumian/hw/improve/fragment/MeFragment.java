@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
@@ -97,7 +98,8 @@ public class MeFragment extends BasePagerFragment implements View.OnClickListene
                 UserInfoActivity.show(getContext());
                 break;
             case R.id.siv_customer_service:
-
+                UIProvider.getInstance().clearCacheMsg();
+                LeanCloudHelper.checkLoginEasemob(LeanCloudHelper::startEasemobChatRoom);
                 break;
             case R.id.siv_upgrade:
                 VersionNoticeActivity.show(getContext());

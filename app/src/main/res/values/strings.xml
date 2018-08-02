@@ -245,6 +245,7 @@
     <string name="tab_device_hint">设备</string>
     <string name="tab_report_hint">报告</string>
     <string name="tab_consultant_hint">咨询</string>
+    <string name="tab_service">服务</string>
     <string name="tab_me_hint">我的</string>
     <string name="empty_msg_center_msg">没有消息提醒</string>
     <string name="empty_msg_center_desc"><b>您收到医生回复、建议或报告更新，</b>都会在这里收到消息提醒</string>

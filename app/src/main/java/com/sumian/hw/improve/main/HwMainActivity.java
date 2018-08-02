@@ -57,7 +57,6 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     NavTab mTabMain;
 
     private BasePagerFragment[] mPagerFragments;
-    private int mCurrentPosition = -1;
     private static final String KEY_PUSH_REPORT_SCHEME = "key_push_report_scheme";
 
     public static void show(Context context) {
@@ -244,7 +243,6 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
                 }
             }
         }
-        mCurrentPosition = position;
     }
 
     private void launchSleepDoctor() {
