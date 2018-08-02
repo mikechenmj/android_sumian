@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.improve.main.HwWelcomeActivity;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -48,7 +49,7 @@ public class SdWelcomeActivity extends BaseActivity {
     public void onToken(Token token) {
         mRoot.postDelayed(() -> {
             if (token == null) {
-                LoginActivity.show(SdWelcomeActivity.this, LoginActivity.class);
+                ActivityUtils.startActivity(HwLoginActivity.class);
             } else if (token.is_new) {
                 ImproveUserProfileOneActivity.show(SdWelcomeActivity.this, ImproveUserProfileOneActivity.class);
             } else {

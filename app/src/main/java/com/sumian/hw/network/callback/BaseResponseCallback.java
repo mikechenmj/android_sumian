@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.account.activity.LoginActivity;
+import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.ApplicationDelegate;
 import com.sumian.hw.network.response.ErrorResponse;
@@ -60,7 +60,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                                 break;
                             case 401://token 鉴权失败
                                 if (!ApplicationDelegate.isIsLoginActivity()) {
-                                    LoginActivity.show(App.getAppContext(), true);
+                                    HwLoginActivity.show(App.getAppContext(), true);
                                     ApplicationDelegate.setIsLoginActivity(true);
                                 }
                             default:

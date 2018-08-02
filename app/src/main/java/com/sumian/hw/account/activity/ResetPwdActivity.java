@@ -149,7 +149,7 @@ public class ResetPwdActivity extends BaseActivity implements View.OnClickListen
     public void onResetPwdSuccess() {
         runUiThread(() -> {
             ToastHelper.show(R.string.set_pwd_success_hint);
-            LoginActivity.show(this);
+            HwLoginActivity.show(this);
             finish();
         });
     }

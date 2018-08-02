@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Process;
 
-import com.sumian.hw.account.activity.LoginActivity;
+import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.account.activity.SleepReminderActivity;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.improve.main.HwWelcomeActivity;
@@ -103,7 +103,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
             return;
         }
 
-        if (activity instanceof LoginActivity) {
+        if (activity instanceof HwLoginActivity) {
             mIsLoginActivity = true;
             //Log.e(TAG, "------------loginWithService  is top----->");
         }
@@ -173,7 +173,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
             return;
         }
         activities.remove(activity);
-        if (activity instanceof LoginActivity) {
+        if (activity instanceof HwLoginActivity) {
             mIsLoginActivity = false;
         }
 

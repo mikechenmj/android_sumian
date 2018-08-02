@@ -84,7 +84,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.bt_login) {
-            LoginActivity.show(this, true);
+            HwLoginActivity.show(this, true);
         } else if (id == R.id.tv_register) {
             RegisterActivity.show(this);
         } else if (id == R.id.bt_wechat) {

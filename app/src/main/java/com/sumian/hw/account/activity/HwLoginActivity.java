@@ -26,10 +26,10 @@ import com.sumian.hw.widget.refresh.ActionLoadingDialog;
  * desc:
  */
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
+public class HwLoginActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
         LoginContract.View {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = HwLoginActivity.class.getSimpleName();
 
     public static final String KEY_LAUNCHER = "extra_launcher";
     TitleBar mTitleBar;
@@ -45,13 +45,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ActionLoadingDialog mActionLoadingDialog;
 
     public static void show(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, HwLoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     public static void show(Context context, boolean isLauncher) {
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, HwLoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(KEY_LAUNCHER, isLauncher);
         context.startActivity(intent);

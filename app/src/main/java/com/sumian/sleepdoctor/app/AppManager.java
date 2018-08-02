@@ -11,9 +11,11 @@ import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.util.Log;
 import android.view.Gravity;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.open.OpenEngine;
 import com.sumian.open.login.OpenLogin;
 import com.sumian.sleepdoctor.BuildConfig;
@@ -56,7 +58,8 @@ public final class AppManager implements Observer<Boolean> {
         Log.e(TAG, "onChanged: -------token  is invalid------->" + tokenIsInvalid);
 
         if (tokenIsInvalid) {
-            LoginActivity.show(App.Companion.getAppContext(), LoginActivity.class);
+//            LoginActivity.show(App.Companion.getAppContext(), LoginActivity.class);
+            ActivityUtils.startActivity(HwLoginActivity.class);
         }
     }
 

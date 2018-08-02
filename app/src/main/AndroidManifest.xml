@@ -288,7 +288,7 @@
             android:theme="@style/HwAppTheme" />
 
         <activity
-            android:name="com.sumian.hw.account.activity.LoginActivity"
+            android:name="com.sumian.hw.account.activity.HwLoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme" />
 
