@@ -130,7 +130,7 @@ android {
     flavorDimensions "market", "environment"
     productFlavors {
 
-        def app_name = "睡眠医生"
+        def app_name = "速眠医生"
         def application_id = rootProject.ext.applicationId
         def version_name = rootProject.ext.versionName
 

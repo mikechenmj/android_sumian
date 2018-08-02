@@ -41,6 +41,7 @@
                 android:layout_marginTop="@dimen/space_32"
                 android:gravity="center"
                 android:textSize="@dimen/font_16"
+                android:visibility="gone"
                 tools:text="APP 版本: 0.0.1" />
 
             <TextView
