@@ -14,6 +14,8 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.common.utils.SettingsUtil;
+import com.sumian.hw.utils.AppUtil;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.R;
@@ -120,7 +122,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
             return;
         }
         if (position == 2) {
-            selectTab(0);
+            mBottomNavigationBar.selectItem(0, true);
             launchAnotherMainActivity();
             return;
         }
@@ -259,5 +261,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 .setRightBtn(R.string.open_notification, v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION))
                 .show();
         SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis());
+    }
+
+    @Override
+    public void onBackPressed() {
+        AppUtil.exitApp(this);
     }
 }

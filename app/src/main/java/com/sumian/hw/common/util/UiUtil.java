@@ -187,24 +187,4 @@ public final class UiUtil {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
-
-    /**
-     * exit app
-     */
-    public static void exitApp(Activity activity) {
-        long curTime = SystemClock.uptimeMillis();
-        if ((curTime - mBackPressedTime) < 1000) {
-            HwAppManager.getJobScheduler().release(activity.getApplicationContext());
-            BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
-            if (bluePeripheral != null) {
-                bluePeripheral.close();
-            }
-            FileHelper.closeUploadThread();
-            activity.finish();
-            LogManager.appendUserOperationLog("用户退出 app.......");
-        } else {
-            mBackPressedTime = curTime;
-            ToastHelper.show(R.string.tip_double_click_exit_hint);
-        }
-    }
 }

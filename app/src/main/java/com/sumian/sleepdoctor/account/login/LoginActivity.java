@@ -36,8 +36,6 @@ import butterknife.OnClick;
 
 public final class LoginActivity extends BaseActivity<LoginPresenter> implements View.OnClickListener, LoginContract.View, LoginRuleView.OnCheckedListener, UMAuthListener {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
-
     public static final int REQUEST_CODE_SET_USER_INFO = 100;
 
     @BindView(R.id.et_mobil)

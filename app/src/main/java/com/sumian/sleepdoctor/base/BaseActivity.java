@@ -71,11 +71,11 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         context.startActivity(intent);
     }
 
-    public static void showClearTop(Context context, Class<? extends BaseActivity> clx) {
+    public static void showClearTop(Context context, Class<? extends Activity> clx) {
         showClearTop(context, clx, null);
     }
 
-    public static void showClearTop(Context context, Class<? extends BaseActivity> clx, Bundle bundle) {
+    public static void showClearTop(Context context, Class<? extends Activity> clx, Bundle bundle) {
         Intent intent = new Intent(context, clx);
         if (bundle != null) {
             intent.putExtras(bundle);
