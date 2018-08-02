@@ -246,27 +246,6 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     }
 
     private void launchSleepDoctor() {
-        Intent intent = new Intent();
-        intent.setAction("com.sumian.hw.LAUNCH_SLEEP_DOCTOR_MAIN");
-        AccountViewModel accountModel = AppManager.getAccountViewModel();
-        Token hwToken = accountModel.getToken();
-        hwToken.user = accountModel.getUserInfo();
-        String json = JsonUtil.toJson(hwToken);
-        intent.putExtra("token_info", json);
-
-        UserInfo userInfo = hwToken.user;
-        UserInfo userProfile = new UserInfo();
-        userProfile.id = (int) userInfo.getId();
-        userProfile.mobile = userInfo.getMobile();
-        userProfile.avatar = userInfo.getAvatar();
-
-        Token token = new Token();
-        token.token = hwToken.token;
-        token.expired_at = hwToken.expired_at;
-        token.is_new = false;
-        token.user = userProfile;
-        AppManager.getAccountViewModel().updateToken(token);
-        com.sumian.sleepdoctor.app.AppManager.getAccountViewModel().updateToken(token);
         ActivityUtils.startActivity(MainActivity.class);
     }
 
