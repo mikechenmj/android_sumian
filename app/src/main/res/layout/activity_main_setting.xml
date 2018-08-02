@@ -36,10 +36,14 @@
         android:layout_marginTop="@dimen/space_16"
         android:background="@color/b2_color"
         android:clickable="true"
+        android:elevation="0dp"
         android:focusable="true"
+        android:foreground="@drawable/bg_material"
         android:gravity="center"
+        android:outlineProvider="none"
         android:text="@string/logout"
         android:textColor="@color/t4_color"
-        android:textSize="@dimen/font_16" />
+        android:textSize="@dimen/font_16"
+        android:translationZ="0dp" />
 
 </LinearLayout>
