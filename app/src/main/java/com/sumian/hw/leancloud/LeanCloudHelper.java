@@ -38,6 +38,7 @@ import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -164,7 +165,7 @@ public final class LeanCloudHelper {
     public static void loginLeanCloud() {
         loginEasemob(null);
         // Tom 用自己的名字作为clientId，获取AVIMClient对象实例
-        String clientId = HwAppManager.getAccountModel().getLeanCloudId();
+        String clientId = AppManager.getAccountViewModel().getLeanCloudId();
         if (TextUtils.isEmpty(clientId)) {
             return;
         }
@@ -199,7 +200,7 @@ public final class LeanCloudHelper {
     private static void loginEasemob(Runnable run) {
         //未登录，需要登录后，再进入会话界面
 
-        UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+        UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
         if (userInfo == null) {
             return;
         }
@@ -238,13 +239,13 @@ public final class LeanCloudHelper {
 
     public static Intent getChatRoomLaunchIntent() {
         VisitorInfo visitorInfo = ContentFactory.createVisitorInfo(null)
-                .nickName(HwAppManager.getAccountModel().getUserInfo().getNickname())
-                .name(HwAppManager.getAccountModel().getUserInfo().getNickname())
-                .phone(HwAppManager.getAccountModel().getUserInfo().getMobile());
+                .nickName(AppManager.getAccountViewModel().getUserInfo().getNickname())
+                .name(AppManager.getAccountViewModel().getUserInfo().getNickname())
+                .phone(AppManager.getAccountViewModel().getUserInfo().getMobile());
 
         UIProvider.getInstance().setUserProfileProvider((context, message, userAvatarView, usernickView) -> {
             if (Message.Direct.SEND == message.direct()) {
-//                Glide.with(context).load(HwAppManager.getAccountModel().getUserInfo().getAvatar())
+//                Glide.with(context).load(AppManager.getAccountViewModel().getUserInfo().getAvatar())
 //                    .placeholder(R.mipmap.ic_chat_right_default)
 //                    .error(R.mipmap.ic_chat_right_default)
 //                    .into(userAvatarView);
@@ -261,7 +262,7 @@ public final class LeanCloudHelper {
 
         String conversationMembers = serviceType == SERVICE_TYPE_ONLINE_DOCTOR ? BuildConfig.LEANCLOUD_DOCTOR_SERVICE_ID
                 : BuildConfig.LEANCLOUD_ONLINE_SERVICE_ID;
-        String conversationTag = HwAppManager.getAccountModel().getLeanCloudId() + " & " + conversationMembers;
+        String conversationTag = AppManager.getAccountViewModel().getLeanCloudId() + " & " + conversationMembers;
 
         AVIMClient avimClient = INSTANCE.mAVIMClient;
 
@@ -520,7 +521,7 @@ public final class LeanCloudHelper {
                     return;
                 }
 
-                if (name.equals(HwAppManager.getAccountModel().getLeanCloudId() + " & " + BuildConfig.LEANCLOUD_DOCTOR_SERVICE_ID)) {
+                if (name.equals(AppManager.getAccountViewModel().getLeanCloudId() + " & " + BuildConfig.LEANCLOUD_DOCTOR_SERVICE_ID)) {
                     //医生会话
                     Log.d(TAG, "onMessage: ------医生会话下发的消息------->");
                     mDoctorMessages.add(message);

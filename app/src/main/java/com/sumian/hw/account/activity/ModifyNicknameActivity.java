@@ -19,6 +19,7 @@ import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 
 /**
@@ -172,7 +173,7 @@ public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnM
     public void onModifySuccess(UserInfo userInfo) {
         runUiThread(() -> {
             ToastHelper.show(R.string.modify_user_info_success);
-            HwAppManager.getAccountModel().updateUserInfo(userInfo);
+            AppManager.getAccountViewModel().updateUserInfo(userInfo);
             UiUtil.closeKeyboard(mEtMobile);
             finish();
         });

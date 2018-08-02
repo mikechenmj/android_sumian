@@ -13,6 +13,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.TimeUtil;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class LogAdapter extends RecyclerView.Adapter<ViewHolder> {
     public int getItemViewType(int position) {
         AVIMMessage message = this.mItems.get(position);
         String from = message.getFrom();
-        if (from.equals(HwAppManager.getAccountModel().getLeanCloudId())) {
+        if (from.equals(AppManager.getAccountViewModel().getLeanCloudId())) {
             return RIGHT_TEXT_TYPE;
         } else {
             return LEFT_TEXT_TYPE;

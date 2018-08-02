@@ -87,7 +87,7 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
         call.enqueue(new BaseResponseCallback<Token>() {
             @Override
             protected void onSuccess(Token response) {
-                HwAppManager.getAccountModel().updateToken(response);
+                AppManager.getAccountViewModel().updateToken(response);
                 view.onBindOpenSuccess(response);
                 AppManager.getAccountViewModel().updateToken(response);
             }

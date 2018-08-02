@@ -37,6 +37,7 @@ import com.sumian.hw.improve.widget.dialog.SumianDialog;
 import com.sumian.hw.job.JobTask;
 import com.sumian.hw.log.LogManager;
 import com.sumian.common.utils.LocationManagerUtil;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.List;
 
@@ -227,7 +228,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
             //临床环境需要屏蔽小眠助手
             mFloatGroupView.setVisibility(View.GONE);
         } else {
-            boolean haveUserInfoAndSleepBarrierTest = HwAppManager.getAccountModel().isHaveUserInfoAndSleepBarrierTest();
+            boolean haveUserInfoAndSleepBarrierTest = AppManager.getAccountViewModel().isHaveUserInfoAndSleepBarrierTest();
             if (haveUserInfoAndSleepBarrierTest) {
                 mFloatGroupView.setVisibility(View.GONE);
             } else {

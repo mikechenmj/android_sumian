@@ -28,6 +28,7 @@ import com.sumian.hw.widget.TitleBar;
 import com.sumian.blue.callback.BluePeripheralCallback;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -222,7 +223,7 @@ public class DeviceLogActivity extends BaseActivity implements View.OnClickListe
         runUiThread(() -> {
             AVIMTextMessage textMessage = new AVIMTextMessage();
             textMessage.setText(BlueCmd.bytes2HexString(data) + " [" + new SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault()).format(new Date()) + "]");
-            textMessage.setFrom(HwAppManager.getAccountModel().getLeanCloudId());
+            textMessage.setFrom(AppManager.getAccountViewModel().getLeanCloudId());
             textMessage.setTimestamp(System.currentTimeMillis());
             mLogAdapter.addMsg(textMessage);
             this.mRecyclerView.scrollToPosition(mLogAdapter.getItemCount() - 1);

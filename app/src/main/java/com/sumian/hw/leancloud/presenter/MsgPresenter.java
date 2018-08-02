@@ -21,6 +21,7 @@ import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.contract.MsgContract;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -154,7 +155,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
                 }).build());
 
         } else {//pic camera
-            cameraFile = new File(generateImagePath(String.valueOf(HwAppManager.getAccountModel().getUserInfo().getId()), App.getAppContext()), HwAppManager.getAccountModel().getUserInfo().getId()
+            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), App.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
                 + System.currentTimeMillis() + ".jpg");
 
             //noinspection ResultOfMethodCallIgnored

@@ -14,6 +14,7 @@ import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -148,7 +149,7 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
             @Override
             protected void onSuccess(UserInfo response) {
                 view.onModifySuccess(response);
-                HwAppManager.getAccountModel().updateUserInfo(response);
+                AppManager.getAccountViewModel().updateUserInfo(response);
             }
 
             @Override

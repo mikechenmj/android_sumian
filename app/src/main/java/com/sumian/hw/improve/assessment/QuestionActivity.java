@@ -20,6 +20,7 @@ import com.sumian.hw.base.BaseActivity;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Answers;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by sm
@@ -59,7 +60,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.iv_re_do).setOnClickListener(this);
         findViewById(R.id.bt_finish).setOnClickListener(this);
 
-        boolean haveAnswers = HwAppManager.getAccountModel().isHaveAnswers();
+        boolean haveAnswers = AppManager.getAccountViewModel().isHaveAnswers();
         if (!haveAnswers) {
             initWebView();
         } else {
@@ -108,7 +109,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
         String HW_TEST_QUESTION_URL="http://sumian-question-h5-test.oss-cn-shenzhen.aliyuncs.com/index.html";
         String HW_OFFICIAL_QUESTION_URL="http://sumian-question-h5-production.oss-cn-shenzhen.aliyuncs.com/index.html";
         String HW_CLINIC_OFFICIAL_QUESTION_URL="http://sumian-question-h5-clinic.oss-cn-shenzhen.aliyuncs.com/index.html";
-        mWebView.loadUrl(HW_DEV_QUESTION_URL + "?token=" + HwAppManager.getAccountModel().getTokenString());
+        mWebView.loadUrl(HW_DEV_QUESTION_URL + "?token=" + AppManager.getAccountViewModel().getTokenString());
 
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
@@ -125,9 +126,9 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
                 if (url.startsWith("sumian://sleep_quality_result?data=")) {
                     String json = url.substring(url.indexOf("{"));
                     Answers answer = JSON.parseObject(json, Answers.class);
-                    UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+                    UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
                     userInfo.setAnswers(answer);
-                    HwAppManager.getAccountModel().updateUserInfo(userInfo);
+                    AppManager.getAccountViewModel().updateUserInfo(userInfo);
                     finish();
                 }
                 return super.shouldInterceptRequest(view, request);

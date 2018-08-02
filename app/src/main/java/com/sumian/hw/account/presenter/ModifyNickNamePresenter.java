@@ -5,6 +5,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -71,7 +72,7 @@ public class ModifyNickNamePresenter implements ModifyUserInfoContract.Presenter
             @Override
             protected void onSuccess(UserInfo response) {
                 view.onModifySuccess(response);
-                HwAppManager.getAccountModel().updateUserInfo(response);
+                AppManager.getAccountViewModel().updateUserInfo(response);
             }
 
             @Override

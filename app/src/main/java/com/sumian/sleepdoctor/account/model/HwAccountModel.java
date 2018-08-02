@@ -2,21 +2,9 @@ package com.sumian.sleepdoctor.account.model;
 
 import android.text.TextUtils;
 
-import com.sumian.blue.manager.BlueManager;
 import com.sumian.hw.account.cache.HwAccountCache;
-import com.sumian.hw.account.callback.OnLogoutCallback;
-import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.common.cache.BluePeripheralCache;
-import com.sumian.hw.common.config.SumianConfig;
-import com.sumian.hw.common.operator.AppOperator;
-import com.sumian.hw.leancloud.LeanCloudHelper;
-import com.sumian.hw.reminder.ReminderManager;
-import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jzz
@@ -27,7 +15,7 @@ import java.util.List;
 
 public class HwAccountModel {
 
-    private static final String TAG = HwAccountModel.class.getSimpleName();
+    private static final String TAG = AccountViewModel.class.getSimpleName();
 
     private volatile Token mToken;
     private volatile UserInfo mUserInfo;

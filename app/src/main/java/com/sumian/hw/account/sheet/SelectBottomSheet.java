@@ -17,6 +17,7 @@ import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -183,7 +184,7 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
     @Override
     public void onModifySuccess(UserInfo userInfo) {
         runUiThread(this::dismiss);
-        HwAppManager.getAccountModel().updateUserInfo(userInfo);
+        AppManager.getAccountViewModel().updateUserInfo(userInfo);
     }
 
     @Override

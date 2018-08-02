@@ -2,11 +2,12 @@ package com.sumian.hw.improve.device.model;
 
 import android.text.TextUtils;
 
-import com.sumian.sleepdoctor.account.model.HwAccountModel;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.account.model.AccountViewModel;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -126,7 +127,7 @@ public class DeviceModel {
     private void uploadBindSn(String sleepySn, String monitorSn) {
         Map<String, Object> map = new HashMap<>();
 
-        HwAccountModel accountModel = HwAppManager.getAccountModel();
+        AccountViewModel accountModel = AppManager.getAccountViewModel();
 
         UserInfo userInfo = accountModel.getUserInfo();
         userInfo.setSleeper_sn(sleepySn);
@@ -143,7 +144,7 @@ public class DeviceModel {
         HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
             protected void onSuccess(UserInfo response) {
-                HwAppManager.getAccountModel().updateUserInfo(response);
+                AppManager.getAccountViewModel().updateUserInfo(response);
             }
 
             @Override

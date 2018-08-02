@@ -17,6 +17,7 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.engine.OssEngine;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.File;
 
@@ -91,7 +92,7 @@ public class AvatarPresenter implements AvatarContract.Presenter {
             activity.startActivityForResult(intent, PIC_REQUEST_CODE_LOCAL);
 
         } else {//pic camera
-            cameraFile = new File(generateImagePath(String.valueOf(HwAppManager.getAccountModel().getUserInfo().getId()), App.getAppContext()), HwAppManager.getAccountModel().getUserInfo().getId()
+            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), App.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
                 + System.currentTimeMillis() + ".jpg");
 
             //noinspection ResultOfMethodCallIgnored
@@ -143,9 +144,9 @@ public class AvatarPresenter implements AvatarContract.Presenter {
             mView.loadLocalImageSuccess(mLocalImagePath);
         }
 
-        UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+        UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
         userInfo.setAvatar(mLocalImagePath);
-        HwAppManager.getAccountModel().updateUserInfo(userInfo);
+        AppManager.getAccountViewModel().updateUserInfo(userInfo);
     }
 
     /**

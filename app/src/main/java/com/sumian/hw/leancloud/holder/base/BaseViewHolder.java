@@ -78,7 +78,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
         }
 
 //        Glide.with(civIcon.getContext())
-//            .load(mIsLeft ? mipmapId : HwAppManager.getAccountModel().getUserInfo().getAvatar())
+//            .load(mIsLeft ? mipmapId : AppManager.getAccountViewModel().getUserInfo().getAvatar())
 //            .asBitmap()
 //            .diskCacheStrategy(DiskCacheStrategy.RESULT)
 //            .placeholder(mipmapId)

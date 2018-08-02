@@ -6,6 +6,7 @@ import android.util.Log;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.BlueByteUtil;
 import com.sumian.sleepdoctor.account.bean.Answers;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -221,10 +222,10 @@ public final class BlueCmd {
         bytes[0] = Cmd.CMD_APP_HEADER;
         bytes[1] = Cmd.CMD_SET_USER_INFO;
         bytes[2] = 0x04;
-        bytes[3] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getGenderType(HwAppManager.getAccountModel().getUserInfo().getGender()) : 0xff);//性别特征
-        bytes[4] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getFormatAge(HwAppManager.getAccountModel().getUserInfo().getAge()) : 0xff);//年龄
-        bytes[5] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getFormatBmi(HwAppManager.getAccountModel().getUserInfo().getBmi()) : 0xff);//身高体重比
-        bytes[6] = (byte) (HwAppManager.getAccountModel().getUserInfo() != null ? getInsomnia(HwAppManager.getAccountModel().getUserInfo().getAnswers()) : 0xff);//失眠程度
+        bytes[3] = (byte) (AppManager.getAccountViewModel().getUserInfo() != null ? getGenderType(AppManager.getAccountViewModel().getUserInfo().getGender()) : 0xff);//性别特征
+        bytes[4] = (byte) (AppManager.getAccountViewModel().getUserInfo() != null ? getFormatAge(AppManager.getAccountViewModel().getUserInfo().getAge()) : 0xff);//年龄
+        bytes[5] = (byte) (AppManager.getAccountViewModel().getUserInfo() != null ? getFormatBmi(AppManager.getAccountViewModel().getUserInfo().getBmi()) : 0xff);//身高体重比
+        bytes[6] = (byte) (AppManager.getAccountViewModel().getUserInfo() != null ? getInsomnia(AppManager.getAccountViewModel().getUserInfo().getAnswers()) : 0xff);//失眠程度
         return bytes;
     }
 

@@ -62,7 +62,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         call.enqueue(new BaseResponseCallback<Token>() {
             @Override
             protected void onSuccess(Token response) {
-                HwAppManager.getAccountModel().updateToken(response);
+                AppManager.getAccountViewModel().updateToken(response);
                 view.loginSuccess();
                 AppManager.getAccountViewModel().updateToken(response);
             }

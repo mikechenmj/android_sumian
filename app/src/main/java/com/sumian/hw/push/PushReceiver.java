@@ -11,6 +11,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.JsonUtil;
 import com.sumian.hw.utils.NotificationUtil;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -75,7 +76,7 @@ public class PushReceiver extends BroadcastReceiver {
             return false;
         }
         long pushUserId = Long.valueOf(userIdStr);
-        long id = HwAppManager.getAccountModel().getUserInfo().getId();
+        long id = AppManager.getAccountViewModel().getUserInfo().getId();
         if (pushUserId != id) {
             LogUtils.d("user id not equal");
             return false;

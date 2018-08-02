@@ -19,6 +19,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -363,7 +364,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
         int dataType = Integer.parseInt(endCmd.substring(4, 8), 16) >> 12;
         return dataType + "_" + endCmd.substring(10) +
             "_sn" + HwAppManager.getDeviceModel().getMonitorSn() +
-            "_" + HwAppManager.getAccountModel().getUserInfo().getId() +
+            "_" + AppManager.getAccountViewModel().getUserInfo().getId() +
             ".txt";
     }
 

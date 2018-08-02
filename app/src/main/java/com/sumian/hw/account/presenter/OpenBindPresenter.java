@@ -71,7 +71,7 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
         call.enqueue(new BaseResponseCallback<Token>() {
             @Override
             protected void onSuccess(Token response) {
-                HwAppManager.getAccountModel().updateToken(response);
+                AppManager.getAccountViewModel().updateToken(response);
                 view.onBindSuccess(response);
                 AppManager.getAccountViewModel().updateToken(response);
             }

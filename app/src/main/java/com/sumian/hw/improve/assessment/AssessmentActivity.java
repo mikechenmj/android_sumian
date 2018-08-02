@@ -17,6 +17,7 @@ import com.sumian.hw.app.ApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.widget.TitleBar;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by sm
@@ -96,7 +97,7 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
 
-        if (!HwAppManager.getAccountModel().isHaveFullUserInfo()) {
+        if (!AppManager.getAccountViewModel().isHaveFullUserInfo()) {
             mBtUserInfoTable.setVisibility(View.VISIBLE);
             mIvUserInfo.setImageResource(R.mipmap.chatbubble_icon_info);
             mLayShowUserInfoTable.setVisibility(View.VISIBLE);
@@ -106,7 +107,7 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
             mBtUserInfoTable.setVisibility(View.GONE);
         }
 
-        if (!HwAppManager.getAccountModel().isHaveAnswers()) {
+        if (!AppManager.getAccountViewModel().isHaveAnswers()) {
             mBtAssessmentTable.setVisibility(View.VISIBLE);
             mIvSleepAssessment.setImageResource(R.mipmap.chatbubble_icon_evaluationform);
             mLayShowSleepAssessmentTable.setVisibility(View.VISIBLE);

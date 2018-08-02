@@ -168,7 +168,7 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             mIvNext.setVisibility(View.VISIBLE);
 
             // 改为了可以无限往前滑动，所以注释掉下面的代码
-//            String createdAt = HwAppManager.getAccountModel().getUserInfo().getCreated_at();
+//            String createdAt = AppManager.getAccountViewModel().getUserInfo().getCreated_at();
 //            if (!TextUtils.isEmpty(createdAt)) {
 //                try {
 //                    Date parseDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(createdAt);

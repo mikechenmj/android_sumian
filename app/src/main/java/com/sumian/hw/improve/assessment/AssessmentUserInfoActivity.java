@@ -188,7 +188,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
                 @Override
                 protected void onSuccess(UserInfo response) {
                     onSyncCacheUserInfoSuccess(response);
-                    HwAppManager.getAccountModel().updateUserInfo(response);
+                    AppManager.getAccountViewModel().updateUserInfo(response);
                     finish();
                 }
 

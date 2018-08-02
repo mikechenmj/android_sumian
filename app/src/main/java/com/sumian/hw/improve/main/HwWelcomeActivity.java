@@ -12,6 +12,7 @@ import com.sumian.hw.improve.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -39,7 +40,7 @@ public class HwWelcomeActivity extends BaseActivity {
             if (GuidelineUtils.needShowWelcomeUserGuide()) {
                 UserGuidelineActivity.show(this);
             } else {
-                boolean login = HwAppManager.getAccountModel().isLogin();
+                boolean login = AppManager.getAccountViewModel().isLogin();
                 if (login) {
                     HwMainActivity.show(App.getAppContext());
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);

@@ -3,6 +3,7 @@ package com.sumian.hw.common.operator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -31,7 +32,7 @@ public final class AppOperator {
     }
 
     public static GlideUrl getGlideUrlByUser(String url) {
-        if (HwAppManager.getAccountModel().isLogin()) {
+        if (AppManager.getAccountViewModel().isLogin()) {
             return new GlideUrl(url,
                 new LazyHeaders
                     .Builder()

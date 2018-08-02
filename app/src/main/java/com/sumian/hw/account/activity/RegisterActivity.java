@@ -27,6 +27,7 @@ import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -134,7 +135,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onRegisterSuccess(Token token) {
         runUiThread(() -> {
             ToastHelper.show(R.string.register_success_hint);
-            if (!HwAppManager.getAccountModel().isHaveUserInfoAndSleepBarrierTest()) {
+            if (!AppManager.getAccountViewModel().isHaveUserInfoAndSleepBarrierTest()) {
                 AssessmentActivity.show(this, true);
             } else {
                 HwMainActivity.show(App.getAppContext());

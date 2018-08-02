@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.sleepdoctor.account.model.HwAccountModel;
+import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
@@ -132,7 +132,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     @Override
     protected void initData() {
         super.initData();
-        if (HwAppManager.getAccountModel().isLogin()) {
+        if (AppManager.getAccountViewModel().isLogin()) {
             LeanCloudHelper.loginLeanCloud();
             LeanCloudHelper.registerPushService();
             Call<Object> call = HwAppManager.getNetEngine().getHttpService().sendHeartbeats("open_app");
@@ -250,7 +250,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     private void launchSleepDoctor() {
         Intent intent = new Intent();
         intent.setAction("com.sumian.hw.LAUNCH_SLEEP_DOCTOR_MAIN");
-        HwAccountModel accountModel = HwAppManager.getAccountModel();
+        AccountViewModel accountModel = AppManager.getAccountViewModel();
         Token hwToken = accountModel.getToken();
         hwToken.user = accountModel.getUserInfo();
         String json = JsonUtil.toJson(hwToken);

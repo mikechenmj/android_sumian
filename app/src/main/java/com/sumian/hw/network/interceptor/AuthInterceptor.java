@@ -10,6 +10,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.SystemUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.IOException;
 
@@ -43,7 +44,7 @@ public class AuthInterceptor implements Interceptor {
             .addHeader("Content-Type", "application/json")
             .addHeader("UserInfo-Agent", getUserAgent())
             .addHeader("Accept-Language", SystemUtil.getSystemLanguage())
-            .addHeader("Authorization", "Bearer " + HwAppManager.getAccountModel().getTokenString())
+            .addHeader("Authorization", "Bearer " + AppManager.getAccountViewModel().getTokenString())
             .addHeader("Device-Info", Uri.encode(formatDeviceInfo(), "utf-8"))
             .build();
 

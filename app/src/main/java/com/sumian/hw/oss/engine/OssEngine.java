@@ -17,6 +17,7 @@ import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,9 +73,9 @@ public class OssEngine {
                         e.printStackTrace();
                     }
                 }
-                UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+                UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
                 userInfo.setAvatar(avatarUrl);
-                HwAppManager.getAccountModel().updateUserInfo(userInfo);
+                AppManager.getAccountViewModel().updateUserInfo(userInfo);
             }
 
             @Override

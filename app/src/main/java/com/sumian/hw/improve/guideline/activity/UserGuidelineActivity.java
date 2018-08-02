@@ -27,6 +27,7 @@ import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.improve.widget.GuidelineIndicator;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,7 +208,7 @@ public class UserGuidelineActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             GuidelineUtils.putBoolean(GuidelineUtils.SP_KEY_NEED_SHOW_WELCOME_USER_GUIDE, false);
-            boolean login = HwAppManager.getAccountModel().isLogin();
+            boolean login = AppManager.getAccountViewModel().isLogin();
             if (login) {
                 HwMainActivity.show(App.getAppContext());
             } else {

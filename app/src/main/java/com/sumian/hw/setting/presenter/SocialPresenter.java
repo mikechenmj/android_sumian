@@ -61,7 +61,7 @@ public class SocialPresenter implements SocialContract.Presenter {
 
         view.onBegin();
 
-        List<Social> socialites = HwAppManager.getAccountModel().getUserInfo().getSocialites();
+        List<Social> socialites = AppManager.getAccountViewModel().getUserInfo().getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             view.onFinish();
             view.onFailure(App.getAppContext().getString(R.string.unbind_open_platform_failed));

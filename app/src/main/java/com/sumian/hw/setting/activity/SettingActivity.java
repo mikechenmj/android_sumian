@@ -23,6 +23,7 @@ import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -105,7 +106,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.initData();
         mIsInit = true;
         mPresenter.syncSleepDiary();
-        UserInfo userInfo = HwAppManager.getAccountModel().getUserInfo();
+        UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
         if (userInfo == null) {
             return;
         }

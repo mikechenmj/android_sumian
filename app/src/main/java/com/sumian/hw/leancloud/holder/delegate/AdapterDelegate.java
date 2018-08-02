@@ -15,6 +15,7 @@ import com.sumian.hw.leancloud.holder.MsgImageViewHolder;
 import com.sumian.hw.leancloud.holder.MsgTextViewHolder;
 import com.sumian.hw.leancloud.holder.MsgVoiceViewHolder;
 import com.sumian.hw.leancloud.holder.base.BaseViewHolder;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -96,7 +97,7 @@ public class AdapterDelegate {
             String from = msg.getFrom();
             if (TextUtils.isEmpty(from)) return UNKNOWN_TYPE;
 
-            if (from.equals(HwAppManager.getAccountModel().getLeanCloudId())) {
+            if (from.equals(AppManager.getAccountViewModel().getLeanCloudId())) {
                 return getChatType(msg, RIGHT_TEXT_TYPE, RIGHT_IMAGE_TYPE, RIGHT_VOICE_TYPE);
             } else {
                 return getChatType(msg, LEFT_TEXT_TYPE, LEFT_IMAGE_TYPE, LEFT_VOICE_TYPE);
