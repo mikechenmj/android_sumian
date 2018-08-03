@@ -1,5 +1,6 @@
 package com.sumian.hw.network.engine;
 
+import com.google.gson.GsonBuilder;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.interceptor.AuthInterceptor;
@@ -48,7 +49,7 @@ public class HwNetEngine {
         Retrofit retrofit = new Retrofit
                 .Builder()
                 .baseUrl(BuildConfig.HW_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
                 .callFactory(okHttpClient)
                 .build();
 

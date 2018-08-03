@@ -1,5 +1,6 @@
 package com.sumian.hw.network.api;
 
+import com.google.gson.JsonObject;
 import com.sumian.hw.improve.report.base.BaseResultResponse;
 import com.sumian.hw.improve.report.dailyreport.DailyMeta;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
@@ -10,7 +11,6 @@ import com.sumian.hw.oss.bean.OssResponse;
 
 import java.util.Map;
 
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -32,7 +32,7 @@ public interface SleepyV1Api {
 
     //在日历中获取日报告信息
     @GET("sleeps/days/month-unread")
-    Call<Response> getCalendarSleepReport(@QueryMap Map<String, Object> map);
+    Call<JsonObject> getCalendarSleepReport(@QueryMap Map<String, Object> map);
 
     //填写睡眠日记
     @FormUrlEncoded
