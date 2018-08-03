@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseFragment;
 import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;
 import com.sumian.hw.improve.widget.RequestQrCodeView;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.account.presenter.LoginPresenter;
-import com.sumian.hw.app.HwApplicationDelegate;
+import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.request.LoginBody;

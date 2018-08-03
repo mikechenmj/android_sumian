@@ -1,6 +1,6 @@
 package com.sumian.hw.reminder;
 
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.event.ReminderChangeEvent;
 import com.sumian.hw.network.callback.BaseResponseCallback;

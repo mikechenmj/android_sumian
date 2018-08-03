@@ -6,9 +6,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;

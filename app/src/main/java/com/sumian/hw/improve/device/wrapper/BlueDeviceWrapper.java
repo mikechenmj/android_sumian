@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.log.LogManager;
 import com.sumian.blue.callback.BlueScanCallback;

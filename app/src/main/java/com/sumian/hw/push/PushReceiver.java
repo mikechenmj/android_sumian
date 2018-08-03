@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.JsonUtil;
 import com.sumian.hw.utils.NotificationUtil;

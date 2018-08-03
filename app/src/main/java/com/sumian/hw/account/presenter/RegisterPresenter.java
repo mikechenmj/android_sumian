@@ -3,7 +3,7 @@ package com.sumian.hw.account.presenter;
 import android.support.annotation.Nullable;
 
 import com.sumian.hw.account.contract.RegisterContract;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;

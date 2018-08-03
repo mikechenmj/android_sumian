@@ -7,7 +7,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.RawDataBody;

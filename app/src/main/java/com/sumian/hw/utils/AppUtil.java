@@ -3,9 +3,8 @@ package com.sumian.hw.utils;
 import android.app.Activity;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.AppUtils;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 

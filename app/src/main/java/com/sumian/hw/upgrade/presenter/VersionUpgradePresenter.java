@@ -9,9 +9,9 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.common.util.HashUtils;
 import com.sumian.hw.log.LogManager;

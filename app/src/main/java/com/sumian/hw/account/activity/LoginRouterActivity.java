@@ -10,9 +10,9 @@ import android.widget.ImageView;
 
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
-import com.sumian.hw.app.HwApp;
-import com.sumian.hw.app.HwApplicationDelegate;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApplicationDelegate;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;

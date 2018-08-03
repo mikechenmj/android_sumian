@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.webkit.WebSettings;
 
-import com.sumian.hw.app.HwApp;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.SystemUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.blue.model.BluePeripheral;

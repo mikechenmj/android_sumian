@@ -3,7 +3,7 @@ package com.sumian.hw.common.util;
 
 import android.content.res.AssetManager;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

@@ -3,11 +3,10 @@ package com.sumian.hw.setting.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.assessment.QuestionActivity;
@@ -35,7 +34,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by jzz

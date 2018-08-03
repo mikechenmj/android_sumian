@@ -1,6 +1,6 @@
 package com.sumian.hw.tab.report.presenter;
 
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;

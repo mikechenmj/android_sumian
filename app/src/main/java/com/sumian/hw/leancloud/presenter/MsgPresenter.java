@@ -17,7 +17,7 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.contract.MsgContract;
 import com.sumian.sleepdoctor.app.AppManager;

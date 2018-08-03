@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Answers;

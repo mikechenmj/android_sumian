@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.improve.device.util.BluetoothDeviceUtil;

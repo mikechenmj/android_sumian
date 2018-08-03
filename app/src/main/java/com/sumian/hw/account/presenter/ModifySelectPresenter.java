@@ -9,7 +9,7 @@ import com.sumian.hw.account.bean.City;
 import com.sumian.hw.account.bean.Province;
 import com.sumian.hw.account.contract.ModifySelectContract;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;

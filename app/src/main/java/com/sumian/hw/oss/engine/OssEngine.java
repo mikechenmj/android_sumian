@@ -12,7 +12,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.bean.UserInfo;

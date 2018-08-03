@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.common.helper.ToastHelper;

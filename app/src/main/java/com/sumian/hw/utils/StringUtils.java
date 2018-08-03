@@ -2,7 +2,7 @@ package com.sumian.hw.utils;
 
 import android.support.annotation.StringRes;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 
 import java.util.Locale;
 

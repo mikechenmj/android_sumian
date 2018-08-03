@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.sleepdoctor.app.AppManager;
 

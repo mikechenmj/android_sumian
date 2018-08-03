@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.device.fragment.DeviceFragment;
 import com.sumian.blue.callback.BlueAdapterCallback;
 import com.sumian.blue.manager.BlueManager;

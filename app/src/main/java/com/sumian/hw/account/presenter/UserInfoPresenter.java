@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.sumian.hw.account.callback.UserInfoCallback;
 import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 

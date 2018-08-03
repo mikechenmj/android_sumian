@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;

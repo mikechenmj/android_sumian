@@ -11,8 +11,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import com.sumian.hw.account.contract.AvatarContract;
-import com.sumian.hw.app.HwApp;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.engine.OssEngine;

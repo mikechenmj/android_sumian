@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.holder.base.BaseViewHolder;
 import com.sumian.hw.leancloud.player.VoicePlayer;

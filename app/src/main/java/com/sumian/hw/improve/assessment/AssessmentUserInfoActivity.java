@@ -17,7 +17,7 @@ import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectGenderBottomSheet;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.callback.BaseResponseCallback;

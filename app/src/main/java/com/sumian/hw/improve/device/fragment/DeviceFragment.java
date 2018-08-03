@@ -18,10 +18,10 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;

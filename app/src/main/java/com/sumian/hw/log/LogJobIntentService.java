@@ -18,7 +18,7 @@ import com.alibaba.sdk.android.oss.model.AppendObjectRequest;
 import com.alibaba.sdk.android.oss.model.AppendObjectResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 
 import java.io.File;

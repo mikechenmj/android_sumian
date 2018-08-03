@@ -1,4 +1,4 @@
-package com.sumian.hw.app;
+package com.sumian.sleepdoctor.app;
 
 import android.annotation.SuppressLint;
 import android.app.Application;

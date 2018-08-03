@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;

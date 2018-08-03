@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.sumian.hw.account.contract.OpenBindContract;
 import com.sumian.hw.account.presenter.OpenBindPresenter;
-import com.sumian.hw.app.HwApplicationDelegate;
+import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;

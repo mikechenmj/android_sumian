@@ -9,7 +9,6 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.holder.MsgImageViewHolder;
 import com.sumian.hw.leancloud.holder.MsgTextViewHolder;

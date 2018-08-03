@@ -14,8 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.text.TextUtils;
 
-import com.sumian.hw.app.HwApp;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;

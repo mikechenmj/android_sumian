@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.sumian.hw.account.contract.RegisterContract;
 import com.sumian.hw.account.presenter.RegisterPresenter;
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;

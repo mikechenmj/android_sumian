@@ -3,7 +3,7 @@ package com.sumian.hw.common.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 
 /**
  * Created by jzz

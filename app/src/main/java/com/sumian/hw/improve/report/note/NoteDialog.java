@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.improve.widget.note.WakeUpMoodView;

@@ -5,8 +5,8 @@ import android.view.View;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.hw.app.HwApp;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.setting.presenter.LogoutPresenter;

@@ -7,7 +7,7 @@ import android.os.HandlerThread;
 import android.util.Log;
 import android.webkit.WebSettings;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.hw.common.util.StreamUtil;
 

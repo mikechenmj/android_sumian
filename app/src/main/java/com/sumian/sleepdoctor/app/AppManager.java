@@ -17,7 +17,6 @@ import com.sumian.common.social.OpenEngine;
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
 import com.sumian.hw.account.activity.HwLoginActivity;
-import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.advisory.model.AdvisoryViewModel;

@@ -1,6 +1,6 @@
 package com.sumian.hw.tab.report.presenter;
 
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.constant.Constant;
 import com.sumian.hw.network.api.SleepyApi;

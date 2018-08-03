@@ -2,7 +2,7 @@ package com.sumian.hw.improve.device.model;
 
 import android.text.TextUtils;
 
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;

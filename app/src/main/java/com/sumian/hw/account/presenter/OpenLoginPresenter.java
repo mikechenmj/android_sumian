@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.hw.account.contract.OpenLoginContract;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.Token;

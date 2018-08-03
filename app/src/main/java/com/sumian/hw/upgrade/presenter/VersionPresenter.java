@@ -3,9 +3,9 @@ package com.sumian.hw.upgrade.presenter;
 import android.content.pm.PackageInfo;
 import android.text.TextUtils;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.api.SleepyApi;

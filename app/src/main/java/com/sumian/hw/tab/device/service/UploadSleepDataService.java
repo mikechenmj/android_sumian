@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 
 import java.io.File;

@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwApp;
-import com.sumian.hw.app.HwApplicationDelegate;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.widget.TitleBar;

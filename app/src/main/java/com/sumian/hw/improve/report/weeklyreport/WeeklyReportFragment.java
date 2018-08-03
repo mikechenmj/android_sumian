@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;

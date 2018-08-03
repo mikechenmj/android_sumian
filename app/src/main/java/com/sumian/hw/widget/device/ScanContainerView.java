@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.device.adapter.DeviceAdapter;
 import com.sumian.hw.tab.device.bean.BlueDevice;
 

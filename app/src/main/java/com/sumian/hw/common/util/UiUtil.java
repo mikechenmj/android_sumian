@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.hw.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.common.helper.ToastHelper;
