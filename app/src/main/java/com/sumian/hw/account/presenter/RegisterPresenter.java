@@ -9,7 +9,6 @@ import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.RegisterBody;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     private RegisterPresenter(RegisterContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mApiWeakReference = new WeakReference<>(HwAppManager
+        this.mApiWeakReference = new WeakReference<>(AppManager
             .getHwNetEngine()
             .getHttpService());
         this.mCalls = new ArrayList<>();

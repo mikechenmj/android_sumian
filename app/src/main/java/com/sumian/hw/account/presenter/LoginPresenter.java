@@ -8,7 +8,6 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.LoginBody;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             return;
         }
 
-        SleepyApi sleepyApi = HwAppManager
+        SleepyApi sleepyApi = AppManager
             .getHwNetEngine()
             .getHttpService();
         if (sleepyApi == null) {

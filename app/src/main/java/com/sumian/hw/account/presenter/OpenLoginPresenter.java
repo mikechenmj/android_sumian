@@ -8,7 +8,6 @@ import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -34,7 +33,7 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
     private OpenLoginPresenter(OpenLoginContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mSleepyApi = HwAppManager.getHwNetEngine().getHttpService();
+        this.mSleepyApi = AppManager.getHwNetEngine().getHttpService();
     }
 
 

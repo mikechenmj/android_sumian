@@ -23,7 +23,6 @@ import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.Locale;
 
@@ -64,8 +63,8 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
     protected void initData() {
         super.initData();
         HwLeanCloudHelper.addOnAdminMsgCallback(this);
-        HwAppManager.getVersionModel().syncAppVersion();
-        HwAppManager.getVersionModel().registerShowDotCallback(this);
+        AppManager.getVersionModel().syncAppVersion();
+        AppManager.getVersionModel().registerShowDotCallback(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
             @Override
             public void onChanged(@Nullable Token token) {
@@ -120,7 +119,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
     @Override
     protected void onRelease() {
         HwLeanCloudHelper.removeOnAdminMsgCallback(this);
-        HwAppManager.getVersionModel().unRegisterShowDotCallback(this);
+        AppManager.getVersionModel().unRegisterShowDotCallback(this);
         super.onRelease();
     }
 

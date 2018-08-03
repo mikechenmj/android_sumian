@@ -33,7 +33,6 @@ import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.sleepdoctor.main.MainActivity;
 
 import java.util.HashMap;
@@ -111,7 +110,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         mTabMain.setOnTabChangeListener(this);
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this);
-        HwAppManager.getVersionModel().registerShowDotCallback(this);
+        AppManager.getVersionModel().registerShowDotCallback(this);
         if (mPagerFragments == null) {
             mPagerFragments = new BasePagerFragment[]{DeviceFragment.newInstance(),
                     ReportFragment.newInstance(), ConsultantFragment.newInstance(), HwMeFragment.newInstance()};
@@ -131,7 +130,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         if (AppManager.getAccountViewModel().isLogin()) {
             HwLeanCloudHelper.loginLeanCloud();
             HwLeanCloudHelper.registerPushService();
-            Call<Object> call = HwAppManager.getHwNetEngine().getHttpService().sendHeartbeats("open_app");
+            Call<Object> call = AppManager.getHwNetEngine().getHttpService().sendHeartbeats("open_app");
             call.enqueue(new BaseResponseCallback<Object>() {
                 @Override
                 protected void onSuccess(Object response) {
@@ -145,7 +144,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
             });
         }
 
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
 
         VersionPresenter.init().syncAppVersionInfo();
 
@@ -166,7 +165,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
 
-        HwAppManager.getHwNetEngine().getHttpService().syncUpgradeAppInfo(map).enqueue(new BaseResponseCallback<AppUpgradeInfo>() {
+        AppManager.getHwNetEngine().getHttpService().syncUpgradeAppInfo(map).enqueue(new BaseResponseCallback<AppUpgradeInfo>() {
             @Override
             protected void onSuccess(AppUpgradeInfo response) {
                 PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
@@ -175,9 +174,9 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
                 if (appUpgradeInfo == null) {//相同版本或没有新版本
                     appUpgradeInfo = new AppUpgradeInfo();
                     appUpgradeInfo.version = packageInfo.versionName;
-                    HwAppManager.getVersionModel().notifyAppDot(false);
+                    AppManager.getVersionModel().notifyAppDot(false);
                 } else {
-                    HwAppManager.getVersionModel().notifyAppDot(NumberUtil.formatVersionCode(response.version) > packageInfo.versionCode);
+                    AppManager.getVersionModel().notifyAppDot(NumberUtil.formatVersionCode(response.version) > packageInfo.versionCode);
                     if (NumberUtil.formatVersionCode(response.version) > packageInfo.versionCode) {
                         UpgradeDialog upgradeDialog = new UpgradeDialog();
                         Bundle args = new Bundle();
@@ -195,7 +194,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
                     e.printStackTrace();
                 }
 
-                HwAppManager.getVersionModel().setAppUpgradeInfo(appUpgradeInfo);
+                AppManager.getVersionModel().setAppUpgradeInfo(appUpgradeInfo);
             }
 
             @Override
@@ -209,7 +208,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
                 AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
                 appUpgradeInfo.version = packageInfo.versionName;
 
-                HwAppManager.getVersionModel().notifyAppDot(false);
+                AppManager.getVersionModel().notifyAppDot(false);
             }
         });
     }
@@ -254,13 +253,13 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     @Override
     protected void onRelease() {
         super.onRelease();
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.close();
         }
         HwLeanCloudHelper.removeOnAdminMsgCallback(this);
-        HwAppManager.getVersionModel().unRegisterShowDotCallback(this);
-        HwAppManager.getBlueManager().release();
+        AppManager.getVersionModel().unRegisterShowDotCallback(this);
+        AppManager.getBlueManager().release();
     }
 
     @Override

@@ -26,7 +26,6 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -185,7 +184,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
             map.put("height", mUserInfo.height);
             map.put("weight", mUserInfo.weight);
             map.put("include", "doctor");
-            HwAppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
+            AppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
                 @Override
                 protected void onSuccess(UserInfo response) {
                     onSyncCacheUserInfoSuccess(response);

@@ -12,7 +12,7 @@ import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -54,7 +54,7 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.tv_logout) {
-            BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral != null && bluePeripheral.isConnected()) {
                 bluePeripheral.disconnect();
                 bluePeripheral.close();

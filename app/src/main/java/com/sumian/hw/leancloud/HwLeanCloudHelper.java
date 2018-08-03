@@ -41,7 +41,6 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -336,7 +335,7 @@ public final class HwLeanCloudHelper {
         map.put("device_token", installationId);
         map.put("system_version", Build.VERSION.SDK_INT);
 
-        Call<Object> call = HwAppManager
+        Call<Object> call = AppManager
                 .getHwNetEngine()
                 .getHttpService()
                 .uploadDeviceInfo(map);

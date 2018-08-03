@@ -15,7 +15,7 @@ import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -113,7 +113,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     if (!isRead) {
                         Map<String, Object> map = new HashMap<>(0);
                         map.put("id", String.valueOf(report.id));
-                        HwAppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
+                        AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
                             @Override
                             protected void onSuccess(Boolean response) {
                             }
@@ -247,7 +247,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 }
                 setCalendarViewData(mItem);
                 Map<String, Object> map = new HashMap<>(0);
-                HwAppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
+                AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
 
                     @Override
                     protected void onSuccess(Boolean response) {

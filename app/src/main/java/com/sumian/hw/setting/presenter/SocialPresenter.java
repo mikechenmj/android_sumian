@@ -8,7 +8,6 @@ import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -83,7 +82,7 @@ public class SocialPresenter implements SocialContract.Presenter {
                 break;
         }
 
-        Call<Object> call = HwAppManager.getHwNetEngine().getHttpService().unBindOpenPlatform(socialId);
+        Call<Object> call = AppManager.getHwNetEngine().getHttpService().unBindOpenPlatform(socialId);
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override
             protected void onSuccess(Object response) {

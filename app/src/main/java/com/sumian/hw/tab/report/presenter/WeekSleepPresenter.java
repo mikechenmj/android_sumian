@@ -5,7 +5,7 @@ import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.tab.report.contract.WeekSleepContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -42,9 +42,9 @@ public class WeekSleepPresenter implements WeekSleepContract.Presenter {
     private WeekSleepPresenter(WeekSleepContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mSleepyApi = HwAppManager
-            .getHwNetEngine()
-            .getHttpService();
+        this.mSleepyApi = AppManager
+                .getHwNetEngine()
+                .getHttpService();
 
         Calendar calendar = Calendar.getInstance();
 
@@ -106,7 +106,7 @@ public class WeekSleepPresenter implements WeekSleepContract.Presenter {
         if (view == null) return;
         view.onSwitchWeekCallback(mFromYear, mFromMonth + 1, mFromDate, mToYear, mToMonth + 1, mToDate);
         requestDispatcher(TimeUtil.formatLineToday(mCurrentCalendar.getTime()));
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
     }
 
     @Override

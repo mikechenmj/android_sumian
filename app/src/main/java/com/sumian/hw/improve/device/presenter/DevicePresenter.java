@@ -24,7 +24,7 @@ import com.sumian.hw.improve.device.wrapper.BlueDeviceWrapper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.utils.StorageUtil;
 
 import java.io.File;
@@ -73,7 +73,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         this.mView = view;
 
         this.mBlueDeviceWrapper = new BlueDeviceWrapper();
-        HwAppManager.getBlueManager().addBlueAdapterCallback(this);
+        AppManager.getBlueManager().addBlueAdapterCallback(this);
     }
 
     public static void init(DeviceContract.View view) {
@@ -82,7 +82,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     @Override
     public boolean adapterIsEnable() {
-        return HwAppManager.getBlueManager().isEnable();
+        return AppManager.getBlueManager().isEnable();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -118,9 +118,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void doConnect(BlueDevice monitor) {
 
-        HwAppManager.getBlueManager().clearBluePeripheral();
+        AppManager.getBlueManager().clearBluePeripheral();
 
-        BluetoothDevice remoteDevice = HwAppManager.getBlueManager().getBluetoothDeviceFromMac(monitor.mac);
+        BluetoothDevice remoteDevice = AppManager.getBlueManager().getBluetoothDeviceFromMac(monitor.mac);
         if (remoteDevice != null) {
 
             BlueUuidConfig blueUuidConfig = new BlueUuidConfig();
@@ -135,7 +135,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 .setBlueUuidConfig(blueUuidConfig)
                 .setName(remoteDevice.getName())
                 .setRemoteDevice(remoteDevice)
-                .bindWorkThread(HwAppManager.getBlueManager().getWorkThread())
+                .bindWorkThread(AppManager.getBlueManager().getWorkThread())
                 .build();
 
             bluePeripheral.addPeripheralDataCallback(this);
@@ -190,7 +190,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             clearCacheDevice();
         }
 
-        HwAppManager.getBlueManager().clearBluePeripheral();
+        AppManager.getBlueManager().clearBluePeripheral();
         mBlueDeviceWrapper.release();
         LogManager.appendMonitorLog("主动解绑监测仪");
     }
@@ -236,7 +236,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         notifyDeviceDataChanged();
 
         mView.onDisableAdapterCallback();
-        HwAppManager.getBlueManager().clearBluePeripheral();
+        AppManager.getBlueManager().clearBluePeripheral();
 
         mBlueDeviceWrapper.release();
 
@@ -421,11 +421,11 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                     writeResponse(peripheral, data, false);
                     LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,磁盘空间不足 " + dataCount + "包数据" + "  cmd=" + cmd);
                 }
-                HwAppManager.getDeviceModel().notifyStartSyncSleepData();
+                AppManager.getDeviceModel().notifyStartSyncSleepData();
                 notifyDeviceDataChanged();
                 break;
             case 0x0f:// 结束。透传8f 数据接收完成,保存文件,准备上传数据到后台
-                HwAppManager.getDeviceModel().notifyFinishSyncSleepData();
+                AppManager.getDeviceModel().notifyFinishSyncSleepData();
                 //  Log.e(TAG, "onReceiveSuccess: --------8e 0f--->" + cmd + "  count=" + mTransCount);
                 ////558e 1 2d0 0f 5a15627e
                 dataCount = getDataCountFromCmd(cmd);
@@ -440,10 +440,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                     if (isAvailableStorageEnough(dataCount)) {
                         SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
                         LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd);
-                        HwAppManager.getJobScheduler()
+                        AppManager.getJobScheduler()
                             .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,
-                                HwAppManager.getDeviceModel().getMonitorSn(),
-                                HwAppManager.getDeviceModel().getSleepySn(),
+                                AppManager.getDeviceModel().getMonitorSn(),
+                                AppManager.getDeviceModel().getSleepySn(),
                                 mReceiveStartedTime, getActionTime());
                         writeResponse(peripheral, data, true);
                     } else {
@@ -494,8 +494,8 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             }
             notifyDeviceDataChanged();
             LogManager.appendSpeedSleeperLog("0x61 收到速眠仪的pa 模式变化  pa 模式=" + sleepyPaModeState + "  cmd=" + cmd);
-            HwAppManager.getDeviceModel().setMonitorSnoopingModeState(monitorSnoopingModeState);//监测仪的监测模式状态
-            HwAppManager.getDeviceModel().setSleepyPaModeState(sleepyPaModeState);//获取速眠仪的 pa 模式状态
+            AppManager.getDeviceModel().setMonitorSnoopingModeState(monitorSnoopingModeState);//监测仪的监测模式状态
+            AppManager.getDeviceModel().setSleepyPaModeState(sleepyPaModeState);//获取速眠仪的 pa 模式状态
         } else {//指令出错了,需重发所有状态
             peripheral.write(BlueCmd.cResponseFailed(data[1]));
             LogManager.appendMonitorLog("0x61  监测仪与速眠仪反馈模式变化的指令不正确  cmd=" + cmd);
@@ -568,7 +568,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     private void receiveTurnOnOffMonitoringModeResponse(String cmd) {
         //55 57 01  88
         //55 57 01  ff
-        int monitorSnoopingState = HwAppManager.getDeviceModel().getMonitorSnoopingModeState();
+        int monitorSnoopingState = AppManager.getDeviceModel().getMonitorSnoopingModeState();
         switch (cmd) {
             case "55570188"://操作成功
                 if (mMonitor.status == BlueDevice.STATUS_MONITORING) {
@@ -583,7 +583,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 } else {
                     monitorSnoopingState = DeviceModel.MONITOR_SNOOPING_STATE;
                 }
-                HwAppManager.getDeviceModel().setMonitorSnoopingModeState(monitorSnoopingState);
+                AppManager.getDeviceModel().setMonitorSnoopingModeState(monitorSnoopingState);
                 if (monitorSnoopingState == 0x01) {
                     LogManager.appendMonitorLog("0x57 开启监测仪的监测模式成功 cmd=" + cmd);
                 } else {
@@ -603,7 +603,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     private void receiveSleeperMacInfo(String cmd) {
         String mac = cmd.substring(6);
-        HwAppManager.getDeviceModel().setSleepyMac(mac);
+        AppManager.getDeviceModel().setSleepyMac(mac);
         // String formatMac = BlueCmd.formatMac(data);
         long oldMac = Long.parseLong(mac, 16);
         long newMac = ((oldMac & 0xff) + 1) + ((oldMac >> 8) << 8);
@@ -629,7 +629,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         String sleepySn = BlueCmd.formatSn(data);
         // Log.e(TAG, "onReceive: -----55---sleepy sn---->" + sleepySn);
         mMonitor.speedSleeper.sn = sleepySn;
-        HwAppManager.getDeviceModel().setSleepySn(sleepySn);
+        AppManager.getDeviceModel().setSleepySn(sleepySn);
         LogManager.appendSpeedSleeperLog("获取到监测仪绑定的速眠仪的 sn=" + sleepySn + "  cmd=" + cmd);
     }
 
@@ -641,7 +641,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             sleepyFirmwareVersionThree;
         // Log.e(TAG, "onReceive: ---sleepy  version---->" + sleepyFirmwareVersion);
         LogManager.appendSpeedSleeperLog("速眠仪的固件版本信息" + sleepyFirmwareVersion + "  cmd=" + cmd);
-        HwAppManager.getDeviceModel().setSleepyVersion(sleepyFirmwareVersion);
+        AppManager.getDeviceModel().setSleepyVersion(sleepyFirmwareVersion);
     }
 
     private void receiveMonitorSnInfo(byte[] data, String cmd) {
@@ -652,7 +652,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         //  Log.e(TAG, "onReceive: -----53---monitor sn---->" + monitorSn);
         mMonitor.sn = monitorSn;
         //notifyDeviceDataChanged();
-        HwAppManager.getDeviceModel().setMonitorSn(monitorSn);
+        AppManager.getDeviceModel().setMonitorSn(monitorSn);
         LogManager.appendMonitorLog("获取到监测仪绑定的速眠仪的 sn=" + monitorSn + "  cmd=" + cmd);
     }
 
@@ -679,7 +679,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         int monitorFirmwareVersionTwo = Integer.parseInt(cmd.substring(8, 10), 16);
         int monitorFirmwareVersionThree = Integer.parseInt(cmd.substring(10, 12), 16);
         String monitorFirmwareVersion = monitorFirmwareVersionOne + "." + monitorFirmwareVersionTwo + "." + monitorFirmwareVersionThree;
-        HwAppManager.getDeviceModel().setMonitorVersion(monitorFirmwareVersion);
+        AppManager.getDeviceModel().setMonitorVersion(monitorFirmwareVersion);
         //  Log.e(TAG, "onReceive: ------monitor  version------>" + monitorFirmwareVersion);
         LogManager.appendSpeedSleeperLog("速眠仪的固件版本信息" + monitorFirmwareVersion + "  cmd=" + cmd);
     }
@@ -720,7 +720,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             }
         }
         notifyDeviceDataChanged();
-        HwAppManager.getDeviceModel().setSleepyConnectState(sleepyConnectState);
+        AppManager.getDeviceModel().setSleepyConnectState(sleepyConnectState);
         LogManager.appendSpeedSleeperLog("收到速眠仪的连接状态变化------>" + sleepyConnectState + "  cmd=" + cmd);
     }
 
@@ -737,7 +737,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         // Log.e(TAG, "onReceive: -----sleepy  battery---->" + sleepyBattery);
         mMonitor.speedSleeper.battery = sleepyBattery;
         notifyDeviceDataChanged();
-        HwAppManager.getDeviceModel().setSleepyBattery(sleepyBattery);
+        AppManager.getDeviceModel().setSleepyBattery(sleepyBattery);
         LogManager.appendMonitorLog("收到助眠仪的电量变化---->" + sleepyBattery + "  cmd=" + cmd);
     }
 
@@ -746,7 +746,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         mMonitor.battery = monitorBattery;
         mMonitor.status = 0x02;
         notifyDeviceDataChanged();
-        HwAppManager.getDeviceModel().setMonitorBattery(monitorBattery);
+        AppManager.getDeviceModel().setMonitorBattery(monitorBattery);
         LogManager.appendMonitorLog("收到监测仪的电量变化---->" + monitorBattery + "  cmd=" + cmd);
     }
 
@@ -756,7 +756,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     }
 
     private void onSyncDataProgressChange(int current, int total) {
-        HwAppManager.getDeviceModel().updateSyncSleepDataProgressAndNotifyListeners(mPackageNumber, current, total);
+        AppManager.getDeviceModel().updateSyncSleepDataProgressAndNotifyListeners(mPackageNumber, current, total);
     }
 
     /**
@@ -809,7 +809,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
         notifyDeviceDataChanged();
 
-        HwAppManager.getBlueManager().saveBluePeripheral(peripheral);
+        AppManager.getBlueManager().saveBluePeripheral(peripheral);
 
         LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.getName());
     }
@@ -822,7 +822,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
         notifyDeviceDataChanged();
 
-        HwAppManager.getBlueManager().refresh();
+        AppManager.getBlueManager().refresh();
 
         LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.getName());
     }
@@ -838,7 +838,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
         notifyDeviceDataChanged();
 
-        HwAppManager.getBlueManager().refresh();
+        AppManager.getBlueManager().refresh();
 
         LogManager.appendMonitorLog("监测仪正在断开连接 " + peripheral.getName());
     }
@@ -877,8 +877,8 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             saveCacheFile();
         }
 
-        HwAppManager.getBlueManager().refresh();
-        HwAppManager.getBlueManager().clearBluePeripheral();
+        AppManager.getBlueManager().refresh();
+        AppManager.getBlueManager().clearBluePeripheral();
     }
 
     @Override
@@ -902,8 +902,8 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     private void notifyDeviceDataChanged() {
         mView.onMonitorCallback(mMonitor);
-        HwAppManager.getDeviceModel().updateBlueDeviceAndNotifyListeners(mMonitor);
-        HwAppManager.getReportModel().notifySyncStatus(mMonitor.status);
+        AppManager.getDeviceModel().updateBlueDeviceAndNotifyListeners(mMonitor);
+        AppManager.getReportModel().notifySyncStatus(mMonitor.status);
     }
 
     private long getActionTime() {
@@ -935,7 +935,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     @Nullable
     private BluePeripheral getCurrentBluePeripheral() {
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral == null || !bluePeripheral.isConnected()) {
             return null;
         }

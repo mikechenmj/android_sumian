@@ -25,6 +25,7 @@ import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.improve.report.viewModel.ReportModel;
 import com.sumian.hw.job.JobScheduler;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.player.VoicePlayer;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.engine.HwNetEngine;
@@ -51,7 +52,7 @@ public final class AppManager {
     private DoctorViewModel mDoctorViewModel;
     private OpenEngine mOpenEngine;
 
-    private static volatile HwAppManager INSTANCE = null;
+    private static volatile AppManager INSTANCE = null;
     private volatile VersionModel mVersionModel;
     private volatile DeviceModel mDeviceModel;
     private volatile ReportModel mReportModel;
@@ -176,7 +177,7 @@ public final class AppManager {
         initLeanCloud(context);
         initOpenEngine(context);
         initBlueManager(context);
-//        HwLeanCloudHelper.init(context);
+        HwLeanCloudHelper.init(context);
         initKefu(context);
     }
 

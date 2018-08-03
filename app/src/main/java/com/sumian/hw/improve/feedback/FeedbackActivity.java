@@ -24,7 +24,7 @@ import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,7 +99,7 @@ public class FeedbackActivity extends BaseActivity {
 
             LogManager.appendPhoneUSerAgentLog();
 
-            HwAppManager.getHwV1HttpService()
+            AppManager.getHwV1HttpService()
                     .feedback(input, "txt")
                     .enqueue(new BaseResponseCallback<OssResponse>() {
 

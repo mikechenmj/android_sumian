@@ -21,7 +21,7 @@ import com.sumian.hw.upgrade.service.DfuService;
 import com.sumian.hw.upgrade.wrapper.DfuWrapper;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -64,7 +64,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         // FirmwareManager.setOnDfuModeCallback(this);
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.addPeripheralDataCallback(this);
         }
@@ -81,7 +81,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         if (mVersionType == VersionUpgradeActivity.VERSION_TYPE_APP) {
             // Beta.unregisterDownloadListener();
         } else {
-            BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral != null) {
                 bluePeripheral.removePeripheralDataCallback(this);
             }
@@ -234,7 +234,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
     @Override
     public void upgrade(int versionType) {
         Context context = App.Companion.getAppContext();
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         this.mVersionType = versionType;
         switch (versionType) {
             case VersionUpgradeActivity.VERSION_TYPE_APP:
@@ -363,8 +363,8 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                 break;
             case "56"://获取监测仪绑定的速眠仪的 mac 地址
                 String mac = cmd.substring(6);
-                HwAppManager.getDeviceModel().setSleepyMac(mac);
-                this.mDfuMac = HwAppManager.getDeviceModel().getSleepyDfuMac();
+                AppManager.getDeviceModel().setSleepyMac(mac);
+                this.mDfuMac = AppManager.getDeviceModel().getSleepyDfuMac();
                 peripheral.writeDelay(BlueCmd.cDoSleepyDfuMode(), 200);
                 break;
             case "59"://使速眠仪进入 dfu 模式开启成功
@@ -378,7 +378,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
     }
 
     private void disconnect() {
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.close();
         }

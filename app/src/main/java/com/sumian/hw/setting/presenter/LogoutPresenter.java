@@ -14,7 +14,6 @@ import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.utils.NotificationUtil;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
         view.onBegin();
 
         String deviceToken = AVInstallation.getCurrentInstallation().getInstallationId();
-        Call<Object> call = HwAppManager.getHwNetEngine().getHttpService().doLogout(deviceToken);
+        Call<Object> call = AppManager.getHwNetEngine().getHttpService().doLogout(deviceToken);
 
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override

@@ -19,7 +19,6 @@ import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -363,7 +362,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
     private String getFileNameByCommand(String endCmd) {
         int dataType = Integer.parseInt(endCmd.substring(4, 8), 16) >> 12;
         return dataType + "_" + endCmd.substring(10) +
-            "_sn" + HwAppManager.getDeviceModel().getMonitorSn() +
+            "_sn" + AppManager.getDeviceModel().getMonitorSn() +
             "_" + AppManager.getAccountViewModel().getUserInfo().getId() +
             ".txt";
     }

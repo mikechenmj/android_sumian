@@ -10,7 +10,6 @@ import com.sumian.hw.common.util.SystemUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.io.IOException;
 
@@ -56,22 +55,22 @@ public class AuthInterceptor implements Interceptor {
         return "app_version=" + SystemUtil.getPackageInfo(App.Companion.getAppContext()).versionName
             + WITH_SIGN + "model=" + SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
             + WITH_SIGN + "system=" + SystemUtil.getSystemVersion()
-            + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(HwAppManager.getDeviceModel().getMonitorVersion())
-            + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(HwAppManager.getDeviceModel().getMonitorSn())
-            + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(HwAppManager.getDeviceModel().getSleepyVersion())
-            + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(HwAppManager.getDeviceModel().getSleepySn());
+            + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(AppManager.getDeviceModel().getMonitorVersion())
+            + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(AppManager.getDeviceModel().getMonitorSn())
+            + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().getSleepyVersion())
+            + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().getSleepySn());
     }
 
     private String formatMonitorInfo(String monitorInfo) {
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral == null || !bluePeripheral.isConnected()) return "";
         return TextUtils.isEmpty(monitorInfo) ? "" : monitorInfo;
     }
 
     private String formatSpeedSleeperInfo(String speedSleeperInfo) {
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral == null || !bluePeripheral.isConnected()) return "";
-        BlueDevice speedSleeper = HwAppManager.getDeviceModel().getBlueDevice();
+        BlueDevice speedSleeper = AppManager.getDeviceModel().getBlueDevice();
         if (speedSleeper != null && speedSleeper.speedSleeper != null && speedSleeper.speedSleeper.status <= BlueDevice.STATUS_CONNECTING) {
             return "";
         } else {

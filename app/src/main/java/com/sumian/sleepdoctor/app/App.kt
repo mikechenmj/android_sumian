@@ -22,7 +22,6 @@ class App : Application() {
         mAppContext = this
         AppManager.getInstance().init(this)
         mDelegate = HwApplicationDelegate.init().registerActivityLifecycleCallback(this)
-        HwAppManager.create(this)
     }
 }
 

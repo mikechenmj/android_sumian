@@ -5,9 +5,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.sumian.sleepdoctor.app.HwAppManager;
-import com.sumian.hw.log.LogManager;
 import com.sumian.blue.callback.BlueScanCallback;
+import com.sumian.hw.log.LogManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 public class DfuWrapper implements BlueScanCallback, Handler.Callback {
 
@@ -23,7 +23,7 @@ public class DfuWrapper implements BlueScanCallback, Handler.Callback {
     private String mDfuMac;
 
     public DfuWrapper() {
-        this.mWorkHandler = new Handler(HwAppManager.getBlueManager().getWorkThread().getLooper(), this);
+        this.mWorkHandler = new Handler(AppManager.getBlueManager().getWorkThread().getLooper(), this);
     }
 
     public void scan2Connect(String dfuMac, Runnable scan2ConnectCallback, Runnable scanFailedCallback) {
@@ -31,8 +31,8 @@ public class DfuWrapper implements BlueScanCallback, Handler.Callback {
         this.mScan2ConnectCallback = scan2ConnectCallback;
         this.mScanFailedCallback = scanFailedCallback;
         mWorkHandler.removeMessages(MSG_WHAT_STOP_SCAN);
-        HwAppManager.getBlueManager().addBlueScanCallback(this);
-        HwAppManager.getBlueManager().doScan();
+        AppManager.getBlueManager().addBlueScanCallback(this);
+        AppManager.getBlueManager().doScan();
         mWorkHandler.sendEmptyMessageDelayed(MSG_WHAT_STOP_SCAN, SCAN_TIME_OUT_MILLISECOND);
     }
 
@@ -76,7 +76,7 @@ public class DfuWrapper implements BlueScanCallback, Handler.Callback {
     }
 
     private void stopScanAndUnRegisterScanCallback() {
-        HwAppManager.getBlueManager().removeBlueScanCallback(this);
-        HwAppManager.getBlueManager().doStopScan();
+        AppManager.getBlueManager().removeBlueScanCallback(this);
+        AppManager.getBlueManager().doStopScan();
     }
 }

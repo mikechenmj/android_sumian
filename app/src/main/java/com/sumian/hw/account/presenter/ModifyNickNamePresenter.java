@@ -5,7 +5,6 @@ import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class ModifyNickNamePresenter implements ModifyUserInfoContract.Presenter
     private ModifyNickNamePresenter(ModifyUserInfoContract.View<UserInfo> view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mApiWeakReference = new WeakReference<>(HwAppManager
+        this.mApiWeakReference = new WeakReference<>(AppManager
             .getHwNetEngine()
             .getHttpService());
     }

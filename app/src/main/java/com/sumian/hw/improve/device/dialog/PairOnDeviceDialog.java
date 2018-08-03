@@ -31,7 +31,7 @@ import com.sumian.hw.improve.widget.device.DeviceScanView;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,7 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
 
         showScanningView();
 
-        this.mBlueManager = HwAppManager.getBlueManager();
+        this.mBlueManager = AppManager.getBlueManager();
         this.mBlueManager.addBlueScanCallback(this);
         this.mBlueManager.addBlueAdapterCallback(this);
         this.mBlueManager.doScanDelay();

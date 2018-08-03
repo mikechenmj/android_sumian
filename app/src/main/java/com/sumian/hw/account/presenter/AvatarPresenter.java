@@ -17,7 +17,6 @@ import com.sumian.hw.oss.engine.OssEngine;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.io.File;
 
@@ -64,7 +63,7 @@ public class AvatarPresenter implements AvatarContract.Presenter {
     }
 
     private void upload() {
-        Call<OssResponse> call = HwAppManager.getHwNetEngine().getHttpService().uploadAvatar();
+        Call<OssResponse> call = AppManager.getHwNetEngine().getHttpService().uploadAvatar();
         call.enqueue(new BaseResponseCallback<OssResponse>() {
             @Override
             protected void onSuccess(OssResponse response) {

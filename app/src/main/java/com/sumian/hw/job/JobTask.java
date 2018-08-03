@@ -26,7 +26,7 @@ import com.sumian.hw.oss.bean.OssTransData;
 import com.sumian.hw.oss.bean.OssTransDataError;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,7 +129,7 @@ public class JobTask implements Serializable, Cloneable {
         map.put("app_receive_ended_at", receiveEndedTime);
 
         LogManager.appendTransparentLog("1.开始请求透传数据的 oss  凭证");
-        Call<OssResponse> call = HwAppManager.getHwV1HttpService().uploadTransData(map);
+        Call<OssResponse> call = AppManager.getHwV1HttpService().uploadTransData(map);
         call.enqueue(new BaseResponseCallback<OssResponse>() {
             @Override
             protected void onSuccess(OssResponse ossResponse) {
@@ -204,14 +204,14 @@ public class JobTask implements Serializable, Cloneable {
                             //透传成功睡眠特征数据,并解析成功
                             String data = jsonObject.getString("data");
                             List<DailyReport> dailyReports = JSON.parseArray(data, DailyReport.class);
-                            HwAppManager.getReportModel().setCacheDailyReport(dailyReports.get(0));
+                            AppManager.getReportModel().setCacheDailyReport(dailyReports.get(0));
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功--是睡眠特征数据-->" + " dailyReports=" + dailyReports.toString());
                         } else if (returnBody.contains("errors")) {//透传成功睡眠特征数据,但是出现错误信息.比如采集时间重叠  解析失败  文件名存在
                             String errors = jsonObject.getString("errors");
                             OssTransDataError ossTransDataError = JSON.parseObject(errors, OssTransDataError.class);
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功--但出现错误信息  ossTransDataError=" + ossTransDataError.toString());
 
-                            HwAppManager.getReportModel().notifySyncStatus(0xff);
+                            AppManager.getReportModel().notifySyncStatus(0xff);
 
                         } else {
                             //透传成功,不是睡眠特征数据

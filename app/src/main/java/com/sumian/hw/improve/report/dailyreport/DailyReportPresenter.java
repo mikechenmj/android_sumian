@@ -2,7 +2,7 @@ package com.sumian.hw.improve.report.dailyreport;
 
 import com.sumian.hw.improve.report.base.BaseResultResponse;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class DailyReportPresenter implements DailyReportContract.Presenter {
         map.put("page_size", pageSize);
         map.put("is_include", include ? 1 : 0);
 
-        Call<BaseResultResponse<DailyReport, DailyMeta>> call = HwAppManager.getHwV1HttpService().getTodaySleepReport(map);
+        Call<BaseResultResponse<DailyReport, DailyMeta>> call = AppManager.getHwV1HttpService().getTodaySleepReport(map);
         mCalls.add(call);
 
         call.enqueue(new BaseResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {

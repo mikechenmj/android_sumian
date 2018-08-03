@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
-import com.sumian.hw.improve.device.fragment.DeviceFragment;
 import com.sumian.blue.callback.BlueAdapterCallback;
 import com.sumian.blue.manager.BlueManager;
+import com.sumian.hw.improve.device.fragment.DeviceFragment;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -73,7 +73,7 @@ public class DeviceGuideStepOneView extends LinearLayout implements View.OnClick
     }
 
     private void initView() {
-        mBlueManager = HwAppManager.getBlueManager();
+        mBlueManager = AppManager.getBlueManager();
         if (mBlueManager.isEnable()) {
             invalidState(R.string.bind_device, R.string.please_keep_nearly, R.mipmap.equip_btn_binding, R.string.click_to_bind);
 

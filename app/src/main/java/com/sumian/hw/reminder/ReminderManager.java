@@ -5,7 +5,7 @@ import com.sumian.hw.event.ReminderChangeEvent;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.network.response.ResultResponse;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class ReminderManager {
         map.put("per_page", 20);
         map.put("type", 1);
 
-        Call<ResultResponse<Reminder>> call = HwAppManager
+        Call<ResultResponse<Reminder>> call = AppManager
                 .getHwNetEngine()
                 .getHttpService().getReminder(map);
 

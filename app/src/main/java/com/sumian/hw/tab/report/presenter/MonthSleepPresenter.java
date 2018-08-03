@@ -4,7 +4,7 @@ import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.tab.report.contract.MonthSleepContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -59,7 +59,7 @@ public class MonthSleepPresenter implements MonthSleepContract.Presenter {
 
         view.onSwitchMonthCallback(year, month + 1);
         requestDispatcher(TimeUtil.formatLineToday(calendar.getTime()), year, month);
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
     }
 
     @Override
@@ -120,7 +120,7 @@ public class MonthSleepPresenter implements MonthSleepContract.Presenter {
 
         view.onBegin();
 
-        Call<SleepDurationReport> daySleepReportCall = HwAppManager.getHwNetEngine().getHttpService().syncMonthSleepReport(today);
+        Call<SleepDurationReport> daySleepReportCall = AppManager.getHwNetEngine().getHttpService().syncMonthSleepReport(today);
 
         daySleepReportCall.enqueue(new BaseResponseCallback<SleepDurationReport>() {
             @Override

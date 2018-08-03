@@ -8,7 +8,7 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.DaySleepReport;
 import com.sumian.hw.network.response.ResultResponse;
 import com.sumian.hw.tab.report.contract.DaySleepContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 
@@ -29,7 +29,7 @@ public class DaySleepPresenter implements DaySleepContract.Presenter {
     private DaySleepPresenter(DaySleepContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mSleepyApi = HwAppManager
+        this.mSleepyApi = AppManager
             .getHwNetEngine()
             .getHttpService();
     }
@@ -41,8 +41,8 @@ public class DaySleepPresenter implements DaySleepContract.Presenter {
     @Override
     public void doSyncDaySleepReport() {
         requestDispatcher(1);
-        HwAppManager.getJobScheduler().checkJobScheduler();
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        AppManager.getJobScheduler().checkJobScheduler();
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral == null || !bluePeripheral.isConnected()) {
             return;
         }

@@ -28,7 +28,6 @@ import com.sumian.hw.setting.adapter.LogAdapter;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -102,7 +101,7 @@ public class DeviceLogActivity extends BaseActivity implements View.OnClickListe
     protected void initData() {
         super.initData();
 
-        BluePeripheral peripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral peripheral = AppManager.getBlueManager().getBluePeripheral();
         if (peripheral == null) {
             return;
         }
