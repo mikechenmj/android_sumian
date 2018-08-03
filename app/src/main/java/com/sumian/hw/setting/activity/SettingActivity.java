@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.assessment.QuestionActivity;
@@ -26,6 +25,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -244,7 +244,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        HwAppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data);
+        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data);
     }
 
     @Override

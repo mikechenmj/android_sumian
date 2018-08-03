@@ -4,11 +4,11 @@ import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.hw.account.contract.OpenLoginContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -57,7 +57,7 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
         view.onBegin();
         switch (shareMedia) {
             case WEIXIN:
-                HwAppManager.getOpenLogin().weChatLogin(activity, authListener);
+                AppManager.getOpenLogin().weChatLogin(activity, authListener);
                 break;
         }
     }

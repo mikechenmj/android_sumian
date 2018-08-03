@@ -126,14 +126,14 @@ public class HwApplicationDelegate implements Application.ActivityLifecycleCallb
             activity instanceof DaySleepDetailReportActivity ||
             activity instanceof SleepReminderActivity) {
 
-            HwAppManager.getOpenAnalytics().onResume(activity);
+            AppManager.getOpenAnalytics().onResume(activity);
 
             if (activity instanceof DaySleepDetailReportActivity) {
-                HwAppManager.getOpenAnalytics().onPageStart("DaySleepDetailReport");
+                AppManager.getOpenAnalytics().onPageStart("DaySleepDetailReport");
             }
 
             if (activity instanceof SleepReminderActivity) {
-                HwAppManager.getOpenAnalytics().onPageStart("SleepReminder");
+                AppManager.getOpenAnalytics().onPageStart("SleepReminder");
             }
         }
     }
@@ -144,14 +144,14 @@ public class HwApplicationDelegate implements Application.ActivityLifecycleCallb
             activity instanceof DaySleepDetailReportActivity ||
             activity instanceof SleepReminderActivity) {
 
-            HwAppManager.getOpenAnalytics().onPause(activity);
+            AppManager.getOpenAnalytics().onPause(activity);
 
             if (activity instanceof DaySleepDetailReportActivity) {
-                HwAppManager.getOpenAnalytics().onPageEnd("DaySleepDetailReport");
+                AppManager.getOpenAnalytics().onPageEnd("DaySleepDetailReport");
             }
 
             if (activity instanceof SleepReminderActivity) {
-                HwAppManager.getOpenAnalytics().onPageEnd("SleepReminder");
+                AppManager.getOpenAnalytics().onPageEnd("SleepReminder");
             }
         }
     }

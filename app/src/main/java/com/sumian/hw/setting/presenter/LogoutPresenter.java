@@ -6,8 +6,6 @@ import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.account.cache.HwAccountCache;
 import com.sumian.hw.account.callback.OnLogoutCallback;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.cache.BluePeripheralCache;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.network.callback.BaseResponseCallback;
@@ -15,6 +13,8 @@ import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.utils.NotificationUtil;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override
             protected void onSuccess(Object response) {
-                HwAppManager.getOpenAnalytics().onProfileSignOff();
+                AppManager.getOpenAnalytics().onProfileSignOff();
                 AppOperator.runOnThread(() -> {
                     ReminderManager.updateReminder(null);
                     HwAccountCache.clearCache();

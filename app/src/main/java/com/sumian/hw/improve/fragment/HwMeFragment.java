@@ -10,8 +10,6 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.log.LogManager;
@@ -24,6 +22,8 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.Locale;
 
@@ -76,7 +76,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
 
     @Override
     public void onEnterTab() {
-//        HwAppManager.getOpenAnalytics().onClickEvent(getContext(), "me_tabbar_Ry");
+//        AppManager.getOpenAnalytics().onClickEvent(getContext(), "me_tabbar_Ry");
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
     }
 

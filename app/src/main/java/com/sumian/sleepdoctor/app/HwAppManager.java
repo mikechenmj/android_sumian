@@ -8,8 +8,6 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
-import com.sumian.common.social.analytics.OpenAnalytics;
-import com.sumian.common.social.login.OpenLogin;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
@@ -66,24 +64,6 @@ public final class HwAppManager {
 
     public static synchronized SleepyV1Api getV1HttpService() {
         return getNetEngine().getV1HttpService();
-    }
-
-    public static synchronized OpenLogin getOpenLogin() {
-        if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().create(HwApp.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
-            return INSTANCE.mOpenEngine.getOpenLogin();
-        } else {
-            return INSTANCE.mOpenEngine.getOpenLogin();
-        }
-    }
-
-    public static synchronized OpenAnalytics getOpenAnalytics() {
-        if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().create(HwApp.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
-            return INSTANCE.mOpenEngine.getOpenAnalytics();
-        } else {
-            return INSTANCE.mOpenEngine.getOpenAnalytics();
-        }
     }
 
     public static synchronized VersionModel getVersionModel() {

@@ -6,15 +6,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.SleepReminderContract;
 import com.sumian.hw.account.presenter.SleepReminderPresenter;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.ToggleButton;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.List;
 
@@ -145,7 +145,7 @@ public class SleepReminderActivity extends BaseActivity implements TitleBar.OnBa
 
     @Override
     public void onToggle(boolean on) {
-        HwAppManager.getOpenAnalytics().onClickEvent(this, "enable_sleep_reminder", on);
+        AppManager.getOpenAnalytics().onClickEvent(this, "enable_sleep_reminder", on);
         mLayTimerContainer.setVisibility(on ? View.VISIBLE : View.GONE);
         modifyReminder(on);
     }

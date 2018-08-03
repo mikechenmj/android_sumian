@@ -10,14 +10,14 @@ import android.widget.ImageView;
 
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwApplicationDelegate;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -103,7 +103,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        HwAppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data);
+        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-        HwAppManager.getOpenLogin().deleteWechatTokenCache(this, null);
+        AppManager.getOpenLogin().deleteWechatTokenCache(this, null);
         //Log.e(TAG, "onComplete: --------->" + share_media + "  i=" + i + "   map=" + map.toString());
         onFinish();
         mPresenter.bindOpen(share_media, map);

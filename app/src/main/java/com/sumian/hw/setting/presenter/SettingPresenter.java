@@ -3,13 +3,13 @@ package com.sumian.hw.setting.presenter;
 import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.hw.setting.contract.SettingContract;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -126,7 +126,7 @@ public class SettingPresenter implements SettingContract.Presenter {
         view.onBegin();
         switch (shareMedia) {
             case WEIXIN:
-                HwAppManager.getOpenLogin().weChatLogin(activity, authListener);
+                AppManager.getOpenLogin().weChatLogin(activity, authListener);
                 break;
             default:
                 break;

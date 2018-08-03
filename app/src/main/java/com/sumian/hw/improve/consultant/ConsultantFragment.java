@@ -3,13 +3,13 @@ package com.sumian.hw.improve.consultant;
 import android.view.View;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.setting.dialog.ContactDialog;
 import com.sumian.hw.widget.TitleBar;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -33,7 +33,7 @@ public class ConsultantFragment extends BasePagerFragment implements View.OnClic
 
     @Override
     public void onEnterTab() {
-        HwAppManager.getOpenAnalytics().onClickEvent(getContext(), "advice_tabbar_Ry");
+        AppManager.getOpenAnalytics().onClickEvent(getContext(), "advice_tabbar_Ry");
         UIProvider.getInstance().isHaveMsgSize();
         showDot(mCustomerServiceDot, LeanCloudHelper.isHaveCustomerMsg());
     }
