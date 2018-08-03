@@ -17,7 +17,6 @@ import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectGenderBottomSheet;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.callback.BaseResponseCallback;
@@ -27,6 +26,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -185,7 +185,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
             map.put("height", mUserInfo.height);
             map.put("weight", mUserInfo.weight);
             map.put("include", "doctor");
-            HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
+            HwAppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
                 @Override
                 protected void onSuccess(UserInfo response) {
                     onSyncCacheUserInfoSuccess(response);

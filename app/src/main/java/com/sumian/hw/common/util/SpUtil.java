@@ -3,7 +3,7 @@ package com.sumian.hw.common.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.App;
 
 /**
  * Created by jzz
@@ -14,7 +14,7 @@ import com.sumian.sleepdoctor.app.HwApp;
 public final class SpUtil {
 
     public static SharedPreferences initSp(String spFileName) {
-        return HwApp.getAppContext().getSharedPreferences(spFileName, Context.MODE_PRIVATE);
+        return App.Companion.getAppContext().getSharedPreferences(spFileName, Context.MODE_PRIVATE);
     }
 
     public static SharedPreferences.Editor initEdit(String spFileName) {

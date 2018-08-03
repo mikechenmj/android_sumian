@@ -164,7 +164,7 @@ public class CalendarReportPresenter implements CalendarReportContract.Presenter
         map.put("page_size", 3);
         map.put("is_include", isInclude ? 1 : 0);
 
-        Call<JsonObject> call = HwAppManager.getV1HttpService().getCalendarSleepReport(map);
+        Call<JsonObject> call = HwAppManager.getHwV1HttpService().getCalendarSleepReport(map);
         mCalls.add(call);
 
         call.enqueue(new BaseResponseCallback<JsonObject>() {

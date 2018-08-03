@@ -12,8 +12,8 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.utils.NotificationUtil;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
@@ -53,7 +53,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
         view.onBegin();
 
         String deviceToken = AVInstallation.getCurrentInstallation().getInstallationId();
-        Call<Object> call = HwAppManager.getNetEngine().getHttpService().doLogout(deviceToken);
+        Call<Object> call = HwAppManager.getHwNetEngine().getHttpService().doLogout(deviceToken);
 
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override
@@ -67,7 +67,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
                     BlueManager.init().doStopScan();
                 });
                 ChatClient.getInstance().logout(true, null);
-                NotificationUtil.Companion.cancelAllNotification(HwApp.getAppContext());
+                NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
                 AppManager.getAccountViewModel().updateToken(null);
             }
 

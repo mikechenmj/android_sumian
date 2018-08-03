@@ -16,8 +16,8 @@ import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 import com.umeng.socialize.UMAuthListener;
@@ -48,7 +48,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
         Intent intent;
 
         if (context == null) {
-            context = HwApp.getAppContext();
+            context = App.Companion.getAppContext();
         }
 
         intent = new Intent(context, LoginRouterActivity.class);

@@ -12,10 +12,10 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import org.json.JSONException;
@@ -40,7 +40,7 @@ public class OssEngine {
 
     public void uploadFile(OssResponse ossResponse, String localUploadFilePath) {
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(ossResponse.getAccess_key_id(), ossResponse.getAccess_key_secret(), ossResponse.getSecurity_token());
-        OSSClient ossClient = new OSSClient(HwApp.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
+        OSSClient ossClient = new OSSClient(App.Companion.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(ossResponse.getBucket(), ossResponse.getObject(), localUploadFilePath);
         // 异步上传时可以设置进度回调

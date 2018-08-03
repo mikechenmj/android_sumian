@@ -5,9 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.callback.BlueAdapterCallback;
+import com.sumian.blue.callback.BluePeripheralCallback;
+import com.sumian.blue.callback.BluePeripheralDataCallback;
+import com.sumian.blue.constant.BlueConstant;
+import com.sumian.blue.model.BluePeripheral;
+import com.sumian.blue.model.bean.BlueUuidConfig;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.BlueByteUtil;
@@ -19,12 +22,9 @@ import com.sumian.hw.improve.device.contract.DeviceContract;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.improve.device.wrapper.BlueDeviceWrapper;
 import com.sumian.hw.log.LogManager;
-import com.sumian.blue.callback.BlueAdapterCallback;
-import com.sumian.blue.callback.BluePeripheralCallback;
-import com.sumian.blue.callback.BluePeripheralDataCallback;
-import com.sumian.blue.constant.BlueConstant;
-import com.sumian.blue.model.BluePeripheral;
-import com.sumian.blue.model.bean.BlueUuidConfig;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.sleepdoctor.utils.StorageUtil;
 
 import java.io.File;
@@ -64,9 +64,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     private DevicePresenter(DeviceContract.View view) {
         mMonitor = new BlueDevice();
-        mMonitor.name = HwApp.getAppContext().getString(R.string.monitor);
+        mMonitor.name = App.Companion.getAppContext().getString(R.string.monitor);
         BlueDevice speedSleeper = new BlueDevice();
-        speedSleeper.name = HwApp.getAppContext().getString(R.string.speed_sleeper);
+        speedSleeper.name = App.Companion.getAppContext().getString(R.string.speed_sleeper);
         mMonitor.speedSleeper = speedSleeper;
 
         view.setPresenter(this);
@@ -88,7 +88,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public BlueDevice checkCache() {
-        File cacheFile = new File(HwApp.getAppContext().getCacheDir(), CACHE_FILE_NAME);
+        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), CACHE_FILE_NAME);
         BlueDevice cacheBlueDevice = null;
         ObjectInputStream ois = null;
         if (cacheFile.exists()) {
@@ -131,7 +131,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             blueUuidConfig.descUuid = BlueConstant.DESCRIPTORS_UUID;
 
             BluePeripheral bluePeripheral = new BluePeripheral.PeripheralBlueBuilder()
-                .setContext(HwApp.getAppContext())
+                .setContext(App.Companion.getAppContext())
                 .setBlueUuidConfig(blueUuidConfig)
                 .setName(remoteDevice.getName())
                 .setRemoteDevice(remoteDevice)
@@ -556,7 +556,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                             break;
                     }
                     mView.showTurnOnPaModeFailed(errorTextId);
-                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + HwApp.getAppContext().getResources().getString(errorTextId) + "  cmd=" + cmd);
+                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.Companion.getAppContext().getResources().getString(errorTextId) + "  cmd=" + cmd);
                     break;
             }
         } else {
@@ -911,7 +911,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     }
 
     private void saveCacheFile() {
-        File cacheFile = new File(HwApp.getAppContext().getCacheDir(), CACHE_FILE_NAME);
+        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), CACHE_FILE_NAME);
         ObjectOutputStream oos = null;
         try {
             if (cacheFile.exists()) {
@@ -943,7 +943,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     }
 
     private void clearCacheDevice() {
-        File cacheFile = new File(HwApp.getAppContext().getCacheDir(), CACHE_FILE_NAME);
+        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), CACHE_FILE_NAME);
         if (cacheFile.exists()) {
             if (cacheFile.delete()) {
                 LogManager.appendUserOperationLog("设备被成功解绑,并清除掉缓存成功");

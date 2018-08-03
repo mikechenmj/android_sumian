@@ -11,8 +11,6 @@ import android.widget.FrameLayout;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.common.util.NumberUtil;
@@ -33,7 +31,9 @@ import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.nav.NavTab;
 import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.sleepdoctor.main.MainActivity;
 
 import java.util.HashMap;
@@ -131,7 +131,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         if (AppManager.getAccountViewModel().isLogin()) {
             LeanCloudHelper.loginLeanCloud();
             LeanCloudHelper.registerPushService();
-            Call<Object> call = HwAppManager.getNetEngine().getHttpService().sendHeartbeats("open_app");
+            Call<Object> call = HwAppManager.getHwNetEngine().getHttpService().sendHeartbeats("open_app");
             call.enqueue(new BaseResponseCallback<Object>() {
                 @Override
                 protected void onSuccess(Object response) {
@@ -161,15 +161,15 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     private void checkAppVersion() {
         Map<String, String> map = new HashMap<>();
 
-        PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
+        PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
 
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
 
-        HwAppManager.getNetEngine().getHttpService().syncUpgradeAppInfo(map).enqueue(new BaseResponseCallback<AppUpgradeInfo>() {
+        HwAppManager.getHwNetEngine().getHttpService().syncUpgradeAppInfo(map).enqueue(new BaseResponseCallback<AppUpgradeInfo>() {
             @Override
             protected void onSuccess(AppUpgradeInfo response) {
-                PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
+                PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
 
                 AppUpgradeInfo appUpgradeInfo = response;
                 if (appUpgradeInfo == null) {//相同版本或没有新版本

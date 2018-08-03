@@ -65,7 +65,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
         view.onBegin();
 
-        Call<UserSetting> call = HwAppManager.getNetEngine().getHttpService().syncUserSetting();
+        Call<UserSetting> call = HwAppManager.getHwNetEngine().getHttpService().syncUserSetting();
         this.mCalls.add(call);
         call.enqueue(new BaseResponseCallback<UserSetting>() {
             @Override
@@ -97,7 +97,7 @@ public class SettingPresenter implements SettingContract.Presenter {
 
         view.onBegin();
 
-        Call<UserSetting> call = HwAppManager.getNetEngine().getHttpService().updateUserSetting(sleepDiaryEnable);
+        Call<UserSetting> call = HwAppManager.getHwNetEngine().getHttpService().updateUserSetting(sleepDiaryEnable);
         this.mCalls.add(call);
         call.enqueue(new BaseResponseCallback<UserSetting>() {
             @Override
@@ -155,7 +155,7 @@ public class SettingPresenter implements SettingContract.Presenter {
         openMap.put("nickname", openMap.get("screen_name"));
         String openUserInfo = JSON.toJSONString(openMap);
 
-        Call<Social> call = HwAppManager.getNetEngine().getHttpService().bindOpenPlatform(openType, openUserInfo);
+        Call<Social> call = HwAppManager.getHwNetEngine().getHttpService().bindOpenPlatform(openType, openUserInfo);
         this.mCalls.add(call);
         call.enqueue(new BaseResponseCallback<Social>() {
             @Override

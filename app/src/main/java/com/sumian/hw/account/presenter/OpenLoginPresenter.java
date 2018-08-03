@@ -34,7 +34,7 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
     private OpenLoginPresenter(OpenLoginContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mSleepyApi = HwAppManager.getNetEngine().getHttpService();
+        this.mSleepyApi = HwAppManager.getHwNetEngine().getHttpService();
     }
 
 

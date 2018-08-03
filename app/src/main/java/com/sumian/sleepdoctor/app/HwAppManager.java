@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.app;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.easeui.UIProvider;
@@ -9,7 +8,6 @@ import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
 import com.sumian.hw.common.helper.ToastHelper;
-import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.improve.report.viewModel.ReportModel;
@@ -20,9 +18,6 @@ import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.engine.HwNetEngine;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.BuildConfig;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 /**
  * Created by jzz
@@ -58,12 +53,12 @@ public final class HwAppManager {
         }
     }
 
-    public static synchronized HwNetEngine getNetEngine() {
+    public static synchronized HwNetEngine getHwNetEngine() {
         return INSTANCE.mNetEngine == null ? INSTANCE.mNetEngine = new HwNetEngine() : INSTANCE.mNetEngine;
     }
 
-    public static synchronized SleepyV1Api getV1HttpService() {
-        return getNetEngine().getV1HttpService();
+    public static synchronized SleepyV1Api getHwV1HttpService() {
+        return getHwNetEngine().getV1HttpService();
     }
 
     public static synchronized VersionModel getVersionModel() {
@@ -80,12 +75,8 @@ public final class HwAppManager {
         return INSTANCE.mReportModel == null ? INSTANCE.mReportModel = new ReportModel() : INSTANCE.mReportModel;
     }
 
-//    public static synchronized AccountViewModel getAccountModel() {
-//        return INSTANCE.mAccountModel == null ? INSTANCE.mAccountModel = new AccountViewModel() : INSTANCE.mAccountModel;
-//    }
-
     public static synchronized JobScheduler getJobScheduler() {
-        return INSTANCE.mJobScheduler == null ? INSTANCE.mJobScheduler = new JobScheduler(HwApp.getAppContext()) : INSTANCE
+        return INSTANCE.mJobScheduler == null ? INSTANCE.mJobScheduler = new JobScheduler(App.Companion.getAppContext()) : INSTANCE
                 .mJobScheduler;
     }
 
@@ -126,29 +117,5 @@ public final class HwAppManager {
             }
             BlueManager.init().with(context);
         });
-    }
-
-    /**
-     * 获取进程号对应的进程名
-     *
-     * @param pid 进程号
-     * @return 进程名
-     */
-    @SuppressWarnings("unused")
-    private static String getProcessName(int pid) {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
-            String processName = reader.readLine();
-            if (!TextUtils.isEmpty(processName)) {
-                processName = processName.trim();
-            }
-            return processName;
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        } finally {
-            StreamUtil.close(reader);
-        }
-        return null;
     }
 }

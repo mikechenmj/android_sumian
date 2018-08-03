@@ -1,11 +1,11 @@
 package com.sumian.hw.account.presenter;
 
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         this.mApiWeakReference = new WeakReference<>(HwAppManager
-            .getNetEngine()
+            .getHwNetEngine()
             .getHttpService());
     }
 

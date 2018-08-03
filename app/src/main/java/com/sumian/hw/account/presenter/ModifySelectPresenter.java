@@ -9,12 +9,12 @@ import com.sumian.hw.account.bean.City;
 import com.sumian.hw.account.bean.Province;
 import com.sumian.hw.account.contract.ModifySelectContract;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
         ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
         if (view == null) return;
         view.onBegin();
-        SleepyApi sleepyApi = HwAppManager.getNetEngine().getHttpService();
+        SleepyApi sleepyApi = HwAppManager.getHwNetEngine().getHttpService();
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
         map.put("include", "doctor");

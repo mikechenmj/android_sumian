@@ -1,10 +1,10 @@
 package com.sumian.hw.tab.report.presenter;
 
 import com.alibaba.fastjson.JSON;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.tab.report.contract.SleepNoteContract;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class SleepNotePresenter implements SleepNoteContract.Presenter {
         WeakReference<SleepNoteContract.View> viewWeakReference = this.mViewWeakReference;
         SleepNoteContract.View view = viewWeakReference.get();
         if (view == null) return;
-        Call<String> call = HwAppManager.getNetEngine().getHttpService().syncSleepNoteOptions();
+        Call<String> call = HwAppManager.getHwNetEngine().getHttpService().syncSleepNoteOptions();
 
         view.onBegin();
         call.enqueue(new BaseResponseCallback<String>() {
@@ -79,7 +79,7 @@ public class SleepNotePresenter implements SleepNoteContract.Presenter {
         map.put("bedtime_state", JSON.toJSONString(bedTimeState));
         map.put("remark", remark);
 
-        Call<DailyReport> call = HwAppManager.getV1HttpService().writeDiary((int) id, map);
+        Call<DailyReport> call = HwAppManager.getHwV1HttpService().writeDiary((int) id, map);
         mCalls.add(call);
         view.onBegin();
         call.enqueue(new BaseResponseCallback<DailyReport>() {

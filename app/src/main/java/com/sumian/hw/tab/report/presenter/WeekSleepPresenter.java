@@ -1,11 +1,11 @@
 package com.sumian.hw.tab.report.presenter;
 
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.tab.report.contract.WeekSleepContract;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -43,7 +43,7 @@ public class WeekSleepPresenter implements WeekSleepContract.Presenter {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         this.mSleepyApi = HwAppManager
-            .getNetEngine()
+            .getHwNetEngine()
             .getHttpService();
 
         Calendar calendar = Calendar.getInstance();

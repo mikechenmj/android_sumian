@@ -35,8 +35,8 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.LocationManagerUtil;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.List;
@@ -458,7 +458,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
             mDeviceStatusView.show();
             mDeviceGuideStepView.hide();
             BlueDevice speedSleeper = new BlueDevice();
-            speedSleeper.name = HwApp.getAppContext().getString(R.string.speed_sleeper);
+            speedSleeper.name = App.Companion.getAppContext().getString(R.string.speed_sleeper);
             monitor.speedSleeper = speedSleeper;
             mDeviceStatusView.invalidDevice(monitor);
             scanAndConnectWithPermissionCheck(monitor);

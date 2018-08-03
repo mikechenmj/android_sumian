@@ -3,12 +3,12 @@ package com.sumian.hw.account.presenter;
 import android.support.annotation.Nullable;
 
 import com.sumian.hw.account.contract.LoginContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.LoginBody;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
 
         SleepyApi sleepyApi = HwAppManager
-            .getNetEngine()
+            .getHwNetEngine()
             .getHttpService();
         if (sleepyApi == null) {
             return;

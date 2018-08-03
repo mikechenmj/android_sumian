@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.io.File;
 
@@ -70,7 +70,7 @@ public class UploadSleepDataService extends IntentService {
             ("app_receive_ended_at", receiveEndedTime + "");
 
         Call<String> call = HwAppManager
-            .getNetEngine()
+            .getHwNetEngine()
             .getHttpService()
             .uploadRawData(typePart, receiveStartedTimePart, receiveEndedTimePart, filePart);
 

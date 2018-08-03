@@ -16,9 +16,6 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
@@ -27,6 +24,9 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.bean.OssTransData;
 import com.sumian.hw.oss.bean.OssTransDataError;
+import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,7 +129,7 @@ public class JobTask implements Serializable, Cloneable {
         map.put("app_receive_ended_at", receiveEndedTime);
 
         LogManager.appendTransparentLog("1.开始请求透传数据的 oss  凭证");
-        Call<OssResponse> call = HwAppManager.getV1HttpService().uploadTransData(map);
+        Call<OssResponse> call = HwAppManager.getHwV1HttpService().uploadTransData(map);
         call.enqueue(new BaseResponseCallback<OssResponse>() {
             @Override
             protected void onSuccess(OssResponse ossResponse) {
@@ -148,7 +148,7 @@ public class JobTask implements Serializable, Cloneable {
                 super.onForbidden(forbiddenError);
                 Intent intent = new Intent(JobTask.ACTION_SYNC);
                 intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
-                LocalBroadcastManager.getInstance(HwApp.getAppContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
                 LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + forbiddenError);
 
                 SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
@@ -164,7 +164,7 @@ public class JobTask implements Serializable, Cloneable {
         }
 
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(ossResponse.getAccess_key_id(), ossResponse.getAccess_key_secret(), ossResponse.getSecurity_token());
-        OSSClient ossClient = new OSSClient(HwApp.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
+        OSSClient ossClient = new OSSClient(App.Companion.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
         // 构造上传请求
 
         PutObjectRequest putObjectRequest = new PutObjectRequest(ossResponse.getBucket(), ossResponse.getObject(), filePath);
@@ -193,7 +193,7 @@ public class JobTask implements Serializable, Cloneable {
 
                 Intent intent = new Intent(JobTask.ACTION_SYNC);
                 intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
-                LocalBroadcastManager.getInstance(HwApp.getAppContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
 
                 SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
 
@@ -234,7 +234,7 @@ public class JobTask implements Serializable, Cloneable {
                 // 请求异常
                 Intent intent = new Intent(JobTask.ACTION_SYNC);
                 intent.putExtra(JobTask.EXTRA_SYNC_STATUS, false);
-                LocalBroadcastManager.getInstance(HwApp.getAppContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
 
                 if (clientException != null) {
                     LogManager.appendUserOperationLog("该组透传数据 oss 上传失败,进入队列末尾进行再次上传  clientException=" + clientException.getLocalizedMessage());

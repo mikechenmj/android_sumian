@@ -21,8 +21,8 @@ import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.Locale;
@@ -141,7 +141,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
             this.mTvNickname.setText(userInfo.getNickname());
             String age = userInfo.getAge() == null ? null : userInfo.getAge().toString();
             if (!TextUtils.isEmpty(age)) {
-                this.mTvAgeAndGender.append(String.format(Locale.getDefault(), "%s%s%s", "  丨  ", age, HwApp.getAppContext().getString(R.string.age_hint)));
+                this.mTvAgeAndGender.append(String.format(Locale.getDefault(), "%s%s%s", "  丨  ", age, App.Companion.getAppContext().getString(R.string.age_hint)));
             }
         });
         ReminderManager.getReminder();
@@ -182,22 +182,22 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
     }
 
     private String formatGender(String gender) {
-        String genderText = HwApp.getAppContext().getString(R.string.gender_secrecy_hint);
+        String genderText = App.Companion.getAppContext().getString(R.string.gender_secrecy_hint);
         if (TextUtils.isEmpty(gender)) {
             return genderText;
         }
         switch (gender) {
             case "male":
-                genderText = HwApp.getAppContext().getString(R.string.gender_male_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.gender_male_hint);
                 break;
             case "female":
-                genderText = HwApp.getAppContext().getString(R.string.gender_female_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.gender_female_hint);
                 break;
             case "secrecy":
-                genderText = HwApp.getAppContext().getString(R.string.gender_secrecy_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.gender_secrecy_hint);
                 break;
             default:
-                genderText = HwApp.getAppContext().getString(R.string.user_none_default_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.user_none_default_hint);
                 break;
         }
         return genderText;

@@ -6,9 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;
@@ -20,7 +18,9 @@ import com.sumian.hw.upgrade.presenter.VersionPresenter;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.VersionInfoView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
-import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.Locale;
 
@@ -143,9 +143,9 @@ public class VersionNoticeActivity extends BaseActivity implements View.OnClickL
             BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral == null || !bluePeripheral.isConnected()) {
                 setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                        getString(R.string.monitor), HwApp.getAppContext().getString(R.string.none_connected_state_hint)));
+                        getString(R.string.monitor), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
                 setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                        getString(R.string.speed_sleeper), HwApp.getAppContext().getString(R.string.none_connected_state_hint)));
+                        getString(R.string.speed_sleeper), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
             }
             mDivider.setVisibility(isShowAppDot || isShowMonitorDot || isShowSleepyDot ? View.VISIBLE : View.GONE);
             mAppVersionInfo.updateUpgradeInfo(isShowAppDot, null);

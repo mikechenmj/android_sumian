@@ -2,7 +2,7 @@ package com.sumian.hw.utils;
 
 import android.support.annotation.StringRes;
 
-import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.App;
 
 import java.util.Locale;
 
@@ -20,6 +20,6 @@ public final class StringUtils {
 
 
     public static String getText(@StringRes int id) {
-        return HwApp.getAppContext().getResources().getString(id);
+        return App.Companion.getAppContext().getResources().getString(id);
     }
 }

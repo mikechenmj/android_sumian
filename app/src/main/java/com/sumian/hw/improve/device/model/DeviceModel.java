@@ -2,12 +2,12 @@ package com.sumian.hw.improve.device.model;
 
 import android.text.TextUtils;
 
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -141,7 +141,7 @@ public class DeviceModel {
             map.put("sleeper_sn", userInfo.getSleeper_sn());
         }
         map.put("include", "doctor");
-        HwAppManager.getNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
+        HwAppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
             protected void onSuccess(UserInfo response) {
                 AppManager.getAccountViewModel().updateUserInfo(response);

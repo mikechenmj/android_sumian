@@ -17,9 +17,9 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.AppendObjectRequest;
 import com.alibaba.sdk.android.oss.model.AppendObjectResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
+import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.app.HwAppManager;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 
 import java.io.File;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ public class LogJobIntentService extends JobIntentService {
         Map<String, Object> map = new HashMap<>(0);
         map.put("suffix", "txt");
 
-        Call<LogOssResponse> call = HwAppManager.getV1HttpService().autoUploadLog(map);
+        Call<LogOssResponse> call = HwAppManager.getHwV1HttpService().autoUploadLog(map);
 
         call.enqueue(new BaseResponseCallback<LogOssResponse>() {
             @Override

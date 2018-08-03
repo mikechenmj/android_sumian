@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.sumian.hw.account.contract.RegisterContract;
 import com.sumian.hw.account.presenter.RegisterPresenter;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
@@ -26,6 +25,7 @@ import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 
 /**
@@ -137,7 +137,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             if (!AppManager.getAccountViewModel().isHaveUserInfoAndSleepBarrierTest()) {
                 AssessmentActivity.show(this, true);
             } else {
-                HwMainActivity.show(HwApp.getAppContext());
+                HwMainActivity.show(App.Companion.getAppContext());
             }
         });
     }

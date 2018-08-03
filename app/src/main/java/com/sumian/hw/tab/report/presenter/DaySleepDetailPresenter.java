@@ -1,13 +1,13 @@
 package com.sumian.hw.tab.report.presenter;
 
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.SleepDetailReport;
 import com.sumian.hw.tab.report.bean.SleepData;
 import com.sumian.hw.tab.report.contract.DaySleepDetailContract;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class DaySleepDetailPresenter implements DaySleepDetailContract.Presenter
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         this.mSleepyApi = HwAppManager
-            .getNetEngine()
+            .getHwNetEngine()
             .getHttpService();
 
     }

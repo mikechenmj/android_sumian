@@ -9,9 +9,8 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.callback.BluePeripheralDataCallback;
+import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.common.util.HashUtils;
 import com.sumian.hw.log.LogManager;
@@ -20,8 +19,9 @@ import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.service.DfuService;
 import com.sumian.hw.upgrade.wrapper.DfuWrapper;
-import com.sumian.blue.callback.BluePeripheralDataCallback;
-import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -113,12 +113,12 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
 
         //sdcard的目录下的download文件夹，必须设置
         //request.setDestinationInExternalPublicDir("/downloadFile/", versionName + ".zip");
-        request.setDestinationInExternalPublicDir(HwApp.getAppContext().getCacheDir().getAbsolutePath(), versionName + ".zip");
+        request.setDestinationInExternalPublicDir(App.Companion.getAppContext().getCacheDir().getAbsolutePath(), versionName + ".zip");
         //request.setDestinationInExternalFilesDir(),也可以自己制定下载路径
         request.allowScanningByMediaScanner();
 
         //将下载请求加入下载队列
-        mDownloadManager = (DownloadManager) HwApp.getAppContext().getSystemService(Context.DOWNLOAD_SERVICE);
+        mDownloadManager = (DownloadManager) App.Companion.getAppContext().getSystemService(Context.DOWNLOAD_SERVICE);
         //加入下载队列后会给该任务返回一个long型的id，
         //通过该id可以取消任务，重启任务等等，看上面源码中框起来的方法
         if (mDownloadManager != null) {
@@ -186,7 +186,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
 
                             } else {//包已损坏需要重新下载
                                 if (view != null) {
-                                    view.onDownloadFirmwareFailed(HwApp.getAppContext().getString(R.string.firmware_md5_invalid_hint));
+                                    view.onDownloadFirmwareFailed(App.Companion.getAppContext().getString(R.string.firmware_md5_invalid_hint));
                                 }
                                 LogManager.appendUserOperationLog("固件下载成功, MD5校验失败 fileMd5=" + fileMd5 + "  serverFileMd5=" + mVersionInfo.getMd5());
                             }
@@ -196,7 +196,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                         case DownloadManager.STATUS_FAILED:
                             // Log.e(TAG, ">>>下载失败");
                             if (view != null) {
-                                view.onDownloadFirmwareFailed(HwApp.getAppContext().getString(R.string.firmware_download_failed_hint));
+                                view.onDownloadFirmwareFailed(App.Companion.getAppContext().getString(R.string.firmware_download_failed_hint));
                             }
 
                             LogManager.appendUserOperationLog("固件下载失败 " + versionUrl);
@@ -233,7 +233,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
 
     @Override
     public void upgrade(int versionType) {
-        Context context = HwApp.getAppContext();
+        Context context = App.Companion.getAppContext();
         BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
         this.mVersionType = versionType;
         switch (versionType) {
@@ -249,7 +249,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
 //                    intent.setDataAndType(Uri.fromFile(Beta.getStrategyTask().getSaveFile()), "application/vnd.android.package-archive");
 //                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                }
-//                HwApp.getAppContext().startActivity(intent);
+//                App.Companion.getAppContext().startActivity(intent);
                 // Beta.installApk(Beta.getStrategyTask().getSaveFile());
                 break;
             case VersionUpgradeActivity.VERSION_TYPE_MONITOR:
@@ -358,7 +358,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                 LogManager.appendMonitorLog("0x51 监测仪dfu 模式开启成功....");
                 this.mIsEnableDfu = true;
 
-                doDfu(HwApp.getAppContext(), mDfuMac);
+                doDfu(App.Companion.getAppContext(), mDfuMac);
 
                 break;
             case "56"://获取监测仪绑定的速眠仪的 mac 地址
@@ -370,7 +370,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
             case "59"://使速眠仪进入 dfu 模式开启成功
                 LogManager.appendMonitorLog("0x59 速眠仪dfu 模式开启成功....");
                 this.mIsEnableDfu = true;
-                doDfu(HwApp.getAppContext(), mDfuMac);
+                doDfu(App.Companion.getAppContext(), mDfuMac);
                 break;
             default:
                 break;

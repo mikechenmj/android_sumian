@@ -1,7 +1,6 @@
 package com.sumian.sleepdoctor.app
 
 import android.app.Application
-import android.content.Context
 
 /**
  * Created by jzz
@@ -10,9 +9,11 @@ import android.content.Context
  */
 
 class App : Application() {
+    @Volatile
+    private var mDelegate: HwApplicationDelegate? = null
 
     companion object {
-        private lateinit var mAppContext: Context
+        private lateinit var mAppContext: Application
         fun getAppContext() = mAppContext
     }
 
@@ -20,7 +21,8 @@ class App : Application() {
         super.onCreate()
         mAppContext = this
         AppManager.getInstance().init(this)
-        HwApp.init(this)
+        mDelegate = HwApplicationDelegate.init().registerActivityLifecycleCallback(this)
+        HwAppManager.create(this)
     }
 }
 
