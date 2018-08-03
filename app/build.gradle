@@ -358,10 +358,6 @@ dependencies {
     //sumian component
     implementation 'com.sumian.sd:common:1.0.13'
     implementation 'com.sumian.sd:blue:1.0.0'
-    implementation 'com.sumian.sd:kefu-easeui:1.0.0'
+    implementation 'com.sumian.sd:kefu-easeui:1.0.3'
     implementation 'com.sumian.sd:jsbridge:1.0.0'
-    // fast json
-    //implementation 'com.alibaba:fastjson:1.2.47'
-    //implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
-    //compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
