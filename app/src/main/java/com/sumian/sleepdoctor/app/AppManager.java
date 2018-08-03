@@ -34,13 +34,10 @@ import com.sumian.sleepdoctor.network.engine.NetEngine;
 
 public final class AppManager implements Observer<Boolean> {
 
-    private static final String TAG = AppManager.class.getSimpleName();
-
     private DoctorApi mDoctorApi;
     private AccountViewModel mAccountViewModel;
     private AdvisoryViewModel mAdvisoryViewModel;
     private DoctorViewModel mDoctorViewModel;
-
     private LiveData<Boolean> mTokenInvalidStateLiveData;
     private OpenEngine mOpenEngine;
 
@@ -49,17 +46,6 @@ public final class AppManager implements Observer<Boolean> {
 
     public static AppManager init() {
         return Holder.INSTANCE;
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public void onChanged(@Nullable Boolean tokenIsInvalid) {
-        Log.e(TAG, "onChanged: -------token  is invalid------->" + tokenIsInvalid);
-
-        if (tokenIsInvalid) {
-//            LoginActivity.show(HwApp.Companion.getAppContext(), LoginActivity.class);
-            ActivityUtils.startActivity(HwLoginActivity.class);
-        }
     }
 
     private static class Holder {
@@ -91,29 +77,42 @@ public final class AppManager implements Observer<Boolean> {
     }
 
     private void init(Context context) {//初始化第三方平台
-        ToastHelper.init(context);
-        EmojiCompat.Config config = new BundledEmojiCompatConfig(context);
-        EmojiCompat.init(config);
-
         initUtils(context);
+        initEmojiCompat(context);
+        initAccountViewModel((Application) context);
+        initLeanCloud(context);
+        initOpenEngine(context);
+    }
 
-        if (Holder.INSTANCE.mAccountViewModel == null) {
-            Holder.INSTANCE.mAccountViewModel = new AccountViewModel((Application) context);
-            Holder.INSTANCE.mAccountViewModel.loadTokenFromSp();
-        }
-
-        mTokenInvalidStateLiveData = Holder.INSTANCE.mAccountViewModel.getLiveDataTokenInvalidState();
-        mTokenInvalidStateLiveData.observeForever(this);
-
+    private void initLeanCloud(Context context) {
         LeanCloudManager.registerPushService(context);
+    }
 
+    private void initEmojiCompat(Context context) {
+        EmojiCompat.init(new BundledEmojiCompatConfig(context));
+    }
+
+    private void initOpenEngine(Context context) {
         if (mOpenEngine == null) {
             this.mOpenEngine = new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
         }
+    }
 
+    private void observeTokenLiveData() {
+        mTokenInvalidStateLiveData = Holder.INSTANCE.mAccountViewModel.getLiveDataTokenInvalidState();
+        mTokenInvalidStateLiveData.observeForever(this);
+    }
+
+    private void initAccountViewModel(Application context) {
+        if (Holder.INSTANCE.mAccountViewModel == null) {
+            Holder.INSTANCE.mAccountViewModel = new AccountViewModel(context);
+            Holder.INSTANCE.mAccountViewModel.loadTokenFromSp();
+        }
+        observeTokenLiveData();
     }
 
     private void initUtils(Context context) {
+        ToastHelper.init(context);
         Utils.init(context);
         ToastUtils.setGravity(Gravity.CENTER, 0, 0);
     }
@@ -123,5 +122,13 @@ public final class AppManager implements Observer<Boolean> {
             mTokenInvalidStateLiveData.removeObserver(this);
         }
         Holder.INSTANCE = null;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public void onChanged(@Nullable Boolean tokenIsInvalid) {
+        if (tokenIsInvalid) {
+            ActivityUtils.startActivity(HwLoginActivity.class);
+        }
     }
 }
