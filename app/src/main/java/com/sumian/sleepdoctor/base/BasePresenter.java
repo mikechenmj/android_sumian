@@ -19,7 +19,7 @@ public interface BasePresenter<T> {
     default void release() {
         for (int i = 0; i < mCalls.size(); i++) {
             Call call = mCalls.get(i);
-            if (call != null && call.isExecuted()) {
+            if (!call.isCanceled()) {
                 call.cancel();
                 mCalls.remove(call);
             }

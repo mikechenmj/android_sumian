@@ -185,7 +185,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
         }
         this.mRoot = null;
         for (Call call : mCalls) {
-            if (!call.isExecuted() || !call.isExecuted()) {
+            if (!call.isCanceled()) {
                 call.cancel();
             }
         }

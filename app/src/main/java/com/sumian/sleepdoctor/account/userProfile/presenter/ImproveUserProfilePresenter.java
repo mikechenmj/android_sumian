@@ -71,7 +71,9 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
 
     @Override
     public void release() {
-        if (mCall == null || mCall.isExecuted()) return;
+        if (mCall == null || mCall.isCanceled()) {
+            return;
+        }
         mCall.cancel();
     }
 }
