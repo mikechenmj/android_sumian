@@ -30,6 +30,7 @@ public interface DaySleepDetailContract {
 
         List<SleepData> transform2SleepData(SleepDetailReport sleepDetailReport);
 
+        @Override
         void release();
     }
 }

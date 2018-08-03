@@ -134,10 +134,9 @@ public abstract class BaseFragment<Presenter extends BasePresenter> extends Frag
         super.onDestroyView();
         this.mUnBinder.unbind();
         for (Call call : mCalls) {
-            if (call.isCanceled()) {
-                continue;
+            if (!call.isCanceled()) {
+                call.cancel();
             }
-            call.cancel();
         }
         mCalls.clear();
     }

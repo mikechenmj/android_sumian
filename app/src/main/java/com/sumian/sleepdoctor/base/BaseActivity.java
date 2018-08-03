@@ -189,6 +189,7 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
                 call.cancel();
             }
         }
+        mCalls.clear();
     }
 
     public void setStatusBar() {

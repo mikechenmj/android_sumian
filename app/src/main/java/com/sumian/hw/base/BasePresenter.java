@@ -21,7 +21,9 @@ public interface BasePresenter {
     ArrayList<Call> mCalls = new ArrayList<>();
 
     default void release() {
-        if (mCalls.isEmpty()) return;
+        if (mCalls.isEmpty()) {
+            return;
+        }
         for (Call call : mCalls) {
             if (!call.isCanceled()) {
                 call.cancel();

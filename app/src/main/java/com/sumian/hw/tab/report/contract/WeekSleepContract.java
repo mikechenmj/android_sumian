@@ -33,6 +33,7 @@ public interface WeekSleepContract {
 
         void doSyncNextWeekSleepReport();
 
+        @Override
         void release();
     }
 }

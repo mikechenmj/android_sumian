@@ -29,6 +29,7 @@ public interface DaySleepContract {
 
         void doSyncNextDaySleepReport();
 
+        @Override
         void release();
     }
 }

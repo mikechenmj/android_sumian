@@ -35,6 +35,7 @@ public interface MonthSleepContract {
 
         void doSyncNextMonthSleepReport();
 
+        @Override
         void release();
     }
 }
