@@ -3,7 +3,7 @@ package com.sumian.hw.common.util;
 
 import android.content.res.AssetManager;
 
-import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.App;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -46,7 +46,7 @@ public class StreamUtil {
         BufferedReader bis = null;
         try {
             //获取assets资源管理器
-            AssetManager assetManager = HwApp.getAppContext().getAssets();
+            AssetManager assetManager = App.Companion.getAppContext().getAssets();
             //通过管理器打开文件并读取
             bis = new BufferedReader(new InputStreamReader(assetManager.open(fileName, AssetManager.ACCESS_BUFFER), "utf-8"));
 

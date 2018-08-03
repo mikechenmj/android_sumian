@@ -9,13 +9,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.OpenBindContract;
 import com.sumian.hw.account.presenter.OpenBindPresenter;
-import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.request.CaptchaBody;
@@ -23,6 +22,7 @@ import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 /**

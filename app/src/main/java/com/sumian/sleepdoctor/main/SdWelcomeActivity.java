@@ -8,11 +8,9 @@ import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.improve.main.HwWelcomeActivity;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 
 /**
  * Created by jzz
@@ -57,8 +55,5 @@ public class SdWelcomeActivity extends BaseActivity {
             }
             finish();
         }, WELCOME_SHOW_TIME);
-        if (token != null) {
-            LeanCloudManager.getAndUploadCurrentInstallation();
-        }
     }
 }

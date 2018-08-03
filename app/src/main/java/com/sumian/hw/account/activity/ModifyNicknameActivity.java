@@ -9,10 +9,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.presenter.ModifyNickNamePresenter;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;

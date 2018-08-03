@@ -6,9 +6,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.presenter.ModifyGenderPresenter;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.assessment.AssessmentUserInfoActivity;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;

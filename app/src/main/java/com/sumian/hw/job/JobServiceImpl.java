@@ -14,11 +14,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.text.TextUtils;
 
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.BufferedWriter;
@@ -181,7 +180,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
 
     @SuppressWarnings("unchecked")
     private void loadCacheJobTaskAndRunSync() {
-        File cacheFile = new File(HwApp.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
+        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
         ObjectInputStream ois = null;
         try {
             if (cacheFile.exists() && cacheFile.length() > 0) {
@@ -219,7 +218,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
     }
 
     private void commitTaskCacheSync() {
-        File cacheFile = new File(HwApp.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
+        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
         ObjectOutputStream oos;
         try {
 
@@ -363,7 +362,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
     private String getFileNameByCommand(String endCmd) {
         int dataType = Integer.parseInt(endCmd.substring(4, 8), 16) >> 12;
         return dataType + "_" + endCmd.substring(10) +
-            "_sn" + HwAppManager.getDeviceModel().getMonitorSn() +
+            "_sn" + AppManager.getDeviceModel().getMonitorSn() +
             "_" + AppManager.getAccountViewModel().getUserInfo().getId() +
             ".txt";
     }

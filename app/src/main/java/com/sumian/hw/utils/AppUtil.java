@@ -4,9 +4,9 @@ import android.app.Activity;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * <pre>
@@ -21,8 +21,8 @@ public class AppUtil {
      * exit app
      */
     public static void exitApp(Activity activity) {
-        HwAppManager.getJobScheduler().release(activity.getApplicationContext());
-        BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        AppManager.getJobScheduler().release(activity.getApplicationContext());
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.close();
         }

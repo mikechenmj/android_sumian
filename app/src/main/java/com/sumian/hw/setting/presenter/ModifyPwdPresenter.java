@@ -1,7 +1,6 @@
 package com.sumian.hw.setting.presenter;
 
 import com.sumian.hw.account.cache.HwAccountCache;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.ModifyPwdBody;
@@ -29,8 +28,8 @@ public class ModifyPwdPresenter implements ModifyPwdContract.Presenter {
     private ModifyPwdPresenter(ModifyPwdContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mApiWeakReference = new WeakReference<>(HwAppManager
-            .getNetEngine()
+        this.mApiWeakReference = new WeakReference<>(AppManager
+            .getHwNetEngine()
             .getHttpService());
         this.mCalls = new ArrayList<>();
     }

@@ -10,17 +10,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.VersionDialog;
 import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
 import com.sumian.hw.widget.TitleBar;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.Locale;
 
@@ -120,16 +120,16 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
         String currentVersion = null;
         switch (mVersionType) {
             case VERSION_TYPE_APP:
-                newVersion = HwAppManager.getVersionModel().getAppUpgradeInfo().version;
-                currentVersion = UiUtil.getPackageInfo(HwApp.getAppContext()).versionName;
+                newVersion = AppManager.getVersionModel().getAppUpgradeInfo().version;
+                currentVersion = UiUtil.getPackageInfo(App.Companion.getAppContext()).versionName;
                 break;
             case VERSION_TYPE_MONITOR:
-                newVersion = HwAppManager.getVersionModel().getMonitorVersion().getVersion();
-                currentVersion = HwAppManager.getDeviceModel().getMonitorVersion();
+                newVersion = AppManager.getVersionModel().getMonitorVersion().getVersion();
+                currentVersion = AppManager.getDeviceModel().getMonitorVersion();
                 break;
             case VERSION_TYPE_SLEEPY:
-                newVersion = HwAppManager.getVersionModel().getSleepyVersion().getVersion();
-                currentVersion = HwAppManager.getDeviceModel().getSleepyVersion();
+                newVersion = AppManager.getVersionModel().getSleepyVersion().getVersion();
+                currentVersion = AppManager.getDeviceModel().getSleepyVersion();
                 break;
             default:
                 break;
@@ -177,7 +177,7 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
                     return;
                 } else {
                     ToastHelper.show(R.string.firmware_downloading_hint);
-                    mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? HwAppManager.getVersionModel().getMonitorVersion() : HwAppManager.getVersionModel().getSleepyVersion());
+                    mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? AppManager.getVersionModel().getMonitorVersion() : AppManager.getVersionModel().getSleepyVersion());
                 }
             }
 
@@ -291,11 +291,11 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
 
         if (!(percent < 100)) {
             if (mVersionType == VERSION_TYPE_MONITOR) {
-                HwAppManager.getVersionModel().notifyMonitorDot(false);
+                AppManager.getVersionModel().notifyMonitorDot(false);
             } else if (mVersionType == VERSION_TYPE_SLEEPY) {
-                HwAppManager.getVersionModel().notifySleepyDot(false);
+                AppManager.getVersionModel().notifySleepyDot(false);
             } else {
-                HwAppManager.getVersionModel().notifyAppDot(false);
+                AppManager.getVersionModel().notifyAppDot(false);
             }
             runUiThread(() -> ToastHelper.show(R.string.firmware_upgrade_success_hint));
         }
@@ -326,8 +326,8 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
         cancelDialog();
         ToastHelper.show(R.string.firmware_upgrade_success_hint);
         LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
-        HwAppManager.getVersionModel().notifyMonitorDot(false);
-        HwAppManager.getVersionModel().notifySleepyDot(false);
+        AppManager.getVersionModel().notifyMonitorDot(false);
+        AppManager.getVersionModel().notifySleepyDot(false);
         finish();
     }
 
@@ -361,7 +361,7 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
         }
 
         if (error == 4096) {
-            HwAppManager.getBlueManager().refresh();
+            AppManager.getBlueManager().refresh();
         }
 
         LogManager.appendUserOperationLog("设备 dfu 固件升级失败  mac=" + deviceAddress + "  error=" + error + "  errorMessage=" + message);
@@ -382,7 +382,7 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
 
     // private methods
     private boolean monitorBatteryLow() {
-        return HwAppManager.getDeviceModel().getMonitorBattery() < 50;
+        return AppManager.getDeviceModel().getMonitorBattery() < 50;
     }
 
     private boolean mobileBatteryLow() {
@@ -402,7 +402,7 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
     }
 
     private boolean sleepyBatterLow() {
-        return HwAppManager.getDeviceModel().getSleepyBattery() < 50;
+        return AppManager.getDeviceModel().getSleepyBattery() < 50;
     }
 
 

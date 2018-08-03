@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.hw.base.BasePagerFragment;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.setting.dialog.ContactDialog;
 import com.sumian.hw.widget.TitleBar;
@@ -19,7 +19,7 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:咨询
  */
 
-public class ConsultantFragment extends BasePagerFragment implements View.OnClickListener, LeanCloudHelper.OnShowMsgDotCallback {
+public class ConsultantFragment extends BasePagerFragment implements View.OnClickListener, HwLeanCloudHelper.OnShowMsgDotCallback {
 
     private static final String TAG = ConsultantFragment.class.getSimpleName();
 
@@ -35,7 +35,7 @@ public class ConsultantFragment extends BasePagerFragment implements View.OnClic
     public void onEnterTab() {
         AppManager.getOpenAnalytics().onClickEvent(getContext(), "advice_tabbar_Ry");
         UIProvider.getInstance().isHaveMsgSize();
-        showDot(mCustomerServiceDot, LeanCloudHelper.isHaveCustomerMsg());
+        showDot(mCustomerServiceDot, HwLeanCloudHelper.isHaveCustomerMsg());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ConsultantFragment extends BasePagerFragment implements View.OnClic
         root.findViewById(R.id.lay_customer_online_service).setOnClickListener(this);
 
         mTitleBar.hideBack();
-        LeanCloudHelper.addOnAdminMsgCallback(this);
+        HwLeanCloudHelper.addOnAdminMsgCallback(this);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -63,14 +63,14 @@ public class ConsultantFragment extends BasePagerFragment implements View.OnClic
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.lay_doctor_service) {
-            MsgActivity.show(v.getContext(), LeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR);
+            MsgActivity.show(v.getContext(), HwLeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR);
 
         } else if (i == R.id.lay_customer_call_service) {
             new ContactDialog().show(getFragmentManager(), ContactDialog.class.getSimpleName());
 
         } else if (i == R.id.lay_customer_online_service) {
             UIProvider.getInstance().clearCacheMsg();
-            LeanCloudHelper.checkLoginEasemob(LeanCloudHelper::startEasemobChatRoom);
+            HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
 
         } else {
         }

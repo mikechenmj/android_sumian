@@ -20,13 +20,13 @@ import android.widget.TextView;
 
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.improve.widget.GuidelineIndicator;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
@@ -213,7 +213,7 @@ public class UserGuidelineActivity extends BaseActivity {
             GuidelineUtils.putBoolean(GuidelineUtils.SP_KEY_NEED_SHOW_WELCOME_USER_GUIDE, false);
             boolean login = AppManager.getAccountViewModel().isLogin();
             if (login) {
-                HwMainActivity.show(HwApp.getAppContext());
+                HwMainActivity.show(App.Companion.getAppContext());
             } else {
                 LoginRouterActivity.show(UserGuidelineActivity.this);
             }

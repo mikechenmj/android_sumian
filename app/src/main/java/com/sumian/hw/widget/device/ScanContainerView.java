@@ -14,10 +14,10 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.device.adapter.DeviceAdapter;
 import com.sumian.hw.tab.device.bean.BlueDevice;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -86,6 +86,6 @@ public class ScanContainerView extends LinearLayout implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        HwAppManager.getBlueManager().doScan();
+        AppManager.getBlueManager().doScan();
     }
 }

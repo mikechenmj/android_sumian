@@ -11,16 +11,16 @@ import android.text.format.DateUtils;
 import android.view.View;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
-import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;
 import com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.response.SleepDurationReport;
+import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.tab.report.sheet.SleepAdviceBottomSheet;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +142,7 @@ public class WeeklyReportFragment extends BasePagerFragment<WeeklyReportPresente
     public void onEnterTab() {
         LogManager.appendUserOperationLog("点击 '周报告' 界面");
         showPushReportIfNeeded();
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
     }
 
     /**

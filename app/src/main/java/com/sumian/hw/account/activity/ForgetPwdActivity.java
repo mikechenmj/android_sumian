@@ -7,17 +7,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ValidationCaptchaContract;
 import com.sumian.hw.account.presenter.ValidationCaptchaPresenter;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.ValidationCaptchaBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by jzz

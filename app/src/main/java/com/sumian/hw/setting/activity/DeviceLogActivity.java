@@ -15,19 +15,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.callback.BluePeripheralCallback;
+import com.sumian.blue.callback.BluePeripheralDataCallback;
+import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.command.BlueCmd;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.BlueByteUtil;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.setting.adapter.LogAdapter;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.blue.callback.BluePeripheralCallback;
-import com.sumian.blue.callback.BluePeripheralDataCallback;
-import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.text.SimpleDateFormat;
@@ -102,7 +101,7 @@ public class DeviceLogActivity extends BaseActivity implements View.OnClickListe
     protected void initData() {
         super.initData();
 
-        BluePeripheral peripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        BluePeripheral peripheral = AppManager.getBlueManager().getBluePeripheral();
         if (peripheral == null) {
             return;
         }

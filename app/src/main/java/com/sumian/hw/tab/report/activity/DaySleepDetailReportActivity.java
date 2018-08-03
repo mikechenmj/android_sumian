@@ -7,9 +7,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.response.SleepDetailReport;
@@ -20,6 +19,7 @@ import com.sumian.hw.widget.SleepNoteView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.histogram.DaySleepHistogramView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
+import com.sumian.sleepdoctor.R;
 
 import java.util.List;
 

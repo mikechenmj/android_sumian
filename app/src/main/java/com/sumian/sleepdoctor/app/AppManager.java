@@ -12,11 +12,24 @@ import android.view.Gravity;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.easeui.UIProvider;
+import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
 import com.sumian.hw.account.activity.HwLoginActivity;
+import com.sumian.hw.gather.FileHelper;
+import com.sumian.hw.improve.device.model.DeviceModel;
+import com.sumian.hw.improve.report.viewModel.ReportModel;
+import com.sumian.hw.job.JobScheduler;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
+import com.sumian.hw.leancloud.player.VoicePlayer;
+import com.sumian.hw.network.api.SleepyV1Api;
+import com.sumian.hw.network.engine.HwNetEngine;
+import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.advisory.model.AdvisoryViewModel;
@@ -38,6 +51,15 @@ public final class AppManager {
     private AdvisoryViewModel mAdvisoryViewModel;
     private DoctorViewModel mDoctorViewModel;
     private OpenEngine mOpenEngine;
+
+    private static volatile AppManager INSTANCE = null;
+    private volatile VersionModel mVersionModel;
+    private volatile DeviceModel mDeviceModel;
+    private volatile ReportModel mReportModel;
+    private HwNetEngine mHwNetEngine;
+    private JobScheduler mJobScheduler;
+    private VoicePlayer mVoicePlayer;
+
 
     private AppManager() {
     }
@@ -74,12 +96,8 @@ public final class AppManager {
         return Holder.INSTANCE.mOpenEngine.getOpenAnalytics();
     }
 
-    public void init(@NonNull Context context) {
-        initUtils(context);
-        initEmojiCompat(context);
-        initAccountViewModel((Application) context);
-        initLeanCloud(context);
-        initOpenEngine(context);
+    public static synchronized HwNetEngine getHwNetEngine() {
+        return Holder.INSTANCE.mHwNetEngine == null ? Holder.INSTANCE.mHwNetEngine = new HwNetEngine() : Holder.INSTANCE.mHwNetEngine;
     }
 
     private void initLeanCloud(Context context) {
@@ -105,7 +123,10 @@ public final class AppManager {
         mAccountViewModel.getLiveDataTokenInvalidState().observeForever(new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean tokenIsInvalid) {
-                if (tokenIsInvalid != null && tokenIsInvalid) {
+                if (tokenIsInvalid == null) {
+                    return;
+                }
+                if (tokenIsInvalid) {
                     ActivityUtils.startActivity(HwLoginActivity.class);
                 }
             }
@@ -116,5 +137,71 @@ public final class AppManager {
         ToastHelper.init(context);
         Utils.init(context);
         ToastUtils.setGravity(Gravity.CENTER, 0, 0);
+    }
+
+    public static synchronized SleepyV1Api getHwV1HttpService() {
+        return getHwNetEngine().getV1HttpService();
+    }
+
+    public static synchronized VersionModel getVersionModel() {
+        return Holder.INSTANCE.mVersionModel == null ? Holder.INSTANCE.mVersionModel = new VersionModel() : Holder.INSTANCE
+                .mVersionModel;
+    }
+
+    public static synchronized DeviceModel getDeviceModel() {
+        return Holder.INSTANCE.mDeviceModel == null ? Holder.INSTANCE.mDeviceModel = new DeviceModel() : Holder.INSTANCE
+                .mDeviceModel;
+    }
+
+    public static synchronized ReportModel getReportModel() {
+        return Holder.INSTANCE.mReportModel == null ? Holder.INSTANCE.mReportModel = new ReportModel() : Holder.INSTANCE.mReportModel;
+    }
+
+    public static synchronized JobScheduler getJobScheduler() {
+        return Holder.INSTANCE.mJobScheduler == null ? Holder.INSTANCE.mJobScheduler = new JobScheduler(App.Companion.getAppContext()) : Holder.INSTANCE
+                .mJobScheduler;
+    }
+
+    public static synchronized VoicePlayer getVoicePlayer() {
+        return Holder.INSTANCE.mVoicePlayer == null ? Holder.INSTANCE.mVoicePlayer = new VoicePlayer() : Holder.INSTANCE.mVoicePlayer;
+    }
+
+    public static synchronized BlueManager getBlueManager() {
+        return BlueManager.init();
+    }
+
+    public void init(@NonNull Context context) {
+        initUtils(context);
+        initEmojiCompat(context);
+        initAccountViewModel((Application) context);
+        initLeanCloud(context);
+        initOpenEngine(context);
+        initBlueManager(context);
+        HwLeanCloudHelper.init(context);
+        initKefu(context);
+    }
+
+    private void initKefu(Context context) {
+        // Kefu SDK 初始化
+        ChatClient.Options options = new ChatClient.Options();
+        options.setConsoleLog(BuildConfig.DEBUG);
+        options.setAppkey(BuildConfig.EASEMOB_APP_KEY);//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
+        options.setTenantId(BuildConfig.EASEMOB_TENANT_ID);//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
+        if (!ChatClient.getInstance().init(context, options)) {
+            return;
+        }
+        // Kefu EaseUI的初始化
+        UIProvider.getInstance().init(context);
+    }
+
+    private void initBlueManager(Context context) {
+        AppOperator.runOnThread(() -> {
+            FileHelper.init();
+            boolean externalStorageWritable = FileHelper.init().isExternalStorageWritable();
+            if (externalStorageWritable) {
+                FileHelper.createSDDir(FileHelper.FILE_DIR);
+            }
+            BlueManager.init().with(context);
+        });
     }
 }

@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sumian.hw.common.helper.ToastHelper;
+import com.sumian.common.helper.ToastHelper;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -1,13 +1,12 @@
 package com.sumian.hw.setting.presenter;
 
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.setting.contract.SocialContract;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
@@ -64,7 +63,7 @@ public class SocialPresenter implements SocialContract.Presenter {
         List<Social> socialites = AppManager.getAccountViewModel().getUserInfo().getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             view.onFinish();
-            view.onFailure(HwApp.getAppContext().getString(R.string.unbind_open_platform_failed));
+            view.onFailure(App.Companion.getAppContext().getString(R.string.unbind_open_platform_failed));
             return;
         }
 
@@ -83,7 +82,7 @@ public class SocialPresenter implements SocialContract.Presenter {
                 break;
         }
 
-        Call<Object> call = HwAppManager.getNetEngine().getHttpService().unBindOpenPlatform(socialId);
+        Call<Object> call = AppManager.getHwNetEngine().getHttpService().unBindOpenPlatform(socialId);
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override
             protected void onSuccess(Object response) {

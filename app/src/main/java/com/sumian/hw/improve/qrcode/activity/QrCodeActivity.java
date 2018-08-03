@@ -9,15 +9,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.callback.BluePeripheralDataCallback;
+import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.improve.qrcode.fragment.InputSnFragment;
 import com.sumian.hw.improve.qrcode.fragment.QrCodeFragment;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.blue.callback.BluePeripheralDataCallback;
-import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 @SuppressWarnings("ConstantConditions")
 public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackListener, BluePeripheralDataCallback {
@@ -45,7 +45,7 @@ public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackListe
     }
 
     public void bindSn(String sn) {
-        mBluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+        mBluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (mBluePeripheral == null || !mBluePeripheral.isConnected()) {
             showToast("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
             return;

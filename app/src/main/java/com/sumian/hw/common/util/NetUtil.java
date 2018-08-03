@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.sleepdoctor.app.App;
 
 /**
  * Created by jzz
@@ -21,7 +21,7 @@ public final class NetUtil {
      * @return has internet
      */
     public static boolean hasInternet() {
-        ConnectivityManager cm = (ConnectivityManager) HwApp.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) App.Companion.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) {
             return false;
         }

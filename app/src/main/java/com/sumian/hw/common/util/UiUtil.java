@@ -18,10 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.app.HwApp;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.common.helper.ToastHelper;
+import com.sumian.sleepdoctor.app.App;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public final class UiUtil {
     private static long mBackPressedTime;
 
     public static int getColor(@ColorRes int colorId) {
-        return HwApp.getAppContext().getResources().getColor(colorId);
+        return App.Companion.getAppContext().getResources().getColor(colorId);
     }
 
     public static void updateSleepDuration(Integer second, TextView tvHour, TextView tvHourLabel, TextView tvMin, TextView tvMinLabel) {
@@ -64,7 +64,7 @@ public final class UiUtil {
     }
 
     public static Typeface getTypeface() {
-        return Typeface.createFromAsset(HwApp.getAppContext().getResources().getAssets(), "dincond_medium.otf");
+        return Typeface.createFromAsset(App.Companion.getAppContext().getResources().getAssets(), "dincond_medium.otf");
     }
 
     public static void closeKeyboard(EditText view) {

@@ -10,15 +10,15 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ResetPwdContract;
 import com.sumian.hw.account.presenter.RestPwdPresenter;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.network.request.ResetPwdBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by jzz

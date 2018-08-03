@@ -7,10 +7,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
-import com.sumian.sleepdoctor.R;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.holder.base.BaseViewHolder;
 import com.sumian.hw.widget.BubbleImageView;
+import com.sumian.sleepdoctor.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -62,7 +62,7 @@ public class MsgImageViewHolder extends BaseViewHolder<AVIMImageMessage> impleme
         if (i == R.id.biv_image) {
             showImage(mBivImage, mTvLoadingIndicator, mCacheMsg);
         } else if (i == R.id.iv_msg_failed) {
-            LeanCloudHelper.sendImageMsg(mServiceType, mMediaUrlPath);
+            HwLeanCloudHelper.sendImageMsg(mServiceType, mMediaUrlPath);
         }
     }
 }

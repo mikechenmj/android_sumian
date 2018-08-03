@@ -11,7 +11,7 @@ import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.base.BasePagerFragment;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.activity.SettingActivity;
@@ -21,9 +21,8 @@ import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.Locale;
 
@@ -40,7 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ConstantConditions")
 public class HwMeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
-        LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+        HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -63,9 +62,9 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
     @Override
     protected void initData() {
         super.initData();
-        LeanCloudHelper.addOnAdminMsgCallback(this);
-        HwAppManager.getVersionModel().syncAppVersion();
-        HwAppManager.getVersionModel().registerShowDotCallback(this);
+        HwLeanCloudHelper.addOnAdminMsgCallback(this);
+        AppManager.getVersionModel().syncAppVersion();
+        AppManager.getVersionModel().registerShowDotCallback(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
             @Override
             public void onChanged(@Nullable Token token) {
@@ -89,7 +88,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
                 break;
             case R.id.siv_customer_service:
                 UIProvider.getInstance().clearCacheMsg();
-                LeanCloudHelper.checkLoginEasemob(LeanCloudHelper::startEasemobChatRoom);
+                HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
                 break;
             case R.id.siv_upgrade:
                 VersionNoticeActivity.show(getContext());
@@ -107,7 +106,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
 //        } else if (i == R.id.lay_sleepy_notice) {
 //            SleepReminderActivity.show(getContext());
 //        } else if (i == R.id.lay_my_msg_notice) {
-//            MsgActivity.show(v.getContext(), LeanCloudHelper.SERVICE_TYPE_MAIL);
+//            MsgActivity.show(v.getContext(), HwLeanCloudHelper.SERVICE_TYPE_MAIL);
 //        } else if (i == R.id.lay_firmware_update) {
 //            VersionNoticeActivity.show(getContext());
 //        } else if (i == R.id.lay_user_guide) {
@@ -119,8 +118,8 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
 
     @Override
     protected void onRelease() {
-        LeanCloudHelper.removeOnAdminMsgCallback(this);
-        HwAppManager.getVersionModel().unRegisterShowDotCallback(this);
+        HwLeanCloudHelper.removeOnAdminMsgCallback(this);
+        AppManager.getVersionModel().unRegisterShowDotCallback(this);
         super.onRelease();
     }
 
@@ -141,7 +140,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
             this.mTvNickname.setText(userInfo.getNickname());
             String age = userInfo.getAge() == null ? null : userInfo.getAge().toString();
             if (!TextUtils.isEmpty(age)) {
-                this.mTvAgeAndGender.append(String.format(Locale.getDefault(), "%s%s%s", "  丨  ", age, HwApp.getAppContext().getString(R.string.age_hint)));
+                this.mTvAgeAndGender.append(String.format(Locale.getDefault(), "%s%s%s", "  丨  ", age, App.Companion.getAppContext().getString(R.string.age_hint)));
             }
         });
         ReminderManager.getReminder();
@@ -182,22 +181,22 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
     }
 
     private String formatGender(String gender) {
-        String genderText = HwApp.getAppContext().getString(R.string.gender_secrecy_hint);
+        String genderText = App.Companion.getAppContext().getString(R.string.gender_secrecy_hint);
         if (TextUtils.isEmpty(gender)) {
             return genderText;
         }
         switch (gender) {
             case "male":
-                genderText = HwApp.getAppContext().getString(R.string.gender_male_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.gender_male_hint);
                 break;
             case "female":
-                genderText = HwApp.getAppContext().getString(R.string.gender_female_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.gender_female_hint);
                 break;
             case "secrecy":
-                genderText = HwApp.getAppContext().getString(R.string.gender_secrecy_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.gender_secrecy_hint);
                 break;
             default:
-                genderText = HwApp.getAppContext().getString(R.string.user_none_default_hint);
+                genderText = App.Companion.getAppContext().getString(R.string.user_none_default_hint);
                 break;
         }
         return genderText;

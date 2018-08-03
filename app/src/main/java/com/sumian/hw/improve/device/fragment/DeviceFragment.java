@@ -35,9 +35,8 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.LocationManagerUtil;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.List;
 
@@ -208,7 +207,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
         if (isResumed()) {
             autoSyncSleepData();
         }
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
     }
 
     @Override
@@ -222,7 +221,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
         getContext().registerReceiver(mGlobalReceiver, globalFilter);
 
         autoSyncSleepData();
-        HwAppManager.getDeviceModel().registerOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
+        AppManager.getDeviceModel().registerOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
 
         if (BuildConfig.IS_CLINICAL_VERSION) {
             //临床环境需要屏蔽小眠助手
@@ -241,7 +240,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
     public void onPause() {
         super.onPause();
         getContext().unregisterReceiver(mGlobalReceiver);
-        HwAppManager.getDeviceModel().unregisterOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
+        AppManager.getDeviceModel().unregisterOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
     }
 
     @Override
@@ -320,7 +319,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
         mDeviceStatusView.show();
         mDeviceGuideStepView.hide();
         checkDeviceCacheAndScan2Connect();
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
         LogManager.appendBluetoothLog("手机蓝牙被打开");
     }
 
@@ -458,7 +457,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
             mDeviceStatusView.show();
             mDeviceGuideStepView.hide();
             BlueDevice speedSleeper = new BlueDevice();
-            speedSleeper.name = HwApp.getAppContext().getString(R.string.speed_sleeper);
+            speedSleeper.name = App.Companion.getAppContext().getString(R.string.speed_sleeper);
             monitor.speedSleeper = speedSleeper;
             mDeviceStatusView.invalidDevice(monitor);
             scanAndConnectWithPermissionCheck(monitor);

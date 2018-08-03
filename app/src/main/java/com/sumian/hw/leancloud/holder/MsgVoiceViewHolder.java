@@ -6,12 +6,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.holder.base.BaseViewHolder;
 import com.sumian.hw.leancloud.player.VoicePlayer;
 import com.sumian.hw.widget.VoiceProgress;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,8 +48,8 @@ public class MsgVoiceViewHolder extends BaseViewHolder<AVIMAudioMessage> impleme
     @Override
     public void initView(int serviceType, AVIMAudioMessage msg) {
         this.mCacheMsg = msg;
-        itemView.setOnClickListener(v -> HwAppManager.getVoicePlayer().play(mMediaUrlPath, getAdapterPosition()).setStatusListener(this));
-        mIvMsgFailed.setOnClickListener(v -> LeanCloudHelper.sendVoiceMsg(serviceType, mMediaUrlPath));
+        itemView.setOnClickListener(v -> AppManager.getVoicePlayer().play(mMediaUrlPath, getAdapterPosition()).setStatusListener(this));
+        mIvMsgFailed.setOnClickListener(v -> HwLeanCloudHelper.sendVoiceMsg(serviceType, mMediaUrlPath));
         showTime(mTvTimeLine, msg);
         formatServiceType(mIvIcon, serviceType);
         showVoiceAndDuration(mTvVoiceDuration, msg);

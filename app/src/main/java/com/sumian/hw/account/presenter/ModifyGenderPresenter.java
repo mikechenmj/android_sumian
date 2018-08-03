@@ -1,7 +1,6 @@
 package com.sumian.hw.account.presenter;
 
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
@@ -31,8 +30,8 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
     private ModifyGenderPresenter(ModifyUserInfoContract.View<UserInfo> view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mApiWeakReference = new WeakReference<>(HwAppManager
-            .getNetEngine()
+        this.mApiWeakReference = new WeakReference<>(AppManager
+            .getHwNetEngine()
             .getHttpService());
     }
 

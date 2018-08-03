@@ -9,9 +9,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.activity.HwLoginActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
@@ -20,6 +19,7 @@ import com.sumian.hw.setting.contract.ModifyPwdContract;
 import com.sumian.hw.setting.presenter.ModifyPwdPresenter;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by jzz

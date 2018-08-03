@@ -12,10 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
-import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;
 import com.sumian.hw.improve.report.note.NoteDialog;
 import com.sumian.hw.improve.report.note.SleepNote;
@@ -24,7 +21,10 @@ import com.sumian.hw.improve.widget.SwitchDateView;
 import com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView;
 import com.sumian.hw.improve.widget.report.SyncingReportView;
 import com.sumian.hw.log.LogManager;
+import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,8 +119,8 @@ public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter>
 
     private void initAdapter() {
         DailyReport dailyReport;
-        if (HwAppManager.getReportModel().isHaveTodayCache()) {
-            dailyReport = HwAppManager.getReportModel().getCacheDailyReport();
+        if (AppManager.getReportModel().isHaveTodayCache()) {
+            dailyReport = AppManager.getReportModel().getCacheDailyReport();
         } else {
             dailyReport = new DailyReport();
             dailyReport.date = (int) mSwitchDateView.getTodayUnixTime();
@@ -284,10 +284,10 @@ public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter>
     @Override
     public void onEnterTab() {
         // check monitor sync sleep data status
-        HwAppManager.getReportModel().setOnSyncCallback(this).checkSyncStatus();
+        AppManager.getReportModel().setOnSyncCallback(this).checkSyncStatus();
         showPushReportIfNeeded();
         LogManager.appendUserOperationLog("点击 '日报告' 界面");
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
     }
 
     @Override

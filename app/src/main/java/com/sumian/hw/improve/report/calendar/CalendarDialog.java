@@ -10,11 +10,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
-import com.sumian.hw.common.helper.ToastHelper;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView;
 import com.sumian.hw.widget.BaseDialogFragment;
+import com.sumian.sleepdoctor.R;
 
 import java.util.Calendar;
 import java.util.List;

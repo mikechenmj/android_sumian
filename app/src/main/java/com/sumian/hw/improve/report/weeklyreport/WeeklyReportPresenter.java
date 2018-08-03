@@ -1,10 +1,10 @@
 package com.sumian.hw.improve.report.weeklyreport;
 
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.improve.report.base.BaseResultResponse;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.SleepDurationReport;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +51,7 @@ public class WeeklyReportPresenter implements WeeklyReportContact.Presenter {
         map.put("page_size", pageSize);
         map.put("is_include", isInclude ? 1 : 0);
         map.put("direction", 0);
-        Call<BaseResultResponse<SleepDurationReport, WeekMeta>> call = HwAppManager.getV1HttpService().getWeeksSleepReport(map);
+        Call<BaseResultResponse<SleepDurationReport, WeekMeta>> call = AppManager.getHwV1HttpService().getWeeksSleepReport(map);
         mCalls.add(call);
         call.enqueue(new BaseResponseCallback<BaseResultResponse<SleepDurationReport, WeekMeta>>() {
             @Override

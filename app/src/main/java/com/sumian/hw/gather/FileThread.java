@@ -7,14 +7,14 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.manager.BlueManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.RawDataBody;
 import com.sumian.hw.network.request.UploadFileBody;
 import com.sumian.hw.network.response.FileLength;
 import com.sumian.hw.network.response.RawData;
-import com.sumian.blue.manager.BlueManager;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -159,8 +159,8 @@ public class FileThread extends HandlerThread {
 
         if (!BlueManager.init().getBluePeripheral().isConnected()) return;
 
-        Call<RawData> emgCall = HwAppManager
-            .getNetEngine()
+        Call<RawData> emgCall = AppManager
+            .getHwNetEngine()
             .getHttpService()
             .uploadRawData(new RawDataBody()
                 .setType(dataType)
@@ -216,8 +216,8 @@ public class FileThread extends HandlerThread {
 
         uploadFileBodies.add(speedFileBody);
 
-        Call<List<FileLength>> emgCall = HwAppManager
-            .getNetEngine()
+        Call<List<FileLength>> emgCall = AppManager
+            .getHwNetEngine()
             .getHttpService()
             .getRawFileLength(uploadFileBodies);
 

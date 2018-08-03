@@ -61,7 +61,7 @@
             app:offBorderColor="@color/hw_colorPrimary"
             app:offColor="@color/hw_colorPrimary"
             app:onColor="@color/bt_hole_color"
-            app:spotColor="@color/colorPrimaryDark"
+            app:spotColor="@color/black"
             app:toggle_border_width="@dimen/space_1"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>

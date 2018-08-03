@@ -3,12 +3,12 @@ package com.sumian.hw.account.presenter;
 import android.support.annotation.Nullable;
 
 import com.sumian.hw.account.contract.ValidationCaptchaContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.ValidationCaptchaBody;
 import com.sumian.hw.network.response.Ticket;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class ValidationCaptchaPresenter implements ValidationCaptchaContract.Pre
     private ValidationCaptchaPresenter(ValidationCaptchaContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mApiWeakReference = new WeakReference<>(HwAppManager
-            .getNetEngine()
+        this.mApiWeakReference = new WeakReference<>(AppManager
+            .getHwNetEngine()
             .getHttpService());
         this.mCalls = new ArrayList<>();
     }

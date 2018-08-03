@@ -5,10 +5,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.callback.BlueScanCallback;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.log.LogManager;
-import com.sumian.blue.callback.BlueScanCallback;
+import com.sumian.sleepdoctor.app.AppManager;
 
 public class BlueDeviceWrapper implements BlueScanCallback, Handler.Callback {
 
@@ -24,7 +24,7 @@ public class BlueDeviceWrapper implements BlueScanCallback, Handler.Callback {
     private Runnable mScanFailedCallback;
 
     public BlueDeviceWrapper() {
-        this.mWorkHandler = new Handler(HwAppManager.getBlueManager().getWorkThread().getLooper(), this);
+        this.mWorkHandler = new Handler(AppManager.getBlueManager().getWorkThread().getLooper(), this);
     }
 
     public void scan2Connect(BlueDevice monitor, Runnable scan2ConnectCallback, Runnable scanFailedCallback) {
@@ -32,8 +32,8 @@ public class BlueDeviceWrapper implements BlueScanCallback, Handler.Callback {
         this.mScanFailedCallback = scanFailedCallback;
         this.mMonitor = monitor;
         mWorkHandler.removeMessages(MSG_WHAT_STOP_SCAN);
-        HwAppManager.getBlueManager().addBlueScanCallback(this);
-        HwAppManager.getBlueManager().doScan();
+        AppManager.getBlueManager().addBlueScanCallback(this);
+        AppManager.getBlueManager().doScan();
         mWorkHandler.sendEmptyMessageDelayed(MSG_WHAT_STOP_SCAN, SCAN_TIME_OUT_MILLISECOND);
     }
 
@@ -81,7 +81,7 @@ public class BlueDeviceWrapper implements BlueScanCallback, Handler.Callback {
     }
 
     private void stopScanAndUnRegisterScanCallback() {
-        HwAppManager.getBlueManager().removeBlueScanCallback(this);
-        HwAppManager.getBlueManager().doStopScan();
+        AppManager.getBlueManager().removeBlueScanCallback(this);
+        AppManager.getBlueManager().doStopScan();
     }
 }

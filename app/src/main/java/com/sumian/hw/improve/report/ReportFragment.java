@@ -7,18 +7,18 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.improve.guideline.dialog.ReportGuidelineDialog;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.main.bean.PushReport;
-import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;
 import com.sumian.hw.improve.report.dailyreport.DailyReportFragment;
 import com.sumian.hw.improve.report.weeklyreport.WeeklyReportFragment;
 import com.sumian.hw.improve.widget.TabIndicatorView;
 import com.sumian.hw.log.LogManager;
+import com.sumian.hw.push.ReportPushManager;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by sm
@@ -44,7 +44,7 @@ public class ReportFragment extends BasePagerFragment implements TabIndicatorVie
     public void onEnterTab() {
         LogManager.appendUserOperationLog("点击进入 '报告' 页面");
         // check job scheduler
-        HwAppManager.getJobScheduler().checkJobScheduler();
+        AppManager.getJobScheduler().checkJobScheduler();
         // check guideline
         if (GuidelineUtils.needShowDailyUserGuide()) {
             new ReportGuidelineDialog(getContext()).show();

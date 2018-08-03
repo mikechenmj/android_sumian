@@ -18,13 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectPictureBottomSheet;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.adapter.MsgAdapter;
 import com.sumian.hw.leancloud.contract.MsgContract;
 import com.sumian.hw.leancloud.presenter.MsgPresenter;
@@ -32,6 +31,7 @@ import com.sumian.hw.widget.KeyboardView;
 import com.sumian.hw.widget.LCIMRecordButton;
 import com.sumian.hw.widget.MsgEmptyView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
+import com.sumian.sleepdoctor.R;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
 
     @Override
     protected boolean initBundle(Bundle bundle) {
-        this.mServiceType = bundle.getInt(EXTRA_SERVICE_TYPE, LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
+        this.mServiceType = bundle.getInt(EXTRA_SERVICE_TYPE, HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
         return super.initBundle(bundle);
     }
 
@@ -112,21 +112,21 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         MsgPresenter.init(this);
         @StringRes int textId = R.string.setting_send_msg_hint;
         switch (mServiceType) {
-            case LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER:
+            case HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER:
                 textId = R.string.setting_send_msg_hint;
                 mKeyboardView.setOnKeyboardActionListener(this)
                         .setRecordEventListener(this)
                         .setCheckRecordPermission(this)
                         .setVisibility(View.VISIBLE);
                 break;
-            case LeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR:
+            case HwLeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR:
                 textId = R.string.consultant_doctor;
                 mKeyboardView.setOnKeyboardActionListener(this)
                         .setRecordEventListener(this)
                         .setCheckRecordPermission(this)
                         .setVisibility(View.VISIBLE);
                 break;
-            case LeanCloudHelper.SERVICE_TYPE_MAIL:
+            case HwLeanCloudHelper.SERVICE_TYPE_MAIL:
                 textId = R.string.msg_notice_hint;
                 mKeyboardView.setVisibility(View.GONE);
                 break;
@@ -140,7 +140,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         this.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        if (mServiceType != LeanCloudHelper.SERVICE_TYPE_MAIL) {
+        if (mServiceType != HwLeanCloudHelper.SERVICE_TYPE_MAIL) {
             this.mLayMsgContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
             this.mRecyclerView.setOnTouchListener((v, event) -> {
                 UiUtil.closeKeyboard(mKeyboardView.getEtInputView());
@@ -170,7 +170,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     protected void initData() {
         super.initData();
-        if (mServiceType == LeanCloudHelper.SERVICE_TYPE_MAIL) {
+        if (mServiceType == HwLeanCloudHelper.SERVICE_TYPE_MAIL) {
             mPresenter.syncMsgHistory(mServiceType);
         } else {
             mPresenter.loginServiceType(mServiceType);
@@ -224,7 +224,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     public void onSyncMsgHistorySuccess(List<AVIMMessage> messages) {
         runUiThread(() -> {
-            if (mServiceType == LeanCloudHelper.SERVICE_TYPE_MAIL) {
+            if (mServiceType == HwLeanCloudHelper.SERVICE_TYPE_MAIL) {
                 if (mMsgAdapter.getItemCount() <= 0 && (messages == null || messages.isEmpty())) {
                     mMsgEmptyView.show();
                 } else {
@@ -257,7 +257,7 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
     @Override
     public void onNoHaveMsg() {
         runUiThread(() -> {
-            if (mServiceType == LeanCloudHelper.SERVICE_TYPE_MAIL) {
+            if (mServiceType == HwLeanCloudHelper.SERVICE_TYPE_MAIL) {
                 if (mMsgAdapter.getItemCount() <= 0) {
                     mMsgEmptyView.show();
                 } else {
@@ -269,21 +269,21 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
 
     @Override
     public void onPrepareLogin() {
-        runUiThread(() -> mTvTitle.setText(mServiceType == LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ?
+        runUiThread(() -> mTvTitle.setText(mServiceType == HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ?
                 "在线客服(连接中)" : "速眠医生(连接中)"));
     }
 
     @Override
     public void onLoginSuccess() {
         mIsLogin = true;
-        runUiThread(() -> mTvTitle.setText(mServiceType == LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ?
+        runUiThread(() -> mTvTitle.setText(mServiceType == HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ?
                 "在线客服" : "速眠医生"));
     }
 
     @Override
     public void onLoginFailed() {
         mIsLogin = false;
-        runUiThread(() -> mTvTitle.setText(mServiceType == LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ? "在线客服(连接失败)" : "速眠医生(连接失败)"));
+        runUiThread(() -> mTvTitle.setText(mServiceType == HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER ? "在线客服(连接失败)" : "速眠医生(连接失败)"));
         runUiThread(() -> ToastHelper.show("连接失败,请尝试重新连接..."));
     }
 
@@ -299,13 +299,13 @@ public class MsgActivity extends BaseActivity implements View.OnClickListener, M
         if (i == R.id.iv_back) {
             finish();
         } else if (i == R.id.tv_title) {
-            LeanCloudHelper.establishConversationWithService(mServiceType);
+            HwLeanCloudHelper.establishConversationWithService(mServiceType);
         }
     }
 
     @Override
     protected void onRelease() {
-        if (mServiceType != LeanCloudHelper.SERVICE_TYPE_MAIL) {
+        if (mServiceType != HwLeanCloudHelper.SERVICE_TYPE_MAIL) {
             mTitleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         }
         mPresenter.release();

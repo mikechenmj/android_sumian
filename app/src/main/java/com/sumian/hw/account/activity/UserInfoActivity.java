@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.contract.UserInfoContract;
@@ -16,7 +17,6 @@ import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectGenderBottomSheet;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;

@@ -8,14 +8,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.response.ConfigInfo;
 import com.sumian.hw.setting.contract.ConfigContract;
 import com.sumian.hw.setting.presenter.ConfigPresenter;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
+import com.sumian.sleepdoctor.R;
 
 import java.util.List;
 

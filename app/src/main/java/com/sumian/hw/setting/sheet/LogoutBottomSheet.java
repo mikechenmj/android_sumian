@@ -3,16 +3,16 @@ package com.sumian.hw.setting.sheet;
 import android.view.Gravity;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.setting.presenter.LogoutPresenter;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
@@ -54,7 +54,7 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.tv_logout) {
-            BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral != null && bluePeripheral.isConnected()) {
                 bluePeripheral.disconnect();
                 bluePeripheral.close();
@@ -70,7 +70,7 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
     public void onLogoutSuccess() {
         LoginRouterActivity.show(getContext());
         dismiss();
-        ToastHelper.show(HwApp.getAppContext(), HwApp.getAppContext().getResources().getString(R.string.logout_success_hint), Gravity.CENTER);
+        ToastHelper.show(App.Companion.getAppContext(), App.Companion.getAppContext().getResources().getString(R.string.logout_success_hint), Gravity.CENTER);
     }
 
     @Override

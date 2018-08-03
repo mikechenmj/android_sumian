@@ -9,16 +9,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApp;
 import com.sumian.sleepdoctor.app.HwApplicationDelegate;
+import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -47,7 +48,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
         Intent intent;
 
         if (context == null) {
-            context = HwApp.getAppContext();
+            context = App.Companion.getAppContext();
         }
 
         intent = new Intent(context, LoginRouterActivity.class);
@@ -160,6 +161,8 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBindOpenSuccess(Token token) {
+        AppManager.getAccountViewModel().updateToken(token);
+        LeanCloudManager.getAndUploadCurrentInstallation();
         HwApplicationDelegate.goHome(this);
         onFinish();
         finish();

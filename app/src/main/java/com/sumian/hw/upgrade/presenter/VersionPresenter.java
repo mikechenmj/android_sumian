@@ -3,9 +3,7 @@ package com.sumian.hw.upgrade.presenter;
 import android.content.pm.PackageInfo;
 import android.text.TextUtils;
 
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.HwAppManager;
+import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.api.SleepyApi;
@@ -14,7 +12,9 @@ import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.network.response.FirmwareInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
-import com.sumian.blue.model.BluePeripheral;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.App;
+import com.sumian.sleepdoctor.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -60,7 +60,7 @@ public class VersionPresenter implements VersionContract.Presenter {
         if (mViewWeakReference != null) {
             view = this.mViewWeakReference.get();
         }
-        SleepyApi sleepyApi = HwAppManager.getNetEngine().getHttpService();
+        SleepyApi sleepyApi = AppManager.getHwNetEngine().getHttpService();
         if (sleepyApi == null) return;
 
         if (view != null) {
@@ -76,20 +76,20 @@ public class VersionPresenter implements VersionContract.Presenter {
             protected void onSuccess(FirmwareInfo response) {
 
                 VersionInfo monitorVersionInfo = response.monitor;
-                HwAppManager.getVersionModel().setMonitorVersion(monitorVersionInfo);
+                AppManager.getVersionModel().setMonitorVersion(monitorVersionInfo);
                 //clone()  注意这里用的是深拷贝
                 try {
                     if (monitorVersionInfo != null) {
                         monitorVersionInfo = monitorVersionInfo.clone();
                     }
-                    checkVersionInfo(finalView, MONITOR_VERSION_TYPE, monitorVersionInfo, HwAppManager.getDeviceModel().getMonitorVersion());
+                    checkVersionInfo(finalView, MONITOR_VERSION_TYPE, monitorVersionInfo, AppManager.getDeviceModel().getMonitorVersion());
 
                     VersionInfo sleeperVersionInfo = response.sleeper;
                     if (sleeperVersionInfo != null) {
                         sleeperVersionInfo = sleeperVersionInfo.clone();
                     }
-                    HwAppManager.getVersionModel().setSleepyVersion(sleeperVersionInfo);
-                    checkVersionInfo(finalView, SLEEPY_VERSION_TYPE, sleeperVersionInfo, HwAppManager.getDeviceModel().getSleepyVersion());
+                    AppManager.getVersionModel().setSleepyVersion(sleeperVersionInfo);
+                    checkVersionInfo(finalView, SLEEPY_VERSION_TYPE, sleeperVersionInfo, AppManager.getDeviceModel().getSleepyVersion());
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -116,20 +116,20 @@ public class VersionPresenter implements VersionContract.Presenter {
         if (view == null) return;
         boolean isConnected;
         if (versionType == MONITOR_VERSION_TYPE) {
-            BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
+            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             isConnected = bluePeripheral != null && bluePeripheral.isConnected();
         } else {
-            isConnected = HwAppManager.getDeviceModel().sleepyIsConnected();
+            isConnected = AppManager.getDeviceModel().sleepyIsConnected();
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
                     versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                        HwApp.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                        App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
                     if (versionType == MONITOR_VERSION_TYPE) {
-                        HwAppManager.getVersionModel().notifyMonitorDot(true);
+                        AppManager.getVersionModel().notifyMonitorDot(true);
                     } else {
-                        HwAppManager.getVersionModel().notifySleepyDot(true);
+                        AppManager.getVersionModel().notifySleepyDot(true);
                     }
                 } else {
                     versionInfo.setVersion(currentVersionInfo);
@@ -137,14 +137,14 @@ public class VersionPresenter implements VersionContract.Presenter {
                 }
             } else {
                 versionInfo = new VersionInfo().setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                    HwApp.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                    App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
                 notifyVersionDot(versionType);
             }
         } else {
             if (versionInfo == null) {
                 versionInfo = new VersionInfo();
             }
-            versionInfo.setVersion(HwApp.getAppContext().getString(R.string.none_connected_state_hint));
+            versionInfo.setVersion(App.Companion.getAppContext().getString(R.string.none_connected_state_hint));
             notifyVersionDot(versionType);
         }
 
@@ -157,9 +157,9 @@ public class VersionPresenter implements VersionContract.Presenter {
 
     private void notifyVersionDot(int versionType) {
         if (versionType == MONITOR_VERSION_TYPE) {
-            HwAppManager.getVersionModel().notifyMonitorDot(false);
+            AppManager.getVersionModel().notifyMonitorDot(false);
         } else {
-            HwAppManager.getVersionModel().notifySleepyDot(false);
+            AppManager.getVersionModel().notifySleepyDot(false);
         }
     }
 
@@ -171,12 +171,12 @@ public class VersionPresenter implements VersionContract.Presenter {
             view = mViewWeakReference.get();
         }
 
-        SleepyApi sleepyApi = HwAppManager.getNetEngine().getHttpService();
+        SleepyApi sleepyApi = AppManager.getHwNetEngine().getHttpService();
         if (sleepyApi == null) return;
 
         Map<String, String> map = new HashMap<>();
 
-        PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
+        PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
 
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
@@ -189,16 +189,16 @@ public class VersionPresenter implements VersionContract.Presenter {
             @Override
             protected void onSuccess(AppUpgradeInfo response) {
 
-                PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
+                PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
 
                 AppUpgradeInfo appUpgradeInfo = response;
                 if (appUpgradeInfo == null) {//相同版本或没有新版本
                     appUpgradeInfo = new AppUpgradeInfo();
                     appUpgradeInfo.version = packageInfo.versionName;
-                    HwAppManager.getVersionModel().notifyAppDot(false);
+                    AppManager.getVersionModel().notifyAppDot(false);
 
                 } else {
-                    HwAppManager.getVersionModel().notifyAppDot(NumberUtil.formatVersionCode(response.version) > packageInfo.versionCode);
+                    AppManager.getVersionModel().notifyAppDot(NumberUtil.formatVersionCode(response.version) > packageInfo.versionCode);
                 }
 
                 try {
@@ -211,7 +211,7 @@ public class VersionPresenter implements VersionContract.Presenter {
                     e.printStackTrace();
                 }
 
-                HwAppManager.getVersionModel().setAppUpgradeInfo(appUpgradeInfo);
+                AppManager.getVersionModel().setAppUpgradeInfo(appUpgradeInfo);
             }
 
             @Override
@@ -234,7 +234,7 @@ public class VersionPresenter implements VersionContract.Presenter {
                 if (finalView != null)
                     finalView.onSyncAppVersionCallback(appUpgradeInfo);
 
-                HwAppManager.getVersionModel().notifyAppDot(false);
+                AppManager.getVersionModel().notifyAppDot(false);
             }
         });
     }

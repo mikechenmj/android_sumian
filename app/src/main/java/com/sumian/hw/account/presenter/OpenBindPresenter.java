@@ -1,7 +1,6 @@
 package com.sumian.hw.account.presenter;
 
 import com.sumian.hw.account.contract.OpenBindContract;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;
@@ -49,7 +48,7 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
 
         view.onBegin();
 
-        SleepyApi sleepyApi = HwAppManager.getNetEngine().getHttpService();
+        SleepyApi sleepyApi = AppManager.getHwNetEngine().getHttpService();
 
         Map<String, Object> map = new HashMap<>();
         map.put("mobile", mobile);
@@ -99,7 +98,7 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
 
         view.onBegin();
 
-        SleepyApi sleepyApi = HwAppManager.getNetEngine().getHttpService();
+        SleepyApi sleepyApi = AppManager.getHwNetEngine().getHttpService();
 
         Call<Object> call = sleepyApi.doCaptcha(captchaBody);
 

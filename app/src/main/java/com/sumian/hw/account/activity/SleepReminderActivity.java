@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.SleepReminderContract;
 import com.sumian.hw.account.presenter.SleepReminderPresenter;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.ToggleButton;

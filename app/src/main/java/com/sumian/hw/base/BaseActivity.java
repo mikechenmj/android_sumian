@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.sumian.hw.common.helper.ToastHelper;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.log.LogJobIntentService;
 
 import java.lang.reflect.Field;

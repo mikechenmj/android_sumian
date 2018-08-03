@@ -34,13 +34,12 @@ import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.sleepdoctor.app.HwApp;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.IOException;
@@ -59,9 +58,9 @@ import retrofit2.Call;
  * desc:
  */
 
-public final class LeanCloudHelper {
+public final class HwLeanCloudHelper {
 
-    public static final String TAG = LeanCloudHelper.class.getSimpleName();
+    public static final String TAG = HwLeanCloudHelper.class.getSimpleName();
 
     public static final int SERVICE_TYPE_ONLINE_DOCTOR = 0x01;//速眠医生
     public static final int SERVICE_TYPE_ONLINE_CUSTOMER = 0x02;//线上客服
@@ -71,7 +70,7 @@ public final class LeanCloudHelper {
     private static final int MSG_TYPE_IMAGE = 0x22;
     private static final int MSG_TYPE_VOICE = 0x23;
 
-    private static volatile LeanCloudHelper INSTANCE;
+    private static volatile HwLeanCloudHelper INSTANCE;
     private static ReentrantLock mLock = new ReentrantLock();
 
     private List<OnMsgCallback> mOnMsgCallbacks;
@@ -91,7 +90,7 @@ public final class LeanCloudHelper {
 
     private boolean mHaveCuostomrMsg;
 
-    private LeanCloudHelper(Context context) {
+    private HwLeanCloudHelper(Context context) {
         // 初始化参数依次为 context, AppId, AppKey
         PushService.setDefaultChannelId(context, "push_channel");
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
@@ -102,13 +101,13 @@ public final class LeanCloudHelper {
         register();
     }
 
-    public static LeanCloudHelper init(Context context) {
+    public static HwLeanCloudHelper init(Context context) {
         ReentrantLock lock = mLock;
         try {
             if (INSTANCE == null) {
                 lock.lock();
                 if (INSTANCE == null) {
-                    INSTANCE = new LeanCloudHelper(context);
+                    INSTANCE = new HwLeanCloudHelper(context);
                 }
             }
         } finally {
@@ -236,8 +235,8 @@ public final class LeanCloudHelper {
     }
 
     public static void startEasemobChatRoom() {
-        LeanCloudHelper.clearMsgNotification(LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
-        HwApp.getAppContext().startActivity(getChatRoomLaunchIntent());
+        HwLeanCloudHelper.clearMsgNotification(HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
+        App.Companion.getAppContext().startActivity(getChatRoomLaunchIntent());
     }
 
     public static Intent getChatRoomLaunchIntent() {
@@ -252,7 +251,7 @@ public final class LeanCloudHelper {
             }
         });
 
-        return new IntentBuilder(HwApp.getAppContext())
+        return new IntentBuilder(App.Companion.getAppContext())
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
                 .setShowUserNick(false)
                 .setVisitorInfo(visitorInfo).build();
@@ -327,7 +326,7 @@ public final class LeanCloudHelper {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(HwApp.getAppContext(), HwMainActivity.class);
+        PushService.setDefaultPushCallback(App.Companion.getAppContext(), HwMainActivity.class);
     }
 
     private static void uploadDeviceInfo(String installationId) {
@@ -336,8 +335,8 @@ public final class LeanCloudHelper {
         map.put("device_token", installationId);
         map.put("system_version", Build.VERSION.SDK_INT);
 
-        Call<Object> call = HwAppManager
-                .getNetEngine()
+        Call<Object> call = AppManager
+                .getHwNetEngine()
                 .getHttpService()
                 .uploadDeviceInfo(map);
 
