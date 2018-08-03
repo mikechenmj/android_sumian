@@ -357,4 +357,5 @@ dependencies {
     // fast json
     implementation 'com.alibaba:fastjson:1.2.47'
     implementation 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }

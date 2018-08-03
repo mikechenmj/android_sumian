@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.wxapi;
+package com.sumian.sd.wxapi;
 
 
 import com.umeng.socialize.weixin.view.WXCallbackActivity;

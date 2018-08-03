@@ -40,7 +40,7 @@ public class ToastHelper {
             synchronized (ToastHelper.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new ToastHelper(context);
-                    @SuppressLint("ShowToast") Toast toast = Toast.makeText(context, null, Toast.LENGTH_SHORT);
+                    @SuppressLint("ShowToast") Toast toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
                     toast.setDuration(Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM, 0, context.getResources().getDimensionPixelSize(R.dimen.toast_space_100));
                     INSTANCE.mYOffset = toast.getYOffset();

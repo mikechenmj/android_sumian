@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
 import com.sumian.hw.base.BaseActivity;
@@ -107,39 +108,29 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onStart(SHARE_MEDIA share_media) {
-        //  Log.e(TAG, "onBegin: -------->" + share_media);
-        switch (share_media) {
-            case WEIXIN:
-                ToastHelper.show(R.string.opening_wechat);
-                break;
-        }
+    public void onStart(SHARE_MEDIA shareMedia) {
+        LogUtils.d(shareMedia);
+        ToastHelper.show(R.string.opening_wechat);
     }
 
     @Override
-    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+    public void onComplete(SHARE_MEDIA shareMedia, int i, Map<String, String> map) {
         AppManager.getOpenLogin().deleteWechatTokenCache(this, null);
-        //Log.e(TAG, "onComplete: --------->" + share_media + "  i=" + i + "   map=" + map.toString());
+        LogUtils.d(shareMedia, map);
         onFinish();
-        mPresenter.bindOpen(share_media, map);
+        mPresenter.bindOpen(shareMedia, map);
     }
 
     @Override
-    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-        //Log.e(TAG, "onError: ----------->" + share_media + "  i=" + i + "  " + throwable.getMessage());
-        // if (i == UMAuthListener.ACTION_AUTHORIZE) {
-        switch (share_media) {
-            case WEIXIN:
-                ToastHelper.show(R.string.no_have_wechat);
-                break;
-        }
+    public void onError(SHARE_MEDIA shareMedia, int i, Throwable throwable) {
+        LogUtils.d(shareMedia, throwable);
+        ToastHelper.show(R.string.no_have_wechat);
         onFinish();
-        // }
     }
 
     @Override
-    public void onCancel(SHARE_MEDIA share_media, int i) {
-        // Log.e(TAG, "onCancel: --------->" + share_media + "  i=" + i);
+    public void onCancel(SHARE_MEDIA shareMedia, int i) {
+        LogUtils.d(shareMedia);
         onFinish();
     }
 
@@ -177,7 +168,5 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onNotBindCallback(String error, String openUserInfo) {
         OpenBindActivity.show(this, openUserInfo, SHARE_MEDIA.WEIXIN);
-        // onFailure(error);
     }
-
 }

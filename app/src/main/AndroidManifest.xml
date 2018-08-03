@@ -124,14 +124,12 @@
 
         <!-- third  login -->
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.sumian.sd.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- pay start -->
-
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -405,11 +403,6 @@
             android:exported="true"
             tools:ignore="ExportedService" />
 
-        <activity
-            android:name="com.sumian.hw.clinical.wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.sumian.hw.improve.qrcode.activity.QrCodeActivity"
             android:screenOrientation="portrait"
