@@ -176,7 +176,7 @@ public final class AppManager {
         initLeanCloud(context);
         initOpenEngine(context);
         initBlueManager(context);
-//        LeanCloudHelper.init(context);
+//        HwLeanCloudHelper.init(context);
         initKefu(context);
     }
 

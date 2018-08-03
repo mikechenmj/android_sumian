@@ -20,7 +20,7 @@ import com.sumian.hw.improve.device.fragment.DeviceFragment;
 import com.sumian.hw.improve.fragment.HwMeFragment;
 import com.sumian.hw.improve.main.bean.PushReport;
 import com.sumian.hw.improve.report.ReportFragment;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.push.ReportPushManager;
@@ -42,7 +42,7 @@ import java.util.Map;
 import retrofit2.Call;
 
 public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeListener,
-        LeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+        HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     private static final String TAG = HwMainActivity.class.getSimpleName();
 
@@ -110,7 +110,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
 
         mTabMain.setOnTabChangeListener(this);
         //注册站内信消息接收容器
-        LeanCloudHelper.addOnAdminMsgCallback(this);
+        HwLeanCloudHelper.addOnAdminMsgCallback(this);
         HwAppManager.getVersionModel().registerShowDotCallback(this);
         if (mPagerFragments == null) {
             mPagerFragments = new BasePagerFragment[]{DeviceFragment.newInstance(),
@@ -129,8 +129,8 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     protected void initData() {
         super.initData();
         if (AppManager.getAccountViewModel().isLogin()) {
-            LeanCloudHelper.loginLeanCloud();
-            LeanCloudHelper.registerPushService();
+            HwLeanCloudHelper.loginLeanCloud();
+            HwLeanCloudHelper.registerPushService();
             Call<Object> call = HwAppManager.getHwNetEngine().getHttpService().sendHeartbeats("open_app");
             call.enqueue(new BaseResponseCallback<Object>() {
                 @Override
@@ -150,12 +150,12 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         VersionPresenter.init().syncAppVersionInfo();
 
         UIProvider.getInstance().showDotCallback(msgLength -> {
-            LeanCloudHelper.haveCustomerMsg(msgLength);
+            HwLeanCloudHelper.haveCustomerMsg(msgLength);
             onShowMsgDotCallback(0, 0, msgLength);
         });
 
         checkAppVersion();
-        runUiThread(() -> LeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize()), 500);
+        runUiThread(() -> HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize()), 500);
     }
 
     private void checkAppVersion() {
@@ -258,7 +258,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         if (bluePeripheral != null) {
             bluePeripheral.close();
         }
-        LeanCloudHelper.removeOnAdminMsgCallback(this);
+        HwLeanCloudHelper.removeOnAdminMsgCallback(this);
         HwAppManager.getVersionModel().unRegisterShowDotCallback(this);
         HwAppManager.getBlueManager().release();
     }

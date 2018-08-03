@@ -59,9 +59,9 @@ import retrofit2.Call;
  * desc:
  */
 
-public final class LeanCloudHelper {
+public final class HwLeanCloudHelper {
 
-    public static final String TAG = LeanCloudHelper.class.getSimpleName();
+    public static final String TAG = HwLeanCloudHelper.class.getSimpleName();
 
     public static final int SERVICE_TYPE_ONLINE_DOCTOR = 0x01;//速眠医生
     public static final int SERVICE_TYPE_ONLINE_CUSTOMER = 0x02;//线上客服
@@ -71,7 +71,7 @@ public final class LeanCloudHelper {
     private static final int MSG_TYPE_IMAGE = 0x22;
     private static final int MSG_TYPE_VOICE = 0x23;
 
-    private static volatile LeanCloudHelper INSTANCE;
+    private static volatile HwLeanCloudHelper INSTANCE;
     private static ReentrantLock mLock = new ReentrantLock();
 
     private List<OnMsgCallback> mOnMsgCallbacks;
@@ -91,7 +91,7 @@ public final class LeanCloudHelper {
 
     private boolean mHaveCuostomrMsg;
 
-    private LeanCloudHelper(Context context) {
+    private HwLeanCloudHelper(Context context) {
         // 初始化参数依次为 context, AppId, AppKey
         PushService.setDefaultChannelId(context, "push_channel");
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
@@ -102,13 +102,13 @@ public final class LeanCloudHelper {
         register();
     }
 
-    public static LeanCloudHelper init(Context context) {
+    public static HwLeanCloudHelper init(Context context) {
         ReentrantLock lock = mLock;
         try {
             if (INSTANCE == null) {
                 lock.lock();
                 if (INSTANCE == null) {
-                    INSTANCE = new LeanCloudHelper(context);
+                    INSTANCE = new HwLeanCloudHelper(context);
                 }
             }
         } finally {
@@ -236,7 +236,7 @@ public final class LeanCloudHelper {
     }
 
     public static void startEasemobChatRoom() {
-        LeanCloudHelper.clearMsgNotification(LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
+        HwLeanCloudHelper.clearMsgNotification(HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
         App.Companion.getAppContext().startActivity(getChatRoomLaunchIntent());
     }
 

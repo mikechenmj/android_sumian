@@ -8,9 +8,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.sleepdoctor.R;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.holder.base.BaseViewHolder;
+import com.sumian.sleepdoctor.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,6 +64,6 @@ public class MsgTextViewHolder extends BaseViewHolder<AVIMTextMessage> implement
         if (TextUtils.isEmpty(tempContent)) {
             return;
         }
-        LeanCloudHelper.sendTextMsg(LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER, tempContent);
+        HwLeanCloudHelper.sendTextMsg(HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER, tempContent);
     }
 }

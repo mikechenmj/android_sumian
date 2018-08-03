@@ -11,7 +11,7 @@ import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.improve.report.viewModel.ReportModel;
 import com.sumian.hw.job.JobScheduler;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.player.VoicePlayer;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.engine.HwNetEngine;
@@ -88,7 +88,7 @@ public final class HwAppManager {
     private void init(Context context) {
         ToastHelper.init(context);
         initBlueManager(context);
-        LeanCloudHelper.init(context);
+        HwLeanCloudHelper.init(context);
         initKefu(context);
     }
 

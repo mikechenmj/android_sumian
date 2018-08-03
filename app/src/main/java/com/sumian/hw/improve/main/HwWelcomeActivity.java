@@ -7,7 +7,7 @@ import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.improve.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
@@ -44,7 +44,7 @@ public class HwWelcomeActivity extends BaseActivity {
                     HwMainActivity.show(App.Companion.getAppContext());
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);
                     if (launchCustomerServiceActivity) {
-                        LeanCloudHelper.checkLoginEasemob(LeanCloudHelper::startEasemobChatRoom);
+                        HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
                     }
                 } else {
                     LoginRouterActivity.show(this);

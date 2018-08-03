@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.setting.dialog.ContactDialog;
 import com.sumian.hw.widget.TitleBar;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by jzz
@@ -46,7 +46,7 @@ public class ContactActivity extends BaseActivity implements View.OnClickListene
         if (i == R.id.lay_call_me) {
             new ContactDialog().show(getSupportFragmentManager(), ContactDialog.class.getSimpleName());
         } else if (i == R.id.lay_send_msg) {
-            MsgActivity.show(this, LeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR);
+            MsgActivity.show(this, HwLeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR);
         }
     }
 

@@ -9,7 +9,7 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.holder.MsgImageViewHolder;
 import com.sumian.hw.leancloud.holder.MsgTextViewHolder;
 import com.sumian.hw.leancloud.holder.MsgVoiceViewHolder;
@@ -90,7 +90,7 @@ public class AdapterDelegate {
     }
 
     public int getItemViewType(AVIMMessage msg) {
-        if (mServiceType == LeanCloudHelper.SERVICE_TYPE_MAIL) {
+        if (mServiceType == HwLeanCloudHelper.SERVICE_TYPE_MAIL) {
             return getChatType(msg, LEFT_TEXT_TYPE, LEFT_IMAGE_TYPE, LEFT_VOICE_TYPE);
         } else {
             String from = msg.getFrom();

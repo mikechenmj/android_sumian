@@ -17,7 +17,7 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.contract.MsgContract;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -33,7 +33,7 @@ import java.util.List;
  * desc:
  */
 
-public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMsgCallback, LeanCloudHelper.OnConversationCallback {
+public class MsgPresenter implements MsgContract.Presenter, HwLeanCloudHelper.OnMsgCallback, HwLeanCloudHelper.OnConversationCallback {
 
     private static final String TAG = MsgPresenter.class.getSimpleName();
 
@@ -56,8 +56,8 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
     private MsgPresenter(MsgContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        LeanCloudHelper.addOnMsgCallback(this);
-        LeanCloudHelper.addOnConversationCallback(this);
+        HwLeanCloudHelper.addOnMsgCallback(this);
+        HwLeanCloudHelper.addOnConversationCallback(this);
     }
 
     public static void init(MsgContract.View view) {
@@ -68,13 +68,13 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
     @Override
     public void loginServiceType(int serviceType) {
         this.mServiceType = serviceType;
-        LeanCloudHelper.establishConversationWithService(serviceType);
+        HwLeanCloudHelper.establishConversationWithService(serviceType);
     }
 
     @Override
     public void syncMsgHistory(int serviceType) {
         this.mServiceType = serviceType;
-        // LeanCloudHelper.clearMsgNotification(mServiceType);
+        // HwLeanCloudHelper.clearMsgNotification(mServiceType);
         syncPreMsgHistory(false);
     }
 
@@ -91,7 +91,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
         view.onBegin();
         mIsLoad = true;
 
-        AVIMConversation conversation = LeanCloudHelper.getConversation(mServiceType);
+        AVIMConversation conversation = HwLeanCloudHelper.getConversation(mServiceType);
 
         conversation.queryMessages(mMsgId, mTimestamp, 20, new AVIMMessagesQueryCallback() {
             @Override
@@ -104,7 +104,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
                         mMsgId = list.get(0).getMessageId();
                         mTimestamp = list.get(0).getTimestamp();
 
-                        if (mServiceType == LeanCloudHelper.SERVICE_TYPE_MAIL) {
+                        if (mServiceType == HwLeanCloudHelper.SERVICE_TYPE_MAIL) {
                             Collections.reverse(list);
                         }
                         if (isLoadPre) {
@@ -125,7 +125,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
 
     @Override
     public void doSendTextMsg(String content) {
-        LeanCloudHelper.sendTextMsg(mServiceType, content);
+        HwLeanCloudHelper.sendTextMsg(mServiceType, content);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
                     .setCallback(images -> {
                         for (String image : images) {
                             Log.e(TAG, "doSelected: ---------->" + image);
-                            LeanCloudHelper.sendImageMsg(mServiceType, image);
+                            HwLeanCloudHelper.sendImageMsg(mServiceType, image);
                         }
                     }).build());
 
@@ -179,7 +179,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
 
     @Override
     public void sendVoice(String recordFilePath, int second) {
-        LeanCloudHelper.sendVoiceMsg(mServiceType, recordFilePath);
+        HwLeanCloudHelper.sendVoiceMsg(mServiceType, recordFilePath);
     }
 
     @Override
@@ -208,9 +208,9 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
 
     @Override
     public void release() {
-        LeanCloudHelper.clearMsgNotification(mServiceType);
-        LeanCloudHelper.removeOnMsgCallback(this);
-        LeanCloudHelper.removeOnConversationCallback();
+        HwLeanCloudHelper.clearMsgNotification(mServiceType);
+        HwLeanCloudHelper.removeOnMsgCallback(this);
+        HwLeanCloudHelper.removeOnConversationCallback();
         this.mTimestamp = 0;
         this.mMsgId = null;
     }
@@ -278,7 +278,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
     }
 
     private void updateLocalCache() {
-        LeanCloudHelper.sendImageMsg(mServiceType, mLocalImagePath);
+        HwLeanCloudHelper.sendImageMsg(mServiceType, mLocalImagePath);
     }
 
     /**

@@ -21,7 +21,7 @@ import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.bumptech.glide.Glide;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.common.util.TimeUtil;
-import com.sumian.hw.leancloud.LeanCloudHelper;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.widget.BubbleImageView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -74,7 +74,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
 
     protected void formatServiceType(CircleImageView civIcon, int serviceType) {
         @DrawableRes int mipmapId;
-        if (serviceType == LeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR) {
+        if (serviceType == HwLeanCloudHelper.SERVICE_TYPE_ONLINE_DOCTOR) {
             mipmapId = mIsLeft ? R.mipmap.advisory_doctorhead : R.mipmap.ic_chat_right_default;
         } else {
             mipmapId = mIsLeft ? R.mipmap.ic_chat_left_default : R.mipmap.ic_chat_right_default;
