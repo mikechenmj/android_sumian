@@ -2,7 +2,7 @@ package com.sumian.hw.utils;
 
 import android.support.annotation.StringRes;
 
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 
 import java.util.Locale;
 
@@ -20,6 +20,6 @@ public final class StringUtils {
 
 
     public static String getText(@StringRes int id) {
-        return App.getAppContext().getResources().getString(id);
+        return HwApp.getAppContext().getResources().getString(id);
     }
 }

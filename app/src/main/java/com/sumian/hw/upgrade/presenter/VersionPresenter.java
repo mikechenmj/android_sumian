@@ -3,8 +3,8 @@ package com.sumian.hw.upgrade.presenter;
 import android.content.pm.PackageInfo;
 import android.text.TextUtils;
 
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
@@ -125,7 +125,7 @@ public class VersionPresenter implements VersionContract.Presenter {
             if (versionInfo != null) {//服务器有固件版本信息
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
                     versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                        App.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                        HwApp.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
                     if (versionType == MONITOR_VERSION_TYPE) {
                         HwAppManager.getVersionModel().notifyMonitorDot(true);
                     } else {
@@ -137,14 +137,14 @@ public class VersionPresenter implements VersionContract.Presenter {
                 }
             } else {
                 versionInfo = new VersionInfo().setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                    App.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                    HwApp.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
                 notifyVersionDot(versionType);
             }
         } else {
             if (versionInfo == null) {
                 versionInfo = new VersionInfo();
             }
-            versionInfo.setVersion(App.getAppContext().getString(R.string.none_connected_state_hint));
+            versionInfo.setVersion(HwApp.getAppContext().getString(R.string.none_connected_state_hint));
             notifyVersionDot(versionType);
         }
 
@@ -176,7 +176,7 @@ public class VersionPresenter implements VersionContract.Presenter {
 
         Map<String, String> map = new HashMap<>();
 
-        PackageInfo packageInfo = UiUtil.getPackageInfo(App.getAppContext());
+        PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
 
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
@@ -189,7 +189,7 @@ public class VersionPresenter implements VersionContract.Presenter {
             @Override
             protected void onSuccess(AppUpgradeInfo response) {
 
-                PackageInfo packageInfo = UiUtil.getPackageInfo(App.getAppContext());
+                PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
 
                 AppUpgradeInfo appUpgradeInfo = response;
                 if (appUpgradeInfo == null) {//相同版本或没有新版本

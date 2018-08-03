@@ -57,7 +57,7 @@ public final class AppManager implements Observer<Boolean> {
         Log.e(TAG, "onChanged: -------token  is invalid------->" + tokenIsInvalid);
 
         if (tokenIsInvalid) {
-//            LoginActivity.show(App.Companion.getAppContext(), LoginActivity.class);
+//            LoginActivity.show(HwApp.Companion.getAppContext(), LoginActivity.class);
             ActivityUtils.startActivity(HwLoginActivity.class);
         }
     }

@@ -6,7 +6,7 @@ import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.account.cache.HwAccountCache;
 import com.sumian.hw.account.callback.OnLogoutCallback;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.cache.BluePeripheralCache;
 import com.sumian.hw.common.config.SumianConfig;
@@ -67,7 +67,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
                     BlueManager.init().doStopScan();
                 });
                 ChatClient.getInstance().logout(true, null);
-                NotificationUtil.Companion.cancelAllNotification(App.getAppContext());
+                NotificationUtil.Companion.cancelAllNotification(HwApp.getAppContext());
                 AppManager.getAccountViewModel().updateToken(null);
             }
 

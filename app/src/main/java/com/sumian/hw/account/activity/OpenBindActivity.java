@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.sumian.hw.account.contract.OpenBindContract;
 import com.sumian.hw.account.presenter.OpenBindPresenter;
-import com.sumian.hw.app.ApplicationDelegate;
+import com.sumian.hw.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
@@ -142,7 +142,7 @@ public class OpenBindActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onBindSuccess(Token token) {
         runUiThread(() -> ToastHelper.show(R.string.register_success_hint));
-        ApplicationDelegate.goHome(this);
+        HwApplicationDelegate.goHome(this);
     }
 
     @Override

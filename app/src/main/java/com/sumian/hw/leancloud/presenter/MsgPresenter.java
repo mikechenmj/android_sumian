@@ -17,7 +17,7 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.contract.MsgContract;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -154,7 +154,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
                     }).build());
 
         } else {//pic camera
-            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), App.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
+            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), HwApp.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
                     + System.currentTimeMillis() + ".jpg");
 
             //noinspection ResultOfMethodCallIgnored
@@ -292,7 +292,7 @@ public class MsgPresenter implements MsgContract.Presenter, LeanCloudHelper.OnMs
         //MsgContract.View view = viewWeakReference.get();
 
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor cursor = App.getAppContext().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        Cursor cursor = HwApp.getAppContext().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);

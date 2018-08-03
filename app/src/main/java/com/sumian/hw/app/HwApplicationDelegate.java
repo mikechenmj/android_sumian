@@ -21,20 +21,20 @@ import java.util.List;
  * desc:
  */
 
-public class ApplicationDelegate implements Application.ActivityLifecycleCallbacks {
+public class HwApplicationDelegate implements Application.ActivityLifecycleCallbacks {
 
-    private static final String TAG = ApplicationDelegate.class.getSimpleName();
+    private static final String TAG = HwApplicationDelegate.class.getSimpleName();
 
     private static boolean mIsLoginActivity;
     private static boolean mIsHomeActivity;
 
     private static List<Activity> mActivities;
 
-    private ApplicationDelegate() {
+    private HwApplicationDelegate() {
     }
 
-    public static ApplicationDelegate init() {
-        return new ApplicationDelegate();
+    public static HwApplicationDelegate init() {
+        return new HwApplicationDelegate();
     }
 
     public static boolean isIsLoginActivity() {
@@ -51,7 +51,7 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
             HwMainActivity.show(context);
         }
 
-        List<Activity> activities = ApplicationDelegate.mActivities;
+        List<Activity> activities = HwApplicationDelegate.mActivities;
 
         for (int i = activities.size() - 1; i >= 0; i--) {
             Activity activity = activities.get(i);
@@ -81,13 +81,13 @@ public class ApplicationDelegate implements Application.ActivityLifecycleCallbac
         mIsHomeActivity = false;
     }
 
-    public ApplicationDelegate registerActivityLifecycleCallback(Application application) {
+    public HwApplicationDelegate registerActivityLifecycleCallback(Application application) {
         application.registerActivityLifecycleCallbacks(this);
 
         return this;
     }
 
-    public ApplicationDelegate unRegisterActivityLifecycleCallback(Application application) {
+    public HwApplicationDelegate unRegisterActivityLifecycleCallback(Application application) {
         application.unregisterActivityLifecycleCallbacks(this);
         return this;
     }

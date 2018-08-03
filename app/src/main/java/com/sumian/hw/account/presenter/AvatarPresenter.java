@@ -11,7 +11,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import com.sumian.hw.account.contract.AvatarContract;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
@@ -92,7 +92,7 @@ public class AvatarPresenter implements AvatarContract.Presenter {
             activity.startActivityForResult(intent, PIC_REQUEST_CODE_LOCAL);
 
         } else {//pic camera
-            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), App.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
+            cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), HwApp.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
                 + System.currentTimeMillis() + ".jpg");
 
             //noinspection ResultOfMethodCallIgnored
@@ -156,7 +156,7 @@ public class AvatarPresenter implements AvatarContract.Presenter {
      */
     private void sendPicByUri(Uri selectedImage) {
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor cursor = App.getAppContext().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        Cursor cursor = HwApp.getAppContext().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);

@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import com.sumian.hw.account.contract.RegisterContract;
 import com.sumian.hw.account.presenter.RegisterPresenter;
-import com.sumian.hw.app.App;
-import com.sumian.hw.app.HwAppManager;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
@@ -138,7 +137,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             if (!AppManager.getAccountViewModel().isHaveUserInfoAndSleepBarrierTest()) {
                 AssessmentActivity.show(this, true);
             } else {
-                HwMainActivity.show(App.getAppContext());
+                HwMainActivity.show(HwApp.getAppContext());
             }
         });
     }

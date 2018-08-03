@@ -70,7 +70,7 @@ public final class HwAppManager {
 
     public static synchronized OpenLogin getOpenLogin() {
         if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            INSTANCE.mOpenEngine = new OpenEngine().create(HwApp.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
             return INSTANCE.mOpenEngine.getOpenLogin();
         } else {
             return INSTANCE.mOpenEngine.getOpenLogin();
@@ -79,7 +79,7 @@ public final class HwAppManager {
 
     public static synchronized OpenAnalytics getOpenAnalytics() {
         if (INSTANCE.mOpenEngine == null) {
-            INSTANCE.mOpenEngine = new OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            INSTANCE.mOpenEngine = new OpenEngine().create(HwApp.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
             return INSTANCE.mOpenEngine.getOpenAnalytics();
         } else {
             return INSTANCE.mOpenEngine.getOpenAnalytics();
@@ -105,7 +105,7 @@ public final class HwAppManager {
 //    }
 
     public static synchronized JobScheduler getJobScheduler() {
-        return INSTANCE.mJobScheduler == null ? INSTANCE.mJobScheduler = new JobScheduler(App.getAppContext()) : INSTANCE
+        return INSTANCE.mJobScheduler == null ? INSTANCE.mJobScheduler = new JobScheduler(HwApp.getAppContext()) : INSTANCE
                 .mJobScheduler;
     }
 

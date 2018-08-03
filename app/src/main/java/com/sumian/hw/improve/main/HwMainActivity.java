@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.base.BasePagerFragment;
@@ -161,7 +161,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     private void checkAppVersion() {
         Map<String, String> map = new HashMap<>();
 
-        PackageInfo packageInfo = UiUtil.getPackageInfo(App.getAppContext());
+        PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
 
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
@@ -169,7 +169,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         HwAppManager.getNetEngine().getHttpService().syncUpgradeAppInfo(map).enqueue(new BaseResponseCallback<AppUpgradeInfo>() {
             @Override
             protected void onSuccess(AppUpgradeInfo response) {
-                PackageInfo packageInfo = UiUtil.getPackageInfo(App.getAppContext());
+                PackageInfo packageInfo = UiUtil.getPackageInfo(HwApp.getAppContext());
 
                 AppUpgradeInfo appUpgradeInfo = response;
                 if (appUpgradeInfo == null) {//相同版本或没有新版本

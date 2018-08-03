@@ -18,7 +18,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.log.LogManager;
@@ -107,7 +107,7 @@ public class FeedbackActivity extends BaseActivity {
                         protected void onSuccess(OssResponse response) {
                             showCenterToast("您的反馈已提交成功");
                             finish();
-                            // File logFile = new File(App.getAppContext().getCacheDir(), LogManager.LOG_FILE_NAME);
+                            // File logFile = new File(HwApp.getAppContext().getCacheDir(), LogManager.LOG_FILE_NAME);
                             // uploadFile(response, logFile.getAbsolutePath());
                         }
 
@@ -122,7 +122,7 @@ public class FeedbackActivity extends BaseActivity {
 
     public void uploadFile(OssResponse ossResponse, String localUploadFilePath) {
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(ossResponse.getAccess_key_id(), ossResponse.getAccess_key_secret(), ossResponse.getSecurity_token());
-        OSSClient ossClient = new OSSClient(App.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
+        OSSClient ossClient = new OSSClient(HwApp.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
         // 构造上传请求
         PutObjectRequest putObjectRequest = new PutObjectRequest(ossResponse.getBucket(), ossResponse.getObject(), localUploadFilePath);
         // 异步上传时可以设置进度回调

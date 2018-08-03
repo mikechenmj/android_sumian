@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
@@ -121,7 +121,7 @@ public class VersionUpgradeActivity extends BaseActivity implements View.OnClick
         switch (mVersionType) {
             case VERSION_TYPE_APP:
                 newVersion = HwAppManager.getVersionModel().getAppUpgradeInfo().version;
-                currentVersion = UiUtil.getPackageInfo(App.getAppContext()).versionName;
+                currentVersion = UiUtil.getPackageInfo(HwApp.getAppContext()).versionName;
                 break;
             case VERSION_TYPE_MONITOR:
                 newVersion = HwAppManager.getVersionModel().getMonitorVersion().getVersion();

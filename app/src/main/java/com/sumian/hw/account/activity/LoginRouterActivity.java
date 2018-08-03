@@ -10,8 +10,8 @@ import android.widget.ImageView;
 
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
-import com.sumian.hw.app.App;
-import com.sumian.hw.app.ApplicationDelegate;
+import com.sumian.hw.app.HwApp;
+import com.sumian.hw.app.HwApplicationDelegate;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
@@ -46,7 +46,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
         Intent intent;
 
         if (context == null) {
-            context = App.getAppContext();
+            context = HwApp.getAppContext();
         }
 
         intent = new Intent(context, LoginRouterActivity.class);
@@ -96,8 +96,8 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
     public void onBackPressed() {
         super.onBackPressed();
         onFinish();
-        ApplicationDelegate.setIsLoginActivity(false);
-        ApplicationDelegate.exitApp();
+        HwApplicationDelegate.setIsLoginActivity(false);
+        HwApplicationDelegate.exitApp();
     }
 
     @Override
@@ -169,7 +169,7 @@ public class LoginRouterActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBindOpenSuccess(Token token) {
-        ApplicationDelegate.goHome(this);
+        HwApplicationDelegate.goHome(this);
         onFinish();
         finish();
     }

@@ -11,10 +11,10 @@ package com.sumian.sleepdoctor.notification.bean;
  */
 public class Notification {
 
-    private static final String NOTIFICATION_TYPE_PREFIX = "App\\Notifications\\";
+    private static final String NOTIFICATION_TYPE_PREFIX = "HwApp\\Notifications\\";
     /**
      * id : 6a1b932e-fb04-4aee-b1e9-5632ba0e8dca
-     * type : App\Notifications\DiaryEvaluated
+     * type : HwApp\Notifications\DiaryEvaluated
      * data : {"id":838,"date":1527782400,"tittle":"医生建议更新","title":"医生建议更新","content":"速眠医生医生对您6月1日的日记进行反馈，点击查看。","scheme":"sleepdoctor%3A%2F%2Fdiaries%3Fdate%3D1527782400%26notification_id%3D6a1b932e-fb04-4aee-b1e9-5632ba0e8dca%26user_id%3D2102"}
      * read_at : null
      * created_at : 1528178108
@@ -28,7 +28,7 @@ public class Notification {
     public static final String TYPE_FOLLOW_UP_LIFE_NOTICE = NOTIFICATION_TYPE_PREFIX + "FollowUpLifeNotice";
 
     private String id;
-    private String type;    //医生反馈：App\Notifications\DiaryEvaluated，电子报告：App\Notifications\DiaryEvaluated）
+    private String type;    //医生反馈：HwApp\Notifications\DiaryEvaluated，电子报告：HwApp\Notifications\DiaryEvaluated）
     private DataBean data;
     private int read_at;
     private int created_at;

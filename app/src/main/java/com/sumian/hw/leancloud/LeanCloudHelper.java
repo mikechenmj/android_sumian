@@ -34,7 +34,7 @@ import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
@@ -42,7 +42,6 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.cbti.video.LogUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -238,7 +237,7 @@ public final class LeanCloudHelper {
 
     public static void startEasemobChatRoom() {
         LeanCloudHelper.clearMsgNotification(LeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
-        App.getAppContext().startActivity(getChatRoomLaunchIntent());
+        HwApp.getAppContext().startActivity(getChatRoomLaunchIntent());
     }
 
     public static Intent getChatRoomLaunchIntent() {
@@ -253,7 +252,7 @@ public final class LeanCloudHelper {
             }
         });
 
-        return new IntentBuilder(App.getAppContext())
+        return new IntentBuilder(HwApp.getAppContext())
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
                 .setShowUserNick(false)
                 .setVisitorInfo(visitorInfo).build();
@@ -328,7 +327,7 @@ public final class LeanCloudHelper {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(App.getAppContext(), HwMainActivity.class);
+        PushService.setDefaultPushCallback(HwApp.getAppContext(), HwMainActivity.class);
     }
 
     private static void uploadDeviceInfo(String installationId) {

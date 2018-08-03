@@ -6,10 +6,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.activity.HwLoginActivity;
-import com.sumian.hw.app.App;
-import com.sumian.hw.app.ApplicationDelegate;
+import com.sumian.hw.app.HwApplicationDelegate;
 import com.sumian.hw.network.response.ErrorResponse;
 
 import java.io.IOException;
@@ -41,14 +41,14 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
         } else {
             ResponseBody errorBody = response.errorBody();
             if (errorBody == null) {
-                onFailure(App.getAppContext().getString(R.string.error_request_failed_hint));
+                onFailure(HwApp.getAppContext().getString(R.string.error_request_failed_hint));
                 return;
             }
             try {
                 String errorJson = errorBody.string();
                 ErrorResponse errorResponse = JSON.parseObject(errorJson, ErrorResponse.class);
                 if (errorResponse == null) {
-                    onFailure(App.getAppContext().getString(R.string.error_request_failed_hint));
+                    onFailure(HwApp.getAppContext().getString(R.string.error_request_failed_hint));
                 } else {
                     if (response.code() == 403) {
                         onForbidden(errorResponse.getMessage());
@@ -59,9 +59,9 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                                 onNotFound(errorResponse.getMessage());
                                 break;
                             case 401://token 鉴权失败
-                                if (!ApplicationDelegate.isIsLoginActivity()) {
-                                    HwLoginActivity.show(App.getAppContext(), true);
-                                    ApplicationDelegate.setIsLoginActivity(true);
+                                if (!HwApplicationDelegate.isIsLoginActivity()) {
+                                    HwLoginActivity.show(HwApp.getAppContext(), true);
+                                    HwApplicationDelegate.setIsLoginActivity(true);
                                 }
                             default:
                                 onFailure(errorResponse.getMessage());
@@ -70,7 +70,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                     }
                 }
             } catch (IOException e) {
-                onFailure(App.getAppContext().getString(R.string.error_request_failed_hint));
+                onFailure(HwApp.getAppContext().getString(R.string.error_request_failed_hint));
                 e.printStackTrace();
             }
         }
@@ -81,7 +81,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
     public void onFailure(@NonNull Call<T> call, @NonNull Throwable t) {
         // runOnUiThread(() -> {
         onFinish();
-        onFailure(App.getAppContext().getString(R.string.error_request_failed_hint));
+        onFailure(HwApp.getAppContext().getString(R.string.error_request_failed_hint));
         // });
         t.printStackTrace();
     }

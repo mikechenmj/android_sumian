@@ -18,10 +18,10 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.app.App;
 import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;
@@ -458,7 +458,7 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
             mDeviceStatusView.show();
             mDeviceGuideStepView.hide();
             BlueDevice speedSleeper = new BlueDevice();
-            speedSleeper.name = App.getAppContext().getString(R.string.speed_sleeper);
+            speedSleeper.name = HwApp.getAppContext().getString(R.string.speed_sleeper);
             monitor.speedSleeper = speedSleeper;
             mDeviceStatusView.invalidDevice(monitor);
             scanAndConnectWithPermissionCheck(monitor);

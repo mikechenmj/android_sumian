@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.improve.widget.note.WakeUpMoodView;
@@ -162,7 +162,7 @@ public class NoteDialog extends BaseDialogFragment implements View.OnClickListen
     public void onSyncSleepNoteOptionsSuccess(List<String> bedtimeState) {
         for (int i = 0, len = bedtimeState.size(); i < len; i++) {
             String option = bedtimeState.get(i);
-            View view = LayoutInflater.from(App.getAppContext()).inflate(R.layout.hw_lay_options, mLayFlow, false);
+            View view = LayoutInflater.from(HwApp.getAppContext()).inflate(R.layout.hw_lay_options, mLayFlow, false);
             TextView tvOption = view.findViewById(R.id.tv_option);
             tvOption.setTag(i);
             tvOption.setOnClickListener(v -> {

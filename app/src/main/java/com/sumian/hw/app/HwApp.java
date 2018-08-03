@@ -11,18 +11,18 @@ import android.content.Context;
  * desc:
  */
 
-public class App {
+public class HwApp {
 
-    public static final String TAG = App.class.getSimpleName();
+    public static final String TAG = HwApp.class.getSimpleName();
 
     @SuppressLint("StaticFieldLeak")
     private static volatile Application mContext;
-    private static volatile ApplicationDelegate mDelegate;
+    private static volatile HwApplicationDelegate mDelegate;
 
     public static void init(Application context) {
         mContext = context;
         HwAppManager.create(context);
-        mDelegate = ApplicationDelegate.init().registerActivityLifecycleCallback(mContext);
+        mDelegate = HwApplicationDelegate.init().registerActivityLifecycleCallback(mContext);
     }
 
     public static void unregisterActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback) {

@@ -1,6 +1,5 @@
 package com.sumian.hw.common.util;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.SystemClock;
 import android.support.annotation.ColorRes;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
@@ -20,14 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.App;
-import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.helper.ToastHelper;
-import com.sumian.hw.gather.FileHelper;
-import com.sumian.hw.log.LogManager;
-import com.sumian.blue.model.BluePeripheral;
 
 import java.util.List;
 
@@ -42,7 +36,7 @@ public final class UiUtil {
     private static long mBackPressedTime;
 
     public static int getColor(@ColorRes int colorId) {
-        return App.getAppContext().getResources().getColor(colorId);
+        return HwApp.getAppContext().getResources().getColor(colorId);
     }
 
     public static void updateSleepDuration(Integer second, TextView tvHour, TextView tvHourLabel, TextView tvMin, TextView tvMinLabel) {
@@ -70,7 +64,7 @@ public final class UiUtil {
     }
 
     public static Typeface getTypeface() {
-        return Typeface.createFromAsset(App.getAppContext().getResources().getAssets(), "dincond_medium.otf");
+        return Typeface.createFromAsset(HwApp.getAppContext().getResources().getAssets(), "dincond_medium.otf");
     }
 
     public static void closeKeyboard(EditText view) {

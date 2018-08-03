@@ -11,9 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.HwAppManager;
-import com.sumian.hw.app.App;
-import com.sumian.hw.app.ApplicationDelegate;
+import com.sumian.hw.app.HwApp;
+import com.sumian.hw.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.widget.TitleBar;
@@ -142,7 +141,7 @@ public class AssessmentActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onBack(View v) {
         if (mIsRegister) {
-            ApplicationDelegate.goHome(App.getAppContext());
+            HwApplicationDelegate.goHome(HwApp.getAppContext());
         } else {
             finish();
         }

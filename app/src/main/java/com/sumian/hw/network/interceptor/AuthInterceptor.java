@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.webkit.WebSettings;
 
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.SystemUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;
@@ -53,7 +53,7 @@ public class AuthInterceptor implements Interceptor {
 
     private String formatDeviceInfo() {
         //Device-Info": "app_version=速眠-test_1.2.3.1&model=iPhone10,3&system=iOS_11.3.1&monitor_fw=&monitor_sn=&sleeper_fw=&sleeper_sn="
-        return "app_version=" + SystemUtil.getPackageInfo(App.getAppContext()).versionName
+        return "app_version=" + SystemUtil.getPackageInfo(HwApp.getAppContext()).versionName
             + WITH_SIGN + "model=" + SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
             + WITH_SIGN + "system=" + SystemUtil.getSystemVersion()
             + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(HwAppManager.getDeviceModel().getMonitorVersion())
@@ -82,7 +82,7 @@ public class AuthInterceptor implements Interceptor {
     private String getUserAgent() {
         String userAgent;
         try {
-            userAgent = WebSettings.getDefaultUserAgent(App.getAppContext());
+            userAgent = WebSettings.getDefaultUserAgent(HwApp.getAppContext());
         } catch (Exception e) {
             userAgent = System.getProperty("http.agent");
         }

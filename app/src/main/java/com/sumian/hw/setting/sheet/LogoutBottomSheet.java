@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.setting.contract.LogoutContract;
@@ -70,7 +70,7 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
     public void onLogoutSuccess() {
         LoginRouterActivity.show(getContext());
         dismiss();
-        ToastHelper.show(App.getAppContext(), App.getAppContext().getResources().getString(R.string.logout_success_hint), Gravity.CENTER);
+        ToastHelper.show(HwApp.getAppContext(), HwApp.getAppContext().getResources().getString(R.string.logout_success_hint), Gravity.CENTER);
     }
 
     @Override

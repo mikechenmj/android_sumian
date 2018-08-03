@@ -1,6 +1,6 @@
 package com.sumian.hw.setting.presenter;
 
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.setting.contract.SocialContract;
@@ -64,7 +64,7 @@ public class SocialPresenter implements SocialContract.Presenter {
         List<Social> socialites = AppManager.getAccountViewModel().getUserInfo().getSocialites();
         if (socialites == null || socialites.isEmpty()) {
             view.onFinish();
-            view.onFailure(App.getAppContext().getString(R.string.unbind_open_platform_failed));
+            view.onFailure(HwApp.getAppContext().getString(R.string.unbind_open_platform_failed));
             return;
         }
 

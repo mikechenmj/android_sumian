@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
@@ -213,7 +213,7 @@ public class UserGuidelineActivity extends BaseActivity {
             GuidelineUtils.putBoolean(GuidelineUtils.SP_KEY_NEED_SHOW_WELCOME_USER_GUIDE, false);
             boolean login = AppManager.getAccountViewModel().isLogin();
             if (login) {
-                HwMainActivity.show(App.getAppContext());
+                HwMainActivity.show(HwApp.getAppContext());
             } else {
                 LoginRouterActivity.show(UserGuidelineActivity.this);
             }

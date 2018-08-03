@@ -3,7 +3,7 @@ package com.sumian.hw.common.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 
 /**
  * Created by jzz
@@ -14,7 +14,7 @@ import com.sumian.hw.app.App;
 public final class SpUtil {
 
     public static SharedPreferences initSp(String spFileName) {
-        return App.getAppContext().getSharedPreferences(spFileName, Context.MODE_PRIVATE);
+        return HwApp.getAppContext().getSharedPreferences(spFileName, Context.MODE_PRIVATE);
     }
 
     public static SharedPreferences.Editor initEdit(String spFileName) {

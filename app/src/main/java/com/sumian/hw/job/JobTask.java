@@ -16,8 +16,8 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.common.util.SpUtil;
@@ -148,7 +148,7 @@ public class JobTask implements Serializable, Cloneable {
                 super.onForbidden(forbiddenError);
                 Intent intent = new Intent(JobTask.ACTION_SYNC);
                 intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
-                LocalBroadcastManager.getInstance(App.getAppContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(HwApp.getAppContext()).sendBroadcast(intent);
                 LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + forbiddenError);
 
                 SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
@@ -164,7 +164,7 @@ public class JobTask implements Serializable, Cloneable {
         }
 
         OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(ossResponse.getAccess_key_id(), ossResponse.getAccess_key_secret(), ossResponse.getSecurity_token());
-        OSSClient ossClient = new OSSClient(App.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
+        OSSClient ossClient = new OSSClient(HwApp.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
         // 构造上传请求
 
         PutObjectRequest putObjectRequest = new PutObjectRequest(ossResponse.getBucket(), ossResponse.getObject(), filePath);
@@ -193,7 +193,7 @@ public class JobTask implements Serializable, Cloneable {
 
                 Intent intent = new Intent(JobTask.ACTION_SYNC);
                 intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
-                LocalBroadcastManager.getInstance(App.getAppContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(HwApp.getAppContext()).sendBroadcast(intent);
 
                 SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
 
@@ -234,7 +234,7 @@ public class JobTask implements Serializable, Cloneable {
                 // 请求异常
                 Intent intent = new Intent(JobTask.ACTION_SYNC);
                 intent.putExtra(JobTask.EXTRA_SYNC_STATUS, false);
-                LocalBroadcastManager.getInstance(App.getAppContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(HwApp.getAppContext()).sendBroadcast(intent);
 
                 if (clientException != null) {
                     LogManager.appendUserOperationLog("该组透传数据 oss 上传失败,进入队列末尾进行再次上传  clientException=" + clientException.getLocalizedMessage());

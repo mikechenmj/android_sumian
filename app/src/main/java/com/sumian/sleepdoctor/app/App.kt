@@ -2,7 +2,7 @@ package com.sumian.sleepdoctor.app
 
 import android.app.Application
 import android.content.Context
-import com.sumian.hw.app.App
+import com.sumian.hw.app.HwApp
 
 /**
  * Created by jzz
@@ -26,7 +26,7 @@ class App : Application() {
         mAppContext = this
 
         AppManager.init().with(this)
-        App.init(this)
+        HwApp.init(this)
     }
 
 }

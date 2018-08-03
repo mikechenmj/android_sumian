@@ -7,8 +7,8 @@ import android.os.HandlerThread;
 import android.util.Log;
 import android.webkit.WebSettings;
 
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.hw.app.App;
 import com.sumian.hw.common.util.StreamUtil;
 
 import java.io.File;
@@ -55,7 +55,7 @@ public class LogManager {
         HandlerThread handlerThread = new HandlerThread("log thread");
         handlerThread.start();
         this.mWriteHandler = new Handler(handlerThread.getLooper());
-        this.mLogFile = new File(App.getAppContext().getCacheDir(), LOG_FILE_NAME);
+        this.mLogFile = new File(HwApp.getAppContext().getCacheDir(), LOG_FILE_NAME);
     }
 
     private boolean fileIsExists() {
@@ -192,7 +192,7 @@ public class LogManager {
     private static String getUserAgent() {
         String userAgent;
         try {
-            userAgent = WebSettings.getDefaultUserAgent(App.getAppContext());
+            userAgent = WebSettings.getDefaultUserAgent(HwApp.getAppContext());
         } catch (Exception e) {
             userAgent = System.getProperty("http.agent");
         }
@@ -213,9 +213,9 @@ public class LogManager {
     private static String getAppInfo() {
         String appInfo = null;
 
-        PackageManager packageManager = App.getAppContext().getPackageManager();
+        PackageManager packageManager = HwApp.getAppContext().getPackageManager();
         try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(App.getAppContext().getPackageName(), 0);
+            PackageInfo packageInfo = packageManager.getPackageInfo(HwApp.getAppContext().getPackageName(), 0);
             String versionName = packageInfo.versionName;
             int versionCode = packageInfo.versionCode;
 

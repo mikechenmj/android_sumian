@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.sumian.sleepdoctor.R;
 import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.account.presenter.LoginPresenter;
-import com.sumian.hw.app.ApplicationDelegate;
+import com.sumian.hw.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.request.LoginBody;
@@ -119,7 +119,7 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void loginSuccess() {
-        ApplicationDelegate.goHome(this);
+        HwApplicationDelegate.goHome(this);
         runUiThread(() -> ToastHelper.show(R.string.login_success_hint));
     }
 
@@ -151,7 +151,7 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        ApplicationDelegate.setIsLoginActivity(false);
+        HwApplicationDelegate.setIsLoginActivity(false);
         LoginRouterActivity.show(this);
     }
 

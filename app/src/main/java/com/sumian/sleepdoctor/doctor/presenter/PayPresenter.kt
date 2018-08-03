@@ -161,7 +161,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
              * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
              */
 
-            // PlayLog.e(TAG, "onActivityResult: -------------->result=" + result + " package name=" + App.Companion.getAppContext().getPackageName());
+            // PlayLog.e(TAG, "onActivityResult: -------------->result=" + result + " package name=" + HwApp.Companion.getAppContext().getPackageName());
 
         }
     }

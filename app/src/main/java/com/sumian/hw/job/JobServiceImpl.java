@@ -14,7 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.text.TextUtils;
 
-import com.sumian.hw.app.App;
+import com.sumian.hw.app.HwApp;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
@@ -169,7 +169,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
         //}
         // mNetworkReceiver = null;
         commitTaskCache();
-//        mLooper.quitSafely(); // App 退出时release了，再进来没有初始化，会出问题。
+//        mLooper.quitSafely(); // HwApp 退出时release了，再进来没有初始化，会出问题。
     }
 
     /**
@@ -181,7 +181,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
 
     @SuppressWarnings("unchecked")
     private void loadCacheJobTaskAndRunSync() {
-        File cacheFile = new File(App.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
+        File cacheFile = new File(HwApp.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
         ObjectInputStream ois = null;
         try {
             if (cacheFile.exists() && cacheFile.length() > 0) {
@@ -219,7 +219,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
     }
 
     private void commitTaskCacheSync() {
-        File cacheFile = new File(App.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
+        File cacheFile = new File(HwApp.getAppContext().getCacheDir(), JOB_TASK_CACHE_FILE);
         ObjectOutputStream oos;
         try {
 

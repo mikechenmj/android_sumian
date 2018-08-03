@@ -6,8 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.app.App;
 import com.sumian.hw.app.HwAppManager;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
@@ -143,9 +143,9 @@ public class VersionNoticeActivity extends BaseActivity implements View.OnClickL
             BluePeripheral bluePeripheral = HwAppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral == null || !bluePeripheral.isConnected()) {
                 setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                        getString(R.string.monitor), App.getAppContext().getString(R.string.none_connected_state_hint)));
+                        getString(R.string.monitor), HwApp.getAppContext().getString(R.string.none_connected_state_hint)));
                 setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                        getString(R.string.speed_sleeper), App.getAppContext().getString(R.string.none_connected_state_hint)));
+                        getString(R.string.speed_sleeper), HwApp.getAppContext().getString(R.string.none_connected_state_hint)));
             }
             mDivider.setVisibility(isShowAppDot || isShowMonitorDot || isShowSleepyDot ? View.VISIBLE : View.GONE);
             mAppVersionInfo.updateUpgradeInfo(isShowAppDot, null);
