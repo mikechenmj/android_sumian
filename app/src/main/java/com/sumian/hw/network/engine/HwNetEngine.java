@@ -1,10 +1,9 @@
 package com.sumian.hw.network.engine;
 
-import com.google.gson.GsonBuilder;
-import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.interceptor.AuthInterceptor;
+import com.sumian.sleepdoctor.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.fastjson.FastJsonConverterFactory;
 
 /**
  * Created by jzz
@@ -49,7 +48,7 @@ public class HwNetEngine {
         Retrofit retrofit = new Retrofit
                 .Builder()
                 .baseUrl(BuildConfig.HW_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
+                .addConverterFactory(FastJsonConverterFactory.create())
                 .callFactory(okHttpClient)
                 .build();
 
