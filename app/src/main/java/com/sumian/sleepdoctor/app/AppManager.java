@@ -44,7 +44,7 @@ public final class AppManager implements Observer<Boolean> {
     private AppManager() {
     }
 
-    public static AppManager init() {
+    public static AppManager getInstance() {
         return Holder.INSTANCE;
     }
 
@@ -72,11 +72,7 @@ public final class AppManager implements Observer<Boolean> {
         return Holder.INSTANCE.mOpenEngine.getOpenLogin();
     }
 
-    public void with(@NonNull Context context) {
-        init(context);
-    }
-
-    private void init(Context context) {//初始化第三方平台
+    public void init(@NonNull Context context) {
         initUtils(context);
         initEmojiCompat(context);
         initAccountViewModel((Application) context);

@@ -13,21 +13,15 @@ import com.sumian.hw.app.HwApp
 class App : Application() {
 
     companion object {
-
         private lateinit var mAppContext: Context
-
         fun getAppContext() = mAppContext
-
     }
 
     override fun onCreate() {
         super.onCreate()
-
         mAppContext = this
-
-        AppManager.init().with(this)
+        AppManager.getInstance().init(this)
         HwApp.init(this)
     }
-
 }
 
