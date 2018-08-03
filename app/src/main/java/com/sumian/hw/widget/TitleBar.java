@@ -73,7 +73,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
             setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
         }
-        setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        //setBackgroundColor(getResources().getColor(R.color.hw_colorPrimary));
     }
 
     public void addOnSpannerListener(OnClickListener onSpannerListener) {
