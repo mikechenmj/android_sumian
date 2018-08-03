@@ -3,8 +3,8 @@ package com.sumian.hw.improve.report.calendar;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.sumian.sleepdoctor.app.HwAppManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.sleepdoctor.app.HwAppManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.Response;
 import retrofit2.Call;
 
 /**
@@ -163,15 +164,15 @@ public class CalendarReportPresenter implements CalendarReportContract.Presenter
         map.put("page_size", 3);
         map.put("is_include", isInclude ? 1 : 0);
 
-        Call<String> call = HwAppManager.getV1HttpService().getCalendarSleepReport(map);
+        Call<Response> call = HwAppManager.getV1HttpService().getCalendarSleepReport(map);
         mCalls.add(call);
 
-        call.enqueue(new BaseResponseCallback<String>() {
+        call.enqueue(new BaseResponseCallback<Response>() {
 
             @SuppressWarnings("unchecked")
             @Override
-            protected void onSuccess(String response) {
-                JSONObject jsonObject = JSON.parseObject(response);
+            protected void onSuccess(Response response) {
+                JSONObject jsonObject = JSON.parseObject(response.toString());
 
                 Integer earliestMonth = (Integer) jsonObject.get("earliest_month");
                 int startMonth;

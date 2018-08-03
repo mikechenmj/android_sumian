@@ -101,12 +101,7 @@ public final class HwAppManager {
         ToastHelper.init(context);
         initBlueManager(context);
         LeanCloudHelper.init(context);
-        initOpenEngine(context);
         initKefu(context);
-    }
-
-    private void initOpenEngine(Context context) {
-        new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_PUSH_SECRET);
     }
 
     private void initKefu(Context context) {

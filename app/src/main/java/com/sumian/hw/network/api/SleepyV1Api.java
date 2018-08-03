@@ -10,6 +10,7 @@ import com.sumian.hw.oss.bean.OssResponse;
 
 import java.util.Map;
 
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -31,7 +32,7 @@ public interface SleepyV1Api {
 
     //在日历中获取日报告信息
     @GET("sleeps/days/month-unread")
-    Call<String> getCalendarSleepReport(@QueryMap Map<String, Object> map);
+    Call<Response> getCalendarSleepReport(@QueryMap Map<String, Object> map);
 
     //填写睡眠日记
     @FormUrlEncoded

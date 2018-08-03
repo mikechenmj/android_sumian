@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.converter.fastjson.FastJsonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by jzz
@@ -48,7 +48,7 @@ public class HwNetEngine {
         Retrofit retrofit = new Retrofit
                 .Builder()
                 .baseUrl(BuildConfig.HW_BASE_URL)
-                .addConverterFactory(FastJsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .callFactory(okHttpClient)
                 .build();
 
