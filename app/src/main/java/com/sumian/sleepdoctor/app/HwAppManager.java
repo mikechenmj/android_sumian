@@ -5,9 +5,8 @@ import android.content.Context;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.manager.BlueManager;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.operator.AppOperator;
-import com.sumian.common.social.OpenEngine;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.improve.report.viewModel.ReportModel;
@@ -33,10 +32,8 @@ public final class HwAppManager {
     private volatile VersionModel mVersionModel;
     private volatile DeviceModel mDeviceModel;
     private volatile ReportModel mReportModel;
-
-    private HwNetEngine mNetEngine;
+    private HwNetEngine mHwNetEngine;
     private JobScheduler mJobScheduler;
-    private OpenEngine mOpenEngine;
     private VoicePlayer mVoicePlayer;
 
     private HwAppManager(Context context) {
@@ -54,7 +51,7 @@ public final class HwAppManager {
     }
 
     public static synchronized HwNetEngine getHwNetEngine() {
-        return INSTANCE.mNetEngine == null ? INSTANCE.mNetEngine = new HwNetEngine() : INSTANCE.mNetEngine;
+        return INSTANCE.mHwNetEngine == null ? INSTANCE.mHwNetEngine = new HwNetEngine() : INSTANCE.mHwNetEngine;
     }
 
     public static synchronized SleepyV1Api getHwV1HttpService() {

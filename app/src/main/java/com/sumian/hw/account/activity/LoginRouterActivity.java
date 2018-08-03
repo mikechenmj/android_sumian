@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;

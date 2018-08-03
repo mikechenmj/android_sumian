@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.improve.assessment.QuestionActivity;
 import com.sumian.hw.improve.feedback.FeedbackActivity;
 import com.sumian.hw.improve.guideline.activity.ManualActivity;

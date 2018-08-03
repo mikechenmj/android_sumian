@@ -4,8 +4,8 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.setting.presenter.LogoutPresenter;
 import com.sumian.hw.widget.BottomSheetView;

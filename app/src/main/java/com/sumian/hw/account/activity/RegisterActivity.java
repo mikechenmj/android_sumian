@@ -8,12 +8,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.RegisterContract;
 import com.sumian.hw.account.presenter.RegisterPresenter;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.assessment.AssessmentActivity;

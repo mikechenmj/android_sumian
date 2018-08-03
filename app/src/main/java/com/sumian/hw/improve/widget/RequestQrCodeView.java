@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.sumian.hw.common.helper.ToastHelper;
+import com.sumian.common.helper.ToastHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;

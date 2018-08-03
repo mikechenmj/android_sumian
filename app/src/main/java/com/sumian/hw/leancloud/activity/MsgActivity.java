@@ -18,11 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.sumian.sleepdoctor.R;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectPictureBottomSheet;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.leancloud.LeanCloudHelper;
 import com.sumian.hw.leancloud.adapter.MsgAdapter;
@@ -32,6 +31,7 @@ import com.sumian.hw.widget.KeyboardView;
 import com.sumian.hw.widget.LCIMRecordButton;
 import com.sumian.hw.widget.MsgEmptyView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
+import com.sumian.sleepdoctor.R;
 
 import java.util.List;
 

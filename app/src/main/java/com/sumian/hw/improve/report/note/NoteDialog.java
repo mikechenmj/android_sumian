@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.hw.common.helper.ToastHelper;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.improve.widget.note.WakeUpMoodView;
 import com.sumian.hw.tab.report.contract.SleepNoteContract;
