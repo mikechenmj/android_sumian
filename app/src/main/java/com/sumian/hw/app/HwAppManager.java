@@ -118,6 +118,31 @@ public final class HwAppManager {
     }
 
     private void init(Context context) {
+        ToastHelper.init(context);
+        initBlueManager(context);
+        LeanCloudHelper.init(context);
+        initOpenEngine(context);
+        initKefu(context);
+    }
+
+    private void initOpenEngine(Context context) {
+        new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_PUSH_SECRET);
+    }
+
+    private void initKefu(Context context) {
+        // Kefu SDK 初始化
+        ChatClient.Options options = new ChatClient.Options();
+        options.setConsoleLog(BuildConfig.DEBUG);
+        options.setAppkey(BuildConfig.EASEMOB_APP_KEY);//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
+        options.setTenantId(BuildConfig.EASEMOB_TENANT_ID);//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
+        if (!ChatClient.getInstance().init(context, options)) {
+            return;
+        }
+        // Kefu EaseUI的初始化
+        UIProvider.getInstance().init(context);
+    }
+
+    private void initBlueManager(Context context) {
         AppOperator.runOnThread(() -> {
             FileHelper.init();
             boolean externalStorageWritable = FileHelper.init().isExternalStorageWritable();
@@ -126,28 +151,7 @@ public final class HwAppManager {
             }
             BlueManager.init().with(context);
         });
-
-        ToastHelper.init(context);
-        //leancloud
-        LeanCloudHelper.init(context);
-
-        //Umeng
-        new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_PUSH_SECRET);
-
-        // Kefu SDK 初始化
-
-        ChatClient.Options options = new ChatClient.Options();
-        options.setConsoleLog(BuildConfig.DEBUG);
-        options.setAppkey(BuildConfig.EASEMOB_APP_KEY);//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
-        options.setTenantId(BuildConfig.EASEMOB_TENANT_ID);//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
-
-        if (!ChatClient.getInstance().init(context, options)) {
-            return;
-        }
-        // Kefu EaseUI的初始化
-        UIProvider.getInstance().init(context);
     }
-
 
     /**
      * 获取进程号对应的进程名

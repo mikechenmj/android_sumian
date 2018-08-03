@@ -34,7 +34,7 @@ public class LeanCloudManager {
 
     private static final String TAG = LeanCloudManager.class.getSimpleName();
 
-    public static void registerPushService(Context context) {
+    public static void init(Context context) {
         PushService.setDefaultChannelId(context, "push_channel");
         AVOSCloud.initialize(context, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY);
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);

@@ -50,6 +50,7 @@ android {
         buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
         buildConfigField("String", "UMENG_APP_KEY", OFFICIAL_UMENG_APP_KEY)
         buildConfigField("String", "UMENG_PUSH_SECRET", UMENG_PUSH_SECRET)
+        buildConfigField("String", "UMENG_CHANNEL", UMENG_CHANNEL)
         buildConfigField("String", "EASEMOB_APP_KEY", HW_EASEMOB_APP_KEY)
         buildConfigField("String", "EASEMOB_TENANT_ID", HW_EASEMOB_TENANT_ID)
         buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", HW_EASEMOB_CUSTOMER_SERVICE_ID)

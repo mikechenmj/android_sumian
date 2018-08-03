@@ -1,14 +1,12 @@
 package com.sumian.sleepdoctor.app;
 
 import android.app.Application;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
-import android.util.Log;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -16,8 +14,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.social.OpenEngine;
+import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
 import com.sumian.hw.account.activity.HwLoginActivity;
+import com.sumian.hw.app.HwApp;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.account.model.AccountViewModel;
 import com.sumian.sleepdoctor.advisory.model.AdvisoryViewModel;
@@ -32,7 +32,7 @@ import com.sumian.sleepdoctor.network.engine.NetEngine;
  * desc:
  */
 
-public final class AppManager{
+public final class AppManager {
 
     private DoctorApi mDoctorApi;
     private AccountViewModel mAccountViewModel;
@@ -71,6 +71,10 @@ public final class AppManager{
         return Holder.INSTANCE.mOpenEngine.getOpenLogin();
     }
 
+    public static synchronized OpenAnalytics getOpenAnalytics() {
+        return Holder.INSTANCE.mOpenEngine.getOpenAnalytics();
+    }
+
     public void init(@NonNull Context context) {
         initUtils(context);
         initEmojiCompat(context);
@@ -80,7 +84,7 @@ public final class AppManager{
     }
 
     private void initLeanCloud(Context context) {
-        LeanCloudManager.registerPushService(context);
+        LeanCloudManager.init(context);
     }
 
     private void initEmojiCompat(Context context) {
@@ -89,6 +93,7 @@ public final class AppManager{
 
     private void initOpenEngine(Context context) {
         if (mOpenEngine == null) {
+            OpenEngine.init(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET);
             mOpenEngine = new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
         }
     }
