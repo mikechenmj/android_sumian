@@ -32,13 +32,12 @@ import com.sumian.sleepdoctor.network.engine.NetEngine;
  * desc:
  */
 
-public final class AppManager implements Observer<Boolean> {
+public final class AppManager{
 
     private DoctorApi mDoctorApi;
     private AccountViewModel mAccountViewModel;
     private AdvisoryViewModel mAdvisoryViewModel;
     private DoctorViewModel mDoctorViewModel;
-    private LiveData<Boolean> mTokenInvalidStateLiveData;
     private OpenEngine mOpenEngine;
 
     private AppManager() {
@@ -90,41 +89,26 @@ public final class AppManager implements Observer<Boolean> {
 
     private void initOpenEngine(Context context) {
         if (mOpenEngine == null) {
-            this.mOpenEngine = new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+            mOpenEngine = new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
         }
-    }
-
-    private void observeTokenLiveData() {
-        mTokenInvalidStateLiveData = Holder.INSTANCE.mAccountViewModel.getLiveDataTokenInvalidState();
-        mTokenInvalidStateLiveData.observeForever(this);
     }
 
     private void initAccountViewModel(Application context) {
-        if (Holder.INSTANCE.mAccountViewModel == null) {
-            Holder.INSTANCE.mAccountViewModel = new AccountViewModel(context);
-            Holder.INSTANCE.mAccountViewModel.loadTokenFromSp();
+        if (mAccountViewModel == null) {
+            mAccountViewModel = new AccountViewModel(context);
+            mAccountViewModel.loadTokenFromSp();
         }
-        observeTokenLiveData();
+        mAccountViewModel.getLiveDataTokenInvalidState().observeForever(new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                ActivityUtils.startActivity(HwLoginActivity.class);
+            }
+        });
     }
 
     private void initUtils(Context context) {
         ToastHelper.init(context);
         Utils.init(context);
         ToastUtils.setGravity(Gravity.CENTER, 0, 0);
-    }
-
-    public void release() {
-        if (mTokenInvalidStateLiveData != null && (mTokenInvalidStateLiveData.hasActiveObservers() || mTokenInvalidStateLiveData.hasObservers())) {
-            mTokenInvalidStateLiveData.removeObserver(this);
-        }
-        Holder.INSTANCE = null;
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public void onChanged(@Nullable Boolean tokenIsInvalid) {
-        if (tokenIsInvalid) {
-            ActivityUtils.startActivity(HwLoginActivity.class);
-        }
     }
 }
