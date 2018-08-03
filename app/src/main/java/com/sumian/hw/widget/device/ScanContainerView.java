@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.sumian.hw.improve.device.adapter.DeviceAdapter;
 import com.sumian.hw.tab.device.bean.BlueDevice;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
 
 /**
  * Created by jzz
