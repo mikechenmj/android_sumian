@@ -43,8 +43,8 @@ public class Social implements Parcelable, Serializable {
     public String union_id;//第三方union id
     public String nickname;//第三方昵称
     public int user_id;//用户id
-    public int created_at;//第三方绑定时间
-    public int updated_at;//第三方最后更新时间
+    public String created_at;//第三方绑定时间
+    public String updated_at;//第三方最后更新时间
 
     @SuppressWarnings("unused")
     public Social() {
@@ -57,8 +57,8 @@ public class Social implements Parcelable, Serializable {
         open_id = in.readString();
         union_id = in.readString();
         nickname = in.readString();
-        created_at = in.readInt();
-        updated_at = in.readInt();
+        created_at = in.readString();
+        updated_at = in.readString();
     }
 
     @Override
@@ -74,8 +74,8 @@ public class Social implements Parcelable, Serializable {
         dest.writeString(open_id);
         dest.writeString(union_id);
         dest.writeString(nickname);
-        dest.writeInt(created_at);
-        dest.writeInt(updated_at);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
     }
 
     @Override
@@ -145,19 +145,19 @@ public class Social implements Parcelable, Serializable {
         this.user_id = user_id;
     }
 
-    public int getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(int created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    public int getUpdated_at() {
+    public String getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(int updated_at) {
+    public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
 }

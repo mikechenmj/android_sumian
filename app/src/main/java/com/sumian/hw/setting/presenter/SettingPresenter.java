@@ -161,7 +161,6 @@ public class SettingPresenter implements SettingContract.Presenter {
             @Override
             protected void onSuccess(Social response) {
                 UserInfo user = AppManager.getAccountViewModel().getToken().user;
-                UserInfo userInfo = user;
                 List<Social> socialites = user.getSocialites();
                 if (socialites == null) {
                     socialites = new ArrayList<>();
@@ -188,6 +187,12 @@ public class SettingPresenter implements SettingContract.Presenter {
             protected void onFailure(String error) {
                 view.onBindOpenFailed(error);
                 view.onFailure(error);
+            }
+
+            @Override
+            protected void onForbidden(String forbiddenError) {
+                super.onForbidden(forbiddenError);
+                view.onBindOpenFailed(forbiddenError);
             }
 
             @Override
