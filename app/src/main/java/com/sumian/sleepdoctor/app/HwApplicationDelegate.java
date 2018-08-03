@@ -46,13 +46,10 @@ public class HwApplicationDelegate implements Application.ActivityLifecycleCallb
     }
 
     public static void goHome(Context context) {
-
         if (!mIsHomeActivity) {
             HwMainActivity.show(context);
         }
-
         List<Activity> activities = HwApplicationDelegate.mActivities;
-
         for (int i = activities.size() - 1; i >= 0; i--) {
             Activity activity = activities.get(i);
             if (activity instanceof HwMainActivity) {
@@ -61,7 +58,6 @@ public class HwApplicationDelegate implements Application.ActivityLifecycleCallb
             activity.finish();
             activities.remove(activity);
         }
-
         mIsLoginActivity = false;
     }
 

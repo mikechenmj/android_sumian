@@ -9,15 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.account.presenter.LoginPresenter;
-import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.hw.base.BaseActivity;
 import com.sumian.hw.common.helper.ToastHelper;
 import com.sumian.hw.network.request.LoginBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
+import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.app.HwApplicationDelegate;
+import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 
 /**
  * Created by jzz
@@ -87,6 +90,7 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
         } else {
             this.mTitleBar.hideBack();
         }
+        AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null);
     }
 
     @Override
@@ -119,6 +123,7 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void loginSuccess() {
+        LeanCloudManager.getAndUploadCurrentInstallation();
         HwApplicationDelegate.goHome(this);
         runUiThread(() -> ToastHelper.show(R.string.login_success_hint));
     }

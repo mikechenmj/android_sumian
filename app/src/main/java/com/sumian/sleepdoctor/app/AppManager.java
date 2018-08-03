@@ -105,7 +105,10 @@ public final class AppManager {
         mAccountViewModel.getLiveDataTokenInvalidState().observeForever(new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean tokenIsInvalid) {
-                if (tokenIsInvalid != null && tokenIsInvalid) {
+                if (tokenIsInvalid == null) {
+                    return;
+                }
+                if (tokenIsInvalid) {
                     ActivityUtils.startActivity(HwLoginActivity.class);
                 }
             }
