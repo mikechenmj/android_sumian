@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
@@ -31,7 +30,6 @@ import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.cbti.video.LogUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -48,7 +46,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public class SettingActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener, SettingContract.View, UMAuthListener, SocialBottomSheet.UnbindSocialCallback {
+public class HwSettingActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener, SettingContract.View, UMAuthListener, SocialBottomSheet.UnbindSocialCallback {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -70,7 +68,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private boolean mPreToggleStatus;
 
     public static void show(Context context) {
-        context.startActivity(new Intent(context, SettingActivity.class));
+        context.startActivity(new Intent(context, HwSettingActivity.class));
     }
 
     @Override

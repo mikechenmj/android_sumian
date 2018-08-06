@@ -14,7 +14,7 @@ import com.sumian.hw.base.BasePagerFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
-import com.sumian.hw.setting.activity.SettingActivity;
+import com.sumian.hw.setting.activity.HwSettingActivity;
 import com.sumian.hw.setting.widget.HwSettingItemView;
 import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
@@ -93,7 +93,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
                 VersionNoticeActivity.show(getContext());
                 break;
             case R.id.siv_setting:
-                SettingActivity.show(getContext());
+                HwSettingActivity.show(getContext());
                 break;
             default:
                 break;

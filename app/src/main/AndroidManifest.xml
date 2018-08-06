@@ -312,7 +312,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme" />
         <activity
-            android:name="com.sumian.hw.setting.activity.SettingActivity"
+            android:name="com.sumian.hw.setting.activity.HwSettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme" />
         <activity
