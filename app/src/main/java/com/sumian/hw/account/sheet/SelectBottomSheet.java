@@ -27,7 +27,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * desc:
  */
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "MalformedFormatString"})
 public class SelectBottomSheet extends BottomSheetView implements View.OnClickListener,
         ModifySelectContract.View<UserInfo>, NumberPickerView.OnValueChangeListener, NumberPickerView.OnScrollListener {
 
@@ -109,7 +109,6 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
         super.initData();
         mPresenter.transformFormKey(mFormKey, mUserInfo);
     }
-
 
     @Override
     public void onClick(View view) {
