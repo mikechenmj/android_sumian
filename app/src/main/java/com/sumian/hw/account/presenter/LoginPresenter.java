@@ -48,8 +48,8 @@ public class LoginPresenter implements LoginContract.Presenter {
         }
 
         SleepyApi sleepyApi = AppManager
-            .getHwNetEngine()
-            .getHttpService();
+                .getHwNetEngine()
+                .getHttpService();
         if (sleepyApi == null) {
             return;
         }
@@ -63,7 +63,6 @@ public class LoginPresenter implements LoginContract.Presenter {
             protected void onSuccess(Token response) {
                 AppManager.getAccountViewModel().updateToken(response);
                 view.loginSuccess();
-                AppManager.getAccountViewModel().updateToken(response);
             }
 
             @Override

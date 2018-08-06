@@ -72,7 +72,6 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
             protected void onSuccess(Token response) {
                 AppManager.getAccountViewModel().updateToken(response);
                 view.onBindSuccess(response);
-                AppManager.getAccountViewModel().updateToken(response);
             }
 
             @Override

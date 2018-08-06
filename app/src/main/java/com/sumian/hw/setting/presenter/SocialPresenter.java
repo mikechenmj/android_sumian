@@ -87,9 +87,11 @@ public class SocialPresenter implements SocialContract.Presenter {
             @Override
             protected void onSuccess(Object response) {
                 view.onUnbindSocialSuccess();
+
+                syncUserInfo();
+
                 AccountViewModel accountViewModel = AppManager.getAccountViewModel();
                 UserInfo user = accountViewModel.getToken().user;
-                UserInfo userInfo = user;
                 List<Social> socialites = user.getSocialites();
                 if (socialites == null || socialites.isEmpty()) {
                     return;
@@ -103,7 +105,7 @@ public class SocialPresenter implements SocialContract.Presenter {
                     }
                 }
                 user.setSocialites(socialites);
-                accountViewModel.updateUserInfo(userInfo);
+                accountViewModel.updateUserInfo(user);
             }
 
             @Override
@@ -118,5 +120,21 @@ public class SocialPresenter implements SocialContract.Presenter {
             }
         });
         this.mCall = call;
+    }
+
+
+    private void syncUserInfo() {
+        Call<UserInfo> call = AppManager.getHwNetEngine().getHttpService().getUserInfo("doctor");
+        call.enqueue(new BaseResponseCallback<UserInfo>() {
+            @Override
+            protected void onSuccess(UserInfo response) {
+                AppManager.getAccountViewModel().updateUserInfo(response);
+            }
+
+            @Override
+            protected void onFailure(int code, String message) {
+
+            }
+        });
     }
 }

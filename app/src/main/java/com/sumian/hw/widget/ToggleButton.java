@@ -33,7 +33,7 @@ public class ToggleButton extends View {
      * =============================================================================================
      */
     private static final Interpolator ANIMATION_INTERPOLATOR = new DecelerateInterpolator();
-    private static final int ANIMATION_DURATION = 280;
+    private static final int ANIMATION_DURATION = 200;
     private final static Property<ToggleButton, AnimatorProperty> ANIM_VALUE = new Property<ToggleButton, AnimatorProperty>(AnimatorProperty.class, "animValue") {
         @Override
         public AnimatorProperty get(ToggleButton object) {
@@ -264,6 +264,9 @@ public class ToggleButton extends View {
         this.spotX = property.spotX;
         this.borderColor = property.color;
         this.offLineWidth = property.offLineWidth;
+        if (mAnimator != null && mAnimator.isRunning()) {
+            mAnimator.cancel();
+        }
         invalidate();
     }
 
@@ -327,9 +330,9 @@ public class ToggleButton extends View {
             int endB = endValue.color & 0xff;
 
             mProperty.color = (startA + (int) (fraction * (endA - startA))) << 24 |
-                (startR + (int) (fraction * (endR - startR))) << 16 |
-                (startG + (int) (fraction * (endG - startG))) << 8 |
-                (startB + (int) (fraction * (endB - startB)));
+                    (startR + (int) (fraction * (endR - startR))) << 16 |
+                    (startG + (int) (fraction * (endG - startG))) << 8 |
+                    (startB + (int) (fraction * (endB - startB)));
 
             return mProperty;
         }

@@ -32,6 +32,7 @@ import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.nav.NavTab;
 import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.sleepdoctor.R;
+import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.main.MainActivity;
@@ -155,7 +156,40 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         });
 
         checkAppVersion();
+        syncUserInfo();
+        sendHeartBeats();
         runUiThread(() -> HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize()), 500);
+    }
+
+    private void sendHeartBeats() {
+        Call<Object> call = AppManager.getHwNetEngine().getHttpService().sendHeartbeats("open_app");
+        call.enqueue(new BaseResponseCallback<Object>() {
+            @Override
+            protected void onSuccess(Object response) {
+
+            }
+
+            @Override
+            protected void onFailure(int code, String message) {
+
+            }
+        });
+    }
+
+    private void syncUserInfo() {
+        Call<UserInfo> call = AppManager.getHwNetEngine().getHttpService().getUserInfo("doctor");
+        call.enqueue(new BaseResponseCallback<UserInfo>() {
+            @Override
+            protected void onSuccess(UserInfo response) {
+                AppManager.getAccountViewModel().updateUserInfo(response);
+            }
+
+            @Override
+            protected void onFailure(int code, String message) {
+
+            }
+
+        });
     }
 
     private void checkAppVersion() {

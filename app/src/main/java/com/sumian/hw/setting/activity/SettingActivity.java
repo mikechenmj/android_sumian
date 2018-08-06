@@ -12,6 +12,7 @@ import com.sumian.hw.improve.assessment.QuestionActivity;
 import com.sumian.hw.improve.feedback.FeedbackActivity;
 import com.sumian.hw.improve.guideline.activity.ManualActivity;
 import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;
+import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.hw.setting.contract.SettingContract;
 import com.sumian.hw.setting.presenter.SettingPresenter;
@@ -33,6 +34,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
 
 /**
  * Created by jzz
@@ -56,6 +58,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     private SettingContract.Presenter mPresenter;
 
     private boolean mIsInit;
+
+    private boolean mPreToggleStatus;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, SettingActivity.class));
@@ -88,6 +92,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             } else {
                 mPresenter.doLoginOpen(SHARE_MEDIA.WEIXIN, this, this);
             }
+
+            mPreToggleStatus = mBtBindWechat.isToggleOn();
         });
         SettingPresenter.init(this);
     }
@@ -97,17 +103,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         super.initData();
         mIsInit = true;
         mPresenter.syncSleepDiary();
-        UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
-        if (userInfo == null) {
-            return;
-        }
-        List<Social> socialites = userInfo.getSocialites();
-        if (socialites == null || socialites.isEmpty()) {
-            return;
-        }
-        Social social = socialites.get(0);
-        mTvWechatNickname.setText(social.getNickname());
-        mBtBindWechat.setToggleOn();
+        syncUserInfo();
     }
 
     @Override
@@ -136,8 +132,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onFinish() {
-        if (!mIsInit) {
-            this.mActionLoadingDialog.dismiss();
+        if (mActionLoadingDialog != null) {
+            this.mActionLoadingDialog.dismissAllowingStateLoss();
         }
     }
 
@@ -152,6 +148,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             mBtBindWechat.setToggleOn();
             mTvWechatNickname.setText(social.getNickname());
             ToastHelper.show(getString(R.string.bind_open_platform_success));
+            onFinish();
         });
     }
 
@@ -228,6 +225,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         onFinish();
         switch (shareMedia) {
             case WEIXIN:
+                mBtBindWechat.setToggleOff();
                 ToastHelper.show(getString(R.string.no_have_wechat));
                 break;
             default:
@@ -238,6 +236,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onCancel(SHARE_MEDIA shareMedia, int i) {
         onFinish();
+        if (!mPreToggleStatus) {
+            mBtBindWechat.setToggleOn();
+        } else {
+            mBtBindWechat.setToggleOff();
+        }
     }
 
     @Override
@@ -253,5 +256,30 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } else {
             mBtBindWechat.setToggleOn();
         }
+    }
+
+    private void syncUserInfo() {
+        Call<UserInfo> call = AppManager.getHwNetEngine().getHttpService().getUserInfo("doctor");
+        call.enqueue(new BaseResponseCallback<UserInfo>() {
+            @Override
+            protected void onSuccess(UserInfo response) {
+
+                List<Social> socialites = response.getSocialites();
+                if (socialites == null || socialites.isEmpty()) {
+                    return;
+                }
+                Social social = socialites.get(0);
+                mTvWechatNickname.setText(social.getNickname());
+                mBtBindWechat.setToggleOn();
+
+                AppManager.getAccountViewModel().updateUserInfo(response);
+            }
+
+            @Override
+            protected void onFailure(int code, String message) {
+
+            }
+
+        });
     }
 }

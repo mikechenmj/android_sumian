@@ -137,9 +137,7 @@ public class SocialBottomSheet extends BottomSheetView implements View.OnClickLi
         if (mUnbindSocialCallback != null) {
             mUnbindSocialCallback.unbindSocial(mSocialType, true);
         }
-        runUiThread(() -> {
-            ToastHelper.show(getString(R.string.unbind_open_platform_success));
-        });
+        runUiThread(() -> ToastHelper.show(getString(R.string.unbind_open_platform_success)));
         dismiss();
     }
 

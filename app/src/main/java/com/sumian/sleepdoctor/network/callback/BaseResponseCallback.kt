@@ -68,9 +68,16 @@ abstract class BaseResponseCallback<T> : Callback<T> {
         t?.let {
 
             it.printStackTrace()
+
             if ((it.message === "Socket closed" || it.message === "Canceled")) {
                 return
             }
+
+            if (it.message?.startsWith("Unable to resolve host")!!) {
+                onFailure(0, App.getAppContext().getString(R.string.error_request_failed_hint))
+                return
+            }
+
             onFailure(0, it.message
                     ?: App.getAppContext().getString(R.string.error_request_failed_hint))
         }
