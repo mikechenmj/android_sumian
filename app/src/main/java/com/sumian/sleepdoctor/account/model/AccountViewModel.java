@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -69,6 +70,7 @@ public class AccountViewModel extends AndroidViewModel {
         persistentTokenInSp();
     }
 
+    @MainThread
     public void updateUserInfo(UserInfo userInfo) {
         Token token = getToken();
         token.is_new = false;

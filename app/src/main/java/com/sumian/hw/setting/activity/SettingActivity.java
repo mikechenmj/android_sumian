@@ -1,10 +1,13 @@
 package com.sumian.hw.setting.activity;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.BaseActivity;
@@ -19,13 +22,16 @@ import com.sumian.hw.setting.presenter.SettingPresenter;
 import com.sumian.hw.setting.presenter.SocialPresenter;
 import com.sumian.hw.setting.sheet.LogoutBottomSheet;
 import com.sumian.hw.setting.sheet.SocialBottomSheet;
+import com.sumian.hw.setting.widget.HwSettingItemView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.ToggleButton;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Social;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.cbti.video.LogUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -50,6 +56,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     TextView mTvWechatNickname;
     @BindView(R.id.bt_bind_wechat)
     ToggleButton mBtBindWechat;
+    @BindView(R.id.siv_sleep_disorders_evaluation)
+    HwSettingItemView mSivSleepDisordersEvaluation;
 
     private int mCount;
 
@@ -96,6 +104,16 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             mPreToggleStatus = mBtBindWechat.isToggleOn();
         });
         SettingPresenter.init(this);
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
+            @Override
+            public void onChanged(@Nullable Token token) {
+                String content = "";
+                if (token == null || token.user == null || token.user.answers == null) {
+                    content = getString(R.string.hw_not_write_yet);
+                }
+                mSivSleepDisordersEvaluation.setContent(content);
+            }
+        });
     }
 
     @Override

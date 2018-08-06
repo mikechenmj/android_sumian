@@ -42,4 +42,8 @@ class HwSettingItemView(context: Context, attributeSet: AttributeSet) : FrameLay
     fun showDot(show: Boolean) {
         iv_red_dot.visibility = if (show) View.VISIBLE else GONE
     }
+
+    fun setContent(content: String) {
+        tv_content.text = content
+    }
 }

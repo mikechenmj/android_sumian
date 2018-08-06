@@ -917,5 +917,6 @@
     <string name="device">设备</string>
     <string name="hw_setting_customer_service_7x24">7x24小时客服</string>
     <string name="hw_setting_bind_wechat_hint">你可以使用已绑定的账号登录速眠医生。</string>
+    <string name="hw_not_write_yet">未填写</string>
     <!-- Hw end-->
 </resources>

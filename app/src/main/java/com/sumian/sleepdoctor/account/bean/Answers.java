@@ -63,4 +63,15 @@ public class Answers {
     public void setCreated_at(int created_at) {
         this.created_at = created_at;
     }
+
+    @Override
+    public String toString() {
+        return "Answers{" +
+                "id=" + id +
+                ", answers='" + answers + '\'' +
+                ", score=" + score +
+                ", level=" + level +
+                ", created_at=" + created_at +
+                '}';
+    }
 }

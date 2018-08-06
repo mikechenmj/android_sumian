@@ -469,4 +469,36 @@ public class UserInfo implements Parcelable, Cloneable {
         return isHaveAnswers() && isHaveFullUserInfo();
     }
 
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id=" + id +
+                ", mobile='" + mobile + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", area='" + area + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", age=" + age +
+                ", height='" + height + '\'' +
+                ", weight='" + weight + '\'' +
+                ", bmi='" + bmi + '\'' +
+                ", leancloud_id='" + leancloud_id + '\'' +
+                ", doctor_id=" + doctor_id +
+                ", bound_at=" + bound_at +
+                ", last_login_at='" + last_login_at + '\'' +
+                ", device_info='" + device_info + '\'' +
+                ", monitor_sn='" + monitor_sn + '\'' +
+                ", sleeper_sn='" + sleeper_sn + '\'' +
+                ", career='" + career + '\'' +
+                ", education='" + education + '\'' +
+                ", im_id='" + im_id + '\'' +
+                ", im_password='" + im_password + '\'' +
+                ", socialites=" + socialites +
+                ", doctor=" + doctor +
+                ", role=" + role +
+                ", answers=" + answers +
+                '}';
+    }
 }

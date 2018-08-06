@@ -3,6 +3,7 @@ package com.sumian.hw.improve.assessment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -14,12 +15,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.sumian.hw.base.BaseActivity;
+import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Answers;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.utils.JsonUtil;
+import com.sumian.sleepdoctor.utils.SumianExecutor;
 
 /**
  * Created by sm
@@ -36,6 +39,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
     TextView mIvReDo;
     WebView mWebView;
     LinearLayout mFinishContainer;
+    Handler mHandler = new Handler();
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, QuestionActivity.class));
@@ -103,12 +107,7 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
         //Android 5.0上Webview默认不允许加载Http与Https混合内容,所以需要兼容混合模式(比如 src 中图片 url 为 http)
         webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
 
-        // todo in gradle pro
-        String HW_DEV_QUESTION_URL="http://sumian-question-h5-dev.oss-cn-shenzhen.aliyuncs.com/index.html";
-        String HW_TEST_QUESTION_URL="http://sumian-question-h5-test.oss-cn-shenzhen.aliyuncs.com/index.html";
-        String HW_OFFICIAL_QUESTION_URL="http://sumian-question-h5-production.oss-cn-shenzhen.aliyuncs.com/index.html";
-        String HW_CLINIC_OFFICIAL_QUESTION_URL="http://sumian-question-h5-clinic.oss-cn-shenzhen.aliyuncs.com/index.html";
-        mWebView.loadUrl(HW_DEV_QUESTION_URL + "?token=" + AppManager.getAccountViewModel().getTokenString());
+        mWebView.loadUrl(BuildConfig.HW_QUESTION_URL + "?token=" + AppManager.getAccountViewModel().getTokenString());
 
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
@@ -123,12 +122,17 @@ public class QuestionActivity extends BaseActivity implements View.OnClickListen
                 //sumian://sleep_quality_result?data={"id":35,"answers":"06:04,1,00:08,05:08,2,2,2","score":9,"level":1,"created_at":1521047312}
                 String url = request.getUrl().toString();
                 if (url.startsWith("sumian://sleep_quality_result?data=")) {
-                    String json = url.substring(url.indexOf("{"));
-                    Answers answer = JSON.parseObject(json, Answers.class);
-                    UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
-                    userInfo.setAnswers(answer);
-                    AppManager.getAccountViewModel().updateUserInfo(userInfo);
-                    finish();
+                    SumianExecutor.Companion.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String json = url.substring(url.indexOf("{"));
+                            Answers answer = JsonUtil.fromJson(json, Answers.class);
+                            UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
+                            userInfo.setAnswers(answer);
+                            AppManager.getAccountViewModel().updateUserInfo(userInfo);
+                            finish();
+                        }
+                    });
                 }
                 return super.shouldInterceptRequest(view, request);
             }
