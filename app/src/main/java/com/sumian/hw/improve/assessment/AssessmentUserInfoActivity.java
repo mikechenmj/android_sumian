@@ -1,9 +1,7 @@
 package com.sumian.hw.improve.assessment;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +19,6 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
 
@@ -35,8 +32,6 @@ import java.util.Map;
  */
 
 public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackListener, UserInfoContract.View {
-
-    private static final String TAG = AssessmentUserInfoActivity.class.getSimpleName();
 
     public static final String ACTION_MODIFY_ASSESSMENT_USER_INFO = "com.sumian.app.action_MODIFY_ASSESSMENT_USER_INFO";
     public static final String EXTRA_ASSESSMENT_USER_INFO = "com.sumian.app.extra.ASSESSMENT_USER_INFO";
@@ -80,9 +75,8 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
         findViewById(R.id.bt_save).setOnClickListener(this);
 
         mTitleBar.addOnBackListener(this);
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
-            @Override
-            public void onChanged(@Nullable Token token) {
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
+            if (token != null) {
                 updateUserInfoUI(token.user);
             }
         });
@@ -91,9 +85,8 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     @Override
     protected void initData() {
         super.initData();
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
-            @Override
-            public void onChanged(@Nullable Token token) {
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
+            if (token != null) {
                 updateUserInfoUI(token.user);
             }
         });
