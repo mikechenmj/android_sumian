@@ -75,7 +75,6 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
 
     @Override
     public void onEnterTab() {
-//        AppManager.getOpenAnalytics().onClickEvent(getContext(), "me_tabbar_Ry");
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
     }
 
@@ -99,21 +98,6 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
             default:
                 break;
         }
-//        if (i == R.id.lay_sleepy_answer) {
-//            QuestionActivity.show(v.getContext());
-//        } else if (i == R.id.iv_avatar || i == R.id.ll_user_info_container) {
-//            UserInfoActivity.show(getContext());
-//        } else if (i == R.id.lay_sleepy_notice) {
-//            SleepReminderActivity.show(getContext());
-//        } else if (i == R.id.lay_my_msg_notice) {
-//            MsgActivity.show(v.getContext(), HwLeanCloudHelper.SERVICE_TYPE_MAIL);
-//        } else if (i == R.id.lay_firmware_update) {
-//            VersionNoticeActivity.show(getContext());
-//        } else if (i == R.id.lay_user_guide) {
-//            ManualActivity.show(getContext());
-//        } else if (i == R.id.lay_setting) {
-//            SettingActivity.show(getContext());
-//        }
     }
 
     @Override

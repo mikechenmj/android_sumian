@@ -25,6 +25,7 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Message;
@@ -201,12 +202,10 @@ public final class HwLeanCloudHelper {
 
     private static void loginEasemob(Runnable run) {
         //未登录，需要登录后，再进入会话界面
-
         UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
         if (userInfo == null) {
             return;
         }
-
         String imId = userInfo.getIm_id();
         String md5Pwd = userInfo.getIm_password();
         if (TextUtils.isEmpty(imId) || TextUtils.isEmpty(md5Pwd)) {
@@ -236,7 +235,7 @@ public final class HwLeanCloudHelper {
 
     public static void startEasemobChatRoom() {
         HwLeanCloudHelper.clearMsgNotification(HwLeanCloudHelper.SERVICE_TYPE_ONLINE_CUSTOMER);
-        App.Companion.getAppContext().startActivity(getChatRoomLaunchIntent());
+        ActivityUtils.startActivity(getChatRoomLaunchIntent());
     }
 
     public static Intent getChatRoomLaunchIntent() {
