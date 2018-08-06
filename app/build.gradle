@@ -64,7 +64,7 @@ android {
 
         ndk {
             //设置支持的SO库架构
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
     }
 
@@ -78,7 +78,9 @@ android {
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.configs
-            minifyEnabled rootProject.ext.minifyEnabled
+            minifyEnabled false
+            shrinkResources false
+            useProguard false
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -93,7 +95,9 @@ android {
             debuggable true
             jniDebuggable true
             signingConfig signingConfigs.configs
-            minifyEnabled rootProject.ext.minifyEnabled
+            minifyEnabled false
+            shrinkResources false
+            useProguard false
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

@@ -20,15 +20,35 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+
+-keepclasseswithmembernames public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
 
-# for DexGuard only
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+-keepclasseswithmembernames class javax.ws.rs.ext.**{
+*;
+}
+
+-keepclasseswithmembernames class com.sumian.**{
+  *;
+}
+
+-keepclasseswithmembernames class com.alibaba.fastjson.**{
+*;
+}
+
+-keepclasseswithmembernames class com.pingplusplus.**{
+*;
+}
+
+-keepclasseswithmembernames class com.hyphenate.**{
+*;
+}
 
 # recyclerviewpager
 -keep class com.lsjwzh.widget.recyclerviewpager.**

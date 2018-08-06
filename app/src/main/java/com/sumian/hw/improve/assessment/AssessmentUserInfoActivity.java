@@ -1,11 +1,9 @@
 package com.sumian.hw.improve.assessment;
 
 import android.arch.lifecycle.Observer;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -54,8 +52,6 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     private UserInfo mUserInfo;
 
     private Boolean[] mIsBoss = new Boolean[5];
-
-    private BroadcastReceiver mReceiver;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, AssessmentUserInfoActivity.class));
@@ -111,32 +107,32 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
 
     public void onClick(View v) {
         String formKey;
-        int i1 = v.getId();
-        if (i1 == R.id.lay_gender) {
+        int id = v.getId();
+        if (id == R.id.lay_gender) {
             commitBottomSheet(SelectGenderBottomSheet.newInstance(ModifyUserInfoContract.KEY_GENDER, mUserInfo, true));
 
-        } else if (i1 == R.id.lay_birthday) {
+        } else if (id == R.id.lay_birthday) {
             formKey = ModifyUserInfoContract.KEY_BIRTHDAY;
             if (TextUtils.isEmpty(formKey)) {
                 return;
             }
             commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
 
-        } else if (i1 == R.id.lay_height) {
+        } else if (id == R.id.lay_height) {
             formKey = ModifyUserInfoContract.KEY_HEIGHT;
             if (TextUtils.isEmpty(formKey)) {
                 return;
             }
             commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
 
-        } else if (i1 == R.id.lay_weight) {
+        } else if (id == R.id.lay_weight) {
             formKey = ModifyUserInfoContract.KEY_WEIGHT;
             if (TextUtils.isEmpty(formKey)) {
                 return;
             }
             commitBottomSheet(SelectBottomSheet.newInstance(formKey, mUserInfo, true));
 
-        } else if (i1 == R.id.bt_save) {
+        } else if (id == R.id.bt_save) {
             int count = 0;
             int index = -1;
             for (int i = 0; i < mIsBoss.length; i++) {
@@ -197,18 +193,6 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
                     ToastHelper.show(error);
                 }
             });
-
-
-        } else {
-        }
-
-    }
-
-    @Override
-    protected void onRelease() {
-        super.onRelease();
-        if (mReceiver != null) {
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
         }
     }
 
