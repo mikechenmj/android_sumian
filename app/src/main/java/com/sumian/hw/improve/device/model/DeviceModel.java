@@ -147,7 +147,7 @@ public class DeviceModel {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 //uploadBindSn(sleepySn, monitorSn);
             }
         });

@@ -180,7 +180,7 @@ public class FileThread extends HandlerThread {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 // Log.e(TAG, "onFailure: ------->" + error);
                 uploadFile(what, dataType, delayMills, data);
             }
@@ -251,7 +251,7 @@ public class FileThread extends HandlerThread {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
 
             }
 

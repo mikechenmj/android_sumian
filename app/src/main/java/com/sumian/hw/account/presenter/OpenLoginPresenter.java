@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.network.callback.ErrorCode;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.umeng.socialize.UMAuthListener;
@@ -92,19 +93,17 @@ public class OpenLoginPresenter implements OpenLoginContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
-                view.onFailure(error);
+            protected void onFailure(int code, String error) {
+                if (code == ErrorCode.NOT_FOUND) {
+                    view.onNotBindCallback(error, mOpenUserInfo);
+                } else {
+                    view.onFailure(error);
+                }
             }
 
             @Override
             protected void onFinish() {
                 view.onFinish();
-            }
-
-            @Override
-            protected void onNotFound(String error) {
-                super.onNotFound(error);
-                view.onNotBindCallback(error, mOpenUserInfo);
             }
         });
 

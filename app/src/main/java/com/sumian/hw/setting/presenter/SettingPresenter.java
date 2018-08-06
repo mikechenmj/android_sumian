@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.network.callback.ErrorCode;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.hw.setting.contract.SettingContract;
 import com.sumian.sleepdoctor.account.bean.Social;
@@ -73,7 +74,7 @@ public class SettingPresenter implements SettingContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onFailure(error);
             }
 
@@ -105,7 +106,7 @@ public class SettingPresenter implements SettingContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onFailure(error);
             }
 
@@ -183,15 +184,13 @@ public class SettingPresenter implements SettingContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
-                view.onBindOpenFailed(error);
-                view.onFailure(error);
-            }
-
-            @Override
-            protected void onForbidden(String forbiddenError) {
-                super.onForbidden(forbiddenError);
-                view.onBindOpenFailed(forbiddenError);
+            protected void onFailure(int code, String error) {
+                if (code == ErrorCode.FORBIDDEN) {
+                    view.onBindOpenFailed(error);
+                } else {
+                    view.onBindOpenFailed(error);
+                    view.onFailure(error);
+                }
             }
 
             @Override

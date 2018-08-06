@@ -75,7 +75,7 @@ public class ConfigPresenter implements ConfigContract.Presenter {
                 }
 
                 @Override
-                protected void onFailure(String error) {
+                protected void onFailure(int code, String error) {
                     if (finalView == null) return;
                     finalView.onSyncConfigInfoFailed(error);
                 }

@@ -71,7 +71,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onLogoutFailed(error);
             }
 

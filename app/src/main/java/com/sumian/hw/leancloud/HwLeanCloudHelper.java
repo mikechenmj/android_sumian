@@ -346,7 +346,7 @@ public final class HwLeanCloudHelper {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 //onFailure(R.string.error_request_failed_hint);
             }
 

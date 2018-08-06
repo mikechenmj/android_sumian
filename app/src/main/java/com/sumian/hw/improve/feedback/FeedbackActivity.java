@@ -112,7 +112,7 @@ public class FeedbackActivity extends BaseActivity {
                         }
 
                         @Override
-                        protected void onFailure(String error) {
+                        protected void onFailure(int code, String error) {
                             showToast(error);
                         }
                     });

@@ -21,6 +21,7 @@ import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.network.callback.ErrorCode;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.bean.OssTransData;
 import com.sumian.hw.oss.bean.OssTransDataError;
@@ -138,22 +139,18 @@ public class JobTask implements Serializable, Cloneable {
             }
 
             @Override
-            protected void onFailure(String error) {
-                LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 令牌失败,进入队列末尾等待重新上传  错误信息=" + error);
-                mTaskCallback.executeCallbackFailed(JobTask.this);
-            }
-
-            @Override
-            protected void onForbidden(String forbiddenError) {
-                super.onForbidden(forbiddenError);
-                Intent intent = new Intent(JobTask.ACTION_SYNC);
-                intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
-                LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
-                LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + forbiddenError);
-
-                SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
-
-                mTaskCallback.executeCallbackSuccess(JobTask.this);
+            protected void onFailure(int code, String error) {
+                if (code == ErrorCode.FORBIDDEN) {
+                    Intent intent = new Intent(JobTask.ACTION_SYNC);
+                    intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
+                    LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
+                    LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + error);
+                    SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                    mTaskCallback.executeCallbackSuccess(JobTask.this);
+                } else {
+                    LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 令牌失败,进入队列末尾等待重新上传  错误信息=" + error);
+                    mTaskCallback.executeCallbackFailed(JobTask.this);
+                }
             }
         });
     }

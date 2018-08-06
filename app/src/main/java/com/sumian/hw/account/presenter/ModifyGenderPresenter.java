@@ -76,7 +76,7 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onModifyFailed(error);
             }
 

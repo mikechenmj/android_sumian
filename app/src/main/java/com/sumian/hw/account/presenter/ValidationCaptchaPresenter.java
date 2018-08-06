@@ -66,7 +66,7 @@ public class ValidationCaptchaPresenter implements ValidationCaptchaContract.Pre
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onCaptchaFailed(error);
             }
 
@@ -81,16 +81,16 @@ public class ValidationCaptchaPresenter implements ValidationCaptchaContract.Pre
     public void doValidationCaptcha(ValidationCaptchaBody validationCaptchaBody) {
 
         ValidationCaptchaContract.View view = checkView();
-        if (view == null) return;
-
+        if (view == null) {
+            return;
+        }
         SleepyApi sleepyApi = checkApi();
-        if (sleepyApi == null) return;
-
+        if (sleepyApi == null) {
+            return;
+        }
         view.onBegin();
-
         Call<Ticket> call = sleepyApi.doValidationCaptcha(validationCaptchaBody);
         this.mCalls.add(call);
-
         call.enqueue(new BaseResponseCallback<Ticket>() {
             @Override
             protected void onSuccess(Ticket response) {
@@ -98,7 +98,7 @@ public class ValidationCaptchaPresenter implements ValidationCaptchaContract.Pre
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onValidationCaptchaFailed(error);
             }
 

@@ -119,7 +119,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                             }
 
                             @Override
-                            protected void onFailure(String error) {
+                            protected void onFailure(int code, String error) {
                             }
                         });
                     }
@@ -254,7 +254,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     }
 
                     @Override
-                    protected void onFailure(String error) {
+                    protected void onFailure(int code, String error) {
 
                     }
                 });

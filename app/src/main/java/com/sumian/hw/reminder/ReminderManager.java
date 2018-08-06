@@ -46,7 +46,7 @@ public class ReminderManager {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
             }
 
             @Override

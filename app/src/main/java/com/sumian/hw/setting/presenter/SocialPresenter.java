@@ -107,7 +107,7 @@ public class SocialPresenter implements SocialContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onFailure(error);
             }
 
@@ -115,12 +115,6 @@ public class SocialPresenter implements SocialContract.Presenter {
             protected void onFinish() {
                 super.onFinish();
                 view.onFinish();
-            }
-
-            @Override
-            protected void onNotFound(String error) {
-                super.onNotFound(error);
-                view.onFailure(error);
             }
         });
         this.mCall = call;

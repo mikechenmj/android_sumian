@@ -8,6 +8,7 @@ import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.network.callback.ErrorCode;
 import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.network.response.FirmwareInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
@@ -15,6 +16,7 @@ import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.network.response.Error;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -96,7 +98,7 @@ public class VersionPresenter implements VersionContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 if (finalView != null) {
                     finalView.onFailure(error);
                 }
@@ -125,7 +127,7 @@ public class VersionPresenter implements VersionContract.Presenter {
             if (versionInfo != null) {//服务器有固件版本信息
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
                     versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                        App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                            App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
                     if (versionType == MONITOR_VERSION_TYPE) {
                         AppManager.getVersionModel().notifyMonitorDot(true);
                     } else {
@@ -137,7 +139,7 @@ public class VersionPresenter implements VersionContract.Presenter {
                 }
             } else {
                 versionInfo = new VersionInfo().setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                    App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                        App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
                 notifyVersionDot(versionType);
             }
         } else {
@@ -215,26 +217,23 @@ public class VersionPresenter implements VersionContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
-                if (finalView != null)
+            protected void onFailure(int code, String error) {
+                if (code == ErrorCode.NOT_FOUND) {
+                    AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
+                    appUpgradeInfo.version = packageInfo.versionName;
+                    if (finalView != null)
+                        finalView.onSyncAppVersionCallback(appUpgradeInfo);
+                    AppManager.getVersionModel().notifyAppDot(false);
+                } else if (finalView != null) {
                     finalView.onFailure(error);
+                }
             }
 
             @Override
             protected void onFinish() {
-                if (finalView != null)
+                if (finalView != null) {
                     finalView.onFinish();
-            }
-
-            @Override
-            protected void onNotFound(String error) {
-                super.onNotFound(error);
-                AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
-                appUpgradeInfo.version = packageInfo.versionName;
-                if (finalView != null)
-                    finalView.onSyncAppVersionCallback(appUpgradeInfo);
-
-                AppManager.getVersionModel().notifyAppDot(false);
+                }
             }
         });
     }

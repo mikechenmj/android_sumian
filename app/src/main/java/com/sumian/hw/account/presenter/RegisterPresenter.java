@@ -71,7 +71,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onRegisterFailed(error);
             }
 
@@ -106,7 +106,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onCaptchaFailed(error);
             }
 

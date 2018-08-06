@@ -60,7 +60,7 @@ public class RestPwdPresenter implements ResetPwdContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onResetPwdFailed(error);
             }
 

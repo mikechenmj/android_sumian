@@ -87,7 +87,7 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onAddReminderFailed(error);
             }
 
@@ -147,7 +147,7 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onAddReminderFailed(error);
             }
 
@@ -189,7 +189,7 @@ public class SleepReminderPresenter implements SleepReminderContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onModifyReminderFailed(error);
             }
 

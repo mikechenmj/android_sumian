@@ -101,7 +101,7 @@ public class WeeklyReportPresenter implements WeeklyReportContact.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 mView.onFailure(error);
             }
 

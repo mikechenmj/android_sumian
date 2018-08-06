@@ -67,7 +67,7 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.loginFailed(error);
             }
 

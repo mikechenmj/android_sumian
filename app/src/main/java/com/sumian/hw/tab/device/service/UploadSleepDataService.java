@@ -87,7 +87,7 @@ public class UploadSleepDataService extends IntentService {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 if (mCount > 5) {
                     mCount = 0;
                     return;

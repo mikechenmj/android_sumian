@@ -75,7 +75,7 @@ public class LogJobIntentService extends JobIntentService {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
             }
         });
     }

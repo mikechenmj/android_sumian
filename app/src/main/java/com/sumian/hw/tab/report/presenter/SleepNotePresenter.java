@@ -58,7 +58,7 @@ public class SleepNotePresenter implements SleepNoteContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onSyncSleepNoteOptionsFailed(error);
             }
 
@@ -89,7 +89,7 @@ public class SleepNotePresenter implements SleepNoteContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onUploadDiaryFailed(error);
             }
 

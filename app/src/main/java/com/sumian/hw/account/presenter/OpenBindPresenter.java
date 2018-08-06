@@ -76,7 +76,7 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onFailure(error);
             }
 
@@ -109,7 +109,7 @@ public class OpenBindPresenter implements OpenBindContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onCaptchaFailed(error);
             }
 

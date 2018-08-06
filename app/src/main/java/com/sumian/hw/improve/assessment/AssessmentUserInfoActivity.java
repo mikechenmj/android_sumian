@@ -189,7 +189,7 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
                 }
 
                 @Override
-                protected void onFailure(String error) {
+                protected void onFailure(int code, String error) {
                     ToastHelper.show(error);
                 }
             });

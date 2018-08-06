@@ -129,7 +129,7 @@ public class MonthSleepPresenter implements MonthSleepContract.Presenter {
             }
 
             @Override
-            protected void onFailure(String error) {
+            protected void onFailure(int code, String error) {
                 view.onSyncMonthSleepReportFailed(error);
             }
 

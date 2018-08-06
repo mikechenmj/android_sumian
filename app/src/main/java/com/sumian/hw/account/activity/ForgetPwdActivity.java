@@ -85,6 +85,7 @@ public class ForgetPwdActivity extends BaseActivity implements View.OnClickListe
             }
             this.mPresenter.doCaptcha(new CaptchaBody().setMobile(mMobile));
         } else if (id == R.id.bt_ok) {
+            mMobile = this.mEtMobile.getText().toString().trim();
             String captcha = this.mEtCaptcha.getText().toString().trim();
             if (TextUtils.isEmpty(captcha)) {
                 ToastHelper.show(R.string.captcha_error_hint);

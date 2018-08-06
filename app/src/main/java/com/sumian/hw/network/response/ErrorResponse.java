@@ -2,6 +2,8 @@ package com.sumian.hw.network.response;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by jzz
  * on 2017/9/30
@@ -10,27 +12,28 @@ import android.text.TextUtils;
  */
 
 public class ErrorResponse {
-
-    private int status_code;
+    @SerializedName("status_code")
+    private int code;
     private String message;
+    // 兼容性数据，有的网络请求有error info，有个没有
     private ErrorInfo error;
 
-    public int getStatus_code() {
-        return status_code;
+    public int getCode() {
+        if (error != null) {
+            return error.getCode();
+        }
+        return code;
     }
 
-    public void setStatus_code(int status_code) {
-        this.status_code = status_code;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getMessage() {
-        if (!TextUtils.isEmpty(message)) {
-            return message;
-        }
         if (error != null) {
             return error.getUser_message();
         }
-        return "Error unknown";
+        return message;
     }
 
     public void setMessage(String message) {
@@ -48,9 +51,8 @@ public class ErrorResponse {
     @Override
     public String toString() {
         return "ErrorResponse{" +
-                "status_code=" + status_code +
+                "code=" + code +
                 ", message='" + message + '\'' +
                 '}';
     }
-
 }

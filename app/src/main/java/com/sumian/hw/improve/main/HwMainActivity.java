@@ -22,6 +22,7 @@ import com.sumian.hw.improve.main.bean.PushReport;
 import com.sumian.hw.improve.report.ReportFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.network.callback.ErrorCode;
 import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.setting.dialog.UpgradeDialog;
@@ -138,7 +139,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
                 }
 
                 @Override
-                protected void onFailure(String error) {
+                protected void onFailure(int code, String error) {
 
                 }
             });
@@ -198,17 +199,12 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
             }
 
             @Override
-            protected void onFailure(String error) {
-
-            }
-
-            @Override
-            protected void onNotFound(String error) {
-                super.onNotFound(error);
-                AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
-                appUpgradeInfo.version = packageInfo.versionName;
-
-                AppManager.getVersionModel().notifyAppDot(false);
+            protected void onFailure(int code, String error) {
+                if (code == ErrorCode.NOT_FOUND) {
+                    AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
+                    appUpgradeInfo.version = packageInfo.versionName;
+                    AppManager.getVersionModel().notifyAppDot(false);
+                }
             }
         });
     }
