@@ -10,6 +10,7 @@ import com.sumian.hw.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.HwApplicationDelegate;
+import com.sumian.sleepdoctor.utils.JsonUtil;
 
 import java.io.IOException;
 
@@ -40,7 +41,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
             }
             try {
                 String errorJson = errorBody.string();
-                ErrorResponse errorResponse = JSON.parseObject(errorJson, ErrorResponse.class);
+                ErrorResponse errorResponse = JsonUtil.fromJson(errorJson, ErrorResponse.class);
                 if (errorResponse == null) {
                     errorUnknown();
                 } else {

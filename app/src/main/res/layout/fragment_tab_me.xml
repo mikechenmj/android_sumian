@@ -85,7 +85,7 @@
                 android:id="@+id/dv_my_evaluation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/my_evaluation"
                 app:type_icon="@mipmap/ic_my_evaluation" />
@@ -103,10 +103,14 @@
                 android:id="@+id/dv_electric_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/electric_report"
                 app:type_icon="@mipmap/ic_electric_report" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10" />
 
             <com.sumian.sleepdoctor.widget.divider.SettingDividerView
                 android:id="@+id/dv_setting"
