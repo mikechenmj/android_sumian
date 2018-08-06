@@ -53,9 +53,9 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
                         mView?.bindOpenSocialSuccess(response)
                     }
 
-                    override fun onFailure(errorResponse: ErrorResponse) {
-                        mView?.onFailure(errorResponse.message)
-                        ToastUtils.showShort(errorResponse.message)
+                    override fun onFailure(code: Int, message: String) {
+                        mView?.onFailure(message)
+                        ToastUtils.showShort(message)
                     }
 
                     override fun onFinish() {
@@ -74,8 +74,8 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
         val call = AppManager.getHttpService().getCaptcha(mobile)
         addCall(call)
         call.enqueue(object : BaseResponseCallback<Unit>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onFailure(errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onFailure(message)
             }
 
             override fun onSuccess(response: Unit?) {

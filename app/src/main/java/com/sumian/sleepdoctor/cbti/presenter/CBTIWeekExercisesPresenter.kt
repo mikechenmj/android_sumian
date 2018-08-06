@@ -44,8 +44,8 @@ class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.Vie
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView.onGetCBTIWeekPracticeFailed(errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView.onGetCBTIWeekPracticeFailed(message)
             }
 
             override fun onFinish() {

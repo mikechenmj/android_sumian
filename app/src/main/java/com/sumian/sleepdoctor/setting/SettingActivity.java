@@ -124,7 +124,7 @@ public class SettingActivity extends BaseActivity implements TitleBar.OnBackClic
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+            protected void onFailure(int code, @NonNull String message) {
                 ToastUtils.showShort(R.string.logout_failed_please_check_network);
             }
         });

@@ -56,8 +56,8 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                mView.onFailure(errorResponse.getMessage());
+            protected void onFailure(int code, @NonNull String message) {
+                mView.onFailure(message);
             }
 
             @Override

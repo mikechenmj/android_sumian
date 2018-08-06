@@ -44,8 +44,8 @@ public class NotificationViewModel extends ViewModel {
                     }
 
                     @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                        LogUtils.d(errorResponse);
+                    protected void onFailure(int code, @NonNull String message) {
+                        LogUtils.d(message);
                     }
 
                     @Override

@@ -52,8 +52,8 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetCBTIPlayAuthFailed(error = errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onGetCBTIPlayAuthFailed(error = message)
             }
 
             override fun onFinish() {
@@ -79,8 +79,8 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onUploadLessonLogFailed(error = errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onUploadLessonLogFailed(error = message)
             }
 
             override fun onFinish() {
@@ -136,8 +136,8 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetCBTINextPlayAuthFailed(error = errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onGetCBTINextPlayAuthFailed(error = message)
             }
 
             override fun onFinish() {

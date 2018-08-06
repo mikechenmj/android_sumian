@@ -61,8 +61,8 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
             }
 
             @Override
-            protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                mView.onGetUserInfoFailed(errorResponse.getMessage());
+            protected void onFailure(int code, @NonNull String message) {
+                mView.onGetUserInfoFailed(message);
             }
 
             @Override
@@ -110,8 +110,8 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                ToastUtils.showShort(errorResponse.getMessage());
+            protected void onFailure(int code, @NonNull String message) {
+                ToastUtils.showShort(message);
                 mView.onFinish();
             }
         });
@@ -134,8 +134,8 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                mView.onBindSocialFailed(errorResponse.getMessage());
+            protected void onFailure(int code, @NonNull String message) {
+                mView.onBindSocialFailed(message);
             }
 
             @Override
@@ -159,8 +159,8 @@ public class UserInfoPresenter implements UserInfoContract.Presenter {
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                mView.onUnBindWechatFailed(errorResponse.getMessage());
+            protected void onFailure(int code, @NonNull String message) {
+                mView.onUnBindWechatFailed(message);
             }
 
             @Override

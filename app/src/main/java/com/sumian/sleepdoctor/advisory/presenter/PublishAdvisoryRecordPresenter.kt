@@ -76,9 +76,9 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
                 mView?.onPublishAdvisoryRecordSuccess(response)
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
+            override fun onFailure(code: Int, message: String) {
                 Log.e(TAG, "上传失败")
-                mView?.onPublishAdvisoryRecordFailed(error = errorResponse.message)
+                mView?.onPublishAdvisoryRecordFailed(error = message)
             }
 
             override fun onFinish() {
@@ -112,8 +112,8 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
                 mView?.onGetPublishUploadStsSuccess("准备开始上传图片,请稍后")
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetPublishUploadStsFailed(error = errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onGetPublishUploadStsFailed(error = message)
             }
 
             override fun onFinish() {
@@ -141,8 +141,8 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
                 mView?.onGetLastAdvisorySuccess(response)
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetLastAdvisoryFailed(error = errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onGetLastAdvisoryFailed(error = message)
             }
 
             override fun onFinish() {

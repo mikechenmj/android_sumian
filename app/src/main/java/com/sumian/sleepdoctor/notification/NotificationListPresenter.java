@@ -3,6 +3,7 @@ package com.sumian.sleepdoctor.notification;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.hw.network.callback.ErrorCode;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.network.response.ErrorResponse;
@@ -46,9 +47,9 @@ public class NotificationListPresenter implements NotificationListContract.Prese
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                LogUtils.d(errorResponse);
-                mView.onLoadMore(null, errorResponse.isNotFound());
+            protected void onFailure(int code, @NonNull String message) {
+                LogUtils.d(message);
+                mView.onLoadMore(null, code == ErrorCode.NOT_FOUND);
             }
         });
         addCall(call);
@@ -71,9 +72,9 @@ public class NotificationListPresenter implements NotificationListContract.Prese
                     }
 
                     @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                        LogUtils.d(errorResponse);
-                        if (errorResponse.getCode() == ErrorResponse.STATUS_CODE_ERROR_UNKNOWN) {
+                    protected void onFailure(int code, @NonNull String message) {
+                        LogUtils.d(message);
+                        if (code == ErrorResponse.STATUS_CODE_ERROR_UNKNOWN) {
                             mView.onReadSuccess(); // 成功的response body 为空，会走到onFail分支-_-||
                         }
                     }

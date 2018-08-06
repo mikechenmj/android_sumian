@@ -1,6 +1,7 @@
 package com.sumian.sleepdoctor.network.callback
 
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.hw.network.callback.ErrorCode
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
@@ -28,10 +29,6 @@ import java.io.IOException
  */
 abstract class BaseResponseCallback<T> : Callback<T> {
 
-    companion object {
-        val UNKNOWN_ERROR_RESPONSE = ErrorResponse(0, "Error unknown")
-    }
-
     override fun onResponse(call: Call<T>?, response: Response<T>?) {
         onFinish()
         if (response != null && response.isSuccessful) {
@@ -40,26 +37,30 @@ abstract class BaseResponseCallback<T> : Callback<T> {
         } else {
             val errorBody = response?.errorBody()
             if (errorBody == null) {
-                onFailure(UNKNOWN_ERROR_RESPONSE)
+                unknownError()
                 return
             }
             try {
                 val errorResponse = getErrorResponseFromErrorBody(response.code(), errorBody)
                 if (errorResponse == null) {
-                    onFailure(UNKNOWN_ERROR_RESPONSE)
+                    unknownError()
                 } else {
-                    onFailure(errorResponse)
+                    onFailure(errorResponse.code, errorResponse.message)
                     when (errorResponse.code) {
-                    //token 鉴权失败
+                        //token 鉴权失败
                         401 -> AppManager.getAccountViewModel().updateTokenInvalidState(true)
                         503 -> showSystemIsMaintainDialog()
                     }
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
-                onFailure(UNKNOWN_ERROR_RESPONSE)
+                unknownError()
             }
         }
+    }
+
+    private fun unknownError() {
+        onFailure(ErrorCode.UNKNOWN, "Error unknown")
     }
 
     override fun onFailure(call: Call<T>?, t: Throwable?) {
@@ -70,8 +71,8 @@ abstract class BaseResponseCallback<T> : Callback<T> {
             if ((it.message === "Socket closed" || it.message === "Canceled")) {
                 return
             }
-            onFailure(ErrorResponse(0, it.message
-                    ?: App.getAppContext().getString(R.string.error_request_failed_hint)))
+            onFailure(0, it.message
+                    ?: App.getAppContext().getString(R.string.error_request_failed_hint))
         }
     }
 
@@ -96,7 +97,11 @@ abstract class BaseResponseCallback<T> : Callback<T> {
 
     protected abstract fun onSuccess(response: T?)
 
-    protected abstract fun onFailure(errorResponse: ErrorResponse)
+    protected fun onFailure(errorResponse: ErrorResponse) {
+
+    }
+
+    protected abstract fun onFailure(code: Int, message: String)
 
     protected open fun onFinish() {}
 

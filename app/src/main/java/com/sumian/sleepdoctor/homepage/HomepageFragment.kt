@@ -103,7 +103,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
+            override fun onFailure(code: Int, message: String) {
 
             }
         })
@@ -165,8 +165,8 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                 showSleepUpdatedDialog()
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                ToastUtils.showShort(errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                ToastUtils.showShort(message)
             }
         })
     }
@@ -179,7 +179,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                 sleep_record_view.setSleepRecord(response)
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
+            override fun onFailure(code: Int, message: String) {
                 sleep_record_view.setSleepRecord(null)
             }
 
@@ -202,7 +202,7 @@ class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageCon
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
+            override fun onFailure(code: Int, message: String) {
 
             }
 

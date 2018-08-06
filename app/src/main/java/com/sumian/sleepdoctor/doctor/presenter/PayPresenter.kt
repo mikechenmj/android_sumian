@@ -68,8 +68,8 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onFailure(errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onFailure(message)
             }
 
             override fun onFinish() {
@@ -92,8 +92,8 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
                 mView?.onCheckOrderPayIsOk()
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onCheckOrderPayIsInvalid(errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onCheckOrderPayIsInvalid(message)
             }
 
             override fun onFinish() {

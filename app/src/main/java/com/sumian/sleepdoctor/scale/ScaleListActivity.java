@@ -99,7 +99,7 @@ public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.
                     }
 
                     @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                    protected void onFailure(int code, @NonNull String message) {
 
                     }
 

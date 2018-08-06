@@ -60,8 +60,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                        mView.onFailure(errorResponse.getMessage());
+                    protected void onFailure(int code, @NonNull String message) {
+                        mView.onFailure(message);
                     }
 
                     @Override
@@ -92,8 +92,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
 
                     @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                        mView.onFailure(errorResponse.getMessage());
+                    protected void onFailure(int code, @NonNull String message) {
+                        mView.onFailure(message);
                     }
 
                     @Override
@@ -145,10 +145,10 @@ public class LoginPresenter implements LoginContract.Presenter {
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
-                mView.onFailure(errorResponse.getMessage());
-                if (errorResponse.getCode() == 404) {
-                    mView.onNotBindCallback(errorResponse.getMessage(), mOpenUserInfo);
+            protected void onFailure(int code, @NonNull String message) {
+                mView.onFailure(message);
+                if (code == 404) {
+                    mView.onNotBindCallback(message, mOpenUserInfo);
                 }
             }
 

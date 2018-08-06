@@ -64,7 +64,7 @@ class RefundActivity : BaseActivity<BasePresenter<Any>>() {
                 setOrderInfo(response)
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
+            override fun onFailure(code: Int, message: String) {
             }
         })
     }

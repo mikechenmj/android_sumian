@@ -119,7 +119,7 @@ public class SleepRecordFragment extends BaseFragment implements CalendarView.On
             }
 
             @Override
-            protected void onFailure(@NonNull ErrorResponse errorResponse) {
+            protected void onFailure(int code, @NonNull String message) {
 
             }
         });
@@ -186,7 +186,7 @@ public class SleepRecordFragment extends BaseFragment implements CalendarView.On
                     }
 
                     @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                    protected void onFailure(int code, @NonNull String message) {
 
                     }
                 });
@@ -242,7 +242,7 @@ public class SleepRecordFragment extends BaseFragment implements CalendarView.On
                     }
 
                     @Override
-                    protected void onFailure(@NonNull ErrorResponse errorResponse) {
+                    protected void onFailure(int code, @NonNull String message) {
                         updateSleepRecordView(null);
                     }
 

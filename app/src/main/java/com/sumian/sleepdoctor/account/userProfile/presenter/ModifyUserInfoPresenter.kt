@@ -65,8 +65,8 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
                 mView.onImproveUserProfileSuccess()
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView.onFailure(errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView.onFailure(message)
             }
 
             override fun onFinish() {

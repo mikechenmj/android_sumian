@@ -71,8 +71,8 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
                 }
             }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetVersionFailed(error = errorResponse.message)
+            override fun onFailure(code: Int, message: String) {
+                mView?.onGetVersionFailed(error = message)
             }
 
             override fun onFinish() {
