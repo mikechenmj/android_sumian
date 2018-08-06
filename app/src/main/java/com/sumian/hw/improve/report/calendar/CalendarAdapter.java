@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by sm
  * on 2018/3/20.
@@ -86,9 +90,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         static final String CALENDER_GO_BACK_TODAY_ACTION = "com.sumian.app.action.GO_BACK_TODAY";
         static final String EXTRA_POSITION = "com.sumian.app.extra.POSITION";
 
+        @BindView(R.id.iv_pre)
         ImageView mIvPre;
+        @BindView(R.id.tv_date)
         TextView mTvDate;
+        @BindView(R.id.iv_next)
         ImageView mIvNext;
+        @BindView(R.id.calender)
         CalendarView mCalenderView;
 
         private PagerCalendarItem mItem;
@@ -134,15 +142,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-//            ButterKnife.bind(this, itemView);
-            mIvPre = itemView.findViewById(R.id.iv_pre);
-            mTvDate = itemView.findViewById(R.id.tv_date);
-            mIvNext = itemView.findViewById(R.id.iv_next);
-            mCalenderView = itemView.findViewById(R.id.calender);
-            itemView.findViewById(R.id.tv_go_today).setOnClickListener(this);
-            itemView.findViewById(R.id.iv_pre).setOnClickListener(this);
-            itemView.findViewById(R.id.iv_next).setOnClickListener(this);
-            itemView.findViewById(R.id.tv_all_read).setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
         public void initView(PagerCalendarItem pagerCalendarItem) {
@@ -225,39 +225,46 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     .setDrawBgDays(drawBgDays);
         }
 
+        @OnClick({R.id.tv_go_today, R.id.iv_pre, R.id.iv_next, R.id.tv_all_read})
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            int i = v.getId();
-            if (i == R.id.tv_go_today) {
-                intent.setAction(CALENDER_GO_BACK_TODAY_ACTION);
-                intent.putExtra(EXTRA_POSITION, getItemCount() - 1);
-                LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
-            } else if (i == R.id.iv_pre) {
-                intent.setAction(CALENDAR_GO_PRE_ACTION);
-                intent.putExtra(EXTRA_POSITION, getAdapterPosition() - 1);
-                LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
-            } else if (i == R.id.iv_next) {
-                intent.setAction(CALENDAR_GO_NEXT_ACTION);
-                intent.putExtra(EXTRA_POSITION, getAdapterPosition() + 1);
-                LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
-            } else if (i == R.id.tv_all_read) {
-                if (mItem.mCalendarItemSleepReports == null || mItem.mCalendarItemSleepReports.size() <= 0) {
-                    return;
-                }
-                setCalendarViewData(mItem);
-                Map<String, Object> map = new HashMap<>(0);
-                AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
-
-                    @Override
-                    protected void onSuccess(Boolean response) {
+            switch (v.getId()) {
+                case R.id.tv_go_today:
+                    intent.setAction(CALENDER_GO_BACK_TODAY_ACTION);
+                    intent.putExtra(EXTRA_POSITION, getItemCount() - 1);
+                    LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
+                    break;
+                case R.id.iv_pre:
+                    intent.setAction(CALENDAR_GO_PRE_ACTION);
+                    intent.putExtra(EXTRA_POSITION, getAdapterPosition() - 1);
+                    LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
+                    break;
+                case R.id.iv_next:
+                    intent.setAction(CALENDAR_GO_NEXT_ACTION);
+                    intent.putExtra(EXTRA_POSITION, getAdapterPosition() + 1);
+                    LocalBroadcastManager.getInstance(v.getContext()).sendBroadcast(intent);
+                    break;
+                case R.id.tv_all_read:
+                    if (mItem.mCalendarItemSleepReports == null || mItem.mCalendarItemSleepReports.size() <= 0) {
+                        return;
                     }
+                    setCalendarViewData(mItem);
+                    Map<String, Object> map = new HashMap<>(0);
+                    AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
 
-                    @Override
-                    protected void onFailure(int code, String error) {
+                        @Override
+                        protected void onSuccess(Boolean response) {
+                        }
 
-                    }
-                });
+                        @Override
+                        protected void onFailure(int code, String message) {
+
+                        }
+                    });
+                    break;
+                default:
+                    break;
             }
         }
     }

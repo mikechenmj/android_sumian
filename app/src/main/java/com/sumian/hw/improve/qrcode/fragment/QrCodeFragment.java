@@ -2,6 +2,7 @@ package com.sumian.hw.improve.qrcode.fragment;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;

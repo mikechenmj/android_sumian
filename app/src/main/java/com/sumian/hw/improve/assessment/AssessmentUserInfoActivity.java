@@ -1,7 +1,10 @@
 package com.sumian.hw.improve.assessment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +51,9 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
 
     private Boolean[] mIsBoss = new Boolean[5];
 
+    private BroadcastReceiver mReceiver;
+
+
     public static void show(Context context) {
         context.startActivity(new Intent(context, AssessmentUserInfoActivity.class));
     }
@@ -80,6 +86,18 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
                 updateUserInfoUI(token.user);
             }
         });
+
+        IntentFilter filter = new IntentFilter(ACTION_MODIFY_ASSESSMENT_USER_INFO);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (ACTION_MODIFY_ASSESSMENT_USER_INFO.equals(intent.getAction())) {
+                    UserInfo userInfo = intent.getParcelableExtra(EXTRA_ASSESSMENT_USER_INFO);
+                    onSyncCacheUserInfoSuccess(userInfo);
+                }
+            }
+        }, filter);
     }
 
     @Override
@@ -90,6 +108,8 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
                 updateUserInfoUI(token.user);
             }
         });
+
+        this.mUserInfo = AppManager.getAccountViewModel().getUserInfo();
     }
 
     @Override
@@ -210,6 +230,14 @@ public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Pr
     @Override
     public void onSyncCacheUserInfoSuccess(UserInfo userInfo) {
         updateUserInfoUI(userInfo);
+    }
+
+    @Override
+    protected void onRelease() {
+        super.onRelease();
+        if (mReceiver != null) {
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        }
     }
 
     private void updateUserInfoUI(UserInfo userInfo) {

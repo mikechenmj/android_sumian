@@ -119,8 +119,8 @@ public class HwApplicationDelegate implements Application.ActivityLifecycleCallb
     @Override
     public void onActivityResumed(Activity activity) {
         if (activity instanceof HwMainActivity ||
-            activity instanceof DaySleepDetailReportActivity ||
-            activity instanceof SleepReminderActivity) {
+                activity instanceof DaySleepDetailReportActivity ||
+                activity instanceof SleepReminderActivity) {
 
             AppManager.getOpenAnalytics().onResume(activity);
 
@@ -137,8 +137,8 @@ public class HwApplicationDelegate implements Application.ActivityLifecycleCallb
     @Override
     public void onActivityPaused(Activity activity) {
         if (activity instanceof HwMainActivity ||
-            activity instanceof DaySleepDetailReportActivity ||
-            activity instanceof SleepReminderActivity) {
+                activity instanceof DaySleepDetailReportActivity ||
+                activity instanceof SleepReminderActivity) {
 
             AppManager.getOpenAnalytics().onPause(activity);
 

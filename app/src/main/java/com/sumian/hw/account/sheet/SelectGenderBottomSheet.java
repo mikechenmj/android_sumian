@@ -23,9 +23,8 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:
  */
 
+@SuppressWarnings("ConstantConditions")
 public class SelectGenderBottomSheet extends BottomSheetView implements View.OnClickListener, ModifyUserInfoContract.View<UserInfo> {
-
-    private static final String TAG = SelectGenderBottomSheet.class.getSimpleName();
 
     private static final String FORM_KEY = "form_key";
     private static final String USER_KEY = "user_key";
@@ -62,7 +61,7 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
         super.initBundle(arguments);
         this.mFormKey = arguments.getString(FORM_KEY);
         this.mFormKey = arguments.getString(FORM_KEY);
-        this.mUserInfo = (UserInfo) arguments.getSerializable(USER_KEY);
+        this.mUserInfo = arguments.getParcelable(USER_KEY);
         this.mIsAssessment = arguments.getBoolean(IS_ASSESSMENT_KEY, false);
     }
 
@@ -104,7 +103,7 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
 
     @Override
     public void onFinish() {
-        this.mActionLoadingDialog.dismiss();
+        this.mActionLoadingDialog.dismissAllowingStateLoss();
     }
 
     @Override
@@ -140,7 +139,7 @@ public class SelectGenderBottomSheet extends BottomSheetView implements View.OnC
             mUserInfo.setGender(gender);
             Intent intent = new Intent(AssessmentUserInfoActivity.ACTION_MODIFY_ASSESSMENT_USER_INFO);
             intent.putExtra(AssessmentUserInfoActivity.EXTRA_ASSESSMENT_USER_INFO, mUserInfo);
-            boolean sendBroadcast = LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+            boolean sendBroadcast = LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
             if (sendBroadcast) {
                 dismiss();
             }

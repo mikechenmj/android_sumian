@@ -132,18 +132,6 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         if (AppManager.getAccountViewModel().isLogin()) {
             HwLeanCloudHelper.loginLeanCloud();
             HwLeanCloudHelper.registerPushService();
-            Call<Object> call = AppManager.getHwNetEngine().getHttpService().sendHeartbeats("open_app");
-            call.enqueue(new BaseResponseCallback<Object>() {
-                @Override
-                protected void onSuccess(Object response) {
-
-                }
-
-                @Override
-                protected void onFailure(int code, String error) {
-
-                }
-            });
         }
 
         AppManager.getJobScheduler().checkJobScheduler();

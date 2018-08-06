@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.sumian.blue.callback.BluePeripheralDataCallback;
@@ -48,6 +49,12 @@ public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackListe
         mBluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (mBluePeripheral == null || !mBluePeripheral.isConnected()) {
             showToast("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
+            return;
+        }
+
+        String sleepySn = AppManager.getDeviceModel().getSleepySn();
+        if (!TextUtils.isEmpty(sleepySn) && sleepySn.equals(sn)) {
+            showCenterToast("该SN码已绑定该设备");
             return;
         }
 
