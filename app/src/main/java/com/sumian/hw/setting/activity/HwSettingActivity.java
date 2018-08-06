@@ -118,8 +118,7 @@ public class HwSettingActivity extends BaseActivity implements View.OnClickListe
     protected void initData() {
         super.initData();
         mIsInit = true;
-        mPresenter.syncSleepDiary();
-        syncUserInfo();
+        getUserInfo();
     }
 
     @Override
@@ -274,7 +273,7 @@ public class HwSettingActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void syncUserInfo() {
+    private void getUserInfo() {
         Call<UserInfo> call = AppManager.getHwNetEngine().getHttpService().getUserInfo("doctor");
         call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
@@ -287,7 +286,6 @@ public class HwSettingActivity extends BaseActivity implements View.OnClickListe
                 Social social = socialites.get(0);
                 mTvWechatNickname.setText(social.getNickname());
                 mBtBindWechat.setToggleOn();
-
                 AppManager.getAccountViewModel().updateUserInfo(response);
             }
 

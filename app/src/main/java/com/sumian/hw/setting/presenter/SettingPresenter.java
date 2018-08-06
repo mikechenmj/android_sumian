@@ -56,15 +56,12 @@ public class SettingPresenter implements SettingContract.Presenter {
 
     @Override
     public void syncSleepDiary() {
-
         WeakReference<SettingContract.View> viewWeakReference = this.mViewWeakReference;
         SettingContract.View view = viewWeakReference.get();
         if (view == null) {
             return;
         }
-
         view.onBegin();
-
         Call<UserSetting> call = AppManager.getHwNetEngine().getHttpService().syncUserSetting();
         this.mCalls.add(call);
         call.enqueue(new BaseResponseCallback<UserSetting>() {
