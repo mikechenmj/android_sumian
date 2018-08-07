@@ -357,6 +357,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                 cancelDialog();
             });
         } else {
+            mDfuCount++;
             runUiThread(() -> mPresenter.upgrade(mVersionType), 1000);
         }
 

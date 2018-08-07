@@ -289,15 +289,15 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         if (isBluetoothAddress) {
             mDfuWrapper.scan2Connect(mDfuMac, () -> {
                 mDfuServiceController = new DfuServiceInitiator(dfuMac)
-                    //.setDeviceName(currentDevice.getName())
-                    //.setKeepBond(true)
-                    .setPacketsReceiptNotificationsEnabled(true)
-                    .setPacketsReceiptNotificationsValue(5)
-                    .setZip(mDownloadedFileUri)
-                    .setDisableNotification(false)
-                    .setForeground(true)
-                    //.setForceDfu(true)
-                    .start(context, DfuService.class);
+                        //.setDeviceName(currentDevice.getName())
+                        //.setKeepBond(true)
+                        .setPacketsReceiptNotificationsEnabled(true)
+                        .setPacketsReceiptNotificationsValue(5)
+                        .setZip(mDownloadedFileUri)
+                        .setDisableNotification(false)
+                        .setForeground(true)
+                        //.setForceDfu(true)
+                        .start(context, DfuService.class);
                 LogManager.appendUserOperationLog("正在启动 dfu service......");
             }, () -> {
                 VersionUpgradeContract.View view = mViewWeakReference.get();
@@ -355,7 +355,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         switch (cmdIndex) {
             case "51"://监测仪自己固件 dfu 模式开启成功
                 //CD:9D:C4:08:D8:9D --> CD:9D:C4:08:D8:9E
-                LogManager.appendMonitorLog("0x51 监测仪dfu 模式开启成功....");
+                LogManager.appendMonitorLog("0x51 监测仪dfu 模式开启成功...." + mDfuMac);
                 this.mIsEnableDfu = true;
 
                 doDfu(App.Companion.getAppContext(), mDfuMac);
@@ -368,7 +368,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                 peripheral.writeDelay(BlueCmd.cDoSleepyDfuMode(), 200);
                 break;
             case "59"://使速眠仪进入 dfu 模式开启成功
-                LogManager.appendMonitorLog("0x59 速眠仪dfu 模式开启成功....");
+                LogManager.appendMonitorLog("0x59 速眠仪dfu 模式开启成功....mac=" + mDfuMac);
                 this.mIsEnableDfu = true;
                 doDfu(App.Companion.getAppContext(), mDfuMac);
                 break;
