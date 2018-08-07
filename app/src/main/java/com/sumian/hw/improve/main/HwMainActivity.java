@@ -139,7 +139,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         });
 
         runUiThread(() -> {
-            checkAppVersion();
+//            checkAppVersion(); // todo remove comment
             syncUserInfo();
             sendHeartBeats();
         }, 200);

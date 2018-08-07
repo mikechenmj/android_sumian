@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseActivity
 import com.sumian.sleepdoctor.R
+import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.base.BasePresenter
+import com.sumian.sleepdoctor.main.MainActivity.KEY_SLEEP_RECORD_TIME
 import kotlinx.android.synthetic.main.activity_refund.*
 
 /**
@@ -17,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_refund.*
  *     version: 1.0
  * </pre>
  */
-class SleepRecordActivity : BaseActivity() {
+class SleepRecordActivity : BaseActivity<BasePresenter<Any>>() {
 
     override fun initData() {
 
@@ -45,7 +47,7 @@ class SleepRecordActivity : BaseActivity() {
         }
     }
 
-    override fun initWidget() {
+    override fun initWidget(root: android.view.View) {
         title_bar.setOnBackClickListener { onBackPressed() }
 
         val sleepRecordFragment = SleepRecordFragment.newInstance(intent?.getLongExtra(KEY_SLEEP_RECORD_TIME, 0L)
