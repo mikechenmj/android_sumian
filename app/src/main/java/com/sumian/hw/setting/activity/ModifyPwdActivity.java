@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.base.BaseActivity;
@@ -171,8 +172,10 @@ public class ModifyPwdActivity extends BaseActivity implements TitleBar.OnBackLi
 
     @Override
     public void onModifyPwdSuccess() {
-        HwLoginActivity.show(this, true);
         runUiThread(() -> ToastHelper.show(R.string.setting_set_pwd_success_hint));
+//        HwLoginActivity.show(this, true);
+        ActivityUtils.finishAllActivities();
+        ActivityUtils.startActivity(HwLoginActivity.class);
     }
 
     @Override

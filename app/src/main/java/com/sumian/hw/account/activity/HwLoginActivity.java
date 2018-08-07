@@ -14,6 +14,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.account.presenter.LoginPresenter;
 import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.request.LoginBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
@@ -123,9 +124,11 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void loginSuccess() {
-        LeanCloudManager.getAndUploadCurrentInstallation();
-        HwApplicationDelegate.goHome(this);
         runUiThread(() -> ToastHelper.show(R.string.login_success_hint));
+        LeanCloudManager.getAndUploadCurrentInstallation();
+//        HwApplicationDelegate.goHome(this);
+        ActivityUtils.finishAllActivities();
+        ActivityUtils.startActivity(HwMainActivity.class);
     }
 
     @Override
