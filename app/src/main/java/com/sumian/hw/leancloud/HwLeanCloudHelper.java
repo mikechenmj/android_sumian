@@ -29,6 +29,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Message;
+import com.hyphenate.helpdesk.Error;
 import com.hyphenate.helpdesk.callback.Callback;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
@@ -214,8 +215,6 @@ public final class HwLeanCloudHelper {
         ChatClient.getInstance().login(imId, md5Pwd, new Callback() {
             @Override
             public void onSuccess() {
-                //showCenterToast("客服连接成功...");
-                //startEasemobChatRoom();
                 if (run != null) {
                     run.run();
                 }
@@ -223,6 +222,11 @@ public final class HwLeanCloudHelper {
 
             @Override
             public void onError(int code, String error) {
+                if (code == Error.USER_ALREADY_LOGIN) {
+                    if (run != null) {
+                        run.run();
+                    }
+                }
                 LogUtils.d(error);
             }
 

@@ -1,7 +1,5 @@
 package com.sumian.hw.improve.fragment;
 
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +17,6 @@ import com.sumian.hw.setting.widget.HwSettingItemView;
 import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -47,8 +44,11 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
     TextView mTvNickname;
     @BindView(R.id.tv_age_and_gender)
     TextView mTvAgeAndGender;
+    @BindView(R.id.siv_customer_service)
+    HwSettingItemView mSivKefu;
     @BindView(R.id.siv_upgrade)
     HwSettingItemView mSivUpgrade;
+
 
     public static HwMeFragment newInstance() {
         return new HwMeFragment();
@@ -65,12 +65,7 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
         HwLeanCloudHelper.addOnAdminMsgCallback(this);
         AppManager.getVersionModel().syncAppVersion();
         AppManager.getVersionModel().registerShowDotCallback(this);
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
-            @Override
-            public void onChanged(@Nullable Token token) {
-                updateUserInfoUI(token.user);
-            }
-        });
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> updateUserInfoUI(token.user));
     }
 
     @Override
@@ -157,11 +152,6 @@ public class HwMeFragment extends BasePagerFragment implements View.OnClickListe
 
     @Override
     public void onHideMsgCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
-//        showDot(mVDotMsgNotice, adminMsgLen > 0);
-    }
-
-    private void showDot(View dot, boolean isShow) {
-        runOnUiThread(() -> dot.setVisibility(isShow ? View.VISIBLE : View.GONE));
     }
 
     private String formatGender(String gender) {

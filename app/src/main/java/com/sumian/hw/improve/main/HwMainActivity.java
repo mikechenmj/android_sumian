@@ -286,8 +286,8 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     @Override
     public void onHideMsgCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
         runUiThread(() -> {
-            this.mTabConsultant.showDot(doctorMsgLen + customerMsgLen > 0 ? android.view.View.VISIBLE :
-                    android.view.View.GONE);
+            // TODO 注释掉该功能,目前消息中心小红点变化转需求,移入下一个新迭代的新消息中心
+            // this.mTabConsultant.showDot(doctorMsgLen + customerMsgLen > 0 ? android.view.View.VISIBLE : android.view.View.GONE);
             this.mTabMe.showDot(adminMsgLen > 0 ? android.view.View.VISIBLE : android.view.View.GONE);
         });
     }
