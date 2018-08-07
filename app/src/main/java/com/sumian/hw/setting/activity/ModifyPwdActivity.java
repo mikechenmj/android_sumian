@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.base.BaseActivity;
@@ -107,20 +106,19 @@ public class ModifyPwdActivity extends BaseActivity implements TitleBar.OnBackLi
 
     @Override
     public void onBack(View v) {
-        runUiThread(this::finish);
+        finish();
     }
-
 
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.iv_old_pwd_show) {
+        int id = v.getId();
+        if (id == R.id.iv_old_pwd_show) {
             UiUtil.notifyInputType(mIvOldPwdShow, mEtOldPwd);
-        } else if (i == R.id.iv_new_pwd_show) {
+        } else if (id == R.id.iv_new_pwd_show) {
             UiUtil.notifyInputType(mIvNewPwdShow, mEtNewPwd);
-        } else if (i == R.id.iv_re_new_pwd_show) {
+        } else if (id == R.id.iv_re_new_pwd_show) {
             UiUtil.notifyInputType(mIvReNewPwdShow, mEtReNewPwd);
-        } else if (i == R.id.bt_save) {
+        } else if (id == R.id.bt_save) {
             String oldPwd = this.mEtOldPwd.getText().toString().trim();
             String newPwd = this.mEtNewPwd.getText().toString().trim();
             String reNewPwd = this.mEtReNewPwd.getText().toString().trim();
@@ -172,18 +170,16 @@ public class ModifyPwdActivity extends BaseActivity implements TitleBar.OnBackLi
 
     @Override
     public void onModifyPwdSuccess() {
-        runUiThread(() -> ToastHelper.show(R.string.setting_set_pwd_success_hint));
-//        HwLoginActivity.show(this, true);
-        ActivityUtils.finishAllActivities();
-        ActivityUtils.startActivity(HwLoginActivity.class);
+        ToastHelper.show(R.string.setting_set_pwd_success_hint);
+        HwLoginActivity.show(this, true);
+        //ActivityUtils.finishAllActivities();
+        //ActivityUtils.startActivity(HwLoginActivity.class);
     }
 
     @Override
     public void onModifyPwdFailed(String error) {
-        runUiThread(() -> {
-            mTvErrorPop.setText(error);
-            mLayPwdPop.setVisibility(View.VISIBLE);
-            ToastHelper.show(error);
-        });
+        mTvErrorPop.setText(error);
+        mLayPwdPop.setVisibility(View.VISIBLE);
+        ToastHelper.show(error);
     }
 }

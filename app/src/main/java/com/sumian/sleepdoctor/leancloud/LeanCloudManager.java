@@ -17,7 +17,6 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.main.SdWelcomeActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.network.response.ErrorResponse;
 
 import retrofit2.Call;
 
@@ -78,17 +77,16 @@ public class LeanCloudManager {
         Call<Object> call = AppManager
                 .getHttpService()
                 .uploadDeviceInfo("0", installationId, String.valueOf(Build.VERSION.SDK_INT));
-        call
-                .enqueue(new BaseResponseCallback<Object>() {
-                    @Override
-                    protected void onSuccess(Object response) {
-                        LogUtils.d(response);
-                    }
+        call.enqueue(new BaseResponseCallback<Object>() {
+            @Override
+            protected void onSuccess(Object response) {
+                LogUtils.d(response);
+            }
 
-                    @Override
-                    protected void onFailure(int code, @NonNull String message) {
-                        LogUtils.d(message);
-                    }
-                });
+            @Override
+            protected void onFailure(int code, @NonNull String message) {
+                LogUtils.d(message);
+            }
+        });
     }
 }

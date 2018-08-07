@@ -27,7 +27,6 @@ import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.setting.dialog.UpgradeDialog;
 import com.sumian.hw.upgrade.model.VersionModel;
-import com.sumian.hw.upgrade.presenter.VersionPresenter;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.nav.NavTab;
 import com.sumian.hw.widget.nav.TabButton;
@@ -44,8 +43,6 @@ import retrofit2.Call;
 
 public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeListener,
         HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
-
-    private static final String TAG = HwMainActivity.class.getSimpleName();
 
     FrameLayout mMainContainer;
     TabButton mTabDevice;
@@ -136,16 +133,17 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
 
         AppManager.getJobScheduler().checkJobScheduler();
 
-        VersionPresenter.init().syncAppVersionInfo();
-
         UIProvider.getInstance().showDotCallback(msgLength -> {
             HwLeanCloudHelper.haveCustomerMsg(msgLength);
             onShowMsgDotCallback(0, 0, msgLength);
         });
 
-        checkAppVersion();
-        syncUserInfo();
-        sendHeartBeats();
+        runUiThread(() -> {
+            checkAppVersion();
+            syncUserInfo();
+            sendHeartBeats();
+        }, 200);
+
         runUiThread(() -> HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize()), 500);
     }
 

@@ -24,7 +24,6 @@ public class AccountViewModel extends AndroidViewModel {
 
     private static final String SP_KEY_TOKEN = "token";
     private MutableLiveData<Token> mTokenLiveData = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mTokenIsInvalid = new MutableLiveData<>();
 
     public AccountViewModel(@NonNull Application application) {
         super(application);
@@ -66,7 +65,6 @@ public class AccountViewModel extends AndroidViewModel {
 
     public void updateToken(Token token) {
         mTokenLiveData.setValue(token);
-        updateTokenInvalidState(token == null);
         persistentTokenInSp();
     }
 
@@ -80,14 +78,6 @@ public class AccountViewModel extends AndroidViewModel {
 
     public String getTokenString() {
         return getToken() == null ? null : getToken().token;
-    }
-
-    public void updateTokenInvalidState(boolean tokenIsInvalid) {
-        mTokenIsInvalid.setValue(tokenIsInvalid);
-    }
-
-    public LiveData<Boolean> getLiveDataTokenInvalidState() {
-        return mTokenIsInvalid;
     }
 
     private void persistentTokenInSp() {

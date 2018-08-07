@@ -1,10 +1,11 @@
 package com.sumian.sleepdoctor.network.callback
 
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.hw.account.activity.HwLoginActivity
 import com.sumian.hw.network.callback.ErrorCode
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
-import com.sumian.sleepdoctor.app.AppManager
+import com.sumian.sleepdoctor.app.HwApplicationDelegate
 import com.sumian.sleepdoctor.network.StatusCode
 import com.sumian.sleepdoctor.network.response.ErrorInfo400
 import com.sumian.sleepdoctor.network.response.ErrorInfo499
@@ -48,7 +49,12 @@ abstract class BaseResponseCallback<T> : Callback<T> {
                     onFailure(errorResponse.code, errorResponse.message)
                     when (errorResponse.code) {
                         //token 鉴权失败
-                        401 -> AppManager.getAccountViewModel().updateTokenInvalidState(true)
+                        401 -> {
+                            if (!HwApplicationDelegate.isIsLoginActivity()) {
+                                HwLoginActivity.show(App.getAppContext(), true)
+                                HwApplicationDelegate.setIsLoginActivity(true)
+                            }
+                        }
                         503 -> showSystemIsMaintainDialog()
                     }
                 }

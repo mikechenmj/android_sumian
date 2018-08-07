@@ -237,7 +237,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def fileName = "睡眠医生-患者版${variant.flavorName}_${formatDate()}.apk"
+            def fileName = "速眠医生-患者版${variant.flavorName}_${formatDate()}.apk"
 
             println fileName
 

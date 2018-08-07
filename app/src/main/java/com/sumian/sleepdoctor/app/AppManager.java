@@ -1,15 +1,12 @@
 package com.sumian.sleepdoctor.app;
 
 import android.app.Application;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.view.Gravity;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.hyphenate.chat.ChatClient;
@@ -20,7 +17,6 @@ import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
-import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.improve.report.viewModel.ReportModel;
@@ -52,7 +48,6 @@ public final class AppManager {
     private DoctorViewModel mDoctorViewModel;
     private OpenEngine mOpenEngine;
 
-    private static volatile AppManager INSTANCE = null;
     private volatile VersionModel mVersionModel;
     private volatile DeviceModel mDeviceModel;
     private volatile ReportModel mReportModel;
@@ -120,17 +115,6 @@ public final class AppManager {
             mAccountViewModel = new AccountViewModel(context);
             mAccountViewModel.loadTokenFromSp();
         }
-        mAccountViewModel.getLiveDataTokenInvalidState().observeForever(new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean tokenIsInvalid) {
-                if (tokenIsInvalid == null) {
-                    return;
-                }
-                if (tokenIsInvalid) {
-                    ActivityUtils.startActivity(HwLoginActivity.class);
-                }
-            }
-        });
     }
 
     private void initUtils(Context context) {

@@ -1,10 +1,7 @@
 package com.sumian.hw.network.callback;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 
-import com.alibaba.fastjson.JSON;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.R;

@@ -222,8 +222,8 @@
     </style>
 
     <!--<style name="TabTextAppearance" parent="@android:style/TextAppearance">-->
-        <!--<item name="android:textSize">@dimen/font_14</item>-->
-        <!--<item name="textAllCaps">true</item>-->
+    <!--<item name="android:textSize">@dimen/font_14</item>-->
+    <!--<item name="textAllCaps">true</item>-->
     <!--</style>-->
 
     <!-- notification -->
@@ -249,11 +249,11 @@
     </style>
 
     <!--<style name="SumianDialog">-->
-        <!--<item name="android:windowMinWidthMinor">90%</item> &lt;!&ndash; 宽度屏占比 &ndash;&gt;-->
-        <!--&lt;!&ndash; 默认背景是白色的圆角矩形，改为透明 &ndash;&gt;-->
-        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
-        <!--<item name="android:windowIsFloating">true</item> &lt;!&ndash; 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 &ndash;&gt;-->
-        <!--<item name="android:windowCloseOnTouchOutside">true</item>-->
+    <!--<item name="android:windowMinWidthMinor">90%</item> &lt;!&ndash; 宽度屏占比 &ndash;&gt;-->
+    <!--&lt;!&ndash; 默认背景是白色的圆角矩形，改为透明 &ndash;&gt;-->
+    <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+    <!--<item name="android:windowIsFloating">true</item> &lt;!&ndash; 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 &ndash;&gt;-->
+    <!--<item name="android:windowCloseOnTouchOutside">true</item>-->
     <!--</style>-->
 
     <style name="SumianLoadingDialog">
@@ -291,7 +291,7 @@
         <item name="android:windowOverscan">true</item>
         <item name="android:outlineProvider">@null</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:launchMode">singleInstance</item>
+        <item name="android:launchMode">singleTop</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
         <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>

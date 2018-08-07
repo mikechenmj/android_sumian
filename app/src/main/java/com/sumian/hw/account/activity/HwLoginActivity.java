@@ -14,7 +14,6 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.account.presenter.LoginPresenter;
 import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.request.LoginBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
@@ -50,13 +49,13 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
 
     public static void show(Context context) {
         Intent intent = new Intent(context, HwLoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     public static void show(Context context, boolean isLauncher) {
         Intent intent = new Intent(context, HwLoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(KEY_LAUNCHER, isLauncher);
         context.startActivity(intent);
     }
@@ -124,11 +123,11 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void loginSuccess() {
-        runUiThread(() -> ToastHelper.show(R.string.login_success_hint));
+        ToastHelper.show(R.string.login_success_hint);
         LeanCloudManager.getAndUploadCurrentInstallation();
-//        HwApplicationDelegate.goHome(this);
-        ActivityUtils.finishAllActivities();
-        ActivityUtils.startActivity(HwMainActivity.class);
+        HwApplicationDelegate.goHome(this);
+        // ActivityUtils.finishAllActivities();
+        // ActivityUtils.startActivity(HwMainActivity.class);
     }
 
     @Override
@@ -149,7 +148,7 @@ public class HwLoginActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onFinish() {
-        mActionLoadingDialog.dismiss();
+        mActionLoadingDialog.dismissAllowingStateLoss();
     }
 
     @Override
