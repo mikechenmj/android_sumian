@@ -14,7 +14,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public interface BasePresenter {
+public interface HwBasePresenter {
 
     Handler mMainHandler = new Handler(Looper.getMainLooper());//主线程切换
 

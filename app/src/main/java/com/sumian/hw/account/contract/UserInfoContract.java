@@ -2,8 +2,8 @@ package com.sumian.hw.account.contract;
 
 import android.support.annotation.StringRes;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 /**
@@ -14,7 +14,7 @@ import com.sumian.sleepdoctor.account.bean.UserInfo;
 
 public interface UserInfoContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onSyncCacheUserInfoSuccess(UserInfo userInfo);
 
@@ -27,7 +27,7 @@ public interface UserInfoContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         //   void doLoadCacheUserInfo();
 

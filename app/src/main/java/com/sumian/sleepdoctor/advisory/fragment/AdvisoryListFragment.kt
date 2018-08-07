@@ -13,7 +13,7 @@ import com.sumian.sleepdoctor.advisory.adapter.AdvisoryListAdapter
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.contract.AdvisoryListContract
 import com.sumian.sleepdoctor.advisory.presenter.AdvisoryListPresenter
-import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.base.SdBaseFragment
 import kotlinx.android.synthetic.main.activity_main_advisory_list.*
 
 /**
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:
  **/
-class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener {
+class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener {
 
     companion object {
 
@@ -31,7 +31,7 @@ class AdvisoryListFragment : BaseFragment<AdvisoryListPresenter>(), AdvisoryList
         fun newInstance(advisoryType: Int = Advisory.UNUSED_TYPE): Fragment? {
             val args = Bundle()
             args.putInt(ARGS_ADVISORY_TYPE, advisoryType)
-            return BaseFragment.newInstance(AdvisoryListFragment::class.java, args)
+            return SdBaseFragment.newInstance(AdvisoryListFragment::class.java, args)
         }
     }
 

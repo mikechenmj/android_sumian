@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.base.SdBaseFragment
 import com.sumian.sleepdoctor.cbti.activity.CBTICoursePlayActivity
 import com.sumian.sleepdoctor.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
 import com.sumian.sleepdoctor.cbti.adapter.CourseAdapter
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class CourseFragment : BaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener {
+class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener {
 
     private lateinit var mCourseAdapter: CourseAdapter
 

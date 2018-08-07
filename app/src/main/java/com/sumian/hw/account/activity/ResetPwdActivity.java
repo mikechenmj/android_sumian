@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ResetPwdContract;
 import com.sumian.hw.account.presenter.RestPwdPresenter;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.network.request.ResetPwdBody;
 import com.sumian.hw.widget.TitleBar;
@@ -27,7 +27,7 @@ import com.sumian.sleepdoctor.R;
  * desc:
  */
 
-public class ResetPwdActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
+public class ResetPwdActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
         ResetPwdContract.View {
 
     public static final String MOBILE_KEY = "mobile";

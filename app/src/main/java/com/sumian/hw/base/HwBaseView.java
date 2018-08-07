@@ -7,7 +7,7 @@ package com.sumian.hw.base;
  * desc:
  */
 
-public interface BaseView<Presenter> {
+public interface HwBaseView<Presenter> {
 
     void setPresenter(Presenter presenter);
 }

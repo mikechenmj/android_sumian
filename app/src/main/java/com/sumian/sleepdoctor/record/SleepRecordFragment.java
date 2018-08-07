@@ -7,34 +7,22 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseFragment;
-import com.sumian.sleepdoctor.constants.SpKeys;
-import com.sumian.sleepdoctor.doctor.activity.DoctorServiceWebActivity;
-import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
+import com.sumian.sleepdoctor.base.SdBaseFragment;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.record.bean.DoctorServiceList;
 import com.sumian.sleepdoctor.record.bean.SleepRecord;
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary;
-import com.sumian.sleepdoctor.scale.ScaleListActivity;
 import com.sumian.sleepdoctor.record.widget.SleepRecordView;
-import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
-import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
-import com.sumian.sleepdoctor.widget.doctor.DoctorServiceItemView;
 import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarView;
 import com.sumian.sleepdoctor.record.calendar.custom.SleepCalendarViewWrapper;
 
@@ -45,7 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.Call;
 
-public class SleepRecordFragment extends BaseFragment implements CalendarView.OnDateClickListener {
+public class SleepRecordFragment extends SdBaseFragment implements CalendarView.OnDateClickListener {
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
     public static final int PAGE_SIZE = 12;

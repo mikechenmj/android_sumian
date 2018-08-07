@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
@@ -20,7 +20,7 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:
  */
 
-public class HwWelcomeActivity extends BaseActivity {
+public class HwWelcomeActivity extends HwBaseActivity {
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, HwWelcomeActivity.class));

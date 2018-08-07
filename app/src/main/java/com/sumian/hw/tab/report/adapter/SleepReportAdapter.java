@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.sumian.hw.base.BaseFragment;
+import com.sumian.hw.base.HwBaseFragment;
 
 /**
  * Created by jzz
@@ -14,9 +14,9 @@ import com.sumian.hw.base.BaseFragment;
 
 public class SleepReportAdapter extends FragmentPagerAdapter {
 
-    private BaseFragment[] mBaseFragments;
+    private HwBaseFragment[] mBaseFragments;
 
-    public SleepReportAdapter(FragmentManager fm, BaseFragment[] baseFragments) {
+    public SleepReportAdapter(FragmentManager fm, HwBaseFragment[] baseFragments) {
         super(fm);
         this.mBaseFragments = baseFragments;
     }

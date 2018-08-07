@@ -8,18 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.avos.avoscloud.AVInstallation;
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.login.LoginActivity;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.setting.version.VersionActivity;
 import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.UiUtils;
@@ -37,7 +34,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public class SettingActivity extends BaseActivity implements TitleBar.OnBackClickListener, View.OnClickListener {
+public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackClickListener, View.OnClickListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;

@@ -13,7 +13,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.account.presenter.LoginPresenter;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.network.request.LoginBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
@@ -29,7 +29,7 @@ import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
  * desc:
  */
 
-public class HwLoginActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
+public class HwLoginActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
         LoginContract.View {
 
     private static final String TAG = HwLoginActivity.class.getSimpleName();

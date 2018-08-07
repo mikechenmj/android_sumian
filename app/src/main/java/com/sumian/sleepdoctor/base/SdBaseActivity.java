@@ -42,9 +42,9 @@ import retrofit2.Call;
  * desc:
  */
 
-public abstract class BaseActivity<Presenter extends BasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver, ActivityLauncher {
+public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver, ActivityLauncher {
 
-    private static final String TAG = BaseActivity.class.getSimpleName();
+    private static final String TAG = SdBaseActivity.class.getSimpleName();
     protected View mRoot;
     protected Presenter mPresenter;
     protected Activity mActivity;
@@ -52,11 +52,11 @@ public abstract class BaseActivity<Presenter extends BasePresenter> extends AppC
     private Set<Call> mCalls = new HashSet<>();
     private LoadingDialog mLoadingDialog;
 
-    public static void show(Context context, Class<? extends BaseActivity> clx) {
+    public static void show(Context context, Class<? extends SdBaseActivity> clx) {
         show(context, clx, null);
     }
 
-    public static void show(Context context, Class<? extends BaseActivity> clx, Bundle extras) {
+    public static void show(Context context, Class<? extends SdBaseActivity> clx, Bundle extras) {
         Intent intent = new Intent(context, clx);
         if (extras != null) {
             intent.putExtras(extras);

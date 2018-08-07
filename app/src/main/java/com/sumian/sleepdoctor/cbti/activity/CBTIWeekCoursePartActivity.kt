@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.cbti.bean.CBTIMeta
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sleepdoctor.cbti.fragment.CourseFragment
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  * desc: CBTI 周阶段课程模块  包含一周的课时/练习  e.g.  1-1/1-2/1-3   2-1/2-2/2-3
  *
  */
-class CBTIWeekCoursePartActivity : BaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener, Observer<CBTIMeta> {
+class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener, Observer<CBTIMeta> {
 
     private var mChapterId = 1
 

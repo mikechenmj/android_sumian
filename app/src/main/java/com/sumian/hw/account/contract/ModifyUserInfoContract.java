@@ -1,7 +1,7 @@
 package com.sumian.hw.account.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 
 /**
  * Created by jzz
@@ -20,7 +20,7 @@ public interface ModifyUserInfoContract {
     String KEY_CAREER="career";
 
 
-    interface View<T> extends BaseNetView<Presenter> {
+    interface View<T> extends HwBaseNetView<Presenter> {
 
         void onModifySuccess(T t);
 
@@ -28,7 +28,7 @@ public interface ModifyUserInfoContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doModifyUserInfo(String formKey, Object formValue);
 

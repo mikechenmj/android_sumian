@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.base.BaseFragment;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
@@ -16,7 +16,7 @@ import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import java.util.Locale;
 
 @SuppressWarnings("ConstantConditions")
-public class InputSnFragment extends BaseFragment implements View.OnClickListener {
+public class InputSnFragment extends HwBaseFragment implements View.OnClickListener {
 
     TextView tvPopError;
     FrameLayout layPop;

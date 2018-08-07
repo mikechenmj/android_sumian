@@ -3,8 +3,8 @@ package com.sumian.sleepdoctor.cbti.activity
 import android.app.Activity
 import android.content.Intent
 import com.google.gson.reflect.TypeToken
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseWebViewActivity
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity
 import com.sumian.sleepdoctor.doctor.activity.PaymentActivity
 import com.sumian.sleepdoctor.doctor.bean.DoctorServiceShopData
 import com.sumian.sleepdoctor.event.CBTIServiceBoughtEvent
@@ -23,7 +23,7 @@ import com.sumian.sleepdoctor.widget.webview.SWebView
  * desc:
  *
  */
-class CBTIIntroductionWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
+class CBTIIntroductionWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
     private var mStopped = false;
 
     companion object {

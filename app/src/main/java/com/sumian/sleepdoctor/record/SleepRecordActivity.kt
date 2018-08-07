@@ -5,9 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.BaseActivity
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.main.MainActivity.KEY_SLEEP_RECORD_TIME
+import com.sumian.sleepdoctor.base.SdBaseActivity
+import com.sumian.sleepdoctor.base.SdBasePresenter
 import kotlinx.android.synthetic.main.activity_refund.*
 
 /**
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_refund.*
  *     version: 1.0
  * </pre>
  */
-class SleepRecordActivity : BaseActivity<BasePresenter<Any>>() {
+class SleepRecordActivity : SdBaseActivity<SdBasePresenter<Any>>() {
 
     override fun initData() {
 

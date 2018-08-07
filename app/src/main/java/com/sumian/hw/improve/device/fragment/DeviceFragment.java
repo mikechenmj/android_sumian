@@ -18,7 +18,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.improve.device.contract.DeviceContract;
@@ -51,7 +51,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> implements DeviceGuideStepOneView.OnDeviceGuideCallback, DeviceContract.View, DeviceStatusView.OnDeviceStatusCallback, EasyPermissions.PermissionCallbacks {
+public class DeviceFragment extends HwBasePagerFragment<DeviceContract.Presenter> implements DeviceGuideStepOneView.OnDeviceGuideCallback, DeviceContract.View, DeviceStatusView.OnDeviceStatusCallback, EasyPermissions.PermissionCallbacks {
 
     public static final int REQUEST_LOCATION_AND_WRITE_PERMISSIONS = 0x01;   // DeviceGuideStepOneView 用到
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION = 0x02; // DeviceStatusView 用到

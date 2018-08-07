@@ -9,11 +9,10 @@ import com.sumian.sleepdoctor.BuildConfig
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BasePresenter.mCalls
+import com.sumian.sleepdoctor.base.SdBasePresenter.mCalls
 import com.sumian.sleepdoctor.doctor.bean.PayOrder
 import com.sumian.sleepdoctor.doctor.contract.PayContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.order.OrderDetail
 import org.json.JSONException
 import org.json.JSONObject

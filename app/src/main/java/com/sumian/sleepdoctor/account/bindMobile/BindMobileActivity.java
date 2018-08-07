@@ -11,7 +11,7 @@ import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class BindMobileActivity extends BaseActivity<BindMobilePresenter> implements View.OnClickListener, BindMobileContract.View {
+public class BindMobileActivity extends SdBaseActivity<BindMobilePresenter> implements View.OnClickListener, BindMobileContract.View {
 
     public static final String EXTRA_OPEN_USER_INFO = "open_user_info";
     public static final String EXTRA_SHARE_MEDIA = "share_media";

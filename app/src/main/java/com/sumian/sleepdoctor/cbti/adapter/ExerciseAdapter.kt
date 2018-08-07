@@ -10,7 +10,7 @@ import android.widget.TextView
 import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.holder.BaseViewHolder
+import com.sumian.sleepdoctor.base.holder.SdBaseViewHolder
 import com.sumian.sleepdoctor.cbti.bean.Exercise
 
 /**
@@ -30,7 +30,7 @@ class ExerciseAdapter(context: Context) : BaseRecyclerAdapter<Exercise>(context)
         (holder as ViewHolder).initView(item)
     }
 
-    class ViewHolder(itemView: View) : BaseViewHolder<Exercise>(itemView) {
+    class ViewHolder(itemView: View) : SdBaseViewHolder<Exercise>(itemView) {
 
         @BindView(R.id.tv_title)
         lateinit var mTvTitle: TextView

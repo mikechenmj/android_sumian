@@ -4,8 +4,8 @@ import android.app.Activity;
 
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.base.BasePresenter;
-import com.sumian.sleepdoctor.base.BaseView;
+import com.sumian.sleepdoctor.base.SdBasePresenter;
+import com.sumian.sleepdoctor.base.SdBaseView;
 import com.umeng.socialize.UMAuthListener;
 
 /**
@@ -23,7 +23,7 @@ import com.umeng.socialize.UMAuthListener;
  */
 public interface UserInfoContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends SdBaseView<Presenter> {
 
         void onGetUserInfoSuccess(UserInfo userProfile);
 
@@ -39,7 +39,7 @@ public interface UserInfoContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends SdBasePresenter {
 
         void getUserInfo();
 

@@ -9,14 +9,13 @@ import com.sumian.common.image.ImageLoader
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.base.SdBaseFragment
 import com.sumian.sleepdoctor.event.*
 import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sleepdoctor.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.record.FillSleepRecordActivity
 import com.sumian.sleepdoctor.record.SleepRecordActivity
 import com.sumian.sleepdoctor.record.bean.SleepRecord
@@ -34,7 +33,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : BaseFragment<HomepageContract.Presenter>(), HomepageContract.View {
+class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View {
     private var mSleepPrescriptionWrapper: SleepPrescriptionWrapper? = null
     private var mHttpService = AppManager.getHttpService()!!
 

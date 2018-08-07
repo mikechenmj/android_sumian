@@ -1,7 +1,7 @@
 package com.sumian.hw.setting.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 
 /**
  * Created by jzz
@@ -12,14 +12,14 @@ import com.sumian.hw.base.BasePresenter;
 public interface SocialContract {
 
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onUnbindSocialSuccess();
 
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void unbindSocial(int socialType);
 

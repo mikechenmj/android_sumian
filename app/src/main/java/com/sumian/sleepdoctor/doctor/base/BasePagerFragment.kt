@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.doctor.base
 
-import com.sumian.sleepdoctor.base.BaseFragment
-import com.sumian.sleepdoctor.base.BasePresenter
+import com.sumian.sleepdoctor.base.SdBaseFragment
+import com.sumian.sleepdoctor.base.SdBasePresenter
 import com.sumian.sleepdoctor.doctor.callback.OnEnabletabCallback
 
 /**
@@ -16,5 +16,5 @@ import com.sumian.sleepdoctor.doctor.callback.OnEnabletabCallback
  *
  * </pre>
  */
-abstract class BasePagerFragment<Presenter : BasePresenter<Any>> : BaseFragment<Presenter>(), OnEnabletabCallback {
+abstract class BasePagerFragment<Presenter : SdBasePresenter<Any>> : SdBaseFragment<Presenter>(), OnEnabletabCallback {
 }

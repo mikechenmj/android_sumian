@@ -1,7 +1,7 @@
 package com.sumian.hw.improve.report.calendar;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ import java.util.List;
 
 public interface CalendarReportContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onGetOneCalendarReportInfoSuccess(List<PagerCalendarItem> items);
 
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void getOneCalendarReportInfo(long monthInDayUnixTime, boolean isInclude);
 

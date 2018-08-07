@@ -12,7 +12,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public interface BasePresenter<T> {
+public interface SdBasePresenter<T> {
 
     List<Call> mCalls = new ArrayList<>(0);
 

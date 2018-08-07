@@ -9,7 +9,7 @@ import android.widget.TextView
 import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.holder.BaseViewHolder
+import com.sumian.sleepdoctor.base.holder.SdBaseViewHolder
 import com.sumian.sleepdoctor.cbti.bean.Course
 
 @Suppress("DEPRECATION")
@@ -30,7 +30,7 @@ class CourseListAdapter(context: Context) : BaseRecyclerAdapter<Course>(context)
         (holder as ViewHolder).initView(item)
     }
 
-    class ViewHolder(itemView: View) : BaseViewHolder<Course>(itemView) {
+    class ViewHolder(itemView: View) : SdBaseViewHolder<Course>(itemView) {
 
         @BindView(R.id.tv_title)
         lateinit var mTvTitle: TextView

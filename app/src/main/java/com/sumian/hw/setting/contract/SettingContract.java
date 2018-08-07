@@ -2,8 +2,8 @@ package com.sumian.hw.setting.contract;
 
 import android.app.Activity;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.sleepdoctor.account.bean.Social;
 import com.umeng.socialize.UMAuthListener;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 public interface SettingContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void syncSleepDiaryCallback(UserSetting userSetting);
 
@@ -30,7 +30,7 @@ public interface SettingContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
 
         void syncSleepDiary();

@@ -27,7 +27,7 @@ import com.sumian.sleepdoctor.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sleepdoctor.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.onlinereport.OnlineReport
 import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
 import com.sumian.sleepdoctor.widget.TitleBar
@@ -48,7 +48,7 @@ import kotlin.collections.ArrayList
  * on 2018/6/8 10:40
  * desc:图文咨询上传
  **/
-class PublishAdvisoryRecordActivity : BaseActivity<PublishAdvisoryRecordContact.Presenter>(),
+class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContact.Presenter>(),
         PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
 

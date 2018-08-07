@@ -1,7 +1,7 @@
 package com.sumian.hw.setting.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.response.ConfigInfo;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface ConfigContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onSyncConfigInfoSuccess(List<ConfigInfo> configs);
 
@@ -26,7 +26,7 @@ public interface ConfigContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doSyncConfigInfo(int configType);
     }

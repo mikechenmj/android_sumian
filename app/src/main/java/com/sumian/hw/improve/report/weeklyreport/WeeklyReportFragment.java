@@ -11,7 +11,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;
 import com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView;
 import com.sumian.hw.log.LogManager;
@@ -32,7 +32,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class WeeklyReportFragment extends BasePagerFragment<WeeklyReportPresenter> implements
+public class WeeklyReportFragment extends HwBasePagerFragment<WeeklyReportPresenter> implements
         WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback {
 
     LoadViewPagerRecyclerView mRecycler;

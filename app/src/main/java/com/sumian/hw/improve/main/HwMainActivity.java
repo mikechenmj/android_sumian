@@ -11,8 +11,8 @@ import android.widget.FrameLayout;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.base.BaseActivity;
-import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.base.HwBaseActivity;
+import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.consultant.ConsultantFragment;
@@ -41,7 +41,7 @@ import java.util.Map;
 
 import retrofit2.Call;
 
-public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeListener,
+public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChangeListener,
         HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     FrameLayout mMainContainer;
@@ -51,7 +51,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
     TabButton mTabMe;
     NavTab mTabMain;
 
-    private BasePagerFragment[] mPagerFragments;
+    private HwBasePagerFragment[] mPagerFragments;
     private static final String KEY_PUSH_REPORT_SCHEME = "key_push_report_scheme";
 
     public static void show(Context context) {
@@ -111,7 +111,7 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
         HwLeanCloudHelper.addOnAdminMsgCallback(this);
         AppManager.getVersionModel().registerShowDotCallback(this);
         if (mPagerFragments == null) {
-            mPagerFragments = new BasePagerFragment[]{DeviceFragment.newInstance(),
+            mPagerFragments = new HwBasePagerFragment[]{DeviceFragment.newInstance(),
                     ReportFragment.newInstance(), ConsultantFragment.newInstance(), HwMeFragment.newInstance()};
         }
 
@@ -236,13 +236,13 @@ public class HwMainActivity extends BaseActivity implements NavTab.OnTabChangeLi
             launchAnotherMainActivity();
             return;
         }
-        BasePagerFragment pagerFragment;
-        BasePagerFragment fragmentByTag;
+        HwBasePagerFragment pagerFragment;
+        HwBasePagerFragment fragmentByTag;
         String tag;
         for (int i = 0, len = mPagerFragments.length; i < len; i++) {
             pagerFragment = mPagerFragments[i];
             tag = pagerFragment.getClass().getSimpleName();
-            fragmentByTag = (BasePagerFragment) getSupportFragmentManager().findFragmentByTag(tag);
+            fragmentByTag = (HwBasePagerFragment) getSupportFragmentManager().findFragmentByTag(tag);
             if (position == i) {
                 if (fragmentByTag != null && fragmentByTag.isAdded()) {
                     getSupportFragmentManager().beginTransaction().show(pagerFragment).runOnCommit(pagerFragment::onEnterTab).commit();

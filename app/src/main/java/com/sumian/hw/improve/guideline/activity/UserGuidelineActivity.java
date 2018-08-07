@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.LoginRouterActivity;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.main.HwMainActivity;
@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
  * desc:
  */
 
-public class UserGuidelineActivity extends BaseActivity {
+public class UserGuidelineActivity extends HwBaseActivity {
 
     ViewPager mGuidelineViewpager;
 

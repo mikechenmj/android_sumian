@@ -8,7 +8,7 @@ import android.view.View;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.account.userProfile.presenter.ImproveUserProfilePresenter;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ImproveUserProfileOneActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener,
+public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener,
         TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, ImproveUserProfileContract.View {
 
     @BindView(R.id.title_bar)

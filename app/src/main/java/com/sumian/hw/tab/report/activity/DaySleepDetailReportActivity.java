@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.response.SleepDetailReport;
@@ -29,7 +29,7 @@ import java.util.List;
  * desc:睡眠数据详情
  */
 
-public class DaySleepDetailReportActivity extends BaseActivity implements DaySleepDetailContract.View,
+public class DaySleepDetailReportActivity extends HwBaseActivity implements DaySleepDetailContract.View,
         SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackListener {
 
     private static final String ARGS_SLEEP_DETAIL_REPORT = "args_sleep_detail_report";

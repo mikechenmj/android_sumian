@@ -3,8 +3,8 @@ package com.sumian.hw.account.contract;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 
 /**
  * Created by jzz
@@ -14,7 +14,7 @@ import com.sumian.hw.base.BasePresenter;
 
 public interface AvatarContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void imageIsExit();
 
@@ -23,7 +23,7 @@ public interface AvatarContract {
         void loadLocalImageSuccess(String url);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void uploadOss();
 

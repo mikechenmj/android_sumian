@@ -7,15 +7,14 @@ import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BaseActivity
-import com.sumian.sleepdoctor.base.BasePresenter
+import com.sumian.sleepdoctor.base.SdBaseActivity
+import com.sumian.sleepdoctor.base.SdBasePresenter
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.order.OrderDetailV2
 import com.sumian.sleepdoctor.utils.TimeUtil
 import kotlinx.android.synthetic.main.activity_refund.*
 
-class RefundActivity : BaseActivity<BasePresenter<Any>>() {
+class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
     private var mOrderNo: String = ""
 
     override fun getLayoutId(): Int {

@@ -3,9 +3,8 @@ package com.sumian.sleepdoctor.advisory.presenter
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.contract.AdvisoryListContract
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BasePresenter.mCalls
+import com.sumian.sleepdoctor.base.SdBasePresenter.mCalls
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.network.response.PaginationResponse
 import retrofit2.Callback
 

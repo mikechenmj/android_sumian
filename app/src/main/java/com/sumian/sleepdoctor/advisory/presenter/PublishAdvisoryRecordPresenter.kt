@@ -20,10 +20,9 @@ import com.sumian.sleepdoctor.advisory.bean.PictureOssSts
 import com.sumian.sleepdoctor.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BasePresenter.mCalls
+import com.sumian.sleepdoctor.base.SdBasePresenter.mCalls
 import com.sumian.sleepdoctor.network.body.AdvisoryRecordBody
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.ErrorResponse
 import com.sumian.sleepdoctor.utils.JsonUtil
 import org.json.JSONObject
 import java.util.*

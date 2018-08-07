@@ -1,8 +1,8 @@
 package com.sumian.sleepdoctor.advisory.contract
 
 import com.sumian.sleepdoctor.advisory.bean.Advisory
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseView
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseView
 
 /**
  *
@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.base.BaseView
  **/
 interface AdvisoryListContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : SdBaseView<Presenter> {
 
         fun onGetAdvisoriesSuccess(advisories: List<Advisory>)
 
@@ -25,7 +25,7 @@ interface AdvisoryListContract {
     }
 
 
-    interface Presenter : BasePresenter<Any> {
+    interface Presenter : SdBasePresenter<Any> {
 
         fun refreshAdvisories()
 

@@ -13,7 +13,7 @@ import android.util.Log
 import android.view.View
 import com.sumian.common.image.ImageLoader
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.cbti.bean.Course
 import com.sumian.sleepdoctor.cbti.bean.CoursePlayAuth
 import com.sumian.sleepdoctor.cbti.bean.CoursePlayLog
@@ -41,7 +41,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
  * desc:CBTI 一个课时详情中心,包含播放视频,课程列表,以及课程总结等模块
  *
  */
-class CBTICoursePlayActivity : BaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
+class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
 
     private val TAG = CBTICoursePlayActivity::class.java.simpleName
 

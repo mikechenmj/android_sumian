@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;
 import com.sumian.hw.improve.report.note.NoteDialog;
 import com.sumian.hw.improve.report.note.SleepNote;
@@ -36,7 +36,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DailyReportFragment extends BasePagerFragment<DailyReportPresenter> implements DailyReportContract.View,
+public class DailyReportFragment extends HwBasePagerFragment<DailyReportPresenter> implements DailyReportContract.View,
         SwitchDateView.OnSwitchDateListener, View.OnClickListener, RecyclerViewPager.OnPageChangedListener,
         NoteDialog.OnWriteNoteCallback, DailyAdapter.OnRefreshCallback, ReportModel.OnSyncCallback {
 

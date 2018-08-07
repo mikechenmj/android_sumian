@@ -9,7 +9,7 @@ import android.util.Log;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.common.utils.StreamUtil;
-import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.bean.ImageCount;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.sheet.SelectPictureBottomSheet;
@@ -34,7 +34,7 @@ import java.util.List;
  *
  * </pre>
  */
-public class SleepFileWebActivity extends BaseWebViewActivity {
+public class SleepFileWebActivity extends SdBaseWebViewActivity {
 
     private static final String TAG = SleepFileWebActivity.class.getSimpleName();
 

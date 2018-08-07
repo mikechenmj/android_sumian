@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
@@ -36,7 +36,7 @@ import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class VersionUpgradeActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener
+public class VersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener
         , VersionUpgradeContract.View, DfuProgressListener {
 
     private static final String TAG = VersionUpgradeActivity.class.getSimpleName();

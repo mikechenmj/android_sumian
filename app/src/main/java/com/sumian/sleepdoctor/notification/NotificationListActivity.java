@@ -10,7 +10,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.notification.bean.Notification;
@@ -23,7 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class NotificationListActivity extends BaseActivity<NotificationListContract.Presenter>
+public class NotificationListActivity extends SdBaseActivity<NotificationListContract.Presenter>
         implements BaseQuickAdapter.OnItemClickListener, NotificationListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;

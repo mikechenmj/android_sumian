@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.improve.qrcode.fragment.InputSnFragment;
 import com.sumian.hw.improve.qrcode.fragment.QrCodeFragment;
@@ -21,7 +21,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackListener, BluePeripheralDataCallback {
+public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackListener, BluePeripheralDataCallback {
 
     private static final String TAG = QrCodeActivity.class.getSimpleName();
 

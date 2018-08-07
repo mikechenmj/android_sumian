@@ -12,11 +12,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.ScaleFinishFillingEvent;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
 import com.sumian.sleepdoctor.scale.bean.Scale;
 import com.sumian.sleepdoctor.widget.TitleBar;
@@ -31,7 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import retrofit2.Call;
 
-public class ScaleListActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener, BaseQuickAdapter.OnItemClickListener {
+public class ScaleListActivity extends SdBaseActivity implements BaseQuickAdapter.RequestLoadMoreListener, BaseQuickAdapter.OnItemClickListener {
 
     public static final String KEY_TYPE = "type";
     public static final String TYPE_ALL = "all";

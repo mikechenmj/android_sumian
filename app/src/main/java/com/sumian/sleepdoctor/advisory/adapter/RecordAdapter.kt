@@ -16,7 +16,7 @@ import com.sumian.common.widget.FlowLayout
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.advisory.bean.Record
-import com.sumian.sleepdoctor.base.holder.BaseViewHolder
+import com.sumian.sleepdoctor.base.holder.SdBaseViewHolder
 import com.sumian.sleepdoctor.doctor.bean.Doctor
 import com.sumian.sleepdoctor.onlinereport.OnlineReportDetailActivity
 import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity
@@ -39,7 +39,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
     private lateinit var mUser: UserInfo
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
-        var viewHolder: BaseViewHolder<Record>? = null
+        var viewHolder: SdBaseViewHolder<Record>? = null
         return when (type) {
             Record.RECORD_QUESTION_TYPE -> {
                 viewHolder = QuestionViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_question_item, parent, false))
@@ -91,7 +91,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
     /**
      * patient question record
      */
-    inner class QuestionViewHolder(itemView: View) : BaseViewHolder<Record>(itemView) {
+    inner class QuestionViewHolder(itemView: View) : SdBaseViewHolder<Record>(itemView) {
 
         private var mTvQuestionIndex: TextView? = null
         private var mTvQuestionTime: TextView? = null
@@ -171,7 +171,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
     /**
      * doctor replay record
      */
-    inner class ReplyViewHolder(itemView: View) : BaseViewHolder<Record>(itemView) {
+    inner class ReplyViewHolder(itemView: View) : SdBaseViewHolder<Record>(itemView) {
 
         private var mAvatar: CircleImageView? = null
         private var mTvName: TextView? = null

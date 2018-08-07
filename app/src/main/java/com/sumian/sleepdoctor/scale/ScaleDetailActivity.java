@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.ScaleFinishFillingEvent;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.widget.webview.SWebView;
 
-public class ScaleDetailActivity extends BaseWebViewActivity {
+public class ScaleDetailActivity extends SdBaseWebViewActivity {
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_SCALE_ID = "scale_id";

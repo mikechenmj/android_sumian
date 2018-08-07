@@ -12,7 +12,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -32,7 +32,7 @@ import java.util.Map;
  * desc:
  */
 
-public class LoginRouterActivity extends BaseActivity implements View.OnClickListener, UMAuthListener, OpenLoginContract.View {
+public class LoginRouterActivity extends HwBaseActivity implements View.OnClickListener, UMAuthListener, OpenLoginContract.View {
 
     private static final String TAG = LoginRouterActivity.class.getSimpleName();
 

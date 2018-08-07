@@ -17,7 +17,7 @@ import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectGenderBottomSheet;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
@@ -34,7 +34,7 @@ import java.util.Map;
  * desc:
  */
 
-public class AssessmentUserInfoActivity extends BaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackListener, UserInfoContract.View {
+public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackListener, UserInfoContract.View {
 
     public static final String ACTION_MODIFY_ASSESSMENT_USER_INFO = "com.sumian.app.action_MODIFY_ASSESSMENT_USER_INFO";
     public static final String EXTRA_ASSESSMENT_USER_INFO = "com.sumian.app.extra.ASSESSMENT_USER_INFO";

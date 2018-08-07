@@ -16,7 +16,7 @@ import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.account.presenter.UserInfoPresenter;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectGenderBottomSheet;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackListener
+public class UserInfoActivity extends HwBaseActivity implements TitleBar.OnBackListener
         , SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, UserInfoContract.View {
 
     TitleBar mTitleBar;

@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.account.userProfile.presenter.ImproveUserProfilePresenter;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class ImproveUserProfileTwoActivity extends BaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
+public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, ImproveUserProfileContract.View, Observer<Token> {
 
     @BindView(R.id.title_bar)

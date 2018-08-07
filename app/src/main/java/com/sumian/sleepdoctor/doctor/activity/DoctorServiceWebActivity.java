@@ -10,7 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.record.SleepRecordActivity;
@@ -26,7 +26,7 @@ import java.util.Locale;
  * on 2018/5/31 04:36
  * desc:
  **/
-public class DoctorServiceWebActivity extends BaseWebViewActivity {
+public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
     public static final String ACTION_CLOSE_ACTIVE_ACTIVITY = "com.sumian.sleepdoctor.ACTION.close.active.activity";
     private static final String EXTRA_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
     private static final String EXTRA_FROM_RECORD = "com.sumian.doctorsleep.extra.from.record";
