@@ -1,7 +1,7 @@
 package com.sumian.hw.upgrade.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 
@@ -14,7 +14,7 @@ import com.sumian.hw.upgrade.bean.VersionInfo;
 
 public interface VersionContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onSyncMonitorCallback(VersionInfo versionInfo);
 
@@ -24,7 +24,7 @@ public interface VersionContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void syncMonitorVersionInfo();
 

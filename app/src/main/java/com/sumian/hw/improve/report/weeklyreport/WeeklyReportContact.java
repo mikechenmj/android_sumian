@@ -1,14 +1,14 @@
 package com.sumian.hw.improve.report.weeklyreport;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.response.SleepDurationReport;
 
 import java.util.List;
 
 public interface WeeklyReportContact {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void setReportsData(List<SleepDurationReport> reports);
 
@@ -20,7 +20,7 @@ public interface WeeklyReportContact {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void getInitReports(long todayUnixTime);
 

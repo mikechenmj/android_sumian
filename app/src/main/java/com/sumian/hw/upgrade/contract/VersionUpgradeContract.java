@@ -2,8 +2,8 @@ package com.sumian.hw.upgrade.contract;
 
 import android.content.Context;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 
 /**
@@ -15,7 +15,7 @@ import com.sumian.hw.upgrade.bean.VersionInfo;
 
 public interface VersionUpgradeContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onDownloadStartCallback();
 
@@ -31,7 +31,7 @@ public interface VersionUpgradeContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void downloadFile(int versionType, VersionInfo versionInfo);
 

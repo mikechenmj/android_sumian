@@ -13,9 +13,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.network.response.PaginationResponse;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.error.EmptyErrorView;
@@ -35,7 +34,7 @@ import retrofit2.Call;
  *     version: 1.0
  * </pre>
  */
-public class OnlineReportListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class OnlineReportListActivity extends SdBaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
     public static final String KEY_LAUNCH_TYPE = "KEY_LAUNCH_TYPE";
     public static final String KEY_LAUNCH_DATA = "KEY_LAUNCH_DATA";
     public static final String KEY_RESULT_DATA = "data";

@@ -7,7 +7,7 @@ import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.fragment.AdvisoryListFragment
 import com.sumian.sleepdoctor.advisory.presenter.AdvisoryListPresenter
-import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import kotlinx.android.synthetic.main.activity_main_advisory.*
 
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory.*
  * on 2018/6/4 14:20
  * desc: 用户图文咨询列表
  */
-class AdvisoryListActivity : BaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackClickListener {
+class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackClickListener {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory

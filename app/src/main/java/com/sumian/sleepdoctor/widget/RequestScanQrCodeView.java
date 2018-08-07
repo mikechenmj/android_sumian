@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.SdBaseFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -69,7 +69,7 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
         return this;
     }
 
-    public RequestScanQrCodeView setFragment(BaseFragment fragment) {
+    public RequestScanQrCodeView setFragment(SdBaseFragment fragment) {
         if (mFragmentWeakReference == null) {
             mFragmentWeakReference = new WeakReference<>(fragment);
         }

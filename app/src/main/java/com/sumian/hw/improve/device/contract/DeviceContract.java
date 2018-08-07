@@ -2,8 +2,8 @@ package com.sumian.hw.improve.device.contract;
 
 import android.support.annotation.StringRes;
 
-import com.sumian.hw.base.BasePresenter;
-import com.sumian.hw.base.BaseView;
+import com.sumian.hw.base.HwBasePresenter;
+import com.sumian.hw.base.HwBaseView;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 
 /**
@@ -15,7 +15,7 @@ import com.sumian.hw.improve.device.bean.BlueDevice;
 
 public interface DeviceContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends HwBaseView<Presenter> {
 
         void onMonitorCallback(BlueDevice monitor);
 
@@ -37,7 +37,7 @@ public interface DeviceContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         boolean adapterIsEnable();
 

@@ -2,8 +2,8 @@ package com.sumian.hw.account.contract;
 
 import android.app.Activity;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -19,7 +19,7 @@ import java.util.Map;
 public interface OpenLoginContract {
 
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onBindOpenSuccess(Token token);
 
@@ -27,7 +27,7 @@ public interface OpenLoginContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doLoginOpen(SHARE_MEDIA shareMedia, Activity activity, UMAuthListener authListener);
 

@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sleepdoctor.account.userProfile.presenter.ImproveUserProfilePresenter;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * desc:修改用户需要自己填写的信息   e.g. 昵称,姓名,职业
  */
 
-public class ModifyUserInfoActivity extends BaseActivity<ImproveUserProfileContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener, ImproveUserProfileContract.View {
+public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener, ImproveUserProfileContract.View {
 
     private static final String EXTRA_MODIFY = "com.sumian.sleepdoctor.extra.MODIFY";
 

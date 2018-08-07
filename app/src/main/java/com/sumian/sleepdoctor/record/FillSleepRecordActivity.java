@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
-import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.SleepRecordFilledEvent;
 import com.sumian.sleepdoctor.h5.H5Uri;
@@ -30,7 +30,7 @@ import java.util.Locale;
  *     version: 1.0
  * </pre>
  */
-public class FillSleepRecordActivity extends BaseWebViewActivity {
+public class FillSleepRecordActivity extends SdBaseWebViewActivity {
     public static final String SLEEP_RESPONSE = "sleep_response";
     public static final String KEY_TIME = "TIME";
 

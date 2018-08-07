@@ -30,9 +30,9 @@ import butterknife.Unbinder;
  * desc:
  */
 
-public abstract class BaseActivity<Presenter> extends AppCompatActivity {
+public abstract class HwBaseActivity<Presenter> extends AppCompatActivity {
 
-    private static final String TAG = BaseActivity.class.getName();
+    private static final String TAG = HwBaseActivity.class.getName();
     private Unbinder mBind;
     private View mRoot;
 

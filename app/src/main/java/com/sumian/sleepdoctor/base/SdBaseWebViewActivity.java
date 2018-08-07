@@ -28,7 +28,7 @@ import butterknife.BindView;
  * on 2018/5/25 10:03
  * desc:
  **/
-public abstract class BaseWebViewActivity<Presenter extends BasePresenter> extends BaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener {
+public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> extends SdBaseActivity<Presenter> implements TitleBar.OnBackClickListener, SWebViewLayout.WebListener {
 
     @BindView(R.id.sm_webview_container)
     protected SWebViewLayout mSWebViewLayout;

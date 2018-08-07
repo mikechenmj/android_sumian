@@ -8,7 +8,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
@@ -35,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class HwMeFragment extends BasePagerFragment implements View.OnClickListener, UserInfoContract.View,
+public class HwMeFragment extends HwBasePagerFragment implements View.OnClickListener, UserInfoContract.View,
         HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     @BindView(R.id.iv_avatar)

@@ -1,7 +1,7 @@
 package com.sumian.hw.tab.report.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public interface SleepNoteContract {
 
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onSyncSleepNoteOptionsSuccess(List<String> bedtimeState);
 
@@ -28,7 +28,7 @@ public interface SleepNoteContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void syncSleepNoteOptions();
 

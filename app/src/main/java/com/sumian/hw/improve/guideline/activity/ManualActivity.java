@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.TitleBar;
 
 /**
@@ -22,7 +22,7 @@ import com.sumian.hw.widget.TitleBar;
  * desc:新手指南,使用手册
  */
 
-public class ManualActivity extends BaseActivity implements TitleBar.OnBackListener {
+public class ManualActivity extends HwBaseActivity implements TitleBar.OnBackListener {
 
     TitleBar mTitleBar;
     WebView mWebView;

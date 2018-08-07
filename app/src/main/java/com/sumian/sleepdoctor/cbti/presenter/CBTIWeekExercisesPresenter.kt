@@ -1,12 +1,11 @@
 package com.sumian.sleepdoctor.cbti.presenter
 
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BasePresenter.mCalls
+import com.sumian.sleepdoctor.base.SdBasePresenter.mCalls
 import com.sumian.sleepdoctor.cbti.bean.CBTIDataResponse
 import com.sumian.sleepdoctor.cbti.bean.Exercise
 import com.sumian.sleepdoctor.cbti.contract.CBTIWeekExercisesContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.ErrorResponse
 
 /**
  * Created by dq

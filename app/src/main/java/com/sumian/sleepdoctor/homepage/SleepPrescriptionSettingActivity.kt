@@ -5,8 +5,8 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseWebViewActivity
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.event.SleepPrescriptionUpdatedEvent
 import com.sumian.sleepdoctor.h5.H5Uri
@@ -25,7 +25,7 @@ import com.sumian.sleepdoctor.widget.webview.SWebView
  *     version: 1.0
  * </pre>
  */
-class SleepPrescriptionSettingActivity : BaseWebViewActivity<BasePresenter<*>>() {
+class SleepPrescriptionSettingActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
     companion object {
         private const val KEY_DATA = "data"

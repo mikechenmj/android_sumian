@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Answers;
@@ -30,7 +30,7 @@ import com.sumian.sleepdoctor.utils.SumianExecutor;
  * desc:
  */
 
-public class QuestionActivity extends BaseActivity implements View.OnClickListener {
+public class QuestionActivity extends HwBaseActivity implements View.OnClickListener {
 
     private static final String TAG = QuestionActivity.class.getSimpleName();
 

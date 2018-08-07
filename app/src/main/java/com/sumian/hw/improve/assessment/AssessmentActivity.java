@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sleepdoctor.R;
@@ -24,7 +24,7 @@ import com.sumian.sleepdoctor.app.HwApplicationDelegate;
  * desc:
  */
 
-public class AssessmentActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
+public class AssessmentActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
 
     TitleBar mTitleBar;
     FrameLayout mPopContainer;

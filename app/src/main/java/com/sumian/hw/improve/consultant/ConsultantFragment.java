@@ -3,7 +3,7 @@ package com.sumian.hw.improve.consultant;
 import android.view.View;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
-import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.setting.dialog.ContactDialog;
@@ -19,7 +19,7 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:咨询
  */
 
-public class ConsultantFragment extends BasePagerFragment implements View.OnClickListener, HwLeanCloudHelper.OnShowMsgDotCallback {
+public class ConsultantFragment extends HwBasePagerFragment implements View.OnClickListener, HwLeanCloudHelper.OnShowMsgDotCallback {
 
     private static final String TAG = ConsultantFragment.class.getSimpleName();
 

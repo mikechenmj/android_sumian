@@ -28,7 +28,7 @@ import com.sumian.sleepdoctor.account.userProfile.contract.UserInfoContract;
 import com.sumian.sleepdoctor.account.userProfile.presenter.UserInfoPresenter;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog;
@@ -54,7 +54,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:用户信息
  */
 
-public class UserProfileActivity extends BaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
+public class UserProfileActivity extends SdBaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, UserInfoContract.View, UMAuthListener, Observer<Token> {
 

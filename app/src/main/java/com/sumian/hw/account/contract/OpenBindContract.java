@@ -1,7 +1,7 @@
 package com.sumian.hw.account.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -15,7 +15,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 
 public interface OpenBindContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onBindSuccess(Token token);
 
@@ -26,7 +26,7 @@ public interface OpenBindContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doBind(String mobile, String pwd, String captcha, SHARE_MEDIA shareMedia, String openUserInfo);
 

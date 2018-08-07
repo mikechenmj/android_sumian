@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.notification;
 
-import com.sumian.sleepdoctor.base.BasePresenter;
-import com.sumian.sleepdoctor.base.BaseView;
+import com.sumian.sleepdoctor.base.SdBasePresenter;
+import com.sumian.sleepdoctor.base.SdBaseView;
 import com.sumian.sleepdoctor.notification.bean.Notification;
 
 import java.util.List;
@@ -17,13 +17,13 @@ import java.util.List;
  */
 class NotificationListContract {
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends SdBasePresenter {
         void loadMore();
 
         void readNotification(String notificationId);
     }
 
-    interface View extends BaseView<Presenter> {
+    interface View extends SdBaseView<Presenter> {
         void onLoadMore(List<Notification> notificationList, boolean hasMore);
 
         void onReadSuccess();

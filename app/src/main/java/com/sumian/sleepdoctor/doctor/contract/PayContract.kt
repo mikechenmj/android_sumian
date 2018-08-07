@@ -3,8 +3,8 @@ package com.sumian.sleepdoctor.doctor.contract
 import android.app.Activity
 import android.content.Intent
 
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseView
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseView
 import com.sumian.sleepdoctor.doctor.bean.PayOrder
 
 /**
@@ -16,7 +16,7 @@ import com.sumian.sleepdoctor.doctor.bean.PayOrder
 interface PayContract {
 
 
-    interface View : BaseView<Presenter> {
+    interface View : SdBaseView<Presenter> {
 
         fun onCreatePayOrderSuccess()
 
@@ -34,7 +34,7 @@ interface PayContract {
 
     }
 
-    interface Presenter : BasePresenter<Any> {
+    interface Presenter : SdBasePresenter<Any> {
 
         fun createPayOrder(activity: Activity, payOrder: PayOrder)
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ValidationCaptchaContract;
 import com.sumian.hw.account.presenter.ValidationCaptchaPresenter;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.network.request.CaptchaBody;
@@ -26,7 +26,7 @@ import com.sumian.sleepdoctor.R;
  * desc:
  */
 
-public class ForgetPwdActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
+public class ForgetPwdActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
         ValidationCaptchaContract.View {
 
     private static final String TAG = ForgetPwdActivity.class.getSimpleName();

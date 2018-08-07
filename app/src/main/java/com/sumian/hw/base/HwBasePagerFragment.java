@@ -9,6 +9,6 @@ import com.sumian.hw.improve.main.SelectTabCallback;
  * desc:
  */
 
-public abstract class BasePagerFragment<Presenter extends BasePresenter> extends BaseFragment<Presenter> implements SelectTabCallback {
+public abstract class HwBasePagerFragment<Presenter extends HwBasePresenter> extends HwBaseFragment<Presenter> implements SelectTabCallback {
 
 }

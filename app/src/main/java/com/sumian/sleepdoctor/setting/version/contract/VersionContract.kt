@@ -1,8 +1,8 @@
 package com.sumian.sleepdoctor.setting.version.contract
 
 import com.sumian.sleepdoctor.setting.version.bean.Version
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseView
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseView
 
 /**
  * <pre>
@@ -19,7 +19,7 @@ import com.sumian.sleepdoctor.base.BaseView
  */
 interface VersionContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : SdBaseView<Presenter> {
 
         fun onGetVersionSuccess(version: Version)
 
@@ -30,7 +30,7 @@ interface VersionContract {
     }
 
 
-    interface Presenter : BasePresenter<Any> {
+    interface Presenter : SdBasePresenter<Any> {
 
         fun getVersion()
 

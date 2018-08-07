@@ -15,12 +15,11 @@ import com.blankj.utilcode.util.SPUtils;
 import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.hw.utils.AppUtil;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.base.SdBaseFragment;
 import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseActivity;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
@@ -44,7 +43,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class MainActivity extends BaseActivity implements BottomNavigationBar.OnSelectedTabChangeListener {
+public class MainActivity extends SdBaseActivity implements BottomNavigationBar.OnSelectedTabChangeListener {
 
     public static final String KEY_TAB_INDEX = "key_tab_index";
     public static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
@@ -136,16 +135,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationBar.On
                 } else {
                     switch (position) {
                         case 0:
-                            fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
+                            fragmentByTag = SdBaseFragment.newInstance(HomepageFragment.class);
                             break;
                         case 1:
-                            fragmentByTag = BaseFragment.newInstance(DoctorFragment.class);
+                            fragmentByTag = SdBaseFragment.newInstance(DoctorFragment.class);
                             break;
                         case 3:
-                            fragmentByTag = BaseFragment.newInstance(MeFragment.class);
+                            fragmentByTag = SdBaseFragment.newInstance(MeFragment.class);
                             break;
                         default:
-                            fragmentByTag = BaseFragment.newInstance(HomepageFragment.class);
+                            fragmentByTag = SdBaseFragment.newInstance(HomepageFragment.class);
                             break;
                     }
                     addFragment(fragmentByTag, fTag);

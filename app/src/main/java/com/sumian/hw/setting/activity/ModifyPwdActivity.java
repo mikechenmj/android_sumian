@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.activity.HwLoginActivity;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.request.ModifyPwdBody;
@@ -27,7 +27,7 @@ import com.sumian.sleepdoctor.R;
  * desc:
  */
 
-public class ModifyPwdActivity extends BaseActivity implements TitleBar.OnBackListener, View.OnClickListener, ModifyPwdContract.View {
+public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBackListener, View.OnClickListener, ModifyPwdContract.View {
 
     TitleBar mTitleBar;
     TextView mTvErrorPop;

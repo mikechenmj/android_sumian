@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
@@ -21,7 +21,7 @@ import com.sumian.sleepdoctor.widget.webview.SWebView;
  *     version: 1.0
  * </pre>
  */
-public class OnlineReportDetailActivity extends BaseWebViewActivity {
+public class OnlineReportDetailActivity extends SdBaseWebViewActivity {
 
     public static final String KEY_REPORT_URL = "report_url";
     public static final String KEY_REPORT_NAME = "report_name";

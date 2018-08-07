@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.SleepReminderContract;
 import com.sumian.hw.account.presenter.SleepReminderPresenter;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.ToggleButton;
@@ -27,7 +27,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * desc:睡眠提醒模块
  */
 
-public class SleepReminderActivity extends BaseActivity implements TitleBar.OnBackListener, SleepReminderContract.View, ToggleButton.OnToggleChanged, NumberPickerView.OnValueChangeListener {
+public class SleepReminderActivity extends HwBaseActivity implements TitleBar.OnBackListener, SleepReminderContract.View, ToggleButton.OnToggleChanged, NumberPickerView.OnValueChangeListener {
 
     private static final String TAG = SleepReminderActivity.class.getSimpleName();
 

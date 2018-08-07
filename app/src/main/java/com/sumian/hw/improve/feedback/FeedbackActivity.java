@@ -17,7 +17,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
@@ -42,7 +42,7 @@ import java.util.Map;
  */
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class FeedbackActivity extends BaseActivity {
+public class FeedbackActivity extends HwBaseActivity {
 
     private static final String TAG = FeedbackActivity.class.getSimpleName();
 

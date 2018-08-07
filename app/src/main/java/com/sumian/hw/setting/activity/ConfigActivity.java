@@ -9,7 +9,7 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.network.response.ConfigInfo;
 import com.sumian.hw.setting.contract.ConfigContract;
 import com.sumian.hw.setting.presenter.ConfigPresenter;
@@ -25,7 +25,7 @@ import java.util.List;
  * desc:
  */
 
-public class ConfigActivity extends BaseActivity implements TitleBar.OnBackListener, ConfigContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class ConfigActivity extends HwBaseActivity implements TitleBar.OnBackListener, ConfigContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String CONFIG_TYPE = "config_type";
     public static final int ABOUT_TYPE = 0x01;

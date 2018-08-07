@@ -27,9 +27,9 @@ import butterknife.Unbinder;
  * <p>
  * desc: base fragment
  */
-public abstract class BaseFragment<Presenter extends BasePresenter> extends Fragment {
+public abstract class HwBaseFragment<Presenter extends HwBasePresenter> extends Fragment {
 
-    private static final String TAG = "BaseFragment";
+    private static final String TAG = "HwBaseFragment";
 
     public Bundle mBundle;
     protected View mRootView;

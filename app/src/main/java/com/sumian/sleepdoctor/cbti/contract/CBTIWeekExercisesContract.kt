@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.cbti.contract
 
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseView
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseView
 import com.sumian.sleepdoctor.cbti.bean.Exercise
 
 /**
@@ -13,7 +13,7 @@ import com.sumian.sleepdoctor.cbti.bean.Exercise
  */
 interface CBTIWeekExercisesContract {
 
-    interface View : BaseView<Presenter> {
+    interface View : SdBaseView<Presenter> {
 
         fun onGetCBTIWeekPracticeSuccess(exercises: List<Exercise>)
 
@@ -21,7 +21,7 @@ interface CBTIWeekExercisesContract {
     }
 
 
-    interface Presenter : BasePresenter<Any> {
+    interface Presenter : SdBasePresenter<Any> {
 
         fun getCBTIWeekExercises(id: Int = 1)
     }

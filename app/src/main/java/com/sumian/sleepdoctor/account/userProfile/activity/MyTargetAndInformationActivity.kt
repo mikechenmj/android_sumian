@@ -7,8 +7,8 @@ import com.google.gson.reflect.TypeToken
 import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.base.ActivityLauncher
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseWebViewActivity
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity
 import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.h5.bean.H5BaseResponse
 import com.sumian.sleepdoctor.utils.JsonUtil
@@ -25,7 +25,7 @@ import com.sumian.sleepdoctor.widget.webview.SWebView
  *     version: 1.0
  * </pre>
  */
-open class MyTargetAndInformationActivity : BaseWebViewActivity<BasePresenter<Any>>() {
+open class MyTargetAndInformationActivity : SdBaseWebViewActivity<SdBasePresenter<Any>>() {
     private var mIsFromMine = true
 
     companion object {

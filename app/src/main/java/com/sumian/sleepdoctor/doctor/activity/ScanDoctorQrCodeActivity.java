@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.widget.qr.QrCodeView;
 
@@ -31,7 +31,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, QrCodeView.OnShowQrCodeCallback, EasyPermissions.PermissionCallbacks {
+public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnClickListener, QrCodeView.OnShowQrCodeCallback, EasyPermissions.PermissionCallbacks {
 
     public static final String EXTRAS_FROM_RECORD = "com.sumian.sleepdoctor.extras.from.record";
     public static final String EXTRAS_DOCTOR_SERVICE = "com.sumian.sleepdoctor.extras.doctor.service";

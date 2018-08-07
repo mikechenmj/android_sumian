@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.account.userProfile.activity.UserProfileActivity;
 import com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseFragment;
+import com.sumian.sleepdoctor.base.SdBaseFragment;
 import com.sumian.sleepdoctor.h5.SleepFileWebActivity;
 import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class MeFragment extends BaseFragment implements View.OnClickListener {
+public class MeFragment extends SdBaseFragment implements View.OnClickListener {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;

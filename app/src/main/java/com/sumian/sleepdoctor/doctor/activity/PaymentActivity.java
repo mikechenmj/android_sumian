@@ -16,7 +16,7 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.doctor.bean.DoctorServicePackage;
 import com.sumian.sleepdoctor.doctor.bean.DoctorServiceShopData;
@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public class PaymentActivity extends BaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
+public class PaymentActivity extends SdBaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
     private static final String TAG = PaymentActivity.class.getSimpleName();
     private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
     private static final String ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId";

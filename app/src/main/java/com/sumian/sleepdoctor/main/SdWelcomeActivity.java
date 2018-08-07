@@ -10,7 +10,7 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.base.BaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseActivity;
 
 /**
  * Created by jzz
@@ -18,7 +18,7 @@ import com.sumian.sleepdoctor.base.BaseActivity;
  * desc:
  */
 
-public class SdWelcomeActivity extends BaseActivity {
+public class SdWelcomeActivity extends SdBaseActivity {
 
     public static final int WELCOME_SHOW_TIME = 500;
 

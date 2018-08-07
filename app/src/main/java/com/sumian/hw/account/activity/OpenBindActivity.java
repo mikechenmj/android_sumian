@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.OpenBindContract;
 import com.sumian.hw.account.presenter.OpenBindPresenter;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.common.util.CheckUtils;
@@ -32,7 +32,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
  * desc:
  */
 
-public class OpenBindActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
+public class OpenBindActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
         OpenBindContract.View {
 
     private static final String TAG = OpenBindActivity.class.getSimpleName();

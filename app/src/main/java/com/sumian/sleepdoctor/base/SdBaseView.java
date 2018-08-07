@@ -7,7 +7,7 @@ package com.sumian.sleepdoctor.base;
  * desc:
  */
 
-public interface BaseView<Presenter extends BasePresenter> {
+public interface SdBaseView<Presenter extends SdBasePresenter> {
 
     default void setPresenter(Presenter presenter) {
 

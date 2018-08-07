@@ -1,7 +1,7 @@
 package com.sumian.hw.tab.report.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.response.SleepDurationReport;
 
 /**
@@ -12,7 +12,7 @@ import com.sumian.hw.network.response.SleepDurationReport;
 
 public interface MonthSleepContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onSyncMonthSleepReportSuccess(SleepDurationReport sleepDurationReport);
 
@@ -27,7 +27,7 @@ public interface MonthSleepContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doSyncMonthSleepReport();
 

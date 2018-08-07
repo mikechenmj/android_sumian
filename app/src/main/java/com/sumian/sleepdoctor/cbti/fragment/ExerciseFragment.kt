@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.BaseFragment
+import com.sumian.sleepdoctor.base.SdBaseFragment
 import com.sumian.sleepdoctor.cbti.activity.CBTIExerciseWebActivity
 import com.sumian.sleepdoctor.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
 import com.sumian.sleepdoctor.cbti.adapter.ExerciseAdapter
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_tab_practice.*
  * desc: CBTI 练习tab
  *
  */
-class ExerciseFragment : BaseFragment<CBTIWeekExercisesContract.Presenter>(), CBTIWeekExercisesContract.View, BaseRecyclerAdapter.OnItemClickListener {
+class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesContract.Presenter>(), CBTIWeekExercisesContract.View, BaseRecyclerAdapter.OnItemClickListener {
 
     private lateinit var mExerciseAdapter: ExerciseAdapter
 

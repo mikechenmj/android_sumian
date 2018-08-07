@@ -3,8 +3,8 @@ package com.sumian.hw.tab.device.contract;
 import android.bluetooth.BluetoothDevice;
 import android.support.v4.app.Fragment;
 
-import com.sumian.hw.base.BasePresenter;
-import com.sumian.hw.base.BaseView;
+import com.sumian.hw.base.HwBasePresenter;
+import com.sumian.hw.base.HwBaseView;
 import com.sumian.hw.tab.device.bean.BlueDevice;
 import com.sumian.blue.model.BluePeripheral;
 
@@ -18,7 +18,7 @@ import com.sumian.blue.model.BluePeripheral;
 
 public interface DeviceContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends HwBaseView<Presenter> {
 
         void onNotifyAdapterTurnOnSuccess();
 
@@ -62,7 +62,7 @@ public interface DeviceContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         boolean isConnected();
 

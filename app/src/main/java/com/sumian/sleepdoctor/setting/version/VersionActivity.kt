@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import com.sumian.sleepdoctor.setting.version.bean.Version
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.setting.version.contract.VersionContract
 import com.sumian.sleepdoctor.setting.version.presenter.VersionPresenter
 import com.sumian.sleepdoctor.utils.UiUtils
@@ -24,7 +24,7 @@ import java.util.*
  *
  * </pre>
  */
-class VersionActivity : BaseActivity<VersionContract.Presenter>(), VersionContract.View, View.OnClickListener {
+class VersionActivity : SdBaseActivity<VersionContract.Presenter>(), VersionContract.View, View.OnClickListener {
 
     private var mIsHaveUpgrade = false
 

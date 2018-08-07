@@ -2,13 +2,12 @@ package com.sumian.hw.improve.qrcode.fragment;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.base.BaseFragment;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;
 import com.sumian.hw.improve.widget.RequestQrCodeView;
 import com.sumian.sleepdoctor.R;
@@ -17,7 +16,7 @@ import com.sumian.sleepdoctor.app.AppManager;
 import java.util.Locale;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeFragment extends BaseFragment implements View.OnClickListener, RequestQrCodeView.OnShowQrCodeCallback {
+public class QrCodeFragment extends HwBaseFragment implements View.OnClickListener, RequestQrCodeView.OnShowQrCodeCallback {
 
     private static final String TAG = QrCodeFragment.class.getSimpleName();
 

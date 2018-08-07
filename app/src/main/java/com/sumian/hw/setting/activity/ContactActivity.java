@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.setting.dialog.ContactDialog;
@@ -17,7 +17,7 @@ import com.sumian.sleepdoctor.R;
  * desc:
  */
 
-public class ContactActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
+public class ContactActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
 
     TitleBar mTitleBar;
 

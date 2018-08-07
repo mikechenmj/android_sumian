@@ -13,7 +13,7 @@ import com.sumian.sleepdoctor.advisory.adapter.RecordAdapter
 import com.sumian.sleepdoctor.advisory.bean.Advisory
 import com.sumian.sleepdoctor.advisory.contract.RecordContract
 import com.sumian.sleepdoctor.advisory.presenter.RecordPresenter
-import com.sumian.sleepdoctor.base.BaseActivity
+import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.main.MainActivity
 import com.sumian.sleepdoctor.widget.TitleBar
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class AdvisoryDetailActivity : BaseActivity<RecordContract.Presenter>(), RecordContract.View, SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
+class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), RecordContract.View, SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
 
     companion object {
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"

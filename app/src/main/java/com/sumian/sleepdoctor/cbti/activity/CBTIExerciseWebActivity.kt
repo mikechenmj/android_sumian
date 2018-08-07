@@ -7,8 +7,8 @@ import android.support.v4.content.LocalBroadcastManager
 import android.view.View
 import com.google.gson.reflect.TypeToken
 import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseWebViewActivity
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity
 import com.sumian.sleepdoctor.h5.H5Uri
 import com.sumian.sleepdoctor.utils.JsonUtil
 import com.sumian.sleepdoctor.widget.dialog.SumianAlertDialog
@@ -24,7 +24,7 @@ import java.util.*
  *
  * desc: 练习题 item
  */
-class CBTIExerciseWebActivity : BaseWebViewActivity<BasePresenter<*>>() {
+class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
     private var courseId: Int = 0
 

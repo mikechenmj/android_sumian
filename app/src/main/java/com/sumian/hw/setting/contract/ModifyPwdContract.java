@@ -1,7 +1,7 @@
 package com.sumian.hw.setting.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.request.ModifyPwdBody;
 
 /**
@@ -13,7 +13,7 @@ import com.sumian.hw.network.request.ModifyPwdBody;
 public interface ModifyPwdContract {
 
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onModifyPwdSuccess();
 
@@ -22,7 +22,7 @@ public interface ModifyPwdContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doResetPwd(ModifyPwdBody modifyPwdBody);
     }

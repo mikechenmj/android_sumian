@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.presenter.ModifyNickNamePresenter;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
@@ -28,7 +28,7 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:
  */
 
-public class ModifyNicknameActivity extends BaseActivity implements TitleBar.OnMoreListener, TitleBar.OnBackListener,
+public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.OnMoreListener, TitleBar.OnBackListener,
     ModifyUserInfoContract.View<UserInfo> {
 
     public static final String MODIFY_TYPE = "modify_type";

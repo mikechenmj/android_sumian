@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.homepage
 
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseView
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseView
 
 /**
  * <pre>
@@ -13,11 +13,11 @@ import com.sumian.sleepdoctor.base.BaseView
  * </pre>
  */
 class HomepageContract {
-    interface View : BaseView<Presenter> {
+    interface View : SdBaseView<Presenter> {
 
     }
 
-    interface Presenter : BasePresenter<View> {
+    interface Presenter : SdBasePresenter<View> {
 
     }
 }

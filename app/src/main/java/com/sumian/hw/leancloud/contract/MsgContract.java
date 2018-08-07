@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface MsgContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onSendingMsg(AVIMMessage msg);
 
@@ -43,7 +43,7 @@ public interface MsgContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void loginServiceType(int serviceType);
 

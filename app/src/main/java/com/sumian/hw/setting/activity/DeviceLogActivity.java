@@ -19,7 +19,7 @@ import com.sumian.blue.callback.BluePeripheralCallback;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.common.util.BlueByteUtil;
 import com.sumian.hw.common.util.CheckUtils;
@@ -39,7 +39,7 @@ import java.util.Locale;
  * desc:
  */
 
-public class DeviceLogActivity extends BaseActivity implements View.OnClickListener,
+public class DeviceLogActivity extends HwBaseActivity implements View.OnClickListener,
         ViewTreeObserver.OnGlobalLayoutListener, TitleBar.OnBackListener, BluePeripheralCallback, BluePeripheralDataCallback {
 
     private static final String TAG = DeviceLogActivity.class.getSimpleName();

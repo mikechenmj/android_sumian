@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.base.BaseWebViewActivity;
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.doctor.bean.Doctor;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.doctor.contract.BindDoctorContract;
@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
  * on 2018/5/28 11:40
  * desc:
  **/
-public class DoctorWebActivity extends BaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
+public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
 
     private static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
 

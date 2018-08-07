@@ -1,7 +1,7 @@
 package com.sumian.hw.account.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.response.Reminder;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface SleepReminderContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onSyncReminderSuccess(List<Reminder> reminders);
 
@@ -32,7 +32,7 @@ public interface SleepReminderContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void syncReminder();
 

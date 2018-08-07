@@ -17,7 +17,7 @@ import java.util.List;
  * the base adapter for RecyclerView
  * Created by huanghaibin on 16-5-3.
  */
-public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
+public abstract class HwBaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     public static final int STATE_NO_MORE = 1;
     public static final int STATE_LOAD_MORE = 2;
     public static final int STATE_INVALID_NETWORK = 3;
@@ -45,7 +45,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     private OnLongClickListener onLongClickListener;
     private OnLoadingHeaderCallBack onLoadingHeaderCallBack;
 
-    public BaseRecyclerAdapter(Context context, int mode) {
+    public HwBaseRecyclerAdapter(Context context, int mode) {
         mItems = new ArrayList<>();
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);

@@ -1,7 +1,7 @@
 package com.sumian.sleepdoctor.account.userProfile.contract
 
-import com.sumian.sleepdoctor.base.BasePresenter
-import com.sumian.sleepdoctor.base.BaseView
+import com.sumian.sleepdoctor.base.SdBasePresenter
+import com.sumian.sleepdoctor.base.SdBaseView
 
 /**
  * Created by jzz
@@ -12,12 +12,12 @@ import com.sumian.sleepdoctor.base.BaseView
 interface ImproveUserProfileContract {
 
 
-    interface View : BaseView<Presenter> {
+    interface View : SdBaseView<Presenter> {
 
         fun onImproveUserProfileSuccess()
     }
 
-    interface Presenter : BasePresenter<Any> {
+    interface Presenter : SdBasePresenter<Any> {
 
         fun improveUserProfile(improveKey: String, newUserProfile: String)
 

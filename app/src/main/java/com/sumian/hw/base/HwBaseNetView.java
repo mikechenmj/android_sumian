@@ -6,7 +6,7 @@ package com.sumian.hw.base;
  * desc:
  */
 
-public interface BaseNetView<Presenter> extends BaseView<Presenter> {
+public interface HwBaseNetView<Presenter> extends HwBaseView<Presenter> {
 
     default void onFailure(String error) {
     }

@@ -23,15 +23,15 @@ import butterknife.ButterKnife;
  * desc:
  */
 
-public abstract class BaseViewHolder<Item> extends RecyclerView.ViewHolder {
+public abstract class SdBaseViewHolder<Item> extends RecyclerView.ViewHolder {
 
-    //private static final String TAG = BaseViewHolder.class.getSimpleName();
+    //private static final String TAG = SdBaseViewHolder.class.getSimpleName();
 
     private final RequestManager mLoader;
 
     protected Item mItem;
 
-    public BaseViewHolder(View itemView) {
+    public SdBaseViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         mLoader = Glide.with(itemView.getContext());

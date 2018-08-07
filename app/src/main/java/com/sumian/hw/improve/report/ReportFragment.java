@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
-import com.sumian.hw.base.BasePagerFragment;
+import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.improve.guideline.dialog.ReportGuidelineDialog;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.main.bean.PushReport;
@@ -26,11 +26,11 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:
  */
 
-public class ReportFragment extends BasePagerFragment implements TabIndicatorView.OnSwitchIndicatorCallback {
+public class ReportFragment extends HwBasePagerFragment implements TabIndicatorView.OnSwitchIndicatorCallback {
 
     TabIndicatorView mTabIndicatorView;
 
-    private BasePagerFragment[] mBaseFragments;
+    private HwBasePagerFragment[] mBaseFragments;
     private int mCurrentPosition = 0;
 
     private BroadcastReceiver mBroadcastReceiver;
@@ -87,7 +87,7 @@ public class ReportFragment extends BasePagerFragment implements TabIndicatorVie
         super.initWidget(root);
         mTabIndicatorView = root.findViewById(R.id.tab_indicator_view);
         mTabIndicatorView.setOnSwitchIndicatorCallback(this);
-        mBaseFragments = new BasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
+        mBaseFragments = new HwBasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
     }
 
 
@@ -134,21 +134,21 @@ public class ReportFragment extends BasePagerFragment implements TabIndicatorVie
     public void onSwitchIndicator(View v, int position) {
 //        if (mCurrentPosition == position) return;
         LogManager.appendPhoneLog("com.sumian.app.improve.report.ReportFragment.onSwitchIndicator position: " + position);
-        BasePagerFragment pagerFragment;
+        HwBasePagerFragment pagerFragment;
         String tag;
-        BasePagerFragment fragmentByTag;
+        HwBasePagerFragment fragmentByTag;
         for (int i = 0, len = mBaseFragments.length; i < len; i++) {
             pagerFragment = mBaseFragments[i];
             tag = pagerFragment.getClass().getSimpleName();
             if (position == i) {
-                fragmentByTag = (BasePagerFragment) getFragmentManager().findFragmentByTag(tag);
+                fragmentByTag = (HwBasePagerFragment) getFragmentManager().findFragmentByTag(tag);
                 if (fragmentByTag != null && fragmentByTag.isAdded()) {
                     getFragmentManager().beginTransaction().show(fragmentByTag).runOnCommit(fragmentByTag::onEnterTab).commit();
                 } else {
                     getFragmentManager().beginTransaction().add(R.id.report_container, pagerFragment, tag).runOnCommit(pagerFragment::onEnterTab).commit();
                 }
             } else {
-                fragmentByTag = (BasePagerFragment) getFragmentManager().findFragmentByTag(tag);
+                fragmentByTag = (HwBasePagerFragment) getFragmentManager().findFragmentByTag(tag);
                 if (fragmentByTag != null) {
                     getFragmentManager().beginTransaction().hide(fragmentByTag).commit();
                 }

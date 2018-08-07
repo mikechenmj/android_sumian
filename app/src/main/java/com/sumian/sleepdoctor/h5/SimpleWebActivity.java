@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.ActivityLauncher;
-import com.sumian.sleepdoctor.base.BaseWebViewActivity;
-import com.sumian.sleepdoctor.widget.webview.SWebView;
+import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 
-public class SimpleWebActivity extends BaseWebViewActivity {
+public class SimpleWebActivity extends SdBaseWebViewActivity {
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_URL_CONTENT_PART = "urlContentPart";

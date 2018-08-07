@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.assessment.QuestionActivity;
 import com.sumian.hw.improve.feedback.FeedbackActivity;
 import com.sumian.hw.improve.guideline.activity.ManualActivity;
@@ -46,7 +46,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public class HwSettingActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackListener, SettingContract.View, UMAuthListener, SocialBottomSheet.UnbindSocialCallback {
+public class HwSettingActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener, SettingContract.View, UMAuthListener, SocialBottomSheet.UnbindSocialCallback {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;

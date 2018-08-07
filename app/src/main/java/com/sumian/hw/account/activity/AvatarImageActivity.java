@@ -14,7 +14,7 @@ import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.contract.AvatarContract;
 import com.sumian.hw.account.presenter.AvatarPresenter;
 import com.sumian.hw.account.sheet.SelectPictureBottomSheet;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sleepdoctor.R;
 
@@ -28,7 +28,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 图片预览Activity
  */
-public class AvatarImageActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks,
+public class AvatarImageActivity extends HwBaseActivity implements EasyPermissions.PermissionCallbacks,
         TitleBar.OnBackListener, TitleBar.OnMoreListener, SelectPictureBottomSheet.OnTakePhotoCallback, AvatarContract.View {
     public static final String KEY_IMAGE = "images";
     public static final String KEY_POSITION = "position";

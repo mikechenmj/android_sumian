@@ -39,9 +39,9 @@ import retrofit2.Call;
  * <p>
  * desc: base fragment
  */
-public abstract class BaseFragment<Presenter extends BasePresenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner, ActivityLauncher {
+public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner, ActivityLauncher {
 
-    private static final String TAG = BaseFragment.class.getSimpleName();
+    private static final String TAG = SdBaseFragment.class.getSimpleName();
     public Bundle mBundle;
     protected Activity mActivity;
     protected View mRootView;

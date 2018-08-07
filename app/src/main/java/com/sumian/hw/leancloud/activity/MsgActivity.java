@@ -21,7 +21,7 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.sheet.SelectBottomSheet;
 import com.sumian.hw.account.sheet.SelectPictureBottomSheet;
-import com.sumian.hw.base.BaseActivity;
+import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.adapter.MsgAdapter;
@@ -45,7 +45,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class MsgActivity extends BaseActivity implements View.OnClickListener, MsgContract.View,
+public class MsgActivity extends HwBaseActivity implements View.OnClickListener, MsgContract.View,
         ViewTreeObserver.OnGlobalLayoutListener, SelectPictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         KeyboardView.onKeyboardActionListener, LCIMRecordButton.RecordEventListener, LCIMRecordButton.OnCheckRecordPermission {
 

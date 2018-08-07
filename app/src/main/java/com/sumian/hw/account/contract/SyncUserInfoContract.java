@@ -1,6 +1,6 @@
 package com.sumian.hw.account.contract;
 
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBasePresenter;
 
 /**
  * Created by jzz
@@ -10,7 +10,7 @@ import com.sumian.hw.base.BasePresenter;
 
 public interface SyncUserInfoContract {
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doSyncUserInfo(boolean isOnlySync,int loginType);
     }

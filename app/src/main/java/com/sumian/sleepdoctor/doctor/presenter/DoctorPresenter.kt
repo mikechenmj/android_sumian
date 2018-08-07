@@ -1,11 +1,10 @@
 package com.sumian.sleepdoctor.doctor.presenter
 
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.BasePresenter.mCalls
+import com.sumian.sleepdoctor.base.SdBasePresenter.mCalls
 import com.sumian.sleepdoctor.doctor.bean.Doctor
 import com.sumian.sleepdoctor.doctor.contract.DoctorContract
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.ErrorResponse
 
 /**
  *

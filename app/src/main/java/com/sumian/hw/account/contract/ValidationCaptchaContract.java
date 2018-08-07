@@ -1,7 +1,7 @@
 package com.sumian.hw.account.contract;
 
-import com.sumian.hw.base.BaseNetView;
-import com.sumian.hw.base.BasePresenter;
+import com.sumian.hw.base.HwBaseNetView;
+import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.ValidationCaptchaBody;
 
@@ -14,7 +14,7 @@ import com.sumian.hw.network.request.ValidationCaptchaBody;
 
 public interface ValidationCaptchaContract {
 
-    interface View extends BaseNetView<Presenter> {
+    interface View extends HwBaseNetView<Presenter> {
 
         void onCaptchaSuccess();
 
@@ -26,7 +26,7 @@ public interface ValidationCaptchaContract {
     }
 
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends HwBasePresenter {
 
         void doCaptcha(CaptchaBody captchaBody);
 
