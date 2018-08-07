@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.RegisterContract;
 import com.sumian.hw.account.presenter.RegisterPresenter;
@@ -134,10 +135,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onRegisterSuccess(Token token) {
         runUiThread(() -> {
             ToastHelper.show(R.string.register_success_hint);
+            ActivityUtils.finishAllActivities();
             if (!AppManager.getAccountViewModel().isHaveUserInfoAndSleepBarrierTest()) {
                 AssessmentActivity.show(this, true);
             } else {
-                HwMainActivity.show(App.Companion.getAppContext());
+                ActivityUtils.startActivity(HwMainActivity.class);
             }
         });
     }

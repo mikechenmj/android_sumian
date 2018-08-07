@@ -67,7 +67,6 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             protected void onSuccess(Token response) {
                 AppManager.getAccountViewModel().updateToken(response);
                 view.onRegisterSuccess(response);
-                AppManager.getAccountViewModel().updateToken(response);
             }
 
             @Override
