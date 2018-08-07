@@ -240,12 +240,12 @@ public class DeviceFragment extends BasePagerFragment<DeviceContract.Presenter> 
     public void onPause() {
         super.onPause();
         getContext().unregisterReceiver(mGlobalReceiver);
-        AppManager.getDeviceModel().unregisterOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
     }
 
     @Override
     protected void onRelease() {
         super.onRelease();
+        AppManager.getDeviceModel().unregisterOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
