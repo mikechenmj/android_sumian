@@ -34,6 +34,7 @@ public class ReportFragment extends BasePagerFragment implements TabIndicatorVie
     private int mCurrentPosition = 0;
 
     private BroadcastReceiver mBroadcastReceiver;
+    private ReportGuidelineDialog mReportGuidelineDialog;
 
     public static ReportFragment newInstance() {
         return new ReportFragment();
@@ -47,7 +48,8 @@ public class ReportFragment extends BasePagerFragment implements TabIndicatorVie
         AppManager.getJobScheduler().checkJobScheduler();
         // check guideline
         if (GuidelineUtils.needShowDailyUserGuide()) {
-            new ReportGuidelineDialog(getContext()).show();
+            mReportGuidelineDialog = new ReportGuidelineDialog(getContext());
+            mReportGuidelineDialog.show();
         }
         // check push report
         boolean showPushReport = showPushReportInNeeded();
@@ -108,7 +110,16 @@ public class ReportFragment extends BasePagerFragment implements TabIndicatorVie
                 }
             }
         }, filter);
+    }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            if (mReportGuidelineDialog != null && mReportGuidelineDialog.isShowing()) {
+                mReportGuidelineDialog.dismiss();
+            }
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
