@@ -1,6 +1,8 @@
 package com.sumian.hw.account.sheet;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -9,6 +11,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ModifySelectContract;
 import com.sumian.hw.account.contract.ModifyUserInfoContract;
 import com.sumian.hw.account.presenter.ModifySelectPresenter;
+import com.sumian.hw.improve.assessment.AssessmentUserInfoActivity;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
@@ -143,7 +146,12 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
                         break;
                 }
 
-                dismiss();
+                Intent intent = new Intent(AssessmentUserInfoActivity.ACTION_MODIFY_ASSESSMENT_USER_INFO);
+                intent.putExtra(AssessmentUserInfoActivity.EXTRA_ASSESSMENT_USER_INFO, mUserInfo);
+                boolean sendBroadcast = LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+                if (sendBroadcast) {
+                    dismiss();
+                }
 
             } else {
                 mPresenter.doModifyUserInfo(mFormKey, mPresenter.transformFormValue(mFormKey, oneValue, twoValue, threeValue));

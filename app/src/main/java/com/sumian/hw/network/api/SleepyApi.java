@@ -1,5 +1,6 @@
 package com.sumian.hw.network.api;
 
+import com.google.gson.JsonObject;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.LoginBody;
 import com.sumian.hw.network.request.ModifyPwdBody;
@@ -72,7 +73,6 @@ public interface SleepyApi {
     Call<Token> doRegister(@Body RegisterBody registerBody);
 
     /**
-     *
      * @param include "doctor"
      * @return
      */
@@ -105,7 +105,7 @@ public interface SleepyApi {
 
     @GET("user/sleeps")
     Call<ResultResponse<DaySleepReport>> syncDaySleepReport(@Query("page") int page, @Query("per_page") int
-        pageCount);
+            pageCount);
 
     @GET("sleeps/weeks/{date}")
     Call<SleepDurationReport> syncWeekSleepReport(@Path("date") String date);
@@ -145,15 +145,15 @@ public interface SleepyApi {
     @Multipart
     @POST("raw-data/pass-through")
     Call<String> uploadRawData(@Part MultipartBody.Part typePart, @Part MultipartBody.Part
-        partAppReceiveStartedTimePart, @Part MultipartBody.Part partAppReceiveEndedTimePart, @Part
-                                   MultipartBody.Part part);
+            partAppReceiveStartedTimePart, @Part MultipartBody.Part partAppReceiveEndedTimePart, @Part
+                                       MultipartBody.Part part);
 
     @FormUrlEncoded
     @POST("sleeps/{id}/diary")
     Call<SleepDetailReport> uploadDiary(@Path("id") long id, @FieldMap Map<String, Object> map);
 
     @GET("sleeps/options")
-    Call<String> syncSleepNoteOptions();
+    Call<JsonObject> syncSleepNoteOptions();
 
     @GET("app-version/latest")
     Call<AppUpgradeInfo> syncUpgradeAppInfo(@QueryMap Map<String, String> map);

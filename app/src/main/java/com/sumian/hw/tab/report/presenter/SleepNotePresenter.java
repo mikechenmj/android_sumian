@@ -1,6 +1,7 @@
 package com.sumian.hw.tab.report.presenter;
 
 import com.alibaba.fastjson.JSON;
+import com.google.gson.JsonObject;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.tab.report.contract.SleepNoteContract;
@@ -45,14 +46,14 @@ public class SleepNotePresenter implements SleepNoteContract.Presenter {
         WeakReference<SleepNoteContract.View> viewWeakReference = this.mViewWeakReference;
         SleepNoteContract.View view = viewWeakReference.get();
         if (view == null) return;
-        Call<String> call = AppManager.getHwNetEngine().getHttpService().syncSleepNoteOptions();
+        Call<JsonObject> call = AppManager.getHwNetEngine().getHttpService().syncSleepNoteOptions();
 
         view.onBegin();
-        call.enqueue(new BaseResponseCallback<String>() {
+        call.enqueue(new BaseResponseCallback<JsonObject>() {
             @Override
-            protected void onSuccess(String response) {
+            protected void onSuccess(JsonObject response) {
 
-                List<String> bedtimeStates = JSON.parseObject(response).getJSONArray("bedtime_state").toJavaList(String.class);
+                List<String> bedtimeStates = JSON.parseObject(response.toString()).getJSONArray("bedtime_state").toJavaList(String.class);
 
                 view.onSyncSleepNoteOptionsSuccess(bedtimeStates);
             }

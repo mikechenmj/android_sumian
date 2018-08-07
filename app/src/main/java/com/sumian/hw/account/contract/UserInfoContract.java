@@ -29,7 +29,7 @@ public interface UserInfoContract {
 
     interface Presenter extends BasePresenter {
 
-//        void doLoadCacheUserInfo();
+        //   void doLoadCacheUserInfo();
 
 //        void doRefreshUserInfo();
 
