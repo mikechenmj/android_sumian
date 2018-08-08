@@ -12,19 +12,19 @@ import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
-import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.common.utils.SettingsUtil;
+import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.utils.AppUtil;
-import com.sumian.sleepdoctor.base.SdBaseFragment;
-import com.sumian.sleepdoctor.constants.SpKeys;
-import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
+import com.sumian.sleepdoctor.base.SdBaseFragment;
+import com.sumian.sleepdoctor.constants.SpKeys;
 import com.sumian.sleepdoctor.doctor.base.BasePagerFragment;
 import com.sumian.sleepdoctor.event.EventBusUtil;
 import com.sumian.sleepdoctor.event.NotificationReadEvent;
 import com.sumian.sleepdoctor.homepage.HomepageFragment;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
+import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.tab.DoctorFragment;
 import com.sumian.sleepdoctor.tab.MeFragment;
 import com.sumian.sleepdoctor.utils.NotificationUtil;
@@ -216,7 +216,7 @@ public class MainActivity extends SdBaseActivity implements BottomNavigationBar.
     @Override
     protected void onResume() {
         super.onResume();
-        mVersionDelegate.checkVersion(this);
+        // mVersionDelegate.checkVersion(this);  todo
     }
 
     @Subscribe(sticky = true)
