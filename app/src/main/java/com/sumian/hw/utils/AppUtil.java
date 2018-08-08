@@ -41,7 +41,7 @@ public class AppUtil {
         ActivityUtils.finishAllActivities();
     }
 
-    public static void logout(){
+    public static void logoutAndLaunchLoginActivity(){
         AppManager.getOpenAnalytics().onProfileSignOff();
         AppOperator.runOnThread(() -> {
             ReminderManager.updateReminder(null);
