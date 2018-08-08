@@ -157,12 +157,12 @@ public class DeviceModel {
         //CD9DC408D89D
         String sleepyMac = this.mSleepyMac;
 
-        //由于 dfu 升级需要设备 mac-1
+        //由于 dfu 升级需要设备 mac+1
 
         //uint64 x old mac;, y new mac;
         // y = (( x & 0xFF ) + 1) + ((x >> 8) << 8);
         long oldMac = Long.parseLong(sleepyMac, 16);
-        long newMac = ((oldMac & 0xff) - 1) + ((oldMac >> 8) << 8);
+        long newMac = ((oldMac & 0xff) + 1) + ((oldMac >> 8) << 8);
 
         StringBuilder macSb = new StringBuilder();
         //  macSb.delete(0, macSb.length());
