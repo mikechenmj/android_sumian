@@ -65,7 +65,11 @@ public class HwMeFragment extends HwBasePagerFragment implements View.OnClickLis
         HwLeanCloudHelper.addOnAdminMsgCallback(this);
         AppManager.getVersionModel().syncAppVersion();
         AppManager.getVersionModel().registerShowDotCallback(this);
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> updateUserInfoUI(token.user));
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
+            if (token != null && token.user != null) {
+                updateUserInfoUI(token.user);
+            }
+        });
     }
 
     @Override
