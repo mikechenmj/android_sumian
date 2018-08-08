@@ -68,6 +68,18 @@ public class AccountViewModel extends AndroidViewModel {
         persistentTokenInSp();
     }
 
+    public void asyncUpdateToken(Token token) {
+        mTokenLiveData.postValue(token);
+        persistentTokenInSp();
+    }
+
+    public void asyncUpdateUserInfo(UserInfo userInfo) {
+        Token token = getToken();
+        token.is_new = false;
+        token.user = userInfo;
+        asyncUpdateToken(token);
+    }
+
     @MainThread
     public void updateUserInfo(UserInfo userInfo) {
         Token token = getToken();
