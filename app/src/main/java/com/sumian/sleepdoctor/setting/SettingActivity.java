@@ -10,6 +10,7 @@ import android.view.View;
 import com.avos.avoscloud.AVInstallation;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.hw.account.activity.HwLoginActivity;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -114,10 +115,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
         call.enqueue(new BaseResponseCallback<Unit>() {
             @Override
             protected void onSuccess(Unit response) {
-                NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
-                AppManager.getAccountViewModel().updateToken(null);
-                showClearTop(SettingActivity.this, HwLoginActivity.class);
-                AppManager.getOpenLogin().deleteWechatTokenCache(SettingActivity.this, null);
+                AppUtil.logout();
             }
 
             @Override

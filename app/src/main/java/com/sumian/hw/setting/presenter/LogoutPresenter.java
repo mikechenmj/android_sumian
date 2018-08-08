@@ -11,6 +11,7 @@ import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.contract.LogoutContract;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.utils.NotificationUtil;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
@@ -57,17 +58,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
         call.enqueue(new BaseResponseCallback<Object>() {
             @Override
             protected void onSuccess(Object response) {
-                AppManager.getOpenAnalytics().onProfileSignOff();
-                AppOperator.runOnThread(() -> {
-                    ReminderManager.updateReminder(null);
-                    HwAccountCache.clearCache();
-                    SumianConfig.clear();
-                    BluePeripheralCache.clear();
-                    BlueManager.init().doStopScan();
-                });
-                ChatClient.getInstance().logout(true, null);
-                NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
-                AppManager.getAccountViewModel().updateToken(null);
+                AppUtil.logout();
             }
 
             @Override
@@ -99,7 +90,9 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
     public void onLogoutSuccess() {
         WeakReference<LogoutContract.View> viewWeakReference = this.mViewWeakReference;
         LogoutContract.View view = viewWeakReference.get();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         view.onLogoutSuccess();
     }
 }
