@@ -44,10 +44,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 } else {
                     int statusCode = errorResponse.getCode();
                     if (statusCode == ErrorCode.UNAUTHORIZED) {
-                        if (!HwApplicationDelegate.isIsLoginActivity()) {
-                            HwLoginActivity.show(App.Companion.getAppContext(), true);
-                            HwApplicationDelegate.setIsLoginActivity(true);
-                        }
+                        onUnauthorized();
                     } else {
                         onFailure(errorResponse.getCode(), errorResponse.getMessage());
                     }
@@ -56,6 +53,13 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 e.printStackTrace();
                 errorUnknown();
             }
+        }
+    }
+
+    protected void onUnauthorized() {
+        if (!HwApplicationDelegate.isIsLoginActivity()) {
+            HwLoginActivity.show(App.Companion.getAppContext(), true);
+            HwApplicationDelegate.setIsLoginActivity(true);
         }
     }
 
