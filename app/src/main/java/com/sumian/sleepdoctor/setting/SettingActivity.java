@@ -9,17 +9,14 @@ import android.view.View;
 
 import com.avos.avoscloud.AVInstallation;
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.setting.version.VersionActivity;
-import com.sumian.sleepdoctor.utils.NotificationUtil;
 import com.sumian.sleepdoctor.utils.UiUtils;
 import com.sumian.sleepdoctor.widget.TitleBar;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
@@ -115,7 +112,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
         call.enqueue(new BaseResponseCallback<Unit>() {
             @Override
             protected void onSuccess(Unit response) {
-                AppUtil.logout();
+                AppUtil.logoutAndLaunchLoginActivity();
             }
 
             @Override

@@ -13,6 +13,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.OpenLoginContract;
 import com.sumian.hw.account.presenter.OpenLoginPresenter;
 import com.sumian.hw.base.HwBaseActivity;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
@@ -98,8 +99,7 @@ public class LoginRouterActivity extends HwBaseActivity implements View.OnClickL
     public void onBackPressed() {
         super.onBackPressed();
         onFinish();
-        HwApplicationDelegate.setIsLoginActivity(false);
-        HwApplicationDelegate.exitApp();
+        AppUtil.exitApp();
     }
 
     @Override

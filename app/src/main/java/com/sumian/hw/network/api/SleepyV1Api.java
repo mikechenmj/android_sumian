@@ -2,6 +2,7 @@ package com.sumian.hw.network.api;
 
 import com.google.gson.JsonObject;
 import com.sumian.hw.improve.report.base.BaseResultResponse;
+import com.sumian.hw.improve.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.hw.improve.report.dailyreport.DailyMeta;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.improve.report.weeklyreport.WeekMeta;
@@ -47,7 +48,7 @@ public interface SleepyV1Api {
     @FormUrlEncoded
     //已读日报告医生评价
     @PATCH("sleeps/days/read-evaluation")
-    Call<Boolean> readDayDoctorValuation(@FieldMap Map<String, Object> map);
+    Call<ReadSleepRecordEvaluationResponse> readDayDoctorValuation(@FieldMap Map<String, Object> map);
 
     //获取多天睡眠日报告 (左右滑动)
     @GET("sleeps/days/flip-show")

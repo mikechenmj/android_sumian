@@ -10,8 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.common.helper.ToastHelper;
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.common.util.TimeUtil;
+import com.sumian.hw.improve.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.R;
@@ -121,9 +122,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     if (!isRead) {
                         Map<String, Object> map = new HashMap<>(0);
                         map.put("id", String.valueOf(report.id));
-                        AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
+                        AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<ReadSleepRecordEvaluationResponse>() {
                             @Override
-                            protected void onSuccess(Boolean response) {
+                            protected void onSuccess(ReadSleepRecordEvaluationResponse response) {
                             }
 
                             @Override
@@ -135,7 +136,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                         mOnCalenderListener.showCalender(timeInMillis / 1000);
                     }
                 } else {
-                    ToastHelper.show("当前没有睡眠数据");
+//                    ToastHelper.show("当前没有睡眠数据");
                 }
             }
         };
@@ -197,7 +198,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             if (reports.size() > 0) {
                 long firstItemTimeInMillis = reports.get(0).getDateInMillis();
                 boolean isInTheSameMonth = TimeUtil.isInTheSameMonth(mCurrentShowTime, firstItemTimeInMillis);
-//                LogManager.appendFormatPhoneLog("time compare: %s --- %s, in the same month: %b", new Date(firstItemTimeInMillis), new Date(mCurrentShowTime), isInTheSameMonth);
                 if (isInTheSameMonth) {
                     Calendar currentShowTime = TimeUtil.getCalendar(mCurrentShowTime);
                     int currentShowDay = currentShowTime.get(Calendar.DAY_OF_MONTH);
@@ -251,15 +251,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     }
                     setCalendarViewData(mItem);
                     Map<String, Object> map = new HashMap<>(0);
-                    AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<Boolean>() {
+                    AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<ReadSleepRecordEvaluationResponse>() {
 
                         @Override
-                        protected void onSuccess(Boolean response) {
+                        protected void onSuccess(ReadSleepRecordEvaluationResponse response) {
+                            mCalenderView.setDrawDotDays(new int[]{});
+                            mCalenderView.invalidate();
                         }
 
                         @Override
                         protected void onFailure(int code, String message) {
-
+                            LogUtils.d(message);
                         }
                     });
                     break;

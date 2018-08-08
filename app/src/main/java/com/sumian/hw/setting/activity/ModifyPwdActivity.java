@@ -17,6 +17,7 @@ import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.request.ModifyPwdBody;
 import com.sumian.hw.setting.contract.ModifyPwdContract;
 import com.sumian.hw.setting.presenter.ModifyPwdPresenter;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sleepdoctor.R;
@@ -171,9 +172,7 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
     @Override
     public void onModifyPwdSuccess() {
         ToastHelper.show(R.string.setting_set_pwd_success_hint);
-        HwLoginActivity.show(this, true);
-        //ActivityUtils.finishAllActivities();
-        //ActivityUtils.startActivity(HwLoginActivity.class);
+        AppUtil.logoutAndLaunchLoginActivity();
     }
 
     @Override
