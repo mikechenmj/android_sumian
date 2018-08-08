@@ -127,6 +127,8 @@ public class DeviceFragment extends HwBasePagerFragment<DeviceContract.Presenter
     protected void initData() {
         super.initData();
 
+        AppManager.getDeviceModel().registerOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(PairOnDeviceDialog.ACTION_BIND);
         filter.addAction(DeviceBottomSheet.ACTION_TURN_MONITORING_MODE);
@@ -221,7 +223,6 @@ public class DeviceFragment extends HwBasePagerFragment<DeviceContract.Presenter
         getContext().registerReceiver(mGlobalReceiver, globalFilter);
 
         autoSyncSleepData();
-        AppManager.getDeviceModel().registerOnSyncSleepDataProgressChangeListener(mDeviceStatusView);
 
         if (BuildConfig.IS_CLINICAL_VERSION) {
             //临床环境需要屏蔽小眠助手
