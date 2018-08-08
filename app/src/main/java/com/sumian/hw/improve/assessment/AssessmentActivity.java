@@ -14,7 +14,6 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 
@@ -139,11 +138,16 @@ public class AssessmentActivity extends HwBaseActivity implements View.OnClickLi
     }
 
     @Override
+    public void onBackPressed() {
+        onBack(null);
+    }
+
+    @Override
     public void onBack(View v) {
         if (mIsRegister) {
-            HwApplicationDelegate.goHome(App.Companion.getAppContext());
+            HwApplicationDelegate.goHome(this);
         } else {
-            finish();
+            super.onBackPressed();
         }
     }
 }

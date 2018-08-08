@@ -129,28 +129,30 @@ public class DeviceModel {
         AccountViewModel accountModel = AppManager.getAccountViewModel();
 
         UserInfo userInfo = accountModel.getUserInfo();
-        userInfo.setSleeper_sn(sleepySn);
-        userInfo.setMonitor_sn(monitorSn);
+        if (userInfo != null) {
+            userInfo.setSleeper_sn(sleepySn);
+            userInfo.setMonitor_sn(monitorSn);
 
-        if (!TextUtils.isEmpty(userInfo.getMonitor_sn())) {
-            map.put("monitor_sn", userInfo.getMonitor_sn());
-        }
-
-        if (!TextUtils.isEmpty(userInfo.getSleeper_sn())) {
-            map.put("sleeper_sn", userInfo.getSleeper_sn());
-        }
-        map.put("include", "doctor");
-        AppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
-            @Override
-            protected void onSuccess(UserInfo response) {
-                AppManager.getAccountViewModel().updateUserInfo(response);
+            if (!TextUtils.isEmpty(userInfo.getMonitor_sn())) {
+                map.put("monitor_sn", userInfo.getMonitor_sn());
             }
 
-            @Override
-            protected void onFailure(int code, String error) {
-                //uploadBindSn(sleepySn, monitorSn);
+            if (!TextUtils.isEmpty(userInfo.getSleeper_sn())) {
+                map.put("sleeper_sn", userInfo.getSleeper_sn());
             }
-        });
+            map.put("include", "doctor");
+            AppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
+                @Override
+                protected void onSuccess(UserInfo response) {
+                    AppManager.getAccountViewModel().updateUserInfo(response);
+                }
+
+                @Override
+                protected void onFailure(int code, String error) {
+                    //uploadBindSn(sleepySn, monitorSn);
+                }
+            });
+        }
     }
 
     public String getSleepyDfuMac() {
