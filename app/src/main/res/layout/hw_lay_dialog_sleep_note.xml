@@ -160,7 +160,7 @@
                 android:layout_marginEnd="@dimen/space_36"
                 android:layout_marginStart="@dimen/space_36"
                 android:layout_marginTop="@dimen/space_20"
-                android:background="@drawable/bg_chat_input"
+                android:background="@drawable/bg_note_input"
                 android:gravity="left|top"
                 android:inputType="textMultiLine"
                 android:lineSpacingExtra="@dimen/space_2"
