@@ -264,6 +264,6 @@ public class MainActivity extends SdBaseActivity implements BottomNavigationBar.
 
     @Override
     public void onBackPressed() {
-        AppUtil.exitApp(this);
+        AppUtil.exitApp();
     }
 }

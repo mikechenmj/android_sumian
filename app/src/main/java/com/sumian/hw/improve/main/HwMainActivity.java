@@ -201,7 +201,7 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
 
     @Override
     public void onBackPressed() {
-        AppUtil.exitApp(this);
+        AppUtil.exitApp();
     }
 
     @Override

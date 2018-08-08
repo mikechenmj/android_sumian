@@ -1,8 +1,7 @@
 package com.sumian.hw.utils;
 
-import android.app.Activity;
-
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.Utils;
 import com.hyphenate.chat.ChatClient;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.blue.model.BluePeripheral;
@@ -16,7 +15,6 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.setting.SettingActivity;
 
 /**
  * <pre>
@@ -30,8 +28,8 @@ public class AppUtil {
     /**
      * exit app
      */
-    public static void exitApp(Activity activity) {
-        AppManager.getJobScheduler().release(activity.getApplicationContext());
+    public static void exitApp() {
+        AppManager.getJobScheduler().release(Utils.getApp().getApplicationContext());
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.close();
@@ -41,7 +39,7 @@ public class AppUtil {
         ActivityUtils.finishAllActivities();
     }
 
-    public static void logoutAndLaunchLoginActivity(){
+    public static void logoutAndLaunchLoginActivity() {
         AppManager.getOpenAnalytics().onProfileSignOff();
         AppOperator.runOnThread(() -> {
             ReminderManager.updateReminder(null);
