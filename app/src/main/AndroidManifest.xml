@@ -198,6 +198,7 @@
         <!-- notification -->
         <activity
             android:name=".notification.NotificationListActivity"
+            android:launchMode="singleTask"
             android:theme="@style/BaseAppTheme" />
 
         <!-- sleep record -->

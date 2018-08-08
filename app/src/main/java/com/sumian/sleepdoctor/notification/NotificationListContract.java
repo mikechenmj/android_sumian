@@ -18,7 +18,7 @@ import java.util.List;
 class NotificationListContract {
 
     interface Presenter extends SdBasePresenter {
-        void loadMore();
+        void loadData(boolean isInitLoad);
 
         void readNotification(String notificationId);
     }
