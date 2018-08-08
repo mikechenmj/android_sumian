@@ -98,7 +98,17 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadMore();
+        mPresenter.loadData(true);
+    }
+
+    /**
+     * 重复启动（点击notification）会进入该分支，需要刷新数据
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mAdapter.setNewData(null);
+        mPresenter.loadData(true);
     }
 
     @Override
@@ -157,7 +167,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
 
     @Override
     public void onLoadMoreRequested() {
-        mPresenter.loadMore();
+        mPresenter.loadData(false);
     }
 
     @Override

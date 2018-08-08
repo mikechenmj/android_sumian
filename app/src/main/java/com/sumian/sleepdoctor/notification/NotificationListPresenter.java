@@ -25,16 +25,20 @@ import retrofit2.Call;
  */
 public class NotificationListPresenter implements NotificationListContract.Presenter {
     private static final int PER_PAGE = 15;
+    private static final int INIT_PAGE = 1;
     private NotificationListContract.View mView;
-    private int mPage = 1;
+    private int mPage = INIT_PAGE;
 
     NotificationListPresenter(NotificationListContract.View view) {
         mView = view;
     }
 
     @Override
-    public void loadMore() {
+    public void loadData(boolean isInitLoad) {
         mView.onBegin();
+        if (isInitLoad) {
+            mPage = INIT_PAGE;
+        }
         Call<QueryNotificationResponse> call = AppManager.getHttpService().getNotificationList(mPage, PER_PAGE);
         addCall(call);
         call.enqueue(new BaseResponseCallback<QueryNotificationResponse>() {
