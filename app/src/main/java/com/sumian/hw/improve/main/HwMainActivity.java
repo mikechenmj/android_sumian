@@ -4,7 +4,6 @@ import android.app.Application;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
@@ -13,8 +12,6 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.base.HwBasePagerFragment;
-import com.sumian.hw.common.util.NumberUtil;
-import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.consultant.ConsultantFragment;
 import com.sumian.hw.improve.device.fragment.DeviceFragment;
 import com.sumian.hw.improve.fragment.HwMeFragment;
@@ -22,22 +19,15 @@ import com.sumian.hw.improve.main.bean.PushReport;
 import com.sumian.hw.improve.report.ReportFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.callback.ErrorCode;
-import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.push.ReportPushManager;
-import com.sumian.hw.setting.dialog.UpgradeDialog;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.nav.NavTab;
 import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.main.MainActivity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 
@@ -139,7 +129,6 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
         });
 
         runUiThread(() -> {
-//            checkAppVersion(); // todo remove comment
             syncUserInfo();
             sendHeartBeats();
         }, 200);
@@ -175,57 +164,6 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
 
             }
 
-        });
-    }
-
-    private void checkAppVersion() {
-        Map<String, String> map = new HashMap<>();
-
-        PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
-
-        map.put("type", "1");
-        map.put("current_version", packageInfo.versionName);
-
-        AppManager.getHwNetEngine().getHttpService().syncUpgradeAppInfo(map).enqueue(new BaseResponseCallback<AppUpgradeInfo>() {
-            @Override
-            protected void onSuccess(AppUpgradeInfo response) {
-                PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
-
-                AppUpgradeInfo appUpgradeInfo = response;
-                if (appUpgradeInfo == null) {//相同版本或没有新版本
-                    appUpgradeInfo = new AppUpgradeInfo();
-                    appUpgradeInfo.version = packageInfo.versionName;
-                    AppManager.getVersionModel().notifyAppDot(false);
-                } else {
-                    AppManager.getVersionModel().notifyAppDot(NumberUtil.formatVersionCode(response.version) > packageInfo.versionCode);
-                    if (NumberUtil.formatVersionCode(response.version) > packageInfo.versionCode) {
-                        UpgradeDialog upgradeDialog = new UpgradeDialog();
-                        Bundle args = new Bundle();
-                        args.putSerializable("app_info", appUpgradeInfo);
-                        upgradeDialog.setArguments(args);
-                        upgradeDialog.show(getSupportFragmentManager(), UpgradeDialog.class.getSimpleName());
-                    }
-                }
-
-                try {
-                    AppUpgradeInfo copyAppUpgradeInfo = appUpgradeInfo.clone();
-                    copyAppUpgradeInfo.version = packageInfo.versionName;
-
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
-
-                AppManager.getVersionModel().setAppUpgradeInfo(appUpgradeInfo);
-            }
-
-            @Override
-            protected void onFailure(int code, String error) {
-                if (code == ErrorCode.NOT_FOUND) {
-                    AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
-                    appUpgradeInfo.version = packageInfo.versionName;
-                    AppManager.getVersionModel().notifyAppDot(false);
-                }
-            }
         });
     }
 

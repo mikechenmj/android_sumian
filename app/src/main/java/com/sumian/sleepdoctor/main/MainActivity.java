@@ -216,7 +216,7 @@ public class MainActivity extends SdBaseActivity implements BottomNavigationBar.
     @Override
     protected void onResume() {
         super.onResume();
-        // mVersionDelegate.checkVersion(this);  todo
+        mVersionDelegate.checkVersion(this);
     }
 
     @Subscribe(sticky = true)
