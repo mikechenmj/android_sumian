@@ -47,7 +47,7 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 27
     versionCode = new Date().format('yyyyMMddHH').toInteger()
-    versionName = "1.6.1"
+    versionName = "1.6.2"
 
     applicationIdSuffix = null
     versionNameSuffix = null

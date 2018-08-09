@@ -1,10 +1,15 @@
 package com.sumian.sleepdoctor.util;
 
-import com.sumian.hw.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.account.bean.Answers;
-import com.sumian.sleepdoctor.utils.JsonUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 import org.junit.Test;
+
+import java.lang.reflect.Type;
 
 /**
  * <pre>
@@ -19,8 +24,35 @@ public class JsonUtilTest {
 
     @Test
     public void test() {
-        String json = "{\"id\":93,\"answers\":\"22:00,3,07:00,07:00,3,3,1\",\"score\":11,\"level\":2,\"created_at\":1533544680}";
-        Answers errorResponse = JsonUtil.fromJson(json, Answers.class);
-        System.out.println(errorResponse);
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(boolean.class, new BooleanTypeAdapter());
+        builder.registerTypeAdapter(Boolean.class, new BooleanTypeAdapter());
+        Gson gson = builder.create();
+        String json = "{\"enable\":1, \"age\":0}";
+        ClassA a = gson.fromJson(json, ClassA.class);
+        System.out.println(a);
+    }
+
+    static class  ClassA {
+        boolean enable;
+        int age;
+
+        @Override
+        public String toString() {
+            return "ClassA{" +
+                    "enable=" + enable +
+                    ", age=" + age +
+                    '}';
+        }
+    }
+
+    class BooleanTypeAdapter implements JsonDeserializer<Boolean>
+    {
+        public Boolean deserialize(JsonElement json, Type typeOfT,
+                                   JsonDeserializationContext context) throws JsonParseException
+        {
+            int code = json.getAsInt();
+            return code == 1;
+        }
     }
 }
