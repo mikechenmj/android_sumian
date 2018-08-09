@@ -41,7 +41,8 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
     TabButton mTabMe;
     NavTab mTabMain;
 
-    private HwBasePagerFragment[] mPagerFragments;
+    private String[] mFragmentTags = {"tab_0", "tab_1", "tab_2", "tab_3"};
+
     private static final String KEY_PUSH_REPORT_SCHEME = "key_push_report_scheme";
 
     public static void show(Context context) {
@@ -95,16 +96,10 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
         mTabConsultant = findViewById(R.id.tab_consultant);
         mTabMe = findViewById(R.id.tab_me);
         mTabMain = findViewById(R.id.tab_main);
-
         mTabMain.setOnTabChangeListener(this);
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this);
         AppManager.getVersionModel().registerShowDotCallback(this);
-        if (mPagerFragments == null) {
-            mPagerFragments = new HwBasePagerFragment[]{DeviceFragment.newInstance(),
-                    ReportFragment.newInstance(), ConsultantFragment.newInstance(), HwMeFragment.newInstance()};
-        }
-
         PushReport pushReport = ReportPushManager.getInstance().getPushReport();
         if (pushReport != null) {
             mTabMain.onClick(mTabReport);
@@ -174,23 +169,22 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
             launchAnotherMainActivity();
             return;
         }
-        HwBasePagerFragment pagerFragment;
         HwBasePagerFragment fragmentByTag;
         String tag;
-        for (int i = 0, len = mPagerFragments.length; i < len; i++) {
-            pagerFragment = mPagerFragments[i];
-            tag = pagerFragment.getClass().getSimpleName();
+        for (int i = 0, len = mFragmentTags.length; i < len; i++) {
+            tag = mFragmentTags[i];
             fragmentByTag = (HwBasePagerFragment) getSupportFragmentManager().findFragmentByTag(tag);
+            if (fragmentByTag == null) {
+                fragmentByTag = createFragmentByPosition(position);
+            }
             if (position == i) {
-                if (fragmentByTag != null && fragmentByTag.isAdded()) {
-                    getSupportFragmentManager().beginTransaction().show(pagerFragment).runOnCommit(pagerFragment::onEnterTab).commit();
+                if (fragmentByTag.isAdded()) {
+                    getSupportFragmentManager().beginTransaction().show(fragmentByTag).runOnCommit(fragmentByTag::onEnterTab).commit();
                 } else {
-                    getSupportFragmentManager().beginTransaction().add(R.id.main_container, pagerFragment, tag).runOnCommit(pagerFragment::onEnterTab).commit();
+                    getSupportFragmentManager().beginTransaction().add(R.id.main_container, fragmentByTag, tag).runOnCommit(fragmentByTag::onEnterTab).commit();
                 }
             } else {
-                if (fragmentByTag != null) {
-                    getSupportFragmentManager().beginTransaction().hide(pagerFragment).commit();
-                }
+                getSupportFragmentManager().beginTransaction().hide(fragmentByTag).commit();
             }
         }
     }
@@ -234,5 +228,20 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
     public void showDot(boolean isShowAppDot, boolean isShowMonitorDot, boolean isShowSleepyDot) {
         // Log.e(TAG, "showDot: ------->" + isShowAppDot);
         runUiThread(() -> this.mTabMe.showDot(isShowAppDot || isShowMonitorDot || isShowSleepyDot ? android.view.View.VISIBLE : android.view.View.GONE));
+    }
+
+    private HwBasePagerFragment createFragmentByPosition(int position) {
+        switch (position) {
+            case 0:
+                return DeviceFragment.newInstance();
+            case 1:
+                return ReportFragment.newInstance();
+            case 2:
+                return ConsultantFragment.newInstance();
+            case 3:
+                return HwMeFragment.newInstance();
+            default:
+                throw new RuntimeException("Illegal tab position");
+        }
     }
 }
