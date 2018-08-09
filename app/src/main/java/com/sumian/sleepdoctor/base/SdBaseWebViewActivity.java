@@ -33,7 +33,7 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
     @BindView(R.id.sm_webview_container)
     protected SWebViewLayout mSWebViewLayout;
     @BindView(R.id.title_bar)
-    TitleBar mTitleBar;
+    protected TitleBar mTitleBar;
     @BindView(R.id.root_view)
     View mRootView;
     private SoftKeyBoardListener mSoftKeyBoardListener;
