@@ -1,6 +1,7 @@
 package com.sumian.hw.improve.device.model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.network.callback.BaseResponseCallback;
@@ -259,6 +260,7 @@ public class DeviceModel {
 
     public void registerOnSyncSleepDataProgressChangeListener(SyncSleepDataListener listener) {
         mSyncSleepDataListeners.add(listener);
+        Log.e(TAG, "registerOnSyncSleepDataProgressChangeListener: size=" + mSyncSleepDataListeners.size());
     }
 
     public void unregisterOnSyncSleepDataProgressChangeListener(SyncSleepDataListener listener) {
