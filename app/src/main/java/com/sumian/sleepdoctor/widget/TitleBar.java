@@ -37,6 +37,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     ImageView mIvMenu;
     @BindView(R.id.tv_menu)
     TextView mTvMenu;
+    @BindView(R.id.v_root)
+    View mRootView;
 
     private OnSpannerListener mOnSpannerListener;
     private OnBackClickListener mOnBackClickListener;
@@ -229,5 +231,15 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public interface OnMenuClickListener {
         void onMenuClick(View v);
+    }
+
+    public void setBgColor(int color) {
+        mRootView.setBackgroundColor(color);
+    }
+
+    public void setTextColor(int color) {
+        mTvTitle.setTextColor(color);
+        mTvMenu.setTextColor(color);
+        mIvBack.setColorFilter(color);
     }
 }

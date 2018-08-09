@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.HwBaseActivity;
@@ -206,7 +207,7 @@ public class HwSettingActivity extends HwBaseActivity implements View.OnClickLis
                 QuestionActivity.show(this);
                 break;
             case R.id.siv_user_guide:
-                ManualActivity.show(this);
+                ActivityUtils.startActivity(ManualActivity.class);
                 break;
             case R.id.tv_logout:
                 getSupportFragmentManager()
