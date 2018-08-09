@@ -17,8 +17,10 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.AppendObjectRequest;
 import com.alibaba.sdk.android.oss.model.AppendObjectResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
+import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.io.File;
@@ -60,11 +62,13 @@ public class LogJobIntentService extends JobIntentService {
             return;
         }
 
+        Token token = AppManager.getAccountViewModel().getToken();
+        if (token == null) {
+            return;
+        }
         Map<String, Object> map = new HashMap<>(0);
         map.put("suffix", "txt");
-
         Call<LogOssResponse> call = AppManager.getHwV1HttpService().autoUploadLog(map);
-
         call.enqueue(new BaseResponseCallback<LogOssResponse>() {
             @Override
             protected void onSuccess(LogOssResponse response) {
@@ -76,6 +80,11 @@ public class LogJobIntentService extends JobIntentService {
 
             @Override
             protected void onFailure(int code, String error) {
+            }
+
+            @Override
+            protected void onUnauthorized() {
+                LogUtils.d("Token不合法，无法上传Log");
             }
         });
     }

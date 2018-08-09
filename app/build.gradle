@@ -58,6 +58,8 @@ android {
         buildConfigField("String", "HW_PRIVACY_POLICY_URL", HW_PRIVACY_POLICY_URL)
         buildConfigField("String", "HW_USER_GUIDELINE_URL", HW_USER_GUIDELINE_URL)
         buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
+        buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
+        buildConfigField("String", "HW_DOWNLOAD_URL", HW_DEFAULT_APK_DOWNLOAD_URL)
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -160,10 +162,8 @@ android {
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
             buildConfigField("String", "HW_BASE_URL", HW_DEV_URL)
             buildConfigField("String", "HW_QUESTION_URL", HW_DEV_QUESTION_URL)
-            buildConfigField("String", "HW_DOWNLOAD_URL", HW_DEFAULT_APK_DOWNLOAD_URL)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -186,10 +186,8 @@ android {
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
             buildConfigField("String", "HW_BASE_URL", HW_TEST_URL)
             buildConfigField("String", "HW_QUESTION_URL", HW_TEST_QUESTION_URL)
-            buildConfigField("String", "HW_DOWNLOAD_URL", HW_DEFAULT_APK_DOWNLOAD_URL)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -210,10 +208,8 @@ android {
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
             buildConfigField("String", "HW_BASE_URL", HW_OFFICIAL_URL)
             buildConfigField("String", "HW_QUESTION_URL", HW_OFFICIAL_QUESTION_URL)
-            buildConfigField("String", "HW_DOWNLOAD_URL", HW_DEFAULT_APK_DOWNLOAD_URL)
 
             resValue "string", "app_name", app_name
             println("${app_name}")
