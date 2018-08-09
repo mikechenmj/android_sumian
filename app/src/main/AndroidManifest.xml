@@ -159,11 +159,8 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".doctor.activity.ScanDoctorQrCodeActivity"
-            android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/Scan_qr_theme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:theme="@style/Scan_qr_theme" />
 
         <!-- third  login -->
         <activity

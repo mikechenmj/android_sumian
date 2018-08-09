@@ -174,14 +174,12 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                 initDialog(0x00);
                 if (mVersionType == VERSION_TYPE_APP) {
                     UiUtil.openAppInMarket(v.getContext());
-                    return;
                 } else {
                     ToastHelper.show(R.string.firmware_downloading_hint);
                     mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? AppManager.getVersionModel().getMonitorVersion() : AppManager.getVersionModel().getSleepyVersion());
                 }
             }
 
-        } else {
         }
     }
 

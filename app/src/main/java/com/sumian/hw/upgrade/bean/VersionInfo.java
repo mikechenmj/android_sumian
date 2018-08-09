@@ -56,11 +56,11 @@ public class VersionInfo implements Serializable, Cloneable {
     @Override
     public String toString() {
         return "VersionInfo{" +
-            "versionCode=" + versionCode +
-            ", version='" + version + '\'' +
-            ", url='" + url + '\'' +
-            ", md5='" + md5 + '\'' +
-            '}';
+                "versionCode=" + versionCode +
+                ", version='" + version + '\'' +
+                ", url='" + url + '\'' +
+                ", md5='" + md5 + '\'' +
+                '}';
     }
 
     @Override

@@ -16,7 +16,6 @@ import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.network.response.Error;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -126,8 +125,9 @@ public class VersionPresenter implements VersionContract.Presenter {
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
-                    versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                            App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+
+                    versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+
                     if (versionType == MONITOR_VERSION_TYPE) {
                         AppManager.getVersionModel().notifyMonitorDot(true);
                     } else {
