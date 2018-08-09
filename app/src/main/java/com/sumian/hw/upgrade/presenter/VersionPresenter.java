@@ -113,7 +113,7 @@ public class VersionPresenter implements VersionContract.Presenter {
 
     }
 
-    private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
+    private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) throws CloneNotSupportedException {
         if (view == null) return;
         boolean isConnected;
         if (versionType == MONITOR_VERSION_TYPE) {
@@ -122,11 +122,13 @@ public class VersionPresenter implements VersionContract.Presenter {
         } else {
             isConnected = AppManager.getDeviceModel().sleepyIsConnected();
         }
+        VersionInfo tmpVersionInfo = null;
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
+                tmpVersionInfo = versionInfo.clone();
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
 
-                    versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                    tmpVersionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
 
                     if (versionType == MONITOR_VERSION_TYPE) {
                         AppManager.getVersionModel().notifyMonitorDot(true);
@@ -134,26 +136,26 @@ public class VersionPresenter implements VersionContract.Presenter {
                         AppManager.getVersionModel().notifySleepyDot(true);
                     }
                 } else {
-                    versionInfo.setVersion(currentVersionInfo);
+                    tmpVersionInfo.setVersion(currentVersionInfo);
                     notifyVersionDot(versionType);
                 }
             } else {
-                versionInfo = new VersionInfo().setVersion(TextUtils.isEmpty(currentVersionInfo) ?
+                tmpVersionInfo = new VersionInfo().setVersion(TextUtils.isEmpty(currentVersionInfo) ?
                         App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
                 notifyVersionDot(versionType);
             }
         } else {
             if (versionInfo == null) {
-                versionInfo = new VersionInfo();
+                tmpVersionInfo = new VersionInfo();
+                tmpVersionInfo.setVersion(App.Companion.getAppContext().getString(R.string.none_connected_state_hint));
+                notifyVersionDot(versionType);
             }
-            versionInfo.setVersion(App.Companion.getAppContext().getString(R.string.none_connected_state_hint));
-            notifyVersionDot(versionType);
         }
 
         if (versionType == MONITOR_VERSION_TYPE) {
-            view.onSyncMonitorCallback(versionInfo);
+            view.onSyncMonitorCallback(tmpVersionInfo);
         } else {
-            view.onSyncSleepyCallback(versionInfo);
+            view.onSyncSleepyCallback(tmpVersionInfo);
         }
     }
 

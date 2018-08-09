@@ -131,7 +131,7 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
 
     @Override
     public void onLeScanCallback(BluetoothDevice device, int rssi, byte[] scanRecord) {
-        if (rssi <= -80) {
+        if (!device.getName().startsWith("M-SUMIAN") || rssi <= -80) {
             return;
         }
         BlueDevice blueDevice = new BlueDevice();

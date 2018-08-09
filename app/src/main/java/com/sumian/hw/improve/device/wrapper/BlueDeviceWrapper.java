@@ -44,7 +44,7 @@ public class BlueDeviceWrapper implements BlueScanCallback, Handler.Callback {
 
     @Override
     public void onLeScanCallback(BluetoothDevice device, int rssi, byte[] scanRecord) {
-        if (device.getAddress().equals(mMonitor.mac)) {
+        if (device.getName().startsWith("M-SUMIAN") && device.getAddress().equals(mMonitor.mac)) {
             mWorkHandler.removeMessages(MSG_WHAT_STOP_SCAN);
             stopScanAndUnRegisterScanCallback();
             mScan2ConnectCallback.run();

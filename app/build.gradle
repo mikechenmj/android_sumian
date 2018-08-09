@@ -359,7 +359,7 @@ dependencies {
 
     //sumian component
     implementation 'com.sumian.sd:common:1.0.13'
-    implementation 'com.sumian.sd:blue:1.0.1'
+    implementation 'com.sumian.sd:blue:1.0.2'
     implementation 'com.sumian.sd:kefu-easeui:1.0.3'
     implementation 'com.sumian.sd:jsbridge:1.0.0'
 }
