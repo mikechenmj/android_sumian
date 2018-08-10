@@ -16,7 +16,7 @@ import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.userProfile.activity.MyTargetAndInformationActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.widget.LoginRuleView;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
@@ -125,7 +125,7 @@ public final class LoginActivity extends SdBaseActivity<LoginPresenter> implemen
     }
 
     private void launchMainAndFinish() {
-        MainActivity.show(this, MainActivity.class);
+        SdMainActivity.show(this, SdMainActivity.class);
         finish();
     }
 

@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.widget.webview.SWebView;
 
@@ -67,7 +67,7 @@ public class OnlineReportDetailActivity extends SdBaseWebViewActivity {
             @Override
             public void handler(String data) {
                 LogUtils.d(data);
-                MainActivity.launch(mActivity, 1);
+                SdMainActivity.launch(mActivity, 1);
             }
         });
     }

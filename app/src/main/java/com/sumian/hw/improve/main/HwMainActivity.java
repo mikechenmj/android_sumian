@@ -27,7 +27,7 @@ import com.sumian.hw.widget.nav.TabButton;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.main.SdMainActivity;
 
 import retrofit2.Call;
 
@@ -190,7 +190,7 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
     }
 
     private void launchAnotherMainActivity() {
-        ActivityUtils.startActivity(MainActivity.class);
+        ActivityUtils.startActivity(SdMainActivity.class);
     }
 
     @Override
