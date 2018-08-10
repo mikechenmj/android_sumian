@@ -98,7 +98,7 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
         if (id == R.id.app_version_info) {
             UiUtil.openAppInMarket(v.getContext());
         } else if (id == R.id.monitor_version_info) {
-            VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowMonitorVersionDot());
+            VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
         } else if (id == R.id.sleepy_version_info) {
             VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
         }
