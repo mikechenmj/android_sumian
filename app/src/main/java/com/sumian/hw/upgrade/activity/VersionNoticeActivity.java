@@ -79,14 +79,6 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        mRefresh.setRefreshing(true);
-        mPresenter.syncAppVersionInfo();
-        mPresenter.syncMonitorVersionInfo();
-    }
-
-    @Override
     protected void onRelease() {
         AppManager.getVersionModel().unRegisterShowDotCallback(this);
         super.onRelease();
@@ -94,19 +86,27 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.app_version_info) {
+        int id = v.getId();
+        if (id == R.id.app_version_info) {
             UiUtil.openAppInMarket(v.getContext());
-        } else if (i == R.id.monitor_version_info) {
+        } else if (id == R.id.monitor_version_info) {
             VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
-        } else if (i == R.id.sleepy_version_info) {
+        } else if (id == R.id.sleepy_version_info) {
             VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
         }
     }
 
     @Override
     public void onRefresh() {
-        initData();
+        mRefresh.setRefreshing(true);
+        //mPresenter.syncAppVersionInfo();
+        mPresenter.syncMonitorVersionInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onRefresh();
     }
 
     @Override

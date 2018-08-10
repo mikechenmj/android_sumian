@@ -21,7 +21,7 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
 
     public String name;
     public String mac;
-    public String sn;
+    public transient String sn;
     public transient int status;////0x00  未连接  0x01  连接中  0x02  在线  0x03 同步数据状态 0x04 pa 模式  0x05 监测模式
     public transient int battery;//电池电量
     public transient int rssi;//信号强度
@@ -38,12 +38,12 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public static final int MONITORING_CMD_OPEN = 0x01;
 
     @IntDef({
-        STATUS_UNCONNECTED,
-        STATUS_CONNECTING,
-        STATUS_CONNECTED,
-        STATUS_SYNCHRONIZING,
-        STATUS_PA,
-        STATUS_MONITORING,
+            STATUS_UNCONNECTED,
+            STATUS_CONNECTING,
+            STATUS_CONNECTED,
+            STATUS_SYNCHRONIZING,
+            STATUS_PA,
+            STATUS_MONITORING,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface Status {
@@ -52,14 +52,14 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     @Override
     public String toString() {
         return "BlueDevice{" +
-            "name='" + name + '\'' +
-            ", mac='" + mac + '\'' +
-            ", sn='" + sn + '\'' +
-            ", status=" + status +
-            ", battery=" + battery +
-            ", rssi=" + rssi +
-            ", speedSleeper=" + speedSleeper +
-            '}';
+                "name='" + name + '\'' +
+                ", mac='" + mac + '\'' +
+                ", sn='" + sn + '\'' +
+                ", status=" + status +
+                ", battery=" + battery +
+                ", rssi=" + rssi +
+                ", speedSleeper=" + speedSleeper +
+                '}';
     }
 
     public boolean isAvailableBlueDevice() {

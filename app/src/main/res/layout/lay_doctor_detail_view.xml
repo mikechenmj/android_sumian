@@ -111,7 +111,8 @@
             android:layout_marginTop="@dimen/space_10"
             android:background="@color/b2_color"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
                 style="@style/text_t2_style"

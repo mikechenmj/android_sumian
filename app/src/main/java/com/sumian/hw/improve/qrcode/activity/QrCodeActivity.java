@@ -7,7 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.sumian.blue.callback.BluePeripheralDataCallback;
@@ -23,13 +22,11 @@ import com.sumian.sleepdoctor.app.AppManager;
 @SuppressWarnings("ConstantConditions")
 public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackListener, BluePeripheralDataCallback {
 
-    private static final String TAG = QrCodeActivity.class.getSimpleName();
-
-    TitleBar mTitleBar;
-    TabLayout mTabLayout;
-    ViewPager mViewPager;
+    private ViewPager mViewPager;
 
     private BluePeripheral mBluePeripheral;
+
+    // private String mTmpSn;
 
 
     public static void show(Context context) {
@@ -52,11 +49,13 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackLis
             return;
         }
 
-        String sleepySn = AppManager.getDeviceModel().getSleepySn();
-        if (!TextUtils.isEmpty(sleepySn) && sleepySn.equals(sn)) {
-            showCenterToast("该SN码已绑定该设备");
-            return;
-        }
+//        String sleepySn = AppManager.getDeviceModel().getSleepySn();
+//        if (!TextUtils.isEmpty(sleepySn) && sleepySn.equals(sn)) {
+//            showCenterToast("该SN码已绑定该设备");
+//            return;
+//        }
+
+        // mTmpSn = sn;
 
         mBluePeripheral.addPeripheralDataCallback(this);
         mBluePeripheral.writeDelay(BlueCmd.cDoMonitor2BindSleepySnNumber(sn), 200);
@@ -73,11 +72,11 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackLis
     @Override
     protected void initWidget() {
         super.initWidget();
-        mTitleBar = findViewById(R.id.title_bar);
-        mTabLayout = findViewById(R.id.table);
+        TitleBar titleBar = findViewById(R.id.title_bar);
+        TabLayout tabLayout = findViewById(R.id.table);
         mViewPager = findViewById(R.id.view_pager);
 
-        this.mTitleBar.addOnBackListener(this);
+        titleBar.addOnBackListener(this);
         this.mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -110,7 +109,7 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackLis
             }
         });
 
-        this.mTabLayout.setupWithViewPager(mViewPager, true);
+        tabLayout.setupWithViewPager(mViewPager, true);
         this.mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -146,6 +145,9 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackLis
         switch (cmdIndex) {
             case "52":
                 if ("55520188".equals(cmd)) {
+                    if (mBluePeripheral != null) {
+                        mBluePeripheral.writeDelay(BlueCmd.cSleepySnNumber(), 200);
+                    }
                     showCenterToast("绑定速眠仪成功");
                     finish();
                 } else {

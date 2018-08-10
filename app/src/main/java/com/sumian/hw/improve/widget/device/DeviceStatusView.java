@@ -24,11 +24,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.improve.device.fragment.DeviceFragment;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.log.LogManager;
+import com.sumian.sleepdoctor.R;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -256,6 +256,7 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
                     mTvLabelOne.setText("监测仪未连接，点击上方尝试连接");
                     mTvLabelTwo.setVisibility(INVISIBLE);
                     mDeviceRippleConnectingView.showIdleStatus();
+                    mBtSwitchPa.setVisibility(INVISIBLE);
                     break;
             }
 

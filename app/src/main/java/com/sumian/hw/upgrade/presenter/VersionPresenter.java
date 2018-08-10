@@ -16,7 +16,6 @@ import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.network.response.Error;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -87,10 +86,11 @@ public class VersionPresenter implements VersionContract.Presenter {
                     checkVersionInfo(finalView, MONITOR_VERSION_TYPE, monitorVersionInfo, AppManager.getDeviceModel().getMonitorVersion());
 
                     VersionInfo sleeperVersionInfo = response.sleeper;
+                    AppManager.getVersionModel().setSleepyVersion(sleeperVersionInfo);
+
                     if (sleeperVersionInfo != null) {
                         sleeperVersionInfo = sleeperVersionInfo.clone();
                     }
-                    AppManager.getVersionModel().setSleepyVersion(sleeperVersionInfo);
                     checkVersionInfo(finalView, SLEEPY_VERSION_TYPE, sleeperVersionInfo, AppManager.getDeviceModel().getSleepyVersion());
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -114,20 +114,21 @@ public class VersionPresenter implements VersionContract.Presenter {
 
     }
 
-    private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
+    private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) throws CloneNotSupportedException {
         if (view == null) return;
         boolean isConnected;
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (versionType == MONITOR_VERSION_TYPE) {
-            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             isConnected = bluePeripheral != null && bluePeripheral.isConnected();
         } else {
-            isConnected = AppManager.getDeviceModel().sleepyIsConnected();
+            isConnected = (bluePeripheral != null && bluePeripheral.isConnected()) && AppManager.getDeviceModel().sleepyIsConnected();
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
-                    versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                            App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+
+                    versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+
                     if (versionType == MONITOR_VERSION_TYPE) {
                         AppManager.getVersionModel().notifyMonitorDot(true);
                     } else {

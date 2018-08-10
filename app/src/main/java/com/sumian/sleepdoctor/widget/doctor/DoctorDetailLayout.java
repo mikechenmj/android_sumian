@@ -45,8 +45,6 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
     @BindView(R.id.lay_doctor_service_container)
     LinearLayout layDoctorServiceContainer;
 
-    private Doctor mDoctor;
-
     public DoctorDetailLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -61,9 +59,6 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
     }
 
     public void invalidDoctor(Doctor doctor) {
-        // hideRefreshAnim();
-        this.mDoctor = doctor;
-
         ImageLoader.loadImage(doctor.getAvatar(), ivAvatar, R.mipmap.ic_info_avatar_doctor, R.mipmap.ic_info_avatar_doctor);
         this.tvName.setText(doctor.getName());
         this.tvDepartment.setText(String.format(Locale.getDefault(), "%s %s", doctor.getHospital(), doctor.getDepartment()));
@@ -76,11 +71,15 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
     private void appendDoctorServices(Doctor doctor) {
         if (doctor.getServices() != null) {
             this.layDoctorServiceContainer.removeViewsInLayout(2, layDoctorServiceContainer.getChildCount() - 2);
+            this.layDoctorServiceContainer.setVisibility(VISIBLE);
             DoctorServiceLayout doctorServiceLayout;
             DoctorService doctorService;
             ArrayList<DoctorService> doctorServices = doctor.getServices();
             for (int i = 0; i < doctorServices.size(); i++) {
                 doctorService = doctorServices.get(i);
+                if (doctorService.getType() == DoctorService.SERVICE_TYPE_CBTI) {
+                    continue;
+                }
                 doctorServiceLayout = new DoctorServiceLayout(getContext());
                 doctorServiceLayout.setTag(doctorService);
                 doctorServiceLayout.setOnClickListener(v -> {
