@@ -1,11 +1,9 @@
 package com.sumian.sleepdoctor.widget.pay;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -107,7 +105,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
                 }
                 break;
             case R.id.iv_add_duration:
-                if (mCurrentBuyCount < 6) {
+                if (mCurrentBuyCount < 99) {
                     mCurrentBuyCount++;
                 }
                 break;
@@ -123,7 +121,7 @@ public class PayCalculateItemView extends LinearLayout implements View.OnClickLi
             mIvReduceDuration.setImageResource(R.mipmap.ic_group_pay_btn_plus_disabled);
         }
 
-        if (mCurrentBuyCount < 6) {
+        if (mCurrentBuyCount < 99) {
             mIvAddDuration.setEnabled(true);
             mIvAddDuration.setImageResource(R.mipmap.ic_group_pay_btn_minus);
         } else {

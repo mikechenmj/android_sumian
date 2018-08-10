@@ -39,9 +39,12 @@ import butterknife.OnClick;
  */
 
 public class PaymentActivity extends SdBaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
+
     private static final String TAG = PaymentActivity.class.getSimpleName();
+
     private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
     private static final String ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId";
+
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
 
@@ -128,7 +131,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
         SpannableString spannableString = new SpannableString(priceText);
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.t4_color)), 0, priceText.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTvGroupMoney.setText(TextUtils.concat("服务费用: ", spannableString));
-//        mTvGroupMoney.setText(mDoctorService.getDescription());
+        //mTvGroupMoney.setText(mDoctorService.getDescription());
         mPayCalculateItemView.setDefaultMoney(getDoctorServicePackage().getUnit_price());
     }
 

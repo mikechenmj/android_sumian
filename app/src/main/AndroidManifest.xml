@@ -55,7 +55,7 @@
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:name,android:icon,android:theme">
+        tools:replace="android:icon,android:theme,android:name,android:label">
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="@string/umeng_app_key" />
@@ -174,9 +174,11 @@
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- WeChat -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- WeChat -->
         <activity-alias
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="${applicationId}.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:targetActivity="com.pingplusplus.android.PaymentActivity"
             android:theme="@style/BaseAppTheme" />
@@ -390,21 +392,13 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".test.TestActivity" />
 
-        <receiver android:name=".receiver.ModuleCommunicationReceiver">
+        <receiver
+            android:name=".receiver.ModuleCommunicationReceiver"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="com.sumian.hw.LAUNCH_SLEEP_DOCTOR_MAIN" />
             </intent-filter>
         </receiver>
-
-        <!-- Hw -->
-        <!--<activity-->
-        <!--android:name="com.sumian.hw.improve.main.HwWelcomeActivity"-->
-        <!--android:theme="@style/TranslucentWindow">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
 
         <activity
             android:name="com.sumian.hw.improve.main.HwMainActivity"

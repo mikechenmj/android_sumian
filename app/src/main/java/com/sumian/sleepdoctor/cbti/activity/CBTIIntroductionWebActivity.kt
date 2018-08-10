@@ -24,7 +24,7 @@ import com.sumian.sleepdoctor.widget.webview.SWebView
  *
  */
 class CBTIIntroductionWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
-    private var mStopped = false;
+    private var mStopped = false
 
     companion object {
         private const val REQUEST_CODE_BUY_SERVICE = 1000

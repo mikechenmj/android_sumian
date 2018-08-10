@@ -9,17 +9,17 @@ import java.io.Serializable
  */
 @Parcelize
 data class Doctor(var id: Int = 0,
-                  var name: String?,
-                  var mobile: String?,
-                  var avatar: String?,
                   var hospital: String?,
-                  var qr_code: String?,
                   var department: String?,
                   var title: String?,
-                  var mobile_notice: Int,
-                  var notify_mobile: String?,
+                  var qr_code_raw: String?,
                   var introduction: String?,
                   var introduction_no_tag: String?,
+                  var name: String?,
+                  var avatar: String?,
+                  var mobile: String?,
+                  var mobile_notice: Int,
+                  var notify_mobile: String?,
                   var created_at: String?,
                   var updated_at: String?,
                   var services: ArrayList<DoctorService>?) : Parcelable, Serializable
