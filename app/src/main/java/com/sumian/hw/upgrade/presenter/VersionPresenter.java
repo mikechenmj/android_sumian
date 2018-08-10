@@ -117,11 +117,11 @@ public class VersionPresenter implements VersionContract.Presenter {
     private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) throws CloneNotSupportedException {
         if (view == null) return;
         boolean isConnected;
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (versionType == MONITOR_VERSION_TYPE) {
-            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             isConnected = bluePeripheral != null && bluePeripheral.isConnected();
         } else {
-            isConnected = AppManager.getDeviceModel().sleepyIsConnected();
+            isConnected = (bluePeripheral != null && bluePeripheral.isConnected()) && AppManager.getDeviceModel().sleepyIsConnected();
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
@@ -146,9 +146,9 @@ public class VersionPresenter implements VersionContract.Presenter {
         } else {
             if (versionInfo == null) {
                 versionInfo = new VersionInfo();
-                versionInfo.setVersion(App.Companion.getAppContext().getString(R.string.none_connected_state_hint));
-                notifyVersionDot(versionType);
             }
+            versionInfo.setVersion(App.Companion.getAppContext().getString(R.string.none_connected_state_hint));
+            notifyVersionDot(versionType);
         }
 
         if (versionType == MONITOR_VERSION_TYPE) {

@@ -96,7 +96,7 @@ public class DeviceModel {
     public DeviceModel setSleepySn(String sleepySn) {
         mSleepySn = sleepySn;
         if (mBlueDevice != null) {
-            mBlueDevice.sn = sleepySn;
+            mBlueDevice.speedSleeper.sn = sleepySn;
         }
         uploadBindSn(sleepySn, this.mMonitorSn);
         return this;

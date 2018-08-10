@@ -131,12 +131,12 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             blueUuidConfig.descUuid = BlueConstant.DESCRIPTORS_UUID;
 
             BluePeripheral bluePeripheral = new BluePeripheral.PeripheralBlueBuilder()
-                .setContext(App.Companion.getAppContext())
-                .setBlueUuidConfig(blueUuidConfig)
-                .setName(remoteDevice.getName())
-                .setRemoteDevice(remoteDevice)
-                .bindWorkThread(AppManager.getBlueManager().getWorkThread())
-                .build();
+                    .setContext(App.Companion.getAppContext())
+                    .setBlueUuidConfig(blueUuidConfig)
+                    .setName(remoteDevice.getName())
+                    .setRemoteDevice(remoteDevice)
+                    .bindWorkThread(AppManager.getBlueManager().getWorkThread())
+                    .build();
 
             bluePeripheral.addPeripheralDataCallback(this);
             bluePeripheral.addPeripheralCallback(this);
@@ -298,7 +298,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 receiveSetUserInfoResult(cmd);
                 break;
             case "4e"://获取速眠仪的连接状态
-                receiveSleeperConnectionStatus(cmd);
+                receiveSleeperConnectionStatus(peripheral, cmd);
                 break;
             case "4f"://主动获取睡眠特征数据
                 receiveRequestSleepDataResponse(peripheral, cmd);
@@ -313,7 +313,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 receiveMonitorEnterDfuSuccessResponse(cmd);
                 break;
             case "52":
-                LogManager.appendBluetoothLog("正在绑定速眠仪中," + cmd);
+                LogManager.appendBluetoothLog("0x52 正在绑定速眠仪中," + cmd);
                 break;
             case "53"://获取监测仪的 sn 号
                 receiveMonitorSnInfo(data, cmd);
@@ -441,10 +441,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                         SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
                         LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd);
                         AppManager.getJobScheduler()
-                            .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,
-                                AppManager.getDeviceModel().getMonitorSn(),
-                                AppManager.getDeviceModel().getSleepySn(),
-                                mReceiveStartedTime, getActionTime());
+                                .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,
+                                        AppManager.getDeviceModel().getMonitorSn(),
+                                        AppManager.getDeviceModel().getSleepySn(),
+                                        mReceiveStartedTime, getActionTime());
                         writeResponse(peripheral, data, true);
                     } else {
                         writeResponse(peripheral, data, false);
@@ -453,8 +453,8 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                     }
                 } else {
                     LogManager.appendMonitorLog(
-                        "0x8e0f 透传数据" + dataCount + "包接收失败,原因是包数量不一致 实际收到包数量 RealDataCount="
-                            + mCurrentIndex + " 重新透传数据已准备,等待设备重新透传  cmd=" + cmd);
+                            "0x8e0f 透传数据" + dataCount + "包接收失败,原因是包数量不一致 实际收到包数量 RealDataCount="
+                                    + mCurrentIndex + " 重新透传数据已准备,等待设备重新透传  cmd=" + cmd);
                     mCurrentIndex = -1;
                     this.m8fTransData.clear();
                     writeResponse(peripheral, data, false);
@@ -603,10 +603,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     private void receiveSleeperMacInfo(String cmd) {
         String mac = cmd.substring(6);
-        AppManager.getDeviceModel().setSleepyMac(mac);
         // String formatMac = BlueCmd.formatMac(data);
         long oldMac = Long.parseLong(mac, 16);
-        long newMac = ((oldMac & 0xff) + 1) + ((oldMac >> 8) << 8);
+        long newMac = (oldMac & 0xff) + ((oldMac >> 8) << 8);
         StringBuilder macSb = new StringBuilder();
         macSb.delete(0, macSb.length());
         String hexString = Long.toHexString(newMac);
@@ -622,7 +621,8 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             mMonitor.speedSleeper.mac = macSb.toString().toUpperCase(Locale.getDefault());
         }
 
-        LogManager.appendSpeedSleeperLog("获取到监测仪绑定的速眠仪的 mac address=" + macSb.toString().toUpperCase(Locale.getDefault()) + "  cmd=" + cmd);
+        AppManager.getDeviceModel().setSleepyMac(macSb.toString().toUpperCase(Locale.getDefault()));
+        LogManager.appendSpeedSleeperLog("0x56 获取到监测仪绑定的速眠仪的 mac address=" + macSb.toString().toUpperCase(Locale.getDefault()) + "  cmd=" + cmd);
     }
 
     private void receiveSleeperSnInfo(byte[] data, String cmd) {
@@ -630,7 +630,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         // Log.e(TAG, "onReceive: -----55---sleepy sn---->" + sleepySn);
         mMonitor.speedSleeper.sn = sleepySn;
         AppManager.getDeviceModel().setSleepySn(sleepySn);
-        LogManager.appendSpeedSleeperLog("获取到监测仪绑定的速眠仪的 sn=" + sleepySn + "  cmd=" + cmd);
+        LogManager.appendSpeedSleeperLog("0x55 获取到监测仪绑定的速眠仪的 sn=" + sleepySn + "  cmd=" + cmd);
     }
 
     private void receiveSleeperVersionInfo(String cmd) {
@@ -638,9 +638,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         int sleepyFirmwareVersionTwo = Integer.parseInt(cmd.substring(8, 10), 16);
         int sleepyFirmwareVersionThree = Integer.parseInt(cmd.substring(10, 12), 16);
         String sleepyFirmwareVersion = sleepyFirmwareVersionOne + "." + sleepyFirmwareVersionTwo + "." +
-            sleepyFirmwareVersionThree;
+                sleepyFirmwareVersionThree;
         // Log.e(TAG, "onReceive: ---sleepy  version---->" + sleepyFirmwareVersion);
-        LogManager.appendSpeedSleeperLog("速眠仪的固件版本信息" + sleepyFirmwareVersion + "  cmd=" + cmd);
+        LogManager.appendSpeedSleeperLog("0x54 速眠仪的固件版本信息" + sleepyFirmwareVersion + "  cmd=" + cmd);
         AppManager.getDeviceModel().setSleepyVersion(sleepyFirmwareVersion);
     }
 
@@ -653,25 +653,29 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         mMonitor.sn = monitorSn;
         //notifyDeviceDataChanged();
         AppManager.getDeviceModel().setMonitorSn(monitorSn);
-        LogManager.appendMonitorLog("获取到监测仪绑定的速眠仪的 sn=" + monitorSn + "  cmd=" + cmd);
+        LogManager.appendMonitorLog("0x53 获取到监测仪的sn=" + monitorSn + "  cmd=" + cmd);
     }
 
     private void receiveMonitorEnterDfuSuccessResponse(String cmd) {
         mMonitor.status = 0x00;
         mMonitor.battery = 0;
+        mMonitor.sn = null;
         mMonitor.speedSleeper.status = 0x00;
         mMonitor.speedSleeper.battery = 0;
+        mMonitor.speedSleeper.sn = null;
         notifyDeviceDataChanged();
-        LogManager.appendSpeedSleeperLog("0x51 速眠仪进入dfu 模式成功  cmd=" + cmd);
+        LogManager.appendSpeedSleeperLog("0x51 监测仪进入dfu 模式成功  cmd=" + cmd);
     }
 
     private void receiveSleeperEnterDfuSuccessResponse(String cmd) {
         mMonitor.status = 0x00;
         mMonitor.battery = 0;
+        mMonitor.sn = null;
         mMonitor.speedSleeper.status = 0x00;
         mMonitor.speedSleeper.battery = 0;
+        mMonitor.speedSleeper.sn = null;
         notifyDeviceDataChanged();
-        LogManager.appendMonitorLog("0x50 监测仪进入dfu 模式成功 cmd=" + cmd);
+        LogManager.appendMonitorLog("0x59 速眠仪进入dfu 模式成功 cmd=" + cmd);
     }
 
     private void receiveMonitorVersionInfo(String cmd) {
@@ -681,7 +685,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         String monitorFirmwareVersion = monitorFirmwareVersionOne + "." + monitorFirmwareVersionTwo + "." + monitorFirmwareVersionThree;
         AppManager.getDeviceModel().setMonitorVersion(monitorFirmwareVersion);
         //  Log.e(TAG, "onReceive: ------monitor  version------>" + monitorFirmwareVersion);
-        LogManager.appendSpeedSleeperLog("速眠仪的固件版本信息" + monitorFirmwareVersion + "  cmd=" + cmd);
+        LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息" + monitorFirmwareVersion + "  cmd=" + cmd);
     }
 
     private void receiveRequestSleepDataResponse(BluePeripheral peripheral, String cmd) {
@@ -708,20 +712,24 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         notifyDeviceDataChanged();
     }
 
-    private void receiveSleeperConnectionStatus(String cmd) {
+    private void receiveSleeperConnectionStatus(BluePeripheral peripheral, String cmd) {
         // Log.e(TAG, "onReceive: ---sleepy  connected state------->" + cmd);
         int sleepyConnectState = Integer.parseInt(cmd.substring(cmd.length() - 2), 16);
         if (sleepyConnectState == 0x00) {
             mMonitor.speedSleeper.status = 0x00;
             mMonitor.speedSleeper.battery = 0x00;
+            mMonitor.speedSleeper.sn = null;
         } else {
             if (mMonitor.speedSleeper.status <= 0x01) {
                 mMonitor.speedSleeper.status = 0x02;
             }
+            peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100);
+            peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 300);
+            peripheral.writeDelay(BlueCmd.cSleepyMac(), 500);
         }
         notifyDeviceDataChanged();
         AppManager.getDeviceModel().setSleepyConnectState(sleepyConnectState);
-        LogManager.appendSpeedSleeperLog("收到速眠仪的连接状态变化------>" + sleepyConnectState + "  cmd=" + cmd);
+        LogManager.appendSpeedSleeperLog("0x4e 收到速眠仪的连接状态变化------>" + sleepyConnectState + "  cmd=" + cmd);
     }
 
     private void receiveSetUserInfoResult(String cmd) {
@@ -738,7 +746,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         mMonitor.speedSleeper.battery = sleepyBattery;
         notifyDeviceDataChanged();
         AppManager.getDeviceModel().setSleepyBattery(sleepyBattery);
-        LogManager.appendMonitorLog("收到助眠仪的电量变化---->" + sleepyBattery + "  cmd=" + cmd);
+        LogManager.appendMonitorLog("0x44 收到助眠仪的电量变化---->" + sleepyBattery + "  cmd=" + cmd);
     }
 
     private void receiveMonitorBatteryInfo(String cmd) {
@@ -747,7 +755,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         mMonitor.status = 0x02;
         notifyDeviceDataChanged();
         AppManager.getDeviceModel().setMonitorBattery(monitorBattery);
-        LogManager.appendMonitorLog("收到监测仪的电量变化---->" + monitorBattery + "  cmd=" + cmd);
+        LogManager.appendMonitorLog("0x45 收到监测仪的电量变化---->" + monitorBattery + "  cmd=" + cmd);
     }
 
     private void receiveSyncTimeSuccessCmd() {
@@ -849,9 +857,11 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             mMonitor.mac = null;
             mMonitor.status = 0x00;
             mMonitor.battery = 0;
+            mMonitor.sn = null;
 
             mMonitor.speedSleeper.status = 0x00;
             mMonitor.speedSleeper.battery = 0;
+            mMonitor.speedSleeper.sn = null;
 
             notifyDeviceDataChanged();
 
@@ -867,9 +877,11 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             mMonitor.mac = peripheral.getMac();
             mMonitor.status = 0x00;
             mMonitor.battery = 0;
+            mMonitor.sn = null;
 
             mMonitor.speedSleeper.status = 0x00;
             mMonitor.speedSleeper.battery = 0;
+            mMonitor.speedSleeper.sn = null;
 
             notifyDeviceDataChanged();
 

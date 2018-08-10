@@ -79,14 +79,6 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        mRefresh.setRefreshing(true);
-        mPresenter.syncAppVersionInfo();
-        mPresenter.syncMonitorVersionInfo();
-    }
-
-    @Override
     protected void onRelease() {
         AppManager.getVersionModel().unRegisterShowDotCallback(this);
         super.onRelease();
@@ -106,7 +98,15 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
 
     @Override
     public void onRefresh() {
-        initData();
+        mRefresh.setRefreshing(true);
+        //mPresenter.syncAppVersionInfo();
+        mPresenter.syncMonitorVersionInfo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onRefresh();
     }
 
     @Override
