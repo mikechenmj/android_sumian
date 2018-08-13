@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/space_10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/b2_color"
+            android:orientation="vertical">
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/sdv_make_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="invisible"
+                app:type_content="请选择"
+                app:type_desc="预约时间" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1"
+                android:layout_marginStart="@dimen/space_20"
+                android:background="@color/l1_color" />
+
+            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+                android:id="@+id/sdv_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="invisible"
+                app:divider_more_visible="gone"
+                app:type_content="15分钟"
+                app:type_desc="预约时长" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/b2_color"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_64"
+                android:padding="@dimen/space_20"
+                android:text="咨询问题" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1"
+                android:layout_marginStart="@dimen/space_20"
+                android:background="@color/l1_color" />
+
+            <android.support.text.emoji.widget.EmojiEditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_86"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="一句话描述你想要咨询的问题（20字以内）"
+                android:maxLines="2"
+                android:padding="@dimen/space_20" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/b2_color"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_64"
+                android:background="@color/b2_color"
+                android:padding="@dimen/space_20"
+                android:text="补充说明" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1"
+                android:layout_marginStart="@dimen/space_20"
+                android:background="@color/l1_color" />
+
+            <android.support.text.emoji.widget.EmojiEditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_264"
+                android:background="@null"
+                android:gravity="start"
+                android:hint="请详细描述您希望解决的问题：1.描述您的睡前行为；2.描述症状；3.药物相关问题等（400字以内）"
+                android:maxLines="2"
+                android:padding="@dimen/space_20" />
+
+            <TextView
+                android:id="@+id/tv_input_count"
+                style="@style/text_t2_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_20"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginRight="@dimen/space_20"
+                android:gravity="right"
+                android:text="0/400"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+
+        </LinearLayout>
+
+        <Button
+            style="@style/bt_t1_style"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_50"
+            android:layout_marginBottom="@dimen/space_80"
+            android:layout_marginLeft="@dimen/space_36"
+            android:layout_marginRight="@dimen/space_36"
+            android:layout_marginTop="@dimen/space_40"
+            android:gravity="center"
+            android:text="确认" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
