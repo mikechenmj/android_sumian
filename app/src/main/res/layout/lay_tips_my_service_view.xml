@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_152"
+    android:background="@color/b2_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_tips_title"
+        style="@style/text_t2_14"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        android:text="@string/my_service" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        android:background="@color/l1_color" />
+
+    <LinearLayout
+        android:id="@+id/tips_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+        <TextView
+            android:id="@+id/tv_graphic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/space_12"
+            android:drawableTop="@mipmap/ic_info_graphic"
+            android:text="@string/media_service" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+        <View
+            android:layout_width="@dimen/space_1"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@color/l1_color" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+        <TextView
+            android:id="@+id/tv_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/space_12"
+            android:drawableTop="@mipmap/ic_info_telephone"
+            android:text="@string/tel_service" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+        <View
+            android:layout_width="@dimen/space_1"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@color/l1_color" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -919,5 +919,9 @@
     <string name="hw_setting_bind_wechat_hint">你可以使用已绑定的账号登录速眠医生。</string>
     <string name="hw_not_write_yet">未填写</string>
     <string name="hw_version">固件版本</string>
+    <string name="my_service">我的服务</string>
+    <string name="media_service">图文咨询</string>
+    <string name="tel_service">电话预约</string>
+    <string name="my_record">我的档案</string>
     <!-- Hw end-->
 </resources>

@@ -19,6 +19,8 @@ import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
 import com.sumian.sleepdoctor.setting.SettingActivity;
+import com.sumian.sleepdoctor.widget.tips.PatientRecordTips;
+import com.sumian.sleepdoctor.widget.tips.PatientServiceTips;
 
 import java.util.Objects;
 
@@ -33,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class MeFragment extends SdBaseFragment implements View.OnClickListener {
+public class MeFragment extends SdBaseFragment implements View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -42,9 +44,21 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener {
     @BindView(R.id.iv_notification)
     ImageView mIvNotification;
 
+    @BindView(R.id.tips_service)
+    PatientServiceTips mTipsService;
+    @BindView(R.id.tips_record)
+    PatientRecordTips mTipsRecord;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_tab_me;
+    }
+
+    @Override
+    protected void initWidget(View root) {
+        super.initWidget(root);
+        this.mTipsService.setOnServiceTipsCallback(this);
+        this.mTipsRecord.setOnRecordTipsCallback(this);
     }
 
     @Override
@@ -66,45 +80,21 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener {
     @Override
     @OnClick({
             R.id.iv_avatar,
-            R.id.dv_user_info_center,
             R.id.tv_nickname,
-            R.id.dv_my_evaluation,
-            R.id.dv_my_consulting,
             R.id.dv_setting,
-            R.id.dv_electric_report,
             R.id.iv_notification,
-            R.id.dv_my_sleep_file,
     })
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_avatar:
-                UserProfileActivity.show(getContext(), UserProfileActivity.class);
-                break;
-            case R.id.dv_user_info_center:
-                UserProfileActivity.show(getContext(), UserProfileActivity.class);
-                break;
             case R.id.tv_nickname:
                 UserProfileActivity.show(getContext(), UserProfileActivity.class);
-                break;
-            case R.id.dv_my_evaluation:
-                ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_FILLED);
-                break;
-            case R.id.dv_my_consulting:
-                AdvisoryListActivity.show(getActivity(), AdvisoryListActivity.class);
                 break;
             case R.id.dv_setting:
                 SettingActivity.show(getContext(), SettingActivity.class);
                 break;
-            case R.id.dv_electric_report:
-                OnlineReportListActivity.launchForShowAll(this);
-                break;
             case R.id.iv_notification:
                 NotificationListActivity.launch(getActivity());
-                break;
-            case R.id.dv_my_sleep_file:
-                // String title = getString(R.string.me_my_sleep_file);
-                // String urlContentPart = H5Uri.MY_MEDICAL_RECORD;
-                SleepFileWebActivity.show(getContext(), SleepFileWebActivity.class);
                 break;
             default:
                 break;
@@ -115,5 +105,30 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener {
         ImageLoader.loadImage(userProfile.avatar, mIvAvatar, R.mipmap.ic_info_avatar_patient);
         String nickname = userProfile.nickname;
         mTvNickname.setText(TextUtils.isEmpty(nickname) ? userProfile.mobile : nickname);
+    }
+
+    @Override
+    public void showGraphicService() {
+        AdvisoryListActivity.show(getActivity(), AdvisoryListActivity.class);
+    }
+
+    @Override
+    public void showTelService() {
+
+    }
+
+    @Override
+    public void showSleepRecord() {
+        SleepFileWebActivity.show(getContext(), SleepFileWebActivity.class);
+    }
+
+    @Override
+    public void showEvaluation() {
+        ScaleListActivity.launch(getContext(), ScaleListActivity.TYPE_FILLED);
+    }
+
+    @Override
+    public void showOnlineReport() {
+        OnlineReportListActivity.launchForShowAll(this);
     }
 }
