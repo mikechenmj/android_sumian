@@ -15,11 +15,11 @@ import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.account.presenter.LoginPresenter;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.network.request.LoginBody;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 
 /**
@@ -49,7 +49,6 @@ public class HwLoginActivity extends HwBaseActivity implements View.OnClickListe
 
     public static void show(Context context) {
         Intent intent = new Intent(context, HwLoginActivity.class);
-        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -125,9 +124,7 @@ public class HwLoginActivity extends HwBaseActivity implements View.OnClickListe
     public void loginSuccess() {
         ToastHelper.show(R.string.login_success_hint);
         LeanCloudManager.getAndUploadCurrentInstallation();
-        HwApplicationDelegate.goHome(this);
-        // ActivityUtils.finishAllActivities();
-        // ActivityUtils.startActivity(HwMainActivity.class);
+        AppUtil.launchMainAndFinishAll();
     }
 
     @Override
@@ -158,7 +155,6 @@ public class HwLoginActivity extends HwBaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        HwApplicationDelegate.setIsLoginActivity(false);
         LoginRouterActivity.show(this);
     }
 

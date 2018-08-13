@@ -18,9 +18,9 @@ import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.assessment.AssessmentActivity;
-import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.RegisterBody;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
@@ -138,7 +138,7 @@ public class RegisterActivity extends HwBaseActivity implements View.OnClickList
             if (!AppManager.getAccountViewModel().isHaveUserInfoAndSleepBarrierTest()) {
                 AssessmentActivity.show(this, true);
             } else {
-                ActivityUtils.startActivity(HwMainActivity.class);
+                AppUtil.launchMainAndFinishAll();
             }
         });
     }

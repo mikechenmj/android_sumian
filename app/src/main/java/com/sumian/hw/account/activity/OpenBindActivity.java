@@ -18,11 +18,11 @@ import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.request.CaptchaBody;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 /**
@@ -142,7 +142,7 @@ public class OpenBindActivity extends HwBaseActivity implements View.OnClickList
     @Override
     public void onBindSuccess(Token token) {
         runUiThread(() -> ToastHelper.show(R.string.register_success_hint));
-        HwApplicationDelegate.goHome(this);
+        AppUtil.launchMainAndFinishAll();
     }
 
     @Override

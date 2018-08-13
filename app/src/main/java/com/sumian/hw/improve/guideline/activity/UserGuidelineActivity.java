@@ -23,10 +23,9 @@ import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
-import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.improve.widget.GuidelineIndicator;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
 
 import java.util.ArrayList;
@@ -213,7 +212,7 @@ public class UserGuidelineActivity extends HwBaseActivity {
             GuidelineUtils.putBoolean(GuidelineUtils.SP_KEY_NEED_SHOW_WELCOME_USER_GUIDE, false);
             boolean login = AppManager.getAccountViewModel().isLogin();
             if (login) {
-                HwMainActivity.show(App.Companion.getAppContext());
+                AppUtil.launchMain();
             } else {
                 LoginRouterActivity.show(UserGuidelineActivity.this);
             }

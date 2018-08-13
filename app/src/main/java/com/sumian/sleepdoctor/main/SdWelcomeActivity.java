@@ -1,11 +1,13 @@
 package com.sumian.sleepdoctor.main;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.improve.main.HwWelcomeActivity;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
@@ -13,11 +15,12 @@ import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
 
 /**
- * Created by jzz
+ * @author Created by jzz
  * on 2018/1/16.
  * desc:
  */
 
+@SuppressLint("Registered")
 public class SdWelcomeActivity extends SdBaseActivity {
 
     public static final int WELCOME_SHOW_TIME = 500;
@@ -51,7 +54,7 @@ public class SdWelcomeActivity extends SdBaseActivity {
             } else if (token.is_new) {
                 ImproveUserProfileOneActivity.show(SdWelcomeActivity.this, ImproveUserProfileOneActivity.class);
             } else {
-                SdMainActivity.show(SdWelcomeActivity.this, SdMainActivity.class);
+                AppUtil.launchMain();
             }
             finish();
         }, WELCOME_SHOW_TIME);

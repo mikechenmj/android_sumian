@@ -10,10 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.sumian.common.utils.SettingsUtil;
-import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
@@ -161,7 +159,7 @@ public class SdMainActivity extends SdBaseActivity implements BottomNavigationBa
     }
 
     private void launchAnotherMainActivity() {
-        ActivityUtils.startActivity(HwMainActivity.class);
+//        ActivityUtils.startActivity(HwMainActivity.class);
     }
 
     private void changeStatusBarColorByPosition(int position) {

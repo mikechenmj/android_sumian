@@ -6,13 +6,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
-import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import butterknife.BindView;
@@ -137,7 +137,7 @@ public class BindMobileActivity extends SdBaseActivity<BindMobilePresenter> impl
         if (response.is_new) {
             ImproveUserProfileOneActivity.show(this, ImproveUserProfileOneActivity.class);
         } else {
-            SdMainActivity.showClearTop(this, SdMainActivity.class);
+            AppUtil.launchMainAndFinishAll();
         }
     }
 }

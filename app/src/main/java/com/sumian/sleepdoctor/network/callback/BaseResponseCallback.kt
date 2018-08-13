@@ -5,7 +5,6 @@ import com.sumian.hw.account.activity.HwLoginActivity
 import com.sumian.hw.network.callback.ErrorCode
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
-import com.sumian.sleepdoctor.app.HwApplicationDelegate
 import com.sumian.sleepdoctor.network.StatusCode
 import com.sumian.sleepdoctor.network.response.ErrorInfo400
 import com.sumian.sleepdoctor.network.response.ErrorInfo499
@@ -50,10 +49,7 @@ abstract class BaseResponseCallback<T> : Callback<T> {
                     when (errorResponse.code) {
                         //token 鉴权失败
                         401 -> {
-                            if (!HwApplicationDelegate.isIsLoginActivity()) {
-                                HwLoginActivity.show(App.getAppContext(), true)
-                                HwApplicationDelegate.setIsLoginActivity(true)
-                            }
+                            ActivityUtils.startActivity(HwLoginActivity::class.java)
                         }
                         503 -> showSystemIsMaintainDialog()
                     }
@@ -109,10 +105,6 @@ abstract class BaseResponseCallback<T> : Callback<T> {
     }
 
     protected abstract fun onSuccess(response: T?)
-
-    protected fun onFailure(errorResponse: ErrorResponse) {
-
-    }
 
     protected abstract fun onFailure(code: Int, message: String)
 

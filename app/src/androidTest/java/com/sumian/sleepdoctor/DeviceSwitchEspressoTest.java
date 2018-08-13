@@ -8,7 +8,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.sumian.hw.improve.main.HwMainActivity;
+import com.sumian.sleepdoctor.main.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class DeviceSwitchEspressoTest {
 
 
     @Rule
-    public ActivityTestRule<HwMainActivity> mActivityTestRule = new ActivityTestRule<>(HwMainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
 
     @Test

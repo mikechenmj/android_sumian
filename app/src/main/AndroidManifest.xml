@@ -389,14 +389,6 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
-        <receiver
-            android:name=".receiver.ModuleCommunicationReceiver"
-            tools:ignore="ExportedReceiver">
-            <intent-filter>
-                <action android:name="com.sumian.hw.LAUNCH_SLEEP_DOCTOR_MAIN" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name="com.sumian.hw.improve.main.HwMainActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -587,8 +579,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <service android:name="com.sumian.hw.tab.device.service.UploadSleepDataService" />
 
         <service
             android:name="com.sumian.hw.upgrade.service.DfuService"

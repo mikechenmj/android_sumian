@@ -36,8 +36,8 @@ import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.hw.improve.main.HwMainActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
@@ -242,7 +242,7 @@ public final class HwLeanCloudHelper {
         ActivityUtils.startActivity(getChatRoomLaunchIntent());
     }
 
-    public static Intent getChatRoomLaunchIntent() {
+    private static Intent getChatRoomLaunchIntent() {
         VisitorInfo visitorInfo = ContentFactory.createVisitorInfo(null)
                 .nickName(AppManager.getAccountViewModel().getUserInfo().getNickname())
                 .name(AppManager.getAccountViewModel().getUserInfo().getNickname())
@@ -329,7 +329,7 @@ public final class HwLeanCloudHelper {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(App.Companion.getAppContext(), HwMainActivity.class);
+        PushService.setDefaultPushCallback(App.Companion.getAppContext(), AppUtil.getMainClass());
     }
 
     private static void uploadDeviceInfo(String installationId) {

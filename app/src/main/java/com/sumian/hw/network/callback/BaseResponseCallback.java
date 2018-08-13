@@ -2,11 +2,11 @@ package com.sumian.hw.network.callback;
 
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.network.response.ErrorResponse;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 
 import java.io.IOException;
@@ -57,10 +57,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
     }
 
     protected void onUnauthorized() {
-        if (!HwApplicationDelegate.isIsLoginActivity()) {
-            HwLoginActivity.show(App.Companion.getAppContext(), true);
-            HwApplicationDelegate.setIsLoginActivity(true);
-        }
+        ActivityUtils.startActivity(HwLoginActivity.class);
     }
 
     private void errorUnknown() {

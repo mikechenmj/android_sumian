@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.bindMobile.BindMobileActivity;
@@ -125,8 +126,7 @@ public final class LoginActivity extends SdBaseActivity<LoginPresenter> implemen
     }
 
     private void launchMainAndFinish() {
-        SdMainActivity.show(this, SdMainActivity.class);
-        finish();
+        AppUtil.launchMainAndFinishAll();
     }
 
     @Override

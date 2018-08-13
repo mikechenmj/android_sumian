@@ -14,6 +14,7 @@ import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.doctor.contract.BindDoctorContract;
 import com.sumian.sleepdoctor.doctor.presenter.BindDoctorPresenter;
 import com.sumian.sleepdoctor.h5.H5Uri;
+import com.sumian.sleepdoctor.main.MainActivity;
 import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.sumian.sleepdoctor.utils.JsonUtil;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
@@ -113,7 +114,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         if (mIsFromRecord) {
             DoctorServiceWebActivity.show(this, mDoctorService, true);
         } else {
-            SdMainActivity.launch(this, 1);
+            MainActivity.Companion.launch(MainActivity.TAB_SD_DOCTOR, null);
         }
     }
 

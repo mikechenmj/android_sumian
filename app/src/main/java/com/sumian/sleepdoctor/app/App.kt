@@ -9,9 +9,6 @@ import android.app.Application
  */
 
 class App : Application() {
-    @Volatile
-    private var mDelegate: HwApplicationDelegate? = null
-
     companion object {
         private lateinit var mAppContext: Application
         fun getAppContext() = mAppContext
@@ -21,7 +18,6 @@ class App : Application() {
         super.onCreate()
         mAppContext = this
         AppManager.getInstance().init(this)
-        mDelegate = HwApplicationDelegate.init().registerActivityLifecycleCallback(this)
     }
 }
 

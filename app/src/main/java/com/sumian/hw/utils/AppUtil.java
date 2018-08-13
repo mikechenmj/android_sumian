@@ -15,6 +15,7 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.MainActivity;
 
 /**
  * <pre>
@@ -25,9 +26,7 @@ import com.sumian.sleepdoctor.app.AppManager;
  * </pre>
  */
 public class AppUtil {
-    /**
-     * exit app
-     */
+
     public static void exitApp() {
         AppManager.getJobScheduler().release(Utils.getApp().getApplicationContext());
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
@@ -54,5 +53,18 @@ public class AppUtil {
         AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null);
         ActivityUtils.finishAllActivities();
         ActivityUtils.startActivity(HwLoginActivity.class);
+    }
+
+    public static void launchMainAndFinishAll(){
+        ActivityUtils.finishAllActivities();
+        launchMain();
+    }
+
+    public static void launchMain() {
+        ActivityUtils.startActivity(MainActivity.class);
+    }
+
+    public static Class<MainActivity> getMainClass() {
+        return MainActivity.class;
     }
 }

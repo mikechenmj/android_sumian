@@ -1,7 +1,5 @@
 package com.sumian.hw.improve.main;
 
-import android.app.Application;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,14 +42,6 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
     private String[] mFragmentTags = {"tab_0", "tab_1", "tab_2", "tab_3"};
 
     private static final String KEY_PUSH_REPORT_SCHEME = "key_push_report_scheme";
-
-    public static void show(Context context) {
-        Intent intent = new Intent(context, HwMainActivity.class);
-        if (context instanceof Application || context instanceof Service) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        }
-        context.startActivity(intent);
-    }
 
     public static Intent getLaunchIntentForPushReport(Context context, String scheme) {
         Intent intent = new Intent(context, HwMainActivity.class);
@@ -190,7 +180,7 @@ public class HwMainActivity extends HwBaseActivity implements NavTab.OnTabChange
     }
 
     private void launchAnotherMainActivity() {
-        ActivityUtils.startActivity(SdMainActivity.class);
+//        ActivityUtils.startActivity(SdMainActivity.class);
     }
 
     @Override

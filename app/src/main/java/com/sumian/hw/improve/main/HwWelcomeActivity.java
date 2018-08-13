@@ -3,17 +3,15 @@ package com.sumian.hw.improve.main;
 import android.content.Context;
 import android.content.Intent;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.MainActivity;
 
 /**
  * Created by jzz
@@ -43,8 +41,7 @@ public class HwWelcomeActivity extends HwBaseActivity {
             } else {
                 boolean login = AppManager.getAccountViewModel().isLogin();
                 if (login) {
-//                    HwMainActivity.show(App.Companion.getAppContext());
-                    ActivityUtils.startActivity(MainActivity.class);
+                    AppUtil.launchMainAndFinishAll();
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);
                     if (launchCustomerServiceActivity) {
                         HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);

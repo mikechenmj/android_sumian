@@ -19,7 +19,6 @@ import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.app.HwApplicationDelegate;
 import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -163,9 +162,8 @@ public class LoginRouterActivity extends HwBaseActivity implements View.OnClickL
     public void onBindOpenSuccess(Token token) {
         AppManager.getAccountViewModel().updateToken(token);
         LeanCloudManager.getAndUploadCurrentInstallation();
-        HwApplicationDelegate.goHome(this);
         onFinish();
-        finish();
+        AppUtil.launchMainAndFinishAll();
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.sumian.hw.utils.AppUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.Token;
 import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileContract;
@@ -100,7 +101,7 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void onImproveUserProfileSuccess() {
-        SdMainActivity.showClearTop(this, SdMainActivity.class);
+        AppUtil.launchMainAndFinishAll();
     }
 
     @Override

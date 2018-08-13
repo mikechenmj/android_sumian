@@ -1,17 +1,11 @@
 package com.sumian.sleepdoctor.main
 
-import android.app.Application
-import android.app.Service
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.hw.base.HwBasePagerFragment
 import com.sumian.hw.improve.consultant.ConsultantFragment
 import com.sumian.hw.improve.device.fragment.DeviceFragment
-import com.sumian.hw.improve.tab.HwMeFragment
-import com.sumian.hw.improve.main.HwMainActivity
 import com.sumian.hw.improve.report.ReportFragment
+import com.sumian.hw.improve.tab.HwMeFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.hw.push.ReportPushManager
@@ -45,47 +39,13 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
 
     private val mFragmentTags = arrayOf("tab_0", "tab_1", "tab_2", "tab_3")
 
-    private val KEY_PUSH_REPORT_SCHEME = "key_push_report_scheme"
-
-    fun show(context: Context) {
-        val intent = Intent(context, HwMainActivity::class.java)
-        if (context is Application || context is Service) {
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-        context.startActivity(intent)
-    }
-
-    fun getLaunchIntentForPushReport(context: Context, scheme: String): Intent {
-        val intent = Intent(context, HwMainActivity::class.java)
-        intent.putExtra(KEY_PUSH_REPORT_SCHEME, scheme)
-        return intent
-    }
-
-    override fun initBundle(bundle: Bundle) {
-        val scheme = bundle.getString(KEY_PUSH_REPORT_SCHEME) ?: return
-        ReportPushManager.getInstance().setPushReportByUriStr(scheme)
-    }
-
-//    protected override fun onNewIntent(intent: Intent) {
-//        super.onNewIntent(intent)
-//        val pushReport = ReportPushManager.getInstance().pushReport
-//        if (pushReport != null) {
-//            tab_main.onClick(tab_report)
-//        }
-//    }
-
     override fun initWidget() {
         super.initWidget()
         tab_main.setOnTabChangeListener(this)
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)
-        val pushReport = ReportPushManager.getInstance().pushReport
-        if (pushReport != null) {
-            tab_main.onClick(tab_report)
-        } else {
-            tab_main.onClick(tab_device)
-        }
+        showFragmentAccordingToData(true)
     }
 
     override fun initData() {
@@ -153,9 +113,9 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
             }
             if (position == i) {
                 if (fragmentByTag.isAdded) {
-                    fragmentManager!!.beginTransaction().show(fragmentByTag).runOnCommit({ fragmentByTag.onEnterTab() }).commit()
+                    fragmentManager!!.beginTransaction().show(fragmentByTag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
                 } else {
-                    fragmentManager!!.beginTransaction().add(R.id.main_container, fragmentByTag, tag).runOnCommit({ fragmentByTag.onEnterTab() }).commit()
+                    fragmentManager!!.beginTransaction().add(R.id.main_container, fragmentByTag, tag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
                 }
             } else {
                 fragmentManager!!.beginTransaction().hide(fragmentByTag).commit()
@@ -164,7 +124,6 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
     }
 
     private fun launchAnotherMainActivity() {
-//        ActivityUtils.startActivity(SdMainActivity::class.java)
         EventBusUtil.postEvent(SwitchMainActivityEvent(SwitchMainActivityEvent.TYPE_SD_ACTIVITY))
     }
 
@@ -205,6 +164,22 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
             2 -> ConsultantFragment.newInstance()
             3 -> HwMeFragment.newInstance()
             else -> throw RuntimeException("Illegal tab position")
+        }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (hidden) {
+            showFragmentAccordingToData(false)
+        }
+    }
+
+    private fun showFragmentAccordingToData(isInit: Boolean) {
+        val pushReport = ReportPushManager.getInstance().pushReport
+        if (pushReport != null) {
+            tab_main.onClick(tab_report)
+        } else if (isInit) {
+            tab_main.onClick(tab_device)
         }
     }
 }

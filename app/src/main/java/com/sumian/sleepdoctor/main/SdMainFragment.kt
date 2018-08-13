@@ -52,17 +52,10 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     val KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom"
     val REQUEST_CODE_OPEN_NOTIFICATION = 1
 
-    private val TAG = SdMainActivity::class.java.simpleName
     private var mCurrentPosition = -1
     private val mFTags = arrayOf(HomepageFragment::class.java.simpleName, DoctorFragment::class.java.simpleName, "DeviceFragment", MeFragment::class.java.simpleName)
     private var mLaunchData: LaunchData<LaunchSleepTabBean>? = null
     private var mVersionDelegate: VersionDelegate? = null
-
-    fun launch(context: Context, tabIndex: Int) {
-        val bundle = Bundle()
-        bundle.putInt(KEY_TAB_INDEX, tabIndex)
-        SdBaseActivity.showClearTop(context, SdMainActivity::class.java, bundle)
-    }
 
     override fun initBundle(bundle: Bundle) {
         val launchTabIndex = bundle.getInt(KEY_TAB_INDEX)

@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.advisory.contract.RecordContract
 import com.sumian.sleepdoctor.advisory.presenter.RecordPresenter
 import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.h5.H5Uri
+import com.sumian.sleepdoctor.main.MainActivity
 import com.sumian.sleepdoctor.main.SdMainActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.SumianWebDialog
@@ -107,7 +108,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     @SuppressLint("SetTextI18n")
     override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
-        mAdvisory?.let {
+        mAdvisory?.let { it ->
             //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
             when (it.status) {
                 2, 3, 4 -> {
@@ -153,7 +154,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     override fun onClick(v: View?) {
         mAdvisory?.let {
             if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
-                SdMainActivity.launch(this, 1)
+                MainActivity.launch(MainActivity.TAB_SD_DOCTOR)
             } else {
                 PublishAdvisoryRecordActivity.launch(this, mAdvisory)
                 finish()

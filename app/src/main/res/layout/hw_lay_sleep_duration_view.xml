@@ -24,6 +24,7 @@
             android:gravity="center"
             android:text="@string/all_today_duration"
             android:textSize="@dimen/font_12"
+            android:textColor="@color/full_general_color"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/short_none_duration_hint"
             android:textSize="@dimen/font_22"
+            android:textColor="#FF7EA5F4"
             app:layout_constraintBottom_toBottomOf="@id/text_view_1"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_view_1" />
