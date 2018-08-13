@@ -144,13 +144,12 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
         }
         var fragmentByTag: HwBasePagerFragment<*>?
         var tag: String
-        var i = 0
         val len = mFragmentTags.size
-        while (i < len) {
+        for (i in 0 until len) {
             tag = mFragmentTags[i]
             fragmentByTag = fragmentManager!!.findFragmentByTag(tag) as HwBasePagerFragment<*>?
             if (fragmentByTag == null) {
-                fragmentByTag = createFragmentByPosition(position)
+                fragmentByTag = createFragmentByPosition(i)
             }
             if (position == i) {
                 if (fragmentByTag.isAdded) {
@@ -161,7 +160,6 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
             } else {
                 fragmentManager!!.beginTransaction().hide(fragmentByTag).commit()
             }
-            i++
         }
     }
 
