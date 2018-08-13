@@ -51,7 +51,7 @@ public class SdWelcomeActivity extends SdBaseActivity {
             } else if (token.is_new) {
                 ImproveUserProfileOneActivity.show(SdWelcomeActivity.this, ImproveUserProfileOneActivity.class);
             } else {
-                MainActivity.show(SdWelcomeActivity.this, MainActivity.class);
+                SdMainActivity.show(SdWelcomeActivity.this, SdMainActivity.class);
             }
             finish();
         }, WELCOME_SHOW_TIME);

@@ -23,4 +23,12 @@ public class EventBusUtil {
     public static void removeStickyEvent(Object event) {
         EventBus.getDefault().removeStickyEvent(event);
     }
+
+    public static void register(Object subscriber) {
+        EventBus.getDefault().register(subscriber);
+    }
+
+    public static void unregister(Object subscriber) {
+        EventBus.getDefault().unregister(subscriber);
+    }
 }

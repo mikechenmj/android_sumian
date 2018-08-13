@@ -53,7 +53,7 @@ public class ReportFragment extends HwBasePagerFragment implements TabIndicatorV
         }
         // check push report
         boolean showPushReport = showPushReportInNeeded();
-        if (!showPushReport && mCurrentPosition != -1) {
+        if (!showPushReport && mCurrentPosition != -1 && mTabIndicatorView != null) {
             mTabIndicatorView.selectTabByPosition(mCurrentPosition);
         }
     }
@@ -85,11 +85,11 @@ public class ReportFragment extends HwBasePagerFragment implements TabIndicatorV
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mBaseFragments = new HwBasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
         mTabIndicatorView = root.findViewById(R.id.tab_indicator_view);
         mTabIndicatorView.setOnSwitchIndicatorCallback(this);
-        mBaseFragments = new HwBasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
+        mTabIndicatorView.selectTabByPosition(0);
     }
-
 
     @SuppressWarnings("ConstantConditions")
     @Override

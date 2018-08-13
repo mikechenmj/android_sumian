@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sleepdoctor.account.bean.Token
 import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.main.MainActivity
+import com.sumian.sleepdoctor.main.SdMainActivity
 import com.sumian.sleepdoctor.utils.JsonUtil
 
 /**
@@ -32,7 +32,7 @@ class ModuleCommunicationReceiver : BroadcastReceiver() {
             val hwToken = JsonUtil.fromJson<Token>(tokenInfoString, Token::class.java) ?: throw  RuntimeException("token info is null")
             val userInfo = hwToken.user
             val userProfile = UserInfo()
-            userProfile.id = userInfo.id.toInt()
+            userProfile.id = userInfo.id
             userProfile.mobile = userInfo.mobile
             userProfile.avatar = userInfo.avatar
 
@@ -43,7 +43,7 @@ class ModuleCommunicationReceiver : BroadcastReceiver() {
 
             token.user = userProfile
             AppManager.getAccountViewModel().updateToken(token)
-            ActivityUtils.startActivity(MainActivity::class.java)
+            ActivityUtils.startActivity(SdMainActivity::class.java)
         }
     }
 }

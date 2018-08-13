@@ -43,7 +43,7 @@ import butterknife.BindView;
  * desc:
  */
 
-public class MainActivity extends SdBaseActivity implements BottomNavigationBar.OnSelectedTabChangeListener {
+public class SdMainActivity extends SdBaseActivity implements BottomNavigationBar.OnSelectedTabChangeListener {
 
     public static final String KEY_TAB_INDEX = "key_tab_index";
     public static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
@@ -51,7 +51,7 @@ public class MainActivity extends SdBaseActivity implements BottomNavigationBar.
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;
 
     @SuppressWarnings("unused")
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = SdMainActivity.class.getSimpleName();
     @BindView(R.id.nav_tab)
     BottomNavigationBar mBottomNavigationBar;
 
@@ -70,7 +70,7 @@ public class MainActivity extends SdBaseActivity implements BottomNavigationBar.
     public static void launch(Context context, int tabIndex) {
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_TAB_INDEX, tabIndex);
-        showClearTop(context, MainActivity.class, bundle);
+        showClearTop(context, SdMainActivity.class, bundle);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MainActivity extends SdBaseActivity implements BottomNavigationBar.
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.sd_activity_main;
     }
 
     @Override

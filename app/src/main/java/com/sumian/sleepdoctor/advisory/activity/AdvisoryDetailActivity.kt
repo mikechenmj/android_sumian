@@ -15,7 +15,7 @@ import com.sumian.sleepdoctor.advisory.contract.RecordContract
 import com.sumian.sleepdoctor.advisory.presenter.RecordPresenter
 import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.h5.H5Uri
-import com.sumian.sleepdoctor.main.MainActivity
+import com.sumian.sleepdoctor.main.SdMainActivity
 import com.sumian.sleepdoctor.widget.TitleBar
 import com.sumian.sleepdoctor.widget.dialog.SumianWebDialog
 import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
@@ -153,7 +153,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     override fun onClick(v: View?) {
         mAdvisory?.let {
             if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
-                MainActivity.launch(this, 1)
+                SdMainActivity.launch(this, 1)
             } else {
                 PublishAdvisoryRecordActivity.launch(this, mAdvisory)
                 finish()

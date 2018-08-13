@@ -12,7 +12,7 @@ import com.sumian.sleepdoctor.account.captcha.CaptchaTimeDistanceConfig;
 import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import butterknife.BindView;
@@ -86,16 +86,22 @@ public class BindMobileActivity extends SdBaseActivity<BindMobilePresenter> impl
             case R.id.bt_send_captcha:
                 mobile = mEtMobil.getText().toString().trim();
 
-                if (checkMobile(mobile)) return;
+                if (checkMobile(mobile)) {
+                    return;
+                }
 
                 mPresenter.doSendCaptcha(mobile);
                 break;
             case R.id.bt_login:
                 mobile = mEtMobil.getText().toString().trim();
                 String captcha = mEtCaptcha.getText().toString().trim();
-                if (checkMobile(mobile)) return;
+                if (checkMobile(mobile)) {
+                    return;
+                }
 
-                if (TextUtils.isEmpty(captcha)) return;
+                if (TextUtils.isEmpty(captcha)) {
+                    return;
+                }
 
                 int thirdType = 0;
                 if (mShareMedia == SHARE_MEDIA.WEIXIN) {
@@ -131,7 +137,7 @@ public class BindMobileActivity extends SdBaseActivity<BindMobilePresenter> impl
         if (response.is_new) {
             ImproveUserProfileOneActivity.show(this, ImproveUserProfileOneActivity.class);
         } else {
-            MainActivity.showClearTop(this, MainActivity.class);
+            SdMainActivity.showClearTop(this, SdMainActivity.class);
         }
     }
 }

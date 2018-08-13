@@ -13,7 +13,7 @@ import com.sumian.sleepdoctor.account.userProfile.contract.ImproveUserProfileCon
 import com.sumian.sleepdoctor.account.userProfile.presenter.ImproveUserProfilePresenter;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.sumian.sleepdoctor.widget.TitleBar;
 
 import butterknife.BindView;
@@ -100,7 +100,7 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void onImproveUserProfileSuccess() {
-        MainActivity.showClearTop(this, MainActivity.class);
+        SdMainActivity.showClearTop(this, SdMainActivity.class);
     }
 
     @Override
