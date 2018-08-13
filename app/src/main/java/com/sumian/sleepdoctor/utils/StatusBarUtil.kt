@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.utils
 
 import android.app.Activity
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.view.View
 import android.view.WindowManager
 
@@ -25,13 +24,22 @@ class StatusBarUtil {
             window.statusBarColor = color
         }
 
-        @RequiresApi(Build.VERSION_CODES.M)
-        fun setStatusBarTextColor(activity: Activity, isDark: Boolean) {
+        /**
+         * isStatusBarBgDark true：文字白色，false文字黑色
+         */
+        fun setStatusBarTextColor(activity: Activity, isStatusBarBgDark: Boolean) {
             // Fetch the current flags.
-            val flags = activity.window.decorView.systemUiVisibility
-            // Update the SystemUiVisibility dependening on whether we want a Light or Dark theme.
-            activity.window.decorView.systemUiVisibility =
-                    if (isDark) (flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()) else (flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val flags = activity.window.decorView.systemUiVisibility
+                // Update the SystemUiVisibility dependening on whether we want a Light or Dark theme.
+                activity.window.decorView.systemUiVisibility =
+                        if (isStatusBarBgDark) (flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()) else (flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+            }
+        }
+
+        fun setStatusBarColor(activity: Activity, color: Int, isDark: Boolean) {
+            setStatusBarColor(activity, color)
+            setStatusBarTextColor(activity, isDark)
         }
     }
 }

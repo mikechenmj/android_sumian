@@ -1,10 +1,12 @@
 package com.sumian.sleepdoctor.main
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseEventActivity
 import com.sumian.sleepdoctor.event.SwitchMainActivityEvent
+import com.sumian.sleepdoctor.utils.StatusBarUtil
 import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : BaseEventActivity() {
@@ -46,6 +48,11 @@ class MainActivity : BaseEventActivity() {
                     supportFragmentManager.beginTransaction().show(fragmentByTag).commit()
                 } else {
                     supportFragmentManager.beginTransaction().add(R.id.fl_content, fragmentByTag, targetTag).commit()
+                }
+                if (fragmentByTag is HwMainFragment) {
+                    StatusBarUtil.setStatusBarColor(this, Color.TRANSPARENT, true)
+                } else {
+                    StatusBarUtil.setStatusBarColor(this, Color.WHITE, false)
                 }
             } else {
                 supportFragmentManager.beginTransaction().hide(fragmentByTag).commit()
