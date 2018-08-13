@@ -9,7 +9,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.main.MainActivity;
-import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.sumian.sleepdoctor.widget.webview.SBridgeHandler;
 import com.sumian.sleepdoctor.widget.webview.SWebView;
 

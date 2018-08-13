@@ -25,6 +25,7 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
     private List<NavigationItem> mNavigationItems = new ArrayList<>(DEFAULT_TAB_COUNT);
     private int mActivateItemPosition;
     private boolean mInitFinished = false;
+    private boolean mInitTriggerListener;
 
     public BottomNavigationBar(Context context) {
         this(context, null);
@@ -36,7 +37,6 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
 
     public BottomNavigationBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setGravity(Gravity.CENTER);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
     }
 
     private void onInitFinish() {
-        selectItem(mActivateItemPosition, false);
+        selectItem(mActivateItemPosition, mInitTriggerListener);
     }
 
     public void setOnSelectedTabChangeListener(OnSelectedTabChangeListener listener) {
@@ -88,6 +88,7 @@ public class BottomNavigationBar extends LinearLayout implements View.OnClickLis
         // 初始化未完成的时候会记录itemPosition，等到初始化完成自动
         if (!mInitFinished) {
             mActivateItemPosition = itemPosition;
+            mInitTriggerListener = triggerListener;
             return;
         }
         if (itemPosition >= mNavigationItems.size() || itemPosition < 0) {

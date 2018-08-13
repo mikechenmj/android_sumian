@@ -352,4 +352,7 @@
         <item name="android:layout_height">12dp</item>
     </style>
 
+    <style name="MainTab" parent="HorizontalWeight">
+        <item name="android:layout_height">@dimen/space_48</item>
+    </style>
 </resources>

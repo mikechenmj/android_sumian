@@ -17,7 +17,6 @@ import com.sumian.sleepdoctor.account.config.SumianConfig;
 import com.sumian.sleepdoctor.account.userProfile.activity.MyTargetAndInformationActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
-import com.sumian.sleepdoctor.main.SdMainActivity;
 import com.sumian.sleepdoctor.setting.version.delegate.VersionDelegate;
 import com.sumian.sleepdoctor.widget.LoginRuleView;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;

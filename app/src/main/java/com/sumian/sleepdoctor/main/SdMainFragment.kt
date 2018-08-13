@@ -47,51 +47,32 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         return R.layout.sd_fragment_main
     }
 
-    val KEY_TAB_INDEX = "key_tab_index"
-    val KEY_SLEEP_RECORD_TIME = "key_sleep_record_time"
-    val KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom"
-    val REQUEST_CODE_OPEN_NOTIFICATION = 1
+    private val REQUEST_CODE_OPEN_NOTIFICATION = 1
 
     private var mCurrentPosition = -1
-    private val mFTags = arrayOf(HomepageFragment::class.java.simpleName, DoctorFragment::class.java.simpleName, "DeviceFragment", MeFragment::class.java.simpleName)
-    private var mLaunchData: LaunchData<LaunchSleepTabBean>? = null
+    private val mFTags = arrayOf(HomepageFragment::class.java.simpleName, DoctorFragment::class.java.simpleName, MeFragment::class.java.simpleName)
     private var mVersionDelegate: VersionDelegate? = null
 
-    override fun initBundle(bundle: Bundle) {
-        val launchTabIndex = bundle.getInt(KEY_TAB_INDEX)
-        mLaunchData = LaunchData(launchTabIndex)
-        if (launchTabIndex == 0) {
-            val launchSleepRecordTime = bundle.getLong(KEY_SLEEP_RECORD_TIME, 0)
-            val scrollToBottom = bundle.getBoolean(KEY_SCROLL_TO_BOTTOM, false)
-            mLaunchData!!.data = LaunchSleepTabBean(launchSleepRecordTime, scrollToBottom)
-        }
-    }
-
     override fun initWidget() {
-        nav_tab!!.setOnSelectedTabChangeListener(this)
+        nav_tab.setOnSelectedTabChangeListener(this)
+        iv_switch.setOnClickListener {
+            nav_tab.selectItem(0, true)
+            launchAnotherMainActivity()
+        }
     }
 
     override fun initData() {
         super.initData()
         this.mVersionDelegate = VersionDelegate.init()
-        //commitReplace(HwWelcomeActivity.class);
-        val position = if (mLaunchData == null) 0 else mLaunchData!!.tabIndex
-        selectTab(position)
-        nav_tab!!.selectItem(position, false)
-        mLaunchData = null
         showOpenNotificationDialogIfNeeded()
+        val position = 0
+        selectTab(position)
     }
 
     private fun selectTab(position: Int) {
         if (mCurrentPosition == position) {
             return
         }
-        if (position == 2) {
-            nav_tab!!.selectItem(0, true)
-            launchAnotherMainActivity()
-            return
-        }
-
         for (i in 0 until mFTags.size) {
             val tag = mFTags[i]
             var fragmentByTag = fragmentManager!!.findFragmentByTag(tag)
@@ -116,7 +97,7 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         return when (position) {
             0 -> SdBaseFragment.newInstance(HomepageFragment::class.java)
             1 -> SdBaseFragment.newInstance(DoctorFragment::class.java)
-            3 -> SdBaseFragment.newInstance(MeFragment::class.java)
+            2 -> SdBaseFragment.newInstance(MeFragment::class.java)
             else -> SdBaseFragment.newInstance(HomepageFragment::class.java)
         }
     }
@@ -183,7 +164,7 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
                 .setTopIconResource(R.mipmap.ic_notification_alert)
                 .setTitle(R.string.open_notification)
                 .setMessage(R.string.open_notification_and_receive_doctor_response)
-                .setRightBtn(R.string.open_notification) { v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
+                .setRightBtn(R.string.open_notification) { SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
                 .show()
         SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis())
     }

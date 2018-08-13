@@ -6,6 +6,7 @@
         <attr name="tab_icon" format="reference" />
         <attr name="tab_text" format="string|reference" />
         <attr name="tab_text_size" format="dimension|reference" />
+        <attr name="tab_text_color" format="color|reference" />
     </declare-styleable>
 
     <!--divider view-->

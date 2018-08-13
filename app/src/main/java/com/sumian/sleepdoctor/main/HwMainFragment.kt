@@ -2,7 +2,6 @@ package com.sumian.sleepdoctor.main
 
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.hw.base.HwBasePagerFragment
-import com.sumian.hw.improve.consultant.ConsultantFragment
 import com.sumian.hw.improve.device.fragment.DeviceFragment
 import com.sumian.hw.improve.report.ReportFragment
 import com.sumian.hw.improve.tab.HwMeFragment
@@ -11,8 +10,6 @@ import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.AppUtil
-import com.sumian.hw.widget.nav.NavTab
-import com.sumian.hw.widget.nav.TabButton
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.app.AppManager
@@ -20,6 +17,8 @@ import com.sumian.sleepdoctor.base.BaseEventFragment
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.event.SwitchMainActivityEvent
 import com.sumian.sleepdoctor.utils.SumianExecutor
+import com.sumian.sleepdoctor.widget.nav.BottomNavigationBar
+import com.sumian.sleepdoctor.widget.nav.NavigationItem
 import kotlinx.android.synthetic.main.hw_fragment_main.*
 
 /**
@@ -30,22 +29,25 @@ import kotlinx.android.synthetic.main.hw_fragment_main.*
  *     version: 1.0
  * </pre>
  */
-class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
-        HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback, BottomNavigationBar.OnSelectedTabChangeListener {
 
     override fun getLayoutId(): Int {
         return R.layout.hw_fragment_main
     }
 
-    private val mFragmentTags = arrayOf("tab_0", "tab_1", "tab_2", "tab_3")
+    private val mFragmentTags = arrayOf("tab_0", "tab_1", "tab_2")
 
     override fun initWidget() {
         super.initWidget()
-        tab_main.setOnTabChangeListener(this)
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)
+        nav_tab.setOnSelectedTabChangeListener(this)
         showFragmentAccordingToData(true)
+        iv_switch.setOnClickListener {
+            nav_tab.selectItem(0, true)
+            launchAnotherMainActivity()
+        }
     }
 
     override fun initData() {
@@ -96,33 +98,6 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
         })
     }
 
-    override fun tab(tabButton: TabButton, position: Int) {
-        if (position == 2) {
-            tab_main.onClick(tab_device)
-            launchAnotherMainActivity()
-            return
-        }
-        var fragmentByTag: HwBasePagerFragment<*>?
-        var tag: String
-        val len = mFragmentTags.size
-        for (i in 0 until len) {
-            tag = mFragmentTags[i]
-            fragmentByTag = fragmentManager!!.findFragmentByTag(tag) as HwBasePagerFragment<*>?
-            if (fragmentByTag == null) {
-                fragmentByTag = createFragmentByPosition(i)
-            }
-            if (position == i) {
-                if (fragmentByTag.isAdded) {
-                    fragmentManager!!.beginTransaction().show(fragmentByTag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
-                } else {
-                    fragmentManager!!.beginTransaction().add(R.id.main_container, fragmentByTag, tag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
-                }
-            } else {
-                fragmentManager!!.beginTransaction().hide(fragmentByTag).commit()
-            }
-        }
-    }
-
     private fun launchAnotherMainActivity() {
         EventBusUtil.postEvent(SwitchMainActivityEvent(SwitchMainActivityEvent.TYPE_SD_ACTIVITY))
     }
@@ -146,23 +121,19 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
 
     override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
         SumianExecutor.runOnUiThread({
-            // TODO 注释掉该功能,目前消息中心小红点变化转需求,移入下一个新迭代的新消息中心
-            // this.tab_consultant.showDot(doctorMsgLen + customerMsgLen > 0 ? android.view.View.VISIBLE : android.view.View.GONE);
-            this.tab_me.showDot(if (adminMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
+            this.tb_me.showDot(if (adminMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
         })
     }
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
-        // Log.e(TAG, "showDot: ------->" + isShowAppDot);
-        SumianExecutor.runOnUiThread({ this.tab_me.showDot(if (isShowAppDot || isShowMonitorDot || isShowSleepyDot) android.view.View.VISIBLE else android.view.View.GONE) })
+        SumianExecutor.runOnUiThread({ this.tb_me.showDot(if (isShowAppDot || isShowMonitorDot || isShowSleepyDot) android.view.View.VISIBLE else android.view.View.GONE) })
     }
 
     private fun createFragmentByPosition(position: Int): HwBasePagerFragment<*> {
         return when (position) {
             0 -> DeviceFragment.newInstance()
             1 -> ReportFragment.newInstance()
-            2 -> ConsultantFragment.newInstance()
-            3 -> HwMeFragment.newInstance()
+            2 -> HwMeFragment.newInstance()
             else -> throw RuntimeException("Illegal tab position")
         }
     }
@@ -177,9 +148,35 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
     private fun showFragmentAccordingToData(isInit: Boolean) {
         val pushReport = ReportPushManager.getInstance().pushReport
         if (pushReport != null) {
-            tab_main.onClick(tab_report)
+            nav_tab.selectItem(1, true)
         } else if (isInit) {
-            tab_main.onClick(tab_device)
+            nav_tab.selectItem(0, true)
+        }
+    }
+
+    override fun onSelectedTabChange(navigationItem: NavigationItem?, position: Int) {
+        selectTab(position)
+    }
+
+    fun selectTab(position: Int) {
+        var fragmentByTag: HwBasePagerFragment<*>?
+        var tag: String
+        val len = mFragmentTags.size
+        for (i in 0 until len) {
+            tag = mFragmentTags[i]
+            fragmentByTag = fragmentManager!!.findFragmentByTag(tag) as HwBasePagerFragment<*>?
+            if (fragmentByTag == null) {
+                fragmentByTag = createFragmentByPosition(i)
+            }
+            if (position == i) {
+                if (fragmentByTag.isAdded) {
+                    fragmentManager!!.beginTransaction().show(fragmentByTag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
+                } else {
+                    fragmentManager!!.beginTransaction().add(R.id.main_container, fragmentByTag, tag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
+                }
+            } else {
+                fragmentManager!!.beginTransaction().hide(fragmentByTag).commit()
+            }
         }
     }
 }
