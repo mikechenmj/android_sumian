@@ -1,19 +1,16 @@
 package com.sumian.sleepdoctor.main
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.hw.improve.main.HwMainActivity
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.base.BaseEventActivity
 import com.sumian.sleepdoctor.event.SwitchMainActivityEvent
 import com.sumian.sleepdoctor.utils.StatusBarUtil
-import com.umeng.socialize.utils.DeviceConfig.context
 import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : BaseEventActivity() {
