@@ -616,6 +616,15 @@
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.sumian.sleepdoctor.service.tel.activity.TelServiceActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
     </application>
 
 </manifest>

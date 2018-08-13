@@ -18,6 +18,7 @@ import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
+import com.sumian.sleepdoctor.service.tel.activity.TelServiceActivity;
 import com.sumian.sleepdoctor.setting.SettingActivity;
 import com.sumian.sleepdoctor.widget.tips.PatientRecordTips;
 import com.sumian.sleepdoctor.widget.tips.PatientServiceTips;
@@ -35,7 +36,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class MeFragment extends SdBaseFragment implements View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback {
+public class MeFragment extends SdBaseFragment implements View.OnClickListener, PatientServiceTips.OnServiceTipsCallback,
+        PatientRecordTips.OnRecordTipsCallback {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -78,12 +80,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    @OnClick({
-            R.id.iv_avatar,
-            R.id.tv_nickname,
-            R.id.dv_setting,
-            R.id.iv_notification,
-    })
+    @OnClick({R.id.iv_avatar, R.id.tv_nickname, R.id.dv_setting, R.id.iv_notification})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_avatar:
@@ -114,7 +111,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
 
     @Override
     public void showTelService() {
-
+        TelServiceActivity.show();
     }
 
     @Override
