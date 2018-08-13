@@ -122,7 +122,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     }
 
     private fun launchAnotherMainActivity() {
-//        ActivityUtils.startActivity(HwMainActivity::class.java)
         EventBusUtil.postEvent(SwitchMainActivityEvent(SwitchMainActivityEvent.TYPE_HW_ACTIVITY))
     }
 

@@ -93,13 +93,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.SdMainActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".account.login.LoginActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
@@ -387,14 +380,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.improve.main.HwMainActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
