@@ -10,7 +10,9 @@ import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.base.BaseEventActivity
 import com.sumian.sleepdoctor.event.SwitchMainActivityEvent
-import com.sumian.sleepdoctor.utils.StatusBarUtil
+import com.sumian.sleepdoctor.main.widget.SwitchAnimationView
+import com.sumian.sleepdoctor.utils.ColorCompatUtil
+import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : BaseEventActivity() {
@@ -20,6 +22,7 @@ class MainActivity : BaseEventActivity() {
     private val mFragmentTags = arrayOf(mFragmentTagHw, mFragmentTagSd)
     private var mLaunchTabName: String? = TAB_HW_DEVICE
     private var mLaunchTabData: String? = null
+    private val mDarkPrimaryColor: Int by lazy { ColorCompatUtil.getColor(this, R.color.hw_colorPrimary) }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -33,7 +36,6 @@ class MainActivity : BaseEventActivity() {
         const val TAB_SD_DOCTOR = "sd_doctor"
         const val TAB_SD_ME = "sd_me"
 
-        private const val KEY_HW_PUSH_REPORT_SCHEME = "key_hw_push_report_scheme"
         private const val KEY_TAB_NAME = "key_tab_name"
         private const val KEY_TAB_DATA = "key_tab_data"
 
@@ -45,7 +47,7 @@ class MainActivity : BaseEventActivity() {
             return getLaunchIntentForTab(TAB_HW_REPORT, scheme)
         }
 
-        fun getLaunchIntentForTab(tabName: String, tabData: String? = null): Intent {
+        private fun getLaunchIntentForTab(tabName: String, tabData: String? = null): Intent {
             val intent = Intent(App.getAppContext(), MainActivity::class.java)
             intent.putExtra(KEY_TAB_NAME, tabName)
             intent.putExtra(KEY_TAB_DATA, tabData)
@@ -88,10 +90,22 @@ class MainActivity : BaseEventActivity() {
         return true
     }
 
+    @Suppress("unused")
     @Subscribe
     fun onSwitchMainEvent(event: SwitchMainActivityEvent) {
-        val tag = if (event.type == SwitchMainActivityEvent.TYPE_HW_ACTIVITY) mFragmentTagHw else mFragmentTagSd
-        showFragment(tag)
+        val isSwitchToHwFragment = event.type == SwitchMainActivityEvent.TYPE_HW_ACTIVITY
+        val tag = if (isSwitchToHwFragment) mFragmentTagHw else mFragmentTagSd
+        val startColor = if (isSwitchToHwFragment) Color.WHITE else mDarkPrimaryColor
+        val endColor = if (isSwitchToHwFragment) mDarkPrimaryColor else Color.WHITE
+        val startStatusBarColor = if (isSwitchToHwFragment) Color.WHITE else Color.TRANSPARENT
+        val endStatusBarColor = if (isSwitchToHwFragment) Color.TRANSPARENT else Color.WHITE
+        switch_animation_view.startSwitchAnimation(this, startColor, endColor,
+                startStatusBarColor, endStatusBarColor, isSwitchToHwFragment,
+                object : SwitchAnimationView.AnimationListener {
+                    override fun onFullScreenCovered() {
+                        showFragment(tag)
+                    }
+                })
     }
 
     private fun showFragment(targetTag: String) {
@@ -105,11 +119,6 @@ class MainActivity : BaseEventActivity() {
                     supportFragmentManager.beginTransaction().show(fragmentByTag).commit()
                 } else {
                     supportFragmentManager.beginTransaction().add(R.id.fl_content, fragmentByTag, targetTag).commit()
-                }
-                if (fragmentByTag is HwMainFragment) {
-                    StatusBarUtil.setStatusBarColor(this, Color.TRANSPARENT, true)
-                } else {
-                    StatusBarUtil.setStatusBarColor(this, Color.WHITE, false)
                 }
             } else {
                 supportFragmentManager.beginTransaction().hide(fragmentByTag).commit()

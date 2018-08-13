@@ -37,9 +37,9 @@ class StatusBarUtil {
             }
         }
 
-        fun setStatusBarColor(activity: Activity, color: Int, isDark: Boolean) {
+        fun setStatusBarColor(activity: Activity, color: Int, isStatusBarDark: Boolean) {
             setStatusBarColor(activity, color)
-            setStatusBarTextColor(activity, isDark)
+            setStatusBarTextColor(activity, isStatusBarDark)
         }
     }
 }
