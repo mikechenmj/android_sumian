@@ -7,89 +7,63 @@
     android:background="@color/deep_content_bg_color"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll_user_info_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_60"
-        android:layout_marginTop="@dimen/space_64"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/space_284"
+        android:background="@color/light_content_bg_color">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/space_76"
-            android:layout_height="@dimen/space_100"
+            android:layout_width="@dimen/space_80"
+            android:layout_height="@dimen/space_80"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/space_24"
             android:contentDescription="@null"
-            android:src="@mipmap/ic_default_avatar"
-            app:civ_border_color="@color/transparent"
-            app:civ_border_width="@dimen/divider_px_1" />
+            android:src="@mipmap/ic_info_avatar_patient"
+            app:civ_border_color="@android:color/white"
+            app:civ_border_width="@dimen/space_4" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/space_16"
-            android:gravity="center"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/text_t1_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/space_50"
+            android:drawableEnd="@mipmap/ic_info_icon_edit"
+            android:drawablePadding="@dimen/space_12"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_18"
+            tools:text="@string/martian" />
 
-            <TextView
-                android:id="@+id/tv_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|center"
-                android:layout_marginRight="@dimen/space_24"
-                android:ellipsize="marquee"
-                android:focusable="true"
-                android:maxEms="22"
-                android:maxLines="2"
-                android:text="@string/user_none_default_hint"
-                android:textColor="@color/bt_hole_color"
-                android:textSize="@dimen/font_18"
-                tools:ignore="RtlHardcoded"
-                tools:text="张三" />
-
-            <TextView
-                android:id="@+id/tv_age_and_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|center|bottom"
-                android:layout_marginTop="@dimen/space_16"
-                android:singleLine="true"
-                android:text="保密 | 0岁"
-                android:textColor="@color/general_color"
-                android:textSize="@dimen/font_14"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_px_1"
-        android:background="@color/light_line_bg_color" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.sumian.hw.setting.widget.HwSettingItemView
+        <ImageView
             android:id="@+id/siv_customer_service"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hw_siv_label="@string/hw_setting_customer_service_7x24" />
+            android:layout_height="@dimen/space_108"
+            android:layout_marginBottom="@dimen/space_6"
+            android:layout_marginTop="@dimen/space_6"
+            android:contentDescription="@null"
+            android:foreground="@drawable/bg_material_ripple"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_bg_info_customer_service_black" />
 
-        <com.sumian.hw.setting.widget.HwSettingItemView
-            android:id="@+id/siv_upgrade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hw_siv_label="@string/firmware_update_notice_hint" />
-
-        <com.sumian.hw.setting.widget.HwSettingItemView
+        <com.sumian.sleepdoctor.widget.divider.SettingDividerView
             android:id="@+id/siv_setting"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hw_siv_label="@string/setting" />
+            android:layout_height="@dimen/space_64"
+            android:background="@color/light_content_bg_color"
+            app:divider_line_visible="gone"
+            app:type_desc="@string/setting"
+            app:type_desc_text_color="#98add9"
+            app:type_icon="@mipmap/ic_info_icon_set" />
     </LinearLayout>
 
 </LinearLayout>

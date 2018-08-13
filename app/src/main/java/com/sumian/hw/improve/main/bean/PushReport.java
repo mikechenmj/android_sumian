@@ -7,9 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 public class PushReport implements Serializable, Cloneable {
+
     @IntDef({PUSH_TYPE_DAILY_REPORT, PUSH_TYPE_WEEKLY_REPORT})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface PushType {}
+    public @interface PushType {
+    }
 
     public static final int PUSH_TYPE_DAILY_REPORT = 0x01;
     public static final int PUSH_TYPE_WEEKLY_REPORT = 0x02;
@@ -39,9 +41,9 @@ public class PushReport implements Serializable, Cloneable {
     @Override
     public String toString() {
         return "PushReport{" +
-            "pushDate=" + pushDate +
-            ", pushType=" + pushType +
-            '}';
+                "pushDate=" + pushDate +
+                ", pushType=" + pushType +
+                '}';
     }
 
     @Override

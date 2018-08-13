@@ -14,7 +14,7 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.base.HwBasePagerFragment;
 import com.sumian.hw.improve.consultant.ConsultantFragment;
 import com.sumian.hw.improve.device.fragment.DeviceFragment;
-import com.sumian.hw.improve.fragment.HwMeFragment;
+import com.sumian.hw.improve.tab.HwMeFragment;
 import com.sumian.hw.improve.main.bean.PushReport;
 import com.sumian.hw.improve.report.ReportFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;

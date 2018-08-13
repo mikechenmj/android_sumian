@@ -31,6 +31,7 @@
             <enum name="invisible" value="0x00000004" />
         </attr>
         <attr name="show_switch" format="boolean" />
+        <attr name="bg_color" format="color|reference" />
     </declare-styleable>
 
     <!--title bar-->

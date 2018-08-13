@@ -34,6 +34,10 @@ import butterknife.ButterKnife;
 public class SettingDividerView extends LinearLayout implements View.OnClickListener {
 
     public static final int INVALID_RES_ID = -1;
+
+    @BindView(R.id.lay_container)
+    LinearLayout mLinearLayout;
+
     @BindView(R.id.iv_type)
     ImageView mIvType;
     @BindView(R.id.tv_type_desc)
@@ -89,6 +93,9 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         int dividerGone = typedArray.getInt(R.styleable.SettingDividerView_divider_line_visible, View.VISIBLE);
         int moreGone = typedArray.getInt(R.styleable.SettingDividerView_divider_more_visible, View.VISIBLE);
         boolean showSwitch = typedArray.getBoolean(R.styleable.SettingDividerView_show_switch, false);
+
+        @ColorInt int bgColor = typedArray.getColor(R.styleable.SettingDividerView_bg_color, getResources().getColor(R.color.b2_color));
+
         typedArray.recycle();
 
         if (iconId == INVALID_RES_ID) {
@@ -114,7 +121,13 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         mIvMore.setVisibility(moreGone);
         mSwitch.setVisibility(showSwitch ? VISIBLE : GONE);
 
+        setBgColor(bgColor);
+
         setOnClickListener(this);
+    }
+
+    public void setBgColor(int color) {
+        mLinearLayout.setBackgroundColor(color);
     }
 
     @Override

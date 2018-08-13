@@ -9,7 +9,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.hw.base.HwBasePagerFragment
 import com.sumian.hw.improve.consultant.ConsultantFragment
 import com.sumian.hw.improve.device.fragment.DeviceFragment
-import com.sumian.hw.improve.fragment.HwMeFragment
+import com.sumian.hw.improve.tab.HwMeFragment
 import com.sumian.hw.improve.main.HwMainActivity
 import com.sumian.hw.improve.report.ReportFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
@@ -201,11 +201,11 @@ class HwMainFragment : BaseEventFragment(), NavTab.OnTabChangeListener,
     }
 
     private fun createFragmentByPosition(position: Int): HwBasePagerFragment<*> {
-        when (position) {
-            0 -> return DeviceFragment.newInstance()
-            1 -> return ReportFragment.newInstance()
-            2 -> return ConsultantFragment.newInstance()
-            3 -> return HwMeFragment.newInstance()
+        return when (position) {
+            0 -> DeviceFragment.newInstance()
+            1 -> ReportFragment.newInstance()
+            2 -> ConsultantFragment.newInstance()
+            3 -> HwMeFragment.newInstance()
             else -> throw RuntimeException("Illegal tab position")
         }
     }
