@@ -67,9 +67,9 @@ public class BlueDeviceWrapper implements BlueScanCallback, Handler.Callback {
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MSG_WHAT_STOP_SCAN:
-                mMonitor.status = 0x00;
+                mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
                 mMonitor.battery = 0;
-                mMonitor.speedSleeper.status = 0x00;
+                mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
                 mMonitor.speedSleeper.battery = 0;
                 mMainHandler.post(() -> mScanFailedCallback.run());
                 stopScanAndUnRegisterScanCallback();

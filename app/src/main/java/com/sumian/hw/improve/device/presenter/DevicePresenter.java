@@ -152,7 +152,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void doScan2Connect(BlueDevice monitor) {
         this.mMonitor = monitor;
-        this.mMonitor.status = 0x01;
+        this.mMonitor.status = BlueDevice.STATUS_CONNECTING;
         notifyDeviceDataChanged();
         this.mBlueDeviceWrapper.scan2Connect(this.mMonitor, () -> doConnect(mMonitor), () -> {
             notifyDeviceDataChanged();
@@ -215,9 +215,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     @Override
     public void onAdapterEnable() {
-        mMonitor.status = 0x00;
+        mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.battery = 0;
-        mMonitor.speedSleeper.status = 0x00;
+        mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.speedSleeper.battery = 0;
         notifyDeviceDataChanged();
 
@@ -227,10 +227,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     @Override
     public void onAdapterDisable() {
-        mMonitor.status = 0x00;
+        mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.battery = 0;
 
-        mMonitor.speedSleeper.status = 0x00;
+        mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.speedSleeper.battery = 0;
 
         notifyDeviceDataChanged();
@@ -477,19 +477,19 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             peripheral.write(BlueCmd.cResponseOk(data[1]));
             int monitorSnoopingModeState = Integer.parseInt(allState.substring(0, 2), 16);
             if (monitorSnoopingModeState == 0x01) {//独立监测模式
-                mMonitor.status = 0x05;
+                mMonitor.status = BlueDevice.STATUS_MONITORING;
                 mIsMonitoring = true;
             } else {
-                mMonitor.status = 0x02;
+                mMonitor.status = BlueDevice.STATUS_CONNECTED;
                 mIsMonitoring = false;
             }
             LogManager.appendMonitorLog("0x61 收到监测仪的监测模式变化 监测模式=" + monitorSnoopingModeState + "  cmd=" + cmd);
             int sleepyPaModeState = Integer.parseInt(allState.substring(2, 4), 16);
             if (sleepyPaModeState > 0) {
-                mMonitor.speedSleeper.status = 0x04;
+                mMonitor.speedSleeper.status = BlueDevice.STATUS_PA;
             } else {
                 if (mMonitor.speedSleeper.status > 0x01) {
-                    mMonitor.speedSleeper.status = 0x02;
+                    mMonitor.speedSleeper.status = BlueDevice.STATUS_CONNECTED;
                 }
             }
             notifyDeviceDataChanged();
@@ -519,7 +519,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         if (cmd.length() == 8) {
             switch (cmd) {
                 case "55580188"://开启pa成功
-                    mMonitor.speedSleeper.status = 0x04;
+                    mMonitor.speedSleeper.status = BlueDevice.STATUS_PA;
                     notifyDeviceDataChanged();
                     mView.showTurnOnPaModeSuccess();
                     LogManager.appendSpeedSleeperLog("0x58 开启速眠仪的 pa 模式成功  cmd=" + cmd);
@@ -593,7 +593,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             case "555701ff"://操作失败
             default:
                 mIsMonitoring = false;
-                mMonitor.status = 0x02;
+                mMonitor.status = BlueDevice.STATUS_CONNECTED;
                 LogManager.appendMonitorLog("0x57 操作(开启/关闭)监测仪的监测模式失败  cmd=" + cmd);
                 break;
         }
@@ -657,10 +657,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     }
 
     private void receiveMonitorEnterDfuSuccessResponse(String cmd) {
-        mMonitor.status = 0x00;
+        mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.battery = 0;
         mMonitor.sn = null;
-        mMonitor.speedSleeper.status = 0x00;
+        mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.speedSleeper.battery = 0;
         mMonitor.speedSleeper.sn = null;
         notifyDeviceDataChanged();
@@ -668,10 +668,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     }
 
     private void receiveSleeperEnterDfuSuccessResponse(String cmd) {
-        mMonitor.status = 0x00;
+        mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.battery = 0;
         mMonitor.sn = null;
-        mMonitor.speedSleeper.status = 0x00;
+        mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.speedSleeper.battery = 0;
         mMonitor.speedSleeper.sn = null;
         notifyDeviceDataChanged();
@@ -716,12 +716,12 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         // Log.e(TAG, "onReceive: ---sleepy  connected state------->" + cmd);
         int sleepyConnectState = Integer.parseInt(cmd.substring(cmd.length() - 2), 16);
         if (sleepyConnectState == 0x00) {
-            mMonitor.speedSleeper.status = 0x00;
-            mMonitor.speedSleeper.battery = 0x00;
+            mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
+            mMonitor.speedSleeper.battery = 0;
             mMonitor.speedSleeper.sn = null;
         } else {
             if (mMonitor.speedSleeper.status <= 0x01) {
-                mMonitor.speedSleeper.status = 0x02;
+                mMonitor.speedSleeper.status = BlueDevice.STATUS_CONNECTED;
             }
             peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100);
             peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 300);
@@ -752,7 +752,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     private void receiveMonitorBatteryInfo(String cmd) {
         int monitorBattery = Integer.parseInt(cmd.substring(cmd.length() - 2), 16);
         mMonitor.battery = monitorBattery;
-        mMonitor.status = 0x02;
+        mMonitor.status = BlueDevice.STATUS_CONNECTED;
         notifyDeviceDataChanged();
         AppManager.getDeviceModel().setMonitorBattery(monitorBattery);
         LogManager.appendMonitorLog("0x45 收到监测仪的电量变化---->" + monitorBattery + "  cmd=" + cmd);
@@ -798,10 +798,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void onConnecting(BluePeripheral peripheral, int connectState) {
         mMonitor.mac = peripheral.getMac();
-        mMonitor.status = 0x01;
+        mMonitor.status = BlueDevice.STATUS_CONNECTING;
         mMonitor.battery = 0;
 
-        mMonitor.speedSleeper.status = 0x00;
+        mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.speedSleeper.battery = 0;
 
         notifyDeviceDataChanged();
@@ -812,7 +812,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void onConnectSuccess(BluePeripheral peripheral, int connectState) {
         mMonitor.mac = peripheral.getMac();
-        mMonitor.status = 0x01;
+        mMonitor.status = BlueDevice.STATUS_CONNECTING;
         mMonitor.battery = 0;
 
         notifyDeviceDataChanged();
@@ -825,7 +825,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void onConnectFailed(BluePeripheral peripheral, int connectState) {
         mMonitor.mac = peripheral.getMac();
-        mMonitor.status = 0x00;
+        mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.battery = 0;
 
         notifyDeviceDataChanged();
@@ -838,10 +838,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void onDisconnecting(BluePeripheral peripheral, int connectState) {
         mMonitor.mac = peripheral.getMac();
-        mMonitor.status = 0x00;
+        mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.battery = 0;
 
-        mMonitor.speedSleeper.status = 0x00;
+        mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
         mMonitor.speedSleeper.battery = 0;
 
         notifyDeviceDataChanged();
@@ -855,11 +855,11 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     public void onDisconnectSuccess(BluePeripheral peripheral, int connectState) {
         if (mIsUnbinding) {
             mMonitor.mac = null;
-            mMonitor.status = 0x00;
+            mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
             mMonitor.battery = 0;
             mMonitor.sn = null;
 
-            mMonitor.speedSleeper.status = 0x00;
+            mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
             mMonitor.speedSleeper.battery = 0;
             mMonitor.speedSleeper.sn = null;
 
@@ -875,11 +875,11 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         } else {
             mIsUnbinding = false;
             mMonitor.mac = peripheral.getMac();
-            mMonitor.status = 0x00;
+            mMonitor.status = BlueDevice.STATUS_UNCONNECTED;
             mMonitor.battery = 0;
             mMonitor.sn = null;
 
-            mMonitor.speedSleeper.status = 0x00;
+            mMonitor.speedSleeper.status = BlueDevice.STATUS_UNCONNECTED;
             mMonitor.speedSleeper.battery = 0;
             mMonitor.speedSleeper.sn = null;
 
