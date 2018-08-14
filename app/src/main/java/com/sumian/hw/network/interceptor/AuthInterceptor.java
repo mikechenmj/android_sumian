@@ -63,15 +63,20 @@ public class AuthInterceptor implements Interceptor {
 
     private String formatMonitorInfo(String monitorInfo) {
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-        if (bluePeripheral == null || !bluePeripheral.isConnected()) return "";
+        if (bluePeripheral == null || !bluePeripheral.isConnected()) {
+            return "";
+        }
         return TextUtils.isEmpty(monitorInfo) ? "" : monitorInfo;
     }
 
     private String formatSpeedSleeperInfo(String speedSleeperInfo) {
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-        if (bluePeripheral == null || !bluePeripheral.isConnected()) return "";
+        if (bluePeripheral == null || !bluePeripheral.isConnected()) {
+            return "";
+        }
         BlueDevice speedSleeper = AppManager.getDeviceModel().getBlueDevice();
-        if (speedSleeper != null && speedSleeper.speedSleeper != null && speedSleeper.speedSleeper.status <= BlueDevice.STATUS_CONNECTING) {
+        if (speedSleeper != null && speedSleeper.speedSleeper != null
+                && !speedSleeper.speedSleeper.isConnected()) {
             return "";
         } else {
             return TextUtils.isEmpty(speedSleeperInfo) ? "" : speedSleeperInfo;

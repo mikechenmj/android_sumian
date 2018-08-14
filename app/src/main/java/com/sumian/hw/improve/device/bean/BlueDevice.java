@@ -1,12 +1,9 @@
 package com.sumian.hw.improve.device.bean;
 
 import android.bluetooth.BluetoothAdapter;
-import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.Locale;
 
 /**
@@ -22,32 +19,21 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public String name;
     public String mac;
     public transient String sn;
-    public transient int status;////0x00  未连接  0x01  连接中  0x02  在线  0x03 同步数据状态 0x04 pa 模式  0x05 监测模式
+    public transient int status;////0x00  未连接  0x01  连接中  0x02  在线  0x03 同步数据状态 0x04 pa 模式
     public transient int battery;//电池电量
     public transient int rssi;//信号强度
     public transient BlueDevice speedSleeper;//监测仪下属的速眠仪;
+    public transient boolean isMonitoring;
 
     public static final int STATUS_UNCONNECTED = 0;
     public static final int STATUS_CONNECTING = 1;
     public static final int STATUS_CONNECTED = 2;
     public static final int STATUS_SYNCHRONIZING = 3;
     public static final int STATUS_PA = 4;
-    public static final int STATUS_MONITORING = 5;
 
     public static final int MONITORING_CMD_CLOSE = 0x00;
     public static final int MONITORING_CMD_OPEN = 0x01;
 
-    @IntDef({
-            STATUS_UNCONNECTED,
-            STATUS_CONNECTING,
-            STATUS_CONNECTED,
-            STATUS_SYNCHRONIZING,
-            STATUS_PA,
-            STATUS_MONITORING,
-    })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Status {
-    }
 
     @Override
     public String toString() {
@@ -119,16 +105,6 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     @Override
     public int compareTo(@NonNull BlueDevice o) {
         return o.rssi - this.rssi;
-    }
-
-
-    @Status
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(@Status int status) {
-        this.status = status;
     }
 
     public boolean isConnected() {

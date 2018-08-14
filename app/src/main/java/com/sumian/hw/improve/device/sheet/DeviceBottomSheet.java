@@ -51,45 +51,15 @@ public class DeviceBottomSheet extends BottomSheetView implements View.OnClickLi
         super.initView(rootView);
         mTvMonitoringMode = rootView.findViewById(R.id.tv_monitor_monitoring_mode);
         mVDividerOne = rootView.findViewById(R.id.v_divider_one);
-
         rootView.findViewById(R.id.tv_monitor_monitoring_mode).setOnClickListener(this);
         rootView.findViewById(R.id.tv_unbind_device).setOnClickListener(this);
         rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
-    }
 
-    @Override
-    protected void initData() {
-        super.initData();
-        if (mMonitor != null) {
-            if (mMonitor.isConnected()) {
-                switch (mMonitor.status) {
-                    case 0x02:
-                    case 0x03:
-                    case 0x04:
-                        mTvMonitoringMode.setText(R.string.turn_on_snoop_mode);
-                        mTvMonitoringMode.setTextColor(getResources().getColor(R.color.bt_hole_color));
-                        break;
-                    case 0x05:
-                        mTvMonitoringMode.setText(R.string.turn_off_snoop_mode);
-                        mTvMonitoringMode.setTextColor(getResources().getColor(R.color.dot_red_color));
-                        break;
-                    default:
-                        break;
-                }
-                mTvMonitoringMode.setVisibility(View.VISIBLE);
-                mVDividerOne.setVisibility(View.VISIBLE);
-            } else {
-                mTvMonitoringMode.setVisibility(View.GONE);
-                mVDividerOne.setVisibility(View.GONE);
-            }
-        } else {
-            mTvMonitoringMode.setText(R.string.turn_on_snoop_mode);
-            mTvMonitoringMode.setTextColor(getResources().getColor(R.color.bt_hole_color));
-            mTvMonitoringMode.setVisibility(View.GONE);
-            mVDividerOne.setVisibility(View.GONE);
-        }
+        mTvMonitoringMode.setText(mMonitor != null && mMonitor.isMonitoring ? R.string.turn_off_snoop_mode : R.string.turn_on_snoop_mode);
+        mTvMonitoringMode.setTextColor(getResources().getColor(mMonitor != null && mMonitor.isMonitoring ? R.color.dot_red_color : R.color.bt_hole_color));
+        mTvMonitoringMode.setVisibility(mMonitor != null && mMonitor.isConnected() ? View.VISIBLE : View.GONE);
+        mVDividerOne.setVisibility(mMonitor != null && mMonitor.isConnected() ? View.VISIBLE : View.GONE);
     }
-
 
     @Override
     public void onClick(View view) {
@@ -112,7 +82,6 @@ public class DeviceBottomSheet extends BottomSheetView implements View.OnClickLi
             LocalBroadcastManager.getInstance(view.getContext()).sendBroadcast(intent);
             LogManager.appendUserOperationLog("解绑已连接的蓝牙设备");
 
-        } else if (i == R.id.tv_cancel) {
         }
         dismiss();
     }

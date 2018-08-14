@@ -52,7 +52,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> implements DeviceGuideStepOneView.OnDeviceGuideCallback, DeviceContract.View, DeviceStatusView.OnDeviceStatusCallback, EasyPermissions.PermissionCallbacks,OnEnterListener {
+public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> implements DeviceGuideStepOneView.OnDeviceGuideCallback, DeviceContract.View, DeviceStatusView.OnDeviceStatusCallback, EasyPermissions.PermissionCallbacks, OnEnterListener {
 
     public static final int REQUEST_LOCATION_AND_WRITE_PERMISSIONS = 0x01;   // DeviceGuideStepOneView 用到
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION = 0x02; // DeviceStatusView 用到
@@ -145,22 +145,6 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
                         BlueDevice blueDevice = (BlueDevice) intent.getSerializableExtra(PairOnDeviceDialog.EXTRA_DEVICE);
                         mPresenter.doConnect(blueDevice);
                         break;
-//                    case DeviceBottomSheet.ACTION_TURN_MONITORING_MODE:
-//                        int monitoringMode = intent.getIntExtra(DeviceBottomSheet.EXTRA_MONITORING_MODE, 0x00);
-//                        mPresenter.turnOnMonitoringMode(monitoringMode);
-//                        break;
-//                    case DeviceBottomSheet.ACTION_UNBIND:
-//                        mPresenter.doUnbind();
-//                        break;
-                    case JobTask.ACTION_SYNC:
-                        // 上传任务不回调同步结果
-//                        boolean isSyncSuccess = intent.getBooleanExtra(JobTask.EXTRA_SYNC_STATUS, false);
-//                        if (isSyncSuccess) {
-//                            mDeviceStatusView.showSyncDeviceSleepChaSuccess();
-//                        } else {
-//                            mDeviceStatusView.showSyncDeviceSleepChaFailed();
-//                        }
-                        break;
                     default:
                         break;
                 }
@@ -184,6 +168,8 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
                 break;
             case REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION:
                 mDeviceStatusView.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                break;
+            default:
                 break;
         }
     }
@@ -353,18 +339,15 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
         View dividerOne = inflate.findViewById(R.id.v_divider_1);
         View dividerTwo = inflate.findViewById(R.id.v_divider_2);
         BlueDevice monitor = mPresenter.getCurrentMonitor();
-        int status = monitor.getStatus();
-        int tvTurnMonitorAndSynchronizeVisibility =
-                (status != BlueDevice.STATUS_UNCONNECTED && status != BlueDevice.STATUS_CONNECTING) ? View.VISIBLE : View.GONE;
+        int tvTurnMonitorAndSynchronizeVisibility = (monitor.isConnected()) ? View.VISIBLE : View.GONE;
         tvTurnMonitor.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
         tvSynchronize.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
         dividerOne.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
         dividerTwo.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
-        tvTurnMonitor.setText(status == BlueDevice.STATUS_MONITORING ? R.string.turn_off_snoop_mode : R.string.turn_on_snoop_mode);
-        tvTurnMonitor.setTextColor(getResources().getColor(status == BlueDevice.STATUS_MONITORING ? R.color.dot_red_color : R.color.bt_hole_color));
-
+        tvTurnMonitor.setText(monitor.isMonitoring ? R.string.turn_off_snoop_mode : R.string.turn_on_snoop_mode);
+        tvTurnMonitor.setTextColor(getResources().getColor(monitor.isMonitoring ? R.color.dot_red_color : R.color.bt_hole_color));
         tvTurnMonitor.setOnClickListener(v -> {
-            int monitoringMode = status != BlueDevice.STATUS_MONITORING ? BlueDevice.MONITORING_CMD_OPEN : BlueDevice.MONITORING_CMD_CLOSE;
+            int monitoringMode = monitor.isMonitoring ? BlueDevice.MONITORING_CMD_CLOSE : BlueDevice.MONITORING_CMD_OPEN;
             mPresenter.turnOnMonitoringMode(monitoringMode);
             mPopupWindow.dismiss();
         });

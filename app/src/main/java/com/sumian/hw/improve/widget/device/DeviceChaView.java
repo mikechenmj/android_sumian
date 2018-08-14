@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.widget.device.BatteryView;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by sm
@@ -100,32 +100,33 @@ public class DeviceChaView extends LinearLayout {
         @StringRes int statusText;
         int isVisible;
         switch (blueDevice.status) {
-            case 0x01://正在连接中
+            case BlueDevice.STATUS_CONNECTING://正在连接中
                 statusText = R.string.connecting_state_hint;
                 statusColor = R.color.bt_hole_color;
                 isVisible = View.INVISIBLE;
                 break;
-            case 0x02://在线状态
-                statusText = R.string.connected_state_hint;
-                statusColor = R.color.bt_hole_color;
-                isVisible = getResources().getString(R.string.speed_sleeper).equals(blueDevice.name) ? View.INVISIBLE : View.VISIBLE;
+            case BlueDevice.STATUS_CONNECTED://在线状态
+                if(blueDevice.isMonitoring) {
+                    statusText = R.string.connected_state_hint;
+                    statusColor = R.color.bt_hole_color;
+                    isVisible = View.VISIBLE;
+                } else {
+                    statusText = R.string.connected_state_hint;
+                    statusColor = R.color.bt_hole_color;
+                    isVisible = getResources().getString(R.string.speed_sleeper).equals(blueDevice.name) ? View.INVISIBLE : View.VISIBLE;
+                }
                 break;
-            case 0x03://同步数据状态
+            case BlueDevice.STATUS_SYNCHRONIZING://同步数据状态
                 statusText = R.string.syncing;
                 statusColor = R.color.bt_hole_color;
                 isVisible = View.INVISIBLE;
                 break;
-            case 0x04://工作状态
+            case BlueDevice.STATUS_PA://工作状态
                 statusText = R.string.working_state_hint;
                 statusColor = R.color.bt_hole_color;
                 isVisible = View.INVISIBLE;
                 break;
-            case 0x05://监测模式
-                statusText = R.string.connected_state_hint;
-                statusColor = R.color.bt_hole_color;
-                isVisible = View.VISIBLE;
-                break;
-            case 0x00://未在线,未连接状态
+            case BlueDevice.STATUS_UNCONNECTED://未在线,未连接状态
             default:
                 statusColor = R.color.full_general_color;
                 statusText = R.string.none_connected_state_hint;
@@ -134,7 +135,6 @@ public class DeviceChaView extends LinearLayout {
         }
         mTvName.setTextColor(getResources().getColor(statusColor));
         mTvStatus.setText(statusText);
-//        mTvSync.setVisibility(isVisible);
         mBv.setAh(blueDevice.battery);
     }
 

@@ -439,7 +439,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 //   mView.syncDeviceSleepChaFailed();
                 //}
                 if (dataCount == m8fTransData.size()) {
-                    mMonitor.status = mIsMonitoring ? BlueDevice.STATUS_MONITORING : BlueDevice.STATUS_CONNECTED;
+                    mMonitor.status = BlueDevice.STATUS_CONNECTED;
                     @SuppressWarnings("unchecked") ArrayList<String> sleepData = (ArrayList<String>) m8fTransData.clone();
                     m8fTransData.clear();
                     if (isAvailableStorageEnough(dataCount)) {
@@ -481,13 +481,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         if (stateLen == (allState.length() / 2)) {//判断所有状态是否一致
             peripheral.write(BlueCmd.cResponseOk(data[1]));
             int monitorSnoopingModeState = Integer.parseInt(allState.substring(0, 2), 16);
-            if (monitorSnoopingModeState == 0x01) {//独立监测模式
-                mMonitor.status = BlueDevice.STATUS_MONITORING;
-                mIsMonitoring = true;
-            } else {
-                mMonitor.status = BlueDevice.STATUS_CONNECTED;
-                mIsMonitoring = false;
-            }
+            //独立监测模式
+            mIsMonitoring = monitorSnoopingModeState == 0x01;
+            mMonitor.status = BlueDevice.STATUS_CONNECTED;
+            mMonitor.isMonitoring = mIsMonitoring;
             LogManager.appendMonitorLog("0x61 收到监测仪的监测模式变化 监测模式=" + monitorSnoopingModeState + "  cmd=" + cmd);
             int sleepyPaModeState = Integer.parseInt(allState.substring(2, 4), 16);
             if (sleepyPaModeState > 0) {
@@ -576,13 +573,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         int monitorSnoopingState = AppManager.getDeviceModel().getMonitorSnoopingModeState();
         switch (cmd) {
             case "55570188"://操作成功
-                if (mMonitor.status == BlueDevice.STATUS_MONITORING) {
-                    mMonitor.status = BlueDevice.STATUS_CONNECTED;
-                    mIsMonitoring = false;
-                } else {
-                    mMonitor.status = BlueDevice.STATUS_MONITORING;
-                    mIsMonitoring = true;
-                }
+                mIsMonitoring = !mIsMonitoring;
                 if (monitorSnoopingState == DeviceModel.MONITOR_SNOOPING_STATE) {
                     monitorSnoopingState = DeviceModel.MONITOR_IDLE_SNOOPING_STATE;
                 } else {
@@ -598,10 +589,11 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             case "555701ff"://操作失败
             default:
                 mIsMonitoring = false;
-                mMonitor.status = BlueDevice.STATUS_CONNECTED;
                 LogManager.appendMonitorLog("0x57 操作(开启/关闭)监测仪的监测模式失败  cmd=" + cmd);
                 break;
         }
+        mMonitor.status = BlueDevice.STATUS_CONNECTED;
+        mMonitor.isMonitoring = mIsMonitoring;
         notifyDeviceDataChanged();
         //  Log.e(TAG, "onReceive: --57-----set  monitor  snooping mode---->" + cmd);
     }
@@ -701,13 +693,13 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 LogManager.appendTransparentLog("收到0x4f回复 发现设备有睡眠特征数据,准备同步中  cmd=" + cmd);
                 break;
             case "554f020100":
-                mMonitor.status = mIsMonitoring ? BlueDevice.STATUS_MONITORING : BlueDevice.STATUS_CONNECTED;
+                mMonitor.status = BlueDevice.STATUS_CONNECTED;
                 mView.syncDeviceSleepChaSuccess();
                 LogManager.appendTransparentLog("收到0x4f回复 设备没有睡眠特征数据  cmd=" + cmd);
                 SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
                 break;
             case "554f0201ff":
-                mMonitor.status = mIsMonitoring ? BlueDevice.STATUS_MONITORING : BlueDevice.STATUS_CONNECTED;
+                mMonitor.status = BlueDevice.STATUS_CONNECTED;
                 mView.syncDeviceSleepChaFailed();
                 LogManager.appendTransparentLog("收到0x4f回复 设备4f 指令识别异常  cmd=" + cmd);
                 break;

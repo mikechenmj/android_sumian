@@ -123,11 +123,6 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
     }
 
     private void syncSleepData() {
-//        BlueDevice monitor = getMonitor();
-//        if (monitor == null) return;
-//        monitor.status = 0x03;
-//        mIsSyncing = true;
-//        invalidDevice(monitor);
         mCallback.doSyncSleepCha();
     }
 
@@ -159,10 +154,7 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
      * 网络同步数据成功
      */
     public void showSyncDeviceSleepChaSuccess() {
-//        mDeviceRippleConnectingView.showIdleStatus();
-//        mDeviceSyncCallbackView.showSyncSuccess();
         mIsSyncing = false;
-//        delayPostSyncSuccessRunnable();
         onSyncSleepDataFinish();
     }
 
@@ -170,8 +162,6 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
      * 网络同步数据失败
      */
     public void showSyncDeviceSleepChaFailed() {
-//        mDeviceRippleConnectingView.showIdleStatus();
-//        mDeviceSyncCallbackView.showSyncFailed();
         mIsSyncing = false;
         invalidDevice(getMonitor());
         mDeviceSyncCallbackView.showSyncFailed(getContext().getString(R.string.sync_data_fail_please_ensure_the_connection_is_stable));
@@ -180,10 +170,9 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
     public void invalidDevice(BlueDevice monitor) {
         runUiThread(() -> {
             mMonitor.invalidDeice(monitor);
-            int status = monitor.status;
             mSpeedSleeper.invalidDeice(monitor.speedSleeper);
-            switch (status) {
-                case 0x01://连接中
+            switch (monitor.status) {
+                case BlueDevice.STATUS_CONNECTING://连接中
                     mDeviceRippleConnectingView.showIdleStatus();
                     mSpeedSleeper.invisible();
                     mIvDevice.setImageResource(R.mipmap.equip_icon_monitor);
@@ -192,64 +181,65 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
                     mDeviceRippleConnectingView.startConnectingAnimation();
                     mBtSwitchPa.setVisibility(INVISIBLE);
                     break;
-                case 0x02://已连接,在线状态
-                    mDeviceRippleConnectingView.showIdleStatus();
-                    BlueDevice speedSleeper = monitor.speedSleeper;
-                    switch (speedSleeper.status) {
-                        case 0x02://速眠仪连接状态
-                            mIvDevice.setImageResource(R.mipmap.equip_icon_sleeper);
-                            mTvLabelOne.setText("速眠仪已连接，待机中");
-                            mTvLabelOne.setVisibility(VISIBLE);
-                            mTvLabelTwo.setVisibility(INVISIBLE);
-                            mBtSwitchPa.setVisibility(VISIBLE);
-                            break;
-                        case 0x04://速眠仪 pa 模式工作中
+                case BlueDevice.STATUS_CONNECTED://已连接,在线状态
+                    if (monitor.isMonitoring) {
+                        mDeviceRippleConnectingView.showIdleStatus();
+                        if (mIsSyncing) {
                             mSpeedSleeper.show();
-                            mIvDevice.setImageResource(R.mipmap.equip_icon_sleeper);
-                            mTvLabelOne.setText("速眠仪工作中");
-                            mTvLabelOne.setVisibility(VISIBLE);
-                            mTvLabelTwo.setVisibility(INVISIBLE);
+                            mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_synchronization);
+                            mTvLabelOne.setVisibility(GONE);
+                            mTvLabelTwo.setVisibility(GONE);
                             mBtSwitchPa.setVisibility(INVISIBLE);
-                            break;
-                        default://速眠仪未连接状态
+                        } else {
                             mSpeedSleeper.show();
-                            mIvDevice.setImageResource(mIsSyncing ? R.mipmap.equip_icon_monitor_synchronization : R.mipmap.equip_icon_monitor);
-                            mTvLabelOne.setText("监测仪已连接");
-                            mTvLabelTwo.setText("请检查速眠仪是否开启");
+                            mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_monitoringmode);
+                            CharSequence charSequence = formatMonitoringModeText();
+                            mTvLabelOne.setText(charSequence);
+                            mTvLabelTwo.setText("此模式下监测仪不会控制速眠仪。");
                             mTvLabelOne.setVisibility(VISIBLE);
                             mTvLabelTwo.setVisibility(VISIBLE);
                             mBtSwitchPa.setVisibility(INVISIBLE);
                             break;
+                        }
+                    } else {
+                        mDeviceRippleConnectingView.showIdleStatus();
+                        BlueDevice speedSleeper = monitor.speedSleeper;
+                        switch (speedSleeper.status) {
+                            case BlueDevice.STATUS_CONNECTED://速眠仪连接状态
+                                mIvDevice.setImageResource(R.mipmap.equip_icon_sleeper);
+                                mTvLabelOne.setText("速眠仪已连接，待机中");
+                                mTvLabelOne.setVisibility(VISIBLE);
+                                mTvLabelTwo.setVisibility(INVISIBLE);
+                                mBtSwitchPa.setVisibility(VISIBLE);
+                                break;
+                            case BlueDevice.STATUS_PA://速眠仪 pa 模式工作中
+                                mSpeedSleeper.show();
+                                mIvDevice.setImageResource(R.mipmap.equip_icon_sleeper);
+                                mTvLabelOne.setText("速眠仪工作中");
+                                mTvLabelOne.setVisibility(VISIBLE);
+                                mTvLabelTwo.setVisibility(INVISIBLE);
+                                mBtSwitchPa.setVisibility(INVISIBLE);
+                                break;
+                            default://速眠仪未连接状态
+                                mSpeedSleeper.show();
+                                mIvDevice.setImageResource(mIsSyncing ? R.mipmap.equip_icon_monitor_synchronization : R.mipmap.equip_icon_monitor);
+                                mTvLabelOne.setText("监测仪已连接");
+                                mTvLabelTwo.setText("请检查速眠仪是否开启");
+                                mTvLabelOne.setVisibility(VISIBLE);
+                                mTvLabelTwo.setVisibility(VISIBLE);
+                                mBtSwitchPa.setVisibility(INVISIBLE);
+                                break;
+                        }
+                        break;
                     }
-                    break;
-                case 0x03://同步数据中
+                case BlueDevice.STATUS_SYNCHRONIZING://同步数据中
                     mSpeedSleeper.show();
                     mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_synchronization);
                     mTvLabelOne.setVisibility(GONE);
                     mTvLabelTwo.setVisibility(GONE);
                     mBtSwitchPa.setVisibility(INVISIBLE);
                     break;
-                case 0x05://监测仪 监测模式
-                    mDeviceRippleConnectingView.showIdleStatus();
-                    if (mIsSyncing) {
-                        mSpeedSleeper.show();
-                        mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_synchronization);
-                        mTvLabelOne.setVisibility(GONE);
-                        mTvLabelTwo.setVisibility(GONE);
-                        mBtSwitchPa.setVisibility(INVISIBLE);
-                    } else {
-                        mSpeedSleeper.show();
-                        mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_monitoringmode);
-                        CharSequence charSequence = formatMonitoringModeText();
-                        mTvLabelOne.setText(charSequence);
-                        mTvLabelTwo.setText("此模式下监测仪不会控制速眠仪。");
-                        mTvLabelOne.setVisibility(VISIBLE);
-                        mTvLabelTwo.setVisibility(VISIBLE);
-                        mBtSwitchPa.setVisibility(INVISIBLE);
-                        break;
-                    }
-                    break;
-                case 0x00://未连接,不在线
+                case BlueDevice.STATUS_UNCONNECTED://未连接,不在线
                 default:
                     mDeviceRippleConnectingView.showIdleStatus();
                     mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_notconnected);
@@ -259,21 +249,17 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
                     mBtSwitchPa.setVisibility(INVISIBLE);
                     break;
             }
-
-            if (mIsSyncing && status == BlueDevice.STATUS_UNCONNECTED) {
+            if (mIsSyncing && monitor.status == BlueDevice.STATUS_UNCONNECTED) {
                 hideEquipSyncAnimation();
                 mDeviceSyncCallbackView.showSyncFailed(getContext().getString(R.string.sync_data_fail_please_ensure_the_connection_is_stable));
                 mIsSyncing = false;
             }
-
             if (mIsSyncing) {
                 mTvLabelOne.setVisibility(GONE);
                 mTvLabelTwo.setVisibility(GONE);
                 mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_synchronization);
             }
-
             mTvLabelThree.setVisibility(mIsSyncing ? VISIBLE : GONE);
-
             LogManager.appendFormatPhoneLog("设备状态: %s, isSyncing: %b", monitor.toString(), mIsSyncing);
         });
     }
