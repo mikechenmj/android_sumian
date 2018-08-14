@@ -67,7 +67,7 @@ public class OnlineReportDetailActivity extends SdBaseWebViewActivity {
             @Override
             public void handler(String data) {
                 LogUtils.d(data);
-                MainActivity.Companion.launch(MainActivity.TAB_SD_DOCTOR, null);
+                MainActivity.Companion.launch(MainActivity.TAB_SD_1, null);
             }
         });
     }

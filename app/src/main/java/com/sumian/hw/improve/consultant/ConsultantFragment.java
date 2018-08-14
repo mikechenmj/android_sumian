@@ -3,13 +3,14 @@ package com.sumian.hw.improve.consultant;
 import android.view.View;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
-import com.sumian.hw.base.HwBasePagerFragment;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.setting.dialog.ContactDialog;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.OnEnterListener;
 
 /**
  * Created by jzz
@@ -19,7 +20,7 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:咨询
  */
 
-public class ConsultantFragment extends HwBasePagerFragment implements View.OnClickListener, HwLeanCloudHelper.OnShowMsgDotCallback {
+public class ConsultantFragment extends HwBaseFragment implements View.OnClickListener, HwLeanCloudHelper.OnShowMsgDotCallback,OnEnterListener {
 
     private static final String TAG = ConsultantFragment.class.getSimpleName();
 
@@ -32,7 +33,7 @@ public class ConsultantFragment extends HwBasePagerFragment implements View.OnCl
     }
 
     @Override
-    public void onEnterTab() {
+    public void onEnter() {
         AppManager.getOpenAnalytics().onClickEvent(getContext(), "advice_tabbar_Ry");
         UIProvider.getInstance().isHaveMsgSize();
         showDot(mCustomerServiceDot, HwLeanCloudHelper.isHaveCustomerMsg());

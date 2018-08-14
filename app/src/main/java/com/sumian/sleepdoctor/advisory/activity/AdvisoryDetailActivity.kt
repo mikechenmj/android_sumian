@@ -153,7 +153,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     override fun onClick(v: View?) {
         mAdvisory?.let {
             if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
-                MainActivity.launch(MainActivity.TAB_SD_DOCTOR)
+                MainActivity.launch(MainActivity.TAB_SD_1)
             } else {
                 PublishAdvisoryRecordActivity.launch(this, mAdvisory)
                 finish()

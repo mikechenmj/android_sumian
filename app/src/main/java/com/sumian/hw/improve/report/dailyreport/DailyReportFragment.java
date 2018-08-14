@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.hw.base.HwBasePagerFragment;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;
 import com.sumian.hw.improve.report.note.NoteDialog;
 import com.sumian.hw.improve.report.note.SleepNote;
@@ -25,6 +25,7 @@ import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.OnEnterListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,9 @@ import java.util.List;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DailyReportFragment extends HwBasePagerFragment<DailyReportPresenter> implements DailyReportContract.View,
+public class DailyReportFragment extends HwBaseFragment<DailyReportPresenter> implements DailyReportContract.View,
         SwitchDateView.OnSwitchDateListener, View.OnClickListener, RecyclerViewPager.OnPageChangedListener,
-        NoteDialog.OnWriteNoteCallback, DailyAdapter.OnRefreshCallback, ReportModel.OnSyncCallback {
+        NoteDialog.OnWriteNoteCallback, DailyAdapter.OnRefreshCallback, ReportModel.OnSyncCallback,OnEnterListener {
 
     public static final String EXTRA_SCROLL = "com.sumian.app.extra.SCROLL";
     private static final int PRELOAD_THRESHOLD = 5;
@@ -282,7 +283,7 @@ public class DailyReportFragment extends HwBasePagerFragment<DailyReportPresente
     }
 
     @Override
-    public void onEnterTab() {
+    public void onEnter() {
         // check monitor sync sleep data status
         AppManager.getReportModel().setOnSyncCallback(this).checkSyncStatus();
         showPushReportIfNeeded();

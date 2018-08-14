@@ -4,10 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
-import com.sumian.hw.base.HwBasePagerFragment;
+import com.blankj.utilcode.util.LogUtils;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.improve.guideline.dialog.ReportGuidelineDialog;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.main.bean.PushReport;
@@ -17,8 +19,10 @@ import com.sumian.hw.improve.report.weeklyreport.WeeklyReportFragment;
 import com.sumian.hw.improve.widget.TabIndicatorView;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.push.ReportPushManager;
+import com.sumian.hw.utils.FragmentUtil;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.OnEnterListener;
 
 /**
  * Created by sm
@@ -26,11 +30,11 @@ import com.sumian.sleepdoctor.app.AppManager;
  * desc:
  */
 
-public class ReportFragment extends HwBasePagerFragment implements TabIndicatorView.OnSwitchIndicatorCallback {
+public class ReportFragment extends HwBaseFragment implements TabIndicatorView.OnSwitchIndicatorCallback, OnEnterListener {
 
     TabIndicatorView mTabIndicatorView;
 
-    private HwBasePagerFragment[] mBaseFragments;
+    private String[] mFTags = {DailyReportFragment.class.getSimpleName(), WeeklyReportFragment.class.getSimpleName()};
     private int mCurrentPosition = 0;
 
     private BroadcastReceiver mBroadcastReceiver;
@@ -42,7 +46,7 @@ public class ReportFragment extends HwBasePagerFragment implements TabIndicatorV
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void onEnterTab() {
+    public void onEnter() {
         LogManager.appendUserOperationLog("点击进入 '报告' 页面");
         // check job scheduler
         AppManager.getJobScheduler().checkJobScheduler();
@@ -53,6 +57,7 @@ public class ReportFragment extends HwBasePagerFragment implements TabIndicatorV
         }
         // check push report
         boolean showPushReport = showPushReportInNeeded();
+        LogUtils.d(mTabIndicatorView);
         if (!showPushReport && mCurrentPosition != -1 && mTabIndicatorView != null) {
             mTabIndicatorView.selectTabByPosition(mCurrentPosition);
         }
@@ -85,7 +90,8 @@ public class ReportFragment extends HwBasePagerFragment implements TabIndicatorV
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mBaseFragments = new HwBasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
+        LogUtils.d();
+//        mBaseFragments = new HwBasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
         mTabIndicatorView = root.findViewById(R.id.tab_indicator_view);
         mTabIndicatorView.setOnSwitchIndicatorCallback(this);
         mTabIndicatorView.selectTabByPosition(0);
@@ -132,29 +138,25 @@ public class ReportFragment extends HwBasePagerFragment implements TabIndicatorV
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onSwitchIndicator(View v, int position) {
-//        if (mCurrentPosition == position) return;
         LogManager.appendPhoneLog("com.sumian.app.improve.report.ReportFragment.onSwitchIndicator position: " + position);
-        HwBasePagerFragment pagerFragment;
-        String tag;
-        HwBasePagerFragment fragmentByTag;
-        for (int i = 0, len = mBaseFragments.length; i < len; i++) {
-            pagerFragment = mBaseFragments[i];
-            tag = pagerFragment.getClass().getSimpleName();
-            if (position == i) {
-                fragmentByTag = (HwBasePagerFragment) getFragmentManager().findFragmentByTag(tag);
-                if (fragmentByTag != null && fragmentByTag.isAdded()) {
-                    getFragmentManager().beginTransaction().show(fragmentByTag).runOnCommit(fragmentByTag::onEnterTab).commit();
-                } else {
-                    getFragmentManager().beginTransaction().add(R.id.report_container, pagerFragment, tag).runOnCommit(pagerFragment::onEnterTab).commit();
-                }
-            } else {
-                fragmentByTag = (HwBasePagerFragment) getFragmentManager().findFragmentByTag(tag);
-                if (fragmentByTag != null) {
-                    getFragmentManager().beginTransaction().hide(fragmentByTag).commit();
-                }
-            }
-        }
+        showFragmentByPosition(position);
         mCurrentPosition = position;
+    }
+
+    private void showFragmentByPosition(int position) {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager == null) {
+            return;
+        }
+        FragmentUtil.Companion.switchFragment(R.id.report_fragment_container, fragmentManager, mFTags, position,
+                p -> {
+                    if (p == 0) {
+                        return DailyReportFragment.newInstance();
+                    } else {
+                        return WeeklyReportFragment.newInstance();
+                    }
+                }, new FragmentUtil.DefaultRunOnCommitCallbackImpl()
+        );
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -164,7 +166,11 @@ public class ReportFragment extends HwBasePagerFragment implements TabIndicatorV
     }
 
     private long getCurrentShowReportTime() {
-        DailyReportFragment dailyReportFragment = (DailyReportFragment) mBaseFragments[0];
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager == null) {
+            return 0;
+        }
+        DailyReportFragment dailyReportFragment = (DailyReportFragment) fragmentManager.findFragmentByTag(mFTags[0]);
         if (dailyReportFragment == null) {
             return 0;
         }

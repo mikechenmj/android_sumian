@@ -12,7 +12,7 @@
         android:background="@color/hw_colorPrimary" />
 
     <FrameLayout
-        android:id="@+id/report_container"
+        android:id="@+id/report_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

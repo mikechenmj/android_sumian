@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.hw.push.ReportPushManager
+import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.App
 import com.sumian.sleepdoctor.base.BaseEventActivity
@@ -17,10 +18,10 @@ import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : BaseEventActivity() {
 
-    private val mFragmentTagHw = HwMainFragment::class.java.name
-    private val mFragmentTagSd = SdMainFragment::class.java.name
-    private val mFragmentTags = arrayOf(mFragmentTagHw, mFragmentTagSd)
-    private var mLaunchTabName: String? = TAB_HW_DEVICE
+    private val mFragmentPositionHw = 0
+    private val mFragmentPositionSd = 1
+    private val mFragmentTags = arrayOf(HwMainFragment::class.java.name, SdMainFragment::class.java.name)
+    private var mLaunchTabName: String? = TAB_HW_0
     private var mLaunchTabData: String? = null
     private val mDarkPrimaryColor: Int by lazy { ColorCompatUtil.getColor(this, R.color.hw_colorPrimary) }
 
@@ -29,12 +30,12 @@ class MainActivity : BaseEventActivity() {
     }
 
     companion object {
-        const val TAB_HW_DEVICE = "hw_device"
-        const val TAB_HW_REPORT = "hw_report"
-        const val TAB_HW_ME = "hw_me"
-        const val TAB_SD_HOMEPAGE = "sd_homepage"
-        const val TAB_SD_DOCTOR = "sd_doctor"
-        const val TAB_SD_ME = "sd_me"
+        const val TAB_HW_0 = "TAB_HW_0"
+        const val TAB_HW_1 = "TAB_HW_1"
+        const val TAB_HW_2 = "TAB_HW_2"
+        const val TAB_SD_0 = "TAB_SD_0"
+        const val TAB_SD_1 = "TAB_SD_1"
+        const val TAB_SD_2 = "TAB_SD_2"
 
         private const val KEY_TAB_NAME = "key_tab_name"
         private const val KEY_TAB_DATA = "key_tab_data"
@@ -44,7 +45,7 @@ class MainActivity : BaseEventActivity() {
         }
 
         fun getLaunchIntentForHwPushReport(scheme: String): Intent {
-            return getLaunchIntentForTab(TAB_HW_REPORT, scheme)
+            return getLaunchIntentForTab(TAB_HW_1, scheme)
         }
 
         private fun getLaunchIntentForTab(tabName: String, tabData: String? = null): Intent {
@@ -63,8 +64,9 @@ class MainActivity : BaseEventActivity() {
     override fun initBundle(bundle: Bundle) {
         mLaunchTabName = bundle.getString(KEY_TAB_NAME)
         mLaunchTabData = bundle.getString(KEY_TAB_DATA)
+        MainTabHelper.mPendingTabName = mLaunchTabName
         when (mLaunchTabName) {
-            TAB_HW_REPORT -> ReportPushManager.getInstance().setPushReportByUriStr(mLaunchTabData)
+            TAB_HW_1 -> ReportPushManager.getInstance().setPushReportByUriStr(mLaunchTabData)
         }
     }
 
@@ -80,8 +82,8 @@ class MainActivity : BaseEventActivity() {
 
     private fun showFragmentAccordingToData() {
         when (mLaunchTabName) {
-            TAB_HW_DEVICE, TAB_HW_REPORT, TAB_HW_ME -> showFragment(mFragmentTagHw)
-            TAB_SD_HOMEPAGE, TAB_SD_DOCTOR, TAB_SD_ME -> showFragment(mFragmentTagSd)
+            TAB_HW_0, TAB_HW_1, TAB_HW_2 -> showFragmentByPosition(mFragmentPositionHw)
+            TAB_SD_0, TAB_SD_1, TAB_SD_2 -> showFragmentByPosition(mFragmentPositionSd)
         }
         mLaunchTabName = null
     }
@@ -94,7 +96,7 @@ class MainActivity : BaseEventActivity() {
     @Subscribe
     fun onSwitchMainEvent(event: SwitchMainActivityEvent) {
         val isSwitchToHwFragment = event.type == SwitchMainActivityEvent.TYPE_HW_ACTIVITY
-        val tag = if (isSwitchToHwFragment) mFragmentTagHw else mFragmentTagSd
+        val position = if (isSwitchToHwFragment) mFragmentPositionHw else mFragmentPositionSd
         val startColor = if (isSwitchToHwFragment) Color.WHITE else mDarkPrimaryColor
         val endColor = if (isSwitchToHwFragment) mDarkPrimaryColor else Color.WHITE
         val startStatusBarColor = if (isSwitchToHwFragment) Color.WHITE else Color.TRANSPARENT
@@ -103,34 +105,21 @@ class MainActivity : BaseEventActivity() {
                 startStatusBarColor, endStatusBarColor, isSwitchToHwFragment,
                 object : SwitchAnimationView.AnimationListener {
                     override fun onFullScreenCovered() {
-                        showFragment(tag)
+                        showFragmentByPosition(position)
                     }
                 })
     }
 
-    private fun showFragment(targetTag: String) {
-        for (tag in mFragmentTags) {
-            var fragmentByTag = supportFragmentManager.findFragmentByTag(tag)
-            if (fragmentByTag == null) {
-                fragmentByTag = createFragmentByTag(tag)
-            }
-            if (tag == targetTag) {
-                if (fragmentByTag.isAdded) {
-                    supportFragmentManager.beginTransaction().show(fragmentByTag).commit()
-                } else {
-                    supportFragmentManager.beginTransaction().add(R.id.fl_content, fragmentByTag, targetTag).commit()
-                }
-            } else {
-                supportFragmentManager.beginTransaction().hide(fragmentByTag).commit()
-            }
-        }
-    }
-
-    private fun createFragmentByTag(tag: String): Fragment {
-        return when (tag) {
-            mFragmentTagHw -> HwMainFragment()
-            mFragmentTagSd -> SdMainFragment()
-            else -> HwMainFragment()
-        }
+    private fun showFragmentByPosition(position: Int) {
+        FragmentUtil.switchFragment(R.id.main_fragment_container, supportFragmentManager!!, mFragmentTags, position,
+                object : FragmentUtil.FragmentCreator {
+                    override fun createFragmentByPosition(position: Int): Fragment {
+                        return when (position) {
+                            mFragmentPositionHw -> HwMainFragment()
+                            mFragmentPositionSd -> SdMainFragment()
+                            else -> throw RuntimeException("Illegal tab position")
+                        }
+                    }
+                })
     }
 }

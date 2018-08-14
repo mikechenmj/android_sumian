@@ -11,7 +11,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.hw.base.HwBasePagerFragment;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.improve.report.calendar.CalendarDialog;
 import com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView;
 import com.sumian.hw.log.LogManager;
@@ -21,6 +21,7 @@ import com.sumian.hw.tab.report.sheet.SleepAdviceBottomSheet;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.OnEnterListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +33,8 @@ import java.util.List;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class WeeklyReportFragment extends HwBasePagerFragment<WeeklyReportPresenter> implements
-        WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback {
+public class WeeklyReportFragment extends HwBaseFragment<WeeklyReportPresenter> implements
+        WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback, OnEnterListener {
 
     LoadViewPagerRecyclerView mRecycler;
 
@@ -139,7 +140,7 @@ public class WeeklyReportFragment extends HwBasePagerFragment<WeeklyReportPresen
     }
 
     @Override
-    public void onEnterTab() {
+    public void onEnter() {
         LogManager.appendUserOperationLog("点击 '周报告' 界面");
         showPushReportIfNeeded();
         AppManager.getJobScheduler().checkJobScheduler();

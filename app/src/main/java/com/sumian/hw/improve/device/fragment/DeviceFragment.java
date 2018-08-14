@@ -18,7 +18,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.sumian.hw.base.HwBasePagerFragment;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.improve.device.contract.DeviceContract;
@@ -37,6 +37,7 @@ import com.sumian.sleepdoctor.BuildConfig;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.app.App;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.OnEnterListener;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DeviceFragment extends HwBasePagerFragment<DeviceContract.Presenter> implements DeviceGuideStepOneView.OnDeviceGuideCallback, DeviceContract.View, DeviceStatusView.OnDeviceStatusCallback, EasyPermissions.PermissionCallbacks {
+public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> implements DeviceGuideStepOneView.OnDeviceGuideCallback, DeviceContract.View, DeviceStatusView.OnDeviceStatusCallback, EasyPermissions.PermissionCallbacks,OnEnterListener {
 
     public static final int REQUEST_LOCATION_AND_WRITE_PERMISSIONS = 0x01;   // DeviceGuideStepOneView 用到
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION = 0x02; // DeviceStatusView 用到
@@ -204,7 +205,7 @@ public class DeviceFragment extends HwBasePagerFragment<DeviceContract.Presenter
     }
 
     @Override
-    public void onEnterTab() {
+    public void onEnter() {
         LogManager.appendUserOperationLog("点击进入 '设备' 界面");
         if (isResumed()) {
             autoSyncSleepData();

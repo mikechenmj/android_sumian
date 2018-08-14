@@ -1,23 +1,16 @@
 package com.sumian.sleepdoctor.main
 
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.graphics.Color
-import android.os.Build
-import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FrameMetricsAggregator
-import com.alipay.a.a.i
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.utils.AppUtil
+import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.base.BaseEventFragment
-import com.sumian.sleepdoctor.base.SdBaseActivity
 import com.sumian.sleepdoctor.base.SdBaseFragment
 import com.sumian.sleepdoctor.constants.SpKeys
-import com.sumian.sleepdoctor.doctor.base.BasePagerFragment
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.event.NotificationReadEvent
 import com.sumian.sleepdoctor.event.SwitchMainActivityEvent
@@ -42,7 +35,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabChangeListener {
+class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
     override fun getLayoutId(): Int {
         return R.layout.sd_fragment_main
     }
@@ -50,7 +43,10 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     private val REQUEST_CODE_OPEN_NOTIFICATION = 1
 
     private var mCurrentPosition = -1
-    private val mFTags = arrayOf(HomepageFragment::class.java.simpleName, DoctorFragment::class.java.simpleName, MeFragment::class.java.simpleName)
+    private val mFragmentTags = arrayOf(
+            HomepageFragment::class.java.simpleName,
+            DoctorFragment::class.java.simpleName,
+            MeFragment::class.java.simpleName)
     private var mVersionDelegate: VersionDelegate? = null
 
     override fun initWidget() {
@@ -59,47 +55,12 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
             nav_tab.selectItem(0, true)
             launchAnotherMainActivity()
         }
+        showOpenNotificationDialogIfNeeded()
     }
 
     override fun initData() {
         super.initData()
         this.mVersionDelegate = VersionDelegate.init()
-        showOpenNotificationDialogIfNeeded()
-        val position = 0
-        selectTab(position)
-    }
-
-    private fun selectTab(position: Int) {
-        if (mCurrentPosition == position) {
-            return
-        }
-        for (i in 0 until mFTags.size) {
-            val tag = mFTags[i]
-            var fragmentByTag = fragmentManager!!.findFragmentByTag(tag)
-            if (fragmentByTag == null) {
-                fragmentByTag = createFragmentByPosition(i)
-            }
-            if (position == i) {
-                if (fragmentByTag.isAdded) {
-                    fragmentManager!!.beginTransaction().show(fragmentByTag).runOnCommit { autoSelectDoctorTab(fragmentByTag) }.commit()
-                } else {
-                    fragmentManager!!.beginTransaction().add(R.id.lay_tab_container, fragmentByTag, tag).runOnCommit { autoSelectDoctorTab(fragmentByTag) }.commit()
-                }
-            } else {
-                fragmentManager!!.beginTransaction().hide(fragmentByTag).commit()
-            }
-        }
-        mCurrentPosition = position
-        changeStatusBarColorByPosition(position)
-    }
-
-    private fun createFragmentByPosition(position: Int): Fragment {
-        return when (position) {
-            0 -> SdBaseFragment.newInstance(HomepageFragment::class.java)
-            1 -> SdBaseFragment.newInstance(DoctorFragment::class.java)
-            2 -> SdBaseFragment.newInstance(MeFragment::class.java)
-            else -> SdBaseFragment.newInstance(HomepageFragment::class.java)
-        }
     }
 
     private fun launchAnotherMainActivity() {
@@ -117,17 +78,27 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         }
     }
 
-    private fun autoSelectDoctorTab(f: Fragment?) {
-        if (f is BasePagerFragment<*>) {
-            f.selectTab(1)
-        }
-    }
-
     override fun onSelectedTabChange(navigationItem: NavigationItem, position: Int) {
         if (mCurrentPosition == position) {
             return
         }
-        selectTab(position)
+        showFragmentByPosition(position)
+        mCurrentPosition = position
+        changeStatusBarColorByPosition(position)
+    }
+
+    private fun showFragmentByPosition(position: Int) {
+        FragmentUtil.switchFragment(R.id.sd_main_fragment_container, fragmentManager!!, mFragmentTags, position,
+                object : FragmentUtil.FragmentCreator {
+                    override fun createFragmentByPosition(position: Int): Fragment {
+                        return when (position) {
+                            0 -> SdBaseFragment.newInstance(HomepageFragment::class.java)
+                            1 -> SdBaseFragment.newInstance(DoctorFragment::class.java)
+                            2 -> SdBaseFragment.newInstance(MeFragment::class.java)
+                            else -> SdBaseFragment.newInstance(HomepageFragment::class.java)
+                        }
+                    }
+                })
     }
 
     override fun openEventBus(): Boolean {
@@ -145,12 +116,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         ViewModelProviders.of(this)
                 .get(NotificationViewModel::class.java)
                 .updateUnreadCount()
-    }
-
-    class LaunchSleepTabBean internal constructor(internal var sleepRecordTime: Long, internal var needScrollToBottom: Boolean)
-
-    class LaunchData<T> internal constructor(internal var tabIndex: Int) {
-        var data: T? = null
     }
 
     private fun showOpenNotificationDialogIfNeeded() {
@@ -171,5 +136,25 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
 
     fun onBackPressed() {
         AppUtil.exitApp()
+    }
+
+    private fun showTabAccordingToData() {
+        val mPendingTabName = MainTabHelper.mPendingTabName
+        if (mPendingTabName == null) {
+            if (fragmentManager?.findFragmentByTag(mFragmentTags[0]) == null) {
+                nav_tab.selectItem(0, true)
+            }
+        } else {
+            when (mPendingTabName) {
+                MainActivity.TAB_SD_0 -> nav_tab.selectItem(0, true)
+                MainActivity.TAB_SD_1 -> nav_tab.selectItem(1, true)
+                MainActivity.TAB_SD_2 -> nav_tab.selectItem(2, true)
+            }
+        }
+        MainTabHelper.mPendingTabName = null
+    }
+
+    override fun onEnter() {
+        showTabAccordingToData()
     }
 }

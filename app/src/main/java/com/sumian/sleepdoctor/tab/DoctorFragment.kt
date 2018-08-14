@@ -7,11 +7,12 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.app.AppManager
+import com.sumian.sleepdoctor.base.SdBaseFragment
 import com.sumian.sleepdoctor.doctor.activity.ScanDoctorQrCodeActivity
-import com.sumian.sleepdoctor.doctor.base.BasePagerFragment
 import com.sumian.sleepdoctor.doctor.bean.Doctor
 import com.sumian.sleepdoctor.doctor.contract.DoctorContract
 import com.sumian.sleepdoctor.doctor.presenter.DoctorPresenter
+import com.sumian.sleepdoctor.main.OnEnterListener
 import com.sumian.sleepdoctor.notification.NotificationListActivity
 import com.sumian.sleepdoctor.notification.NotificationViewModel
 import com.sumian.sleepdoctor.widget.RequestScanQrCodeView
@@ -23,8 +24,8 @@ import java.util.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View,
-        SwipeRefreshLayout.OnRefreshListener {
+class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View,
+        SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
 
     private val TAG: String = DoctorFragment::class.java.javaClass.simpleName
 
@@ -138,9 +139,8 @@ class DoctorFragment : BasePagerFragment<DoctorContract.Presenter>(), RequestSca
         mPresenter.getBindDoctorInfo()
     }
 
-    override fun selectTab(position: Int) {
+    override fun onEnter() {
         if (mIsAutoRefresh) return
         onRefresh()
     }
-
 }

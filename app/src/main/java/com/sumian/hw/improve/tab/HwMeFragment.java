@@ -9,7 +9,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.account.activity.UserInfoActivity;
 import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.hw.base.HwBasePagerFragment;
+import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
@@ -18,6 +18,7 @@ import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sleepdoctor.R;
 import com.sumian.sleepdoctor.account.bean.UserInfo;
 import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sleepdoctor.main.OnEnterListener;
 import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
 
 import butterknife.BindView;
@@ -32,8 +33,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class HwMeFragment extends HwBasePagerFragment implements View.OnClickListener, UserInfoContract.View,
-        HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+public class HwMeFragment extends HwBaseFragment implements View.OnClickListener, UserInfoContract.View,
+        HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback,OnEnterListener {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -76,7 +77,7 @@ public class HwMeFragment extends HwBasePagerFragment implements View.OnClickLis
     }
 
     @Override
-    public void onEnterTab() {
+    public void onEnter() {
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
     }
 

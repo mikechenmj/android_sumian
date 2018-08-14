@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescription
 import com.sumian.sleepdoctor.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sleepdoctor.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
+import com.sumian.sleepdoctor.main.OnEnterListener
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
 import com.sumian.sleepdoctor.record.FillSleepRecordActivity
 import com.sumian.sleepdoctor.record.SleepRecordActivity
@@ -33,7 +34,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View {
+class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View,OnEnterListener {
     private var mSleepPrescriptionWrapper: SleepPrescriptionWrapper? = null
     private var mHttpService = AppManager.getHttpService()!!
 
@@ -256,5 +257,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun onAvatarClick() {
+    }
+
+    override fun onEnter() {
     }
 }

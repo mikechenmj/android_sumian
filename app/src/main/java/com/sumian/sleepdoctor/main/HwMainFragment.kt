@@ -1,15 +1,15 @@
 package com.sumian.sleepdoctor.main
 
+import android.support.v4.app.Fragment
 import com.hyphenate.helpdesk.easeui.UIProvider
-import com.sumian.hw.base.HwBasePagerFragment
 import com.sumian.hw.improve.device.fragment.DeviceFragment
 import com.sumian.hw.improve.report.ReportFragment
 import com.sumian.hw.improve.tab.HwMeFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.network.callback.BaseResponseCallback
-import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.AppUtil
+import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.account.bean.UserInfo
 import com.sumian.sleepdoctor.app.AppManager
@@ -29,13 +29,16 @@ import kotlinx.android.synthetic.main.hw_fragment_main.*
  *     version: 1.0
  * </pre>
  */
-class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback, BottomNavigationBar.OnSelectedTabChangeListener {
+class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback, BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
 
     override fun getLayoutId(): Int {
         return R.layout.hw_fragment_main
     }
 
-    private val mFragmentTags = arrayOf("tab_0", "tab_1", "tab_2")
+    private val mFragmentTags = arrayOf(
+            DeviceFragment::class.java.simpleName,
+            ReportFragment::class.java.simpleName,
+            HwMeFragment::class.java.simpleName)
 
     override fun initWidget() {
         super.initWidget()
@@ -43,7 +46,6 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)
         nav_tab.setOnSelectedTabChangeListener(this)
-        showFragmentAccordingToData(true)
         iv_switch.setOnClickListener {
             nav_tab.selectItem(0, true)
             launchAnotherMainActivity()
@@ -129,54 +131,41 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
         SumianExecutor.runOnUiThread({ this.tb_me.showDot(if (isShowAppDot || isShowMonitorDot || isShowSleepyDot) android.view.View.VISIBLE else android.view.View.GONE) })
     }
 
-    private fun createFragmentByPosition(position: Int): HwBasePagerFragment<*> {
-        return when (position) {
-            0 -> DeviceFragment.newInstance()
-            1 -> ReportFragment.newInstance()
-            2 -> HwMeFragment.newInstance()
-            else -> throw RuntimeException("Illegal tab position")
-        }
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (hidden) {
-            showFragmentAccordingToData(false)
-        }
-    }
-
-    private fun showFragmentAccordingToData(isInit: Boolean) {
-        val pushReport = ReportPushManager.getInstance().pushReport
-        if (pushReport != null) {
-            nav_tab.selectItem(1, true)
-        } else if (isInit) {
-            nav_tab.selectItem(0, true)
-        }
-    }
-
     override fun onSelectedTabChange(navigationItem: NavigationItem?, position: Int) {
-        selectTab(position)
+        showFragmentByPosition(position)
     }
 
-    fun selectTab(position: Int) {
-        var fragmentByTag: HwBasePagerFragment<*>?
-        var tag: String
-        val len = mFragmentTags.size
-        for (i in 0 until len) {
-            tag = mFragmentTags[i]
-            fragmentByTag = fragmentManager!!.findFragmentByTag(tag) as HwBasePagerFragment<*>?
-            if (fragmentByTag == null) {
-                fragmentByTag = createFragmentByPosition(i)
+    private fun showFragmentByPosition(position: Int) {
+        FragmentUtil.switchFragment(R.id.hw_main_fragment_container, fragmentManager!!, mFragmentTags, position,
+                object : FragmentUtil.FragmentCreator {
+                    override fun createFragmentByPosition(position: Int): Fragment {
+                        return when (position) {
+                            0 -> DeviceFragment.newInstance()
+                            1 -> ReportFragment.newInstance()
+                            2 -> HwMeFragment.newInstance()
+                            else -> throw RuntimeException("Illegal tab position")
+                        }
+                    }
+                })
+    }
+
+    private fun showTabAccordingToData() {
+        val mPendingTabName = MainTabHelper.mPendingTabName
+        if (mPendingTabName == null) {
+            if (fragmentManager?.findFragmentByTag(mFragmentTags[0]) == null) {
+                nav_tab.selectItem(0, true)
             }
-            if (position == i) {
-                if (fragmentByTag.isAdded) {
-                    fragmentManager!!.beginTransaction().show(fragmentByTag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
-                } else {
-                    fragmentManager!!.beginTransaction().add(R.id.main_container, fragmentByTag, tag).runOnCommit { fragmentByTag.onEnterTab() }.commit()
-                }
-            } else {
-                fragmentManager!!.beginTransaction().hide(fragmentByTag).commit()
+        } else {
+            when (mPendingTabName) {
+                MainActivity.TAB_HW_0 -> nav_tab.selectItem(0, true)
+                MainActivity.TAB_HW_1 -> nav_tab.selectItem(1, true)
+                MainActivity.TAB_HW_2 -> nav_tab.selectItem(2, true)
             }
         }
+        MainTabHelper.mPendingTabName = null
+    }
+
+    override fun onEnter() {
+        showTabAccordingToData()
     }
 }
