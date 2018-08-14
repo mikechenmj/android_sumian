@@ -99,8 +99,12 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         BlueDevice that = (BlueDevice) o;
         return (name != null ? name.equals(that.name) : that.name == null) && (mac != null ? mac.equals(that.mac) : that.mac == null);
     }
@@ -125,5 +129,9 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
 
     public void setStatus(@Status int status) {
         this.status = status;
+    }
+
+    public boolean isConnected() {
+        return status != STATUS_UNCONNECTED && status != STATUS_CONNECTING;
     }
 }

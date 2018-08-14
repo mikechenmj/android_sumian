@@ -6,10 +6,10 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.widget.BottomSheetView;
+import com.sumian.sleepdoctor.R;
 
 /**
  * Created by jzz
@@ -61,7 +61,7 @@ public class DeviceBottomSheet extends BottomSheetView implements View.OnClickLi
     protected void initData() {
         super.initData();
         if (mMonitor != null) {
-            if (mMonitor.status > 0x01) {
+            if (mMonitor.isConnected()) {
                 switch (mMonitor.status) {
                     case 0x02:
                     case 0x03:

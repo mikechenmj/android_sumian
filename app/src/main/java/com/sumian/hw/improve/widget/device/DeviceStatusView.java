@@ -139,7 +139,7 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.iv_device) {
-            if (getMonitor().status >= 0x01) {
+            if (getMonitor().status != BlueDevice.STATUS_UNCONNECTED) {
                 return;
             }
             mCallback.doConnect(getMonitor());

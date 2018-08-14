@@ -163,7 +163,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void turnOnSleep() {
         BluePeripheral bluePeripheral = getCurrentBluePeripheral();
-        if (bluePeripheral == null) return;
+        if (bluePeripheral == null) {
+            return;
+        }
         mView.showStartingPaMode();
         bluePeripheral.writeDelay(BlueCmd.cDoSleepyPaMode(), 500);
 
@@ -173,7 +175,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void doSyncSleepData() {
         BluePeripheral bluePeripheral = getCurrentBluePeripheral();
-        if (bluePeripheral == null) return;
+        if (bluePeripheral == null) {
+            return;
+        }
         bluePeripheral.write(BlueCmd.cSleepData());
         mPackageNumber = 0;
         LogManager.appendTransparentLog("主动同步睡眠数据");
@@ -198,8 +202,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @Override
     public void turnOnMonitoringMode(int monitoringMode) {
         BluePeripheral bluePeripheral = getCurrentBluePeripheral();
-        if (bluePeripheral == null) return;
-
+        if (bluePeripheral == null) {
+            return;
+        }
         bluePeripheral.write(BlueCmd.cDoMonitorMonitoringMode(monitoringMode));
     }
 
@@ -210,7 +215,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     @Override
     public boolean isConnected() {
-        return mMonitor != null && mMonitor.status > 0x01;
+        return mMonitor != null && mMonitor.isConnected();
     }
 
     @Override
@@ -488,7 +493,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             if (sleepyPaModeState > 0) {
                 mMonitor.speedSleeper.status = BlueDevice.STATUS_PA;
             } else {
-                if (mMonitor.speedSleeper.status > 0x01) {
+                if (mMonitor.speedSleeper.isConnected()) {
                     mMonitor.speedSleeper.status = BlueDevice.STATUS_CONNECTED;
                 }
             }
@@ -720,7 +725,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             mMonitor.speedSleeper.battery = 0;
             mMonitor.speedSleeper.sn = null;
         } else {
-            if (mMonitor.speedSleeper.status <= 0x01) {
+            if (!mMonitor.speedSleeper.isConnected()) {
                 mMonitor.speedSleeper.status = BlueDevice.STATUS_CONNECTED;
             }
             peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100);
