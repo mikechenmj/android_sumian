@@ -71,7 +71,7 @@ public class DoctorServiceLayout extends LinearLayout {
         load(doctorService.getIcon(), serviceIconId, ivServiceIcon);
 
         tvServiceName.setText(doctorService.getName());
-        tvServiceDesc.setText(doctorService.getNot_buy_description());
+        tvServiceDesc.setText(doctorService.getIntroduction());
 
         bottomDivider.setVisibility(isGoneDivider ? View.GONE : View.VISIBLE);
     }

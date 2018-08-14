@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 import com.sumian.sleepdoctor.base.SdBasePresenter
 import com.sumian.sleepdoctor.base.SdBaseWebViewActivity
 import com.sumian.sleepdoctor.doctor.activity.PaymentActivity
-import com.sumian.sleepdoctor.doctor.bean.DoctorServiceShopData
+import com.sumian.sleepdoctor.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sleepdoctor.event.CBTIServiceBoughtEvent
 import com.sumian.sleepdoctor.event.EventBusUtil
 import com.sumian.sleepdoctor.h5.H5Uri
@@ -39,10 +39,12 @@ class CBTIIntroductionWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() 
         sWebView.registerHandler("buyService", object : SBridgeHandler() {
             override fun handler(data: String?) {
                 super.handler(data)
-                val type = object : TypeToken<H5BaseResponse<DoctorServiceShopData>>() {}
-                val response = JsonUtil.fromJson<H5BaseResponse<DoctorServiceShopData>>(data, type.type)
-                        ?: return
-                PaymentActivity.startForResult(this@CBTIIntroductionWebActivity, response.result, REQUEST_CODE_BUY_SERVICE)
+                val type = object : TypeToken<H5BaseResponse<H5DoctorServiceShoppingResult>>() {}
+                val response = JsonUtil.fromJson<H5BaseResponse<H5DoctorServiceShoppingResult>>(data, type.type)
+
+                response?.let {
+                    PaymentActivity.startForResult(this@CBTIIntroductionWebActivity, it.result?.service!!, it.result.packageId, REQUEST_CODE_BUY_SERVICE)
+                }
             }
         })
         sWebView.registerHandler("onCbtiChapterClick", object : SBridgeHandler() {

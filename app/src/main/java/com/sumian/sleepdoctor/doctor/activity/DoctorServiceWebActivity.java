@@ -12,6 +12,7 @@ import com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sleepdoctor.app.AppManager;
 import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
+import com.sumian.sleepdoctor.doctor.bean.H5DoctorServiceShoppingResult;
 import com.sumian.sleepdoctor.h5.H5Uri;
 import com.sumian.sleepdoctor.record.SleepRecordActivity;
 import com.sumian.sleepdoctor.utils.JsonUtil;
@@ -66,7 +67,7 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
 
     @Override
     protected String getUrlContentPart() {
-        return H5Uri.DOCTOR_SERVICE.replace("{id}", String.format(Locale.getDefault(), "%d", mDoctorService.getId()));
+        return H5Uri.DOCTOR_SERVICE.replace("{id}", String.format(Locale.getDefault(), "%d", mDoctorService.getType()));
     }
 
     @Override
@@ -80,15 +81,15 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
     @Override
     protected void registerHandler(@NonNull SWebView sWebView) {
         super.registerHandler(sWebView);
-        sWebView.registerHandler("payDirect", new SBridgeHandler() {
+        sWebView.registerHandler("buyService", new SBridgeHandler() {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void handler(String data) {
-                SBridgeResult<DoctorService> sBridgeResult = JsonUtil.fromJson(data, new TypeToken<SBridgeResult<DoctorService>>() {
+                SBridgeResult<H5DoctorServiceShoppingResult> sBridgeResult = JsonUtil.fromJson(data, new TypeToken<SBridgeResult<H5DoctorServiceShoppingResult>>() {
                 }.getType());
                 //0：立即购买； -1：未绑定医生
                 if (sBridgeResult.code == 0) {
-                    PaymentActivity.startForResult(DoctorServiceWebActivity.this, sBridgeResult.result, REQUEST_CODE_BUY_SERVICE);
+                    PaymentActivity.startForResult(DoctorServiceWebActivity.this, sBridgeResult.result.getService(), sBridgeResult.result.getPackageId(), REQUEST_CODE_BUY_SERVICE);
                 } else {//未绑定医生
                     if (mIsFromRecord) {
                         ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, mDoctorService, mIsFromRecord);

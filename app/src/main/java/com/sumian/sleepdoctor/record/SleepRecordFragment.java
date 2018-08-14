@@ -20,11 +20,11 @@ import com.sumian.sleepdoctor.h5.SimpleWebActivity;
 import com.sumian.sleepdoctor.network.callback.BaseResponseCallback;
 import com.sumian.sleepdoctor.record.bean.SleepRecord;
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary;
+import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarView;
+import com.sumian.sleepdoctor.record.calendar.custom.SleepCalendarViewWrapper;
 import com.sumian.sleepdoctor.record.widget.SleepRecordView;
 import com.sumian.sleepdoctor.utils.TimeUtil;
 import com.sumian.sleepdoctor.widget.dialog.ActionLoadingDialog;
-import com.sumian.sleepdoctor.record.calendar.calendarView.CalendarView;
-import com.sumian.sleepdoctor.record.calendar.custom.SleepCalendarViewWrapper;
 
 import java.util.List;
 import java.util.Map;
@@ -34,11 +34,14 @@ import butterknife.OnClick;
 import retrofit2.Call;
 
 public class SleepRecordFragment extends SdBaseFragment implements CalendarView.OnDateClickListener {
+
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
     public static final int PAGE_SIZE = 12;
+
     private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
     private static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
+
     @BindView(R.id.rl_toolbar)
     View mToolbar;
     @BindView(R.id.iv_date_arrow)
@@ -100,7 +103,7 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
         call.enqueue(new BaseResponseCallback<DoctorService>() {
             @Override
             protected void onSuccess(DoctorService response) {
-                boolean hasSleepReportService = response != null && response.getLast_count() > 0;
+                boolean hasSleepReportService = response != null;
                 if (mSleepRecordView != null) {
                     mSleepRecordView.setForceShowDoctorAdvice(hasSleepReportService);
                 }

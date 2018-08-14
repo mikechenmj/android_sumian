@@ -923,5 +923,14 @@
     <string name="media_service">图文咨询</string>
     <string name="tel_service">电话预约</string>
     <string name="my_record">我的档案</string>
+    <string name="ask_question">咨询问题</string>
+    <string name="ask_question_hint">一句话描述你想要咨询的问题（20字以内）</string>
+    <string name="ask_more">补充说明</string>
+    <string name="ask_more_hint">请详细描述您希望解决的问题：1.描述您的睡前行为；2.描述症状；3.药物相关问题等（400字以内）</string>
+    <string name="tel_submit">确认</string>
+    <string name="tel_ask_detail">预约详情</string>
+    <string name="ask_time">预约时间</string>
+    <string name="un_finished">未完成</string>
+    <string name="is_finished">已完成</string>
     <!-- Hw end-->
 </resources>

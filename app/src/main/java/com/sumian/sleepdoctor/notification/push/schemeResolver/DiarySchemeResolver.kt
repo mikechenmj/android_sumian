@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import com.sumian.sleepdoctor.record.SleepRecordActivity
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
  * <pre>
  *     @author : Zhan Xuzhao

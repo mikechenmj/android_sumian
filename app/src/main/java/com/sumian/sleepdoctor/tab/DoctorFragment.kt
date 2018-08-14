@@ -53,6 +53,7 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
             val doctor = AppManager.getAccountViewModel()?.userInfo?.doctor
             doctor_detail_layout.invalidDoctor(doctor)
             if (doctor?.services == null) {
+                mIsAutoRefresh = true
                 mPresenter.getBindDoctorInfo()
             }
         } else {

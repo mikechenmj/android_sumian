@@ -64,7 +64,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
     override fun getDoctorServiceInfo(doctorId: Int) {
 
-        val doctorInfoCall = AppManager.getHttpService().getDoctorInfo(doctorId, "services")
+        val doctorInfoCall = AppManager.getHttpService().getDoctorInfo(doctorId)
 
         mCalls?.add(doctorInfoCall)
 

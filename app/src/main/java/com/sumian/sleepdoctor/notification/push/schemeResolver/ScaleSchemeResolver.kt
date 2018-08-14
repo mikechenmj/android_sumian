@@ -6,6 +6,7 @@ import android.net.Uri
 import com.sumian.sleepdoctor.R
 import com.sumian.sleepdoctor.scale.ScaleDetailActivity
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
  * <pre>
  *     @author : Zhan Xuzhao

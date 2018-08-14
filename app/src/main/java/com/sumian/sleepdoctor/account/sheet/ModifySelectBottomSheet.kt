@@ -15,6 +15,7 @@ import com.sumian.sleepdoctor.account.userProfile.presenter.ModifyUserInfoPresen
 import com.sumian.sleepdoctor.widget.base.BaseBottomSheetView
 import java.util.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
  * Created by sm
  *

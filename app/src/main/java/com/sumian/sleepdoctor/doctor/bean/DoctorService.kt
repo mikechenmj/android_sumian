@@ -12,18 +12,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class DoctorService(var id: Int,
                          var type: Int/*0：睡眠日记，1：图文咨询*/,
-                         var name: String,
-                         var description: String,
-                         var picture: String,//服务 banner
-                         var icon: String,//服务 icon
-                         var not_buy_description: String,
-                         var bought_description: String,
-                         var doctor_id: Int,
-                         var day_last: Int/*等于0条件：1、未登录，2、未绑定医生，3、未绑定此医生。4、未买过此服务 。5、过期*/,
-                         var expired_at: Int/*等于0条件：1、未登录，2、未绑定医生，3、未绑定此医生。4、未买过此服务*/,
-                         var last_count: Int/*服务剩余数量*/,
-                         var remaining_description: String/*剩余描述*/,
-                         var packages: ArrayList<DoctorServicePackage> /*参数include=services出现，否则不展示*/
+                         var name: String,//服务名
+                         var description: String, //服务描述
+                         var introduction: String, //服务简介
+                         var banner_type: Int,//展示位类型 0：图片 1：视频
+                         var picture: String,//图片 url banner_type=0
+                         var video: String,//视频 url banner_type=1
+                         var icon: String,//图标 url
+                         var service_packages: ArrayList<DoctorServicePackage> /*参数include=services出现，否则不展示*/
 ) : Parcelable {
 
     companion object {

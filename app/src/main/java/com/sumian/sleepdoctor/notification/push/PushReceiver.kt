@@ -9,6 +9,7 @@ import com.sumian.sleepdoctor.app.AppManager
 import com.sumian.sleepdoctor.utils.NotificationUtil
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
  * <pre>
  *     @author : Zhan Xuzhao

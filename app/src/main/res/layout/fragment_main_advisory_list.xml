@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.sumian.sleepdoctor.widget.refresh.SumianRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/b1_color">
+    android:background="@color/b1_color"
+    tools:context=".tel.activity.TelBookingListActivity">
 
     <FrameLayout
         android:layout_width="match_parent"

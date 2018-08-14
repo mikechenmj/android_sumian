@@ -25,6 +25,7 @@ import com.sumian.sleepdoctor.record.bean.SleepRecord
 import com.sumian.sleepdoctor.record.bean.SleepRecordSummary
 import com.sumian.sleepdoctor.scale.bean.Scale
 import com.sumian.sleepdoctor.setting.version.bean.Version
+import com.sumian.sleepdoctor.tel.bean.TelBooking
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -126,7 +127,7 @@ interface DoctorApi {
      * 服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
      */
     @GET("service")
-    fun getServiceByType(@Query("type")type:Int): Call<DoctorService>
+    fun getServiceByType(@Query("type") type: Int): Call<DoctorService>
 
     @GET("services/{id}")
     fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>
@@ -168,7 +169,7 @@ interface DoctorApi {
     fun bindDoctor(@FieldMap map: MutableMap<String, Any>): Call<Doctor>
 
     @GET("doctors/{id}")
-    fun getDoctorInfo(@Path("id") id: Int, @Query("include") include: String): Call<Doctor>
+    fun getDoctorInfo(@Path("id") id: Int): Call<Doctor>
 
     @GET("user/doctor")
     fun getBindDoctorInfo(): Call<Doctor>
@@ -244,6 +245,34 @@ interface DoctorApi {
     @POST("cbti-course/{id}/logs")
     fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
+    /**
+     * 获取 app 的版本信息
+     */
     @GET("app-version/latest")
     fun getAppVersion(@Query("type") type: Int = 1, @Query("current_version") currentVersion: String): Call<Version>
+
+    /**
+     * 使用该电话预约清单
+     */
+    @PATCH("bookings/{id}")
+    fun callTelBooking(@Path("id") telBookingId: Int, @FieldMap map: MutableMap<String, Any>): Call<TelBooking>
+
+    /**
+     * 获取最新未使用的电话预约订单,可用于提交新的电话预约
+     */
+    @GET("booking/latest")
+    fun getLatestTelBookingDetail(@QueryMap map: MutableMap<String, Any>): Call<TelBooking>
+
+    /**
+     * 获取电话预约列表  包括已使用/未使用列表清单
+     */
+    @GET("bookings")
+    fun getTelBookingList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<TelBooking>>
+
+    /**
+     * 通过 id 获取该电话预约清单的详情
+     */
+    @GET("bookings/{id}")
+    fun getTelBookingDetail(@Path("id") telBookingId: Int, @QueryMap() map: MutableMap<String, Any>): Call<TelBooking>
+
 }

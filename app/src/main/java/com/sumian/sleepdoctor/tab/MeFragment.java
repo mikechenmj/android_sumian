@@ -18,8 +18,8 @@ import com.sumian.sleepdoctor.notification.NotificationListActivity;
 import com.sumian.sleepdoctor.notification.NotificationViewModel;
 import com.sumian.sleepdoctor.onlinereport.OnlineReportListActivity;
 import com.sumian.sleepdoctor.scale.ScaleListActivity;
-import com.sumian.sleepdoctor.service.tel.activity.TelServiceActivity;
 import com.sumian.sleepdoctor.setting.SettingActivity;
+import com.sumian.sleepdoctor.tel.activity.TelBookingListActivity;
 import com.sumian.sleepdoctor.widget.tips.PatientRecordTips;
 import com.sumian.sleepdoctor.widget.tips.PatientServiceTips;
 
@@ -111,7 +111,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
 
     @Override
     public void showTelService() {
-        TelServiceActivity.show();
+        TelBookingListActivity.show();
     }
 
     @Override

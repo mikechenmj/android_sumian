@@ -268,14 +268,14 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity"
+            android:name=".advisory.activity.AdvisoryListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryDetailActivity"
+            android:name=".advisory.activity.AdvisoryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -603,12 +603,15 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.sumian.sleepdoctor.service.tel.activity.TelServiceActivity"
+            android:name="com.sumian.sleepdoctor.tel.activity.PublishTelBookingActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+
+        <activity android:name=".tel.activity.TelBookingListActivity" />
+        <activity android:name=".tel.activity.TelBookingListActivity" />
 
     </application>
 

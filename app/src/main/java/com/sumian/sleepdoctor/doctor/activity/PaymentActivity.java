@@ -19,7 +19,6 @@ import com.sumian.sleepdoctor.base.ActivityLauncher;
 import com.sumian.sleepdoctor.base.SdBaseActivity;
 import com.sumian.sleepdoctor.doctor.bean.DoctorService;
 import com.sumian.sleepdoctor.doctor.bean.DoctorServicePackage;
-import com.sumian.sleepdoctor.doctor.bean.DoctorServiceShopData;
 import com.sumian.sleepdoctor.doctor.bean.PayOrder;
 import com.sumian.sleepdoctor.doctor.contract.PayContract;
 import com.sumian.sleepdoctor.doctor.dialog.PayDialog;
@@ -73,22 +72,16 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     private PayDialog mPayDialog;
 
     private DoctorService mDoctorService;
+
     private int mPackageId;
+
     private DoctorServicePackage mServicePackage;
 
-    private static void startForResult(ActivityLauncher launcher, DoctorService doctorService, int packageId, int requestCode) {
+    public static void startForResult(ActivityLauncher launcher,@NonNull DoctorService doctorService, int packageId, int requestCode) {
         Intent intent = new Intent(launcher.getActivity(), PaymentActivity.class);
         intent.putExtra(ARGS_DOCTOR_SERVICE, doctorService);
         intent.putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId);
         launcher.startActivityForResult(intent, requestCode);
-    }
-
-    public static void startForResult(ActivityLauncher launcher, DoctorService doctorService, int requestCode) {
-        startForResult(launcher, doctorService, doctorService.getPackages().get(0).getId(), requestCode);
-    }
-
-    public static void startForResult(ActivityLauncher launcher, DoctorServiceShopData doctorServiceShopData, int requestCode) {
-        startForResult(launcher, doctorServiceShopData.getService(), doctorServiceShopData.getPackageId(), requestCode);
     }
 
     @SuppressWarnings("unchecked")
@@ -97,7 +90,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
         if (bundle != null) {
             this.mDoctorService = bundle.getParcelable(ARGS_DOCTOR_SERVICE);
             this.mPackageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID);
-            for (DoctorServicePackage servicePackage : mDoctorService.getPackages()) {
+            for (DoctorServicePackage servicePackage : mDoctorService.getService_packages()) {
                 if (servicePackage.getId() == mPackageId) {
                     mServicePackage = servicePackage;
                 }
@@ -127,12 +120,12 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
         super.initData();
         ImageLoader.loadImage(mDoctorService.getIcon(), mIvGroupIcon);
         mTvDesc.setText(mDoctorService.getName());
-        String priceText = getDoctorServicePackage().getPrice_text();
+        String priceText = String.valueOf(getDoctorServicePackage().getDefault_price());
         SpannableString spannableString = new SpannableString(priceText);
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.t4_color)), 0, priceText.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTvGroupMoney.setText(TextUtils.concat("服务费用: ", spannableString));
         //mTvGroupMoney.setText(mDoctorService.getDescription());
-        mPayCalculateItemView.setDefaultMoney(getDoctorServicePackage().getUnit_price());
+        mPayCalculateItemView.setDefaultMoney(getDoctorServicePackage().getDefault_price());
     }
 
     @Override
