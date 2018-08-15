@@ -69,6 +69,12 @@ public final class TimeUtil {
         return mDateFormatMinuteThreadLocal.get().format(new Date(unixTime * 1000L));
     }
 
+    public static String formatYYYYMMDD(int unixTime) {
+        Date date = new Date();
+        date.setTime(unixTime * 1000L);
+        return mDateFormatLineThreadLocal.get().format(date);
+    }
+
     public static String formatDate2FileName(long unixTime) {
         Date date = new Date();
         date.setTime(unixTime * 1000L);

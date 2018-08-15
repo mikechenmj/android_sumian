@@ -48,10 +48,11 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
         mView?.showLoading()
 
         val map = mutableMapOf<String, Any>()
-        // map["include"] ="package.servicePackage"
+
         map["page"] = mPageNumber
         map["per_page"] = DEFAULT_PAGES
         map["list_type"] = telBookingListType
+        map["include"] = "package.servicePackage"
 
         val call = AppManager.getHttpService().getTelBookingList(map)
         mCalls.add(call)

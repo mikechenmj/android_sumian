@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import com.sumian.sd.notification.RefundActivity
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
  * <pre>
  *     @author : Zhan Xuzhao

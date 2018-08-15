@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -50,14 +46,14 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     @BindView(R.id.lay_group_icon)
     QMUIRadiusImageView mIvGroupIcon;
 
-    @BindView(R.id.tv_desc)
-    TextView mTvDesc;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
 
     @BindView(R.id.pay_calculate_item_view)
     PayCalculateItemView mPayCalculateItemView;
 
-    @BindView(R.id.tv_group_money)
-    TextView mTvGroupMoney;
+    @BindView(R.id.tv_desc)
+    TextView mTvDesc;
 
     @BindView(R.id.pay_group_view)
     PayItemGroupView mPayGroupView;
@@ -75,6 +71,8 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     private DoctorServicePackage mServicePackage;
 
+    private DoctorServicePackage.ServicePackage mPackage;
+
     public static void startForResult(ActivityLauncher launcher, @NonNull DoctorService doctorService, int packageId, int requestCode) {
         Intent intent = new Intent(launcher.getActivity(), PaymentActivity.class);
         intent.putExtra(ARGS_DOCTOR_SERVICE, doctorService);
@@ -90,7 +88,9 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
             int packageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID);
             for (DoctorServicePackage servicePackage : mDoctorService.getService_packages()) {
                 if (servicePackage.getId() == packageId) {
-                    mServicePackage = servicePackage;
+                    this.mServicePackage = servicePackage;
+                    this.mPackage = mServicePackage.getPackages().get(0);
+                    break;
                 }
             }
         }
@@ -117,13 +117,10 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     protected void initData() {
         super.initData();
         ImageLoader.loadImage(mDoctorService.getIcon(), mIvGroupIcon);
-        mTvDesc.setText(mDoctorService.getName());
-        String priceText = String.valueOf(getDoctorServicePackage().getDefault_price());
-        SpannableString spannableString = new SpannableString(priceText);
-        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.t4_color)), 0, priceText.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTvGroupMoney.setText(TextUtils.concat("服务费用: ", spannableString));
-        //mTvGroupMoney.setText(mDoctorService.getDescription());
-        mPayCalculateItemView.setDefaultMoney(getDoctorServicePackage().getDefault_price());
+        mTvName.setText(mServicePackage.getName());
+        mTvDesc.setText(mServicePackage.getIntroduction());
+
+        mPayCalculateItemView.setDefaultMoney(mPackage.getUnit_price());
     }
 
     @Override
@@ -143,16 +140,12 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                PayOrder payOrder = new PayOrder(mPayCalculateItemView.getCurrentMoney(), mPayChannel, "cny", mDoctorService.getName(), mDoctorService.getDescription(), getDoctorServicePackage().getId(), mPayCalculateItemView.getCurrentBuyCount());
+                PayOrder payOrder = new PayOrder(mPayCalculateItemView.getCurrentMoney(), mPayChannel, "cny", mDoctorService.getName(), mDoctorService.getDescription(), mPackage.getId(), mPayCalculateItemView.getCurrentBuyCount());
                 mPresenter.createPayOrder(this, payOrder);
                 break;
             default:
                 break;
         }
-    }
-
-    private DoctorServicePackage getDoctorServicePackage() {
-        return mServicePackage;
     }
 
     @Override

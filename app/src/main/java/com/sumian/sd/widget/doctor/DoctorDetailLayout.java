@@ -77,9 +77,6 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
             ArrayList<DoctorService> doctorServices = doctor.getServices();
             for (int i = 0; i < doctorServices.size(); i++) {
                 doctorService = doctorServices.get(i);
-                if (doctorService.getType() == DoctorService.SERVICE_TYPE_CBTI) {
-                    continue;
-                }
                 doctorServiceLayout = new DoctorServiceLayout(getContext());
                 doctorServiceLayout.setTag(doctorService);
                 doctorServiceLayout.setOnClickListener(v -> {
