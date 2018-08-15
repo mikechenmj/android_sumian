@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.Collections;

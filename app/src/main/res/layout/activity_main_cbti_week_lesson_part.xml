@@ -7,7 +7,7 @@
     android:background="@color/b1_color"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.TitleBar
+    <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans">
 
-            <com.sumian.sleepdoctor.cbti.widget.CBTIWeekCourseBannerView
+            <com.sumian.sd.cbti.widget.CBTIWeekCourseBannerView
                 android:id="@+id/cbti_week_lesson_banner_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_180"

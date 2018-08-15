@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.fold.FoldTextView
+    <com.sumian.sd.widget.fold.FoldTextView
         android:id="@+id/tv_summary"
         style="@style/text_t2_style"
         android:layout_width="match_parent"

@@ -7,7 +7,7 @@
     android:background="@color/b1_color"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.TitleBar
+    <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:textSize="@dimen/font_16"
         tools:text="最新版本号：1.1.0" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+    <com.sumian.sd.widget.divider.SettingDividerView
         android:id="@+id/sdv_go_market"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

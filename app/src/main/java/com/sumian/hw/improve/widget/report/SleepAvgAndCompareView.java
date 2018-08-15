@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.common.util.TimeUtil;
 
 /**

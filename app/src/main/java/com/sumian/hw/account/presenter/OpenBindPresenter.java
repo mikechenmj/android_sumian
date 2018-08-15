@@ -4,8 +4,8 @@ import com.sumian.hw.account.contract.OpenBindContract;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.CaptchaBody;
-import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.account.bean.Token;
+import com.sumian.sd.app.AppManager;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.lang.ref.WeakReference;

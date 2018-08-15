@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.improve.widget.base.BaseBlueCardView;
 

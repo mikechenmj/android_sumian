@@ -1,0 +1,277 @@
+package com.sumian.sd.network.api
+
+import com.sumian.sd.account.bean.Social
+import com.sumian.sd.account.bean.Token
+import com.sumian.sd.account.bean.UserInfo
+import com.sumian.sd.advisory.bean.Advisory
+import com.sumian.sd.advisory.bean.PictureOssSts
+import com.sumian.sd.cbti.bean.*
+import com.sumian.sd.doctor.bean.Doctor
+import com.sumian.sd.doctor.bean.DoctorService
+import com.sumian.sd.doctor.bean.PayOrder
+import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
+import com.sumian.sd.homepage.bean.SleepPrescription
+import com.sumian.sd.homepage.bean.SleepPrescriptionWrapper
+import com.sumian.sd.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
+import com.sumian.sd.network.body.AdvisoryRecordBody
+import com.sumian.sd.network.response.PaginationResponse
+import com.sumian.sd.notification.bean.QueryNotificationResponse
+import com.sumian.sd.onlinereport.OnlineReport
+import com.sumian.sd.order.OrderDetail
+import com.sumian.sd.order.OrderDetailV2
+import com.sumian.sd.oss.OssResponse
+import com.sumian.sd.record.bean.DoctorServiceList
+import com.sumian.sd.record.bean.SleepRecord
+import com.sumian.sd.record.bean.SleepRecordSummary
+import com.sumian.sd.scale.bean.Scale
+import com.sumian.sd.setting.version.bean.Version
+import retrofit2.Call
+import retrofit2.http.*
+
+@Suppress("unused")
+/**
+ * Created by jzz
+ * on 2018/1/15.
+ * desc:
+ */
+
+interface DoctorApi {
+
+    @PATCH("authorizations/current")
+    fun refreshToken(@Header("Authorization") token: String): Call<Any>
+
+    @FormUrlEncoded
+    @POST("authorizations")
+    fun login(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+
+    @DELETE("authorizations/current")
+    fun logout(@Query("device_token") deviceToken: String): Call<Unit>
+
+    @FormUrlEncoded
+    @POST("captcha")
+    fun getCaptcha(@Field("mobile") mobile: String): Call<Unit>
+
+    @GET("user/profile")
+    fun getUserProfile(): Call<UserInfo>
+
+    @FormUrlEncoded
+    @POST("authorizations/socialite-bound")
+    fun loginOpenPlatform(@FieldMap map: MutableMap<String, Any>): Call<Token>
+
+    @FormUrlEncoded
+    @POST("authorizations/socialite-bind")
+    fun bindSocial(@FieldMap map: MutableMap<String, Any>): Call<Token>
+
+    @FormUrlEncoded
+    @PATCH("user/profile")
+    fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserInfo>
+
+    @PATCH("user/avatar")
+    fun uploadAvatar(): Call<OssResponse>
+
+    @FormUrlEncoded
+    @POST("orders")
+    fun createOrder(@FieldMap map: MutableMap<String, Any>): Call<String>
+
+    @GET("orders/{order_no}")
+    fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
+
+    @GET("orders/{order_no}")
+    fun getOrderDetailV2(@Path("order_no") orderNumber: String): Call<OrderDetailV2>
+
+    @FormUrlEncoded
+    @POST("user/leancloud")
+    fun getLeancloudGroupUsers(@Field("leancloud_ids") leancloudIds: String, @Field("group_id") groupId: Int): Call<String>
+
+    // socialites
+    @FormUrlEncoded
+    @POST("socialites")
+    fun bindSocialites(@Field("type") type: Int, @Field("info") info: String): Call<Social>
+
+    @DELETE("socialites/{id}")
+    fun unbindSocialites(@Path("id") userId: Int): Call<String>
+
+    // ---------- sleep record ----------
+
+    /**
+     * date unix时间戳：1519833600，可传当月任何一天，默认这个月
+     * is_include 是否包括此时间戳，1：是，0：否。默认0
+     * page_size 请求数量不传默认为1
+     * direction 请求方向 0：小于查询时间戳，1：大于查询时间戳 不传默认0
+     */
+    @GET("diary-month")
+    fun getSleepDiarySummaryList(@Query("date") unixTime: Int,
+                                 @Query("is_include") isInclude: Int,
+                                 @Query("page_size") pageSize: Int,
+                                 @Query("direction") direction: Int): Call<Map<String, List<SleepRecordSummary>>>
+
+    @GET("diaries")
+    fun getSleepDiaryDetail(@Query("date") unixTime: Int): Call<SleepRecord>
+
+    // ---------- online report ----------
+
+    /**
+     * page 第几页 Default value: 1
+     * per_page 每页数量 Default value: 15
+     * user_id 用户id
+     */
+    @GET("/online-reports")
+    fun getReports(@Query("page") page: Int,
+                   @Query("per_page") perPage: Int): Call<PaginationResponse<OnlineReport>>
+
+    @GET("services")
+    fun getServiceList(): Call<DoctorServiceList>
+
+    /**
+     * 服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     */
+    @GET("service")
+    fun getServiceByType(@Query("type")type:Int): Call<DoctorService>
+
+    @GET("services/{id}")
+    fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>
+
+    /**
+     * type 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     */
+    @GET("services")
+    fun getServiceDetailByType(@Query("type") type: Int): Call<Any>
+
+    // ---------- notification ----------
+    @GET("notifications")
+    fun getNotificationList(@Query("page") page: Int,
+                            @Query("per_page") perPage: Int): Call<QueryNotificationResponse>
+
+    @PATCH("notifications/{id}")
+    fun readNotification(@Path("id") notificationId: String): Call<Any>
+
+    // ---------- scale ----------
+    @GET("scale-distributions")
+    fun getScaleList(@Query("page") page: Int,
+                     @Query("per_page") perPage: Int,
+                     @Query("type") type: String): Call<PaginationResponse<Scale>>
+
+    // ---------- device info ----------
+    /**
+     *
+     * device_type 设备类型，0：Android，1：iOS
+     */
+    @POST("portables")
+    @FormUrlEncoded
+    fun uploadDeviceInfo(@Field("device_type") deviceType: String,
+                         @Field("device_token") deviceToken: String,
+                         @Field("system_version") systemVersion: String): Call<Any>
+
+    // ---------- doctor ----------
+
+    @PATCH("doctor-bind")
+    fun bindDoctor(@FieldMap map: MutableMap<String, Any>): Call<Doctor>
+
+    @GET("doctors/{id}")
+    fun getDoctorInfo(@Path("id") id: Int): Call<Doctor>
+
+    @GET("user/doctor")
+    fun getBindDoctorInfo(): Call<Doctor>
+
+    @DELETE("doctor/binding")
+    fun unbindDoctor(): Call<Unit>
+
+    //order
+
+    @POST("orders")
+    fun createOrder(@Body payOrder: PayOrder): Call<Any>
+
+    //user advisory
+
+    @GET("advisories")
+    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Advisory>>
+
+    @GET("advisories/{id}")
+    fun getDoctorAdvisoryDetails(@Path("id") advisoryId: Int, @QueryMap map: MutableMap<String, Any>): Call<Advisory>
+
+    @GET("advisory/latest")
+    fun getLastAdvisoryDetails(@QueryMap map: MutableMap<String, Any>): Call<Advisory>
+
+    @POST("advisory-records")
+    fun publishAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<Advisory>
+
+    @POST("advisory-records/sts")
+    fun publishPicturesAdvisoryRecord(@Body advisoryRecordBody: AdvisoryRecordBody): Call<PictureOssSts>
+
+    // ---------- homepage ----------
+
+    @GET("sleep-prescriptions")
+    fun getSleepPrescriptions(): Call<SleepPrescriptionWrapper>
+
+    @POST("sleep-prescriptions")
+    fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
+
+    @POST("sleep-prescriptions/fatigue")
+    fun updateSleepPrescriptionsWhenFatigue(@Body data: UpdateSleepPrescriptionWhenFatiguedData): Call<SleepPrescriptionWrapper>
+
+    /**
+     * include
+     * courses 课程
+     * courses.exercise 课后练习
+     */
+    @GET("cbti-chapters")
+    fun getCbtiChapters(@Query("include") include: String?): Call<GetCbtiChaptersResponse>
+
+    //cbti
+
+    /**
+     * 获取该章节下的所有课程
+     */
+    @GET("cbti-chapter/{chapter-id}/courses")
+    fun getCBTICourseWeekPart(@Path("chapter-id") id: Int): Call<CBTIDataResponse<Course>>
+
+    /**
+     * 获取该章节下的所有练习
+     */
+    @GET("cbti-chapter/{chapter-id}/exercises")
+    fun getCBTIExerciseWeekPart(@Path("chapter-id") id: Int): Call<CBTIDataResponse<Exercise>>
+
+    /**
+     * 获取该章节下的单独课时详情信息,包括视频播放权限,及相关信息
+     */
+    @GET("cbti-courses/{id}")
+    fun getCBTIPLayAuth(@Path("id") id: Int): Call<CoursePlayAuth>
+
+    /**
+     * 上传当前课时的视频播放 log 日志
+     */
+    @FormUrlEncoded
+    @POST("cbti-course/{id}/logs")
+    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
+
+    /**
+     * 获取 app 的版本信息
+     */
+    @GET("app-version/latest")
+    fun getAppVersion(@Query("type") type: Int = 1, @Query("current_version") currentVersion: String): Call<Version>
+
+    /**
+     * 使用该电话预约清单
+     */
+    @PATCH("bookings/{id}")
+    fun callTelBooking(@Path("id") telBookingId: Int, @FieldMap map: MutableMap<String, Any>): Call<TelBooking>
+
+    /**
+     * 获取最新未使用的电话预约订单,可用于提交新的电话预约
+     */
+    @GET("booking/latest")
+    fun getLatestTelBookingDetail(@QueryMap map: MutableMap<String, Any>): Call<TelBooking>
+
+    /**
+     * 获取电话预约列表  包括已使用/未使用列表清单
+     */
+    @GET("bookings")
+    fun getTelBookingList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<TelBooking>>
+
+    /**
+     * 通过 id 获取该电话预约清单的详情
+     */
+    @GET("bookings/{id}")
+    fun getTelBookingDetail(@Path("id") telBookingId: Int, @QueryMap() map: MutableMap<String, Any>): Call<TelBooking>
+
+}

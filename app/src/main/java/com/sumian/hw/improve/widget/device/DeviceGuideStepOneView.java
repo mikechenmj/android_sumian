@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.sumian.blue.callback.BlueAdapterCallback;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.hw.improve.device.fragment.DeviceFragment;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

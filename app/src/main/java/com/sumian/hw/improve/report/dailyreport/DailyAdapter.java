@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.improve.report.note.SleepNote;
 import com.sumian.hw.improve.widget.ReportSleepDurationView;
 import com.sumian.hw.improve.widget.SwitchDateView;

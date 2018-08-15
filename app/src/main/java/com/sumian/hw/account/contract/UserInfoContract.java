@@ -4,7 +4,7 @@ import android.support.annotation.StringRes;
 
 import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sd.account.bean.UserInfo;
 
 /**
  * Created by jzz

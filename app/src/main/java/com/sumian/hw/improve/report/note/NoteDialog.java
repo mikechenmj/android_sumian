@@ -20,8 +20,8 @@ import com.sumian.hw.tab.report.presenter.SleepNotePresenter;
 import com.sumian.hw.widget.BaseDialogFragment;
 import com.sumian.hw.widget.FlowLayout;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
 
 import java.util.ArrayList;
 import java.util.List;

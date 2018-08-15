@@ -25,9 +25,9 @@ import com.sumian.hw.network.callback.ErrorCode;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.bean.OssTransData;
 import com.sumian.hw.oss.bean.OssTransDataError;
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.BuildConfig;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

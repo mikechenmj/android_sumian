@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sumian.sleepdoctor.widget.refresh.SumianRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.sumian.sd.widget.refresh.SumianRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/b1_color"
-    tools:context=".tel.activity.TelBookingListActivity">
+    android:background="@color/b1_color">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,11 +15,11 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/space_10" />
 
-        <com.sumian.sleepdoctor.widget.error.EmptyErrorView
+        <com.sumian.sd.widget.error.EmptyErrorView
             android:id="@+id/empty_error_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </FrameLayout>
 
-</com.sumian.sleepdoctor.widget.refresh.SumianRefreshLayout>
+</com.sumian.sd.widget.refresh.SumianRefreshLayout>

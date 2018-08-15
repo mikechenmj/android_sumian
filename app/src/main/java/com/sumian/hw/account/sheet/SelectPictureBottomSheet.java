@@ -2,7 +2,7 @@ package com.sumian.hw.account.sheet;
 
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.widget.BottomSheetView;
 
 /**

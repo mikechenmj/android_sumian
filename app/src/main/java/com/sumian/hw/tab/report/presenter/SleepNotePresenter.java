@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.sumian.hw.improve.report.dailyreport.DailyReport;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.tab.report.contract.SleepNoteContract;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

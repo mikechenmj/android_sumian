@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.network.response.SleepDetailReport;
 import com.sumian.hw.tab.report.bean.SleepData;

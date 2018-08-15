@@ -19,9 +19,9 @@ import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.service.DfuService;
 import com.sumian.hw.upgrade.wrapper.DfuWrapper;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

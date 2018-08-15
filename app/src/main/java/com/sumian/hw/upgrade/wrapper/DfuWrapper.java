@@ -7,7 +7,7 @@ import android.os.Message;
 
 import com.sumian.blue.callback.BlueScanCallback;
 import com.sumian.hw.log.LogManager;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 public class DfuWrapper implements BlueScanCallback, Handler.Callback {
 

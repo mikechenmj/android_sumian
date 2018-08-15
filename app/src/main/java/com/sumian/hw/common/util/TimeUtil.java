@@ -5,7 +5,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

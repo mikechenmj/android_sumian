@@ -3,7 +3,7 @@ package com.sumian.hw.utils
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import com.sumian.sleepdoctor.main.OnEnterListener
+import com.sumian.sd.main.OnEnterListener
 
 /**
  * <pre>

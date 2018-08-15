@@ -19,8 +19,8 @@ import com.sumian.common.media.ImagePickerActivity;
 import com.sumian.common.media.SelectOptions;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.contract.MsgContract;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

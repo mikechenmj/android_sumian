@@ -33,11 +33,11 @@ import com.sumian.hw.improve.widget.dialog.SumianDialog;
 import com.sumian.hw.job.JobTask;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.LocationManagerUtil;
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.OnEnterListener;
+import com.sumian.sd.BuildConfig;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.main.OnEnterListener;
 
 import java.util.List;
 

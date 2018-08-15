@@ -10,8 +10,8 @@ import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.holder.base.BaseViewHolder;
 import com.sumian.hw.leancloud.player.VoicePlayer;
 import com.sumian.hw.widget.VoiceProgress;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

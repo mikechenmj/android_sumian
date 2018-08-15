@@ -23,9 +23,9 @@ import com.sumian.hw.improve.widget.report.SyncingReportView;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.OnEnterListener;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.main.OnEnterListener;
 
 import java.util.ArrayList;
 import java.util.List;

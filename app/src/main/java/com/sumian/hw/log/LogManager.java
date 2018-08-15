@@ -8,8 +8,8 @@ import android.util.Log;
 import android.webkit.WebSettings;
 
 import com.sumian.hw.common.util.StreamUtil;
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.app.App;
+import com.sumian.sd.BuildConfig;
+import com.sumian.sd.app.App;
 
 import java.io.File;
 import java.io.IOException;

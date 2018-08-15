@@ -25,7 +25,7 @@ import com.avos.avoscloud.im.v2.audio.AVIMAudioRecorder;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.leancloud.utils.LCIMAudioHelper;
 import com.sumian.hw.leancloud.utils.LCIMPathUtils;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.io.File;
 

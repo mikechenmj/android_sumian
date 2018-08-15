@@ -14,7 +14,7 @@ import com.sumian.hw.network.request.RawDataBody;
 import com.sumian.hw.network.request.UploadFileBody;
 import com.sumian.hw.network.response.FileLength;
 import com.sumian.hw.network.response.RawData;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;

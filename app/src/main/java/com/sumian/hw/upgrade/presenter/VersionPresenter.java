@@ -13,9 +13,9 @@ import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.network.response.FirmwareInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

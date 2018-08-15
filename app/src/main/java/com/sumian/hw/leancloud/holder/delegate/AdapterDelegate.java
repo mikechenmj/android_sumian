@@ -14,7 +14,7 @@ import com.sumian.hw.leancloud.holder.MsgImageViewHolder;
 import com.sumian.hw.leancloud.holder.MsgTextViewHolder;
 import com.sumian.hw.leancloud.holder.MsgVoiceViewHolder;
 import com.sumian.hw.leancloud.holder.base.BaseViewHolder;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 /**
  * Created by jzz

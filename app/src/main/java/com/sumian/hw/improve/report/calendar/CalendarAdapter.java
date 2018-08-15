@@ -15,8 +15,8 @@ import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.improve.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;

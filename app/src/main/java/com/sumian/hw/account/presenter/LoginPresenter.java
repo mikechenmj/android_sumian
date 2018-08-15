@@ -6,8 +6,8 @@ import com.sumian.hw.account.contract.LoginContract;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.LoginBody;
-import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.account.bean.Token;
+import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

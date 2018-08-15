@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.sumian.sleepdoctor.cbti.widget.video.VideoBannerView
+    <com.sumian.sd.cbti.widget.video.VideoBannerView
         android:id="@+id/video_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.sumian.sleepdoctor.cbti.widget.video.VideoController
+    <com.sumian.sd.cbti.widget.video.VideoController
         android:id="@+id/video_controller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

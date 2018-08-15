@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.response.DaySleepReport;

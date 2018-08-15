@@ -12,9 +12,9 @@ import com.sumian.hw.account.presenter.ModifyGenderPresenter;
 import com.sumian.hw.improve.assessment.AssessmentUserInfoActivity;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.app.AppManager;
 
 /**
  * Created by jzz

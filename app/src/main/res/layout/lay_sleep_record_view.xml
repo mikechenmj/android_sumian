@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.record.widget.ColorfulProgressView
+    <com.sumian.sd.record.widget.ColorfulProgressView
         android:id="@+id/pv"
         android:layout_width="@dimen/space_150"
         android:layout_height="@dimen/space_150" />

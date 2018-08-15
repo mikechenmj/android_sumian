@@ -5,8 +5,8 @@ import com.sumian.hw.event.ReminderChangeEvent;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.network.response.ResultResponse;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.event.EventBusUtil;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.event.EventBusUtil;
 
 import java.util.HashMap;
 import java.util.List;

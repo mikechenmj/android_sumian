@@ -31,7 +31,7 @@ import com.sumian.hw.widget.KeyboardView;
 import com.sumian.hw.widget.LCIMRecordButton;
 import com.sumian.hw.widget.MsgEmptyView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.List;
 

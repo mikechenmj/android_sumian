@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.TitleBar
+    <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 
             <View style="@style/HorizontalDividerLine" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_10" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_my_target"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_10" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                 app:type_content="@string/none_edit"
                 app:type_desc="@string/real_name" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 app:type_content="@string/none_edit"
                 app:type_desc="@string/gender" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                 app:type_content="@string/none_edit"
                 app:type_desc="@string/birthday" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                 app:type_content="@string/none_edit"
                 app:type_desc="@string/height" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                 app:type_content="@string/none_edit"
                 app:type_desc="@string/weight" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_edu_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                 app:type_content="@string/none_edit"
                 app:type_desc="@string/edu_level" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_career"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                 android:paddingTop="@dimen/space_10"
                 android:text="@string/extra_user_info" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
                 app:type_desc="@string/register_mobile"
                 tools:type_content="13412345678" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_wechat_bind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

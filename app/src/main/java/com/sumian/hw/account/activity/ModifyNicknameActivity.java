@@ -16,9 +16,9 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.app.AppManager;
 
 
 /**

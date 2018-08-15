@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import com.sumian.sleepdoctor.R
+import com.sumian.sd.R
 import kotlinx.android.synthetic.main.hw_view_setting_item.view.*
 
 /**

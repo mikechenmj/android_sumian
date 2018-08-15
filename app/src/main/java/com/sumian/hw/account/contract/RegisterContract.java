@@ -4,7 +4,7 @@ import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.RegisterBody;
-import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sd.account.bean.Token;
 
 /**
  * Created by jzz

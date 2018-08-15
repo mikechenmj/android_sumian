@@ -22,9 +22,9 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;

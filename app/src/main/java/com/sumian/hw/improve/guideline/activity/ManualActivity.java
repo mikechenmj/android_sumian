@@ -10,11 +10,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.BuildConfig;
+import com.sumian.sd.R;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.sleepdoctor.base.SdBaseWebViewActivity;
+import com.sumian.sd.base.SdBaseWebViewActivity;
 
 /**
  * Created by sm

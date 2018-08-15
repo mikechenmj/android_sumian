@@ -13,9 +13,9 @@ import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.MainActivity;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.main.MainActivity;
 
 /**
  * <pre>

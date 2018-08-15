@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.interceptor.AuthInterceptor;
-import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sd.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.sumian.hw.account.contract;
 
-import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sd.account.bean.UserInfo;
 
 /**
  * Created by jzz

@@ -8,9 +8,9 @@ import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.activity.MsgActivity;
 import com.sumian.hw.setting.dialog.ContactDialog;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.OnEnterListener;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.main.OnEnterListener;
 
 /**
  * Created by jzz

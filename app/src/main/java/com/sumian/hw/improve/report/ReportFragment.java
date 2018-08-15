@@ -20,9 +20,9 @@ import com.sumian.hw.improve.widget.TabIndicatorView;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.push.ReportPushManager;
 import com.sumian.hw.utils.FragmentUtil;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.OnEnterListener;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.main.OnEnterListener;
 
 /**
  * Created by sm

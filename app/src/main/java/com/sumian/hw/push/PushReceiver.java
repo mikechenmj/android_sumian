@@ -10,7 +10,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.JsonUtil;
 import com.sumian.hw.utils.NotificationUtil;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 /**
  * Created by jzz

@@ -15,7 +15,7 @@ import com.sumian.hw.setting.contract.ConfigContract;
 import com.sumian.hw.setting.presenter.ConfigPresenter;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.List;
 

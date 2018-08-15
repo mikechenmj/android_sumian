@@ -7,13 +7,13 @@
     android:background="@color/b1_color"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.TitleBar
+    <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:text="1-1 睡眠的奥秘" />
 
-    <com.sumian.sleepdoctor.cbti.video.NiceVideoView
+    <com.sumian.sd.cbti.video.NiceVideoView
         android:id="@+id/aliyun_player"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_212" />
@@ -35,7 +35,7 @@
                 android:background="@color/b2_color"
                 android:orientation="horizontal">
 
-                <com.sumian.sleepdoctor.widget.nav.NavigationItem
+                <com.sumian.sd.widget.nav.NavigationItem
                     android:id="@+id/nav_tab_lesson_practice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                     android:layout_gravity="center"
                     android:background="@color/l1_color" />
 
-                <com.sumian.sleepdoctor.widget.nav.NavigationItem
+                <com.sumian.sd.widget.nav.NavigationItem
                     android:id="@+id/nav_tab_lesson_review_last_week"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

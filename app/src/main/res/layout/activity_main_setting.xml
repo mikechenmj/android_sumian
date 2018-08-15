@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.TitleBar
+    <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:show_back="true"
         app:text="@string/setting" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+    <com.sumian.sd.widget.divider.SettingDividerView
         android:id="@+id/version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         app:type_content="1.0.0"
         app:type_desc="@string/current_app_version" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+    <com.sumian.sd.widget.divider.SettingDividerView
         android:id="@+id/about_me"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

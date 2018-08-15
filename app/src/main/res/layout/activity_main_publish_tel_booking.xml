@@ -18,7 +18,7 @@
             android:background="@color/b2_color"
             android:orientation="vertical">
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/sdv_make_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 android:layout_marginStart="@dimen/space_20"
                 android:background="@color/l1_color" />
 
-            <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/sdv_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

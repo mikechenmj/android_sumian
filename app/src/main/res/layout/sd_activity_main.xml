@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/b1_color"
     android:orientation="vertical"
-    tools:context="com.sumian.sleepdoctor.main.MainActivity">
+    tools:context="com.sumian.sd.main.MainActivity">
 
     <FrameLayout
         android:id="@+id/lay_tab_container"
@@ -21,13 +21,13 @@
         android:layout_height="@dimen/space_1"
         android:background="@color/l1_color" />
 
-    <com.sumian.sleepdoctor.widget.nav.BottomNavigationBar
+    <com.sumian.sd.widget.nav.BottomNavigationBar
         android:id="@+id/nav_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_48"
         android:background="@color/white">
 
-        <com.sumian.sleepdoctor.widget.nav.NavigationItem
+        <com.sumian.sd.widget.nav.NavigationItem
             android:id="@+id/tb_record"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/sd_sel_tab_record_icon"
@@ -35,7 +35,7 @@
 
         <include layout="@layout/lay_nav_tab_divider" />
 
-        <com.sumian.sleepdoctor.widget.nav.NavigationItem
+        <com.sumian.sd.widget.nav.NavigationItem
             android:id="@+id/tb_doctor"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/sd_sel_tab_device_icon"
@@ -43,7 +43,7 @@
 
         <include layout="@layout/lay_nav_tab_divider" />
 
-        <com.sumian.sleepdoctor.widget.nav.NavigationItem
+        <com.sumian.sd.widget.nav.NavigationItem
             android:id="@+id/tb_device"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
@@ -51,11 +51,11 @@
 
         <include layout="@layout/lay_nav_tab_divider" />
 
-        <com.sumian.sleepdoctor.widget.nav.NavigationItem
+        <com.sumian.sd.widget.nav.NavigationItem
             android:id="@+id/tb_me"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/sd_sel_tab_me_icon"
             app:tab_text="@string/tab_me" />
-    </com.sumian.sleepdoctor.widget.nav.BottomNavigationBar>
+    </com.sumian.sd.widget.nav.BottomNavigationBar>
 
 </LinearLayout>

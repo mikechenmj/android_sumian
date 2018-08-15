@@ -14,7 +14,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView;
 import com.sumian.hw.widget.BaseDialogFragment;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.Calendar;
 import java.util.List;

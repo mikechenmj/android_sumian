@@ -9,7 +9,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.blankj.utilcode.util.AppUtils
-import com.sumian.sleepdoctor.R
+import com.sumian.sd.R
 import java.util.concurrent.atomic.AtomicInteger
 
 

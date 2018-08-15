@@ -22,7 +22,7 @@
             android:padding="@dimen/space_12"
             android:src="@mipmap/ic_close" />
 
-        <com.sumian.sleepdoctor.widget.webview.SWebViewLayout
+        <com.sumian.sd.widget.webview.SWebViewLayout
             android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_500"

@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
 import com.sumian.hw.network.response.UserSetting;
-import com.sumian.sleepdoctor.account.bean.Social;
+import com.sumian.sd.account.bean.Social;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 

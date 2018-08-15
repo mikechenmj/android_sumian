@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.TitleBar
+    <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:text="医生详情" />
 
-    <com.sumian.sleepdoctor.widget.SmWebView
+    <com.sumian.sd.widget.SmWebView
         android:id="@+id/sm_web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

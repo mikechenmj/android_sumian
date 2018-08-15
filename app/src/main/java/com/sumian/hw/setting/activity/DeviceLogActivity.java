@@ -26,8 +26,8 @@ import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.setting.adapter.LogAdapter;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

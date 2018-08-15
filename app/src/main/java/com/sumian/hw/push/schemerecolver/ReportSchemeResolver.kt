@@ -3,7 +3,7 @@ package com.sumian.hw.push.schemerecolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.sleepdoctor.main.MainActivity
+import com.sumian.sd.main.MainActivity
 
 /**
  * <pre>

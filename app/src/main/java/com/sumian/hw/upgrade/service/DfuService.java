@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import no.nordicsemi.android.dfu.DfuBaseService;
 
-import com.sumian.sleepdoctor.BuildConfig;
+import com.sumian.sd.BuildConfig;
 import com.sumian.hw.upgrade.activity.VersionUpgradeActivity;
 
 /**

@@ -6,8 +6,8 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.SleepDetailReport;
 import com.sumian.hw.tab.report.bean.SleepData;
 import com.sumian.hw.tab.report.contract.DaySleepDetailContract;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

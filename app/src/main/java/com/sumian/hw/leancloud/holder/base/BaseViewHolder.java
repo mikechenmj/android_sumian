@@ -23,8 +23,8 @@ import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.widget.BubbleImageView;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.util.Locale;
 
