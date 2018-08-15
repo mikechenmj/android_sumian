@@ -1,8 +1,8 @@
-package com.sumian.sleepdoctor.tel.contract
+package com.sumian.sd.tel.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
 import com.sumian.common.mvp.IPresenter
-import com.sumian.sleepdoctor.tel.bean.TelBooking
+import com.sumian.sd.tel.bean.TelBooking
 
 /**
  * Created by sm

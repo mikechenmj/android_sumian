@@ -25,6 +25,7 @@ import com.sumian.sd.record.bean.SleepRecord
 import com.sumian.sd.record.bean.SleepRecordSummary
 import com.sumian.sd.scale.bean.Scale
 import com.sumian.sd.setting.version.bean.Version
+import com.sumian.sd.tel.bean.TelBooking
 import retrofit2.Call
 import retrofit2.http.*
 

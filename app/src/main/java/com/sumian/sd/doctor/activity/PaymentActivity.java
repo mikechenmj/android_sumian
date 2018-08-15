@@ -19,7 +19,6 @@ import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.doctor.bean.DoctorServicePackage;
-import com.sumian.sd.doctor.bean.DoctorServiceShopData;
 import com.sumian.sd.doctor.bean.PayOrder;
 import com.sumian.sd.doctor.contract.PayContract;
 import com.sumian.sd.doctor.dialog.PayDialog;
@@ -74,11 +73,9 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     private DoctorService mDoctorService;
 
-    private int mPackageId;
-
     private DoctorServicePackage mServicePackage;
 
-    public static void startForResult(ActivityLauncher launcher,@NonNull DoctorService doctorService, int packageId, int requestCode) {
+    public static void startForResult(ActivityLauncher launcher, @NonNull DoctorService doctorService, int packageId, int requestCode) {
         Intent intent = new Intent(launcher.getActivity(), PaymentActivity.class);
         intent.putExtra(ARGS_DOCTOR_SERVICE, doctorService);
         intent.putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId);
@@ -90,9 +87,9 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     protected boolean initBundle(Bundle bundle) {
         if (bundle != null) {
             this.mDoctorService = bundle.getParcelable(ARGS_DOCTOR_SERVICE);
-            this.mPackageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID);
+            int packageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID);
             for (DoctorServicePackage servicePackage : mDoctorService.getService_packages()) {
-                if (servicePackage.getId() == mPackageId) {
+                if (servicePackage.getId() == packageId) {
                     mServicePackage = servicePackage;
                 }
             }

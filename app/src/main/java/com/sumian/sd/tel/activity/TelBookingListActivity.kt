@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.tel.activity
+package com.sumian.sd.tel.activity
 
 import android.content.Intent
 import android.support.v4.app.Fragment
@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseBackPresenterActivity
 import com.sumian.common.mvp.IPresenter
-import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.tel.bean.TelBooking
-import com.sumian.sleepdoctor.tel.fragment.TelBookingListFragment
+import com.sumian.sd.R
+import com.sumian.sd.tel.bean.TelBooking
+import com.sumian.sd.tel.fragment.TelBookingListFragment
 import kotlinx.android.synthetic.main.activity_main_tel_booking.*
 
 /**

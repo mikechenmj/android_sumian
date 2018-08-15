@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.tel.adpater
+package com.sumian.sd.tel.adpater
 
 import android.content.Context
 import android.support.annotation.StringRes
@@ -8,9 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseRecyclerAdapter
-import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.tel.bean.TelBooking
-import com.sumian.sleepdoctor.utils.TimeUtil
+import com.sumian.sd.R
+import com.sumian.sd.tel.bean.TelBooking
+import com.sumian.sd.utils.TimeUtil
 import java.util.*
 
 /**

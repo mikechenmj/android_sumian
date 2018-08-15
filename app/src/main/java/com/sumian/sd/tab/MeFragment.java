@@ -18,8 +18,8 @@ import com.sumian.sd.notification.NotificationListActivity;
 import com.sumian.sd.notification.NotificationViewModel;
 import com.sumian.sd.onlinereport.OnlineReportListActivity;
 import com.sumian.sd.scale.ScaleListActivity;
-import com.sumian.sd.service.tel.activity.TelServiceActivity;
 import com.sumian.sd.setting.SettingActivity;
+import com.sumian.sd.tel.activity.TelBookingListActivity;
 import com.sumian.sd.widget.tips.PatientRecordTips;
 import com.sumian.sd.widget.tips.PatientServiceTips;
 

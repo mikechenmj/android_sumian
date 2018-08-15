@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.doctor.activity.PaymentActivity
-import com.sumian.sd.doctor.bean.DoctorServiceShopData
+import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.event.CBTIServiceBoughtEvent
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.h5.H5Uri

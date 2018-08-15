@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.tel.fragment
+package com.sumian.sd.tel.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,12 +9,12 @@ import android.view.View
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
-import com.sumian.sleepdoctor.R
-import com.sumian.sleepdoctor.base.SdBaseFragment
-import com.sumian.sleepdoctor.tel.adpater.TelBookingListAdapter
-import com.sumian.sleepdoctor.tel.bean.TelBooking
-import com.sumian.sleepdoctor.tel.contract.TelBookingListContract
-import com.sumian.sleepdoctor.tel.presenter.TelBookingListPresenter
+import com.sumian.sd.R
+import com.sumian.sd.base.SdBaseFragment
+import com.sumian.sd.tel.adpater.TelBookingListAdapter
+import com.sumian.sd.tel.bean.TelBooking
+import com.sumian.sd.tel.contract.TelBookingListContract
+import com.sumian.sd.tel.presenter.TelBookingListPresenter
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**

@@ -14,7 +14,7 @@ import com.sumian.sd.advisory.bean.Advisory
 import com.sumian.sd.advisory.contract.AdvisoryListContract
 import com.sumian.sd.advisory.presenter.AdvisoryListPresenter
 import com.sumian.sd.base.SdBaseFragment
-import kotlinx.android.synthetic.main.activity_main_advisory_list.*
+import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**
  *

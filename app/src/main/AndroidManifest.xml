@@ -603,12 +603,13 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.sumian.sd.service.tel.activity.TelServiceActivity"
+            android:name="com.sumian.sd.tel.activity.TelBookingListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".tel.activity.PublishTelBookingActivity" />
 
     </application>
 

@@ -1,11 +1,12 @@
-package com.sumian.sleepdoctor.tel.presenter
+package com.sumian.sd.tel.presenter
 
-import com.sumian.sleepdoctor.app.AppManager
-import com.sumian.sleepdoctor.base.SdBasePresenter.mCalls
-import com.sumian.sleepdoctor.network.callback.BaseResponseCallback
-import com.sumian.sleepdoctor.network.response.PaginationResponse
-import com.sumian.sleepdoctor.tel.bean.TelBooking
-import com.sumian.sleepdoctor.tel.contract.TelBookingListContract
+import com.sumian.common.mvp.IPresenter.Companion.mCalls
+import com.sumian.common.network.response.BaseResponseCallback
+import com.sumian.common.network.response.ErrorResponse
+import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.response.PaginationResponse
+import com.sumian.sd.tel.bean.TelBooking
+import com.sumian.sd.tel.contract.TelBookingListContract
 import retrofit2.Callback
 
 /**
@@ -53,8 +54,13 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
         map["list_type"] = telBookingListType
 
         val call = AppManager.getHttpService().getTelBookingList(map)
-        mCalls?.add(call)
+        mCalls.add(call)
         call.enqueue(object : BaseResponseCallback<PaginationResponse<TelBooking>>(), Callback<PaginationResponse<TelBooking>> {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mIsRefresh = false
+                mView?.onGetTelBookingListFailed(errorResponse.message)
+            }
+
             override fun onSuccess(response: PaginationResponse<TelBooking>?) {
                 val data = response?.data
                 if (mIsRefresh) {
@@ -68,11 +74,6 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
                 if (data != null && !data.isEmpty()) {
                     mPageNumber++
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mIsRefresh = false
-                mView?.onGetTelBookingListFailed(message)
             }
 
             override fun onFinish() {

@@ -12,6 +12,7 @@ import com.sumian.sd.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.doctor.bean.DoctorService;
+import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult;
 import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.record.SleepRecordActivity;
 import com.sumian.sd.utils.JsonUtil;

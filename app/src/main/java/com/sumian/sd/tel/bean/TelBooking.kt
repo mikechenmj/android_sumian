@@ -1,4 +1,4 @@
-package com.sumian.sleepdoctor.tel.bean
+package com.sumian.sd.tel.bean
 
 import com.google.gson.annotations.SerializedName
 

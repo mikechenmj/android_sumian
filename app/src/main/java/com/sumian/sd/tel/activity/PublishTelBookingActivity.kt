@@ -1,11 +1,11 @@
-package com.sumian.sleepdoctor.tel.activity
+package com.sumian.sd.tel.activity
 
 import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseBackPresenterActivity
 import com.sumian.common.mvp.IPresenter
-import com.sumian.sleepdoctor.R
+import com.sumian.sd.R
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
 
 /**
