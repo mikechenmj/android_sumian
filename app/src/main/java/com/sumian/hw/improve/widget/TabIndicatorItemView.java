@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import butterknife.ButterKnife;
 

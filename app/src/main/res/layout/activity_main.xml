@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.sumian.sleepdoctor.main.widget.SwitchAnimationView
+    <com.sumian.sd.main.widget.SwitchAnimationView
         android:id="@+id/switch_animation_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -4,8 +4,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.sumian.hw.common.util.BlueByteUtil;
-import com.sumian.sleepdoctor.account.bean.Answers;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.account.bean.Answers;
+import com.sumian.sd.app.AppManager;
 
 import java.util.Arrays;
 import java.util.Calendar;

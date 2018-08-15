@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.sumian.sleepdoctor.app.App;
+import com.sumian.sd.app.App;
 
 /**
  * Created by jzz

@@ -2,7 +2,7 @@ package com.sumian.hw.improve.report.dailyreport;
 
 import com.sumian.hw.improve.report.base.BaseResultResponse;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 import java.util.Collections;
 import java.util.HashMap;

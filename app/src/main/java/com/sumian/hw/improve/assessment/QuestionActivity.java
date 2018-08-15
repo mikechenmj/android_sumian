@@ -15,12 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.hw.base.HwBaseActivity;
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.Answers;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.utils.JsonUtil;
+import com.sumian.sd.BuildConfig;
+import com.sumian.sd.R;
+import com.sumian.sd.account.bean.Answers;
+import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.utils.JsonUtil;
 
 /**
  * Created by sm

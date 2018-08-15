@@ -7,7 +7,7 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.network.response.ResultResponse;
 import com.sumian.hw.reminder.ReminderManager;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

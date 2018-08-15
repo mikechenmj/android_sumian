@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.improve.widget.ripple.RippleScanningView;
 

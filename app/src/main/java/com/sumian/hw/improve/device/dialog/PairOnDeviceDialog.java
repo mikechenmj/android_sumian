@@ -29,9 +29,9 @@ import com.sumian.hw.improve.widget.device.DeviceListView;
 import com.sumian.hw.improve.widget.device.DeviceScanErrorView;
 import com.sumian.hw.improve.widget.device.DeviceScanView;
 import com.sumian.hw.log.LogManager;
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.BuildConfig;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;

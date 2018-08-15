@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 /**
  * Created by jzz

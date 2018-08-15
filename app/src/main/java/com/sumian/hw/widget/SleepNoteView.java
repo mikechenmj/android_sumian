@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.network.response.SleepDetailReport;
 
 import java.util.List;

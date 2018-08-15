@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 /**
  * Created by jzz

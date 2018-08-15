@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.widget.device.BatteryView;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 /**
  * Created by sm

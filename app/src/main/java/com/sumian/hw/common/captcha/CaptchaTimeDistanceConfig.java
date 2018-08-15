@@ -4,7 +4,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.common.config.SumianConfig;
 
 import java.util.Locale;

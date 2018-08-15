@@ -16,8 +16,8 @@ import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.improve.qrcode.fragment.InputSnFragment;
 import com.sumian.hw.improve.qrcode.fragment.QrCodeFragment;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 @SuppressWarnings("ConstantConditions")
 public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackListener, BluePeripheralDataCallback {

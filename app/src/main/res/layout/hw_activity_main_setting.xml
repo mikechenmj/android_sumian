@@ -17,7 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/space_10" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+    <com.sumian.sd.widget.divider.SettingDividerView
         android:id="@+id/siv_hw_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:type_desc="@string/hw_version"
         app:type_desc_text_color="#98add9" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+    <com.sumian.sd.widget.divider.SettingDividerView
         android:id="@+id/siv_change_bind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:type_desc="@string/change_bind"
         app:type_desc_text_color="#98add9" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+    <com.sumian.sd.widget.divider.SettingDividerView
         android:id="@+id/siv_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:type_desc="@string/feedback"
         app:type_desc_text_color="#98add9" />
 
-    <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+    <com.sumian.sd.widget.divider.SettingDividerView
         android:id="@+id/siv_modify_password"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_64"

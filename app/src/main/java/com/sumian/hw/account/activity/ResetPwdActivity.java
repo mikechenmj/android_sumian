@@ -18,7 +18,7 @@ import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.network.request.ResetPwdBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 /**
  * Created by jzz

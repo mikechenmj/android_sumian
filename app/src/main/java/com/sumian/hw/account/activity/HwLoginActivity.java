@@ -18,9 +18,9 @@ import com.sumian.hw.network.request.LoginBody;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.leancloud.LeanCloudManager;
 
 /**
  * Created by jzz

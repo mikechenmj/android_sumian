@@ -9,7 +9,7 @@ import com.sumian.hw.setting.contract.SocialContract;
 import com.sumian.hw.setting.presenter.SocialPresenter;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.Locale;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sumian.sleepdoctor">
+    package="com.sumian.sd">
 
     <!-- 基础模块（必须加入以下声明）START -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -268,14 +268,14 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryListActivity"
+            android:name="com.sumian.sd.advisory.activity.AdvisoryListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.sleepdoctor.advisory.activity.AdvisoryDetailActivity"
+            android:name="com.sumian.sd.advisory.activity.AdvisoryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -298,7 +298,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.sleepdoctor.advisory.activity.PublishAdvisoryRecordActivity"
+            android:name="com.sumian.sd.advisory.activity.PublishAdvisoryRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -603,7 +603,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.sumian.sleepdoctor.service.tel.activity.TelServiceActivity"
+            android:name="com.sumian.sd.service.tel.activity.TelServiceActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

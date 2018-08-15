@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.Locale;
 

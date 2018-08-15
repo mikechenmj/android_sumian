@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.sumian.sleepdoctor.main.MainActivity">
+    tools:context="com.sumian.sd.main.MainActivity">
 
     <FrameLayout
         android:id="@+id/sd_main_fragment_container"
@@ -21,7 +21,7 @@
         android:layout_gravity="bottom"
         android:background="@drawable/tab_img_bg_white">
 
-        <com.sumian.sleepdoctor.widget.nav.BottomNavigationBar
+        <com.sumian.sd.widget.nav.BottomNavigationBar
             android:id="@+id/nav_tab"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -29,7 +29,7 @@
             android:layout_weight="3"
             android:gravity="center_vertical">
 
-            <com.sumian.sleepdoctor.widget.nav.NavigationItem
+            <com.sumian.sd.widget.nav.NavigationItem
                 android:id="@+id/tb_record"
                 style="@style/HorizontalWeight"
                 app:tab_icon="@drawable/sd_sel_tab_record_icon"
@@ -37,7 +37,7 @@
 
             <include layout="@layout/lay_nav_tab_divider" />
 
-            <com.sumian.sleepdoctor.widget.nav.NavigationItem
+            <com.sumian.sd.widget.nav.NavigationItem
                 android:id="@+id/tb_doctor"
                 style="@style/HorizontalWeight"
                 app:tab_icon="@drawable/sd_sel_tab_device_icon"
@@ -45,7 +45,7 @@
 
             <include layout="@layout/lay_nav_tab_divider" />
 
-            <com.sumian.sleepdoctor.widget.nav.NavigationItem
+            <com.sumian.sd.widget.nav.NavigationItem
 
                 android:id="@+id/tb_me"
                 style="@style/HorizontalWeight"
@@ -54,7 +54,7 @@
 
             <include layout="@layout/lay_nav_tab_divider" />
 
-        </com.sumian.sleepdoctor.widget.nav.BottomNavigationBar>
+        </com.sumian.sd.widget.nav.BottomNavigationBar>
 
         <ImageView
             android:id="@+id/iv_switch"

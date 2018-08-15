@@ -1,6 +1,6 @@
 package com.sumian.hw.account.callback;
 
-import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sd.account.bean.UserInfo;
 
 /**
  * Created by jzz

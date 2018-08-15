@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.hw.common.util.SpUtil;
-import com.sumian.sleepdoctor.account.bean.Token;
+import com.sumian.sd.account.bean.Token;
 
 /**
  * Created by jzz

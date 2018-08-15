@@ -19,7 +19,7 @@ import com.sumian.hw.widget.SleepNoteView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.histogram.DaySleepHistogramView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.List;
 

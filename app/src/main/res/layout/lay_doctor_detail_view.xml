@@ -94,7 +94,7 @@
                 android:background="@color/l1_color"
                 tools:ignore="RtlHardcoded" />
 
-            <com.sumian.sleepdoctor.widget.fold.FoldLayout
+            <com.sumian.sd.widget.fold.FoldLayout
                 android:id="@+id/fold_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

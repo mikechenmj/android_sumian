@@ -16,7 +16,7 @@
         tools:layout_marginTop="@dimen/space_28"
         tools:progress="50" />
 
-    <com.sumian.sleepdoctor.widget.error.EmptyErrorView
+    <com.sumian.sd.widget.error.EmptyErrorView
         android:id="@+id/empty_error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

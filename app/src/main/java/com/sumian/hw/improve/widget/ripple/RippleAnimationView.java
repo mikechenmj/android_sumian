@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

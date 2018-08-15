@@ -15,11 +15,11 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.activity.HwSettingActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.main.OnEnterListener;
-import com.sumian.sleepdoctor.widget.divider.SettingDividerView;
+import com.sumian.sd.R;
+import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.main.OnEnterListener;
+import com.sumian.sd.widget.divider.SettingDividerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;

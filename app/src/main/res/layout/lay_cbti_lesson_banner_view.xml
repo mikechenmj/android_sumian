@@ -34,7 +34,7 @@
         tools:ignore="HardcodedText"
         tools:text="这节课将会带你学习睡眠的科学和与失眠有关的定义和引起失眠的因素，赶紧打开视频一起学习吧。" />
 
-    <com.sumian.sleepdoctor.cbti.widget.CBTIWeekCoursePlanView
+    <com.sumian.sd.cbti.widget.CBTIWeekCoursePlanView
         android:id="@+id/cbti_lesson_plan_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

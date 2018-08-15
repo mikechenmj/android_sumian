@@ -12,8 +12,8 @@ import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;
 import com.sumian.hw.setting.sheet.LogoutBottomSheet;
 import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;

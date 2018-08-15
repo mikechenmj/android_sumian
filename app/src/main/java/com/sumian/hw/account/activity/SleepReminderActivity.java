@@ -13,8 +13,8 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.network.response.Reminder;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.ToggleButton;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.util.List;
 

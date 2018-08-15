@@ -7,7 +7,7 @@
     android:background="@color/b1_color"
     android:orientation="vertical">
 
-    <com.sumian.sleepdoctor.widget.TitleBar
+    <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -81,13 +81,13 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <com.sumian.sleepdoctor.widget.pay.PayCalculateItemView
+            <com.sumian.sd.widget.pay.PayCalculateItemView
                 android:id="@+id/pay_calculate_item_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_16" />
 
-            <com.sumian.sleepdoctor.widget.pay.PayItemGroupView
+            <com.sumian.sd.widget.pay.PayItemGroupView
                 android:id="@+id/pay_group_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

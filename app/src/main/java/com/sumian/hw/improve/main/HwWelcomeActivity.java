@@ -10,8 +10,8 @@ import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.AppUtil;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 /**
  * Created by jzz

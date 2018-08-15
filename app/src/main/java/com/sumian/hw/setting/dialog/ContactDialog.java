@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.network.response.ConfigInfo;
 import com.sumian.hw.setting.activity.ConfigActivity;
 import com.sumian.hw.setting.contract.ConfigContract;

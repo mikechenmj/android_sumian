@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_10" />
 
-        <com.sumian.sleepdoctor.widget.tips.PatientServiceTips
+        <com.sumian.sd.widget.tips.PatientServiceTips
             android:id="@+id/tips_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_10" />
 
-        <com.sumian.sleepdoctor.widget.tips.PatientRecordTips
+        <com.sumian.sd.widget.tips.PatientRecordTips
             android:id="@+id/tips_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_10" />
 
-        <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        <com.sumian.sd.widget.divider.SettingDividerView
             android:id="@+id/dv_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

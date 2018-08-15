@@ -25,8 +25,8 @@ import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.widget.GuidelineIndicator;
 import com.sumian.hw.utils.AppUtil;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.util.ArrayList;
 import java.util.List;

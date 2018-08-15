@@ -55,7 +55,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/ic_bg_info_customer_service_black" />
 
-        <com.sumian.sleepdoctor.widget.divider.SettingDividerView
+        <com.sumian.sd.widget.divider.SettingDividerView
             android:id="@+id/siv_setting"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_64"

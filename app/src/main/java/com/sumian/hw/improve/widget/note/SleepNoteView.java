@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.improve.report.note.SleepNote;
 import com.sumian.hw.improve.widget.base.BaseBlueCardView;
 

@@ -16,7 +16,7 @@ import com.sumian.hw.account.presenter.AvatarPresenter;
 import com.sumian.hw.account.sheet.SelectPictureBottomSheet;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 import java.util.List;
 

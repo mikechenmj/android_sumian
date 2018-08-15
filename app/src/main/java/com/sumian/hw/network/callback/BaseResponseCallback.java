@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.network.response.ErrorResponse;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.utils.JsonUtil;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.utils.JsonUtil;
 
 import java.io.IOException;
 

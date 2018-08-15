@@ -22,10 +22,10 @@ import com.sumian.hw.improve.device.contract.DeviceContract;
 import com.sumian.hw.improve.device.model.DeviceModel;
 import com.sumian.hw.improve.device.wrapper.BlueDeviceWrapper;
 import com.sumian.hw.log.LogManager;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.utils.StorageUtil;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.utils.StorageUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

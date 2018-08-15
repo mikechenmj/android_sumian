@@ -4,9 +4,9 @@ import android.text.TextUtils;
 
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.account.model.AccountViewModel;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.account.model.AccountViewModel;
+import com.sumian.sd.app.AppManager;
 
 import java.util.HashMap;
 import java.util.HashSet;

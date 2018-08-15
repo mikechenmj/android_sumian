@@ -15,11 +15,11 @@ import com.sumian.hw.account.presenter.OpenLoginPresenter;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
-import com.sumian.sleepdoctor.leancloud.LeanCloudManager;
+import com.sumian.sd.R;
+import com.sumian.sd.account.bean.Token;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.leancloud.LeanCloudManager;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 

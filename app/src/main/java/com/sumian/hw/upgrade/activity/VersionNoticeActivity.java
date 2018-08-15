@@ -18,9 +18,9 @@ import com.sumian.hw.upgrade.presenter.VersionPresenter;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.VersionInfoView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import java.util.Locale;
 

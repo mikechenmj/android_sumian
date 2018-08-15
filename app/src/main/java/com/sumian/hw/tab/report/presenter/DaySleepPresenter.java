@@ -8,7 +8,7 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.response.DaySleepReport;
 import com.sumian.hw.network.response.ResultResponse;
 import com.sumian.hw.tab.report.contract.DaySleepContract;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;
 

@@ -20,10 +20,10 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.account.bean.Token;
+import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.app.AppManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -18,9 +18,9 @@ import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.VersionDialog;
 import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
 import com.sumian.hw.widget.TitleBar;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import java.util.Locale;
 

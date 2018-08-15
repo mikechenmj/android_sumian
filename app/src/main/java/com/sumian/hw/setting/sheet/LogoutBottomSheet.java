@@ -10,9 +10,9 @@ import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.setting.presenter.LogoutPresenter;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 /**
  * Created by jzz

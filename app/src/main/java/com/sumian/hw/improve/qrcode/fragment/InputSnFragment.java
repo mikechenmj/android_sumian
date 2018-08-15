@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;

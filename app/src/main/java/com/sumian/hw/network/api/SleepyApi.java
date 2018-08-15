@@ -22,9 +22,9 @@ import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.network.response.Ticket;
 import com.sumian.hw.network.response.UserSetting;
 import com.sumian.hw.oss.bean.OssResponse;
-import com.sumian.sleepdoctor.account.bean.Social;
-import com.sumian.sleepdoctor.account.bean.Token;
-import com.sumian.sleepdoctor.account.bean.UserInfo;
+import com.sumian.sd.account.bean.Social;
+import com.sumian.sd.account.bean.Token;
+import com.sumian.sd.account.bean.UserInfo;
 
 import java.util.List;
 import java.util.Map;

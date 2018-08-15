@@ -101,7 +101,7 @@
         android:layout_marginTop="@dimen/space_28"
         android:text="@string/login" />
 
-    <com.sumian.sleepdoctor.widget.LoginRuleView
+    <com.sumian.sd.widget.LoginRuleView
         android:id="@+id/login_rule_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

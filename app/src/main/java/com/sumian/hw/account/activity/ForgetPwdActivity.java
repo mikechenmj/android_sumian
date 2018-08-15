@@ -17,7 +17,7 @@ import com.sumian.hw.network.request.CaptchaBody;
 import com.sumian.hw.network.request.ValidationCaptchaBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 /**
  * Created by jzz

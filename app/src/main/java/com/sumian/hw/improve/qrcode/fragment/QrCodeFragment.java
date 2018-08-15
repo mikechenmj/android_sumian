@@ -10,8 +10,8 @@ import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.improve.qrcode.activity.QrCodeActivity;
 import com.sumian.hw.improve.widget.RequestQrCodeView;
-import com.sumian.sleepdoctor.R;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 
 import java.util.Locale;
 

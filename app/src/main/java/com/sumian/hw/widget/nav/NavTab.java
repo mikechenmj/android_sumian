@@ -7,8 +7,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.sumian.sleepdoctor.BuildConfig;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.BuildConfig;
+import com.sumian.sd.R;
 
 /**
  * Created by jzz

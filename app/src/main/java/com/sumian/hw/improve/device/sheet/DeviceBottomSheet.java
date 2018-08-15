@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.sumian.hw.improve.device.bean.BlueDevice;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.widget.BottomSheetView;
-import com.sumian.sleepdoctor.R;
+import com.sumian.sd.R;
 
 /**
  * Created by jzz

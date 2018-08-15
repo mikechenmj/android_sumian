@@ -17,8 +17,8 @@ import android.text.TextUtils;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
-import com.sumian.sleepdoctor.app.App;
-import com.sumian.sleepdoctor.app.AppManager;
+import com.sumian.sd.app.App;
+import com.sumian.sd.app.AppManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
