@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hw_colorPrimary"
+    android:orientation="vertical"
+    tools:context=".account.login.ValidatePhoneNumberActivity">
+
+    <com.sumian.hw.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/validate_phone_number" />
+
+    <EditText
+        style="@style/HwEditText"
+        android:layout_marginEnd="@dimen/space_36"
+        android:layout_marginStart="@dimen/space_36"
+        android:layout_marginTop="@dimen/space_36"
+        android:hint="@string/input_phone_hint"
+        android:inputType="textPassword" />
+
+    <EditText
+        style="@style/HwEditText"
+        android:layout_marginEnd="@dimen/space_36"
+        android:layout_marginStart="@dimen/space_36"
+        android:layout_marginTop="@dimen/space_30"
+        android:hint="@string/input_captcha_hint"
+        android:inputType="textPassword" />
+
+    <TextView
+        style="@style/SumianButton"
+        android:layout_marginEnd="@dimen/space_36"
+        android:layout_marginStart="@dimen/space_36"
+        android:layout_marginTop="@dimen/space_40"
+        android:text="@string/next_step" />
+</LinearLayout>

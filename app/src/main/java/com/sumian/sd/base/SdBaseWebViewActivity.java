@@ -165,7 +165,7 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
         StringBuilder stringBuilder = new StringBuilder();
         String urlServerPart = getUrlServerPart();
         String urlContentPart = getUrlContentPart();
-        boolean contentContainerParams = urlContentPart.contains("?");
+        boolean contentContainerParams = urlContentPart != null && urlContentPart.contains("?");
         stringBuilder.append(urlServerPart)
                 .append(urlContentPart)
                 .append(contentContainerParams ? "&" : "?")

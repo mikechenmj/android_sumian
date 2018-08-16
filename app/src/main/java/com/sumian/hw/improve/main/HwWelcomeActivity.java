@@ -3,6 +3,7 @@ package com.sumian.hw.improve.main;
 import android.content.Context;
 import android.content.Intent;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.guideline.activity.UserGuidelineActivity;
@@ -11,6 +12,7 @@ import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.sd.R;
+import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.AppManager;
 
 /**
@@ -47,7 +49,7 @@ public class HwWelcomeActivity extends HwBaseActivity {
                         HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
                     }
                 } else {
-                    LoginRouterActivity.show(this);
+                    ActivityUtils.startActivity(LoginRouterActivity.class);
                 }
             }
             finish();

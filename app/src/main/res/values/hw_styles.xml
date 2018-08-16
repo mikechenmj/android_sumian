@@ -4,10 +4,14 @@
     <style name="HwDividerLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/light_content_bg_color</item>
+        <item name="android:background">#434B5B</item>
     </style>
 
     <style name="HwHorizontalDividerLine" parent="HwDividerLine">
         <item name="android:layout_height">@dimen/divider_px_1</item>
+    </style>
+
+    <style name="HwVerticalDividerLine" parent="HwDividerLine">
+        <item name="android:layout_width">@dimen/divider_px_1</item>
     </style>
 </resources>

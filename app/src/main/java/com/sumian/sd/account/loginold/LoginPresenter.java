@@ -1,4 +1,4 @@
-package com.sumian.sd.account.login;
+package com.sumian.sd.account.loginold;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -8,7 +8,6 @@ import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.leancloud.LeanCloudManager;
 import com.sumian.sd.network.callback.BaseResponseCallback;
-import com.sumian.sd.network.response.ErrorResponse;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 

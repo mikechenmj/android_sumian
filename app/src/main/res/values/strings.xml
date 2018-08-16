@@ -455,7 +455,7 @@
     <string name="mobile_error_hint">请输入正确的手机号码</string>
     <string name="captcha_error_hint">请输入正确的验证码</string>
     <string name="pwd_error_hint">密码格式不对,请输入正确的密码</string>
-    <string name="input_captcha_hint">输入验证码</string>
+    <string name="input_captcha_hint">请输入验证码</string>
     <string name="captcha_hint">发送验证码</string>
     <string name="bind_mobile">绑定手机</string>
     <string name="bind_set_pwd">请设置密码</string>
@@ -932,5 +932,24 @@
     <string name="ask_time">预约时间</string>
     <string name="un_finished">未完成</string>
     <string name="is_finished">已完成</string>
+    <string name="hello_comment">您好，</string>
+    <string name="welcome_use_this_app_please_login">欢迎使用速眠医生，请登录</string>
+    <string name="input_phone_hint">请输入手机号码</string>
+    <string name="input_password_hint">请输入密码</string>
+    <string name="login_with_space_inside">登 录</string>
+    <string name="app_user_agreement">速眠医生用户协议</string>
+    <string name="register">注册</string>
+    <string name="captcha_login">验证码登录</string>
+    <string name="password_login">密码登录</string>
+    <string name="captcha_already_sent">验证码已发送%ds</string>
+    <string name="validate_cellphone">验证手机</string>
+    <string name="password_length_invalidate">密码长度需在%1$d-%2$d位之间</string>
+    <string name="phone_number_invalid">电话号码不合法</string>
+    <string name="captcha_invalidate">验证码长度不合法</string>
+    <string name="please_set_password">请设置密码</string>
+    <string name="repeat_password">再次输入密码</string>
+    <string name="register_with_space_inside">注 册</string>
+    <string name="forget_password_question">忘记密码？</string>
+    <string name="validate_phone_number">验证手机</string>
     <!-- Hw end-->
 </resources>

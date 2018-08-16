@@ -65,40 +65,29 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitleBar, defStyleAttr, 0);
-
         boolean showBack = a.getBoolean(R.styleable.TitleBar_show_back, true);
-
         String title = a.getString(R.styleable.TitleBar_text);
         boolean showSpanner = a.getBoolean(R.styleable.TitleBar_show_spanner, false);
         String menuText = a.getString(R.styleable.TitleBar_menu_text);
-
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_menu_icon);
-
+        boolean isDarkTheme = a.getBoolean(R.styleable.TitleBar_tb_dark_theme, false);
         a.recycle();
-
         ButterKnife.bind(inflate(context, R.layout.lay_title_bar, this));
-
         if (showBack) {
             mIvBack.setOnClickListener(this);
             mIvBack.setVisibility(VISIBLE);
         } else {
             mIvBack.setVisibility(INVISIBLE);
         }
-
-        //if (!TextUtils.isEmpty(title)) {
         mTvTitle.setText(title);
-        // }
-
         if (showSpanner) {
             mTvTitle.setOnClickListener(this);
         }
-
         if (!TextUtils.isEmpty(menuText)) {
             mTvMenu.setText(menuText);
             mTvMenu.setVisibility(VISIBLE);
             mTvMenu.setOnClickListener(this);
         }
-
         if (moreDrawable != null) {
             mIvMenu.setImageDrawable(moreDrawable);
             mIvMenu.setVisibility(VISIBLE);
@@ -106,7 +95,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         }
         setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
         setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
-        setBackgroundResource(R.color.colorPrimary);
+        setIsDarkTheme(isDarkTheme);
     }
 
     public TitleBar addOnSpannerListener(OnSpannerListener onSpannerListener) {
@@ -241,5 +230,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         mTvTitle.setTextColor(color);
         mTvMenu.setTextColor(color);
         mIvBack.setColorFilter(color);
+    }
+
+    public void setIsDarkTheme(boolean isDarkTheme) {
+        setBgColor(getResources().getColor(isDarkTheme ? R.color.hw_colorPrimary : R.color.colorPrimary));
+        setTextColor(getResources().getColor(isDarkTheme ? R.color.bt_hole_color : R.color.white));
     }
 }

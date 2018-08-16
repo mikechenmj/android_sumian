@@ -19,8 +19,11 @@ public final class SumianConfig {
 
     public static final String LOGIN_CAPTCHA_TYPE = "login_captcha_type";
     public static final String BIND_SOCIAL_CAPTCHA_TYPE = "bind_social_captcha_type";
-    private static final String TAG = SumianConfig.class.getSimpleName();
     private static final String SETTING_NAME = "sumian_doctor_setting";
+    public static final int  PASSWORD_LENGTH_MIN = 6;
+    public static final int PASSWORD_LENGTH_MAX = 14;
+    public static final int SEND_CAPTCHA_COLD_TIME = 30;
+    public static final int CAPTCHA_LENGTH = 6;
 
     public static void updateCaptchaTimeDistance(CaptchaTime captchaTime, String captchaTimeType) {
         String json = JSON.toJSONString(captchaTime);
@@ -31,8 +34,9 @@ public final class SumianConfig {
 
     public static CaptchaTime syncCaptchaTimeDistance(String captchaTimeType) {
         String json = initSp().getString(captchaTimeType, null);
-        if (TextUtils.isEmpty(json))
+        if (TextUtils.isEmpty(json)) {
             return new CaptchaTime();
+        }
         return JSON.parseObject(json, CaptchaTime.class);
     }
 
