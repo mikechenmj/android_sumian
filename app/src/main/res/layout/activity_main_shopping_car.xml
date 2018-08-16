@@ -42,7 +42,7 @@
                     app:qmui_corner_radius="@dimen/space_4" />
 
                 <TextView
-                    android:id="@+id/tv_desc"
+                    android:id="@+id/tv_name"
                     style="@style/text_t3_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,14 +53,14 @@
                     android:singleLine="true"
                     android:textSize="@dimen/font_16"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_group_money"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_desc"
                     app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="RtlHardcoded"
                     tools:text="一个有十二个字符的随访群" />
 
                 <TextView
-                    android:id="@+id/tv_group_money"
+                    android:id="@+id/tv_desc"
                     style="@style/text_t1_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     android:textSize="@dimen/font_14"
                     app:layout_constraintBottom_toBottomOf="@id/lay_group_icon"
                     app:layout_constraintLeft_toRightOf="@id/lay_group_icon"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_desc"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name"
                     tools:ignore="RtlHardcoded"
                     tools:text="服务费用: 50元/次" />
 

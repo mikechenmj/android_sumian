@@ -10,14 +10,12 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.tel.bean.TelBooking
-import com.sumian.sd.utils.TimeUtil
-import java.util.*
 
 /**
  *
  *Created by sm
  * on 2018/6/5 13:43
- * desc:咨询列表 adapter, 包含未使用,已使用2部分
+ * desc:电话预约咨询列表 adapter, 包含未完成/已完成2部分
  **/
 class TelBookingListAdapter(context: Context) : BaseRecyclerAdapter<TelBooking>(context) {
 
@@ -27,37 +25,16 @@ class TelBookingListAdapter(context: Context) : BaseRecyclerAdapter<TelBooking>(
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: TelBooking?, position: Int) {
-        (holder as ViewHolder).init(item!!)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: TelBooking, position: Int) {
+        (holder as ViewHolder).init(item)
     }
 
     inner class ViewHolder constructor(itemView: View) : BaseViewHolder(itemView) {
 
         fun init(item: TelBooking) {
-            //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
-            val advisoryTitle: String = when (item.status) {
-                5 -> String.format(Locale.getDefault(), "%s", "123")
-                else ->
-                    "123"
-            }
-
-            setText(R.id.tv_title, advisoryTitle)
-                    .setText(R.id.tv_advisory_time, if (item.started_at > 0) {
-                        TimeUtil.formatYYYYMMDDHHMM(item.started_at)
-                    } else {
-                        TimeUtil.formatYYYYMMDDHHMM(item.created_at)
-                    })
-                    .setText(R.id.tv_advisory_action_status, when (item.status) {
-                        0 -> getString(R.string.waiting_for_reply)
-                        1 -> getString(R.string.replied)
-                        2 -> getString(R.string.over)
-                        3 -> getString(R.string.closed)
-                        4 -> getString(R.string.cancelled)
-                        5 -> getString(R.string.have_a_question)
-                        else -> {
-                            ""
-                        }
-                    }).setVisible(R.id.tv_advisory_action_status, true)
+            setText(R.id.tv_title, item.formatOrderContent())
+                    .setText(R.id.tv_advisory_time, item.formatOrderCreateTime())
+                    .setText(R.id.tv_advisory_action_status, item.formatStatus()).setVisible(R.id.tv_advisory_action_status, true)
         }
 
         fun getString(@StringRes textId: Int = 0): String {

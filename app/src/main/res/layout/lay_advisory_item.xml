@@ -14,7 +14,11 @@
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
         android:layout_marginTop="@dimen/space_20"
-        tools:text="我又开始失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两种药物，但是感觉对睡眠并没有什么帮助，醒来之后感觉很沮丧，不…" />
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/space_2"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="3"
+        tools:text="我又开始失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两种药物，但是感觉对睡眠并没有什么帮助，醒来之后感觉很沮丧，dadasdasdaaaaaaaaaaaaasdaasaaasaaaaaaaaaaaaaaaaaaaaa不…" />
 
     <FrameLayout
         android:layout_width="match_parent"

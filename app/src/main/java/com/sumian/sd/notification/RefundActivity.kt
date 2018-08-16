@@ -14,6 +14,9 @@ import com.sumian.sd.order.OrderDetailV2
 import com.sumian.sd.utils.TimeUtil
 import kotlinx.android.synthetic.main.activity_refund.*
 
+/**
+ * 退款
+ */
 class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
     private var mOrderNo: String = ""
 
@@ -38,8 +41,8 @@ class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
     }
 
     override fun initBundle(bundle: Bundle?): Boolean {
-        if (bundle != null) {
-            mOrderNo = bundle.getString(KEY_ORDER_NO)
+        bundle?.let {
+            mOrderNo = it.getString(KEY_ORDER_NO, "")
         }
         return super.initBundle(bundle)
     }
