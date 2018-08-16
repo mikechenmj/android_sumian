@@ -34,7 +34,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
 
     override fun validatePhoneNumberForRegister(mobile: String, captcha: String) {
         view.showLoading()
-        val call = AppManager.getHttpService().loginByCaptcha(mobile, captcha)
+        val call = AppManager.getHttpService().validateCaptchaForRegister(mobile, captcha)
         call.enqueue(object : BaseResponseCallback<Token>() {
 
             override fun onSuccess(response: Token?) {
@@ -52,13 +52,14 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
         })
     }
 
-    override fun validatePhoneNumberForModifyPassword(mobile: String, captcha: String) {
+    override fun validatePhoneNumberForResetPassword(mobile: String, captcha: String) {
         view.showLoading()
-        val call = AppManager.getHttpService().loginByCaptcha(mobile, captcha)  // todo change loginByCaptcha
+        val call = AppManager.getHttpService().validateCaptchaForResetPassword(mobile, captcha)
         call.enqueue(object : BaseResponseCallback<Token>() {
 
             override fun onSuccess(response: Token?) {
-                LoginHelper.onLoginSuccess(response)
+                LoginHelper.updateTokenAndUploadInstallationId(response)
+                SetPasswordActivity.launch()
             }
 
             override fun onFailure(code: Int, message: String) {

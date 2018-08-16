@@ -32,7 +32,7 @@ class LoginHelper {
             }
         }
 
-        private fun updateTokenAndUploadInstallationId(response: Token?) {
+        fun updateTokenAndUploadInstallationId(response: Token?) {
             AppManager.getAccountViewModel().updateToken(response)
             LeanCloudManager.getAndUploadCurrentInstallation()
         }

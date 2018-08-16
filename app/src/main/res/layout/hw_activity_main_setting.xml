@@ -67,7 +67,4 @@
         android:textColor="@color/t4_color"
         android:textSize="@dimen/font_16"
         tools:ignore="RtlHardcoded" />
-
-    <View style="@style/HwHorizontalDividerLine" />
-
 </LinearLayout>

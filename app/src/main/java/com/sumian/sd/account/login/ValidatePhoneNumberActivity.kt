@@ -65,7 +65,7 @@ class ValidatePhoneNumberActivity : BasePresenterActivity<ValidatePhoneNumberCon
             when (mLaunchType) {
                 LAUNCH_TYPE_BIND_SOCIAL -> mPresenter!!.bindMobile(mobile, captcha, mSocialInfo!!)
                 LAUNCH_TYPE_REGISTER -> mPresenter!!.validatePhoneNumberForRegister(mobile, captcha)
-                LAUNCH_TYPE_FORGET_PASSWORD -> mPresenter!!.validatePhoneNumberForModifyPassword(mobile, captcha)
+                LAUNCH_TYPE_FORGET_PASSWORD -> mPresenter!!.validatePhoneNumberForResetPassword(mobile, captcha)
             }
         }
     }

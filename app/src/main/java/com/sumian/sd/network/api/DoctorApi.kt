@@ -46,6 +46,14 @@ interface DoctorApi {
     fun loginByCaptcha(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
 
     @FormUrlEncoded
+    @POST("authorizations/registration-validation")
+    fun validateCaptchaForRegister(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+
+    @FormUrlEncoded
+    @POST("authorizations/retrieve-validation")
+    fun validateCaptchaForResetPassword(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+
+    @FormUrlEncoded
     @POST("authorizations/password")
     fun loginByPassword(@Field("mobile") mobile: String, @Field("password") password: String): Call<Token>
 
