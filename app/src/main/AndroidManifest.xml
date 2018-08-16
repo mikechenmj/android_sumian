@@ -85,13 +85,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".account.loginold.LoginActivityOld"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".account.userProfile.activity.ImproveUserProfileOneActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
@@ -136,13 +129,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name=".account.bindMobile.BindMobileActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <activity
             android:name=".doctor.activity.ScanDoctorQrCodeActivity"
             android:launchMode="singleTop"
@@ -371,31 +358,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.account.activity.HwLoginActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.account.activity.RegisterActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.account.activity.LoginRouterActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name="com.sumian.hw.tab.report.activity.DaySleepDetailReportActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -456,23 +418,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.account.activity.ForgetPwdActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
             android:name="com.sumian.hw.account.activity.ModifyNicknameActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.account.activity.SleepReminderActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -497,13 +445,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.account.activity.OpenBindActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name="com.sumian.hw.account.activity.AvatarImageActivity"

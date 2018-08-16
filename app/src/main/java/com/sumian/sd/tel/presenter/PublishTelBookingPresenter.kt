@@ -62,7 +62,5 @@ class PublishTelBookingPresenter private constructor(view: PublishTelBookingCont
 
     override fun publishTelBookingOrder(planStartAt: Int, consultingQuestion: String, add: String, include: Boolean) {
 
-        val map = mutableMapOf<String, Any>()
-
     }
 }
