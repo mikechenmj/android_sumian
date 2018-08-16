@@ -5,14 +5,11 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BasePresenterActivity
-import com.sumian.hw.account.activity.RegisterActivity
-import com.sumian.hw.improve.guideline.activity.ManualActivity
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.account.config.SumianConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.h5.HwSimpleWebActivity
-import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.utils.PhoneNumberUtil
@@ -20,12 +17,15 @@ import kotlinx.android.synthetic.main.activity_login_v2.*
 
 class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginContract.View {
 
-    private var mIsLoginWithCaptcha: Boolean = false // true login with captcha, false login with password
-
     private lateinit var mVersionDelegate: VersionDelegate
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login_v2
+    }
+
+    override fun initWidgetBefore() {
+        super.initWidgetBefore()
+        mPresenter = LoginPresenter(this)
     }
 
     override fun initWidget() {
@@ -54,19 +54,16 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         }
         bt_login.setOnClickListener { onLoginClick() }
         iv_user_agreement.setOnClickListener { onIvUserAgreementClick() }
-        tv_user_agreement.setOnClickListener {
-            HwSimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.HW_USER_AGREEMENT_URL)
-//            ActivityUtils.startActivity(ManualActivity::class.java)
-        }
+        tv_user_agreement.setOnClickListener { HwSimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.HW_USER_AGREEMENT_URL) }
         tv_wechat_login.setOnClickListener { wechatLogin() }
         tv_captcha_login.setOnClickListener { turnOnCaptchaLogin(true) }
         tv_password_login.setOnClickListener { turnOnCaptchaLogin(false) }
-        tv_register.setOnClickListener { ActivityUtils.startActivity(SetPasswordActivity::class.java) }
+        tv_register.setOnClickListener { ValidatePhoneNumberActivity.launchForRegister() }
+        tv_forget_password.setOnClickListener { ValidatePhoneNumberActivity.launchForForgetPassword() }
     }
 
     override fun initData() {
         super.initData()
-        mPresenter = LoginPresenter(this)
         mVersionDelegate = VersionDelegate.init()
     }
 
@@ -77,7 +74,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
 
     private fun onLoginClick() {
         val phone = getPhoneNumberWithCheck() ?: return
-        if (mIsLoginWithCaptcha) {
+        if (ll_captcha.visibility == View.VISIBLE) {
             val captcha = getCaptchaWithCheck() ?: return
             mPresenter!!.loginByCaptcha(phone, captcha)
         } else {
@@ -103,7 +100,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
     private fun getPasswordWithCheck(): String? {
         val password = et_password.text.toString()
         return if (!checkPasswordValidation(password)) {
-            ToastUtils.showShort(getString(R.string.password_length_invalidate))
+            ToastUtils.showShort(getString(R.string.password_length_invalidate, SumianConfig.PASSWORD_LENGTH_MIN, SumianConfig.PASSWORD_LENGTH_MAX))
             et_password.isActivated = true
             iv_password_clear.visibility = View.VISIBLE
             null
@@ -142,7 +139,6 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
     }
 
     private fun turnOnCaptchaLogin(turnOn: Boolean) {
-        mIsLoginWithCaptcha = turnOn
         ll_captcha.visibility = if (turnOn) View.VISIBLE else View.GONE
         ll_password_et_container.visibility = if (turnOn) View.GONE else View.VISIBLE
         tv_password_login.visibility = if (turnOn) View.VISIBLE else View.GONE

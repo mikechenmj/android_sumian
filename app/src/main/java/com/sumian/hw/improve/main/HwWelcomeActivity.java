@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
@@ -49,7 +48,7 @@ public class HwWelcomeActivity extends HwBaseActivity {
                         HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
                     }
                 } else {
-                    ActivityUtils.startActivity(LoginRouterActivity.class);
+                    ActivityUtils.startActivity(LoginActivity.class);
                 }
             }
             finish();

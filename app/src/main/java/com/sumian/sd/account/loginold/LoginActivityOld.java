@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * desc:
  */
 
-public final class LoginActivity extends SdBaseActivity<LoginPresenter> implements View.OnClickListener, LoginContract.View, LoginRuleView.OnCheckedListener, UMAuthListener {
+public final class LoginActivityOld extends SdBaseActivity<LoginPresenter> implements View.OnClickListener, LoginContract.View, LoginRuleView.OnCheckedListener, UMAuthListener {
 
     public static final int REQUEST_CODE_SET_USER_INFO = 100;
 

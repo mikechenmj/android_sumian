@@ -1,6 +1,5 @@
 package com.sumian.sd.account.login
 
-import com.alibaba.sdk.android.oss.model.ImagePersistRequest
 import com.sumian.common.mvp.BaseShowLoadingView
 import com.sumian.common.mvp.IPresenter
 
@@ -16,10 +15,13 @@ class ValidatePhoneNumberContract {
     interface View : BaseShowLoadingView {
         fun onValidateSuccess()
         fun onValidateFailure()
+        fun onRequestCaptchaSuccess()
     }
 
     interface Presenter : IPresenter {
         fun requestCaptcha(mobile: String)
-        fun validatePhoneNumber(mobile: String, captcha: String)
+        fun validatePhoneNumberForRegister(mobile: String, captcha: String)
+        fun validatePhoneNumberForModifyPassword(mobile: String, captcha: String)
+        fun bindMobile(mobile: String, captcha: String, socialInfo:String)
     }
 }

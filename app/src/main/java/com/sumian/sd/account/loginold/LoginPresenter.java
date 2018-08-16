@@ -46,7 +46,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         mView.onBegin();
 
         Call<Token> call = AppManager.getHttpService()
-                .login(mobile, captcha);
+                .loginByCaptcha(mobile, captcha);
         addCall(call);
         call
                 .enqueue(new BaseResponseCallback<Token>() {
@@ -79,28 +79,26 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         mView.onBegin();
 
-        Call<Unit> call = AppManager.getHttpService()
-                .getCaptcha(mobile);
+        Call<Unit> call = AppManager.getHttpService().getCaptcha(mobile);
         addCall(call);
-        call
-                .enqueue(new BaseResponseCallback<Unit>() {
+        call.enqueue(new BaseResponseCallback<Unit>() {
 
-                    @Override
-                    protected void onSuccess(Unit response) {
-                        mView.onSendCaptchaSuccess();
-                    }
+            @Override
+            protected void onSuccess(Unit response) {
+                mView.onSendCaptchaSuccess();
+            }
 
-                    @Override
-                    protected void onFailure(int code, @NonNull String message) {
-                        mView.onFailure(message);
-                    }
+            @Override
+            protected void onFailure(int code, @NonNull String message) {
+                mView.onFailure(message);
+            }
 
-                    @Override
-                    protected void onFinish() {
-                        super.onFinish();
-                        mView.onFinish();
-                    }
-                });
+            @Override
+            protected void onFinish() {
+                super.onFinish();
+                mView.onFinish();
+            }
+        });
     }
 
     @Override

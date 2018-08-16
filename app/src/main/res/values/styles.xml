@@ -131,6 +131,10 @@
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
+    <style name="HwButton" parent="SumianButton">
+        <item name="android:background">@drawable/hw_bg_bt</item>
+    </style>
+
     <style name="text_lesson_style" parent="@style/text_b2_14">
         <item name="android:textColor">@color/bt_lesson_text_color</item>
         <item name="android:background">@drawable/bg_bt_lesson_action</item>

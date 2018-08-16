@@ -85,7 +85,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".account.login.LoginActivity"
+            android:name=".account.loginold.LoginActivityOld"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -148,7 +148,7 @@
             android:launchMode="singleTop"
             android:theme="@style/Scan_qr_theme" />
 
-        <!-- third  login -->
+        <!-- third  loginByCaptcha -->
         <activity
             android:name="com.sumian.sd.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -599,7 +599,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".tel.activity.PublishTelBookingActivity" />
         <activity
             android:name=".account.login.LoginActivity"
             android:exported="true" />

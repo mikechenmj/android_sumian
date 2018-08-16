@@ -949,7 +949,10 @@
     <string name="please_set_password">请设置密码</string>
     <string name="repeat_password">再次输入密码</string>
     <string name="register_with_space_inside">注 册</string>
+    <string name="complete_with_space_inside">完 成</string>
     <string name="forget_password_question">忘记密码？</string>
     <string name="validate_phone_number">验证手机</string>
+    <string name="captcha_send_success">验证码发送成功</string>
+    <string name="login_cancel">登录取消</string>
     <!-- Hw end-->
 </resources>

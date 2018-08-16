@@ -1,9 +1,9 @@
 package com.sumian.sd.network.callback
 
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.hw.account.activity.HwLoginActivity
 import com.sumian.hw.network.callback.ErrorCode
 import com.sumian.sd.R
+import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.App
 import com.sumian.sd.network.StatusCode
 import com.sumian.sd.network.response.ErrorInfo400
@@ -49,7 +49,7 @@ abstract class BaseResponseCallback<T> : Callback<T> {
                     when (errorResponse.code) {
                         //token 鉴权失败
                         401 -> {
-                            ActivityUtils.startActivity(HwLoginActivity::class.java)
+                            ActivityUtils.startActivity(LoginActivity::class.java)
                         }
                         503 -> showSystemIsMaintainDialog()
                     }

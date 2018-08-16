@@ -15,22 +15,55 @@
         app:text="@string/validate_phone_number" />
 
     <EditText
+        android:id="@+id/et_mobile"
         style="@style/HwEditText"
         android:layout_marginEnd="@dimen/space_36"
         android:layout_marginStart="@dimen/space_36"
         android:layout_marginTop="@dimen/space_36"
         android:hint="@string/input_phone_hint"
-        android:inputType="textPassword" />
+        android:inputType="numberDecimal" />
 
-    <EditText
-        style="@style/HwEditText"
+    <LinearLayout
+        android:id="@+id/ll_captcha"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
         android:layout_marginEnd="@dimen/space_36"
         android:layout_marginStart="@dimen/space_36"
         android:layout_marginTop="@dimen/space_30"
-        android:hint="@string/input_captcha_hint"
-        android:inputType="textPassword" />
+        android:orientation="horizontal"
+        android:visibility="visible"
+        tools:visibility="visible">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_48"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/et_captcha"
+                style="@style/HwEditText"
+                android:layout_width="match_parent"
+                android:hint="@string/input_captcha_hint"
+                android:inputType="numberDecimal" />
+
+            <ImageView
+                android:id="@+id/iv_captcha_clear"
+                style="@style/EditTextClearIv"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <com.sumian.sd.widget.CountDownTextView
+            android:id="@+id/tv_send_captcha"
+            style="@style/HwButton"
+            android:layout_width="@dimen/space_110"
+            app:cdtv_count_down_text="@string/captcha_already_sent"
+            app:cdtv_count_down_time="30"
+            app:cdtv_normal_text="@string/send_captcha" />
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/btn_next"
         style="@style/SumianButton"
         android:layout_marginEnd="@dimen/space_36"
         android:layout_marginStart="@dimen/space_36"

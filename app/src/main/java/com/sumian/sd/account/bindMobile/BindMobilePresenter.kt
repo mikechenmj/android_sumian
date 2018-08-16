@@ -4,7 +4,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseResponseCallback
-import com.sumian.sd.network.response.ErrorResponse
 
 /**
  * Created by sm
@@ -86,10 +85,6 @@ class BindMobilePresenter private constructor(view: BindMobileContract.View) : B
                 super.onFinish()
                 mView?.onFinish()
             }
-
         })
-
     }
-
-
 }

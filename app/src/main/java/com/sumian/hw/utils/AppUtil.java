@@ -6,13 +6,13 @@ import com.hyphenate.chat.ChatClient;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.operator.AppOperator;
-import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.account.cache.HwAccountCache;
 import com.sumian.hw.common.cache.BluePeripheralCache;
 import com.sumian.hw.common.config.SumianConfig;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.reminder.ReminderManager;
+import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.MainActivity;
@@ -52,7 +52,7 @@ public class AppUtil {
         AppManager.getAccountViewModel().updateToken(null);
         AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null);
         ActivityUtils.finishAllActivities();
-        ActivityUtils.startActivity(HwLoginActivity.class);
+        ActivityUtils.startActivity(LoginActivity.class);
     }
 
     public static void launchMainAndFinishAll(){
