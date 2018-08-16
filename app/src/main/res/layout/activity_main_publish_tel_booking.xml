@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/space_10"
-    tools:context=".tel.activity.PublishTelBookingActivity">
+    tools:context=".tel.activity.TelBookingPublishActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +17,16 @@
             android:layout_height="wrap_content"
             android:background="@color/b2_color"
             android:orientation="vertical">
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_border_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:divider_line_visible="invisible"
+                app:type_content=" 已确认"
+                app:type_desc="订单状态"
+                tools:visibility="visible" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/sdv_make_date"

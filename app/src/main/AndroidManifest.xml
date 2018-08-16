@@ -602,12 +602,20 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
-            android:name=".tel.activity.PublishTelBookingActivity"
+            android:name=".tel.activity.TelBookingPublishActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+
+        <activity
+            android:name=".tel.activity.TelBookingDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
     </application>
 

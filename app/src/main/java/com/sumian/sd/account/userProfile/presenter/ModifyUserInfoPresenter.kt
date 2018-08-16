@@ -11,7 +11,6 @@ import com.sumian.sd.account.userProfile.contract.ModifyUserInfoContract
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseResponseCallback
-import com.sumian.sd.network.response.ErrorResponse
 import java.util.*
 
 /**
@@ -246,7 +245,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         val count = maxHeight - minHeight
         val heights = arrayOfNulls<String>(count)
         val decimalHeights = arrayOfNulls<String>(10)
-        val heightValue = userInfo.getHeightValue()
+        val heightValue = userInfo.heightValue
         val valueX10 = (heightValue * 10).toInt()
         var numberOnePosition = valueX10 / 10 - minHeight
         if (numberOnePosition < 0) {

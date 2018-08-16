@@ -11,7 +11,8 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseFragment
-import com.sumian.sd.tel.activity.PublishTelBookingActivity
+import com.sumian.sd.tel.activity.TelBookingDetailActivity
+import com.sumian.sd.tel.activity.TelBookingPublishActivity
 import com.sumian.sd.tel.adpater.TelBookingListAdapter
 import com.sumian.sd.tel.bean.TelBooking
 import com.sumian.sd.tel.contract.TelBookingListContract
@@ -85,14 +86,12 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
 
     override fun onItemClick(position: Int, itemId: Long) {
         val telBooking = this.mListAdapter.getItem(position)
+
         if (telBooking.status == 9) {//未使用,跳转到可提交的预约电话详情
-
-            PublishTelBookingActivity.show()
-
+            TelBookingPublishActivity.show(telBooking)
         } else {//跳转到预约电话清单详情
-
+            TelBookingDetailActivity.show(telBookingId = telBooking.id)
         }
-
     }
 
     override fun showLoading() {

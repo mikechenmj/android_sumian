@@ -255,7 +255,7 @@ interface DoctorApi {
      * 使用该电话预约清单
      */
     @PATCH("bookings/{id}")
-    fun callTelBooking(@Path("id") telBookingId: Int, @FieldMap map: MutableMap<String, Any>): Call<TelBooking>
+    fun publishTelBooking(@Path("id") telBookingId: Int, @FieldMap map: MutableMap<String, Any>): Call<TelBooking>
 
     /**
      * 获取最新未使用的电话预约订单,可用于提交新的电话预约

@@ -12,7 +12,7 @@ import com.sumian.sd.tel.bean.TelBooking
  * desc:
  *
  */
-interface PublishTelBookingContract {
+interface TelBookingPublishContract {
 
     interface View : BaseShowLoadingView {
 
@@ -23,6 +23,11 @@ interface PublishTelBookingContract {
         fun onPublishTelBookingOrderSuccess(telBooking: TelBooking)
 
         fun onPublishTelBookingOrderFailed(error: String)
+
+        fun onCheckInputContentSuccess(consultingQuestion: String, add: String)
+
+        fun onCheckInputContentFailed(error: String)
+
     }
 
 
@@ -30,6 +35,8 @@ interface PublishTelBookingContract {
 
         fun getLatestTelBookingOrder()
 
-        fun publishTelBookingOrder(planStartAt: Int, consultingQuestion: String, add: String, include: Boolean = false)
+        fun publishTelBookingOrder(telBookingId: Int, planStartAt: Int, consultingQuestion: String, add: String, include: Boolean = false)
+
+        fun checkInputContent(consultingQuestion: String, add: String)
     }
 }
