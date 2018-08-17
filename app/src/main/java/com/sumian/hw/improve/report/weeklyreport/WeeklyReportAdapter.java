@@ -178,7 +178,7 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
 //                    int weekOffset = calendar.get(Calendar.DAY_OF_WEEK);
 //                    int weekCount = 7 - weekOffset;
 //                    long dayUnixTime = 60 * 60 * 24 * 1000L * weekCount;
-//                    long currentStartTime = calendar.getTimeInMillis() - dayUnixTime;
+//                    long currentStartTime = calendar.getUnixTime() - dayUnixTime;
 //                    this.mIvPre.setVisibility(item.getStart_date_show() * 1000L > currentStartTime ? View.VISIBLE : View.INVISIBLE);
 //                } catch (ParseException e) {
 //                    e.printStackTrace();

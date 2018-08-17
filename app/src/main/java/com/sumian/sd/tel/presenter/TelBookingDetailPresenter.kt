@@ -1,23 +1,22 @@
 package com.sumian.sd.tel.presenter
 
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.tel.bean.TelBooking
-import com.sumian.sd.tel.contract.PublishTelBookingContract
+import com.sumian.sd.tel.contract.TelBookingDetailContract
 
 /**
  * Created by sm
  *
- * on 2018/8/15
+ * on 2018/8/16
  *
  * desc:
  *
  */
-class PublishTelBookingPresenter private constructor(view: PublishTelBookingContract.View) : PublishTelBookingContract.Presenter {
+class TelBookingDetailPresenter private constructor(view: TelBookingDetailContract.View) : TelBookingDetailContract.Presenter {
 
-    private var mView: PublishTelBookingContract.View? = null
+    private var mView: TelBookingDetailContract.View? = null
 
     init {
         this.mView = view
@@ -25,30 +24,30 @@ class PublishTelBookingPresenter private constructor(view: PublishTelBookingCont
 
     companion object {
 
-        fun init(view: PublishTelBookingContract.View): PublishTelBookingContract.Presenter {
-            return PublishTelBookingPresenter(view)
+        fun init(view: TelBookingDetailContract.View): TelBookingDetailContract.Presenter {
+            return TelBookingDetailPresenter(view)
         }
+
     }
 
-    override fun getLatestTelBookingOrder() {
+    override fun getTelBookingDetail(telBookingId: Int) {
 
         mView?.showLoading()
 
         val map = mutableMapOf<String, Any>()
-
         map["include"] = "package.servicePackage"
 
-        val call = AppManager.getHttpService().getLatestTelBookingDetail(map = map)
-        mCalls.add(call)
+        val call = AppManager.getHttpService().getTelBookingDetail(telBookingId = telBookingId, map = map)
+
         call.enqueue(object : BaseResponseCallback<TelBooking>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetLatestTelBookingOrderFailed(error = errorResponse.message)
+                mView?.onGetTelBookingDetailFailed(error = errorResponse.message)
             }
 
             override fun onSuccess(response: TelBooking?) {
                 response?.let {
-                    mView?.onGetLatestTelBookingOrderSuccess(it)
+                    mView?.onGetTelBookingDetailSuccess(it)
                 }
             }
 
@@ -58,9 +57,6 @@ class PublishTelBookingPresenter private constructor(view: PublishTelBookingCont
             }
 
         })
-    }
-
-    override fun publishTelBookingOrder(planStartAt: Int, consultingQuestion: String, add: String, include: Boolean) {
 
     }
 }

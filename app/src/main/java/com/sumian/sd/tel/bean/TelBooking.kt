@@ -49,11 +49,13 @@ data class TelBooking(var id: Int,
 
     }
 
-    fun formatStatus(): String {
+    fun formatStatus(): CharSequence {
         return when (status) {
             0 -> {
                 val formatStatus = "待确认"
-                return SpannableString(formatStatus).setSpan(ForegroundColorSpan(App.getAppContext().resources.getColor(R.color.b3_color)), 0, formatStatus.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE).toString()
+                val spannableString = SpannableString(formatStatus)
+                spannableString.setSpan(ForegroundColorSpan(App.getAppContext().resources.getColor(R.color.b3_color)), 0, formatStatus.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                return spannableString
             }
             1 -> {
                 "已确认"
@@ -94,20 +96,40 @@ data class TelBooking(var id: Int,
         }
     }
 
-    private fun formatOrderTime(): String {
+    fun formatOrderTime(): String {
         return if (plan_start_at <= 0) {
-            "预约时间:  ${formatOrderCreateTime()}\r\n"
+            "预约时间:  ${formatOrderCreateTimeYYYYMMDD()}\r\n"
         } else {
-            "预约时间:  ${formatOrderPlanStartTime()}\r\n"
+            "预约时间:  ${formatOrderPlanStartTimeYYYYMMDD()}\r\n"
+        }
+    }
+
+    fun formatOrderTimeYYYYMMDDHHMM(): String {
+        return if (plan_start_at <= 0) {
+            formatOrderCreateTimeYYYYMMDDHHMM()
+        } else {
+            formatOrderPlanStartTimeYYYYMMDDHHMM()
         }
     }
 
     fun formatOrderCreateTime(): String {
+        return TimeUtil.formatYYYYMMDDHHMM(updated_at)
+    }
+
+    private fun formatOrderCreateTimeYYYYMMDD(): String {
+        return TimeUtil.formatYYYYMMDD(created_at)
+    }
+
+    private fun formatOrderCreateTimeYYYYMMDDHHMM(): String {
         return TimeUtil.formatYYYYMMDDHHMM(created_at)
     }
 
-    private fun formatOrderPlanStartTime(): String {
+    private fun formatOrderPlanStartTimeYYYYMMDD(): String {
         return TimeUtil.formatYYYYMMDD(plan_start_at)
+    }
+
+    fun formatOrderPlanStartTimeYYYYMMDDHHMM(): String {
+        return TimeUtil.formatYYYYMMDDHHMM(plan_start_at)
     }
 
     /**

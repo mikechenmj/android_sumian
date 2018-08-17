@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/space_10"
-    tools:context=".tel.activity.PublishTelBookingActivity">
+    tools:context=".tel.activity.TelBookingPublishActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_10"
+            android:background="@color/l1_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,9 +23,28 @@
             android:orientation="vertical">
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_border_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:divider_line_visible="invisible"
+                app:type_content=" 已确认"
+                app:type_desc="订单状态"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_10"
+                android:background="@color/l1_color"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/sdv_make_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
                 app:divider_line_visible="invisible"
                 app:type_content="请选择"
                 app:type_desc="@string/ask_time" />
@@ -99,10 +122,11 @@
             <android.support.text.emoji.widget.EmojiEditText
                 android:id="@+id/et_input_ask_question_more"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_264"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:gravity="start"
                 android:hint="@string/ask_more_hint"
+                android:maxHeight="@dimen/space_264"
                 android:padding="@dimen/space_20" />
 
             <TextView
