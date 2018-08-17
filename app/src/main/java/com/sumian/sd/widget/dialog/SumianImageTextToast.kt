@@ -1,5 +1,6 @@
 package com.sumian.sd.widget.dialog
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.view.Gravity
@@ -46,6 +47,7 @@ class SumianImageTextToast {
             toast.show()
         }
 
+        @SuppressLint("InflateParams")
         private fun showWindow(context: Context, imageResId: Int, textResId: Int, showShort: Boolean) {
             val view = LayoutInflater.from(context).inflate(R.layout.layout_image_text_toast, null)
             val iv = view.findViewById<ImageView>(R.id.iv)

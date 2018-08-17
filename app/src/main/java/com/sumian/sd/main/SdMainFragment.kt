@@ -16,7 +16,6 @@ import com.sumian.sd.event.NotificationReadEvent
 import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.homepage.HomepageFragment
 import com.sumian.sd.notification.NotificationViewModel
-import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.tab.DoctorFragment
 import com.sumian.sd.tab.MeFragment
 import com.sumian.sd.utils.NotificationUtil
@@ -36,18 +35,22 @@ import org.greenrobot.eventbus.Subscribe
  * </pre>
  */
 class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
-    override fun getLayoutId(): Int {
-        return R.layout.sd_fragment_main
-    }
 
-    private val REQUEST_CODE_OPEN_NOTIFICATION = 1
+    companion object {
+
+        private const val REQUEST_CODE_OPEN_NOTIFICATION = 1
+
+    }
 
     private var mCurrentPosition = -1
     private val mFragmentTags = arrayOf(
             HomepageFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
-    private var mVersionDelegate: VersionDelegate? = null
+
+    override fun getLayoutId(): Int {
+        return R.layout.sd_fragment_main
+    }
 
     override fun initWidget() {
         nav_tab.setOnSelectedTabChangeListener(this)
@@ -56,11 +59,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
             launchAnotherMainActivity()
         }
         showOpenNotificationDialogIfNeeded()
-    }
-
-    override fun initData() {
-        super.initData()
-        this.mVersionDelegate = VersionDelegate.init()
     }
 
     private fun launchAnotherMainActivity() {
@@ -103,11 +101,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
 
     override fun openEventBus(): Boolean {
         return true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mVersionDelegate!!.checkVersion(activity!!)
     }
 
     @Subscribe(sticky = true)

@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -65,31 +66,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_left"
                 style="@style/SumianButton"
+                android:layout_height="@dimen/space_50"
                 android:layout_marginBottom="@dimen/space_30"
                 android:layout_marginStart="@dimen/space_20"
                 android:layout_marginTop="@dimen/space_30"
                 android:layout_weight="1"
                 tools:background="@drawable/bg_btn_white"
                 tools:text="@string/confirm"
-                tools:textColor="@color/t5_color"
-                tools:visibility="gone" />
+                tools:textColor="@color/t5_color" />
 
             <Space
                 android:id="@+id/space"
                 android:layout_width="@dimen/space_20"
                 android:layout_height="wrap_content" />
 
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_right"
                 style="@style/SumianButton"
+                android:layout_height="@dimen/space_50"
                 android:layout_marginBottom="@dimen/space_30"
                 android:layout_marginEnd="@dimen/space_20"
                 android:layout_marginTop="@dimen/space_30"
                 android:layout_weight="1"
                 tools:text="@string/cancel" />
         </LinearLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -4,13 +4,18 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.view.KeyEvent
 import android.view.View
-import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.R
 import com.sumian.sd.app.App
+import com.sumian.sd.main.MainActivity
+import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.setting.version.presenter.VersionPresenter
 import com.sumian.sd.utils.UiUtils
 import com.sumian.sd.widget.dialog.SumianAlertDialog
+import com.sumian.sd.widget.dialog.theme.BlackTheme
+import com.sumian.sd.widget.dialog.theme.ITheme
+import com.sumian.sd.widget.dialog.theme.LightTheme
+import com.sumian.sd.widget.dialog.theme.ThemeFactory
 
 /**
  * <pre>
@@ -27,8 +32,11 @@ import com.sumian.sd.widget.dialog.SumianAlertDialog
  */
 open class VersionDelegate private constructor() : VersionContract.View, View.OnClickListener, DialogInterface.OnKeyListener {
 
-    override fun onClick(v: View?) {
-        UiUtils.openAppInMarket(App.getAppContext())
+    companion object {
+
+        fun init(): VersionDelegate {
+            return VersionDelegate()
+        }
     }
 
     private lateinit var mVersion: Version
@@ -45,6 +53,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean) {
         if (isHaveForce) {
             SumianAlertDialog(mActivity)
+                    .setTheme(createTheme())
                     .setTitle(R.string.version_upgrade)
                     .setMessage(R.string.force_upgrade_version)
                     .setRightBtn(R.string.sure, this)
@@ -54,6 +63,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         } else {
             if (isHaveUpgrade && isHaveForce) {
                 SumianAlertDialog(mActivity)
+                        .setTheme(createTheme())
                         .setTitle(R.string.version_upgrade)
                         .setMessage(R.string.have_a_new_version)
                         .setRightBtn(R.string.sure, this)
@@ -64,21 +74,23 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         }
     }
 
+    private fun createTheme(): ITheme {
+        return if ((mActivity as MainActivity).mIsBlackTheme)
+            ThemeFactory.create(BlackTheme::class.java) else
+            ThemeFactory.create(LightTheme::class.java)
+    }
+
     private val mPresenter: VersionContract.Presenter by lazy {
         VersionPresenter.init(this)
     }
 
-    companion object {
-
-        fun init(): VersionDelegate {
-            return VersionDelegate()
-        }
-    }
-
-
     fun checkVersion(activity: Activity) {
         this.mActivity = activity
         this.mPresenter.getVersion()
+    }
+
+    override fun onClick(v: View?) {
+        UiUtils.openAppInMarket(App.getAppContext())
     }
 
     override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {

@@ -12,6 +12,7 @@ import com.sumian.sd.app.App
 import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.main.widget.SwitchAnimationView
+import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.utils.ColorCompatUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
@@ -23,7 +24,16 @@ class MainActivity : BaseEventActivity() {
     private val mFragmentTags = arrayOf(HwMainFragment::class.java.name, SdMainFragment::class.java.name)
     private var mLaunchTabName: String? = TAB_HW_0
     private var mLaunchTabData: String? = null
-    private val mDarkPrimaryColor: Int by lazy { ColorCompatUtil.getColor(this, R.color.hw_colorPrimary) }
+
+    private val mDarkPrimaryColor: Int by lazy {
+        ColorCompatUtil.getColor(this, R.color.hw_colorPrimary)
+    }
+
+    var mIsBlackTheme = true
+
+    private val mVersionDelegate: VersionDelegate  by lazy {
+        VersionDelegate.init()
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -88,6 +98,11 @@ class MainActivity : BaseEventActivity() {
         mLaunchTabName = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        mVersionDelegate.checkVersion(this)
+    }
+
     override fun openEventBus(): Boolean {
         return true
     }
@@ -111,6 +126,7 @@ class MainActivity : BaseEventActivity() {
     }
 
     private fun showFragmentByPosition(position: Int) {
+        this.mIsBlackTheme = (position == mFragmentPositionHw)
         FragmentUtil.switchFragment(R.id.main_fragment_container, supportFragmentManager!!, mFragmentTags, position,
                 object : FragmentUtil.FragmentCreator {
                     override fun createFragmentByPosition(position: Int): Fragment {
