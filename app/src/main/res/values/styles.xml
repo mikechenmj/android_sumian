@@ -129,6 +129,8 @@
         <item name="android:textColor">@color/sel_btn_text</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:paddingStart">@dimen/space_20</item>
+        <item name="android:paddingEnd">@dimen/space_20</item>
     </style>
 
     <style name="HwButton" parent="SumianButton">
@@ -296,15 +298,21 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical|end</item>
         <item name="android:contentDescription">false</item>
-        <item name="android:padding">@dimen/space_10</item>
+        <item name="android:paddingStart">@dimen/space_10</item>
+        <item name="android:paddingTop">@dimen/space_10</item>
+        <item name="android:paddingBottom">@dimen/space_10</item>
         <item name="android:src">@drawable/ic_et_error</item>
         <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="HwEditTextClearIv" parent="EditTextClearIv">
+        <item name="android:src">@drawable/login_icon_error_black</item>
     </style>
 
     <style name="HwEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/space_48</item>
-        <item name="android:background">@drawable/hw_et_bg</item>
+        <item name="android:background">@drawable/hw_et_bg_sel</item>
         <item name="android:textColor">@color/hw_tv_normal</item>
         <item name="android:textColorHint">@color/hw_tv_normal</item>
         <item name="android:textSize">@dimen/font_16</item>

@@ -941,11 +941,8 @@
     <string name="register">注册</string>
     <string name="captcha_login">验证码登录</string>
     <string name="password_login">密码登录</string>
-    <string name="captcha_already_sent">验证码已发送%ds</string>
+    <string name="captcha_already_sent">已发送%ds</string>
     <string name="validate_cellphone">验证手机</string>
-    <string name="password_length_invalidate">密码长度需在%1$d-%2$d位之间</string>
-    <string name="phone_number_invalid">电话号码不合法</string>
-    <string name="captcha_invalidate">验证码长度不合法</string>
     <string name="please_set_password">请设置密码</string>
     <string name="repeat_password">再次输入密码</string>
     <string name="register_with_space_inside">注 册</string>
@@ -954,5 +951,12 @@
     <string name="validate_phone_number">验证手机</string>
     <string name="captcha_send_success">验证码发送成功</string>
     <string name="login_cancel">登录取消</string>
+    <string name="phone_number_invalid_toast">手机格式有误，请重新输入</string>
+    <string name="captcha_invalid_toast">验证码错误，请重新输入</string>
+    <string name="password_invalid_toast">请输入%d～%d位密码</string>
+    <string name="password_not_the_same">密码输入不一致</string>
+    <string name="phone_number_validation_regex">1([0-9]{10})</string>
+    <string name="captcha_validation_regex">\\d{6}</string>
+    <string name="password_validation_regex">.{6,16}</string>
     <!-- Hw end-->
 </resources>

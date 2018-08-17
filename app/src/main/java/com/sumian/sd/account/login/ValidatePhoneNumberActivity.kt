@@ -55,13 +55,25 @@ class ValidatePhoneNumberActivity : BasePresenterActivity<ValidatePhoneNumberCon
     override fun initWidget() {
         super.initWidget()
         tv_send_captcha.setOnClickListener {
-            val mobile = et_mobile.text.toString()
+            val mobile = et_mobile.getValidText()
+            if (mobile == null) {
+                InputCheckUtil.toastPhoneNumberInvalidate()
+                return@setOnClickListener
+            }
             mPresenter!!.requestCaptcha(mobile)
             onRequestCaptchaSuccess()
         }
         btn_next.setOnClickListener {
-            val mobile = et_mobile.text.toString()
-            val captcha = et_captcha.text.toString()
+            val mobile = et_mobile.getValidText()
+            val captcha = et_captcha.getValidText()
+            if (mobile == null) {
+                InputCheckUtil.toastPhoneNumberInvalidate()
+                return@setOnClickListener
+            }
+            if (captcha == null) {
+                InputCheckUtil.toastCaptchaInvalidate()
+                return@setOnClickListener
+            }
             when (mLaunchType) {
                 LAUNCH_TYPE_BIND_SOCIAL -> mPresenter!!.bindMobile(mobile, captcha, mSocialInfo!!)
                 LAUNCH_TYPE_REGISTER -> mPresenter!!.validatePhoneNumberForRegister(mobile, captcha)

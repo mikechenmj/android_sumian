@@ -236,4 +236,25 @@
         <attr name="cdtv_count_down_text" format="reference" />
         <attr name="cdtv_count_down_time" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="HwSettingItemView">
+        <attr name="hw_siv_icon" format="reference" />
+        <attr name="hw_siv_label" format="string|reference" />
+        <attr name="hw_siv_content" format="string|reference" />
+        <attr name="hw_siv_show_arrow" format="boolean" />
+        <attr name="hw_siv_show_red_dot" format="boolean" />
+        <attr name="hw_siv_show_bottom_line" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SumianEditText">
+        <attr name="set_hint" format="string|reference" />
+        <attr name="set_text" format="string|reference" />
+        <attr name="set_validation_regex" format="string|reference" />
+        <attr name="set_show_bg" format="boolean|reference" />
+        <attr name="set_input_type" format="enum">
+            <enum name="text" value="0" />
+            <enum name="number" value="1" />
+            <enum name="textPassword" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>
