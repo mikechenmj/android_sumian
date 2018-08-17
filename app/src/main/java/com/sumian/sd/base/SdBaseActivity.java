@@ -95,17 +95,17 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
      * @param color    状态栏颜色值
      */
     public static void setColor(Activity activity, int color) {
-        // 设置状态栏透明
-        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        // 生成一个状态栏大小的矩形
-        View statusView = createStatusView(activity, color);
-        // 添加 statusView 到布局中
-        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-        decorView.addView(statusView);
-        // 设置根布局的参数
-        ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-        rootView.setFitsSystemWindows(true);
-        rootView.setClipToPadding(true);
+//        // 设置状态栏透明
+//        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        // 生成一个状态栏大小的矩形
+//        View statusView = createStatusView(activity, color);
+//        // 添加 statusView 到布局中
+//        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+//        decorView.addView(statusView);
+//        // 设置根布局的参数
+//        ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+//        rootView.setFitsSystemWindows(true);
+//        rootView.setClipToPadding(true);
     }
 
     /**
@@ -193,8 +193,8 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
     }
 
     public void setStatusBar() {
-        StatusBarUtil.setTransparent(this);
-        StatusBarUtil.setTranslucent(this, 0);
+//        StatusBarUtil.setTransparent(this);
+//        StatusBarUtil.setTranslucent(this, 0);
     }
 
     protected boolean initBundle(Bundle bundle) {

@@ -538,13 +538,16 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".account.login.LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name=".account.login.ValidatePhoneNumberActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name=".account.login.SetPasswordActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/HwAppTheme" />
         <activity
             android:name=".h5.HwSimpleWebActivity"
             android:theme="@style/HwAppTheme" />
