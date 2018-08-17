@@ -5,11 +5,11 @@ import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.improve.main.HwWelcomeActivity;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.Token;
+import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.account.userProfile.activity.ImproveUserProfileOneActivity;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
@@ -50,7 +50,7 @@ public class SdWelcomeActivity extends SdBaseActivity {
     public void onToken(Token token) {
         mRoot.postDelayed(() -> {
             if (token == null) {
-                ActivityUtils.startActivity(HwLoginActivity.class);
+                ActivityUtils.startActivity(LoginActivity.class);
             } else if (token.is_new) {
                 ImproveUserProfileOneActivity.show(SdWelcomeActivity.this, ImproveUserProfileOneActivity.class);
             } else {

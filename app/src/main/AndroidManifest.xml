@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 基础模块 END -->
 
+
     <!-- Hw start -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
@@ -84,13 +85,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".account.login.LoginActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".account.userProfile.activity.ImproveUserProfileOneActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
@@ -135,19 +129,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name=".account.bindMobile.BindMobileActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <activity
             android:name=".doctor.activity.ScanDoctorQrCodeActivity"
             android:launchMode="singleTop"
             android:theme="@style/Scan_qr_theme" />
 
-        <!-- third  login -->
+        <!-- third  loginByCaptcha -->
         <activity
             android:name="com.sumian.sd.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -159,9 +147,7 @@
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- WeChat -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- WeChat -->
         <activity-alias
             android:name="${applicationId}.wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -372,31 +358,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.account.activity.HwLoginActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.account.activity.RegisterActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.account.activity.LoginRouterActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name="com.sumian.hw.tab.report.activity.DaySleepDetailReportActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -457,23 +418,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.account.activity.ForgetPwdActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
             android:name="com.sumian.hw.account.activity.ModifyNicknameActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.account.activity.SleepReminderActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -498,13 +445,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.account.activity.OpenBindActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name="com.sumian.hw.account.activity.AvatarImageActivity"
@@ -600,6 +540,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".account.login.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".account.login.ValidatePhoneNumberActivity"
+            android:exported="true" />
+        <activity
+            android:name=".account.login.SetPasswordActivity"
+            android:exported="true" />
+        <activity
+            android:name=".h5.HwSimpleWebActivity"
+            android:theme="@style/HwAppTheme" />
 
         <activity
             android:name=".tel.activity.TelBookingPublishActivity"

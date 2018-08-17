@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.doctor.bean.Doctor;
@@ -46,9 +47,7 @@ public class UserInfo implements Parcelable, Cloneable {
     public Doctor doctor;//绑定的医生信息
     public int role; // add by zxz for passing compile
     public Answers answers;
-
-    public UserInfo() {
-    }
+    @SerializedName("set_password") public boolean hasPassword;
 
     protected UserInfo(Parcel in) {
         id = in.readInt();
@@ -81,6 +80,7 @@ public class UserInfo implements Parcelable, Cloneable {
         socialites = in.createTypedArrayList(Social.CREATOR);
         doctor = in.readParcelable(Doctor.class.getClassLoader());
         role = in.readInt();
+        hasPassword = in.readByte() != 0;
     }
 
     public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {

@@ -28,8 +28,7 @@ public class ManualActivity extends SdBaseWebViewActivity implements TitleBar.On
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setBgColor(getResources().getColor(R.color.hw_colorPrimary));
-        mTitleBar.setTextColor(getResources().getColor(R.color.bt_hole_color));
+        mTitleBar.setIsDarkTheme(true);
     }
 
     @Override

@@ -12,7 +12,6 @@ import com.sumian.hw.account.contract.UserInfoContract;
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.reminder.ReminderManager;
 import com.sumian.hw.setting.activity.HwSettingActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.R;
@@ -123,7 +122,6 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
             String nickname = userInfo.nickname;
             mTvNickname.setText(TextUtils.isEmpty(nickname) ? userInfo.mobile : nickname);
         });
-        ReminderManager.getReminder();
     }
 
     @Override

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hw_colorPrimary"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_padding"
+    android:paddingRight="@dimen/activity_horizontal_padding">
+
+    <TextView
+        style="@style/text_t3_style"
+        android:layout_marginTop="@dimen/space_80"
+        android:text="@string/hello_comment"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_30" />
+
+    <TextView
+        style="@style/hw_text_normal"
+        android:layout_marginTop="@dimen/space_10"
+        android:text="@string/welcome_use_this_app_please_login" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
+        android:layout_marginBottom="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_90">
+
+        <EditText
+            android:id="@+id/et_phone"
+            style="@style/HwEditText"
+            android:hint="@string/input_phone_hint"
+            android:inputType="numberDecimal" />
+
+        <ImageView
+            android:id="@+id/iv_phone_clear"
+            style="@style/EditTextClearIv"
+            android:contentDescription="@null" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_password_et_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
+        android:background="@drawable/hw_et_bg"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        tools:visibility="visible">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_48"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/et_password"
+                style="@style/HwEditText"
+                android:background="@null"
+                android:hint="@string/input_password_hint"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/iv_password_clear"
+                style="@style/EditTextClearIv"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <View
+            style="@style/HwVerticalDividerLine"
+            android:layout_height="@dimen/space_12"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_forget_password"
+            style="@style/hw_text_normal"
+            android:layout_height="@dimen/space_48"
+            android:layout_marginStart="@dimen/space_10"
+            android:gravity="center_vertical"
+            android:text="@string/forget_password_question" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_captcha"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_48"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/et_captcha"
+                style="@style/HwEditText"
+                android:layout_width="match_parent"
+                android:hint="@string/input_captcha_hint"
+                android:inputType="numberDecimal" />
+
+            <ImageView
+                android:id="@+id/iv_captcha_clear"
+                style="@style/EditTextClearIv"
+                android:contentDescription="@null" />
+        </FrameLayout>
+
+        <com.sumian.sd.widget.CountDownTextView
+            android:id="@+id/tv_send_captcha"
+            style="@style/HwButton"
+            android:layout_width="@dimen/space_110"
+            app:cdtv_count_down_text="@string/captcha_already_sent"
+            app:cdtv_count_down_time="30"
+            app:cdtv_normal_text="@string/send_captcha" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bt_login"
+        style="@style/HwButton"
+        android:layout_marginTop="@dimen/space_40"
+        android:text="@string/login_with_space_inside" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
+        android:layout_marginTop="@dimen/space_10"
+        android:gravity="center_vertical|start"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/iv_user_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:paddingBottom="@dimen/space_10"
+            android:paddingEnd="@dimen/space_10"
+            android:paddingTop="@dimen/space_10"
+            android:src="@drawable/sel_login_check"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tv_user_agreement"
+            style="@style/WrapContent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="@string/app_user_agreement"
+            android:textColor="@color/b3_color"
+            android:textSize="13sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            style="@style/WrapContent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="@string/register"
+            android:textColor="@color/b3_color"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_wechat_login"
+            style="@style/text_t2_14"
+            android:layout_width="120dp"
+            android:gravity="end"
+            android:padding="@dimen/space_20"
+            android:text="@string/wechat_login" />
+
+        <View
+            style="@style/HwVerticalDividerLine"
+            android:layout_height="@dimen/space_12" />
+
+        <TextView
+            android:id="@+id/tv_captcha_login"
+            style="@style/text_t2_14"
+            android:layout_width="120dp"
+            android:gravity="start"
+            android:padding="@dimen/space_20"
+            android:text="@string/captcha_login" />
+
+        <TextView
+            android:id="@+id/tv_password_login"
+            style="@style/text_t2_14"
+            android:layout_width="120dp"
+            android:gravity="start"
+            android:padding="@dimen/space_20"
+            android:text="@string/password_login"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

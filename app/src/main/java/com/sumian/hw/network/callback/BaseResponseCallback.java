@@ -3,9 +3,9 @@ package com.sumian.hw.network.callback;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.sumian.hw.account.activity.HwLoginActivity;
 import com.sumian.hw.network.response.ErrorResponse;
 import com.sumian.sd.R;
+import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.App;
 import com.sumian.sd.utils.JsonUtil;
 
@@ -57,7 +57,7 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
     }
 
     protected void onUnauthorized() {
-        ActivityUtils.startActivity(HwLoginActivity.class);
+        ActivityUtils.startActivity(LoginActivity.class);
     }
 
     private void errorUnknown() {

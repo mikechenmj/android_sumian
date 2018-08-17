@@ -94,19 +94,20 @@
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
-    <style name="text_grey_blue" parent="BaseText">
-        <item name="android:textColor">@color/general_color</item>
+    <style name="hw_text_normal" parent="BaseText">
+        <item name="android:textColor">@color/hw_tv_normal</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="text_grey_blue_14" parent="text_grey_blue">
+    <style name="hw_text_grey_14" parent="hw_text_normal">
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
-    <style name="text_grey_blue_16" parent="text_grey_blue">
+    <style name="hw_text_grey_16" parent="hw_text_normal">
         <item name="android:textSize">@dimen/font_16</item>
     </style>
 
-    <style name="text_grey_blue_18" parent="text_grey_blue">
+    <style name="hw_text_grey_18" parent="hw_text_normal">
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
@@ -128,6 +129,10 @@
         <item name="android:textColor">@color/sel_btn_text</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="HwButton" parent="SumianButton">
+        <item name="android:background">@drawable/hw_bg_bt</item>
     </style>
 
     <style name="text_lesson_style" parent="@style/text_b2_14">
@@ -274,38 +279,6 @@
         <item name="android:windowBackground">@color/dialog_bg_color</item>
     </style>
 
-
-    <!-- Base application theme. -->
-    <style name="HwAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/hw_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/hw_colorPrimary</item>
-        <item name="colorAccent">@color/hw_colorPrimary</item>
-        <item name="android:textColor">@color/general_color</item>
-        <item name="android:textSize">@dimen/font_16</item>
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:selectableItemBackground">@drawable/bg_material_ripple</item>
-        <item name="android:state_pressed">@drawable/bg_material_ripple</item>
-        <item name="android:animateOnClick">@drawable/bg_material_ripple</item>
-        <item name="android:windowOverscan">true</item>
-        <item name="android:outlineProvider">@null</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:launchMode">singleTop</item>
-        <item name="android:screenOrientation">portrait</item>
-        <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
-        <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
-        <item name="android:textCursorDrawable">@drawable/bg_cursor</item>
-        <!--<item name="android:windowBackground">@color/transparent</item>-->
-        <item name="android:windowBackground">@color/hw_colorPrimary</item>
-        <!--<item name="android:windowAnimationStyle">@style/default_animation</item>-->
-        <!--<item name="android:windowIsTranslucent">true</item>-->
-    </style>
-
-    <style name="TranslucentWindow" parent="HwAppTheme">
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
-
     <style name="TabTextAppearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/font_16</item>
         <item name="textAllCaps">true</item>
@@ -354,5 +327,33 @@
 
     <style name="MainTab" parent="HorizontalWeight">
         <item name="android:layout_height">@dimen/space_48</item>
+    </style>
+
+    <style name="SumianEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:background">@drawable/sel_et_bg</item>
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textColor">@color/t1_color</item>
+        <item name="android:drawableEnd">@drawable/sel_et_drawable_end</item>
+    </style>
+
+    <style name="EditTextClearIv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="android:contentDescription">false</item>
+        <item name="android:padding">@dimen/space_10</item>
+        <item name="android:src">@drawable/ic_et_error</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="HwEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:background">@drawable/hw_et_bg</item>
+        <item name="android:textColor">@color/hw_tv_normal</item>
+        <item name="android:textColorHint">@color/hw_tv_normal</item>
+        <item name="android:textSize">@dimen/font_16</item>
     </style>
 </resources>

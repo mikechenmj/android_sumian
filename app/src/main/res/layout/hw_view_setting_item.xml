@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/tv_label"
-            style="@style/text_grey_blue_16"
+            style="@style/hw_text_grey_16"
             tools:text="版本升级" />
 
         <ImageView
@@ -42,7 +42,7 @@
 
         <TextView
             android:id="@+id/tv_content"
-            style="@style/text_grey_blue_16"
+            style="@style/hw_text_grey_16"
             android:layout_marginEnd="@dimen/space_20"
             tools:ignore="RelativeOverlap"
             tools:text="content content" />

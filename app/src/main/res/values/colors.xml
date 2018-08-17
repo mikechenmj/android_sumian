@@ -109,6 +109,7 @@
     <color name="white">#ffffffff</color>
     <color name="empty_msg_color">#FF798FB6</color>
     <color name="alpha_general_color">#cc7d8fb3</color>
+    <color name="hw_tv_normal">#7A8599</color>
 
     <!--indicator color-->
     <color name="sleepy_working_start_color">#FF49A811</color>

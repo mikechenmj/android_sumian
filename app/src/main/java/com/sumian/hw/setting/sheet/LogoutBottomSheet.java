@@ -3,14 +3,15 @@ package com.sumian.hw.setting.sheet;
 import android.view.Gravity;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.setting.contract.LogoutContract;
 import com.sumian.hw.setting.presenter.LogoutPresenter;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;
+import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 
@@ -68,7 +69,7 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
 
     @Override
     public void onLogoutSuccess() {
-        LoginRouterActivity.show(getContext());
+        ActivityUtils.startActivity(LoginActivity.class);
         dismiss();
         ToastHelper.show(App.Companion.getAppContext(), App.Companion.getAppContext().getResources().getString(R.string.logout_success_hint), Gravity.CENTER);
     }

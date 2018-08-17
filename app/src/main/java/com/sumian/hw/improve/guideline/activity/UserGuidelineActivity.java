@@ -18,14 +18,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.hw.account.activity.LoginRouterActivity;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.improve.guideline.bean.Guideline;
 import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
 import com.sumian.hw.improve.widget.GuidelineIndicator;
 import com.sumian.hw.utils.AppUtil;
 import com.sumian.sd.R;
+import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.AppManager;
 
 import java.util.ArrayList;
@@ -214,7 +215,7 @@ public class UserGuidelineActivity extends HwBaseActivity {
             if (login) {
                 AppUtil.launchMain();
             } else {
-                LoginRouterActivity.show(UserGuidelineActivity.this);
+                ActivityUtils.startActivity(LoginActivity.class);
             }
             finish();
         }

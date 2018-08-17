@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.account.contract.ResetPwdContract;
 import com.sumian.hw.account.presenter.RestPwdPresenter;
@@ -19,6 +20,7 @@ import com.sumian.hw.network.request.ResetPwdBody;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;
+import com.sumian.sd.account.login.LoginActivity;
 
 /**
  * Created by jzz
@@ -149,7 +151,7 @@ public class ResetPwdActivity extends HwBaseActivity implements View.OnClickList
     public void onResetPwdSuccess() {
         runUiThread(() -> {
             ToastHelper.show(R.string.set_pwd_success_hint);
-            HwLoginActivity.show(this);
+            ActivityUtils.startActivity(LoginActivity.class);
             finish();
         });
     }

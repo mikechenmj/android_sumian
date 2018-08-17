@@ -43,7 +43,19 @@ interface DoctorApi {
 
     @FormUrlEncoded
     @POST("authorizations")
-    fun login(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+    fun loginByCaptcha(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+
+    @FormUrlEncoded
+    @POST("authorizations/registration-validation")
+    fun validateCaptchaForRegister(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+
+    @FormUrlEncoded
+    @POST("authorizations/retrieve-validation")
+    fun validateCaptchaForResetPassword(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+
+    @FormUrlEncoded
+    @POST("authorizations/password")
+    fun loginByPassword(@Field("mobile") mobile: String, @Field("password") password: String): Call<Token>
 
     @DELETE("authorizations/current")
     fun logout(@Query("device_token") deviceToken: String): Call<Unit>
@@ -57,7 +69,7 @@ interface DoctorApi {
 
     @FormUrlEncoded
     @POST("authorizations/socialite-bound")
-    fun loginOpenPlatform(@FieldMap map: MutableMap<String, Any>): Call<Token>
+    fun loginOpenPlatform(@FieldMap map: MutableMap<String, Any?>): Call<Token>
 
     @FormUrlEncoded
     @POST("authorizations/socialite-bind")
@@ -66,6 +78,10 @@ interface DoctorApi {
     @FormUrlEncoded
     @PATCH("user/profile")
     fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserInfo>
+
+    @FormUrlEncoded
+    @PATCH("user/password")
+    fun modifyPassword(@Field("password") password: String, @Field("password_confirmation") passwordConfirm: String): Call<Token>
 
     @PATCH("user/avatar")
     fun uploadAvatar(): Call<OssResponse>
@@ -127,7 +143,7 @@ interface DoctorApi {
      * 服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
      */
     @GET("service")
-    fun getServiceByType(@Query("type")type:Int): Call<DoctorService>
+    fun getServiceByType(@Query("type") type: Int): Call<DoctorService>
 
     @GET("services/{id}")
     fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>
