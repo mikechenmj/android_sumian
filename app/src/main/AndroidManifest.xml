@@ -526,6 +526,7 @@
 
         <activity
             android:name=".main.MainActivity"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

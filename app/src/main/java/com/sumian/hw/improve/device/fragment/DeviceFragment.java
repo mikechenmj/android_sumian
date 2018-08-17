@@ -38,6 +38,7 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.OnEnterListener;
+import com.sumian.sd.utils.ColorCompatUtil;
 
 import java.util.List;
 
@@ -102,10 +103,6 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
 
     @Override
     protected void initWidget(View root) {
-        Window window = getActivity().getWindow();
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.TRANSPARENT);
         super.initWidget(root);
 
         mDeviceGuideStepView = root.findViewById(R.id.device_guide_step_view);
@@ -345,7 +342,7 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
         dividerOne.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
         dividerTwo.setVisibility(tvTurnMonitorAndSynchronizeVisibility);
         tvTurnMonitor.setText(monitor.isMonitoring ? R.string.turn_off_snoop_mode : R.string.turn_on_snoop_mode);
-        tvTurnMonitor.setTextColor(getResources().getColor(monitor.isMonitoring ? R.color.dot_red_color : R.color.bt_hole_color));
+        tvTurnMonitor.setTextColor(ColorCompatUtil.Companion.getColor(getActivity(), monitor.isMonitoring ? R.color.dot_red_color : R.color.bt_hole_color));
         tvTurnMonitor.setOnClickListener(v -> {
             int monitoringMode = monitor.isMonitoring ? BlueDevice.MONITORING_CMD_CLOSE : BlueDevice.MONITORING_CMD_OPEN;
             mPresenter.turnOnMonitoringMode(monitoringMode);
