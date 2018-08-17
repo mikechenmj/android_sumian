@@ -1,10 +1,10 @@
 package com.sumian.sd.widget.dialog
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatDialog
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.lay_dialog_common_sumian.*
  *     version: 1.0
  * </pre>
  */
-class SumianImageTextDialog(context: Context) : Dialog(context, R.style.SumianLoadingDialog_NotDim) {
+class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style.SumianLoadingDialog_NotDim) {
     private val mContext = context
     private val mHandler = Handler()
     private var mType = TYPE_TEXT

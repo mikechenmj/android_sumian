@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.sumian.sd.R;
 import com.sumian.hw.widget.BaseDialogFragment;
+import com.sumian.sd.R;
 
 import java.util.Locale;
 
@@ -18,8 +18,6 @@ import java.util.Locale;
  */
 
 public class VersionDialog extends BaseDialogFragment {
-
-    private static final String TAG = VersionDialog.class.getSimpleName();
 
     TextView mTvFirmwareTitle;
     TextView mTvProgress;

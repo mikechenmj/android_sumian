@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v7.app.AppCompatDialog;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
+import com.sumian.sd.widget.dialog.theme.BlackTheme;
+import com.sumian.sd.widget.dialog.theme.ITheme;
+import com.sumian.sd.widget.dialog.theme.LightTheme;
+import com.sumian.sd.widget.dialog.theme.ThemeFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,68 +33,145 @@ import butterknife.OnClick;
  *     time   : 2018/5/25 9:18
  *     desc   :
  *     version: 1.0
+ *
+ *     updated by jzz
+ *
+ *     on 2018/08/17
+ *
+ *     desc:加入黑白主题
  * </pre>
  */
 public class SumianAlertDialog {
 
     private final Context mContext;
+
     private final Dialog mDialog;
-    @BindView(R.id.iv_top)
-    ImageView mIvTop;
+
+    @BindView(R.id.card_view)
+    CardView mCardView;
+
     @BindView(R.id.iv_close)
     ImageView mIvClose;
+
+    @BindView(R.id.iv_top)
+    ImageView mIvTop;
+
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+
     @BindView(R.id.tv_message)
     TextView mTvMessage;
+
     @BindView(R.id.btn_left)
     Button mBtnLeft;
+
     @BindView(R.id.btn_right)
     Button mBtnRight;
+
+
     private boolean mIsCloseBtnVisible;
-    private int mIconRes;
-    private int mTitleRes;
-    private int mLeftBtnTextRes;
+
     private View.OnClickListener mLeftBtnClickListener;
-    private int mRightBtnTextRes;
     private View.OnClickListener mRightBtnClickListener;
+
     private boolean mWhitenLeft;
     private boolean mWhitenRight;
+
+    private ITheme mITheme;
+
+    private int mBgColorRes;
+
+    private int mDismissRes;
+
+    private int mIconRes;
+
+    private int mTitleFontColor;
+    private int mTitleRes;
+
+
+    private int mMessageFontColorRes;
     private String mMessage;
+
+    private int mLeftBgRes;
+    private int mLeftFontColorRes;
+    private int mLeftBtnTextRes;
+
+    private int mRightBgRes;
+    private int mRightFontColorRes;
+    private int mRightBtnTextRes;
+
 
     public SumianAlertDialog(Context context) {
         mContext = context;
-        mDialog = new Dialog(context, R.style.SumianDialog);
+        mITheme = ThemeFactory.create(LightTheme.class);
+        mDialog = new AppCompatDialog(context, R.style.SumianDialog);
         @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.lay_alert_dialog, null, false);
         ButterKnife.bind(this, inflate);
         mDialog.setContentView(inflate);
     }
 
+    public SumianAlertDialog setTheme(ITheme iTheme) {
+        this.mITheme = iTheme;
+        return this;
+    }
+
     private void updateView() {
+        if (mITheme instanceof LightTheme) {
+            LightTheme lightTheme = (LightTheme) mITheme;
+
+            setupTheme(lightTheme.getBgColorRes(), lightTheme.getDismissImageRes(),
+                    lightTheme.getNoticeImageRes(), lightTheme.getTitleColorRes(),
+                    lightTheme.getMessageColorRes(), lightTheme.getLeftButtonBgRes(),
+                    lightTheme.getLeftButtonFontColorRes(), lightTheme.getRightButtonBgRes(), lightTheme.getRightButtonFontColorRes());
+        } else if (mITheme instanceof BlackTheme) {
+            BlackTheme blackTheme = (BlackTheme) mITheme;
+
+            setupTheme(blackTheme.getBgColorRes(), blackTheme.getDismissImageRes(),
+                    blackTheme.getNoticeImageRes(), blackTheme.getTitleColorRes(),
+                    blackTheme.getMessageColorRes(), blackTheme.getLeftButtonBgRes(),
+                    blackTheme.getLeftButtonFontColorRes(), blackTheme.getRightButtonBgRes(), blackTheme.getRightButtonFontColorRes());
+        }
+
+        mCardView.setCardBackgroundColor(mContext.getResources().getColor(mBgColorRes));
+
+        mIvClose.setImageResource(mDismissRes);
         mIvClose.setVisibility(mIsCloseBtnVisible ? View.VISIBLE : View.GONE);
+
         mIvTop.setVisibility(mIconRes == 0 ? View.GONE : View.VISIBLE);
         mIvTop.setImageResource(mIconRes);
+
         mTvTitle.setVisibility(mTitleRes == 0 ? View.GONE : View.VISIBLE);
         if (mTitleRes != 0) {
             mTvTitle.setText(mTitleRes);
         }
+        mTvTitle.setTextColor(getColor(mTitleFontColor));
+
         mTvMessage.setVisibility(TextUtils.isEmpty(mMessage) ? View.GONE : View.VISIBLE);
         mTvMessage.setText(mMessage);
+        mTvMessage.setTextColor(getColor(mMessageFontColorRes));
+
         mBtnLeft.setVisibility(mLeftBtnTextRes == 0 ? View.GONE : View.VISIBLE);
         if (mLeftBtnTextRes != 0) {
             mBtnLeft.setText(mLeftBtnTextRes);
         }
+        mBtnLeft.setTextColor(getColor(mLeftFontColorRes));
+        mBtnLeft.setBackgroundResource(mLeftBgRes);
+
         mBtnRight.setVisibility(mRightBtnTextRes == 0 ? View.GONE : View.VISIBLE);
         if (mRightBtnTextRes != 0) {
             mBtnRight.setText(mRightBtnTextRes);
         }
+        mBtnRight.setTextColor(getColor(mRightFontColorRes));
+        mBtnRight.setBackgroundResource(mRightBgRes);
+
         if (mWhitenLeft) {
             mBtnLeft.setBackgroundResource(R.drawable.bg_btn_white);
-            mBtnLeft.setTextColor(mContext.getResources().getColor(R.color.t5_color));
+            mBtnLeft.setTextColor(getColor(R.color.t5_color));
         }
+
         if (mWhitenRight) {
             mBtnRight.setBackgroundResource(R.drawable.bg_btn_white);
-            mBtnRight.setTextColor(mContext.getResources().getColor(R.color.t5_color));
+            mBtnRight.setTextColor(getColor(R.color.t5_color));
         }
     }
 
@@ -174,5 +258,28 @@ public class SumianAlertDialog {
     public SumianAlertDialog whitenRight() {
         mWhitenRight = true;
         return this;
+    }
+
+    private int getColor(@ColorRes int colorRes) {
+        return mContext.getResources().getColor(colorRes);
+    }
+
+    private void setupTheme(int bgColor, int dismissImageResource, int noticeImageResource, int titleColor,
+                            int messageColor, int leftButtonBg, int leftButtonFontColor, int rightButtonBg,
+                            int rightButtonFontColor) {
+
+        this.mBgColorRes = bgColor;
+
+        this.mDismissRes = dismissImageResource;
+        this.mIconRes = noticeImageResource;
+
+        this.mTitleFontColor = titleColor;
+        this.mMessageFontColorRes = messageColor;
+
+        this.mLeftBgRes = leftButtonBg;
+        this.mLeftFontColorRes = leftButtonFontColor;
+
+        this.mRightBgRes = rightButtonBg;
+        this.mRightFontColorRes = rightButtonFontColor;
     }
 }
