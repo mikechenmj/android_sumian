@@ -18,12 +18,7 @@ class ValidatePhoneNumberActivity : BasePresenterActivity<ValidatePhoneNumberCon
         const val KEY_SOCIAL_INFO = "KEY_SOCIAL_INFO"
         const val KEY_LAUNCH_TYPE = "KEY_LAUNCH_TYPE"
         const val LAUNCH_TYPE_BIND_SOCIAL = 1
-        const val LAUNCH_TYPE_REGISTER = 2
-        const val LAUNCH_TYPE_FORGET_PASSWORD = 3
-
-        fun launchForRegister() {
-            launch(LAUNCH_TYPE_REGISTER, null)
-        }
+        const val LAUNCH_TYPE_FORGET_PASSWORD = 2
 
         fun launchForForgetPassword() {
             launch(LAUNCH_TYPE_FORGET_PASSWORD, null)
@@ -76,7 +71,6 @@ class ValidatePhoneNumberActivity : BasePresenterActivity<ValidatePhoneNumberCon
             }
             when (mLaunchType) {
                 LAUNCH_TYPE_BIND_SOCIAL -> mPresenter!!.bindMobile(mobile, captcha, mSocialInfo!!)
-                LAUNCH_TYPE_REGISTER -> mPresenter!!.validatePhoneNumberForRegister(mobile, captcha)
                 LAUNCH_TYPE_FORGET_PASSWORD -> mPresenter!!.validatePhoneNumberForResetPassword(mobile, captcha)
             }
         }

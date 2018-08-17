@@ -1,9 +1,7 @@
 package com.sumian.hw.account.activity;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,7 +19,6 @@ import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
 import com.sumian.sd.R;
-import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
 
@@ -87,16 +84,14 @@ public class UserInfoActivity extends HwBaseActivity implements TitleBar.OnBackL
         UserInfoPresenter.init(this);
         mTitleBar.addOnBackListener(this);
         mBlueRefreshView.setOnRefreshListener(this);
-
+        mBlueRefreshView.setEnabled(false);
     }
 
     @Override
     protected void initData() {
         super.initData();
-//        this.mPresenter.doLoadCacheUserInfo();
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, new Observer<Token>() {
-            @Override
-            public void onChanged(@Nullable Token token) {
+        AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
+            if (token != null) {
                 updateUserInfoUI(token.user);
             }
         });

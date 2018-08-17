@@ -2,6 +2,7 @@ package com.sumian.sd.account.login
 
 import com.sumian.common.mvp.BaseShowLoadingView
 import com.sumian.common.mvp.IPresenter
+import com.sumian.sd.account.bean.Token
 
 /**
  * <pre>
@@ -19,5 +20,6 @@ class SetPasswordContract {
 
     interface Presenter : IPresenter {
         fun setPassword(password: String)
+        fun setPassword(token: Token, password: String)
     }
 }

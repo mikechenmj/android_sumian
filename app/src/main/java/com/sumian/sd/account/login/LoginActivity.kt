@@ -31,6 +31,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         tv_send_captcha.setOnClickListener {
             val number = getPhoneNumberWithCheck()
             if (number != null) {
+                onRequestCaptchaSuccess()
                 mPresenter!!.requestCaptcha(number)
             }
         }

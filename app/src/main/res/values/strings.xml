@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--<string name="app_name">Sleep_Doctor</string>-->
 
     <!--main tab-->
@@ -955,8 +955,9 @@
     <string name="captcha_invalid_toast">验证码错误，请重新输入</string>
     <string name="password_invalid_toast">请输入%d～%d位密码</string>
     <string name="password_not_the_same">密码输入不一致</string>
-    <string name="phone_number_validation_regex">1([0-9]{10})</string>
+    <string name="phone_number_validation_regex" tools:ignore="TypographyDashes">1([0-9]{10})</string>
     <string name="captcha_validation_regex">\\d{6}</string>
     <string name="password_validation_regex">.{6,16}</string>
+    <string name="modify_success">修改成功</string>
     <!-- Hw end-->
 </resources>

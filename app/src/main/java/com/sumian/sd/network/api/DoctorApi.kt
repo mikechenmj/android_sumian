@@ -81,7 +81,15 @@ interface DoctorApi {
 
     @FormUrlEncoded
     @PATCH("user/password")
-    fun modifyPassword(@Field("password") password: String, @Field("password_confirmation") passwordConfirm: String): Call<Token>
+    fun modifyPassword(@Field("old_password") oldPassword: String?, @Field("password") password: String, @Field("password_confirmation") passwordConfirm: String): Call<UserInfo>
+
+    @FormUrlEncoded
+    @PATCH("user/password")
+    fun modifyPasswordWithoutOldPassword(@Field("password") password: String, @Field("password_confirmation") passwordConfirm: String): Call<UserInfo>
+
+    @FormUrlEncoded
+    @PATCH("user/password")
+    fun modifyPasswordWithToken(@Header("Authorization") authorization: String, @Field("password") password: String, @Field("password_confirmation") passwordConfirm: String): Call<UserInfo>
 
     @PATCH("user/avatar")
     fun uploadAvatar(): Call<OssResponse>

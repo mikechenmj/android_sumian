@@ -20,7 +20,6 @@ class ValidatePhoneNumberContract {
 
     interface Presenter : IPresenter {
         fun requestCaptcha(mobile: String)
-        fun validatePhoneNumberForRegister(mobile: String, captcha: String)
         fun validatePhoneNumberForResetPassword(mobile: String, captcha: String)
         fun bindMobile(mobile: String, captcha: String, socialInfo:String)
     }

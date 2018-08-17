@@ -20,6 +20,8 @@ import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sd.R;
+import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.app.AppManager;
 
 /**
  * Created by jzz
@@ -41,6 +43,7 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
     Button mBtSave;
 
     private ModifyPwdContract.Presenter mPresenter;
+    private boolean mHasPassword;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, ModifyPwdActivity.class));
@@ -96,6 +99,12 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
                 mIvReNewPwdShow.setVisibility(s.length() > 0 ? View.VISIBLE : View.GONE);
             }
         });
+
+        UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
+        mHasPassword = userInfo.hasPassword;
+        if (!mHasPassword) {
+            findViewById(R.id.ll_old_password_container).setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -123,7 +132,7 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
             String newPwd = this.mEtNewPwd.getText().toString().trim();
             String reNewPwd = this.mEtReNewPwd.getText().toString().trim();
             mLayPwdPop.setVisibility(View.GONE);
-            if (!CheckUtils.isValidPassword(oldPwd)) {
+            if (mHasPassword && !CheckUtils.isValidPassword(oldPwd)) {
                 ToastHelper.show(R.string.pwd_error_hint);
                 return;
             }
@@ -170,8 +179,7 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
 
     @Override
     public void onModifyPwdSuccess() {
-        ToastHelper.show(R.string.setting_set_pwd_success_hint);
-        AppUtil.logoutAndLaunchLoginActivity();
+        finish();
     }
 
     @Override

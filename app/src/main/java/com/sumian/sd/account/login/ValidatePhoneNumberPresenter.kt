@@ -2,6 +2,7 @@ package com.sumian.sd.account.login
 
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.hw.utils.AppUtil
+import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
@@ -32,34 +33,13 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
         })
     }
 
-    override fun validatePhoneNumberForRegister(mobile: String, captcha: String) {
-        view.showLoading()
-        val call = AppManager.getHttpService().validateCaptchaForRegister(mobile, captcha)
-        call.enqueue(object : BaseResponseCallback<Token>() {
-
-            override fun onSuccess(response: Token?) {
-                LoginHelper.onLoginSuccess(response)
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                ToastUtils.showShort(message)
-            }
-
-            override fun onFinish() {
-                super.onFinish()
-                view.dismissLoading()
-            }
-        })
-    }
-
     override fun validatePhoneNumberForResetPassword(mobile: String, captcha: String) {
         view.showLoading()
         val call = AppManager.getHttpService().validateCaptchaForResetPassword(mobile, captcha)
         call.enqueue(object : BaseResponseCallback<Token>() {
 
             override fun onSuccess(response: Token?) {
-                LoginHelper.updateTokenAndUploadInstallationId(response)
-                SetPasswordActivity.launch()
+                SetPasswordActivity.launchForResetPassword(JsonUtil.toJson(response!!))
             }
 
             override fun onFailure(code: Int, message: String) {
