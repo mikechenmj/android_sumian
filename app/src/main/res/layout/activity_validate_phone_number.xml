@@ -14,14 +14,16 @@
         android:layout_height="wrap_content"
         app:text="@string/validate_phone_number" />
 
-    <EditText
+    <com.sumian.sd.account.login.SumianEditText
         android:id="@+id/et_mobile"
-        style="@style/HwEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/space_36"
         android:layout_marginStart="@dimen/space_36"
         android:layout_marginTop="@dimen/space_36"
-        android:hint="@string/input_phone_hint"
-        android:inputType="numberDecimal" />
+        app:set_hint="@string/input_phone_hint"
+        app:set_input_type="number"
+        app:set_validation_regex="@string/phone_number_validation_regex" />
 
     <LinearLayout
         android:id="@+id/ll_captcha"
@@ -40,12 +42,13 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1">
 
-            <EditText
+            <com.sumian.sd.account.login.SumianEditText
                 android:id="@+id/et_captcha"
-                style="@style/HwEditText"
                 android:layout_width="match_parent"
-                android:hint="@string/input_captcha_hint"
-                android:inputType="numberDecimal" />
+                android:layout_height="wrap_content"
+                app:set_hint="@string/input_captcha_hint"
+                app:set_input_type="number"
+                app:set_validation_regex="@string/captcha_validation_regex" />
 
             <ImageView
                 android:id="@+id/iv_captcha_clear"
@@ -56,9 +59,8 @@
         <com.sumian.sd.widget.CountDownTextView
             android:id="@+id/tv_send_captcha"
             style="@style/HwButton"
-            android:layout_width="@dimen/space_110"
+            android:layout_width="wrap_content"
             app:cdtv_count_down_text="@string/captcha_already_sent"
-            app:cdtv_count_down_time="30"
             app:cdtv_normal_text="@string/send_captcha" />
     </LinearLayout>
 

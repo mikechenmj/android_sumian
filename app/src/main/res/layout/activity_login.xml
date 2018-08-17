@@ -21,50 +21,34 @@
         android:layout_marginTop="@dimen/space_10"
         android:text="@string/welcome_use_this_app_please_login" />
 
-    <FrameLayout
+    <com.sumian.sd.account.login.SumianEditText
+        android:id="@+id/et_phone"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_48"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/space_20"
-        android:layout_marginTop="@dimen/space_90">
-
-        <EditText
-            android:id="@+id/et_phone"
-            style="@style/HwEditText"
-            android:hint="@string/input_phone_hint"
-            android:inputType="numberDecimal" />
-
-        <ImageView
-            android:id="@+id/iv_phone_clear"
-            style="@style/EditTextClearIv"
-            android:contentDescription="@null" />
-    </FrameLayout>
+        android:layout_marginTop="@dimen/space_90"
+        app:set_hint="@string/input_phone_hint"
+        app:set_input_type="number"
+        app:set_validation_regex="@string/phone_number_validation_regex" />
 
     <LinearLayout
         android:id="@+id/ll_password_et_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_48"
-        android:background="@drawable/hw_et_bg"
+        android:background="@drawable/hw_et_bg_sel"
         android:orientation="horizontal"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:visibility="visible">
 
-        <FrameLayout
+        <com.sumian.sd.account.login.SumianEditText
+            android:id="@+id/et_password"
             android:layout_width="0dp"
-            android:layout_height="@dimen/space_48"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/et_password"
-                style="@style/HwEditText"
-                android:background="@null"
-                android:hint="@string/input_password_hint"
-                android:inputType="textPassword" />
-
-            <ImageView
-                android:id="@+id/iv_password_clear"
-                style="@style/EditTextClearIv"
-                android:contentDescription="@null" />
-        </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:set_hint="@string/input_password_hint"
+            app:set_input_type="textPassword"
+            app:set_show_bg="false"
+            app:set_validation_regex="@string/password_validation_regex" />
 
         <View
             style="@style/HwVerticalDividerLine"
@@ -86,34 +70,24 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_48"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:visibility="visible">
 
-        <FrameLayout
+        <com.sumian.sd.account.login.SumianEditText
+            android:id="@+id/et_captcha"
             android:layout_width="0dp"
-            android:layout_height="@dimen/space_48"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/et_captcha"
-                style="@style/HwEditText"
-                android:layout_width="match_parent"
-                android:hint="@string/input_captcha_hint"
-                android:inputType="numberDecimal" />
-
-            <ImageView
-                android:id="@+id/iv_captcha_clear"
-                style="@style/EditTextClearIv"
-                android:contentDescription="@null" />
-        </FrameLayout>
+            android:layout_weight="1"
+            app:set_hint="@string/input_captcha_hint"
+            app:set_input_type="number"
+            app:set_validation_regex="@string/captcha_validation_regex" />
 
         <com.sumian.sd.widget.CountDownTextView
             android:id="@+id/tv_send_captcha"
             style="@style/HwButton"
-            android:layout_width="@dimen/space_110"
+            android:layout_width="wrap_content"
             app:cdtv_count_down_text="@string/captcha_already_sent"
-            app:cdtv_count_down_time="30"
             app:cdtv_normal_text="@string/send_captcha" />
     </LinearLayout>
 
@@ -155,16 +129,6 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/tv_register"
-            style="@style/WrapContent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
-            android:text="@string/register"
-            android:textColor="@color/b3_color"
-            android:textSize="13sp" />
     </LinearLayout>
 
     <Space
@@ -195,7 +159,8 @@
             android:layout_width="120dp"
             android:gravity="start"
             android:padding="@dimen/space_20"
-            android:text="@string/captcha_login" />
+            android:text="@string/captcha_login"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_password_login"
@@ -204,6 +169,6 @@
             android:gravity="start"
             android:padding="@dimen/space_20"
             android:text="@string/password_login"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </LinearLayout>
 </LinearLayout>
