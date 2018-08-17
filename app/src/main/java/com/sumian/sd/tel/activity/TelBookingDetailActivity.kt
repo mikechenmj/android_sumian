@@ -55,10 +55,14 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
 
     override fun initWidget() {
         super.initWidget()
-        sdv_make_date.hideMoreIcon()
+        mTitleBar.setTitle("预约详情")
+        sdv_border_status.goneMoreIcon()
+        sdv_make_date.goneMoreIcon()
+        divider.visibility = View.VISIBLE
         et_input_ask_question.isFocusable = false
         et_input_ask_question_more.isFocusable = false
         bt_submit.visibility = View.GONE
+        tv_input_count.visibility = View.GONE
     }
 
     override fun initData() {
@@ -69,7 +73,7 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
     override fun onGetTelBookingDetailSuccess(telBooking: TelBooking) {
         sdv_border_status.visibility = View.VISIBLE
         sdv_border_status.setContent(telBooking.formatStatus())
-        sdv_make_date.setContent(telBooking.formatOrderTime())
+        sdv_make_date.setContent(telBooking.formatOrderTimeYYYYMMDDHHMM())
         sdv_duration.setContent(telBooking.p_package.servicePackage.formatServiceLengthType())
         et_input_ask_question.setText(telBooking.consulting_question)
         et_input_ask_question_more.setText(telBooking.add)

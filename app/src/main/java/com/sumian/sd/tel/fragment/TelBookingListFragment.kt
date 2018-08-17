@@ -46,6 +46,8 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
 
     private var mTelBookingType: Int = TelBooking.UN_FINISHED_TYPE
 
+    private var mIsRefresh = false
+
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
         this.mTelBookingType = bundle.getInt(ARGS_TEL_BOOKING_TYPE, TelBooking.UN_FINISHED_TYPE)
@@ -72,15 +74,24 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
 
     override fun initData() {
         super.initData()
+        mIsRefresh = true
         this.mPresenter?.getTelBookingList(mTelBookingType)
     }
 
     override fun onResume() {
         super.onResume()
-        onRefresh()
+        if (!mIsRefresh) {
+            onRefresh()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mIsRefresh = false
     }
 
     override fun onRefresh() {
+        mIsRefresh = true
         this.mPresenter?.refreshTelBookingList()
     }
 
@@ -102,6 +113,7 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
     override fun dismissLoading() {
         //super.dismissLoading()
         refresh.hideRefreshAnim()
+        mIsRefresh = false
     }
 
     override fun onGetTelBookingListSuccess(telBookingList: List<TelBooking>) {

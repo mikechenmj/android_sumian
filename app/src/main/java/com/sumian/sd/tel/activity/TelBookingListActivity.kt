@@ -36,8 +36,8 @@ class TelBookingListActivity : BaseBackPresenterActivity<IPresenter>() {
 
     override fun initWidget() {
         super.initWidget()
-
-        view_pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        mTitleBar.setTitle("电话预约")
+        view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
 
             override fun getItem(position: Int): Fragment {
                 return when (position) {
@@ -60,8 +60,7 @@ class TelBookingListActivity : BaseBackPresenterActivity<IPresenter>() {
             }
         }
 
-        tab_layout?.setupWithViewPager(view_pager, true)
+        tab_layout.setupWithViewPager(view_pager, true)
     }
-
 
 }

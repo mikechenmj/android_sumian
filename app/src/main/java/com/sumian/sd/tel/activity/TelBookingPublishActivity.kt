@@ -12,7 +12,9 @@ import com.sumian.sd.R
 import com.sumian.sd.tel.bean.TelBooking
 import com.sumian.sd.tel.contract.TelBookingPublishContract
 import com.sumian.sd.tel.presenter.TelBookingPublishPresenter
-import com.sumian.sd.tel.sheet.TelBookingSheet
+import com.sumian.sd.tel.sheet.TelBookingBottomSheet
+import com.sumian.sd.utils.TimeUtil
+import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
 
 /**
@@ -24,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
  *
  */
 class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishContract.Presenter>(), View.OnClickListener,
-        TelBookingPublishContract.View, TelBookingSheet.OnSelectTelBookingCallback {
+        TelBookingPublishContract.View, TelBookingBottomSheet.OnSelectTelBookingCallback {
 
     companion object {
 
@@ -70,6 +72,14 @@ class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishCon
         super.initWidget()
         mTitleBar.setTitle(R.string.tel_ask_detail)
         sdv_make_date.setOnClickListener(this)
+        et_input_ask_question_more.addTextChangedListener(object : SimpleTextWatchAdapter() {
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                super.onTextChanged(s, start, before, count)
+                tv_input_count.text = showEditContentLength(s.toString().trim())
+            }
+        })
+        bt_submit.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -84,9 +94,13 @@ class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishCon
     override fun onClick(v: View) {
         when (v.id) {
             R.id.sdv_make_date -> {
-                TelBookingSheet.show(fragmentManager = supportFragmentManager, telBookingTime = mTelBookingUnixTime, onSelectTelBookingCallback = this@TelBookingPublishActivity)
+                TelBookingBottomSheet.show(fragmentManager = supportFragmentManager, telBookingTime = mTelBookingUnixTime, onSelectTelBookingCallback = this@TelBookingPublishActivity)
             }
             R.id.bt_submit -> {
+                if (mTelBookingUnixTime <= 0) {
+                    onCheckInputContentFailed("请选择预约时间")
+                    return
+                }
                 mPresenter?.checkInputContent(et_input_ask_question.text.toString().trim(), et_input_ask_question_more.text.toString().trim())
             }
         }
@@ -103,6 +117,7 @@ class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishCon
 
     override fun onPublishTelBookingOrderSuccess(telBooking: TelBooking) {//publish success
         invalidTelBooking(telBooking)
+        finish()
     }
 
     override fun onPublishTelBookingOrderFailed(error: String) {
@@ -115,11 +130,12 @@ class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishCon
 
     override fun onCheckInputContentSuccess(consultingQuestion: String, add: String) {
         mPresenter?.publishTelBookingOrder(mTelBooking?.id!!, mTelBookingUnixTime, consultingQuestion, add, true)
-
     }
 
-    override fun onSelectTelBookingTime(unixTime: Int) {
+    override fun onSelectTelBookingTime(unixTime: Int): Boolean {
         this.mTelBookingUnixTime = unixTime
+        sdv_make_date.setContent(TimeUtil.formatYYYYMMDDHHMM(unixTime))
+        return true
     }
 
     private fun editSelectPosition(content: String?): Int {

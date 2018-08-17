@@ -270,6 +270,7 @@ interface DoctorApi {
     /**
      * 使用该电话预约清单
      */
+    @FormUrlEncoded
     @PATCH("bookings/{id}")
     fun publishTelBooking(@Path("id") telBookingId: Int, @FieldMap map: MutableMap<String, Any>): Call<TelBooking>
 

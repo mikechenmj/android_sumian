@@ -49,11 +49,13 @@ data class TelBooking(var id: Int,
 
     }
 
-    fun formatStatus(): String {
+    fun formatStatus(): CharSequence {
         return when (status) {
             0 -> {
                 val formatStatus = "待确认"
-                return SpannableString(formatStatus).setSpan(ForegroundColorSpan(App.getAppContext().resources.getColor(R.color.b3_color)), 0, formatStatus.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE).toString()
+                val spannableString = SpannableString(formatStatus)
+                spannableString.setSpan(ForegroundColorSpan(App.getAppContext().resources.getColor(R.color.b3_color)), 0, formatStatus.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                return spannableString
             }
             1 -> {
                 "已确认"

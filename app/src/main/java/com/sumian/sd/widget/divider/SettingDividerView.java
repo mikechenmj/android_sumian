@@ -141,6 +141,15 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         mIvMore.setVisibility(INVISIBLE);
     }
 
+    public void goneMoreIcon() {
+        mIvMore.setVisibility(GONE);
+    }
+
+    public void setContent(CharSequence content) {
+        mTvSettingContent.setText(content);
+        mTvSettingContent.setVisibility(TextUtils.isEmpty(content) ? GONE : VISIBLE);
+    }
+
     public void setContent(String content) {
         mTvSettingContent.setText(content);
         mTvSettingContent.setVisibility(TextUtils.isEmpty(content) ? GONE : VISIBLE);

@@ -25,10 +25,17 @@ interface TelBookingSelectTimeContract {
 
     interface Presenter : IPresenter {
 
-        fun calculateDate(currentTelBookingUnixTime: Int)
+        fun getHour(currentUnixTime: Int): Int
+
+        fun getMinute(currentUnixTime: Int): Int
+
+        fun calculateDate(currentUnixTime: Int)
 
         fun calculateHour(currentHour: Int)
 
         fun calculateMinute(currentMinute: Int)
+
+        fun formatUnixTime(date: String, hour: String, minute: String): Int
+
     }
 }

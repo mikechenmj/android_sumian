@@ -28,7 +28,27 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
 
     }
 
-    override fun calculateDate(currentTelBookingUnixTime: Int) {
+    override fun getHour(currentUnixTime: Int): Int {
+        return if (currentUnixTime == 0) {
+            19
+        } else {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = currentUnixTime * 1000L
+            calendar.get(Calendar.HOUR_OF_DAY)
+        }
+    }
+
+    override fun getMinute(currentUnixTime: Int): Int {
+        return if (currentUnixTime == 0) {
+            0
+        } else {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = currentUnixTime * 1000L
+            calendar.get(Calendar.MINUTE)
+        }
+    }
+
+    override fun calculateDate(currentUnixTime: Int) {
         val showBookingTimes = calculateShowBookingTimes()
         val dates = mutableListOf<String>()
         var isCheckDatePosition = 0
@@ -36,7 +56,7 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
         showBookingTimes
                 .forEachIndexed { index, bookingTime ->
                     val unixTime = bookingTime.unixTime
-                    if (isSameDay(unixTime, currentTelBookingUnixTime)) {
+                    if (isSameDay(unixTime, currentUnixTime)) {
                         isCheckDatePosition = index
                     }
                     val formatDate = bookingTime.formatDate()
@@ -48,9 +68,9 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
     override fun calculateHour(currentHour: Int) {
         val hours = mutableListOf<String>()
         var isCheckDatePosition = 0
-        var startHour = 19 //19-22
-        for (i in 0..4) {
-            startHour += i
+        var startHour = 18 //19-22
+        for (i in 0..3) {
+            startHour += 1
             if (startHour == currentHour) {
                 isCheckDatePosition = i
             }
@@ -70,6 +90,24 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
             minutes.add(i.toString())
         }
         this.mView?.transformThreeDisplayedValues(isCheckDatePosition, "", minutes.toTypedArray())
+    }
+
+
+    override fun formatUnixTime(date: String, hour: String, minute: String): Int {
+        val showBookingTimes = calculateShowBookingTimes()
+        val find = showBookingTimes.find { it.formatDate() == date }
+
+        val unixTime = find?.unixTime!!
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = unixTime * 1000L
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val tmpDate = calendar.get(Calendar.DATE)
+
+        calendar.set(year, month, tmpDate, hour.toInt(), minute.toInt())
+
+        return (calendar.timeInMillis / 1000L).toInt()
     }
 
     private fun calculateShowBookingTimes(): MutableList<BookingTime> {

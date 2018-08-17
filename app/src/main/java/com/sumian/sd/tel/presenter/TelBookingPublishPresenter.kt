@@ -96,9 +96,9 @@ class TelBookingPublishPresenter private constructor(view: TelBookingPublishCont
     }
 
     override fun checkInputContent(consultingQuestion: String, add: String) {
-        if (checkContent(consultingQuestion, 21, "请用一句话描述你想要咨询的问题", "已超过21个字")) {
-            if (checkContent(add, 401, "请详细描述你希望解决的问题", "已超过401个字")) {
-                mView?.onCheckInputContentSuccess(consultingQuestion,add)
+        if (checkContent(consultingQuestion, 21, "请用一句话描述你想要咨询的问题", "问题已超过21个字")) {
+            if (checkContent(add, 401, "请详细描述你希望解决的问题", "补充说明已超过401个字")) {
+                mView?.onCheckInputContentSuccess(consultingQuestion, add)
             }
         }
     }

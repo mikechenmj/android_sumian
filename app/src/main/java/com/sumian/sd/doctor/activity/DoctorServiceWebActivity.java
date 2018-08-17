@@ -15,6 +15,7 @@ import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult;
 import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.record.SleepRecordActivity;
+import com.sumian.sd.tel.activity.TelBookingPublishActivity;
 import com.sumian.sd.utils.JsonUtil;
 import com.sumian.sd.widget.webview.SBridgeHandler;
 import com.sumian.sd.widget.webview.SBridgeResult;
@@ -115,6 +116,8 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
                 case DoctorService.SERVICE_TYPE_SLEEP_REPORT:
                     SleepRecordActivity.Companion.launch(this);
                     break;
+                case DoctorService.SERVICE_TYPE_PHONE_ADVISORY:
+                    TelBookingPublishActivity.show();
                 default:
                     break;
             }

@@ -18,22 +18,24 @@ import kotlinx.android.synthetic.main.lay_bottom_sheet_select_tel_booking_time.*
  * desc: 电话预约中,用户选择预约时间的 widget
  *
  */
-class TelBookingSheet : BaseBottomSheetView(), TelBookingSelectTimeContract.View, NumberPickerView.OnValueChangeListener, View.OnClickListener {
+class TelBookingBottomSheet : BaseBottomSheetView(), TelBookingSelectTimeContract.View, NumberPickerView.OnValueChangeListener, View.OnClickListener {
 
     companion object {
 
         private const val ARGS_TEL_BOOKING_TIME = "com.sumian.sd.args.tel.booking.time"
 
-        private fun newInstance(telBookingTime: Int): TelBookingSheet {
-            return TelBookingSheet().apply {
-                arguments?.putInt(ARGS_TEL_BOOKING_TIME, telBookingTime)
+        private fun newInstance(telBookingTime: Int): TelBookingBottomSheet {
+            return TelBookingBottomSheet().apply {
+                this.arguments = Bundle().apply {
+                    putInt(ARGS_TEL_BOOKING_TIME, telBookingTime)
+                }
             }
         }
 
         fun show(fragmentManager: FragmentManager, telBookingTime: Int, onSelectTelBookingCallback: OnSelectTelBookingCallback) {
             fragmentManager
                     .beginTransaction()
-                    .add(TelBookingSheet.newInstance(telBookingTime).setOnSelectTelBookingCallback(onSelectTelBookingCallback), TelBookingSheet::class.java.simpleName)
+                    .add(TelBookingBottomSheet.newInstance(telBookingTime).setOnSelectTelBookingCallback(onSelectTelBookingCallback), TelBookingBottomSheet::class.java.simpleName)
                     .commitNowAllowingStateLoss()
         }
     }
@@ -41,20 +43,19 @@ class TelBookingSheet : BaseBottomSheetView(), TelBookingSelectTimeContract.View
     private var mTelBookingTime: Int = 0
 
     private val mPresenter: TelBookingSelectTimeContract.Presenter by lazy {
-        TelBookingSelectTimePresenter.init(this@TelBookingSheet)
+        TelBookingSelectTimePresenter.init(this@TelBookingBottomSheet)
     }
 
     private var mOnSelectTelBookingCallback: OnSelectTelBookingCallback? = null
 
 
-    fun setOnSelectTelBookingCallback(onSelectTelBookingCallback: OnSelectTelBookingCallback): TelBookingSheet {
+    fun setOnSelectTelBookingCallback(onSelectTelBookingCallback: OnSelectTelBookingCallback): TelBookingBottomSheet {
         this.mOnSelectTelBookingCallback = onSelectTelBookingCallback
         return this
     }
 
     override fun initBundle(arguments: Bundle?) {
         super.initBundle(arguments)
-
         arguments?.let {
             this.mTelBookingTime = it.getInt(ARGS_TEL_BOOKING_TIME, 0)
         }
@@ -73,8 +74,8 @@ class TelBookingSheet : BaseBottomSheetView(), TelBookingSelectTimeContract.View
     override fun initData() {
         super.initData()
         mPresenter.calculateDate(mTelBookingTime)
-        mPresenter.calculateHour(20)
-        mPresenter.calculateMinute(20)
+        mPresenter.calculateHour(mPresenter.getHour(mTelBookingTime))
+        mPresenter.calculateMinute(mPresenter.getMinute(mTelBookingTime))
     }
 
     override fun release() {
@@ -84,7 +85,11 @@ class TelBookingSheet : BaseBottomSheetView(), TelBookingSelectTimeContract.View
 
     override fun onClick(v: View) {
         //计算出选中的时间的 unixTime
-        mOnSelectTelBookingCallback?.onSelectTelBookingTime(123)
+        val onSelectTelBookingTime = mOnSelectTelBookingCallback?.onSelectTelBookingTime(mPresenter.formatUnixTime(npv_one.contentByCurrValue, npv_two.contentByCurrValue, npv_three.contentByCurrValue))
+        if (onSelectTelBookingTime!!) {
+            dismissAllowingStateLoss()
+        }
+
     }
 
     override fun onValueChange(picker: NumberPickerView?, oldVal: Int, newVal: Int) {
@@ -110,7 +115,7 @@ class TelBookingSheet : BaseBottomSheetView(), TelBookingSelectTimeContract.View
 
     interface OnSelectTelBookingCallback {
 
-        fun onSelectTelBookingTime(unixTime: Int)
+        fun onSelectTelBookingTime(unixTime: Int): Boolean
     }
 
 
