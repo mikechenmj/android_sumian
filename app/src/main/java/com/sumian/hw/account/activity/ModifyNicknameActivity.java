@@ -28,7 +28,7 @@ import com.sumian.sd.app.AppManager;
  * desc:
  */
 
-public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.OnMoreListener, TitleBar.OnBackListener,
+public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.OnMoreListener, TitleBar.OnBackClickListener,
     ModifyUserInfoContract.View<UserInfo> {
 
     public static final String MODIFY_TYPE = "modify_type";
@@ -88,7 +88,7 @@ public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.O
             this.mTvWarnLabel.setText(R.string.career_warn_label);
             this.mEtMobile.setMaxEms(12);
         }
-        this.mTitleBar.showMoreIcon(R.mipmap.ic_nav_ok).addOnMoreListener(this).addOnBackListener(this);
+        this.mTitleBar.showMoreIcon(R.mipmap.ic_nav_ok).addOnMoreListener(this).setOnBackClickListener(this);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.O
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

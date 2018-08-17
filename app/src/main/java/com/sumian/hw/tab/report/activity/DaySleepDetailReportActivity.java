@@ -30,7 +30,7 @@ import java.util.List;
  */
 
 public class DaySleepDetailReportActivity extends HwBaseActivity implements DaySleepDetailContract.View,
-        SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackListener {
+        SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackClickListener {
 
     private static final String ARGS_SLEEP_DETAIL_REPORT = "args_sleep_detail_report";
 
@@ -89,7 +89,7 @@ public class DaySleepDetailReportActivity extends HwBaseActivity implements DayS
         mTvSleepLightDurationMin = findViewById(R.id.tv_sleep_light_duration_min);
         mSleepNoteView = findViewById(R.id.sleepNoteView);
 
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
         this.mRefresh.setOnRefreshListener(this);
         this.mTvSleepDurationHour.setTypeface(UiUtil.getTypeface());
         this.mTvSleepDurationMin.setTypeface(UiUtil.getTypeface());
@@ -179,7 +179,7 @@ public class DaySleepDetailReportActivity extends HwBaseActivity implements DayS
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 }

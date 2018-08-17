@@ -25,7 +25,7 @@ import java.util.List;
  * desc:
  */
 
-public class ConfigActivity extends HwBaseActivity implements TitleBar.OnBackListener, ConfigContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class ConfigActivity extends HwBaseActivity implements TitleBar.OnBackClickListener, ConfigContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String CONFIG_TYPE = "config_type";
     public static final int ABOUT_TYPE = 0x01;
@@ -65,7 +65,7 @@ public class ConfigActivity extends HwBaseActivity implements TitleBar.OnBackLis
         mWeb = findViewById(R.id.web);
 
         ConfigPresenter.init(this);
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
         @StringRes int resType;
         switch (mConfigType) {
             case ABOUT_TYPE:
@@ -93,7 +93,7 @@ public class ConfigActivity extends HwBaseActivity implements TitleBar.OnBackLis
 
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

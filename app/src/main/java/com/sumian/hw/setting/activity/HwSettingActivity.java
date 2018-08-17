@@ -29,7 +29,7 @@ import butterknife.OnClick;
  */
 
 public class HwSettingActivity extends HwBaseActivity implements View.OnClickListener,
-        TitleBar.OnBackListener {
+        TitleBar.OnBackClickListener {
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
@@ -56,11 +56,11 @@ public class HwSettingActivity extends HwBaseActivity implements View.OnClickLis
                 mCount = 0;
             }
         });
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

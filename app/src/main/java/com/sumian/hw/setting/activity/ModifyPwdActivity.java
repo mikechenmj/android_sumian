@@ -16,7 +16,6 @@ import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.request.ModifyPwdBody;
 import com.sumian.hw.setting.contract.ModifyPwdContract;
 import com.sumian.hw.setting.presenter.ModifyPwdPresenter;
-import com.sumian.hw.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sd.R;
@@ -29,7 +28,7 @@ import com.sumian.sd.app.AppManager;
  * desc:
  */
 
-public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBackListener, View.OnClickListener, ModifyPwdContract.View {
+public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBackClickListener, View.OnClickListener, ModifyPwdContract.View {
 
     TitleBar mTitleBar;
     TextView mTvErrorPop;
@@ -72,7 +71,7 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
         findViewById(R.id.iv_re_new_pwd_show).setOnClickListener(this);
         findViewById(R.id.bt_save).setOnClickListener(this);
 
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
         this.mEtOldPwd.addTextChangedListener(new OnTextWatcherAdapter() {
 
             @Override
@@ -114,7 +113,7 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

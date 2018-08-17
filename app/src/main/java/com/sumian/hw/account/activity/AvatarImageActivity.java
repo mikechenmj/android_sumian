@@ -29,7 +29,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 图片预览Activity
  */
 public class AvatarImageActivity extends HwBaseActivity implements EasyPermissions.PermissionCallbacks,
-        TitleBar.OnBackListener, TitleBar.OnMoreListener, SelectPictureBottomSheet.OnTakePhotoCallback, AvatarContract.View {
+        TitleBar.OnBackClickListener, TitleBar.OnMoreListener, SelectPictureBottomSheet.OnTakePhotoCallback, AvatarContract.View {
     public static final String KEY_IMAGE = "images";
     public static final String KEY_POSITION = "position";
     public static final String KEY_NEED_SAVE = "save";
@@ -99,7 +99,7 @@ public class AvatarImageActivity extends HwBaseActivity implements EasyPermissio
         mTitleBar = findViewById(R.id.title_bar);
         mImagePager = findViewById(R.id.vp_image);
         setTitle("");
-        mTitleBar.addOnBackListener(this)
+        mTitleBar.setOnBackClickListener(this)
                 .showMoreIcon()
                 .addOnMoreListener(this);
 
@@ -149,7 +149,7 @@ public class AvatarImageActivity extends HwBaseActivity implements EasyPermissio
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

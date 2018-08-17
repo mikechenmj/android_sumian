@@ -30,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-public class UserInfoActivity extends HwBaseActivity implements TitleBar.OnBackListener
+public class UserInfoActivity extends HwBaseActivity implements TitleBar.OnBackClickListener
         , SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, UserInfoContract.View {
 
     TitleBar mTitleBar;
@@ -82,7 +82,7 @@ public class UserInfoActivity extends HwBaseActivity implements TitleBar.OnBackL
         findViewById(R.id.lay_career).setOnClickListener(this);
 
         UserInfoPresenter.init(this);
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         mBlueRefreshView.setOnRefreshListener(this);
         mBlueRefreshView.setEnabled(false);
     }
@@ -98,7 +98,7 @@ public class UserInfoActivity extends HwBaseActivity implements TitleBar.OnBackL
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

@@ -34,7 +34,7 @@ import java.util.Map;
  * desc:
  */
 
-public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackListener, UserInfoContract.View {
+public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener, UserInfoContract.View {
 
     public static final String ACTION_MODIFY_ASSESSMENT_USER_INFO = "com.sumian.app.action_MODIFY_ASSESSMENT_USER_INFO";
     public static final String EXTRA_ASSESSMENT_USER_INFO = "com.sumian.app.extra.ASSESSMENT_USER_INFO";
@@ -80,7 +80,7 @@ public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.
         findViewById(R.id.lay_weight).setOnClickListener(this);
         findViewById(R.id.bt_save).setOnClickListener(this);
 
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, token -> {
             if (token != null) {
                 updateUserInfoUI(token.user);
@@ -210,7 +210,7 @@ public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

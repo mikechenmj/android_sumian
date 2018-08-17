@@ -1,18 +1,8 @@
 package com.sumian.hw.improve.guideline.activity;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.sumian.sd.BuildConfig;
-import com.sumian.sd.R;
-import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 
@@ -23,7 +13,7 @@ import com.sumian.sd.base.SdBaseWebViewActivity;
  * desc:新手指南,使用手册
  */
 
-public class ManualActivity extends SdBaseWebViewActivity implements TitleBar.OnBackListener {
+public class ManualActivity extends SdBaseWebViewActivity{
 
     @Override
     protected void initWidget(View root) {

@@ -40,7 +40,7 @@ import java.util.Locale;
  */
 
 public class DeviceLogActivity extends HwBaseActivity implements View.OnClickListener,
-        ViewTreeObserver.OnGlobalLayoutListener, TitleBar.OnBackListener, BluePeripheralCallback, BluePeripheralDataCallback {
+        ViewTreeObserver.OnGlobalLayoutListener, TitleBar.OnBackClickListener, BluePeripheralCallback, BluePeripheralDataCallback {
 
     private static final String TAG = DeviceLogActivity.class.getSimpleName();
 
@@ -86,7 +86,7 @@ public class DeviceLogActivity extends HwBaseActivity implements View.OnClickLis
         findViewById(R.id.iv_keyboard_image).setOnClickListener(this);
         findViewById(R.id.iv_keyboard_send).setOnClickListener(this);
 
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
         this.mLayMsgContainer.getViewTreeObserver().addOnGlobalLayoutListener(this);
         this.mRecyclerView.setAdapter(mLogAdapter = new LogAdapter());
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
@@ -183,7 +183,7 @@ public class DeviceLogActivity extends HwBaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

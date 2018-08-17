@@ -91,10 +91,8 @@ public class ReportFragment extends HwBaseFragment implements TabIndicatorView.O
     protected void initWidget(View root) {
         super.initWidget(root);
         LogUtils.d();
-//        mBaseFragments = new HwBasePagerFragment[]{DailyReportFragment.newInstance(), WeeklyReportFragment.newInstance()};
         mTabIndicatorView = root.findViewById(R.id.tab_indicator_view);
         mTabIndicatorView.setOnSwitchIndicatorCallback(this);
-        mTabIndicatorView.selectTabByPosition(0);
     }
 
     @SuppressWarnings("ConstantConditions")

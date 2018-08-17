@@ -55,6 +55,7 @@ class SetPasswordActivity : BasePresenterActivity<SetPasswordContract.Presenter>
 
     override fun initWidget() {
         super.initWidget()
+        title_bar.setOnBackClickListener { onBackPressed() }
         btn_confirm.setOnClickListener {
             val password = et_password.getValidText()
             val passwordConfirm = et_password_confirm.getValidText()
@@ -79,6 +80,7 @@ class SetPasswordActivity : BasePresenterActivity<SetPasswordContract.Presenter>
                 mPresenter!!.setPassword(password!!)
             }
         }
+
     }
 
     override fun onSetPasswordSuccess(data: String) {

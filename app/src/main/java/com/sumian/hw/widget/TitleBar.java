@@ -29,7 +29,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     TextView mTvTitle;
     ImageView mIvMore;
 
-    private OnBackListener mOnBackListener;
+    private OnBackClickListener mOnBackClickListener;
     private OnMoreListener mOnMoreListener;
 
     public TitleBar(@NonNull Context context) {
@@ -80,8 +80,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         mTvTitle.setOnClickListener(onSpannerListener);
     }
 
-    public TitleBar addOnBackListener(OnBackListener onBackListener) {
-        mOnBackListener = onBackListener;
+    public TitleBar setOnBackClickListener(OnBackClickListener onBackClickListener) {
+        mOnBackClickListener = onBackClickListener;
         return this;
     }
 
@@ -129,11 +129,11 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.iv_back) {
-            OnBackListener onBackListener = this.mOnBackListener;
-            if (onBackListener == null) {
+            OnBackClickListener onBackClickListener = this.mOnBackClickListener;
+            if (onBackClickListener == null) {
                 return;
             }
-            onBackListener.onBack(v);
+            onBackClickListener.onBackClick(v);
         } else if (id == R.id.iv_more) {
             OnMoreListener onMoreListener = this.mOnMoreListener;
             if (onMoreListener == null) {
@@ -143,8 +143,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         }
     }
 
-    public interface OnBackListener {
-        void onBack(View v);
+    public interface OnBackClickListener {
+        void onBackClick(View v);
     }
 
     public interface OnMoreListener {

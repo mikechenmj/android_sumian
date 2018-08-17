@@ -29,7 +29,7 @@ import com.sumian.sd.account.login.LoginActivity;
  * desc:
  */
 
-public class ResetPwdActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener,
+public class ResetPwdActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener,
         ResetPwdContract.View {
 
     public static final String MOBILE_KEY = "mobile";
@@ -83,7 +83,7 @@ public class ResetPwdActivity extends HwBaseActivity implements View.OnClickList
         mBtSave = findViewById(R.id.bt_save);
         mBtSave.setOnClickListener(this);
 
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
     }
 
     @Override
@@ -166,7 +166,7 @@ public class ResetPwdActivity extends HwBaseActivity implements View.OnClickList
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

@@ -36,7 +36,7 @@ import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class VersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener
+public class VersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
         , VersionUpgradeContract.View, DfuProgressListener {
 
     private static final String TAG = VersionUpgradeActivity.class.getSimpleName();
@@ -106,7 +106,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         mBtDownload = findViewById(R.id.bt_download);
         findViewById(R.id.bt_download).setOnClickListener(this);
 
-        this.mTitleBar.addOnBackListener(this);
+        this.mTitleBar.setOnBackClickListener(this);
         if (mVersionType != VERSION_TYPE_APP) {
             mPresenter.showDfuProgressNotification(this);
             DfuServiceListenerHelper.registerProgressListener(this, this);
@@ -191,7 +191,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

@@ -32,7 +32,7 @@ import java.util.Locale;
  */
 
 public class VersionNoticeActivity extends HwBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
-        TitleBar.OnBackListener, VersionContract.View, VersionModel.ShowDotCallback {
+        TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
 
     TitleBar mTitleBar;
     BlueRefreshView mRefresh;
@@ -72,7 +72,7 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
         findViewById(R.id.monitor_version_info).setOnClickListener(this);
         findViewById(R.id.sleepy_version_info).setOnClickListener(this);
 
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
         mRefresh.setOnRefreshListener(this);
         AppManager.getVersionModel().registerShowDotCallback(this);
         VersionPresenter.init(this);
@@ -110,7 +110,7 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 

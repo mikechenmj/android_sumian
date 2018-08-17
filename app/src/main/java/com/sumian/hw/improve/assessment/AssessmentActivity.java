@@ -23,7 +23,7 @@ import com.sumian.sd.app.AppManager;
  * desc:
  */
 
-public class AssessmentActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackListener {
+public class AssessmentActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener {
 
     TitleBar mTitleBar;
     FrameLayout mPopContainer;
@@ -88,7 +88,7 @@ public class AssessmentActivity extends HwBaseActivity implements View.OnClickLi
         findViewById(R.id.bt_user_info_table).setOnClickListener(this);
         findViewById(R.id.bt_assessment_table).setOnClickListener(this);
 
-        mTitleBar.addOnBackListener(this);
+        mTitleBar.setOnBackClickListener(this);
     }
 
     @Override
@@ -139,11 +139,11 @@ public class AssessmentActivity extends HwBaseActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        onBack(null);
+        onBackClick(null);
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         if (mIsRegister) {
             AppUtil.launchMainAndFinishAll();
         } else {

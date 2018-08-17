@@ -20,7 +20,7 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackListener, BluePeripheralDataCallback {
+public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
 
     private ViewPager mViewPager;
 
@@ -76,7 +76,7 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackLis
         TabLayout tabLayout = findViewById(R.id.table);
         mViewPager = findViewById(R.id.view_pager);
 
-        titleBar.addOnBackListener(this);
+        titleBar.setOnBackClickListener(this);
         this.mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -121,7 +121,7 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackLis
     }
 
     @Override
-    public void onBack(View v) {
+    public void onBackClick(View v) {
         finish();
     }
 
