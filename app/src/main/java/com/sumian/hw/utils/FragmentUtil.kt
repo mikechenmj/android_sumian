@@ -24,10 +24,11 @@ class FragmentUtil {
             for (i in 0 until tags.size) {
                 tag = tags[i]
                 fragmentByTag = fragmentManager.findFragmentByTag(tag)
-                if (fragmentByTag == null) {
-                    fragmentByTag = fragmentCreator.createFragmentByPosition(i)
-                }
+
                 if (position == i) {
+                    if (fragmentByTag == null) {
+                        fragmentByTag = fragmentCreator.createFragmentByPosition(i)
+                    }
                     selectFragment = fragmentByTag
                     val runOnCommitRunnable: () -> Unit = { runOnCommitCallback?.runOnCommit(selectFragment) }
                     if (fragmentByTag.isAdded) {
@@ -36,7 +37,9 @@ class FragmentUtil {
                         fragmentManager.beginTransaction().add(containerViewId, fragmentByTag, tag).runOnCommit(runOnCommitRunnable).commit()
                     }
                 } else {
-                    fragmentManager.beginTransaction().hide(fragmentByTag).commit()
+                    if (fragmentByTag != null) {
+                        fragmentManager.beginTransaction().hide(fragmentByTag).commit()
+                    }
                 }
             }
         }
