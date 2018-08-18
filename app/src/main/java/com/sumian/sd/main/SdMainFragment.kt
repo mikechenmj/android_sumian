@@ -68,10 +68,8 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     private fun changeStatusBarColorByPosition(position: Int) {
         val activity = activity ?: return
         if (position == 0) {
-            StatusBarUtil.setStatusBarColor(activity, Color.WHITE)
             StatusBarUtil.setStatusBarTextColor(activity, false)
         } else {
-            StatusBarUtil.setStatusBarColor(activity, Color.TRANSPARENT)
             StatusBarUtil.setStatusBarTextColor(activity, true)
         }
     }
