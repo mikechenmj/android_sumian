@@ -15,7 +15,7 @@ import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.main.SdWelcomeActivity;
+import com.sumian.sd.main.HwWelcomeActivity;
 import com.sumian.sd.network.callback.BaseResponseCallback;
 
 import retrofit2.Call;
@@ -57,7 +57,7 @@ public class LeanCloudManager {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(context, SdWelcomeActivity.class);
+        PushService.setDefaultPushCallback(context, HwWelcomeActivity.class);
     }
 
     public static void getAndUploadCurrentInstallation() {

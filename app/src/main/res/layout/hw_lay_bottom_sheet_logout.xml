@@ -12,6 +12,7 @@
         android:gravity="center"
         android:padding="@dimen/space_16"
         android:text="@string/logout_title_hint"
+        android:textColor="@color/hw_tv_normal"
         android:textSize="@dimen/font_14" />
 
     <View

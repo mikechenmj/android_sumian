@@ -1,4 +1,4 @@
-package com.sumian.hw.improve.main;
+package com.sumian.sd.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +38,7 @@ public class HwWelcomeActivity extends HwBaseActivity {
         LogManager.appendUserOperationLog("用户启动 app.......");
         runUiThread(() -> {
             if (GuidelineUtils.needShowWelcomeUserGuide()) {
+//            if (true) {
                 UserGuidelineActivity.show(this);
             } else {
                 boolean login = AppManager.getAccountViewModel().isLogin();
