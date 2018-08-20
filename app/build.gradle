@@ -59,7 +59,6 @@ android {
         buildConfigField("String", "HW_USER_GUIDELINE_URL", HW_USER_GUIDELINE_URL)
         buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
         buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
-        buildConfigField("String", "HW_DOWNLOAD_URL", HW_DEFAULT_APK_DOWNLOAD_URL)
 
         // Enabling multidex support.
         multiDexEnabled true
