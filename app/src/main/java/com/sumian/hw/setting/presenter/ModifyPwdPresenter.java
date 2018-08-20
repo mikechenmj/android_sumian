@@ -1,11 +1,8 @@
 package com.sumian.hw.setting.presenter;
 
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.hw.account.cache.HwAccountCache;
-import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.request.ModifyPwdBody;
 import com.sumian.hw.setting.contract.ModifyPwdContract;
