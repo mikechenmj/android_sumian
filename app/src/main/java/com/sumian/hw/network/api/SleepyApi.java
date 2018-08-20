@@ -56,28 +56,8 @@ import retrofit2.http.QueryMap;
 
 public interface SleepyApi {
 
-    //user authorization module
-
-    @PUT("authorizations/current")
-    Call<Token> doRefreshToken();
-
-    @POST("authorizations")
-    Call<Token> doLogin(@Body LoginBody loginBody);
-
     @DELETE("authorizations/current")
     Call<Object> doLogout(@Query("device_token") String deviceToken);
-
-    //account module
-
-    @POST("users")
-    Call<Token> doRegister(@Body RegisterBody registerBody);
-
-    /**
-     * @param include "doctor"
-     * @return
-     */
-    @GET("user/profile")
-    Call<UserInfo> getUserInfo(@Query("include") String include);
 
     @FormUrlEncoded
     @PATCH("user/profile")
@@ -85,20 +65,6 @@ public interface SleepyApi {
 
     @PATCH("user/reset-password")
     Call<Object> doResetPwd(@Body ResetPwdBody resetPwdBody);
-
-    @PATCH("user/change-password")
-    Call<Object> doModifyPwd(@Body ModifyPwdBody modifyPwdBody);
-
-
-    //common  module
-
-    @POST("captchas")
-    Call<Object> doCaptcha(@Body CaptchaBody captchaBody);
-
-    @POST("captchas/validation")
-    Call<Ticket> doValidationCaptcha(@Body ValidationCaptchaBody validationCaptchaBody);
-
-    //sleep  data  module
 
     @GET("sleeps/{id}")
     Call<SleepDetailReport> syncSleepDetail(@Path("id") long id);
@@ -127,16 +93,9 @@ public interface SleepyApi {
     @GET("firmware/latest")
     Call<FirmwareInfo> syncFirmwareInfo();
 
-    @GET("reminders/subscriptions")
-    Call<ResultResponse<Reminder>> getReminder(@QueryMap Map<String, Object> map);
-
     @FormUrlEncoded
     @PATCH("reminders/subscriptions/{id}")
     Call<Reminder> modifyReminder(@Path("id") int id, @FieldMap Map<String, Object> map);
-
-    @FormUrlEncoded
-    @POST("reminders/subscriptions")
-    Call<Reminder> addReminder(@FieldMap Map<String, Object> map);
 
     @GET("configs")
     Call<List<ConfigInfo>> syncConfigInfo();
@@ -157,18 +116,6 @@ public interface SleepyApi {
 
     @GET("app-version/latest")
     Call<AppUpgradeInfo> syncUpgradeAppInfo(@QueryMap Map<String, String> map);
-
-    @POST("socialite/authorizations")
-    @FormUrlEncoded
-    Call<Token> loginOpenPlatform(@FieldMap Map<String, Object> map);
-
-    @POST("socialite/users")
-    @FormUrlEncoded
-    Call<Token> bindOpenPlatform(@FieldMap Map<String, Object> map);
-
-    @POST("socialites")
-    @FormUrlEncoded
-    Call<Social> bindOpenPlatform(@Field("type") int platformType, @Field("info") String openInfo);
 
     @DELETE("socialites/{id}")
     Call<Object> unBindOpenPlatform(@Path("id") int id);

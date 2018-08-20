@@ -88,7 +88,7 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
     }
 
     private fun syncUserInfo() {
-        val call = AppManager.getHwNetEngine().httpService.getUserInfo("doctor")
+        val call = AppManager.getHttpService().getUserProfile()
         call.enqueue(object : BaseResponseCallback<UserInfo>() {
             override fun onSuccess(response: UserInfo) {
                 AppManager.getAccountViewModel().updateUserInfo(response)
