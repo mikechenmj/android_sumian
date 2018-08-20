@@ -6,7 +6,6 @@ import com.hyphenate.chat.ChatClient;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.operator.AppOperator;
-import com.sumian.hw.common.cache.BluePeripheralCache;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sd.account.login.LoginActivity;
@@ -37,10 +36,7 @@ public class AppUtil {
 
     public static void logoutAndLaunchLoginActivity() {
         AppManager.getOpenAnalytics().onProfileSignOff();
-        AppOperator.runOnThread(() -> {
-            BluePeripheralCache.clear();
-            BlueManager.init().doStopScan();
-        });
+        AppOperator.runOnThread(() -> BlueManager.init().doStopScan());
         ChatClient.getInstance().logout(true, null);
         NotificationUtil.Companion.cancelAllNotification(App.Companion.getAppContext());
         AppManager.getAccountViewModel().updateToken(null);
@@ -49,7 +45,7 @@ public class AppUtil {
         ActivityUtils.startActivity(LoginActivity.class);
     }
 
-    public static void launchMainAndFinishAll(){
+    public static void launchMainAndFinishAll() {
         ActivityUtils.finishAllActivities();
         launchMain();
     }
