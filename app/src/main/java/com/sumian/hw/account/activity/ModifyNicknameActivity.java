@@ -18,6 +18,7 @@ import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.account.config.SumianConfig;
 import com.sumian.sd.app.AppManager;
 
 
@@ -114,7 +115,7 @@ public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.O
             }
         }
 
-        if (nickname.length() < 2) {
+        if (nickname.length() < 1) {
             if (mType == NICKNAME_TYPE) {
                 this.mAdapterPop.setVisibility(View.VISIBLE);
                 this.mTvPopError.setText(R.string.new_nickname_less_error);
@@ -123,7 +124,7 @@ public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.O
         }
 
         if (mType == NICKNAME_TYPE) {
-            if (nickname.length() > 24) {
+            if (nickname.length() > SumianConfig.NICK_NAME_LENGTH_MAX) {
                 this.mAdapterPop.setVisibility(View.VISIBLE);
                 this.mTvPopError.setText(R.string.new_nickname_too_much_more_error);
                 return;

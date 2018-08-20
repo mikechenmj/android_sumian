@@ -38,6 +38,7 @@
                     android:contentDescription="@null"
                     android:gravity="center|left"
                     android:text="@string/nickname_hint"
+                    android:textColor="@color/general_color"
                     android:textSize="@dimen/font_16"
                     tools:ignore="RtlHardcoded" />
 
@@ -55,7 +56,7 @@
                     android:background="@null"
                     android:hint="@string/new_nickname_hint"
                     android:inputType="text"
-                    android:maxLength="24"
+                    android:maxLength="16"
                     android:textColor="@color/general_color"
                     android:textColorHint="@color/general_color"
                     android:textCursorDrawable="@drawable/bg_cursor"
@@ -75,7 +76,8 @@
                 android:layout_marginRight="@dimen/space_32"
                 android:layout_marginTop="@dimen/space_12"
                 android:contentDescription="@null"
-                android:text="昵称需保证在2-24个字符内，且不能与他人重复."
+                android:text="昵称需保证在1-16个字符内，且不能与他人重复."
+                android:textColor="@color/general_color"
                 android:textSize="@dimen/font_14"
                 tools:ignore="HardcodedText" />
 

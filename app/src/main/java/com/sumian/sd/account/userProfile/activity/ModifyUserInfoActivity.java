@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
+import com.sumian.sd.account.config.SumianConfig;
 import com.sumian.sd.account.userProfile.contract.ImproveUserProfileContract;
 import com.sumian.sd.account.userProfile.presenter.ImproveUserProfilePresenter;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
+import com.sumian.sd.utils.EditTextUtil;
 import com.sumian.sd.widget.TitleBar;
 
 import butterknife.BindView;
@@ -66,6 +68,9 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
     protected void initWidget(View root) {
         super.initWidget(root);
         mTitleBar.setOnBackClickListener(this);
+        if (mModifyType.equals(ImproveUserProfileContract.IMPROVE_NICKNAME_KEY)) {
+            EditTextUtil.Companion.setMaxLength(mEtName, SumianConfig.NICK_NAME_LENGTH_MAX);
+        }
     }
 
     @Override

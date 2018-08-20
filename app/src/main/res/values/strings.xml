@@ -686,8 +686,8 @@
     <string name="nickname_hint">昵称</string>
     <string name="new_nickname_hint">请输入您的新昵称</string>
     <string name="new_nickname_error_hint">您的新昵称不合法,请重新输入</string>
-    <string name="new_nickname_less_error">您新昵称少于2个字符</string>
-    <string name="new_nickname_too_much_more_error">昵称不能超过24个字符</string>
+    <string name="new_nickname_less_error">您新昵称少于1个字符</string>
+    <string name="new_nickname_too_much_more_error">昵称不能超过16个字符</string>
     <string name="modify_user_info_success">您的用户信息已修改成功</string>
     <string name="update_user_info_hint">是否更新您的用户信息？</string>
     <string name="no_have_msg_hint">没有更多消息了…</string>
@@ -852,7 +852,7 @@
     <string name="no_have_sleep_data_low_label">使用设备后，打开手机蓝牙，自动上传睡眠数据</string>
     <string name="sleep_assessment_default_mode">当前未匹配为默认模式</string>
     <string name="career_hint">职业</string>
-    <string name="nickname_warn_label">昵称需保证在2–24个字符内，且不能与他人重复.</string>
+    <string name="nickname_warn_label">昵称需保证在1–16个字符内，且不能与他人重复.</string>
     <string name="career_warn_label">请填写你所从事的职业类型</string>
     <!--<string name="input_career_hint">请输入您的职业</string>-->
     <string name="input_career_error">您输入的新职业信息不合法,请重新输入</string>

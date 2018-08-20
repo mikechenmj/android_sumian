@@ -51,6 +51,7 @@
             android:contentDescription="@null"
             android:gravity="center"
             android:text="@string/nickname_hint"
+            android:textColor="@color/general_color"
             android:textSize="@dimen/font_16" />
 
         <View
@@ -69,7 +70,7 @@
             android:background="@null"
             android:hint="@string/new_nickname_hint"
             android:inputType="text"
-            android:maxLength="24"
+            android:maxLength="16"
             android:textColor="@color/general_color"
             android:textColorHint="@color/general_color"
             android:textCursorDrawable="@drawable/bg_cursor"
@@ -83,7 +84,6 @@
         android:layout_marginStart="@dimen/space_18"
         android:background="@color/login_line_color" />
 
-
     <TextView
         android:id="@+id/tv_warn_label"
         android:layout_width="match_parent"
@@ -93,6 +93,7 @@
         android:layout_marginTop="@dimen/space_12"
         android:contentDescription="@null"
         android:text="@string/nickname_warn_label"
+        android:textColor="@color/general_color"
         android:textSize="@dimen/font_14"
         tools:ignore="HardcodedText" />
 
