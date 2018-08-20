@@ -34,6 +34,7 @@
 
         <TextView
             android:id="@+id/tv_graphic"
+            style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_12"
@@ -59,6 +60,7 @@
 
         <TextView
             android:id="@+id/tv_tel"
+            style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_12"
