@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_16"
         app:divider_line_visible="visible"
-        app:divider_more_visible="gone"
         app:type_content="1.0.0"
         app:type_desc="@string/current_app_version" />
 

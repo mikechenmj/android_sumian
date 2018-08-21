@@ -40,7 +40,7 @@
             <com.sumian.sd.widget.nav.NavigationItem
                 android:id="@+id/tb_doctor"
                 style="@style/HorizontalWeight"
-                app:tab_icon="@drawable/sd_sel_tab_device_icon"
+                app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
                 app:tab_text="@string/tab_doctor" />
 
             <include layout="@layout/lay_nav_tab_divider" />
@@ -60,6 +60,7 @@
             android:id="@+id/iv_switch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:contentDescription="@null"
             android:paddingTop="2dp"
