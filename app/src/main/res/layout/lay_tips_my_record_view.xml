@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_12"
             android:drawableTop="@mipmap/ic_info_file"
+            android:foreground="@drawable/bg_material"
             android:text="@string/me_my_sleep_file" />
 
         <Space
@@ -65,6 +66,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_12"
             android:drawableTop="@mipmap/ic_info_evaluation"
+            android:foreground="@drawable/bg_material"
             android:text="@string/my_evaluation" />
 
         <Space
@@ -91,6 +93,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_12"
             android:drawableTop="@mipmap/ic_info_report"
+            android:foreground="@drawable/bg_material"
             android:text="@string/electric_report" />
 
         <Space

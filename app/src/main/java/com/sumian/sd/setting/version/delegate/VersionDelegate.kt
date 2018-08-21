@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.view.KeyEvent
 import android.view.View
 import com.sumian.sd.R
+import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.App
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.setting.version.bean.Version
@@ -43,6 +44,8 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     private lateinit var mActivity: Activity
 
+    private var mIsHaveForce: Boolean = false
+
     override fun onGetVersionSuccess(version: Version) {
         this.mVersion = version
     }
@@ -51,23 +54,24 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     }
 
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean) {
+        this.mIsHaveForce = isHaveForce
         if (isHaveForce) {
             SumianAlertDialog(mActivity)
                     .setTheme(createTheme())
                     .setTitle(R.string.version_upgrade)
                     .setMessage(R.string.force_upgrade_version)
                     .setRightBtn(R.string.sure, this)
-                    .setCancelable()
+                    .setCancelable(false)
                     .setOnKeyListener(this)
                     .show()
         } else {
-            if (isHaveUpgrade && isHaveForce) {
+            if (isHaveUpgrade) {
                 SumianAlertDialog(mActivity)
                         .setTheme(createTheme())
                         .setTitle(R.string.version_upgrade)
                         .setMessage(R.string.have_a_new_version)
                         .setRightBtn(R.string.sure, this)
-                        .setCancelable()
+                        .setCancelable(true)
                         .setOnKeyListener(this)
                         .show()
             }
@@ -75,9 +79,17 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     }
 
     private fun createTheme(): ITheme {
-        return if ((mActivity as MainActivity).mIsBlackTheme)
-            ThemeFactory.create(BlackTheme::class.java) else
+        return if (mActivity is MainActivity) {
+            if ((mActivity as MainActivity).mIsBlackTheme) {
+                ThemeFactory.create(BlackTheme::class.java)
+            } else {
+                ThemeFactory.create(LightTheme::class.java)
+            }
+        } else if (mActivity is LoginActivity) {
+            ThemeFactory.create(BlackTheme::class.java)
+        } else {
             ThemeFactory.create(LightTheme::class.java)
+        }
     }
 
     private val mPresenter: VersionContract.Presenter by lazy {
@@ -95,12 +107,14 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
-            dialog.cancel()
-            mActivity.finishAffinity()
+            if (mIsHaveForce) {
+                dialog.cancel()
+                mActivity.finishAffinity()
+            } else {
+                dialog.cancel()
+            }
             return true
         }
         return false
     }
-
-
 }

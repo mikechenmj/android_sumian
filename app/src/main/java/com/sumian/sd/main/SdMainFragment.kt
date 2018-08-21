@@ -1,16 +1,12 @@
 package com.sumian.sd.main
 
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Color
 import android.support.v4.app.Fragment
-import com.blankj.utilcode.util.SPUtils
-import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.utils.AppUtil
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.BaseEventFragment
 import com.sumian.sd.base.SdBaseFragment
-import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationReadEvent
 import com.sumian.sd.event.SwitchMainActivityEvent
@@ -18,9 +14,7 @@ import com.sumian.sd.homepage.HomepageFragment
 import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.tab.DoctorFragment
 import com.sumian.sd.tab.MeFragment
-import com.sumian.sd.utils.NotificationUtil
 import com.sumian.sd.utils.StatusBarUtil
-import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.nav.BottomNavigationBar
 import com.sumian.sd.widget.nav.NavigationItem
 import kotlinx.android.synthetic.main.sd_fragment_main.*
@@ -58,7 +52,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
             nav_tab.selectItem(0, true)
             launchAnotherMainActivity()
         }
-        showOpenNotificationDialogIfNeeded()
     }
 
     private fun launchAnotherMainActivity() {
@@ -107,22 +100,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         ViewModelProviders.of(this)
                 .get(NotificationViewModel::class.java)
                 .updateUnreadCount()
-    }
-
-    private fun showOpenNotificationDialogIfNeeded() {
-        val previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0)
-        val alreadyShowed = previousShowTime > 0
-        if (NotificationUtil.areNotificationsEnabled(activity) || alreadyShowed) {
-            return
-        }
-        SumianAlertDialog(activity)
-                .setCloseIconVisible(true)
-                .setTopIconResource(R.mipmap.ic_notification_alert)
-                .setTitle(R.string.open_notification)
-                .setMessage(R.string.open_notification_and_receive_doctor_response)
-                .setRightBtn(R.string.open_notification) { SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
-                .show()
-        SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis())
     }
 
     fun onBackPressed() {

@@ -31,10 +31,10 @@ class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.O
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> {
-                        AdvisoryListFragment.newInstance(Advisory.UNUSED_TYPE)!!
+                        AdvisoryListFragment.newInstance(Advisory.UNFINISHED_TYPE)!!
                     }
-                    1 -> AdvisoryListFragment.newInstance(Advisory.USED_TYPE)!!
-                    else -> AdvisoryListFragment.newInstance(Advisory.UNUSED_TYPE)!!
+                    1 -> AdvisoryListFragment.newInstance(Advisory.FINISHED_TYPE)!!
+                    else -> AdvisoryListFragment.newInstance(Advisory.UNFINISHED_TYPE)!!
                 }
             }
 
@@ -44,9 +44,9 @@ class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.O
 
             override fun getPageTitle(position: Int): CharSequence? {
                 return when (position) {
-                    0 -> getString(R.string.unused)
-                    1 -> getString(R.string.used)
-                    else -> getString(R.string.unused)
+                    0 -> getString(R.string.un_finished)
+                    1 -> getString(R.string.finished)
+                    else -> getString(R.string.un_finished)
                 }
             }
         }

@@ -29,11 +29,13 @@ import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
 class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), RecordContract.View, SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
 
     companion object {
+
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
         private const val ARGS_ADVISORY = "com.sumian.sleepdoctor.extras.advisory"
 
         fun launch(context: Context, advisory: Advisory) {
-            val extras = Bundle().apply { putParcelable(ARGS_ADVISORY, advisory) }
+            val extras = Bundle()
+            extras.putParcelable(ARGS_ADVISORY, advisory)
             show(context, AdvisoryDetailActivity::class.java, extras)
         }
 
@@ -45,6 +47,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
             intent.putExtras(bundle)
             return intent
         }
+
     }
 
     private var mAdvisoryId: Int = 0

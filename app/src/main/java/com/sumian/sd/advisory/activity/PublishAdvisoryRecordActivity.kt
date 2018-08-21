@@ -85,7 +85,9 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     }
 
     override fun initBundle(bundle: Bundle?): Boolean {
-        this.mAdvisory = bundle?.getParcelable(ARGS_ADVISORY)
+        bundle?.let {
+            this.mAdvisory = it.getParcelable(ARGS_ADVISORY)
+        }
         return super.initBundle(bundle)
     }
 
@@ -145,7 +147,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     override fun onResume() {
         super.onResume()
 
-        mAdvisory?.let {
+        mAdvisory?.let { it ->
             val cacheContent = AdvisoryContentCacheUtils.checkAndLoadCacheContent(it.id)
             cacheContent?.let {
                 et_input.setText(it)
@@ -208,11 +210,13 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     }
 
     override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
-        et_input.text = null
+        et_input.post {
+            et_input.text = null
+        }
         AdvisoryContentCacheUtils.clearCache(advisoryId = advisory.id)
         this.mAdvisory = advisory
         this.mPresenter.getLastAdvisory()
-        AdvisoryDetailActivity.launch(this, advisory)
+        AdvisoryDetailActivity.launch(this@PublishAdvisoryRecordActivity, advisory)
         finish()
     }
 
@@ -273,7 +277,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     }
 
     override fun onPicPictureCallback() {
-        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(publish_pictures_previewer.paths).setCallback {
+        SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(publish_pictures_previewer.paths).setCallback { it ->
             it.forEach {
                 Log.e(TAG, it)
             }
@@ -328,7 +332,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
                         }
                     }
                     PIC_REQUEST_CODE_CAMERA -> {// capture new image
-                        cameraFile?.let {
+                        cameraFile?.let { it ->
 
                             if (!it.exists()) {
                                 return@let

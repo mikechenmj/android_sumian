@@ -1,5 +1,6 @@
 package com.sumian.sd.advisory.utils
 
+import com.sumian.common.operator.AppOperator
 import com.sumian.common.utils.StreamUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.utils.JsonUtil.toJson
@@ -23,7 +24,7 @@ class AdvisoryContentCacheUtils {
 
     companion object {
 
-        private const val cacheFileName = "cacheContent.tmp"
+        private const val cacheFileName = "advisoryCacheContent.log"
 
         fun saveContent2Cache(advisoryId: Int, content: String) {
             synchronized(this) {
@@ -84,9 +85,11 @@ class AdvisoryContentCacheUtils {
 
         fun clearCache(advisoryId: Int) {
             synchronized(this) {
-                val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
-                if (cacheContent.exists()) {
-                    cacheContent.delete()
+                AppOperator.runOnThread {
+                    val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
+                    if (cacheContent.exists()) {
+                        cacheContent.delete()
+                    }
                 }
             }
         }

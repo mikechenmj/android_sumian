@@ -34,6 +34,7 @@ class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(cont
     inner class ViewHolder constructor(itemView: View) : BaseViewHolder(itemView) {
 
         fun init(item: Advisory) {
+
             //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
             val advisoryTitle: String = when (item.status) {
                 5 -> String.format(Locale.getDefault(), "%s", item.description)
@@ -47,17 +48,7 @@ class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(cont
                     } else {
                         TimeUtil.formatYYYYMMDDHHMM(item.created_at)
                     })
-                    .setText(R.id.tv_advisory_action_status, when (item.status) {
-                        0 -> getString(R.string.waiting_for_reply)
-                        1 -> getString(R.string.replied)
-                        2 -> getString(R.string.over)
-                        3 -> getString(R.string.closed)
-                        4 -> getString(R.string.cancelled)
-                        5 -> getString(R.string.have_a_question)
-                        else -> {
-                            ""
-                        }
-                    }).setVisible(R.id.tv_advisory_action_status, true)
+                    .setText(R.id.tv_advisory_action_status, item.formatStatus()).setVisible(R.id.tv_advisory_action_status, true)
         }
 
         fun getString(@StringRes textId: Int = 0): String {

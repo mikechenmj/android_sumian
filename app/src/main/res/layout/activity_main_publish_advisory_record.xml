@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:menu_text="@string/submit"
         app:show_back="true"
-        app:text="向张三医生提问" />
+        app:text="问题详情" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

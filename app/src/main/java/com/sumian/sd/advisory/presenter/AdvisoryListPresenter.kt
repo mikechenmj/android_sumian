@@ -19,7 +19,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
     private var mView: AdvisoryListContract.View? = null
 
     private var mPageNumber: Int = 1
-    private var mAdvisoryType = Advisory.UNUSED_TYPE
+    private var mAdvisoryType = Advisory.UNFINISHED_TYPE
     private var mIsRefresh: Boolean = false
 
     init {
@@ -48,7 +48,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         mView?.onBegin()
 
         val map = mutableMapOf<String, Any>()
-        map["include"] = if (advisoryType == Advisory.USED_TYPE) "records" else ""
+        map["include"] = if (advisoryType == Advisory.FINISHED_TYPE) "records" else ""
         map["page"] = mPageNumber
         map["per_page"] = DEFAULT_PAGES
         map["type"] = advisoryType

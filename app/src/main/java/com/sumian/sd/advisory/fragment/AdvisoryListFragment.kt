@@ -28,7 +28,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
         private const val ARGS_ADVISORY_TYPE: String = "com.sumian.app.extras.advisory.type"
 
-        fun newInstance(advisoryType: Int = Advisory.UNUSED_TYPE): Fragment? {
+        fun newInstance(advisoryType: Int = Advisory.UNFINISHED_TYPE): Fragment? {
             val args = Bundle()
             args.putInt(ARGS_ADVISORY_TYPE, advisoryType)
             return SdBaseFragment.newInstance(AdvisoryListFragment::class.java, args)
@@ -37,11 +37,11 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     private lateinit var mListAdapter: AdvisoryListAdapter
 
-    private var mAdvisoryType: Int = Advisory.UNUSED_TYPE
+    private var mAdvisoryType: Int = Advisory.UNFINISHED_TYPE
 
     override fun initBundle(bundle: Bundle?) {
         super.initBundle(bundle)
-        this.mAdvisoryType = bundle?.getInt(ARGS_ADVISORY_TYPE, Advisory.UNUSED_TYPE)!!
+        this.mAdvisoryType = bundle?.getInt(ARGS_ADVISORY_TYPE, Advisory.UNFINISHED_TYPE)!!
     }
 
     override fun getLayoutId(): Int {
@@ -78,10 +78,13 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     override fun onItemClick(position: Int, itemId: Long) {
         val advisory = mListAdapter.getItem(position)
-        if (mAdvisoryType == Advisory.USED_TYPE) {
-            AdvisoryDetailActivity.launch(context!!, advisory)
-        } else {
-            PublishAdvisoryRecordActivity.launch(context!!, advisory)
+        when (advisory.status) {
+            5 -> {
+                PublishAdvisoryRecordActivity.launch(context!!, advisory)
+            }
+            else -> {
+                AdvisoryDetailActivity.launch(context!!, advisory)
+            }
         }
     }
 

@@ -57,30 +57,19 @@ data class TelBooking(var id: Int,
                 spannableString.setSpan(ForegroundColorSpan(App.getAppContext().resources.getColor(R.color.b3_color)), 0, formatStatus.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 return spannableString
             }
-            1 -> {
+            1, 2, 3 -> {
                 "已确认"
             }
-            2 -> {
-                "进行中"
-            }
-            3 -> {
-                "通话中"
-            }
-            4 -> {
+            4, 7 -> {
                 "已完成"
             }
-            5 -> {
+            5, 8 -> {
                 "已关闭"
             }
             6 -> {
-                "已挂起"
+                "挂起中"
             }
-            7 -> {
-                "已取消"
-            }
-            8 -> {
-                "已结束"
-            }//9 未使用,不显示
+            //9 未使用,不显示
             else -> {
                 ""
             }
