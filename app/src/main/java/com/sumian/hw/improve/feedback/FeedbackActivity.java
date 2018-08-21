@@ -21,10 +21,12 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
+import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.utils.ColorCompatUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,10 +48,10 @@ public class FeedbackActivity extends HwBaseActivity {
 
     private static final String TAG = FeedbackActivity.class.getSimpleName();
 
-    ImageView mTitleBar;
     EditText mEtInput;
     TextView mTvContentLength;
     TextView mTvSubmit;
+    TitleBar mTitleBar;
 
     private int mRetryCount;
 
@@ -65,12 +67,12 @@ public class FeedbackActivity extends HwBaseActivity {
     @Override
     protected void initWidget() {
         super.initWidget();
-        mTitleBar = findViewById(R.id.iv_back);
+        mTitleBar = findViewById(R.id.title_bar);
+        mTitleBar.setOnBackClickListener(v -> onBackPressed());
         mEtInput = findViewById(R.id.et_input);
         mTvContentLength = findViewById(R.id.tv_content_length);
         mTvSubmit = findViewById(R.id.tv_submit);
 
-        mTitleBar.setOnClickListener(v -> finish());
         mEtInput.addTextChangedListener(new OnTextWatcherAdapter() {
 
             @Override
@@ -81,12 +83,13 @@ public class FeedbackActivity extends HwBaseActivity {
                     mTvContentLength.setVisibility(View.GONE);
                 } else {
                     if (s.length() >= 200) {
-                        mTvContentLength.setTextColor(getResources().getColor(R.color.warn_color));
+                        mTvContentLength.setTextColor(ColorCompatUtil.Companion.getColor(FeedbackActivity.this, R.color.warn_color));
                     } else {
-                        mTvContentLength.setTextColor(getResources().getColor(R.color.full_general_color));
+                        mTvContentLength.setTextColor((ColorCompatUtil.Companion.getColor(FeedbackActivity.this, R.color.full_general_color)));
                     }
                     mTvContentLength.setVisibility(View.VISIBLE);
                 }
+                mEtInput.requestLayout();
             }
         });
 

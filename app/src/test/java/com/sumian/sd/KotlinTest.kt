@@ -1,8 +1,10 @@
 package com.sumian.sd
 
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.account.config.SumianConfig
+import com.sumian.sd.bean.ClassA
 import com.sumian.sd.h5.bean.H5BaseResponse
 import com.sumian.sd.utils.JsonUtil
 import org.junit.Test
@@ -24,4 +26,11 @@ class KotlinTest {
         System.out.println("12313".matches(regex.toRegex()))
     }
 
+    @Test
+    fun test2() {
+        val gson = Gson()
+        val json = "{\"enable\":true, \"age\":null}"
+        val a = gson.fromJson<ClassA>(json, ClassA::class.java)
+        println(a)
+    }
 }

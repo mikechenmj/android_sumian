@@ -8,10 +8,9 @@
     <TextView
         style="@style/ButtonSheetItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/space_20"
-        android:paddingTop="@dimen/space_20"
-        android:text="@string/logout_dialog_hint" />
+        android:layout_height="@dimen/space_80"
+        android:text="@string/logout_hint"
+        android:textSize="@dimen/font_14" />
 
     <TextView
         android:id="@+id/tv_logout"
@@ -22,7 +21,8 @@
         android:paddingBottom="@dimen/space_20"
         android:paddingTop="@dimen/space_20"
         android:text="@string/logout"
-        android:textColor="@color/t4_color" />
+        android:textColor="@color/t4_color"
+        android:textSize="@dimen/font_16" />
 
     <View style="@style/HorizontalDividerLine" />
 
@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/space_20"
         android:paddingTop="@dimen/space_20"
-        android:text="@string/cancel" />
+        android:text="@string/cancel"
+        android:textSize="@dimen/font_16" />
 
 </LinearLayout>
