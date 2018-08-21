@@ -17,7 +17,7 @@ import com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.push.ReportPushManager;
-import com.sumian.hw.tab.report.sheet.SleepAdviceBottomSheet;
+import com.sumian.hw.improve.report.sheet.SleepAdviceBottomSheet;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
