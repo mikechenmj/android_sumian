@@ -283,7 +283,7 @@ public class DailyReportFragment extends HwBaseFragment<DailyReportPresenter> im
     }
 
     @Override
-    public void onEnter() {
+    public void onEnter(String data) {
         // check monitor sync sleep data status
         AppManager.getReportModel().setOnSyncCallback(this).checkSyncStatus();
         showPushReportIfNeeded();

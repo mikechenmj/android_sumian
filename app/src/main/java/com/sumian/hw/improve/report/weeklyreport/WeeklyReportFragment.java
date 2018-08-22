@@ -140,7 +140,7 @@ public class WeeklyReportFragment extends HwBaseFragment<WeeklyReportPresenter> 
     }
 
     @Override
-    public void onEnter() {
+    public void onEnter(String data) {
         LogManager.appendUserOperationLog("点击 '周报告' 界面");
         showPushReportIfNeeded();
         AppManager.getJobScheduler().checkJobScheduler();

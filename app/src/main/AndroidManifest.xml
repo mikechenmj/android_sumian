@@ -520,7 +520,7 @@
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.TranslucentStatus" />
+            android:theme="@style/MainActivity" />
 
         <activity
             android:name=".account.login.LoginActivity"

@@ -76,7 +76,7 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void onEnter() {
+    public void onEnter(String data) {
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
     }
 

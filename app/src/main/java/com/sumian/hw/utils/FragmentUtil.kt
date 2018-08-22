@@ -53,10 +53,10 @@ class FragmentUtil {
         fun runOnCommit(selectFragment: Fragment)
     }
 
-    class DefaultRunOnCommitCallbackImpl : RunOnCommitCallback {
+    open class DefaultRunOnCommitCallbackImpl : FragmentUtil.RunOnCommitCallback {
         override fun runOnCommit(selectFragment: Fragment) {
             if (selectFragment is OnEnterListener) {
-                (selectFragment as OnEnterListener).onEnter()
+                (selectFragment as OnEnterListener).onEnter(null)
             }
         }
     }

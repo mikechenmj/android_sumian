@@ -38,12 +38,11 @@ public class HwWelcomeActivity extends HwBaseActivity {
         LogManager.appendUserOperationLog("用户启动 app.......");
         runUiThread(() -> {
             if (GuidelineUtils.needShowWelcomeUserGuide()) {
-//            if (true) {
                 UserGuidelineActivity.show(this);
             } else {
                 boolean login = AppManager.getAccountViewModel().isLogin();
                 if (login) {
-                    AppUtil.launchMainAndFinishAll();
+                    AppUtil.launchMain();
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);
                     if (launchCustomerServiceActivity) {
                         HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
@@ -52,8 +51,14 @@ public class HwWelcomeActivity extends HwBaseActivity {
                     ActivityUtils.startActivity(LoginActivity.class);
                 }
             }
-            finish();
         }, 500);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 之所以在onStop finish，是因为在启动MainActivity 时马上finish 会导致无法执行Activity转场动画，会显示APP下面的内容。
+        finish();
     }
 
     @Override
