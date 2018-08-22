@@ -361,13 +361,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.tab.report.activity.DaySleepDetailReportActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
             android:name="com.sumian.hw.account.activity.UserInfoActivity"
@@ -526,7 +519,7 @@
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.TranslucentStatus" />
+            android:theme="@style/MainActivity" />
 
         <activity
             android:name="com.sumian.sd.tel.activity.TelBookingListActivity"
