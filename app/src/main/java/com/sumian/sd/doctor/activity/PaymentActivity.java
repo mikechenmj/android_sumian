@@ -117,8 +117,8 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     protected void initData() {
         super.initData();
         ImageLoader.loadImage(mDoctorService.getIcon(), mIvGroupIcon);
-        mTvName.setText(mServicePackage.getName());
-        mTvDesc.setText(mServicePackage.getIntroduction());
+        mTvName.setText(mDoctorService.getName());
+        mTvDesc.setText(mServicePackage.getName());
 
         mPayCalculateItemView.setDefaultMoney(mPackage.getUnit_price());
     }
