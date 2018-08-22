@@ -443,7 +443,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                     @SuppressWarnings("unchecked") ArrayList<String> sleepData = (ArrayList<String>) m8fTransData.clone();
                     m8fTransData.clear();
                     if (isAvailableStorageEnough(dataCount)) {
-                        SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                        if (mTranType == 0x01) {
+                            SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                        }
                         LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd);
                         AppManager.getJobScheduler()
                                 .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,

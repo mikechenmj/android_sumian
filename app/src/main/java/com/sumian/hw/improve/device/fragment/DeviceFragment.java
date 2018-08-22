@@ -6,15 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -457,7 +454,7 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
 
         PowerManager powerManager = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
 
-        if (mPresenter.isConnected() && powerManager.isInteractive() && (autoUploadTime == 0 || System.currentTimeMillis() - autoUploadTime > 60 * 60 * 1000)) {
+        if (mPresenter.isConnected() && powerManager.isInteractive() && (autoUploadTime == 0 || System.currentTimeMillis() - autoUploadTime > 5)) {
             mDeviceStatusView.syncSleepDataWithPermissionCheck();
             LogManager.appendPhoneLog("app  主动同步睡眠数据,原因是上一次同步的时间超过1小时");
         }
