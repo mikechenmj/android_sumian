@@ -185,7 +185,7 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
     }
 
     @Override
-    public void onEnter() {
+    public void onEnter(String data) {
         LogManager.appendUserOperationLog("点击进入 '设备' 界面");
         if (isResumed()) {
             autoSyncSleepData();

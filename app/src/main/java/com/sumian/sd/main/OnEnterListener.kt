@@ -9,5 +9,5 @@ package com.sumian.sd.main
  * </pre>
  */
 interface OnEnterListener {
-    fun onEnter()
+    fun onEnter(data: String?)
 }

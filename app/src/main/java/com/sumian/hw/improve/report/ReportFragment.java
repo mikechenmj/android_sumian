@@ -46,7 +46,7 @@ public class ReportFragment extends HwBaseFragment implements TabIndicatorView.O
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void onEnter() {
+    public void onEnter(String data) {
         LogManager.appendUserOperationLog("点击进入 '报告' 页面");
         // check job scheduler
         AppManager.getJobScheduler().checkJobScheduler();

@@ -140,7 +140,7 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
         mPresenter.getBindDoctorInfo()
     }
 
-    override fun onEnter() {
+    override fun onEnter(data: String?) {
         if (mIsAutoRefresh) return
         onRefresh()
     }

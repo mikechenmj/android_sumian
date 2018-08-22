@@ -49,7 +49,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     override fun initWidget() {
         nav_tab.setOnSelectedTabChangeListener(this)
         iv_switch.setOnClickListener {
-            nav_tab.selectItem(0, true)
             launchAnotherMainActivity()
         }
     }
@@ -106,23 +105,21 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         AppUtil.exitApp()
     }
 
-    private fun showTabAccordingToData() {
-        val mPendingTabName = MainTabHelper.mPendingTabName
-        if (mPendingTabName == null) {
+    private fun showTabAccordingToData(data: String?) {
+        if (data == null) {
             if (fragmentManager?.findFragmentByTag(mFragmentTags[0]) == null) {
                 nav_tab.selectItem(0, true)
             }
         } else {
-            when (mPendingTabName) {
+            when (data) {
                 MainActivity.TAB_SD_0 -> nav_tab.selectItem(0, true)
                 MainActivity.TAB_SD_1 -> nav_tab.selectItem(1, true)
                 MainActivity.TAB_SD_2 -> nav_tab.selectItem(2, true)
             }
         }
-        MainTabHelper.mPendingTabName = null
     }
 
-    override fun onEnter() {
-        showTabAccordingToData()
+    override fun onEnter(data: String?) {
+        showTabAccordingToData(data)
     }
 }

@@ -34,7 +34,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View,OnEnterListener {
+class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View, OnEnterListener {
     private var mSleepPrescriptionWrapper: SleepPrescriptionWrapper? = null
     private var mHttpService = AppManager.getHttpService()!!
 
@@ -259,6 +259,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     private fun onAvatarClick() {
     }
 
-    override fun onEnter() {
+    override fun onEnter(data: String?) {
     }
 }
