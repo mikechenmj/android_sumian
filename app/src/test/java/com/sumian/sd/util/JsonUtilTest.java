@@ -10,6 +10,7 @@ import com.google.gson.JsonParseException;
 import org.junit.Test;
 
 import java.lang.reflect.Type;
+import java.util.Map;
 
 /**
  * <pre>
@@ -33,9 +34,17 @@ public class JsonUtilTest {
         System.out.println(a);
     }
 
+    @Test
+    public void test2() {
+        Gson gson = new Gson();
+        String json = "{\"enable\":true, \"age\":null}";
+        ClassA a = gson.fromJson(json, ClassA.class);
+        System.out.println(a);
+    }
+
     static class  ClassA {
         boolean enable;
-        int age;
+        Integer age;
 
         @Override
         public String toString() {

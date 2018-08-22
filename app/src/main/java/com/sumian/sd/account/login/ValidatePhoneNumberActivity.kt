@@ -49,6 +49,7 @@ class ValidatePhoneNumberActivity : BasePresenterActivity<ValidatePhoneNumberCon
 
     override fun initWidget() {
         super.initWidget()
+        title_bar.setOnBackClickListener { onBackPressed() }
         tv_send_captcha.setOnClickListener {
             val mobile = et_mobile.getValidText()
             if (mobile == null) {

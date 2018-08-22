@@ -30,13 +30,11 @@
                 <LinearLayout
                     android:id="@+id/lay_avatar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -81,14 +79,12 @@
                 <LinearLayout
                     android:id="@+id/lay_nickname"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:addStatesFromChildren="true"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -133,13 +129,11 @@
                 <LinearLayout
                     android:id="@+id/lay_mobile"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -173,13 +167,11 @@
                 <LinearLayout
                     android:id="@+id/lay_area"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -222,13 +214,11 @@
                 <LinearLayout
                     android:id="@+id/lay_gender"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -271,13 +261,11 @@
                 <LinearLayout
                     android:id="@+id/lay_birthday"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -320,13 +308,11 @@
                 <LinearLayout
                     android:id="@+id/lay_height"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -369,13 +355,11 @@
                 <LinearLayout
                     android:id="@+id/lay_weight"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -418,13 +402,11 @@
                 <LinearLayout
                     android:id="@+id/lay_career"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/normal_item_height_62"
                     android:background="@drawable/bg_material_ripple"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/space_20"
                     android:paddingStart="@dimen/space_24"
-                    android:paddingTop="@dimen/space_20"
                     tools:ignore="RtlSymmetry">
 
                     <TextView
@@ -463,7 +445,6 @@
                     android:layout_height="@dimen/divider_px_1"
                     android:layout_marginStart="@dimen/space_24"
                     android:background="@color/light_line_bg_color" />
-
 
             </LinearLayout>
 
