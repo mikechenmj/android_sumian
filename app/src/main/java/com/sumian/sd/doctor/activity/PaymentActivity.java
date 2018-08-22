@@ -24,6 +24,8 @@ import com.sumian.sd.widget.dialog.ActionLoadingDialog;
 import com.sumian.sd.widget.pay.PayCalculateItemView;
 import com.sumian.sd.widget.pay.PayItemGroupView;
 
+import org.jetbrains.annotations.NotNull;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -117,8 +119,8 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     protected void initData() {
         super.initData();
         ImageLoader.loadImage(mDoctorService.getIcon(), mIvGroupIcon);
-        mTvName.setText(mServicePackage.getName());
-        mTvDesc.setText(mServicePackage.getIntroduction());
+        mTvName.setText(mDoctorService.getName());
+        mTvDesc.setText(mServicePackage.getName());
 
         mPayCalculateItemView.setDefaultMoney(mPackage.getUnit_price());
     }
@@ -173,6 +175,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
         if (mActionLoadingDialog != null) {
             mActionLoadingDialog.dismiss();
         }
+        cancelDialog();
         finish();
     }
 
@@ -189,7 +192,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onFailure(String error) {
-        showToast(error);
+        showCenterToast(error);
         if (mActionLoadingDialog != null) {
             mActionLoadingDialog.dismiss();
         }
@@ -210,7 +213,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     @Override
     public void onCreatePayOrderSuccess() {
         mPresenter.doPay(this);
-        showToast(R.string.create_order_success);
+        showCenterToast(R.string.create_order_success);
     }
 
     @Override
@@ -222,7 +225,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onOrderPayFailed(@NonNull String payMsg) {
-        showToast(payMsg);
+        showCenterToast(payMsg);
         if (!mPayDialog.isShowing()) {
             mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show();
         }
@@ -230,7 +233,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onOrderPayInvalid(@NonNull String payMsg) {
-        showToast(payMsg);
+        showCenterToast(payMsg);
         if (!mPayDialog.isShowing()) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
         }
@@ -238,7 +241,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onOrderPayCancel(@NonNull String payMsg) {
-        showToast(payMsg);
+        showCenterToast(payMsg);
         if (mActionLoadingDialog != null) {
             mActionLoadingDialog.dismiss();
         }
@@ -246,15 +249,34 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onCheckOrderPayIsOk() {
-        if (mPayDialog != null && mPayDialog.isShowing()) {
-            mPayDialog.cancel();
-        }
+        cancelDialog();
         setResult(Activity.RESULT_OK);
         finish();
     }
 
+    private void cancelDialog() {
+        if (mPayDialog != null && mPayDialog.isShowing()) {
+            mPayDialog.cancel();
+        }
+    }
+
     @Override
     public void onCheckOrderPayIsInvalid(@NonNull String invalidError) {
-        onCheckOrderPayIsOk();
+        showCenterToast(invalidError);
+        if (mPayDialog != null) {
+            if (!mPayDialog.isShowing()) {
+                mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
+            } else {
+                mPayDialog.setPayStatus(PayDialog.PAY_INVALID);
+            }
+        }
+    }
+
+    @Override
+    public void onCheckOrderPayFinialIsInvalid(@NotNull String invalidError) {
+        showCenterToast(invalidError);
+        cancelDialog();
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 }

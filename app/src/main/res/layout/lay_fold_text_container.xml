@@ -5,15 +5,15 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.sumian.sd.widget.fold.FoldTextView
+    <TextView
         android:id="@+id/tv_summary"
         style="@style/text_t2_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/space_10"
+        android:ellipsize="end"
         android:lineSpacingExtra="@dimen/space_4"
-        android:marqueeRepeatLimit="marquee_forever"
-        tools:text="这里是一个医生的介绍，随便给点字来占位失眠是一种常见的睡眠障碍，困扰着许多人。目前的治疗方法包括药物治疗和非药物治疗。失眠是一种常见的睡眠障碍，困扰着许多人目前的治疗方法包括药物治疗,sososososososososososo…" />
+        tools:text="这里是一个医生的介绍，随便给点字dsdadadasdasdadadsdasdadadada来占位失眠是一种常见的睡眠障碍，困扰着许多人。目前的治疗方法包括药物治疗和非药物治疗。失眠是一种常见的睡眠障碍，困扰着许多人目前的治疗方法包括药物治疗,sososososososososososo…" />
 
     <TextView
         android:id="@+id/tv_show_more"

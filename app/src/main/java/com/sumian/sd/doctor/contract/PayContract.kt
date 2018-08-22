@@ -32,6 +32,13 @@ interface PayContract {
 
         fun onCheckOrderPayIsInvalid(invalidError: String)
 
+        /**
+         * 原因：ping++ 的服务器回调可能会比 客户端回调 晚，此时服务端还未生成电话预约，所以会返回上一次的数据
+         *
+         * 查询该订单10次都没检测到订单支付成功,则直接跳转到医生详情页
+         */
+        fun onCheckOrderPayFinialIsInvalid(invalidError: String)
+
     }
 
     interface Presenter : SdBasePresenter<Any> {
