@@ -135,6 +135,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     private fun showSleepPrescriptionFatiguedDialog(response: SleepPrescriptionWrapper) {
         SumianAlertDialog(activity)
+                .goneTopIcon(true)
                 .setTitle(R.string.last_week_tired_enquire)
                 .setMessage(R.string.last_week_tired_enquire_hint)
                 .setLeftBtn(R.string.no) {
@@ -150,8 +151,9 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     private fun showSleepUpdatedDialog() {
         SumianAlertDialog(activity)
                 .setTitle(R.string.update_sleep_prescription)
+                .goneTopIcon(true)
                 .setMessage(R.string.update_sleep_prescription_hint)
-                .setLeftBtn(R.string.i_got_it, null)
+                .setRightBtn(R.string.i_got_it, null)
                 .show()
     }
 
@@ -219,9 +221,10 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     private fun showStopPrescriptionDialog() {
         SumianAlertDialog(activity)
+                .goneTopIcon(true)
                 .setTitle(R.string.sleep_data_no_enough)
                 .setMessage(R.string.sleep_data_no_enough_hint)
-                .setLeftBtn(R.string.confirm, null)
+                .setRightBtn(R.string.confirm, null)
                 .show()
     }
 

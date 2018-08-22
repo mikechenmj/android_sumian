@@ -36,14 +36,14 @@ class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(cont
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Advisory?, position: Int) {
-        (holder as ViewHolder).init(item!!)
+        (holder as ViewHolder).init(item!!, mItems.size - 1 == position)
     }
 
     inner class ViewHolder constructor(itemView: View) : BaseViewHolder(itemView) {
 
         private var mCountDownTimer: CountDownTimer? = null
 
-        fun init(item: Advisory) {
+        fun init(item: Advisory, isGoneDivider: Boolean) {
 
             //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
             val advisoryTitle: String = when (item.status) {
@@ -112,9 +112,9 @@ class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(cont
                                 .setVisible(R.id.divider, true)
                     }
                 }
-
             }
 
+            setVisible(R.id.divider, !isGoneDivider)
         }
 
 
