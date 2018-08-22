@@ -122,7 +122,7 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
 
     override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
         SumianExecutor.runOnUiThread({
-            this.tb_me.showDot(if (adminMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
+            this.tb_me.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
         })
     }
 
