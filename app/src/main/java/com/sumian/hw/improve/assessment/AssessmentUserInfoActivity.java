@@ -12,11 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.account.contract.ModifyUserInfoContract;
-import com.sumian.hw.account.contract.UserInfoContract;
-import com.sumian.hw.account.presenter.UserInfoPresenter;
-import com.sumian.hw.account.sheet.SelectBottomSheet;
-import com.sumian.hw.account.sheet.SelectGenderBottomSheet;
+import com.sumian.sd.account.login.ModifyUserInfoContract;
+import com.sumian.sd.account.userProfile.HwUserInfoContract;
+import com.sumian.sd.account.userProfile.HwHwUserInfoPresenter;
+import com.sumian.sd.account.sheet.SelectBottomSheet;
+import com.sumian.sd.account.sheet.SelectGenderBottomSheet;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.widget.BottomSheetView;
@@ -34,7 +34,7 @@ import java.util.Map;
  * desc:
  */
 
-public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener, UserInfoContract.View {
+public class AssessmentUserInfoActivity extends HwBaseActivity<HwUserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener, HwUserInfoContract.View {
 
     public static final String ACTION_MODIFY_ASSESSMENT_USER_INFO = "com.sumian.app.action_MODIFY_ASSESSMENT_USER_INFO";
     public static final String EXTRA_ASSESSMENT_USER_INFO = "com.sumian.app.extra.ASSESSMENT_USER_INFO";
@@ -115,9 +115,10 @@ public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.
     @Override
     protected void initPresenter() {
         super.initPresenter();
-        UserInfoPresenter.init(this);
+        HwHwUserInfoPresenter.init(this);
     }
 
+    @Override
     public void onClick(View v) {
         String formKey;
         int id = v.getId();
@@ -286,7 +287,7 @@ public class AssessmentUserInfoActivity extends HwBaseActivity<UserInfoContract.
     }
 
     @Override
-    public void setPresenter(UserInfoContract.Presenter presenter) {
+    public void setPresenter(HwUserInfoContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 

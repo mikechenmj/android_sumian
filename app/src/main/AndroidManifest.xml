@@ -88,21 +88,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".account.userProfile.activity.ImproveUserProfileOneActivity"
+            android:name=".account.userProfile.ImproveUserProfileOneActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.userProfile.activity.ImproveUserProfileTwoActivity"
+            android:name=".account.userProfile.ImproveUserProfileTwoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.userProfile.activity.UserProfileActivity"
+            android:name=".account.userProfile.SdUserActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -126,7 +126,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
-            android:name=".account.userProfile.activity.ModifyUserInfoActivity"
+            android:name=".account.userProfile.ModifyUserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -342,7 +342,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
-            android:name=".account.userProfile.activity.MyTargetAndInformationActivity"
+            android:name=".account.userProfile.MyTargetAndInformationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -364,7 +364,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
-            android:name="com.sumian.hw.account.activity.UserInfoActivity"
+            android:name=".account.userProfile.HwUserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -402,15 +402,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
-            android:name="com.sumian.hw.account.activity.ResetPwdActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name="com.sumian.hw.account.activity.ModifyNicknameActivity"
+            android:name=".account.login.ModifyNicknameActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -437,7 +429,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.account.activity.AvatarImageActivity"
+            android:name=".account.login.AvatarImageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

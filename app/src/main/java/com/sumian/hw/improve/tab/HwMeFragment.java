@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.hw.account.activity.UserInfoActivity;
-import com.sumian.hw.account.contract.UserInfoContract;
+import com.sumian.sd.account.userProfile.HwUserInfoActivity;
+import com.sumian.sd.account.userProfile.HwUserInfoContract;
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class HwMeFragment extends HwBaseFragment implements View.OnClickListener, UserInfoContract.View,
+public class HwMeFragment extends HwBaseFragment implements View.OnClickListener, HwUserInfoContract.View,
         HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback,OnEnterListener {
 
     @BindView(R.id.iv_avatar)
@@ -85,7 +85,7 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_user_info_container:
-                UserInfoActivity.show(getContext());
+                HwUserInfoActivity.show(getContext());
                 break;
             case R.id.siv_customer_service:
                 UIProvider.getInstance().clearCacheMsg();
@@ -107,7 +107,7 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
     }
 
     @Override
-    public void setPresenter(UserInfoContract.Presenter presenter) {
+    public void setPresenter(HwUserInfoContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 

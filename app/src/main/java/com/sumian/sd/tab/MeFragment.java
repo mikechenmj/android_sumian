@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
-import com.sumian.sd.account.userProfile.activity.UserProfileActivity;
+import com.sumian.sd.account.userProfile.SdUserActivity;
 import com.sumian.sd.advisory.activity.AdvisoryListActivity;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
@@ -85,7 +85,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.iv_avatar:
             case R.id.tv_nickname:
-                UserProfileActivity.show(getContext(), UserProfileActivity.class);
+                SdUserActivity.show(getContext(), SdUserActivity.class);
                 break;
             case R.id.dv_setting:
                 SettingActivity.show(getContext(), SettingActivity.class);
