@@ -39,20 +39,15 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
     private lateinit var mUser: UserInfo
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
-        var viewHolder: SdBaseViewHolder<Record>? = null
         return when (type) {
             Record.RECORD_QUESTION_TYPE -> {
-                viewHolder = QuestionViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_question_item, parent, false))
-                viewHolder.itemView!!.tag = viewHolder
-                viewHolder
+                QuestionViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_question_item, parent, false))
             }
             Record.RECORD_REPLY_TYPE -> {
-                viewHolder = ReplyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_reply_item, parent, false))
-                viewHolder.itemView!!.tag = viewHolder
-                viewHolder
+                ReplyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_reply_item, parent, false))
             }
             else -> {
-                viewHolder!!
+                throw NullPointerException("invalid advisory type")
             }
         }
     }
@@ -127,7 +122,9 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
             }
 
             mTvQuestionTime?.text = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault()).format(Date(item.created_at * 1000L))
+
             mTvContent?.text = item.content
+
             if (item.images.isEmpty()) {
                 mFlowLayout?.removeAllViewsInLayout()
                 mFlowLayout?.visibility = View.GONE

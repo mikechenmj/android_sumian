@@ -14,34 +14,42 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_284"
+            android:layout_height="@dimen/space_210"
             android:background="@drawable/bg_welcome"
             android:orientation="vertical"
             android:paddingTop="@dimen/status_bar_height">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_avatar"
-                android:layout_width="@dimen/space_80"
-                android:layout_height="@dimen/space_80"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@mipmap/ic_info_avatar_patient"
-                app:civ_border_color="@android:color/white"
-                app:civ_border_width="@dimen/space_4" />
-
-            <TextView
-                android:id="@+id/tv_nickname"
-                style="@style/text_t1_18"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="@dimen/space_50"
-                android:drawableEnd="@mipmap/ic_info_icon_edit"
-                android:drawablePadding="@dimen/space_12"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_18"
-                tools:text="@string/martian" />
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="@dimen/space_80"
+                    android:layout_height="@dimen/space_80"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_info_avatar_patient"
+                    app:civ_border_color="@android:color/white"
+                    app:civ_border_width="@dimen/space_4" />
+
+                <TextView
+                    android:id="@+id/tv_nickname"
+                    style="@style/text_b2_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="@dimen/space_30"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:drawableEnd="@mipmap/ic_info_icon_edit"
+                    android:drawablePadding="@dimen/space_12"
+                    android:singleLine="true"
+                    tools:text="@string/martian" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_notification"

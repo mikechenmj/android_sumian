@@ -11,6 +11,7 @@
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
         android:layout_marginTop="@dimen/space_20"
+        android:foreground="@drawable/bg_material"
         android:text="@string/my_service" />
 
     <View
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_12"
             android:drawableTop="@mipmap/ic_info_graphic"
+            android:foreground="@drawable/bg_material"
             android:text="@string/media_service" />
 
         <Space
@@ -82,7 +84,23 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.5" />
+
+        <TextView
+            android:id="@+id/tv_online_report"
+            style="@style/text_t1_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/space_12"
+            android:drawableTop="@mipmap/ic_info_report"
+            android:foreground="@drawable/bg_material"
+            android:text="@string/electric_report"
+            android:visibility="invisible" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
 
     </LinearLayout>
 

@@ -68,6 +68,11 @@
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
+    <style name="text_b2_18" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
     <style name="text_b2_22" parent="BaseText">
         <item name="android:textColor">@color/b2_color</item>
         <item name="android:textSize">@dimen/font_22</item>

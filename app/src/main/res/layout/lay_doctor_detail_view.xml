@@ -17,8 +17,8 @@
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:id="@+id/iv_avatar"
-                android:layout_width="@dimen/space_104"
-                android:layout_height="@dimen/space_104"
+                android:layout_width="@dimen/space_90"
+                android:layout_height="@dimen/space_90"
                 android:layout_marginLeft="@dimen/space_20"
                 android:layout_marginRight="@dimen/space_20"
                 android:contentDescription="@null"
@@ -51,7 +51,7 @@
             <TextView
                 android:id="@+id/tv_department"
                 style="@style/text_t1_style"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_20"
                 android:layout_marginRight="@dimen/space_20"
@@ -62,9 +62,16 @@
                 android:minLines="1"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
-                app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+                app:layout_constraintLeft_toRightOf="@+id/iv_avatar"
+                app:layout_constraintRight_toRightOf="@id/space"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
-                tools:text="哈尔滨医科大学附属第一医院 睡眠医学中心睡眠医学中心科室" />
+                tools:text="哈尔滨医科大学附属第一医院 睡眠医学中心睡眠医学中心科室dadasdadaddsada" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                app:layout_constraintRight_toRightOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 

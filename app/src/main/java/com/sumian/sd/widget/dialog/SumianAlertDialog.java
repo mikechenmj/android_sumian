@@ -219,13 +219,18 @@ public class SumianAlertDialog {
         mDialog.show();
     }
 
-    public SumianAlertDialog setCancelable() {
-        mDialog.setCancelable(false);
+    public SumianAlertDialog setCancelable(boolean cancelable) {
+        mDialog.setCancelable(cancelable);
         return this;
     }
 
     public SumianAlertDialog setOnKeyListener(DialogInterface.OnKeyListener onKeyListener) {
         mDialog.setOnKeyListener(onKeyListener);
+        return this;
+    }
+
+    public SumianAlertDialog setOnCancelListener(DialogInterface.OnCancelListener onCancelListener) {
+        mDialog.setOnCancelListener(onCancelListener);
         return this;
     }
 

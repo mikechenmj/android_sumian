@@ -5,15 +5,25 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.SPUtils
+import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.base.BaseEventActivity
+import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.main.widget.SwitchAnimationView
+import com.sumian.sd.notification.NotificationListActivity.REQUEST_CODE_OPEN_NOTIFICATION
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.utils.ColorCompatUtil
+import com.sumian.sd.utils.NotificationUtil
+import com.sumian.sd.widget.dialog.SumianAlertDialog
+import com.sumian.sd.widget.dialog.theme.BlackTheme
+import com.sumian.sd.widget.dialog.theme.ITheme
+import com.sumian.sd.widget.dialog.theme.LightTheme
+import com.sumian.sd.widget.dialog.theme.ThemeFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -82,25 +92,14 @@ class MainActivity : BaseEventActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        mVersionDelegate.checkVersion(this)
         showFragmentAccordingToData()
+        showOpenNotificationDialogIfNeeded()
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         showFragmentAccordingToData()
-    }
-
-    private fun showFragmentAccordingToData() {
-        when (mLaunchTabName) {
-            TAB_HW_0, TAB_HW_1, TAB_HW_2 -> showFragmentByPosition(mFragmentPositionHw)
-            TAB_SD_0, TAB_SD_1, TAB_SD_2 -> showFragmentByPosition(mFragmentPositionSd)
-        }
-        mLaunchTabName = null
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mVersionDelegate.checkVersion(this)
     }
 
     override fun openEventBus(): Boolean {
@@ -137,5 +136,39 @@ class MainActivity : BaseEventActivity() {
                         }
                     }
                 })
+    }
+
+    private fun showOpenNotificationDialogIfNeeded() {
+        val previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0)
+        val alreadyShowed = previousShowTime > 0
+
+        if (NotificationUtil.areNotificationsEnabled(this@MainActivity) || alreadyShowed) {
+            return
+        }
+
+        SumianAlertDialog(this@MainActivity)
+                .setCloseIconVisible(true)
+                .setTheme(createTheme())
+                .setTopIconResource(R.mipmap.ic_notification_alert)
+                .setTitle(R.string.open_notification)
+                .setMessage(R.string.open_notification_and_receive_doctor_response)
+                .setRightBtn(R.string.open_notification) { SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
+                .show()
+        SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis())
+    }
+
+    private fun createTheme(): ITheme {
+        return if (mIsBlackTheme)
+            ThemeFactory.create(BlackTheme::class.java)
+        else
+            ThemeFactory.create(LightTheme::class.java)
+    }
+
+    private fun showFragmentAccordingToData() {
+        when (mLaunchTabName) {
+            TAB_HW_0, TAB_HW_1, TAB_HW_2 -> showFragmentByPosition(mFragmentPositionHw)
+            TAB_SD_0, TAB_SD_1, TAB_SD_2 -> showFragmentByPosition(mFragmentPositionSd)
+        }
+        mLaunchTabName = null
     }
 }

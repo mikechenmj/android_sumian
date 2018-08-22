@@ -29,7 +29,7 @@ interface AdvisoryListContract {
 
         fun refreshAdvisories()
 
-        fun getAdvisories(advisoryType: Int = Advisory.UNUSED_TYPE)
+        fun getAdvisories(advisoryType: Int = Advisory.UNFINISHED_TYPE)
 
         fun getNextAdvisories()
 

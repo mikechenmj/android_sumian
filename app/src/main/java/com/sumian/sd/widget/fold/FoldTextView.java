@@ -77,7 +77,9 @@ public class FoldTextView extends EmojiAppCompatTextView implements View.OnClick
         //赋值计算
         int linCount = getLineCount();
 
-        if (linCount <= 0) return;
+        if (linCount <= 0) {
+            return;
+        }
 
         int defaultShowLine = this.mDefaultShowLine;
 
@@ -88,18 +90,23 @@ public class FoldTextView extends EmojiAppCompatTextView implements View.OnClick
 
         //当文字行数大于默认设置的显示行数时,实现折叠,首先初始化折叠
         //1.计算默认显示的文字行数的高度
-        float defaultHeight = defaultShowLine * lineHeight;
-        this.mMaxHeight = contentHeight;
-        this.mDefaultSHowHeight = defaultHeight;
-        if (mFoldHeight <= 0)
-            this.mFoldHeight = contentHeight - defaultHeight;
+        if (linCount > defaultShowLine) {
+            this.mDefaultSHowHeight = (float) (defaultShowLine * lineHeight);
+            mLayoutParams.height = (int) mDefaultSHowHeight + getPaddingBottom() + getPaddingTop();
+            setLayoutParams(mLayoutParams);
+        }
 
-        mLayoutParams.height = (int) defaultHeight + getPaddingBottom() + getPaddingTop();
-        setLayoutParams(mLayoutParams);
+        if (mFoldHeight <= 0.0f) {
+            this.mFoldHeight = contentHeight - mDefaultSHowHeight;
+        }
+
+        this.mMaxHeight = contentHeight;
+
 
         if (linCount > 4) {
             setOnClickListener(this);
         }
+
     }
 
     @Override

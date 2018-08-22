@@ -254,6 +254,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <activity
             android:name="com.sumian.sd.advisory.activity.AdvisoryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -522,13 +523,6 @@
             android:theme="@style/MainActivity" />
 
         <activity
-            android:name="com.sumian.sd.tel.activity.TelBookingListActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".account.login.LoginActivity"
             android:exported="true"
             android:theme="@style/HwAppTheme" />
@@ -550,14 +544,21 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".tel.activity.TelBookingDetailActivity"
-            android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
+            android:name="com.sumian.sd.tel.activity.TelBookingListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
     </application>
