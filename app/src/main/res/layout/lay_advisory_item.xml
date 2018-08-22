@@ -50,11 +50,28 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/tv_timer"
+        style="@style/text_t2_14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
+        android:layout_marginTop="@dimen/space_20"
+        android:background="@color/b1_color"
+        android:paddingEnd="@dimen/space_20"
+        android:paddingStart="@dimen/space_20"
+        android:paddingTop="@dimen/space_10"
+        android:visibility="visible"
+        tools:text="该订单还有过期，10请及时回复。"
+        tools:visibility="visible" />
+
     <View
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1"
         android:layout_marginStart="@dimen/space_20"
         android:layout_marginTop="@dimen/space_20"
-        android:background="@color/l1_color" />
+        android:background="@color/l1_color"
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
 </LinearLayout>
