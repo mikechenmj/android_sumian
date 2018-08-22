@@ -10,7 +10,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.network.callback.BaseResponseCallback
-import com.sumian.sd.order.OrderDetailV2
+import com.sumian.sd.order.OrderDetail
 import com.sumian.sd.utils.TimeUtil
 import kotlinx.android.synthetic.main.activity_refund.*
 
@@ -58,10 +58,10 @@ class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
 
     override fun initData() {
         super.initData()
-        val call = AppManager.getHttpService().getOrderDetailV2(mOrderNo)
+        val call = AppManager.getHttpService().getOrderDetail(mOrderNo)
         addCall(call)
-        call.enqueue(object : BaseResponseCallback<OrderDetailV2>() {
-            override fun onSuccess(response: OrderDetailV2?) {
+        call.enqueue(object : BaseResponseCallback<OrderDetail>() {
+            override fun onSuccess(response: OrderDetail?) {
                 if (response == null) return
                 setOrderInfo(response)
             }
@@ -71,7 +71,7 @@ class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
         })
     }
 
-    private fun setOrderInfo(order: OrderDetailV2) {
+    private fun setOrderInfo(order: OrderDetail) {
         LogUtils.d(order)
         ll_order.visibility = View.VISIBLE
         val amount = "%.02f".format(order.amount * 1.0f)

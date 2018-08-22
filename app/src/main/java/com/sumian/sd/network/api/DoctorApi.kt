@@ -18,7 +18,6 @@ import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.order.OrderDetail
-import com.sumian.sd.order.OrderDetailV2
 import com.sumian.sd.oss.OssResponse
 import com.sumian.sd.record.bean.DoctorServiceList
 import com.sumian.sd.record.bean.SleepRecord
@@ -100,9 +99,6 @@ interface DoctorApi {
 
     @GET("orders/{order_no}")
     fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
-
-    @GET("orders/{order_no}")
-    fun getOrderDetailV2(@Path("order_no") orderNumber: String): Call<OrderDetailV2>
 
     @FormUrlEncoded
     @POST("user/leancloud")

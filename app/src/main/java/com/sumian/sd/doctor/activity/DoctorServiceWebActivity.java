@@ -106,18 +106,27 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_BUY_SERVICE && resultCode == RESULT_OK) {
-            switch (mDoctorService.getType()) {
-                case DoctorService.SERVICE_TYPE_ADVISORY:
-                    Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
-                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-                    PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
+        if (requestCode == REQUEST_CODE_BUY_SERVICE) {
+            switch (resultCode) {
+                case RESULT_OK:
+                    switch (mDoctorService.getType()) {
+                        case DoctorService.SERVICE_TYPE_ADVISORY:
+                            Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
+                            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                            PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
+                            break;
+                        case DoctorService.SERVICE_TYPE_SLEEP_REPORT:
+                            SleepRecordActivity.Companion.launch(this);
+                            break;
+                        case DoctorService.SERVICE_TYPE_PHONE_ADVISORY:
+                            TelBookingPublishActivity.show();
+                        default:
+                            break;
+                    }
                     break;
-                case DoctorService.SERVICE_TYPE_SLEEP_REPORT:
-                    SleepRecordActivity.Companion.launch(this);
+                case RESULT_CANCELED:
+
                     break;
-                case DoctorService.SERVICE_TYPE_PHONE_ADVISORY:
-                    TelBookingPublishActivity.show();
                 default:
                     break;
             }
