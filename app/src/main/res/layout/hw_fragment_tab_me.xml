@@ -47,13 +47,11 @@
         <ImageView
             android:id="@+id/siv_customer_service"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_108"
-            android:layout_marginBottom="@dimen/space_6"
-            android:layout_marginTop="@dimen/space_6"
+            android:layout_height="wrap_content"
             android:contentDescription="@null"
             android:foreground="@drawable/bg_material_ripple"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_bg_info_customer_service_black" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_info_customerservice_black" />
 
         <com.sumian.sd.widget.divider.SettingDividerView
             android:id="@+id/siv_setting"

@@ -21,7 +21,6 @@ import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.onlinereport.OnlineReportDetailActivity
 import com.sumian.sd.onlinereport.OnlineReportListActivity
 import com.sumian.sd.utils.TimeUtil
-import com.sumian.sd.utils.getAppContext
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -137,7 +136,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                     val image = rootView.findViewById<QMUIRadiusImageView>(R.id.iv)
                     image.setOnClickListener { v -> LargeImageActivity.show(v?.context, img) }
 
-                    load(img, RequestOptions.errorOf(R.mipmap.ic_preview_split_graph).fitCenter().override(getAppContext().resources.getDimensionPixelSize(R.dimen.space_80), getAppContext().resources.getDimensionPixelSize(R.dimen.space_80)), image)
+                    load("$img?x-oss-process=image/resize,m_lfit,h_80,w_80", RequestOptions.errorOf(R.mipmap.ic_preview_split_graph).fitCenter(), image)
 
                     mFlowLayout?.addView(rootView)
 

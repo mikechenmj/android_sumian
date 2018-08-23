@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_info_customerservice_black"
+    android:gravity="center|left"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_30"
+        android:paddingTop="@dimen/space_30">
+
+        <TextView
+            style="@style/text_b2_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="睡眠管家" />
+
+        <TextView
+            style="@style/text_b2_12"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_24"
+            android:layout_marginStart="@dimen/space_6"
+            android:background="@drawable/ic_info_bg_notification"
+            android:text="新回复"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/text_b2_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_30"
+        android:layout_marginLeft="@dimen/space_30"
+        android:layout_marginRight="@dimen/space_30"
+        android:layout_marginTop="@dimen/space_6"
+        android:text="7X24小时为您服务" />
+
+
+</LinearLayout>

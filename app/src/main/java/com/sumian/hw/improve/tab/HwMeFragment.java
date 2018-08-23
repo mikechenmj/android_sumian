@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ConstantConditions")
 public class HwMeFragment extends HwBaseFragment implements View.OnClickListener, UserInfoContract.View,
-        HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback,OnEnterListener {
+        HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback, OnEnterListener {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -151,6 +151,6 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
 
     @Override
     public void onHideMsgCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
-        runOnUiThread(() -> mSivKefu.setImageResource((adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) ? R.drawable.ic_bg_info_customer_service_reddot : R.drawable.ic_bg_info_customer_service_black));
+        runOnUiThread(() -> mSivKefu.setImageResource((adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) ? R.drawable.ic_info_customerservice_reddot : R.drawable.ic_info_customerservice_black));
     }
 }

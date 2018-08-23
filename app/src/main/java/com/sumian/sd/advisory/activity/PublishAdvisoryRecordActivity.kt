@@ -57,7 +57,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     private var mSelectOnlineRecords: ArrayList<OnlineReport>? = null
 
-    private var mAdvisory: Advisory? = null
+    private var mAdvisoryId: Int = 0
 
     private var mPictures = mutableListOf<String>()
 
@@ -77,16 +77,19 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
         private const val PIC_REQUEST_CODE_CAMERA = 0x02
 
-        fun launch(context: Context, advisory: Advisory?) {
+        private const val REQUEST_WRITE_PERMISSION = 0x03
+
+
+        fun launch(context: Context, advisoryId: Int) {
             val extras = Bundle()
-            extras.putParcelable(ARGS_ADVISORY, advisory)
+            extras.putInt(ARGS_ADVISORY, advisoryId)
             show(context, PublishAdvisoryRecordActivity::class.java, extras)
         }
     }
 
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
-            this.mAdvisory = it.getParcelable(ARGS_ADVISORY)
+            this.mAdvisoryId = it.getInt(ARGS_ADVISORY, 0)
         }
         return super.initBundle(bundle)
     }
@@ -139,16 +142,30 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     override fun initData() {
         super.initData()
-        if (mAdvisory == null) {
+        if (mAdvisoryId == 0) {
             this.mPresenter.getLastAdvisory()
+        }
+
+        requestWritePermissions()
+    }
+
+
+    @AfterPermissionGranted(REQUEST_WRITE_PERMISSION)
+    private fun requestWritePermissions() {
+        val perms = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            Log.e(TAG, "已经有 sd 卡读写权限")
+        } else {
+            // Request one permission
+            Log.e(TAG, "没有 sd 卡读写权限")
+            EasyPermissions.requestPermissions(this, "请求获取照片的访问权限", REQUEST_WRITE_PERMISSION, *perms)
         }
     }
 
     override fun onResume() {
         super.onResume()
-
-        mAdvisory?.let { it ->
-            val cacheContent = AdvisoryContentCacheUtils.checkAndLoadCacheContent(it.id)
+        if (mAdvisoryId != 0) {
+            val cacheContent = AdvisoryContentCacheUtils.checkAndLoadCacheContent(mAdvisoryId)
             cacheContent?.let {
                 et_input.setText(it)
                 et_input.setSelection(it.length)
@@ -158,8 +175,8 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     override fun onStop() {
         super.onStop()
-        mAdvisory?.let {
-            AdvisoryContentCacheUtils.saveContent2Cache(it.id, et_input.text.toString().trim())
+        if (mAdvisoryId != 0) {
+            AdvisoryContentCacheUtils.saveContent2Cache(mAdvisoryId, et_input.text.toString().trim())
         }
     }
 
@@ -168,7 +185,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         this.mPresenter = presenter
     }
 
-    override fun onMenuClick(v: View?) {
+    override fun onMenuClick(v: View) {
 
         val inputContent = et_input.text.toString().trim()
 
@@ -178,9 +195,9 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         }
 
         if (mPictures.isEmpty()) {
-            this.mPresenter.publishAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = getSelectReportIds())
+            this.mPresenter.publishAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds())
         } else {
-            this.mPresenter.publishPictureAdvisoryRecord(advisoryId = mAdvisory?.id!!, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures.size)
+            this.mPresenter.publishPictureAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures.size)
         }
 
     }
@@ -201,8 +218,11 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         }
     }
 
+    private var mAdvisory: Advisory? = null
+
     override fun onGetLastAdvisorySuccess(advisory: Advisory) {
         this.mAdvisory = advisory
+        this.mAdvisoryId = advisory.id
     }
 
     override fun onGetLastAdvisoryFailed(error: String) {
@@ -215,6 +235,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         }
         AdvisoryContentCacheUtils.clearCache(advisoryId = advisory.id)
         this.mAdvisory = advisory
+        this.mAdvisoryId = advisory.id
         this.mPresenter.getLastAdvisory()
         AdvisoryDetailActivity.launch(this@PublishAdvisoryRecordActivity, advisory)
         finish()
@@ -250,7 +271,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     @AfterPermissionGranted(PIC_REQUEST_CODE_CAMERA)
     override fun onTakePhotoCallback() {
-        val perms = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+        val perms = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
         if (EasyPermissions.hasPermissions(this, *perms)) {
 
             cameraFile = File(generateImagePath(AppManager.getAccountViewModel().token.user.id.toString(), App.getAppContext()), (AppManager.getAccountViewModel().token.user.id + System.currentTimeMillis()).toString() + ".jpg")

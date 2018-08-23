@@ -9,6 +9,7 @@ import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.doctor.bean.Doctor
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /**
  *
@@ -36,7 +37,7 @@ data class Advisory(var id: Int, //咨询 ID
                     var records: ArrayList<Record>?,//提问或回复记录
                     var user: UserInfo?,//用户信息
                     var doctor: Doctor?//医生信息
-) : Parcelable {
+) : Parcelable, Serializable {
     companion object {
 
         const val UNFINISHED_TYPE: Int = 0x00  //未完成的咨询
@@ -55,7 +56,7 @@ data class Advisory(var id: Int, //咨询 ID
                 "已回复"
             }
             2 -> {
-                "已结束"
+                "已完成"
             }
             3 -> {
                 "已关闭"

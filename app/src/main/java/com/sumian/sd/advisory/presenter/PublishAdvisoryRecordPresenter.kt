@@ -93,7 +93,6 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         this.mView?.onBegin()
 
         val advisoryRecordBody = AdvisoryRecordBody()
-        advisoryRecordBody.include = "records"
         advisoryRecordBody.advisory_id = advisoryId
         advisoryRecordBody.content = content
         if (onlineReportIds != null) {

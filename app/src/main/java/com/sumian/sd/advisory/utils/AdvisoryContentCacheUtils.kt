@@ -1,11 +1,10 @@
 package com.sumian.sd.advisory.utils
 
-import com.sumian.common.operator.AppOperator
+import android.text.TextUtils
 import com.sumian.common.utils.StreamUtil
 import com.sumian.sd.app.App
-import com.sumian.sd.utils.JsonUtil.toJson
-import org.json.JSONObject
 import java.io.*
+import java.lang.StringBuilder
 
 /**
  * <pre>
@@ -26,30 +25,25 @@ class AdvisoryContentCacheUtils {
 
         private const val cacheFileName = "advisoryCacheContent.log"
 
-        fun saveContent2Cache(advisoryId: Int, content: String) {
-            synchronized(this) {
-                val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
-                if (cacheContent.exists()) {
-                    if (cacheContent.length() > 0) {
-                        writeCache(advisoryId, cacheContent, content)
-                    } else {
+        private val CACHE_PARENT_PATH = App.getAppContext().cacheDir
 
-                    }
-                } else {
-                    val createNewFile = cacheContent.createNewFile()
-                    if (createNewFile) {
-                        writeCache(advisoryId, cacheContent, content)
-                    }
+        fun saveContent2Cache(advisoryId: Int, content: String) {
+            val cacheContent = File(CACHE_PARENT_PATH, "$advisoryId" + cacheFileName)
+            if (cacheContent.exists()) {
+                writeCache(cacheContent, content)
+            } else {
+                val createNewFile = cacheContent.createNewFile()
+                if (createNewFile) {
+                    writeCache(cacheContent, content)
                 }
             }
         }
 
-        private fun writeCache(advisoryId: Int, cacheContentFile: File, content: String) {
-            val tmpMap = mutableMapOf<Int, String>()
-            tmpMap[advisoryId] = content
+        private fun writeCache(cacheContentFile: File, content: String) {
+            if (TextUtils.isEmpty(content)) return
             val bw = BufferedWriter(OutputStreamWriter(FileOutputStream(cacheContentFile)))
             try {
-                bw.write(toJson(tmpMap))
+                bw.write(content)
                 bw.flush()
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -59,11 +53,11 @@ class AdvisoryContentCacheUtils {
         }
 
         fun checkAndLoadCacheContent(advisoryId: Int): String? {
-            val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
+            val cacheContent = File(CACHE_PARENT_PATH, "$advisoryId" + cacheFileName)
             if (cacheContent.exists() && cacheContent.length() > 0) {
                 val br = BufferedReader(InputStreamReader(FileInputStream(cacheContent)))
                 var line: String?
-                val buff = StringBuffer()
+                val buff = StringBuilder()
                 try {
                     line = br.readLine()
                     while (line != null) {
@@ -75,22 +69,16 @@ class AdvisoryContentCacheUtils {
                 } finally {
                     StreamUtil.close(br)
                 }
-                val json = buff.toString()
-                val jsonObject = JSONObject(json)
-                return jsonObject.getString(advisoryId.toString())
+                return buff.toString()
             } else {
                 return null
             }
         }
 
         fun clearCache(advisoryId: Int) {
-            synchronized(this) {
-                AppOperator.runOnThread {
-                    val cacheContent = File(App.getAppContext().cacheDir, "$advisoryId" + cacheFileName)
-                    if (cacheContent.exists()) {
-                        cacheContent.delete()
-                    }
-                }
+            val cacheContent = File(CACHE_PARENT_PATH, "$advisoryId" + cacheFileName)
+            if (cacheContent.exists()) {
+                cacheContent.delete()
             }
         }
     }
