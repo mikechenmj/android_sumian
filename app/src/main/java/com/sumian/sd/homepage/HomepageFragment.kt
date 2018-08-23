@@ -3,6 +3,7 @@ package com.sumian.sd.homepage
 import android.arch.lifecycle.Observer
 import android.text.format.DateUtils
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.image.ImageLoader
@@ -10,6 +11,7 @@ import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
+import com.sumian.sd.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sd.event.*
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SleepPrescription
@@ -63,8 +65,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun launchCbtiActivity() {
-        ToastUtils.showShort(R.string.comming_soon)
-//        ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
+//        ToastUtils.showShort(R.string.comming_soon)
+        ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
     }
 
     private fun initUserInfo() {
