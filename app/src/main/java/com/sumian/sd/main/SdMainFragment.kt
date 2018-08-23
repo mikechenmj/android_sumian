@@ -96,7 +96,7 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     @Subscribe(sticky = true)
     fun onNotificationReadEvent(event: NotificationReadEvent) {
         EventBusUtil.removeStickyEvent(event)
-        ViewModelProviders.of(this)
+        ViewModelProviders.of(activity!!)
                 .get(NotificationViewModel::class.java)
                 .updateUnreadCount()
     }
