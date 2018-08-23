@@ -265,5 +265,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     override fun onEnter(data: String?) {
+        initData()
     }
 }
