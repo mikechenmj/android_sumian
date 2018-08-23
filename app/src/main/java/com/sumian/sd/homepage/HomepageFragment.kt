@@ -3,6 +3,7 @@ package com.sumian.sd.homepage
 import android.arch.lifecycle.Observer
 import android.text.format.DateUtils
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.image.ImageLoader
@@ -10,6 +11,7 @@ import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
+import com.sumian.sd.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sd.event.*
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SleepPrescription
@@ -63,8 +65,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun launchCbtiActivity() {
-        ToastUtils.showShort(R.string.comming_soon)
-//        ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
+//        ToastUtils.showShort(R.string.comming_soon)
+        ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
     }
 
     private fun initUserInfo() {
@@ -135,6 +137,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     private fun showSleepPrescriptionFatiguedDialog(response: SleepPrescriptionWrapper) {
         SumianAlertDialog(activity)
+                .goneTopIcon(true)
                 .setTitle(R.string.last_week_tired_enquire)
                 .setMessage(R.string.last_week_tired_enquire_hint)
                 .setLeftBtn(R.string.no) {
@@ -150,8 +153,9 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     private fun showSleepUpdatedDialog() {
         SumianAlertDialog(activity)
                 .setTitle(R.string.update_sleep_prescription)
+                .goneTopIcon(true)
                 .setMessage(R.string.update_sleep_prescription_hint)
-                .setLeftBtn(R.string.i_got_it, null)
+                .setRightBtn(R.string.i_got_it, null)
                 .show()
     }
 
@@ -219,9 +223,10 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     private fun showStopPrescriptionDialog() {
         SumianAlertDialog(activity)
+                .goneTopIcon(true)
                 .setTitle(R.string.sleep_data_no_enough)
                 .setMessage(R.string.sleep_data_no_enough_hint)
-                .setLeftBtn(R.string.confirm, null)
+                .setRightBtn(R.string.confirm, null)
                 .show()
     }
 
@@ -260,5 +265,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     override fun onEnter(data: String?) {
+        initData()
     }
 }

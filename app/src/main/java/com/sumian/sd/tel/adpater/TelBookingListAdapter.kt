@@ -26,15 +26,18 @@ class TelBookingListAdapter(context: Context) : BaseRecyclerAdapter<TelBooking>(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: TelBooking, position: Int) {
-        (holder as ViewHolder).init(item)
+        (holder as ViewHolder).init(item, mItems.size - 1 == position)
     }
 
     inner class ViewHolder constructor(itemView: View) : BaseViewHolder(itemView) {
 
-        fun init(item: TelBooking) {
+        fun init(item: TelBooking, isGoneDivider: Boolean = false) {
             setText(R.id.tv_title, item.formatOrderContent())
                     .setText(R.id.tv_advisory_time, item.formatOrderCreateTime())
-                    .setText(R.id.tv_advisory_action_status, item.formatStatus()).setVisible(R.id.tv_advisory_action_status, true)
+                    .setText(R.id.tv_advisory_action_status, item.formatStatus())
+                    .setVisible(R.id.tv_advisory_action_status, true)
+                    .setGone(R.id.tv_timer, false)
+                    .setVisible(R.id.divider, !isGoneDivider)
         }
 
         fun getString(@StringRes textId: Int = 0): String {

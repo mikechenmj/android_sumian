@@ -87,7 +87,7 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
             if (i == currentMinute) {
                 isCheckDatePosition = i
             }
-            minutes.add(i.toString())
+            minutes.add(String.format(Locale.getDefault(), "%02d", i))
         }
         this.mView?.transformThreeDisplayedValues(isCheckDatePosition, "", minutes.toTypedArray())
     }

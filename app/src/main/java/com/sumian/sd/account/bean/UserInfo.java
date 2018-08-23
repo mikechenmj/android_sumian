@@ -9,6 +9,7 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.doctor.bean.Doctor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("WeakerAccess")
-public class UserInfo implements Parcelable, Cloneable {
+public class UserInfo implements Parcelable, Serializable, Cloneable {
 
     public int id;
     public String mobile;
@@ -47,7 +48,8 @@ public class UserInfo implements Parcelable, Cloneable {
     public Doctor doctor;//绑定的医生信息
     public int role; // add by zxz for passing compile
     public Answers answers;
-    @SerializedName("set_password") public boolean hasPassword;
+    @SerializedName("set_password")
+    public boolean hasPassword;
 
     protected UserInfo(Parcel in) {
         id = in.readInt();

@@ -2,6 +2,7 @@ package com.sumian.sd.doctor.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /**
  *
@@ -22,7 +23,7 @@ data class DoctorServicePackage(var id: Int,//服务包模板id
                                 var created_at: Int,//创建时间
                                 var updated_at: Int,//最后更新时间
                                 var packages: List<ServicePackage>
-) : Parcelable {
+) : Parcelable, Serializable {
 
     /**
      * 医生服务包功能下属的各个级别的服务包 e.y.  比如通过不同价格划分了很多小包
@@ -34,5 +35,6 @@ data class DoctorServicePackage(var id: Int,//服务包模板id
                               var service_package_id: Int,//服务包模板id
                               var enable: Int,//开启 1：开启 已过滤enable=0情况
                               var created_at: Int,//创建时间
-                              var updated_at: Int) : Parcelable//最后更新时间
+                              var updated_at: Int)//最后更新时间
+        : Parcelable, Serializable
 }

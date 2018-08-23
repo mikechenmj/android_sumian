@@ -77,7 +77,9 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     public static void startForResult(ActivityLauncher launcher, @NonNull DoctorService doctorService, int packageId, int requestCode) {
         Intent intent = new Intent(launcher.getActivity(), PaymentActivity.class);
-        intent.putExtra(ARGS_DOCTOR_SERVICE, doctorService);
+        Bundle extras = new Bundle();
+        extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService);
+        intent.putExtras(extras);
         intent.putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId);
         launcher.startActivityForResult(intent, requestCode);
     }

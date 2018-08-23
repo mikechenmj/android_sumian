@@ -147,7 +147,9 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
                 }
 
                 Intent intent = new Intent(AssessmentUserInfoActivity.ACTION_MODIFY_ASSESSMENT_USER_INFO);
-                intent.putExtra(AssessmentUserInfoActivity.EXTRA_ASSESSMENT_USER_INFO, mUserInfo);
+                Bundle extras = new Bundle();
+                extras.putParcelable(AssessmentUserInfoActivity.EXTRA_ASSESSMENT_USER_INFO, mUserInfo);
+                intent.putExtras(extras);
                 boolean sendBroadcast = LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
                 if (sendBroadcast) {
                     dismiss();

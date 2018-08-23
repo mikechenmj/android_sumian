@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), RecordContract.View, SwipeRefreshLayout.OnRefreshListener, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
+class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), RecordContract.View, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
 
     companion object {
 
@@ -76,7 +75,6 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
         title_bar.setOnMenuClickListener(this)
-        refresh.setOnRefreshListener(this)
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.itemAnimator = DefaultItemAnimator()
         this.mAdapter = RecordAdapter(this)
@@ -94,16 +92,6 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
             mPresenter.getAdvisoryDetail(mAdvisoryId)
         }
 
-    }
-
-    override fun onBegin() {
-        super.onBegin()
-        refresh.showRefreshAnim()
-    }
-
-    override fun onFinish() {
-        super.onFinish()
-        refresh.hideRefreshAnim()
     }
 
     @Suppress("DEPRECATION")
@@ -149,16 +137,12 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
         this.mPresenter = presenter
     }
 
-    override fun onRefresh() {
-        mPresenter.getAdvisoryDetail(mAdvisoryId)
-    }
-
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         mAdvisory?.let {
             if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
                 MainActivity.launch(MainActivity.TAB_SD_1)
             } else {
-                PublishAdvisoryRecordActivity.launch(this, mAdvisory)
+                PublishAdvisoryRecordActivity.launch(this, mAdvisory?.id!!)
                 finish()
             }
         }
