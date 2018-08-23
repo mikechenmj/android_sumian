@@ -49,7 +49,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
         call.enqueue(object : BaseResponseCallback<Token>() {
 
             override fun onSuccess(response: Token?) {
-                onLoginSuccess(response)
+                LoginHelper.onLoginSuccess(response)
             }
 
             override fun onFailure(code: Int, message: String) {
