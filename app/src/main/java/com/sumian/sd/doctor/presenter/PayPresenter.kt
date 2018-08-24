@@ -169,6 +169,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
             val result = data.extras!!.getString("pay_result")
 
             @StringRes val payResultMsg: Int
+
             when (result) {
                 "success" -> {
                     payResultMsg = R.string.pay_success
