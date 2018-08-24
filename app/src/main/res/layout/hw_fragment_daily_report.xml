@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.hw.improve.widget.SwitchDateView
+    <com.sumian.hw.widget.SwitchDateView
         android:id="@+id/sdv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <com.sumian.hw.improve.widget.report.LoadViewPagerRecyclerView
+            <com.sumian.hw.widget.report.LoadViewPagerRecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -40,7 +40,7 @@
 
         </FrameLayout>
 
-        <com.sumian.hw.improve.widget.report.SyncingReportView
+        <com.sumian.hw.widget.report.SyncingReportView
             android:id="@+id/syncing_report_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

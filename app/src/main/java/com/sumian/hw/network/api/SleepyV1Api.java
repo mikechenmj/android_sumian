@@ -1,11 +1,11 @@
 package com.sumian.hw.network.api;
 
 import com.google.gson.JsonObject;
-import com.sumian.hw.improve.report.base.BaseResultResponse;
-import com.sumian.hw.improve.report.bean.ReadSleepRecordEvaluationResponse;
-import com.sumian.hw.improve.report.dailyreport.DailyMeta;
-import com.sumian.hw.improve.report.dailyreport.DailyReport;
-import com.sumian.hw.improve.report.weeklyreport.WeekMeta;
+import com.sumian.hw.report.base.BaseResultResponse;
+import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
+import com.sumian.hw.report.dailyreport.DailyMeta;
+import com.sumian.hw.report.dailyreport.DailyReport;
+import com.sumian.hw.report.weeklyreport.WeekMeta;
 import com.sumian.hw.log.LogOssResponse;
 import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.oss.bean.OssResponse;

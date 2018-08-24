@@ -2,9 +2,9 @@ package com.sumian.sd.main
 
 import android.support.v4.app.Fragment
 import com.hyphenate.helpdesk.easeui.UIProvider
-import com.sumian.hw.improve.device.fragment.DeviceFragment
-import com.sumian.hw.improve.report.ReportFragment
-import com.sumian.hw.improve.tab.HwMeFragment
+import com.sumian.hw.device.fragment.DeviceFragment
+import com.sumian.hw.report.ReportFragment
+import com.sumian.hw.tab.HwMeFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.hw.upgrade.model.VersionModel

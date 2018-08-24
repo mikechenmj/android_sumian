@@ -5,8 +5,8 @@ import android.content.Intent;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.hw.base.HwBaseActivity;
-import com.sumian.hw.improve.guideline.activity.UserGuidelineActivity;
-import com.sumian.hw.improve.guideline.utils.GuidelineUtils;
+import com.sumian.hw.guideline.activity.UserGuidelineActivity;
+import com.sumian.hw.guideline.utils.GuidelineUtils;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.AppUtil;

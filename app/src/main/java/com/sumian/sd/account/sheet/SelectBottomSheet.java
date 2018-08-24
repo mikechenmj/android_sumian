@@ -11,7 +11,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.account.login.ModifySelectContract;
 import com.sumian.sd.account.login.ModifyUserInfoContract;
 import com.sumian.sd.account.login.ModifySelectPresenter;
-import com.sumian.hw.improve.assessment.AssessmentUserInfoActivity;
+import com.sumian.hw.assessment.AssessmentUserInfoActivity;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;

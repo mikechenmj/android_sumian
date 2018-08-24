@@ -7,7 +7,7 @@ import android.webkit.WebSettings;
 
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.common.util.SystemUtil;
-import com.sumian.hw.improve.device.bean.BlueDevice;
+import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 

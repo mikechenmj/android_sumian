@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.sumian.hw.improve.main.bean.PushReport;
+import com.sumian.hw.main.bean.PushReport;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.NotificationUtil;
 

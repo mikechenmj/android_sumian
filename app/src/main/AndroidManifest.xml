@@ -436,40 +436,40 @@
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.improve.assessment.QuestionActivity"
+            android:name="com.sumian.hw.assessment.QuestionActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.improve.assessment.AssessmentUserInfoActivity"
+            android:name="com.sumian.hw.assessment.AssessmentUserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.improve.assessment.AssessmentActivity"
+            android:name="com.sumian.hw.assessment.AssessmentActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.improve.feedback.FeedbackActivity"
+            android:name="com.sumian.hw.feedback.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.improve.guideline.activity.UserGuidelineActivity"
+            android:name="com.sumian.hw.guideline.activity.UserGuidelineActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.Fullscreen" />
         <activity
-            android:name="com.sumian.hw.improve.guideline.activity.ManualActivity"
+            android:name="com.sumian.hw.guideline.activity.ManualActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -482,7 +482,7 @@
             tools:ignore="ExportedService" />
 
         <activity
-            android:name="com.sumian.hw.improve.qrcode.activity.QrCodeActivity"
+            android:name="com.sumian.hw.qrcode.activity.QrCodeActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
