@@ -70,6 +70,7 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
         recycler.adapter = mListAdapter
         mListAdapter.setOnItemClickListener(this)
         empty_error_view.invalidAdvisoryError()
+        empty_error_view.isEnabled = false
     }
 
     override fun initData() {
