@@ -40,7 +40,7 @@
             app:npv_TextSizeHint="@dimen/font_16"
             app:npv_TextSizeNormal="@dimen/font_16"
             app:npv_TextSizeSelected="@dimen/font_16"
-            app:npv_WrapSelectorWheel="true" />
+            app:npv_WrapSelectorWheel="false" />
 
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/npv_two"
@@ -58,7 +58,7 @@
             app:npv_TextSizeHint="@dimen/font_16"
             app:npv_TextSizeNormal="@dimen/font_16"
             app:npv_TextSizeSelected="@dimen/font_16"
-            app:npv_WrapSelectorWheel="true" />
+            app:npv_WrapSelectorWheel="false" />
 
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/npv_three"
@@ -76,7 +76,7 @@
             app:npv_TextSizeHint="@dimen/font_16"
             app:npv_TextSizeNormal="@dimen/font_16"
             app:npv_TextSizeSelected="@dimen/font_16"
-            app:npv_WrapSelectorWheel="true" />
+            app:npv_WrapSelectorWheel="false" />
 
     </LinearLayout>
 
