@@ -176,14 +176,20 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
 
         val metadata = ObjectMetadata()
         metadata.addUserMetadata("Accept-Encoding", "")
+        // metadata.contentType = "application/octet-stream"
+
         putObjectRequest.metadata = metadata
 
         // 异步上传时可以设置进度回调
         val callbackParam = HashMap<String, String>(0)
-        callbackParam["callbackUrl"] = sts.callback_url
-        //callbackParam.put("callbackHost", "oss-cn-hangzhou.aliyuncs.com");
-        //callbackParam.put("callbackBodyType", "application/json");//如果加入该请求参数,会出现请求500的错误.直接
-        callbackParam["callbackBody"] = sts.callback_body
+
+        if (mPublishIndex == sts.objects.size - 1) {
+            callbackParam["callbackUrl"] = sts.callback_url
+            //callbackParam.put("callbackHost", "oss-cn-hangzhou.aliyuncs.com");
+            //callbackParam.put("callbackBodyType", "application/json");//如果加入该请求参数,会出现请求500的错误.直接
+            callbackParam["callbackBody"] = sts.callback_body
+        }
+
         putObjectRequest.callbackParam = callbackParam
 
         putObjectRequest.progressCallback = oSSProgressCallback

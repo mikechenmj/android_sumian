@@ -81,10 +81,10 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
         val advisory = mListAdapter.getItem(position)
         when (advisory.status) {
             5 -> {
-                PublishAdvisoryRecordActivity.launch(context!!, advisory.id)
+                PublishAdvisoryRecordActivity.show(context!!, advisory.id)
             }
             else -> {
-                AdvisoryDetailActivity.launch(context!!, advisory)
+                AdvisoryDetailActivity.show(context!!, advisory.id)
             }
         }
     }

@@ -20,6 +20,7 @@ import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
 import com.sumian.common.media.widget.PicturesPreviewer
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.advisory.bean.Advisory
 import com.sumian.sd.advisory.contract.PublishAdvisoryRecordContact
@@ -80,7 +81,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         private const val REQUEST_WRITE_PERMISSION = 0x03
 
 
-        fun launch(context: Context, advisoryId: Int) {
+        fun show(context: Context, advisoryId: Int) {
             val extras = Bundle()
             extras.putInt(ARGS_ADVISORY, advisoryId)
             show(context, PublishAdvisoryRecordActivity::class.java, extras)
@@ -236,8 +237,8 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         AdvisoryContentCacheUtils.clearCache(advisoryId = advisory.id)
         this.mAdvisory = advisory
         this.mAdvisoryId = advisory.id
-        this.mPresenter.getLastAdvisory()
-        AdvisoryDetailActivity.launch(this@PublishAdvisoryRecordActivity, advisory)
+        //this.mPresenter.getLastAdvisory()
+        AdvisoryDetailActivity.show(this@PublishAdvisoryRecordActivity, advisoryId = advisory.id)
         finish()
     }
 
@@ -250,7 +251,9 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     }
 
     override fun onProgress(request: PutObjectRequest?, currentSize: Long, totalSize: Long) {
-        Log.e(TAG, "progress=${currentSize * 1.0f / totalSize * 100.0f}")
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "progress=${currentSize * 1.0f / totalSize * 100.0f}")
+        }
     }
 
     override fun onGetPublishUploadStsSuccess(successMsg: String) {

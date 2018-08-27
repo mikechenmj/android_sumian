@@ -22,6 +22,6 @@ class AdvisoriesSchemeResolver : SchemeResolver {
      */
     override fun resolveScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("id")
-        return AdvisoryDetailActivity.getLaunchIntent(context, data.toInt())
+        return AdvisoryDetailActivity.show(context, data.toInt())
     }
 }
