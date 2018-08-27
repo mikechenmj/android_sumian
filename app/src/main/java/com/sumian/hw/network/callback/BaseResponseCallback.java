@@ -42,11 +42,11 @@ public abstract class BaseResponseCallback<T> implements Callback<T> {
                 if (errorResponse == null) {
                     errorUnknown();
                 } else {
-                    int statusCode = errorResponse.getCode();
+                    int statusCode = response.code();
                     if (statusCode == ErrorCode.UNAUTHORIZED) {
                         onUnauthorized();
                     } else {
-                        onFailure(errorResponse.getCode(), errorResponse.getMessage());
+                        onFailure(statusCode, errorResponse.getMessage());
                     }
                 }
             } catch (IOException e) {
