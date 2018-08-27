@@ -1,6 +1,7 @@
-package com.sumian.hw.utils;
+package com.sumian.sd.utils;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
 import com.hyphenate.chat.ChatClient;
 import com.sumian.blue.manager.BlueManager;
@@ -8,6 +9,7 @@ import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.hw.utils.NotificationUtil;
 import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -56,5 +58,9 @@ public class AppUtil {
 
     public static Class<MainActivity> getMainClass() {
         return MainActivity.class;
+    }
+
+    public static boolean isAppForeground() {
+        return AppUtils.isAppForeground();
     }
 }

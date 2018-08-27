@@ -1,7 +1,7 @@
 package com.sumian.sd.account.login
 
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.hw.utils.AppUtil
+import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager

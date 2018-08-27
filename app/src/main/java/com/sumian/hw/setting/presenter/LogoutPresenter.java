@@ -4,7 +4,7 @@ import com.avos.avoscloud.AVInstallation;
 import com.sumian.hw.account.callback.OnLogoutCallback;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.setting.contract.LogoutContract;
-import com.sumian.hw.utils.AppUtil;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.app.AppManager;
 
 import java.lang.ref.WeakReference;

@@ -37,7 +37,7 @@ import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.utils.AppUtil;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;

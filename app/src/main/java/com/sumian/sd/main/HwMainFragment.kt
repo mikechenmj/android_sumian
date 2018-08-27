@@ -8,7 +8,7 @@ import com.sumian.hw.improve.tab.HwMeFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.hw.upgrade.model.VersionModel
-import com.sumian.hw.utils.AppUtil
+import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo

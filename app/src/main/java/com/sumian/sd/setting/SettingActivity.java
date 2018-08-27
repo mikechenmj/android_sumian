@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.avos.avoscloud.AVInstallation;
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.hw.utils.AppUtil;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;

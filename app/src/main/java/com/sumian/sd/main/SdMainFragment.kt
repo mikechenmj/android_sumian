@@ -2,7 +2,7 @@ package com.sumian.sd.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
-import com.sumian.hw.utils.AppUtil
+import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.BaseEventFragment

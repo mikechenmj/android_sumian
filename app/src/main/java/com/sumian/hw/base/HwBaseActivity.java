@@ -47,15 +47,13 @@ public abstract class HwBaseActivity<Presenter> extends AppCompatActivity {
      */
     public static int StatusBarLightMode(Activity activity) {
         int result = 0;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (MIUISetStatusBarLightMode(activity.getWindow(), true)) {
-                result = 1;
-            } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
-                result = 2;
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                result = 3;
-            }
+        if (MIUISetStatusBarLightMode(activity.getWindow(), true)) {
+            result = 1;
+        } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
+            result = 2;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            result = 3;
         }
         return result;
     }
@@ -139,9 +137,9 @@ public abstract class HwBaseActivity<Presenter> extends AppCompatActivity {
             try {
                 WindowManager.LayoutParams lp = window.getAttributes();
                 Field darkFlag = WindowManager.LayoutParams.class
-                    .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+                        .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
                 Field meizuFlags = WindowManager.LayoutParams.class
-                    .getDeclaredField("meizuFlags");
+                        .getDeclaredField("meizuFlags");
                 darkFlag.setAccessible(true);
                 meizuFlags.setAccessible(true);
                 int bit = darkFlag.getInt(null);
@@ -175,15 +173,6 @@ public abstract class HwBaseActivity<Presenter> extends AppCompatActivity {
             initData();
         } else {
             finish();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        boolean appIsInBackground = LogJobIntentService.isAppIsInBackground(this);
-        if (appIsInBackground) {
-            LogJobIntentService.enqueueWork(this, new Intent(this, LogJobIntentService.class));
         }
     }
 
@@ -237,7 +226,9 @@ public abstract class HwBaseActivity<Presenter> extends AppCompatActivity {
 
     protected void runUiThread(Runnable runnable, int delay) {
         View root = this.mRoot;
-        if (root == null) return;
+        if (root == null) {
+            return;
+        }
         if (Looper.myLooper() == Looper.getMainLooper()) {
             if (delay > 0) {
                 root.postDelayed(runnable, delay);
