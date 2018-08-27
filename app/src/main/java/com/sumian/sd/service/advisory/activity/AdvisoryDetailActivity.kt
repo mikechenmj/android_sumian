@@ -31,20 +31,12 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     companion object {
 
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
-        private const val ARGS_ADVISORY = "com.sumian.sleepdoctor.extras.advisory"
 
-        fun launch(context: Context, advisory: Advisory) {
-            val extras = Bundle()
-            extras.putParcelable(ARGS_ADVISORY, advisory)
-            show(context, AdvisoryDetailActivity::class.java, extras)
-        }
-
-        fun getLaunchIntent(context: Context, advisoryId: Int): Intent {
+        fun show(context: Context, advisoryId: Int): Intent {
             val intent = Intent(context, AdvisoryDetailActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            val bundle = Bundle()
-            bundle.putInt(ARGS_ADVISORY_ID, advisoryId)
-            intent.putExtras(bundle)
+            intent.putExtra(ARGS_ADVISORY_ID, advisoryId)
+            context.startActivity(intent)
             return intent
         }
 
@@ -53,13 +45,13 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     private var mAdvisoryId: Int = 0
 
     private lateinit var mAdapter: RecordAdapter
+
     private var mAdvisory: Advisory? = null
 
     override fun initBundle(bundle: Bundle?): Boolean {
-        bundle?.let {
-            this.mAdvisory = it.getParcelable(ARGS_ADVISORY)
-            this.mAdvisoryId = it.getInt(ARGS_ADVISORY_ID, 0)
-        }
+
+        this.mAdvisoryId = bundle?.getInt(ARGS_ADVISORY_ID, 0)!!
+
         return super.initBundle(bundle)
     }
 
@@ -85,14 +77,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
 
     override fun initData() {
         super.initData()
-        mAdvisory?.let {
-            mPresenter.getAdvisoryDetail(it.id)
-        }
-
-        if (mAdvisory == null) {
-            mPresenter.getAdvisoryDetail(mAdvisoryId)
-        }
-
+        mPresenter.getAdvisoryDetail(mAdvisoryId)
     }
 
     override fun onStop() {
@@ -148,7 +133,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
             if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
                 MainActivity.launch(MainActivity.TAB_SD_1)
             } else {
-                PublishAdvisoryRecordActivity.launch(this, mAdvisory?.id!!)
+                PublishAdvisoryRecordActivity.show(this, mAdvisory?.id!!)
                 finish()
             }
         }
