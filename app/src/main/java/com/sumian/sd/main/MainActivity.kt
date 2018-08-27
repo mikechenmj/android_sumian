@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.utils.SettingsUtil
@@ -13,6 +14,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.constants.SpKeys
+import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.main.widget.SwitchAnimationView
 import com.sumian.sd.notification.NotificationListActivity.REQUEST_CODE_OPEN_NOTIFICATION
@@ -94,6 +96,14 @@ class MainActivity : BaseEventActivity() {
         mVersionDelegate.checkVersion(this)
         showFragmentAccordingToData()
         showOpenNotificationDialogIfNeeded()
+//        showUserGuidDialogIfNeed()
+    }
+
+    private fun showUserGuidDialogIfNeed() {
+        HomepageUserGuidDialog(this, View.OnClickListener {
+            EventBusUtil.postEvent(SwitchMainActivityEvent(SwitchMainActivityEvent.TYPE_SD_ACTIVITY))
+        })
+                .show()
     }
 
     override fun onNewIntent(intent: Intent?) {
