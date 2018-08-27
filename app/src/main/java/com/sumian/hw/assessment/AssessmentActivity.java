@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.NetUtil;
-import com.sumian.hw.utils.AppUtil;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;

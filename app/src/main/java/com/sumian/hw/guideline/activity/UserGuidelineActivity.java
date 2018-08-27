@@ -20,7 +20,7 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.guideline.bean.Guideline;
 import com.sumian.hw.guideline.utils.GuidelineUtils;
 import com.sumian.hw.widget.GuidelineIndicator;
-import com.sumian.hw.utils.AppUtil;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.AppManager;
