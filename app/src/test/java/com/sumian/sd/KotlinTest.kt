@@ -8,6 +8,7 @@ import com.sumian.sd.bean.ClassA
 import com.sumian.sd.h5.bean.H5BaseResponse
 import com.sumian.sd.utils.JsonUtil
 import org.junit.Test
+import java.util.ArrayList
 
 /**
  * <pre>
@@ -32,5 +33,10 @@ class KotlinTest {
         val json = "{\"enable\":true, \"age\":null}"
         val a = gson.fromJson<ClassA>(json, ClassA::class.java)
         println(a)
+    }
+
+    @Test
+    fun test3() {
+        System.out.println("%02d:%02d".format(1,2))
     }
 }

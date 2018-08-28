@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.utils.FragmentUtil
@@ -26,6 +27,7 @@ import com.sumian.sd.widget.dialog.theme.BlackTheme
 import com.sumian.sd.widget.dialog.theme.ITheme
 import com.sumian.sd.widget.dialog.theme.LightTheme
 import com.sumian.sd.widget.dialog.theme.ThemeFactory
+import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 

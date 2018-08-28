@@ -51,12 +51,12 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:用户信息
  */
 
-public class SdUserActivity extends SdBaseActivity<SdUserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
+public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, SdUserInfoContract.View, UMAuthListener, Observer<Token> {
 
     @SuppressWarnings("unused")
-    private static final String TAG = SdUserActivity.class.getSimpleName();
+    private static final String TAG = SdUserProfileActivity.class.getSimpleName();
     private final static String imagePathName = "/image/";
     private static final int PIC_REQUEST_CODE_CAMERA = 0x02;
 

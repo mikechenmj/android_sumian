@@ -29,10 +29,8 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -102,13 +100,12 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.userProfile.SdUserActivity"
+            android:name=".account.userProfile.SdUserProfileActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".doctor.activity.PaymentActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -116,7 +113,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".setting.SettingActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -124,7 +120,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".account.userProfile.ModifyUserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -132,7 +127,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".doctor.activity.ScanDoctorQrCodeActivity"
             android:launchMode="singleTop"
@@ -140,7 +134,7 @@
 
         <!-- third  loginByCaptcha -->
         <activity
-            android:name="com.sumian.sd.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -248,15 +242,14 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.sd.advisory.activity.AdvisoryListActivity"
+            android:name=".advisory.activity.AdvisoryListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
-            android:name="com.sumian.sd.advisory.activity.AdvisoryDetailActivity"
+            android:name=".advisory.activity.AdvisoryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -279,7 +272,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.sd.advisory.activity.PublishAdvisoryRecordActivity"
+            android:name=".advisory.activity.PublishAdvisoryRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -292,7 +285,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".h5.SleepFileWebActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -300,7 +292,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".setting.version.VersionActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -308,7 +299,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".cbti.activity.CBTICoursePlayActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -316,7 +306,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/PlayActivityTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".cbti.activity.CBTIIntroductionWebActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -324,7 +313,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".cbti.activity.CBTIWeekCoursePartActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -332,7 +320,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".record.SleepRecordActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -340,7 +327,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".account.userProfile.MyTargetAndInformationActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -362,7 +348,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".account.userProfile.HwUserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -384,7 +369,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name="com.sumian.hw.leancloud.activity.MsgActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -392,7 +376,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name="com.sumian.hw.setting.activity.ModifyPwdActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -400,7 +383,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".account.login.ModifyNicknameActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -492,7 +474,6 @@
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
         <service android:name="com.avos.avoscloud.PushService" />
-
         <service
             android:name="com.sumian.hw.log.LogJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -513,7 +494,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MainActivity" />
-
         <activity
             android:name=".account.login.LoginActivity"
             android:exported="true"
@@ -529,7 +509,6 @@
         <activity
             android:name=".h5.HwSimpleWebActivity"
             android:theme="@style/HwAppTheme" />
-
         <activity
             android:name=".tel.activity.TelBookingPublishActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -537,22 +516,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
         <activity
             android:name=".tel.activity.TelBookingDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
-            android:name="com.sumian.sd.tel.activity.TelBookingListActivity"
+            android:name=".tel.activity.TelBookingListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
+        <activity android:name=".setting.RemindSettingActivity" />
+        <activity android:name=".setting.SleepDiaryRemindSettingActivity" />
     </application>
 
 </manifest>

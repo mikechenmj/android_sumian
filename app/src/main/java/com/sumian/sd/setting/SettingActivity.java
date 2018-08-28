@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.avos.avoscloud.AVInstallation;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.R;
@@ -65,10 +66,13 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
         finish();
     }
 
-    @OnClick({R.id.version, R.id.about_me, R.id.bt_logout})
+    @OnClick({R.id.version, R.id.about_me, R.id.bt_logout, R.id.sdv_remind})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.sdv_remind:
+                ActivityUtils.startActivity(RemindSettingActivity.class);
+                break;
             case R.id.version:
                 VersionActivity.show(v.getContext(), VersionActivity.class);
                 break;
