@@ -1,6 +1,8 @@
 package com.sumian.hw.improve.device.presenter;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
@@ -48,6 +50,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
 
     @SuppressWarnings("unused")
     private static final String TAG = DevicePresenter.class.getSimpleName();
+    private static final String DEVICE_CACHE_FILE_DIR = "device";
     private static final String CACHE_FILE_NAME = "blue_device_cache.txt";
     private DeviceContract.View mView;
     private int mCurrentIndex = -1;
@@ -88,7 +91,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public BlueDevice checkCache() {
-        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), CACHE_FILE_NAME);
+        File cacheFile = getDeviceCacheFile();
         BlueDevice cacheBlueDevice = null;
         ObjectInputStream ois = null;
         if (cacheFile.exists()) {
@@ -922,7 +925,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     }
 
     private void saveCacheFile() {
-        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), CACHE_FILE_NAME);
+        File cacheFile = getDeviceCacheFile();
         ObjectOutputStream oos = null;
         try {
             if (cacheFile.exists()) {
@@ -944,6 +947,11 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         }
     }
 
+    @NonNull
+    private File getDeviceCacheFile() {
+        return new File(App.Companion.getAppContext().getDir(DEVICE_CACHE_FILE_DIR, Context.MODE_PRIVATE), CACHE_FILE_NAME);
+    }
+
     @Nullable
     private BluePeripheral getCurrentBluePeripheral() {
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
@@ -954,7 +962,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
     }
 
     private void clearCacheDevice() {
-        File cacheFile = new File(App.Companion.getAppContext().getCacheDir(), CACHE_FILE_NAME);
+        File cacheFile = getDeviceCacheFile();
         if (cacheFile.exists()) {
             if (cacheFile.delete()) {
                 LogManager.appendUserOperationLog("设备被成功解绑,并清除掉缓存成功");
