@@ -10,6 +10,7 @@ package com.sumian.sd.constants;
  * </pre>
  */
 public interface SpKeys {
+    String HOME_PAGE_FIRST_LAUNCH_GUIDE_DIALOG_HAS_SHOWN = "HOME_PAGE_FIRST_LAUNCH_GUIDE_DIALOG_HAS_SHOWN";
     // ---------- sleep record ----------
     String SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME = "SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME";
 

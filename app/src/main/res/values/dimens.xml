@@ -97,4 +97,6 @@
     <dimen name="space_320">320dp</dimen>
     <dimen name="space_154">154dp</dimen>
     <dimen name="space_108">108dp</dimen>
+
+    <dimen name="homepage_bottom_nav_bar_height">68dp</dimen>
 </resources>

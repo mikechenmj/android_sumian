@@ -20,10 +20,11 @@ import kotlinx.android.synthetic.main.dailog_homepage_user_guide.*
 class HomepageUserGuidDialog(context: Context, onClickListener: View.OnClickListener) : Dialog(context, R.style.FullScreenDialog) {
     init {
         val inflate = LayoutInflater.from(context).inflate(R.layout.dailog_homepage_user_guide, null)
-        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        inflate.layoutParams = layoutParams
         setContentView(inflate)
-        iv_switch.setOnClickListener(onClickListener)
+        iv_switch.setOnClickListener{
+            onClickListener.onClick(it)
+            dismiss()
+        }
         inflate.setOnClickListener { dismiss() }
     }
 }

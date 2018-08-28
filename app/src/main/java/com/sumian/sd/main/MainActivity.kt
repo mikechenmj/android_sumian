@@ -96,14 +96,19 @@ class MainActivity : BaseEventActivity() {
         mVersionDelegate.checkVersion(this)
         showFragmentAccordingToData()
         showOpenNotificationDialogIfNeeded()
-//        showUserGuidDialogIfNeed()
+        showUserGuidDialogIfNeed()
     }
 
     private fun showUserGuidDialogIfNeed() {
+        val hasShow = SPUtils.getInstance().getBoolean(SpKeys.HOME_PAGE_FIRST_LAUNCH_GUIDE_DIALOG_HAS_SHOWN, false)
+        if (hasShow) {
+            return
+        }
         HomepageUserGuidDialog(this, View.OnClickListener {
             EventBusUtil.postEvent(SwitchMainActivityEvent(SwitchMainActivityEvent.TYPE_SD_ACTIVITY))
         })
                 .show()
+        SPUtils.getInstance().put(SpKeys.HOME_PAGE_FIRST_LAUNCH_GUIDE_DIALOG_HAS_SHOWN, true)
     }
 
     override fun onNewIntent(intent: Intent?) {
