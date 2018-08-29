@@ -16,13 +16,14 @@ public class SleepNote implements Serializable {
     public List<String> bedtimeState;//睡前状态
     public String remark;//睡前备注
 
+
     @Override
     public String toString() {
-        return "BedtimeState{" +
-            "sleepId=" + sleepId +
-            ", wakeUpMood=" + wakeUpMood +
-            ", bedtimeState=" + bedtimeState +
-            ", remark='" + remark + '\'' +
-            '}';
+        return "SleepNote{" +
+                "sleepId=" + sleepId +
+                ", wakeUpMood=" + wakeUpMood +
+                ", bedtimeState=" + bedtimeState +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }
