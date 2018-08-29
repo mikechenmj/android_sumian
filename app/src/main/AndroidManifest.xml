@@ -529,8 +529,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".setting.RemindSettingActivity" />
-        <activity android:name=".setting.SleepDiaryRemindSettingActivity" />
+        <activity android:name=".setting.remind.RemindSettingActivity" />
+        <activity android:name=".setting.remind.SleepDiaryRemindSettingActivity" />
     </application>
 
 </manifest>

@@ -32,10 +32,6 @@ class SelectTimeHHmmBottomSheet(context: Context, @StringRes title: Int,
         tv_title.setText(title)
         picker_hour.refreshByNewDisplayedValues(Array(24) { i -> i.toString() })
         picker_minute.refreshByNewDisplayedValues(Array(60) { i -> i.toString() })
-//        picker_hour.minValue = 0
-//        picker_hour.maxValue = 23
-//        picker_minute.minValue = 0
-//        picker_minute.maxValue = 59
         picker_hour.value = initHour
         picker_minute.value = initMinute
         tv_confirm.setOnClickListener {

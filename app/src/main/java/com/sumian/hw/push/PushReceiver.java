@@ -22,7 +22,7 @@ import com.sumian.sd.app.AppManager;
 public class PushReceiver extends BroadcastReceiver {
 
     private static final String ACTION_PUSH = "com.tech.sumian.action.PUSH";
-    private static final String EXTRA_DATA_JSON = "com.avos.avoscloud.Data";
+    private static final String EXTRA_DATA_JSON = "com.avos.avoscloud.Reminder";
 
     @Override
     public void onReceive(Context context, Intent intent) {

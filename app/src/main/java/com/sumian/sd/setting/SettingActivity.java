@@ -10,6 +10,7 @@ import android.view.View;
 import com.avos.avoscloud.AVInstallation;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.sd.setting.remind.RemindSettingActivity;
 import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;

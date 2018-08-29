@@ -37,6 +37,13 @@ class KotlinTest {
 
     @Test
     fun test3() {
-        System.out.println("%02d:%02d".format(1,2))
+        val s = "13:47:00"
+        System.out.println(s.split(":")[1])
+        System.out.println(getReminderHHmm(s))
+    }
+
+    fun getReminderHHmm(remindAt: String): String {
+        val endIndex = remindAt.lastIndexOf(":")
+        return remindAt.substring(-0, endIndex)
     }
 }

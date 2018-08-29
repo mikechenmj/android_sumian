@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".setting.RemindSettingActivity">
+    tools:context=".setting.remind.RemindSettingActivity">
 
     <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"

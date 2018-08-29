@@ -23,6 +23,8 @@ import com.sumian.sd.record.bean.DoctorServiceList
 import com.sumian.sd.record.bean.SleepRecord
 import com.sumian.sd.record.bean.SleepRecordSummary
 import com.sumian.sd.scale.bean.Scale
+import com.sumian.sd.setting.remind.bean.Reminder
+import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.tel.bean.TelBooking
 import retrofit2.Call
@@ -296,4 +298,22 @@ interface DoctorApi {
     @GET("bookings/{id}")
     fun getTelBookingDetail(@Path("id") telBookingId: Int, @QueryMap() map: MutableMap<String, Any>): Call<TelBooking>
 
+
+    /**
+     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒
+     */
+    @GET("reminders/subscriptions")
+    fun getReminderList(@Query("type") type: Int = 2): Call<ReminderListResponse>
+
+    /**
+     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒
+     * enable 0 false ,1 true
+     */
+    @FormUrlEncoded
+    @POST("reminders/subscriptions")
+    fun addReminder(@Field("type") type: Int = 2, @Field("remind_at") remindAtInSecond: Int, @Field("enable") enable: Int = 1): Call<Reminder>
+
+    @FormUrlEncoded
+    @PATCH("reminders/subscriptions/{id}")
+    fun modifyReminder(@Path("id") id: Int, @Field("remind_at") remindAtInSecond: Int, @Field("enable") enable: Int): Call<Reminder>
 }
