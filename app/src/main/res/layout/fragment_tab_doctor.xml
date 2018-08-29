@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_72"
+        android:layout_height="wrap_content"
         android:background="@color/b3_color"
         android:paddingTop="@dimen/status_bar_height">
 
@@ -22,6 +22,9 @@
         <ImageView
             android:id="@+id/iv_notification"
             style="@style/NotificationIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_44"
+            android:layout_marginEnd="@dimen/space_15"
             android:contentDescription="@null" />
 
     </FrameLayout>
@@ -30,15 +33,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sumian.sd.widget.doctor.DoctorDetailLayout
-            android:id="@+id/doctor_detail_layout"
+        <com.sumian.sd.widget.RequestScanQrCodeView
+            android:id="@+id/request_scan_qr_code_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <com.sumian.sd.widget.RequestScanQrCodeView
-            android:id="@+id/request_scan_qr_code_view"
+        <com.sumian.sd.widget.doctor.DoctorDetailLayout
+            android:id="@+id/doctor_detail_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"

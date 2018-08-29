@@ -162,7 +162,6 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
 
     @Override
     public void onReadSuccess() {
-        EventBusUtil.postStickyEvent(new NotificationReadEvent());
     }
 
     @Override

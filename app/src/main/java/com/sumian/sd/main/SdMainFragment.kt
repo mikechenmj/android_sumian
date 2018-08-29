@@ -53,6 +53,11 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        updateNotificationUnreadCount()
+    }
+
     private fun launchAnotherMainActivity() {
         EventBusUtil.postEvent(SwitchMainActivityEvent(SwitchMainActivityEvent.TYPE_HW_ACTIVITY))
     }
@@ -89,13 +94,7 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
                 })
     }
 
-    override fun openEventBus(): Boolean {
-        return true
-    }
-
-    @Subscribe(sticky = true)
-    fun onNotificationReadEvent(event: NotificationReadEvent) {
-        EventBusUtil.removeStickyEvent(event)
+    private fun updateNotificationUnreadCount() {
         ViewModelProviders.of(activity!!)
                 .get(NotificationViewModel::class.java)
                 .updateUnreadCount()
@@ -121,5 +120,6 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
 
     override fun onEnter(data: String?) {
         showTabAccordingToData(data)
+        updateNotificationUnreadCount()
     }
 }

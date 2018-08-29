@@ -14,8 +14,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_210"
-            android:background="@drawable/bg_welcome"
+            android:layout_height="@dimen/space_220"
+            android:background="@color/b3_color"
             android:orientation="vertical"
             android:paddingTop="@dimen/status_bar_height">
 
@@ -52,8 +52,9 @@
             <ImageView
                 android:id="@+id/iv_notification"
                 style="@style/NotificationIcon"
-                android:layout_width="@dimen/space_44"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/space_44"
+                android:layout_marginEnd="@dimen/space_15"
                 android:contentDescription="@null" />
         </FrameLayout>
 

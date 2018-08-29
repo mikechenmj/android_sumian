@@ -100,4 +100,5 @@
     <dimen name="space_108">108dp</dimen>
 
     <dimen name="homepage_bottom_nav_bar_height">68dp</dimen>
+    <dimen name="sd_homepage_title_bar_height">44dp</dimen>
 </resources>
