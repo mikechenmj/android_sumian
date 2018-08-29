@@ -32,7 +32,7 @@ class RemindSettingActivity : BaseActivity() {
         AppManager.getHttpService().getReminderList(2)
                 .enqueue(object : BaseResponseCallback<ReminderListResponse>() {
                     override fun onSuccess(response: ReminderListResponse?) {
-                        mReminder = response?.data?.get(0)
+                        mReminder = response?.getReminder()
                         sdv_sleep_diary_remind.setContent(
                                 if (mReminder == null || !mReminder!!.isEnable())
                                     resources.getString(R.string.not_set_yet)

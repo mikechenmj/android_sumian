@@ -30,7 +30,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         mCalls.add(call)
         call.enqueue(object : BaseResponseCallback<ReminderListResponse>() {
             override fun onSuccess(response: ReminderListResponse?) {
-                view.updateReminder(response?.data?.get(0))
+                view.updateReminder(response?.getReminder())
             }
 
             override fun onFailure(code: Int, message: String?) {

@@ -13,13 +13,12 @@ import kotlinx.android.synthetic.main.activity_sleep_diary_remind_setting.*
 
 class SleepDiaryRemindSettingActivity :
         BasePresenterActivity<SleepDiaryReminderSettingContract.Presenter>(),
-        SelectTimeHHmmBottomSheet.OnTimePickedListener,
         SleepDiaryReminderSettingContract.View {
 
     companion object {
         private const val KEY_REMINDER = "key_reminder"
-        private const val DEFAULT_HOUR = 8
-        private const val DEFAULT_MINUTE = 0
+        private const val DEFAULT_HOUR = 9
+        private const val DEFAULT_MINUTE = 30
 
         fun launch(context: Context, reminder: Reminder?) {
             val intent = Intent(context, SleepDiaryRemindSettingActivity::class.java)
@@ -33,6 +32,8 @@ class SleepDiaryRemindSettingActivity :
     }
 
     private var mReminder: Reminder? = null
+    private var mOnTimePicked = false
+    private var mSwitchPendingOff = false  // switch 点击后，如果没有pick 时间，则会回滚。
 
     init {
         mPresenter = SleepDiaryReminderSettingPresenter(this)
@@ -49,10 +50,8 @@ class SleepDiaryRemindSettingActivity :
             run {
                 fl_remind_time.visibility = if (checked) View.VISIBLE else View.GONE
                 if (checked) {
+                    mSwitchPendingOff = true
                     showTimePicker()
-                    val hour = mReminder?.getRemindAtHour() ?: DEFAULT_HOUR
-                    val minute = mReminder?.getReminderAtMinute() ?: DEFAULT_MINUTE
-                    addOrUpdateReminder(hour, minute)
                 } else {
                     if (mReminder != null) {
                         mPresenter?.modifyReminder(mReminder!!.id, mReminder!!.getRemindAtUnixTime(), false)
@@ -77,17 +76,23 @@ class SleepDiaryRemindSettingActivity :
     }
 
     private fun showTimePicker() {
-        SelectTimeHHmmBottomSheet(this,
-                R.string.set_remind_time,
-                mReminder?.getRemindAtHour() ?: DEFAULT_HOUR,
-                mReminder?.getReminderAtMinute() ?: DEFAULT_MINUTE,
-                this)
-                .show()
-    }
-
-    override fun onTimePicked(hour: Int, minute: Int) {
-        tv_time.text = getString(R.string.pattern_hh_mm).format(hour, minute)
-        addOrUpdateReminder(hour, minute)
+        mOnTimePicked = false
+        val initHour = mReminder?.getRemindAtHour() ?: DEFAULT_HOUR
+        val initMinute = mReminder?.getReminderAtMinute() ?: DEFAULT_MINUTE
+        val bottomSheet = SelectTimeHHmmBottomSheet(this, R.string.set_remind_time, initHour, initMinute,
+                object : SelectTimeHHmmBottomSheet.OnTimePickedListener {
+                    override fun onTimePicked(hour: Int, minute: Int) {
+                        tv_time.text = getString(R.string.pattern_hh_mm).format(hour, minute)
+                        addOrUpdateReminder(hour, minute)
+                        mOnTimePicked = true
+                    }
+                })
+        bottomSheet.setOnDismissListener {
+            if (!mOnTimePicked && mSwitchPendingOff) {
+                sdv_sleep_diary_remind.setSwitchCheckedWithoutCallback(false)
+            }
+        }
+        bottomSheet.show()
     }
 
     fun addOrUpdateReminder(hour: Int, minute: Int) {
