@@ -134,16 +134,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return this;
     }
 
-//    @SuppressWarnings("deprecation")
-//    public void isShow(boolean isShow) {
-//        if (isShow) {
-//          //  mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_more), null);
-//        } else {
-//           // mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_less), null);
-//        }
-//       // mIsShow = isShow;
-//    }
-
     public TextView getTitle() {
         return mTvTitle;
     }
@@ -178,13 +168,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
                 onBackClickListener.onBack(v);
                 break;
             case R.id.tv_title:
-//                if (!mIsShow) {
-//                    //   mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_less), null);
-//                    mIsShow = true;
-//                } else {
-//                    // mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_more), null);
-//                    mIsShow = false;
-//                }
                 OnSpannerListener onSpannerListener = this.mOnSpannerListener;
                 if (onSpannerListener == null) {
                     return;
@@ -235,5 +218,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     public void setIsDarkTheme(boolean isDarkTheme) {
         setBgColor(getResources().getColor(isDarkTheme ? R.color.hw_colorPrimary : R.color.colorPrimary));
         setTextColor(getResources().getColor(isDarkTheme ? R.color.bt_hole_color : R.color.white));
+    }
+
+    public void openTopPadding(boolean open) {
+        mRootView.setPadding(0, open ? (int) getResources().getDimension(R.dimen.status_bar_height) : 0, 0, 0);
     }
 }

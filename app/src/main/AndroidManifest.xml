@@ -531,6 +531,10 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".setting.remind.RemindSettingActivity" />
         <activity android:name=".setting.remind.SleepDiaryRemindSettingActivity" />
+        <activity
+            android:name=".account.login.NewUserGuideActivity"
+            android:exported="true"
+            android:theme="@style/BaseAppTheme.TranslucentStatus" />
     </application>
 
 </manifest>

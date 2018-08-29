@@ -1,5 +1,7 @@
 package com.sumian.sd.account.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by jzz
  * on 2018/1/23.
@@ -9,10 +11,10 @@ package com.sumian.sd.account.bean;
 public class Token {
 
     public String token;
-    public int expired_at;
-    public int refresh_expired_at;
-    public UserInfo user;
-    public boolean is_new;//true:新用户，false:旧用户
+    public @SerializedName("expired_at") int expired_at;
+    public @SerializedName("refresh_expired_at") int refresh_expired_at;
+    public @SerializedName("user") UserInfo user;
+    public @SerializedName("is_new") boolean is_new;//true:新用户，false:旧用户
 
     @Override
     public String toString() {

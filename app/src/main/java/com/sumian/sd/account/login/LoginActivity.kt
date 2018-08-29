@@ -107,11 +107,6 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         tv_captcha_login.visibility = if (turnOn) View.GONE else View.VISIBLE
     }
 
-    override fun launchMain() {
-        ActivityUtils.startActivity(MainActivity::class.java)
-        finish()
-    }
-
     override fun onRequestCaptchaSuccess() {
         tv_send_captcha.startCountDown()
     }
