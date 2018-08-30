@@ -14,7 +14,7 @@ import com.sumian.hw.log.LogJobIntentService
  *     version: 1.0
  * </pre>
  */
-class ActivityLifecycleCallbackImpl : Application.ActivityLifecycleCallbacks {
+class ActivityLifecycleCallbackForUploadLog : Application.ActivityLifecycleCallbacks {
     override fun onActivityPaused(activity: Activity?) {
     }
 

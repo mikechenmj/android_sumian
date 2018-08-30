@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.hyphenate.chat.KefuMessageEncoder;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.guideline.utils.GuidelineUtils;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.account.login.LoginActivity;
@@ -45,7 +47,7 @@ public class HwWelcomeActivity extends HwBaseActivity {
                     AppUtil.launchMain();
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);
                     if (launchCustomerServiceActivity) {
-                        HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
+                        KefuManager.Companion.launchKefuActivity();
                     }
                 } else {
                     ActivityUtils.startActivity(LoginActivity.class);

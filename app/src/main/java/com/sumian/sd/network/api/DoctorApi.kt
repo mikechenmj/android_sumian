@@ -316,4 +316,7 @@ interface DoctorApi {
     @FormUrlEncoded
     @PATCH("reminders/subscriptions/{id}")
     fun modifyReminder(@Path("id") id: Int, @Field("remind_at") remindAtInSecond: Int, @Field("enable") enable: Int): Call<Reminder>
+
+    @POST("customer-service/message-event")
+    fun newCustomerMessage(): Call<Any>
 }

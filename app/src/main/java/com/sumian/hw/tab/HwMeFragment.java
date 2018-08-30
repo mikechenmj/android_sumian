@@ -17,7 +17,9 @@ import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.main.OnEnterListener;
+import com.sumian.sd.utils.ColorCompatUtil;
 import com.sumian.sd.widget.divider.SettingDividerView;
 
 import butterknife.BindView;
@@ -59,7 +61,7 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mSdvSetting.setBgColor(getResources().getColor(R.color.light_content_bg_color));
+        mSdvSetting.setBgColor(ColorCompatUtil.Companion.getColor(getActivity(), R.color.light_content_bg_color));
     }
 
     @Override
@@ -89,7 +91,7 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
                 break;
             case R.id.siv_customer_service:
                 UIProvider.getInstance().clearCacheMsg();
-                HwLeanCloudHelper.checkLoginEasemob(HwLeanCloudHelper::startEasemobChatRoom);
+                KefuManager.Companion.launchKefuActivity();
                 break;
             case R.id.siv_setting:
                 HwSettingActivity.show(getContext());
