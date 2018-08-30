@@ -1,10 +1,7 @@
 package com.sumian.hw.log;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 import android.util.Log;
@@ -24,7 +21,6 @@ import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.cbti.video.LogUtil;
 import com.sumian.sd.utils.AppUtil;
 
 import java.io.File;

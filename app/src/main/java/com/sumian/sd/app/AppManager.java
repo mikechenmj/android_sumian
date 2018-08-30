@@ -28,7 +28,7 @@ import com.sumian.hw.network.engine.HwNetEngine;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.model.AccountViewModel;
-import com.sumian.sd.advisory.model.AdvisoryViewModel;
+import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
 import com.sumian.sd.doctor.model.DoctorViewModel;
 import com.sumian.sd.leancloud.LeanCloudManager;
 import com.sumian.sd.network.api.DoctorApi;

@@ -3,9 +3,6 @@ package com.sumian.sd.network.api
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.advisory.bean.Advisory
-import com.sumian.sd.advisory.bean.PictureOssSts
-import com.sumian.sd.cbti.bean.*
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.doctor.bean.PayOrder
@@ -23,10 +20,13 @@ import com.sumian.sd.record.bean.DoctorServiceList
 import com.sumian.sd.record.bean.SleepRecord
 import com.sumian.sd.record.bean.SleepRecordSummary
 import com.sumian.sd.scale.bean.Scale
+import com.sumian.sd.service.advisory.bean.Advisory
+import com.sumian.sd.service.advisory.bean.PictureOssSts
+import com.sumian.sd.service.cbti.bean.*
+import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.setting.remind.bean.Reminder
 import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import com.sumian.sd.setting.version.bean.Version
-import com.sumian.sd.tel.bean.TelBooking
 import retrofit2.Call
 import retrofit2.http.*
 

@@ -11,7 +11,6 @@ import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
-import com.sumian.sd.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sd.event.*
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SleepPrescription
@@ -23,6 +22,7 @@ import com.sumian.sd.record.FillSleepRecordActivity
 import com.sumian.sd.record.SleepRecordActivity
 import com.sumian.sd.record.bean.SleepRecord
 import com.sumian.sd.scale.ScaleListActivity
+import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe

@@ -242,14 +242,14 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".advisory.activity.AdvisoryListActivity"
+            android:name=".service.advisory.activity.AdvisoryListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".advisory.activity.AdvisoryDetailActivity"
+            android:name=".service.advisory.activity.AdvisoryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -272,7 +272,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".advisory.activity.PublishAdvisoryRecordActivity"
+            android:name=".service.advisory.activity.PublishAdvisoryRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -300,21 +300,21 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".cbti.activity.CBTICoursePlayActivity"
+            android:name=".service.cbti.activity.CBTICoursePlayActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/PlayActivityTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".cbti.activity.CBTIIntroductionWebActivity"
+            android:name=".service.cbti.activity.CBTIIntroductionWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".cbti.activity.CBTIWeekCoursePartActivity"
+            android:name=".service.cbti.activity.CBTIWeekCoursePartActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -342,7 +342,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".cbti.activity.CBTIExerciseWebActivity"
+            android:name=".service.cbti.activity.CBTIExerciseWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -510,20 +510,20 @@
             android:name=".h5.HwSimpleWebActivity"
             android:theme="@style/HwAppTheme" />
         <activity
-            android:name=".tel.activity.TelBookingPublishActivity"
+            android:name=".service.tel.activity.TelBookingPublishActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".tel.activity.TelBookingDetailActivity"
+            android:name=".service.tel.activity.TelBookingDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".tel.activity.TelBookingListActivity"
+            android:name=".service.tel.activity.TelBookingListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
