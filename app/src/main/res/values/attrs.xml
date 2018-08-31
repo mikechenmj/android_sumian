@@ -257,4 +257,11 @@
             <enum name="textPassword" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="EmptyErrorView">
+        <attr name="eev_icon" format="reference"/>
+        <attr name="eev_title" format="string|reference"/>
+        <attr name="eev_desc" format="string|reference"/>
+        <attr name="eev_auto_hide" format="boolean|reference"/>
+    </declare-styleable>
 </resources>

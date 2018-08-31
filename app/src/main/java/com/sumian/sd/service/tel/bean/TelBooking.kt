@@ -47,7 +47,16 @@ data class TelBooking(var id: Int,
 
         const val UN_FINISHED_TYPE: Int = 0x00  //未完成的电话预约
         const val IS_FINISHED_TYPE: Int = 0x01    //已完成的电话预约
-
+        const val STATUS_0_WAITING_CONFIRM = 0
+        const val STATUS_1_CONFIRMED = 1
+        const val STATUS_2_GOING = 2
+        const val STATUS_3_ON_CALL = 3
+        const val STATUS_4_COMPLETE = 4
+        const val STATUS_5_CLOSED = 5
+        const val STATUS_6_HANG_ON = 6
+        const val STATUS_7_CANCELED = 7
+        const val STATUS_8_FINISH = 8
+        const val STATUS_9_UNUSED = 9
     }
 
     fun formatStatus(): CharSequence {
@@ -154,5 +163,4 @@ data class TelBooking(var id: Int,
             return "【$name（${introduction}）】"
         }
     }
-
 }

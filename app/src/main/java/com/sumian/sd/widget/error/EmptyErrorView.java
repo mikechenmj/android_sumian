@@ -1,6 +1,8 @@
 package com.sumian.sd.widget.error;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -22,7 +24,7 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
     private ImageView mIvEmptyIcon;
     private TextView mTvEmptyMsgTitle;
     private TextView mTvEmptyMsgDesc;
-
+    private boolean mAutoHide;
 
     private OnEmptyCallback mOnEmptyCallback;
 
@@ -36,10 +38,19 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
 
     public EmptyErrorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initView(context);
         setOrientation(VERTICAL);
         setBackgroundColor(getResources().getColor(R.color.b1_color));
         setOnClickListener(this);
-        initView(context);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EmptyErrorView);
+        Drawable icon = a.getDrawable(R.styleable.EmptyErrorView_eev_icon);
+        String title = a.getString(R.styleable.EmptyErrorView_eev_title);
+        String desc = a.getString(R.styleable.EmptyErrorView_eev_desc);
+        mAutoHide = a.getBoolean(R.styleable.EmptyErrorView_eev_auto_hide, true);
+        a.recycle();
+        mIvEmptyIcon.setImageDrawable(icon);
+        mTvEmptyMsgTitle.setText(title);
+        mTvEmptyMsgDesc.setText(desc);
     }
 
     public static EmptyErrorView create(Context context, @DrawableRes int icon, @StringRes int msgTitle, @StringRes int msgDesc) {
@@ -130,7 +141,9 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
         if (mOnEmptyCallback != null) {
             this.mOnEmptyCallback.reload();
         }
-        hide();
+        if (mAutoHide) {
+            hide();
+        }
     }
 
     public void setIvEmptyIcon(@DrawableRes int icon) {
