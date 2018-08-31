@@ -264,8 +264,6 @@ dependencies {
     })
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
-
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
@@ -274,20 +272,14 @@ dependencies {
     implementation 'com.android.support:support-vector-drawable:' + rootProject.ext.supportVersion
     implementation 'com.android.support:palette-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-
     implementation 'com.google.code.gson:gson:2.8.4'
-
     implementation 'pub.devrel:easypermissions:1.2.0'
-
     implementation 'de.hdodenhof:circleimageview:2.1.0'
-
     implementation 'com.jakewharton:butterknife:8.8.1'
     kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-
     implementation 'com.qmuiteam:qmui:1.1.3'
     implementation 'com.qmuiteam:arch:0.0.1'
 
@@ -357,8 +349,12 @@ dependencies {
     implementation 'no.nordicsemi.android:dfu:1.6.1'
 
     //sumian component
-    implementation 'com.sumian.sd:common:1.0.21'
-    implementation 'com.sumian.sd:blue:1.0.2'
-    implementation 'com.sumian.sd:kefu-easeui:1.0.3'
-    implementation 'com.sumian.sd:jsbridge:1.0.0'
+//    implementation 'com.sumian.sd:common:1.0.21'
+//    implementation 'com.sumian.sd:blue:1.0.2'
+//    implementation 'com.sumian.sd:kefu-easeui:1.0.3'
+//    implementation 'com.sumian.sd:jsbridge:1.0.0'
+    implementation project(':blue')
+    implementation project(':common')
+    implementation project(':jsbridge')
+    implementation project(':kefu-easeui')
 }

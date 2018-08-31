@@ -4,9 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.sumian.sd.R
-import com.umeng.commonsdk.internal.utils.InfoPreferenceAgent
 import kotlinx.android.synthetic.main.dailog_homepage_user_guide.*
 
 /**
