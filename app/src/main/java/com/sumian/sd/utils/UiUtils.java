@@ -58,6 +58,7 @@ public final class UiUtils {
         try {
             intent.setClassName("com.tencent.android.qqdownloader", "com.tencent.pangu.link.LinkProxyActivity");
             if (intent.resolveActivity(context.getPackageManager()) != null) {
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         } catch (ActivityNotFoundException e) {

@@ -2,7 +2,7 @@ package com.sumian.sd.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
-import com.sumian.hw.utils.AppUtil
+import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.BaseEventFragment
@@ -49,9 +49,13 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     override fun initWidget() {
         nav_tab.setOnSelectedTabChangeListener(this)
         iv_switch.setOnClickListener {
-            nav_tab.selectItem(0, true)
             launchAnotherMainActivity()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        updateNotificationUnreadCount()
     }
 
     private fun launchAnotherMainActivity() {
@@ -90,14 +94,8 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
                 })
     }
 
-    override fun openEventBus(): Boolean {
-        return true
-    }
-
-    @Subscribe(sticky = true)
-    fun onNotificationReadEvent(event: NotificationReadEvent) {
-        EventBusUtil.removeStickyEvent(event)
-        ViewModelProviders.of(this)
+    private fun updateNotificationUnreadCount() {
+        ViewModelProviders.of(activity!!)
                 .get(NotificationViewModel::class.java)
                 .updateUnreadCount()
     }
@@ -106,23 +104,22 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         AppUtil.exitApp()
     }
 
-    private fun showTabAccordingToData() {
-        val mPendingTabName = MainTabHelper.mPendingTabName
-        if (mPendingTabName == null) {
+    private fun showTabAccordingToData(data: String?) {
+        if (data == null) {
             if (fragmentManager?.findFragmentByTag(mFragmentTags[0]) == null) {
                 nav_tab.selectItem(0, true)
             }
         } else {
-            when (mPendingTabName) {
+            when (data) {
                 MainActivity.TAB_SD_0 -> nav_tab.selectItem(0, true)
                 MainActivity.TAB_SD_1 -> nav_tab.selectItem(1, true)
                 MainActivity.TAB_SD_2 -> nav_tab.selectItem(2, true)
             }
         }
-        MainTabHelper.mPendingTabName = null
     }
 
-    override fun onEnter() {
-        showTabAccordingToData()
+    override fun onEnter(data: String?) {
+        showTabAccordingToData(data)
+        updateNotificationUnreadCount()
     }
 }

@@ -18,7 +18,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.common.util.SpUtil;
-import com.sumian.hw.improve.report.dailyreport.DailyReport;
+import com.sumian.hw.report.dailyreport.DailyReport;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.callback.ErrorCode;
@@ -86,14 +86,14 @@ public class JobTask implements Serializable, Cloneable {
     @Override
     public String toString() {
         return "JobTask{" +
-            "filePath='" + filePath + '\'' +
-            ", beginCmd='" + beginCmd + '\'' +
-            ", endCmd='" + endCmd + '\'' +
-            ", receiveStartedTime=" + receiveStartedTime +
-            ", receiveEndedTime=" + receiveEndedTime +
-            ", type=" + type +
-            ", mTaskCallback=" + mTaskCallback +
-            '}';
+                "filePath='" + filePath + '\'' +
+                ", beginCmd='" + beginCmd + '\'' +
+                ", endCmd='" + endCmd + '\'' +
+                ", receiveStartedTime=" + receiveStartedTime +
+                ", receiveEndedTime=" + receiveEndedTime +
+                ", type=" + type +
+                ", mTaskCallback=" + mTaskCallback +
+                '}';
     }
 
     public JobTask setTaskCallback(TaskCallback taskCallback) {
@@ -135,7 +135,7 @@ public class JobTask implements Serializable, Cloneable {
             @Override
             protected void onSuccess(OssResponse ossResponse) {
                 LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 成功,准备进行 oss 服务进行上传文件...");
-                requestOss(ossResponse, filePath);
+                requestOss(ossResponse, filePath, transDataType);
             }
 
             @Override
@@ -145,7 +145,9 @@ public class JobTask implements Serializable, Cloneable {
                     intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
                     LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
                     LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + error);
-                    SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                    if (transDataType == 0x01) {
+                        SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                    }
                     mTaskCallback.executeCallbackSuccess(JobTask.this);
                 } else {
                     LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 令牌失败,进入队列末尾等待重新上传  错误信息=" + error);
@@ -155,7 +157,7 @@ public class JobTask implements Serializable, Cloneable {
         });
     }
 
-    private void requestOss(OssResponse ossResponse, String filePath) {
+    private void requestOss(OssResponse ossResponse, String filePath, int trasDataType) {
         if (BuildConfig.DEBUG) {
             OSSLog.enableLog();
         }
@@ -192,7 +194,9 @@ public class JobTask implements Serializable, Cloneable {
                 intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
                 LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
 
-                SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                if (trasDataType == 0x01) {
+                    SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                }
 
                 if (!TextUtils.isEmpty(returnBody)) {
                     try {

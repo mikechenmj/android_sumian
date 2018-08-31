@@ -9,9 +9,9 @@ import butterknife.OnClick
 import cn.carbswang.android.numberpickerview.library.NumberPickerView
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
-import com.sumian.sd.account.userProfile.contract.ImproveUserProfileContract
-import com.sumian.sd.account.userProfile.contract.ModifyUserInfoContract
-import com.sumian.sd.account.userProfile.presenter.ModifyUserInfoPresenter
+import com.sumian.sd.account.userProfile.ImproveUserProfileContract
+import com.sumian.sd.account.userProfile.ModifyUserInfoContract
+import com.sumian.sd.account.userProfile.ModifyUserInfoPresenter
 import com.sumian.sd.widget.base.BaseBottomSheetView
 import java.util.*
 

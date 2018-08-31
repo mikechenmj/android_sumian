@@ -14,7 +14,7 @@
         android:textColor="@color/full_general_color"
         android:textSize="@dimen/font_12" />
 
-    <com.sumian.hw.improve.widget.SleepPercentTextView
+    <com.sumian.hw.widget.SleepPercentTextView
         android:id="@+id/tv_sleep_duration_percent"
         android:layout_width="70dp"
         android:layout_height="70dp"

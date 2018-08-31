@@ -13,10 +13,17 @@
         app:text="@string/setting" />
 
     <com.sumian.sd.widget.divider.SettingDividerView
-        android:id="@+id/version"
+        android:id="@+id/sdv_remind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_16"
+        app:divider_line_visible="visible"
+        app:type_desc="@string/remind_setting" />
+
+    <com.sumian.sd.widget.divider.SettingDividerView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:divider_line_visible="visible"
         app:type_content="1.0.0"
         app:type_desc="@string/current_app_version" />

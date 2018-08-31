@@ -16,7 +16,6 @@ import com.sumian.common.mvp.IPresenter
 class LoginContract {
 
     interface View : BaseShowLoadingView {
-        fun launchMain()
         fun onRequestCaptchaSuccess()
     }
 

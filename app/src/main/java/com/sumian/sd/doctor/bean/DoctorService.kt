@@ -2,6 +2,7 @@ package com.sumian.sd.doctor.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /**
  *
@@ -20,7 +21,7 @@ data class DoctorService(var id: Int,
                          var video: String,//视频 url banner_type=1
                          var icon: String,//图标 url
                          var service_packages: ArrayList<DoctorServicePackage> /*参数include=services出现，否则不展示*/
-) : Parcelable {
+) : Parcelable, Serializable {
 
     companion object {
         const val SERVICE_TYPE_SLEEP_REPORT: Int = 0

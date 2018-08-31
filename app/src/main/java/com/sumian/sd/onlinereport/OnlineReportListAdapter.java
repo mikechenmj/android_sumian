@@ -35,7 +35,7 @@ public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, Base
     @Override
     protected void convert(BaseViewHolder helper, OnlineReport item) {
         long createAtInMillis = item.getCreateAtInMillis();
-        String time = TimeUtil.formatDate("yyyy/MM/dd hh:mm:ss", createAtInMillis);
+        String time = TimeUtil.formatDate("yyyy/MM/dd HH:mm:ss", createAtInMillis);
         helper.setText(R.id.tv_title, item.getTitle());
         helper.setText(R.id.tv_time, time);
         ImageView ivSelect = helper.getView(R.id.iv_selected);

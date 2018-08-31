@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.hw.improve.widget.SwitchDateView
+    <com.sumian.hw.widget.SwitchDateView
         android:id="@+id/switch_date_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -26,17 +26,17 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.sumian.hw.improve.widget.TouchDailySleepHistogramView
+                <com.sumian.hw.widget.TouchDailySleepHistogramView
                     android:id="@+id/day_sleep_histogram_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_200"
                     android:gravity="center" />
 
-                <com.sumian.hw.improve.widget.ReportIndicatorRuleView
+                <com.sumian.hw.widget.ReportIndicatorRuleView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <com.sumian.hw.improve.widget.ReportSleepDurationView
+                <com.sumian.hw.widget.ReportSleepDurationView
                     android:id="@+id/report_sleep_duration_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                     android:layout_marginRight="@dimen/space_10"
                     android:layout_marginTop="@dimen/space_20" />
 
-                <com.sumian.hw.improve.widget.note.SleepNoteView
+                <com.sumian.hw.widget.note.SleepNoteView
                     android:id="@+id/sleep_note_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

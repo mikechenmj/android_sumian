@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_50"
+    android:gravity="bottom|right"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="@dimen/space_44"
+        android:src="@drawable/homepage_mask_img_guide" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/homepage_bottom_nav_bar_height"
+        android:layout_gravity="bottom">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="3" />
+
+        <ImageView
+            android:id="@+id/iv_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:contentDescription="@null"
+            android:paddingTop="2dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/tab_icon_service" />
+    </LinearLayout>
+</LinearLayout>

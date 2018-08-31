@@ -1,6 +1,6 @@
 package com.sumian.hw.base;
 
-import com.sumian.hw.improve.main.SelectTabCallback;
+import com.sumian.hw.main.SelectTabCallback;
 
 /**
  * Created by jzz

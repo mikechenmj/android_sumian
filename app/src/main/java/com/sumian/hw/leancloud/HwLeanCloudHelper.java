@@ -37,7 +37,7 @@ import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.utils.AppUtil;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
@@ -186,22 +186,12 @@ public final class HwLeanCloudHelper {
 
                 } else {
                     Log.e(TAG, "done: -----登录失败--->");
-                    //loginLeanCloud();
                 }
             }
         });
     }
 
-    public static void checkLoginEasemob(Runnable run) {
-        // if (ChatClient.getInstance().isLoggedInBefore()) {
-        //    startEasemobChatRoom();
-        //已经登录，可以直接进入会话界面
-        //} else {
-        loginEasemob(run);
-        // }
-    }
-
-    private static void loginEasemob(Runnable run) {
+    public static void loginEasemob(Runnable run) {
         //未登录，需要登录后，再进入会话界面
         UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
         if (userInfo == null) {

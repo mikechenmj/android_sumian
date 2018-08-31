@@ -959,5 +959,13 @@
     <string name="password_validation_regex">.{6,16}</string>
     <string name="modify_success">修改成功</string>
     <string name="feedback_hint">请详细描述您的意见或建议，我们将及时处理并给予反馈，速眠医生致力于为您提供专业贴心的服务。</string>
+    <string name="remind_setting">提醒设置</string>
+    <string name="sd_sleep_diary_remind">睡眠日记填写提醒</string>
+    <string name="not_set_yet">未设置</string>
+    <string name="sleep_diary_remind">睡眠日记填写提醒</string>
+    <string name="open_sleep_diary_remind_hint">开启睡眠日记填写提醒，速眠医生将会每日定时通知您填写日记。请确保APP通知权限开启。</string>
+    <string name="remind_time">提醒时间</string>
+    <string name="set_remind_time">设置提醒时间</string>
+    <string name="pattern_hh_mm">%02d:%02d</string>
     <!-- Hw end-->
 </resources>

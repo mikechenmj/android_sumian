@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">common</string>
+    <string name="common_hint_key">Please enter key.</string>
+    <string name="select_pic">选择图片</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="preview">预览</string>
+    <string name="finish">完成</string>
+    <string name="link_label">输入链接名称</string>
+    <string name="link_url">输入链接地址</string>
+    <string name="scan_qr_code">扫描二维码</string>
+    <string name="scan_qr_code_note">将医生群组二维码放入框中,可自动扫描</string>
+    <string name="scan_qr_code_warn">扫描二维码,需要授予相机权限,是否授予?</string>
+    <string name="scan_qr_code_denied">扫描二维码,授予相机权限失败,请检查该权限是否正确授予,并授予</string>
+    <string name="open_camera_failed">打开相机失败,请进入系统设置检查相机权限是否正确授予,并授予</string>
+
+    <string name="state_network_error">网络错误</string>
+    <string name="state_loading">正在加载…</string>
+    <string name="state_not_more">没有更多数据</string>
+    <string name="state_load_error">加载失败</string>
+    <string name="state_refreshing">正在刷新</string>
+    <string name="state_loading_error">数据加载中&#8230;</string>
+    <string name="state_submit">正在提交中&#8230;</string>
+
+
+    <string name="gallery_save_file_not_have_external_storage_permission">没有外部存储权限!</string>
+    <string name="gallery_save_file_not_have_external_storage">没有外部存储!</string>
+    <string name="gallery_save_file_success">保存成功!</string>
+    <string name="gallery_save_file_failed">存储失败!</string>
+    <string name="image_select_opt_done">完成</string>
+    <string name="image_select_opt_preview">预览</string>
+
+
+    <!-- Error View -->
+    <string name="error_view_no_data">暂无内容</string>
+    <string name="error_view_loading">加载中…</string>
+    <string name="error_view_loading_friend">数据初始化中…</string>
+    <string name="error_view_loading_local_friend">获取附近的程序员中…</string>
+    <string name="error_view_load_error_click_to_refresh">内容加载失败\r\n点击重新加载</string>
+    <string name="error_view_network_error_click_to_refresh">没有可用的网络</string>
+    <string name="tip_network_error">没有可用的网络</string>
+
+
+    <!--version -->
+
+    <string name="none_market">"您的手机没有安装应用市场!"</string>
+
+    <!--dialog/toast-->
+    <string name="operation_warning">操作警告</string>
+    <string name="operation_success">操作成功</string>
+    <string name="operation_fail">操作失败</string>
+
+    <!-- genera -->
+    <string name="confirm">确认</string>
+    <string name="reject">拒绝</string>
+    <string name="loading_dot_en">Loading&#8230;</string>
+    <string name="loading">加载中</string>
+
+</resources>

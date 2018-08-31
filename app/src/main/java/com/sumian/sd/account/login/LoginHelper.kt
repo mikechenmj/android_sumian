@@ -1,7 +1,8 @@
 package com.sumian.sd.account.login
 
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.hw.utils.AppUtil
+import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
@@ -19,14 +20,18 @@ import java.lang.ref.WeakReference
  */
 class LoginHelper {
     companion object {
-        fun onLoginSuccess(response: Token?) {
-            if (response == null) {
+        fun onLoginSuccess(token: Token?) {
+            if (token == null) {
                 ToastUtils.showShort(R.string.error)
                 return
             }
-            updateTokenAndUploadInstallationId(response)
-            if (response.user.hasPassword) {
-                AppUtil.launchMainAndFinishAll()
+            updateTokenAndUploadInstallationId(token)
+            if (token.user.hasPassword) {
+                if (token.is_new) {
+                    ActivityUtils.startActivity(NewUserGuideActivity::class.java)
+                } else {
+                    AppUtil.launchMainAndFinishAll()
+                }
             } else {
                 SetPasswordActivity.launch()
             }

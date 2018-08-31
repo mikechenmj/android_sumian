@@ -16,7 +16,7 @@
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
-            <com.sumian.hw.improve.widget.device.DeviceChaView
+            <com.sumian.hw.widget.device.DeviceChaView
                 android:id="@+id/monitor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                 app:name="@string/monitor"
                 app:status="0x00" />
 
-            <com.sumian.hw.improve.widget.device.DeviceChaView
+            <com.sumian.hw.widget.device.DeviceChaView
                 android:id="@+id/speed_sleeper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_18" />
 
-            <com.sumian.hw.improve.widget.device.DeviceRippleConnectingView
+            <com.sumian.hw.widget.device.DeviceRippleConnectingView
                 android:id="@+id/device_ripple_connecting_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_200">
@@ -69,7 +69,7 @@
                     android:contentDescription="@null"
                     app:srcCompat="@mipmap/equip_btn_more"
                     tools:ignore="RtlHardcoded" />
-            </com.sumian.hw.improve.widget.device.DeviceRippleConnectingView>
+            </com.sumian.hw.widget.device.DeviceRippleConnectingView>
 
             <TextView
                 android:id="@+id/tv_label_one"
@@ -122,7 +122,7 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <com.sumian.hw.improve.widget.device.DeviceSyncCallbackView
+    <com.sumian.hw.widget.device.DeviceSyncCallbackView
         android:id="@+id/device_sync_callback_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

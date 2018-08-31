@@ -69,7 +69,7 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
     }
 
     private void appendDoctorServices(Doctor doctor) {
-        if (doctor.getServices() != null) {
+        if (doctor.getServices() != null && !doctor.getServices().isEmpty()) {
             this.layDoctorServiceContainer.removeViewsInLayout(2, layDoctorServiceContainer.getChildCount() - 2);
             this.layDoctorServiceContainer.setVisibility(VISIBLE);
             DoctorServiceLayout doctorServiceLayout;
@@ -88,6 +88,9 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
                 doctorServiceLayout.invalidDoctorService(doctorService, i == doctorServices.size() - 1);
                 this.layDoctorServiceContainer.addView(doctorServiceLayout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             }
+            this.layDoctorServiceContainer.setVisibility(VISIBLE);
+        } else {
+            this.layDoctorServiceContainer.setVisibility(GONE);
         }
     }
 

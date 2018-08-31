@@ -59,21 +59,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sumian.hw.improve.widget.device.DeviceScanErrorView
+        <com.sumian.hw.widget.device.DeviceScanErrorView
             android:id="@+id/device_scan_error_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <com.sumian.hw.improve.widget.device.DeviceListView
+        <com.sumian.hw.widget.device.DeviceListView
             android:id="@+id/device_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <com.sumian.hw.improve.widget.device.DeviceScanView
+        <com.sumian.hw.widget.device.DeviceScanView
             android:id="@+id/device_scanning_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

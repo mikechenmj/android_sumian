@@ -4,8 +4,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.utils.FragmentUtil
@@ -13,6 +15,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.constants.SpKeys
+import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.main.widget.SwitchAnimationView
 import com.sumian.sd.notification.NotificationListActivity.REQUEST_CODE_OPEN_NOTIFICATION
@@ -24,6 +27,7 @@ import com.sumian.sd.widget.dialog.theme.BlackTheme
 import com.sumian.sd.widget.dialog.theme.ITheme
 import com.sumian.sd.widget.dialog.theme.LightTheme
 import com.sumian.sd.widget.dialog.theme.ThemeFactory
+import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -84,7 +88,6 @@ class MainActivity : BaseEventActivity() {
     override fun initBundle(bundle: Bundle) {
         mLaunchTabName = bundle.getString(KEY_TAB_NAME)
         mLaunchTabData = bundle.getString(KEY_TAB_DATA)
-        MainTabHelper.mPendingTabName = mLaunchTabName
         when (mLaunchTabName) {
             TAB_HW_1 -> ReportPushManager.getInstance().setPushReportByUriStr(mLaunchTabData)
         }
@@ -95,6 +98,19 @@ class MainActivity : BaseEventActivity() {
         mVersionDelegate.checkVersion(this)
         showFragmentAccordingToData()
         showOpenNotificationDialogIfNeeded()
+        showUserGuidDialogIfNeed()
+    }
+
+    private fun showUserGuidDialogIfNeed() {
+        val hasShow = SPUtils.getInstance().getBoolean(SpKeys.HOME_PAGE_FIRST_LAUNCH_GUIDE_DIALOG_HAS_SHOWN, false)
+        if (hasShow) {
+            return
+        }
+        HomepageUserGuidDialog(this, View.OnClickListener {
+            EventBusUtil.postEvent(SwitchMainActivityEvent(SwitchMainActivityEvent.TYPE_SD_ACTIVITY))
+        })
+                .show()
+        SPUtils.getInstance().put(SpKeys.HOME_PAGE_FIRST_LAUNCH_GUIDE_DIALOG_HAS_SHOWN, true)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -115,16 +131,17 @@ class MainActivity : BaseEventActivity() {
         val endColor = if (isSwitchToHwFragment) mDarkPrimaryColor else Color.WHITE
         val startStatusBarColor = if (isSwitchToHwFragment) Color.WHITE else Color.TRANSPARENT
         val endStatusBarColor = if (isSwitchToHwFragment) Color.TRANSPARENT else Color.WHITE
+        val subFragmentName = if (isSwitchToHwFragment) TAB_HW_0 else TAB_SD_0
         switch_animation_view.startSwitchAnimation(this, startColor, endColor,
                 startStatusBarColor, endStatusBarColor, isSwitchToHwFragment,
                 object : SwitchAnimationView.AnimationListener {
                     override fun onFullScreenCovered() {
-                        showFragmentByPosition(position)
+                        showFragmentByPosition(position, subFragmentName)
                     }
                 })
     }
 
-    private fun showFragmentByPosition(position: Int) {
+    private fun showFragmentByPosition(position: Int, subFragmentName: String? = null) {
         this.mIsBlackTheme = (position == mFragmentPositionHw)
         FragmentUtil.switchFragment(R.id.main_fragment_container, supportFragmentManager!!, mFragmentTags, position,
                 object : FragmentUtil.FragmentCreator {
@@ -133,6 +150,13 @@ class MainActivity : BaseEventActivity() {
                             mFragmentPositionHw -> HwMainFragment()
                             mFragmentPositionSd -> SdMainFragment()
                             else -> throw RuntimeException("Illegal tab position")
+                        }
+                    }
+                },
+                object : FragmentUtil.RunOnCommitCallback {
+                    override fun runOnCommit(selectFragment: Fragment) {
+                        if (selectFragment is OnEnterListener) {
+                            (selectFragment as OnEnterListener).onEnter(subFragmentName)
                         }
                     }
                 })
@@ -166,8 +190,8 @@ class MainActivity : BaseEventActivity() {
 
     private fun showFragmentAccordingToData() {
         when (mLaunchTabName) {
-            TAB_HW_0, TAB_HW_1, TAB_HW_2 -> showFragmentByPosition(mFragmentPositionHw)
-            TAB_SD_0, TAB_SD_1, TAB_SD_2 -> showFragmentByPosition(mFragmentPositionSd)
+            TAB_HW_0, TAB_HW_1, TAB_HW_2 -> showFragmentByPosition(mFragmentPositionHw, mLaunchTabName)
+            TAB_SD_0, TAB_SD_1, TAB_SD_2 -> showFragmentByPosition(mFragmentPositionSd, mLaunchTabName)
         }
         mLaunchTabName = null
     }

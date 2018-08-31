@@ -2,13 +2,13 @@ package com.sumian.sd.main
 
 import android.support.v4.app.Fragment
 import com.hyphenate.helpdesk.easeui.UIProvider
-import com.sumian.hw.improve.device.fragment.DeviceFragment
-import com.sumian.hw.improve.report.ReportFragment
-import com.sumian.hw.improve.tab.HwMeFragment
+import com.sumian.hw.device.fragment.DeviceFragment
+import com.sumian.hw.report.ReportFragment
+import com.sumian.hw.tab.HwMeFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.hw.upgrade.model.VersionModel
-import com.sumian.hw.utils.AppUtil
+import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
@@ -47,7 +47,6 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
         AppManager.getVersionModel().registerShowDotCallback(this)
         nav_tab.setOnSelectedTabChangeListener(this)
         iv_switch.setOnClickListener {
-            nav_tab.selectItem(0, true)
             launchAnotherMainActivity()
         }
     }
@@ -123,7 +122,7 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
 
     override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
         SumianExecutor.runOnUiThread({
-            this.tb_me.showDot(if (adminMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
+            this.tb_me.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
         })
     }
 
@@ -149,23 +148,21 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
                 })
     }
 
-    private fun showTabAccordingToData() {
-        val mPendingTabName = MainTabHelper.mPendingTabName
-        if (mPendingTabName == null) {
+    private fun showTabAccordingToData(data: String?) {
+        if (data == null) {
             if (fragmentManager?.findFragmentByTag(mFragmentTags[0]) == null) {
                 nav_tab.selectItem(0, true)
             }
         } else {
-            when (mPendingTabName) {
+            when (data) {
                 MainActivity.TAB_HW_0 -> nav_tab.selectItem(0, true)
                 MainActivity.TAB_HW_1 -> nav_tab.selectItem(1, true)
                 MainActivity.TAB_HW_2 -> nav_tab.selectItem(2, true)
             }
         }
-        MainTabHelper.mPendingTabName = null
     }
 
-    override fun onEnter() {
-        showTabAccordingToData()
+    override fun onEnter(data: String?) {
+        showTabAccordingToData(data)
     }
 }

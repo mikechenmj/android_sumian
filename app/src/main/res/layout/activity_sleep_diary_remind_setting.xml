@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".setting.remind.SleepDiaryRemindSettingActivity">
+
+    <com.sumian.sd.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/sleep_diary_remind" />
+
+    <com.sumian.sd.widget.divider.SettingDividerView
+        android:id="@+id/sdv_sleep_diary_remind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:divider_line_visible="gone"
+        app:divider_more_visible="invisible"
+        app:show_switch="true"
+        app:type_desc="@string/sleep_diary_remind" />
+
+    <FrameLayout
+        android:id="@+id/fl_remind_time"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <View
+            style="@style/HorizontalDividerLine"
+            android:layout_marginStart="@dimen/space_20" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_t1_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_20"
+                android:text="@string/remind_time" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/text_t1_16"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_5"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="08:00" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@null"
+            app:srcCompat="@mipmap/ic_info_icon_enter" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_open_sleep_diary_remind_hint"
+        style="@style/text_t2_14"
+        android:layout_marginEnd="@dimen/space_20"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10"
+        android:text="@string/open_sleep_diary_remind_hint"
+        android:textSize="@dimen/font_12" />
+</LinearLayout>

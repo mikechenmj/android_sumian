@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
-import com.sumian.sd.account.userProfile.activity.UserProfileActivity;
-import com.sumian.sd.advisory.activity.AdvisoryListActivity;
+import com.sumian.sd.account.userProfile.SdUserProfileActivity;
+import com.sumian.sd.service.advisory.activity.AdvisoryListActivity;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
 import com.sumian.sd.h5.SleepFileWebActivity;
@@ -19,7 +19,7 @@ import com.sumian.sd.notification.NotificationViewModel;
 import com.sumian.sd.onlinereport.OnlineReportListActivity;
 import com.sumian.sd.scale.ScaleListActivity;
 import com.sumian.sd.setting.SettingActivity;
-import com.sumian.sd.tel.activity.TelBookingListActivity;
+import com.sumian.sd.service.tel.activity.TelBookingListActivity;
 import com.sumian.sd.widget.tips.PatientRecordTips;
 import com.sumian.sd.widget.tips.PatientServiceTips;
 
@@ -85,7 +85,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.iv_avatar:
             case R.id.tv_nickname:
-                UserProfileActivity.show(getContext(), UserProfileActivity.class);
+                SdUserProfileActivity.show(getContext(), SdUserProfileActivity.class);
                 break;
             case R.id.dv_setting:
                 SettingActivity.show(getContext(), SettingActivity.class);

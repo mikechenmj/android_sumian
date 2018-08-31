@@ -58,6 +58,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         if (isHaveForce) {
             SumianAlertDialog(mActivity)
                     .setTheme(createTheme())
+                    .goneTopIcon(true)
                     .setTitle(R.string.version_upgrade)
                     .setMessage(R.string.force_upgrade_version)
                     .setRightBtn(R.string.sure, this)
@@ -65,16 +66,16 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
                     .setOnKeyListener(this)
                     .show()
         } else {
-            if (isHaveUpgrade) {
-                SumianAlertDialog(mActivity)
-                        .setTheme(createTheme())
-                        .setTitle(R.string.version_upgrade)
-                        .setMessage(R.string.have_a_new_version)
-                        .setRightBtn(R.string.sure, this)
-                        .setCancelable(true)
-                        .setOnKeyListener(this)
-                        .show()
-            }
+//            if (isHaveUpgrade) {
+//                SumianAlertDialog(mActivity)
+//                        .setTheme(createTheme())
+//                        .setTitle(R.string.version_upgrade)
+//                        .setMessage(R.string.have_a_new_version)
+//                        .setRightBtn(R.string.sure, this)
+//                        .setCancelable(true)
+//                        .setOnKeyListener(this)
+//                        .show()
+//            }
         }
     }
 

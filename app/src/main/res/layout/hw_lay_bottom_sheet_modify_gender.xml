@@ -15,7 +15,7 @@
         android:padding="@dimen/space_12"
         android:text="@string/gender_male_hint"
         android:textColor="@color/bt_hole_color"
-        android:textSize="@dimen/font_16" />
+        android:textSize="@dimen/font_18" />
 
     <View
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:padding="@dimen/space_12"
         android:text="@string/gender_female_hint"
         android:textColor="@color/bt_hole_color"
-        android:textSize="@dimen/font_16" />
+        android:textSize="@dimen/font_18" />
 
     <View
         android:layout_width="match_parent"
@@ -47,6 +47,6 @@
         android:padding="@dimen/space_12"
         android:text="@string/cancel_hint"
         android:textColor="@color/warn_color"
-        android:textSize="@dimen/font_20" />
+        android:textSize="@dimen/font_18" />
 
 </LinearLayout>

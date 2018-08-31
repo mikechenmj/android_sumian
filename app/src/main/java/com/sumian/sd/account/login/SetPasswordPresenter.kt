@@ -1,13 +1,11 @@
 package com.sumian.sd.account.login
 
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.hw.utils.AppUtil
+import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseResponseCallback
-import com.umeng.socialize.net.utils.URequest
 
 /**
  * <pre>

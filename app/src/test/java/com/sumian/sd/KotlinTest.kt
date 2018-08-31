@@ -8,6 +8,7 @@ import com.sumian.sd.bean.ClassA
 import com.sumian.sd.h5.bean.H5BaseResponse
 import com.sumian.sd.utils.JsonUtil
 import org.junit.Test
+import java.util.ArrayList
 
 /**
  * <pre>
@@ -32,5 +33,17 @@ class KotlinTest {
         val json = "{\"enable\":true, \"age\":null}"
         val a = gson.fromJson<ClassA>(json, ClassA::class.java)
         println(a)
+    }
+
+    @Test
+    fun test3() {
+        val s = "13:47:00"
+        System.out.println(s.split(":")[1])
+        System.out.println(getReminderHHmm(s))
+    }
+
+    fun getReminderHHmm(remindAt: String): String {
+        val endIndex = remindAt.lastIndexOf(":")
+        return remindAt.substring(-0, endIndex)
     }
 }

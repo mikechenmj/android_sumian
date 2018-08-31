@@ -12,6 +12,7 @@
     <dimen name="font_16">16sp</dimen>
     <dimen name="font_15">15sp</dimen>
     <dimen name="font_14">14sp</dimen>
+    <dimen name="font_13">13sp</dimen>
     <dimen name="font_12">12sp</dimen>
     <dimen name="font_10">10sp</dimen>
     <dimen name="font_8">8sp</dimen>
@@ -97,4 +98,7 @@
     <dimen name="space_320">320dp</dimen>
     <dimen name="space_154">154dp</dimen>
     <dimen name="space_108">108dp</dimen>
+
+    <dimen name="homepage_bottom_nav_bar_height">68dp</dimen>
+    <dimen name="sd_homepage_title_bar_height">44dp</dimen>
 </resources>

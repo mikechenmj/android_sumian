@@ -80,13 +80,23 @@
                 tools:visibility="visible" />
 
             <com.sumian.sd.widget.doctor.DoctorServiceItemView
-                android:id="@+id/doctor_service_item_view_cbti"
+                android:id="@+id/dsiv_cbti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 app:dsiv_desc="@string/service_desc_cbti"
                 app:dsiv_image="@drawable/ic_service_icon_cbti"
                 app:dsiv_title="@string/service_title_cbti"
+                tools:visibility="visible" />
+
+            <com.sumian.sd.widget.doctor.DoctorServiceItemView
+                android:id="@+id/dsiv_relaxation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:dsiv_desc="放慢呼吸，让你的心灵喘口气"
+                app:dsiv_image="@drawable/ic_relaxation"
+                app:dsiv_title="心灵减压放松训练"
                 tools:visibility="visible" />
 
             <LinearLayout

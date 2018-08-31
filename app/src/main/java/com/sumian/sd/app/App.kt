@@ -18,6 +18,7 @@ class App : Application() {
         super.onCreate()
         mAppContext = this
         AppManager.getInstance().init(this)
+        registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
     }
 }
 

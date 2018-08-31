@@ -2,6 +2,7 @@ package com.sumian.sd.widget.fold;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,10 +18,12 @@ import butterknife.ButterKnife;
  * on 2018/5/30 13:54
  * desc:
  **/
-public class FoldLayout extends LinearLayout implements View.OnClickListener, FoldTextView.OnFoldListener {
+public class FoldLayout extends LinearLayout implements View.OnClickListener {
+
+    private static final String TAG = FoldLayout.class.getSimpleName();
 
     @BindView(R.id.tv_summary)
-    FoldTextView tvSummary;
+    TextView tvSummary;
     @BindView(R.id.tv_show_more)
     TextView tvShowMore;
 
@@ -34,44 +37,32 @@ public class FoldLayout extends LinearLayout implements View.OnClickListener, Fo
 
     public FoldLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context);
-    }
-
-    private void initView(Context context) {
         ButterKnife.bind(inflate(context, R.layout.lay_fold_text_container, this));
 
-        tvSummary.setShowLineRule(4);
-        tvSummary.setOnFoldListener(this);
-        if (tvSummary.getLineCount() > 4) {
-            tvShowMore.setOnClickListener(this);
-            tvShowMore.setVisibility(VISIBLE);
-        } else {
-            tvShowMore.setVisibility(GONE);
-        }
     }
 
     @Override
     public void onClick(View v) {
-        if (tvShowMore.getTag() == null) {
-            tvSummary.foldContent();
-            tvShowMore.setTag(true);
-        } else {
-            tvSummary.unfoldContent();
-            tvShowMore.setTag(null);
-        }
-    }
-
-    @Override
-    public void fold() {
-        tvShowMore.setTag(true);
-    }
-
-    @Override
-    public void unfold() {
-        tvShowMore.setTag(null);
+        tvSummary.setMaxLines(Integer.MAX_VALUE);
+        tvShowMore.setLines(Integer.MAX_VALUE);
+        tvShowMore.setVisibility(GONE);
     }
 
     public void setText(String text) {
+        tvSummary.setVisibility(GONE);
         tvSummary.setText(text);
+        tvSummary.setVisibility(VISIBLE);
+        if (tvSummary.getLineCount() > 4) {
+            tvSummary.setEllipsize(TextUtils.TruncateAt.END);
+            tvSummary.setMaxLines(4);
+
+            tvShowMore.setTag(true);
+            tvShowMore.setOnClickListener(this);
+            tvShowMore.setVisibility(VISIBLE);
+        } else {
+            if (tvShowMore.getTag() == null) {
+                tvShowMore.setVisibility(GONE);
+            }
+        }
     }
 }

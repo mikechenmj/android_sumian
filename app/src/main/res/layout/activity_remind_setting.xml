@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".setting.remind.RemindSettingActivity">
+
+    <com.sumian.sd.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/remind_setting" />
+
+    <com.sumian.sd.widget.divider.SettingDividerView
+        android:id="@+id/sdv_sleep_diary_remind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_16"
+        app:divider_line_visible="visible"
+        app:type_desc="@string/sd_sleep_diary_remind"
+        tools:type_content="@string/not_set_yet" />
+
+</LinearLayout>

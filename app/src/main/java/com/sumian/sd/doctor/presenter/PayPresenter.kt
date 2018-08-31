@@ -2,6 +2,7 @@ package com.sumian.sd.doctor.presenter
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Handler
 import android.support.annotation.StringRes
 import com.google.gson.Gson
 import com.pingplusplus.android.Pingpp
@@ -34,6 +35,12 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
     private var mOrder: String? = null
 
     private var mOrderNo: String? = null
+
+    private var mCheckOrderCount = 0
+
+    private val mHandler: Handler by lazy {
+        Handler()
+    }
 
     init {
         view.setPresenter(this)
@@ -82,17 +89,49 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
 
     override fun checkPayOrder() {
 
+        mCheckOrderCount++
+
         mView?.onBegin()
 
         val call = AppManager.getHttpService().getOrderDetail(mOrderNo!!)
         addCall(call)
         call.enqueue(object : BaseResponseCallback<OrderDetail>() {
-            override fun onSuccess(response: OrderDetail?) {
-                mView?.onCheckOrderPayIsOk()
-            }
 
             override fun onFailure(code: Int, message: String) {
-                mView?.onCheckOrderPayIsInvalid(message)
+                autoCheckOrderStatus()
+            }
+
+            override fun onSuccess(response: OrderDetail?) {
+                response?.let {
+                    when (response.status) {//0：待支付，1：支付成功，2：支付失败 3：退款中 4：退款成功 5：退款失败
+                        0 -> {//待支付
+                            autoCheckOrderStatus()
+                        }
+                        1 -> {//支付成功
+                            mCheckOrderCount = 0
+                            mView?.onCheckOrderPayIsOk()
+                        }
+                        2 -> {
+                            mCheckOrderCount = 0
+                            mView?.onCheckOrderPayIsInvalid("支付失败")
+                        }
+                        3 -> {
+                            mCheckOrderCount = 0
+                            mView?.onCheckOrderPayIsInvalid("退款中")
+                        }
+                        4 -> {
+                            mCheckOrderCount = 0
+                            mView?.onCheckOrderPayIsInvalid("退款成功")
+                        }
+                        5 -> {
+                            mCheckOrderCount = 0
+                            mView?.onCheckOrderPayIsInvalid("退款失败")
+                        }
+                        else -> {//2及其他都是支付失败
+
+                        }
+                    }
+                }
             }
 
             override fun onFinish() {
@@ -100,6 +139,16 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
                 mView?.onFinish()
             }
         })
+    }
+
+    fun autoCheckOrderStatus() {
+        if (mCheckOrderCount >= 10) {
+            mCheckOrderCount = 0
+            mView?.onCheckOrderPayFinialIsInvalid("该订单支付失败,请重新购买")
+        } else {
+            mHandler.removeCallbacksAndMessages(null)
+            mHandler.postDelayed({ checkPayOrder() }, 1000L)
+        }
     }
 
     override fun doPay(activity: Activity) {
@@ -120,6 +169,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
             val result = data.extras!!.getString("pay_result")
 
             @StringRes val payResultMsg: Int
+
             when (result) {
                 "success" -> {
                     payResultMsg = R.string.pay_success

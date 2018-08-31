@@ -100,6 +100,8 @@ public class SumianAlertDialog {
     private int mRightFontColorRes;
     private int mRightBtnTextRes;
 
+    private boolean mIsGoneTopIcon;
+
 
     public SumianAlertDialog(Context context) {
         mContext = context;
@@ -137,7 +139,7 @@ public class SumianAlertDialog {
         mIvClose.setImageResource(mDismissRes);
         mIvClose.setVisibility(mIsCloseBtnVisible ? View.VISIBLE : View.GONE);
 
-        mIvTop.setVisibility(mIconRes == 0 ? View.GONE : View.VISIBLE);
+        mIvTop.setVisibility(mIconRes == 0 || mIsGoneTopIcon ? View.GONE : View.VISIBLE);
         mIvTop.setImageResource(mIconRes);
 
         mTvTitle.setVisibility(mTitleRes == 0 ? View.GONE : View.VISIBLE);
@@ -262,6 +264,11 @@ public class SumianAlertDialog {
 
     public SumianAlertDialog whitenRight() {
         mWhitenRight = true;
+        return this;
+    }
+
+    public SumianAlertDialog goneTopIcon(boolean isGone) {
+        this.mIsGoneTopIcon = isGone;
         return this;
     }
 

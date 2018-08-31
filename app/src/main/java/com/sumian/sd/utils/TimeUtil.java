@@ -399,4 +399,11 @@ public final class TimeUtil {
         }
         return list;
     }
+
+    public static int getUnixTimeFromHourAndMinute(int hour, int minute) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return (int) (calendar.getTimeInMillis() / 1000);
+    }
 }

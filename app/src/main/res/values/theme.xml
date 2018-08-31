@@ -43,6 +43,10 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
+    <style name="MainActivity" parent="BaseAppTheme.TranslucentStatus">
+        <item name="android:windowBackground">@color/hw_colorPrimary</item>
+    </style>
+
     <style name="Scan_qr_theme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -96,4 +100,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <!--<item name="android:backgroundDimEnabled">false</item>-->
+    <style name="FullScreenDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

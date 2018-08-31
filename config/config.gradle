@@ -1,0 +1,87 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+ext {
+
+    android = [
+
+            compileSdkVersion: 28,
+            buildToolsVersion: "28.0.2",
+            minSdkVersion    : 21,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0.0",
+
+            libVersionCode   : 1,
+            libVersionName   : "1.0",
+    ]
+
+    supportVersion = "27.1.1"
+
+    configs = {
+
+        // keystore.properties
+        Properties keystoreProperties = new Properties()
+        keystoreProperties.load(project.rootProject.file('./config/keystore.properties').newDataInputStream())
+
+        keyAlias keystoreProperties.get('APP_KEY_ALIAS', null)
+        keyPassword keystoreProperties.getProperty('APP_KEY_PASSWORD', null)
+        storePassword keystoreProperties.getProperty('APP_STORE_PASSWORD', null)
+
+        windows_release_store_file_path = keystoreProperties.getProperty('WINDOWS_RELEASE_STORE_FILE', null)
+        linux_release_store_file_path = keystoreProperties.getProperty('LINUX_RELEASE_STORE_FILE', null)
+
+        def userName = System.getProperty("user.name")//根据 os 账户信息动态生成keystore 保存路径
+        def keystore_path = Os.isFamily(Os.FAMILY_WINDOWS) ? windows_release_store_file_path : linux_release_store_file_path
+        keystore_path = keystore_path.replace("{user_name}", userName)
+
+        storeFile file(keystore_path)
+
+    }
+
+    buildTypes = {
+
+        release {
+            debuggable false
+            jniDebuggable false
+            minifyEnabled false
+            pseudoLocalesEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.configs
+        }
+
+        debug {
+            debuggable true
+            jniDebuggable true
+            minifyEnabled false
+            pseudoLocalesEnabled true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.configs
+        }
+
+    }
+
+    compileOptions = {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions = {
+        abortOnError rootProject.ext.android.abortOnError
+    }
+
+    defaultDependencies = {
+
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        // support
+        implementation "com.android.support:support-v4:${supportVersion}"
+        implementation "com.android.support:appcompat-v7:${supportVersion}"
+        implementation "com.android.support:recyclerview-v7:${supportVersion}"
+        implementation "com.android.support:design:${supportVersion}"
+        // 测试
+        testImplementation "junit:junit:4.12"
+        androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
+        androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    }
+}

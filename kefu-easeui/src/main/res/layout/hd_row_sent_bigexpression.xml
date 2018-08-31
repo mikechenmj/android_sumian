@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="13dp">
+
+    <TextView
+        android:id="@+id/timestamp"
+        style="@style/chat_text_date_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="20:10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_chat_activity"
+        android:gravity="right"
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/msg_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:contentDescription="@null"
+                android:focusable="true"
+                android:src="@drawable/hd_msg_state_fail"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_ack"
+                style="@style/chat_text_name_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/text_ack_msg"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_delivered"
+                style="@style/chat_text_name_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/text_delivered_msg"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_chat_activity">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:minHeight="90dp"
+                    android:minWidth="90dp"
+                    android:scaleType="fitXY" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <com.hyphenate.helpdesk.easeui.widget.CircularImage
+            android:id="@+id/iv_userhead"
+            android:layout_width="@dimen/size_avatar"
+            android:layout_height="@dimen/size_avatar"
+            android:layout_marginEnd="@dimen/margin_chat_activity"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_chat_right_default" />
+
+    </LinearLayout>
+
+</LinearLayout>

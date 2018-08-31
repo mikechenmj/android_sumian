@@ -3,9 +3,6 @@ package com.sumian.sd.network.api
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.advisory.bean.Advisory
-import com.sumian.sd.advisory.bean.PictureOssSts
-import com.sumian.sd.cbti.bean.*
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.doctor.bean.PayOrder
@@ -18,14 +15,18 @@ import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.order.OrderDetail
-import com.sumian.sd.order.OrderDetailV2
 import com.sumian.sd.oss.OssResponse
 import com.sumian.sd.record.bean.DoctorServiceList
 import com.sumian.sd.record.bean.SleepRecord
 import com.sumian.sd.record.bean.SleepRecordSummary
 import com.sumian.sd.scale.bean.Scale
+import com.sumian.sd.service.advisory.bean.Advisory
+import com.sumian.sd.service.advisory.bean.PictureOssSts
+import com.sumian.sd.service.cbti.bean.*
+import com.sumian.sd.service.tel.bean.TelBooking
+import com.sumian.sd.setting.remind.bean.Reminder
+import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import com.sumian.sd.setting.version.bean.Version
-import com.sumian.sd.tel.bean.TelBooking
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -100,9 +101,6 @@ interface DoctorApi {
 
     @GET("orders/{order_no}")
     fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
-
-    @GET("orders/{order_no}")
-    fun getOrderDetailV2(@Path("order_no") orderNumber: String): Call<OrderDetailV2>
 
     @FormUrlEncoded
     @POST("user/leancloud")
@@ -300,4 +298,25 @@ interface DoctorApi {
     @GET("bookings/{id}")
     fun getTelBookingDetail(@Path("id") telBookingId: Int, @QueryMap() map: MutableMap<String, Any>): Call<TelBooking>
 
+
+    /**
+     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒
+     */
+    @GET("reminders/subscriptions")
+    fun getReminderList(@Query("type") type: Int = 2): Call<ReminderListResponse>
+
+    /**
+     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒
+     * enable 0 false ,1 true
+     */
+    @FormUrlEncoded
+    @POST("reminders/subscriptions")
+    fun addReminder(@Field("type") type: Int = 2, @Field("remind_at") remindAtInSecond: Int, @Field("enable") enable: Int = 1): Call<Reminder>
+
+    @FormUrlEncoded
+    @PATCH("reminders/subscriptions/{id}")
+    fun modifyReminder(@Path("id") id: Int, @Field("remind_at") remindAtInSecond: Int, @Field("enable") enable: Int): Call<Reminder>
+
+    @POST("customer-service/message-event")
+    fun newCustomerMessage(): Call<Any>
 }
