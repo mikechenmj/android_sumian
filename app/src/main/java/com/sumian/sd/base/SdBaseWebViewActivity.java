@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -102,6 +103,16 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
             @Override
             public void handler(String data) {
                 finish();
+            }
+        });
+        sWebView.registerHandler("updatePageUI", new SBridgeHandler() {
+            @Override
+            public void handler(String data) {
+                super.handler(data);
+                UpdatePageUIData updatePageUIData = JsonUtil.Companion.fromJson(data, UpdatePageUIData.class);
+                if (updatePageUIData != null) {
+                    mTitleBar.setVisibility(updatePageUIData.fullscreen ? View.GONE : View.VISIBLE);
+                }
             }
         });
     }
@@ -214,5 +225,9 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
 
     protected void reload() {
         mSWebViewLayout.reload();
+    }
+
+    static class UpdatePageUIData {
+        public boolean fullscreen;
     }
 }
