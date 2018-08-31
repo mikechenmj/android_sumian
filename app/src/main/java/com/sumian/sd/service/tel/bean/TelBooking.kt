@@ -6,6 +6,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import com.google.gson.annotations.SerializedName
 import com.sumian.sd.R
+import com.sumian.sd.R.attr.status
 import com.sumian.sd.app.App
 import com.sumian.sd.utils.TimeUtil
 import kotlinx.android.parcel.Parcelize
@@ -57,18 +58,11 @@ data class TelBooking(var id: Int,
                 spannableString.setSpan(ForegroundColorSpan(App.getAppContext().resources.getColor(R.color.b3_color)), 0, formatStatus.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 return spannableString
             }
-            1, 2, 3 -> {
-                "已确认"
-            }
-            4, 7 -> {
-                "已完成"
-            }
-            5, 8 -> {
-                "已关闭"
-            }
-            6 -> {
-                "挂起中"
-            }
+            1, 2, 3 -> "已确认"
+            4 -> "已完成"
+            5, 8 -> "已关闭"
+            6 -> "挂起中"
+            7 -> "已取消"
             //9 未使用,不显示
             else -> {
                 ""
@@ -78,10 +72,10 @@ data class TelBooking(var id: Int,
     }
 
     fun formatOrderContent(): String {
-        return if (status == 9) {
-            "您的电话咨询（${p_package.servicePackage.formatServiceLengthType()}电话咨询服务）还未使用，点击预约 >"
-        } else {
-            return "${formatOrderTime()}预约时长:  ${p_package.servicePackage.formatServiceLengthType()} \r\n咨询问题:  $consulting_question"
+        return when (status) {
+            9 -> "您的${p_package.servicePackage.formatPackageNameAndIntro()}还未使用，点击预约 >"
+            7 -> "您的${p_package.servicePackage.formatPackageNameAndIntro()}已取消。"
+            else -> "${formatOrderTime()}预约时长:  ${p_package.servicePackage.formatServiceLengthType()} \r\n咨询问题:  $consulting_question"
         }
     }
 
@@ -154,6 +148,10 @@ data class TelBooking(var id: Int,
                     "分钟"
                 }
             }
+        }
+
+        fun formatPackageNameAndIntro(): String {
+            return "【$name（${introduction}）】"
         }
     }
 
