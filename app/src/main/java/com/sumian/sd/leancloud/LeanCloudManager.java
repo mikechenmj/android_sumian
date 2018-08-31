@@ -60,7 +60,7 @@ public class LeanCloudManager {
         PushService.setDefaultPushCallback(context, HwWelcomeActivity.class);
     }
 
-    public static void getAndUploadCurrentInstallation() {
+    public static void uploadPushId() {
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
