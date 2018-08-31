@@ -4,17 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.hyphenate.chat.KefuMessageEncoder;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.guideline.utils.GuidelineUtils;
-import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
-import com.sumian.sd.kefu.KefuManager;
-import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.account.login.LoginActivity;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.kefu.KefuManager;
+import com.sumian.sd.leancloud.LeanCloudManager;
+import com.sumian.sd.utils.AppUtil;
 
 /**
  * Created by jzz
@@ -44,6 +43,7 @@ public class HwWelcomeActivity extends HwBaseActivity {
             } else {
                 boolean login = AppManager.getAccountViewModel().isLogin();
                 if (login) {
+                    LeanCloudManager.uploadPushId();
                     AppUtil.launchMain();
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);
                     if (launchCustomerServiceActivity) {

@@ -39,7 +39,7 @@ class LoginHelper {
 
         fun updateTokenAndUploadInstallationId(response: Token?) {
             AppManager.getAccountViewModel().updateToken(response)
-            LeanCloudManager.getAndUploadCurrentInstallation()
+            LeanCloudManager.uploadPushId()
         }
 
         fun requestCaptcha(mobile: String, listener: RequestCaptchaListener) {
