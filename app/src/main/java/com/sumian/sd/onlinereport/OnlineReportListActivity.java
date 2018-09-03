@@ -14,6 +14,7 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseActivity;
+import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.network.callback.BaseResponseCallback;
 import com.sumian.sd.network.response.PaginationResponse;
 import com.sumian.sd.widget.TitleBar;
@@ -164,10 +165,9 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
         if (mIsPickMode) {
             mAdapter.addOrRemoveSelectedItem(position);
         } else {
-            OnlineReportDetailActivity.launch(this, item.getTitle(), item.getReport_url());
-//            SimpleWebActivity.launch(this, item.getReport_url());
-//            SimpleWebActivity.launchWithCompleteUrl(this, item.getReport_url() + getUrlToken());
-//            SimpleWebActivity.launchWithCompleteUrl(this, "https://sd-dev.sumian.com/scale-details/scales?scale_id=951,952,953&chapter_id=1&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NkYXBpLWRldi5zdW1pYW4uY29tL2F1dGhvcml6YXRpb25zIiwiaWF0IjoxNTM1OTczNzAwLCJleHAiOjE1Mzg1NjU3MDAsIm5iZiI6MTUzNTk3MzcwMCwianRpIjoiUTNMeGN6QlRKenFKdkM3diIsInN1YiI6MjM0NSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.eykoQTIy65LVVcAiPeqybPYlUVbXcGNHd4_icu7tYfU");
+            String reportUrl = item.getReport_url();
+            String completeUrl = appendToken(reportUrl);
+            SimpleWebActivity.launchWithCompleteUrl(this, completeUrl);
         }
     }
 
@@ -185,5 +185,14 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
 
     private String getUrlToken() {
         return "&token=" + AppManager.getAccountViewModel().getTokenString();
+    }
+
+    protected String appendToken(String url) {
+        StringBuilder stringBuilder = new StringBuilder();
+        boolean hasQuestionMark = url != null && url.contains("?");
+        stringBuilder.append(url)
+                .append(hasQuestionMark ? "&" : "?")
+                .append(getUrlToken());
+        return stringBuilder.toString();
     }
 }
