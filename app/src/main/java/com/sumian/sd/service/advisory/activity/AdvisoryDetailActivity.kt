@@ -7,14 +7,15 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.sumian.common.widget.voice.player.VoicePlayer
 import com.sumian.sd.R
+import com.sumian.sd.base.SdBaseActivity
+import com.sumian.sd.h5.H5Uri
+import com.sumian.sd.main.MainActivity
 import com.sumian.sd.service.advisory.adapter.RecordAdapter
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.contract.RecordContract
 import com.sumian.sd.service.advisory.presenter.RecordPresenter
-import com.sumian.sd.base.SdBaseActivity
-import com.sumian.sd.h5.H5Uri
-import com.sumian.sd.main.MainActivity
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianWebDialog
 import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
@@ -92,6 +93,11 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
             mPresenter.getAdvisoryDetail(mAdvisoryId)
         }
 
+    }
+
+    override fun onStop() {
+        super.onStop()
+        VoicePlayer.getInstance().release()
     }
 
     @Suppress("DEPRECATION")

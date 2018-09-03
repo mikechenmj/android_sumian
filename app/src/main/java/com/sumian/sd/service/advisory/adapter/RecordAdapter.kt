@@ -13,13 +13,14 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.media.LargeImageActivity
 import com.sumian.common.widget.FlowLayout
+import com.sumian.common.widget.voice.widget.VoicePlayerView
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.service.advisory.bean.Record
 import com.sumian.sd.base.holder.SdBaseViewHolder
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.onlinereport.OnlineReportDetailActivity
 import com.sumian.sd.onlinereport.OnlineReportListActivity
+import com.sumian.sd.service.advisory.bean.Record
 import com.sumian.sd.utils.TimeUtil
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
@@ -173,12 +174,14 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
         private var mTvName: TextView? = null
         private var mTvReplyTime: TextView? = null
         private var mTvContent: TextView? = null
+        private var mVoicePlayerView: VoicePlayerView? = null
 
         init {
             this.mAvatar = getView(R.id.civ_avatar)
             this.mTvName = getView(R.id.tv_name)
             this.mTvReplyTime = getView(R.id.tv_time)
             this.mTvContent = getView(R.id.tv_content)
+            this.mVoicePlayerView = getView(R.id.voice_player_view)
         }
 
         override fun initView(item: Record) {
@@ -186,7 +189,14 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
             load(mDoctor.avatar, R.mipmap.ic_info_avatar_doctor, mAvatar)
             this.mTvName?.text = if (TextUtils.isEmpty(mDoctor.name)) getText(R.string.sleep_doctor) else mDoctor.name
             this.mTvReplyTime?.text = TimeUtil.formatYYYYMMDDHHMM(item.created_at)
-            this.mTvContent?.text = item.content
+            this.mTvContent?.visibility = View.GONE
+            this.mVoicePlayerView?.hide()
+            if (item.content_type == 1) {
+                this.mVoicePlayerView?.invalid(item.sound.getFormatVoice())?.setPosition(adapterPosition)?.show()
+            } else {
+                this.mTvContent?.text = item.content
+                this.mTvContent?.visibility = View.VISIBLE
+            }
         }
 
     }
