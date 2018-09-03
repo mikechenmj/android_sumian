@@ -165,6 +165,9 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
             mAdapter.addOrRemoveSelectedItem(position);
         } else {
             OnlineReportDetailActivity.launch(this, item.getTitle(), item.getReport_url());
+//            SimpleWebActivity.launch(this, item.getReport_url());
+//            SimpleWebActivity.launchWithCompleteUrl(this, item.getReport_url() + getUrlToken());
+//            SimpleWebActivity.launchWithCompleteUrl(this, "https://sd-dev.sumian.com/scale-details/scales?scale_id=951,952,953&chapter_id=1&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NkYXBpLWRldi5zdW1pYW4uY29tL2F1dGhvcml6YXRpb25zIiwiaWF0IjoxNTM1OTczNzAwLCJleHAiOjE1Mzg1NjU3MDAsIm5iZiI6MTUzNTk3MzcwMCwianRpIjoiUTNMeGN6QlRKenFKdkM3diIsInN1YiI6MjM0NSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.eykoQTIy65LVVcAiPeqybPYlUVbXcGNHd4_icu7tYfU");
         }
     }
 
@@ -178,5 +181,9 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
                 R.mipmap.ic_empty_state_report,
                 R.string.online_report_list_empty_title,
                 R.string.online_report_list_empty_desc);
+    }
+
+    private String getUrlToken() {
+        return "&token=" + AppManager.getAccountViewModel().getTokenString();
     }
 }
