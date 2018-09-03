@@ -83,8 +83,10 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
     public void release() {
         removeAllMsg();
-        mMediaPlayer.pause();
-        mMediaPlayer.stop();
+        if (mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+            mMediaPlayer.stop();
+        }
         if (mStatusListener != null) {
             mStatusListener.stop();
         }
