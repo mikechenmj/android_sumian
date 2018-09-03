@@ -497,6 +497,7 @@
         <activity
             android:name=".account.login.LoginActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:theme="@style/HwAppTheme" />
         <activity
             android:name=".account.login.ValidatePhoneNumberActivity"

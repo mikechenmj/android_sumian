@@ -111,7 +111,7 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
                 super.handler(data);
                 UpdatePageUIData updatePageUIData = JsonUtil.Companion.fromJson(data, UpdatePageUIData.class);
                 if (updatePageUIData != null) {
-                    mTitleBar.setVisibility(updatePageUIData.fullscreen ? View.GONE : View.VISIBLE);
+                    mTitleBar.setVisibility(!updatePageUIData.showNavigationBar ? View.GONE : View.VISIBLE);
                 }
             }
         });
@@ -228,6 +228,6 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
     }
 
     static class UpdatePageUIData {
-        public boolean fullscreen;
+        public boolean showNavigationBar;
     }
 }
