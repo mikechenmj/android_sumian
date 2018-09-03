@@ -63,10 +63,10 @@ public class ModifyNickNamePresenter implements ModifyUserInfoContract.Presenter
 
         view.onBegin();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put(formKey, formValue);
+        Map<String, String> map = new HashMap<>();
+        map.put(formKey, formValue.toString());
         map.put("include", "doctor");
-        Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
+        Call<UserInfo> call = AppManager.getHttpService().modifyUserProfile(map);
         call.enqueue(new BaseResponseCallback<UserInfo>() {
             @Override
             protected void onSuccess(UserInfo response) {
