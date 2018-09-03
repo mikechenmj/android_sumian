@@ -71,12 +71,18 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
     }
 
     override fun onGetTelBookingDetailSuccess(telBooking: TelBooking) {
-        sdv_border_status.visibility = View.VISIBLE
-        sdv_border_status.setContent(telBooking.formatStatus())
-        sdv_make_date.setContent(telBooking.formatOrderTimeYYYYMMDDHHMM())
-        sdv_duration.setContent(telBooking.p_package.servicePackage.formatServiceLengthType())
-        et_input_ask_question.setText(telBooking.consulting_question)
-        et_input_ask_question_more.setText(telBooking.add)
+        if (telBooking.status == TelBooking.STATUS_7_CANCELED) {
+            tv_top_bar.visibility = View.VISIBLE
+            empty_error_view.visibility = View.VISIBLE
+        } else {
+            scroll_view.visibility = View.VISIBLE
+            sdv_border_status.visibility = View.VISIBLE
+            sdv_border_status.setContent(telBooking.formatStatus())
+            sdv_make_date.setContent(telBooking.formatOrderTimeYYYYMMDDHHMM())
+            sdv_duration.setContent(telBooking.p_package.servicePackage.formatServiceLengthType())
+            et_input_ask_question.setText(telBooking.consulting_question)
+            et_input_ask_question_more.setText(telBooking.add)
+        }
     }
 
     override fun onGetTelBookingDetailFailed(error: String) {

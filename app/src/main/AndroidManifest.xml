@@ -497,6 +497,7 @@
         <activity
             android:name=".account.login.LoginActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:theme="@style/HwAppTheme" />
         <activity
             android:name=".account.login.ValidatePhoneNumberActivity"
@@ -534,6 +535,9 @@
         <activity
             android:name=".account.login.NewUserGuideActivity"
             android:exported="true"
+            android:theme="@style/BaseAppTheme.TranslucentStatus" />
+        <activity
+            android:name=".homepage.RelaxationActivity"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
     </application>
 

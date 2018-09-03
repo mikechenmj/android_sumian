@@ -967,5 +967,8 @@
     <string name="remind_time">提醒时间</string>
     <string name="set_remind_time">设置提醒时间</string>
     <string name="pattern_hh_mm">%02d:%02d</string>
+    <string name="service_is_canceled">服务已取消</string>
+    <string name="any_question_ask_kefu">如有疑问，请咨询客服</string>
+    <string name="relate_service_is_canceled">相关服务已取消</string>
     <!-- Hw end-->
 </resources>
