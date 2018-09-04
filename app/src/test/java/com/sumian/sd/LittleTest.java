@@ -7,6 +7,8 @@ import com.sumian.sd.utils.JsonUtil;
 
 import org.junit.Test;
 
+import java.util.Map;
+
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -20,8 +22,15 @@ public class LittleTest {
 
     @Test
     public void test() {
-        String data = "";
-        H5BaseResponse<UserInfo> o = JsonUtil.fromJson(data, new TypeToken<H5BaseResponse<UserInfo>>() {
+        String s = "{\"showNavigationBar\":false}";
+        Map<String, Object> map = JsonUtil.fromJson(s, new TypeToken<Map<String, Object>>() {
         }.getType());
+        System.out.println(map);
+        if (map == null) {
+            return;
+        }
+        Object value = map.get("123");
+        System.out.println(value);
+        System.out.println(value instanceof Boolean);
     }
 }

@@ -538,6 +538,7 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
             android:name=".homepage.RelaxationActivity"
+            android:exported="true"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
     </application>
 

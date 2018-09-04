@@ -37,9 +37,25 @@ class KotlinTest {
 
     @Test
     fun test3() {
-        val s = "13:47:00"
-        System.out.println(s.split(":")[1])
-        System.out.println(getReminderHHmm(s))
+        val s = "{\n" +
+                "\"showNavigationBar\": true,\n" +
+                "\"showTitle\": true,\n" +
+                "\"showBackArrow\": true,\n" +
+                "\"name\":\"jack\"\n" +
+                "}"
+        val map = JsonUtil.fromJson<Map<String, Any>>(s, object : TypeToken<Map<String, Any>>() {
+
+        }.type)
+        for ((key, value) in map ?: return) {
+            System.out.println("$key, $value")
+            when (key) {
+                "showNavigationBar" -> System.out.println(" ${value as? Boolean}")
+                "showTitle" -> System.out.println(" ${value as? Boolean}")
+                "showBackArrow" -> System.out.println(" ${value as? Boolean}")
+                "name" -> System.out.println(" ${value as? String}")
+            }
+        }
+
     }
 
     fun getReminderHHmm(remindAt: String): String {

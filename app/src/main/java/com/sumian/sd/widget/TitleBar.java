@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
+import com.sumian.sd.utils.ColorCompatUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -216,11 +217,19 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     }
 
     public void setIsDarkTheme(boolean isDarkTheme) {
-        setBgColor(getResources().getColor(isDarkTheme ? R.color.hw_colorPrimary : R.color.colorPrimary));
-        setTextColor(getResources().getColor(isDarkTheme ? R.color.bt_hole_color : R.color.white));
+        setBgColor(ColorCompatUtil.Companion.getColor(getContext(), isDarkTheme ? R.color.hw_colorPrimary : R.color.colorPrimary));
+        setTextColor(ColorCompatUtil.Companion.getColor(getContext(), isDarkTheme ? R.color.bt_hole_color : R.color.white));
     }
 
     public void openTopPadding(boolean open) {
         mRootView.setPadding(0, open ? (int) getResources().getDimension(R.dimen.status_bar_height) : 0, 0, 0);
+    }
+
+    public void showBackArrow(boolean show) {
+        mIvBack.setVisibility(show ? VISIBLE : GONE);
+    }
+
+    public void showTitle(boolean show) {
+        mTvTitle.setVisibility(show ? VISIBLE : GONE);
     }
 }

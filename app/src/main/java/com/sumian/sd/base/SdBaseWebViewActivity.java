@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.google.gson.reflect.TypeToken;
 import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
@@ -21,6 +22,8 @@ import com.sumian.sd.widget.dialog.SumianImageTextDialog;
 import com.sumian.sd.widget.webview.SBridgeHandler;
 import com.sumian.sd.widget.webview.SWebView;
 import com.sumian.sd.widget.webview.SWebViewLayout;
+
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -109,9 +112,31 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
             @Override
             public void handler(String data) {
                 super.handler(data);
-                UpdatePageUIData updatePageUIData = JsonUtil.Companion.fromJson(data, UpdatePageUIData.class);
-                if (updatePageUIData != null) {
-                    mTitleBar.setVisibility(!updatePageUIData.showNavigationBar ? View.GONE : View.VISIBLE);
+                Map<String, Object> map = JsonUtil.Companion.fromJson(data, new TypeToken<Map<String, Object>>() {
+                }.getType());
+                if (map == null) {
+                    return;
+                }
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    switch (entry.getKey()) {
+                        case "showNavigationBar":
+                            if (entry.getValue() instanceof Boolean) {
+                                mTitleBar.setVisibility((boolean) entry.getValue() ? View.VISIBLE : View.GONE);
+                            }
+                            break;
+                        case "showTitle":
+                            if (entry.getValue() instanceof Boolean) {
+                                mTitleBar.showTitle((boolean) entry.getValue());
+                            }
+                            break;
+                        case "showBackArrow":
+                            if (entry.getValue() instanceof Boolean) {
+                                mTitleBar.showBackArrow((boolean) entry.getValue());
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         });
