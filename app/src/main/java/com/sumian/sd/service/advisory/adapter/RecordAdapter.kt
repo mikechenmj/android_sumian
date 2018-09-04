@@ -164,7 +164,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                     if (item.reports.size > 1) {
                         OnlineReportListActivity.launchForShowList(itemView.context, item.reports)
                     } else {
-                        OnlineReportDetailActivity.launch(itemView.context, item.reports[0].title, item.reports[0].report_url)
+                        OnlineReportDetailActivity.launch(itemView.context, item.reports[0])
                     }
                 }
             }

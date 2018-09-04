@@ -212,6 +212,7 @@
         <activity
             android:name=".onlinereport.OnlineReportListActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"

@@ -3,6 +3,8 @@ package com.sumian.sd.onlinereport;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -13,6 +15,49 @@ import android.os.Parcelable;
  * </pre>
  */
 public class OnlineReport implements Parcelable {
+
+
+    /**
+     * id : 22
+     * title : CBTI初期报告
+     * type : 1
+     * data : http://sd-dev.sumian.com/scale-details/scales?scale_id=1037,1038,1039&chapter_id=1
+     * conversion_status : 1
+     * task_id :
+     * report_url : http://sd-dev.sumian.com/scale-details/scales?scale_id=1037,1038,1039&chapter_id=1
+     * created_at : 1536061737
+     * updated_at : 1536061737
+     */
+
+    @SerializedName("id")
+    private int id;
+    @SerializedName("title")
+    private String title;
+    @SerializedName("type")
+    private int type;
+    @SerializedName("data")
+    private Object data;
+    @SerializedName("conversion_status")
+    private int conversionStatus;
+    @SerializedName("task_id")
+    private String taskId;
+    @SerializedName("report_url")
+    private String reportUrl;
+    @SerializedName("created_at")
+    private int createdAt;
+    @SerializedName("updated_at")
+    private int updatedAt;
+
+    protected OnlineReport(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        type = in.readInt();
+        conversionStatus = in.readInt();
+        taskId = in.readString();
+        reportUrl = in.readString();
+        createdAt = in.readInt();
+        updatedAt = in.readInt();
+    }
 
     public static final Creator<OnlineReport> CREATOR = new Creator<OnlineReport>() {
         @Override
@@ -25,34 +70,9 @@ public class OnlineReport implements Parcelable {
             return new OnlineReport[size];
         }
     };
-    /**
-     * id : 2
-     * title : 睡眠监测报告
-     * conversion_status : 1
-     * task_id :
-     * report_url : https://sleep-doctor-imm-test.oss-cn-shanghai.aliyuncs.com/doctors/online_report/3/34d5fcfe-6785-43ee-bbe1-b86a3f71b0bf.pdf
-     * deleted_at : null
-     * created_at : 1528078554
-     * updated_at : 1528078554
-     */
 
-    private int id;
-    private String title;
-    private int conversion_status;
-    private String task_id;
-    private String report_url;
-    private Object deleted_at;
-    private int created_at;
-    private int updated_at;
-
-    private OnlineReport(Parcel in) {
-        id = in.readInt();
-        title = in.readString();
-        conversion_status = in.readInt();
-        task_id = in.readString();
-        report_url = in.readString();
-        created_at = in.readInt();
-        updated_at = in.readInt();
+    public long getCreateAtInMillis() {
+        return createdAt * 1000L;
     }
 
     public int getId() {
@@ -71,70 +91,60 @@ public class OnlineReport implements Parcelable {
         this.title = title;
     }
 
-    public int getConversion_status() {
-        return conversion_status;
+    public int getType() {
+        return type;
     }
 
-    public void setConversion_status(int conversion_status) {
-        this.conversion_status = conversion_status;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public String getTask_id() {
-        return task_id;
+    public Object getData() {
+        return data;
     }
 
-    public void setTask_id(String task_id) {
-        this.task_id = task_id;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public String getReport_url() {
-        return report_url;
+    public int getConversionStatus() {
+        return conversionStatus;
     }
 
-    public void setReport_url(String report_url) {
-        this.report_url = report_url;
+    public void setConversionStatus(int conversionStatus) {
+        this.conversionStatus = conversionStatus;
     }
 
-    public Object getDeleted_at() {
-        return deleted_at;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setDeleted_at(Object deleted_at) {
-        this.deleted_at = deleted_at;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
-    public int getCreated_at() {
-        return created_at;
+    public String getReportUrl() {
+        return reportUrl;
     }
 
-    public void setCreated_at(int created_at) {
-        this.created_at = created_at;
+    public void setReportUrl(String reportUrl) {
+        this.reportUrl = reportUrl;
     }
 
-    public int getUpdated_at() {
-        return updated_at;
+    public int getCreatedAt() {
+        return createdAt;
     }
 
-    public void setUpdated_at(int updated_at) {
-        this.updated_at = updated_at;
+    public void setCreatedAt(int createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public long getCreateAtInMillis() {
-        return created_at * 1000L;
+    public int getUpdatedAt() {
+        return updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return "OnlineReport{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", conversion_status=" + conversion_status +
-                ", task_id='" + task_id + '\'' +
-                ", report_url='" + report_url + '\'' +
-                ", deleted_at=" + deleted_at +
-                ", created_at=" + created_at +
-                ", updated_at=" + updated_at +
-                '}';
+    public void setUpdatedAt(int updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -143,22 +153,14 @@ public class OnlineReport implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(title);
-        dest.writeInt(conversion_status);
-        dest.writeString(task_id);
-        dest.writeString(report_url);
-        dest.writeInt(created_at);
-        dest.writeInt(updated_at);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof OnlineReport)) {
-            return false;
-        }
-        OnlineReport report = (OnlineReport) obj;
-        return id == report.id;
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeInt(type);
+        parcel.writeInt(conversionStatus);
+        parcel.writeString(taskId);
+        parcel.writeString(reportUrl);
+        parcel.writeInt(createdAt);
+        parcel.writeInt(updatedAt);
     }
 }
