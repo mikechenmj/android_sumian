@@ -13,7 +13,8 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.media.LargeImageActivity
 import com.sumian.common.widget.FlowLayout
-import com.sumian.common.widget.voice.widget.VoicePlayerView
+import com.sumian.common.widget.voice.VoicePlayer
+import com.sumian.common.widget.voice.VoicePlayerView
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.base.holder.SdBaseViewHolder
@@ -37,6 +38,8 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
     private lateinit var mDoctor: Doctor
 
     private lateinit var mUser: UserInfo
+
+    private lateinit var mMediaPlayer: VoicePlayer
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
         return when (type) {
@@ -82,6 +85,10 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
         this.mUser = userProfile
     }
 
+    fun registerMediaPlayer(voicePlayer: VoicePlayer): RecordAdapter {
+        this.mMediaPlayer = voicePlayer
+        return this
+    }
 
     /**
      * patient question record
@@ -168,35 +175,100 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
     /**
      * doctor replay record
      */
-    inner class ReplyViewHolder(itemView: View) : SdBaseViewHolder<Record>(itemView) {
+    inner class ReplyViewHolder(itemView: View) : SdBaseViewHolder<Record>(itemView), VoicePlayerView.OnVoiceViewListener, VoicePlayer.onPlayStatusListener {
 
-        private var mAvatar: CircleImageView? = null
-        private var mTvName: TextView? = null
-        private var mTvReplyTime: TextView? = null
-        private var mTvContent: TextView? = null
-        private var mVoicePlayerView: VoicePlayerView? = null
-
-        init {
-            this.mAvatar = getView(R.id.civ_avatar)
-            this.mTvName = getView(R.id.tv_name)
-            this.mTvReplyTime = getView(R.id.tv_time)
-            this.mTvContent = getView(R.id.tv_content)
-            this.mVoicePlayerView = getView(R.id.voice_player_view)
+        private val mAvatar: CircleImageView  by lazy {
+            getView<CircleImageView>(R.id.civ_avatar)
+        }
+        private val mTvName: TextView  by lazy {
+            getView<TextView>(R.id.tv_name)
+        }
+        private val mTvReplyTime: TextView  by lazy {
+            getView<TextView>(R.id.tv_time)
+        }
+        private val mTvContent: TextView  by lazy {
+            getView<TextView>(R.id.tv_content)
+        }
+        private val mVoicePlayerView: VoicePlayerView  by lazy {
+            getView<VoicePlayerView>(R.id.voice_player_view)
         }
 
         override fun initView(item: Record) {
             super.initView(item)
             load(mDoctor.avatar, R.mipmap.ic_info_avatar_doctor, mAvatar)
-            this.mTvName?.text = if (TextUtils.isEmpty(mDoctor.name)) getText(R.string.sleep_doctor) else mDoctor.name
-            this.mTvReplyTime?.text = TimeUtil.formatYYYYMMDDHHMM(item.created_at)
-            this.mTvContent?.visibility = View.GONE
-            this.mVoicePlayerView?.hide()
+            this.mTvName.text = if (TextUtils.isEmpty(mDoctor.name)) getText(R.string.sleep_doctor) else mDoctor.name
+            this.mTvReplyTime.text = TimeUtil.formatYYYYMMDDHHMM(item.created_at)
+            this.mTvContent.visibility = View.GONE
+            this.mVoicePlayerView.hide()
             if (item.content_type == 1) {
-                this.mVoicePlayerView?.invalid(item.sound.getFormatVoice())?.setPosition(adapterPosition)?.show()
+                this.mVoicePlayerView.setOnVoiceViewListener(this).invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status).show()
             } else {
-                this.mTvContent?.text = item.content
-                this.mTvContent?.visibility = View.VISIBLE
+                this.mTvContent.text = item.content
+                this.mTvContent.visibility = View.VISIBLE
             }
+        }
+
+        override fun doPlay() {
+            mMediaPlayer.setStatusListener(this).play(mItem.sound.url, adapterPosition, mItem.sound.progress)
+        }
+
+        override fun doPause() {
+            mMediaPlayer.setStatusListener(this).pause(adapterPosition)
+        }
+
+        override fun doSeekTo(position: Int) {
+            mItem.sound.progress = position
+            mItems[adapterPosition] = mItem
+            mMediaPlayer.seekTo(position)
+        }
+
+        override fun onPrepareCallback(position: Int) {
+            val item = mItems[position]
+            item.sound.status = Record.Sound.PREPARE_STATUS
+            mItems[position] = item
+            mVoicePlayerView.invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status)
+        }
+
+        override fun onPlayCallback(position: Int) {
+            val item = mItems[position]
+            item.sound.status = Record.Sound.PLAYING_STATUS
+            mItems[position] = item
+            mVoicePlayerView.invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status)
+        }
+
+        override fun onPausePreCallback(prePosition: Int, progress: Int) {
+            val item = mItems[prePosition]
+            item.sound.status = Record.Sound.IDLE_STATUS
+            item.sound.progress = progress
+            mItems[prePosition] = item
+            notifyItemChanged(prePosition)
+            // mVoicePlayerView.invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status)
+        }
+
+        override fun onPauseCallback(position: Int) {
+            val item = mItems[position]
+            item.sound.status = Record.Sound.IDLE_STATUS
+            mItems[position] = item
+            //notifyItemChanged(position)
+            mVoicePlayerView.invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status)
+        }
+
+        override fun onProgressCallback(position: Int, duration: Int, progress: Int) {
+            val item = mItems[position]
+            item.sound.status = Record.Sound.PLAYING_STATUS
+            item.sound.progress = progress
+            item.sound.duration = duration
+            mItems[position] = item
+            //notifyItemChanged(position)
+            mVoicePlayerView.invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status)
+        }
+
+        override fun onCompleteCallback(position: Int) {
+            val item = mItems[position]
+            item.sound.status = Record.Sound.IDLE_STATUS
+            item.sound.progress = 0
+            mItems[position] = item
+            mVoicePlayerView.invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status)
         }
 
     }

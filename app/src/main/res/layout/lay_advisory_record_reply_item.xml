@@ -51,7 +51,7 @@
         android:layout_marginStart="@dimen/space_20"
         android:background="@color/b1_color" />
 
-    <com.sumian.common.widget.voice.widget.VoicePlayerView
+    <com.sumian.common.widget.voice.VoicePlayerView
         android:id="@+id/voice_player_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_50"

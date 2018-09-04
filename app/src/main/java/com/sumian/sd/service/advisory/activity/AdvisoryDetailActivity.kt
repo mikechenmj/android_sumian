@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.sumian.common.widget.voice.player.VoicePlayer
+import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.h5.H5Uri
@@ -48,6 +48,10 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
 
     private var mAdvisory: Advisory? = null
 
+    private val mMediaPlayer: VoicePlayer by lazy {
+        VoicePlayer()
+    }
+
     override fun initBundle(bundle: Bundle?): Boolean {
 
         this.mAdvisoryId = bundle?.getInt(ARGS_ADVISORY_ID, 0)!!
@@ -70,7 +74,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
         title_bar.setOnMenuClickListener(this)
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.itemAnimator = DefaultItemAnimator()
-        this.mAdapter = RecordAdapter(this)
+        this.mAdapter = RecordAdapter(this).registerMediaPlayer(mMediaPlayer)
         recycler.adapter = mAdapter
         tv_bottom_notification.setOnClickListener(this)
     }
@@ -82,7 +86,12 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
 
     override fun onStop() {
         super.onStop()
-        VoicePlayer.getInstance().release()
+        mMediaPlayer.pause()
+    }
+
+    override fun onRelease() {
+        super.onRelease()
+        mMediaPlayer.release()
     }
 
     @Suppress("DEPRECATION")
