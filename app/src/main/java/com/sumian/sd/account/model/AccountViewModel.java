@@ -83,7 +83,6 @@ public class AccountViewModel extends AndroidViewModel {
     @MainThread
     public void updateUserInfo(UserInfo userInfo) {
         Token token = getToken();
-        token.is_new = false;
         token.user = userInfo;
         updateToken(token);
     }
