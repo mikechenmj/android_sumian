@@ -1,4 +1,4 @@
-package com.sumian.common.widget.voice.widget
+package com.sumian.common.widget.voice
 
 /**
  * Created by dq

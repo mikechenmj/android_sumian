@@ -1,7 +1,6 @@
 package com.sumian.sd.service.advisory.bean
 
 import android.os.Parcelable
-import com.sumian.common.widget.voice.widget.Voice
 import com.sumian.sd.onlinereport.OnlineReport
 import kotlinx.android.parcel.Parcelize
 
@@ -34,15 +33,21 @@ data class Record(var id: Int,//记录 ID
 
     @Parcelize
     data class Sound(var url: String, //声音url
-                     var duration: Int//声音时长 单位：秒
+                     var duration: Int,//声音时长 单位：秒
+                     var progress: Int,//当前播放的进度
+                     var status: Int// 当前sound 的播放状态  0x00 idle 0x01 prepare 0x02 playing
     ) : Parcelable {
 
-        fun getFormatVoice(): Voice {
-            val voice = Voice()
-            voice.duration = duration
-            voice.voicePath = url
-            voice.status = Voice.IDLE_STATUS
-            return voice
+        companion object {
+
+            const val IDLE_STATUS = 0x00
+            const val PREPARE_STATUS = 0x01
+            const val PLAYING_STATUS = 0x02
+
+        }
+
+        fun isPlaying(): Boolean {
+            return status == 0x02
         }
 
     }
