@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.sumian.sd.base.SdBaseWebViewActivity;
+import com.sumian.hw.utils.JsonUtil;
 import com.sumian.sd.h5.H5Uri;
+import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.main.MainActivity;
 import com.sumian.sd.widget.webview.SBridgeHandler;
 import com.sumian.sd.widget.webview.SWebView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <pre>
@@ -21,7 +26,7 @@ import com.sumian.sd.widget.webview.SWebView;
  *     version: 1.0
  * </pre>
  */
-public class OnlineReportDetailActivity extends SdBaseWebViewActivity {
+public class OnlineReportDetailActivity extends SimpleWebActivity {
 
     public static final String KEY_REPORT_URL = "report_url";
     public static final String KEY_REPORT_NAME = "report_name";
@@ -38,6 +43,20 @@ public class OnlineReportDetailActivity extends SdBaseWebViewActivity {
         intent.putExtra(KEY_REPORT_NAME, reportName);
         intent.putExtra(KEY_REPORT_URL, reportUrl);
         return intent;
+    }
+
+    public static void launch(Context context, int id, int type) {
+        ActivityUtils.startActivity(getLaunchIntent(context, id, type));
+    }
+
+    public static Intent getLaunchIntent(Context context, int id, int type) {
+        Map<String, Object> data = new HashMap<>(2);
+        data.put("id", id);
+        data.put("type", type);
+        Map<String, Object> page = new HashMap<>(2);
+        page.put("page", "onlineReport");
+        page.put("data", data);
+        return SimpleWebActivity.getLaunchIntentWithRouteData(context, JsonUtil.toJson(page), OnlineReportDetailActivity.class);
     }
 
     @Override

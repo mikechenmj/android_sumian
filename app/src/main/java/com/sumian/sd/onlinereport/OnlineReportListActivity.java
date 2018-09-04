@@ -184,7 +184,7 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     }
 
     private String getUrlToken() {
-        return "&token=" + AppManager.getAccountViewModel().getTokenString();
+        return "token=" + AppManager.getAccountViewModel().getTokenString();
     }
 
     protected String appendToken(String url) {

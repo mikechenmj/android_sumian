@@ -33,4 +33,5 @@ public interface H5Uri {
     String NEW_USER_GUIDE = "guide?from=newUser&theme=black";
     String CBTI_RELAXATIONS = "cbti/relaxations";
     String CBTI_SLEEP_HEALTH = "cbti/sleep-health";
+    String NATIVE_ROUTE = "native-route?data={pageData}&token={token}";
 }

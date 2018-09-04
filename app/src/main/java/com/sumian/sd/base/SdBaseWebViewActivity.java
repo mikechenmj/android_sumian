@@ -220,7 +220,11 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
     }
 
     private String getUrlToken() {
-        return "token=" + AppManager.getAccountViewModel().getTokenString();
+        return "token=" + getToken();
+    }
+
+    protected static String getToken() {
+        return AppManager.getAccountViewModel().getTokenString();
     }
 
     @Override
@@ -250,9 +254,5 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
 
     protected void reload() {
         mSWebViewLayout.reload();
-    }
-
-    static class UpdatePageUIData {
-        public boolean showNavigationBar;
     }
 }
