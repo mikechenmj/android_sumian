@@ -12,6 +12,7 @@ import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingDetailContract
 import com.sumian.sd.service.tel.presenter.TelBookingDetailPresenter
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
+import kotlinx.android.synthetic.main.activity_tel_booking_detail.*
 
 /**
  * Created by sm
@@ -45,7 +46,7 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
 
 
     override fun getChildContentId(): Int {
-        return R.layout.activity_main_publish_tel_booking
+        return R.layout.activity_tel_booking_detail
     }
 
     override fun initWidgetBefore() {

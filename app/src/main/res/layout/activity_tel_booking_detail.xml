@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_top_bar"
+        style="@style/text_white_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40"
+        android:background="@color/b4_color"
+        android:gravity="center"
+        android:text="@string/service_is_canceled"
+        android:visibility="gone" />
+
+    <com.sumian.sd.widget.error.EmptyErrorView
+        android:id="@+id/empty_error_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:eev_auto_hide="false"
+        app:eev_desc="@string/any_question_ask_kefu"
+        app:eev_icon="@drawable/ic_service_cancel"
+        app:eev_title="@string/relate_service_is_canceled"
+        tools:visibility="gone" />
+
+    <include layout="@layout/activity_main_publish_tel_booking" />
+</LinearLayout>
