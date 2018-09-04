@@ -33,9 +33,9 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
     private String mReportName;
     private String mReportUrl;
 
-    public static void launch(Context context, String reportName, String reportUrl) {
-        show(context, getLaunchIntent(context, reportName, reportUrl));
-    }
+//    public static void launch(Context context, String reportName, String reportUrl) {
+//        show(context, getLaunchIntent(context, reportName, reportUrl));
+//    }
 
     @NonNull
     public static Intent getLaunchIntent(Context context, String reportName, String reportUrl) {
@@ -45,39 +45,40 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
         return intent;
     }
 
-    public static void launch(Context context, int id, int type) {
-        ActivityUtils.startActivity(getLaunchIntent(context, id, type));
+    public static void launch(Context context, OnlineReport onlineReport) {
+        Intent intent = getLaunchIntent(context, onlineReport.getType(), onlineReport.getData());
+        ActivityUtils.startActivity(intent);
     }
 
-    public static Intent getLaunchIntent(Context context, int id, int type) {
-        Map<String, Object> data = new HashMap<>(2);
-        data.put("id", id);
-        data.put("type", type);
+    public static Intent getLaunchIntent(Context context, int type, Object data) {
+        Map<String, Object> payload = new HashMap<>(2);
+        payload.put("type", type);
+        payload.put("data", data);
         Map<String, Object> page = new HashMap<>(2);
         page.put("page", "onlineReport");
-        page.put("data", data);
+        page.put("payload", payload);
         return SimpleWebActivity.getLaunchIntentWithRouteData(context, JsonUtil.toJson(page), OnlineReportDetailActivity.class);
     }
 
-    @Override
-    protected boolean initBundle(Bundle bundle) {
-        mReportName = bundle.getString(KEY_REPORT_NAME);
-        mReportUrl = bundle.getString(KEY_REPORT_URL);
-        return true;
-    }
+//    @Override
+//    protected boolean initBundle(Bundle bundle) {
+//        mReportName = bundle.getString(KEY_REPORT_NAME);
+//        mReportUrl = bundle.getString(KEY_REPORT_URL);
+//        return true;
+//    }
 
-    @Override
-    protected String initTitle() {
-        return mReportName;
-    }
+//    @Override
+//    protected String initTitle() {
+//        return mReportName;
+//    }
 
-    @Override
-    protected String getUrlContentPart() {
-        String onlineReport = H5Uri.ONLINE_REPORT;
-        onlineReport = onlineReport.replace("{title}", mReportName)
-                .replace("{pdfUrl}", mReportUrl);
-        return onlineReport;
-    }
+//    @Override
+//    protected String getUrlContentPart() {
+//        String onlineReport = H5Uri.ONLINE_REPORT;
+//        onlineReport = onlineReport.replace("{title}", mReportName)
+//                .replace("{pdfUrl}", mReportUrl);
+//        return onlineReport;
+//    }
 
     @Override
     protected void registerHandler(@NonNull SWebView sWebView) {

@@ -165,9 +165,7 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
         if (mIsPickMode) {
             mAdapter.addOrRemoveSelectedItem(position);
         } else {
-            String reportUrl = item.getReport_url();
-            String completeUrl = appendToken(reportUrl);
-            SimpleWebActivity.launchWithCompleteUrl(this, completeUrl);
+            OnlineReportDetailActivity.launch(this, item);
         }
     }
 

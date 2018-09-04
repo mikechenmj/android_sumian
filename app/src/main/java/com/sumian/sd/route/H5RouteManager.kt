@@ -26,7 +26,7 @@ class H5RouteManager private constructor() {
         fun launch(context: Context, page: String, data: Map<String, Any>) {
             val map = HashMap<String, Any>()
             map.put("page", page)
-            map.put("data", data)
+            map.put("payload", data)
             launch(context, map)
         }
 
