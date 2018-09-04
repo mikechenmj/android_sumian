@@ -44,4 +44,10 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
             }
         })
     }
+
+    override fun onBackPressed() {
+        if (mSWebViewLayout.sWebView.canGoBack()) {
+            super.onBackPressed()
+        }
+    }
 }

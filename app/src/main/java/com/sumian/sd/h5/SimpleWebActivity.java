@@ -3,9 +3,7 @@ package com.sumian.sd.h5;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
-import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 
 public class SimpleWebActivity extends SdBaseWebViewActivity {
@@ -26,13 +24,17 @@ public class SimpleWebActivity extends SdBaseWebViewActivity {
     }
 
     public static void launchWithCompleteUrl(Context context, String completeUrl) {
+        Intent intent = getLaunchIntentWithCompleteUrl(context, completeUrl);
+        context.startActivity(intent);
+    }
+
+    public static Intent getLaunchIntentWithCompleteUrl(Context context, String completeUrl) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_URL_COMPLETE, completeUrl);
         Intent intent = new Intent(context, SimpleWebActivity.class);
         intent.putExtras(bundle);
-        context.startActivity(intent);
+        return intent;
     }
-
 
     @Override
     protected boolean initBundle(Bundle bundle) {
