@@ -82,12 +82,23 @@ data class TelBooking(var id: Int,
     fun formatOrderContent(): String {
         return when (status) {
             9 -> "您的${p_package.servicePackage.formatPackageNameAndIntro()}还未使用，点击预约 >"
-            7 -> "您的${p_package.servicePackage.formatPackageNameAndIntro()}已取消。"
-            else -> "${formatOrderTime()}预约时长:  ${p_package.servicePackage.formatServiceLengthType()} \r\n咨询问题:  $consulting_question"
+            7 -> {
+                if (isNotUsed()) {
+                    getCancelString()
+                } else {
+                    getOrderString()
+                }
+            }
+            else -> getOrderString()
         }
     }
 
-    fun formatOrderTime(): String {
+    private fun getOrderString() =
+            "${formatOrderTime()}预约时长:  ${p_package.servicePackage.formatServiceLengthType()} \r\n咨询问题:  $consulting_question"
+
+    private fun getCancelString() = "您的${p_package.servicePackage.formatPackageNameAndIntro()}已取消。"
+
+    private fun formatOrderTime(): String {
         return if (plan_start_at <= 0) {
             "预约时间:  ${formatOrderCreateTimeYYYYMMDD()}\r\n"
         } else {
@@ -121,6 +132,10 @@ data class TelBooking(var id: Int,
 
     fun formatOrderPlanStartTimeYYYYMMDDHHMM(): String {
         return TimeUtil.formatYYYYMMDDHHMM(plan_start_at)
+    }
+
+    fun isNotUsed(): Boolean {
+        return plan_start_at == 0
     }
 
     /**

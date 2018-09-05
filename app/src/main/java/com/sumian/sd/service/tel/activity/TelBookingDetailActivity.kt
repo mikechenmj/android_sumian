@@ -72,7 +72,7 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
     }
 
     override fun onGetTelBookingDetailSuccess(telBooking: TelBooking) {
-        if (telBooking.status == TelBooking.STATUS_7_CANCELED) {
+        if (telBooking.status == TelBooking.STATUS_7_CANCELED && telBooking.isNotUsed()) {
             tv_top_bar.visibility = View.VISIBLE
             empty_error_view.visibility = View.VISIBLE
         } else {
