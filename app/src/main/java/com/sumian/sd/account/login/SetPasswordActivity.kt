@@ -93,7 +93,7 @@ class SetPasswordActivity : BasePresenterActivity<SetPasswordContract.Presenter>
         if (mLaunchType == LAUNCH_TYPE_RESET_PASSWORD) {
             super.onBackPressed()
         } else {
-            AppUtil.launchMainAndFinishAll()
+            ActivityUtils.startActivity(NewUserGuideActivity::class.java)
         }
     }
 }
