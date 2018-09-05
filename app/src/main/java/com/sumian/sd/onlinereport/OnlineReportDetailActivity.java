@@ -46,12 +46,13 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
     }
 
     public static void launch(Context context, OnlineReport onlineReport) {
-        Intent intent = getLaunchIntent(context, onlineReport.getType(), onlineReport.getData());
+        Intent intent = getLaunchIntent(context, onlineReport.getTitle(), onlineReport.getType(), onlineReport.getData());
         ActivityUtils.startActivity(intent);
     }
 
-    public static Intent getLaunchIntent(Context context, int type, Object data) {
+    public static Intent getLaunchIntent(Context context, String title, int type, Object data) {
         Map<String, Object> payload = new HashMap<>(2);
+        payload.put("title", title);
         payload.put("type", type);
         payload.put("data", data);
         Map<String, Object> page = new HashMap<>(2);

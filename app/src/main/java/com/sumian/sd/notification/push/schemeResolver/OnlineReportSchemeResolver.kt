@@ -24,6 +24,7 @@ class OnlineReportSchemeResolver : SchemeResolver {
     override fun resolveScheme(context: Context, uri: Uri): Intent {
         val type = uri.getQueryParameter("type")?.toInt() ?: 0
         val data = uri.getQueryParameter("data")
-        return OnlineReportDetailActivity.getLaunchIntent(context, type, data)
+        val title = uri.getQueryParameter("title")
+        return OnlineReportDetailActivity.getLaunchIntent(context, title, type, data)
     }
 }
