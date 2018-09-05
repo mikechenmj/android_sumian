@@ -6,8 +6,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * Created by jzz
@@ -19,16 +21,14 @@ import java.io.IOException;
 public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener,
         MediaPlayer.OnErrorListener, MediaPlayer.OnSeekCompleteListener, Handler.Callback {
 
+    private static final String TAG = VoicePlayer.class.getSimpleName();
     private static final int MSG_WHAT_GAP_TIMER = 0x01;
+    private static final long PROGRESS_UPDATE_INTERVAL = 100L;
 
     private MediaPlayer mMediaPlayer;
-
     private onPlayStatusListener mStatusListener;
-
     private int mCurrentPosition = -1;
-
     private int mProgress = 0;
-
     private Handler mHandler = new Handler(Looper.getMainLooper(), this);
 
     public VoicePlayer() {
@@ -50,17 +50,17 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     }
 
     public int getCurrentPlayPosition() {
-        return mMediaPlayer.getCurrentPosition() / 1000;
+        return mMediaPlayer.getCurrentPosition();
     }
 
     public int getDuration() {
-        return mMediaPlayer.getDuration() / 1000;
+        return mMediaPlayer.getDuration();
     }
 
     public void seekTo(int progress) {
         removeAllMsg();
         this.mProgress = progress;
-        mMediaPlayer.seekTo(progress * 1000);
+        mMediaPlayer.seekTo(progress);
     }
 
     public void pause(int position) {
@@ -78,6 +78,7 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     }
 
     public VoicePlayer play(String filePath, int position, int progress) {
+        Log.d(TAG, String.format(Locale.getDefault(), "play %d, %d, %s", position, progress, filePath));
         synchronized (this) {
             removeAllMsg();
             if (TextUtils.isEmpty(filePath)) {
@@ -94,7 +95,6 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                     sendTimerMsg();
                     notifyPlaying();
                 }
-
             } else {//不是当前音频,先关闭前一个如果正在播放的音频,然后里面播放当前该音频
                 if (mCurrentPosition != -1) {
                     removeAllMsg();
@@ -135,7 +135,6 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         }
     }
 
-
     @Override
     public void onCompletion(MediaPlayer mp) {
         notifyComplete(mCurrentPosition);
@@ -146,7 +145,7 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     public void onPrepared(MediaPlayer mp) {
         sendTimerMsg();
         if (mProgress > 0) {
-            mp.seekTo(mProgress * 1000);
+            mp.seekTo(mProgress);
         } else {
             mp.start();
         }
@@ -166,14 +165,18 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             mp.start();
         }
         sendTimerMsg();
+        Log.d(TAG, "onSeekComplete progress: " + getCurrentPlayPosition());
     }
 
     @Override
     public boolean handleMessage(Message msg) {
         switch (msg.what) {
             case MSG_WHAT_GAP_TIMER:
+                Log.d(TAG, "notify progress");
                 notifyProgress();
                 sendGapTimerMsg();
+                break;
+            default:
                 break;
         }
         return true;
@@ -199,7 +202,8 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
     private void notifyPrePause(int prePosition) {
         if (mStatusListener != null) {
-            mStatusListener.onPausePreCallback(prePosition, getCurrentPlayPosition());
+//            mStatusListener.onPausePreCallback(prePosition, getCurrentPlayPosition());
+            mStatusListener.onPausePreCallback(prePosition, 0);
         }
     }
 
@@ -210,6 +214,7 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     }
 
     private void notifyProgress() {
+        // seek to complete 才notify，避免 getCurrentPosition = 0 闪烁
         if (mStatusListener != null) {
             mStatusListener.onProgressCallback(mCurrentPosition, getDuration(), getCurrentPlayPosition());
         }
@@ -237,14 +242,13 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
     private void sendTimerMsg() {
         removeAllMsg();
-        notifyProgress();
         mHandler.obtainMessage(MSG_WHAT_GAP_TIMER).sendToTarget();
     }
 
     private void sendGapTimerMsg() {
         Message gapMsg = Message.obtain();
         gapMsg.what = MSG_WHAT_GAP_TIMER;
-        mHandler.sendMessageDelayed(gapMsg, 1000L);
+        mHandler.sendMessageDelayed(gapMsg, PROGRESS_UPDATE_INTERVAL);
     }
 
 }

@@ -73,7 +73,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
         title_bar.setOnBackClickListener(this)
         title_bar.setOnMenuClickListener(this)
         recycler.layoutManager = LinearLayoutManager(this)
-        recycler.itemAnimator = DefaultItemAnimator()
+        recycler.itemAnimator = null //避免 update 数据 item 闪烁
         this.mAdapter = RecordAdapter(this).registerMediaPlayer(mMediaPlayer)
         recycler.adapter = mAdapter
         tv_bottom_notification.setOnClickListener(this)

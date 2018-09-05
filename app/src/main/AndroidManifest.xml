@@ -248,6 +248,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
+            android:exported="true"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".service.advisory.activity.AdvisoryDetailActivity"
@@ -255,6 +256,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
+            android:exported="true"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <!-- scale -->

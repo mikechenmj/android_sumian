@@ -3,6 +3,7 @@ package com.sumian.common.widget.voice
 import android.content.Context
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -28,6 +29,7 @@ class VoicePlayerView : LinearLayout, View.OnClickListener, IVisible {
         private const val IDLE_STATUS = 0x00
         private const val PREPARE_STATUS = 0x01
         private const val PLAYING_STATUS = 0x02
+        private var TAG = VoicePlayerView::class.java.simpleName.toString()
 
     }
 
@@ -66,31 +68,36 @@ class VoicePlayerView : LinearLayout, View.OnClickListener, IVisible {
     }
 
     override fun onClick(v: View) {
-        if (v.tag == null) {
+        if (v.tag == null || v.tag == false) {
             v.tag = true
             iv_play.setImageResource(R.drawable.shap_play)
             onVoiceViewListener?.doPlay()
         } else {
             v.tag = null
-            iv_play.setImageResource(R.drawable.ic_play_icon)
+            iv_play.setImageResource(R.drawable.ic_voice_play)
             onVoiceViewListener?.doPause()
         }
     }
 
     fun invalid(url: String, duration: Int, progress: Int, status: Int): VoicePlayerView {
         this.status = status
+        Log.d(TAG, String.format("progress %d / %d", progress, duration))
         iv_play.setImageResource(when (status) {
-            IDLE_STATUS -> {
-                iv_play.tag = null
-                R.drawable.ic_play_icon
-            }
             PLAYING_STATUS -> {
                 iv_play.tag = true
-                R.drawable.shap_play
+                R.drawable.ic_voice_pause
+            }
+            PREPARE_STATUS -> {
+                iv_play.tag = true
+                R.drawable.rotate_loading
+            }
+            IDLE_STATUS -> {
+                iv_play.tag = false
+                R.drawable.ic_voice_play
             }
             else -> {
-                iv_play.tag = null
-                R.drawable.ic_play_icon
+                iv_play.tag = false
+                R.drawable.ic_voice_play
             }
         })
         if (status == PREPARE_STATUS) {
@@ -102,7 +109,7 @@ class VoicePlayerView : LinearLayout, View.OnClickListener, IVisible {
         }
 
         if (duration > progress) {
-            tv_duration.text = formatDuration(duration - progress)
+            tv_duration.text = formatDuration((duration - progress) / 1000)
         }
         sb_progress.progress = progress
         sb_progress.max = duration

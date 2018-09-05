@@ -239,7 +239,6 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
         override fun onPausePreCallback(prePosition: Int, progress: Int) {
             val item = mItems[prePosition]
             item.sound.status = Record.Sound.IDLE_STATUS
-            item.sound.progress = progress
             mItems[prePosition] = item
             notifyItemChanged(prePosition)
             // mVoicePlayerView.invalid(item.sound.url, item.sound.duration, item.sound.progress, item.sound.status)

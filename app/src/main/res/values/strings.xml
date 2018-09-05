@@ -665,6 +665,7 @@
     <string name="setting_about_me_hint">关于我们</string>
     <string name="setting_modify_pwd_hint">修改密码</string>
     <string name="setting_reset_pwd">重置密码</string>
+    <string name="set_pwd">设置密码</string>
     <string name="setting_logout_hint">退出登录</string>
     <string name="setting_new_pwd_hint">请设置新密码</string>
     <string name="setting_re_set_new_pwd_hint">再次输入新密码</string>
