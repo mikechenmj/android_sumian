@@ -52,7 +52,7 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
         map["page"] = mPageNumber
         map["per_page"] = DEFAULT_PAGES
         map["list_type"] = telBookingListType
-        map["include"] = "package.servicePackage"
+        map["include"] = "package.servicePackage.service"
 
         val call = AppManager.getHttpService().getTelBookingList(map)
         mCalls.add(call)

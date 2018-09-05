@@ -141,7 +141,8 @@ data class TelBooking(var id: Int,
                               var name: String,//服务包名
                               var introduction: String,//服务包介绍
                               var service_length: Int,//服务时长
-                              var service_length_unit: Int //服务时长类型 0：无 1：分钟 2：小时 3：天
+                              var service_length_unit: Int, //服务时长类型 0：无 1：分钟 2：小时 3：天
+                              var service: Service?
     ) : Parcelable {
 
 
@@ -160,7 +161,13 @@ data class TelBooking(var id: Int,
         }
 
         fun formatPackageNameAndIntro(): String {
-            return "【$name（${introduction}）】"
+            return "【${service?.name}（${name}）】"
         }
     }
+
+    @Parcelize
+    data class Service(
+            @SerializedName("id") val id: Int,
+            @SerializedName("name") val name: String
+    ) : Parcelable
 }
