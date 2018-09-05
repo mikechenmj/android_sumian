@@ -68,10 +68,9 @@ data class TelBooking(var id: Int,
                 return spannableString
             }
             1, 2, 3 -> "已确认"
-            4 -> "已完成"
+            4, 7 -> "已完成"
             5, 8 -> "已关闭"
             6 -> "挂起中"
-            7 -> "已取消"
             //9 未使用,不显示
             else -> {
                 ""
