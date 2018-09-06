@@ -169,7 +169,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         mView.showStartingPaMode();
         bluePeripheral.writeDelay(BlueCmd.cDoSleepyPaMode(), 500);
 
-        LogManager.appendSpeedSleeperLog("主动 turn on  助眠仪 pa 模式");
+        LogManager.appendSpeedSleeperLog("主动 turn on  速眠仪 pa 模式");
     }
 
     @Override
@@ -745,7 +745,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         mMonitor.speedSleeper.battery = sleepyBattery;
         notifyDeviceDataChanged();
         AppManager.getDeviceModel().setSleepyBattery(sleepyBattery);
-        LogManager.appendMonitorLog("0x44 收到助眠仪的电量变化---->" + sleepyBattery + "  cmd=" + cmd);
+        LogManager.appendMonitorLog("0x44 收到速眠仪的电量变化---->" + sleepyBattery + "  cmd=" + cmd);
     }
 
     private void receiveMonitorBatteryInfo(String cmd) {
@@ -908,7 +908,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         peripheral.writeDelay(BlueCmd.cUserInfo(), 2200);
         peripheral.writeDelay(BlueCmd.cSleepData(), 2400);
         mPackageNumber = 0;
-        LogManager.appendMonitorLog("连接成功,开始初始化同步监测仪与助眠仪相关状态数据 " + peripheral.getName());
+        LogManager.appendMonitorLog("连接成功,开始初始化同步监测仪与速眠仪相关状态数据 " + peripheral.getName());
     }
 
     private void notifyDeviceDataChanged() {

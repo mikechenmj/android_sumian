@@ -268,10 +268,10 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                 if (!this.mIsEnableDfu) {
                     if (bluePeripheral != null && bluePeripheral.isConnected()) {
                         bluePeripheral.writeDelay(BlueCmd.cSleepyMac(), 200);
-                        LogManager.appendSpeedSleeperLog("0x56 获取助眠仪的 mac 地址");
+                        LogManager.appendSpeedSleeperLog("0x56 获取速眠仪的 mac 地址");
                     }
                 } else {
-                    LogManager.appendMonitorLog("开始进行助眠仪固件更新....");
+                    LogManager.appendMonitorLog("开始进行速眠仪固件更新....");
                     doDfu(context, mDfuMac);
                 }
                 break;

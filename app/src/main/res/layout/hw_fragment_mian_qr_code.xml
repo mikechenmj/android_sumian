@@ -27,7 +27,7 @@
         app:qrcv_isShowTipTextAsSingleLine="true"
         app:qrcv_isTipTextBelowRect="true"
         app:qrcv_maskColor="#33ffffff"
-        app:qrcv_qrCodeTipText="扫描助眠仪上的二维码"
+        app:qrcv_qrCodeTipText="扫描速眠仪上的二维码"
         app:qrcv_rectWidth="200dp"
         app:qrcv_scanLineMargin="2dp"
         app:qrcv_tipTextColor="@android:color/white"

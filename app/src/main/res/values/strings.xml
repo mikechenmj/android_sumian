@@ -774,7 +774,7 @@
     <string name="not_turn_on_pa_mode_in_sleep_time">正在睡眠中,请勿再次开启</string>
     <string name="turn_on_sleepy_pa_none_mode_error">开启睡眠模式失败,请重试</string>
     <string name="turn_on_sleepy_pa_mode_error">未知错误,请重启设备或联系客服</string>
-    <string name="monitoring_mode_warn">监测模式已开启，此模式下监测仪不会控制助眠仪.</string>
+    <string name="monitoring_mode_warn">监测模式已开启，此模式下监测仪不会控制速眠仪.</string>
     <string name="turn_on_sleep_pa_mode">开启睡眠</string>
     <string name="turning_on_toast">速眠仪睡眠模式开启中</string>
     <string name="turn_on_sleepy_pa_mode_success">速眠仪睡眠模式开启成功啦</string>

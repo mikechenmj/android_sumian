@@ -24,12 +24,10 @@ import com.sumian.hw.device.presenter.DevicePresenter;
 import com.sumian.hw.device.sheet.DeviceBottomSheet;
 import com.sumian.hw.widget.device.DeviceGuideStepOneView;
 import com.sumian.hw.widget.device.DeviceStatusView;
-import com.sumian.hw.widget.device.FloatGroupView;
 import com.sumian.hw.widget.dialog.SumianDialog;
 import com.sumian.hw.job.JobTask;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.LocationManagerUtil;
-import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -60,7 +58,6 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
 
     DeviceGuideStepOneView mDeviceGuideStepView;
     DeviceStatusView mDeviceStatusView;
-    FloatGroupView mFloatGroupView;
 
     private BroadcastReceiver mReceiver;
     private PaModeDialog mPaModeDialog;
@@ -103,7 +100,6 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
 
         mDeviceGuideStepView = root.findViewById(R.id.device_guide_step_view);
         mDeviceStatusView = root.findViewById(R.id.device_status_view);
-        mFloatGroupView = root.findViewById(R.id.float_group_view);
 
         mDeviceGuideStepView.setFragment(this);
         mDeviceGuideStepView.setOnDeviceGuideCallback(this);
@@ -205,19 +201,6 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
         getContext().registerReceiver(mGlobalReceiver, globalFilter);
 
         autoSyncSleepData();
-
-
-        if (BuildConfig.IS_CLINICAL_VERSION) {
-            //临床环境需要屏蔽小眠助手
-            mFloatGroupView.setVisibility(View.GONE);
-        } else {
-            boolean haveUserInfoAndSleepBarrierTest = AppManager.getAccountViewModel().isHaveUserInfoAndSleepBarrierTest();
-            if (haveUserInfoAndSleepBarrierTest) {
-                mFloatGroupView.setVisibility(View.GONE);
-            } else {
-                mFloatGroupView.setVisibility(View.VISIBLE);
-            }
-        }
     }
 
     @Override
