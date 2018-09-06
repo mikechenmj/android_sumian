@@ -40,7 +40,7 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
     protected TitleBar mTitleBar;
     @BindView(R.id.root_view)
     View mRootView;
-    private SoftKeyBoardListener mSoftKeyBoardListener;
+    protected SoftKeyBoardListener mSoftKeyBoardListener;
     private SumianImageTextDialog mSumianImageTextDialog;
 
     @Override
