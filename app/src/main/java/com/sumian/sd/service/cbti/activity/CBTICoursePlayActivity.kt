@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.event.CBTIProgressChangeEvent
 import com.sumian.sd.event.EventBusUtil
@@ -102,7 +103,8 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
             setController(mController)
         }
         nav_tab_lesson_review_last_week.setOnClickListener {
-            SumianWebDialog.createWithPartUrl(H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", mCoursePlayAuth!!.summary!!)).show(supportFragmentManager)
+            val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", mCoursePlayAuth!!.summary!!) + "&token=" + AppManager.getAccountViewModel().token.token
+            SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.lesson_review_last_week)).show(supportFragmentManager)
         }
     }
 
