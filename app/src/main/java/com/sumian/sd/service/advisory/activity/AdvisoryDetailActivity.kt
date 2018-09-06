@@ -92,6 +92,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     override fun onRelease() {
         super.onRelease()
         mMediaPlayer.release()
+        this.codeCacheDir
     }
 
     @Suppress("DEPRECATION")

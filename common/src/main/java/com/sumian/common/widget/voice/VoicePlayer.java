@@ -19,7 +19,7 @@ import java.util.Locale;
  */
 
 public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener,
-        MediaPlayer.OnErrorListener, MediaPlayer.OnSeekCompleteListener, Handler.Callback {
+        MediaPlayer.OnErrorListener, MediaPlayer.OnSeekCompleteListener, Handler.Callback, MediaPlayer.OnBufferingUpdateListener {
 
     private static final String TAG = VoicePlayer.class.getSimpleName();
     private static final int MSG_WHAT_GAP_TIMER = 0x01;
@@ -40,6 +40,7 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             player.setOnPreparedListener(this);
             player.setOnErrorListener(this);
             player.setOnSeekCompleteListener(this);
+            player.setOnBufferingUpdateListener(this);
             mMediaPlayer = player;
         }
     }
@@ -78,7 +79,7 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     }
 
     public VoicePlayer play(String filePath, int position, int progress) {
-        Log.d(TAG, String.format(Locale.getDefault(), "play %d, %d, %s", position, progress, filePath));
+        Log.e(TAG, String.format(Locale.getDefault(), "play %d, %d, %s", position, progress, filePath));
         synchronized (this) {
             removeAllMsg();
             if (TextUtils.isEmpty(filePath)) {
@@ -91,10 +92,12 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                     mMediaPlayer.pause();
                     notifyPause(position);
                 } else {//当前音频未在播放状态,直接播放该音频
-                    start();
+                    //start();
+                    seekTo(progress);
                     sendTimerMsg();
                     notifyPlaying();
                 }
+
             } else {//不是当前音频,先关闭前一个如果正在播放的音频,然后里面播放当前该音频
                 if (mCurrentPosition != -1) {
                     removeAllMsg();
@@ -119,7 +122,11 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     }
 
     public boolean isPlaying() {
+        //try {
         return mMediaPlayer.isPlaying();
+        //} catch (IllegalStateException e) {
+        //   return false;
+        // }
     }
 
     private void play(String filePath, MediaPlayer player, int progress) {
@@ -154,7 +161,8 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        release();
+        //release();
+        Log.e(TAG, "onError: -------->what=" + what + "   extra=" + extra);
         notifyPause(mCurrentPosition);
         return false;
     }
@@ -167,6 +175,12 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         sendTimerMsg();
         Log.d(TAG, "onSeekComplete progress: " + getCurrentPlayPosition());
     }
+
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        Log.e(TAG, "onBufferingUpdate: percent=" + percent);
+    }
+
 
     @Override
     public boolean handleMessage(Message msg) {
