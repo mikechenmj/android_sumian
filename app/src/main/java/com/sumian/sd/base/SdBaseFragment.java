@@ -132,20 +132,20 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        this.mUnBinder.unbind();
+        onRelease();
         for (Call call : mCalls) {
             if (!call.isCanceled()) {
                 call.cancel();
             }
         }
         mCalls.clear();
+        this.mUnBinder.unbind();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         getLifecycle().removeObserver(this);
-        onRelease();
     }
 
     protected boolean openEventBus() {
