@@ -86,17 +86,11 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         })
     }
 
-    override fun initData() {
-        super.initData()
+    override fun onStart() {
+        super.onStart()
         queryCbti()
         querySleepRecord()
         querySleepPrescription()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        updateSleepPrescriptionIfNeed()
-//        SumianImageTextToast.showWindow(activity!!, R.drawable.ic_dialog_fail, R.string.operation_fail, true)
     }
 
     private fun querySleepPrescription() {
