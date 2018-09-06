@@ -63,7 +63,7 @@ public class AppUtil {
         if (token != null && token.is_new) {
             ActivityUtils.startActivity(NewUserGuideActivity.class);
         } else {
-            launchMain();
+            launchMainAndFinishAll();
         }
     }
 
