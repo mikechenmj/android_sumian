@@ -32,14 +32,16 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
 
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
 
-        fun show(context: Context, advisoryId: Int): Intent {
-            val intent = Intent(context, AdvisoryDetailActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            intent.putExtra(ARGS_ADVISORY_ID, advisoryId)
-            context.startActivity(intent)
-            return intent
+        fun show(context: Context, advisoryId: Int) {
+            context.startActivity(getLaunchIntent(context, advisoryId))
         }
 
+        fun getLaunchIntent(context: Context, advisoryId: Int): Intent {
+            val intent = Intent(context, AdvisoryDetailActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra(ARGS_ADVISORY_ID, advisoryId)
+            return intent
+        }
     }
 
     private var mAdvisoryId: Int = 0
