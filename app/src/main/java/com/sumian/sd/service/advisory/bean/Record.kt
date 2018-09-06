@@ -46,9 +46,5 @@ data class Record(var id: Int,//记录 ID
 
         }
 
-        fun isPlaying(): Boolean {
-            return status == 0x02
-        }
-
     }
 }

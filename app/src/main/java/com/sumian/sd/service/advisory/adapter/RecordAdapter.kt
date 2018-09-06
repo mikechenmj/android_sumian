@@ -141,7 +141,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
 
                     val rootView = LayoutInflater.from(itemView.context).inflate(R.layout.lay_item_advisory_imag, mFlowLayout, false)
 
-                    val image = rootView.findViewById<QMUIRadiusImageView>(R.id.iv)
+                    val image = rootView.findViewById<QMUIRadiusImageView>(R.id.iv_avatar)
                     image.setOnClickListener { v -> LargeImageActivity.show(v?.context, img) }
 
                     load("$img?x-oss-process=image/resize,m_lfit,h_80,w_80", RequestOptions.errorOf(R.mipmap.ic_preview_split_graph).fitCenter(), image)
