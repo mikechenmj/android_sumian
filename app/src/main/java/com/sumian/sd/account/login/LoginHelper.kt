@@ -27,11 +27,7 @@ class LoginHelper {
             }
             updateTokenAndUploadInstallationId(token)
             if (token.user.hasPassword) {
-                if (token.is_new) {
-                    ActivityUtils.startActivity(NewUserGuideActivity::class.java)
-                } else {
-                    AppUtil.launchMainAndFinishAll()
-                }
+                AppUtil.launchMainOrNewUserGuide()
             } else {
                 SetPasswordActivity.launch()
             }

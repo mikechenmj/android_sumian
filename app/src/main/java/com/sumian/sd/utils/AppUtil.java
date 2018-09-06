@@ -10,7 +10,9 @@ import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.NotificationUtil;
+import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.account.login.LoginActivity;
+import com.sumian.sd.account.login.NewUserGuideActivity;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.MainActivity;
@@ -54,6 +56,15 @@ public class AppUtil {
 
     public static void launchMain() {
         ActivityUtils.startActivity(MainActivity.class);
+    }
+
+    public static void launchMainOrNewUserGuide() {
+        Token token = AppManager.getAccountViewModel().getToken();
+        if (token != null && token.is_new) {
+            ActivityUtils.startActivity(NewUserGuideActivity.class);
+        } else {
+            launchMain();
+        }
     }
 
     public static Class<MainActivity> getMainClass() {

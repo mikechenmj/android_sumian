@@ -10,6 +10,7 @@ import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
+import com.sumian.sd.app.AppManager
 import kotlinx.android.synthetic.main.activity_set_password.*
 
 class SetPasswordActivity : BasePresenterActivity<SetPasswordContract.Presenter>(), SetPasswordContract.View {
@@ -93,7 +94,7 @@ class SetPasswordActivity : BasePresenterActivity<SetPasswordContract.Presenter>
         if (mLaunchType == LAUNCH_TYPE_RESET_PASSWORD) {
             super.onBackPressed()
         } else {
-            ActivityUtils.startActivity(NewUserGuideActivity::class.java)
+            AppUtil.launchMainOrNewUserGuide()
         }
     }
 }

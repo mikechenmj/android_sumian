@@ -20,6 +20,7 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
         mTitleBar.setIsDarkTheme(true)
         mTitleBar.openTopPadding(true)
         mTitleBar.showTitle(false)
+        mTitleBar.showBackArrow(false)
     }
 
     override fun getUrlContentPart(): String {
