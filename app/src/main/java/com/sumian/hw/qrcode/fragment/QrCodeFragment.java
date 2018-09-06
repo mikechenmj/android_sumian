@@ -92,7 +92,7 @@ public class QrCodeFragment extends HwBaseFragment implements View.OnClickListen
     @SuppressLint("SetTextI18n")
     private void handleText(String qrCode) {
         if (qrCode.length() == 12) {
-            zxingView.showTipText("助眠仪SN码：" + qrCode + "\r\n确定要绑定这台助眠仪吗？");
+            zxingView.showTipText("速眠仪SN码：" + qrCode + "\r\n确定要绑定这台速眠仪吗？");
             updateActionText("确定");
         } else {
             updateActionText("手动输入");
@@ -122,7 +122,7 @@ public class QrCodeFragment extends HwBaseFragment implements View.OnClickListen
         int i = v.getId();
         if (i == R.id.bt_re_scan) {
             hideActionButton();
-            zxingView.showTipText("扫描助眠仪上的二维码");
+            zxingView.showTipText("扫描速眠仪上的二维码");
             zxingView.startSpotAndShowRect();
 
         } else if (i == R.id.bt_action) {
