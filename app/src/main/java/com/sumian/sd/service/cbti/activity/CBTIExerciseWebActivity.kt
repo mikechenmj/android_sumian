@@ -54,18 +54,18 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
     private var sumianAlertDialog: SumianAlertDialog? = null
 
     override fun onBack(v: View?) {
-        if (mQuitWithoutCheck) {
-            finish()
-        } else {
-            sumianAlertDialog = SumianAlertDialog(this)
-                    .whitenLeft()
-                    .setTitle(R.string.are_you_exit_practice)
-                    .setMessage("退出后将不会保存此次填写记录")
-                    .setLeftBtn(R.string.cancel, null)
-                    .setRightBtn(R.string.sure) { finish() }
-            sumianAlertDialog?.show()
-
-        }
+        finish()
+//        if (mQuitWithoutCheck) {
+//            finish()
+//        } else {
+//            sumianAlertDialog = SumianAlertDialog(this)
+//                    .whitenLeft()
+//                    .setTitle(R.string.are_you_exit_practice)
+//                    .setMessage("退出后将不会保存此次填写记录")
+//                    .setLeftBtn(R.string.cancel, null)
+//                    .setRightBtn(R.string.sure) { finish() }
+//            sumianAlertDialog?.show()
+//        }
     }
 
     override fun onBackPressed() {
@@ -96,7 +96,7 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
             }
         })
         sWebView.registerHandler("quitWithoutCheck", object : SBridgeHandler() {
-            override fun handler(data: String) {
+            override fun handler(data: String?) {
                 mQuitWithoutCheck = true
             }
         })
