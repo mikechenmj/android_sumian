@@ -1,14 +1,11 @@
 package com.sumian.sd.service.cbti.activity
 
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.View
 import com.sumian.common.image.ImageLoader
@@ -93,14 +90,6 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         this.mPresenter = CBTICoursePlayAuthPresenter.init(this)
     }
 
-    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == "finished") {
-                onPlayNext()
-            }
-        }
-    }
-
     override fun initWidget(root: View?) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
@@ -115,10 +104,6 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         nav_tab_lesson_review_last_week.setOnClickListener {
             SumianWebDialog.createWithPartUrl(H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", mCoursePlayAuth!!.summary!!)).show(supportFragmentManager)
         }
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, IntentFilter().apply {
-            addAction("finished")
-        })
     }
 
     override fun initData() {

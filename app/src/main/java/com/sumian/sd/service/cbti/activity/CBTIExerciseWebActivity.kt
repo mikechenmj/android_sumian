@@ -27,8 +27,7 @@ import java.util.*
 class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
     private var courseId: Int = 0
-
-    private var mCode: Int = 0xff
+    private var mQuitWithoutCheck = false
 
     companion object {
 
@@ -55,34 +54,21 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
     private var sumianAlertDialog: SumianAlertDialog? = null
 
     override fun onBack(v: View?) {
-        when (mCode) {
-            0 -> {
+        if (mQuitWithoutCheck) {
+            finish()
+        } else {
+            sumianAlertDialog = SumianAlertDialog(this)
+                    .whitenLeft()
+                    .setTitle(R.string.are_you_exit_practice)
+                    .setMessage("退出后将不会保存此次填写记录")
+                    .setLeftBtn(R.string.cancel, null)
+                    .setRightBtn(R.string.sure) { finish() }
+            sumianAlertDialog?.show()
 
-                val intent = Intent().apply {
-                    action = "finished"
-                }
-
-                LocalBroadcastManager.getInstance(this@CBTIExerciseWebActivity).sendBroadcastSync(intent)
-                finish()
-            }
-            0xff -> {
-                sumianAlertDialog = SumianAlertDialog(this)
-                        .whitenLeft()
-                        .setTitle(R.string.are_you_exit_practice)
-                        .setMessage("退出后将不会保存此次填写记录")
-                        .setLeftBtn(R.string.cancel, null)
-                        .setRightBtn(R.string.sure) { finish() }
-
-                sumianAlertDialog?.show()
-            }
-            else -> {
-                finish()
-            }
         }
     }
 
     override fun onBackPressed() {
-        //super.onBackPressed()
         onBack(null)
     }
 
@@ -101,14 +87,17 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
                 sBridgeResult?.let {
                     if (it.code == 0) {
-                        mCode = it.code
                         LocalBroadcastManager.getInstance(this@CBTIExerciseWebActivity).sendBroadcastSync(Intent().apply {
                             action = "finished"
                         })
                         finish()
                     }
                 }
-
+            }
+        })
+        sWebView.registerHandler("quitWithoutCheck", object : SBridgeHandler() {
+            override fun handler(data: String) {
+                mQuitWithoutCheck = true
             }
         })
     }
