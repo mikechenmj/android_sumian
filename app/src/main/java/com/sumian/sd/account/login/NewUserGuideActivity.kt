@@ -52,4 +52,8 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
             super.onBackPressed()
         }
     }
+
+    override fun monitorKeyboard() {
+        // todo update 键盘高度计算 适配小米8
+    }
 }

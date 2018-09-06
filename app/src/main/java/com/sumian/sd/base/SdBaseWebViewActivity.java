@@ -232,7 +232,7 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
         mTitleBar.setTitle(title);
     }
 
-    private void monitorKeyboard() {
+    protected void monitorKeyboard() {
         mSoftKeyBoardListener = SoftKeyBoardListener.registerListener(this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
