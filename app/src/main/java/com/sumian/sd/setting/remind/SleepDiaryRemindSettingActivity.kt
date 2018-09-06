@@ -90,6 +90,7 @@ class SleepDiaryRemindSettingActivity :
         bottomSheet.setOnDismissListener {
             if (!mOnTimePicked && mSwitchPendingOff) {
                 sdv_sleep_diary_remind.setSwitchCheckedWithoutCallback(false)
+                fl_remind_time.visibility = View.GONE
             }
         }
         bottomSheet.show()
