@@ -304,7 +304,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".service.cbti.activity.CBTICoursePlayActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/PlayActivityTheme"
