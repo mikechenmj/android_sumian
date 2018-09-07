@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -53,6 +53,11 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         controller
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        EventBusUtil.postStickyEvent(CBTIProgressChangeEvent())
+    }
+
     companion object {
 
         private const val EXTRA_CBTI_COURSE = "com.sumian.sleepdoctor.extras.cbti.course"
@@ -77,12 +82,8 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         return super.initBundle(bundle)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        EventBusUtil.postStickyEvent(CBTIProgressChangeEvent())
-    }
-
     override fun getLayoutId(): Int {
+        window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         return R.layout.activity_main_cbti_lesson_detail_center
     }
 
