@@ -10,6 +10,8 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.blankj.utilcode.util.AppUtils
 import com.sumian.sd.R
+import com.sumian.sd.event.EventBusUtil
+import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -65,6 +67,7 @@ class NotificationUtil {
             val pendingIntent = getPendingIntent(context, intent)
             if (pendingIntent != null) builder.setContentIntent(pendingIntent)
             NotificationManagerCompat.from(context).notify(Random().nextInt(), builder.build())
+            EventBusUtil.postStickyEvent(NotificationUnreadCountChangeEvent())
         }
 
         private fun getPendingIntent(context: Context?, intent: Intent?): PendingIntent? {

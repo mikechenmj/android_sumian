@@ -8,7 +8,7 @@ import com.sumian.sd.R
 import com.sumian.sd.base.BaseEventFragment
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.event.EventBusUtil
-import com.sumian.sd.event.NotificationReadEvent
+import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.homepage.HomepageFragment
 import com.sumian.sd.notification.NotificationViewModel
@@ -92,6 +92,16 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
                         }
                     }
                 })
+    }
+
+    override fun openEventBus(): Boolean {
+        return true
+    }
+
+    @Subscribe(sticky = true)
+    public fun onNotificationUnreadCountChangeEvent(event: NotificationUnreadCountChangeEvent) {
+        updateNotificationUnreadCount()
+        EventBusUtil.removeStickyEvent(event)
     }
 
     private fun updateNotificationUnreadCount() {

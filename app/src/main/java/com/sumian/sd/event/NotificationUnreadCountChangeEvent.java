@@ -9,5 +9,5 @@ package com.sumian.sd.event;
  *     version: 1.0
  * </pre>
  */
-public class NotificationReadEvent {
+public class NotificationUnreadCountChangeEvent {
 }

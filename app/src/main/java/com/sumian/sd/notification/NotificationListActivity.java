@@ -11,8 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
-import com.sumian.sd.event.EventBusUtil;
-import com.sumian.sd.event.NotificationReadEvent;
 import com.sumian.sd.notification.bean.Notification;
 import com.sumian.sd.notification.push.SchemeResolveUtil;
 import com.sumian.sd.utils.NotificationUtil;
