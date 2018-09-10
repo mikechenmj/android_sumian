@@ -322,7 +322,7 @@ dependencies {
     //implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.3'
 
     // utils
-    implementation 'com.blankj:utilcode:1.16.0'
+    implementation 'com.blankj:utilcode:1.19.0'
 
     // RecyclerViewPager
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'

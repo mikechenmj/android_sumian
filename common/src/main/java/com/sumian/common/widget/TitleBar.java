@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.sumian.common.R;
 
-
 /**
  * Created by jzz
  * on 2017/09/30.
@@ -26,8 +25,6 @@ import com.sumian.common.R;
  */
 
 public class TitleBar extends FrameLayout implements View.OnClickListener {
-
-    private static int EXT_PADDING_TOP;
 
     private ImageView mIvBack;
     private TextView mTvTitle;
@@ -65,7 +62,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_menu_icon);
         a.recycle();
 
-        View rootView = inflate(context, R.layout.lay_title_bar, this);
+        View rootView = inflate(context, R.layout.common_lay_title_bar, this);
         mIvBack = rootView.findViewById(R.id.iv_back);
         if (showBack) {
             mIvBack.setOnClickListener(this);
@@ -93,12 +90,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             mIvMenu.setVisibility(VISIBLE);
             mIvMenu.setOnClickListener(this);
         }
-
-//        setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
-        setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_48));
-        setBackgroundColor(getResources().getColor(R.color.b3_color));
-        // Init padding
-        //setPadding(getLeft(), getTop() + getExtPaddingTop(getResources()), getRight(), getBottom());
     }
 
     public TitleBar addOnSpannerListener(OnSpannerListener onSpannerListener) {
@@ -137,16 +128,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return this;
     }
 
-//    @SuppressWarnings("deprecation")
-//    public void isShow(boolean isShow) {
-//        if (isShow) {
-//          //  mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_more), null);
-//        } else {
-//           // mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_less), null);
-//        }
-//       // mIsShow = isShow;
-//    }
-
     public TextView getTitle() {
         return mTvTitle;
     }
@@ -157,8 +138,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     @SuppressLint("ResourceType")
     public TitleBar setTitle(@StringRes int titleRes) {
-        if (titleRes <= 0x00)
+        if (titleRes <= 0x00) {
             return this;
+        }
         setTitle(getResources().getString(titleRes));
         return this;
     }
@@ -167,51 +149,22 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         mTvTitle.setText(text);
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        float d = getResources().getDisplayMetrics().density;
-//        int minH = (int) (d * 36 + getExtPaddingTop(getResources()));
-//
-//        heightMeasureSpec = MeasureSpec.makeMeasureSpec(minH, MeasureSpec.EXACTLY);
-//
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//    }
-//
-//    public static int getExtPaddingTop(Resources resources) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && EXT_PADDING_TOP == 0) {
-//            try {
-//                @SuppressLint("PrivateApi") Class<?> clazz = Class.forName("com.android.internal.R$dimen");
-//                Object object = clazz.newInstance();
-//                int height = Integer.parseInt(clazz.getField("status_bar_height")
-//                        .get(object).toString());
-//                EXT_PADDING_TOP = resources.getDimensionPixelSize(height);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return EXT_PADDING_TOP;
-//    }
-
     @SuppressWarnings("deprecation")
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.iv_back) {
             OnBackClickListener onBackClickListener = this.mOnBackClickListener;
-            if (onBackClickListener == null) return;
+            if (onBackClickListener == null) {
+                return;
+            }
             onBackClickListener.onBack(v);
-
-        } else if (i == R.id.tv_title) {//                if (!mIsShow) {
-//                    //   mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_less), null);
-//                    mIsShow = true;
-//                } else {
-//                    // mTvTitle.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.show_more), null);
-//                    mIsShow = false;
-//                }
+        } else if (i == R.id.tv_title) {
             OnSpannerListener onSpannerListener = this.mOnSpannerListener;
-            if (onSpannerListener == null) return;
+            if (onSpannerListener == null) {
+                return;
+            }
             onSpannerListener.onSpanner(v, mIsShow);
-
         } else if (i == R.id.iv_menu || i == R.id.tv_menu) {
             if (mOnMenuClickListener != null) {
                 mOnMenuClickListener.onMenuClick(v);
@@ -238,5 +191,27 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public interface OnMenuClickListener {
         void onMenuClick(View v);
+    }
+
+    public void setBgColor(int color) {
+        setBackgroundColor(color);
+    }
+
+    public void setTextColor(int color) {
+        mTvTitle.setTextColor(color);
+        mTvMenu.setTextColor(color);
+        mIvBack.setColorFilter(color);
+    }
+
+    public void openTopPadding(boolean open) {
+        setPadding(0, open ? (int) getResources().getDimension(R.dimen.status_bar_height) : 0, 0, 0);
+    }
+
+    public void showTitle(boolean show) {
+        mTvTitle.setVisibility(show ? VISIBLE : GONE);
+    }
+
+    public void showBackArrow(boolean show) {
+        mIvBack.setVisibility(show ? VISIBLE : GONE);
     }
 }

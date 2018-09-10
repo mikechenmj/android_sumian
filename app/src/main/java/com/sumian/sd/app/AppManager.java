@@ -17,22 +17,23 @@ import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
-import com.sumian.hw.gather.FileHelper;
+import com.sumian.common.webview.WebViewManger;
 import com.sumian.hw.device.model.DeviceModel;
-import com.sumian.hw.report.viewModel.ReportModel;
+import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.job.JobScheduler;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.player.VoicePlayer;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.engine.HwNetEngine;
+import com.sumian.hw.report.viewModel.ReportModel;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.model.AccountViewModel;
-import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
 import com.sumian.sd.doctor.model.DoctorViewModel;
 import com.sumian.sd.leancloud.LeanCloudManager;
 import com.sumian.sd.network.api.DoctorApi;
 import com.sumian.sd.network.engine.NetEngine;
+import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
 
 /**
  * Created by jzz
@@ -163,6 +164,13 @@ public final class AppManager {
         initBlueManager(context);
         HwLeanCloudHelper.init(context);
         initKefu(context);
+        initWebView();
+    }
+
+    private void initWebView() {
+        WebViewManger webViewManger = WebViewManger.Companion.getInstance();
+        webViewManger.setBaseUrl(BuildConfig.BASE_H5_URL);
+        AppManager.getAccountViewModel().getLiveDataToken().observeForever(token -> webViewManger.setToken(token == null ? null : token.token));
     }
 
     private void initKefu(Context context) {

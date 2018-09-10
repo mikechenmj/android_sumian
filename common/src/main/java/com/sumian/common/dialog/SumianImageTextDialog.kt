@@ -4,12 +4,11 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatDialog
-import android.text.TextUtils
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.R
+import com.sumian.common.webview.bean.H5ShowToastData
 import kotlinx.android.synthetic.main.layout_sumian_dialog.*
 
 
@@ -24,33 +23,12 @@ import kotlinx.android.synthetic.main.layout_sumian_dialog.*
  * </pre>
  */
 class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style.SumianLoadingDialog_NotDim) {
-
     private val mContext = context
-    private var mRotateImage = true
-    private var mImageRes: Int? = null
-    private var mText: String? = null
     private val mHandler = Handler()
     private var mType = TYPE_TEXT
 
-    private var mDuration: Long = 0
-
-    private val mDismissRunnable: Runnable by lazy {
-        Runnable {
-            dismiss()
-        }
-    }
-
-    private val mShowRunnable: Runnable by lazy {
-        Runnable {
-            show()
-            if (mDuration != 0L) {
-                mHandler.removeCallbacks(mDismissRunnable)
-                mHandler.postDelayed(mDismissRunnable, mDuration)
-            }
-        }
-    }
-
     companion object {
+        const val TYPE_INVALID = -1
         const val TYPE_LOADING = 0
         const val TYPE_SUCCESS = 1
         const val TYPE_FAIL = 2
@@ -60,101 +38,118 @@ class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_sumian_dialog)
+        setContentView(R.layout.common_lay_dialog_common_sumian)
         updateImageAndText()
     }
 
     private fun updateImageAndText() {
         ll_iv_tv_container.visibility = if (mType == TYPE_TEXT) View.GONE else View.VISIBLE
-        tv_toast.visibility = if (mType != TYPE_TEXT) View.GONE else View.VISIBLE
-
-        if (mType != TYPE_TEXT) {
-            if (mImageRes != null) {
-                iv.setImageResource(mImageRes!!)
-                iv.visibility = View.VISIBLE
-            } else {
-                iv.visibility = View.GONE
-            }
-            if (!TextUtils.isEmpty(mText)) {
-                tv_desc.text = mText
-                tv_desc.visibility = View.VISIBLE
-            } else {
-                tv_desc.visibility = View.GONE
-            }
+        val imageRes = getImageRes(mType)
+        val textRes = getTextRes(mType)
+        if (imageRes != 0) {
+            iv.setImageResource(imageRes)
+            iv.visibility = View.VISIBLE
         } else {
-            tv_toast.text = mText
+            iv.visibility = View.GONE
         }
-    }
-
-    fun setImage(@DrawableRes imageRes: Int) {
-        mImageRes = imageRes
-    }
-
-    fun setText(@StringRes textRes: Int): SumianImageTextDialog {
-        mText = mContext.getString(textRes)
-        return this
-    }
-
-    fun setText(text: String): SumianImageTextDialog {
-        mText = text
-        return this
-    }
-
-    fun setType(type: Int): SumianImageTextDialog {
-        mType = type
-        when (type) {
-            TYPE_LOADING -> {
-                setImage(R.drawable.dialog_loading_animation)
-                mRotateImage = true
-            }
-
-            TYPE_SUCCESS -> {
-                setImage(R.drawable.ic_dialog_success)
-                setText(R.string.operation_success)
-                mRotateImage = false
-            }
-            TYPE_FAIL -> {
-                setImage(R.drawable.ic_dialog_fail)
-                setText(R.string.operation_fail)
-                mRotateImage = false
-            }
-            TYPE_WARNING -> {
-                setImage(R.drawable.ic_dialog_warning)
-                setText(R.string.operation_warning)
-                mRotateImage = false
-            }
-            TYPE_TEXT -> {
-                setImage(R.drawable.ic_dialog_warning)
-                setText(R.string.operation_warning)
-                mRotateImage = false
-            }
-            else -> {
-                setType(TYPE_TEXT)
-            }
+        if (textRes != 0) {
+            tv_desc.setText(textRes)
+            tv_desc.visibility = View.VISIBLE
+        } else {
+            tv_desc.visibility = View.GONE
         }
-        return this
     }
 
     fun show(delay: Long, duration: Long): SumianImageTextDialog {
-        this.mDuration = duration
-        mHandler.removeCallbacks(mShowRunnable)
-        mHandler.removeCallbacks(mDismissRunnable)
-        mHandler.postDelayed(mShowRunnable, delay)
+        mHandler.postDelayed({
+            show()
+            if (duration != 0L) {
+                mHandler.postDelayed({ dismiss() }, duration)
+            }
+        }, delay)
         return this
     }
 
     fun dismiss(delay: Long): SumianImageTextDialog {
-        mHandler.removeCallbacks(mDismissRunnable)
-        mHandler.postDelayed(mDismissRunnable, delay)
+        if (!isShowing) {
+            return this
+        }
+        mHandler.postDelayed({
+            if (isShowing) {
+                dismiss()
+            }
+        }, delay)
         return this
     }
 
     override fun setOnDismissListener(listener: DialogInterface.OnDismissListener?) {
         super.setOnDismissListener {
-            mHandler.removeCallbacks(mShowRunnable)
-            mHandler.removeCallbacks(mDismissRunnable)
             mHandler.removeCallbacksAndMessages(null)
             listener?.onDismiss(it)
         }
+    }
+
+    fun show(toastData: H5ShowToastData) {
+        val type = getType(toastData.type)
+        if (type == TYPE_INVALID) {
+            return
+        }
+        if (type == TYPE_TEXT) {
+            ToastUtils.showShort(toastData.message)
+            return
+        }
+        if (toastData.duration > 0) {
+            val textRes = getTextRes(type)
+            val imageRes = getImageRes(type)
+            SumianImageTextToast.showToast(mContext, imageRes, textRes, toastData.duration > 2000)
+            return
+        }
+        mType = type
+        show(toastData.delay, toastData.duration)
+    }
+
+    private fun getType(typeString: String): Int {
+        return when (typeString) {
+            "text" -> SumianImageTextDialog.TYPE_TEXT
+            "success" -> TYPE_SUCCESS
+            "error" -> TYPE_FAIL
+            "loading" -> TYPE_LOADING
+            "warning" -> TYPE_WARNING
+            else -> {
+                TYPE_INVALID
+            }
+        }
+    }
+
+    private fun getTextRes(type: Int): Int {
+        return when (type) {
+            TYPE_TEXT -> 0
+            TYPE_SUCCESS -> R.string.operation_success
+            TYPE_FAIL -> R.string.operation_fail
+            TYPE_WARNING -> R.string.operation_warning
+            TYPE_LOADING -> 0
+            else -> {
+                0
+            }
+        }
+    }
+
+    private fun getImageRes(type: Int): Int {
+        return when (type) {
+            TYPE_SUCCESS -> R.drawable.ic_dialog_success
+            TYPE_FAIL -> R.drawable.ic_dialog_fail
+            TYPE_WARNING -> R.drawable.ic_dialog_warning
+            TYPE_LOADING -> R.drawable.dialog_loading_animation
+            else -> {
+                0
+            }
+        }
+    }
+
+    /**
+     * 清除所有延时任务
+     */
+    fun release() {
+        mHandler.removeCallbacksAndMessages(null)
     }
 }
