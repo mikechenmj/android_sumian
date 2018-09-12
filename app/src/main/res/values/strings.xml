@@ -443,6 +443,8 @@
     <string name="cancel_hint">取消</string>
     <string name="ok_hint">确认</string>
     <string name="ensure_hint">确定</string>
+    <string name="turn_off_monitoring_mode_title">确定关闭监测模式？</string>
+    <string name="turn_off_monitoring_mode_message">关闭后不影响监测仪工作，速眠仪将正常开启工作模式，是否确定？</string>
 
     <!--account-->
     <string name="login_hint">登录</string>
