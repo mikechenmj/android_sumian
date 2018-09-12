@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.widget.voice.VoicePlayer
@@ -129,6 +128,9 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
                 this.mAdapter.setUser(it)
             }
             this.mAdapter.resetItem(advisory.records)
+            val isRecordEmpty = advisory.records == null || advisory.records!!.isEmpty()
+            empty_error_view.visibility = if (isRecordEmpty) View.VISIBLE else View.GONE
+            recycler.visibility = if (isRecordEmpty) View.GONE else View.VISIBLE
         }
     }
 

@@ -34,6 +34,17 @@
             android:clipToPadding="true"
             android:paddingBottom="@dimen/space_64" />
 
+        <com.sumian.sd.widget.error.EmptyErrorView
+            android:id="@+id/empty_error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:eev_auto_hide="false"
+            app:eev_desc="@string/any_question_ask_kefu"
+            app:eev_icon="@drawable/ic_service_cancel"
+            app:eev_title="@string/relate_service_is_canceled"
+            tools:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_bottom_notification"
             style="@style/TopNotificationText"
