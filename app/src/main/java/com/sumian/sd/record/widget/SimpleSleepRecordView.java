@@ -82,5 +82,6 @@ public class SimpleSleepRecordView extends LinearLayout {
 
     public void setOnClickFillSleepRecordBtnListener(OnClickListener listener) {
         btnGoRecord.setOnClickListener(listener);
+        llNoSleepRecord.setOnClickListener(listener);
     }
 }

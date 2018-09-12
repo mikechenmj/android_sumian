@@ -12,8 +12,8 @@ import com.sumian.sd.R;
 import com.sumian.sd.record.bean.SleepPill;
 import com.sumian.sd.record.bean.SleepRecord;
 import com.sumian.sd.record.bean.SleepRecordAnswer;
-import com.sumian.sd.utils.TimeUtil;
 import com.sumian.sd.record.pill.PillsDialog;
+import com.sumian.sd.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,6 +180,7 @@ public class SleepRecordView extends LinearLayout {
 
     public void setOnClickFillSleepRecordBtnListener(OnClickListener listener) {
         btnGoRecord.setOnClickListener(listener);
+        llNoSleepRecord.setOnClickListener(listener);
     }
 
     public void setTime(long timeInMillis) {
