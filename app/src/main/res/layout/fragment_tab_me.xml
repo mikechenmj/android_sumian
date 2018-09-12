@@ -42,8 +42,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_marginTop="@dimen/space_10"
-                    android:drawableEnd="@mipmap/ic_info_icon_edit"
-                    android:drawablePadding="@dimen/space_12"
                     android:singleLine="true"
                     tools:text="@string/martian" />
 
