@@ -222,18 +222,18 @@ public final class TimeUtil {
 
     public static String formatCalendar(Calendar calendar) {
         return String.format(Locale.getDefault(),
-            "%04d-%02d-%02d %02d:%02d:%02d:%02d week of day:%d",
-            // yyyy-mm-dd
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH) + 1,
-            calendar.get(Calendar.DAY_OF_MONTH),
-            // hh:MM:ss:ms ms
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE),
-            calendar.get(Calendar.SECOND),
-            calendar.get(Calendar.MILLISECOND),
-            // day of week
-            calendar.get(Calendar.DAY_OF_WEEK)
+                "%04d-%02d-%02d %02d:%02d:%02d:%02d week of day:%d",
+                // yyyy-mm-dd
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH) + 1,
+                calendar.get(Calendar.DAY_OF_MONTH),
+                // hh:MM:ss:ms ms
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                calendar.get(Calendar.SECOND),
+                calendar.get(Calendar.MILLISECOND),
+                // day of week
+                calendar.get(Calendar.DAY_OF_WEEK)
         );
     }
 
@@ -301,14 +301,14 @@ public final class TimeUtil {
         Calendar c1 = getCalendar(t1);
         Calendar c2 = getCalendar(t2);
         return c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR)
-            && c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH);
+                && c1.get(Calendar.MONTH) == c2.get(Calendar.MONTH);
     }
 
     public static boolean isInTheSameDayOfYear(long t1, long t2) {
         Calendar c1 = getCalendar(t2);
         Calendar c2 = getCalendar(t2);
         return c1.get(Calendar.YEAR) == c2.get(Calendar.YEAR)
-            && c1.get(Calendar.DAY_OF_YEAR) == c2.get(Calendar.DAY_OF_YEAR);
+                && c1.get(Calendar.DAY_OF_YEAR) == c2.get(Calendar.DAY_OF_YEAR);
     }
 
     public static int getHourFromSecond(int second) {
@@ -347,4 +347,14 @@ public final class TimeUtil {
         }
     }
 
+    public static String secondToHHMM(int second) {
+        int hour = second / 3600;
+        int minute = (second / 60) % 60;
+        StringBuilder sb = new StringBuilder();
+        if (hour > 0) {
+            sb.append(hour).append("小时");
+        }
+        sb.append(minute).append("分");
+        return sb.toString();
+    }
 }

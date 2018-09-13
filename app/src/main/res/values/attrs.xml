@@ -259,9 +259,15 @@
     </declare-styleable>
 
     <declare-styleable name="EmptyErrorView">
-        <attr name="eev_icon" format="reference"/>
-        <attr name="eev_title" format="string|reference"/>
-        <attr name="eev_desc" format="string|reference"/>
-        <attr name="eev_auto_hide" format="boolean|reference"/>
+        <attr name="eev_icon" format="reference" />
+        <attr name="eev_title" format="string|reference" />
+        <attr name="eev_desc" format="string|reference" />
+        <attr name="eev_auto_hide" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SleepRecordProgressView">
+        <attr name="srpv_show_center_message" format="boolean|reference" />
+        <attr name="srpv_center_message" format="string|reference" />
+        <attr name="srpv_ring_width" format="dimension|reference" />
     </declare-styleable>
 </resources>

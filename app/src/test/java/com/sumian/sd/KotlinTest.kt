@@ -1,10 +1,9 @@
 package com.sumian.sd
 
 import com.google.gson.Gson
+import com.sumian.hw.common.util.TimeUtil
 import com.sumian.sd.account.config.SumianConfig
 import com.sumian.sd.bean.ClassA
-import com.sumian.sd.onlinereport.OnlineReport
-import com.sumian.sd.utils.JsonUtil
 import org.junit.Test
 
 /**
@@ -34,26 +33,11 @@ class KotlinTest {
 
     @Test
     fun test3() {
-        var json =
-                "{\n" +
-                        "            \"id\":22,\n" +
-                        "            \"title\":\"CBTI初期报告\",\n" +
-                        "            \"type\":1,\n" +
-                        "            \"data\":{\n" +
-                        "                \"scale_id\":\"1037,1038,1039\",\n" +
-                        "                \"chapter_id\":\"1\"\n" +
-                        "            },\n" +
-                        "            \"conversion_status\":1,\n" +
-                        "            \"task_id\":\"\",\n" +
-                        "            \"report_url\":\"http://sd-dev.sumian.com/scale-details/scales?scale_id=1037,1038,1039&chapter_id=1\",\n" +
-                        "            \"deleted_at\":null,\n" +
-                        "            \"created_at\":1536061737,\n" +
-                        "            \"updated_at\":1536061737\n" +
-                        "        }"
-//        json = "{\"id\":22,\"title\":\"CBTI初期报告\",\"type\":1,\"data\":\"data\",\"conversion_status\":1,\"task_id\":\"\",\"report_url\":\"http://sd-dev.sumian.com/scale-details/scales?scale_id\\u003d1037,1038,1039\\u0026chapter_id\\u003d1\",\"created_at\":1536061737,\"updated_at\":1536061737}"
-        System.out.println(json)
-//        val data = JsonUtil.fromJson<Map<String, Any>>(json, object : TypeToken<Map<String, Any>>() {}.type)
-        val data = JsonUtil.fromJson<OnlineReport>(json, OnlineReport::class.java)
-        System.out.println(JsonUtil.toJson(data))
+        var s = 3660
+        System.out.println(TimeUtil.secondToHHMM(s))
+        s = 60
+        System.out.println(TimeUtil.secondToHHMM(s))
+        s = 3600
+        System.out.println(TimeUtil.secondToHHMM(s))
     }
 }

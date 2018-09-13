@@ -971,5 +971,9 @@
     <string name="service_is_canceled">服务已取消</string>
     <string name="any_question_ask_kefu">如有疑问，请咨询客服</string>
     <string name="relate_service_is_canceled">相关服务已取消</string>
+    <string name="sleep_data">睡眠数据</string>
+    <string name="hardware">硬件</string>
+    <string name="is_the_latest_data_already">已是最新数据</string>
+    <string name="refresh_sleep_dairy_hint">尝试刷新数据获取您的睡眠报告</string>
     <!-- Hw end-->
 </resources>

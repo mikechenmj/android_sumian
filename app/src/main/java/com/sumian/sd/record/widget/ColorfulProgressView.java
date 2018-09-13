@@ -64,12 +64,11 @@ public class ColorfulProgressView extends View {
         // init background ring paint
         mBgRingPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mBgRingPaint.setStyle(Paint.Style.STROKE);
-        mBgRingPaint.setStrokeWidth(ringWidth);
         mBgRingPaint.setColor(ringBgColor);
         // init progress paint
         mProgressPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mProgressPaint.setStyle(Paint.Style.STROKE);
-        mProgressPaint.setStrokeWidth(ringWidth);
+        setRingWidth(ringWidth);
     }
 
     private void initColors() {
@@ -151,5 +150,10 @@ public class ColorfulProgressView extends View {
 
     public int getPercent() {
         return mPercent;
+    }
+
+    public void setRingWidth(float ringWidth) {
+        mBgRingPaint.setStrokeWidth(ringWidth);
+        mProgressPaint.setStrokeWidth(ringWidth);
     }
 }

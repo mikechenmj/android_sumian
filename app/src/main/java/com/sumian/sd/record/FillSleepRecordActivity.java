@@ -1,9 +1,11 @@
 package com.sumian.sd.record;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sd.R;
@@ -38,6 +40,12 @@ public class FillSleepRecordActivity extends SdBaseWebViewActivity {
         Intent intent = new Intent(launcher.getActivity(), FillSleepRecordActivity.class);
         intent.putExtra(KEY_TIME, time);
         launcher.startActivityForResult(intent, requestCode);
+    }
+
+    public static void launch(Context context, long time) {
+        Intent intent = new Intent(context, FillSleepRecordActivity.class);
+        intent.putExtra(KEY_TIME, time);
+        ActivityUtils.startActivity(intent);
     }
 
     public static SleepRecord resolveResultData(Intent data) {
