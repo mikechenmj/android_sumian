@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.common.R;
+import com.sumian.common.utils.ColorCompatUtil;
 
 /**
  * Created by jzz
@@ -90,6 +91,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             mIvMenu.setVisibility(VISIBLE);
             mIvMenu.setOnClickListener(this);
         }
+        setBackgroundColor(ColorCompatUtil.Companion.getColor(getContext(), R.color.b3_color));
     }
 
     public TitleBar addOnSpannerListener(OnSpannerListener onSpannerListener) {

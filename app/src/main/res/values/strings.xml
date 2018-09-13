@@ -29,7 +29,7 @@
 
     <!--network error-->
     <string name="error_network_hint">网络不给力，请检查网络设置&#8230;</string>
-    <string name="error_request_failed_hint">网络请求失败，请重试&#8230;</string>
+    <string name="error_request_failed_hint">网络异常，请检查您的网络情况</string>
     <string name="error_token_past_hint">token已失效，请重新登录</string>
     <string name="login">登录</string>
     <string name="mobile_error">手机号格式错误</string>
