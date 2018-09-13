@@ -1,6 +1,7 @@
 package com.sumian.sd.network.callback
 
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.LogUtils
 import com.sumian.hw.network.callback.ErrorCode
 import com.sumian.sd.R
 import com.sumian.sd.account.login.LoginActivity
@@ -67,21 +68,13 @@ abstract class BaseResponseCallback<T> : Callback<T> {
 
     override fun onFailure(call: Call<T>?, t: Throwable?) {
         onFinish()
+        LogUtils.d(t?.message)
         t?.let {
-
             it.printStackTrace()
-
             if ((it.message === "Socket closed" || it.message === "Canceled")) {
                 return
             }
-
-            if (it.message?.startsWith("Unable to resolve host")!!) {
-                onFailure(0, App.getAppContext().getString(R.string.error_request_failed_hint))
-                return
-            }
-
-            onFailure(0, it.message
-                    ?: App.getAppContext().getString(R.string.error_request_failed_hint))
+            onFailure(0, App.getAppContext().getString(R.string.error_request_failed_hint))
         }
     }
 

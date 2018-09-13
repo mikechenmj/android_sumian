@@ -22,7 +22,7 @@ import java.io.IOException
 abstract class BaseResponseCallback<Data> : Callback<Data> {
 
     companion object {
-
+        private val TAG = BaseResponseCallback::class.java.simpleName
         private val UNKNOWN_ERROR_RESPONSE: ErrorResponse by lazy {
             ErrorResponse(0, "Error unknown")
         }
@@ -31,17 +31,13 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
 
     override fun onFailure(call: Call<Data>?, t: Throwable?) {
         onFinish()
+        Log.d(TAG, t?.message)
         t?.let {
             it.printStackTrace()
             if ((it.message === "Socket closed" || it.message === "Canceled")) {
                 return
             }
-            val message = "网络异常，请检查您的网络情况"
-            if (it.message?.startsWith("Unable to resolve host")!!) {
-                onFailure(ErrorResponse(0, message))
-                return
-            }
-            onFailure(ErrorResponse(0, it.message ?: message))
+            onFailure(ErrorResponse(0, "网络异常，请检查您的网络情况"))
         }
     }
 
