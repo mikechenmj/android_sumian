@@ -40,7 +40,7 @@ public class TicketListAdapter extends RecyclerArrayAdapter<TicketEntity> {
         private ISO8601DateFormat dateFormat = new ISO8601DateFormat();
 
         public TicketListHolder(ViewGroup parent) {
-            super(parent, R.layout.em_row_ticket);
+            super(parent, R.layout.night_em_row_ticket);
             tvName = $(R.id.tv_name);
             tvTime = $(R.id.tv_date);
             tvContent = $(R.id.tv_content);

@@ -36,7 +36,7 @@ public class ChatRowImage extends ChatRowFile{
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.hd_row_received_picture : R.layout.hd_row_sent_picture, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.night_hd_row_received_picture : R.layout.night_hd_row_sent_picture, this);
     }
 
     @Override

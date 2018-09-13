@@ -29,7 +29,7 @@ public class ChatRowBigExpression extends ChatRowText{
     @Override
     protected void onInflatView() {
         inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                R.layout.hd_row_received_bigexpression : R.layout.hd_row_sent_bigexpression, this);
+                R.layout.night_hd_row_received_bigexpression : R.layout.night_hd_row_sent_bigexpression, this);
     }
 
     @Override

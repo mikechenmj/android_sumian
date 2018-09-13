@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/alert_tittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="22dp"
+        android:textColor="#de000000"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/alert_content"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#8a000000"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="280dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20.5dp"
+        android:background="#bbbbbb" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/alert_left_btn"
+            android:layout_width="74dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/hd_btn_cancel_bj"
+            android:text="@string/cancel"
+            android:textColor="#666666"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/alert_right_btn"
+            android:layout_width="74dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#b81616"
+            android:text="@string/ok"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</LinearLayout>
+
+

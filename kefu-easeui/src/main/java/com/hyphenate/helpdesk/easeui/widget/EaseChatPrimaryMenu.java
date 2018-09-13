@@ -58,7 +58,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements View
 
     private void init(final Context context, AttributeSet attrs) {
         this.context = context;
-        LayoutInflater.from(context).inflate(R.layout.hd_widget_chat_primary_menu, this, true);
+        LayoutInflater.from(context).inflate(R.layout.night_hd_widget_chat_primary_menu, this, true);
         buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
         buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
         edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);

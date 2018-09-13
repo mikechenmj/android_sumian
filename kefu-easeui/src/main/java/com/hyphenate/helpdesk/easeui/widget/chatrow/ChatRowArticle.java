@@ -35,7 +35,7 @@ public class ChatRowArticle extends ChatRow {
 
 	@Override
 	protected void onInflatView() {
-		inflater.inflate(R.layout.hd_row_received_articles, this);
+		inflater.inflate(R.layout.night_hd_row_received_articles, this);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class ChatRowArticle extends ChatRow {
 
 		if (msgArticles.getArticles().size() == 1) {
 			final ArticlesInfo.ArticleItem bean = msgArticles.getArticles().get(0);
-			View view = inflater.inflate(R.layout.hd_row_article_single_main, null);
+			View view = inflater.inflate(R.layout.night_hd_row_article_single_main, null);
 
 			if (view == null) {
 				return;
@@ -120,7 +120,7 @@ public class ChatRowArticle extends ChatRow {
 		RelativeLayout view;
 
 		if (isFirst) {
-			view = (RelativeLayout)inflater.inflate(R.layout.hd_row_article_main, null);
+			view = (RelativeLayout)inflater.inflate(R.layout.night_hd_row_article_main, null);
 			RelativeLayout mainLayout = (RelativeLayout) view.findViewById(R.id.rl_main);
 			ImageView mainImage = (ImageView) view.findViewById(R.id.iv_main);
 			TextView mainText = (TextView) view.findViewById(R.id.tv_main);

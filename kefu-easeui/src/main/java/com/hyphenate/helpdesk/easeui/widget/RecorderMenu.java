@@ -135,7 +135,7 @@ public class RecorderMenu extends RelativeLayout implements AudioManager.AudioSt
 	}
 
 	private void init(Context context) {
-		LayoutInflater.from(context).inflate(R.layout.hd_widget_recorder_menu, this, true);
+		LayoutInflater.from(context).inflate(R.layout.night_hd_widget_recorder_menu, this, true);
 		mRecordText = (TextView) findViewById(R.id.record_menu_text);
 		mRecordBtn = (ImageButton) findViewById(R.id.record_menu_image_btn);
 		setMotionEventSplittingEnabled(false);

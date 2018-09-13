@@ -38,7 +38,7 @@ public class ChatRowVideo extends ChatRowFile {
     @Override
     protected void onInflatView() {
         inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                R.layout.hd_row_received_video : R.layout.hd_row_sent_video, this);
+                R.layout.night_hd_row_received_video : R.layout.night_hd_row_sent_video, this);
     }
 
     @Override

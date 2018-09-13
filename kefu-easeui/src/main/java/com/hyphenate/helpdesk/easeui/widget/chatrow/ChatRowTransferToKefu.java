@@ -31,8 +31,8 @@ public class ChatRowTransferToKefu extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.hd_row_received_transfertokefu
-                : R.layout.hd_row_sent_transfertokefu, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.night_hd_row_received_transfertokefu
+                : R.layout.night_hd_row_sent_transfertokefu, this);
     }
 
     @Override

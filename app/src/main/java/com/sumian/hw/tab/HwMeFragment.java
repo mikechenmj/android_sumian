@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.sd.account.userProfile.HwUserInfoActivity;
-import com.sumian.sd.account.userProfile.HwUserInfoContract;
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
@@ -16,6 +14,8 @@ import com.sumian.hw.setting.activity.HwSettingActivity;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.account.userProfile.HwUserInfoActivity;
+import com.sumian.sd.account.userProfile.HwUserInfoContract;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.main.OnEnterListener;
@@ -91,7 +91,7 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
                 break;
             case R.id.siv_customer_service:
                 UIProvider.getInstance().clearCacheMsg();
-                KefuManager.Companion.launchKefuActivity();
+                KefuManager.launchKefuActivity();
                 break;
             case R.id.siv_setting:
                 HwSettingActivity.show(getContext());

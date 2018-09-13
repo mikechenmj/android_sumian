@@ -25,8 +25,8 @@ public class ChatRowEvaluation extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.em_row_received_satisfaction
-            : R.layout.em_row_sent_satisfaction, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.night_em_row_received_satisfaction
+            : R.layout.night_em_row_sent_satisfaction, this);
     }
 
     @Override

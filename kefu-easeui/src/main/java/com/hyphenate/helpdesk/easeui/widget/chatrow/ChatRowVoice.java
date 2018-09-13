@@ -45,7 +45,7 @@ public class ChatRowVoice extends ChatRowFile {
     @Override
     protected void onInflatView() {
         inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-            R.layout.hd_row_received_voice : R.layout.hd_row_sent_voice, this);
+            R.layout.night_hd_row_received_voice : R.layout.night_hd_row_sent_voice, this);
     }
 
     @Override

@@ -64,7 +64,7 @@ public class EaseChatInputMenu extends LinearLayout {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.hd_widget_chat_input_menu, this);
+        layoutInflater.inflate(R.layout.night_hd_widget_chat_input_menu, this);
         primaryMenuContainer = (FrameLayout) findViewById(R.id.primary_menu_container);
         emojiconMenuContainer = (FrameLayout) findViewById(R.id.emojicon_menu_container);
         chatExtendMenuContainer = (FrameLayout) findViewById(R.id.extend_menu_container);
@@ -87,7 +87,7 @@ public class EaseChatInputMenu extends LinearLayout {
         }
         // 主按钮菜单栏,没有定义用默认的
         if (chatPrimaryMenu == null) {
-            chatPrimaryMenu = (EaseChatPrimaryMenuBase) layoutInflater.inflate(R.layout.hd_layout_chat_primary_menu,
+            chatPrimaryMenu = (EaseChatPrimaryMenuBase) layoutInflater.inflate(R.layout.night_hd_layout_chat_primary_menu,
                     null);
         }
         primaryMenuContainer.addView(chatPrimaryMenu);
@@ -95,7 +95,7 @@ public class EaseChatInputMenu extends LinearLayout {
 
         // 表情栏
         if (emojiconMenu == null) {
-            emojiconMenu = (EmojiconMenu) layoutInflater.inflate(R.layout.hd_layout_emojicon_menu, null);
+            emojiconMenu = (EmojiconMenu) layoutInflater.inflate(R.layout.night_hd_layout_emojicon_menu, null);
             if (emojiconGroupList == null) {
                 emojiconGroupList = new ArrayList<EmojiconGroupEntity>();
                 EmojiconGroupEntity emojiconGroupEntity = new EmojiconGroupEntity(R.drawable.e_e_1, Arrays

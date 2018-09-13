@@ -2,7 +2,7 @@ package com.sumian.hw.network.api;
 
 import com.google.gson.JsonObject;
 import com.sumian.hw.report.base.BaseResultResponse;
-import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
+import com.sumian.sd.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.hw.report.dailyreport.DailyMeta;
 import com.sumian.hw.report.dailyreport.DailyReport;
 import com.sumian.hw.report.weeklyreport.WeekMeta;

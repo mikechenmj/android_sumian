@@ -56,6 +56,15 @@
                 android:contentDescription="@null" />
         </FrameLayout>
 
+        <ImageView
+            android:id="@+id/siv_customer_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:foreground="@drawable/bg_material_ripple"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_info_customerservice_black" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_10" />

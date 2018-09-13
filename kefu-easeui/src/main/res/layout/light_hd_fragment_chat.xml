@@ -13,7 +13,7 @@
         android:layout_height="@dimen/title_height"
         android:background="@color/title_bg_color"
         easemob:titleBarLeftImage="@mipmap/ic_back"
-        easemob:titleBarTitle="在线客服" />
+        easemob:titleBarTitle="@string/sleep_housekeeper" />
 
     <TextView
         android:id="@+id/tv_username"

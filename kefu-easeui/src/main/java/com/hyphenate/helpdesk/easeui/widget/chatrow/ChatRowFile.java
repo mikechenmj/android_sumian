@@ -33,7 +33,7 @@ public class ChatRowFile extends ChatRow{
     @Override
     protected void onInflatView() {
         inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                R.layout.hd_row_received_file : R.layout.hd_row_sent_file, this);
+                R.layout.night_hd_row_received_file : R.layout.night_hd_row_sent_file, this);
     }
 
     @Override

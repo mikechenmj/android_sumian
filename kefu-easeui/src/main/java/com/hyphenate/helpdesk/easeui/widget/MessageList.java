@@ -50,7 +50,7 @@ public class MessageList extends RelativeLayout {
 
     private void init(Context context){
         this.context = context;
-        LayoutInflater.from(context).inflate(R.layout.hd_chat_message_list, this);
+        LayoutInflater.from(context).inflate(R.layout.night_hd_chat_message_list, this);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.chat_swipe_layout);
         swipeRefreshLayout. setProgressBackgroundColorSchemeResource(R.color.refresh_bg_color);
         swipeRefreshLayout. setColorSchemeResources(R.color.white);

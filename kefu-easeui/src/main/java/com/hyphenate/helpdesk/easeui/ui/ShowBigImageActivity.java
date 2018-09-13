@@ -53,7 +53,7 @@ public class ShowBigImageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.hd_activity_show_big_image);
+        setContentView(R.layout.night_hd_activity_show_big_image);
         super.onCreate(savedInstanceState);
 
         image = (PhotoView) findViewById(R.id.image);

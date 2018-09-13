@@ -38,7 +38,7 @@ public class ChatRowCustomEmoji extends ChatRow {
 
 	@Override
 	protected void onInflatView() {
-		inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.hd_row_received_custom_emoji : R.layout.hd_row_sent_custom_emoji, this);
+		inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.night_hd_row_received_custom_emoji : R.layout.night_hd_row_sent_custom_emoji, this);
 	}
 
 	@Override
