@@ -16,9 +16,10 @@ import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.common.util.BlueByteUtil;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.common.util.StreamUtil;
-import com.sumian.hw.device.contract.DeviceContract;import com.sumian.hw.gather.FileHelper;
-import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.device.contract.DeviceContract;
+import com.sumian.hw.device.pattern.SyncPatternManager;
+import com.sumian.hw.gather.FileHelper;
+import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.device.model.DeviceModel;
 import com.sumian.hw.device.wrapper.BlueDeviceWrapper;
 import com.sumian.hw.log.LogManager;
@@ -813,12 +814,10 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         mMonitor.mac = peripheral.getMac();
         mMonitor.status = BlueDevice.STATUS_CONNECTING;
         mMonitor.battery = 0;
-
         notifyDeviceDataChanged();
-
         AppManager.getBlueManager().saveBluePeripheral(peripheral);
-
         LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.getName());
+        SyncPatternManager.Companion.syncPatternInPossible(App.Companion.getAppContext());
     }
 
     @Override
