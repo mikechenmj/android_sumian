@@ -65,11 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.sumian.sd.record.widget.SimpleSleepRecordView
-                android:id="@+id/sleep_record_view"
+            <com.sumian.sd.homepage.widget.SleepDataPagerView
+                android:id="@+id/sleep_data_pager_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="visible" />
+                android:layout_height="wrap_content" />
 
             <com.sumian.sd.homepage.widget.CbtiProgressView
                 android:id="@+id/cbti_progress_view"

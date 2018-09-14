@@ -9,11 +9,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.record.FillSleepRecordActivity;
+import com.sumian.sd.record.SleepRecordActivity;
 import com.sumian.sd.record.bean.SleepRecord;
 import com.sumian.sd.utils.TimeUtil;
 
+import org.jetbrains.annotations.NotNull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
 
 /**
  * <pre>
@@ -35,7 +43,7 @@ public class SimpleSleepRecordView extends LinearLayout {
     LinearLayout llSleepRecord;
     @BindView(R.id.progress_view_sleep)
     SleepRecordProgressView progressViewSleep;
-    @BindView(R.id.btn_go_record)
+    @BindView(R.id.btn_for_no_data)
     TextView btnGoRecord;
     @BindView(R.id.ll_no_sleep_record)
     LinearLayout llNoSleepRecord;
@@ -52,6 +60,10 @@ public class SimpleSleepRecordView extends LinearLayout {
     private void init(Context context) {
         View inflate = inflate(context, R.layout.view_simple_sleep_record_view, this);
         ButterKnife.bind(this, inflate);
+        setOnLabelClickListener(view -> SleepRecordActivity.Companion.launch(context));
+        setOnClickRightArrowListener(view -> SleepRecordActivity.Companion.launch(context));
+        setOnClickFillSleepRecordBtnListener(view -> FillSleepRecordActivity.launch(context, System.currentTimeMillis()));
+        llNoSleepRecord.setOnClickListener(view -> FillSleepRecordActivity.launch(context, System.currentTimeMillis()));
     }
 
     public void setSleepRecord(SleepRecord sleepRecord) {
@@ -83,5 +95,20 @@ public class SimpleSleepRecordView extends LinearLayout {
     public void setOnClickFillSleepRecordBtnListener(OnClickListener listener) {
         btnGoRecord.setOnClickListener(listener);
         llNoSleepRecord.setOnClickListener(listener);
+    }
+
+    public void querySleepRecord() {
+        Call<SleepRecord> call = AppManager.getHttpService().getSleepDiaryDetail((int) (System.currentTimeMillis() / 1000L));
+        call.enqueue(new BaseResponseCallback<SleepRecord>() {
+            @Override
+            protected void onSuccess(@Nullable SleepRecord response) {
+                setSleepRecord(response);
+            }
+
+            @Override
+            protected void onFailure(int code, @NotNull String message) {
+                setSleepRecord(null);
+            }
+        });
     }
 }

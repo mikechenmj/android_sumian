@@ -1,6 +1,7 @@
 package com.sumian.sd.record.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -28,6 +29,8 @@ public class SleepRecordProgressView extends FrameLayout {
     TextView tvPercent;
     @BindView(R.id.tv_percent_mark)
     TextView tvPercentMark;
+    @BindView(R.id.tv_center_message)
+    TextView tvCenterMessage;
 
     public SleepRecordProgressView(@NonNull Context context) {
         this(context, null);
@@ -41,6 +44,15 @@ public class SleepRecordProgressView extends FrameLayout {
     private void init(Context context, AttributeSet attrs) {
         inflate(context, R.layout.lay_report_progress_view, this);
         ButterKnife.bind(this);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SleepRecordProgressView);
+        boolean showCenterMessage = typedArray.getBoolean(R.styleable.SleepRecordProgressView_srpv_show_center_message, true);
+        String centerMessage = typedArray.getString(R.styleable.SleepRecordProgressView_srpv_center_message);
+        float ringWidth = typedArray.getDimension(R.styleable.SleepRecordProgressView_srpv_ring_width, getResources().getDimension(R.dimen.space_10));
+        typedArray.recycle();
+
+        tvCenterMessage.setVisibility(showCenterMessage ? VISIBLE : GONE);
+        tvCenterMessage.setText(centerMessage);
+        progressView.setRingWidth(ringWidth);
     }
 
     public void setProgress(int progress) {

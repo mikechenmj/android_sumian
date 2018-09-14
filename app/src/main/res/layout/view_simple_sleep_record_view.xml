@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/home_page_sleep_data_view_height"
     android:orientation="vertical">
 
     <com.sumian.sd.record.widget.TitleView
@@ -19,7 +19,7 @@
     <LinearLayout
         android:id="@+id/ll_sleep_record"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
@@ -29,7 +29,8 @@
         <com.sumian.sd.record.widget.SleepRecordProgressView
             android:id="@+id/progress_view_sleep"
             android:layout_width="@dimen/space_150"
-            android:layout_height="@dimen/space_210" />
+            android:layout_height="@dimen/space_210"
+            app:srpv_center_message="@string/sleep_efficient" />
 
         <Space
             android:layout_width="@dimen/space_20"
@@ -70,37 +71,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_no_sleep_record"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="visible"
-        tools:layout_marginTop="@dimen/space_1"
-        tools:visibility="visible">
-
-        <TextView
-            style="@style/text_t1_18"
-            android:layout_marginTop="@dimen/space_40"
-            android:text="@string/today_no_record"
-            android:textColor="@color/b3_color"
-            android:textStyle="bold" />
-
-        <TextView
-            style="@style/text_t2_14"
-            android:layout_marginTop="@dimen/space_5"
-            android:text="@string/today_no_record_hint" />
-
-        <TextView
-            android:id="@+id/btn_go_record"
-            style="@style/SumianButton"
-            android:layout_marginBottom="@dimen/space_30"
-            android:layout_marginEnd="@dimen/space_36"
-            android:layout_marginStart="@dimen/space_36"
-            android:layout_marginTop="@dimen/space_24"
-            android:text="@string/go_record" />
-    </LinearLayout>
+    <include layout="@layout/lay_no_sleep_data" />
 
 </LinearLayout>

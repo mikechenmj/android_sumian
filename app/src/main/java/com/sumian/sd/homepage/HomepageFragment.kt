@@ -22,7 +22,6 @@ import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseResponseCallback
 import com.sumian.sd.record.FillSleepRecordActivity
 import com.sumian.sd.record.SleepRecordActivity
-import com.sumian.sd.record.bean.SleepRecord
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sd.widget.dialog.SumianAlertDialog
@@ -55,9 +54,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun initWidget(root: View) {
         super.initWidget(root)
         initUserInfo()
-        sleep_record_view.setOnLabelClickListener { SleepRecordActivity.launch(activity!!) }
-        sleep_record_view.setOnClickRightArrowListener { SleepRecordActivity.launch(activity!!) }
-        sleep_record_view.setOnClickFillSleepRecordBtnListener { launchFillSleepRecordActivity() }
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
         dsiv_cbti.setOnClickListener { launchCbtiActivity() }
         dsiv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationActivity::class.java) }
@@ -65,10 +61,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
         sleep_prescription_view.setOnClickListener { onSleepPrescriptionClick() }
         iv_avatar.setOnClickListener { onAvatarClick() }
-    }
-
-    private fun launchFillSleepRecordActivity() {
-        FillSleepRecordActivity.launchForResult(this, System.currentTimeMillis(), REQUEST_CODE_FILL_SLEEP_RECORD)
     }
 
     private fun launchCbtiActivity() {
@@ -88,8 +80,13 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     override fun onStart() {
         super.onStart()
+        refreshData()
+    }
+
+    fun refreshData() {
         queryCbti()
         querySleepRecord()
+        queryDailyReport()
         querySleepPrescription()
     }
 
@@ -176,21 +173,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun querySleepRecord() {
-        val call = AppManager.getHttpService().getSleepDiaryDetail((System.currentTimeMillis() / 1000L).toInt())
-        addCall(call)
-        call.enqueue(object : BaseResponseCallback<SleepRecord>() {
-            override fun onSuccess(response: SleepRecord?) {
-                sleep_record_view.setSleepRecord(response)
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                sleep_record_view.setSleepRecord(null)
-            }
-
-            override fun onFinish() {
-                super.onFinish()
-            }
-        })
+        sleep_data_pager_view.querySleepRecord()
     }
 
     private fun queryCbti() {
@@ -211,6 +194,10 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
             }
 
         })
+    }
+
+    fun queryDailyReport() {
+        sleep_data_pager_view.queryDailyReport()
     }
 
     private fun onSleepPrescriptionClick() {

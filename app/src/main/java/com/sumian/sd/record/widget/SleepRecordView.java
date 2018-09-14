@@ -66,7 +66,7 @@ public class SleepRecordView extends LinearLayout {
     TextView tvLittleSleepDuration;
     @BindView(R.id.tv_no_record_date)
     TextView tvNoRecordDate;
-    @BindView(R.id.btn_go_record)
+    @BindView(R.id.btn_for_no_data)
     TextView btnGoRecord;
     @BindView(R.id.ll_no_sleep_record)
     LinearLayout llNoSleepRecord;
