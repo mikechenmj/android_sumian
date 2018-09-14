@@ -37,7 +37,7 @@
             style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/space_12"
+            android:drawablePadding="@dimen/space_10"
             android:drawableTop="@mipmap/ic_info_file"
             android:foreground="@drawable/bg_material"
             android:text="@string/me_my_sleep_file" />
@@ -64,7 +64,7 @@
             style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/space_12"
+            android:drawablePadding="@dimen/space_10"
             android:drawableTop="@mipmap/ic_info_evaluation"
             android:foreground="@drawable/bg_material"
             android:text="@string/my_evaluation" />
@@ -91,7 +91,7 @@
             style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/space_12"
+            android:drawablePadding="@dimen/space_10"
             android:drawableTop="@mipmap/ic_info_report"
             android:foreground="@drawable/bg_material"
             android:text="@string/electric_report" />

@@ -37,7 +37,7 @@
             style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/space_12"
+            android:drawablePadding="@dimen/space_10"
             android:drawableTop="@mipmap/ic_info_graphic"
             android:foreground="@drawable/bg_material"
             android:text="@string/media_service" />
@@ -64,7 +64,7 @@
             style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/space_12"
+            android:drawablePadding="@dimen/space_10"
             android:drawableTop="@mipmap/ic_info_telephone"
             android:text="@string/tel_service" />
 
@@ -90,8 +90,8 @@
             style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/space_12"
-            android:drawableTop="@mipmap/ic_info_report"
+            android:drawablePadding="@dimen/space_10"
+            android:drawableTop="@drawable/ic_sleep_diary_evaluation"
             android:foreground="@drawable/bg_material"
             android:text="@string/diary_evaluation" />
 
