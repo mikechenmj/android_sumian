@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/b2_color"
+    android:foreground="@drawable/bg_material"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_t1_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/space_2"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="3"
+        tools:text="我又开始失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两种药物，但是感觉对睡眠并没有什么帮助，醒来之后感觉很沮丧，dadasdasdaaaaaaaaaaaaasdaasaaasaaaaaaaaaaaaaaaaaaaaa不…" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10">
+
+        <TextView
+            android:id="@+id/tv_advisory_time"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            tools:ignore="RtlHardcoded"
+            tools:text="2018/05/04 15:48" />
+
+        <TextView
+            android:id="@+id/tv_advisory_action_status"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:visibility="invisible"
+            tools:ignore="RtlHardcoded"
+            tools:text="发送中"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_timer"
+        style="@style/text_t2_14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_48"
+        android:layout_marginTop="@dimen/space_20"
+        android:background="@color/b1_color"
+        android:paddingEnd="@dimen/space_20"
+        android:paddingStart="@dimen/space_20"
+        android:paddingTop="@dimen/space_10"
+        android:visibility="visible"
+        tools:text="该订单还有过期，10请及时回复。"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        android:background="@color/l1_color"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+</LinearLayout>

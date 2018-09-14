@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
@@ -18,6 +19,7 @@ import com.sumian.sd.notification.NotificationListActivity;
 import com.sumian.sd.notification.NotificationViewModel;
 import com.sumian.sd.onlinereport.OnlineReportListActivity;
 import com.sumian.sd.scale.ScaleListActivity;
+import com.sumian.sd.service.diary.DiaryEvaluationListActivity;
 import com.sumian.sd.setting.SettingActivity;
 import com.sumian.sd.service.tel.activity.TelBookingListActivity;
 import com.sumian.sd.widget.tips.PatientRecordTips;
@@ -112,6 +114,11 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
     @Override
     public void showTelService() {
         TelBookingListActivity.show();
+    }
+
+    @Override
+    public void onDiaryEvaluationClick() {
+        ActivityUtils.startActivity(DiaryEvaluationListActivity.class);
     }
 
     @Override
