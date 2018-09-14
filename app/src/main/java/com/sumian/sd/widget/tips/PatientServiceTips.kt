@@ -29,6 +29,7 @@ class PatientServiceTips : LinearLayout, View.OnClickListener {
         View.inflate(context, R.layout.lay_tips_my_service_view, this)
         tv_graphic.setOnClickListener(this)
         tv_tel.setOnClickListener(this)
+        tv_diary_evaluation.setOnClickListener { mOnServiceTipsCallback?.onDiaryEvaluationClick() }
     }
 
 
@@ -52,8 +53,8 @@ class PatientServiceTips : LinearLayout, View.OnClickListener {
     interface OnServiceTipsCallback {
 
         fun showGraphicService()
-
         fun showTelService()
+        fun onDiaryEvaluationClick()
 
     }
 

@@ -86,15 +86,14 @@
             android:layout_weight="0.5" />
 
         <TextView
-            android:id="@+id/tv_online_report"
+            android:id="@+id/tv_diary_evaluation"
             style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_12"
             android:drawableTop="@mipmap/ic_info_report"
             android:foreground="@drawable/bg_material"
-            android:text="@string/electric_report"
-            android:visibility="invisible" />
+            android:text="@string/diary_evaluation" />
 
         <Space
             android:layout_width="0dp"

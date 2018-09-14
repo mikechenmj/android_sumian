@@ -547,6 +547,7 @@
             android:name=".homepage.RelaxationActivity"
             android:exported="true"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
+        <activity android:name=".service.diary.DiaryEvaluationListActivity" />
     </application>
 
 </manifest>
