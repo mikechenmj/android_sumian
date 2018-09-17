@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.sumian.sd.widget.refresh.SumianRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,12 +15,19 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/space_10" />
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/space_10" />
 
         <com.sumian.sd.widget.error.EmptyErrorView
             android:id="@+id/empty_error_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:eev_auto_hide="false"
+            app:eev_desc="@string/after_bind_doctor_you_can_consult_the_doctor"
+            app:eev_icon="@drawable/ic_emptystate_img_advisory"
+            app:eev_title="@string/no_data_yet"
+            tools:visibility="visible" />
 
     </FrameLayout>
 

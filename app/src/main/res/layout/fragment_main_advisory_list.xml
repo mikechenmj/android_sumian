@@ -13,7 +13,8 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/space_10" />
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/space_10" />
 
         <com.sumian.sd.widget.error.EmptyErrorView
             android:id="@+id/empty_error_view"
