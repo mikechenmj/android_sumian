@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import com.sumian.common.widget.voice.IVisible
 import com.sumian.sd.R
+import com.sumian.sd.theme.ViewAttributeUtil
 import kotlinx.android.synthetic.main.hw_lay_tab_dot.view.*
 
 /**
@@ -16,13 +17,14 @@ import kotlinx.android.synthetic.main.hw_lay_tab_dot.view.*
  * desc:
  */
 
-class TabIndicatorItemView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr), View.OnClickListener, IVisible {
-
+class TabIndicatorItemView : FrameLayout, View.OnClickListener, IVisible {
 
     private var mOnSelectTabCallback: OnSelectTabCallback? = null
 
-    init {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        ViewAttributeUtil.applyBackgroundDrawable(this, context.theme, ViewAttributeUtil.getBackgroundAttribute(attrs))
         setOnClickListener(this)
         initView(context)
     }
@@ -40,10 +42,8 @@ class TabIndicatorItemView @JvmOverloads constructor(context: Context, attrs: At
     }
 
     override fun onClick(v: View) {
-        if (mOnSelectTabCallback != null) {
-            tv_tab_text.isActivated = true
-            mOnSelectTabCallback!!.onSelect(v, tv_tab_text.isActivated)
-        }
+        tv_tab_text.isActivated = true
+        mOnSelectTabCallback?.onSelect(v, tv_tab_text.isActivated)
     }
 
     fun unSelect() {

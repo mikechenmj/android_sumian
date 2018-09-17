@@ -7,19 +7,18 @@ import android.content.IntentFilter
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.view.View
-import com.blankj.utilcode.util.LogUtils
 import com.sumian.hw.base.HwBaseFragment
 import com.sumian.hw.base.HwBasePresenter
 import com.sumian.hw.guideline.dialog.ReportGuidelineDialog
 import com.sumian.hw.guideline.utils.GuidelineUtils
 import com.sumian.hw.log.LogManager
-import com.sumian.hw.main.bean.PushReport
 import com.sumian.hw.push.ReportPushManager
+import com.sumian.hw.report.bean.PushReport
 import com.sumian.hw.report.calendar.CalendarDialog
 import com.sumian.hw.report.fragment.DailyReportFragment
 import com.sumian.hw.report.fragment.WeeklyReportFragment
-import com.sumian.hw.utils.FragmentUtil
 import com.sumian.hw.report.widget.tab.TabIndicatorView
+import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
@@ -56,8 +55,6 @@ class ReportFragment : HwBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwi
                         tab_indicator_view.updateTabsUiBySelectPosition(0)
                         onSwitchIndicator(null!!, 0)
                     }
-                    else -> {
-                    }
                 }
             }
         }
@@ -79,16 +76,15 @@ class ReportFragment : HwBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwi
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        LogUtils.d()
-        tab_indicator_view.setOnSwitchIndicatorCallback(this)
+        tab_indicator_view?.setOnSwitchIndicatorCallback(this)
     }
 
     override fun initData() {
         super.initData()
         val filter = IntentFilter()
         filter.addAction(CalendarDialog.ACTION_SELECT_DATE)
-        LocalBroadcastManager.getInstance(context!!).registerReceiver(mBroadcastReceiver, filter)
-        onEnter(this.javaClass.simpleName)
+        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mBroadcastReceiver, filter)
+        onEnter(null)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -102,9 +98,8 @@ class ReportFragment : HwBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwi
 
     override fun onRelease() {
         super.onRelease()
-        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(mBroadcastReceiver)
+        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(mBroadcastReceiver)
     }
-
 
     override fun onEnter(data: String?) {
         LogManager.appendUserOperationLog("点击进入 '报告' 页面")
@@ -116,9 +111,8 @@ class ReportFragment : HwBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwi
         }
         // check push report
         val showPushReport = showPushReportInNeeded()
-        LogUtils.d(tab_indicator_view)
-        if (!showPushReport && mCurrentPosition != -1 && tab_indicator_view != null) {
-            tab_indicator_view.selectTabByPosition(mCurrentPosition)
+        if (!showPushReport && mCurrentPosition != -1) {
+            tab_indicator_view?.selectTabByPosition(mCurrentPosition)
         }
     }
 
@@ -158,9 +152,9 @@ class ReportFragment : HwBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwi
         val pushReport = ReportPushManager.getInstance().pushReport
         if (pushReport != null) {
             if (pushReport.pushType == PushReport.PUSH_TYPE_DAILY_REPORT) {
-                tab_indicator_view.selectTabByPosition(0)
+                tab_indicator_view?.selectTabByPosition(0)
             } else {
-                tab_indicator_view.selectTabByPosition(1)
+                tab_indicator_view?.selectTabByPosition(1)
             }
             return true
         }

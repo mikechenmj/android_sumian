@@ -548,7 +548,9 @@
             android:exported="true"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity android:name=".service.diary.DiaryEvaluationListActivity" />
-        <activity android:name="com.sumian.hw.report.ReportActivity" />
+        <activity
+            android:name="com.sumian.hw.report.ReportActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

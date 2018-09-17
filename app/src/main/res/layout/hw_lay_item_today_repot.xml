@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/b1"
     android:orientation="vertical">
 
     <com.sumian.hw.report.widget.SwitchDateView
@@ -29,11 +30,16 @@
                     android:id="@+id/day_sleep_histogram_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_200"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    app:tdshv_coordinate_color="?attr/l3"
+                    app:tdshv_deep_color="?attr/g3"
+                    app:tdshv_empty_text_color="?attr/t5"
+                    app:tdshv_eog_color="?attr/g2"
+                    app:tdshv_light_color="?attr/g1" />
 
                 <com.sumian.hw.report.widget.ReportIndicatorRuleView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="@dimen/space_26" />
 
                 <com.sumian.hw.report.widget.ReportSleepDurationView
                     android:id="@+id/report_sleep_duration_view"

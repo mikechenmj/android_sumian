@@ -42,7 +42,7 @@ import java.util.Map;
 
 public class TouchDailySleepHistogramView extends View implements View.OnLongClickListener {
 
-    private static final String TAG = TouchDailySleepHistogramView.class.getSimpleName();
+    // private static final String TAG = TouchDailySleepHistogramView.class.getSimpleName();
 
     private Paint mCoordinatePaint;//坐标系画笔
     private TextPaint mTextPaint;//文本画笔
@@ -89,6 +89,17 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
     private float mDownX;
     private float mDownY;
 
+    private int mCoordinateColor = Color.TRANSPARENT;
+
+    private int mTextColor = Color.TRANSPARENT;
+    private int mEmptyLabelTextColor = Color.TRANSPARENT;
+
+    private int mSoberColor = Color.TRANSPARENT;
+    private int mLightColor = Color.TRANSPARENT;
+    private int mEogColor = Color.TRANSPARENT;
+    private int mDeepColor = Color.TRANSPARENT;
+
+
     public TouchDailySleepHistogramView(Context context) {
         this(context, null);
     }
@@ -98,19 +109,29 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
     }
 
     public TouchDailySleepHistogramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr,0);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public TouchDailySleepHistogramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         setOnLongClickListener(this);
-        initAttrs(context,attrs,defStyleAttr,defStyleRes);
+        initAttrs(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
-    private void initAttrs(Context context,AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void initAttrs(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.TouchDailySleepHistogramView, defStyleAttr, defStyleRes);
+
+        this.mCoordinateColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_coordinate_color, getResources().getColor(R.color.l3_color_day));
+
+        this.mTextColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_label_text_color, getResources().getColor(R.color.t2_color_day));
+        this.mEmptyLabelTextColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_empty_text_color, getResources().getColor(R.color.t5_color_day));
+
+        this.mSoberColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_sober_color, getResources().getColor(R.color.g3_color_day));
+        this.mLightColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_light_color, getResources().getColor(R.color.g1_color_day));
+        this.mEogColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_eog_color, getResources().getColor(R.color.g1_color_day));
+        this.mDeepColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_deep_color, getResources().getColor(R.color.g2_color_day));
 
 
         attributes.recycle();
@@ -153,7 +174,7 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
 
         //1.init  坐标系画笔
         mCoordinatePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
-        mCoordinatePaint.setColor(getResources().getColor(R.color.light_content_bg_color));
+        mCoordinatePaint.setColor(mCoordinateColor);
         mCoordinatePaint.setStrokeCap(Paint.Cap.ROUND);
         float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics());
 
@@ -232,10 +253,10 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
         if (mSegmentArrayMap == null || mSegmentArrayMap.isEmpty()) {
             mTextPaint.setTextAlign(Paint.Align.CENTER);
             mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16.0f, getResources().getDisplayMetrics()));
-            mTextPaint.setColor(getResources().getColor(R.color.bt_hole_color));
+            mTextPaint.setColor(mEmptyLabelTextColor);
             canvas.drawText(getContext().getString(R.string.no_have_sleep_data), mCenterX, mCenterY - 40, mTextPaint);
-            mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12.0f, getResources().getDisplayMetrics()));
-            mTextPaint.setColor(getResources().getColor(R.color.full_general_color));
+            mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 13.0f, getResources().getDisplayMetrics()));
+            mTextPaint.setColor(mTextColor);
             canvas.drawText(getContext().getString(R.string.no_have_sleep_data_low_label), mCenterX, mCenterY + 40, mTextPaint);
             return;
         }
@@ -268,16 +289,17 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
                 switch (p.state) {
                     case 0://清醒
                         mContentRectF.top = mContentRectF.bottom - mAwakeSleepHeight;
-                        mSquarePaint.setColor(getResources().getColor(R.color.sleep_sober_color));
+                        mSquarePaint.setColor(mSoberColor);
                         break;
                     case 1://快速眼动睡眠
+                        mSquarePaint.setColor(mEogColor);
                     case 2://浅睡
                         mContentRectF.top = mContentRectF.bottom - mLightSleepHeight;
-                        mSquarePaint.setColor(getResources().getColor(R.color.sleep_light_color));
+                        mSquarePaint.setColor(mLightColor);
                         break;
                     case 3://深睡
                         mContentRectF.top = mContentRectF.bottom - mDeepSleepHeight;
-                        mSquarePaint.setColor(getResources().getColor(R.color.sleep_deep_color));
+                        mSquarePaint.setColor(mDeepColor);
                         break;
                     default:
                         break;
@@ -306,9 +328,9 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
             if (fromTime > mFromUnixTime) {
                 indicator = formatIndicator(fromTime);
                 if (tmpSegment.isClick) {
-                    mTextPaint.setColor(getResources().getColor(R.color.full_general_color));
+                    mTextPaint.setColor(mTextColor);
                     mTextPaint.setTextAlign(Paint.Align.CENTER);
-                    mCoordinatePaint.setColor(getResources().getColor(R.color.light_content_bg_color));
+                    mCoordinatePaint.setColor(mCoordinateColor);
                 } else {
                     mTextPaint.setColor(Color.TRANSPARENT);
                     mCoordinatePaint.setColor(Color.TRANSPARENT);
@@ -348,9 +370,9 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
             if (toTime < mToUnixTime) {
                 indicator = formatIndicator(toTime);
                 if (tmpSegment.isClick) {
-                    mTextPaint.setColor(getResources().getColor(R.color.full_general_color));
+                    mTextPaint.setColor(mTextColor);
                     mTextPaint.setTextAlign(Paint.Align.CENTER);
-                    mCoordinatePaint.setColor(getResources().getColor(R.color.light_content_bg_color));
+                    mCoordinatePaint.setColor(mCoordinateColor);
                 } else {
                     mTextPaint.setColor(Color.TRANSPARENT);
                     mCoordinatePaint.setColor(Color.TRANSPARENT);
@@ -403,7 +425,7 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
 
     private void drawCoordinate(Canvas canvas) {
         mTextPaint.setTextAlign(Paint.Align.LEFT);
-        mTextPaint.setColor(getResources().getColor(R.color.full_general_color));
+        mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12.0f, getResources().getDisplayMetrics()));
         mTextPaint.getTextBounds(mLabelText[0], 0, mLabelText[0].length(), mTextBounds);
 
@@ -423,7 +445,7 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
         mCoordinatePaint.setStyle(Paint.Style.STROKE);
         float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics());
         mCoordinatePaint.setStrokeWidth(width);
-        mCoordinatePaint.setColor(getResources().getColor(R.color.light_content_bg_color));
+        mCoordinatePaint.setColor(mCoordinateColor);
         canvas.drawPath(mHorizontalPath, mCoordinatePaint);
     }
 

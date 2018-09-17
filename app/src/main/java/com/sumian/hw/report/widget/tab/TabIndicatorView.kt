@@ -13,11 +13,13 @@ import kotlinx.android.synthetic.main.hw_lay_tab_indicator_view.view.*
  * desc:
  */
 
-class TabIndicatorView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr), TabIndicatorItemView.OnSelectTabCallback {
+class TabIndicatorView : FrameLayout, TabIndicatorItemView.OnSelectTabCallback {
 
     private var mOnSwitchIndicatorCallback: OnSwitchIndicatorCallback? = null
 
-    init {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initView(context)
     }
 
@@ -28,13 +30,14 @@ class TabIndicatorView @JvmOverloads constructor(context: Context, attrs: Attrib
     private fun initView(context: Context) {
         View.inflate(context, R.layout.hw_lay_tab_indicator_view, this)
 
-        day_tab_indicator_item_view.setIndicatorText("日")
+        day_tab_indicator_item_view.setIndicatorText(resources.getString(R.string.today))
         day_tab_indicator_item_view.setOnSelectTabCallback(this)
         day_tab_indicator_item_view.select()
-        week_tab_indicator_item_view.setIndicatorText("周")
+
+        week_tab_indicator_item_view.setIndicatorText(resources.getString(R.string.week))
         week_tab_indicator_item_view.setOnSelectTabCallback(this)
         week_tab_indicator_item_view.unSelect()
-        // calendar_tab_indicator_item_view.setCalendarIcon(R.mipmap.report_calendar)
+
         calendar_tab_indicator_item_view.setOnSelectTabCallback(this)
     }
 
@@ -42,33 +45,24 @@ class TabIndicatorView @JvmOverloads constructor(context: Context, attrs: Attrib
         when (position) {
             0 -> onSelect(day_tab_indicator_item_view, true)
             1 -> onSelect(week_tab_indicator_item_view, true)
-            else -> {
-            }
         }
     }
 
     override fun onSelect(v: View, isSelect: Boolean) {
         var position = 0
-        val i = v.id
-        if (i == R.id.day_tab_indicator_item_view) {
-            week_tab_indicator_item_view.unSelect()
-            position = 0
-            if (mOnSwitchIndicatorCallback != null) {
-                mOnSwitchIndicatorCallback!!.onSwitchIndicator(v, position)
-            }
+        when (v.id) {
+            R.id.day_tab_indicator_item_view -> {
+                week_tab_indicator_item_view.unSelect()
+                position = 0
+                mOnSwitchIndicatorCallback?.onSwitchIndicator(v, position)
 
-        } else if (i == R.id.week_tab_indicator_item_view) {
-            day_tab_indicator_item_view.unSelect()
-            position = 1
-            if (mOnSwitchIndicatorCallback != null) {
-                mOnSwitchIndicatorCallback!!.onSwitchIndicator(v, position)
             }
-
-        } else if (i == R.id.calendar_tab_indicator_item_view) {
-            if (mOnSwitchIndicatorCallback != null) {
-                mOnSwitchIndicatorCallback!!.onShowCalendar(v)
+            R.id.week_tab_indicator_item_view -> {
+                day_tab_indicator_item_view.unSelect()
+                position = 1
+                mOnSwitchIndicatorCallback?.onSwitchIndicator(v, position)
             }
-
+            R.id.calendar_tab_indicator_item_view -> mOnSwitchIndicatorCallback?.onShowCalendar(v)
         }
         updateTabsUiBySelectPosition(position)
     }
@@ -86,8 +80,6 @@ class TabIndicatorView @JvmOverloads constructor(context: Context, attrs: Attrib
                 day_tab_indicator_item_view.unSelect()
                 calendar_tab_indicator_item_view.showCalendar(false)
                 calendar_tab_indicator_item_view.visibility = View.INVISIBLE
-            }
-            else -> {
             }
         }
     }

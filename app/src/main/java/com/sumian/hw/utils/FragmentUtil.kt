@@ -35,13 +35,13 @@ class FragmentUtil {
                     selectFragment = fragmentByTag
                     val runOnCommitRunnable: () -> Unit = { runOnCommitCallback?.runOnCommit(selectFragment) }
                     if (fragmentByTag.isAdded) {
-                        fragmentManager.beginTransaction().show(fragmentByTag).runOnCommit(runOnCommitRunnable).commit()
+                        fragmentManager.beginTransaction().show(fragmentByTag).runOnCommit(runOnCommitRunnable).commitAllowingStateLoss()
                     } else {
-                        fragmentManager.beginTransaction().add(containerViewId, fragmentByTag, tag).runOnCommit(runOnCommitRunnable).commit()
+                        fragmentManager.beginTransaction().add(containerViewId, fragmentByTag, tag).runOnCommit(runOnCommitRunnable).commitAllowingStateLoss()
                     }
                 } else {
                     if (fragmentByTag != null) {
-                        fragmentManager.beginTransaction().hide(fragmentByTag).commit()
+                        fragmentManager.beginTransaction().hide(fragmentByTag).commitAllowingStateLoss()
                     }
                 }
             }

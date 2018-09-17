@@ -179,14 +179,8 @@
     <declare-styleable name="TouchDailySleepHistogramView">
         <attr name="tdshv_label_text_size" format="dimension|reference" />
         <attr name="tdshv_label_text_color" format="color|reference" />
-        <attr name="tdshv_x_max_progress" format="integer|reference" />
-        <attr name="tdshv_y_max_progress" format="integer|reference" />
-        <attr name="tdshv_histogram_type" format="enum|reference">
-            <enum name="WEEK" value="0" />
-            <enum name="MONTH" value="1" />
-            <enum name="YEAR" value="2" />
-        </attr>
         <attr name="tdshv_empty_text" format="string|reference" />
+        <attr name="tdshv_empty_text_color" format="color|reference" />
         <attr name="tdshv_empty_text_size" format="dimension|reference" />
         <attr name="tdshv_deep_color" format="color|reference" />
         <attr name="tdshv_light_color" format="color|reference" />

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/b3">
 
     <com.sumian.hw.report.widget.tab.TabIndicatorItemView
         android:id="@+id/day_tab_indicator_item_view"
@@ -27,4 +28,4 @@
         android:layout_marginStart="@dimen/space_20"
         tools:ignore="RtlHardcoded" />
 
-</merge>
+</FrameLayout>

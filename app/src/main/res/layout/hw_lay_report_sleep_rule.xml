@@ -2,23 +2,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/space_8"
-    android:paddingLeft="@dimen/space_16"
-    android:paddingRight="@dimen/space_16"
-    android:paddingTop="@dimen/space_8">
+    android:orientation="horizontal">
 
     <View
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_10"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/shape_deep_sleep" />
 
     <TextView
         style="@style/text_t2_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_deep_hint"
@@ -27,7 +23,7 @@
     <View
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_10"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/space_40"
         android:background="@drawable/shape_light_sleep" />
 
@@ -35,7 +31,7 @@
         style="@style/text_t2_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:layout_marginEnd="@dimen/space_40"
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
@@ -45,14 +41,14 @@
     <View
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_10"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/shape_sober_sleep" />
 
     <TextView
         style="@style/text_t2_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_sober_hint"

@@ -1,9 +1,7 @@
 package com.sumian.sd.base
 
-import android.os.Bundle
 import com.sumian.common.base.BaseFragment
 import com.sumian.sd.event.EventBusUtil
-import org.greenrobot.eventbus.EventBus
 
 /**
  * <pre>
@@ -14,6 +12,7 @@ import org.greenrobot.eventbus.EventBus
  * </pre>
  */
 abstract class BaseEventFragment : BaseFragment() {
+
     override fun onStart() {
         super.onStart()
         if (openEventBus()) {
@@ -25,7 +24,6 @@ abstract class BaseEventFragment : BaseFragment() {
         super.onStop()
         if (openEventBus()) {
             EventBusUtil.unregister(this)
-
         }
     }
 

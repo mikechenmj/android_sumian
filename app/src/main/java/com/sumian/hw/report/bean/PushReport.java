@@ -1,4 +1,4 @@
-package com.sumian.hw.main.bean;
+package com.sumian.hw.report.bean;
 
 import android.support.annotation.IntDef;
 

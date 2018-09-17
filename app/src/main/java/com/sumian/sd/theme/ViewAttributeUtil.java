@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,6 +58,13 @@ public class ViewAttributeUtil {
         if (null != ci) {
             (ci.getView()).setBackground(drawable);
         }
+        ta.recycle();
+    }
+
+    public static void applyBackgroundDrawable(View view, Resources.Theme theme, int paramInt) {
+        TypedArray ta = theme.obtainStyledAttributes(new int[]{paramInt});
+        Drawable drawable = ta.getDrawable(0);
+        view.setBackground(drawable);
         ta.recycle();
     }
 
