@@ -23,6 +23,8 @@ import com.sumian.sd.scale.bean.Scale
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts
 import com.sumian.sd.service.cbti.bean.*
+import com.sumian.sd.service.diary.bean.DiaryEvaluationData
+import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.setting.remind.bean.Reminder
 import com.sumian.sd.setting.remind.bean.ReminderListResponse
@@ -319,4 +321,14 @@ interface DoctorApi {
 
     @POST("customer-service/message-event")
     fun newCustomerMessage(): Call<Any>
+
+    /**
+     * type optiona 0:未完成 1:已完成
+     * include optional	user,doctor,package.servicePackage.service
+     */
+    @GET("diary-evaluations")
+    fun getDiaryEvaluations(@Query("type") type: Int,
+                            @Query("include") include: String?,
+                            @Query("page") page: Int = 1,
+                            @Query("per_page") perPage: Int = 10): Call<DiaryEvaluationsResponse>
 }

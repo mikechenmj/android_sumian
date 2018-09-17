@@ -1,15 +1,15 @@
 package com.sumian.sd.service.diary
 
 import android.content.Context
-import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
-import com.sumian.sd.service.tel.bean.TelBooking
+import com.sumian.sd.service.diary.bean.DiaryEvaluationData
+import com.sumian.sd.service.util.ServiceTimeUtil
+import com.umeng.socialize.utils.DeviceConfig.context
+import kotlinx.android.synthetic.main.item_diary_evaluation.view.*
 
 /**
  * <pre>
@@ -19,31 +19,135 @@ import com.sumian.sd.service.tel.bean.TelBooking
  *     version: 1.0
  * </pre>
  */
-class DiaryEvaluationListAdapter(context: Context) : BaseRecyclerAdapter<TelBooking>(context) {
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
-        val viewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_item, parent, false))
-        viewHolder.itemView.tag = viewHolder
-        return viewHolder
+
+class DiaryEvaluateVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private val context: Context by lazy {
+        itemView.context
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: TelBooking, position: Int) {
-        (holder as ViewHolder).init(item, mItems.size - 1 == position)
-    }
-
-    inner class ViewHolder constructor(itemView: View) : BaseViewHolder(itemView) {
-
-        fun init(item: TelBooking, isGoneDivider: Boolean = false) {
-            setText(R.id.tv_title, item.formatOrderContent())
-                    .setText(R.id.tv_advisory_time, item.formatOrderCreateTime())
-                    .setText(R.id.tv_advisory_action_status, item.formatStatus())
-                    .setVisible(R.id.tv_advisory_action_status, true)
-                    .setGone(R.id.tv_timer, false)
-                    .setVisible(R.id.divider, !isGoneDivider)
-        }
-
-        fun getString(@StringRes textId: Int = 0): String {
-            return itemView.resources.getString(textId)
+    fun setData(data: DiaryEvaluationData?) {
+        data?.apply {
+            itemView.tv_description.text = getItemDesc(data)
+            itemView.tv_time.text = ServiceTimeUtil.formatTimeYYYYMMDDHHMM(getUpdateAtInMillis())
+            itemView.tv_status.text = getStatusString(status)
         }
     }
+
+    fun getItemDescAccordingToStatus(data: DiaryEvaluationData): String {
+        return when (data.status) {
+            DiaryEvaluationData.STATUS_0_WAITING_RESPONSE -> getItemDesc(data)
+            DiaryEvaluationData.STATUS_1_FINISHED -> getItemDesc(data)
+            DiaryEvaluationData.STATUS_2_CLOSED -> getItemDesc(data)
+            DiaryEvaluationData.STATUS_3_CANCELED -> data.description
+            DiaryEvaluationData.STATUS_4_UNUSED -> data.description
+            else -> data.description
+        }
+    }
+
+    private fun getItemDesc(data: DiaryEvaluationData): String {
+        return if (data.diaryEndAt != 0) {
+            "评估时间：${getYYYYMMDD(data.getDiaryStartAtInMillis())}-${getYYYYMMDD(data.getDiaryEndAtInMillis())}\n备注详情：$data.remark"
+        } else {
+            data.description
+        }
+    }
+
+    private fun getYYYYMMDD(unixTime: Long): String? {
+        return ServiceTimeUtil.formatTimeYYYYMMDD(unixTime)
+    }
+
+    private fun getStatusString(status: Int): String {
+        return when (status) {
+            DiaryEvaluationData.STATUS_0_WAITING_RESPONSE -> context.getString(R.string.waiting_for_reply)
+            DiaryEvaluationData.STATUS_1_FINISHED -> context.getString(R.string.finished)
+            DiaryEvaluationData.STATUS_2_CLOSED -> context.getString(R.string.closed)
+            DiaryEvaluationData.STATUS_3_CANCELED -> context.getString(R.string.bind_canceled)
+            DiaryEvaluationData.STATUS_4_UNUSED -> ""
+            else -> ""
+        }
+    }
+}
+
+class DiaryEvaluationListAdapter() : BaseQuickAdapter<DiaryEvaluationData, BaseViewHolder>(R.layout.item_diary_evaluation) {
+
+    override fun convert(helper: BaseViewHolder, data: DiaryEvaluationData) {
+        helper
+                .setText(R.id.tv_description, getItemDesc(data))
+                .setText(R.id.tv_time, ServiceTimeUtil.formatTimeYYYYMMDDHHMM(data.getUpdateAtInMillis()))
+                .setText(R.id.tv_status, getStatusString(data.status))
+    }
+
+    fun getItemDescAccordingToStatus(data: DiaryEvaluationData): String {
+        return when (data.status) {
+            DiaryEvaluationData.STATUS_0_WAITING_RESPONSE -> getItemDesc(data)
+            DiaryEvaluationData.STATUS_1_FINISHED -> getItemDesc(data)
+            DiaryEvaluationData.STATUS_2_CLOSED -> getItemDesc(data)
+            DiaryEvaluationData.STATUS_3_CANCELED -> data.description
+            DiaryEvaluationData.STATUS_4_UNUSED -> data.description
+            else -> data.description
+        }
+    }
+
+    private fun getItemDesc(data: DiaryEvaluationData): String {
+        return if (data.diaryEndAt != 0) {
+            "评估时间：${getYYYYMMDD(data.getDiaryStartAtInMillis())}-${getYYYYMMDD(data.getDiaryEndAtInMillis())}\n备注详情：$data.remark"
+        } else {
+            data.description
+        }
+    }
+
+    private fun getYYYYMMDD(unixTime: Long): String? {
+        return ServiceTimeUtil.formatTimeYYYYMMDD(unixTime)
+    }
+
+    private fun getStatusString(status: Int): String {
+        return when (status) {
+            DiaryEvaluationData.STATUS_0_WAITING_RESPONSE -> context.getString(R.string.waiting_for_reply)
+            DiaryEvaluationData.STATUS_1_FINISHED -> context.getString(R.string.finished)
+            DiaryEvaluationData.STATUS_2_CLOSED -> context.getString(R.string.closed)
+            DiaryEvaluationData.STATUS_3_CANCELED -> context.getString(R.string.bind_canceled)
+            DiaryEvaluationData.STATUS_4_UNUSED -> ""
+            else -> ""
+        }
+    }
+    //    private var mData: MutableList<DiaryEvaluationData>? = null
+//    var mOnItemClickListener: OnItemClickListener<DiaryEvaluationData>? = null
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryEvaluateVH {
+//        val inflate = LayoutInflater.from(parent.context).inflate(R.layout.item_diary_evaluation, null, false)
+//        return DiaryEvaluateVH(inflate)
+//    }
+//
+//    override fun getItemCount(): Int {
+//        return mData?.size ?: 0
+//    }
+//
+//    override fun onBindViewHolder(holder: DiaryEvaluateVH, position: Int) {
+//        val data = mData?.get(position)
+//        holder.setData(data)
+//        holder.itemView.setOnClickListener { mOnItemClickListener?.onItemClick(data!!) }
+//    }
+//
+//    fun setData(data: List<DiaryEvaluationData>?) {
+//        mData = data?.toMutableList()
+//        notifyDataSetChanged()
+//    }
+//
+//    fun addData(data: List<DiaryEvaluationData>?) {
+//        if (data == null || data.isEmpty()) {
+//            return
+//        }
+//        if (mData == null) {
+//            mData = ArrayList<DiaryEvaluationData>()
+//        }
+//        val oldSize = mData!!.size
+//        mData!!.addAll(data)
+////        notifyItemRangeChanged(oldSize, data.size)
+//        notifyDataSetChanged()
+//    }
+}
+
+interface OnItemClickListener<T> {
+    fun onItemClick(data: T)
 }

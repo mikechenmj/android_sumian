@@ -978,5 +978,7 @@
     <string name="is_the_latest_data_already">已是最新数据</string>
     <string name="refresh_sleep_dairy_hint">尝试刷新数据获取您的睡眠报告</string>
     <string name="diary_evaluation">日记评估</string>
+    <string name="no_data_yet">暂无相关记录</string>
+    <string name="after_bind_doctor_you_can_consult_the_doctor">绑定医生后，可向主治医生咨询</string>
     <!-- Hw end-->
 </resources>

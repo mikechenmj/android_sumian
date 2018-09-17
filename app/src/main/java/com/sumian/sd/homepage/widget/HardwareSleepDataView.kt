@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.view_hardware_sleep_data.view.*
  * </pre>
  */
 class HardwareSleepDataView(context: Context, attributeSet: AttributeSet? = null) : FrameLayout(context, attributeSet) {
-    private var mIsRefresh = false
+    private var mOnRefreshClicked = false
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_hardware_sleep_data, this, true)
@@ -33,6 +33,7 @@ class HardwareSleepDataView(context: Context, attributeSet: AttributeSet? = null
             ReportActivity.show()
         }
         btn_for_no_data.setOnClickListener {
+            mOnRefreshClicked = true
             queryDailyReport()
         }
         btn_for_no_data.text = resources.getString(R.string.refresh)
@@ -41,8 +42,9 @@ class HardwareSleepDataView(context: Context, attributeSet: AttributeSet? = null
 
     fun setDailyReport(dailyReport: DailyReport?) {
         val hasData = dailyReport != null && dailyReport.id != 0
-        if (!hasData && mIsRefresh) {
+        if (!hasData && mOnRefreshClicked) {
             ToastUtils.showShort(context.getString(R.string.is_the_latest_data_already))
+            mOnRefreshClicked = false
             return
         }
         ll_no_sleep_record.visibility = if (hasData) GONE else View.VISIBLE
