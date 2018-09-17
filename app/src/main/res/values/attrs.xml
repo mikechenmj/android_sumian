@@ -176,6 +176,26 @@
         <attr name="verticalSpace" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="TouchDailySleepHistogramView">
+        <attr name="tdshv_label_text_size" format="dimension|reference" />
+        <attr name="tdshv_label_text_color" format="color|reference" />
+        <attr name="tdshv_x_max_progress" format="integer|reference" />
+        <attr name="tdshv_y_max_progress" format="integer|reference" />
+        <attr name="tdshv_histogram_type" format="enum|reference">
+            <enum name="WEEK" value="0" />
+            <enum name="MONTH" value="1" />
+            <enum name="YEAR" value="2" />
+        </attr>
+        <attr name="tdshv_empty_text" format="string|reference" />
+        <attr name="tdshv_empty_text_size" format="dimension|reference" />
+        <attr name="tdshv_deep_color" format="color|reference" />
+        <attr name="tdshv_light_color" format="color|reference" />
+        <attr name="tdshv_eog_color" format="color|reference" />
+        <attr name="tdshv_sober_color" format="color|reference" />
+        <attr name="tdshv_coordinate_color" format="color|reference" />
+        <attr name="tdshv_coordinate_size" format="dimension|reference" />
+    </declare-styleable>
+
     <declare-styleable name="SleepHistogramView">
         <attr name="label_text_size" format="dimension|reference" />
         <attr name="label_text_color" format="color|reference" />
@@ -270,4 +290,11 @@
         <attr name="srpv_center_message" format="string|reference" />
         <attr name="srpv_ring_width" format="dimension|reference" />
     </declare-styleable>
+
+    <declare-styleable name="CountSleepDurationTextView">
+        <attr name="csdtv_number_text_size" format="reference|dimension" />
+        <attr name="csdtv_unit_text_size" format="reference|dimension" />
+        <attr name="csdtv_default_drawable" format="reference" />
+    </declare-styleable>
+
 </resources>

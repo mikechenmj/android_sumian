@@ -19,7 +19,7 @@ import com.sumian.hw.report.calendar.CalendarDialog
 import com.sumian.hw.report.fragment.DailyReportFragment
 import com.sumian.hw.report.fragment.WeeklyReportFragment
 import com.sumian.hw.utils.FragmentUtil
-import com.sumian.hw.widget.TabIndicatorView
+import com.sumian.hw.report.widget.tab.TabIndicatorView
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener

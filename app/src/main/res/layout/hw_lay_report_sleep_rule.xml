@@ -15,14 +15,14 @@
         android:background="@drawable/shape_deep_sleep" />
 
     <TextView
+        style="@style/text_t2_13"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/space_16"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_deep_hint"
-        android:textColor="@color/general_color"
-        android:textSize="@dimen/font_12" />
+        android:textColor="?attr/t2" />
 
     <View
         android:layout_width="@dimen/space_20"
@@ -32,15 +32,15 @@
         android:background="@drawable/shape_light_sleep" />
 
     <TextView
+        style="@style/text_t2_13"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/space_16"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/space_40"
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_light_hint"
-        android:textColor="@color/general_color"
-        android:textSize="@dimen/font_12" />
+        android:textColor="?attr/t2" />
 
     <View
         android:layout_width="@dimen/space_20"
@@ -49,13 +49,13 @@
         android:background="@drawable/shape_sober_sleep" />
 
     <TextView
+        style="@style/text_t2_13"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/space_16"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_sober_hint"
-        android:textColor="@color/general_color"
-        android:textSize="@dimen/font_12" />
+        android:textColor="?attr/t2" />
 
 </merge>

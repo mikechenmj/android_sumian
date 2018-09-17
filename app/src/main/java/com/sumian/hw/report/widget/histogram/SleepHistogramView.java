@@ -1,4 +1,4 @@
-package com.sumian.hw.widget.histogram;
+package com.sumian.hw.report.widget.histogram;
 
 import android.content.Context;
 import android.content.res.TypedArray;

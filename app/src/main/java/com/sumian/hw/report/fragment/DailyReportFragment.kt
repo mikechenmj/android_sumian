@@ -106,27 +106,8 @@ class DailyReportFragment : HwBaseFragment<DailyReportPresenter>(), DailyReportC
         initAdapter()
         val showDailyPushReport = showPushReportIfNeeded()
         if (!showDailyPushReport) {
-            mPresenter.getInitReports(sdv.todayUnixTime)
+            mPresenter.getInitReports(getInitToday())
         }
-    }
-
-    private fun initReceiver() {
-        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mBroadcastReceiver, IntentFilter().apply {
-            addAction(CalendarDialog.ACTION_SELECT_DATE)
-        })
-    }
-
-    private fun initAdapter() {
-        val dailyReport: DailyReport
-        if (AppManager.getReportModel().isHaveTodayCache) {
-            dailyReport = AppManager.getReportModel().cacheDailyReport
-        } else {
-            dailyReport = DailyReport()
-            dailyReport.date = sdv.todayUnixTime.toInt()
-            dailyReport.bedtime_state = ArrayList(0)
-            dailyReport.packages = ArrayList<SleepPackage>(0)
-        }
-        mDailyAdapter.addItem(dailyReport)
     }
 
     override fun setPresenter(presenter: DailyReportContract.Presenter) {
@@ -167,6 +148,10 @@ class DailyReportFragment : HwBaseFragment<DailyReportPresenter>(), DailyReportC
         mDailyAdapter.insertDataToHead(dailyReports)
     }
 
+    override fun onRefresh(position: Int, dailyReport: DailyReport) {
+        mPresenter.refreshReport(dailyReport.date.toLong())
+    }
+
     override fun onScrollToTime(unixTime: Long) {
         val position = mDailyAdapter.getPosition(unixTime.toInt())
         if (position == -1) {
@@ -181,14 +166,6 @@ class DailyReportFragment : HwBaseFragment<DailyReportPresenter>(), DailyReportC
             mNeedScrollToBottom = false
             recycler.scrollToPosition(position)
         }
-    }
-
-    private fun getViewHolder(position: Int): DailyAdapter.ViewHolder {
-        return recycler.findViewHolderForAdapterPosition(position) as DailyAdapter.ViewHolder
-    }
-
-    private fun preloadData() {
-        mPresenter.getPreloadReports(mDailyAdapter.getItemDate(0))
     }
 
     override fun OnPageChanged(positionBeforeScroll: Int, position: Int) {
@@ -209,16 +186,12 @@ class DailyReportFragment : HwBaseFragment<DailyReportPresenter>(), DailyReportC
     }
 
     override fun onFinish() {
-        dismissLoadingDialog()
+        mActionLoadingDialog.dismiss()
         stopRefreshing()
     }
 
     override fun onFailure(error: String) {
         showToast(error)
-    }
-
-    private fun dismissLoadingDialog() {
-        mActionLoadingDialog.dismiss()
     }
 
     private fun stopRefreshing() {
@@ -270,7 +243,40 @@ class DailyReportFragment : HwBaseFragment<DailyReportPresenter>(), DailyReportC
         }
     }
 
-    override fun onRefresh(position: Int, dailyReport: DailyReport) {
-        mPresenter.refreshReport(dailyReport.date.toLong())
+    private fun initReceiver() {
+        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mBroadcastReceiver, IntentFilter().apply {
+            addAction(CalendarDialog.ACTION_SELECT_DATE)
+        })
     }
+
+    private fun initAdapter() {
+        val dailyReport: DailyReport
+        if (AppManager.getReportModel().isHaveTodayCache) {
+            dailyReport = AppManager.getReportModel().cacheDailyReport
+        } else {
+            dailyReport = DailyReport()
+            dailyReport.date = getInitToday().toInt()
+            dailyReport.bedtime_state = ArrayList(0)
+            dailyReport.packages = ArrayList<SleepPackage>(0)
+        }
+        mDailyAdapter.addItem(dailyReport)
+    }
+
+    private fun getViewHolder(position: Int): DailyAdapter.ViewHolder {
+        return recycler.findViewHolderForAdapterPosition(position) as DailyAdapter.ViewHolder
+    }
+
+    private fun preloadData() {
+        mPresenter.getPreloadReports(mDailyAdapter.getItemDate(0))
+    }
+
+    private fun getInitToday(): Long {
+        val instance = Calendar.getInstance()
+        val year = instance.get(Calendar.YEAR)
+        val month = instance.get(Calendar.MONTH)
+        val date = instance.get(Calendar.DATE)
+        instance.set(year, month, date, 0, 0, 0)
+        return instance.timeInMillis / 1000L
+    }
+
 }

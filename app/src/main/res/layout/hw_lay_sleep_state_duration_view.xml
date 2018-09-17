@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -7,12 +8,12 @@
 
     <TextView
         android:id="@+id/tv_label"
+        style="@style/text_t2_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/light_sleep_duration"
-        android:textColor="@color/full_general_color"
-        android:textSize="@dimen/font_12" />
+        android:textColor="?attr/t2" />
 
     <com.sumian.hw.report.widget.SleepPercentTextView
         android:id="@+id/tv_sleep_duration_percent"
@@ -25,14 +26,15 @@
         android:textColorHint="@color/bt_hole_color"
         android:textSize="@dimen/font_20" />
 
-    <TextView
+    <com.sumian.hw.report.widget.text.CountSleepDurationTextView
         android:id="@+id/tv_sleep_duration_count"
+        style="@style/text_t5_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
         android:gravity="center"
-        android:hint="@string/short_none_duration_hint"
-        android:textColor="@color/bt_hole_color"
-        android:textColorHint="@color/bt_hole_color"
-        android:textSize="@dimen/font_12" />
-</LinearLayout>
+        android:textColor="?attr/t5"
+        app:csdtv_default_drawable="@drawable/bg_text_t5"
+        app:csdtv_number_text_size="@dimen/font_14"
+        app:csdtv_unit_text_size="@dimen/font_14" />
+</merge>

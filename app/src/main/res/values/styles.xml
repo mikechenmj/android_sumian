@@ -38,8 +38,8 @@
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
-    <style name="t2" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">?t2</item>
+    <style name="text_t2_12" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_12</item>
     </style>
 
     <style name="text_t2_13" parent="text_t2_style">
@@ -69,6 +69,19 @@
 
     <style name="text_t3_18" parent="text_t3_style">
         <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t5" parent="BaseText">
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textColor">@color/t5_color_day</item>
+    </style>
+
+    <style name="text_t5_14" parent="text_t5">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t5_21" parent="text_t5">
+        <item name="android:textSize">@dimen/font_21</item>
     </style>
 
     <style name="text_white" parent="BaseText">
@@ -340,4 +353,6 @@
         <item name="android:textColorHint">@color/hw_tv_normal</item>
         <item name="android:textSize">@dimen/font_16</item>
     </style>
+
+    <dimen name="font_21">21sp</dimen>
 </resources>

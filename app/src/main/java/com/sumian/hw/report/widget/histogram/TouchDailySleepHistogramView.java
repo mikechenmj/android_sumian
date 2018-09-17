@@ -1,7 +1,8 @@
-package com.sumian.hw.report.widget;
+package com.sumian.hw.report.widget.histogram;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -53,7 +54,8 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
     private RectF mContentRectF = new RectF();
     private Rect mIndicatorBounds = new Rect();
 
-    private String[] mLabelText = {"20时", "0时", "4时", "12时"};
+    private String[] mLabelText = getResources().getStringArray(R.array.duration);
+
     private ArrayMap<Integer, SleepSegment> mSegmentArrayMap = new ArrayMap<>(0);
 
     private int mLightSleepHeight;
@@ -96,10 +98,22 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
     }
 
     public TouchDailySleepHistogramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        this(context, attrs, defStyleAttr,0);
+    }
+
+    public TouchDailySleepHistogramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         setOnLongClickListener(this);
+        initAttrs(context,attrs,defStyleAttr,defStyleRes);
         init();
+    }
+
+    private void initAttrs(Context context,AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.TouchDailySleepHistogramView, defStyleAttr, defStyleRes);
+
+
+        attributes.recycle();
     }
 
     private WindowManager.LayoutParams createPopupLayout(IBinder token) {

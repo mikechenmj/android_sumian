@@ -10,7 +10,7 @@ import android.widget.ScrollView
 import com.sumian.hw.report.bean.DailyReport
 import com.sumian.hw.report.widget.SwitchDateView
 import com.sumian.hw.report.widget.ReportSleepDurationView
-import com.sumian.hw.report.widget.TouchDailySleepHistogramView
+import com.sumian.hw.report.widget.histogram.TouchDailySleepHistogramView
 import com.sumian.hw.widget.refresh.BlueRefreshView
 import com.sumian.sd.R
 import java.util.*

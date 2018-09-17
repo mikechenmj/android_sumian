@@ -63,7 +63,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.sumian.hw.widget.histogram.SleepHistogramView
+                <com.sumian.hw.report.widget.histogram.SleepHistogramView
                     android:id="@+id/week_sleep_histogram_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

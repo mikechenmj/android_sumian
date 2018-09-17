@@ -1,4 +1,4 @@
-package com.sumian.hw.widget
+package com.sumian.hw.report.widget.tab
 
 import android.content.Context
 import android.util.AttributeSet
@@ -17,10 +17,6 @@ class TabIndicatorView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     private var mOnSwitchIndicatorCallback: OnSwitchIndicatorCallback? = null
 
-    companion object {
-        private val TAG = TabIndicatorView::class.java.simpleName
-    }
-
     init {
         initView(context)
     }
@@ -38,7 +34,7 @@ class TabIndicatorView @JvmOverloads constructor(context: Context, attrs: Attrib
         week_tab_indicator_item_view.setIndicatorText("周")
         week_tab_indicator_item_view.setOnSelectTabCallback(this)
         week_tab_indicator_item_view.unSelect()
-        calendar_tab_indicator_item_view.setCalendarIcon(R.mipmap.report_calendar)
+        // calendar_tab_indicator_item_view.setCalendarIcon(R.mipmap.report_calendar)
         calendar_tab_indicator_item_view.setOnSelectTabCallback(this)
     }
 
@@ -81,12 +77,14 @@ class TabIndicatorView @JvmOverloads constructor(context: Context, attrs: Attrib
         when (position) {
             0 -> {
                 calendar_tab_indicator_item_view.visibility = View.VISIBLE
+                calendar_tab_indicator_item_view.showCalendar(true)
                 day_tab_indicator_item_view.select()
                 week_tab_indicator_item_view.unSelect()
             }
             1 -> {
                 week_tab_indicator_item_view.select()
                 day_tab_indicator_item_view.unSelect()
+                calendar_tab_indicator_item_view.showCalendar(false)
                 calendar_tab_indicator_item_view.visibility = View.INVISIBLE
             }
             else -> {

@@ -16,7 +16,7 @@
         android:foreground="@drawable/bg_material_ripple"
         android:padding="@dimen/space_14"
         android:scaleType="fitCenter"
-        android:src="@mipmap/ic_left"
+        android:src="?attr/switch_report_date_navigation_left_src"
         tools:ignore="RtlHardcoded" />
 
     <Space
@@ -50,7 +50,7 @@
         android:foreground="@drawable/bg_material_ripple"
         android:padding="@dimen/space_14"
         android:scaleType="fitCenter"
-        android:src="@mipmap/ic_right"
+        android:src="?attr/switch_report_date_navigation_right_src"
         tools:ignore="RtlHardcoded" />
 
 </LinearLayout>

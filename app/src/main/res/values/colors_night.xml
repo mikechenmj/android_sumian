@@ -33,12 +33,12 @@
     <color name="s4_color_night">#00000000</color>
 
     <!--grid color-->
-    <color name="g1_color_day">#ff3653bf</color>
-    <color name="g2_color_day">#ff5c81cc</color>
-    <color name="g3_color_day">#ffcc9041</color>
+    <color name="g1_color_night">#ff3653bf</color>
+    <color name="g2_color_night">#ff5c81cc</color>
+    <color name="g3_color_night">#ffcc9041</color>
 
     <!--navigation color-->
-    <color name="n1_color_day">#ff363a47</color>
-    <color name="n2_color_day">#ff7ea5f4</color>
+    <color name="n1_color_night">#ff363a47</color>
+    <color name="n2_color_night">#ff7ea5f4</color>
 
 </resources>

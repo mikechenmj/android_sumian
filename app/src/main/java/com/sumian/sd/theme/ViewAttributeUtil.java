@@ -69,6 +69,15 @@ public class ViewAttributeUtil {
         ta.recycle();
     }
 
+    public static void applyCardViewBackgroundDrawable(CardView cardView, Resources.Theme theme, int paramInt) {
+        TypedArray ta = theme.obtainStyledAttributes(new int[]{paramInt});
+        Drawable drawable = ta.getDrawable(0);
+        if (null != cardView) {
+            cardView.setBackground(drawable);
+        }
+        ta.recycle();
+    }
+
     public static void applyTextDrawable(ITheme ci, Resources.Theme theme, int paramInt) {
         TypedArray ta = theme.obtainStyledAttributes(new int[]{paramInt});
         int resourceId = ta.getColor(0, 0);

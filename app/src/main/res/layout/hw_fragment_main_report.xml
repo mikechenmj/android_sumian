@@ -5,7 +5,7 @@
     android:background="?attr/b1"
     android:orientation="vertical">
 
-    <com.sumian.hw.widget.TabIndicatorView
+    <com.sumian.hw.report.widget.tab.TabIndicatorView
         android:id="@+id/tab_indicator_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

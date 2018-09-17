@@ -1,8 +1,7 @@
-package com.sumian.hw.widget
+package com.sumian.hw.report.widget.tab
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.support.annotation.DrawableRes
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
@@ -61,9 +60,8 @@ class TabIndicatorItemView @JvmOverloads constructor(context: Context, attrs: At
     }
 
     @SuppressLint("ResourceType")
-    fun setCalendarIcon(@DrawableRes drawable: Int) {
-        iv_calendar.setImageResource(drawable)
-        iv_calendar.visibility = if (drawable > -1) View.VISIBLE else View.GONE
+    fun showCalendar(isShow: Boolean) {
+        iv_calendar.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
     fun showDot() {

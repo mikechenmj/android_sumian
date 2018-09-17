@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,23 +17,25 @@
 
         <TextView
             android:id="@+id/text_view_1"
+            style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_9"
             android:drawableStart="?attr/sleep_drawable_start_src"
             android:gravity="center"
             android:text="@string/all_today_duration"
-            android:textColor="@color/full_general_color"
-            android:textSize="@dimen/font_12"
+            android:textColor="?attr/t1"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.sumian.hw.report.widget.text.CountSleepDurationTextView
             android:id="@+id/tv_sleep_today_duration"
+            style="@style/text_t5_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/short_none_duration_hint"
-            android:textColor="#FF7EA5F4"
-            android:textSize="@dimen/font_22"
+            android:textColor="?attr/t5"
+            app:csdtv_default_drawable="?attr/sleep_all_duration_src"
+            app:csdtv_number_text_size="@dimen/font_21"
+            app:csdtv_unit_text_size="@dimen/font_13"
             app:layout_constraintBottom_toBottomOf="@id/text_view_1"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_view_1" />
@@ -42,30 +44,33 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_1"
-            android:layout_marginTop="@dimen/space_24"
+            android:layout_marginTop="@dimen/space_25"
             android:background="?attr/l1"
             app:layout_constraintTop_toBottomOf="@id/text_view_1" />
 
-        <com.sumian.hw.report.widget.SleepStateDurationView
-            android:id="@+id/light_sleep_duration_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/space_20"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/divider" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="@+id/divider">
 
-        <com.sumian.hw.report.widget.SleepStateDurationView
-            android:id="@+id/deep_sleep_duration_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
-            android:layout_marginTop="@dimen/space_20"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider" />
+            <com.sumian.hw.report.widget.SleepStateDurationView
+                android:id="@+id/light_sleep_duration_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <com.sumian.hw.report.widget.SleepStateDurationView
+                android:id="@+id/deep_sleep_duration_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </LinearLayout>
+
 
     </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+</merge>
