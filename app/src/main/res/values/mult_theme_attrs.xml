@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- bg color attr-->
+    <attr name="b1" format="color|reference" />
+    <attr name="b2" format="color|reference" />
+    <attr name="b2_alpha_50" format="color|reference" />
+    <attr name="b3" format="color|reference" />
+    <attr name="b4" format="color|reference" />
+    <attr name="b5" format="color|reference" />
+    <attr name="b6" format="color|reference" />
+    <attr name="b7" format="color|reference" />
+    <attr name="b8" format="color|reference" />
+
+    <!-- text color attr-->
+    <attr name="t1" format="color|reference" />
+    <attr name="t2" format="color|reference" />
+    <attr name="t3" format="color|reference" />
+    <attr name="t4" format="color|reference" />
+
+    <!-- line color attr-->
+    <attr name="l1" format="color|reference" />
+    <attr name="l2" format="color|reference" />
+    <attr name="l3" format="color|reference" />
+
+    <!-- shadow color attr-->
+    <attr name="s1" format="color|reference" />
+    <attr name="s2" format="color|reference" />
+    <attr name="s3" format="color|reference" />
+
+    <attr name="sm_src" format="reference" />
+    <attr name="sm_srcCompat" format="reference" />
+    <attr name="bg" format="reference|color" />
+
+    <attr name="report_calendar_src" format="reference" />
+    <attr name="sleep_drawable_start_src" format="reference" />
+
+
+</resources>

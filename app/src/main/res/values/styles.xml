@@ -38,6 +38,10 @@
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
+    <style name="t2" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?t2</item>
+    </style>
+
     <style name="text_t2_13" parent="text_t2_style">
         <item name="android:textSize">@dimen/font_13</item>
     </style>

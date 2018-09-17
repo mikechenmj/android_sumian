@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.common.util.TimeUtil;
-import com.sumian.sd.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 

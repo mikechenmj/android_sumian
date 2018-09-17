@@ -65,8 +65,6 @@ public abstract class HwBaseFragment<Presenter extends HwBasePresenter> extends 
         if (savedInstanceState != null) {
             onRestartInstance(savedInstanceState);
         }
-        // Init
-        initWidget(rootView);
         this.mRootView = rootView;
         // Log.e("TAG", "onCreateView: ----->" + mRootView);
         return rootView;
@@ -75,7 +73,9 @@ public abstract class HwBaseFragment<Presenter extends HwBasePresenter> extends 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Init
         initPresenter();
+        initWidget(view);
         initData();
     }
 

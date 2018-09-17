@@ -60,6 +60,7 @@
 
     <!--divider size-->
     <dimen name="divider_px_1">1px</dimen>
+    <dimen name="space_0">0dp</dimen>
 
     <!--default toast for system-->
     <dimen name="toast_space_64">64dp</dimen>

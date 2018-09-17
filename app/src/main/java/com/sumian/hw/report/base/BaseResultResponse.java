@@ -16,8 +16,8 @@ public class BaseResultResponse<Data, Meta> {
     @Override
     public String toString() {
         return "BaseResultResponse{" +
-            "data=" + data +
-            ", meta=" + meta +
-            '}';
+                "data=" + data +
+                ", meta=" + meta +
+                '}';
     }
 }

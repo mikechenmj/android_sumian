@@ -3,6 +3,8 @@ package com.sumian.sd.theme;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +21,7 @@ public class ViewAttributeUtil {
         for (int i = 0; i < count; i++) {
             if (attr.getAttributeNameResource(i) == paramInt) {
                 String str = attr.getAttributeValue(i);
-                if (null != str && str.startsWith("?")) {
+                if (!TextUtils.isEmpty(str) && str.startsWith("?")) {
                     value = Integer.valueOf(str.substring(1, str.length()));
                     return value;
                 }
@@ -54,6 +56,15 @@ public class ViewAttributeUtil {
         Drawable drawable = ta.getDrawable(0);
         if (null != ci) {
             (ci.getView()).setBackground(drawable);
+        }
+        ta.recycle();
+    }
+
+    public static void applyCardViewBgColor(CardView cardView, Resources.Theme theme, int paramInt) {
+        TypedArray ta = theme.obtainStyledAttributes(new int[]{paramInt});
+        int resourceId = ta.getColor(0, 0);
+        if (null != cardView) {
+            cardView.setCardBackgroundColor(resourceId);
         }
         ta.recycle();
     }

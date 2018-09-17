@@ -7,7 +7,7 @@
     app:cardCornerRadius="@dimen/space_6"
     app:cardElevation="@dimen/space_4">
 
-    <com.sumian.hw.widget.report.LoadViewPagerRecyclerView
+    <com.sumian.hw.report.widget.LoadViewPagerRecyclerView
         android:id="@+id/calendar_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

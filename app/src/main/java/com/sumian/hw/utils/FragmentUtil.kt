@@ -14,7 +14,10 @@ import com.sumian.sd.main.OnEnterListener
  * </pre>
  */
 class FragmentUtil {
+
     companion object {
+
+        @JvmStatic
         fun switchFragment(@IdRes containerViewId: Int, fragmentManager: FragmentManager,
                            tags: Array<String>, position: Int, fragmentCreator: FragmentCreator,
                            runOnCommitCallback: RunOnCommitCallback? = DefaultRunOnCommitCallbackImpl()) {
@@ -56,7 +59,7 @@ class FragmentUtil {
     open class DefaultRunOnCommitCallbackImpl : FragmentUtil.RunOnCommitCallback {
         override fun runOnCommit(selectFragment: Fragment) {
             if (selectFragment is OnEnterListener) {
-                (selectFragment as OnEnterListener).onEnter(null)
+                selectFragment.onEnter(null)
             }
         }
     }

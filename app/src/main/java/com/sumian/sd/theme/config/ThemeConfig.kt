@@ -15,9 +15,10 @@ import com.sumian.sd.theme.ITheme
 object ThemeConfig {
 
     private const val THEME_FILE_NAME = "ThemeConfig"
-    private const val THEME_TYPE = "THEME_TYPE"
 
-    fun applyThemeMode(themeType: Int = ITheme.DAY_THEME) {
+    private const val THEME_TYPE = "theme_type"
+
+    fun applyThemeType(themeType: Int = ITheme.DAY_THEME) {
         synchronized(ThemeConfig::class.java) {
             val sp = App.getAppContext().getSharedPreferences(THEME_FILE_NAME, Context.MODE_PRIVATE)
             sp.edit().putInt(THEME_TYPE, themeType).apply()

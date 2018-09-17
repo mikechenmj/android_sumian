@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.common.util.TimeUtil;
-import com.sumian.hw.widget.report.LoadViewPagerRecyclerView;
+import com.sumian.hw.report.widget.LoadViewPagerRecyclerView;
 import com.sumian.hw.widget.BaseDialogFragment;
 import com.sumian.sd.R;
 
@@ -187,5 +187,10 @@ public class CalendarDialog extends BaseDialogFragment implements CalendarView.O
         Calendar instance = Calendar.getInstance();
         instance.setTimeInMillis(item.monthTimeUnix * 1000L);
         mPresenter.getOneCalendarReportInfo(instance.getTimeInMillis() / 1000L, false);
+    }
+
+    @Override
+    public void loadMore() {
+
     }
 }

@@ -30,7 +30,7 @@ abstract class BaseThemeActivity : BaseActivity(), ITheme {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val themeResId: Int = if (ThemeConfig.isDayTheme()) R.style.AppBaseTheme else 0
+        val themeResId: Int = if (ThemeConfig.isDayTheme()) R.style.BaseAppTheme_Day else R.style.BaseAppTheme_Night
         setTheme(themeResId)
         super.onCreate(savedInstanceState)
     }
@@ -48,8 +48,8 @@ abstract class BaseThemeActivity : BaseActivity(), ITheme {
 
     override fun onContentChanged() {
         super.onContentChanged()
-        initWidget()
-        initData()
+        // initWidget()
+        //initData()
         Log.e(TAG, "onContentChanged()")
     }
 

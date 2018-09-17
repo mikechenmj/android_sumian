@@ -3,9 +3,7 @@ package com.sumian.hw.report.weeklyreport;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.sumian.sd.R;
-import com.sumian.hw.widget.report.SleepAvgAndCompareView;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.network.response.SleepAdvice;
 import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.widget.histogram.SleepHistogramView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
+import com.sumian.hw.report.widget.SleepAvgAndCompareView;
+import com.sumian.sd.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -116,19 +113,16 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
     @SuppressWarnings("deprecation")
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-        BlueRefreshView mRefresh;
-        NestedScrollView mNestedScrollView;
-        ImageView mIvPre;
-        TextView mTvWeekQuantum;
-        ImageView mIvNext;
-        SleepHistogramView mSleepHistogramView;
-        SleepAvgAndCompareView mDailySleepAvgCompareView;
-        SleepAvgAndCompareView mDailySleepLightAvgCompareView;
-        SleepAvgAndCompareView mDailySleepDeepAvgCompareView;
-        SleepAvgAndCompareView mDailySleepAwakeAvgCompareView;
-        CardView mLaySleepDataLessContainer;
-        CardView mLaySleepDoctorAdviceContainer;
-        TextView mTvSleepEvaluate;
+        private BlueRefreshView mRefresh;
+        private NestedScrollView mNestedScrollView;
+        private ImageView mIvPre;
+        private TextView mTvWeekQuantum;
+        private ImageView mIvNext;
+        private SleepHistogramView mSleepHistogramView;
+        private SleepAvgAndCompareView mDailySleepAvgCompareView;
+        private SleepAvgAndCompareView mDailySleepLightAvgCompareView;
+        private SleepAvgAndCompareView mDailySleepDeepAvgCompareView;
+        private SleepAvgAndCompareView mDailySleepAwakeAvgCompareView;
 
         private SleepDurationReport mItem;
 
@@ -146,13 +140,9 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             mDailySleepLightAvgCompareView = itemView.findViewById(R.id.daily_sleep_light_avg_compare_view);
             mDailySleepDeepAvgCompareView = itemView.findViewById(R.id.daily_sleep_deep_avg_compare_view);
             mDailySleepAwakeAvgCompareView = itemView.findViewById(R.id.daily_sleep_awake_avg_compare_view);
-            mLaySleepDataLessContainer = itemView.findViewById(R.id.lay_sleep_data_less_container);
-            mLaySleepDoctorAdviceContainer = itemView.findViewById(R.id.lay_sleep_doctor_advice_container);
-            mTvSleepEvaluate = itemView.findViewById(R.id.tv_sleep_evaluate);
 
             itemView.findViewById(R.id.iv_pre).setOnClickListener(this);
             itemView.findViewById(R.id.iv_next).setOnClickListener(this);
-            itemView.findViewById(R.id.lay_sleep_data_less).setOnClickListener(this);
         }
 
         public void initView(SleepDurationReport item, OnWeekReportCallback onWeekReportCallback) {
@@ -209,17 +199,6 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             mDailySleepDeepAvgCompareView.setAvgDuration(item.getAvg_deep_duration()).setCompareDuration(item.getDiff_avg_deep_duration());
             mDailySleepAwakeAvgCompareView.setAvgDuration(item.getAvg_awake_duration()).setCompareDuration(item.getDiff_avg_awake_duration());
 
-            String doctorsEvaluation = item.getDoctors_evaluation();
-            if (TextUtils.isEmpty(doctorsEvaluation)) {
-                mLaySleepDoctorAdviceContainer.setVisibility(View.GONE);
-            } else {
-                mTvSleepEvaluate.setText(doctorsEvaluation);
-                mLaySleepDoctorAdviceContainer.setVisibility(View.VISIBLE);
-            }
-
-            SleepAdvice advice = item.getAdvice();
-            this.mLaySleepDataLessContainer.setVisibility(advice == null ? View.GONE : View.VISIBLE);
-
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(item.getStart_date_show() * 1000L);
             int preYear = calendar.get(Calendar.YEAR);
@@ -240,14 +219,13 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             }
         }
 
-
         @Override
         public void onClick(View v) {
-            int i = v.getId();
-            if (i == R.id.iv_pre || i == R.id.iv_next) {
-                mWeekReportCallback.onSwitchWeek(v, getAdapterPosition(), mItem);
-            } else if (i == R.id.lay_sleep_data_less) {
-                mWeekReportCallback.onShowSleepAdvice(v, getAdapterPosition(), mItem);
+            switch (v.getId()) {
+                case R.id.iv_pre:
+                case R.id.iv_next:
+                    mWeekReportCallback.onSwitchWeek(v, getAdapterPosition(), mItem);
+                    break;
             }
         }
 
@@ -266,8 +244,6 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
         void onSwitchWeek(View v, int position, SleepDurationReport item);
 
         void onRefreshWeekReport(View v, int position, SleepDurationReport item);
-
-        void onShowSleepAdvice(View v, int position, SleepDurationReport item);
 
     }
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseAppTheme.Day" parent="@style/BaseAppTheme.TranslucentStatus">
+
+        <item name="b1">@color/b1_color_day</item>
+        <item name="b2">@color/b2_color_day</item>
+        <item name="b2_alpha_50">@color/b2_alpha_50_color_day</item>
+
+        <item name="b3">@color/b3_color_day</item>
+        <item name="b4">@color/b4_color_day</item>
+        <item name="b5">@color/b5_color_day</item>
+        <item name="b6">@color/b6_color_day</item>
+        <item name="b7">@color/b7_color_day</item>
+        <item name="b8">@color/b8_color_day</item>
+
+        <item name="t1">@color/t1_color_day</item>
+        <item name="t2">@color/t2_color_day</item>
+        <item name="t3">@color/t3_color_day</item>
+        <item name="t4">@color/t4_color_day</item>
+
+        <item name="l1">@color/l1_color_day</item>
+        <item name="l2">@color/l2_color_day</item>
+        <item name="l3">@color/l3_color_day</item>
+
+        <item name="s1">@color/s1_color_day</item>
+        <item name="s2">@color/s2_color_day</item>
+        <item name="s3">@color/s3_color_day</item>
+
+        <item name="report_calendar_src">@mipmap/report_calendar</item>
+        <item name="sleep_drawable_start_src">@drawable/ic_sleep_time</item>
+
+    </style>
+
+    <style name="BaseAppTheme.Night" parent="@style/BaseAppTheme.TranslucentStatus">
+
+        <item name="b1">@color/b1_color_night</item>
+        <item name="b2">@color/b2_color_night</item>
+        <item name="b2_alpha_50">@color/b2_alpha_50_color_night</item>
+
+        <item name="b3">@color/b3_color_night</item>
+        <item name="b4">@color/b4_color_night</item>
+        <item name="b5">@color/b5_color_night</item>
+        <item name="b6">@color/b6_color_night</item>
+        <item name="b7">@color/b7_color_night</item>
+        <item name="b8">@color/b8_color_night</item>
+
+        <item name="t1">@color/t1_color_night</item>
+        <item name="t2">@color/t2_color_night</item>
+        <item name="t3">@color/t3_color_night</item>
+        <item name="t4">@color/t4_color_night</item>
+
+        <item name="l1">@color/l1_color_night</item>
+        <item name="l2">@color/l2_color_night</item>
+        <item name="l3">@color/l3_color_night</item>
+
+        <item name="s1">@color/s1_color_night</item>
+        <item name="s2">@color/s2_color_night</item>
+        <item name="s3">@color/s3_color_night</item>
+
+        <item name="report_calendar_src">@mipmap/report_calendar</item>
+        <item name="sleep_drawable_start_src">@drawable/ic_sleep_time</item>
+
+    </style>
+
+
+</resources>

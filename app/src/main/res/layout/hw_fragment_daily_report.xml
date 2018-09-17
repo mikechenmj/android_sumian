@@ -5,42 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.hw.widget.SwitchDateView
+    <com.sumian.hw.report.widget.SwitchDateView
         android:id="@+id/sdv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:background="?attr/b2"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <com.sumian.hw.report.widget.LoadViewPagerRecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:overScrollMode="never" />
 
-            <com.sumian.hw.widget.report.LoadViewPagerRecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="never" />
-
-            <ImageView
-                android:id="@+id/iv_float_diary"
-                android:layout_width="94dp"
-                android:layout_height="94dp"
-                android:layout_gravity="right|bottom"
-                android:contentDescription="@null"
-                android:src="@mipmap/report_button_diary"
-                android:visibility="gone"
-                tools:ignore="RtlHardcoded"
-                tools:visibility="visible" />
-
-        </FrameLayout>
-
-        <com.sumian.hw.widget.report.SyncingReportView
+        <com.sumian.hw.report.widget.SyncingReportView
             android:id="@+id/syncing_report_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

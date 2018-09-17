@@ -28,9 +28,14 @@ public abstract class BaseBlueCardView extends CardView {
 
     public BaseBlueCardView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setCardBackgroundColor(getResources().getColor(R.color.light_content_bg_color));
-        setRadius(getResources().getDimension(R.dimen.space_10));
-        setElevation(getResources().getDimension(R.dimen.space_2));
+        //通过该方式读取申明的 attr 值 动态的设置属性
+        if (attrs != null) {
+            //ViewAttributeUtil.applyCardViewBgColor(this, context.getTheme(), ViewAttributeUtil.getAttributeValue(attrs, android.support.v7.cardview.R.attr.cardBackgroundColor));
+        }
+
+        //setCardBackgroundColor(getResources().getColor(R.color.light_content_bg_color));
+        setRadius(getResources().getDimension(R.dimen.space_4));
+        setElevation(getResources().getDimension(R.dimen.divider_px_1));
         setContentPadding(getResources().getDimensionPixelOffset(R.dimen.space_20), getResources().getDimensionPixelOffset(R.dimen.space_20), getResources().getDimensionPixelOffset(R.dimen.space_20), getResources().getDimensionPixelOffset(R.dimen.space_20));
         View inflate = inflate(context, getLayoutRes(), this);
         initView(inflate);

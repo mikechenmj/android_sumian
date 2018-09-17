@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/tv_tab_text"
+        style="@style/text_b2_18"
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_28"
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/hw_tab_indicator_color"
-        android:textSize="@dimen/font_20"
         tools:text="@string/week_hint" />
 
     <ImageView
@@ -25,7 +25,7 @@
         android:contentDescription="@null"
         android:padding="@dimen/space_4"
         android:visibility="gone"
-        app:srcCompat="@mipmap/report_calendar"
+        app:srcCompat="?attr/report_calendar_src"
         tools:visibility="visible" />
 
     <View
@@ -40,4 +40,4 @@
         tools:ignore="RtlHardcoded"
         tools:visibility="visible" />
 
-</FrameLayout>
+</merge>
