@@ -27,6 +27,7 @@ import com.qmuiteam.qmui.util.QMUISpanHelper;
 import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.device.fragment.DeviceFragment;
 import com.sumian.hw.device.model.DeviceModel;
+import com.sumian.hw.device.pattern.SyncPatternManager;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sd.R;
 
@@ -329,6 +330,7 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
         mDeviceRippleConnectingView.showIdleStatus();
         mDeviceSyncCallbackView.showSyncSuccess();
         invalidDevice(getMonitor());
+        SyncPatternManager.Companion.syncPatternInPossible(getContext());
     }
 
 

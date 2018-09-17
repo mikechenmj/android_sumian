@@ -1,5 +1,6 @@
 package com.sumian.sd.network.api
 
+import com.sumian.hw.device.pattern.PatternData
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
@@ -319,4 +320,7 @@ interface DoctorApi {
 
     @POST("customer-service/message-event")
     fun newCustomerMessage(): Call<Any>
+
+    @GET("user/patterns")
+    fun getUserPattern(): Call<List<PatternData>>
 }

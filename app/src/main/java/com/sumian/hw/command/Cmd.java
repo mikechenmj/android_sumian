@@ -12,7 +12,7 @@ public interface Cmd {
     byte CMD_LOSE = (byte) 0xff;//failed
 
     byte CMD_APP_HEADER = (byte) 0xaa;//app header cmd
-    // byte CMD_RING_HEADER = 0x55;//ring header cmd
+    byte CMD_RING_HEADER = 0x55;//ring header cmd
     byte CMD_SET_TIMER = 0x40;//set time yyyy-mm-dd HH:mm:ss 24
     byte CMD_GET_RING_BATTERY = 0x44;//get 监测仪(监测仪?)  battery
     byte CMD_GET_SLEEPY_BATTERY = 0x45;//get 速眠仪 battery
@@ -35,4 +35,5 @@ public interface Cmd {
     //①监测仪收到该指令后，断开与速眠仪的连接，并在10分钟内，不与速眠仪连接。
     //②10分钟内，如果被手机APP连接，则退出速眠仪升级模式，可以连接速眠仪
     byte CMD_GET_MONITOR_SLEEPY_STATE = 0x61;//get  获取监测仪和连接上的速眠仪的所有状态信息
+    byte CMD_SET_PATTERN = 0x4a;
 }

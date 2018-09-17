@@ -817,7 +817,6 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         notifyDeviceDataChanged();
         AppManager.getBlueManager().saveBluePeripheral(peripheral);
         LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.getName());
-        SyncPatternManager.Companion.syncPatternInPossible(App.Companion.getAppContext());
     }
 
     @Override
