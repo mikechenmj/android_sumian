@@ -5,9 +5,8 @@ import com.sumian.hw.command.BlueCmd
 import com.sumian.hw.command.Cmd
 import com.sumian.sd.account.config.SumianConfig
 import com.sumian.sd.bean.ClassA
-import com.sumian.sd.onlinereport.OnlineReport
-import com.sumian.sd.utils.JsonUtil
 import org.junit.Test
+import java.math.BigInteger
 
 /**
  * <pre>
@@ -36,11 +35,9 @@ class KotlinTest {
 
     @Test
     fun test3() {
-        val m1 = HashMap<String, String>()
-        m1.put("123123","1234123")
-        m1.put("222","222")
-        val m2 = HashMap<String, String>()
-        m2.put("123123","1234123")
-        System.out.println(m1 == m2)
+        val data = "10013f0f1f210013f0f1f210013f0f1f2f00"
+        System.out.println(data.length)
+        val cmd = BlueCmd.makeCmd(Cmd.CMD_SET_PATTERN, data)
+        System.out.println(BlueCmd.bytes2HexString(cmd))
     }
 }

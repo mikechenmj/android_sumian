@@ -307,7 +307,7 @@ public final class BlueCmd {
         byte[] bytes = new byte[totalLen];
         bytes[0] = Cmd.CMD_APP_HEADER;  // header
         bytes[1] = cmd; // cmd
-        bytes[2] = Byte.parseByte(String.valueOf(dataLen), 16);
+        bytes[2] = BigInteger.valueOf(dataLen).toByteArray()[0];
         System.arraycopy(data, 0, bytes, 3, dataLen);
         return bytes;
     }
