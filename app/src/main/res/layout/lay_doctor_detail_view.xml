@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/doctor_info"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_170"
             android:background="@color/b3_color">
@@ -37,6 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_20"
                 android:layout_marginRight="@dimen/space_20"
+                android:drawableEnd="@drawable/ic_doctor_introduction"
+                android:drawablePadding="@dimen/space_10"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:minLines="1"
@@ -75,12 +78,23 @@
 
         </android.support.constraint.ConstraintLayout>
 
+        <ImageView
+            android:id="@+id/siv_customer_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:foreground="@drawable/bg_material_ripple"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_info_customerservice" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_10"
             android:layout_marginTop="@dimen/space_10"
             android:background="@color/b2_color"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 style="@style/text_t2_style"
@@ -115,7 +129,6 @@
             android:id="@+id/lay_doctor_service_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_10"
             android:background="@color/b2_color"
             android:orientation="vertical"
             android:visibility="gone"

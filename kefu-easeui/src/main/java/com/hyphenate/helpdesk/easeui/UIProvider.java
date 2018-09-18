@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class UIProvider {
     private static final String TAG = UIProvider.class.getSimpleName();
 
@@ -108,7 +109,9 @@ public class UIProvider {
 
     public void clearCacheMsg() {
         mCacheMsgSize = 0;
-        mOnMsgCallback.onMsg(mCacheMsgSize);
+        if (mOnMsgCallback != null) {
+            mOnMsgCallback.onMsg(mCacheMsgSize);
+        }
     }
 
     /**

@@ -664,6 +664,7 @@
     </string-array>
 
     <string name="reminder_add_success_hint">您睡眠提醒设置成功啦</string>
+    <string name="doctor_info">医生简介</string>
 
     <!--setting-->
     <string name="setting_about_me_hint">关于我们</string>
