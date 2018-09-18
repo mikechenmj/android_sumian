@@ -14,6 +14,7 @@ import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.hw.command.BlueCmd
+import com.sumian.hw.command.Cmd
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.constants.SpKeys
@@ -80,17 +81,18 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
         val bluePeripheral = getConnectedBluePeripheral() ?: return
         bluePeripheral.addPeripheralDataCallback(this)
         mHandler.postDelayed({ stop() }, UNREGISTER_BLUE_DATA_CALLBACK_DELAY)    // 设备回执超时
-        var delay = 0L
+        var delay = 200L
+        bluePeripheral.writeDelay(BlueCmd.makeCmd(Cmd.CMD_GET_PATTERN, null), delay)
         for (bytes in data) {
-            bluePeripheral.writeDelay(bytes, delay)
             delay += 200
+            bluePeripheral.writeDelay(bytes, delay)
             LogUtils.d("write bytes: ", BlueCmd.bytes2HexString(bytes))
         }
     }
 
     override fun onSendSuccess(bluePeripheral: BluePeripheral?, data: ByteArray?) {
-        if (isPatternCmd(data)) {
-            LogManager.appendMonitorLog("0x4a pattern数据 APP 发送：${BlueCmd.bytes2HexString(data)} ")
+        if (isSetPatternCmd(data) || isGetPatternCmd(data)) {
+            LogManager.appendMonitorLog("0x4a pattern APP 发送：${BlueCmd.bytes2HexString(data)} ")
         }
     }
 
@@ -98,15 +100,15 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
      * 55 4a 03 1001 88
      */
     override fun onReceiveSuccess(bluePeripheral: BluePeripheral?, bytes: ByteArray?) {
-        if (isPatternCmd(bytes)) {
+        if (isSetPatternCmd(bytes)) {
             val data = BlueCmd.bytes2HexString(bytes)
             LogUtils.d(data)
-            LogManager.appendMonitorLog("0x4a pattern数据 监测仪 回执：${BlueCmd.bytes2HexString(bytes)}")
+            LogManager.appendMonitorLog("0x4a pattern 监测仪 回执：${BlueCmd.bytes2HexString(bytes)}")
             if (data.endsWith("88")) {
                 val patternIndex = data.substring(6, 10)
                 mSuccessReceivedPattern.add(patternIndex)
                 if (mSuccessReceivedPattern.size == mPatternValues.size) {
-                    LogManager.appendMonitorLog("0x4a pattern数据 监测仪 全部接收完毕")
+                    LogManager.appendMonitorLog("0x4a pattern 监测仪 全部接收完毕")
                     persistPattern(JsonUtil.toJson(mPatternValues))
                 }
             }
@@ -115,14 +117,25 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
                 stop()
             }
         }
+        if (isGetPatternCmd(bytes)) {
+            LogManager.appendMonitorLog("0x4a pattern 监测仪 原有pattern数据：${BlueCmd.bytes2HexString(bytes)}")
+        }
     }
 
-    private fun isPatternCmd(bytes: ByteArray?): Boolean {
+    private fun isSetPatternCmd(bytes: ByteArray?): Boolean {
         val data = BlueCmd.bytes2HexString(bytes)
         if (data == null || data.length < 4) {
             return false
         }
         return data.startsWith("554a") || data.startsWith("aa4a")
+    }
+
+    private fun isGetPatternCmd(bytes: ByteArray?): Boolean {
+        val data = BlueCmd.bytes2HexString(bytes)
+        if (data == null || data.length < 4) {
+            return false
+        }
+        return data.startsWith("554c") || data.startsWith("aa4c")
     }
 
     private fun stop() {

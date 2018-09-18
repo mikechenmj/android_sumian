@@ -299,16 +299,18 @@ public final class BlueCmd {
     /**
      * @param cmd cmd, see {@link com.sumian.hw.command.Cmd}
      */
-    public static byte[] makeCmd(byte cmd, @NonNull byte[] data) {
+    public static byte[] makeCmd(byte cmd, byte[] data) {
         // aa 4a 05 10 01 9f 20 50
         // APP pattern 数据长度 模式信息（长度不定）
-        int dataLen = data.length;
+        int dataLen = data != null ? data.length : 0;
         int totalLen = 3 + dataLen;
         byte[] bytes = new byte[totalLen];
         bytes[0] = Cmd.CMD_APP_HEADER;  // header
         bytes[1] = cmd; // cmd
         bytes[2] = BigInteger.valueOf(dataLen).toByteArray()[0];
-        System.arraycopy(data, 0, bytes, 3, dataLen);
+        if (dataLen > 0) {
+            System.arraycopy(data, 0, bytes, 3, dataLen);
+        }
         return bytes;
     }
 }

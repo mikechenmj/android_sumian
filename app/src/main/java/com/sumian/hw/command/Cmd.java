@@ -36,4 +36,5 @@ public interface Cmd {
     //②10分钟内，如果被手机APP连接，则退出速眠仪升级模式，可以连接速眠仪
     byte CMD_GET_MONITOR_SLEEPY_STATE = 0x61;//get  获取监测仪和连接上的速眠仪的所有状态信息
     byte CMD_SET_PATTERN = 0x4a;
+    byte CMD_GET_PATTERN = 0x4c;
 }

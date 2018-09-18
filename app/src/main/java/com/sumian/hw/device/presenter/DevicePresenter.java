@@ -365,6 +365,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 receiveSleepData(peripheral, data, cmd);
                 break;
             case "4a":
+            case "4c":
                 // do nothing
                 break;
             default:
