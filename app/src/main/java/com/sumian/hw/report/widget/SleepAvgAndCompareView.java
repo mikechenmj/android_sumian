@@ -8,14 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
-import com.sumian.sd.R;
 import com.sumian.hw.common.util.TimeUtil;
+import com.sumian.hw.report.widget.text.CountSleepDurationTextView;
+import com.sumian.sd.R;
 
 /**
  * Created by sm
@@ -25,11 +27,8 @@ import com.sumian.hw.common.util.TimeUtil;
 
 public class SleepAvgAndCompareView extends ConstraintLayout {
 
-    TextView mTvLabel;
-    TextView mTvDuration;
-    TextView mTvCompareLabel;
-    TextView mTvCompareDuration;
-    View mDivider;
+    private CountSleepDurationTextView mTvDuration;
+    private TextView mTvCompareDuration;
 
     private String mLabel;
     private Drawable mLabelDrawable;
@@ -56,37 +55,44 @@ public class SleepAvgAndCompareView extends ConstraintLayout {
 
     private void initView(Context context) {
         View inflate = inflate(context, R.layout.hw_lay_sleep_week_count_view, this);
-        mTvLabel = inflate.findViewById(R.id.tv_label);
+        TextView tvLabel = inflate.findViewById(R.id.tv_label);
         mTvDuration = inflate.findViewById(R.id.tv_duration);
-        mTvCompareLabel = inflate.findViewById(R.id.tv_compare_label);
+        //TextView tvCompareLabel = inflate.findViewById(R.id.tv_compare_label);
         mTvCompareDuration = inflate.findViewById(R.id.tv_compare_duration);
-        mDivider = inflate.findViewById(R.id.v_divider);
+        View divider = inflate.findViewById(R.id.v_divider);
 
         CharSequence charSequence = QMUISpanHelper.generateSideIconText(true, getResources().getDimensionPixelSize(R.dimen.space_12), mLabel, mLabelDrawable);
-        mTvLabel.setText(charSequence);
-        mDivider.setVisibility(mIsGoneDivider ? GONE : VISIBLE);
+        tvLabel.setText(charSequence);
+        divider.setVisibility(mIsGoneDivider ? GONE : VISIBLE);
     }
 
     public SleepAvgAndCompareView setAvgDuration(Integer duration) {
-        CharSequence formatDuration = TimeUtil.formatSleepDurationText(getContext(), duration);
-        mTvDuration.setText(formatDuration);
+        // CharSequence formatDuration = TimeUtil.formatSleepDurationText(getContext(), duration);
+        mTvDuration.setDuration(duration);
         return this;
     }
 
     public void setCompareDuration(Integer duration) {
-        CharSequence formatDuration = TimeUtil.formatSleepDurationText(getContext(), duration);
-        mTvCompareDuration.setText(formatDuration);
         if (duration == null || duration == 0) {
-            return;
+            Drawable defaultDrawable = getResources().getDrawable(R.drawable.bg_text_t5);
+            defaultDrawable.setTint(mTvCompareDuration.getCurrentTextColor());
+            CharSequence charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", defaultDrawable);
+            CharSequence concat = TextUtils.concat(charSequence, " ");
+            mTvCompareDuration.setText(concat);
+        } else {
+
+            CharSequence formatDuration = TimeUtil.formatSleepDurationText(getContext(), duration);
+            mTvCompareDuration.setText(formatDuration);
+
+            Drawable leftDrawable = getResources().getDrawable(duration > 0 ? R.mipmap.ic_report_up : R.mipmap.ic_report_down);
+
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(formatDuration);
+            spannableStringBuilder.setSpan(new ForegroundColorSpan(getResources().getColor(duration > 0 ? R.color.bt_hole_color : R.color.warn_color)), 0, formatDuration.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+
+            CharSequence charSequence = QMUISpanHelper.generateSideIconText(true, getResources().getDimensionPixelSize(R.dimen.space_4), spannableStringBuilder, leftDrawable);
+            mTvCompareDuration.setText(charSequence);
         }
 
-        Drawable leftDrawable = getResources().getDrawable(duration > 0 ? R.mipmap.ic_report_up : R.mipmap.ic_report_down);
-
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(formatDuration);
-        spannableStringBuilder.setSpan(new ForegroundColorSpan(getResources().getColor(duration > 0 ? R.color.bt_hole_color : R.color.warn_color)), 0, formatDuration.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-
-        CharSequence charSequence = QMUISpanHelper.generateSideIconText(true, getResources().getDimensionPixelSize(R.dimen.space_4), spannableStringBuilder, leftDrawable);
-        mTvCompareDuration.setText(charSequence);
     }
 
 }

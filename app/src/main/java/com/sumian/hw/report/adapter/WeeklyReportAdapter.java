@@ -1,4 +1,4 @@
-package com.sumian.hw.report.weeklyreport;
+package com.sumian.hw.report.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;

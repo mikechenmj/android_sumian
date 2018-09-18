@@ -22,6 +22,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.theme.three.base.SkinBaseFragment
+import com.sumian.sd.theme.three.loader.SkinManager
 import kotlinx.android.synthetic.main.hw_fragment_main_report.*
 
 @Suppress("UNREACHABLE_CODE")
@@ -53,12 +54,13 @@ class ReportFragment : SkinBaseFragment<HwBasePresenter>(), TabIndicatorView.OnS
                 when (intent.action) {
                     CalendarDialog.ACTION_SELECT_DATE -> {
                         tab_indicator_view.updateTabsUiBySelectPosition(0)
-                        onSwitchIndicator(null!!, 0)
+                        onSwitchIndicator(tab_indicator_view, 0)
                     }
                 }
             }
         }
     }
+
     private val mReportGuidelineDialog: ReportGuidelineDialog  by lazy {
         ReportGuidelineDialog(context!!)
     }
@@ -143,6 +145,11 @@ class ReportFragment : SkinBaseFragment<HwBasePresenter>(), TabIndicatorView.OnS
     }
 
     override fun onShowCalendar(v: View) {
+        if (!SkinManager.getInstance().isNightMode) {
+            SkinManager.getInstance().nightMode()
+        } else {
+            SkinManager.getInstance().restoreDefaultTheme()
+        }
         CalendarDialog.create(currentShowReportTime).show(fragmentManager!!, CalendarDialog::class.java.simpleName)
     }
 

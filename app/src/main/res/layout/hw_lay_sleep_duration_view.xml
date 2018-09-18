@@ -2,6 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/b2_color_day"
@@ -28,7 +29,8 @@
             android:text="@string/all_today_duration"
             android:textColor="@color/t1_color_day"
             app:layout_constraintTop_toTopOf="parent"
-            skin:enable="true" />
+            skin:enable="true"
+            tools:ignore="MissingPrefix" />
 
         <com.sumian.hw.report.widget.text.CountSleepDurationTextView
             android:id="@+id/tv_sleep_today_duration"

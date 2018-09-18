@@ -525,7 +525,7 @@
     <string name="week_sleep_average_duration">日均睡眠时长</string>
     <string name="week_sleep_deep_average_duration">日均深睡时长</string>
     <string name="week_sleep_light_average_duration">日均浅睡时长</string>
-    <string name="week_sleep_sober_average_duration">日均清醒睡时长</string>
+    <string name="week_sleep_sober_average_duration">日均清醒时长</string>
     <string name="week_sleep_night_awake_average_duration">日均夜醒时长</string>
 
     <string name="month_sleep_duration">月睡眠总时长</string>
@@ -818,6 +818,7 @@
     <!--<string name="register_rule_privacy_policy_title">隐私政策</string>-->
     <string name="leancloud_login_failed_hint">无法发送消息,请检查网络或重试…</string>
     <string name="none_have_sleep_data">您还未有睡眠数据记录</string>
+    <string name="none_week_have_sleep_data">本周无睡眠记录</string>
     <string name="empty_msg">你的消息空空如也~</string>
     <string name="unbind_social_title">解绑后,你将无法使用%s帐号登陆速眠</string>
     <!--<string name="unbind">解绑</string>-->
