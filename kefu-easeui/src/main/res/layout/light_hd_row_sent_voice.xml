@@ -11,7 +11,8 @@
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#ffffffff" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:background="@drawable/hd_chatto_bg"
+            android:background="@drawable/light_hd_chatto_bg"
             android:padding="@dimen/space_4"
             tools:ignore="RtlHardcoded">
 

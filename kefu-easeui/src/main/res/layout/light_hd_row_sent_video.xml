@@ -10,7 +10,8 @@
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#ffffffff" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,7 +78,7 @@
             android:layout_width="130dp"
             android:layout_height="145dp"
             android:layout_marginRight="@dimen/margin_chat_activity"
-            android:background="@drawable/hd_chatto_bg">
+            android:background="@drawable/light_hd_chatto_bg">
 
             <ImageView
                 android:id="@+id/chatting_content_iv"
@@ -124,9 +125,9 @@
             android:id="@+id/iv_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
-            android:src="@mipmap/ic_chat_right_default"
             android:layout_marginRight="@dimen/margin_chat_activity"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_chat_right_default" />
 
     </LinearLayout>
 

@@ -10,7 +10,8 @@
         style="@style/chat_text_date_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:textColor="#ffffffff" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,14 +20,14 @@
         android:paddingRight="20dp">
 
         <com.hyphenate.helpdesk.easeui.widget.CircularImage
-            android:src="@mipmap/ic_chat_left_default"
             android:id="@+id/iv_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_chat_left_default" />
 
         <TextView
             android:id="@+id/tv_userid"
@@ -46,7 +47,7 @@
             android:layout_marginLeft="@dimen/margin_chat_activity"
             android:layout_toLeftOf="@+id/progress_bar"
             android:layout_toRightOf="@id/iv_userhead"
-            android:background="@drawable/hd_chatfrom_bg">
+            android:background="@drawable/light_hd_chatfrom_bg">
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -65,7 +65,7 @@ public class EaseChatInputMenu extends LinearLayout {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.night_hd_widget_chat_input_menu, this);
+        layoutInflater.inflate(UIProvider.getInstance().isLightThemeMode()?R.layout.light_hd_widget_chat_input_menu:R.layout.night_hd_widget_chat_input_menu, this);
         primaryMenuContainer = (FrameLayout) findViewById(R.id.primary_menu_container);
         emojiconMenuContainer = (FrameLayout) findViewById(R.id.emojicon_menu_container);
         chatExtendMenuContainer = (FrameLayout) findViewById(R.id.extend_menu_container);

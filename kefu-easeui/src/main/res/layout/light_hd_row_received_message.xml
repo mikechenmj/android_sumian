@@ -7,6 +7,7 @@
     android:paddingTop="13dp">
 
     <TextView
+        android:textColor="#ffffffff"
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
         android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="all"
-                android:background="@drawable/bg_chat_left"
+                android:background="@drawable/bg_chat_left_light"
                 android:lineSpacingExtra="2dp"
                 android:maxWidth="225.0dip"
                 android:minHeight="38dp"

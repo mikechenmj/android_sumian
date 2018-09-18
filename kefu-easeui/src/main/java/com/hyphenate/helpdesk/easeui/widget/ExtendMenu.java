@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ExtendMenu extends GridView {
         init(context, null);
     }
 
-    private void init(Context context, AttributeSet attrs){
+    private void init(Context context, AttributeSet attrs) {
         this.context = context;
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatExtendMenu);
         int numColumns = ta.getInt(R.styleable.EaseChatExtendMenu_numColumns, 4);
@@ -54,30 +55,25 @@ public class ExtendMenu extends GridView {
     /**
      * 初始化
      */
-    public void init(){
+    public void init() {
         setAdapter(new ItemAdapter(context, itemModels));
     }
 
     /**
      * 注册menu item
      *
-     * @param name
-     *            item名字
-     * @param drawableRes
-     *            item背景
-     * @param itemId
-     *             id
-     * @param resId
-     *            resId
-     * @param listener
-     *            item点击事件
+     * @param name        item名字
+     * @param drawableRes item背景
+     * @param itemId      id
+     * @param resId       resId
+     * @param listener    item点击事件
      */
     public void registerMenuItem(String name, int drawableRes, int itemId, @IdRes int resId, EaseChatExtendMenuItemClickListener listener) {
         ChatMenuItemModel item = new ChatMenuItemModel();
         item.name = name;
         item.image = drawableRes;
         item.id = itemId;
-	    item.resId = resId;
+        item.resId = resId;
         item.clickListener = listener;
         itemModels.add(item);
     }
@@ -85,16 +81,11 @@ public class ExtendMenu extends GridView {
     /**
      * 注册menu item
      *
-     * @param nameRes
-     *            item名字的resource id
-     * @param drawableRes
-     *            item背景
-     * @param itemId
-     *             id
-     * @param resId
-     *            resId
-     * @param listener
-     *            item点击事件
+     * @param nameRes     item名字的resource id
+     * @param drawableRes item背景
+     * @param itemId      id
+     * @param resId       resId
+     * @param listener    item点击事件
      */
     public void registerMenuItem(int nameRes, int drawableRes, int itemId, @IdRes int resId, EaseChatExtendMenuItemClickListener listener) {
         registerMenuItem(context.getString(nameRes), drawableRes, itemId, resId, listener);
@@ -113,7 +104,7 @@ public class ExtendMenu extends GridView {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             ChatMenuItem menuItem = null;
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = new ChatMenuItem(context);
             }
             menuItem = (ChatMenuItem) convertView;
@@ -122,10 +113,10 @@ public class ExtendMenu extends GridView {
             menuItem.setId(getItem(position).resId);
             menuItem.setOnClickListener(v -> {
                 ChatMenuItemModel itemModel = getItem(position);
-                if (itemModel == null){
+                if (itemModel == null) {
                     return;
                 }
-                if(itemModel.clickListener != null){
+                if (itemModel.clickListener != null) {
                     itemModel.clickListener.onExtendMenuItemClick(itemModel.id, v);
                 }
             });
@@ -134,16 +125,17 @@ public class ExtendMenu extends GridView {
     }
 
 
-    public interface EaseChatExtendMenuItemClickListener{
+    public interface EaseChatExtendMenuItemClickListener {
         void onExtendMenuItemClick(int itemId, View view);
     }
 
 
-    class ChatMenuItemModel{
+    class ChatMenuItemModel {
         String name;
         int image;
         int id;
-	    @IdRes int resId;
+        @IdRes
+        int resId;
         EaseChatExtendMenuItemClickListener clickListener;
     }
 
@@ -166,7 +158,7 @@ public class ExtendMenu extends GridView {
         }
 
         private void init(Context context, AttributeSet attrs) {
-            LayoutInflater.from(context).inflate(R.layout.night_hd_chat_menu_item, this);
+            LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_chat_menu_item : R.layout.night_hd_chat_menu_item, this);
             imageView = (ImageView) findViewById(R.id.image);
             textView = (TextView) findViewById(R.id.text);
         }

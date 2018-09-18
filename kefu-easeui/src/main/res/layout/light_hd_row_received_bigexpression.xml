@@ -10,7 +10,8 @@
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,14 +19,14 @@
         android:layout_marginTop="@dimen/margin_chat_activity">
 
         <com.hyphenate.helpdesk.easeui.widget.CircularImage
-            android:src="@mipmap/ic_chat_left_default"
             android:id="@+id/iv_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_chat_left_default" />
 
         <RelativeLayout
             android:id="@+id/bubble"

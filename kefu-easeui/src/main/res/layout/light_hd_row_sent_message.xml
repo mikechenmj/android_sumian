@@ -12,6 +12,7 @@
         style="@style/chat_text_date_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#ffffffff"
         tools:text="8月31日 15:40" />
 
     <LinearLayout
@@ -90,10 +91,10 @@
                 android:layout_marginRight="@dimen/space_10"
                 android:layout_marginTop="@dimen/space_8"
                 android:autoLink="all"
-                android:background="@drawable/bg_chat_right"
+                android:background="@drawable/bg_chat_right_light"
                 android:lineSpacingExtra="@dimen/space_2"
                 android:padding="@dimen/space_8"
-                android:textColor="@color/send_text_color"
+                android:textColor="#ffffffff"
                 android:textSize="@dimen/font_16"
                 tools:ignore="RtlHardcoded"
                 tools:text="小姐姐dadaddadadadadasdadsdadasdaasaaaaasaaaasaaaaaadasaaaaasaaasdadaaadadaddadaaaaaaaaa大大所多多" />

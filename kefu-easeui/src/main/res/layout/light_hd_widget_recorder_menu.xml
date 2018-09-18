@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/deep_content_bg_color">
+    android:background="#f2f3f5">
 
     <TextView
         android:id="@+id/record_menu_text"
@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
         android:text="@string/button_pushtotalk"
-        android:textColor="#ffffffff"
+        android:textColor="#475266"
         android:textSize="16sp" />
 
     <ImageButton

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="@color/light_content_bg_color"
+    android:background="#f2f3f5"
     android:orientation="vertical">
 
     <!-- <com.hyphenate.easeui.widget.EaseChatPrimaryMenu
@@ -23,8 +23,9 @@
         android:id="@+id/extend_menu_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:visibility="gone">
+        android:background="#f2f3f5"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <com.hyphenate.helpdesk.easeui.widget.ExtendMenu
             android:id="@+id/extend_menu"

@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/emob_bg_chat_input">
+                    android:background="@drawable/light_emob_bg_chat_input">
 
                     <EditText
                         android:id="@+id/et_sendmessage"
@@ -68,7 +68,7 @@
                         android:maxLines="3"
                         android:paddingLeft="@dimen/space_4"
                         android:paddingRight="@dimen/space_4"
-                        android:textColor="@color/main_text_color"
+                        android:textColor="#475266"
                         android:textColorHint="#BBBBBB"
                         android:textCursorDrawable="@drawable/bg_cursor"
                         android:textSize="14sp"
@@ -162,5 +162,6 @@
         android:id="@+id/record_menu"
         android:layout_width="match_parent"
         android:layout_height="139dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
 </LinearLayout>
