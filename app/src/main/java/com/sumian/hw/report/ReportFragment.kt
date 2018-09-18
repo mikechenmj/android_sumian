@@ -7,7 +7,6 @@ import android.content.IntentFilter
 import android.support.v4.app.Fragment
 import android.support.v4.content.LocalBroadcastManager
 import android.view.View
-import com.sumian.hw.base.HwBaseFragment
 import com.sumian.hw.base.HwBasePresenter
 import com.sumian.hw.guideline.dialog.ReportGuidelineDialog
 import com.sumian.hw.guideline.utils.GuidelineUtils
@@ -22,6 +21,7 @@ import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
+import com.sumian.sd.theme.three.base.SkinBaseFragment
 import kotlinx.android.synthetic.main.hw_fragment_main_report.*
 
 @Suppress("UNREACHABLE_CODE")
@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.hw_fragment_main_report.*
  * desc:
  */
 
-class ReportFragment : HwBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwitchIndicatorCallback, OnEnterListener {
+class ReportFragment : SkinBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwitchIndicatorCallback, OnEnterListener {
 
     companion object {
 
@@ -76,7 +76,10 @@ class ReportFragment : HwBaseFragment<HwBasePresenter>(), TabIndicatorView.OnSwi
 
     override fun initWidget(root: View) {
         super.initWidget(root)
-        tab_indicator_view?.setOnSwitchIndicatorCallback(this)
+        tab_indicator_view?.let {
+            it.setOnSwitchIndicatorCallback(this)
+            dynamicAddView(it, "background", R.color.n1_color_day)
+        }
     }
 
     override fun initData() {

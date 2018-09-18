@@ -1,4 +1,5 @@
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -8,7 +9,8 @@
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_10"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/shape_deep_sleep" />
+        android:background="@drawable/shape_deep_sleep"
+        skin:enable="true" />
 
     <TextView
         style="@style/text_t2_13"
@@ -18,14 +20,15 @@
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_deep_hint"
-        android:textColor="?attr/t2" />
+        android:textColor="@color/t2_color_day" />
 
     <View
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_10"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/space_40"
-        android:background="@drawable/shape_light_sleep" />
+        android:background="@drawable/shape_light_sleep"
+        skin:enable="true" />
 
     <TextView
         style="@style/text_t2_13"
@@ -36,13 +39,14 @@
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_light_hint"
-        android:textColor="?attr/t2" />
+        android:textColor="@color/t2_color_day" />
 
     <View
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_10"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/shape_sober_sleep" />
+        android:background="@drawable/shape_sober_sleep"
+        skin:enable="true" />
 
     <TextView
         style="@style/text_t2_13"
@@ -52,6 +56,6 @@
         android:layout_marginStart="@dimen/space_6"
         android:gravity="center"
         android:text="@string/sleep_sober_hint"
-        android:textColor="?attr/t2" />
+        android:textColor="@color/t2_color_day" />
 
-</merge>
+</LinearLayout>

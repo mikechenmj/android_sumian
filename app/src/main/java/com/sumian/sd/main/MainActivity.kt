@@ -20,6 +20,7 @@ import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.main.widget.SwitchAnimationView
 import com.sumian.sd.notification.NotificationListActivity.REQUEST_CODE_OPEN_NOTIFICATION
 import com.sumian.sd.setting.version.delegate.VersionDelegate
+import com.sumian.sd.theme.three.loader.SkinManager
 import com.sumian.sd.utils.ColorCompatUtil
 import com.sumian.sd.utils.NotificationUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
@@ -136,6 +137,11 @@ class MainActivity : BaseEventActivity() {
                 startStatusBarColor, endStatusBarColor, isSwitchToHwFragment,
                 object : SwitchAnimationView.AnimationListener {
                     override fun onFullScreenCovered() {
+                        if (isSwitchToHwFragment) {
+                            SkinManager.getInstance().nightMode()
+                        } else {
+                            SkinManager.getInstance().restoreDefaultTheme()
+                        }
                         showFragmentByPosition(position, subFragmentName)
                     }
                 })

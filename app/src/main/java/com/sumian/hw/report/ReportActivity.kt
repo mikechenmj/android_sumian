@@ -2,7 +2,7 @@ package com.sumian.hw.report
 
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R
-import com.sumian.sd.theme.base.BaseThemeActivity
+import com.sumian.sd.theme.three.base.SkinBaseActivity
 
 /**
  * Created by dq
@@ -11,7 +11,7 @@ import com.sumian.sd.theme.base.BaseThemeActivity
  *
  * desc:睡眠数据报告
  */
-class ReportActivity : BaseThemeActivity() {
+class ReportActivity : SkinBaseActivity() {
 
     companion object {
 
@@ -39,7 +39,7 @@ class ReportActivity : BaseThemeActivity() {
                             findFragmentByTag.onEnter(null)
                         }
                     }
-                    .commitNowAllowingStateLoss()
+                    .commitAllowingStateLoss()
         } else {
 
             val reportFragment = ReportFragment.newInstance()
@@ -48,7 +48,7 @@ class ReportActivity : BaseThemeActivity() {
                     .beginTransaction()
                     .replace(R.id.container, reportFragment, ReportFragment::class.java.simpleName).runOnCommit {
                         reportFragment.onEnter(null)
-                    }.commitNowAllowingStateLoss()
+                    }.commitAllowingStateLoss()
         }
 
     }

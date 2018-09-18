@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/b3">
+    android:layout_height="wrap_content">
 
     <com.sumian.hw.report.widget.tab.TabIndicatorItemView
         android:id="@+id/day_tab_indicator_item_view"

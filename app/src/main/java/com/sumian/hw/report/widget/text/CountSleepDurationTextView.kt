@@ -35,7 +35,6 @@ class CountSleepDurationTextView : TextView {
         attributes.recycle()
     }
 
-
     /**
      * 设置统计的睡眠时间长度
      */

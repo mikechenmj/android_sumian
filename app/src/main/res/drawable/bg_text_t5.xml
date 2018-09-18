@@ -5,7 +5,7 @@
         <shape>
             <corners android:radius="@dimen/space_1" />
             <size android:width="@dimen/space_26" android:height="@dimen/space_1" />
-            <solid android:color="?attr/t5" />
+            <solid android:color="@color/t5_color_day" />
         </shape>
     </item>
 

@@ -2,9 +2,13 @@ package com.sumian.sd.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
+import android.view.View
+import com.sumian.hw.base.HwBasePresenter
 import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
+import com.sumian.sd.R.id.iv_switch
+import com.sumian.sd.R.id.nav_tab
 import com.sumian.sd.base.BaseEventFragment
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.event.EventBusUtil
@@ -28,7 +32,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
+class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
 
     companion object {
 
@@ -46,7 +50,7 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         return R.layout.sd_fragment_main
     }
 
-    override fun initWidget() {
+    override fun initWidget(root: View?) {
         nav_tab.setOnSelectedTabChangeListener(this)
         iv_switch.setOnClickListener {
             launchAnotherMainActivity()

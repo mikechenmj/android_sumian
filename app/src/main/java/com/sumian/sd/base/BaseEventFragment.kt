@@ -1,7 +1,8 @@
 package com.sumian.sd.base
 
-import com.sumian.common.base.BaseFragment
+import com.sumian.hw.base.HwBasePresenter
 import com.sumian.sd.event.EventBusUtil
+import com.sumian.sd.theme.three.base.SkinBaseFragment
 
 /**
  * <pre>
@@ -11,23 +12,23 @@ import com.sumian.sd.event.EventBusUtil
  *     version: 1.0
  * </pre>
  */
-abstract class BaseEventFragment : BaseFragment() {
+abstract class BaseEventFragment<BasePresenter : HwBasePresenter> : SkinBaseFragment<BasePresenter>() {
 
     override fun onStart() {
         super.onStart()
         if (openEventBus()) {
-            EventBusUtil.register(this)
+           // EventBusUtil.register(this)
         }
     }
 
     override fun onStop() {
         super.onStop()
         if (openEventBus()) {
-            EventBusUtil.unregister(this)
+          //  EventBusUtil.unregister(this)
         }
     }
 
-    protected open fun openEventBus(): Boolean {
+    override fun openEventBus(): Boolean {
         return false
     }
 }

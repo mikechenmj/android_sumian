@@ -10,7 +10,6 @@ import android.text.format.DateUtils;
 import android.view.View;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.response.SleepDurationReport;
 import com.sumian.hw.push.ReportPushManager;
@@ -18,11 +17,12 @@ import com.sumian.hw.report.calendar.CalendarDialog;
 import com.sumian.hw.report.contract.WeeklyReportContact;
 import com.sumian.hw.report.presenter.WeeklyReportPresenter;
 import com.sumian.hw.report.weeklyreport.WeeklyReportAdapter;
-import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.hw.report.widget.LoadViewPagerRecyclerView;
+import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.OnEnterListener;
+import com.sumian.sd.theme.three.base.SkinBaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class WeeklyReportFragment extends HwBaseFragment<WeeklyReportPresenter> implements
+public class WeeklyReportFragment extends SkinBaseFragment<WeeklyReportPresenter> implements
         WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback, OnEnterListener {
 
     LoadViewPagerRecyclerView mRecycler;

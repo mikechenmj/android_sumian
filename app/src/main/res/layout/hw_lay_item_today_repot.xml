@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/b1"
-    android:orientation="vertical">
+    android:background="@color/b1_color_day"
+    android:orientation="vertical"
+    skin:enable="true">
 
     <com.sumian.hw.report.widget.SwitchDateView
         android:id="@+id/switch_date_view"
@@ -31,11 +33,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_200"
                     android:gravity="center"
-                    app:tdshv_coordinate_color="?attr/l3"
-                    app:tdshv_deep_color="?attr/g3"
-                    app:tdshv_empty_text_color="?attr/t5"
-                    app:tdshv_eog_color="?attr/g2"
-                    app:tdshv_light_color="?attr/g1" />
+                    app:tdshv_coordinate_color="@color/l3_color_day"
+                    app:tdshv_deep_color="@color/g3_color_day"
+                    app:tdshv_empty_text_color="@color/t5_color_day"
+                    app:tdshv_eog_color="@color/g2_color_day"
+                    app:tdshv_light_color="@color/g1_color_day"
+                    skin:enable="true" />
 
                 <com.sumian.hw.report.widget.ReportIndicatorRuleView
                     android:layout_width="match_parent"
@@ -49,8 +52,8 @@
                     android:layout_marginLeft="@dimen/space_10"
                     android:layout_marginRight="@dimen/space_10"
                     android:layout_marginTop="@dimen/space_20"
-                    android:background="?attr/b2"
-                    app:cardBackgroundColor="?attr/b2" />
+                    android:background="@color/b2_color_day"
+                    app:cardBackgroundColor="@color/b2_color_day" />
 
             </LinearLayout>
 

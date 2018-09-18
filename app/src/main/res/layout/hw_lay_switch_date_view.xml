@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/space_40"
-    android:background="?attr/b2"
-    android:gravity="center">
+    android:background="@color/b2_color_day"
+    android:gravity="center"
+    skin:enable="true">
 
     <ImageView
         android:id="@+id/iv_pre"
@@ -16,7 +18,8 @@
         android:foreground="@drawable/bg_material_ripple"
         android:padding="@dimen/space_14"
         android:scaleType="fitCenter"
-        android:src="?attr/switch_report_date_navigation_left_src"
+        android:src="@drawable/ic_report_left_day"
+        skin:enable="true"
         tools:ignore="RtlHardcoded" />
 
     <Space
@@ -31,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="?attr/t2"
+        android:textColor="@color/t2_color_day"
+        skin:enable="true"
         tools:ignore="HardcodedText"
         tools:text="2017/09" />
 
@@ -50,7 +54,8 @@
         android:foreground="@drawable/bg_material_ripple"
         android:padding="@dimen/space_14"
         android:scaleType="fitCenter"
-        android:src="?attr/switch_report_date_navigation_right_src"
+        android:src="@drawable/ic_report_right_day"
+        skin:enable="true"
         tools:ignore="RtlHardcoded" />
 
 </LinearLayout>

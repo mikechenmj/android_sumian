@@ -8,7 +8,6 @@ import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
-import com.sumian.hw.base.HwBaseFragment
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.report.adapter.DailyAdapter
@@ -23,6 +22,7 @@ import com.sumian.hw.widget.refresh.ActionLoadingDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
+import com.sumian.sd.theme.three.base.SkinBaseFragment
 import kotlinx.android.synthetic.main.hw_fragment_daily_report.*
 import java.util.*
 
@@ -32,7 +32,7 @@ import java.util.*
  * desc:
  */
 
-class DailyReportFragment : HwBaseFragment<DailyReportPresenter>(), DailyReportContract.View, SwitchDateView.OnSwitchDateListener, RecyclerViewPager.OnPageChangedListener, DailyAdapter.OnRefreshCallback, ReportModel.OnSyncCallback, OnEnterListener {
+class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyReportContract.View, SwitchDateView.OnSwitchDateListener, RecyclerViewPager.OnPageChangedListener, DailyAdapter.OnRefreshCallback, ReportModel.OnSyncCallback, OnEnterListener {
 
     companion object {
 
@@ -69,8 +69,6 @@ class DailyReportFragment : HwBaseFragment<DailyReportPresenter>(), DailyReportC
                         val selectUnixTime = intent.getLongExtra(CalendarDialog.EXTRA_DATE, 0)
                         mNeedScrollToBottom = intent.getBooleanExtra(EXTRA_SCROLL, false)
                         onScrollToTime(selectUnixTime)
-                    }
-                    else -> {
                     }
                 }
             }

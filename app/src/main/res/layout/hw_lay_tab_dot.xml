@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    skin:enable="true">
 
     <TextView
         android:id="@+id/tv_tab_text"
@@ -12,6 +14,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/hw_tab_indicator_color"
+        skin:enable="true"
         tools:text="@string/week_hint" />
 
     <ImageView
@@ -23,6 +26,7 @@
         android:padding="@dimen/space_6"
         android:src="@drawable/ic_nav_calendar_day"
         android:visibility="gone"
+        skin:enable="true"
         tools:visibility="visible" />
 
     <View
@@ -33,7 +37,8 @@
         android:background="@drawable/bg_dot"
         android:contentDescription="@null"
         android:visibility="visible"
+        skin:enable="true"
         tools:ignore="RtlHardcoded"
         tools:visibility="visible" />
 
-</merge>
+</FrameLayout>
