@@ -15,6 +15,7 @@ import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult;
 import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.record.SleepRecordActivity;
+import com.sumian.sd.service.diary.DiaryEvaluationDetailActivity;
 import com.sumian.sd.service.tel.activity.TelBookingPublishActivity;
 import com.sumian.sd.utils.JsonUtil;
 import com.sumian.sd.widget.webview.SBridgeHandler;
@@ -35,8 +36,6 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
     private static final int REQUEST_CODE_BUY_SERVICE = 1000;
 
     private DoctorService mDoctorService;
-    private BroadcastReceiver mBroadcastReceiver;
-
     private boolean mIsFromRecord;
 
     public static void show(Context context, DoctorService doctorService) {
@@ -69,14 +68,6 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
     @Override
     protected String getUrlContentPart() {
         return H5Uri.DOCTOR_SERVICE.replace("{id}", String.format(Locale.getDefault(), "%d", mDoctorService.getType()));
-    }
-
-    @Override
-    protected void onRelease() {
-        super.onRelease();
-        if (mBroadcastReceiver != null) {
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
-        }
     }
 
     @Override
@@ -116,7 +107,7 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
                             PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
                             break;
                         case DoctorService.SERVICE_TYPE_SLEEP_REPORT:
-                            SleepRecordActivity.Companion.launch(this);
+                            DiaryEvaluationDetailActivity.launchLatestEvaluation(this);
                             break;
                         case DoctorService.SERVICE_TYPE_PHONE_ADVISORY:
                             TelBookingPublishActivity.show();

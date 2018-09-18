@@ -11,6 +11,8 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.h5.SimpleWebActivity
+import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import kotlinx.android.synthetic.main.fragment_diary_evaluation_list.*
 
@@ -23,7 +25,6 @@ import kotlinx.android.synthetic.main.fragment_diary_evaluation_list.*
  * </pre>
  */
 class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
-
 
     private val mAdapter by lazy {
         DiaryEvaluationListAdapter()
@@ -61,7 +62,8 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
         recycler.layoutManager = LinearLayoutManager(activity)
         mAdapter.setOnLoadMoreListener(this, recycler)
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            ToastUtils.showShort("todo 启动详情页")
+            val item = adapter.getItem(position) as DiaryEvaluationData
+            DiaryEvaluationDetailActivity.launch(activity, item.id)
         }
     }
 
