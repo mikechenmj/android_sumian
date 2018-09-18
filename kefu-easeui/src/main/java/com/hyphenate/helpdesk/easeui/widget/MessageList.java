@@ -14,10 +14,11 @@ import android.widget.RelativeLayout;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Conversation;
-import com.hyphenate.helpdesk.R;
 import com.hyphenate.chat.Message;
-import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
+import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
+import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
 
 public class MessageList extends RelativeLayout {
     protected static final String TAG = MessageList.class.getSimpleName();
@@ -48,17 +49,18 @@ public class MessageList extends RelativeLayout {
         init(context);
     }
 
-    private void init(Context context){
+    private void init(Context context) {
         this.context = context;
-        LayoutInflater.from(context).inflate(R.layout.night_hd_chat_message_list, this);
+        LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_chat_message_list : R.layout.night_hd_chat_message_list, this);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.chat_swipe_layout);
-        swipeRefreshLayout. setProgressBackgroundColorSchemeResource(R.color.refresh_bg_color);
-        swipeRefreshLayout. setColorSchemeResources(R.color.white);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.refresh_bg_color);
+        swipeRefreshLayout.setColorSchemeResources(R.color.white);
         listView = (ListView) findViewById(R.id.list);
     }
 
     /**
      * init widget
+     *
      * @param toChatUsername
      * @param customChatRowProvider
      */
@@ -91,7 +93,7 @@ public class MessageList extends RelativeLayout {
     /**
      * 刷新列表
      */
-    public void refresh(){
+    public void refresh() {
         if (messageAdapter != null) {
             messageAdapter.refresh();
         }
@@ -100,13 +102,13 @@ public class MessageList extends RelativeLayout {
     /**
      * 刷新列表，并且跳至最后一个item
      */
-    public void refreshSelectLast(){
+    public void refreshSelectLast() {
         if (messageAdapter != null) {
             messageAdapter.refreshSelectLast();
         }
     }
 
-    public void refreshSelectLastDelay(long delay){
+    public void refreshSelectLastDelay(long delay) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -119,9 +121,10 @@ public class MessageList extends RelativeLayout {
 
     /**
      * 刷新页面,并跳至给定position
+     *
      * @param position
      */
-    public void refreshSeekTo(int position){
+    public void refreshSeekTo(int position) {
         if (messageAdapter != null) {
             messageAdapter.refreshSeekTo(position);
         }
@@ -129,6 +132,7 @@ public class MessageList extends RelativeLayout {
 
     /**
      * 获取listview
+     *
      * @return
      */
     public ListView getListView() {
@@ -137,46 +141,53 @@ public class MessageList extends RelativeLayout {
 
     /**
      * 获取SwipeRefreshLayout
+     *
      * @return
      */
-    public SwipeRefreshLayout getSwipeRefreshLayout(){
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
     }
 
-    public Message getItem(int position){
+    public Message getItem(int position) {
         return messageAdapter.getItem(position);
     }
 
     /**
      * 设置是否显示用户昵称
+     *
      * @param showUserNick
      */
-    public void setShowUserNick(boolean showUserNick){
+    public void setShowUserNick(boolean showUserNick) {
         this.showUserNick = showUserNick;
     }
 
-    public boolean isShowUserNick(){
+    public boolean isShowUserNick() {
         return showUserNick;
     }
 
-    public interface MessageListItemClickListener{
+    public interface MessageListItemClickListener {
         void onResendClick(Message message);
+
         /**
          * 控件有对气泡做点击事件默认实现，如果需要自己实现，return true。
          * 当然也可以在相应的chatrow的onBubbleClick()方法里实现点击事件
+         *
          * @param message
          * @return
          */
         boolean onBubbleClick(Message message);
+
         void onBubbleLongClick(Message message);
+
         void onUserAvatarClick(String username);
     }
 
     /**
      * 设置list item里控件的点击事件
+     *
      * @param listener
      */
-    public void setItemClickListener(MessageListItemClickListener listener){
+    public void setItemClickListener(MessageListItemClickListener listener) {
         if (messageAdapter != null) {
             messageAdapter.setItemClickListener(listener);
         }
@@ -184,9 +195,10 @@ public class MessageList extends RelativeLayout {
 
     /**
      * 设置自定义chatrow提供者
+     *
      * @param rowProvider
      */
-    public void setCustomChatRowProvider(CustomChatRowProvider rowProvider){
+    public void setCustomChatRowProvider(CustomChatRowProvider rowProvider) {
         if (messageAdapter != null) {
             messageAdapter.setCustomChatRowProvider(rowProvider);
         }

@@ -55,7 +55,8 @@
                 android:text="@string/button_send"
                 android:textColor="@color/main_text_color"
                 android:visibility="gone"
-                tools:ignore="RtlHardcoded" />
+                tools:ignore="RtlHardcoded"
+                tools:visibility="visible" />
         </RelativeLayout>
 
     </FrameLayout>

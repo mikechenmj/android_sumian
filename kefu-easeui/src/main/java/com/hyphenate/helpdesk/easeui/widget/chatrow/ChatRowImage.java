@@ -18,6 +18,7 @@ import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.ImageCache;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
 import com.hyphenate.helpdesk.easeui.ui.ShowBigImageActivity;
 import com.hyphenate.helpdesk.easeui.util.CommonUtils;
@@ -25,7 +26,8 @@ import com.hyphenate.util.DensityUtil;
 import com.hyphenate.util.ImageUtils;
 
 import java.io.File;
-public class ChatRowImage extends ChatRowFile{
+
+public class ChatRowImage extends ChatRowFile {
 
     protected ImageView imageView;
     private EMImageMessageBody imgBody;
@@ -36,7 +38,7 @@ public class ChatRowImage extends ChatRowFile{
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.night_hd_row_received_picture : R.layout.night_hd_row_sent_picture, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_picture : R.layout.night_hd_row_received_picture) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_picture : R.layout.night_hd_row_sent_picture), this);
     }
 
     @Override
@@ -44,7 +46,6 @@ public class ChatRowImage extends ChatRowFile{
         percentageView = (TextView) findViewById(R.id.percentage);
         imageView = (ImageView) findViewById(R.id.image);
     }
-
 
     @Override
     protected void onSetUpView() {

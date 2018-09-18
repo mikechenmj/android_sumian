@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class EmojiconScrollTabBar extends RelativeLayout {
 
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
-        LayoutInflater.from(context).inflate(R.layout.night_hd_widget_emojicon_tab_bar, this);
+        LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_widget_emojicon_tab_bar : R.layout.night_hd_widget_emojicon_tab_bar, this);
 
         scrollView = (HorizontalScrollView) findViewById(R.id.scroll_view);
         tabContainer = (LinearLayout) findViewById(R.id.tab_container);
@@ -55,7 +56,7 @@ public class EmojiconScrollTabBar extends RelativeLayout {
      * @param content
      */
     public void addTab(String content) {
-        View tabView = View.inflate(context, R.layout.night_hd_scroll_tab_text_item, null);
+        View tabView = View.inflate(context, UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_scroll_tab_text_item : R.layout.night_hd_scroll_tab_text_item, null);
         TextView textView = (TextView) tabView.findViewById(R.id.tv_text);
         textView.setText(content);
         LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(DensityUtil.dip2px(context, tabWidth), LayoutParams.MATCH_PARENT);
@@ -81,7 +82,7 @@ public class EmojiconScrollTabBar extends RelativeLayout {
      * @param icon
      */
     public void addTab(int icon) {
-        View tabView = View.inflate(context, R.layout.night_hd_scroll_tab_item, null);
+        View tabView = View.inflate(context, UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_scroll_tab_item : R.layout.night_hd_scroll_tab_item, null);
         ImageView imageView = (ImageView) tabView.findViewById(R.id.iv_icon);
         imageView.setImageResource(icon);
         LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(DensityUtil.dip2px(context, tabWidth), LayoutParams.MATCH_PARENT);

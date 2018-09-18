@@ -14,9 +14,8 @@ import com.hyphenate.helpdesk.R;
 
 /**
  * 标题栏
- *
  */
-public class TitleBar extends RelativeLayout {
+public class EaseTitleBar extends RelativeLayout {
 
     protected RelativeLayout leftLayout;
     protected ImageView leftImage;
@@ -25,21 +24,21 @@ public class TitleBar extends RelativeLayout {
     protected TextView titleView;
     protected RelativeLayout titleLayout;
 
-    public TitleBar(Context context, AttributeSet attrs, int defStyle) {
+    public EaseTitleBar(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
     }
 
-    public TitleBar(Context context, AttributeSet attrs) {
+    public EaseTitleBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public TitleBar(Context context) {
+    public EaseTitleBar(Context context) {
         super(context);
         init(context, null);
     }
 
-    private void init(Context context, AttributeSet attrs){
+    private void init(Context context, AttributeSet attrs) {
         LayoutInflater.from(context).inflate(R.layout.night_hd_widget_title_bar, this);
         leftLayout = (RelativeLayout) findViewById(R.id.left_layout);
         leftImage = (ImageView) findViewById(R.id.left_image);
@@ -51,11 +50,14 @@ public class TitleBar extends RelativeLayout {
         parseStyle(context, attrs);
     }
 
-    private void parseStyle(Context context, AttributeSet attrs){
-        if(attrs != null){
+    private void parseStyle(Context context, AttributeSet attrs) {
+        if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseTitleBar);
             String title = ta.getString(R.styleable.EaseTitleBar_titleBarTitle);
             titleView.setText(title);
+
+            int textColor = ta.getColor(R.styleable.EaseTitleBar_titleBarTextColor, context.getResources().getColor(R.color.bt_hole_color));
+            titleView.setTextColor(textColor);
 
             Drawable leftDrawable = ta.getDrawable(R.styleable.EaseTitleBar_titleBarLeftImage);
             if (null != leftDrawable) {
@@ -67,7 +69,7 @@ public class TitleBar extends RelativeLayout {
             }
 
             Drawable background = ta.getDrawable(R.styleable.EaseTitleBar_titleBarBackground);
-            if(null != background) {
+            if (null != background) {
                 titleLayout.setBackgroundDrawable(background);
             }
 
@@ -83,35 +85,35 @@ public class TitleBar extends RelativeLayout {
         rightImage.setImageResource(resId);
     }
 
-    public void setLeftLayoutClickListener(OnClickListener listener){
+    public void setLeftLayoutClickListener(OnClickListener listener) {
         leftLayout.setOnClickListener(listener);
     }
 
-    public void setRightLayoutClickListener(OnClickListener listener){
+    public void setRightLayoutClickListener(OnClickListener listener) {
         rightLayout.setOnClickListener(listener);
     }
 
-    public void setLeftLayoutVisibility(int visibility){
+    public void setLeftLayoutVisibility(int visibility) {
         leftLayout.setVisibility(visibility);
     }
 
-    public void setRightLayoutVisibility(int visibility){
+    public void setRightLayoutVisibility(int visibility) {
         rightLayout.setVisibility(visibility);
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         titleView.setText(title);
     }
 
-    public void setBackgroundColor(int color){
+    public void setBackgroundColor(int color) {
         titleLayout.setBackgroundColor(color);
     }
 
-    public RelativeLayout getLeftLayout(){
+    public RelativeLayout getLeftLayout() {
         return leftLayout;
     }
 
-    public RelativeLayout getRightLayout(){
+    public RelativeLayout getRightLayout() {
         return rightLayout;
     }
 }

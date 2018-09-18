@@ -4,7 +4,7 @@
     android:id="@+id/ll_face_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/deep_content_bg_color"
+    android:background="#F2F3F5"
     android:orientation="vertical">
 
     <com.hyphenate.helpdesk.easeui.emojicon.EmojiconPagerView
@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="#CFCFCF"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <com.hyphenate.helpdesk.easeui.emojicon.EmojiconScrollTabBar
         android:id="@+id/tab_bar"
@@ -30,6 +31,7 @@
         android:layout_height="35dp"
         android:paddingRight="60dp"
         android:visibility="gone"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        tools:ignore="RtlHardcoded,RtlSymmetry"
+        tools:visibility="visible" />
 
 </LinearLayout>

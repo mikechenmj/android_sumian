@@ -18,6 +18,7 @@ import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMVoiceMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
 import com.hyphenate.helpdesk.easeui.recorder.MediaManager;
 
@@ -45,7 +46,7 @@ public class ChatRowVoice extends ChatRowFile {
     @Override
     protected void onInflatView() {
         inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-            R.layout.night_hd_row_received_voice : R.layout.night_hd_row_sent_voice, this);
+                (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_voice : R.layout.night_hd_row_received_voice) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_voice : R.layout.night_hd_row_sent_voice), this);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class ChatRowVoice extends ChatRowFile {
             }
             Log.d(TAG, "it is receive msg");
             if (voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
-                voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
+                    voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
                 progressBar.setVisibility(View.VISIBLE);
                 setMessageReceiveCallback();
             } else {

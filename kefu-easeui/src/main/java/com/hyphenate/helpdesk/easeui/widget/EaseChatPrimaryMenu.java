@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 
 /**
  * 聊天输入栏主菜单栏
@@ -58,10 +59,13 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements View
 
     private void init(final Context context, AttributeSet attrs) {
         this.context = context;
-        LayoutInflater.from(context).inflate(R.layout.night_hd_widget_chat_primary_menu, this, true);
+        LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_widget_chat_primary_menu : R.layout.night_hd_widget_chat_primary_menu, this, true);
         buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
         buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
         edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);
+        if (UIProvider.getInstance().isLightThemeMode()) {
+            findViewById(R.id.cc).setBackgroundResource(R.drawable.light_emob_bg_chat_input);
+        }
         editText = (EditText) findViewById(R.id.et_sendmessage);
         buttonPressToSpeak = (RecorderMenu) findViewById(R.id.record_menu);
         faceLayout = (RelativeLayout) findViewById(R.id.rl_face);

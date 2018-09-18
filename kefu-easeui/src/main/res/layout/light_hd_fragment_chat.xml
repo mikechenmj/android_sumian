@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/deep_content_bg_color">
+    android:background="#F2F3F5">
 
-    <com.hyphenate.helpdesk.easeui.widget.TitleBar
+    <com.hyphenate.helpdesk.easeui.widget.EaseTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:background="@color/title_bg_color"
-        easemob:titleBarLeftImage="@mipmap/ic_back"
+        easemob:titleBarBackground="#6595F4 "
+        easemob:titleBarLeftImage="@drawable/ic_nav_icon_back_white"
+        easemob:titleBarTextColor="#FFFFFF"
         easemob:titleBarTitle="@string/sleep_housekeeper" />
 
     <TextView

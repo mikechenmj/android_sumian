@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.helpdesk.model.RobotMenuInfo;
@@ -18,7 +19,7 @@ import com.hyphenate.util.DensityUtil;
 
 import java.util.Collection;
 
-public class ChatRowRobotMenu extends ChatRow{
+public class ChatRowRobotMenu extends ChatRow {
 
     TextView tvTitle;
     LinearLayout tvList;
@@ -30,8 +31,8 @@ public class ChatRowRobotMenu extends ChatRow{
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.night_hd_row_received_menu
-                : R.layout.night_hd_row_sent_message, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_menu : R.layout.night_hd_row_received_menu)
+                : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_message : R.layout.night_hd_row_sent_message), this);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class ChatRowRobotMenu extends ChatRow{
     @Override
     protected void onSetUpView() {
         RobotMenuInfo info;
-        if((info = MessageHelper.getRobotMenu(message)) != null){
+        if ((info = MessageHelper.getRobotMenu(message)) != null) {
             tvTitle.setText(info.getTitle());
             setRobotMenuMessageLayout(tvList, info);
         }
@@ -58,13 +59,13 @@ public class ChatRowRobotMenu extends ChatRow{
     protected void onBubbleClick() {
     }
 
-    private void setRobotMenuMessageLayout(LinearLayout parentView, final RobotMenuInfo menuInfo){
+    private void setRobotMenuMessageLayout(LinearLayout parentView, final RobotMenuInfo menuInfo) {
 
         parentView.removeAllViews();
 
-        if (menuInfo.getItems() != null && !menuInfo.getItems().isEmpty()){
+        if (menuInfo.getItems() != null && !menuInfo.getItems().isEmpty()) {
             Collection<RobotMenuInfo.Item> items = menuInfo.getItems();
-            for(RobotMenuInfo.Item item : items) {
+            for (RobotMenuInfo.Item item : items) {
                 final String content = item.getName();
                 final String menuId = item.getId();
                 final TextView textView = new TextView(context);
@@ -81,19 +82,19 @@ public class ChatRowRobotMenu extends ChatRow{
                         ChatClient.getInstance().chatManager().sendMessage(sendMessage);
                     }
                 });
-                LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 llLp.bottomMargin = DensityUtil.dip2px(context, 3);
                 llLp.topMargin = DensityUtil.dip2px(context, 3);
                 parentView.addView(textView, llLp);
             }
-        }else if (menuInfo.getList() != null && !menuInfo.getList().isEmpty()){
+        } else if (menuInfo.getList() != null && !menuInfo.getList().isEmpty()) {
             Collection<String> items = menuInfo.getList();
-            for (final String content : items){
+            for (final String content : items) {
                 final TextView textView = new TextView(context);
                 textView.setText(content);
                 textView.setTextSize(15);
                 textView.setTextColor(context.getResources().getColorStateList(R.color.hd_menu_msg_text_color));
-                textView.setOnClickListener(new View.OnClickListener(){
+                textView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -101,7 +102,7 @@ public class ChatRowRobotMenu extends ChatRow{
                         ChatClient.getInstance().chatManager().sendMessage(sendMessage);
                     }
                 });
-                LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 llLp.bottomMargin = DensityUtil.dip2px(context, 3);
                 llLp.topMargin = DensityUtil.dip2px(context, 3);
                 parentView.addView(textView, llLp);

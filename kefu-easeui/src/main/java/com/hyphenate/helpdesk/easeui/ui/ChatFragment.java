@@ -139,7 +139,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.night_hd_fragment_chat, container, false);
+        return inflater.inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_fragment_chat : R.layout.night_hd_fragment_chat, container, false);
     }
 
     @Override
@@ -238,7 +238,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
 
         swipeRefreshLayout = messageList.getSwipeRefreshLayout();
         swipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light,
-            R.color.holo_orange_light, R.color.holo_red_light);
+                R.color.holo_orange_light, R.color.holo_red_light);
 
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -302,18 +302,18 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
             //  titleBar.setTitle(toChatUsername);
         }
 
-        titleBar.setRightImageResource(R.drawable.hd_mm_title_remove);
+        mEaseTitleBar.setRightImageResource(R.drawable.hd_mm_title_remove);
 
         onConversationInit();
         onMessageListInit();
 
         // 设置标题栏点击事件
-        titleBar.setLeftLayoutClickListener(v -> {
+        mEaseTitleBar.setLeftLayoutClickListener(v -> {
             if (getActivity() != null) {
                 getActivity().finish();
             }
         });
-        titleBar.setRightLayoutClickListener(v -> emptyHistory());
+        mEaseTitleBar.setRightLayoutClickListener(v -> emptyHistory());
         setRefreshLayoutListener();
     }
 
@@ -362,7 +362,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
     @SuppressLint("ClickableViewAccessibility")
     protected void onMessageListInit() {
         messageList.init(toChatUsername, chatFragmentListener != null ?
-            chatFragmentListener.onSetCustomChatRowProvider() : null);
+                chatFragmentListener.onSetCustomChatRowProvider() : null);
         //设置list item里的控件的点击事件
         setListItemClickListener();
 
@@ -438,7 +438,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
                             List<Message> messages = null;
                             try {
                                 messages = conversation.loadMessages(messageList.getItem(0).messageId(),
-                                    pagesize);
+                                        pagesize);
                             } catch (Exception e1) {
                                 swipeRefreshLayout.setRefreshing(false);
                                 return;
@@ -456,7 +456,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
 
                         } else {
                             Toast.makeText(getActivity(), getResources().getString(R.string.no_more_messages),
-                                Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -718,7 +718,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         }
         try {
             File cameraFile = new File(PathUtil.getInstance().getImagePath(), ChatClient.getInstance().currentUserName()
-                + System.currentTimeMillis() + ".jpg");
+                    + System.currentTimeMillis() + ".jpg");
             cameraFilePath = cameraFile.getAbsolutePath();
             if (!cameraFile.getParentFile().exists()) {
                 cameraFile.getParentFile().mkdirs();
@@ -785,7 +785,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
             if (getActivity().getCurrentFocus() != null)
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS);
+                        InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 

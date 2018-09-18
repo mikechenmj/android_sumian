@@ -14,10 +14,12 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.sd.R;
+import com.sumian.sd.app.App;
 import com.sumian.sd.doctor.activity.DoctorServiceWebActivity;
 import com.sumian.sd.doctor.bean.Doctor;
 import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.kefu.KefuManager;
+import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 import com.sumian.sd.widget.dialog.theme.LightTheme;
 import com.sumian.sd.widget.fold.FoldLayout;
@@ -80,6 +82,7 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
         this.tvDepartment.setText(String.format(Locale.getDefault(), "%s %s", doctor.getHospital(), doctor.getDepartment()));
         this.foldLayout.setText(doctor.getIntroduction_no_tag());
         mIvCustomerService.setOnClickListener(v -> {
+            UIProvider.getInstance().setThemeMode(SkinConfig.isInNightMode(App.getAppContext()) ? 0x02 : 0x01);
             UIProvider.getInstance().clearCacheMsg();
             KefuManager.launchKefuActivity();
         });

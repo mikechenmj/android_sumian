@@ -3,4 +3,4 @@
     android:id="@+id/emojicon"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/deep_content_bg_color" />
+    android:background="#F2F3F5" />

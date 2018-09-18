@@ -16,9 +16,11 @@ import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.account.userProfile.HwUserInfoActivity;
 import com.sumian.sd.account.userProfile.HwUserInfoContract;
+import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.main.OnEnterListener;
+import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.utils.ColorCompatUtil;
 import com.sumian.sd.widget.divider.SettingDividerView;
 
@@ -91,6 +93,7 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
                 break;
             case R.id.siv_customer_service:
                 UIProvider.getInstance().clearCacheMsg();
+                UIProvider.getInstance().setThemeMode(SkinConfig.isInNightMode(App.getAppContext()) ? 0x02 : 0x01);
                 KefuManager.launchKefuActivity();
                 break;
             case R.id.siv_setting:

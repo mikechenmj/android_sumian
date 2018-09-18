@@ -13,6 +13,7 @@ import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.util.SmileUtils;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.helpdesk.model.ToCustomServiceInfo;
@@ -31,8 +32,8 @@ public class ChatRowTransferToKefu extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.night_hd_row_received_transfertokefu
-                : R.layout.night_hd_row_sent_transfertokefu, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_transfertokefu : R.layout.night_hd_row_received_transfertokefu)
+                : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_transfertokefu : R.layout.night_hd_row_sent_transfertokefu), this);
     }
 
     @Override
@@ -50,13 +51,13 @@ public class ChatRowTransferToKefu extends ChatRow {
     @Override
     protected void onSetUpView() {
         final ToCustomServiceInfo toCustomServiceInfo;
-        if ((toCustomServiceInfo = MessageHelper.getToCustomServiceInfo(message)) != null){
+        if ((toCustomServiceInfo = MessageHelper.getToCustomServiceInfo(message)) != null) {
             EMTextMessageBody txtBody = (EMTextMessageBody) message.body();
             Spannable span = SmileUtils.getSmiledText(context, txtBody.getMessage());
             // 设置内容
             tvContent.setText(span, TextView.BufferType.SPANNABLE);
             String btnLable = toCustomServiceInfo.getLable();
-            if (!TextUtils.isEmpty(btnLable)){
+            if (!TextUtils.isEmpty(btnLable)) {
                 btnTransfer.setText(btnLable);
             }
             btnTransfer.setOnClickListener(new OnClickListener() {
@@ -69,8 +70,8 @@ public class ChatRowTransferToKefu extends ChatRow {
         }
     }
 
-    private void sendToCustomServiceMessage(ToCustomServiceInfo info){
-        if (TextUtils.isEmpty(info.getId()) || TextUtils.isEmpty(info.getServiceSessionId())){
+    private void sendToCustomServiceMessage(ToCustomServiceInfo info) {
+        if (TextUtils.isEmpty(info.getId()) || TextUtils.isEmpty(info.getServiceSessionId())) {
             return;
         }
 

@@ -13,6 +13,7 @@ import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.account.userProfile.SdUserProfileActivity;
+import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
 import com.sumian.sd.h5.SleepFileWebActivity;
@@ -25,6 +26,7 @@ import com.sumian.sd.service.advisory.activity.AdvisoryListActivity;
 import com.sumian.sd.service.diary.DiaryEvaluationListActivity;
 import com.sumian.sd.service.tel.activity.TelBookingListActivity;
 import com.sumian.sd.setting.SettingActivity;
+import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.widget.tips.PatientRecordTips;
 import com.sumian.sd.widget.tips.PatientServiceTips;
 
@@ -106,6 +108,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
                 break;
             case R.id.siv_customer_service:
                 UIProvider.getInstance().clearCacheMsg();
+                UIProvider.getInstance().setThemeMode(SkinConfig.isInNightMode(App.getAppContext()) ? 0x02 : 0x01);
                 KefuManager.launchKefuActivity();
                 break;
             default:

@@ -9,7 +9,7 @@
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
         android:layout_height="62dp"
-        android:background="#ff2c2f37"
+        android:background="#ffffffff"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
