@@ -65,12 +65,7 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
                         mPatternValues.add(value)
                         cmdList.add(cmd)
                     }
-                    val patternAlreadySent = isPatternAlreadySent(mPatternValues)
-                    if (!patternAlreadySent) {
-                        sendDataToDevice(cmdList)
-                    } else {
-                        stopSelf()
-                    }
+                    sendDataToDevice(cmdList)
                 }
             }
 
@@ -95,7 +90,7 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
 
     override fun onSendSuccess(bluePeripheral: BluePeripheral?, data: ByteArray?) {
         if (isPatternCmd(data)) {
-            LogManager.appendMonitorLog("0x4a pattern数据 APP 发送成功")
+            LogManager.appendMonitorLog("0x4a pattern数据 APP 发送：${BlueCmd.bytes2HexString(data)} ")
         }
     }
 
@@ -106,11 +101,12 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
         if (isPatternCmd(bytes)) {
             val data = BlueCmd.bytes2HexString(bytes)
             LogUtils.d(data)
+            LogManager.appendMonitorLog("0x4a pattern数据 监测仪 回执：${BlueCmd.bytes2HexString(bytes)}")
             if (data.endsWith("88")) {
                 val patternIndex = data.substring(6, 10)
                 mSuccessReceivedPattern.add(patternIndex)
                 if (mSuccessReceivedPattern.size == mPatternValues.size) {
-                    LogManager.appendMonitorLog("0x4a pattern数据 监测仪 接收完毕")
+                    LogManager.appendMonitorLog("0x4a pattern数据 监测仪 全部接收完毕")
                     persistPattern(JsonUtil.toJson(mPatternValues))
                 }
             }
@@ -126,7 +122,7 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
         if (data == null || data.length < 4) {
             return false
         }
-        return data.startsWith("554a")
+        return data.startsWith("554a") || data.startsWith("aa4a")
     }
 
     private fun stop() {
@@ -156,8 +152,8 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
         return JsonUtil.fromJson<List<String>>(json, object : TypeToken<List<String>>() {}.type)
     }
 
+    @Suppress("unused")
     private fun isPatternAlreadySent(data: List<String>?): Boolean {
         return data != null && data == getPersistPattern()
-//        return false
     }
 }

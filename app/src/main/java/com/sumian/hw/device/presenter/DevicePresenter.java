@@ -364,6 +364,9 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
             case "8f": // 透传数据
                 receiveSleepData(peripheral, data, cmd);
                 break;
+            case "4a":
+                // do nothing
+                break;
             default:
                 peripheral.write(BlueCmd.cResponseOk(data[1]));
                 break;
