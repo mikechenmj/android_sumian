@@ -1,28 +1,26 @@
 package com.sumian.sd.homepage
 
 import android.arch.lifecycle.Observer
-import android.text.format.DateUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
-import com.sumian.sd.event.*
+import com.sumian.sd.event.CBTIProgressChangeEvent
+import com.sumian.sd.event.CBTIServiceBoughtEvent
+import com.sumian.sd.event.EventBusUtil
+import com.sumian.sd.event.SleepRecordFilledEvent
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SleepPrescription
-import com.sumian.sd.homepage.bean.SleepPrescriptionWrapper
-import com.sumian.sd.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseResponseCallback
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
-import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -36,16 +34,12 @@ import org.greenrobot.eventbus.Subscribe
  * </pre>
  */
 class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View, OnEnterListener {
-    private var mSleepPrescriptionWrapper: SleepPrescriptionWrapper? = null
-
     override fun getLayoutId(): Int {
         return R.layout.fragment_homepage
     }
 
     companion object {
-        const val REQUEST_CODE_FILL_SLEEP_RECORD = 1
         const val SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME = "update_sleep_prescription_time"
-        const val REFRESH_DATA_INTERVAL = DateUtils.MINUTE_IN_MILLIS * 1
     }
 
     override fun initWidget(root: View) {
@@ -91,9 +85,9 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         SPUtils.getInstance().put(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, System.currentTimeMillis())
         val call = AppManager.getHttpService().getSleepPrescriptions()
         addCall(call)
-        call.enqueue(object : BaseResponseCallback<SleepPrescriptionWrapper>() {
-            override fun onSuccess(response: SleepPrescriptionWrapper?) {
-                updateSleepPrescription(response)
+        call.enqueue(object : BaseResponseCallback<SleepPrescription?>() {
+            override fun onSuccess(response: SleepPrescription?) {
+                sleep_prescription_view.setPrescriptionData(response)
             }
 
             override fun onFailure(code: Int, message: String) {
@@ -101,11 +95,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
             }
         })
 
-    }
-
-    private fun updateSleepPrescription(response: SleepPrescriptionWrapper?) {
-        sleep_prescription_view.setPrescriptionData(response)
-        mSleepPrescriptionWrapper = response
     }
 
     private fun querySleepRecord() {
@@ -152,12 +141,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     fun onCBTIProgressChangeEvent(event: CBTIProgressChangeEvent) {
         EventBusUtil.removeStickyEvent(event)
         queryCbti()
-    }
-
-    @Subscribe(sticky = true)
-    fun onSleepSubscriptionUpdatedEvent(event: SleepPrescriptionUpdatedEvent) {
-        EventBusUtil.removeStickyEvent(event)
-        updateSleepPrescription(event.sleepPrescriptionWrapper)
     }
 
     @Subscribe(sticky = true)
