@@ -104,5 +104,5 @@
     <dimen name="sd_homepage_title_bar_height">44dp</dimen>
     <dimen name="home_page_sleep_data_view_height">330dp</dimen>
     <dimen name="home_page_pager_max_margin">42dp</dimen>
-    <dimen name="home_page_pager_min_margin">10dp</dimen>
+    <dimen name="home_page_pager_min_margin">0dp</dimen>
 </resources>

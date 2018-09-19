@@ -41,7 +41,7 @@ class SleepDataPagerView(context: Context, attributeSet: AttributeSet) : FrameLa
         LayoutInflater.from(context).inflate(R.layout.lay_sleep_data_pager, this, true)
         clipChildren = false
         view_pager.adapter = mAdapter
-        view_pager.pageMargin = resources.getDimension(R.dimen.space_10).toInt()
+//        view_pager.pageMargin = resources.getDimension(R.dimen.space_10).toInt()
         view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
