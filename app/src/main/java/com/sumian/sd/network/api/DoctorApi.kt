@@ -331,4 +331,7 @@ interface DoctorApi {
                             @Query("include") include: String?,
                             @Query("page") page: Int = 1,
                             @Query("per_page") perPage: Int = 10): Call<DiaryEvaluationsResponse>
+
+    @GET("diary-evaluation/latest")
+    fun getLatestDiaryEvaluation(@Query("include") include: String? = null): Call<DiaryEvaluationData>
 }
