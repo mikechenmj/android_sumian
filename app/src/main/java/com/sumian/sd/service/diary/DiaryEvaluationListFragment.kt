@@ -106,7 +106,7 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
                     }
                     if (response != null) {
                         val pagination = response.meta.pagination
-                        if (pagination.currentPage == pagination.totalPages) {
+                        if (pagination.currentPage >= pagination.totalPages) {
                             mAdapter.loadMoreEnd()
                         } else {
                             mAdapter.loadMoreComplete()
