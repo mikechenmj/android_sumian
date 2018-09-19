@@ -42,6 +42,7 @@
     <!--navigation color-->
     <color name="n1_color_day">#ff6595f4</color>
     <color name="n2_color_day">#ffffffff</color>
+    <color name="n2_alpha_40_color_day">#66ffffff</color>
 
     <!--night  theme-->
 
@@ -84,5 +85,6 @@
     <!--navigation color-->
     <color name="n1_color_night">#ff363a47</color>
     <color name="n2_color_night">#ff7ea5f4</color>
+    <color name="n2_alpha_40_color_night">#667ea5f4</color>
 
 </resources>

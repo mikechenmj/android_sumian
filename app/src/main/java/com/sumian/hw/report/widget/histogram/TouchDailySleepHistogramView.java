@@ -176,7 +176,7 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
         mCoordinatePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mCoordinatePaint.setColor(mCoordinateColor);
         mCoordinatePaint.setStrokeCap(Paint.Cap.ROUND);
-        float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics());
+        float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics());
 
         mCoordinatePaint.setStrokeWidth(width);
         mCoordinatePaint.setStyle(Paint.Style.STROKE);
@@ -443,7 +443,7 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
         mHorizontalPath.moveTo(segmentStartX, mContentHeight - 2.5f * mTextBounds.height());
         mHorizontalPath.lineTo(getPaddingLeft() + mContentWidth - mDefaultPadding, mContentHeight - 2.5f * mTextBounds.height());
         mCoordinatePaint.setStyle(Paint.Style.STROKE);
-        float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics());
+        float width = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics());
         mCoordinatePaint.setStrokeWidth(width);
         mCoordinatePaint.setColor(mCoordinateColor);
         canvas.drawPath(mHorizontalPath, mCoordinatePaint);
@@ -462,6 +462,46 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
                 break;
         }
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200.0f, getResources().getDisplayMetrics());
+    }
+
+    public void setCoordinateColor(int coordinateColor) {
+        mCoordinateColor = coordinateColor;
+        invalidate();
+    }
+
+    public void setTextColor(int textColor) {
+        mTextColor = textColor;
+        invalidate();
+    }
+
+    public void setEmptyLabelTextColor(int emptyLabelTextColor) {
+        mEmptyLabelTextColor = emptyLabelTextColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setSoberColor(int soberColor) {
+        mSoberColor = soberColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setLightColor(int lightColor) {
+        mLightColor = lightColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setEogColor(int eogColor) {
+        mEogColor = eogColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setDeepColor(int deepColor) {
+        mDeepColor = deepColor;
+        requestLayout();
+        invalidate();
     }
 
     /**

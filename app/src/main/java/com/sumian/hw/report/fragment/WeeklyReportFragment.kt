@@ -224,7 +224,7 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
     }
 
     private fun getViewHolder(position: Int): WeeklyReportAdapter.ViewHolder? {
-        return recycler.findViewHolderForAdapterPosition(position) as WeeklyReportAdapter.ViewHolder
+        return recycler.findViewHolderForAdapterPosition(position) as? WeeklyReportAdapter.ViewHolder
     }
 
     /**

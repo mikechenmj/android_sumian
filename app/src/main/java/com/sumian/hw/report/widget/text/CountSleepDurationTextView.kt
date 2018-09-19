@@ -2,7 +2,10 @@ package com.sumian.hw.report.widget.text
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextUtils
+import android.text.style.AbsoluteSizeSpan
 import android.util.AttributeSet
 import android.widget.TextView
 import com.qmuiteam.qmui.util.QMUISpanHelper
@@ -46,6 +49,26 @@ class CountSleepDurationTextView : TextView {
             TextUtils.concat(charSequence, " ")
         } else {
             TimeUtil.formatSleepDurationText(second, numberTextSize, unitTextSize)
+        }
+    }
+
+    /**
+     * 设置睡眠百分比
+     */
+    fun setPercent(percent: Int?) {
+        text = if (percent == null || percent == 0) {
+            defaultDrawable?.setTint(currentTextColor)
+            val charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", defaultDrawable)
+            TextUtils.concat(charSequence, " ")
+        } else {
+            val percentSpannableBuilder = SpannableStringBuilder(percent.toString())
+            val percentTextSizeSpan = AbsoluteSizeSpan(numberTextSize)
+            percentSpannableBuilder.setSpan(percentTextSizeSpan, 0, percentSpannableBuilder.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+
+            val unitSpannableBuilder = SpannableStringBuilder("%")
+            val unitTextSizeSpan = AbsoluteSizeSpan(unitTextSize)
+            unitSpannableBuilder.setSpan(unitTextSizeSpan, 0, unitSpannableBuilder.length, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            TextUtils.concat(percentSpannableBuilder, unitSpannableBuilder)
         }
     }
 

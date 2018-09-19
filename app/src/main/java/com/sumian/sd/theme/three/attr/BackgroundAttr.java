@@ -12,6 +12,7 @@ import com.sumian.sd.theme.three.utils.SkinResourcesUtils;
  * Date:2016/4/13
  * Time:21:46
  */
+@SuppressWarnings("ALL")
 public class BackgroundAttr extends SkinAttr {
 
     @Override

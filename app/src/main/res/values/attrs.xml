@@ -291,4 +291,13 @@
         <attr name="csdtv_default_drawable" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="TabIndicatorItemView">
+        <attr name="enable_tab" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="BlueRefreshView">
+        <attr name="brv_progress_color" format="color|reference" />
+        <attr name="brv_progress_bg_color" format="reference|color" />
+    </declare-styleable>
+
 </resources>

@@ -27,4 +27,17 @@ public class ImageViewSrcAttr extends SkinAttr {
             }
         }
     }
+
+    @Override
+    protected void applyNightMode(View view) {
+        super.applyNightMode(view);
+        if (view instanceof ImageView) {
+            ImageView iv = (ImageView) view;
+            if (isDrawable()) {
+                iv.setImageDrawable(SkinResourcesUtils.getNightDrawable(attrValueRefName));
+            } else if (isColor()) {
+                iv.setImageDrawable(new ColorDrawable(SkinResourcesUtils.getNightColor(attrValueRefId)));
+            }
+        }
+    }
 }

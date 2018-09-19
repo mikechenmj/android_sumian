@@ -36,7 +36,24 @@ import com.sumian.sd.network.engine.NetEngine;
 import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
 import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.theme.three.attr.CardViewAttr;
+import com.sumian.sd.theme.three.attr.ColorfulProgressRingBgAttr;
 import com.sumian.sd.theme.three.attr.CountSleepDurationTextViewAttr;
+import com.sumian.sd.theme.three.attr.SleepAvgAndCompareAttr;
+import com.sumian.sd.theme.three.attr.SwipeRefreshLayoutAttr;
+import com.sumian.sd.theme.three.attr.SwipeRefreshLayoutBgAttr;
+import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewCoordinateAttr;
+import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewDeepAttr;
+import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewEmptyLableTextAttr;
+import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewEogAttr;
+import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewLightAttr;
+import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewSoberAttr;
+import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewTextAttr;
+import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewCoordinateAttr;
+import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewDeepAttr;
+import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewEogAttr;
+import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewLableTextAttr;
+import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewLightTextAttr;
+import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewSoberTextAttr;
 import com.sumian.sd.theme.three.loader.SkinManager;
 
 /**
@@ -180,7 +197,30 @@ public final class AppManager {
         SkinConfig.setDebug(true);
         SkinConfig.addSupportAttr("csdtv_default_drawable", new CountSleepDurationTextViewAttr());
         SkinConfig.addSupportAttr("cardBackgroundColor", new CardViewAttr());
-        //SkinConfig.addSupportAttr("backgroud", new BackgroundAttr());
+        SkinConfig.addSupportAttr("brv_progress_color", new SwipeRefreshLayoutAttr());
+        SkinConfig.addSupportAttr("brv_progress_bg_color", new SwipeRefreshLayoutBgAttr());
+
+        SkinConfig.addSupportAttr("tdshv_coordinate_color", new TouchDailySleepHistogramViewCoordinateAttr());
+        SkinConfig.addSupportAttr("tdshv_deep_color", new TouchDailySleepHistogramViewDeepAttr());
+        SkinConfig.addSupportAttr("tdshv_empty_text_color", new TouchDailySleepHistogramViewEmptyLableTextAttr());
+        SkinConfig.addSupportAttr("tdshv_eog_color", new TouchDailySleepHistogramViewEogAttr());
+        SkinConfig.addSupportAttr("tdshv_light_color", new TouchDailySleepHistogramViewLightAttr());
+        SkinConfig.addSupportAttr("tdshv_sober_color", new TouchDailySleepHistogramViewSoberAttr());
+        SkinConfig.addSupportAttr("tdshv_label_text_color", new TouchDailySleepHistogramViewTextAttr());
+
+        SkinConfig.addSupportAttr("coordinate_color", new WeekSleepHistogramViewCoordinateAttr());
+        SkinConfig.addSupportAttr("deep_color", new WeekSleepHistogramViewDeepAttr());
+        SkinConfig.addSupportAttr("eog_color", new WeekSleepHistogramViewEogAttr());
+        SkinConfig.addSupportAttr("light_color", new WeekSleepHistogramViewLightTextAttr());
+        SkinConfig.addSupportAttr("sober_color", new WeekSleepHistogramViewSoberTextAttr());
+        SkinConfig.addSupportAttr("label_text_color", new WeekSleepHistogramViewLableTextAttr());
+
+        SkinConfig.addSupportAttr("label_icon", new SleepAvgAndCompareAttr());
+
+        SkinConfig.addSupportAttr("cpv_ring_bg_color", new ColorfulProgressRingBgAttr());
+        //SkinConfig.addSupportAttr("label_icon", new SleepAvgAndCompareAttr());
+
+
         SkinConfig.enableGlobalSkinApply();
     }
 

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
@@ -15,18 +16,15 @@
         android:gravity="center"
         android:text="@string/light_sleep_duration"
         android:textColor="@color/t2_color_day"
-        skin:enable="true" />
+        skin:enable="true"
+        tools:ignore="MissingPrefix" />
 
-    <com.sumian.hw.report.widget.SleepPercentTextView
+    <com.sumian.hw.report.widget.text.PercentTextView
         android:id="@+id/tv_sleep_duration_percent"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/space_80"
+        android:layout_height="@dimen/space_80"
         android:layout_marginTop="@dimen/space_10"
         android:gravity="center"
-        android:hint="@string/short_none_duration_hint"
-        android:textColor="@color/bt_hole_color"
-        android:textColorHint="@color/bt_hole_color"
-        android:textSize="@dimen/font_20"
         skin:enable="true" />
 
     <com.sumian.hw.report.widget.text.CountSleepDurationTextView

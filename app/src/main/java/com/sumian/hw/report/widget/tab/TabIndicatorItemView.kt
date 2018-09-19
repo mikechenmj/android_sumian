@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.FrameLayout
 import com.sumian.common.widget.voice.IVisible
 import com.sumian.sd.R
-import com.sumian.sd.theme.ViewAttributeUtil
 import kotlinx.android.synthetic.main.hw_lay_tab_dot.view.*
 
 /**
@@ -20,14 +19,21 @@ import kotlinx.android.synthetic.main.hw_lay_tab_dot.view.*
 class TabIndicatorItemView : FrameLayout, View.OnClickListener, IVisible {
 
     private var mOnSelectTabCallback: OnSelectTabCallback? = null
+    private var mEnableTab = false
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        ViewAttributeUtil.applyBackgroundDrawable(this, context.theme, ViewAttributeUtil.getBackgroundAttribute(attrs))
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.TabIndicatorItemView, defStyleAttr, defStyleRes)
+
+        mEnableTab = attributes.getBoolean(R.styleable.TabIndicatorItemView_enable_tab, false)
+
+        attributes.recycle()
         setOnClickListener(this)
         initView(context)
     }
+
 
     private fun initView(context: Context) {
         setPadding(0, resources.getDimensionPixelSize(R.dimen.space_32), 0, resources.getDimensionPixelSize(R.dimen.space_14))
@@ -43,15 +49,18 @@ class TabIndicatorItemView : FrameLayout, View.OnClickListener, IVisible {
 
     override fun onClick(v: View) {
         tv_tab_text.isActivated = true
+        mEnableTab = tv_tab_text.isActivated
         mOnSelectTabCallback?.onSelect(v, tv_tab_text.isActivated)
     }
 
     fun unSelect() {
         tv_tab_text.isActivated = false
+        mEnableTab = tv_tab_text.isActivated
     }
 
     fun select() {
         tv_tab_text.isActivated = true
+        mEnableTab = tv_tab_text.isActivated
     }
 
     fun setIndicatorText(text: String) {
@@ -70,6 +79,10 @@ class TabIndicatorItemView : FrameLayout, View.OnClickListener, IVisible {
 
     fun hideDot() {
         v_tab_dot.visibility = View.GONE
+    }
+
+    fun isEnableTab(): Boolean {
+        return mEnableTab
     }
 
     override fun show() {
