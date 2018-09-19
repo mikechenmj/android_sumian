@@ -28,17 +28,14 @@ import com.sumian.sd.widget.webview.SWebView
 class SleepPrescriptionSettingActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
     companion object {
-        private const val KEY_DATA = "data"
 
-        fun launch(sleepPrescriptionWrapper: SleepPrescriptionWrapper) {
-            val bundle = Bundle()
-            bundle.putString(KEY_DATA, JsonUtil.toJson(sleepPrescriptionWrapper))
-            ActivityUtils.startActivity(bundle, SleepPrescriptionSettingActivity::class.java)
+        fun launch() {
+            ActivityUtils.startActivity(SleepPrescriptionSettingActivity::class.java)
         }
     }
 
     override fun getUrlContentPart(): String {
-        return H5Uri.SLEEP_PRESCRIPTION.replace("{data}", intent.getStringExtra(KEY_DATA))
+        return H5Uri.SLEEP_PRESCRIPTION
     }
 
     override fun registerHandler(sWebView: SWebView) {
