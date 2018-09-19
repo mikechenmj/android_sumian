@@ -330,7 +330,7 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
             if (monitoringMode == BlueDevice.MONITORING_CMD_CLOSE) {
                 new SumianAlertDialog(getContext())
                         .setTheme(new BlackTheme())
-                        .goneTopIcon(true)
+                        .hideTopIcon(true)
                         .setTitle(R.string.turn_off_monitoring_mode_title)
                         .setMessage(R.string.turn_off_monitoring_mode_message)
                         .setLeftBtn(R.string.cancel, null)

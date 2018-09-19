@@ -89,7 +89,7 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
 
         mDoctorDetailLayout.setOnClickListener(v -> new SumianAlertDialog(getContext())
                 .setTheme(new LightTheme())
-                .goneTopIcon(true)
+                .hideTopIcon(true)
                 .setTitle(R.string.doctor_info)
                 .setCloseIconVisible(true)
                 .setMessage(doctor.getIntroduction_no_tag())

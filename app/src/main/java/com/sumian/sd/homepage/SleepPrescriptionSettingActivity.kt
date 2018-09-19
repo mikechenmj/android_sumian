@@ -1,10 +1,11 @@
 package com.sumian.sd.homepage
 
-import android.os.Bundle
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
+import com.sumian.sd.R
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.event.EventBusUtil
@@ -13,6 +14,7 @@ import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.bean.H5BaseResponse
 import com.sumian.sd.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sd.utils.JsonUtil
+import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
 import com.sumian.sd.widget.webview.SBridgeHandler
 import com.sumian.sd.widget.webview.SWebView
 
@@ -34,6 +36,17 @@ class SleepPrescriptionSettingActivity : SdBaseWebViewActivity<SdBasePresenter<*
         }
     }
 
+    override fun initWidget(root: View?) {
+        super.initWidget(root)
+        mTitleBar.showMoreIcon(R.drawable.ic_nav_icon_sleep_prescription_details)
+        mTitleBar.setOnMenuClickListener {
+            SumianTitleMessageDialog(this)
+                    .setTitle(resources.getString(R.string.sleep_prescription_introduction_title))
+                    .setMessage(resources.getString(R.string.sleep_prescription_introduction_content))
+                    .show()
+        }
+    }
+
     override fun getUrlContentPart(): String {
         return H5Uri.SLEEP_PRESCRIPTION
     }
@@ -46,7 +59,8 @@ class SleepPrescriptionSettingActivity : SdBaseWebViewActivity<SdBasePresenter<*
                 val type = object : TypeToken<H5BaseResponse<SleepPrescriptionWrapper>>() {}.type
                 val response = JsonUtil.fromJson<H5BaseResponse<SleepPrescriptionWrapper>>(data, type)
                         ?: return
-                EventBusUtil.postStickyEvent(SleepPrescriptionUpdatedEvent(response.result ?: return))
+                EventBusUtil.postStickyEvent(SleepPrescriptionUpdatedEvent(response.result
+                        ?: return))
                 finish()
             }
         })

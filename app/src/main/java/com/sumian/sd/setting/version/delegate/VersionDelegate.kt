@@ -58,7 +58,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         if (isHaveForce) {
             SumianAlertDialog(mActivity)
                     .setTheme(createTheme())
-                    .goneTopIcon(true)
+                    .hideTopIcon(true)
                     .setTitle(R.string.version_upgrade)
                     .setMessage(R.string.force_upgrade_version)
                     .setRightBtn(R.string.sure, this)
