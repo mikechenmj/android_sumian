@@ -9,11 +9,11 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.widget.TitleBar;
+import com.hyphenate.helpdesk.easeui.widget.EaseTitleBar;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected TitleBar titleBar;
+    protected EaseTitleBar mEaseTitleBar;
     protected InputMethodManager inputMethodManager;
 
     @Override
@@ -21,7 +21,7 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (getView() != null)
-            titleBar = (TitleBar) getView().findViewById(R.id.title_bar);
+            mEaseTitleBar = (EaseTitleBar) getView().findViewById(R.id.title_bar);
 
         initView();
         setUpView();
@@ -31,8 +31,8 @@ public abstract class BaseFragment extends Fragment {
      * 显示标题栏
      */
     public void ShowTitleBar() {
-        if (titleBar != null) {
-            titleBar.setVisibility(View.VISIBLE);
+        if (mEaseTitleBar != null) {
+            mEaseTitleBar.setVisibility(View.VISIBLE);
         }
     }
 
@@ -40,8 +40,8 @@ public abstract class BaseFragment extends Fragment {
      * 隐藏标题栏
      */
     public void hideTitleBar() {
-        if (titleBar != null) {
-            titleBar.setVisibility(View.GONE);
+        if (mEaseTitleBar != null) {
+            mEaseTitleBar.setVisibility(View.GONE);
         }
     }
 

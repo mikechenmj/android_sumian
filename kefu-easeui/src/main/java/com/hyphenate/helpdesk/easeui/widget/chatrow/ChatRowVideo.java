@@ -1,6 +1,7 @@
 package com.hyphenate.helpdesk.easeui.widget.chatrow;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,12 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMVideoMessageBody;
-import com.hyphenate.chat.ChatClient;
-import com.hyphenate.helpdesk.R;
 import com.hyphenate.chat.Message;
+import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.ImageCache;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.ui.ShowVideoActivity;
 import com.hyphenate.helpdesk.easeui.util.CommonUtils;
 import com.hyphenate.helpdesk.util.Log;
@@ -38,7 +40,7 @@ public class ChatRowVideo extends ChatRowFile {
     @Override
     protected void onInflatView() {
         inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                R.layout.hd_row_received_video : R.layout.hd_row_sent_video, this);
+                (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_video : R.layout.night_hd_row_received_video) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_video : R.layout.night_hd_row_sent_video), this);
     }
 
     @Override
@@ -117,6 +119,7 @@ public class ChatRowVideo extends ChatRowFile {
      * @param thumbnailUrl 远程缩略图路径
      * @param message
      */
+    @SuppressLint("StaticFieldLeak")
     private void showVideoThumbView(final String localThumb, final ImageView iv, String thumbnailUrl, final Message message) {
         // first check if the thumbnail image already loaded into cache
         Bitmap bitmap = ImageCache.getInstance().get(localThumb);

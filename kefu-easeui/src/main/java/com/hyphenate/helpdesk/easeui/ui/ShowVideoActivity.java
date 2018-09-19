@@ -36,7 +36,7 @@ public class ShowVideoActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.hd_showvideo_activity);
+        setContentView(R.layout.night_hd_showvideo_activity);
         loadingLayout = (RelativeLayout) findViewById(R.id.loading_layout);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         final Message message = getIntent().getParcelableExtra("msg");

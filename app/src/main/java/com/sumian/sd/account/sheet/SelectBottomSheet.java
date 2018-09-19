@@ -8,14 +8,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.sd.account.login.ModifySelectContract;
-import com.sumian.sd.account.login.ModifyUserInfoContract;
-import com.sumian.sd.account.login.ModifySelectPresenter;
 import com.sumian.hw.assessment.AssessmentUserInfoActivity;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.account.login.ModifySelectContract;
+import com.sumian.sd.account.login.ModifySelectPresenter;
+import com.sumian.sd.account.login.ModifyUserInfoContract;
 import com.sumian.sd.app.AppManager;
 
 import java.util.Calendar;
@@ -251,12 +251,15 @@ public class SelectBottomSheet extends BottomSheetView implements View.OnClickLi
                 break;
             case ModifyUserInfoContract.KEY_AREA:
                 String province;
-                if (id == R.id.picker_one) {
-                    province = picker.getContentByCurrValue();
-                    mPresenter.transformCityForProvince(province);
-                } else if (id == R.id.picker_one) {
-                    String city = picker.getContentByCurrValue();
-                    mPresenter.transformAreaForCity(city);
+                switch (picker.getId()) {
+                    case R.id.picker_one:
+                        province = picker.getContentByCurrValue();
+                        mPresenter.transformCityForProvince(province);
+                        break;
+                    case R.id.picker_two:
+                        String city = picker.getContentByCurrValue();
+                        mPresenter.transformAreaForCity(city);
+                        break;
                 }
                 break;
             default:

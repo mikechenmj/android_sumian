@@ -1,6 +1,6 @@
 package com.sumian.hw.report.viewModel;
 
-import com.sumian.hw.report.dailyreport.DailyReport;import com.sumian.hw.report.dailyreport.DailyReport;
+import com.sumian.hw.report.bean.DailyReport;
 
 import java.util.Calendar;
 

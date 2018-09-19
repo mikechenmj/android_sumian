@@ -20,8 +20,6 @@ import com.sumian.sd.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sd.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseResponseCallback
-import com.sumian.sd.record.FillSleepRecordActivity
-import com.sumian.sd.record.SleepRecordActivity
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import com.sumian.sd.widget.dialog.SumianAlertDialog

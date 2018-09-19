@@ -1,14 +1,15 @@
 package com.sumian.sd.main
 
 import android.support.v4.app.Fragment
+import android.view.View
 import com.hyphenate.helpdesk.easeui.UIProvider
+import com.sumian.hw.base.HwBasePresenter
 import com.sumian.hw.device.fragment.DeviceFragment
-import com.sumian.hw.report.ReportFragment
-import com.sumian.hw.tab.HwMeFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.network.callback.BaseResponseCallback
+import com.sumian.hw.report.ReportFragment
+import com.sumian.hw.tab.HwMeFragment
 import com.sumian.hw.upgrade.model.VersionModel
-import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
@@ -16,6 +17,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.BaseEventFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.SwitchMainActivityEvent
+import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.utils.SumianExecutor
 import com.sumian.sd.widget.nav.BottomNavigationBar
 import com.sumian.sd.widget.nav.NavigationItem
@@ -29,7 +31,7 @@ import kotlinx.android.synthetic.main.hw_fragment_main.*
  *     version: 1.0
  * </pre>
  */
-class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback, BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
+class HwMainFragment : BaseEventFragment<HwBasePresenter>(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback, BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
 
     override fun getLayoutId(): Int {
         return R.layout.hw_fragment_main
@@ -40,8 +42,8 @@ class HwMainFragment : BaseEventFragment(), HwLeanCloudHelper.OnShowMsgDotCallba
             ReportFragment::class.java.simpleName,
             HwMeFragment::class.java.simpleName)
 
-    override fun initWidget() {
-        super.initWidget()
+    override fun initWidget(root: View?) {
+        super.initWidget(root)
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)

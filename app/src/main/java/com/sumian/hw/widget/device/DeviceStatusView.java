@@ -195,7 +195,7 @@ public class DeviceStatusView extends FrameLayout implements OnClickListener, Ea
                             mIvDevice.setImageResource(R.mipmap.equip_icon_monitor_monitoringmode);
                             CharSequence charSequence = formatMonitoringModeText();
                             mTvLabelOne.setText(charSequence);
-                            mTvLabelTwo.setText("此模式下监测仪不会控制速眠仪。");
+                            mTvLabelTwo.setText("此模式下速眠仪不会开启工作模式。");
                             mTvLabelOne.setVisibility(VISIBLE);
                             mTvLabelTwo.setVisibility(VISIBLE);
                             mBtSwitchPa.setVisibility(INVISIBLE);

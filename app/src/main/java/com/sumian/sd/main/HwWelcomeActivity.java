@@ -4,15 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.guideline.activity.UserGuidelineActivity;
 import com.sumian.hw.guideline.utils.GuidelineUtils;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sd.R;
 import com.sumian.sd.account.login.LoginActivity;
+import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.leancloud.LeanCloudManager;
+import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.utils.AppUtil;
 
 /**
@@ -47,6 +50,7 @@ public class HwWelcomeActivity extends HwBaseActivity {
                     AppUtil.launchMain();
                     boolean launchCustomerServiceActivity = getIntent().getBooleanExtra("key_launch_online_customer_service_activity", false);
                     if (launchCustomerServiceActivity) {
+                        UIProvider.getInstance().setThemeMode(SkinConfig.isInNightMode(App.getAppContext()) ? 0x02 : 0x01);
                         KefuManager.Companion.launchKefuActivity();
                     }
                 } else {

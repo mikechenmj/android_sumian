@@ -42,8 +42,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_marginTop="@dimen/space_10"
-                    android:drawableEnd="@mipmap/ic_info_icon_edit"
-                    android:drawablePadding="@dimen/space_12"
                     android:singleLine="true"
                     tools:text="@string/martian" />
 
@@ -58,9 +56,14 @@
                 android:contentDescription="@null" />
         </FrameLayout>
 
-        <Space
+        <ImageView
+            android:id="@+id/siv_customer_service"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_10" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:foreground="@drawable/bg_material_ripple"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_info_customerservice" />
 
         <com.sumian.sd.widget.tips.PatientServiceTips
             android:id="@+id/tips_service"

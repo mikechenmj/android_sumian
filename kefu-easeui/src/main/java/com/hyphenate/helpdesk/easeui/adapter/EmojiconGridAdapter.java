@@ -31,9 +31,9 @@ public class EmojiconGridAdapter extends ArrayAdapter<Emojicon>{
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             if(emojiconType == Type.BIG_EXPRESSION){
-                convertView = View.inflate(getContext(), R.layout.hd_row_big_expression, null);
+                convertView = View.inflate(getContext(), R.layout.night_hd_row_big_expression, null);
             }else{
-                convertView = View.inflate(getContext(), R.layout.hd_row_expression, null);
+                convertView = View.inflate(getContext(), R.layout.night_hd_row_expression, null);
             }
         }
         

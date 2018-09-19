@@ -18,7 +18,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.common.util.SpUtil;
-import com.sumian.hw.report.dailyreport.DailyReport;
+import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.network.callback.ErrorCode;

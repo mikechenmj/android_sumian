@@ -12,8 +12,10 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.sumian.sd.R;
 import com.sumian.hw.common.util.TimeUtil;
+import com.sumian.sd.R;
+import com.sumian.sd.app.App;
+import com.sumian.sd.theme.three.SkinConfig;
 
 import java.util.Calendar;
 
@@ -47,6 +49,10 @@ public class CalendarView extends View implements View.OnClickListener {
     private int mWithBgTextColor;
     private int mBgCircleColor;
     private int mDotColor;
+    private int mTodayColor;
+
+    private int mToday = -1;//今天的position
+
     // special draw times
     private int[] highlightDays;
     private int[] drawUnderlineDays;
@@ -115,11 +121,21 @@ public class CalendarView extends View implements View.OnClickListener {
     }
 
     private void initColors() {
-        mDefaultTextColor = getResources().getColor(R.color.default_font_color);
-        mHighlightTextColor = getResources().getColor(R.color.bt_hole_color);
-        mWithBgTextColor = getResources().getColor(R.color.white);
-        mBgCircleColor = getResources().getColor(R.color.bt_hole_color);
-        mDotColor = getResources().getColor(R.color.battery_top_less_color);
+        if (SkinConfig.isInNightMode(App.getAppContext())) {//夜间模式
+            mDefaultTextColor = getResources().getColor(R.color.t2_color_night);
+            mHighlightTextColor = getResources().getColor(R.color.t5_color_night);
+            mWithBgTextColor = getResources().getColor(R.color.t5_color_night);
+            mBgCircleColor = getResources().getColor(R.color.b1_color_night);
+            mDotColor = getResources().getColor(R.color.b8_color_night);
+            mTodayColor = getResources().getColor(R.color.b2_color_day);
+        } else {//正常模式
+            mDefaultTextColor = getResources().getColor(R.color.t2_color_day);
+            mHighlightTextColor = getResources().getColor(R.color.t5_color_day);
+            mWithBgTextColor = getResources().getColor(R.color.t5_color_day);
+            mBgCircleColor = getResources().getColor(R.color.b1_color_day);
+            mDotColor = getResources().getColor(R.color.b8_color_day);
+            mTodayColor = getResources().getColor(R.color.b3_color_day);
+        }
     }
 
     @Override
@@ -174,7 +190,7 @@ public class CalendarView extends View implements View.OnClickListener {
                 // shift position， draw nothing
             } else {
                 // draw date
-                drawDate(canvas, dayOfMonth);
+                drawDate(canvas, dayOfMonth, index);
                 dayOfMonth++;
             }
             index++;
@@ -212,15 +228,15 @@ public class CalendarView extends View implements View.OnClickListener {
     private void drawUnderline(Canvas canvas) {
         mLinePaint.setColor(mBgCircleColor);
         canvas.drawLine(mX - mTextBound.width() / 1.5f, mY + mTextBound.height(),
-            mX + mTextBound.width() / 1.5f, mY + mTextBound.height(), mLinePaint);
+                mX + mTextBound.width() / 1.5f, mY + mTextBound.height(), mLinePaint);
     }
 
     private void drawBgCircle(Canvas canvas) {
-        mBgPaint.setColor(getResources().getColor(R.color.refresh_bg_color));
+        mBgPaint.setColor(mBgCircleColor);
         canvas.drawCircle(mItemRect.centerX(), mItemRect.centerY(), mRadius, mBgPaint);
     }
 
-    private void drawDate(Canvas canvas, int dayOfMonth) {
+    private void drawDate(Canvas canvas, int dayOfMonth, int index) {
         if (dayIn(dayOfMonth, drawDotDays)) {
             drawDot(canvas);
         }
@@ -308,6 +324,14 @@ public class CalendarView extends View implements View.OnClickListener {
             }
         }
         return false;
+    }
+
+    public CalendarView setToday(int today) {
+        this.mToday = today;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(today * 1000L);
+        int maxDate = calendar.getActualMaximum(Calendar.DATE);
+        return this;
     }
 
     public CalendarView setHighlightDays(int[] highlightDays) {

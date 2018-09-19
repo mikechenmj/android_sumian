@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/tv_label"
-        style="@style/week_count_text_style"
+        style="@style/text_t1_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_20"
@@ -15,24 +15,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.sumian.hw.report.widget.text.CountSleepDurationTextView
         android:id="@+id/tv_duration"
+        style="@style/text_b3_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_20"
         android:layout_marginTop="@dimen/space_6"
         android:gravity="center"
-        android:hint="@string/none_duration_hint"
-        android:textColor="@color/bt_hole_color"
-        android:textColorHint="@color/bt_hole_color"
-        android:textSize="@dimen/font_12"
+        app:csdtv_default_drawable="@drawable/bg_text_t5"
+        app:csdtv_number_text_size="@dimen/font_21"
+        app:csdtv_unit_text_size="@dimen/font_13"
         app:layout_constraintLeft_toLeftOf="@id/tv_label"
         app:layout_constraintRight_toRightOf="@id/tv_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_label" />
 
     <TextView
         android:id="@+id/tv_compare_label"
-        style="@style/week_count_text_style"
+        style="@style/text_t1_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/space_32"
@@ -42,14 +42,11 @@
 
     <TextView
         android:id="@+id/tv_compare_duration"
+        style="@style/text_b3_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_6"
         android:gravity="center"
-        android:hint="@string/none_duration_hint"
-        android:textColor="@color/bt_hole_color"
-        android:textColorHint="@color/bt_hole_color"
-        android:textSize="@dimen/font_12"
         app:layout_constraintLeft_toLeftOf="@id/tv_compare_label"
         app:layout_constraintRight_toRightOf="@id/tv_compare_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_compare_label" />
@@ -57,11 +54,11 @@
     <View
         android:id="@+id/v_divider"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_px_1"
+        android:layout_height="@dimen/space_1"
         android:layout_marginEnd="@dimen/space_20"
         android:layout_marginStart="@dimen/space_20"
         android:layout_marginTop="@dimen/space_20"
-        android:background="@color/light_line_bg_color"
+        android:background="@color/l1_color_day"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/tv_duration"
         app:layout_constraintRight_toRightOf="@id/tv_compare_duration"

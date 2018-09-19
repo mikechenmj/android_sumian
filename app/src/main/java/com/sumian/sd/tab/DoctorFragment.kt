@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
+import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
@@ -25,9 +26,7 @@ import java.util.*
  * desc:
  */
 class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View,
-        SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
-
-    private val TAG: String = DoctorFragment::class.java.javaClass.simpleName
+        SwipeRefreshLayout.OnRefreshListener, OnEnterListener, HwLeanCloudHelper.OnShowMsgDotCallback {
 
     private var mIsInit = false
     private var mIsAutoRefresh = false
@@ -74,6 +73,8 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
                     onGetDoctorInfoSuccess(doctor)
             }
         })
+
+        HwLeanCloudHelper.addOnAdminMsgCallback(this)
     }
 
     override fun onResume() {
@@ -143,5 +144,13 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     override fun onEnter(data: String?) {
         if (mIsAutoRefresh) return
         onRefresh()
+    }
+
+    override fun onShowMsgDotCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
+        onHideMsgCallback(adminMsgLen, doctorMsgLen, customerMsgLen)
+    }
+
+    override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
+        runOnUiThread { doctor_detail_layout.showMsgDot(customerMsgLen > 0) }
     }
 }

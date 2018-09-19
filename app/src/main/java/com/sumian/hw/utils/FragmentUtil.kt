@@ -14,7 +14,10 @@ import com.sumian.sd.main.OnEnterListener
  * </pre>
  */
 class FragmentUtil {
+
     companion object {
+
+        @JvmStatic
         fun switchFragment(@IdRes containerViewId: Int, fragmentManager: FragmentManager,
                            tags: Array<String>, position: Int, fragmentCreator: FragmentCreator,
                            runOnCommitCallback: RunOnCommitCallback? = DefaultRunOnCommitCallbackImpl()) {
@@ -32,13 +35,13 @@ class FragmentUtil {
                     selectFragment = fragmentByTag
                     val runOnCommitRunnable: () -> Unit = { runOnCommitCallback?.runOnCommit(selectFragment) }
                     if (fragmentByTag.isAdded) {
-                        fragmentManager.beginTransaction().show(fragmentByTag).runOnCommit(runOnCommitRunnable).commit()
+                        fragmentManager.beginTransaction().show(fragmentByTag).runOnCommit(runOnCommitRunnable).commitAllowingStateLoss()
                     } else {
-                        fragmentManager.beginTransaction().add(containerViewId, fragmentByTag, tag).runOnCommit(runOnCommitRunnable).commit()
+                        fragmentManager.beginTransaction().add(containerViewId, fragmentByTag, tag).runOnCommit(runOnCommitRunnable).commitAllowingStateLoss()
                     }
                 } else {
                     if (fragmentByTag != null) {
-                        fragmentManager.beginTransaction().hide(fragmentByTag).commit()
+                        fragmentManager.beginTransaction().hide(fragmentByTag).commitAllowingStateLoss()
                     }
                 }
             }
@@ -56,7 +59,7 @@ class FragmentUtil {
     open class DefaultRunOnCommitCallbackImpl : FragmentUtil.RunOnCommitCallback {
         override fun runOnCommit(selectFragment: Fragment) {
             if (selectFragment is OnEnterListener) {
-                (selectFragment as OnEnterListener).onEnter(null)
+                selectFragment.onEnter(null)
             }
         }
     }

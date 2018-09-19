@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseAppTheme.Day" parent="@style/BaseAppTheme.TranslucentStatus">
+
+        <item name="b1">@color/b1_color_day</item>
+        <item name="b2">@color/b2_color_day</item>
+        <item name="b2_alpha_50">@color/b2_alpha_50_color_day</item>
+
+        <item name="b3">@color/b3_color_day</item>
+        <item name="b4">@color/b4_color_day</item>
+        <item name="b5">@color/b5_color_day</item>
+        <item name="b6">@color/b6_color_day</item>
+        <item name="b7">@color/b7_color_day</item>
+        <item name="b8">@color/b8_color_day</item>
+
+        <item name="t1">@color/t1_color_day</item>
+        <item name="t2">@color/t2_color_day</item>
+        <item name="t3">@color/t3_color_day</item>
+        <item name="t4">@color/t4_color_day</item>
+        <item name="t5">@color/t5_color_day</item>
+
+        <item name="l1">@color/l1_color_day</item>
+        <item name="l2">@color/l2_color_day</item>
+        <item name="l3">@color/l3_color_day</item>
+
+        <item name="s1">@color/s1_color_day</item>
+        <item name="s2">@color/s2_color_day</item>
+        <item name="s3">@color/s3_color_day</item>
+
+        <item name="g1">@color/g1_color_day</item>
+        <item name="g2">@color/g2_color_day</item>
+        <item name="g3">@color/g3_color_day</item>
+
+        <item name="n1">@color/n1_color_day</item>
+        <item name="n2">@color/n2_color_day</item>
+
+        <item name="report_calendar_src">@drawable/ic_nav_calendar_day</item>
+        <item name="switch_report_date_navigation_left_src">@drawable/ic_report_left_day</item>
+        <item name="switch_report_date_navigation_right_src">@drawable/ic_report_right_day</item>
+        <item name="sleep_drawable_start_src">@drawable/ic_home_sleep_time_day</item>
+        <item name="sleep_all_duration_src">@drawable/bg_text_t5</item>
+
+    </style>
+
+    <style name="BaseAppTheme.Night" parent="@style/BaseAppTheme.TranslucentStatus">
+
+        <item name="b1">@color/b1_color_night</item>
+        <item name="b2">@color/b2_color_night</item>
+        <item name="b2_alpha_50">@color/b2_alpha_50_color_night</item>
+
+        <item name="b3">@color/b3_color_night</item>
+        <item name="b4">@color/b4_color_night</item>
+        <item name="b5">@color/b5_color_night</item>
+        <item name="b6">@color/b6_color_night</item>
+        <item name="b7">@color/b7_color_night</item>
+        <item name="b8">@color/b8_color_night</item>
+
+        <item name="t1">@color/t1_color_night</item>
+        <item name="t2">@color/t2_color_night</item>
+        <item name="t3">@color/t3_color_night</item>
+        <item name="t4">@color/t4_color_night</item>
+        <item name="t5">@color/t5_color_night</item>
+
+        <item name="l1">@color/l1_color_night</item>
+        <item name="l2">@color/l2_color_night</item>
+        <item name="l3">@color/l3_color_night</item>
+
+        <item name="s1">@color/s1_color_night</item>
+        <item name="s2">@color/s2_color_night</item>
+        <item name="s3">@color/s3_color_night</item>
+
+        <item name="g1">@color/g1_color_night</item>
+        <item name="g2">@color/g2_color_night</item>
+        <item name="g3">@color/g3_color_night</item>
+
+        <item name="n1">@color/n1_color_night</item>
+        <item name="n2">@color/n2_color_night</item>
+
+        <item name="report_calendar_src">@drawable/ic_nav_calendar_night</item>
+        <item name="switch_report_date_navigation_left_src">@drawable/ic_report_left_night</item>
+        <item name="switch_report_date_navigation_right_src">@drawable/ic_report_right_night</item>
+        <item name="sleep_drawable_start_src">@drawable/ic_home_sleep_time_night</item>
+        <item name="sleep_all_duration_src">@drawable/bg_text_t5</item>
+
+    </style>
+
+
+</resources>

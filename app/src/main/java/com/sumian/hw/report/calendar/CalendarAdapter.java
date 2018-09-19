@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.common.util.TimeUtil;
-import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 
@@ -135,9 +135,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     if (mOnCalenderListener != null) {
                         mOnCalenderListener.showCalender(timeInMillis / 1000);
                     }
-                } else {
+                } //else {
 //                    ToastHelper.show("当前没有睡眠数据");
-                }
+                // }
             }
         };
 
@@ -205,6 +205,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 }
             }
 
+            int today = 0;
+
             for (int i = 0; i < size; i++) {
                 CalendarItemSleepReport report = reports.get(i);
                 int date = report.date;
@@ -218,8 +220,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                         drawDotDays[i] = dayOfMonth;
                     }
                 }
+                if (report.is_today) {
+                    today = date;
+                }
             }
-            mCalenderView.setHighlightDays(highlightDays)
+            mCalenderView.setToday(today)
+                    .setHighlightDays(highlightDays)
                     .setDrawUnderlineDays(drawUnderlineDays)
                     .setDrawDotDays(drawDotDays)
                     .setDrawBgDays(drawBgDays);

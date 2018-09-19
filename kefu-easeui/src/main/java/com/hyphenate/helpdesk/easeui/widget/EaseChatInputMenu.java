@@ -13,12 +13,13 @@ import android.widget.LinearLayout;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.emojicon.DefaultEmojiconDatas;
-import com.hyphenate.helpdesk.emojicon.Emojicon;
 import com.hyphenate.helpdesk.easeui.emojicon.EmojiconGroupEntity;
 import com.hyphenate.helpdesk.easeui.emojicon.EmojiconMenu;
 import com.hyphenate.helpdesk.easeui.emojicon.EmojiconMenuBase;
 import com.hyphenate.helpdesk.easeui.util.SmileUtils;
+import com.hyphenate.helpdesk.emojicon.Emojicon;
 import com.hyphenate.helpdesk.manager.EmojiconManager.EmojiconPackage;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class EaseChatInputMenu extends LinearLayout {
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.hd_widget_chat_input_menu, this);
+        layoutInflater.inflate(UIProvider.getInstance().isLightThemeMode()?R.layout.light_hd_widget_chat_input_menu:R.layout.night_hd_widget_chat_input_menu, this);
         primaryMenuContainer = (FrameLayout) findViewById(R.id.primary_menu_container);
         emojiconMenuContainer = (FrameLayout) findViewById(R.id.emojicon_menu_container);
         chatExtendMenuContainer = (FrameLayout) findViewById(R.id.extend_menu_container);
@@ -78,16 +79,15 @@ public class EaseChatInputMenu extends LinearLayout {
      * init view 此方法需放在registerExtendMenuItem后面及setCustomEmojiconMenu，
      * setCustomPrimaryMenu(如果需要自定义这两个menu)后面
      *
-     * @param emojiconGroupList
-     *            表情组类别，传null使用easeui默认的表情
+     * @param emojiconGroupList 表情组类别，传null使用easeui默认的表情
      */
     public void init(List<EmojiconGroupEntity> emojiconGroupList) {
-        if(inited){
+        if (inited) {
             return;
         }
         // 主按钮菜单栏,没有定义用默认的
         if (chatPrimaryMenu == null) {
-            chatPrimaryMenu = (EaseChatPrimaryMenuBase) layoutInflater.inflate(R.layout.hd_layout_chat_primary_menu,
+            chatPrimaryMenu = (EaseChatPrimaryMenuBase) layoutInflater.inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_layout_chat_primary_menu : R.layout.night_hd_layout_chat_primary_menu,
                     null);
         }
         primaryMenuContainer.addView(chatPrimaryMenu);
@@ -95,7 +95,7 @@ public class EaseChatInputMenu extends LinearLayout {
 
         // 表情栏
         if (emojiconMenu == null) {
-            emojiconMenu = (EmojiconMenu) layoutInflater.inflate(R.layout.hd_layout_emojicon_menu, null);
+            emojiconMenu = (EmojiconMenu) layoutInflater.inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_layout_emojicon_menu : R.layout.night_hd_layout_emojicon_menu, null);
             if (emojiconGroupList == null) {
                 emojiconGroupList = new ArrayList<EmojiconGroupEntity>();
                 EmojiconGroupEntity emojiconGroupEntity = new EmojiconGroupEntity(R.drawable.e_e_1, Arrays
@@ -132,8 +132,8 @@ public class EaseChatInputMenu extends LinearLayout {
     private synchronized void initOnlineEmojiconGroupList() {
         List<EmojiconPackage> emojiconPackages = ChatClient.getInstance().emojiconManager().getEmojiPackagesList();
         if (emojiconPackages.size() > 0) {
-            synchronized (emojiconPackages){
-                for (EmojiconPackage aPackage: emojiconPackages) {
+            synchronized (emojiconPackages) {
+                for (EmojiconPackage aPackage : emojiconPackages) {
                     EmojiconGroupEntity emojiconGroupEntity = new EmojiconGroupEntity(-1, ChatClient.getInstance().emojiconManager().getEmojiconList(aPackage), Emojicon.Type.BIG_EXPRESSION);
                     emojiconGroupEntity.setName(aPackage.packageName);
                     ((EmojiconMenu) emojiconMenu).addEmojiconGroup(emojiconGroupEntity);
@@ -174,7 +174,7 @@ public class EaseChatInputMenu extends LinearLayout {
         return emojiconMenu;
     }
 
-    public View getButtonSend(){
+    public View getButtonSend() {
         return chatPrimaryMenu.getButtonSend();
     }
 
@@ -194,16 +194,11 @@ public class EaseChatInputMenu extends LinearLayout {
     /**
      * 注册扩展菜单的item
      *
-     * @param name
-     *            item名字
-     * @param drawableRes
-     *            item背景
-     * @param itemId
-     *            id
-     * @param resId
-     *            resId
-     * @param listener
-     *            item点击事件
+     * @param name        item名字
+     * @param drawableRes item背景
+     * @param itemId      id
+     * @param resId       resId
+     * @param listener    item点击事件
      */
     public void registerExtendMenuItem(String name, int drawableRes, int itemId, @IdRes int resId,
                                        ExtendMenu.EaseChatExtendMenuItemClickListener listener) {
@@ -213,16 +208,11 @@ public class EaseChatInputMenu extends LinearLayout {
     /**
      * 注册扩展菜单的item
      *
-     * @param nameRes
-     *            item名字
-     * @param drawableRes
-     *            item背景
-     * @param itemId
-     *            id
-     * @param resId
-     *            resId
-     * @param listener
-     *            item点击事件
+     * @param nameRes     item名字
+     * @param drawableRes item背景
+     * @param itemId      id
+     * @param resId       resId
+     * @param listener    item点击事件
      */
     public void registerExtendMenuItem(int nameRes, int drawableRes, int itemId, @IdRes int resId,
                                        ExtendMenu.EaseChatExtendMenuItemClickListener listener) {
@@ -294,13 +284,12 @@ public class EaseChatInputMenu extends LinearLayout {
 
     }
 
-    public boolean isVoiceRecording(){
+    public boolean isVoiceRecording() {
         return chatPrimaryMenu.isRecording();
     }
 
     /**
      * 显示或隐藏图标按钮页
-     *
      */
     protected void toggleMore() {
         if (chatExtendMenuContainer.getVisibility() == View.GONE) {
@@ -373,9 +362,9 @@ public class EaseChatInputMenu extends LinearLayout {
 
     /**
      * 系统返回键被按时调用此方法
-     *
+     * <p>
      * 返回false表示返回键时扩展菜单栏时打开状态，true则表示按返回键时扩展栏是关闭状态
-     *         如果返回时打开状态状态，会先关闭扩展栏再返回值
+     * 如果返回时打开状态状态，会先关闭扩展栏再返回值
      */
     public boolean onBackPressed() {
         if (chatExtendMenuContainer.getVisibility() == View.VISIBLE) {
@@ -395,8 +384,7 @@ public class EaseChatInputMenu extends LinearLayout {
         /**
          * 发送消息按钮点击
          *
-         * @param content
-         *            文本内容
+         * @param content 文本内容
          */
         void onSendMessage(String content);
 
@@ -410,7 +398,7 @@ public class EaseChatInputMenu extends LinearLayout {
         /**
          * 录音完成
          *
-         * @param seconds duration
+         * @param seconds  duration
          * @param filePath
          */
         void onRecorderCompleted(float seconds, String filePath);

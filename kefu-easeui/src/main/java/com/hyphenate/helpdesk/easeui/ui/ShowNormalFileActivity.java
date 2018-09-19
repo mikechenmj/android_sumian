@@ -20,7 +20,7 @@ public class ShowNormalFileActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hd_activity_show_file);
+        setContentView(R.layout.night_hd_activity_show_file);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         final String msgId = getIntent().getStringExtra("messageId");

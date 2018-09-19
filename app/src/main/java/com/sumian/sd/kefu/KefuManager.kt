@@ -23,14 +23,17 @@ class KefuManager private constructor() {
     var waitingSendMessage = false
 
     companion object {
+
         private val INSTANCE: KefuManager by lazy {
             KefuManager()
         }
 
+        @JvmStatic
         fun getInstance(): KefuManager {
             return INSTANCE
         }
 
+        @JvmStatic
         fun launchKefuActivity() {
             HwLeanCloudHelper.loginEasemob { HwLeanCloudHelper.startEasemobChatRoom() }
             INSTANCE.waitingSendMessage = true

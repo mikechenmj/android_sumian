@@ -17,22 +17,25 @@ import android.widget.TextView;
 
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.common.util.SpUtil;
-import com.sumian.hw.device.contract.DeviceContract;import com.sumian.hw.device.bean.BlueDevice;
+import com.sumian.hw.device.bean.BlueDevice;
+import com.sumian.hw.device.contract.DeviceContract;
 import com.sumian.hw.device.dialog.PaModeDialog;
 import com.sumian.hw.device.dialog.PairOnDeviceDialog;
 import com.sumian.hw.device.presenter.DevicePresenter;
 import com.sumian.hw.device.sheet.DeviceBottomSheet;
-import com.sumian.hw.widget.device.DeviceGuideStepOneView;
-import com.sumian.hw.widget.device.DeviceStatusView;
-import com.sumian.hw.widget.dialog.SumianDialog;
 import com.sumian.hw.job.JobTask;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.LocationManagerUtil;
+import com.sumian.hw.widget.device.DeviceGuideStepOneView;
+import com.sumian.hw.widget.device.DeviceStatusView;
+import com.sumian.hw.widget.dialog.SumianDialog;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.OnEnterListener;
 import com.sumian.sd.utils.ColorCompatUtil;
+import com.sumian.sd.widget.dialog.SumianAlertDialog;
+import com.sumian.sd.widget.dialog.theme.BlackTheme;
 
 import java.util.List;
 
@@ -324,7 +327,18 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
         tvTurnMonitor.setTextColor(ColorCompatUtil.Companion.getColor(getActivity(), monitor.isMonitoring ? R.color.dot_red_color : R.color.bt_hole_color));
         tvTurnMonitor.setOnClickListener(v -> {
             int monitoringMode = monitor.isMonitoring ? BlueDevice.MONITORING_CMD_CLOSE : BlueDevice.MONITORING_CMD_OPEN;
-            mPresenter.turnOnMonitoringMode(monitoringMode);
+            if (monitoringMode == BlueDevice.MONITORING_CMD_CLOSE) {
+                new SumianAlertDialog(getContext())
+                        .setTheme(new BlackTheme())
+                        .goneTopIcon(true)
+                        .setTitle(R.string.turn_off_monitoring_mode_title)
+                        .setMessage(R.string.turn_off_monitoring_mode_message)
+                        .setLeftBtn(R.string.cancel, null)
+                        .setRightBtn(R.string.sure, v1 -> mPresenter.turnOnMonitoringMode(monitoringMode))
+                        .show();
+            } else {
+                mPresenter.turnOnMonitoringMode(monitoringMode);
+            }
             mPopupWindow.dismiss();
         });
         tvUnbind.setOnClickListener(v -> {
@@ -338,6 +352,7 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
 
         mPopupWindow = new PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setFocusable(true);
         mPopupWindow.showAsDropDown(view);
         mPopupWindow.setOnDismissListener(() -> mPopupDismissTime = System.currentTimeMillis());
     }

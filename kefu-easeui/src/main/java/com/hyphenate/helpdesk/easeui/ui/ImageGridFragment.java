@@ -77,7 +77,7 @@ public class ImageGridFragment extends BaseFragment implements AdapterView.OnIte
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 	                         ViewGroup container, Bundle savedInstanceState) {
-		final View v = inflater.inflate(R.layout.hd_image_grid_fragment,
+		final View v = inflater.inflate(R.layout.night_hd_image_grid_fragment,
 				container, false);
 		final GridView mGridView = (GridView) v.findViewById(R.id.gridView);
 		mGridView.setAdapter(mAdapter);
@@ -226,7 +226,7 @@ public class ImageGridFragment extends BaseFragment implements AdapterView.OnIte
 			if(convertView==null)
 			{
 				holder=new ViewHolder();
-				convertView=LayoutInflater.from(mContext).inflate(R.layout.hd_choose_griditem, container,false);
+				convertView=LayoutInflater.from(mContext).inflate(R.layout.night_hd_choose_griditem, container,false);
 				holder.imageView=(RecyclingImageView) convertView.findViewById(R.id.imageView);
 				holder.icon=(ImageView) convertView.findViewById(R.id.video_icon);
 				holder.tvDur=(TextView)convertView.findViewById(R.id.chatting_length_iv);

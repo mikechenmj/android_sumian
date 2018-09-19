@@ -7,17 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.hyphenate.helpdesk.R;
 import com.hyphenate.chat.Message;
+import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.Constant;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.emojicon.Emojicon;
 
 /**
  * 大表情(动态表情)
- *
  */
-public class ChatRowBigExpression extends ChatRowText{
+public class ChatRowBigExpression extends ChatRowText {
 
     private ImageView imageView;
 
@@ -28,8 +27,8 @@ public class ChatRowBigExpression extends ChatRowText{
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                R.layout.hd_row_received_bigexpression : R.layout.hd_row_sent_bigexpression, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_bigexpression :
+                R.layout.night_hd_row_received_bigexpression) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_bigexpression : R.layout.night_hd_row_sent_bigexpression), this);
     }
 
     @Override
@@ -43,15 +42,15 @@ public class ChatRowBigExpression extends ChatRowText{
     public void onSetUpView() {
         String emojiconId = message.getStringAttribute(Constant.MESSAGE_ATTR_EXPRESSION_ID, null);
         Emojicon emojicon = null;
-        if(UIProvider.getInstance().getEmojiconInfoProvider() != null){
-            emojicon =  UIProvider.getInstance().getEmojiconInfoProvider().getEmojiconInfo(emojiconId);
+        if (UIProvider.getInstance().getEmojiconInfoProvider() != null) {
+            emojicon = UIProvider.getInstance().getEmojiconInfoProvider().getEmojiconInfo(emojiconId);
         }
-        if(emojicon != null){
-            if(emojicon.getBigIcon() != 0){
+        if (emojicon != null) {
+            if (emojicon.getBigIcon() != 0) {
                 Glide.with(activity).load(emojicon.getBigIcon()).placeholder(R.drawable.hd_default_expression).into(imageView);
-            }else if(emojicon.getBigIconPath() != null){
+            } else if (emojicon.getBigIconPath() != null) {
                 Glide.with(activity).load(emojicon.getBigIconPath()).placeholder(R.drawable.hd_default_expression).into(imageView);
-            }else{
+            } else {
                 imageView.setImageResource(R.drawable.hd_default_expression);
             }
         }

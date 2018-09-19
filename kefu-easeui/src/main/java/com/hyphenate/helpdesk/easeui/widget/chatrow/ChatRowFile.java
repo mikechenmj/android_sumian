@@ -18,7 +18,7 @@ import com.hyphenate.util.TextFormater;
 
 import java.io.File;
 
-public class ChatRowFile extends ChatRow{
+public class ChatRowFile extends ChatRow {
 
     protected TextView fileNameView;
     protected TextView fileSizeView;
@@ -32,8 +32,8 @@ public class ChatRowFile extends ChatRow{
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                R.layout.hd_row_received_file : R.layout.hd_row_sent_file, this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_file :
+                R.layout.night_hd_row_received_file) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_file : R.layout.night_hd_row_sent_file), this);
     }
 
     @Override
@@ -73,25 +73,25 @@ public class ChatRowFile extends ChatRow{
         switch (message.status()) {
             case SUCCESS:
                 progressBar.setVisibility(View.GONE);
-                if(percentageView != null)
+                if (percentageView != null)
                     percentageView.setVisibility(View.GONE);
                 statusView.setVisibility(View.GONE);
                 break;
             case FAIL:
                 progressBar.setVisibility(View.GONE);
-                if(percentageView != null)
+                if (percentageView != null)
                     percentageView.setVisibility(View.GONE);
                 statusView.setVisibility(View.VISIBLE);
                 break;
             case INPROGRESS:
                 if (UIProvider.getInstance().isShowProgress())
                     progressBar.setVisibility(View.VISIBLE);
-                if(percentageView != null){
+                if (percentageView != null) {
                     percentageView.setVisibility(View.VISIBLE);
                     try {
                         int process = (int) percentageView.getTag();
                         percentageView.setText(process + "%");
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         percentageView.setText("");
                     }
                 }
@@ -99,7 +99,7 @@ public class ChatRowFile extends ChatRow{
                 break;
             default:
                 progressBar.setVisibility(View.GONE);
-                if(percentageView != null)
+                if (percentageView != null)
                     percentageView.setVisibility(View.GONE);
                 statusView.setVisibility(View.VISIBLE);
                 break;

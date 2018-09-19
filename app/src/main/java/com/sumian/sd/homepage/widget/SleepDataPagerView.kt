@@ -10,13 +10,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import com.sumian.hw.report.dailyreport.DailyReport
+import com.sumian.hw.report.bean.DailyReport
 import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
-import com.sumian.sd.network.callback.BaseResponseCallback
 import com.sumian.sd.record.bean.SleepRecord
 import com.sumian.sd.record.widget.SimpleSleepRecordView
-import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.lay_sleep_data_pager.view.*
 
 /**

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/light_content_bg_color"
-    app:cardCornerRadius="@dimen/space_10"
+    app:cardBackgroundColor="@color/b2_color_day"
+    app:cardCornerRadius="@dimen/space_4"
     app:cardElevation="@dimen/space_2"
     app:contentPaddingBottom="@dimen/space_20"
     app:contentPaddingLeft="@dimen/space_20"
     app:contentPaddingRight="@dimen/space_20"
-    app:contentPaddingTop="@dimen/space_24">
+    app:contentPaddingTop="@dimen/space_24"
+    skin:enable="true">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,55 +20,63 @@
 
         <TextView
             android:id="@+id/text_view_1"
+            style="@style/text_t1_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/space_9"
-            android:drawableStart="@mipmap/report_icon_lensleep"
+            android:drawableStart="@drawable/ic_home_sleep_time_day"
             android:gravity="center"
             android:text="@string/all_today_duration"
-            android:textSize="@dimen/font_12"
-            android:textColor="@color/full_general_color"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="@color/t1_color_day"
+            app:layout_constraintTop_toTopOf="parent"
+            skin:enable="true"
+            tools:ignore="MissingPrefix" />
 
-        <TextView
+        <com.sumian.hw.report.widget.text.CountSleepDurationTextView
             android:id="@+id/tv_sleep_today_duration"
+            style="@style/text_t5_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/short_none_duration_hint"
-            android:textSize="@dimen/font_22"
-            android:textColor="#FF7EA5F4"
+            android:textColor="@color/t5_color_day"
+            app:csdtv_default_drawable="@drawable/bg_text_t5"
+            app:csdtv_number_text_size="@dimen/font_21"
+            app:csdtv_unit_text_size="@dimen/font_13"
             app:layout_constraintBottom_toBottomOf="@id/text_view_1"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_view_1" />
+            app:layout_constraintTop_toTopOf="@id/text_view_1"
+            skin:enable="true" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_px_1"
-            android:layout_marginTop="@dimen/space_24"
-            android:background="@color/light_line_bg_color"
+            android:layout_height="@dimen/space_1"
+            android:layout_marginTop="@dimen/space_25"
+            android:background="@color/l1_color_day"
             app:layout_constraintTop_toBottomOf="@id/text_view_1" />
 
-        <com.sumian.hw.widget.SleepStateDurationView
-            android:id="@+id/light_sleep_duration_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/space_20"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/divider" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="@+id/divider">
 
-        <com.sumian.hw.widget.SleepStateDurationView
-            android:id="@+id/deep_sleep_duration_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
-            android:layout_marginTop="@dimen/space_20"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider" />
+            <com.sumian.hw.report.widget.SleepStateDurationView
+                android:id="@+id/light_sleep_duration_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <com.sumian.hw.report.widget.SleepStateDurationView
+                android:id="@+id/deep_sleep_duration_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+        </LinearLayout>
+
 
     </android.support.constraint.ConstraintLayout>
 </merge>

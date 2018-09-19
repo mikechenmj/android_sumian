@@ -41,4 +41,5 @@
     <string name="app_key_modify_fail">修改appkey失败!</string>
     <string name="short_cut_msg">常用语</string>
     <string name="comment_load_fail">评论加载出错</string>
+    <string name="sleep_housekeeper">睡眠管家</string>
 </resources>

@@ -14,4 +14,11 @@
         <item>其它</item>
     </string-array>
 
+    <string-array name="duration">
+        <item>20时</item>
+        <item>0时</item>
+        <item>4时</item>
+        <item>12时</item>
+    </string-array>
+
 </resources>

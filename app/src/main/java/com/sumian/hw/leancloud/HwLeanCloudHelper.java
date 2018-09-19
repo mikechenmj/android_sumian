@@ -37,12 +37,12 @@ import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.utils.AppUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -197,12 +197,15 @@ public final class HwLeanCloudHelper {
         if (userInfo == null) {
             return;
         }
+
         String imId = userInfo.getIm_id();
         String md5Pwd = userInfo.getIm_password();
         if (TextUtils.isEmpty(imId) || TextUtils.isEmpty(md5Pwd)) {
             return;
         }
+
         ChatClient.getInstance().login(imId, md5Pwd, new Callback() {
+
             @Override
             public void onSuccess() {
                 if (run != null) {
@@ -224,6 +227,7 @@ public final class HwLeanCloudHelper {
             public void onProgress(int progress, String status) {
                 LogUtils.d(progress);
             }
+
         });
     }
 

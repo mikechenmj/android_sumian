@@ -327,8 +327,12 @@ public final class TimeUtil {
 
     public static CharSequence formatSleepDurationText(Integer second, int numberSizeInPx, int unitSizeInPx) {
         if (second == null || second == 0) {
-            return "----";
+//            Drawable drawable = App.getAppContext().getResources().getDrawable(R.drawable.bg_text_t5);
+//            CharSequence charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", drawable);
+//            CharSequence concat = TextUtils.concat(charSequence, " ");
+            return null;
         }
+
         List<SpannableString> charSequenceList = new ArrayList<>();
         CharSequence[] charSequences;
         int hour = TimeUtil.getHourFromSecond(second);

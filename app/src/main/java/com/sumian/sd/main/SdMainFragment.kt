@@ -2,7 +2,9 @@ package com.sumian.sd.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
-import com.sumian.sd.utils.AppUtil
+import android.view.View
+import com.sumian.hw.base.HwBasePresenter
+import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.BaseEventFragment
@@ -14,7 +16,9 @@ import com.sumian.sd.homepage.HomepageFragment
 import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.tab.DoctorFragment
 import com.sumian.sd.tab.MeFragment
+import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.utils.StatusBarUtil
+import com.sumian.sd.utils.SumianExecutor
 import com.sumian.sd.widget.nav.BottomNavigationBar
 import com.sumian.sd.widget.nav.NavigationItem
 import kotlinx.android.synthetic.main.sd_fragment_main.*
@@ -28,7 +32,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener {
+class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar.OnSelectedTabChangeListener, OnEnterListener, HwLeanCloudHelper.OnShowMsgDotCallback {
 
     companion object {
 
@@ -46,11 +50,17 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
         return R.layout.sd_fragment_main
     }
 
-    override fun initWidget() {
+    override fun initWidget(root: View?) {
         nav_tab.setOnSelectedTabChangeListener(this)
         iv_switch.setOnClickListener {
             launchAnotherMainActivity()
         }
+    }
+
+    override fun initData() {
+        super.initData()
+        //注册站内信消息接收容器
+        HwLeanCloudHelper.addOnAdminMsgCallback(this)
     }
 
     override fun onStart() {
@@ -131,5 +141,16 @@ class SdMainFragment : BaseEventFragment(), BottomNavigationBar.OnSelectedTabCha
     override fun onEnter(data: String?) {
         showTabAccordingToData(data)
         updateNotificationUnreadCount()
+    }
+
+    override fun onShowMsgDotCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
+        onHideMsgCallback(adminMsgLen, doctorMsgLen, customerMsgLen)
+    }
+
+    override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
+        SumianExecutor.runOnUiThread({
+            this.tb_doctor?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
+            this.tb_me?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
+        })
     }
 }

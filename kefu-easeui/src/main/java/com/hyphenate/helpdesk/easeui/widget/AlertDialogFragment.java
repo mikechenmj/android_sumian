@@ -74,7 +74,7 @@ public class AlertDialogFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-		View dialogView = inflater.inflate(R.layout.hd_fragment_alert_dialog_layout, null);
+		View dialogView = inflater.inflate(R.layout.night_hd_fragment_alert_dialog_layout, null);
 		((TextView) dialogView.findViewById(R.id.alert_tittle)).setText(title);
 		((TextView) dialogView.findViewById(R.id.alert_content)).setText(content);
 		//LeftButton default gone

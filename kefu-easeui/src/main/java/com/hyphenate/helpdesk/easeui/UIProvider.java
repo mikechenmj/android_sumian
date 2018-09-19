@@ -17,8 +17,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class UIProvider {
     private static final String TAG = UIProvider.class.getSimpleName();
+
+    public static final int LIGHT_THEME = 0x01;
+
+    public static final int NIGHT_THEME = 0x02;
 
     /**
      * the global EaseUI instance
@@ -47,6 +52,8 @@ public class UIProvider {
     private OnMsgCallback mOnMsgCallback;
 
     private int mCacheMsgSize;
+
+    private int mThemeMode = LIGHT_THEME;
 
     /**
      * 用来记录注册了eventlistener的foreground Activity
@@ -102,7 +109,9 @@ public class UIProvider {
 
     public void clearCacheMsg() {
         mCacheMsgSize = 0;
-        mOnMsgCallback.onMsg(mCacheMsgSize);
+        if (mOnMsgCallback != null) {
+            mOnMsgCallback.onMsg(mCacheMsgSize);
+        }
     }
 
     /**
@@ -187,6 +196,13 @@ public class UIProvider {
         return settingsProvider;
     }
 
+    public void setThemeMode(int themeMode) {
+        this.mThemeMode = themeMode;
+    }
+
+    public boolean isLightThemeMode() {
+        return this.mThemeMode == LIGHT_THEME;
+    }
 
     public interface UserProfileProvider {
         void setNickAndAvatar(Context context, Message message, ImageView userAvatarView, TextView usernickView);

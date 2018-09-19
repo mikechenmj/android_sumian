@@ -1,7 +1,7 @@
 package com.sumian.sd.base
 
-import com.sumian.common.base.BaseActivity
 import com.sumian.sd.event.EventBusUtil
+import com.sumian.sd.theme.three.base.SkinBaseActivity
 
 
 /**
@@ -12,7 +12,7 @@ import com.sumian.sd.event.EventBusUtil
  *     version: 1.0
  * </pre>
  */
-abstract class BaseEventActivity : BaseActivity() {
+abstract class BaseEventActivity : SkinBaseActivity() {
     override fun onStart() {
         super.onStart()
         if (openEventBus()) {

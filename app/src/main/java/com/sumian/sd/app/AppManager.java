@@ -34,6 +34,10 @@ import com.sumian.sd.leancloud.LeanCloudManager;
 import com.sumian.sd.network.api.DoctorApi;
 import com.sumian.sd.network.engine.NetEngine;
 import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
+import com.sumian.sd.theme.three.SkinConfig;
+import com.sumian.sd.theme.three.attr.CardViewAttr;
+import com.sumian.sd.theme.three.attr.CountSleepDurationTextViewAttr;
+import com.sumian.sd.theme.three.loader.SkinManager;
 
 /**
  * Created by jzz
@@ -165,6 +169,19 @@ public final class AppManager {
         HwLeanCloudHelper.init(context);
         initKefu(context);
         initWebView();
+        initSkin(context);
+    }
+
+    private void initSkin(@NonNull Context context) {
+        //第三方皮肤插件初始化
+        SkinManager.getInstance().init(context);
+        SkinConfig.setCanChangeStatusColor(true);
+        SkinConfig.setCanChangeFont(true);
+        SkinConfig.setDebug(true);
+        SkinConfig.addSupportAttr("csdtv_default_drawable", new CountSleepDurationTextViewAttr());
+        SkinConfig.addSupportAttr("cardBackgroundColor", new CardViewAttr());
+        //SkinConfig.addSupportAttr("backgroud", new BackgroundAttr());
+        SkinConfig.enableGlobalSkinApply();
     }
 
     private void initWebView() {
