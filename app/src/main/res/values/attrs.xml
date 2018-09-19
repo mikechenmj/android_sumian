@@ -36,7 +36,7 @@
     </declare-styleable>
 
     <!--title bar-->
-    <declare-styleable name="EaseTitleBar">
+    <declare-styleable name="TitleBar">
         <attr name="text" format="string|reference" />
         <attr name="text_size" format="dimension|reference" />
         <attr name="show_back" format="boolean|reference" />
