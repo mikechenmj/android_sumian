@@ -447,6 +447,8 @@
     <string name="ensure_hint">确定</string>
     <string name="turn_off_monitoring_mode_title">确定关闭监测模式？</string>
     <string name="turn_off_monitoring_mode_message">关闭后不影响监测仪工作，速眠仪将正常开启工作模式，是否确定？</string>
+    <string name="turn_on_monitoring_mode_title">确定开启监测模式？</string>
+    <string name="turn_on_monitoring_mode_message">开启监测模式后，速眠仪将一直处于待机状态，此状态下将不会开启工作，是否开启？</string>
 
     <!--account-->
     <string name="login_hint">登录</string>
@@ -880,7 +882,7 @@
     <string name="guideline_one_h1">绑定监测仪</string>
     <string name="guideline_one_h2">打开蓝牙，与监测仪绑定。</string>
     <string name="guideline_two_h1">佩戴监测仪</string>
-    <string name="guideline_two_h2">佩戴上监测仪，按一下按钮，确保显示“正确佩戴”的图标。</string>
+    <string name="guideline_two_h2">佩戴上监测仪，距离腕骨至少一指，按一下按钮，确保显示“正确佩戴”的图标。</string>
     <string name="guideline_three_h1">开启速眠仪</string>
     <string name="guideline_three_h2">长按速眠仪3秒，直至绿灯亮起，将速眠仪放置在枕头下。</string>
     <string name="guideline_four_h1">开启睡眠</string>
