@@ -39,7 +39,7 @@ class DiaryEvaluationListAdapter() : BaseQuickAdapter<DiaryEvaluationData, BaseV
 
     private fun getItemDesc(data: DiaryEvaluationData): String {
         return if (data.diaryEndAt != 0) {
-            "评估时间：${getYYYYMMDD(data.getDiaryStartAtInMillis())}-${getYYYYMMDD(data.getDiaryEndAtInMillis())}\n备注详情：$data.remark"
+            "评估时间：${getYYYYMMDD(data.getDiaryStartAtInMillis())}-${getYYYYMMDD(data.getDiaryEndAtInMillis())}\n${data.description}"
         } else {
             data.description
         }

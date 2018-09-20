@@ -92,8 +92,8 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         if (moreDrawable != null) {
             mIvMenu.setImageDrawable(moreDrawable);
             mIvMenu.setVisibility(VISIBLE);
-            mIvMenu.setOnClickListener(this);
         }
+        mIvMenu.setOnClickListener(this);
 //        setPadding(0, getResources().getDimensionPixelOffset(R.dimen.space_24), 0, 0);
 //        setMinimumHeight(getResources().getDimensionPixelOffset(R.dimen.space_72));
         setIsDarkTheme(isDarkTheme);

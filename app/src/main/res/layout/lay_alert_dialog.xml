@@ -27,25 +27,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/space_20"
                 android:contentDescription="@null"
-                tools:src="@mipmap/ic_notification_alert" />
+                tools:src="@mipmap/ic_notification_alert"
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_close"
-                android:layout_width="@dimen/space_40"
-                android:layout_height="@dimen/space_40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/space_20"
                 android:contentDescription="@null"
-                android:padding="@dimen/space_10"
-                android:src="@mipmap/ic_close" />
+                android:src="@mipmap/ic_close"
+                tools:visibility="visible" />
         </FrameLayout>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_20"
             android:textColor="@color/t3_color"
             android:textSize="@dimen/font_18"
             android:textStyle="bold"

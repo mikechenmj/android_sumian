@@ -5,16 +5,16 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.common.base.BaseFragment
 import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.h5.SimpleWebActivity
+import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import kotlinx.android.synthetic.main.fragment_diary_evaluation_list.*
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * <pre>
@@ -53,6 +53,16 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_diary_evaluation_list
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBusUtil.register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBusUtil.unregister(this)
     }
 
     override fun initWidget() {
@@ -96,7 +106,7 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
                     }
                     if (response != null) {
                         val pagination = response.meta.pagination
-                        if (pagination.currentPage == pagination.totalPages) {
+                        if (pagination.currentPage >= pagination.totalPages) {
                             mAdapter.loadMoreEnd()
                         } else {
                             mAdapter.loadMoreComplete()
@@ -119,5 +129,10 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
 
     override fun onLoadMoreRequested() {
         queryData(false)
+    }
+
+    @Subscribe(sticky = true)
+    fun onDiaryEvaluationFilledEvent(diaryEvaluationFilledEvent: DiaryEvaluationFilledEvent) {
+        queryData(true)
     }
 }

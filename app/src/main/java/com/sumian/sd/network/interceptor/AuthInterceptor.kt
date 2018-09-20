@@ -2,7 +2,6 @@ package com.sumian.sd.network.interceptor
 
 import android.text.TextUtils
 import android.webkit.WebSettings
-import com.alibaba.sdk.android.oss.common.utils.OSSUtils.addHeader
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import okhttp3.Interceptor
@@ -55,7 +54,6 @@ class AuthInterceptor private constructor() : Interceptor {
         val builder = chain
                 .request()
                 .newBuilder()
-                .addHeader("Accept", "application/vnd.sumianapi+json")
                 .addHeader("Content-Type", "application/json")
                 .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android")
 

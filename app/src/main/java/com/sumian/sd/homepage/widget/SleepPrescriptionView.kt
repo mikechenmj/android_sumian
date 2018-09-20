@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.sumian.sd.R
-import com.sumian.sd.homepage.bean.SleepPrescriptionWrapper
+import com.sumian.sd.homepage.bean.SleepPrescription
 import kotlinx.android.synthetic.main.view_sleep_prescription.view.*
 
 /**
@@ -23,13 +23,13 @@ class SleepPrescriptionView(context: Context, attributeSet: AttributeSet) : Fram
         LayoutInflater.from(context).inflate(R.layout.view_sleep_prescription, this, true)
     }
 
-    fun setPrescriptionData(data: SleepPrescriptionWrapper?) {
-        val prescriptionIsNull = data?.sleepPrescription?.getUpAt == null
+    fun setPrescriptionData(data: SleepPrescription?) {
+        val prescriptionIsNull = data?.getUpAt == null
         ll_no_sleep_prescription_hint.visibility = if (prescriptionIsNull) View.VISIBLE else View.GONE
         ll_sleep_prescription.visibility = if (!prescriptionIsNull) View.VISIBLE else View.GONE
-        if (data?.sleepPrescription != null) {
-            tv_sleep_time.text = data.sleepPrescription.sleepAt
-            tv_get_up_time.text = data.sleepPrescription.getUpAt
+        if (data != null) {
+            tv_sleep_time.text = data.sleepAt
+            tv_get_up_time.text = data.getUpAt
         }
     }
 }

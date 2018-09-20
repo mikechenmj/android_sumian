@@ -10,12 +10,14 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.utils.JsonUtil;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.h5.SimpleWebActivity;
+import com.sumian.sd.main.MainActivity;
 import com.sumian.sd.network.callback.BaseResponseCallback;
 import com.sumian.sd.service.cbti.video.LogUtil;
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData;
 import com.sumian.sd.widget.webview.SBridgeHandler;
 import com.sumian.sd.widget.webview.SWebView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +39,7 @@ public class DiaryEvaluationDetailActivity extends SimpleWebActivity {
 
     /**
      * launch latest diary evaluation
+     *
      * @param context
      */
     public static void launchLatestEvaluation(Context context) {
@@ -74,10 +77,20 @@ public class DiaryEvaluationDetailActivity extends SimpleWebActivity {
     @Override
     protected void registerHandler(@NonNull SWebView sWebView) {
         super.registerHandler(sWebView);
-        sWebView.registerHandler("analyseReport", new SBridgeHandler() {
+        sWebView.registerHandler("weeklyAssessFilling", new SBridgeHandler() {
+            @Override
+            public void handler(String data) {
+                EventBus.getDefault().postSticky(new DiaryEvaluationFilledEvent());
+                LogUtils.d(data);
+                finish();
+            }
+        });
+        sWebView.registerHandler("toDoctorService", new SBridgeHandler() {
             @Override
             public void handler(String data) {
                 LogUtils.d(data);
+                MainActivity.Companion.launch(MainActivity.TAB_SD_1, null);
+                finish();
             }
         });
     }

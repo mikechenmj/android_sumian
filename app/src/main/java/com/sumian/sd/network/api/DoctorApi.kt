@@ -225,8 +225,9 @@ interface DoctorApi {
 
     // ---------- homepage ----------
 
+    @Headers("Accept: application/vnd.sd.v2+json")
     @GET("sleep-prescriptions")
-    fun getSleepPrescriptions(): Call<SleepPrescriptionWrapper>
+    fun getSleepPrescriptions(): Call<SleepPrescription?>
 
     @POST("sleep-prescriptions")
     fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
