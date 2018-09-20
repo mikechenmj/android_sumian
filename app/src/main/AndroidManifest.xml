@@ -547,6 +547,10 @@
             android:name=".homepage.RelaxationActivity"
             android:exported="true"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
+
+        <service
+            android:name="com.sumian.hw.device.pattern.SyncPatternService"
+            android:exported="false" />
         <activity android:name=".service.diary.DiaryEvaluationListActivity" />
         <activity android:name=".service.diary.DiaryEvaluationDetailActivity" />
         <activity
