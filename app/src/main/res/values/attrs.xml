@@ -117,6 +117,12 @@
     <declare-styleable name="ColorfulProgressView">
         <attr name="cpv_ring_width" format="float|dimension" />
         <attr name="cpv_ring_bg_color" format="color|reference" />
+        <attr name="cpv_high_start_color" format="color|reference" />
+        <attr name="cpv_high_end_color" format="color|reference" />
+        <attr name="cpv_middle_start_color" format="color|reference" />
+        <attr name="cpv_middle_end_color" format="color|reference" />
+        <attr name="cpv_low_start_color" format="color|reference" />
+        <attr name="cpv_low_end_color" format="color|reference" />
     </declare-styleable>
 
     <declare-styleable name="ProgressView">

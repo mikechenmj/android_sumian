@@ -145,7 +145,7 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
         blueDevice.name = device.getName();
         blueDevice.mac = device.getAddress();
         blueDevice.rssi = rssi;
-        boolean isDeviceVersionValid = isDeviceValid(scanRecord);
+        boolean isDeviceVersionValid = isDeviceValid(scanRecord, blueDevice.name, blueDevice.mac);
         LogManager.appendBluetoothLog(
                 String.format(Locale.getDefault(),
                         "搜索到 %s %s, isVersionValid: %b",
@@ -168,11 +168,13 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
      * @return whether the device is valid for the app
      */
     @SuppressWarnings("SimplifiableIfStatement")
-    private boolean isDeviceValid(byte[] scanRecord) {
+    private boolean isDeviceValid(byte[] scanRecord, String deviceName, String deviceMac) {
         int deviceVersion = BluetoothDeviceUtil.getBluetoothDeviceVersion(scanRecord);
         if (BuildConfig.IS_CLINICAL_VERSION) { // clinical version app
+            LogManager.appendBluetoothLog("临床版本app 搜索到一台设备 name=" + deviceName + "  mac=" + deviceMac);
             return true;
         } else { // release version app
+            LogManager.appendBluetoothLog("常规版本app 搜索到一台设备 name=" + deviceName + "  mac=" + deviceMac);
             return deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE;
         }
     }
