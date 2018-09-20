@@ -151,9 +151,9 @@ class DailyAdapter : RecyclerView.Adapter<DailyAdapter.ViewHolder>() {
             this.mSwitchDateView.setOnSwitchDateListener(switchDateListener)
 
             this.mDaySleepHistogramView.setData(dailyReport)
-            this.mReportSleepDurationView.setSleepTodayDuration(mDailyReport.sleep_duration)
-            this.mReportSleepDurationView.setLightSleepData(mDailyReport.light_duration, mDailyReport.light_duration_percent)
-            this.mReportSleepDurationView.setDeepSleepData(mDailyReport.deep_duration, mDailyReport.deep_duration_percent)
+            this.mReportSleepDurationView.setSleepTodayDuration(dailyReport.sleep_duration)
+            this.mReportSleepDurationView.setLightSleepData(dailyReport.light_duration, dailyReport.light_duration_percent)
+            this.mReportSleepDurationView.setDeepSleepData(dailyReport.deep_duration, dailyReport.deep_duration_percent)
 
             if (this.mDailyReport.needScrollToBottom) {
                 this.mNestedScrollView.post { mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
@@ -179,7 +179,7 @@ class DailyAdapter : RecyclerView.Adapter<DailyAdapter.ViewHolder>() {
 
             iDynamicNewView?.dynamicAddView(mReportSleepDurationView.light_sleep_duration_view.tv_sleep_duration_percent.getProgressView(), "cpv_ring_bg_color", R.color.b1_color_day)
             iDynamicNewView?.dynamicAddView(mReportSleepDurationView.light_sleep_duration_view.tv_sleep_duration_percent.getCountPercentView(), "csdtv_default_drawable", R.drawable.bg_text_b3)
-            iDynamicNewView?.dynamicAddView(mReportSleepDurationView.deep_sleep_duration_view.tv_sleep_duration_percent.getProgressView(), "cpv_ring_bg_color", R.color.b6_color_day)
+            iDynamicNewView?.dynamicAddView(mReportSleepDurationView.deep_sleep_duration_view.tv_sleep_duration_percent.getProgressView(), "cpv_ring_bg_color", R.color.b1_color_day)
             iDynamicNewView?.dynamicAddView(mReportSleepDurationView.deep_sleep_duration_view.tv_sleep_duration_percent.getCountPercentView(), "csdtv_default_drawable", R.drawable.bg_text_b3)
 
         }

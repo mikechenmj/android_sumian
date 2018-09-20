@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.text.TextPaint;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
@@ -28,6 +29,7 @@ import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.hw.report.bean.SleepPackage;
 import com.sumian.hw.report.widget.bean.SleepSegment;
 import com.sumian.sd.R;
+import com.sumian.sd.theme.three.SkinConfig;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -745,8 +747,12 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
 
         if (popView == null) {
             popView = LayoutInflater.from(getContext()).inflate(R.layout.hw_lay_sleep_data_indicator_pop, null, false);
+            CardView popCardView = popView.findViewById(R.id.pop_container);
+            popCardView.setCardBackgroundColor(SkinConfig.isInNightMode(v.getContext()) ? getResources().getColor(R.color.b2_color_night) : getResources().getColor(R.color.b2_color_day));
             tvTop = popView.findViewById(R.id.tv_indicator_top);
+            tvTop.setTextColor(SkinConfig.isInNightMode(v.getContext()) ? getResources().getColor(R.color.t5_color_night) : getResources().getColor(R.color.t5_color_day));
             tvBottom = popView.findViewById(R.id.tv_indicator_bottom);
+            tvBottom.setTextColor(SkinConfig.isInNightMode(v.getContext()) ? getResources().getColor(R.color.t5_color_night) : getResources().getColor(R.color.t5_color_day));
             popLayoutParams = createPopupLayout(getWindowToken());
         }
 

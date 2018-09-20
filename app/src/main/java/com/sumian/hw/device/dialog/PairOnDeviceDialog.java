@@ -25,10 +25,10 @@ import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.device.util.BluetoothDeviceUtil;
+import com.sumian.hw.log.LogManager;
 import com.sumian.hw.widget.device.DeviceListView;
 import com.sumian.hw.widget.device.DeviceScanErrorView;
 import com.sumian.hw.widget.device.DeviceScanView;
-import com.sumian.hw.log.LogManager;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -138,7 +138,7 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
         blueDevice.name = device.getName();
         blueDevice.mac = device.getAddress();
         blueDevice.rssi = rssi;
-        boolean isDeviceVersionValid = isDeviceValid(scanRecord);
+        boolean isDeviceVersionValid = isDeviceValid(scanRecord, blueDevice.name, blueDevice.mac);
         LogManager.appendBluetoothLog(
                 String.format(Locale.getDefault(),
                         "搜索到 %s %s, isVersionValid: %b",
@@ -161,11 +161,13 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
      * @return whether the device is valid for the app
      */
     @SuppressWarnings("SimplifiableIfStatement")
-    private boolean isDeviceValid(byte[] scanRecord) {
+    private boolean isDeviceValid(byte[] scanRecord, String deviceName, String deviceMac) {
         int deviceVersion = BluetoothDeviceUtil.getBluetoothDeviceVersion(scanRecord);
         if (BuildConfig.IS_CLINICAL_VERSION) { // clinical version app
+            LogManager.appendBluetoothLog("搜索到一台 临床版本设备 name=" + deviceName + "  mac=" + deviceMac);
             return true;
         } else { // release version app
+            LogManager.appendBluetoothLog("搜索到一台 正式版本设备 name=" + deviceName + "  mac=+deviceMac");
             return deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE;
         }
     }

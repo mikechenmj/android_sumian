@@ -195,7 +195,7 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
 
     private fun stopRefreshing() {
         val viewHolder = getViewHolder(mCurrentPosition)
-        viewHolder.setRefreshing(false)
+        viewHolder?.setRefreshing(false)
     }
 
     override fun onEnter(data: String?) {
@@ -261,8 +261,8 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
         mDailyAdapter.addItem(dailyReport)
     }
 
-    private fun getViewHolder(position: Int): DailyAdapter.ViewHolder {
-        return recycler.findViewHolderForAdapterPosition(position) as DailyAdapter.ViewHolder
+    private fun getViewHolder(position: Int): DailyAdapter.ViewHolder? {
+        return recycler.findViewHolderForAdapterPosition(position) as? DailyAdapter.ViewHolder
     }
 
     private fun preloadData() {

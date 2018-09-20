@@ -53,11 +53,21 @@ public class ColorfulProgressView extends View {
 //        inflate(context, R.layout.lay_progress_view, this);
 
         Resources resources = context.getResources();
-        initColors();
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.ColorfulProgressView);
+
         float ringWidth = attributes.getDimension(R.styleable.ColorfulProgressView_cpv_ring_width, resources.getDimension(R.dimen.space_10));
         int ringBgColor = attributes.getColor(R.styleable.ColorfulProgressView_cpv_ring_bg_color, resources.getColor(R.color.b1_color));
+
+        int highStartColor = attributes.getColor(R.styleable.ColorfulProgressView_cpv_high_start_color, resources.getColor(R.color.sleep_record_progress_high_start));
+        int highEndColor = attributes.getColor(R.styleable.ColorfulProgressView_cpv_high_end_color, resources.getColor(R.color.sleep_record_progress_high_end));
+        int middleStartColor = attributes.getColor(R.styleable.ColorfulProgressView_cpv_middle_start_color, resources.getColor(R.color.sleep_record_progress_middle_start));
+        int middleEndColor = attributes.getColor(R.styleable.ColorfulProgressView_cpv_middle_end_color, resources.getColor(R.color.sleep_record_progress_middle_end));
+        int lowStartColor = attributes.getColor(R.styleable.ColorfulProgressView_cpv_low_start_color, resources.getColor(R.color.sleep_record_progress_low_start));
+        int lowEndColor = attributes.getColor(R.styleable.ColorfulProgressView_cpv_low_end_color, resources.getColor(R.color.sleep_record_progress_low_end));
+
         attributes.recycle();
+
+        mProgressColors = new int[][]{{highStartColor, highEndColor}, {middleStartColor, middleEndColor}, {lowStartColor, lowEndColor}};
 
         mArcRect = new RectF();
         mMatrix = new Matrix();
@@ -69,17 +79,6 @@ public class ColorfulProgressView extends View {
         mProgressPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mProgressPaint.setStyle(Paint.Style.STROKE);
         setRingWidth(ringWidth);
-    }
-
-    private void initColors() {
-        Resources resources = getResources();
-        int highStartColor = resources.getColor(R.color.sleep_record_progress_high_start);
-        int highEndColor = resources.getColor(R.color.sleep_record_progress_high_end);
-        int middleStartColor = resources.getColor(R.color.sleep_record_progress_middle_start);
-        int middleEndColor = resources.getColor(R.color.sleep_record_progress_middle_end);
-        int lowStartColor = resources.getColor(R.color.sleep_record_progress_low_start);
-        int lowEndColor = resources.getColor(R.color.sleep_record_progress_low_end);
-        mProgressColors = new int[][]{{highStartColor, highEndColor}, {middleStartColor, middleEndColor}, {lowStartColor, lowEndColor}};
     }
 
     @Override
