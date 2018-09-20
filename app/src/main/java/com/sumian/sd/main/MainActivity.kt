@@ -99,6 +99,8 @@ class MainActivity : BaseEventActivity() {
         showFragmentAccordingToData()
         showOpenNotificationDialogIfNeeded()
         showUserGuidDialogIfNeed()
+        //目前因为默认launch 的是黑色主题  所以必须加这行.保证app 每次初始化都是黑色
+        SkinManager.getInstance().nightMode()
     }
 
     private fun showUserGuidDialogIfNeed() {
