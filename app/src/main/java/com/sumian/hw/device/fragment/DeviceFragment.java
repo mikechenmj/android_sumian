@@ -327,18 +327,14 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
         tvTurnMonitor.setTextColor(ColorCompatUtil.Companion.getColor(getActivity(), monitor.isMonitoring ? R.color.dot_red_color : R.color.bt_hole_color));
         tvTurnMonitor.setOnClickListener(v -> {
             int monitoringMode = monitor.isMonitoring ? BlueDevice.MONITORING_CMD_CLOSE : BlueDevice.MONITORING_CMD_OPEN;
-            if (monitoringMode == BlueDevice.MONITORING_CMD_CLOSE) {
-                new SumianAlertDialog(getContext())
-                        .setTheme(new BlackTheme())
-                        .hideTopIcon(true)
-                        .setTitle(R.string.turn_off_monitoring_mode_title)
-                        .setMessage(R.string.turn_off_monitoring_mode_message)
-                        .setLeftBtn(R.string.cancel, null)
-                        .setRightBtn(R.string.sure, v1 -> mPresenter.turnOnMonitoringMode(monitoringMode))
-                        .show();
-            } else {
-                mPresenter.turnOnMonitoringMode(monitoringMode);
-            }
+            new SumianAlertDialog(getContext())
+                    .setTheme(new BlackTheme())
+                    .hideTopIcon(true)
+                    .setTitle(monitor.isMonitoring ? R.string.turn_off_monitoring_mode_title : R.string.turn_on_monitoring_mode_title)
+                    .setMessage(monitor.isMonitoring ? R.string.turn_off_monitoring_mode_message : R.string.turn_on_monitoring_mode_message)
+                    .setLeftBtn(R.string.cancel, null)
+                    .setRightBtn(R.string.sure, v1 -> mPresenter.turnOnMonitoringMode(monitoringMode))
+                    .show();
             mPopupWindow.dismiss();
         });
         tvUnbind.setOnClickListener(v -> {
