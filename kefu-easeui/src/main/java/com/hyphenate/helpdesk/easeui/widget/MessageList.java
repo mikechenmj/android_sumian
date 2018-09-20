@@ -4,6 +4,7 @@ package com.hyphenate.helpdesk.easeui.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -52,9 +53,14 @@ public class MessageList extends RelativeLayout {
     private void init(Context context) {
         this.context = context;
         LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_chat_message_list : R.layout.night_hd_chat_message_list, this);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.chat_swipe_layout);
-        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.refresh_bg_color);
-        swipeRefreshLayout.setColorSchemeResources(R.color.white);
+        swipeRefreshLayout = findViewById(R.id.chat_swipe_layout);
+        if (UIProvider.getInstance().isLightThemeMode()) {
+            swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.parseColor("#FF6595F4"));
+            swipeRefreshLayout.setColorSchemeResources(R.color.white);
+        } else {
+            swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.refresh_bg_color);
+            swipeRefreshLayout.setColorSchemeResources(R.color.white);
+        }
         listView = (ListView) findViewById(R.id.list);
     }
 
