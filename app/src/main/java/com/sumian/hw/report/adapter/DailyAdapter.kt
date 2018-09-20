@@ -172,9 +172,9 @@ class DailyAdapter : RecyclerView.Adapter<DailyAdapter.ViewHolder>() {
             iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_coordinate_color", R.color.l3_color_day)
             iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_label_text_color", R.color.t2_color_day)
             iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_empty_text_color", R.color.t5_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_light_color", R.color.g1_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_eog_color", R.color.g1_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_deep_color", R.color.g2_color_day)
+            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_light_color", R.color.g2_color_day)
+            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_eog_color", R.color.g2_color_day)
+            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_deep_color", R.color.g1_color_day)
             iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_sober_color", R.color.g3_color_day)
 
             iDynamicNewView?.dynamicAddView(mReportSleepDurationView.light_sleep_duration_view.tv_sleep_duration_percent.getProgressView(), "cpv_ring_bg_color", R.color.b1_color_day)

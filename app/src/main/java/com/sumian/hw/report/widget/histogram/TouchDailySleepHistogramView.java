@@ -131,9 +131,9 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
         this.mEmptyLabelTextColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_empty_text_color, getResources().getColor(R.color.t5_color_day));
 
         this.mSoberColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_sober_color, getResources().getColor(R.color.g3_color_day));
-        this.mLightColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_light_color, getResources().getColor(R.color.g1_color_day));
+        this.mLightColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_light_color, getResources().getColor(R.color.g2_color_day));
         this.mEogColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_eog_color, getResources().getColor(R.color.g1_color_day));
-        this.mDeepColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_deep_color, getResources().getColor(R.color.g2_color_day));
+        this.mDeepColor = attributes.getColor(R.styleable.TouchDailySleepHistogramView_tdshv_deep_color, getResources().getColor(R.color.g1_color_day));
 
 
         attributes.recycle();
