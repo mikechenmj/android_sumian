@@ -20,6 +20,7 @@ class SumianTitleMessageDialog(context: Context) : Dialog(context, R.style.Sumia
     init {
         val inflate = LayoutInflater.from(context).inflate(R.layout.layout_sumian_title_message_dialog, null, false);
         setContentView(inflate)
+        iv_close.setOnClickListener { dismiss() }
     }
 
     fun setTitle(title: String): SumianTitleMessageDialog {
