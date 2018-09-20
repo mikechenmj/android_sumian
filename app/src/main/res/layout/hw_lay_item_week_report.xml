@@ -57,7 +57,8 @@
     <com.sumian.hw.widget.refresh.BlueRefreshView
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        skin:enable="true">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
@@ -76,6 +77,7 @@
                     android:layout_marginTop="@dimen/space_8"
                     android:paddingBottom="@dimen/space_4"
                     app:coordinate_color="@color/l3_color_day"
+                    app:coordinate_size="@dimen/divider_px_1"
                     app:deep_color="@color/g1_color_day"
                     app:empty_text="@string/none_week_have_sleep_data"
                     app:empty_text_size="@dimen/font_16"
@@ -99,7 +101,7 @@
                     android:layout_marginLeft="@dimen/space_10"
                     android:layout_marginRight="@dimen/space_10"
                     android:layout_marginTop="@dimen/space_24"
-                    app:cardBackgroundColor="@color/b1_color_day"
+                    app:cardBackgroundColor="@color/b2_color_day"
                     app:cardCornerRadius="@dimen/space_4"
                     app:cardElevation="@dimen/space_4"
                     skin:enable="true">

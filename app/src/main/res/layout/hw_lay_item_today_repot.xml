@@ -16,7 +16,10 @@
     <com.sumian.hw.widget.refresh.BlueRefreshView
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:brv_progress_bg_color="@color/l2_color_day"
+        app:brv_progress_color="@color/n2_color_day"
+        skin:enable="true">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nested_scroll_view"
@@ -44,16 +47,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_26" />
 
-                <com.sumian.hw.report.widget.ReportSleepDurationView
-                    android:id="@+id/report_sleep_duration_view"
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/space_20"
                     android:layout_marginLeft="@dimen/space_10"
                     android:layout_marginRight="@dimen/space_10"
-                    android:layout_marginTop="@dimen/space_20"
-                    android:background="@color/b2_color_day"
-                    app:cardBackgroundColor="@color/b2_color_day" />
+                    android:layout_marginTop="@dimen/space_24"
+                    app:cardBackgroundColor="@color/b2_color_day"
+                    app:cardCornerRadius="@dimen/space_4"
+                    app:cardElevation="@dimen/space_2"
+                    app:contentPadding="@dimen/space_20"
+                    skin:enable="true">
+
+                    <com.sumian.hw.report.widget.ReportSleepDurationView
+                        android:id="@+id/report_sleep_duration_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </android.support.v7.widget.CardView>
+
 
             </LinearLayout>
 

@@ -3,8 +3,7 @@
     xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    skin:enable="true">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_tab_text"
@@ -15,6 +14,7 @@
         android:gravity="center"
         android:textColor="@color/hw_tab_indicator_color"
         skin:enable="true"
+        tools:ignore="MissingPrefix"
         tools:text="@string/week_hint" />
 
     <ImageView
@@ -27,6 +27,7 @@
         android:src="@drawable/ic_nav_calendar_day"
         android:visibility="gone"
         skin:enable="true"
+        tools:ignore="MissingPrefix"
         tools:visibility="visible" />
 
     <View
@@ -34,11 +35,11 @@
         android:layout_width="@dimen/space_8"
         android:layout_height="@dimen/space_8"
         android:layout_gravity="right|top"
-        android:background="@drawable/bg_dot"
+        android:background="@drawable/bg_dot_day"
         android:contentDescription="@null"
         android:visibility="visible"
         skin:enable="true"
-        tools:ignore="RtlHardcoded"
+        tools:ignore="MissingPrefix,RtlHardcoded"
         tools:visibility="visible" />
 
 </FrameLayout>

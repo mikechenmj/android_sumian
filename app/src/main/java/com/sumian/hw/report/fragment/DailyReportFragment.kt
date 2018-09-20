@@ -51,12 +51,13 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
         DailyAdapter().setOnSwitchDateListener(this).setOnRefreshCallback(this)
     }
 
-    private var mCurrentDailyReport: DailyReport? = null
-    private var mNeedScrollToBottom: Boolean = false
-
     private val mActionLoadingDialog: ActionLoadingDialog  by lazy {
         ActionLoadingDialog()
     }
+
+    private var mCurrentDailyReport: DailyReport? = null
+    private var mNeedScrollToBottom: Boolean = false
+
     private var mCurrentPosition: Int = 0
 
     private var mIsSyncing: Boolean = false
@@ -84,6 +85,11 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
         return R.layout.hw_fragment_daily_report
     }
 
+    override fun initPresenter() {
+        super.initPresenter()
+        DailyReportPresenter.init(this)
+    }
+
     override fun initWidget(root: View) {
         super.initWidget(root)
 
@@ -91,11 +97,6 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
         recycler.layoutManager = LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
         recycler.adapter = mDailyAdapter
         recycler.addOnPageChangedListener(this)
-    }
-
-    override fun initPresenter() {
-        super.initPresenter()
-        DailyReportPresenter.init(this)
     }
 
     override fun initData() {
@@ -169,11 +170,11 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
     override fun OnPageChanged(positionBeforeScroll: Int, position: Int) {
         mCurrentPosition = position
         mCurrentDailyReport = mDailyAdapter.getItem(position)
-        if ((mCurrentDailyReport == null || mCurrentDailyReport!!.sleep_duration <= 0) && mIsSyncing) {
-            //syncing_report_view.showSyncing()
-        } else {
-            // syncing_report_view.hide()
-        }
+        //if ((mCurrentDailyReport == null || mCurrentDailyReport!!.sleep_duration <= 0) && mIsSyncing) {
+        //syncing_report_view.showSyncing()
+        //} else {
+        // syncing_report_view.hide()
+        //}
         if (position < PRELOAD_THRESHOLD) {
             preloadData()
         }

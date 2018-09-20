@@ -1,5 +1,6 @@
 package com.sumian.hw.report.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,10 +14,11 @@ import android.widget.TextView;
 
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.response.SleepDurationReport;
+import com.sumian.hw.report.widget.SleepAvgAndCompareView;
 import com.sumian.hw.report.widget.histogram.SleepHistogramView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
-import com.sumian.hw.report.widget.SleepAvgAndCompareView;
 import com.sumian.sd.R;
+import com.sumian.sd.theme.three.IDynamicNewView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -216,6 +218,32 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             if (mItem.needScrollToBottom) {
                 mNestedScrollView.post(() -> mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN));
                 mItem.needScrollToBottom = false;
+            }
+            registerThemeChangeEvent();
+        }
+
+        private void registerThemeChangeEvent() {
+            Context context = itemView.getContext();
+
+            if (context instanceof IDynamicNewView) {
+
+                IDynamicNewView iDynamicNewView = (IDynamicNewView) context;
+
+                iDynamicNewView.dynamicAddView(mRefresh, "brv_progress_color", R.color.n2_color_day);
+                iDynamicNewView.dynamicAddView(mRefresh, "brv_progress_bg_color", R.color.l2_color_day);
+
+                iDynamicNewView.dynamicAddView(mSleepHistogramView, "deep_color", R.color.g1_color_day);
+                iDynamicNewView.dynamicAddView(mSleepHistogramView, "light_color", R.color.g2_color_day);
+                iDynamicNewView.dynamicAddView(mSleepHistogramView, "eog_color", R.color.g2_color_day);
+                iDynamicNewView.dynamicAddView(mSleepHistogramView, "sober_color", R.color.g3_color_day);
+                iDynamicNewView.dynamicAddView(mSleepHistogramView, "coordinate_color", R.color.l3_color_day);
+                iDynamicNewView.dynamicAddView(mSleepHistogramView, "label_text_color", R.color.t2_color_day);
+
+
+                iDynamicNewView.dynamicAddView(mDailySleepAvgCompareView, "label_icon", R.drawable.ic_home_sleep_time_day);
+                iDynamicNewView.dynamicAddView(mDailySleepLightAvgCompareView, "label_icon", R.drawable.ic_report_light_sleep_day);
+                iDynamicNewView.dynamicAddView(mDailySleepDeepAvgCompareView, "label_icon", R.drawable.ic_report_deep_sleep_day);
+                iDynamicNewView.dynamicAddView(mDailySleepAwakeAvgCompareView, "label_icon", R.drawable.ic_report_awake_day);
             }
         }
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -9,14 +11,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/space_24" />
+        android:layout_marginEnd="@dimen/space_24"
+        app:enable_tab="true"
+        skin:enable="true" />
 
     <com.sumian.hw.report.widget.tab.TabIndicatorItemView
         android:id="@+id/week_tab_indicator_item_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="@dimen/space_24" />
+        android:layout_marginStart="@dimen/space_24"
+        app:enable_tab="false"
+        skin:enable="true" />
 
     <com.sumian.hw.report.widget.tab.TabIndicatorItemView
         android:id="@+id/calendar_tab_indicator_item_view"
@@ -25,6 +31,8 @@
         android:layout_gravity="right|center"
         android:layout_marginEnd="@dimen/space_20"
         android:layout_marginStart="@dimen/space_20"
+        app:enable_tab="false"
+        skin:enable="true"
         tools:ignore="RtlHardcoded" />
 
 </FrameLayout>

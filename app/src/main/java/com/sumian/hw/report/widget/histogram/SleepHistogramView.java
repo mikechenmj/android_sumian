@@ -14,8 +14,8 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.sumian.sd.R;
 import com.sumian.hw.network.response.SleepDuration;
+import com.sumian.sd.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,6 +92,42 @@ public class SleepHistogramView extends View {
         initPaint();
     }
 
+    public void setTextColor(int textColor) {
+        mTextColor = textColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setDeepColor(int deepColor) {
+        mDeepColor = deepColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setLightColor(int lightColor) {
+        mLightColor = lightColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setEogColor(int eogColor) {
+        mEogColor = eogColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setSoberColor(int soberColor) {
+        mSoberColor = soberColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setCoordinateColor(int coordinateColor) {
+        mCoordinateColor = coordinateColor;
+        requestLayout();
+        invalidate();
+    }
+
     private void initPaint() {
         //1.init  坐标系画笔
         Paint coordinatePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
@@ -165,7 +201,7 @@ public class SleepHistogramView extends View {
         this.mEmptyTextSize = typedArray.getDimension(R.styleable.SleepHistogramView_empty_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16.0f, getResources().getDisplayMetrics()));
 
         this.mCoordinateColor = typedArray.getColor(R.styleable.SleepHistogramView_coordinate_color, 0xff2c2f37);
-        this.mCoordinateSize = typedArray.getDimension(R.styleable.SleepHistogramView_coordinate_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1.0f, getResources().getDisplayMetrics()));
+        this.mCoordinateSize = typedArray.getDimension(R.styleable.SleepHistogramView_coordinate_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics()));
         this.mDeepColor = typedArray.getColor(R.styleable.SleepHistogramView_deep_color, 0xff2d4fa6);
         this.mLightColor = typedArray.getColor(R.styleable.SleepHistogramView_light_color, 0xff5071b3);
         this.mEogColor = typedArray.getColor(R.styleable.SleepHistogramView_eog_color, 0xff2d4fa6);

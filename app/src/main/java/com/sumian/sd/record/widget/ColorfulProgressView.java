@@ -156,4 +156,10 @@ public class ColorfulProgressView extends View {
         mBgRingPaint.setStrokeWidth(ringWidth);
         mProgressPaint.setStrokeWidth(ringWidth);
     }
+
+    public void setRingBgColor(int color) {
+        mBgRingPaint.setColor(color);
+        requestLayout();
+        invalidate();
+    }
 }

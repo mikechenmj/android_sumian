@@ -33,6 +33,7 @@ public class SleepAvgAndCompareView extends ConstraintLayout {
     private String mLabel;
     private Drawable mLabelDrawable;
     private boolean mIsGoneDivider;
+    private TextView mTvLabel;
 
     public SleepAvgAndCompareView(@NonNull Context context) {
         this(context, null);
@@ -55,15 +56,19 @@ public class SleepAvgAndCompareView extends ConstraintLayout {
 
     private void initView(Context context) {
         View inflate = inflate(context, R.layout.hw_lay_sleep_week_count_view, this);
-        TextView tvLabel = inflate.findViewById(R.id.tv_label);
+        mTvLabel = inflate.findViewById(R.id.tv_label);
         mTvDuration = inflate.findViewById(R.id.tv_duration);
         //TextView tvCompareLabel = inflate.findViewById(R.id.tv_compare_label);
         mTvCompareDuration = inflate.findViewById(R.id.tv_compare_duration);
         View divider = inflate.findViewById(R.id.v_divider);
 
-        CharSequence charSequence = QMUISpanHelper.generateSideIconText(true, getResources().getDimensionPixelSize(R.dimen.space_12), mLabel, mLabelDrawable);
-        tvLabel.setText(charSequence);
+        setDrawableLabel(mLabelDrawable);
         divider.setVisibility(mIsGoneDivider ? GONE : VISIBLE);
+    }
+
+    public void setDrawableLabel(Drawable drawable) {
+        CharSequence charSequence = QMUISpanHelper.generateSideIconText(true, getResources().getDimensionPixelSize(R.dimen.space_12), mLabel, drawable);
+        mTvLabel.setText(charSequence);
     }
 
     public SleepAvgAndCompareView setAvgDuration(Integer duration) {

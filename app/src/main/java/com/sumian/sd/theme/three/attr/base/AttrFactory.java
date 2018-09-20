@@ -3,6 +3,7 @@ package com.sumian.sd.theme.three.attr.base;
 import com.sumian.sd.theme.three.attr.BackgroundAttr;
 import com.sumian.sd.theme.three.attr.ImageViewSrcAttr;
 import com.sumian.sd.theme.three.attr.TextColorAttr;
+import com.sumian.sd.theme.three.attr.TextDrawableAttr;
 
 import java.util.HashMap;
 
@@ -20,6 +21,8 @@ public class AttrFactory {
         sSupportAttr.put("background", new BackgroundAttr());
         sSupportAttr.put("textColor", new TextColorAttr());
         sSupportAttr.put("src", new ImageViewSrcAttr());
+        sSupportAttr.put("drawableLeft", new TextDrawableAttr());
+        sSupportAttr.put("drawableStart", new TextDrawableAttr());
     }
 
 

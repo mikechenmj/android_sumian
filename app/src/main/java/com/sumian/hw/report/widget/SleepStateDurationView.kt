@@ -29,6 +29,6 @@ class SleepStateDurationView @JvmOverloads constructor(context: Context, attrs: 
     fun setData(label: String, duration: Int, percent: Int) {
         tv_label.text = label
         tv_sleep_duration_count.setDuration(duration)
-        tv_sleep_duration_percent.percent = percent
+        tv_sleep_duration_percent.setPercent(percent)
     }
 }
