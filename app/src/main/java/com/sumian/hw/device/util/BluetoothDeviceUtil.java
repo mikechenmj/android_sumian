@@ -23,9 +23,9 @@ public class BluetoothDeviceUtil {
     public static final int BLUETOOTH_DEVICE_VERSION_RELEASE = 2;
 
     @IntDef({
-        BLUETOOTH_DEVICE_VERSION_OLD,
-        BLUETOOTH_DEVICE_VERSION_CLINICAL,
-        BLUETOOTH_DEVICE_VERSION_RELEASE,
+            BLUETOOTH_DEVICE_VERSION_OLD,
+            BLUETOOTH_DEVICE_VERSION_CLINICAL,
+            BLUETOOTH_DEVICE_VERSION_RELEASE,
     })
     @Retention(RetentionPolicy.SOURCE)
     private @interface BluetoothDeviceVersion {

@@ -164,10 +164,10 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
     private boolean isDeviceValid(byte[] scanRecord, String deviceName, String deviceMac) {
         int deviceVersion = BluetoothDeviceUtil.getBluetoothDeviceVersion(scanRecord);
         if (BuildConfig.IS_CLINICAL_VERSION) { // clinical version app
-            LogManager.appendBluetoothLog("搜索到一台 临床版本设备 name=" + deviceName + "  mac=" + deviceMac);
+            LogManager.appendBluetoothLog("临床版本app 搜索到一台设备 name=" + deviceName + "  mac=" + deviceMac);
             return true;
         } else { // release version app
-            LogManager.appendBluetoothLog("搜索到一台 正式版本设备 name=" + deviceName + "  mac=+deviceMac");
+            LogManager.appendBluetoothLog("常规版本app 搜索到一台设备 name=" + deviceName + "  mac=" + deviceMac);
             return deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE;
         }
     }
