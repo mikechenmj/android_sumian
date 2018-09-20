@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,8 +19,7 @@ import com.sumian.sd.doctor.bean.Doctor;
 import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.theme.three.SkinConfig;
-import com.sumian.sd.widget.dialog.SumianAlertDialog;
-import com.sumian.sd.widget.dialog.theme.LightTheme;
+import com.sumian.sd.widget.dialog.SumianTitleMessageDialog;
 import com.sumian.sd.widget.fold.FoldLayout;
 import com.sumian.sd.widget.refresh.SumianRefreshLayout;
 
@@ -37,8 +35,6 @@ import butterknife.ButterKnife;
  * desc:医生详情
  **/
 public class DoctorDetailLayout extends SumianRefreshLayout {
-
-    private static final String TAG = DoctorDetailLayout.class.getSimpleName();
 
     @BindView(R.id.doctor_info)
     ConstraintLayout mDoctorDetailLayout;
@@ -59,8 +55,6 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
     @BindView(R.id.lay_doctor_service_container)
     LinearLayout layDoctorServiceContainer;
 
-    private Doctor mDoctor;
-
     public DoctorDetailLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -76,7 +70,6 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
 
     @SuppressWarnings("ConstantConditions")
     public void invalidDoctor(Doctor doctor) {
-        mDoctor = doctor;
         ImageLoader.loadImage(doctor.getAvatar(), ivAvatar, R.mipmap.ic_info_avatar_doctor, R.mipmap.ic_info_avatar_doctor);
         this.tvName.setText(doctor.getName());
         this.tvDepartment.setText(String.format(Locale.getDefault(), "%s %s", doctor.getHospital(), doctor.getDepartment()));
@@ -87,16 +80,13 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
             KefuManager.launchKefuActivity();
         });
 
-        mDoctorDetailLayout.setOnClickListener(v -> new SumianAlertDialog(getContext())
-                .setTheme(new LightTheme())
-                .hideTopIcon(true)
-                .setTitle(R.string.doctor_info)
-                .setCloseIconVisible(true)
-                .setMessage(doctor.getIntroduction_no_tag())
-                .setCancelable(true)
-                //.setRightBtn(R.string.cancel, null)
-                //.setLeftBtn(R.string.cancel, null)
-                .show());
+        mDoctorDetailLayout.setOnClickListener(v ->
+                new SumianTitleMessageDialog(v.getContext())
+                        .showCloseIv(true)
+                        .setTitle(v.getResources().getString(R.string.doctor_info))
+                        .setMessage(doctor.getIntroduction_no_tag())
+                        .show()
+        );
 
         appendDoctorServices(doctor);
         show();
@@ -116,7 +106,6 @@ public class DoctorDetailLayout extends SumianRefreshLayout {
                 doctorServiceLayout.setOnClickListener(v -> {
                     DoctorService cacheDoctorService = (DoctorService) v.getTag();
                     DoctorServiceWebActivity.show(getContext(), cacheDoctorService);
-                    Log.e(TAG, "onClick: -------->" + cacheDoctorService.toString());
                 });
                 doctorServiceLayout.invalidDoctorService(doctorService, i == doctorServices.size() - 1);
                 this.layDoctorServiceContainer.addView(doctorServiceLayout, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

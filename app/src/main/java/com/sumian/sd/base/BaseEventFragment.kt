@@ -1,7 +1,6 @@
 package com.sumian.sd.base
 
 import com.sumian.hw.base.HwBasePresenter
-import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.theme.three.base.SkinBaseFragment
 
 /**
@@ -17,14 +16,14 @@ abstract class BaseEventFragment<BasePresenter : HwBasePresenter> : SkinBaseFrag
     override fun onStart() {
         super.onStart()
         if (openEventBus()) {
-           // EventBusUtil.register(this)
+            // EventBusUtil.register(this)
         }
     }
 
     override fun onStop() {
         super.onStop()
         if (openEventBus()) {
-          //  EventBusUtil.unregister(this)
+            //  EventBusUtil.unregister(this)
         }
     }
 

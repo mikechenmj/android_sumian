@@ -1,5 +1,6 @@
 package com.sumian.sd.base
 
+import android.annotation.SuppressLint
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.theme.three.base.SkinBaseActivity
 
@@ -13,6 +14,7 @@ import com.sumian.sd.theme.three.base.SkinBaseActivity
  * </pre>
  */
 abstract class BaseEventActivity : SkinBaseActivity() {
+    @SuppressLint("MissingSuperCall")
     override fun onStart() {
         super.onStart()
         if (openEventBus()) {
@@ -20,6 +22,7 @@ abstract class BaseEventActivity : SkinBaseActivity() {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onStop() {
         super.onStop()
         if (openEventBus()) {

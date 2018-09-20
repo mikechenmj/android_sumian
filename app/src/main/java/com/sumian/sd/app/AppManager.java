@@ -192,9 +192,11 @@ public final class AppManager {
     private void initSkin(@NonNull Context context) {
         //第三方皮肤插件初始化
         SkinManager.getInstance().init(context);
-        SkinConfig.setCanChangeStatusColor(true);
-        SkinConfig.setCanChangeFont(true);
-        SkinConfig.setDebug(true);
+        SkinConfig.setCanChangeStatusColor(false);
+        SkinConfig.setCanChangeFont(false);
+        if (BuildConfig.DEBUG) {
+            SkinConfig.setDebug(true);
+        }
         SkinConfig.addSupportAttr("csdtv_default_drawable", new CountSleepDurationTextViewAttr());
         SkinConfig.addSupportAttr("cardBackgroundColor", new CardViewAttr());
         SkinConfig.addSupportAttr("brv_progress_color", new SwipeRefreshLayoutAttr());
@@ -220,8 +222,7 @@ public final class AppManager {
         SkinConfig.addSupportAttr("cpv_ring_bg_color", new ColorfulProgressRingBgAttr());
         //SkinConfig.addSupportAttr("label_icon", new SleepAvgAndCompareAttr());
 
-
-        SkinConfig.enableGlobalSkinApply();
+        // SkinConfig.enableGlobalSkinApply();
     }
 
     private void initWebView() {

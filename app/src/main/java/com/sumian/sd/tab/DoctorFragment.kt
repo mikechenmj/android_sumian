@@ -102,7 +102,8 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun onBegin() {
         super.onBegin()
-        doctor_detail_layout.showRefreshAnim()
+        //doctor_detail_layout.showRefreshAnim()
+        doctor_detail_layout.hideRefreshAnim()
     }
 
     override fun onFinish() {
