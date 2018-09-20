@@ -61,14 +61,13 @@
             android:foreground="@drawable/bg_material_ripple"
             android:scaleType="fitXY"
             android:src="@drawable/ic_info_customerservice_black"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:visibility="visible" />
 
         <com.sumian.sd.widget.divider.SettingDividerView
             android:id="@+id/siv_setting"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_64"
-            android:layout_marginTop="@dimen/space_10"
             android:background="@color/light_content_bg_color"
             app:divider_line_visible="gone"
             app:type_desc="@string/setting"

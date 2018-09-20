@@ -124,12 +124,12 @@ class HwMainFragment : BaseEventFragment<HwBasePresenter>(), HwLeanCloudHelper.O
 
     override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
         SumianExecutor.runOnUiThread({
-            this.tb_me.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
+            this.tb_me.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) View.VISIBLE else View.GONE)
         })
     }
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
-        SumianExecutor.runOnUiThread({ this.tb_me.showDot(if (isShowAppDot || isShowMonitorDot || isShowSleepyDot) android.view.View.VISIBLE else android.view.View.GONE) })
+        SumianExecutor.runOnUiThread({ this.tb_me.showDot(if (isShowAppDot || isShowMonitorDot || isShowSleepyDot) View.VISIBLE else View.GONE) })
     }
 
     override fun onSelectedTabChange(navigationItem: NavigationItem?, position: Int) {
