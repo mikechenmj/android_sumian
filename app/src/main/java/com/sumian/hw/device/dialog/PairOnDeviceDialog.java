@@ -25,10 +25,10 @@ import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.device.util.BluetoothDeviceUtil;
+import com.sumian.hw.log.LogManager;
 import com.sumian.hw.widget.device.DeviceListView;
 import com.sumian.hw.widget.device.DeviceScanErrorView;
 import com.sumian.hw.widget.device.DeviceScanView;
-import com.sumian.hw.log.LogManager;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -52,6 +52,7 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
 
     public static final String ACTION_BIND = "com.sumian.app.intent.action.BIND_DEVICE";
     public static final String EXTRA_DEVICE = "com.sumian.app.intent.extra_DEVICE";
+    public static final int FINISH_SCAN_DELAY_MILLIS = 3000;
 
     private TextView mTvLabelH1;
     private TextView mTvLabelH2;
@@ -118,15 +119,21 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
         this.mBlueManager.addBlueAdapterCallback(this);
         this.mBlueManager.doScanDelay();
         LogManager.appendBluetoothLog("第一次进入搜索界面,开始进行蓝牙搜索");
+        rootView.postDelayed(() -> mBlueManager.doStopScan(), FINISH_SCAN_DELAY_MILLIS);
+        setOnDismissListener(dialogInterface -> unregisterBlueCallbacks());
     }
 
     @Override
     public void onClick(View v) {
-        this.mBlueManager.removeBlueScanCallback(this);
-        this.mBlueManager.removeBlueAdapterCallback(this);
+        unregisterBlueCallbacks();
         this.mBlueManager.doStopScan();
         LogManager.appendBluetoothLog("退出搜索界面,停止蓝牙搜索");
         cancel();
+    }
+
+    private void unregisterBlueCallbacks() {
+        this.mBlueManager.removeBlueScanCallback(this);
+        this.mBlueManager.removeBlueAdapterCallback(this);
     }
 
     @Override
@@ -215,8 +222,7 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
         intent.putExtra(EXTRA_DEVICE, blueDevice);
         boolean sendBroadcast = LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         if (sendBroadcast) {
-            this.mBlueManager.removeBlueScanCallback(this);
-            this.mBlueManager.removeBlueAdapterCallback(this);
+            unregisterBlueCallbacks();
             cancel();
         }
     }
