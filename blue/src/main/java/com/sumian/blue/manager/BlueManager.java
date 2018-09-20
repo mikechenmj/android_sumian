@@ -154,6 +154,10 @@ public class BlueManager implements BlueContract.Presenter, BluetoothAdapter.LeS
         return mBluePeripheral;
     }
 
+    public boolean isBluePeripheralConnected() {
+        return mBluePeripheral != null && mBluePeripheral.isConnected();
+    }
+
     @Override
     public void clearBluePeripheral() {
         if (mBluePeripheral != null) {

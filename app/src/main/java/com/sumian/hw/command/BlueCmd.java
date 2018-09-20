@@ -1,12 +1,15 @@
 package com.sumian.hw.command;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.sumian.hw.common.util.BlueByteUtil;
 import com.sumian.sd.account.bean.Answers;
 import com.sumian.sd.app.AppManager;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
@@ -21,6 +24,8 @@ import java.util.Locale;
 public final class BlueCmd {
 
     private static final String TAG = BlueCmd.class.getSimpleName();
+    public static final String CMD_PATTERN_SEND = "aa4a";
+    public static final String CMD_PATTERN_RECEIVE = "554a";
 
     public static String bytes2HexString(byte[] bytes) {
         StringBuilder ret = new StringBuilder();
@@ -32,6 +37,10 @@ public final class BlueCmd {
             ret.append(hex.toLowerCase(Locale.getDefault()));
         }
         return ret.toString();
+    }
+
+    public static byte[] hexStringToByteArray(String s) {
+        return new BigInteger(s, 16).toByteArray();
     }
 
     public static String formatCmdIndex(String command) {
@@ -274,5 +283,34 @@ public final class BlueCmd {
         } else {
             return answers.level;
         }
+    }
+
+    public static byte[] makePatternCmd(@NonNull String data) {
+        return makeCmd(Cmd.CMD_SET_PATTERN, data);
+    }
+
+    /**
+     * @param cmd cmd, see {@link com.sumian.hw.command.Cmd}
+     */
+    public static byte[] makeCmd(byte cmd, @NonNull String data) {
+        return makeCmd(cmd, hexStringToByteArray(data));
+    }
+
+    /**
+     * @param cmd cmd, see {@link com.sumian.hw.command.Cmd}
+     */
+    public static byte[] makeCmd(byte cmd, byte[] data) {
+        // aa 4a 05 10 01 9f 20 50
+        // APP pattern 数据长度 模式信息（长度不定）
+        int dataLen = data != null ? data.length : 0;
+        int totalLen = 3 + dataLen;
+        byte[] bytes = new byte[totalLen];
+        bytes[0] = Cmd.CMD_APP_HEADER;  // header
+        bytes[1] = cmd; // cmd
+        bytes[2] = BigInteger.valueOf(dataLen).toByteArray()[0];
+        if (dataLen > 0) {
+            System.arraycopy(data, 0, bytes, 3, dataLen);
+        }
+        return bytes;
     }
 }

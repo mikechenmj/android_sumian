@@ -17,10 +17,10 @@ import android.widget.TextView;
 
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.common.util.SpUtil;
-import com.sumian.hw.device.bean.BlueDevice;
-import com.sumian.hw.device.contract.DeviceContract;
+import com.sumian.hw.device.bean.BlueDevice;import com.sumian.hw.device.contract.DeviceContract;
 import com.sumian.hw.device.dialog.PaModeDialog;
 import com.sumian.hw.device.dialog.PairOnDeviceDialog;
+import com.sumian.hw.device.pattern.SyncPatternManager;
 import com.sumian.hw.device.presenter.DevicePresenter;
 import com.sumian.hw.device.sheet.DeviceBottomSheet;
 import com.sumian.hw.job.JobTask;
@@ -210,6 +210,12 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
     public void onPause() {
         super.onPause();
         getContext().unregisterReceiver(mGlobalReceiver);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        SyncPatternManager.Companion.syncPatternInPossible(getActivity());
     }
 
     @Override
