@@ -44,10 +44,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:visibility="invisible"
+            android:visibility="visible"
             tools:ignore="RtlHardcoded"
-            tools:text="发送中"
-            tools:visibility="visible" />
+            tools:text="发送中" />
     </FrameLayout>
 
     <View

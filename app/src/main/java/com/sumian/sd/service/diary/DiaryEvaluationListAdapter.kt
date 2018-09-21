@@ -53,7 +53,7 @@ class DiaryEvaluationListAdapter() : BaseQuickAdapter<DiaryEvaluationData, BaseV
             DiaryEvaluationData.STATUS_0_WAITING_RESPONSE -> App.getAppContext().getString(R.string.waiting_for_reply)
             DiaryEvaluationData.STATUS_1_FINISHED -> App.getAppContext().getString(R.string.finished)
             DiaryEvaluationData.STATUS_2_CLOSED -> App.getAppContext().getString(R.string.closed)
-            DiaryEvaluationData.STATUS_3_CANCELED -> App.getAppContext().getString(R.string.bind_canceled)
+            DiaryEvaluationData.STATUS_3_CANCELED -> App.getAppContext().getString(R.string.cancelled)
             DiaryEvaluationData.STATUS_4_UNUSED -> ""
             else -> ""
         }
