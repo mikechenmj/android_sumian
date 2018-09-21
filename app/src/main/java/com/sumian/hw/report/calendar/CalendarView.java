@@ -54,7 +54,8 @@ public class CalendarView extends View implements View.OnClickListener {
     private int mToday = -1;//今天的position
 
     // special draw times
-    private int[] highlightDays;
+    private int[] highlightDays; // 有睡眠日记的天
+    private int[] highlightDays2;   // 今天
     private int[] drawUnderlineDays;
     private int[] drawDotDays;
     private int[] drawBgDays;
@@ -249,7 +250,11 @@ public class CalendarView extends View implements View.OnClickListener {
             drawBgCircle(canvas);
             drawText(canvas, text, mWithBgTextColor);
         } else {
-            drawText(canvas, text, dayIn(dayOfMonth, highlightDays));
+            if (dayIn(dayOfMonth, highlightDays2)) {
+                drawText(canvas, text, mTodayColor);
+            } else {
+                drawText(canvas, text, dayIn(dayOfMonth, highlightDays));
+            }
         }
     }
 
@@ -326,16 +331,13 @@ public class CalendarView extends View implements View.OnClickListener {
         return false;
     }
 
-    public CalendarView setToday(int today) {
-        this.mToday = today;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(today * 1000L);
-        int maxDate = calendar.getActualMaximum(Calendar.DATE);
+    public CalendarView setHighlightDays(int[] highlightDays) {
+        this.highlightDays = highlightDays;
         return this;
     }
 
-    public CalendarView setHighlightDays(int[] highlightDays) {
-        this.highlightDays = highlightDays;
+    public CalendarView setHighlightDays2(int[] highlightDays2) {
+        this.highlightDays2 = highlightDays2;
         return this;
     }
 

@@ -128,9 +128,9 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
                 this.mAdapter.setUser(it)
             }
             this.mAdapter.resetItem(advisory.records)
-            val isRecordEmpty = advisory.records == null || advisory.records!!.isEmpty()
-            empty_error_view.visibility = if (isRecordEmpty) View.VISIBLE else View.GONE
-            recycler.visibility = if (isRecordEmpty) View.GONE else View.VISIBLE
+            val isRecordCanceled = advisory.status == 4
+            empty_error_view.visibility = if (isRecordCanceled) View.VISIBLE else View.GONE
+            recycler.visibility = if (isRecordCanceled) View.GONE else View.VISIBLE
         }
     }
 
