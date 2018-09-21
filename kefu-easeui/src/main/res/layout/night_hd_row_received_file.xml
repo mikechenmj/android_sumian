@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_10"
     android:orientation="vertical"
     android:paddingTop="13dp">
 
@@ -19,14 +20,14 @@
         android:paddingRight="20dp">
 
         <com.hyphenate.helpdesk.easeui.widget.CircularImage
-            android:src="@mipmap/ic_chat_left_default"
             android:id="@+id/iv_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_chat_left_default" />
 
         <TextView
             android:id="@+id/tv_userid"

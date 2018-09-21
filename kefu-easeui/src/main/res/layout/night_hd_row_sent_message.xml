@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_10"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="13dp">
@@ -94,6 +95,7 @@
                 android:lineSpacingExtra="@dimen/space_2"
                 android:padding="@dimen/space_8"
                 android:textColor="@color/send_text_color"
+                android:textColorLink="@color/send_text_color"
                 android:textSize="@dimen/font_16"
                 tools:ignore="RtlHardcoded"
                 tools:text="小姐姐dadaddadadadadasdadsdadasdaasaaaaasaaaasaaaaaadasaaaaasaaasdadaaadadaddadaaaaaaaaa大大所多多" />
