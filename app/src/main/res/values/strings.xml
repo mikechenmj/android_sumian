@@ -564,11 +564,11 @@
     <string name="compare_month_hint">同比上月</string>
     <string name="minute_hint">分钟</string>
     <string name="sleep_advice_hint">影响因素及建议</string>
-    <string name="sleep_data_less_hint">睡眠数据不足</string>
+    <string name="sleep_data_less_hint">睡眠数据不全</string>
     <string name="sleep_advice_cancel">知道了</string>
-    <string name="sleep_note_advice_hint">建议</string>
-    <string name="sleep_advice_explain">解释</string>
-    <string name="sleep_advice_element">因素</string>
+    <string name="sleep_note_advice_hint">【建议】</string>
+    <string name="sleep_advice_explain">【解释】</string>
+    <string name="sleep_advice_element">【因素】</string>
 
     <string name="none_sleep_hint">当前没有更多睡眠数据</string>
     <string name="now_none_have_sleep_data">暂无睡眠记录</string>

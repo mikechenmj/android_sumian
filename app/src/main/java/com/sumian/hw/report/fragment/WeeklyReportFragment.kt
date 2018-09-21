@@ -16,6 +16,7 @@ import com.sumian.hw.report.adapter.WeeklyReportAdapter
 import com.sumian.hw.report.calendar.CalendarDialog
 import com.sumian.hw.report.contract.WeeklyReportContact
 import com.sumian.hw.report.presenter.WeeklyReportPresenter
+import com.sumian.hw.report.sheet.SleepAdviceBottomSheet
 import com.sumian.hw.widget.refresh.ActionLoadingDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -172,6 +173,12 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
 
     override fun onRefreshWeekReport(v: View, position: Int, item: SleepDurationReport) {
         mPresenter.refreshReport(item.end_date_show * 1000L)
+    }
+
+    override fun onShowSleepAdvice(v: View, position: Int, item: SleepDurationReport) {
+        fragmentManager?.beginTransaction()
+                ?.add(SleepAdviceBottomSheet.newInstance(item.advice), SleepAdviceBottomSheet::class.java.simpleName)
+                ?.commitNowAllowingStateLoss()
     }
 
     override fun onBegin() {
