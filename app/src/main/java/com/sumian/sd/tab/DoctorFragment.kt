@@ -50,11 +50,15 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
             request_scan_qr_code_view.hide()
 
             val doctor = AppManager.getAccountViewModel()?.userInfo?.doctor
-            doctor_detail_layout.invalidDoctor(doctor)
+            doctor?.let {
+                doctor_detail_layout.invalidDoctor(doctor)
+            }
+
             if (doctor?.services == null) {
                 mIsAutoRefresh = true
                 mPresenter.getBindDoctorInfo()
             }
+
         } else {
             doctor_detail_layout.hide()
             request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
