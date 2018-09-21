@@ -22,7 +22,9 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.theme.three.base.SkinBaseFragment
+import com.sumian.sd.theme.three.loader.SkinManager
 import kotlinx.android.synthetic.main.hw_fragment_main_report.*
+import kotlinx.android.synthetic.main.hw_lay_tab_indicator_view.view.*
 
 @Suppress("UNREACHABLE_CODE")
 /**
@@ -118,12 +120,22 @@ class ReportFragment : SkinBaseFragment<HwBasePresenter>(), TabIndicatorView.OnS
         if (!showPushReport && mCurrentPosition != -1) {
             tab_indicator_view?.selectTabByPosition(mCurrentPosition)
         }
+
+        tab_indicator_view?.iv_back?.visibility = if (SkinManager.getInstance().isNightMode) View.INVISIBLE else View.VISIBLE
+    }
+
+    override fun onBack(v: View) {
+        activity?.finish()
     }
 
     override fun onSwitchIndicator(v: View, position: Int) {
         LogManager.appendPhoneLog("com.sumian.app.improve.report.ReportFragment.onSwitchIndicator position: $position")
         showFragmentByPosition(position)
         mCurrentPosition = position
+    }
+
+    override fun onShowCalendar(v: View) {
+        CalendarDialog.create(currentShowReportTime).show(fragmentManager!!, CalendarDialog::class.java.simpleName)
     }
 
     private fun showFragmentByPosition(position: Int) {
@@ -141,10 +153,6 @@ class ReportFragment : SkinBaseFragment<HwBasePresenter>(), TabIndicatorView.OnS
                     }
                 }
                 , FragmentUtil.DefaultRunOnCommitCallbackImpl())
-    }
-
-    override fun onShowCalendar(v: View) {
-        CalendarDialog.create(currentShowReportTime).show(fragmentManager!!, CalendarDialog::class.java.simpleName)
     }
 
     /**

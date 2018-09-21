@@ -6,6 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="@dimen/space_32"
+        android:layout_height="@dimen/space_32"
+        android:layout_gravity="center|left"
+        android:layout_marginTop="@dimen/space_12"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_8"
+        android:src="@drawable/ic_nav_icon_back_white"
+        skin:enable="true"
+        tools:ignore="MissingPrefix,RtlHardcoded" />
+
     <com.sumian.hw.report.widget.tab.TabIndicatorItemView
         android:id="@+id/day_tab_indicator_item_view"
         android:layout_width="wrap_content"

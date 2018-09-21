@@ -232,7 +232,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def fileName = "患者版 $versionName ${variant.flavorName} ${formatDate()}.apk"
+            def fileName = "速眠医生_患者版_${versionName}_${variant.flavorName} ${formatDate()}.apk"
 
             println fileName
 
@@ -251,7 +251,7 @@ android {
 }
 
 static def formatDate() {
-    def sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm")
+    def sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
     def formatDate = sdf.format(new Date())
     return formatDate
 }

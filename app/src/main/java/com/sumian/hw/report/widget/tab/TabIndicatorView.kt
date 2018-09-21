@@ -30,6 +30,10 @@ class TabIndicatorView : FrameLayout, TabIndicatorItemView.OnSelectTabCallback {
     private fun initView(context: Context) {
         View.inflate(context, R.layout.hw_lay_tab_indicator_view, this)
 
+        iv_back.setOnClickListener {
+            mOnSwitchIndicatorCallback?.onBack(it)
+        }
+
         day_tab_indicator_item_view.setIndicatorText(resources.getString(R.string.today))
         day_tab_indicator_item_view.setOnSelectTabCallback(this)
         day_tab_indicator_item_view.select()
@@ -85,6 +89,8 @@ class TabIndicatorView : FrameLayout, TabIndicatorItemView.OnSelectTabCallback {
     }
 
     interface OnSwitchIndicatorCallback {
+
+        fun onBack(v: View)
 
         fun onSwitchIndicator(v: View, position: Int)
 
