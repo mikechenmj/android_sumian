@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -262,7 +263,11 @@ public class SleepHistogramView extends View {
 
         if (mSleepDurations == null || mSleepDurations.isEmpty()) {
             mTextPaint.setTextSize(mEmptyTextSize);
-            canvas.drawText(mEmptyText, getWidth() / 2, getHeight() / 2, mTextPaint);
+            mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
+            canvas.drawText(mEmptyText, getWidth() / 2, getHeight() / 2 - 40, mTextPaint);
+            mTextPaint.setTypeface(Typeface.DEFAULT);
+            mTextPaint.setTextSize(mTextSize);
+            canvas.drawText(getContext().getString(R.string.no_have_sleep_data_low_label), getWidth() / 2, getHeight() / 2 + 40, mTextPaint);
             return;
         }
 
@@ -319,6 +324,7 @@ public class SleepHistogramView extends View {
         canvas.drawPath(this.mCoordinatePath, this.mCoordinatePaint);
 
         //画纵坐标刻度
+        mTextPaint.setTypeface(Typeface.DEFAULT);
         mTextPaint.setTextSize(mTextSize);
         int y = getPaddingTop() + mContentHeight - mItemHeight;
         int x = (int) (getPaddingLeft() + (mItemWidth * 0.75f));

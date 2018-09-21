@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,6 +126,7 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
         private SleepAvgAndCompareView mDailySleepLightAvgCompareView;
         private SleepAvgAndCompareView mDailySleepDeepAvgCompareView;
         private SleepAvgAndCompareView mDailySleepAwakeAvgCompareView;
+        private CardView mLaySleepDataLessContainer;
 
         private SleepDurationReport mItem;
 
@@ -142,6 +144,9 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             mDailySleepLightAvgCompareView = itemView.findViewById(R.id.daily_sleep_light_avg_compare_view);
             mDailySleepDeepAvgCompareView = itemView.findViewById(R.id.daily_sleep_deep_avg_compare_view);
             mDailySleepAwakeAvgCompareView = itemView.findViewById(R.id.daily_sleep_awake_avg_compare_view);
+
+            mLaySleepDataLessContainer = itemView.findViewById(R.id.lay_sleep_data_less_container);
+            mLaySleepDataLessContainer.setOnClickListener(this);
 
             itemView.findViewById(R.id.iv_pre).setOnClickListener(this);
             itemView.findViewById(R.id.iv_next).setOnClickListener(this);
@@ -215,6 +220,8 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             this.mTvWeekQuantum.setText(String.format(Locale.getDefault(), "%d%s%02d%s%02d%s%d%s%02d%s%02d",
                     preYear, "/", (preMonth + 1), "/", preDate, " - ", nextYear, "/", (nextMonth + 1), "/", nextDate));
 
+            this.mLaySleepDataLessContainer.setVisibility(item.getAdvice() == null ? View.GONE : View.VISIBLE);
+
             if (mItem.needScrollToBottom) {
                 mNestedScrollView.post(() -> mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN));
                 mItem.needScrollToBottom = false;
@@ -239,7 +246,6 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
                 iDynamicNewView.dynamicAddView(mSleepHistogramView, "coordinate_color", R.color.l3_color_day);
                 iDynamicNewView.dynamicAddView(mSleepHistogramView, "label_text_color", R.color.t2_color_day);
 
-
                 iDynamicNewView.dynamicAddView(mDailySleepAvgCompareView, "label_icon", R.drawable.ic_home_sleep_time_day);
                 iDynamicNewView.dynamicAddView(mDailySleepLightAvgCompareView, "label_icon", R.drawable.ic_report_light_sleep_day);
                 iDynamicNewView.dynamicAddView(mDailySleepDeepAvgCompareView, "label_icon", R.drawable.ic_report_deep_sleep_day);
@@ -253,6 +259,9 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
                 case R.id.iv_pre:
                 case R.id.iv_next:
                     mWeekReportCallback.onSwitchWeek(v, getAdapterPosition(), mItem);
+                    break;
+                case R.id.lay_sleep_data_less_container:
+                    mWeekReportCallback.onShowSleepAdvice(v, getAdapterPosition(), mItem);
                     break;
             }
         }
@@ -272,6 +281,8 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
         void onSwitchWeek(View v, int position, SleepDurationReport item);
 
         void onRefreshWeekReport(View v, int position, SleepDurationReport item);
+
+        void onShowSleepAdvice(View v, int position, SleepDurationReport item);
 
     }
 

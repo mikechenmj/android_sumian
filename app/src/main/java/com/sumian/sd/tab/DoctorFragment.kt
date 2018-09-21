@@ -37,8 +37,8 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
-        doctor_detail_layout.setOnRefreshListener(this)
-        iv_notification.setOnClickListener { NotificationListActivity.launch(activity) }
+        doctor_detail_layout?.setOnRefreshListener(this)
+        iv_notification?.setOnClickListener { NotificationListActivity.launch(activity) }
     }
 
     override fun initData() {
@@ -50,11 +50,15 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
             request_scan_qr_code_view.hide()
 
             val doctor = AppManager.getAccountViewModel()?.userInfo?.doctor
-            doctor_detail_layout.invalidDoctor(doctor)
+            doctor?.let {
+                doctor_detail_layout.invalidDoctor(doctor)
+            }
+
             if (doctor?.services == null) {
                 mIsAutoRefresh = true
                 mPresenter.getBindDoctorInfo()
             }
+
         } else {
             doctor_detail_layout.hide()
             request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
@@ -97,20 +101,20 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        request_scan_qr_code_view.onRequestPermissionsResultDelegate(requestCode, permissions, grantResults)
+        request_scan_qr_code_view?.onRequestPermissionsResultDelegate(requestCode, permissions, grantResults)
     }
 
     override fun onBegin() {
         super.onBegin()
         //doctor_detail_layout.showRefreshAnim()
-        doctor_detail_layout.hideRefreshAnim()
+        doctor_detail_layout?.hideRefreshAnim()
     }
 
     override fun onFinish() {
         super.onFinish()
         mIsInit = false
         mIsAutoRefresh = false
-        doctor_detail_layout.hideRefreshAnim()
+        doctor_detail_layout?.hideRefreshAnim()
     }
 
     override fun onGrantedSuccess() {

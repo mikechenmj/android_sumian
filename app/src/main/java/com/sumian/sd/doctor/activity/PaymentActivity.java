@@ -37,8 +37,6 @@ import butterknife.OnClick;
 
 public class PaymentActivity extends SdBaseActivity<PayPresenter> implements View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
 
-    private static final String TAG = PaymentActivity.class.getSimpleName();
-
     private static final String ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service";
     private static final String ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId";
 
@@ -227,7 +225,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onOrderPayFailed(@NonNull String payMsg) {
-        showCenterToast(payMsg);
+        //showCenterToast(payMsg);
         if (!mPayDialog.isShowing()) {
             mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show();
         }
@@ -235,7 +233,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onOrderPayInvalid(@NonNull String payMsg) {
-        showCenterToast(payMsg);
+        //showCenterToast(payMsg);
         if (!mPayDialog.isShowing()) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show();
         }

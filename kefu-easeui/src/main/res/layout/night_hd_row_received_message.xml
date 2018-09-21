@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_10"
     android:orientation="vertical"
     android:paddingTop="13dp">
 
@@ -54,6 +55,7 @@
                 android:paddingLeft="6dp"
                 android:paddingRight="1dp"
                 android:textColor="@color/bt_hole_color"
+                android:textColorLink="@color/bt_hole_color"
                 android:textSize="@dimen/font_16"
                 tools:ignore="RtlHardcoded"
                 tools:text="小姐姐dadadadsddasdadadadadadadasdadsdadasdaasaaaaasaaaasaaaaaadasaaaaasaaasdadaaadadaddadaaaaaaaaa大大所多多" />

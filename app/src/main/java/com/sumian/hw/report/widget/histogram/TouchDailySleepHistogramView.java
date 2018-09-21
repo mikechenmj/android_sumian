@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -256,9 +257,11 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
             mTextPaint.setTextAlign(Paint.Align.CENTER);
             mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16.0f, getResources().getDisplayMetrics()));
             mTextPaint.setColor(mEmptyLabelTextColor);
+            mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
             canvas.drawText(getContext().getString(R.string.no_have_sleep_data), mCenterX, mCenterY - 40, mTextPaint);
             mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 13.0f, getResources().getDisplayMetrics()));
             mTextPaint.setColor(mTextColor);
+            mTextPaint.setTypeface(Typeface.DEFAULT);
             canvas.drawText(getContext().getString(R.string.no_have_sleep_data_low_label), mCenterX, mCenterY + 40, mTextPaint);
             return;
         }
@@ -274,6 +277,8 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
 
         //记录上一个 indicator 的 x 坐标
         float preToTimeStartX = 0;
+
+        mTextPaint.setTypeface(Typeface.DEFAULT);
 
         mCoordinatePaint.setStrokeWidth(1.0f);
 
@@ -426,6 +431,7 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
     }
 
     private void drawCoordinate(Canvas canvas) {
+        mTextPaint.setTypeface(Typeface.DEFAULT);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12.0f, getResources().getDisplayMetrics()));
@@ -450,7 +456,6 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
         mCoordinatePaint.setColor(mCoordinateColor);
         canvas.drawPath(mHorizontalPath, mCoordinatePaint);
     }
-
 
     private int measureHeight(int heightMeasureSpec) {
         int size = MeasureSpec.getSize(heightMeasureSpec);
