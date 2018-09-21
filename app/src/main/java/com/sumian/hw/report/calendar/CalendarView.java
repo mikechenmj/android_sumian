@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -186,7 +187,7 @@ public class CalendarView extends View implements View.OnClickListener {
             updateItemRect(index);
             if (index < DAY_COUNT_OF_WEEK) {
                 // draw weekday name
-                drawText(canvas, mWeekdayNames[index], false);
+                drawWeekday(canvas, mWeekdayNames[index]);
             } else if (index < DAY_COUNT_OF_WEEK + dayOfWeekOfTheFirstDayOfTheMonth - 1) {
                 // shift position， draw nothing
             } else {
@@ -196,6 +197,10 @@ public class CalendarView extends View implements View.OnClickListener {
             }
             index++;
         }
+    }
+
+    private void drawWeekday(Canvas canvas, String weekdayName) {
+        drawText(canvas, weekdayName, false);
     }
 
     private void updateItemRect(int index) {
@@ -213,11 +218,12 @@ public class CalendarView extends View implements View.OnClickListener {
 
     private void drawText(Canvas canvas, String text, boolean highlight) {
         int color = highlight ? mHighlightTextColor : mDefaultTextColor;
-        drawText(canvas, text, color);
+        drawText(canvas, text, color, highlight);
     }
 
-    private void drawText(Canvas canvas, String text, int textColor) {
+    private void drawText(Canvas canvas, String text, int textColor, boolean bold) {
         mTextPaint.setColor(textColor);
+        mTextPaint.setTypeface(bold ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
         canvas.drawText(text, mX, mY + (mTextBound.height() >> 1), mTextPaint);
     }
 
@@ -248,13 +254,13 @@ public class CalendarView extends View implements View.OnClickListener {
         boolean drawBg = dayIn(dayOfMonth, drawBgDays);
         if (drawBg) {
             drawBgCircle(canvas);
-            drawText(canvas, text, mWithBgTextColor);
-        } else {
             if (dayIn(dayOfMonth, highlightDays2)) {
-                drawText(canvas, text, mTodayColor);
+                drawText(canvas, text, mTodayColor, true);
             } else {
-                drawText(canvas, text, dayIn(dayOfMonth, highlightDays));
+                drawText(canvas, text, mWithBgTextColor, true);
             }
+        } else {
+            drawText(canvas, text, dayIn(dayOfMonth, highlightDays));
         }
     }
 
