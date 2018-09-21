@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,8 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
 
     public static final String ACTION_BIND = "com.sumian.app.intent.action.BIND_DEVICE";
     public static final String EXTRA_DEVICE = "com.sumian.app.intent.extra_DEVICE";
-    public static final int FINISH_SCAN_DELAY_MILLIS = 3000;
+
+    private static final int FINISH_SCAN_DELAY_MILLIS = 3000;
 
     private TextView mTvLabelH1;
     private TextView mTvLabelH2;
@@ -174,7 +176,20 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
             LogManager.appendBluetoothLog("临床版本app 搜索到一台设备 name=" + deviceName + "  mac=" + deviceMac);
             return true;
         } else { // release version app
-            LogManager.appendBluetoothLog("常规版本app 搜索到一台设备 name=" + deviceName + "  mac=" + deviceMac);
+            switch (deviceVersion) {
+                case BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE:
+                    LogManager.appendBluetoothLog("常规版本app 搜索到一台正式版本设备 name=" + deviceName + "  mac=" + deviceMac);
+                    break;
+                case BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_CLINICAL:
+                    LogManager.appendBluetoothLog("常规版本app 搜索到一台临床版本设备 name=" + deviceName + "  mac=" + deviceMac);
+                    break;
+                case BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_OLD:
+                    LogManager.appendBluetoothLog("常规版本app 搜索到一台老版本设备 name=" + deviceName + "  mac=" + deviceMac);
+                    break;
+                default:
+                    LogManager.appendBluetoothLog("常规版本app 搜索到一台未知版本设备 name=" + deviceName + "  mac=" + deviceMac);
+                    break;
+            }
             return deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE;
         }
     }
@@ -255,11 +270,13 @@ public class PairOnDeviceDialog extends AppCompatDialog implements View.OnClickL
 
     @Override
     public void onAdapterEnable() {
-        ToastHelper.show("蓝牙已成功开启");
+        LogManager.appendBluetoothLog("手机蓝牙适配器已开启");
+        ToastHelper.show(getContext(), "蓝牙已成功开启", Gravity.CENTER);
     }
 
     @Override
     public void onAdapterDisable() {
-        ToastHelper.show("蓝牙已关闭,无法扫描或连接设备");
+        LogManager.appendBluetoothLog("手机蓝牙适配器已关闭");
+        ToastHelper.show(getContext(), "蓝牙已关闭,无法扫描或连接设备", Gravity.CENTER);
     }
 }
