@@ -186,15 +186,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
         private void setCalendarViewData(PagerCalendarItem pagerCalendarItem) {
             long monthTimeInMillis = pagerCalendarItem.getMonthTimeInMillis();
-            mCalenderView.setTime(monthTimeInMillis);
-
             List<CalendarItemSleepReport> reports = pagerCalendarItem.mCalendarItemSleepReports;
             int size = reports.size();
             int[] highlightDays = new int[size];
+            int[] highlightDays2 = new int[size];
             int[] drawUnderlineDays = new int[size];
             int[] drawDotDays = new int[size];
             int[] drawBgDays = new int[1];
-
             if (reports.size() > 0) {
                 long firstItemTimeInMillis = reports.get(0).getDateInMillis();
                 boolean isInTheSameMonth = TimeUtil.isInTheSameMonth(mCurrentShowTime, firstItemTimeInMillis);
@@ -204,9 +202,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     drawBgDays[0] = currentShowDay;
                 }
             }
-
-            int today = 0;
-
             for (int i = 0; i < size; i++) {
                 CalendarItemSleepReport report = reports.get(i);
                 int date = report.date;
@@ -220,12 +215,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                         drawDotDays[i] = dayOfMonth;
                     }
                 }
-                if (report.is_today) {
-                    today = date;
-                }
             }
-            mCalenderView.setToday(today)
-                    .setHighlightDays(highlightDays)
+            long currentTimeMillis = System.currentTimeMillis();
+            if (TimeUtil.isInTheSameMonth(currentTimeMillis, monthTimeInMillis)) {
+                highlightDays2[0] = TimeUtil.getCalendar(currentTimeMillis).get(Calendar.DAY_OF_MONTH);
+            }
+            mCalenderView.setTime(monthTimeInMillis);
+            mCalenderView.setHighlightDays(highlightDays)
+                    .setHighlightDays2(highlightDays2)
                     .setDrawUnderlineDays(drawUnderlineDays)
                     .setDrawDotDays(drawDotDays)
                     .setDrawBgDays(drawBgDays);
