@@ -25,7 +25,7 @@ public interface HwBasePresenter {
             return;
         }
         for (Call call : mCalls) {
-            if (!call.isCanceled()) {
+            if (call.isExecuted()) {
                 call.cancel();
             }
         }

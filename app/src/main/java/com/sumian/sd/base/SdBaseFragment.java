@@ -134,7 +134,7 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
         super.onDestroyView();
         onRelease();
         for (Call call : mCalls) {
-            if (!call.isCanceled()) {
+            if (call.isExecuted()) {
                 call.cancel();
             }
         }

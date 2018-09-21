@@ -42,9 +42,10 @@ public class ConfigPresenter implements ConfigContract.Presenter {
     @Override
     public void release() {
         Call call = this.mCall;
-        if (call == null || call.isCanceled()) return;
-        call.cancel();
-        this.mCall = null;
+        if (call == null) return;
+        if (call.isExecuted()) {
+            call.cancel();
+        }
     }
 
     @Override

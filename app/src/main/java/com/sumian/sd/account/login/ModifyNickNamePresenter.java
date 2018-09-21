@@ -30,8 +30,8 @@ public class ModifyNickNamePresenter implements ModifyUserInfoContract.Presenter
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         this.mApiWeakReference = new WeakReference<>(AppManager
-            .getHwNetEngine()
-            .getHttpService());
+                .getHwNetEngine()
+                .getHttpService());
     }
 
     public static void init(ModifyUserInfoContract.View<UserInfo> view) {
@@ -44,10 +44,9 @@ public class ModifyNickNamePresenter implements ModifyUserInfoContract.Presenter
         if (call == null) {
             return;
         }
-        if (call.isCanceled()) {
-            return;
+        if (call.isExecuted()) {
+            call.cancel();
         }
-        call.cancel();
     }
 
     @Override

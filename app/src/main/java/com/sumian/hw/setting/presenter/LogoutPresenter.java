@@ -70,7 +70,7 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
     public void release() {
         List<Call> calls = this.mCalls;
         for (Call call : calls) {
-            if (!call.isCanceled()) {
+            if (call.isExecuted()) {
                 call.cancel();
             }
         }

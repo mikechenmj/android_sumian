@@ -77,7 +77,7 @@ public class ModifyPwdPresenter implements ModifyPwdContract.Presenter {
     public void release() {
         List<Call> calls = this.mCalls;
         for (Call call : calls) {
-            if (!call.isCanceled()) {
+            if (call.isExecuted()) {
                 call.cancel();
             }
         }
