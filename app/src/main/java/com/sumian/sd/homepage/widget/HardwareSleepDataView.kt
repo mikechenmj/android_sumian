@@ -78,6 +78,7 @@ class HardwareSleepDataView(context: Context, attributeSet: AttributeSet? = null
             }
 
             override fun onFailure(code: Int, error: String) {
+                ToastUtils.showShort(error)
             }
         })
     }
