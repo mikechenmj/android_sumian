@@ -1,1 +1,19 @@
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2018092117,"versionName":"1.8.0-test","enabled":true,"outputFile":"速眠医生_患者版_1.8.0-test_yybAlpha 2018-09-21 17-04-14.apk","fullName":"yybAlphaDebug","baseName":"yyb-alpha-debug"},"path":"速眠医生_患者版_1.8.0-test_yybAlpha 2018-09-21 17-04-14.apk","properties":{}}]
+[
+  {
+    "outputType": {
+      "type": "APK"
+    },
+    "apkInfo": {
+      "type": "MAIN",
+      "splits": [],
+      "versionCode": 2018092117,
+      "versionName": "1.8.0-test",
+      "enabled": true,
+      "outputFile": "����ҽ��_���߰�_1.8.0-test_yybAlpha 2018-09-21 17-47-06.apk",
+      "fullName": "yybAlphaDebug",
+      "baseName": "yyb-alpha-debug"
+    },
+    "path": "����ҽ��_���߰�_1.8.0-test_yybAlpha 2018-09-21 17-47-06.apk",
+    "properties": {}
+  }
+]

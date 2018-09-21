@@ -71,7 +71,7 @@ abstract class BaseResponseCallback<T> : Callback<T> {
         LogUtils.d(t?.message)
         t?.let {
             it.printStackTrace()
-            if ((it.message === "Socket closed" || it.message === "Canceled")) {
+            if ((it.message == "Socket closed" || it.message == "Canceled")) {
                 return
             }
             onFailure(0, App.getAppContext().getString(R.string.error_request_failed_hint))

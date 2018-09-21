@@ -34,7 +34,7 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
         Log.d(TAG, t?.message)
         t?.let {
             it.printStackTrace()
-            if ((it.message === "Socket closed" || it.message === "Canceled")) {
+            if ((it.message == "Socket closed" || it.message == "Canceled")) {
                 return
             }
             onFailure(ErrorResponse(0, "网络异常，请检查您的网络情况"))
