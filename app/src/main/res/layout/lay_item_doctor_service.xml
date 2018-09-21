@@ -39,7 +39,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/space_80"
+            android:layout_gravity="center"
             android:layout_marginEnd="@dimen/space_20"
             android:gravity="center"
             android:orientation="vertical">
@@ -66,10 +67,10 @@
                 android:layout_gravity="left|center"
                 android:layout_marginTop="@dimen/space_5"
                 android:ellipsize="end"
-                android:lines="2"
                 android:marqueeRepeatLimit="marquee_forever"
+                android:maxLines="2"
                 tools:ignore="RtlHardcoded"
-                tools:text="报告解读图文咨询报告解读图文咨询报告解读图文咨询报告解读图文咨询报告解读图文咨询报告解读图文咨询报告解读图文咨询报告解读图文咨询" />
+                tools:text="报告解读图读图文咨询报告解读图文咨询报告解读图读图文咨询报告解读图文咨询报告解读图读图文咨询报告解读图文咨询" />
 
         </LinearLayout>
 
