@@ -6,7 +6,6 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.util.ServiceTimeUtil
-import com.umeng.socialize.utils.DeviceConfig.context
 
 /**
  * <pre>
@@ -52,9 +51,9 @@ class DiaryEvaluationListAdapter() : BaseQuickAdapter<DiaryEvaluationData, BaseV
     private fun getStatusString(status: Int): String {
         return when (status) {
             DiaryEvaluationData.STATUS_0_WAITING_RESPONSE -> App.getAppContext().getString(R.string.waiting_for_reply)
-            DiaryEvaluationData.STATUS_1_FINISHED -> context.getString(R.string.finished)
-            DiaryEvaluationData.STATUS_2_CLOSED -> context.getString(R.string.closed)
-            DiaryEvaluationData.STATUS_3_CANCELED -> context.getString(R.string.bind_canceled)
+            DiaryEvaluationData.STATUS_1_FINISHED -> App.getAppContext().getString(R.string.finished)
+            DiaryEvaluationData.STATUS_2_CLOSED -> App.getAppContext().getString(R.string.closed)
+            DiaryEvaluationData.STATUS_3_CANCELED -> App.getAppContext().getString(R.string.bind_canceled)
             DiaryEvaluationData.STATUS_4_UNUSED -> ""
             else -> ""
         }

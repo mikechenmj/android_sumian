@@ -224,7 +224,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             mCalenderView.setHighlightDays(highlightDays)
                     .setHighlightDays2(highlightDays2)
                     .setDrawUnderlineDays(drawUnderlineDays)
-                    .setDrawDotDays(drawDotDays)
                     .setDrawBgDays(drawBgDays);
         }
 
