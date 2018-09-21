@@ -78,7 +78,7 @@
             <TextView
                 style="@style/text_t2_13"
                 android:drawablePadding="@dimen/space_10"
-                android:drawableStart="@drawable/weeklyreport_icon_fallasleep"
+                android:drawableStart="@drawable/ic_home_icon_sleeptime"
                 android:text="@string/all_today_duration" />
 
             <Space
@@ -91,13 +91,13 @@
                 style="@style/text_t1_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 tools:text="8小时35分" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/space_32"
             android:baselineAligned="false"
             android:gravity="center_vertical"
             android:paddingEnd="16dp"
@@ -122,6 +122,7 @@
                     android:layout_height="@dimen/space_100"
                     android:layout_marginBottom="@dimen/space_10"
                     android:layout_marginTop="@dimen/space_10"
+
                     app:srpv_ring_width="5dp"
                     app:srpv_show_center_message="false" />
 
@@ -130,6 +131,7 @@
                     style="@style/text_t1_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     tools:text="3小时26分" />
             </LinearLayout>
 
@@ -164,6 +166,7 @@
                     style="@style/text_t1_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     tools:text="3小时26分" />
             </LinearLayout>
         </LinearLayout>

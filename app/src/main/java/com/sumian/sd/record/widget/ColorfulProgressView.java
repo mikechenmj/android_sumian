@@ -161,4 +161,9 @@ public class ColorfulProgressView extends View {
         requestLayout();
         invalidate();
     }
+
+    public void setProgressColors(int[][] progressColors) {
+        mProgressColors = progressColors;
+        invalidate();
+    }
 }

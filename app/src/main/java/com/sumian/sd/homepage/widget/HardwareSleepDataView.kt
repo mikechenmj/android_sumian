@@ -13,6 +13,8 @@ import com.sumian.hw.report.bean.DailyReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.hw.report.ReportActivity
+import com.sumian.sd.R.id.*
+import com.umeng.socialize.utils.DeviceConfig.context
 import kotlinx.android.synthetic.main.lay_no_sleep_data.view.*
 import kotlinx.android.synthetic.main.view_hardware_sleep_data.view.*
 
@@ -38,6 +40,15 @@ class HardwareSleepDataView(context: Context, attributeSet: AttributeSet? = null
         }
         btn_for_no_data.text = resources.getString(R.string.refresh)
         tv_no_sleep_data_desc.text = resources.getString(R.string.refresh_sleep_dairy_hint)
+        val highStartColor = resources.getColor(R.color.sleep_record_progress_high_start)
+        val highEndColor = resources.getColor(R.color.sleep_record_progress_high_end)
+        val startColorEndColor = intArrayOf(highStartColor, highEndColor)
+        val textColors = intArrayOf(highEndColor, highEndColor, highEndColor)
+        val colors = arrayOf(startColorEndColor, startColorEndColor, startColorEndColor);
+        progress_light_sleep.setProgressColors(colors)
+        progress_deep_sleep.setProgressColors(colors)
+        progress_light_sleep.setTextColors(textColors)
+        progress_deep_sleep.setTextColors(textColors)
     }
 
     fun setDailyReport(dailyReport: DailyReport?) {

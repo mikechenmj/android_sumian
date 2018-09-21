@@ -32,6 +32,10 @@ public class SleepRecordProgressView extends FrameLayout {
     @BindView(R.id.tv_center_message)
     TextView tvCenterMessage;
 
+    private int mColor0 = getResources().getColor(R.color.b3_color);
+    private int mColor1 = getResources().getColor(R.color.b4_color);
+    private int mColor2 = getResources().getColor(R.color.t4_color);
+
     public SleepRecordProgressView(@NonNull Context context) {
         this(context, null);
     }
@@ -67,13 +71,23 @@ public class SleepRecordProgressView extends FrameLayout {
     public int getColor(int level) {
         switch (level) {
             case 0:
-                return getResources().getColor(R.color.b3_color);
+                return mColor0;
             case 1:
-                return getResources().getColor(R.color.b4_color);
+                return mColor1;
             case 2:
-                return getResources().getColor(R.color.t4_color);
+                return mColor2;
             default:
-                return getResources().getColor(R.color.b3_color);
+                return mColor0;
         }
+    }
+
+    public void setProgressColors(int[][] colors) {
+        progressView.setProgressColors(colors);
+    }
+
+    public void setTextColors(int[] colors) {
+        mColor0 = colors[0];
+        mColor1 = colors[1];
+        mColor2 = colors[2];
     }
 }
