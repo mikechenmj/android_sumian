@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/deep_content_bg_color"
+    android:background="#F2F3F5"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/light_content_bg_color"
+        android:background="#6595F4"
         android:gravity="center_vertical">
 
         <include
@@ -24,7 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/title_satifisfaction_eval"
-            android:textColor="@color/bt_hole_color"
+            android:textColor="#ffffff"
             android:textSize="@dimen/title_text_size" />
     </RelativeLayout>
 
@@ -104,8 +104,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="30dip">
+                android:layout_marginTop="30dip"
+                android:layout_marginBottom="10dip">
 
                 <RatingBar
                     android:id="@+id/ratingBar1"
@@ -155,7 +155,7 @@
                 android:background="@drawable/bt_circle_bg"
                 android:padding="10dip"
                 android:text="@string/tip_btn_sumbit"
-                android:textColor="@android:color/white"
+                android:textColor="#ffffffff"
                 android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>

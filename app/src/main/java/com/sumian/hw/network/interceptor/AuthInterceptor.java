@@ -38,14 +38,15 @@ public class AuthInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
 
         Request request = chain
-            .request()
-            .newBuilder()
-            .addHeader("Content-Type", "application/json")
-            .addHeader("UserInfo-Agent", getUserAgent())
-            .addHeader("Accept-Language", SystemUtil.getSystemLanguage())
-            .addHeader("Authorization", "Bearer " + AppManager.getAccountViewModel().getTokenString())
-            .addHeader("Device-Info", Uri.encode(formatDeviceInfo(), "utf-8"))
-            .build();
+                .request()
+                .newBuilder()
+                .addHeader("Content-Type", "application/json")
+                .addHeader("UserInfo-Agent", getUserAgent())
+                .addHeader("Accept-Language", SystemUtil.getSystemLanguage())
+                .addHeader("Authorization", "Bearer " + AppManager.getAccountViewModel().getTokenString())
+                .addHeader("Device-Info", Uri.encode(formatDeviceInfo(), "utf-8"))
+                .addHeader("Host", chain.request().url().newBuilder().build().host())
+                .build();
 
         return chain.proceed(request);
     }
@@ -53,12 +54,12 @@ public class AuthInterceptor implements Interceptor {
     private String formatDeviceInfo() {
         //Device-Info": "app_version=速眠-test_1.2.3.1&model=iPhone10,3&system=iOS_11.3.1&monitor_fw=&monitor_sn=&sleeper_fw=&sleeper_sn="
         return "app_version=" + SystemUtil.getPackageInfo(App.Companion.getAppContext()).versionName
-            + WITH_SIGN + "model=" + SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
-            + WITH_SIGN + "system=" + SystemUtil.getSystemVersion()
-            + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(AppManager.getDeviceModel().getMonitorVersion())
-            + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(AppManager.getDeviceModel().getMonitorSn())
-            + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().getSleepyVersion())
-            + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().getSleepySn());
+                + WITH_SIGN + "model=" + SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
+                + WITH_SIGN + "system=" + SystemUtil.getSystemVersion()
+                + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(AppManager.getDeviceModel().getMonitorVersion())
+                + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(AppManager.getDeviceModel().getMonitorSn())
+                + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().getSleepyVersion())
+                + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().getSleepySn());
     }
 
     private String formatMonitorInfo(String monitorInfo) {

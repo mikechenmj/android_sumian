@@ -59,6 +59,9 @@ android {
         buildConfigField("String", "HW_USER_GUIDELINE_URL", HW_USER_GUIDELINE_URL)
         buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
         buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
+        buildConfigField("String", "HTTP_DNS_ACCOUNT_ID", HTTP_DNS_ACCOUNT_ID)
+        buildConfigField("String", "HTTP_DNS_SECRET_KEY", HTTP_DNS_SECRET_KEY)
+
 
         // Enabling multidex support.
         multiDexEnabled true

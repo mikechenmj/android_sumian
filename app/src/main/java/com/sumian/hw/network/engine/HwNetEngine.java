@@ -1,15 +1,21 @@
 package com.sumian.hw.network.engine;
 
+import android.text.TextUtils;
+
 import com.google.gson.GsonBuilder;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.api.SleepyV1Api;
 import com.sumian.hw.network.interceptor.AuthInterceptor;
 import com.sumian.sd.BuildConfig;
+import com.sumian.sd.app.AppManager;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Dns;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -43,7 +49,16 @@ public class HwNetEngine {
                 .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .protocols(protocols)
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
+                //.addInterceptor(HostInterceptor.create())
                 .addInterceptor(AuthInterceptor.create())
+                .dns(hostname -> {
+                    String hostIpFrom = AppManager.getHttpDns().getHostIpFromHostname(hostname);
+                    if (TextUtils.isEmpty(hostIpFrom)) {
+                        return Dns.SYSTEM.lookup(hostname);
+                    } else {
+                        return Arrays.asList(InetAddress.getAllByName(hostIpFrom));
+                    }
+                })
                 .build();
 
         Retrofit retrofit = new Retrofit
