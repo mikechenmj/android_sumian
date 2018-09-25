@@ -5,11 +5,11 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.sumian.common.operator.AppOperator;
-import com.sumian.sd.account.bean.City;
-import com.sumian.sd.account.bean.Province;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.sd.account.bean.City;
+import com.sumian.sd.account.bean.Province;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
 
@@ -65,8 +65,9 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
     public void release() {
         Call call = this.mCall;
         if (call == null) return;
-        if (call.isCanceled()) return;
-        call.cancel();
+        if (call.isExecuted()) {
+            call.cancel();
+        }
     }
 
     @Override

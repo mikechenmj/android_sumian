@@ -19,7 +19,7 @@ public interface SdBasePresenter<T> {
     default void release() {
         for (int i = 0; i < mCalls.size(); i++) {
             Call call = mCalls.get(i);
-            if (!call.isCanceled()) {
+            if (call.isExecuted()) {
                 call.cancel();
                 mCalls.remove(call);
             }

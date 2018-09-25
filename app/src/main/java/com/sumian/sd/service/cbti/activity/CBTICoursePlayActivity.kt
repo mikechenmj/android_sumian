@@ -21,7 +21,6 @@ import com.sumian.sd.service.cbti.bean.CoursePlayLog
 import com.sumian.sd.service.cbti.contract.CBTIWeekPlayContract
 import com.sumian.sd.service.cbti.presenter.CBTICoursePlayAuthPresenter
 import com.sumian.sd.service.cbti.sheet.CBTICourseListBottomSheet
-import com.sumian.sd.service.cbti.video.NiceVideoView
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.dialog.SumianWebDialog
@@ -169,7 +168,9 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
             setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
 
-            ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+            if (!isDestroyed) {
+                ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+            }
 
         }
 

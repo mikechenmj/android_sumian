@@ -20,7 +20,9 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
 
     override fun release() {
         for (call in mCalls) {
-            call.cancel()
+            if (call.isExecuted) {
+                call.cancel()
+            }
         }
         mCalls.clear()
     }

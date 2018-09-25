@@ -43,6 +43,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         mView?.onBegin()
 
         val call = AppManager.getHttpService().getCBTIPLayAuth(id = courseId)
+        mCalls.add(call)
         call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
 
             override fun onSuccess(response: CoursePlayAuth?) {
@@ -61,7 +62,6 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
             }
 
         })
-        mCalls.add(call)
     }
 
     override fun uploadCBTIVideoLog(courseId: Int, videoProgress: String, endpoint: Int) {
@@ -127,6 +127,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         mView?.onBegin()
 
         val call = AppManager.getHttpService().getCBTIPLayAuth(id = courseId)
+        mCalls.add(call)
         call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
 
             override fun onSuccess(response: CoursePlayAuth?) {
@@ -143,10 +144,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
                 super.onFinish()
                 mView?.onFinish()
             }
-
         })
-        mCalls.add(call)
-
     }
 
     /**

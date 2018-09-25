@@ -17,10 +17,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.R;
 import com.sumian.sd.widget.TitleBar;
@@ -185,7 +183,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         }
         this.mRoot = null;
         for (Call call : mCalls) {
-            if (!call.isCanceled()) {
+            if (call.isExecuted()) {
                 call.cancel();
             }
         }
