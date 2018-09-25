@@ -189,7 +189,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             List<CalendarItemSleepReport> reports = pagerCalendarItem.mCalendarItemSleepReports;
             int size = reports.size();
             int[] highlightDays = new int[size];
-            int[] highlightDays2 = new int[size];
+            int[] highlightDays2 = new int[1];
             int[] drawUnderlineDays = new int[size];
             int[] drawDotDays = new int[size];
             int[] drawBgDays = new int[1];
