@@ -260,7 +260,11 @@ public class CalendarView extends View implements View.OnClickListener {
                 drawText(canvas, text, mWithBgTextColor, true);
             }
         } else {
-            drawText(canvas, text, dayIn(dayOfMonth, highlightDays));
+            if (dayIn(dayOfMonth, highlightDays2)) {
+                drawText(canvas, text, mTodayColor, true);
+            } else {
+                drawText(canvas, text, dayIn(dayOfMonth, highlightDays));
+            }
         }
     }
 
