@@ -32,7 +32,7 @@
             android:layout_marginEnd="@dimen/space_4"
             android:layout_marginTop="@dimen/space_4"
             android:background="@drawable/bg_tab_dot"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:ignore="RtlHardcoded"
             tools:visibility="visible" />
     </FrameLayout>
