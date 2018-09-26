@@ -104,6 +104,7 @@
     <string name="ask">提问</string>
     <string name="send">发送</string>
     <string name="talk">按住说话</string>
+    <string name="repay">重新支付</string>
 
     <string name="str_request_camera_message">请求获取相机权限</string>
     <string name="str_request_record_message">请求获取录音权限</string>

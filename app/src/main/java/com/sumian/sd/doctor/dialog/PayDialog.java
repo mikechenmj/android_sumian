@@ -26,30 +26,25 @@ import butterknife.OnClick;
 
 public class PayDialog extends QMUIDialog implements View.OnClickListener {
 
-    public static final int PAY_SUCCESS = 0x01;
-    public static final int PAY_FAILED = 0x02;
-    public static final int PAY_INVALID = 0x0f;
+    public static final int PAY_INVALID = 0;
+    public static final int PAY_SUCCESS = 1;
+    public static final int PAY_FAILED = 2;
+    public static final int PAY_CANCELED = 3;
 
     @BindView(R.id.iv_pay_status)
     ImageView mIvPayStatus;
-
     @BindView(R.id.tv_pay_desc)
     TextView mTvPayDesc;
-
     @BindView(R.id.bt_join)
     Button mBtJoin;
 
     private WeakReference<PayContract.Presenter> mPresenterWeakReference;
-
     private int mPayStatus;
+    private Listener mListener;
 
-
-    public PayDialog(Context context) {
-        this(context, R.style.QMUI_Dialog);
-    }
-
-    public PayDialog(Context context, int styleRes) {
-        super(context, styleRes);
+    public PayDialog(Context context, Listener listener) {
+        super(context, R.style.QMUI_Dialog);
+        mListener = listener;
     }
 
     public void bindPresenter(PayContract.Presenter presenter) {
@@ -74,6 +69,11 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_abnormal);
                 mTvPayDesc.setText(R.string.pay_invalid);
                 mBtJoin.setText(R.string.back);
+                break;
+            case PAY_CANCELED:
+                mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_fail);
+                mTvPayDesc.setText(R.string.pay_cancel);
+                mBtJoin.setText(R.string.repay);
                 break;
             default:
                 break;
@@ -105,11 +105,20 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
                     cancel();
                 } else if (mPayStatus == PAY_INVALID) {
                     cancel();
+                } else if (mPayStatus == PAY_CANCELED) {
+                    if (mListener != null) {
+                        mListener.onRepayClick();
+                    }
+                    cancel();
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    public interface Listener {
+        void onRepayClick();
     }
 
 }
