@@ -74,11 +74,13 @@ public class SWebView extends BridgeWebView {
         setDefaultHandler(new DefaultHandler());
         setWebChromeClient(new WVChromeClient());
         setWebViewClient(new WVClient(this));
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebSettings() {
         WebSettings webSettings = this.getSettings();
+        webSettings.setDomStorageEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         }
