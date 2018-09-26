@@ -79,7 +79,7 @@ public class NavigationItem extends LinearLayout {
 
     @SuppressWarnings("unused")
     public void showDot(int show) {
-        mDot.setVisibility(show);
+//        mDot.setVisibility(show);
     }
 
     @Override
