@@ -90,7 +90,7 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
 
     private fun invalidateItem(position: Int, courses: List<Course>?) {
         flow_layout.removeAllViews()
-        courses?.let {
+        courses?.let { it ->
             it.forEachIndexed { index, lesson ->
                 run {
                     val viewHolder = CourseListAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.lay_item_cbti_lesson_item, flow_layout, false))

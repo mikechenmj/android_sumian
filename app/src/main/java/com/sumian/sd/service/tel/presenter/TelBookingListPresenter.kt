@@ -22,6 +22,7 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
     private var mPageNumber: Int = 1
     private var mTelBookingType = TelBooking.UN_FINISHED_TYPE
     private var mIsRefresh: Boolean = false
+    private var mIsGetNext = false
 
     init {
         this.mView = view
@@ -39,6 +40,7 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
     override fun refreshTelBookingList() {
         this.mPageNumber = 1
         this.mIsRefresh = true
+        this.mIsGetNext = false
         getTelBookingList(mTelBookingType)
     }
 
@@ -70,7 +72,12 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
                     mView?.onRefreshTelBookingListSuccess(data!!)
                 } else {
                     mIsRefresh = false
-                    mView?.onGetTelBookingListSuccess(data!!)
+                    if (mIsGetNext) {
+                        mIsGetNext = false
+                        mView?.onGetNextTelBookingListSuccess(data!!)
+                    } else {
+                        mView?.onGetTelBookingListSuccess(data!!)
+                    }
                 }
                 if (data != null && !data.isEmpty()) {
                     mPageNumber++
@@ -85,6 +92,7 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
     }
 
     override fun getNextTelBookingList() {
+        this.mIsGetNext = true
         getTelBookingList(mTelBookingType)
     }
 

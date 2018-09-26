@@ -272,6 +272,13 @@ interface DoctorApi {
     fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
     /**
+     * 上传视频问卷
+     */
+    @FormUrlEncoded
+    @POST("cbti-course/{id}/questionnaires")
+    fun uploadCBTIVideoQuestionnaires(@Path("id") id: Int, @Field("data") json: String): Call<CoursePlayAuth>
+
+    /**
      * 获取 app 的版本信息
      */
     @GET("app-version/latest")

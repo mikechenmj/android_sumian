@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_select"
+        style="@style/text_t2_14"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/space_36"
+        android:layout_marginStart="@dimen/space_20"
+        android:background="@drawable/bg_faced_status"
+        android:gravity="center"
+        android:paddingLeft="@dimen/space_14"
+        android:paddingRight="@dimen/space_14"
+        tools:text="十分困难" />
+
+</FrameLayout>
