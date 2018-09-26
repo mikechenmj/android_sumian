@@ -32,8 +32,6 @@ import java.util.Locale;
 
 public class SleepHistogramView extends View {
 
-    private static final String TAG = SleepHistogramView.class.getSimpleName();
-
     private static final int TYPE_WEEK = 0;
     private static final int TYPE_MONTH = 1;
     private static final int TYPE_YEAR = 2;
@@ -67,6 +65,7 @@ public class SleepHistogramView extends View {
 
     private String mEmptyText;
     private float mEmptyTextSize;
+    private int mEmptyTextColor;
     @ColorInt
     private int mDeepColor;
     @ColorInt
@@ -125,6 +124,12 @@ public class SleepHistogramView extends View {
 
     public void setCoordinateColor(int coordinateColor) {
         mCoordinateColor = coordinateColor;
+        requestLayout();
+        invalidate();
+    }
+
+    public void setmEmptyTextColor(int mEmptyTextColor) {
+        this.mEmptyTextColor = mEmptyTextColor;
         requestLayout();
         invalidate();
     }
@@ -200,6 +205,7 @@ public class SleepHistogramView extends View {
         this.mHistogramType = typedArray.getInt(R.styleable.SleepHistogramView_histogram_type, TYPE_WEEK);
         this.mEmptyText = typedArray.getString(R.styleable.SleepHistogramView_empty_text);
         this.mEmptyTextSize = typedArray.getDimension(R.styleable.SleepHistogramView_empty_text_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16.0f, getResources().getDisplayMetrics()));
+        this.mEmptyTextColor = typedArray.getColor(R.styleable.SleepHistogramView_empty_text_color, 0xb47d8fb3);
 
         this.mCoordinateColor = typedArray.getColor(R.styleable.SleepHistogramView_coordinate_color, 0xff2c2f37);
         this.mCoordinateSize = typedArray.getDimension(R.styleable.SleepHistogramView_coordinate_size, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0.5f, getResources().getDisplayMetrics()));
@@ -263,9 +269,11 @@ public class SleepHistogramView extends View {
 
         if (mSleepDurations == null || mSleepDurations.isEmpty()) {
             mTextPaint.setTextSize(mEmptyTextSize);
+            mTextPaint.setColor(mEmptyTextColor);
             mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
             canvas.drawText(mEmptyText, getWidth() / 2, getHeight() / 2 - 40, mTextPaint);
             mTextPaint.setTypeface(Typeface.DEFAULT);
+            mTextPaint.setColor(mTextColor);
             mTextPaint.setTextSize(mTextSize);
             canvas.drawText(getContext().getString(R.string.no_have_sleep_data_low_label), getWidth() / 2, getHeight() / 2 + 40, mTextPaint);
             return;
@@ -321,10 +329,12 @@ public class SleepHistogramView extends View {
 
     private void drawCoordinate(Canvas canvas) {
         //画坐标轴
+        this.mCoordinatePaint.setColor(mCoordinateColor);
         canvas.drawPath(this.mCoordinatePath, this.mCoordinatePaint);
 
         //画纵坐标刻度
         mTextPaint.setTypeface(Typeface.DEFAULT);
+        mTextPaint.setColor(mTextColor);
         mTextPaint.setTextSize(mTextSize);
         int y = getPaddingTop() + mContentHeight - mItemHeight;
         int x = (int) (getPaddingLeft() + (mItemWidth * 0.75f));
@@ -394,6 +404,7 @@ public class SleepHistogramView extends View {
         this.mGrowthHeight = mItemHeight * growthProgress;//计算进度比原先增加的具体item 高度
 
         requestLayout();
+        invalidate();
         // onMeasure--->if height/width is change? onLayout----> onSizeChange----> onDraw : onLayout-----> onDraw
     }
 

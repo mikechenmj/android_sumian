@@ -208,6 +208,7 @@
         </attr>
         <attr name="empty_text" format="string|reference" />
         <attr name="empty_text_size" format="dimension|reference" />
+        <attr name="empty_text_color" format="color|reference" />
         <attr name="deep_color" format="color|reference" />
         <attr name="light_color" format="color|reference" />
         <attr name="eog_color" format="color|reference" />

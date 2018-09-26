@@ -16,7 +16,7 @@ import com.sumian.hw.report.adapter.WeeklyReportAdapter
 import com.sumian.hw.report.calendar.CalendarDialog
 import com.sumian.hw.report.contract.WeeklyReportContact
 import com.sumian.hw.report.presenter.WeeklyReportPresenter
-import com.sumian.hw.report.sheet.SleepAdviceDialog
+import com.sumian.hw.report.dialog.SleepAdviceDialog
 import com.sumian.hw.widget.refresh.ActionLoadingDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
