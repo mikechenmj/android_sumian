@@ -1,6 +1,7 @@
 package com.sumian.sd.service.cbti.presenter
 
 import android.util.Log
+import com.alibaba.fastjson.JSON
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.network.callback.BaseResponseCallback
@@ -145,6 +146,33 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
                 mView?.onFinish()
             }
         })
+    }
+
+    override fun uploadCBTIQuestionnaires(courseId: Int, position: Int) {
+
+        mView?.onBegin()
+
+        val call = AppManager.getHttpService().uploadCBTIVideoQuestionnaires(courseId, JSON.toJSONString(position))
+        mCalls.add(call)
+        call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
+
+            override fun onSuccess(response: CoursePlayAuth?) {
+                response?.let {
+                    mView?.onUploadCBTIQuestionnairesSuccess(it)
+                }
+            }
+
+            override fun onFailure(code: Int, message: String) {
+                mView?.onUploadCBTIQuestionnairesFailed(error = message)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                mView?.onFinish()
+            }
+
+        })
+
     }
 
     /**

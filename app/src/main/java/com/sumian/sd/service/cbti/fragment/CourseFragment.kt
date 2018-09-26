@@ -9,6 +9,7 @@ import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseFragment
+import com.sumian.sd.service.cbti.activity.CBTICoursePlayActivity
 import com.sumian.sd.service.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
 import com.sumian.sd.service.cbti.adapter.CourseAdapter
 import com.sumian.sd.service.cbti.bean.CBTIMeta
@@ -92,7 +93,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIW
             showCenterToast("完成上节课程后解锁")
             return
         }
-        com.sumian.sd.service.cbti.activity.CBTICoursePlayActivity.show(activity!!, lesson, position)
+        CBTICoursePlayActivity.show(activity!!, lesson, position)
     }
 
     override fun onGetCBTIWeekLessonSuccess(courses: List<Course>) {
