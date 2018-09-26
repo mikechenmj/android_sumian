@@ -110,7 +110,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
         mTitleBar.setOnBackClickListener(this);
         mPayGroupView.setOnSelectPayWayListener(this);
         mPayCalculateItemView.setOnMoneyChangeCallback(this);
-        mPayDialog = new PayDialog(root.getContext()).bindContentView(R.layout.dialog_pay);
+        mPayDialog = new PayDialog(this, this::pay).bindContentView(R.layout.dialog_pay);
         mPayDialog.setOwnerActivity(this);
         mPayDialog.bindPresenter(mPresenter);
     }
@@ -142,12 +142,16 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_pay:
-                PayOrder payOrder = new PayOrder(mPayCalculateItemView.getCurrentMoney(), mPayChannel, "cny", mDoctorService.getName(), mDoctorService.getDescription(), mPackage.getId(), mPayCalculateItemView.getCurrentBuyCount());
-                mPresenter.createPayOrder(this, payOrder);
+                pay();
                 break;
             default:
                 break;
         }
+    }
+
+    private void pay() {
+        PayOrder payOrder = new PayOrder(mPayCalculateItemView.getCurrentMoney(), mPayChannel, "cny", mDoctorService.getName(), mDoctorService.getDescription(), mPackage.getId(), mPayCalculateItemView.getCurrentBuyCount());
+        mPresenter.createPayOrder(this, payOrder);
     }
 
     @Override
@@ -241,7 +245,9 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     @Override
     public void onOrderPayCancel(@NonNull String payMsg) {
-        showCenterToast(payMsg);
+        if (!mPayDialog.isShowing()) {
+            mPayDialog.setPayStatus(PayDialog.PAY_CANCELED).show();
+        }
         if (mActionLoadingDialog != null) {
             mActionLoadingDialog.dismiss();
         }
