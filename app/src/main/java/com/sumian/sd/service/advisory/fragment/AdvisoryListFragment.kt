@@ -7,13 +7,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
+import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.service.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.service.advisory.activity.PublishAdvisoryRecordActivity
 import com.sumian.sd.service.advisory.adapter.AdvisoryListAdapter
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.contract.AdvisoryListContract
 import com.sumian.sd.service.advisory.presenter.AdvisoryListPresenter
-import com.sumian.sd.base.SdBaseFragment
+import com.sumian.sd.widget.LoadMoreRecyclerView
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:
  **/
-class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener {
+class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
@@ -59,6 +60,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
         recycler.layoutManager = LinearLayoutManager(context)
         mListAdapter = AdvisoryListAdapter(context!!)
         recycler.adapter = mListAdapter
+        recycler.setOnLoadCallback(this)
         mListAdapter.setOnItemClickListener(this)
         empty_error_view.invalidAdvisoryError()
         empty_error_view.isEnabled = false
@@ -75,6 +77,12 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     override fun onRefresh() {
         this.mPresenter.refreshAdvisories()
+        refresh.showRefreshAnim()
+    }
+
+    override fun loadMore() {
+        super.loadMore()
+        mPresenter?.getNextAdvisories()
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
@@ -92,11 +100,11 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
     override fun onResume() {
         super.onResume()
         this.mPresenter.refreshAdvisories()
+        refresh.showRefreshAnim()
     }
 
     override fun onBegin() {
         super.onBegin()
-        refresh.showRefreshAnim()
     }
 
     override fun onFinish() {

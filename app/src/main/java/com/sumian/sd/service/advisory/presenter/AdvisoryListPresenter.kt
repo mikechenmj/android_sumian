@@ -1,11 +1,11 @@
 package com.sumian.sd.service.advisory.presenter
 
-import com.sumian.sd.service.advisory.bean.Advisory
-import com.sumian.sd.service.advisory.contract.AdvisoryListContract
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.network.callback.BaseResponseCallback
 import com.sumian.sd.network.response.PaginationResponse
+import com.sumian.sd.service.advisory.bean.Advisory
+import com.sumian.sd.service.advisory.contract.AdvisoryListContract
 import retrofit2.Callback
 
 /**
@@ -21,6 +21,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
     private var mPageNumber: Int = 1
     private var mAdvisoryType = Advisory.UNFINISHED_TYPE
     private var mIsRefresh: Boolean = false
+    private var mIsGetNext = false
 
     init {
         view.setPresenter(this)
@@ -39,6 +40,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
     override fun refreshAdvisories() {
         this.mPageNumber = 1
         this.mIsRefresh = true
+        this.mIsGetNext = false
         getAdvisories(mAdvisoryType)
     }
 
@@ -64,7 +66,12 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
                     mView?.onRefreshAdvisoriesSuccess(data!!)
                 } else {
                     mIsRefresh = false
-                    mView?.onGetAdvisoriesSuccess(data!!)
+                    if (mIsGetNext) {
+                        mIsGetNext = false
+                        mView?.onGetNextAdvisoriesSuccess(data!!)
+                    } else {
+                        mView?.onGetAdvisoriesSuccess(data!!)
+                    }
                 }
                 if (data != null && !data.isEmpty()) {
                     mPageNumber++
@@ -84,6 +91,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
     }
 
     override fun getNextAdvisories() {
+        mIsGetNext = true
         getAdvisories(mAdvisoryType)
     }
 
