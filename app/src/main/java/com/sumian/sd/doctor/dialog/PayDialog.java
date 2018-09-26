@@ -106,9 +106,9 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
                 } else if (mPayStatus == PAY_INVALID) {
                     cancel();
                 } else if (mPayStatus == PAY_CANCELED) {
-                    if (mListener != null) {
-                        mListener.onRepayClick();
-                    }
+//                    if (mListener != null) {
+//                        mListener.onRepayClick();
+//                    }
                     cancel();
                 }
                 break;
