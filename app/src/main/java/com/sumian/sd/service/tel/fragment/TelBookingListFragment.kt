@@ -17,6 +17,7 @@ import com.sumian.sd.service.tel.adpater.TelBookingListAdapter
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingListContract
 import com.sumian.sd.service.tel.presenter.TelBookingListPresenter
+import com.sumian.sd.widget.LoadMoreRecyclerView
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * desc: 电话预约列表, 已完成/未完成
  *
  */
-class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Presenter>(), TelBookingListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener {
+class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Presenter>(), TelBookingListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
@@ -67,6 +68,7 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
         refresh.setOnRefreshListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
         mListAdapter = TelBookingListAdapter(context!!)
+        recycler.setOnLoadCallback(this)
         recycler.adapter = mListAdapter
         mListAdapter.setOnItemClickListener(this)
         empty_error_view.invalidAdvisoryError()
@@ -94,6 +96,12 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
     override fun onRefresh() {
         mIsRefresh = true
         this.mPresenter?.refreshTelBookingList()
+        refresh.showRefreshAnim()
+    }
+
+    override fun loadMore() {
+        super.loadMore()
+        mPresenter?.getNextTelBookingList()
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
@@ -108,7 +116,6 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
 
     override fun showLoading() {
         //super.showLoading()
-        refresh.showRefreshAnim()
     }
 
     override fun dismissLoading() {
