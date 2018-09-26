@@ -245,6 +245,8 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
                 iDynamicNewView.dynamicAddView(mSleepHistogramView, "sober_color", R.color.g3_color_day);
                 iDynamicNewView.dynamicAddView(mSleepHistogramView, "coordinate_color", R.color.l3_color_day);
                 iDynamicNewView.dynamicAddView(mSleepHistogramView, "label_text_color", R.color.t2_color_day);
+                iDynamicNewView.dynamicAddView(mSleepHistogramView, "empty_text_color", R.color.t5_color_day);
+
 
                 iDynamicNewView.dynamicAddView(mDailySleepAvgCompareView, "label_icon", R.drawable.ic_home_sleep_time_day);
                 iDynamicNewView.dynamicAddView(mDailySleepLightAvgCompareView, "label_icon", R.drawable.ic_report_light_sleep_day);

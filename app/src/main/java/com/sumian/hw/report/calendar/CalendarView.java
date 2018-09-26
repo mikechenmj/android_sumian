@@ -52,8 +52,6 @@ public class CalendarView extends View implements View.OnClickListener {
     private int mDotColor;
     private int mTodayColor;
 
-    private int mToday = -1;//今天的position
-
     // special draw times
     private int[] highlightDays; // 有睡眠日记的天
     private int[] highlightDays2;   // 今天

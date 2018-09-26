@@ -166,5 +166,6 @@ class HwMainFragment : BaseEventFragment<HwBasePresenter>(), HwLeanCloudHelper.O
 
     override fun onEnter(data: String?) {
         showTabAccordingToData(data)
+        SumianExecutor.runOnUiThread({ tb_me?.showDot(if (HwLeanCloudHelper.isHaveCustomerMsg()) View.VISIBLE else View.GONE) })
     }
 }

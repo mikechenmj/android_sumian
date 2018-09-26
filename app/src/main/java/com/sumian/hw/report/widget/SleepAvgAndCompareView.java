@@ -78,7 +78,9 @@ public class SleepAvgAndCompareView extends ConstraintLayout {
     }
 
     public void setCompareDuration(Integer duration) {
-        if (duration == null || duration == 0) {
+        if (duration == null) {
+            mTvCompareDuration.setText(R.string.none_sleep_status_data);
+        } else if (duration == 0) {
             Drawable defaultDrawable = getResources().getDrawable(R.drawable.bg_text_t5);
             defaultDrawable.setTint(mTvCompareDuration.getCurrentTextColor());
             CharSequence charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", defaultDrawable);

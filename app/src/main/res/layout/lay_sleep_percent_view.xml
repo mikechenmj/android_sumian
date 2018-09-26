@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@color/b3_color_day"
+        android:textStyle="bold"
         app:csdtv_default_drawable="@drawable/bg_text_b3"
         app:csdtv_number_text_size="@dimen/font_21"
         app:csdtv_unit_text_size="@dimen/font_13"

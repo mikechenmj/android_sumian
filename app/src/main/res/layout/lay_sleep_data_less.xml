@@ -12,7 +12,7 @@
     android:visibility="gone"
     app:cardBackgroundColor="@color/b2_color_day"
     app:cardCornerRadius="@dimen/space_4"
-    app:cardElevation="@dimen/space_4"
+    app:cardElevation="0dp"
     skin:enable="true"
     tools:visibility="visible">
 

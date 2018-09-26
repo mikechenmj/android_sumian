@@ -52,6 +52,7 @@ import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewSoberAttr;
 import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewTextAttr;
 import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewCoordinateAttr;
 import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewDeepAttr;
+import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewEmptyTextAttr;
 import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewEogAttr;
 import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewLableTextAttr;
 import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewLightTextAttr;
@@ -230,6 +231,7 @@ public final class AppManager {
         SkinConfig.addSupportAttr("light_color", new WeekSleepHistogramViewLightTextAttr());
         SkinConfig.addSupportAttr("sober_color", new WeekSleepHistogramViewSoberTextAttr());
         SkinConfig.addSupportAttr("label_text_color", new WeekSleepHistogramViewLableTextAttr());
+        SkinConfig.addSupportAttr("empty_text_color", new WeekSleepHistogramViewEmptyTextAttr());
 
         SkinConfig.addSupportAttr("label_icon", new SleepAvgAndCompareAttr());
 
