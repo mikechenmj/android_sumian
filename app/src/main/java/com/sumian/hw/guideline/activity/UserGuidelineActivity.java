@@ -71,24 +71,23 @@ public class UserGuidelineActivity extends HwBaseActivity {
             @NonNull
             @Override
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
-                Guideline guideline = mGuidelines.get(position);
-                ViewHolder viewHolder = new ViewHolder();
-                viewHolder.initView(guideline);
-                container.addView(viewHolder.getItemView());
-                return container.getChildAt(position);
+                View itemView = getItemView(position);
+                container.addView(itemView);
+                return itemView;
             }
 
             @Override
             public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                //super.destroyItem(container, position, object);
-                //container.removeViewAt(position);
-            }
-
-            @Override
-            public int getItemPosition(@NonNull Object object) {
-                return PagerAdapter.POSITION_NONE;
+                container.removeView((View) object);
             }
         });
+    }
+
+    private View getItemView(int position) {
+        Guideline guideline = mGuidelines.get(position);
+        ViewHolder viewHolder = new ViewHolder();
+        viewHolder.initView(guideline);
+        return viewHolder.getItemView();
     }
 
     @Override
