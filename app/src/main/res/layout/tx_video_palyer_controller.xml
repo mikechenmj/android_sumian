@@ -59,8 +59,8 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="100dp"
             android:layout_height="2dp"
-            android:layout_marginBottom="4dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:max="100"
             android:progressDrawable="@drawable/pb_change" />
     </LinearLayout>
@@ -86,8 +86,8 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="100dp"
             android:layout_height="2dp"
-            android:layout_marginBottom="4dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:max="100"
             android:progressDrawable="@drawable/pb_change" />
 
@@ -115,8 +115,8 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="100dp"
             android:layout_height="2dp"
-            android:layout_marginBottom="4dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:max="100"
             android:progressDrawable="@drawable/pb_change" />
 
@@ -207,10 +207,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_retry"
-            android:paddingBottom="5dp"
             android:paddingLeft="12dp"
-            android:paddingRight="12dp"
             android:paddingTop="4dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="5dp"
             android:text="点击重试"
             android:textColor="@android:color/white"
             android:textSize="13sp" />
@@ -240,9 +240,9 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="真实死亡游戏“蓝鲸”疑似进入国内，家长们要注意了"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="真实死亡游戏“蓝鲸”疑似进入国内，家长们要注意了" />
 
         <LinearLayout
             android:id="@+id/battery_time"
