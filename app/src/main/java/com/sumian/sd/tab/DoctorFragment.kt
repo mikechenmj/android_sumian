@@ -147,6 +147,7 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     override fun onEnter(data: String?) {
+        runOnUiThread { doctor_detail_layout?.showMsgDot(HwLeanCloudHelper.isHaveCustomerMsg()) }
         if (mIsAutoRefresh) return
         onRefresh()
     }
@@ -156,6 +157,6 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        runOnUiThread { doctor_detail_layout.showMsgDot(customerMsgLen > 0) }
+        runOnUiThread { doctor_detail_layout?.showMsgDot(customerMsgLen > 0) }
     }
 }

@@ -82,6 +82,9 @@ public class HwMeFragment extends HwBaseFragment implements View.OnClickListener
     @Override
     public void onEnter(String data) {
         LogManager.appendUserOperationLog("点击进入 '我的'  界面");
+        if (mSivKefu != null) {
+            runOnUiThread(() -> mSivKefu.setImageResource((HwLeanCloudHelper.isHaveCustomerMsg()) ? R.drawable.ic_info_customerservice_reddot : R.drawable.ic_info_customerservice_black));
+        }
     }
 
     @OnClick({R.id.ll_user_info_container, R.id.siv_customer_service, R.id.siv_setting})

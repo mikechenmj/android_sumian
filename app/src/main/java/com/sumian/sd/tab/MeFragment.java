@@ -18,6 +18,7 @@ import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
 import com.sumian.sd.h5.SleepFileWebActivity;
 import com.sumian.sd.kefu.KefuManager;
+import com.sumian.sd.main.OnEnterListener;
 import com.sumian.sd.notification.NotificationListActivity;
 import com.sumian.sd.notification.NotificationViewModel;
 import com.sumian.sd.onlinereport.OnlineReportListActivity;
@@ -29,6 +30,8 @@ import com.sumian.sd.setting.SettingActivity;
 import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.widget.tips.PatientRecordTips;
 import com.sumian.sd.widget.tips.PatientServiceTips;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -44,7 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class MeFragment extends SdBaseFragment implements View.OnClickListener, PatientServiceTips.OnServiceTipsCallback,
-        PatientRecordTips.OnRecordTipsCallback, HwLeanCloudHelper.OnShowMsgDotCallback {
+        PatientRecordTips.OnRecordTipsCallback, HwLeanCloudHelper.OnShowMsgDotCallback, OnEnterListener {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -160,5 +163,12 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
     @Override
     public void onHideMsgCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
         runOnUiThread(() -> mSivKefu.setImageResource((customerMsgLen > 0) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
+    }
+
+    @Override
+    public void onEnter(@Nullable String data) {
+        if (mSivKefu != null) {
+            runOnUiThread(() -> mSivKefu.setImageResource((HwLeanCloudHelper.isHaveCustomerMsg()) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
+        }
     }
 }
