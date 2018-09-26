@@ -50,7 +50,7 @@ class SleepRecordActivity : SdBaseActivity<SdBasePresenter<Any>>() {
         title_bar.setOnBackClickListener { onBackPressed() }
 
         val sleepRecordFragment = SleepRecordFragment.newInstance(intent?.getLongExtra(KEY_SLEEP_RECORD_TIME, 0L)
-                ?: 0L, true)
+                ?: 0L, false)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fl_content, sleepRecordFragment)
                 .commit()
