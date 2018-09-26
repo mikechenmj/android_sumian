@@ -38,6 +38,9 @@ allprojects {
         flatDir {//用于 load aliyun player sdk/model
             dirs 'libs'
         }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
     }
 }
 

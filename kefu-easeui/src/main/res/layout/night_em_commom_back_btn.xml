@@ -12,6 +12,6 @@
         android:layout_height="@dimen/title_back_btn_size"
         android:layout_centerInParent="true"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_back" />
+        android:src="@drawable/ic_nav_icon_back_white" />
 
 </RelativeLayout>

@@ -12,6 +12,8 @@ import com.blankj.utilcode.util.Utils;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.manager.BlueManager;
+import com.sumian.common.dns.HttpDnsEngine;
+import com.sumian.common.dns.IHttpDns;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
@@ -77,6 +79,8 @@ public final class AppManager {
     private JobScheduler mJobScheduler;
     private VoicePlayer mVoicePlayer;
 
+    private IHttpDns mHttpDns;
+
 
     private AppManager() {
     }
@@ -117,32 +121,8 @@ public final class AppManager {
         return Holder.INSTANCE.mHwNetEngine == null ? Holder.INSTANCE.mHwNetEngine = new HwNetEngine() : Holder.INSTANCE.mHwNetEngine;
     }
 
-    private void initLeanCloud(Context context) {
-        LeanCloudManager.init(context);
-    }
-
-    private void initEmojiCompat(Context context) {
-        EmojiCompat.init(new BundledEmojiCompatConfig(context));
-    }
-
-    private void initOpenEngine(Context context) {
-        if (mOpenEngine == null) {
-            OpenEngine.init(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET);
-            mOpenEngine = new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
-        }
-    }
-
-    private void initAccountViewModel(Application context) {
-        if (mAccountViewModel == null) {
-            mAccountViewModel = new AccountViewModel(context);
-            mAccountViewModel.loadTokenFromSp();
-        }
-    }
-
-    private void initUtils(Context context) {
-        ToastHelper.init(context);
-        Utils.init(context);
-        ToastUtils.setGravity(Gravity.CENTER, 0, 0);
+    public static synchronized IHttpDns getHttpDns() {
+        return Holder.INSTANCE.mHttpDns == null ? Holder.INSTANCE.mHttpDns = new HttpDnsEngine().init(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY) : Holder.INSTANCE.mHttpDns;
     }
 
     public static synchronized SleepyV1Api getHwV1HttpService() {
@@ -177,6 +157,7 @@ public final class AppManager {
     }
 
     public void init(@NonNull Context context) {
+        initHttpDns(context);
         initUtils(context);
         initEmojiCompat(context);
         initAccountViewModel((Application) context);
@@ -187,6 +168,39 @@ public final class AppManager {
         initKefu(context);
         initWebView();
         initSkin(context);
+    }
+
+    private void initLeanCloud(Context context) {
+        LeanCloudManager.init(context);
+    }
+
+    private void initEmojiCompat(Context context) {
+        EmojiCompat.init(new BundledEmojiCompatConfig(context));
+    }
+
+    private void initOpenEngine(Context context) {
+        if (mOpenEngine == null) {
+            OpenEngine.init(context, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET);
+            mOpenEngine = new OpenEngine().create(context, BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET);
+        }
+    }
+
+    private void initAccountViewModel(Application context) {
+        if (mAccountViewModel == null) {
+            mAccountViewModel = new AccountViewModel(context);
+            mAccountViewModel.loadTokenFromSp();
+        }
+    }
+
+    private void initUtils(Context context) {
+        ToastHelper.init(context);
+        Utils.init(context);
+        ToastUtils.setGravity(Gravity.CENTER, 0, 0);
+    }
+
+    private void initHttpDns(Context context) {
+        this.mHttpDns = new HttpDnsEngine().init(context, BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY);
+        this.mHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL);
     }
 
     private void initSkin(@NonNull Context context) {

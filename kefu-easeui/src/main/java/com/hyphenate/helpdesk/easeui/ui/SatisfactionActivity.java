@@ -29,6 +29,7 @@ import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.callback.Callback;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.ui.adapter.TagAdapter;
 import com.hyphenate.helpdesk.easeui.widget.flow.FlowTagLayout;
 import com.hyphenate.helpdesk.easeui.widget.flow.OnTagSelectListener;
@@ -56,7 +57,7 @@ public class SatisfactionActivity extends BaseActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.night_em_activity_satisfaction);
+        setContentView(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_em_activity_satisfaction : R.layout.night_em_activity_satisfaction);
         String msgId = getIntent().getStringExtra("msgId");
         initView();
         currentMessage = ChatClient.getInstance().chatManager().getMessage(msgId);

@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/deep_content_bg_color"
+    android:background="#F2F3F5"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/light_content_bg_color"
+        android:background="#6595F4"
         android:gravity="center_vertical">
 
         <include
@@ -24,7 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/title_satifisfaction_eval"
-            android:textColor="@color/bt_hole_color"
+            android:textColor="#ffffff"
             android:textSize="@dimen/title_text_size" />
     </RelativeLayout>
 
@@ -62,7 +62,8 @@
                         android:layout_marginTop="10dip"
                         android:gravity="center"
                         android:text="@string/nick_service"
-                        android:textColor="@color/general_color"
+                        android:textColor="#2C2F37"
+                        android:textSize="16sp"
                         android:visibility="visible" />
                 </LinearLayout>
             </RelativeLayout>
@@ -83,8 +84,8 @@
                     android:layout_marginRight="5dp"
                     android:gravity="center_horizontal"
                     android:text="@string/tip_eval"
-                    android:textColor="@color/general_color"
-                    android:textSize="12sp" />
+                    android:textColor="#878D99"
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -104,8 +105,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dip"
-                android:layout_marginTop="30dip">
+                android:layout_marginTop="30dip"
+                android:layout_marginBottom="10dip">
 
                 <RatingBar
                     android:id="@+id/ratingBar1"
@@ -124,8 +125,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/general_color"
-                android:textSize="14sp" />
+                android:textColor="#2C2F37"
+                android:textSize="16sp" />
 
             <com.hyphenate.helpdesk.easeui.widget.flow.FlowTagLayout
                 android:id="@+id/id_flowlayout"
@@ -152,10 +153,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_margin="20dip"
-                android:background="@drawable/bt_circle_bg"
+                android:background="@drawable/bt_circle_bg_light"
                 android:padding="10dip"
                 android:text="@string/tip_btn_sumbit"
-                android:textColor="@android:color/white"
+                android:textColor="#ffffffff"
                 android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>

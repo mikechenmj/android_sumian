@@ -1,14 +1,18 @@
 package com.sumian.sd.network.engine
 
+import android.text.TextUtils
 import com.google.gson.GsonBuilder
 import com.sumian.sd.BuildConfig
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.api.DoctorApi
 import com.sumian.sd.network.interceptor.AuthInterceptor
 import com.sumian.sd.network.interceptor.StatusCodeInterceptor
+import okhttp3.Dns
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.InetAddress
 import java.util.concurrent.TimeUnit
 
 /**
@@ -35,6 +39,14 @@ class NetEngine {
                         .setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE))
                 .addInterceptor(AuthInterceptor.create())
                 .addInterceptor(StatusCodeInterceptor.create())
+                .dns { hostname ->
+                    val hostIpFrom = AppManager.getHttpDns().getHostIpFromHostname(hostname)
+                    if (TextUtils.isEmpty(hostIpFrom)) {
+                        Dns.SYSTEM.lookup(hostname)
+                    } else {
+                        InetAddress.getAllByName(hostIpFrom).toMutableList()
+                    }
+                }
                 .build()
 
         val retrofit = Retrofit.Builder()

@@ -2,6 +2,7 @@ package com.sumian.sd.network.interceptor
 
 import android.text.TextUtils
 import android.webkit.WebSettings
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import okhttp3.Interceptor
@@ -56,8 +57,9 @@ class AuthInterceptor private constructor() : Interceptor {
                 .newBuilder()
                 .addHeader("Content-Type", "application/json")
                 .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android")
+                .addHeader("Host", chain.request().url().newBuilder().build().host())
 
-        val token = AppManager.getAccountViewModel().getTokenString()
+        val token = AppManager.getAccountViewModel().tokenString
         if (!TextUtils.isEmpty(token)) {
             builder.addHeader("Authorization", "Bearer " + token)
         }

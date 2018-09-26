@@ -89,6 +89,11 @@ dependencies {
     //implementation 'net.qiujuer.genius:ui:latest.integration'
     implementation project(':jsbridge')
 
+    //aliyun httpdns
+    implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar') {
+        transitive true
+    }
+
     // utils
     implementation 'com.blankj:utilcode:1.19.0'
 }
