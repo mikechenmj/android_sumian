@@ -1,21 +1,19 @@
-package com.sumian.sd.widget.webview;
+package com.sumian.common.h5.widget;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.sumian.sd.R;
-import com.sumian.sd.network.StatusCode;
-import com.sumian.sd.widget.error.EmptyErrorView;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.sumian.common.R;
+import com.sumian.common.network.StatusCode;
 
 /**
  * Created by sm
@@ -24,9 +22,7 @@ import butterknife.ButterKnife;
  **/
 public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewListener, EmptyErrorView.OnEmptyCallback {
 
-    @BindView(R.id.web_view_progress)
     ProgressBar mWebViewProgress;
-    @BindView(R.id.empty_error_view)
     EmptyErrorView mEmptyErrorView;
 
     private SWebView mSWebView;
@@ -46,7 +42,9 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
     }
 
     private void initView(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.lay_webview_container_view, this));
+        View inflate = LayoutInflater.from(context).inflate(R.layout.common_lay_webview_container_view, this, true);
+        mWebViewProgress = inflate.findViewById(R.id.web_view_progress);
+        mEmptyErrorView = inflate.findViewById(R.id.empty_error_view);
         this.mEmptyErrorView.setOnEmptyCallback(this);
         this.mSWebView = new SWebView(getContext());
         this.mSWebView.setOnWebViewListener(this);

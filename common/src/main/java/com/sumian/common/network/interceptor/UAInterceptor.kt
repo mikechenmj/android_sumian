@@ -6,6 +6,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.lang.ref.WeakReference
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
  * Created by jzz
  * on 2017/9/26

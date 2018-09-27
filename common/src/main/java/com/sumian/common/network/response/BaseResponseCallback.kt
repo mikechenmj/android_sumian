@@ -74,10 +74,10 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
     private fun getErrorResponseFromErrorBody(code: Int, errorBody: ResponseBody): ErrorResponse? {
         val errorJson = errorBody.string()
         return if (code == BUSINESS_ERROR) {
-            val errorInfo = JsonUtil.fromJson(errorJson, ErrorInfo499::class.java)
+            val errorInfo = JsonUtil.fromJson(errorJson, ErrorResponse.ErrorInfo499::class.java)
             ErrorResponse.createFromErrorInfo(errorInfo)
         } else {
-            val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorInfo400::class.java)
+            val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorResponse.ErrorInfo400::class.java)
             ErrorResponse.createFromErrorInfo(errorInfo400)
         }
     }

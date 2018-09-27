@@ -3,19 +3,17 @@ package com.sumian.sd.service.diary;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.h5.handler.SBridgeHandler;
+import com.sumian.common.h5.widget.SWebView;
 import com.sumian.hw.utils.JsonUtil;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.main.MainActivity;
 import com.sumian.sd.network.callback.BaseResponseCallback;
-import com.sumian.sd.service.cbti.video.LogUtil;
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData;
-import com.sumian.sd.widget.webview.SBridgeHandler;
-import com.sumian.sd.widget.webview.SWebView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;

@@ -1,5 +1,7 @@
 package com.sumian.sd.h5;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -9,12 +11,12 @@ import android.util.Log;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.common.utils.StreamUtil;
+import com.sumian.common.h5.handler.SBridgeHandler;
+import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.h5.bean.ImageCount;
 import com.sumian.sd.utils.JsonUtil;
 import com.sumian.sd.widget.sheet.SelectPictureBottomSheet;
-import com.sumian.sd.widget.webview.SBridgeHandler;
-import com.sumian.sd.widget.webview.SWebView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -39,6 +41,10 @@ public class SleepFileWebActivity extends SdBaseWebViewActivity {
     private static final String TAG = SleepFileWebActivity.class.getSimpleName();
 
     private String[] selectedImages;
+
+    public static void show(Context context) {
+        context.startActivity(new Intent(context, SleepFileWebActivity.class));
+    }
 
     @Override
     protected String getUrlContentPart() {

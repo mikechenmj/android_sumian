@@ -9,8 +9,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.h5.bean.H5ShowToastData
 import com.sumian.sd.R
-import com.sumian.sd.h5.bean.H5ShowToastData
 import kotlinx.android.synthetic.main.lay_dialog_common_sumian.*
 
 @Suppress("MemberVisibilityCanBePrivate")

@@ -16,6 +16,7 @@ import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import kotlinx.android.synthetic.main.fragment_diary_evaluation_list.*
 import org.greenrobot.eventbus.Subscribe
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 /**
  * <pre>
  *     @author : Zhan Xuzhao

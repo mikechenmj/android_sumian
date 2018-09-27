@@ -2,17 +2,15 @@ package com.sumian.sd.onlinereport;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.h5.handler.SBridgeHandler;
+import com.sumian.common.h5.widget.SWebView;
 import com.sumian.hw.utils.JsonUtil;
-import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.main.MainActivity;
-import com.sumian.sd.widget.webview.SBridgeHandler;
-import com.sumian.sd.widget.webview.SWebView;
 
 import java.util.HashMap;
 import java.util.Map;

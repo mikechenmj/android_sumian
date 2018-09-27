@@ -1,7 +1,7 @@
-package com.sumian.sd.h5.bean
+package com.sumian.common.h5.bean
 
 import com.google.gson.annotations.SerializedName
-import com.sumian.sd.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 
 data class H5ShowToastData(
         @SerializedName("type") var type: String = "text",   //1.text 2.success 3.error 4.loading 5.warning

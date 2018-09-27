@@ -1,9 +1,9 @@
 package com.sumian.sd.doctor.contract
 
+import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.doctor.bean.Doctor
-import com.sumian.sd.widget.webview.SBridgeResult
 
 interface BindDoctorContract {
 

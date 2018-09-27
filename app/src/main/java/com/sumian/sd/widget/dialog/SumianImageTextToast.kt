@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.WindowManager
-import android.view.WindowManager.*
+import android.view.WindowManager.LayoutParams
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +23,7 @@ import com.sumian.sd.R
  * </pre>
  */
 class SumianImageTextToast {
+    @Suppress("UNUSED_PARAMETER")
     companion object {
         fun showToast(context: Context, imageResId: Int, textResId: Int, showLong: Boolean) {
             val view = LayoutInflater.from(context).inflate(R.layout.layout_image_text_toast, null)

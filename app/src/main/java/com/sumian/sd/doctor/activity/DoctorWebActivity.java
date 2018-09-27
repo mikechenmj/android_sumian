@@ -1,12 +1,15 @@
 package com.sumian.sd.doctor.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
+import com.sumian.common.h5.handler.SBridgeHandler;
+import com.sumian.common.h5.bean.SBridgeResult;
+import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.doctor.bean.Doctor;
@@ -16,9 +19,6 @@ import com.sumian.sd.doctor.presenter.BindDoctorPresenter;
 import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.main.MainActivity;
 import com.sumian.sd.utils.JsonUtil;
-import com.sumian.sd.widget.webview.SBridgeHandler;
-import com.sumian.sd.widget.webview.SBridgeResult;
-import com.sumian.sd.widget.webview.SWebView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
  * on 2018/5/28 11:40
  * desc:
  **/
+@SuppressWarnings("ALL")
 public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
 
     private static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
@@ -39,7 +40,10 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         Bundle extras = new Bundle();
         //"https://sd-dev.sumian.com/doctor/1?scheme=" + uriQuery
         extras.putString(ARGS_URL, url);
-        DoctorWebActivity.show(context, DoctorWebActivity.class, extras);
+
+        Intent intent = new Intent(context, DoctorWebActivity.class);
+        intent.putExtras(extras);
+        context.startActivity(intent);
     }
 
     public static void show(Context context, String url, DoctorService doctorService, boolean isFromRecord) {
@@ -48,27 +52,18 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         extras.putString(ARGS_URL, url);
         extras.putParcelable(ScanDoctorQrCodeActivity.EXTRAS_DOCTOR_SERVICE, doctorService);
         extras.putBoolean(ScanDoctorQrCodeActivity.EXTRAS_FROM_RECORD, isFromRecord);
-        DoctorWebActivity.show(context, DoctorWebActivity.class, extras);
+
+        Intent intent = new Intent(context, DoctorWebActivity.class);
+        intent.putExtras(extras);
+        context.startActivity(intent);
     }
 
     @Override
-    protected boolean initBundle(Bundle bundle) {
-        if (bundle != null) {
-            this.mIsFromRecord = bundle.getBoolean(ScanDoctorQrCodeActivity.EXTRAS_FROM_RECORD, false);
-            this.mArgUrl = bundle.getString(ARGS_URL);
-            this.mDoctorService = bundle.getParcelable(ScanDoctorQrCodeActivity.EXTRAS_DOCTOR_SERVICE);
-        }
-        return super.initBundle(bundle);
-    }
-
-    @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
+    protected void initBundle(@NonNull Bundle bundle) {
+        mPresenter = BindDoctorPresenter.init(this);
+        this.mIsFromRecord = bundle.getBoolean(ScanDoctorQrCodeActivity.EXTRAS_FROM_RECORD, false);
+        this.mArgUrl = bundle.getString(ARGS_URL);
+        this.mDoctorService = bundle.getParcelable(ScanDoctorQrCodeActivity.EXTRAS_DOCTOR_SERVICE);
     }
 
     @Override
@@ -76,12 +71,6 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         Uri argUri = Uri.parse(mArgUrl);
         String originUrl = H5Uri.BIND_DOCTOR;
         return originUrl.replace("{id}", argUri.getQueryParameter("id"));
-    }
-
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-        BindDoctorPresenter.Companion.init(this);
     }
 
     @Override
@@ -119,7 +108,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
 
     @Override
     public void onBindDoctorFailed(@NotNull String message) {
-        showCenterToast(message);
+       showCenterToast(message);
     }
 
     @Override

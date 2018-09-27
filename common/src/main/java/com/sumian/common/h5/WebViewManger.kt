@@ -1,6 +1,6 @@
-package com.sumian.common.webview
+package com.sumian.common.h5
 
-import android.text.TextUtils
+import com.sumian.common.dns.IHttpDns
 
 /**
  * <pre>
@@ -11,14 +11,18 @@ import android.text.TextUtils
  * </pre>
  */
 class WebViewManger private constructor() {
+
     private var mBaseUrl: String? = null
     private var mToken: String? = null
+    private var mIHttpDns: IHttpDns? = null
+    private var mIsDebug: Boolean = false
 
     companion object {
         private val INSTANCE by lazy {
             WebViewManger()
         }
 
+        @JvmStatic
         fun getInstance(): WebViewManger {
             return INSTANCE
         }
@@ -38,5 +42,21 @@ class WebViewManger private constructor() {
 
     fun getToken(): String? {
         return mToken
+    }
+
+    fun registerHttpDnsEngine(iHttpDns: IHttpDns) {
+        mIHttpDns = iHttpDns
+    }
+
+    fun getHttpDnsEngine(): IHttpDns {
+        return mIHttpDns!!
+    }
+
+    fun setDebug(isDebug: Boolean) {
+        mIsDebug = isDebug
+    }
+
+    fun isDebug(): Boolean {
+        return mIsDebug
     }
 }

@@ -14,12 +14,12 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.common.dns.HttpDnsEngine;
 import com.sumian.common.dns.IHttpDns;
+import com.sumian.common.h5.WebViewManger;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
-import com.sumian.common.webview.WebViewManger;
 import com.sumian.hw.device.model.DeviceModel;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.job.JobScheduler;
@@ -242,8 +242,10 @@ public final class AppManager {
     }
 
     private void initWebView() {
-        WebViewManger webViewManger = WebViewManger.Companion.getInstance();
+        WebViewManger webViewManger = WebViewManger.getInstance();
         webViewManger.setBaseUrl(BuildConfig.BASE_H5_URL);
+        webViewManger.registerHttpDnsEngine(this.mHttpDns);
+        webViewManger.setDebug(BuildConfig.DEBUG);
         AppManager.getAccountViewModel().getLiveDataToken().observeForever(token -> webViewManger.setToken(token == null ? null : token.token));
     }
 

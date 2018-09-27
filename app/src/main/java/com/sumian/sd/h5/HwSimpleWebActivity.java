@@ -3,19 +3,14 @@ package com.sumian.sd.h5;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.view.View;
 
-import com.sumian.sd.R;
-import com.sumian.sd.base.ActivityLauncher;
-import com.sumian.sd.base.SdBaseWebViewActivity;
 
 public class HwSimpleWebActivity extends SimpleWebActivity {
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
-        mTitleBar.setIsDarkTheme(true);
+    protected void initWidget() {
+        super.initWidget();
+        getTitleBar().setIsDarkTheme(true);
     }
 
     public static void launch(Context context, String urlContentPart) {

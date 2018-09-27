@@ -5,7 +5,7 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.contract.BindDoctorContract
-import com.sumian.sd.widget.webview.SBridgeResult
+import com.sumian.common.h5.bean.SBridgeResult
 
 class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : BindDoctorContract.Presenter {
 
@@ -18,8 +18,9 @@ class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : B
 
     companion object {
 
-        fun init(view: BindDoctorContract.View) {
-            BindDoctorPresenter(view)
+        @JvmStatic
+        fun init(view: BindDoctorContract.View): BindDoctorPresenter {
+            return BindDoctorPresenter(view)
         }
 
     }

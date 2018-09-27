@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.sd.BuildConfig;
+import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 
 public class SimpleWebActivity extends SdBaseWebViewActivity {
@@ -64,20 +65,20 @@ public class SimpleWebActivity extends SdBaseWebViewActivity {
         return getLaunchIntentWithRouteData(context, routePageData, SimpleWebActivity.class);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static Intent getLaunchIntentWithRouteData(Context context, String routePageData, Class<? extends SimpleWebActivity> cls) {
         String urlContent = H5Uri.NATIVE_ROUTE
                 .replace("{pageData}", routePageData)
-                .replace("{token}", getToken());
+                .replace("{token}", AppManager.getAccountViewModel().getToken().token);
         String completeUrl = BuildConfig.BASE_H5_URL + urlContent;
         return getLaunchIntentWithCompleteUrl(context, completeUrl, cls);
     }
 
     @Override
-    protected boolean initBundle(Bundle bundle) {
+    protected void initBundle(@NonNull Bundle bundle) {
         mTitle = bundle.getString(KEY_TITLE);
         mUrlContentPart = bundle.getString(KEY_URL_CONTENT_PART);
         mUrlComplete = bundle.getString(KEY_URL_COMPLETE);
-        return super.initBundle(bundle);
     }
 
     @Override

@@ -1,11 +1,8 @@
-package com.sumian.sd.widget.webview;
-
-import android.util.Log;
+package com.sumian.common.h5.handler;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.sumian.sd.BuildConfig;
 
 /**
  * Created by sm

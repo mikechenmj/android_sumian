@@ -1,4 +1,4 @@
-package com.sumian.common.webview.widget;
+package com.sumian.common.h5.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

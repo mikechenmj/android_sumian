@@ -155,7 +155,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
                         .commitNow();
                 break;
             case R.id.dv_my_target:
-                MyTargetAndInformationActivity.Companion.launchForResult(this, true, 0);
+                MyTargetAndInformationActivity.launchForResult(this, true, 0);
                 break;
             default:
                 break;

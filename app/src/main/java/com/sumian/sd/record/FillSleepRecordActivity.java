@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.common.h5.handler.SBridgeHandler;
+import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseWebViewActivity;
@@ -18,8 +20,6 @@ import com.sumian.sd.record.bean.FillSleepRecordResponse;
 import com.sumian.sd.record.bean.SleepRecord;
 import com.sumian.sd.utils.JsonUtil;
 import com.sumian.sd.utils.TimeUtil;
-import com.sumian.sd.widget.webview.SBridgeHandler;
-import com.sumian.sd.widget.webview.SWebView;
 
 import java.util.Locale;
 

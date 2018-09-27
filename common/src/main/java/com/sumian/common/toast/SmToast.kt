@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import com.sumian.common.R
 
+@Suppress("DEPRECATION")
 /**
  * Created by sm
  *

@@ -7,17 +7,16 @@ import android.view.View
 import android.widget.FrameLayout
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.hw.base.HwBasePresenter
+import com.sumian.hw.report.ReportActivity
 import com.sumian.hw.report.base.BaseResultResponse
 import com.sumian.hw.report.bean.DailyMeta
 import com.sumian.hw.report.bean.DailyReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.hw.report.ReportActivity
-import com.sumian.sd.R.id.*
-import com.umeng.socialize.utils.DeviceConfig.context
 import kotlinx.android.synthetic.main.lay_no_sleep_data.view.*
 import kotlinx.android.synthetic.main.view_hardware_sleep_data.view.*
 
+@Suppress("DEPRECATION", "DEPRECATION")
 /**
  * <pre>
  *     @author : Zhan Xuzhao

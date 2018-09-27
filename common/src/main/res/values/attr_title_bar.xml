@@ -8,6 +8,7 @@
         <attr name="show_spanner" format="boolean|reference" />
         <attr name="menu_icon" format="reference" />
         <attr name="menu_text" format="string|reference" />
+        <attr name="tb_dark_theme" format="boolean|reference" />
     </declare-styleable>
 
 </resources>

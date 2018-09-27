@@ -1,4 +1,4 @@
-package com.sumian.common.webview;
+package com.sumian.common.h5;
 
 import android.app.Activity;
 import android.graphics.Rect;

@@ -12,10 +12,10 @@
         android:layout_gravity="center|left"
         android:background="@drawable/bg_material"
         android:contentDescription="@null"
-        android:paddingBottom="@dimen/space_16"
         android:paddingLeft="@dimen/space_20"
-        android:paddingRight="@dimen/space_20"
         android:paddingTop="@dimen/space_16"
+        android:paddingRight="@dimen/space_20"
+        android:paddingBottom="@dimen/space_16"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_nav_icon_back"
         tools:ignore="RtlHardcoded" />

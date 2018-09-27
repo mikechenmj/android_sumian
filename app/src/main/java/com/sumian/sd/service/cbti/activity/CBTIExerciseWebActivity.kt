@@ -4,17 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
-import android.view.View
 import com.google.gson.reflect.TypeToken
-import com.sumian.sd.R
+import com.sumian.common.h5.bean.SBridgeResult
+import com.sumian.common.h5.handler.SBridgeHandler
+import com.sumian.common.h5.widget.SWebView
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.utils.JsonUtil
-import com.sumian.sd.widget.dialog.SumianAlertDialog
-import com.sumian.sd.widget.webview.SBridgeHandler
-import com.sumian.sd.widget.webview.SBridgeResult
-import com.sumian.sd.widget.webview.SWebView
 import java.util.*
 
 /**
@@ -38,38 +35,16 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
             val extras = Bundle().apply {
                 putInt(EXTRAS_COURSE_ID, courseId)
             }
-            show(context, CBTIExerciseWebActivity::class.java, extras)
+
+            val intent = Intent(context, CBTIExerciseWebActivity::class.java)
+            intent.putExtras(extras)
+            context.startActivity(intent)
         }
 
     }
 
-    override fun initBundle(bundle: Bundle?): Boolean {
-        bundle?.let {
-            courseId = it.getInt(EXTRAS_COURSE_ID, 0)
-        }
-
-        return super.initBundle(bundle)
-    }
-
-    private var sumianAlertDialog: SumianAlertDialog? = null
-
-    override fun onBack(v: View?) {
-        finish()
-//        if (mQuitWithoutCheck) {
-//            finish()
-//        } else {
-//            sumianAlertDialog = SumianAlertDialog(this)
-//                    .whitenLeft()
-//                    .setTitle(R.string.are_you_exit_practice)
-//                    .setMessage("退出后将不会保存此次填写记录")
-//                    .setLeftBtn(R.string.cancel, null)
-//                    .setRightBtn(R.string.sure) { finish() }
-//            sumianAlertDialog?.show()
-//        }
-    }
-
-    override fun onBackPressed() {
-        onBack(null)
+    override fun initBundle(bundle: Bundle) {
+        courseId = bundle.getInt(EXTRAS_COURSE_ID, 0)
     }
 
     override fun getUrlContentPart(): String {

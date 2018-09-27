@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.lay_voice_play_view.view.*
 import java.util.*
 
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "UNUSED_PARAMETER")
 /**
  * Created by dq
  *

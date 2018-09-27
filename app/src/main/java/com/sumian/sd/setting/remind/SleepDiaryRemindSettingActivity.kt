@@ -11,6 +11,7 @@ import com.sumian.sd.utils.TimeUtil
 import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
 import kotlinx.android.synthetic.main.activity_sleep_diary_remind_setting.*
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class SleepDiaryRemindSettingActivity :
         BasePresenterActivity<SleepDiaryReminderSettingContract.Presenter>(),
         SleepDiaryReminderSettingContract.View {

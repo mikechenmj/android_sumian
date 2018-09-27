@@ -29,20 +29,25 @@ data class ErrorResponse(var code: Int, var message: String) {
         }
     }
 
+    data class ErrorInfo499(
+            @SerializedName("error") val error: Error
+    )
+
+    data class Error(
+            @SerializedName("code") val code: Int,
+            @SerializedName("user_message") val userMessage: String,
+            @SerializedName("internal_message") val internalMessage: String,
+            @SerializedName("more_info") val moreInfo: Any
+    )
+
+    data class ErrorInfo400(
+            @SerializedName("message") val message: String,
+            @SerializedName("status_code") val statusCode: Int
+    )
+
 }
 
-data class ErrorInfo499(
-        @SerializedName("error") val error: Error
-)
 
-data class Error(
-        @SerializedName("code") val code: Int,
-        @SerializedName("user_message") val userMessage: String,
-        @SerializedName("internal_message") val internalMessage: String,
-        @SerializedName("more_info") val moreInfo: Any
-)
 
-data class ErrorInfo400(
-        @SerializedName("message") val message: String,
-        @SerializedName("status_code") val statusCode: Int
-)
+
+

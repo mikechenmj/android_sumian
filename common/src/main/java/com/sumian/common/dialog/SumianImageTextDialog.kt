@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatDialog
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.R
-import com.sumian.common.webview.bean.H5ShowToastData
+import com.sumian.common.h5.bean.H5ShowToastData
 import kotlinx.android.synthetic.main.layout_sumian_dialog.*
 
 

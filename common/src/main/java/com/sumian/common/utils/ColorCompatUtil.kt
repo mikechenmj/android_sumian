@@ -14,6 +14,8 @@ import android.support.annotation.ColorRes
  */
 class ColorCompatUtil {
     companion object {
+
+        @JvmStatic
         fun getColor(context: Context, @ColorRes colorRes: Int): Int {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 context.resources.getColor(colorRes, context.theme)

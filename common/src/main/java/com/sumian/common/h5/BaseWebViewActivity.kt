@@ -1,4 +1,4 @@
-package com.sumian.common.webview
+package com.sumian.common.h5
 
 import android.os.Bundle
 import android.view.View
@@ -10,11 +10,11 @@ import com.google.gson.reflect.TypeToken
 import com.sumian.common.R
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.dialog.SumianImageTextDialog
+import com.sumian.common.h5.bean.H5ShowToastData
+import com.sumian.common.h5.widget.SWebView
+import com.sumian.common.h5.widget.SWebViewLayout
 import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.ScreenUtil
-import com.sumian.common.webview.bean.H5ShowToastData
-import com.sumian.common.webview.widget.SWebView
-import com.sumian.common.webview.widget.SWebViewLayout
 import com.sumian.common.widget.TitleBar
 import kotlinx.android.synthetic.main.common_activity_main_base_webview.*
 
@@ -26,10 +26,11 @@ import kotlinx.android.synthetic.main.common_activity_main_base_webview.*
  *     version: 1.0
  * </pre>
  */
+@Suppress("ObjectLiteralToLambda", "MemberVisibilityCanBePrivate")
 abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener {
 
     protected var mSoftKeyBoardListener: SoftKeyBoardListener? = null
-    private var mSumianImageTextDialog: SumianImageTextDialog? = null
+    protected var mSumianImageTextDialog: SumianImageTextDialog? = null
 
     override fun getLayoutId(): Int {
         return R.layout.common_activity_main_base_webview
@@ -52,9 +53,9 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
 
     override fun initData() {
         super.initData()
-        val sWebView = sm_webview_container!!.getSWebView()
-        sm_webview_container!!.setWebListener(this)
-        sm_webview_container!!.loadRequestUrl(getCompleteUrl())
+        val sWebView = sm_webview_container.sWebView
+        sm_webview_container?.setWebListener(this)
+        sm_webview_container?.loadRequestUrl(getCompleteUrl())
         registerHandler(sWebView)
         registerBaseHandler(sWebView)
     }
@@ -94,7 +95,7 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
                 for ((key, value) in map) {
                     when (key) {
                         "showNavigationBar" -> if (value is Boolean) {
-                            title_bar!!.setVisibility(if (value) View.VISIBLE else View.GONE)
+                            title_bar!!.visibility = if (value) View.VISIBLE else View.GONE
                         }
                         "showTitle" -> if (value is Boolean) {
                             title_bar!!.showTitle(value)
@@ -126,21 +127,19 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
     }
 
     override fun onStop() {
-        if (mSumianImageTextDialog != null) {
-            mSumianImageTextDialog!!.release()
-        }
+        mSumianImageTextDialog?.release()
         super.onStop()
     }
 
-    protected fun h5HandlerName(): String? {
+    protected open fun h5HandlerName(): String? {
         return null
     }
 
-    protected fun initTitle(): String? {
+    protected open fun initTitle(): String? {
         return null
     }
 
-    protected fun registerHandler(sWebView: SWebView) {}
+    protected open fun registerHandler(sWebView: SWebView) {}
 
     override fun onBackPressed() {
         if (!sm_webview_container!!.webViewCanGoBack()) {
@@ -179,10 +178,10 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
     }
 
     override fun onReceiveTitle(webView: WebView, title: String) {
-        title_bar!!.setTitle(title)
+        title_bar?.setTitle(title)
     }
 
-    protected fun monitorKeyboard() {
+    protected open fun monitorKeyboard() {
         mSoftKeyBoardListener = SoftKeyBoardListener.registerListener(this, object : SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
             override fun keyBoardShow(height: Int) {
                 updateRootViewHeight(ScreenUtil.getScreenHeight(this@BaseWebViewActivity) - height)

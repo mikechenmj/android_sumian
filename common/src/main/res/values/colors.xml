@@ -71,4 +71,8 @@
 
     <color name="qr_code_bg">#7F9cbdff</color>
 
+    <color name="hw_colorPrimary">#ff2c2f37</color>
+    <color name="hw_colorPrimaryDark">#ff212329</color>
+    <color name="bt_hole_color">#ff7ea5f4</color>
+
 </resources>

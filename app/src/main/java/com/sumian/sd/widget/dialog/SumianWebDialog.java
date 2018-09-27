@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sumian.common.h5.widget.SWebViewLayout;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.h5.H5Uri;
-import com.sumian.sd.widget.webview.SWebViewLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

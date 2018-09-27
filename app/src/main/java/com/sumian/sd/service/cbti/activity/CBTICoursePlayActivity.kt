@@ -28,6 +28,7 @@ import com.sumian.sd.widget.dialog.SumianWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
 
 
+@Suppress("REDUNDANT_LABEL_WARNING")
 /**
  * Created by sm
  *

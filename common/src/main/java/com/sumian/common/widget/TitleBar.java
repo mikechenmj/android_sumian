@@ -61,6 +61,9 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         boolean showSpanner = a.getBoolean(R.styleable.TitleBar_show_spanner, false);
         String menuText = a.getString(R.styleable.TitleBar_menu_text);
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_menu_icon);
+
+        boolean isDarkTheme = a.getBoolean(R.styleable.TitleBar_tb_dark_theme, false);
+
         a.recycle();
 
         View rootView = inflate(context, R.layout.common_lay_title_bar, this);
@@ -91,6 +94,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             mIvMenu.setVisibility(VISIBLE);
             mIvMenu.setOnClickListener(this);
         }
+        setIsDarkTheme(isDarkTheme);
         setBackgroundColor(ColorCompatUtil.Companion.getColor(getContext(), R.color.b3_color));
     }
 
@@ -149,6 +153,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void setTitle(String text) {
         mTvTitle.setText(text);
+        mTvTitle.setVisibility(VISIBLE);
     }
 
     @SuppressWarnings("deprecation")
@@ -184,15 +189,12 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void setMenuText(String menuText) {
         mTvMenu.setText(menuText);
+        mTvMenu.setVisibility(VISIBLE);
     }
 
     public void setMenuVisibility(int visibility) {
         mTvMenu.setVisibility(visibility);
         mTvMenu.setOnClickListener(this);
-    }
-
-    public interface OnMenuClickListener {
-        void onMenuClick(View v);
     }
 
     public void setBgColor(int color) {
@@ -216,4 +218,14 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     public void showBackArrow(boolean show) {
         mIvBack.setVisibility(show ? VISIBLE : GONE);
     }
+
+    public void setIsDarkTheme(boolean isDarkTheme) {
+        setBgColor(ColorCompatUtil.getColor(getContext(), isDarkTheme ? R.color.hw_colorPrimary : R.color.colorPrimary));
+        setTextColor(ColorCompatUtil.getColor(getContext(), isDarkTheme ? R.color.bt_hole_color : R.color.white));
+    }
+
+    public interface OnMenuClickListener {
+        void onMenuClick(View v);
+    }
+
 }

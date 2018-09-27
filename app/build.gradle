@@ -62,7 +62,6 @@ android {
         buildConfigField("String", "HTTP_DNS_ACCOUNT_ID", HTTP_DNS_ACCOUNT_ID)
         buildConfigField("String", "HTTP_DNS_SECRET_KEY", HTTP_DNS_SECRET_KEY)
 
-
         // Enabling multidex support.
         multiDexEnabled true
 
@@ -235,7 +234,7 @@ android {
         variant.outputs.all { output ->
             //输出 apk 文件名
 
-            def fileName = "速眠医生_患者版_${versionName}_${variant.flavorName} ${formatDate()}.apk"
+            def fileName = "速眠医生_患者版_${variant.flavorName}_${formatDate()}.apk"
 
             println fileName
 
@@ -254,7 +253,7 @@ android {
 }
 
 static def formatDate() {
-    def sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
+    def sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm")
     def formatDate = sdf.format(new Date())
     return formatDate
 }

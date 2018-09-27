@@ -1,6 +1,5 @@
 package com.sumian.sd.doctor.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +7,18 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.gson.reflect.TypeToken;
-import com.sumian.sd.service.advisory.activity.PublishAdvisoryRecordActivity;
+import com.sumian.common.h5.handler.SBridgeHandler;
+import com.sumian.common.h5.bean.SBridgeResult;
+import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult;
 import com.sumian.sd.h5.H5Uri;
-import com.sumian.sd.record.SleepRecordActivity;
+import com.sumian.sd.service.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sd.service.diary.DiaryEvaluationDetailActivity;
 import com.sumian.sd.service.tel.activity.TelBookingPublishActivity;
 import com.sumian.sd.utils.JsonUtil;
-import com.sumian.sd.widget.webview.SBridgeHandler;
-import com.sumian.sd.widget.webview.SBridgeResult;
-import com.sumian.sd.widget.webview.SWebView;
 
 import java.util.Locale;
 
@@ -41,23 +39,26 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
     public static void show(Context context, DoctorService doctorService) {
         Bundle extras = new Bundle();
         extras.putParcelable(EXTRA_DOCTOR_SERVICE, doctorService);
-        show(context, DoctorServiceWebActivity.class, extras);
+        initLauncherIntent(context, extras);
+    }
+
+    private static void initLauncherIntent(Context context, Bundle extras) {
+        Intent intent = new Intent(context, DoctorServiceWebActivity.class);
+        intent.putExtras(extras);
+        context.startActivity(intent);
     }
 
     public static void show(Context context, DoctorService doctorService, boolean isFromRecord) {
         Bundle extras = new Bundle();
         extras.putParcelable(EXTRA_DOCTOR_SERVICE, doctorService);
         extras.putBoolean(EXTRA_FROM_RECORD, isFromRecord);
-        show(context, DoctorServiceWebActivity.class, extras);
+        initLauncherIntent(context, extras);
     }
 
     @Override
-    protected boolean initBundle(Bundle bundle) {
-        if (bundle != null) {
-            this.mDoctorService = bundle.getParcelable(EXTRA_DOCTOR_SERVICE);
-            this.mIsFromRecord = bundle.getBoolean(EXTRA_FROM_RECORD, false);
-        }
-        return super.initBundle(bundle);
+    protected void initBundle(@NonNull Bundle bundle) {
+        this.mDoctorService = bundle.getParcelable(EXTRA_DOCTOR_SERVICE);
+        this.mIsFromRecord = bundle.getBoolean(EXTRA_FROM_RECORD, false);
     }
 
     @Override

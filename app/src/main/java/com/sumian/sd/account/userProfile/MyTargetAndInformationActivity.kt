@@ -4,16 +4,15 @@ import android.app.Activity
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.gson.reflect.TypeToken
+import com.sumian.common.h5.bean.H5BaseResponse
+import com.sumian.common.h5.handler.SBridgeHandler
+import com.sumian.common.h5.widget.SWebView
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.ActivityLauncher
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
-import com.sumian.sd.h5.bean.H5BaseResponse
 import com.sumian.sd.utils.JsonUtil
-import com.sumian.sd.widget.webview.SBridgeHandler
-import com.sumian.sd.widget.webview.SWebView
 
 
 /**
@@ -31,10 +30,11 @@ open class MyTargetAndInformationActivity : SdBaseWebViewActivity<SdBasePresente
     companion object {
         private const val KEY_IS_FROM_MINE = "IS_FROM_MINE"
 
-        fun launchForResult(launcher: ActivityLauncher, isFromMine: Boolean, requestCode: Int = 0) {
+        @JvmStatic
+        fun launchForResult(activity: Activity, isFromMine: Boolean, requestCode: Int = 0) {
             val bundle = Bundle()
             bundle.putBoolean(KEY_IS_FROM_MINE, isFromMine)
-            ActivityUtils.startActivityForResult(bundle, launcher.activity, MyTargetAndInformationActivity::class.java, requestCode)
+            ActivityUtils.startActivityForResult(bundle, activity, MyTargetAndInformationActivity::class.java, requestCode)
         }
     }
 

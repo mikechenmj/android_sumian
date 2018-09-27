@@ -3,6 +3,9 @@ package com.sumian.sd.service.cbti.activity
 import android.app.Activity
 import android.content.Intent
 import com.google.gson.reflect.TypeToken
+import com.sumian.common.h5.bean.H5BaseResponse
+import com.sumian.common.h5.handler.SBridgeHandler
+import com.sumian.common.h5.widget.SWebView
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.doctor.activity.PaymentActivity
@@ -10,10 +13,7 @@ import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.event.CBTIServiceBoughtEvent
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.h5.H5Uri
-import com.sumian.sd.h5.bean.H5BaseResponse
 import com.sumian.sd.utils.JsonUtil
-import com.sumian.sd.widget.webview.SBridgeHandler
-import com.sumian.sd.widget.webview.SWebView
 
 /**
  * Created by sm
@@ -43,7 +43,7 @@ class CBTIIntroductionWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() 
                 val response = JsonUtil.fromJson<H5BaseResponse<H5DoctorServiceShoppingResult>>(data, type.type)
 
                 response?.let {
-                    PaymentActivity.startForResult(this@CBTIIntroductionWebActivity, it.result?.service!!, it.result.packageId, REQUEST_CODE_BUY_SERVICE)
+                    PaymentActivity.startForResult(this@CBTIIntroductionWebActivity, it.result?.service!!, it.result!!.packageId, REQUEST_CODE_BUY_SERVICE)
                 }
             }
         })
@@ -51,10 +51,9 @@ class CBTIIntroductionWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() 
             override fun handler(data: String?) {
                 super.handler(data)
                 val type = object : TypeToken<H5BaseResponse<Map<String, Int>>>() {}
-                val response = JsonUtil.fromJson<H5BaseResponse<Map<String, Int>>>(data, type.type)
-                        ?: return
+                val response = JsonUtil.fromJson<H5BaseResponse<Map<String, Int>>>(data, type.type) ?: return
                 val chapterId = response.result?.get("chapterId") ?: return
-                CBTIWeekCoursePartActivity.show(mActivity, chapterId)
+                CBTIWeekCoursePartActivity.show(this@CBTIIntroductionWebActivity, chapterId)
             }
         })
     }

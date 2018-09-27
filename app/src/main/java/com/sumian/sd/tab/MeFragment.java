@@ -45,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * desc:
  */
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
+@SuppressWarnings("ALL")
 public class MeFragment extends SdBaseFragment implements View.OnClickListener, PatientServiceTips.OnServiceTipsCallback,
         PatientRecordTips.OnRecordTipsCallback, HwLeanCloudHelper.OnShowMsgDotCallback, OnEnterListener {
 
@@ -142,7 +142,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
 
     @Override
     public void showSleepRecord() {
-        SleepFileWebActivity.show(getContext(), SleepFileWebActivity.class);
+        SleepFileWebActivity.show(getContext());
     }
 
     @Override

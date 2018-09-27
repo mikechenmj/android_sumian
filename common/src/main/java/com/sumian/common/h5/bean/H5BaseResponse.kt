@@ -1,4 +1,4 @@
-package com.sumian.common.webview.bean
+package com.sumian.common.h5.bean
 
 import com.google.gson.annotations.SerializedName
 

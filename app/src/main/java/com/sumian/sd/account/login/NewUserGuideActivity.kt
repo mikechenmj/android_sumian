@@ -1,26 +1,25 @@
 package com.sumian.sd.account.login
 
-import android.view.View
 import com.google.gson.reflect.TypeToken
+import com.sumian.common.h5.bean.H5BaseResponse
+import com.sumian.common.h5.handler.SBridgeHandler
+import com.sumian.common.h5.widget.SWebView
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
-import com.sumian.sd.h5.bean.H5BaseResponse
 import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.utils.JsonUtil
-import com.sumian.sd.utils.SoftKeyBoardListener
-import com.sumian.sd.widget.webview.SBridgeHandler
-import com.sumian.sd.widget.webview.SWebView
 
 class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
-        mTitleBar.setIsDarkTheme(true)
-        mTitleBar.openTopPadding(true)
-        mTitleBar.showTitle(false)
-        mTitleBar.showBackArrow(false)
+
+    override fun initWidget() {
+        super.initWidget()
+        getTitleBar().setIsDarkTheme(true)
+        getTitleBar().openTopPadding(true)
+        getTitleBar().showTitle(false)
+        getTitleBar().showBackArrow(false)
     }
 
     override fun getUrlContentPart(): String {
@@ -47,22 +46,6 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
         })
     }
 
-    override fun onBackPressed() {
-        if (mSWebViewLayout.sWebView.canGoBack()) {
-            super.onBackPressed()
-        }
-    }
-
     override fun monitorKeyboard() {
-        mSoftKeyBoardListener = SoftKeyBoardListener.registerListener(this, object : SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
-            override fun keyBoardShow(height: Int) {
-//                updateRootViewHeight(ScreenUtil.getScreenHeight(mActivity) - height)
-            }
-
-            override fun keyBoardHide(height: Int) {
-//                updateRootViewHeight(ScreenUtil.getScreenHeight(mActivity))
-            }
-        })
-        // todo update 键盘高度计算 适配小米8
     }
 }

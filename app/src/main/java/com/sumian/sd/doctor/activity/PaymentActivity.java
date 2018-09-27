@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.sd.R;
-import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.doctor.bean.DoctorServicePackage;
@@ -73,13 +72,13 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
 
     private DoctorServicePackage.ServicePackage mPackage;
 
-    public static void startForResult(ActivityLauncher launcher, @NonNull DoctorService doctorService, int packageId, int requestCode) {
-        Intent intent = new Intent(launcher.getActivity(), PaymentActivity.class);
+    public static void startForResult(Activity activity, @NonNull DoctorService doctorService, int packageId, int requestCode) {
+        Intent intent = new Intent(activity, PaymentActivity.class);
         Bundle extras = new Bundle();
         extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService);
         intent.putExtras(extras);
         intent.putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId);
-        launcher.startActivityForResult(intent, requestCode);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     @SuppressWarnings("unchecked")
