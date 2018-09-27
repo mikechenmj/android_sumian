@@ -1,6 +1,7 @@
 package com.sumian.common.network.response
 
-import com.google.gson.annotations.SerializedName
+import com.sumian.common.network.error.ErrorInfo400
+import com.sumian.common.network.error.ErrorInfo499
 
 /**
  * <pre>
@@ -28,23 +29,6 @@ data class ErrorResponse(var code: Int, var message: String) {
             return ErrorResponse(errorInfo.statusCode, errorInfo.message)
         }
     }
-
-    data class ErrorInfo499(
-            @SerializedName("error") val error: Error
-    )
-
-    data class Error(
-            @SerializedName("code") val code: Int,
-            @SerializedName("user_message") val userMessage: String,
-            @SerializedName("internal_message") val internalMessage: String,
-            @SerializedName("more_info") val moreInfo: Any
-    )
-
-    data class ErrorInfo400(
-            @SerializedName("message") val message: String,
-            @SerializedName("status_code") val statusCode: Int
-    )
-
 }
 
 

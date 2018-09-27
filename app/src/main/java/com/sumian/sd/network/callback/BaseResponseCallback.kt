@@ -2,7 +2,7 @@ package com.sumian.sd.network.callback
 
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
-import com.sumian.hw.network.callback.ErrorCode
+import com.sumian.common.network.error.ErrorCode
 import com.sumian.sd.R
 import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.App

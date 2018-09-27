@@ -2,6 +2,9 @@ package com.sumian.common.network.response
 
 import android.util.Log
 import com.sumian.common.network.StatusCode.BUSINESS_ERROR
+import com.sumian.common.network.error.ErrorCode
+import com.sumian.common.network.error.ErrorInfo400
+import com.sumian.common.network.error.ErrorInfo499
 import com.sumian.common.utils.JsonUtil
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -22,7 +25,9 @@ import java.io.IOException
 abstract class BaseResponseCallback<Data> : Callback<Data> {
 
     companion object {
+
         private val TAG = BaseResponseCallback::class.java.simpleName
+
         private val UNKNOWN_ERROR_RESPONSE: ErrorResponse by lazy {
             ErrorResponse(0, "Error unknown")
         }
@@ -60,8 +65,8 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
                     onFailure(errorResponse)
                     when (errorResponse.code) {
                         //token 鉴权失败
-                        401 -> showTokenInvalidState()
-                        503 -> showSystemIsMaintainDialog()
+                        ErrorCode.UNAUTHORIZED -> onUnauthorized()
+                        ErrorCode.SERVICE_UNAVAILABLE -> showSystemIsMaintainDialog()
                     }
                 }
             } catch (e: IOException) {
@@ -74,10 +79,10 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
     private fun getErrorResponseFromErrorBody(code: Int, errorBody: ResponseBody): ErrorResponse? {
         val errorJson = errorBody.string()
         return if (code == BUSINESS_ERROR) {
-            val errorInfo = JsonUtil.fromJson(errorJson, ErrorResponse.ErrorInfo499::class.java)
+            val errorInfo = JsonUtil.fromJson(errorJson, ErrorInfo499::class.java)
             ErrorResponse.createFromErrorInfo(errorInfo)
         } else {
-            val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorResponse.ErrorInfo400::class.java)
+            val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorInfo400::class.java)
             ErrorResponse.createFromErrorInfo(errorInfo400)
         }
     }
@@ -86,12 +91,10 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
 
     protected abstract fun onFailure(errorResponse: ErrorResponse)
 
+    protected abstract fun onUnauthorized()
+
     protected open fun onFinish() {
 
-    }
-
-    protected open fun showTokenInvalidState() {
-        Log.e("TAG", "showTokenInvalidState()")
     }
 
     protected open fun showSystemIsMaintainDialog() {

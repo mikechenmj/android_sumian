@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.sumian.common.network.interceptor.SpecialRequestInterceptor
 import com.sumian.common.network.interceptor.StatusCodeInterceptor
 import com.sumian.common.network.interceptor.UAInterceptor
+import okhttp3.Dns
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
  * desc:
  */
 
-class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, clx: Class<out NetApi>, isDebug: Boolean = false, interceptors: Array<out Interceptor>) {
+class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, clx: Class<out NetApi>, isDebug: Boolean = false, dns: Dns = Dns.SYSTEM, interceptors: Array<out Interceptor>) {
 
     private var mBaseNetApi: NetApi
 
@@ -38,6 +39,7 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
                         .setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE))
                 .addInterceptor(UAInterceptor.create(context))
                 .addInterceptor(StatusCodeInterceptor())
+                .dns(dns)
                 .addInterceptor(SpecialRequestInterceptor())
 
         interceptors.forEach {
@@ -70,6 +72,8 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
 
         private var mInterceptors: Array<out Interceptor>? = null
 
+        private var mDns: Dns? = null
+
         fun with(context: Context): NetEngineBuilder<NetApi> {
             this.mContext = context
             return this
@@ -90,6 +94,11 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
             return this
         }
 
+        fun addDns(dns: Dns): NetEngineBuilder<NetApi> {
+            this.mDns = dns
+            return this
+        }
+
         /**
          * you can add many interceptor   e.g. tokenInterceptor
          */
@@ -99,7 +108,7 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
         }
 
         fun build(): NetEngine<NetApi> {
-            return NetEngine(this.mContext!!, this.mBaseUrl!!, this.mClx!!, this.mIsDebug, this.mInterceptors!!)
+            return NetEngine(this.mContext!!, this.mBaseUrl!!, this.mClx!!, this.mIsDebug, this.mDns!!, this.mInterceptors!!)
         }
 
     }

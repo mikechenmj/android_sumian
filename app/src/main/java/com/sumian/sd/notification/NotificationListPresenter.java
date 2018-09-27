@@ -3,7 +3,7 @@ package com.sumian.sd.notification;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.sumian.hw.network.callback.ErrorCode;
+import com.sumian.common.network.error.ErrorCode;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseResponseCallback;
 import com.sumian.sd.network.response.ErrorResponse;
@@ -53,7 +53,7 @@ public class NotificationListPresenter implements NotificationListContract.Prese
             @Override
             protected void onFailure(int code, @NonNull String message) {
                 LogUtils.d(message);
-                mView.onLoadMore(null, code == ErrorCode.NOT_FOUND);
+                mView.onLoadMore(null, code == ErrorCode.INSTANCE.getNOT_FOUND());
             }
         });
         addCall(call);

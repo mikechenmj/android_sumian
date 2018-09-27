@@ -21,7 +21,7 @@ import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.callback.ErrorCode;
+import com.sumian.common.network.error.ErrorCode;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.bean.OssTransData;
 import com.sumian.hw.oss.bean.OssTransDataError;
@@ -140,7 +140,7 @@ public class JobTask implements Serializable, Cloneable {
 
             @Override
             protected void onFailure(int code, String error) {
-                if (code == ErrorCode.FORBIDDEN) {
+                if (code == ErrorCode.INSTANCE.getFORBIDDEN()) {
                     Intent intent = new Intent(JobTask.ACTION_SYNC);
                     intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
                     LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
