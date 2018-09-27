@@ -1,18 +1,19 @@
-package com.sumian.sd.app
+package com.sumian.common.social.analytics
 
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import com.umeng.analytics.MobclickAgent
 
 class ActivityLifecycleCallbackForUserAnalysis : Application.ActivityLifecycleCallbacks {
     override fun onActivityPaused(activity: Activity?) {
-        AppManager.getOpenAnalytics().onPageEnd(activity?.javaClass?.simpleName)
-        AppManager.getOpenAnalytics().onPause(activity)
+        MobclickAgent.onPageEnd(activity?.javaClass?.simpleName)
+        MobclickAgent.onPause(activity)
     }
 
     override fun onActivityResumed(activity: Activity?) {
-        AppManager.getOpenAnalytics().onPageStart(activity?.javaClass?.simpleName)
-        AppManager.getOpenAnalytics().onResume(activity)
+        MobclickAgent.onPageStart(activity?.javaClass?.simpleName)
+        MobclickAgent.onResume(activity)
     }
 
     override fun onActivityStarted(activity: Activity?) {

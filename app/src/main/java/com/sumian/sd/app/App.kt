@@ -1,6 +1,7 @@
 package com.sumian.sd.app
 
 import android.app.Application
+import com.sumian.common.social.analytics.ActivityLifecycleCallbackForUserAnalysis
 
 /**
  * Created by jzz
