@@ -13,6 +13,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
+import com.sumian.sd.widget.SumianLoadMoreView
 import kotlinx.android.synthetic.main.fragment_diary_evaluation_list.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -75,6 +76,7 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
             val item = adapter.getItem(position) as DiaryEvaluationData
             DiaryEvaluationDetailActivity.launch(activity, item.id)
         }
+        mAdapter.setLoadMoreView(SumianLoadMoreView())
     }
 
     override fun initData() {

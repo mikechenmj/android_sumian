@@ -1,5 +1,6 @@
 package com.sumian.sd.widget
 
+import android.view.View
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.loadmore.LoadMoreView
 import com.sumian.sd.R
@@ -23,6 +24,6 @@ class SumianLoadMoreView : LoadMoreView() {
 
     override fun convert(holder: BaseViewHolder) {
         super.convert(holder)
-        holder.setGone(R.id.root_view, loadMoreStatus == STATUS_END)
+        holder.getView<View>(R.id.root_view).visibility = if (loadMoreStatus == STATUS_END) View.GONE else View.VISIBLE
     }
 }
