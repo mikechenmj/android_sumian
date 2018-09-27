@@ -1,6 +1,7 @@
 package com.sumian.sd.app
 
 import android.app.Application
+import com.sumian.common.social.analytics.ActivityLifecycleCallbackForUserAnalysis
 
 /**
  * Created by jzz
@@ -23,6 +24,7 @@ class App : Application() {
         mAppContext = this
         AppManager.getInstance().init(this)
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
+        registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
     }
 }
 
