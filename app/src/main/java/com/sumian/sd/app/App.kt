@@ -23,6 +23,7 @@ class App : Application() {
         mAppContext = this
         AppManager.getInstance().init(this)
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
+        registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
     }
 }
 
