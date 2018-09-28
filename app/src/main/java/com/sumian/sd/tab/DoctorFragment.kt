@@ -16,6 +16,7 @@ import com.sumian.sd.doctor.presenter.DoctorPresenter
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.notification.NotificationListActivity
 import com.sumian.sd.notification.NotificationViewModel
+import com.sumian.sd.utils.StatusBarUtil
 import com.sumian.sd.widget.RequestScanQrCodeView
 import kotlinx.android.synthetic.main.fragment_tab_doctor.*
 import java.util.*
@@ -51,7 +52,9 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
             val doctor = AppManager.getAccountViewModel()?.userInfo?.doctor
             doctor?.let {
+                lay_doctor_title_container.visibility = View.VISIBLE
                 doctor_detail_layout.invalidDoctor(doctor)
+                StatusBarUtil.setStatusBarTextColor(activity!!, true)
             }
 
             if (doctor?.services == null) {
@@ -60,7 +63,9 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
             }
 
         } else {
+            lay_doctor_title_container.visibility = View.GONE
             doctor_detail_layout.hide()
+            StatusBarUtil.setStatusBarTextColor(activity!!, false)
             request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
         }
         ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
@@ -71,7 +76,9 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
                 if (doctor == null) {
+                    StatusBarUtil.setStatusBarTextColor(activity!!, false)
                     doctor_detail_layout.hide()
+                    lay_doctor_title_container.visibility = View.GONE
                     request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
                 } else
                     onGetDoctorInfoSuccess(doctor)
@@ -123,6 +130,8 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {
         doctor?.let {
+            StatusBarUtil.setStatusBarTextColor(activity!!, true)
+            lay_doctor_title_container.visibility = View.VISIBLE
             doctor_detail_layout.invalidDoctor(doctor)
             request_scan_qr_code_view.setFragment(null).hide()
         }
@@ -130,6 +139,8 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun onNotBindDoctor() {
         doctor_detail_layout.hide()
+        StatusBarUtil.setStatusBarTextColor(activity!!, false)
+        lay_doctor_title_container.visibility = View.GONE
         request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
     }
 
