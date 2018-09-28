@@ -8,13 +8,14 @@ import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.h5.HwSimpleWebActivity
-import com.sumian.sd.main.MainActivity
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginContract.View {
 
-    private lateinit var mVersionDelegate: VersionDelegate
+    private val mVersionDelegate: VersionDelegate by lazy {
+        VersionDelegate.init()
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login
@@ -49,13 +50,8 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         })
     }
 
-    override fun initData() {
-        super.initData()
-        mVersionDelegate = VersionDelegate.init()
-    }
-
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         mVersionDelegate.checkVersion(this)
     }
 

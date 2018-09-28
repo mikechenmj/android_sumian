@@ -2,9 +2,9 @@ package com.sumian.sd.setting.version
 
 import android.annotation.SuppressLint
 import android.view.View
-import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
+import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.setting.version.presenter.VersionPresenter
 import com.sumian.sd.utils.UiUtils
@@ -37,7 +37,7 @@ class VersionActivity : SdBaseActivity<VersionContract.Presenter>(), VersionCont
         this.mPresenter = VersionPresenter.init(this)
     }
 
-    override fun initWidget(root:View) {
+    override fun initWidget(root: View) {
         super.initWidget(root)
         title_bar.setOnBackClickListener { finish() }
         sdv_go_market.setOnClickListener(this)
@@ -48,7 +48,7 @@ class VersionActivity : SdBaseActivity<VersionContract.Presenter>(), VersionCont
         super.initData()
         tv_current_app_version.text = formatVersion(getString(R.string.current_version), UiUtils.getPackageInfo(this).versionName)
         tv_new_app_version.text = formatVersion(getString(R.string.new_version), UiUtils.getPackageInfo(this).versionName)
-        onHaveUpgrade(false, false)
+        onHaveUpgrade(false, false, "")
         this.mPresenter?.getVersion()
     }
 
@@ -62,7 +62,7 @@ class VersionActivity : SdBaseActivity<VersionContract.Presenter>(), VersionCont
         showCenterToast(error)
     }
 
-    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean) {
+    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
         mIsHaveUpgrade = isHaveUpgrade
         sdv_go_market.visibility = View.VISIBLE//if (isHaveUpgrade) View.VISIBLE else View.GONE
     }

@@ -1,10 +1,9 @@
 package com.sumian.sd.setting.version.presenter
 
-import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseResponseCallback
-import com.sumian.sd.network.response.ErrorResponse
+import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.utils.UiUtils
 
@@ -66,7 +65,7 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
                             }
                         }
 
-                        mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update)
+                        mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update,response.description)
                     }
                 }
             }
