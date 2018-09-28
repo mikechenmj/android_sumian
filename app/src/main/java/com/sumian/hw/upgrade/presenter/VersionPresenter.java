@@ -4,11 +4,11 @@ import android.content.pm.PackageInfo;
 import android.text.TextUtils;
 
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.network.error.ErrorCode;
 import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.network.api.SleepyApi;
 import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.common.network.error.ErrorCode;
 import com.sumian.hw.network.response.AppUpgradeInfo;
 import com.sumian.hw.network.response.FirmwareInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
@@ -219,7 +219,7 @@ public class VersionPresenter implements VersionContract.Presenter {
 
             @Override
             protected void onFailure(int code, String error) {
-                if (code == ErrorCode.INSTANCE.getNOT_FOUND()) {
+                if (code == ErrorCode.NOT_FOUND) {
                     AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
                     appUpgradeInfo.version = packageInfo.versionName;
                     if (finalView != null)

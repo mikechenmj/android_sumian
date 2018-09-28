@@ -53,7 +53,7 @@ public class NotificationListPresenter implements NotificationListContract.Prese
             @Override
             protected void onFailure(int code, @NonNull String message) {
                 LogUtils.d(message);
-                mView.onLoadMore(null, code == ErrorCode.INSTANCE.getNOT_FOUND());
+                mView.onLoadMore(null, code == ErrorCode.NOT_FOUND);
             }
         });
         addCall(call);
