@@ -27,10 +27,10 @@ import com.sumian.common.utils.ColorCompatUtil;
 
 public class TitleBar extends FrameLayout implements View.OnClickListener {
 
-    private ImageView mIvBack;
-    private TextView mTvTitle;
-    private ImageView mIvMenu;
-    private TextView mTvMenu;
+    public ImageView mIvBack;
+    public TextView mTvTitle;
+    public ImageView mIvMenu;
+    public TextView mTvMenu;
 
     private OnSpannerListener mOnSpannerListener;
     private OnBackClickListener mOnBackClickListener;
@@ -197,12 +197,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void setBgColor(int color) {
         setBackgroundColor(color);
-    }
-
-    public void setTextColor(int color) {
-        mTvTitle.setTextColor(color);
-        mTvMenu.setTextColor(color);
-        mIvBack.setColorFilter(color);
     }
 
     public void openTopPadding(boolean open) {
