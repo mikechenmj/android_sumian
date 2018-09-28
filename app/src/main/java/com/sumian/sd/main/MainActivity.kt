@@ -19,6 +19,7 @@ import com.sumian.sd.event.SwitchMainActivityEvent
 import com.sumian.sd.main.widget.SwitchAnimationView
 import com.sumian.sd.notification.NotificationListActivity.REQUEST_CODE_OPEN_NOTIFICATION
 import com.sumian.sd.setting.version.delegate.VersionDelegate
+import com.sumian.sd.setting.version.delegate.VersionDialogAlertUtils
 import com.sumian.sd.theme.three.loader.SkinManager
 import com.sumian.sd.utils.ColorCompatUtil
 import com.sumian.sd.utils.NotificationUtil
@@ -85,6 +86,11 @@ class MainActivity : BaseEventActivity() {
         setContentView(R.layout.activity_main)
     }
 
+    override fun onStart() {
+        super.onStart()
+        mVersionDelegate.checkVersion(this)
+    }
+
     override fun initBundle(bundle: Bundle) {
         mLaunchTabName = bundle.getString(KEY_TAB_NAME)
         mLaunchTabData = bundle.getString(KEY_TAB_DATA)
@@ -95,7 +101,6 @@ class MainActivity : BaseEventActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        mVersionDelegate.checkVersion(this)
         showFragmentAccordingToData()
         showOpenNotificationDialogIfNeeded()
         showUserGuidDialogIfNeed()
@@ -208,5 +213,6 @@ class MainActivity : BaseEventActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addCategory(Intent.CATEGORY_HOME)
         startActivity(intent)
+        VersionDialogAlertUtils.clearAlertTime()
     }
 }

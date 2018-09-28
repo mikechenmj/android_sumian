@@ -1,8 +1,8 @@
 package com.sumian.sd.setting.version.contract
 
-import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
+import com.sumian.sd.setting.version.bean.Version
 
 /**
  * <pre>
@@ -25,7 +25,7 @@ interface VersionContract {
 
         fun onGetVersionFailed(error: String)
 
-        fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean)
+        fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean,versionMsg: String?)
 
     }
 

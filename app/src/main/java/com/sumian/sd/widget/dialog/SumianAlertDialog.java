@@ -10,6 +10,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -91,6 +92,7 @@ public class SumianAlertDialog {
 
     private int mMessageFontColorRes;
     private String mMessage;
+    private CharSequence mMessageCharSequence;
 
     private int mLeftBgRes;
     private int mLeftFontColorRes;
@@ -148,9 +150,16 @@ public class SumianAlertDialog {
         }
         mTvTitle.setTextColor(getColor(mTitleFontColor));
 
-        mTvMessage.setVisibility(TextUtils.isEmpty(mMessage) ? View.GONE : View.VISIBLE);
-        mTvMessage.setText(mMessage);
         mTvMessage.setTextColor(getColor(mMessageFontColorRes));
+        if (TextUtils.isEmpty(mMessage)) {
+            mTvMessage.setText(mMessageCharSequence);
+            mTvMessage.setMaxLines(10);
+            mTvMessage.setMovementMethod(LinkMovementMethod.getInstance());
+        } else {
+            mTvMessage.setText(mMessage);
+        }
+
+        mTvMessage.setVisibility(TextUtils.isEmpty(mMessage) && TextUtils.isEmpty(mMessageCharSequence) ? View.GONE : View.VISIBLE);
 
         mBtnLeft.setVisibility(mLeftBtnTextRes == 0 ? View.GONE : View.VISIBLE);
         if (mLeftBtnTextRes != 0) {
@@ -199,6 +208,11 @@ public class SumianAlertDialog {
 
     public SumianAlertDialog setMessage(String message) {
         mMessage = message;
+        return this;
+    }
+
+    public SumianAlertDialog setMessage(CharSequence message) {
+        mMessageCharSequence = message;
         return this;
     }
 

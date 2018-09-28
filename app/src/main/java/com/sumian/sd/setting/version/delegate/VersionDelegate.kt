@@ -1,22 +1,20 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.sd.setting.version.delegate
 
 import android.app.Activity
 import android.content.DialogInterface
+import android.text.Html
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import com.sumian.sd.R
-import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.App
-import com.sumian.sd.main.MainActivity
 import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.setting.version.presenter.VersionPresenter
 import com.sumian.sd.utils.UiUtils
 import com.sumian.sd.widget.dialog.SumianAlertDialog
-import com.sumian.sd.widget.dialog.theme.BlackTheme
-import com.sumian.sd.widget.dialog.theme.ITheme
-import com.sumian.sd.widget.dialog.theme.LightTheme
-import com.sumian.sd.widget.dialog.theme.ThemeFactory
 
 /**
  * <pre>
@@ -35,6 +33,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     companion object {
 
+        @JvmStatic
         fun init(): VersionDelegate {
             return VersionDelegate()
         }
@@ -44,8 +43,6 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     private lateinit var mActivity: Activity
 
-    private var mIsHaveForce: Boolean = false
-
     override fun onGetVersionSuccess(version: Version) {
         this.mVersion = version
     }
@@ -53,44 +50,48 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     override fun onGetVersionFailed(error: String) {
     }
 
-    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean) {
-        this.mIsHaveForce = isHaveForce
+    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
         if (isHaveForce) {
             SumianAlertDialog(mActivity)
-                    .setTheme(createTheme())
-                    .hideTopIcon(true)
                     .setTitle(R.string.version_upgrade)
-                    .setMessage(R.string.force_upgrade_version)
+                    .setMessage(
+                            if (TextUtils.isEmpty(versionMsg))
+                                App.getAppContext().getString(R.string.force_upgrade_version)
+                            else Html.fromHtml(versionMsg))
                     .setRightBtn(R.string.sure, this)
                     .setCancelable(false)
                     .setOnKeyListener(this)
                     .show()
+            VersionDialogAlertUtils.saveAlertTime()
         } else {
-//            if (isHaveUpgrade) {
-//                SumianAlertDialog(mActivity)
-//                        .setTheme(createTheme())
-//                        .setTitle(R.string.version_upgrade)
-//                        .setMessage(R.string.have_a_new_version)
-//                        .setRightBtn(R.string.sure, this)
-//                        .setCancelable(true)
-//                        .setOnKeyListener(this)
-//                        .show()
-//            }
+            if (isHaveUpgrade && VersionDialogAlertUtils.isCanAlert()) {
+                SumianAlertDialog(mActivity)
+                        .setTitle(R.string.version_upgrade)
+                        .setMessage(if (TextUtils.isEmpty(versionMsg))
+                            App.getAppContext().getString(R.string.have_a_new_version)
+                        else Html.fromHtml(versionMsg))
+                        .whitenLeft()
+                        .setLeftBtn(R.string.cancel, null)
+                        .setRightBtn(R.string.sure, this)
+                        .setCancelable(true)
+                        .setOnKeyListener(this)
+                        .show()
+                VersionDialogAlertUtils.saveAlertTime()
+            }
         }
     }
 
-    private fun createTheme(): ITheme {
-        return if (mActivity is MainActivity) {
-            if ((mActivity as MainActivity).mIsBlackTheme) {
-                ThemeFactory.create(BlackTheme::class.java)
-            } else {
-                ThemeFactory.create(LightTheme::class.java)
-            }
-        } else if (mActivity is LoginActivity) {
-            ThemeFactory.create(BlackTheme::class.java)
-        } else {
-            ThemeFactory.create(LightTheme::class.java)
+    override fun onClick(v: View?) {
+        UiUtils.openAppInMarket(App.getAppContext())
+    }
+
+    override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+            dialog.cancel()
+            mActivity.finishAffinity()
+            return true
         }
+        return false
     }
 
     private val mPresenter: VersionContract.Presenter by lazy {
@@ -102,20 +103,4 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         this.mPresenter.getVersion()
     }
 
-    override fun onClick(v: View?) {
-        UiUtils.openAppInMarket(App.getAppContext())
-    }
-
-    override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
-            if (mIsHaveForce) {
-                dialog.cancel()
-                mActivity.finishAffinity()
-            } else {
-                dialog.cancel()
-            }
-            return true
-        }
-        return false
-    }
 }
