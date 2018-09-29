@@ -38,6 +38,7 @@ allprojects {
         flatDir {//用于 load aliyun player sdk/model
             dirs 'libs'
         }
+        // alicloud-android-httpdns
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
