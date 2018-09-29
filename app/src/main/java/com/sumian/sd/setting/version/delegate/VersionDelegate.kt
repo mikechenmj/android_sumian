@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.sumian.sd.setting.version.delegate
 
 import android.app.Activity
@@ -9,12 +7,18 @@ import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
 import com.sumian.sd.R
+import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.App
+import com.sumian.sd.main.MainActivity
 import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.setting.version.presenter.VersionPresenter
 import com.sumian.sd.utils.UiUtils
 import com.sumian.sd.widget.dialog.SumianAlertDialog
+import com.sumian.sd.widget.dialog.theme.BlackTheme
+import com.sumian.sd.widget.dialog.theme.ITheme
+import com.sumian.sd.widget.dialog.theme.LightTheme
+import com.sumian.sd.widget.dialog.theme.ThemeFactory
 
 /**
  * <pre>
@@ -53,7 +57,9 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
         if (isHaveForce) {
             SumianAlertDialog(mActivity)
+                    .hideTopIcon(true)
                     .setTitle(R.string.version_upgrade)
+                    .setTheme(createTheme())
                     .setMessage(
                             if (TextUtils.isEmpty(versionMsg))
                                 App.getAppContext().getString(R.string.force_upgrade_version)
@@ -66,11 +72,12 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         } else {
             if (isHaveUpgrade && VersionDialogAlertUtils.isCanAlert()) {
                 SumianAlertDialog(mActivity)
+                        .hideTopIcon(true)
                         .setTitle(R.string.version_upgrade)
+                        .setTheme(createTheme())
                         .setMessage(if (TextUtils.isEmpty(versionMsg))
                             App.getAppContext().getString(R.string.have_a_new_version)
                         else Html.fromHtml(versionMsg))
-                        .whitenLeft()
                         .setLeftBtn(R.string.cancel, null)
                         .setRightBtn(R.string.sure, this)
                         .setCancelable(true)
@@ -96,6 +103,20 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     private val mPresenter: VersionContract.Presenter by lazy {
         VersionPresenter.init(this)
+    }
+
+    private fun createTheme(): ITheme {
+        return if (mActivity is MainActivity) {
+            if ((mActivity as MainActivity).mIsBlackTheme) {
+                ThemeFactory.create(BlackTheme::class.java)
+            } else {
+                ThemeFactory.create(LightTheme::class.java)
+            }
+        } else if (mActivity is LoginActivity) {
+            ThemeFactory.create(BlackTheme::class.java)
+        } else {
+            ThemeFactory.create(LightTheme::class.java)
+        }
     }
 
     fun checkVersion(activity: Activity) {
