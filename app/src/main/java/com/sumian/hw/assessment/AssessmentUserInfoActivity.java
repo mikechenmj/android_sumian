@@ -207,7 +207,6 @@ public class AssessmentUserInfoActivity extends HwBaseActivity<HwUserInfoContrac
 
                 @Override
                 protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                    super.onFailure(errorResponse);
                     ToastHelper.show(errorResponse.getMessage());
                 }
             });

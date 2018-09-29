@@ -117,7 +117,6 @@ public class FeedbackActivity extends HwBaseActivity {
 
                         @Override
                         protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                            super.onFailure(errorResponse);
                             showToast(errorResponse.getMessage());
 
                         }

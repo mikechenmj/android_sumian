@@ -57,7 +57,6 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
 
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                super.onFailure(errorResponse);
                 view.onLogoutFailed(errorResponse.getMessage());
             }
 

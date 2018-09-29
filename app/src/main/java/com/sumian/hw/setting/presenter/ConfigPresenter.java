@@ -80,7 +80,6 @@ public class ConfigPresenter implements ConfigContract.Presenter {
 
                 @Override
                 protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                    super.onFailure(errorResponse);
                     if (finalView == null) return;
                     finalView.onSyncConfigInfoFailed(errorResponse.getMessage());
                 }

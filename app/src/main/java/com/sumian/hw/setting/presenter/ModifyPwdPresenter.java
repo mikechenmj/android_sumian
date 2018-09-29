@@ -58,7 +58,6 @@ public class ModifyPwdPresenter implements ModifyPwdContract.Presenter {
 
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                super.onFailure(errorResponse);
                 ToastUtils.showShort(errorResponse.getMessage());
                 ModifyPwdContract.View view = viewWeakReference.get();
                 if (view != null) {

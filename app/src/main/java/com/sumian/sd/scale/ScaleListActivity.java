@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
@@ -21,6 +22,7 @@ import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.error.EmptyErrorView;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -85,6 +87,11 @@ public class ScaleListActivity extends SdBaseActivity implements BaseQuickAdapte
         Call<PaginationResponse<Scale>> call = AppManager.getSdHttpService().getScaleList(mPage, PER_PAGE, mType);
         addCall(call);
         call.enqueue(new BaseSdResponseCallback<PaginationResponse<Scale>>() {
+
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+
+            }
 
             @Override
             protected void onSuccess(PaginationResponse<Scale> response) {

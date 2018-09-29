@@ -107,7 +107,6 @@ public class WeeklyReportPresenter implements WeeklyReportContact.Presenter {
 
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                super.onFailure(errorResponse);
                 mView.onFailure(errorResponse.getMessage());
             }
 

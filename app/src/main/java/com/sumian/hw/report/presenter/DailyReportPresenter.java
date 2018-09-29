@@ -88,7 +88,6 @@ public class DailyReportPresenter implements DailyReportContract.Presenter {
 
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                super.onFailure(errorResponse);
                 mView.onFailure(errorResponse.getMessage());
             }
 

@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -125,6 +128,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                                 .getHwHttpService()
                                 .readDayDoctorValuation(map)
                                 .enqueue(new BaseSdResponseCallback<ReadSleepRecordEvaluationResponse>() {
+                                    @Override
+                                    protected void onFailure(@NotNull ErrorResponse errorResponse) {
+
+                                    }
+
                                     @Override
                                     protected void onSuccess(ReadSleepRecordEvaluationResponse response) {
                                     }
@@ -256,6 +264,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                             .getHwHttpService()
                             .readDayDoctorValuation(map)
                             .enqueue(new BaseSdResponseCallback<ReadSleepRecordEvaluationResponse>() {
+
+                                @Override
+                                protected void onFailure(@NotNull ErrorResponse errorResponse) {
+
+                                }
 
                                 @Override
                                 protected void onSuccess(ReadSleepRecordEvaluationResponse response) {

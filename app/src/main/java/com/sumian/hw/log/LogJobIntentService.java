@@ -17,11 +17,14 @@ import com.alibaba.sdk.android.oss.model.AppendObjectRequest;
 import com.alibaba.sdk.android.oss.model.AppendObjectResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.utils.AppUtil;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
@@ -65,6 +68,11 @@ public class LogJobIntentService extends JobIntentService {
         map.put("suffix", "txt");
         Call<LogOssResponse> call = AppManager.getHwHttpService().autoUploadLog(map);
         call.enqueue(new BaseSdResponseCallback<LogOssResponse>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+
+            }
+
             @Override
             protected void onSuccess(LogOssResponse response) {
                 LogUtils.d(response);

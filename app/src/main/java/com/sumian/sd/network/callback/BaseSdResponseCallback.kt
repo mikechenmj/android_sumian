@@ -2,7 +2,6 @@ package com.sumian.sd.network.callback
 
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.network.response.BaseResponseCallback
-import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.widget.dialog.SumianAlertDialog
@@ -28,8 +27,5 @@ abstract class BaseSdResponseCallback<Data> : BaseResponseCallback<Data>() {
                 .setMessage(R.string.system_maintain_desc)
                 .setRightBtn(R.string.confirm, null)
                 .show()
-    }
-
-    override fun onFailure(errorResponse: ErrorResponse) {
     }
 }

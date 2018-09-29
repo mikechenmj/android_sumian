@@ -217,7 +217,6 @@ public class CalendarReportPresenter implements CalendarReportContract.Presenter
 
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
-                super.onFailure(errorResponse);
                 mView.onFailure(errorResponse.getMessage());
             }
 

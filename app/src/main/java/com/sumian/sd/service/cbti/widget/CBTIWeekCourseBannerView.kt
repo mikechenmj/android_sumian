@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.sd.service.cbti.widget
 
 import android.content.Context
