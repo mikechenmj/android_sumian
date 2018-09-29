@@ -120,12 +120,13 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public TitleBar showMoreIcon() {
         mIvMenu.setVisibility(VISIBLE);
+        mIvMenu.setOnClickListener(this);
         return this;
     }
 
     public TitleBar showMoreIcon(int resId) {
         mIvMenu.setImageResource(resId);
-        mIvMenu.setVisibility(VISIBLE);
+        showMoreIcon();
         return this;
     }
 
@@ -159,37 +160,29 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     @SuppressWarnings("deprecation")
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.iv_back) {
+        int id = v.getId();
+        if (id == R.id.iv_back) {
             OnBackClickListener onBackClickListener = this.mOnBackClickListener;
             if (onBackClickListener == null) {
                 return;
             }
             onBackClickListener.onBack(v);
-        } else if (i == R.id.tv_title) {
+        } else if (id == R.id.tv_title) {
             OnSpannerListener onSpannerListener = this.mOnSpannerListener;
             if (onSpannerListener == null) {
                 return;
             }
             onSpannerListener.onSpanner(v, mIsShow);
-        } else if (i == R.id.iv_menu || i == R.id.tv_menu) {
+        } else if (id == R.id.iv_menu || id == R.id.tv_menu) {
             if (mOnMenuClickListener != null) {
                 mOnMenuClickListener.onMenuClick(v);
             }
         }
     }
 
-    public interface OnSpannerListener {
-        void onSpanner(View v, boolean isShow);
-    }
-
-    public interface OnBackClickListener {
-        void onBack(View v);
-    }
-
     public void setMenuText(String menuText) {
         mTvMenu.setText(menuText);
-        mTvMenu.setVisibility(VISIBLE);
+        setMenuVisibility(VISIBLE);
     }
 
     public void setMenuVisibility(int visibility) {
@@ -199,6 +192,12 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void setBgColor(int color) {
         setBackgroundColor(color);
+    }
+
+    public void setTextColor(int color) {
+        mTvTitle.setTextColor(color);
+        mTvMenu.setTextColor(color);
+        mIvBack.setColorFilter(color);
     }
 
     public void openTopPadding(boolean open) {
@@ -220,6 +219,14 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public interface OnMenuClickListener {
         void onMenuClick(View v);
+    }
+
+    public interface OnSpannerListener {
+        void onSpanner(View v, boolean isShow);
+    }
+
+    public interface OnBackClickListener {
+        void onBack(View v);
     }
 
 }

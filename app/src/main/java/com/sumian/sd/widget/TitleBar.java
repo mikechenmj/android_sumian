@@ -188,22 +188,12 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void setMenuText(String menuText) {
         mTvMenu.setText(menuText);
+        setMenuVisibility(View.VISIBLE);
     }
 
     public void setMenuVisibility(int visibility) {
         mTvMenu.setVisibility(visibility);
-    }
-
-    public interface OnSpannerListener {
-        void onSpanner(View v, boolean isShow);
-    }
-
-    public interface OnBackClickListener {
-        void onBack(View v);
-    }
-
-    public interface OnMenuClickListener {
-        void onMenuClick(View v);
+        mTvMenu.setOnClickListener(this);
     }
 
     public void setBgColor(int color) {
@@ -231,5 +221,17 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void showTitle(boolean show) {
         mTvTitle.setVisibility(show ? VISIBLE : GONE);
+    }
+
+    public interface OnSpannerListener {
+        void onSpanner(View v, boolean isShow);
+    }
+
+    public interface OnBackClickListener {
+        void onBack(View v);
+    }
+
+    public interface OnMenuClickListener {
+        void onMenuClick(View v);
     }
 }
