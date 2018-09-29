@@ -1,6 +1,6 @@
 package com.sumian.hw.upgrade.model;
 
-import com.sumian.hw.network.response.AppUpgradeInfo;
+import com.sumian.sd.network.response.AppUpgradeInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 
 import java.util.ArrayList;

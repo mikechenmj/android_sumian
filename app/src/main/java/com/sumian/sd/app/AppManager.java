@@ -25,16 +25,15 @@ import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.job.JobScheduler;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.leancloud.player.VoicePlayer;
-import com.sumian.hw.network.api.SleepyV1Api;
-import com.sumian.hw.network.engine.HwNetEngine;
 import com.sumian.hw.report.viewModel.ReportModel;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.model.AccountViewModel;
 import com.sumian.sd.doctor.model.DoctorViewModel;
 import com.sumian.sd.leancloud.LeanCloudManager;
-import com.sumian.sd.network.api.DoctorApi;
-import com.sumian.sd.network.engine.NetEngine;
+import com.sumian.sd.network.NetworkManager;
+import com.sumian.sd.network.api.HwApi;
+import com.sumian.sd.network.api.SdApi;
 import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
 import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.theme.three.attr.CardViewAttr;
@@ -67,7 +66,6 @@ import com.sumian.sd.theme.three.loader.SkinManager;
 
 public final class AppManager {
 
-    private DoctorApi mDoctorApi;
     private AccountViewModel mAccountViewModel;
     private AdvisoryViewModel mAdvisoryViewModel;
     private DoctorViewModel mDoctorViewModel;
@@ -76,12 +74,16 @@ public final class AppManager {
     private volatile VersionModel mVersionModel;
     private volatile DeviceModel mDeviceModel;
     private volatile ReportModel mReportModel;
-    private HwNetEngine mHwNetEngine;
+
+    private volatile NetworkManager mNetworkManager;
+
     private JobScheduler mJobScheduler;
     private VoicePlayer mVoicePlayer;
 
-    private IHttpDns mHttpDns;
+    private SdApi mSdApi;
+    private HwApi mHwApi;
 
+    private IHttpDns mHttpDns;
 
     private AppManager() {
     }
@@ -106,8 +108,12 @@ public final class AppManager {
         return Holder.INSTANCE.mDoctorViewModel == null ? Holder.INSTANCE.mDoctorViewModel = new DoctorViewModel() : Holder.INSTANCE.mDoctorViewModel;
     }
 
-    public static synchronized DoctorApi getHttpService() {
-        return Holder.INSTANCE.mDoctorApi == null ? Holder.INSTANCE.mDoctorApi = new NetEngine().httpRequest() : Holder.INSTANCE.mDoctorApi;
+    public static synchronized SdApi getSdHttpService() {
+        return Holder.INSTANCE.mSdApi == null ? Holder.INSTANCE.mSdApi = Holder.INSTANCE.mNetworkManager.installSdHttpRequest() : Holder.INSTANCE.mSdApi;
+    }
+
+    public static synchronized HwApi getHwHttpService() {
+        return Holder.INSTANCE.mHwApi == null ? Holder.INSTANCE.mHwApi = Holder.INSTANCE.mNetworkManager.installHwHttpRequest() : Holder.INSTANCE.mHwApi;
     }
 
     public static synchronized OpenLogin getOpenLogin() {
@@ -118,16 +124,8 @@ public final class AppManager {
         return Holder.INSTANCE.mOpenEngine.getOpenAnalytics();
     }
 
-    public static synchronized HwNetEngine getHwNetEngine() {
-        return Holder.INSTANCE.mHwNetEngine == null ? Holder.INSTANCE.mHwNetEngine = new HwNetEngine() : Holder.INSTANCE.mHwNetEngine;
-    }
-
     public static synchronized IHttpDns getHttpDns() {
-        return Holder.INSTANCE.mHttpDns == null ? Holder.INSTANCE.mHttpDns = new HttpDnsEngine().init(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY) : Holder.INSTANCE.mHttpDns;
-    }
-
-    public static synchronized SleepyV1Api getHwV1HttpService() {
-        return getHwNetEngine().getV1HttpService();
+        return Holder.INSTANCE.mHttpDns;
     }
 
     public static synchronized VersionModel getVersionModel() {
@@ -158,7 +156,7 @@ public final class AppManager {
     }
 
     public void init(@NonNull Context context) {
-        initHttpDns(context);
+        initNetWork(context);
         initUtils(context);
         initEmojiCompat(context);
         initAccountViewModel((Application) context);
@@ -169,6 +167,14 @@ public final class AppManager {
         initKefu(context);
         initWebView();
         initSkin(context);
+    }
+
+    private void initNetWork(Context context) {
+        //注册 aliyun httpDns
+        this.mHttpDns = new HttpDnsEngine().init(context, BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY);
+        this.mHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL);
+        //注册网络引擎框架
+        this.mNetworkManager = NetworkManager.create();
     }
 
     private void initLeanCloud(Context context) {
@@ -197,11 +203,6 @@ public final class AppManager {
         ToastHelper.init(context);
         Utils.init(context);
         ToastUtils.setGravity(Gravity.CENTER, 0, 0);
-    }
-
-    private void initHttpDns(Context context) {
-        this.mHttpDns = new HttpDnsEngine().init(context, BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY);
-        this.mHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL);
     }
 
     private void initSkin(@NonNull Context context) {

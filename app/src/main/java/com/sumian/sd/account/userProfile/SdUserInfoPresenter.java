@@ -1,18 +1,19 @@
 package com.sumian.sd.account.userProfile;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.account.bean.Social;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.network.callback.BaseResponseCallback;
-import com.sumian.sd.oss.OssResponse;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.oss.OssEngine;
+import com.sumian.sd.oss.OssResponse;
 import com.umeng.socialize.UMAuthListener;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,18 +49,18 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
     @Override
     public void getUserInfo() {
         mView.onBegin();
-        Call<UserInfo> call = AppManager.getHttpService().getUserProfile();
+        Call<UserInfo> call = AppManager.getSdHttpService().getUserProfile();
         addCall(call);
-        call.enqueue(new BaseResponseCallback<UserInfo>() {
+        call.enqueue(new BaseSdResponseCallback<UserInfo>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                mView.onGetUserInfoFailed(errorResponse.getMessage());
+            }
+
             @Override
             protected void onSuccess(@Nullable UserInfo response) {
                 AppManager.getAccountViewModel().updateUserInfo(response);
                 mView.onGetUserInfoSuccess(response);
-            }
-
-            @Override
-            protected void onFailure(int code, @NonNull String message) {
-                mView.onGetUserInfoFailed(message);
             }
 
             @Override
@@ -75,9 +76,15 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
     @Override
     public void uploadAvatar(String imageUrl) {
         mView.onBegin();
-        Call<OssResponse> call = AppManager.getHttpService().uploadAvatar();
+        Call<OssResponse> call = AppManager.getSdHttpService().uploadAvatar();
         addCall(call);
-        call.enqueue(new BaseResponseCallback<OssResponse>() {
+        call.enqueue(new BaseSdResponseCallback<OssResponse>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                ToastUtils.showShort(errorResponse.getMessage());
+                mView.onFinish();
+            }
+
             @Override
             protected void onSuccess(OssResponse ossResponse) {
                 OssEngine.Companion.uploadFile(ossResponse, imageUrl, new OssEngine.UploadCallback() {
@@ -105,12 +112,6 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
                     }
                 });
             }
-
-            @Override
-            protected void onFailure(int code, @NonNull String message) {
-                ToastUtils.showShort(message);
-                mView.onFinish();
-            }
         });
     }
 
@@ -122,17 +123,17 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
     @Override
     public void bindSocial(int socialType, String socialInfo) {
         mView.onBegin();
-        Call<Social> call = AppManager.getHttpService().bindSocialites(Social.SOCIAL_TYPE_WECHAT, socialInfo);
+        Call<Social> call = AppManager.getSdHttpService().bindSocialites(Social.SOCIAL_TYPE_WECHAT, socialInfo);
         addCall(call);
-        call.enqueue(new BaseResponseCallback<Social>() {
+        call.enqueue(new BaseSdResponseCallback<Social>() {
             @Override
-            protected void onSuccess(Social response) {
-                mView.onBindSocialSuccess(response);
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                mView.onBindSocialFailed(errorResponse.getMessage());
             }
 
             @Override
-            protected void onFailure(int code, @NonNull String message) {
-                mView.onBindSocialFailed(message);
+            protected void onSuccess(Social response) {
+                mView.onBindSocialSuccess(response);
             }
 
             @Override
@@ -147,17 +148,17 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
     public void unBindWechat(int socialId) {
         mView.onBegin();
 
-        Call<String> call = AppManager.getHttpService().unbindSocialites(socialId);
+        Call<String> call = AppManager.getSdHttpService().unbindSocialites(socialId);
         addCall(call);
-        call.enqueue(new BaseResponseCallback<String>() {
+        call.enqueue(new BaseSdResponseCallback<String>() {
             @Override
-            protected void onSuccess(String response) {
-                mView.onUnBindWechatSuccess();
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                mView.onUnBindWechatFailed(errorResponse.getMessage());
             }
 
             @Override
-            protected void onFailure(int code, @NonNull String message) {
-                mView.onUnBindWechatFailed(message);
+            protected void onSuccess(String response) {
+                mView.onUnBindWechatSuccess();
             }
 
             @Override

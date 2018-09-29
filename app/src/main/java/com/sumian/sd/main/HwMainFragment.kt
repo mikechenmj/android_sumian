@@ -3,10 +3,10 @@ package com.sumian.sd.main
 import android.support.v4.app.Fragment
 import android.view.View
 import com.hyphenate.helpdesk.easeui.UIProvider
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.hw.base.HwBasePresenter
 import com.sumian.hw.device.fragment.DeviceFragment
 import com.sumian.hw.leancloud.HwLeanCloudHelper
-import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.hw.report.ReportFragment
 import com.sumian.hw.tab.HwMeFragment
 import com.sumian.hw.upgrade.model.VersionModel
@@ -17,6 +17,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.BaseEventFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.SwitchMainActivityEvent
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.utils.SumianExecutor
 import com.sumian.sd.widget.nav.BottomNavigationBar
@@ -76,27 +77,27 @@ class HwMainFragment : BaseEventFragment<HwBasePresenter>(), HwLeanCloudHelper.O
     }
 
     private fun sendHeartBeats() {
-        val call = AppManager.getHwNetEngine().httpService.sendHeartbeats("open_app")
-        call.enqueue(object : BaseResponseCallback<Any?>() {
+        val call = AppManager.getHwHttpService().sendHeartbeats("open_app")
+        call.enqueue(object : BaseSdResponseCallback<Any?>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+
+            }
+
             override fun onSuccess(response: Any?) {
 
             }
 
-            override fun onFailure(code: Int, message: String) {
-
-            }
         })
     }
 
     private fun syncUserInfo() {
-        val call = AppManager.getHttpService().getUserProfile()
-        call.enqueue(object : BaseResponseCallback<UserInfo>() {
-            override fun onSuccess(response: UserInfo) {
-                AppManager.getAccountViewModel().updateUserInfo(response)
+        val call = AppManager.getSdHttpService().getUserProfile()
+        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
             }
 
-            override fun onFailure(code: Int, message: String) {
-
+            override fun onSuccess(response: UserInfo?) {
+                AppManager.getAccountViewModel().updateUserInfo(response)
             }
         })
     }

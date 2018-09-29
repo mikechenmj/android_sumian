@@ -17,10 +17,10 @@ import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.common.network.error.ErrorCode;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.common.util.NetUtil;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.bean.OssTransData;
 import com.sumian.hw.oss.bean.OssTransDataError;
@@ -28,7 +28,9 @@ import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -130,29 +132,29 @@ public class JobTask implements Serializable, Cloneable {
         map.put("app_receive_ended_at", receiveEndedTime);
 
         LogManager.appendTransparentLog("1.开始请求透传数据的 oss  凭证");
-        Call<OssResponse> call = AppManager.getHwV1HttpService().uploadTransData(map);
-        call.enqueue(new BaseResponseCallback<OssResponse>() {
+        Call<OssResponse> call = AppManager.getHwHttpService().uploadTransData(map);
+        call.enqueue(new BaseSdResponseCallback<OssResponse>() {
             @Override
-            protected void onSuccess(OssResponse ossResponse) {
-                LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 成功,准备进行 oss 服务进行上传文件...");
-                requestOss(ossResponse, filePath, transDataType);
-            }
-
-            @Override
-            protected void onFailure(int code, String error) {
-                if (code == ErrorCode.FORBIDDEN) {
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                if (errorResponse.getCode() == ErrorCode.FORBIDDEN) {
                     Intent intent = new Intent(JobTask.ACTION_SYNC);
                     intent.putExtra(JobTask.EXTRA_SYNC_STATUS, true);
                     LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
-                    LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + error);
+                    LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + errorResponse.getMessage());
                     if (transDataType == 0x01) {
                         SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
                     }
                     mTaskCallback.executeCallbackSuccess(JobTask.this);
                 } else {
-                    LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 令牌失败,进入队列末尾等待重新上传  错误信息=" + error);
+                    LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 令牌失败,进入队列末尾等待重新上传  错误信息=" + errorResponse.getMessage());
                     mTaskCallback.executeCallbackFailed(JobTask.this);
                 }
+            }
+
+            @Override
+            protected void onSuccess(OssResponse ossResponse) {
+                LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 成功,准备进行 oss 服务进行上传文件...");
+                requestOss(ossResponse, filePath, transDataType);
             }
         });
     }

@@ -12,18 +12,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.sd.account.login.ModifyUserInfoContract;
-import com.sumian.sd.account.userProfile.HwUserInfoContract;
-import com.sumian.sd.account.userProfile.HwHwUserInfoPresenter;
-import com.sumian.sd.account.sheet.SelectBottomSheet;
-import com.sumian.sd.account.sheet.SelectGenderBottomSheet;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.base.HwBaseActivity;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.widget.BottomSheetView;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
+import com.sumian.sd.account.login.ModifyUserInfoContract;
+import com.sumian.sd.account.sheet.SelectBottomSheet;
+import com.sumian.sd.account.sheet.SelectGenderBottomSheet;
+import com.sumian.sd.account.userProfile.HwHwUserInfoPresenter;
+import com.sumian.sd.account.userProfile.HwUserInfoContract;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -194,7 +197,7 @@ public class AssessmentUserInfoActivity extends HwBaseActivity<HwUserInfoContrac
             map.put("height", mUserInfo.height);
             map.put("weight", mUserInfo.weight);
             map.put("include", "doctor");
-            AppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
+            AppManager.getHwHttpService().doModifyUserInfo(map).enqueue(new BaseSdResponseCallback<UserInfo>() {
                 @Override
                 protected void onSuccess(UserInfo response) {
                     onSyncCacheUserInfoSuccess(response);
@@ -203,8 +206,9 @@ public class AssessmentUserInfoActivity extends HwBaseActivity<HwUserInfoContrac
                 }
 
                 @Override
-                protected void onFailure(int code, String error) {
-                    ToastHelper.show(error);
+                protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                    super.onFailure(errorResponse);
+                    ToastHelper.show(errorResponse.getMessage());
                 }
             });
         }

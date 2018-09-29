@@ -2,14 +2,15 @@ package com.sumian.sd.account.login
 
 import android.app.Activity
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
-import com.sumian.sd.account.login.LoginHelper.Companion.onLoginSuccess
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.umeng.socialize.UMAuthListener
 import com.umeng.socialize.bean.SHARE_MEDIA
+import retrofit2.Callback
 import java.util.*
 
 /**
@@ -25,15 +26,15 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
     override fun loginByPassword(mobile: String, password: String) {
         view.showLoading()
-        val call = AppManager.getHttpService().loginByPassword(mobile, password)
-        call.enqueue(object : BaseResponseCallback<Token>() {
+        val call = AppManager.getSdHttpService().loginByPassword(mobile, password)
+        call.enqueue(object : BaseSdResponseCallback<Token>() {
 
             override fun onSuccess(response: Token?) {
                 LoginHelper.onLoginSuccess(response)
             }
 
-            override fun onFailure(code: Int, message: String) {
-                ToastUtils.showShort(message)
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(errorResponse.message)
             }
 
             override fun onFinish() {
@@ -45,15 +46,14 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
     override fun loginByCaptcha(mobile: String, captcha: String) {
         view.showLoading()
-        val call = AppManager.getHttpService().loginByCaptcha(mobile, captcha)
-        call.enqueue(object : BaseResponseCallback<Token>() {
+        val call = AppManager.getSdHttpService().loginByCaptcha(mobile, captcha)
+        call.enqueue(object : BaseSdResponseCallback<Token>(), Callback<Token> {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(errorResponse.message)
+            }
 
             override fun onSuccess(response: Token?) {
                 LoginHelper.onLoginSuccess(response)
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                ToastUtils.showShort(message)
             }
 
             override fun onFinish() {
@@ -92,20 +92,20 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
         val map = HashMap<String, Any?>()
         map["type"] = 0
         map["union_id"] = openMap["unionid"]
-        val call = AppManager.getHttpService().loginOpenPlatform(map)
-        call.enqueue(object : BaseResponseCallback<Token>() {
-            override fun onSuccess(response: Token?) {
-                LoginHelper.onLoginSuccess(response)
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                if (code == 404) {
+        val call = AppManager.getSdHttpService().loginOpenPlatform(map)
+        call.enqueue(object : BaseSdResponseCallback<Token>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                if (errorResponse.code == 404) {
                     openMap["nickname"] = openMap["screen_name"]
                     val socialInfo = JsonUtil.toJson(openMap)
                     ValidatePhoneNumberActivity.launchForBindMobile(socialInfo)
                 } else {
-                    ToastUtils.showShort(message)
+                    ToastUtils.showShort(errorResponse.message)
                 }
+            }
+
+            override fun onSuccess(response: Token?) {
+                LoginHelper.onLoginSuccess(response)
             }
 
             override fun onFinish() {

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.support.annotation.StringRes
 import com.google.gson.Gson
 import com.pingplusplus.android.Pingpp
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.App
@@ -13,7 +14,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.doctor.bean.PayOrder
 import com.sumian.sd.doctor.contract.PayContract
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.order.OrderDetail
 import org.json.JSONException
 import org.json.JSONObject
@@ -27,8 +28,6 @@ import retrofit2.Callback
  */
 
 class PayPresenter private constructor(view: PayContract.View) : PayContract.Presenter {
-
-    private val TAG: String = PayPresenter::class.java.simpleName
 
     private var mView: PayContract.View? = null
 
@@ -59,9 +58,12 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
 
         mView?.onBegin()
 
-        val call: Call<Any> = AppManager.getHttpService().createOrder(payOrder)
+        val call: Call<Any> = AppManager.getSdHttpService().createOrder(payOrder)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<Any>(), Callback<Any> {
+        call.enqueue(object : BaseSdResponseCallback<Any>(), Callback<Any> {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onFailure(errorResponse.message)
+            }
 
             override fun onSuccess(response: Any?) {
                 val toJson = Gson().toJson(response)
@@ -72,10 +74,6 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onFailure(message)
             }
 
             override fun onFinish() {
@@ -93,11 +91,10 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().getOrderDetail(mOrderNo!!)
+        val call = AppManager.getSdHttpService().getOrderDetail(mOrderNo!!)
         addCall(call)
-        call.enqueue(object : BaseResponseCallback<OrderDetail>() {
-
-            override fun onFailure(code: Int, message: String) {
+        call.enqueue(object : BaseSdResponseCallback<OrderDetail>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
                 autoCheckOrderStatus()
             }
 

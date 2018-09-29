@@ -2,7 +2,7 @@ package com.sumian.hw.upgrade.contract;
 
 import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
-import com.sumian.hw.network.response.AppUpgradeInfo;
+import com.sumian.sd.network.response.AppUpgradeInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 
 /**

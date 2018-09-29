@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER", "unused")
+
 package com.sumian.sd.service.diary
 
 import android.os.Bundle
@@ -7,10 +9,11 @@ import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.common.base.BaseFragment
-import com.sumian.hw.network.callback.BaseResponseCallback
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import com.sumian.sd.widget.SumianLoadMoreView
@@ -94,8 +97,12 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
         if (isInitData) {
             mPage = 1
         }
-        val call = AppManager.getHttpService().getDiaryEvaluations(type, null, mPage, PAGE_SIZE)
-        call.enqueue(object : BaseResponseCallback<DiaryEvaluationsResponse>() {
+        val call = AppManager.getSdHttpService().getDiaryEvaluations(type, null, mPage, PAGE_SIZE)
+        call.enqueue(object : BaseSdResponseCallback<DiaryEvaluationsResponse>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d(errorResponse.message)
+            }
+
             override fun onSuccess(response: DiaryEvaluationsResponse?) {
                 LogUtils.d(response)
                 val data = response?.data
@@ -117,10 +124,6 @@ class DiaryEvaluationListFragment : BaseFragment(), SwipeRefreshLayout.OnRefresh
                     }
                 }
                 mPage++
-            }
-
-            override fun onFailure(code: Int, message: String?) {
-                LogUtils.d(message)
             }
 
             override fun onFinish() {

@@ -68,8 +68,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     //glide
-    api 'com.github.bumptech.glide:glide:4.7.1'
-    kapt 'com.github.bumptech.glide:compiler:4.7.1'
+    api 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
 
     implementation 'pub.devrel:easypermissions:1.2.0'
 
@@ -84,10 +84,10 @@ dependencies {
     // retrofit
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
     //implementation 'net.qiujuer.genius:ui:latest.integration'
-    implementation project(':jsbridge')
+    api project(':jsbridge')
 
     //aliyun httpdns
     implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar') {

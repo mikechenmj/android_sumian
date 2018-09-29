@@ -1,10 +1,11 @@
 package com.sumian.sd.service.advisory.presenter
 
-import com.sumian.sd.service.advisory.bean.Advisory
-import com.sumian.sd.service.advisory.contract.RecordContract
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.service.advisory.bean.Advisory
+import com.sumian.sd.service.advisory.contract.RecordContract
 
 /**
  *
@@ -34,16 +35,16 @@ class RecordPresenter private constructor(view: RecordContract.View) : RecordCon
 
         val map = mutableMapOf<String, Any>()
         map["include"] = "user,doctor,records"
-        val call = AppManager.getHttpService().getDoctorAdvisoryDetails(advisoryId, map)
+        val call = AppManager.getSdHttpService().getDoctorAdvisoryDetails(advisoryId, map)
         mCalls.add(call)
 
-        call.enqueue(object : BaseResponseCallback<Advisory>() {
-            override fun onSuccess(response: Advisory?) {
-                mView?.onGetAdvisoryDetailSuccess(response!!)
+        call.enqueue(object : BaseSdResponseCallback<Advisory>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetAdvisoryDetailFailed(error = errorResponse.message)
             }
 
-            override fun onFailure(code: Int, message: String) {
-                mView?.onGetAdvisoryDetailFailed(message)
+            override fun onSuccess(response: Advisory?) {
+                mView?.onGetAdvisoryDetailSuccess(response!!)
             }
 
             override fun onFinish() {

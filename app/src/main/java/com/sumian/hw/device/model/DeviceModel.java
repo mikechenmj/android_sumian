@@ -2,11 +2,14 @@ package com.sumian.hw.device.model;
 
 import android.text.TextUtils;
 
-import com.sumian.hw.device.bean.BlueDevice;import com.sumian.hw.device.bean.BlueDevice;
-import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.account.model.AccountViewModel;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -147,17 +150,21 @@ public class DeviceModel {
                 map.put("sleeper_sn", userInfo.getSleeper_sn());
             }
             map.put("include", "doctor");
-            AppManager.getHwNetEngine().getHttpService().doModifyUserInfo(map).enqueue(new BaseResponseCallback<UserInfo>() {
-                @Override
-                protected void onSuccess(UserInfo response) {
-                    AppManager.getAccountViewModel().updateUserInfo(response);
-                }
+            AppManager
+                    .getHwHttpService()
+                    .doModifyUserInfo(map)
+                    .enqueue(new BaseSdResponseCallback<UserInfo>() {
+                        @Override
+                        protected void onFailure(@NotNull ErrorResponse errorResponse) {
 
-                @Override
-                protected void onFailure(int code, String error) {
-                    //uploadBindSn(sleepySn, monitorSn);
-                }
-            });
+                        }
+
+                        @Override
+                        protected void onSuccess(UserInfo response) {
+                            AppManager.getAccountViewModel().updateUserInfo(response);
+                        }
+
+                    });
         }
     }
 

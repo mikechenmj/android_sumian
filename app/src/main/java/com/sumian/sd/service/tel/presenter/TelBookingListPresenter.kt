@@ -1,9 +1,9 @@
 package com.sumian.sd.service.tel.presenter
 
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
-import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingListContract
@@ -56,9 +56,9 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
         map["list_type"] = telBookingListType
         map["include"] = "package.servicePackage.service"
 
-        val call = AppManager.getHttpService().getTelBookingList(map)
+        val call = AppManager.getSdHttpService().getTelBookingList(map)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<PaginationResponse<TelBooking>>(), Callback<PaginationResponse<TelBooking>> {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponse<TelBooking>>(), Callback<PaginationResponse<TelBooking>> {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
                 mView?.onGetTelBookingListFailed(errorResponse.message)

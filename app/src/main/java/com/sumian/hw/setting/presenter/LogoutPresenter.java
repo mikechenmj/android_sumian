@@ -1,11 +1,14 @@
 package com.sumian.hw.setting.presenter;
 
 import com.avos.avoscloud.AVInstallation;
-import com.sumian.sd.account.login.OnLogoutCallback;
-import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.setting.contract.LogoutContract;
-import com.sumian.sd.utils.AppUtil;
+import com.sumian.sd.account.login.OnLogoutCallback;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+import com.sumian.sd.utils.AppUtil;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -44,17 +47,18 @@ public class LogoutPresenter implements LogoutContract.Presenter, OnLogoutCallba
         view.onBegin();
 
         String deviceToken = AVInstallation.getCurrentInstallation().getInstallationId();
-        Call<Object> call = AppManager.getHwNetEngine().getHttpService().doLogout(deviceToken);
+        Call<Object> call = AppManager.getHwHttpService().doLogout(deviceToken);
 
-        call.enqueue(new BaseResponseCallback<Object>() {
+        call.enqueue(new BaseSdResponseCallback<Object>() {
             @Override
             protected void onSuccess(Object response) {
                 AppUtil.logoutAndLaunchLoginActivity();
             }
 
             @Override
-            protected void onFailure(int code, String error) {
-                view.onLogoutFailed(error);
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                super.onFailure(errorResponse);
+                view.onLogoutFailed(errorResponse.getMessage());
             }
 
             @Override

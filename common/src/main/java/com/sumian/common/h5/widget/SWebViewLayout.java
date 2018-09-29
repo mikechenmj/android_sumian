@@ -13,7 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.sumian.common.R;
-import com.sumian.common.network.StatusCode;
+
+import static com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR;
 
 /**
  * Created by sm
@@ -111,7 +112,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
 
     @Override
     public void onRequestErrorCallback(WebView view, int responseCode) {
-        if (responseCode == StatusCode.BUSINESS_ERROR) {
+        if (responseCode == BUSINESS_ERROR) {
             return;
         }
         this.mWebViewProgress.setVisibility(GONE);

@@ -1,8 +1,9 @@
 package com.sumian.sd.service.cbti.presenter
 
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.cbti.bean.CBTIDataResponse
 import com.sumian.sd.service.cbti.bean.Exercise
 import com.sumian.sd.service.cbti.contract.CBTIWeekExercisesContract
@@ -34,17 +35,16 @@ class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.Vie
 
         mView.onBegin()
 
-        val call = AppManager.getHttpService().getCBTIExerciseWeekPart(id)
-        call.enqueue(object : BaseResponseCallback<CBTIDataResponse<Exercise>>() {
+        val call = AppManager.getSdHttpService().getCBTIExerciseWeekPart(id)
+        call.enqueue(object : BaseSdResponseCallback<CBTIDataResponse<Exercise>>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView.onGetCBTIWeekPracticeFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: CBTIDataResponse<Exercise>?) {
                 response?.let {
                     mView.onGetCBTIWeekPracticeSuccess(response.data)
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView.onGetCBTIWeekPracticeFailed(message)
             }
 
             override fun onFinish() {

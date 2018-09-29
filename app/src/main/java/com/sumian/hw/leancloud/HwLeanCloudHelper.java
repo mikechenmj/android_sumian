@@ -36,13 +36,16 @@ import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.VisitorInfo;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.utils.AppUtil;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -333,18 +336,17 @@ public final class HwLeanCloudHelper {
         map.put("system_version", Build.VERSION.SDK_INT);
 
         Call<Object> call = AppManager
-                .getHwNetEngine()
-                .getHttpService()
+                .getHwHttpService()
                 .uploadDeviceInfo(map);
 
-        call.enqueue(new BaseResponseCallback<Object>() {
+        call.enqueue(new BaseSdResponseCallback<Object>() {
             @Override
-            protected void onSuccess(Object response) {
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+
             }
 
             @Override
-            protected void onFailure(int code, String error) {
-                //onFailure(R.string.error_request_failed_hint);
+            protected void onSuccess(Object response) {
             }
 
             @Override

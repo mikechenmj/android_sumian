@@ -4,14 +4,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.operator.AppOperator;
 import com.sumian.hw.common.util.StreamUtil;
-import com.sumian.hw.network.api.SleepyApi;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sd.account.bean.City;
 import com.sumian.sd.account.bean.Province;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import retrofit2.Call;
  * desc:
  */
 
+@SuppressWarnings("ALL")
 public class ModifySelectPresenter implements ModifySelectContract.Presenter {
 
     private static final String TAG = ModifySelectPresenter.class.getSimpleName();
@@ -136,21 +139,20 @@ public class ModifySelectPresenter implements ModifySelectContract.Presenter {
         ModifySelectContract.View<UserInfo> view = viewWeakReference.get();
         if (view == null) return;
         view.onBegin();
-        SleepyApi sleepyApi = AppManager.getHwNetEngine().getHttpService();
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
         map.put("include", "doctor");
-        Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
-        call.enqueue(new BaseResponseCallback<UserInfo>() {
+        Call<UserInfo> call = AppManager.getHwHttpService().doModifyUserInfo(map);
+        call.enqueue(new BaseSdResponseCallback<UserInfo>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                view.onModifyFailed(errorResponse.getMessage());
+            }
+
             @Override
             protected void onSuccess(UserInfo response) {
                 view.onModifySuccess(response);
                 AppManager.getAccountViewModel().updateUserInfo(response);
-            }
-
-            @Override
-            protected void onFailure(int code, String error) {
-                view.onModifyFailed(error);
             }
 
             @Override

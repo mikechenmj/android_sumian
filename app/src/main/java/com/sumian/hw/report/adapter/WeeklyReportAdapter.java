@@ -14,7 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.network.response.SleepDurationReport;
+import com.sumian.sd.network.response.SleepDurationReport;
 import com.sumian.hw.report.widget.SleepAvgAndCompareView;
 import com.sumian.hw.report.widget.histogram.SleepHistogramView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;

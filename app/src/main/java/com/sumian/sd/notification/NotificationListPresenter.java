@@ -1,14 +1,13 @@
 package com.sumian.sd.notification;
 
-import android.support.annotation.NonNull;
-
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.network.callback.BaseResponseCallback;
-import com.sumian.sd.network.response.ErrorResponse;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.notification.bean.Notification;
 import com.sumian.sd.notification.bean.QueryNotificationResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -39,9 +38,15 @@ public class NotificationListPresenter implements NotificationListContract.Prese
         if (isInitLoad) {
             mPage = INIT_PAGE;
         }
-        Call<QueryNotificationResponse> call = AppManager.getHttpService().getNotificationList(mPage, PER_PAGE);
+        Call<QueryNotificationResponse> call = AppManager.getSdHttpService().getNotificationList(mPage, PER_PAGE);
         addCall(call);
-        call.enqueue(new BaseResponseCallback<QueryNotificationResponse>() {
+        call.enqueue(new BaseSdResponseCallback<QueryNotificationResponse>() {
+            @Override
+            protected void onFailure(@NotNull com.sumian.common.network.response.ErrorResponse errorResponse) {
+                LogUtils.d(errorResponse.getMessage());
+                mView.onLoadMore(null, errorResponse.getCode() == ErrorCode.NOT_FOUND);
+            }
+
             @Override
             protected void onSuccess(QueryNotificationResponse response) {
                 LogUtils.d(response);
@@ -50,11 +55,6 @@ public class NotificationListPresenter implements NotificationListContract.Prese
                 mPage++;
             }
 
-            @Override
-            protected void onFailure(int code, @NonNull String message) {
-                LogUtils.d(message);
-                mView.onLoadMore(null, code == ErrorCode.NOT_FOUND);
-            }
         });
         addCall(call);
         mView.onFinish();
@@ -65,23 +65,23 @@ public class NotificationListPresenter implements NotificationListContract.Prese
      */
     @Override
     public void readNotification(String notificationId) {
-        Call<Object> call = AppManager.getHttpService().readNotification(notificationId);
+        Call<Object> call = AppManager.getSdHttpService().readNotification(notificationId);
         addCall(call);
-        call
-                .enqueue(new BaseResponseCallback<Object>() {
-                    @Override
-                    protected void onSuccess(Object response) {
-                        LogUtils.d(response);
-                        mView.onReadSuccess();
-                    }
+        call.enqueue(new BaseSdResponseCallback<Object>() {
+            @Override
+            protected void onFailure(@NotNull com.sumian.common.network.response.ErrorResponse errorResponse) {
+                LogUtils.d(errorResponse.getMessage());
+                if (errorResponse.getCode() == ErrorCode.STATUS_CODE_ERROR_UNKNOWN) {
+                    mView.onReadSuccess(); // 成功的response body 为空，会走到onFail分支-_-||
+                }
+            }
 
-                    @Override
-                    protected void onFailure(int code, @NonNull String message) {
-                        LogUtils.d(message);
-                        if (code == ErrorResponse.STATUS_CODE_ERROR_UNKNOWN) {
-                            mView.onReadSuccess(); // 成功的response body 为空，会走到onFail分支-_-||
-                        }
-                    }
-                });
+            @Override
+            protected void onSuccess(Object response) {
+                LogUtils.d(response);
+                mView.onReadSuccess();
+            }
+
+        });
     }
 }

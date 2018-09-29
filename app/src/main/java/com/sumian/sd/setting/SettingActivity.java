@@ -2,7 +2,6 @@ package com.sumian.sd.setting;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageInfo;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +9,21 @@ import android.view.View;
 import com.avos.avoscloud.AVInstallation;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.sd.setting.remind.RemindSettingActivity;
-import com.sumian.sd.utils.AppUtil;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.h5.SimpleWebActivity;
-import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+import com.sumian.sd.setting.remind.RemindSettingActivity;
 import com.sumian.sd.setting.version.VersionActivity;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.utils.UiUtils;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.divider.SettingDividerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -112,17 +114,17 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
     }
 
     private void logout() {
-        Call<Unit> call = AppManager.getHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId());
+        Call<Unit> call = AppManager.getSdHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId());
         addCall(call);
-        call.enqueue(new BaseResponseCallback<Unit>() {
+        call.enqueue(new BaseSdResponseCallback<Unit>() {
             @Override
-            protected void onSuccess(Unit response) {
-                AppUtil.logoutAndLaunchLoginActivity();
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                ToastUtils.showShort(R.string.logout_failed_please_check_network);
             }
 
             @Override
-            protected void onFailure(int code, @NonNull String message) {
-                ToastUtils.showShort(R.string.logout_failed_please_check_network);
+            protected void onSuccess(Unit response) {
+                AppUtil.logoutAndLaunchLoginActivity();
             }
         });
     }

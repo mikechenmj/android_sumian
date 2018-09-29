@@ -10,7 +10,7 @@ import android.webkit.WebView;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.HwBaseActivity;
-import com.sumian.hw.network.response.ConfigInfo;
+import com.sumian.sd.network.response.ConfigInfo;
 import com.sumian.hw.setting.contract.ConfigContract;
 import com.sumian.hw.setting.presenter.ConfigPresenter;
 import com.sumian.hw.widget.TitleBar;

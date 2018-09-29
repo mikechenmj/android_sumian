@@ -1,11 +1,14 @@
 package com.sumian.hw.report.presenter;
 
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.report.base.BaseResultResponse;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.report.bean.DailyMeta;
 import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.hw.report.contract.DailyReportContract;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,10 +56,10 @@ public class DailyReportPresenter implements DailyReportContract.Presenter {
         map.put("page_size", pageSize);
         map.put("is_include", include ? 1 : 0);
 
-        Call<BaseResultResponse<DailyReport, DailyMeta>> call = AppManager.getHwV1HttpService().getTodaySleepReport(map);
+        Call<BaseResultResponse<DailyReport, DailyMeta>> call = AppManager.getHwHttpService().getTodaySleepReport(map);
         mCalls.add(call);
 
-        call.enqueue(new BaseResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {
+        call.enqueue(new BaseSdResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {
             @Override
             protected void onSuccess(BaseResultResponse<DailyReport, DailyMeta> response) {
                 List<DailyReport> data = response.data;
@@ -84,8 +87,9 @@ public class DailyReportPresenter implements DailyReportContract.Presenter {
             }
 
             @Override
-            protected void onFailure(int code, String error) {
-                mView.onFailure(error);
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                super.onFailure(errorResponse);
+                mView.onFailure(errorResponse.getMessage());
             }
 
             @Override

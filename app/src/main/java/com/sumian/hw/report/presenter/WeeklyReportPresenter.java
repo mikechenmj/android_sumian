@@ -1,12 +1,15 @@
 package com.sumian.hw.report.presenter;
 
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.report.base.BaseResultResponse;
-import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.SleepDurationReport;
-import com.sumian.hw.report.contract.WeeklyReportContact;
 import com.sumian.hw.report.bean.WeekMeta;
+import com.sumian.hw.report.contract.WeeklyReportContact;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+import com.sumian.sd.network.response.SleepDurationReport;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,9 +56,9 @@ public class WeeklyReportPresenter implements WeeklyReportContact.Presenter {
         map.put("page_size", pageSize);
         map.put("is_include", isInclude ? 1 : 0);
         map.put("direction", 0);
-        Call<BaseResultResponse<SleepDurationReport, WeekMeta>> call = AppManager.getHwV1HttpService().getWeeksSleepReport(map);
+        Call<BaseResultResponse<SleepDurationReport, WeekMeta>> call = AppManager.getHwHttpService().getWeeksSleepReport(map);
         mCalls.add(call);
-        call.enqueue(new BaseResponseCallback<BaseResultResponse<SleepDurationReport, WeekMeta>>() {
+        call.enqueue(new BaseSdResponseCallback<BaseResultResponse<SleepDurationReport, WeekMeta>>() {
             @Override
             protected void onSuccess(BaseResultResponse<SleepDurationReport, WeekMeta> response) {
                 List<SleepDurationReport> weekReports = response.data;
@@ -103,8 +106,9 @@ public class WeeklyReportPresenter implements WeeklyReportContact.Presenter {
             }
 
             @Override
-            protected void onFailure(int code, String error) {
-                mView.onFailure(error);
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                super.onFailure(errorResponse);
+                mView.onFailure(errorResponse.getMessage());
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.sumian.sd.account.login;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,12 +11,15 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
-import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.engine.OssEngine;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -27,9 +31,8 @@ import retrofit2.Call;
  * desc:
  */
 
+@SuppressWarnings("WeakerAccess")
 public class AvatarPresenter implements AvatarContract.Presenter {
-
-    private static final String TAG = AvatarPresenter.class.getSimpleName();
 
     private final static String imagePathName = "/image/";
     public static final int PIC_REQUEST_CODE_LOCAL = 0x01;
@@ -62,20 +65,22 @@ public class AvatarPresenter implements AvatarContract.Presenter {
     }
 
     private void upload() {
-        Call<OssResponse> call = AppManager.getHwNetEngine().getHttpService().uploadAvatar();
-        call.enqueue(new BaseResponseCallback<OssResponse>() {
+        Call<OssResponse> call = AppManager.getHwHttpService().uploadAvatar();
+        call.enqueue(new BaseSdResponseCallback<OssResponse>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                upload();
+            }
+
             @Override
             protected void onSuccess(OssResponse response) {
                 new OssEngine().uploadFile(response, mLocalImagePath);
             }
 
-            @Override
-            protected void onFailure(int code, String error) {
-                upload();
-            }
         });
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     @Override
     public void sendPic(Activity activity, int type) {
 
@@ -91,7 +96,7 @@ public class AvatarPresenter implements AvatarContract.Presenter {
 
         } else {//pic camera
             cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getUserInfo().getId()), App.Companion.getAppContext()), AppManager.getAccountViewModel().getUserInfo().getId()
-                + System.currentTimeMillis() + ".jpg");
+                    + System.currentTimeMillis() + ".jpg");
 
             //noinspection ResultOfMethodCallIgnored
             cameraFile.getParentFile().mkdirs();

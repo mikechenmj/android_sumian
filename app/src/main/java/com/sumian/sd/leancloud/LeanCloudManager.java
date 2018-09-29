@@ -2,7 +2,6 @@ package com.sumian.sd.leancloud;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.avos.avoscloud.AVException;
@@ -13,10 +12,13 @@ import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.HwWelcomeActivity;
-import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 
@@ -75,18 +77,19 @@ public class LeanCloudManager {
 
     private static void uploadDeviceInfo(String installationId) {
         Call<Object> call = AppManager
-                .getHttpService()
+                .getSdHttpService()
                 .uploadDeviceInfo("0", installationId, String.valueOf(Build.VERSION.SDK_INT));
-        call.enqueue(new BaseResponseCallback<Object>() {
+        call.enqueue(new BaseSdResponseCallback<Object>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                LogUtils.d(errorResponse.getMessage());
+            }
+
             @Override
             protected void onSuccess(Object response) {
                 LogUtils.d(response);
             }
 
-            @Override
-            protected void onFailure(int code, @NonNull String message) {
-                LogUtils.d(message);
-            }
         });
     }
 }

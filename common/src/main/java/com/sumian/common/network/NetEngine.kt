@@ -1,13 +1,12 @@
 package com.sumian.common.network
 
-import android.content.Context
 import com.google.gson.GsonBuilder
 import com.sumian.common.network.interceptor.SpecialRequestInterceptor
 import com.sumian.common.network.interceptor.StatusCodeInterceptor
-import com.sumian.common.network.interceptor.UAInterceptor
 import okhttp3.Dns
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,18 +15,19 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by jzz
  * on 2018/1/15.
- * desc:
+ * desc: 网络引擎
  */
 
-class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, clx: Class<out NetApi>, isDebug: Boolean = false, dns: Dns = Dns.SYSTEM, interceptors: Array<out Interceptor>) {
-
-    private var mBaseNetApi: NetApi
+class NetEngine<NetApi> private constructor(baseUrl: String, clx: Class<out NetApi>, isDebug: Boolean = false, dns: Dns = Dns.SYSTEM, interceptors: Array<out Interceptor>) {
 
     companion object {
 
-        private const val TIMEOUT = 5L
+        private const val TIMEOUT = 3L
 
     }
+
+    private var mBaseNetApi: NetApi
+
 
     init {
 
@@ -35,17 +35,16 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
                 .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-                .addInterceptor(HttpLoggingInterceptor()
-                        .setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE))
-                .addInterceptor(UAInterceptor.create(context))
-                .addInterceptor(StatusCodeInterceptor())
+                .protocols(arrayListOf(Protocol.HTTP_1_1, Protocol.HTTP_2))
                 .dns(dns)
-                .addInterceptor(SpecialRequestInterceptor())
+                .addInterceptor(HttpLoggingInterceptor().setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE))
+                .addInterceptor(StatusCodeInterceptor.create())
+                .addInterceptor(SpecialRequestInterceptor.create())
+
 
         interceptors.forEach {
             okHttpClientBuilder.addInterceptor(it)
         }
-
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -62,8 +61,6 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
 
     class NetEngineBuilder<NetApi> {
 
-        private var mContext: Context? = null
-
         private var mClx: Class<out NetApi>? = null
 
         private var mBaseUrl: String? = null
@@ -72,14 +69,9 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
 
         private var mInterceptors: Array<out Interceptor>? = null
 
-        private var mDns: Dns? = null
+        private var mDns: Dns = Dns.SYSTEM
 
-        fun with(context: Context): NetEngineBuilder<NetApi> {
-            this.mContext = context
-            return this
-        }
-
-        fun isDebug(isDebug: Boolean): NetEngineBuilder<NetApi> {
+        fun isDebug(isDebug: Boolean = false): NetEngineBuilder<NetApi> {
             this.mIsDebug = isDebug
             return this
         }
@@ -94,7 +86,7 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
             return this
         }
 
-        fun addDns(dns: Dns): NetEngineBuilder<NetApi> {
+        fun addDns(dns: Dns = Dns.SYSTEM): NetEngineBuilder<NetApi> {
             this.mDns = dns
             return this
         }
@@ -108,7 +100,7 @@ class NetEngine<NetApi> private constructor(context: Context, baseUrl: String, c
         }
 
         fun build(): NetEngine<NetApi> {
-            return NetEngine(this.mContext!!, this.mBaseUrl!!, this.mClx!!, this.mIsDebug, this.mDns!!, this.mInterceptors!!)
+            return NetEngine(this.mBaseUrl!!, this.mClx!!, this.mIsDebug, this.mDns, this.mInterceptors!!)
         }
 
     }

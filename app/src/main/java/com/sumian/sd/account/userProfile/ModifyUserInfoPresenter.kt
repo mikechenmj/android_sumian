@@ -1,14 +1,14 @@
 package com.sumian.sd.account.userProfile
 
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import cn.carbswang.android.numberpickerview.library.NumberPickerView
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import java.util.*
 
 /**
@@ -21,9 +21,6 @@ import java.util.*
  * desc:
  */
 class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserInfoContract.View) : ModifyUserInfoContract.Presenter {
-
-
-    private val TAG: String = ModifyUserInfoPresenter::class.java.simpleName
 
     init {
         mView.setPresenter(this)
@@ -54,16 +51,16 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
         map[improveKey] = newUserProfile
 
-        val call = AppManager.getHttpService().modifyUserProfile(map)
+        val call = AppManager.getSdHttpService().modifyUserProfile(map)
 
-        call.enqueue(object : BaseResponseCallback<UserInfo>() {
+        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView.onFailure(errorResponse.message)
+            }
+
             override fun onSuccess(response: UserInfo?) {
                 AppManager.getAccountViewModel().updateUserInfo(response)
                 mView.onImproveUserProfileSuccess()
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView.onFailure(message)
             }
 
             override fun onFinish() {
@@ -228,7 +225,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         for (i in 0 until count) {
             weights[i] = (minWeight + i).toString()
             if (weights[i] == weight) {
-                Log.e(TAG, "position=" + i + " weight=" + weights[i])
+                // Log.e(TAG, "position=" + i + " weight=" + weights[i])
             }
             if (i < 10) {
                 decimalWeights[i] = i.toString()

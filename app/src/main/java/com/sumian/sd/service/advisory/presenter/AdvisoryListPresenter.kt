@@ -1,8 +1,9 @@
 package com.sumian.sd.service.advisory.presenter
 
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.contract.AdvisoryListContract
@@ -55,9 +56,14 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         map["per_page"] = DEFAULT_PAGES
         map["type"] = advisoryType
 
-        val call = AppManager.getHttpService().getDoctorAdvisories(map)
+        val call = AppManager.getSdHttpService().getDoctorAdvisories(map)
         mCalls?.add(call)
-        call.enqueue(object : BaseResponseCallback<PaginationResponse<Advisory>>(), Callback<PaginationResponse<Advisory>> {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponse<Advisory>>(), Callback<PaginationResponse<Advisory>> {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mIsRefresh = false
+                mView?.onGetAdvisoriesFailed(error = errorResponse.message)
+            }
+
             override fun onSuccess(response: PaginationResponse<Advisory>?) {
                 val data = response?.data
                 if (mIsRefresh) {
@@ -76,11 +82,6 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
                 if (data != null && !data.isEmpty()) {
                     mPageNumber++
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mIsRefresh = false
-                mView?.onGetAdvisoriesFailed(message)
             }
 
             override fun onFinish() {

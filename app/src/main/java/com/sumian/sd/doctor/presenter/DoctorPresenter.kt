@@ -1,10 +1,11 @@
 package com.sumian.sd.doctor.presenter
 
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.contract.DoctorContract
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 
 /**
  *
@@ -33,18 +34,18 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
         mView?.onBegin()
 
-        val doctorInfoCall = AppManager.getHttpService().getBindDoctorInfo()
+        val doctorInfoCall = AppManager.getSdHttpService().getBindDoctorInfo()
 
         mCalls?.add(doctorInfoCall)
 
-        doctorInfoCall.enqueue(object : BaseResponseCallback<Doctor>() {
-            override fun onFailure(code: Int, message: String) {
-                if (code == 1) {
+        doctorInfoCall.enqueue(object : BaseSdResponseCallback<Doctor>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                if (errorResponse.code == 1) {
                     AppManager.getAccountViewModel().updateBoundDoctor(null)
                     AppManager.getDoctorViewModel().notifyDoctor(null)
                     mView?.onNotBindDoctor()
                 } else {
-                    mView?.onGetDoctorInfoFailed(message)
+                    mView?.onGetDoctorInfoFailed(error = errorResponse.message)
                 }
             }
 
@@ -64,13 +65,14 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
     override fun getDoctorServiceInfo(doctorId: Int) {
 
-        val doctorInfoCall = AppManager.getHttpService().getDoctorInfo(doctorId)
+        val doctorInfoCall = AppManager.getSdHttpService().getDoctorInfo(doctorId)
 
         mCalls?.add(doctorInfoCall)
 
-        doctorInfoCall.enqueue(object : BaseResponseCallback<Doctor>() {
-            override fun onFailure(code: Int, message: String) {
-                mView?.onGetDoctorInfoFailed(message)
+        doctorInfoCall.enqueue(object : BaseSdResponseCallback<Doctor>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetDoctorInfoFailed(errorResponse.message)
+
             }
 
             override fun onSuccess(response: Doctor?) {

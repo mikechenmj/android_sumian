@@ -3,13 +3,14 @@ package com.sumian.sd.notification;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.network.callback.BaseResponseCallback;
-import com.sumian.sd.network.response.ErrorResponse;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.notification.bean.QueryNotificationResponse;
+
+import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 
@@ -35,24 +36,17 @@ public class NotificationViewModel extends ViewModel {
     }
 
     public void updateUnreadCount() {
-        Call<QueryNotificationResponse> call = AppManager.getHttpService().getNotificationList(1, 1);
-        call
-                .enqueue(new BaseResponseCallback<QueryNotificationResponse>() {
-                    @Override
-                    protected void onSuccess(QueryNotificationResponse response) {
-                        mUnreadCount.setValue(response.getMeta().getUnread_num());
-                    }
+        Call<QueryNotificationResponse> call = AppManager.getSdHttpService().getNotificationList(1, 1);
+        call.enqueue(new BaseSdResponseCallback<QueryNotificationResponse>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                LogUtils.d(errorResponse.getMessage());
+            }
 
-                    @Override
-                    protected void onFailure(int code, @NonNull String message) {
-                        LogUtils.d(message);
-                    }
-
-                    @Override
-                    protected void onFinish() {
-                        super.onFinish();
-
-                    }
-                });
+            @Override
+            protected void onSuccess(QueryNotificationResponse response) {
+                mUnreadCount.setValue(response.getMeta().getUnread_num());
+            }
+        });
     }
 }

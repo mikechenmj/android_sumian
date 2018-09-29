@@ -86,11 +86,6 @@ class MainActivity : BaseEventActivity() {
         mVersionDelegate.checkVersion(this)
     }
 
-    override fun onStart() {
-        super.onStart()
-        mVersionDelegate.checkVersion(this)
-    }
-
     override fun initBundle(bundle: Bundle) {
         mLaunchTabName = bundle.getString(KEY_TAB_NAME)
         mLaunchTabData = bundle.getString(KEY_TAB_DATA)

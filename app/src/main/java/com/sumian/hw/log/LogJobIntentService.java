@@ -17,10 +17,10 @@ import com.alibaba.sdk.android.oss.model.AppendObjectRequest;
 import com.alibaba.sdk.android.oss.model.AppendObjectResult;
 import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.blankj.utilcode.util.LogUtils;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.utils.AppUtil;
 
 import java.io.File;
@@ -63,8 +63,8 @@ public class LogJobIntentService extends JobIntentService {
         }
         Map<String, Object> map = new HashMap<>(0);
         map.put("suffix", "txt");
-        Call<LogOssResponse> call = AppManager.getHwV1HttpService().autoUploadLog(map);
-        call.enqueue(new BaseResponseCallback<LogOssResponse>() {
+        Call<LogOssResponse> call = AppManager.getHwHttpService().autoUploadLog(map);
+        call.enqueue(new BaseSdResponseCallback<LogOssResponse>() {
             @Override
             protected void onSuccess(LogOssResponse response) {
                 LogUtils.d(response);
@@ -75,20 +75,10 @@ public class LogJobIntentService extends JobIntentService {
             }
 
             @Override
-            protected void onFailure(int code, String error) {
-                LogUtils.d(error);
-            }
-
-            @Override
             protected void onUnauthorized() {
                 LogUtils.d("Token不合法，无法上传Log");
             }
         });
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     private boolean isCanUpload() {

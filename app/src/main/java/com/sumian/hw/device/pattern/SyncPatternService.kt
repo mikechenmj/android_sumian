@@ -10,7 +10,6 @@ import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
 import com.sumian.blue.callback.BluePeripheralDataCallback
 import com.sumian.blue.model.BluePeripheral
-import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.hw.command.BlueCmd
@@ -18,6 +17,7 @@ import com.sumian.hw.command.Cmd
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.constants.SpKeys
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 
 /**
  * 该类用于从服务器下拉pattern数据同步到设备
@@ -50,10 +50,10 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
         queryPattern()
     }
 
-    fun queryPattern() {
+    private fun queryPattern() {
         LogUtils.d()
-        val call = AppManager.getHttpService().getUserPattern()
-        call.enqueue(object : BaseResponseCallback<List<PatternData>>() {
+        val call = AppManager.getSdHttpService().getUserPattern()
+        call.enqueue(object : BaseSdResponseCallback<List<PatternData>>() {
             override fun onSuccess(response: List<PatternData>?) {
                 LogUtils.d(response)
                 response?.apply {

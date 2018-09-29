@@ -51,12 +51,12 @@ task clean(type: Delete) {
 ext {
 
     compileSdkVersion = 28
-    buildToolsVersion = "28.0.2"
+    buildToolsVersion = "28.0.3"
     applicationId = "com.sumian.sd"
     minSdkVersion = 21
     targetSdkVersion = 28
     versionCode = new Date().format('yyyyMMddHH').toInteger()
-    versionName = "1.8.0"
+    versionName = "1.8.1"
 
     applicationIdSuffix = null
     versionNameSuffix = null

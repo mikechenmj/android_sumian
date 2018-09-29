@@ -1,8 +1,8 @@
 package com.sumian.common.network.response
 
 import android.util.Log
-import com.sumian.common.network.StatusCode.BUSINESS_ERROR
 import com.sumian.common.network.error.ErrorCode
+import com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR
 import com.sumian.common.network.error.ErrorInfo400
 import com.sumian.common.network.error.ErrorInfo499
 import com.sumian.common.utils.JsonUtil

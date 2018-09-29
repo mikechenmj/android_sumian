@@ -2,9 +2,10 @@ package com.sumian.sd.service.cbti.presenter
 
 import android.util.Log
 import com.alibaba.fastjson.JSON
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.cbti.bean.CoursePlayAuth
 import com.sumian.sd.service.cbti.bean.CoursePlayLog
 import com.sumian.sd.service.cbti.contract.CBTIWeekPlayContract
@@ -43,18 +44,17 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().getCBTIPLayAuth(id = courseId)
+        val call = AppManager.getSdHttpService().getCBTIPLayAuth(id = courseId)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
+        call.enqueue(object : BaseSdResponseCallback<CoursePlayAuth>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetCBTIPlayAuthFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: CoursePlayAuth?) {
                 response?.let {
                     mView?.onGetCBTIPlayAuthSuccess(response)
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onGetCBTIPlayAuthFailed(error = message)
             }
 
             override fun onFinish() {
@@ -69,18 +69,17 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().uploadCBTICourseLogs(courseId, videoProgress.toUpperCase(), endpoint)
+        val call = AppManager.getSdHttpService().uploadCBTICourseLogs(courseId, videoProgress.toUpperCase(), endpoint)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<CoursePlayLog>() {
+        call.enqueue(object : BaseSdResponseCallback<CoursePlayLog>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onUploadLessonLogFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: CoursePlayLog?) {
                 response?.let {
                     mView?.onUploadLessonLogSuccess(response)
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onUploadLessonLogFailed(error = message)
             }
 
             override fun onFinish() {
@@ -127,18 +126,17 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().getCBTIPLayAuth(id = courseId)
+        val call = AppManager.getSdHttpService().getCBTIPLayAuth(id = courseId)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
+        call.enqueue(object : BaseSdResponseCallback<CoursePlayAuth>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetCBTINextPlayAuthFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: CoursePlayAuth?) {
                 response?.let {
                     mView?.onGetCBTINextPlayAuthSuccess(response)
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onGetCBTINextPlayAuthFailed(error = message)
             }
 
             override fun onFinish() {
@@ -152,18 +150,17 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
 
         mView?.onBegin()
 
-        val call = AppManager.getHttpService().uploadCBTIVideoQuestionnaires(courseId, JSON.toJSONString(position))
+        val call = AppManager.getSdHttpService().uploadCBTIVideoQuestionnaires(courseId, JSON.toJSONString(position))
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<CoursePlayAuth>() {
+        call.enqueue(object : BaseSdResponseCallback<CoursePlayAuth>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onUploadCBTIQuestionnairesFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: CoursePlayAuth?) {
                 response?.let {
                     mView?.onUploadCBTIQuestionnairesSuccess(it)
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onUploadCBTIQuestionnairesFailed(error = message)
             }
 
             override fun onFinish() {

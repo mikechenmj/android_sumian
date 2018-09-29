@@ -2,7 +2,7 @@ package com.sumian.hw.setting.contract;
 
 import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
-import com.sumian.hw.network.response.ConfigInfo;
+import com.sumian.sd.network.response.ConfigInfo;
 
 import java.util.List;
 

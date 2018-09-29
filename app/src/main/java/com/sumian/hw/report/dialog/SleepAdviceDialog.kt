@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import com.sumian.hw.network.response.SleepAdvice
+import com.sumian.sd.network.response.SleepAdvice
 import com.sumian.sd.R
 import com.sumian.sd.theme.three.SkinConfig
 

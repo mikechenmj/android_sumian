@@ -8,11 +8,12 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.utils.JsonUtil;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.main.MainActivity;
-import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,22 +39,22 @@ public class DiaryEvaluationDetailActivity extends SimpleWebActivity {
     /**
      * launch latest diary evaluation
      *
-     * @param context
+     * @param context context
      */
     public static void launchLatestEvaluation(Context context) {
-        Call<DiaryEvaluationData> call = AppManager.getHttpService().getLatestDiaryEvaluation(null);
-        call.enqueue(new BaseResponseCallback<DiaryEvaluationData>() {
+        Call<DiaryEvaluationData> call = AppManager.getSdHttpService().getLatestDiaryEvaluation(null);
+        call.enqueue(new BaseSdResponseCallback<DiaryEvaluationData>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                LogUtils.d(errorResponse.getMessage());
+            }
+
             @Override
             protected void onSuccess(@Nullable DiaryEvaluationData response) {
                 if (response == null) {
                     return;
                 }
                 launch(context, response.getId());
-            }
-
-            @Override
-            protected void onFailure(int code, @NotNull String message) {
-                LogUtils.d(message);
             }
         });
     }

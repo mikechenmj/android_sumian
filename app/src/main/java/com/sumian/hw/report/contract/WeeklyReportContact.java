@@ -2,7 +2,7 @@ package com.sumian.hw.report.contract;
 
 import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
-import com.sumian.hw.network.response.SleepDurationReport;
+import com.sumian.sd.network.response.SleepDurationReport;
 
 import java.util.List;
 

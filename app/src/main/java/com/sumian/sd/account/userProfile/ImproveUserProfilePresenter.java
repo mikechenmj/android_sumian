@@ -2,9 +2,12 @@ package com.sumian.sd.account.userProfile;
 
 import android.support.annotation.NonNull;
 
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +35,7 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
     }
 
     @Override
-    public void improveUserProfile(String improveKey, String newUserProfile) {
+    public void improveUserProfile(@NonNull String improveKey, @NonNull String newUserProfile) {
 
         if (mView == null) return;
         mView.onBegin();
@@ -42,20 +45,20 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
         map.put(improveKey, newUserProfile);
 
         Call<UserInfo> call = AppManager
-                .getHttpService()
+                .getSdHttpService()
                 .modifyUserProfile(map);
 
         this.mCall = call;
-        call.enqueue(new BaseResponseCallback<UserInfo>() {
+        call.enqueue(new BaseSdResponseCallback<UserInfo>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                mView.onFailure(errorResponse.getMessage());
+            }
+
             @Override
             protected void onSuccess(UserInfo response) {
                 AppManager.getAccountViewModel().updateUserInfo(response);
                 mView.onImproveUserProfileSuccess();
-            }
-
-            @Override
-            protected void onFailure(int code, @NonNull String message) {
-                mView.onFailure(message);
             }
 
             @Override
@@ -72,7 +75,7 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
         if (mCall == null) {
             return;
         }
-        if (mCall.isExecuted()){
+        if (mCall.isExecuted()) {
             mCall.cancel();
         }
     }

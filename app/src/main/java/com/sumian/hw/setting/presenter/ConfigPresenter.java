@@ -1,11 +1,14 @@
 package com.sumian.hw.setting.presenter;
 
-import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.ConfigInfo;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.setting.activity.ConfigActivity;
 import com.sumian.hw.setting.contract.ConfigContract;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+import com.sumian.sd.network.response.ConfigInfo;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -63,10 +66,10 @@ public class ConfigPresenter implements ConfigContract.Presenter {
             view.onBegin();
 
         if (configType == ConfigActivity.ABOUT_TYPE) {
-            Call<List<ConfigInfo>> call = AppManager.getHwNetEngine().getHttpService().syncConfigInfo();
+            Call<List<ConfigInfo>> call = AppManager.getHwHttpService().syncConfigInfo();
             this.mCall = call;
             ConfigContract.View finalView = view;
-            call.enqueue(new BaseResponseCallback<List<ConfigInfo>>() {
+            call.enqueue(new BaseSdResponseCallback<List<ConfigInfo>>() {
 
                 @Override
                 protected void onSuccess(List<ConfigInfo> response) {
@@ -76,9 +79,10 @@ public class ConfigPresenter implements ConfigContract.Presenter {
                 }
 
                 @Override
-                protected void onFailure(int code, String error) {
+                protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                    super.onFailure(errorResponse);
                     if (finalView == null) return;
-                    finalView.onSyncConfigInfoFailed(error);
+                    finalView.onSyncConfigInfoFailed(errorResponse.getMessage());
                 }
 
                 @Override

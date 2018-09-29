@@ -4,9 +4,10 @@ import com.blankj.utilcode.util.LogUtils
 import com.hyphenate.chat.ChatClient
 import com.hyphenate.chat.ChatManager
 import com.hyphenate.chat.Message
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.hw.leancloud.HwLeanCloudHelper
-import com.sumian.hw.network.callback.BaseResponseCallback
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 
 /**
  * <pre>
@@ -51,14 +52,16 @@ class KefuManager private constructor() {
 
             override fun onMessageSent() {
                 if (waitingSendMessage) {
-                    AppManager.getHttpService().newCustomerMessage()
-                            .enqueue(object : BaseResponseCallback<Any>() {
-                                override fun onSuccess(response: Any?) {
-                                    LogUtils.d(response)
+                    AppManager
+                            .getSdHttpService()
+                            .newCustomerMessage()
+                            .enqueue(object : BaseSdResponseCallback<Any>() {
+                                override fun onFailure(errorResponse: ErrorResponse) {
+                                    LogUtils.d(errorResponse.message)
                                 }
 
-                                override fun onFailure(code: Int, message: String?) {
-                                    LogUtils.d(message)
+                                override fun onSuccess(response: Any?) {
+                                    LogUtils.d(response)
                                 }
                             })
                     waitingSendMessage = false

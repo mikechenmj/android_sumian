@@ -1,7 +1,7 @@
 package com.sumian.common.network.interceptor
 
-import com.sumian.common.network.StatusCode.BUSINESS_ERROR
-import com.sumian.common.network.StatusCode.BUSINESS_ERROR_FOR_ALIBABA_OSS
+import com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR
+import com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR_FOR_ALIBABA_OSS
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -16,7 +16,14 @@ import okhttp3.Response
  *     version: 1.0
  * </pre>
  */
-class StatusCodeInterceptor : Interceptor {
+class StatusCodeInterceptor private constructor() : Interceptor {
+
+    companion object {
+        @JvmStatic
+        fun create(): Interceptor {
+            return StatusCodeInterceptor()
+        }
+    }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())

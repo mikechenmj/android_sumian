@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.record.FillSleepRecordActivity;
 import com.sumian.sd.record.SleepRecordActivity;
 import com.sumian.sd.record.bean.SleepRecord;
@@ -20,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 
 /**
@@ -98,17 +98,18 @@ public class SimpleSleepRecordView extends LinearLayout {
     }
 
     public void querySleepRecord() {
-        Call<SleepRecord> call = AppManager.getHttpService().getSleepDiaryDetail((int) (System.currentTimeMillis() / 1000L));
-        call.enqueue(new BaseResponseCallback<SleepRecord>() {
+        Call<SleepRecord> call = AppManager.getSdHttpService().getSleepDiaryDetail((int) (System.currentTimeMillis() / 1000L));
+        call.enqueue(new BaseSdResponseCallback<SleepRecord>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                setSleepRecord(null);
+            }
+
             @Override
             protected void onSuccess(@Nullable SleepRecord response) {
                 setSleepRecord(response);
             }
 
-            @Override
-            protected void onFailure(int code, @NotNull String message) {
-                setSleepRecord(null);
-            }
         });
     }
 }

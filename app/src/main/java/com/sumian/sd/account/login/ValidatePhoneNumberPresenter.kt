@@ -1,12 +1,13 @@
 package com.sumian.sd.account.login
 
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.sd.utils.AppUtil
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.utils.AppUtil
 
 /**
  * <pre>
@@ -35,15 +36,14 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
 
     override fun validatePhoneNumberForResetPassword(mobile: String, captcha: String) {
         view.showLoading()
-        val call = AppManager.getHttpService().validateCaptchaForResetPassword(mobile, captcha)
-        call.enqueue(object : BaseResponseCallback<Token>() {
+        val call = AppManager.getSdHttpService().validateCaptchaForResetPassword(mobile, captcha)
+        call.enqueue(object : BaseSdResponseCallback<Token>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(errorResponse.message)
+            }
 
             override fun onSuccess(response: Token?) {
                 SetPasswordActivity.launchForResetPassword(JsonUtil.toJson(response!!))
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                ToastUtils.showShort(message)
             }
 
             override fun onFinish() {
@@ -60,8 +60,12 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
         map["captcha"] = captcha
         map["type"] = 0
         map["info"] = socialInfo
-        val call = AppManager.getHttpService().bindSocial(map)
-        call.enqueue(object : BaseResponseCallback<Token>() {
+        val call = AppManager.getSdHttpService().bindSocial(map)
+        call.enqueue(object : BaseSdResponseCallback<Token>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(errorResponse.message)
+            }
+
             override fun onSuccess(response: Token?) {
                 if (response == null) {
                     ToastUtils.showShort(R.string.error)
@@ -73,10 +77,6 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
                 } else {
                     SetPasswordActivity.launch()
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                ToastUtils.showShort(message)
             }
 
             override fun onFinish() {

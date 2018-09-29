@@ -5,11 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.base.SdBasePresenter
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.order.OrderDetail
 import com.sumian.sd.utils.TimeUtil
 import kotlinx.android.synthetic.main.activity_refund.*
@@ -58,15 +59,16 @@ class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
 
     override fun initData() {
         super.initData()
-        val call = AppManager.getHttpService().getOrderDetail(mOrderNo)
+        val call = AppManager.getSdHttpService().getOrderDetail(mOrderNo)
         addCall(call)
-        call.enqueue(object : BaseResponseCallback<OrderDetail>() {
+        call.enqueue(object : BaseSdResponseCallback<OrderDetail>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+
+            }
+
             override fun onSuccess(response: OrderDetail?) {
                 if (response == null) return
                 setOrderInfo(response)
-            }
-
-            override fun onFailure(code: Int, message: String) {
             }
         })
     }

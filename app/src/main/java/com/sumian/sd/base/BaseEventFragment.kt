@@ -16,7 +16,7 @@ abstract class BaseEventFragment<BasePresenter : HwBasePresenter> : SkinBaseFrag
     override fun onStart() {
         super.onStart()
         if (openEventBus()) {
-            // EventBusUtil.register(this)
+            // EventBusUtil.create(this)
         }
     }
 

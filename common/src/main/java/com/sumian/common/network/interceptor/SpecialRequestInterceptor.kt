@@ -16,7 +16,14 @@ import okhttp3.ResponseBody
  *     version: 1.0
  * </pre>
  */
-class SpecialRequestInterceptor : Interceptor {
+class SpecialRequestInterceptor private constructor() : Interceptor {
+
+    companion object {
+        @JvmStatic
+        fun create(): Interceptor {
+            return SpecialRequestInterceptor()
+        }
+    }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()

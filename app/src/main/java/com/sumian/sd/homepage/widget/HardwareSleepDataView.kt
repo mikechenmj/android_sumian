@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.hw.base.HwBasePresenter
 import com.sumian.hw.report.ReportActivity
 import com.sumian.hw.report.base.BaseResultResponse
@@ -13,6 +14,7 @@ import com.sumian.hw.report.bean.DailyMeta
 import com.sumian.hw.report.bean.DailyReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.lay_no_sleep_data.view.*
 import kotlinx.android.synthetic.main.view_hardware_sleep_data.view.*
 
@@ -78,17 +80,19 @@ class HardwareSleepDataView(context: Context, attributeSet: AttributeSet? = null
         map["date"] = System.currentTimeMillis() / 1000
         map["page_size"] = 1
         map["is_include"] = 1
-        val call = AppManager.getHwV1HttpService().getTodaySleepReport(map)
+        val call = AppManager.getHwHttpService().getTodaySleepReport(map)
         HwBasePresenter.mCalls.add(call)
-        call.enqueue(object : com.sumian.hw.network.callback.BaseResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {
-            override fun onSuccess(response: BaseResultResponse<DailyReport, DailyMeta>) {
-                val data = response.data
-                val dailyReport = if (data != null && data.size > 0) data[0] else null
-                setDailyReport(dailyReport)
+        call.enqueue(object : BaseSdResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(errorResponse.message)
             }
 
-            override fun onFailure(code: Int, error: String) {
-                ToastUtils.showShort(error)
+            override fun onSuccess(response: BaseResultResponse<DailyReport, DailyMeta>?) {
+                response?.let {
+                    val data = response.data
+                    val dailyReport = if (data != null && data.size > 0) data[0] else null
+                    setDailyReport(dailyReport)
+                }
             }
         })
     }

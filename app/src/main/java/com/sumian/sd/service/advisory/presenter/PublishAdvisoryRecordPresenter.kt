@@ -14,15 +14,16 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.alibaba.sdk.android.oss.model.ObjectMetadata
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.BuildConfig
-import com.sumian.sd.service.advisory.bean.Advisory
-import com.sumian.sd.service.advisory.bean.PictureOssSts
-import com.sumian.sd.service.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.network.body.AdvisoryRecordBody
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
+import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.service.advisory.bean.Advisory
+import com.sumian.sd.service.advisory.bean.PictureOssSts
+import com.sumian.sd.service.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sd.utils.JsonUtil
 import org.json.JSONObject
 import java.util.*
@@ -67,17 +68,17 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
             advisoryRecordBody.online_report_ids = onlineReportIds
         }
 
-        val call = AppManager.getHttpService().publishAdvisoryRecord(advisoryRecordBody)
+        val call = AppManager.getSdHttpService().publishAdvisoryRecord(advisoryRecordBody)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<Advisory>() {
+        call.enqueue(object : BaseSdResponseCallback<Advisory>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                Log.e(TAG, "上传失败")
+                mView?.onPublishAdvisoryRecordFailed(error = errorResponse.message)
+            }
+
             override fun onSuccess(response: Advisory?) {
                 AppManager.getAdvisoryViewModel().notifyAdvisory(advisory = response!!)
                 mView?.onPublishAdvisoryRecordSuccess(response)
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                Log.e(TAG, "上传失败")
-                mView?.onPublishAdvisoryRecordFailed(error = message)
             }
 
             override fun onFinish() {
@@ -100,18 +101,17 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         }
         advisoryRecordBody.picture_count = pictureCount
 
-        val call = AppManager.getHttpService().publishPicturesAdvisoryRecord(advisoryRecordBody)
+        val call = AppManager.getSdHttpService().publishPicturesAdvisoryRecord(advisoryRecordBody)
         mCalls.add(call)
 
-        call.enqueue(object : BaseResponseCallback<PictureOssSts>() {
+        call.enqueue(object : BaseSdResponseCallback<PictureOssSts>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetPublishUploadStsFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: PictureOssSts?) {
                 mPictureOssSts = response
                 mView?.onGetPublishUploadStsSuccess("准备开始上传图片,请稍后")
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onGetPublishUploadStsFailed(error = message)
             }
 
             override fun onFinish() {
@@ -129,18 +129,17 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         val map = mutableMapOf<String, Any>()
         map["include"] = "user,doctor,records"
 
-        val call = AppManager.getHttpService().getLastAdvisoryDetails(map)
+        val call = AppManager.getSdHttpService().getLastAdvisoryDetails(map)
         mCalls.add(call)
 
-        call.enqueue(object : BaseResponseCallback<Advisory>() {
+        call.enqueue(object : BaseSdResponseCallback<Advisory>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetLastAdvisoryFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: Advisory?) {
                 AppManager.getAdvisoryViewModel().notifyAdvisory(response!!)
                 mView?.onGetLastAdvisorySuccess(response)
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onGetLastAdvisoryFailed(error = message)
             }
 
             override fun onFinish() {

@@ -10,7 +10,7 @@ import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
-import com.sumian.hw.network.response.AppUpgradeInfo;
+import com.sumian.sd.network.response.AppUpgradeInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.hw.upgrade.model.VersionModel;

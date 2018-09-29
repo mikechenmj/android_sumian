@@ -2,7 +2,7 @@ package com.sumian.hw.setting.contract;
 
 import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
-import com.sumian.hw.network.request.ModifyPwdBody;
+import com.sumian.sd.network.request.ModifyPwdBody;
 
 /**
  * Created by jzz

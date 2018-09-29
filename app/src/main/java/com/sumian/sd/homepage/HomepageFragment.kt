@@ -5,6 +5,7 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.image.ImageLoader
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
@@ -18,7 +19,7 @@ import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SleepPrescription
 import com.sumian.sd.main.OnEnterListener
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
@@ -74,7 +75,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         refreshData()
     }
 
-    fun refreshData() {
+    private fun refreshData() {
         queryCbti()
         querySleepRecord()
         queryDailyReport()
@@ -83,15 +84,15 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     private fun querySleepPrescription() {
         SPUtils.getInstance().put(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, System.currentTimeMillis())
-        val call = AppManager.getHttpService().getSleepPrescriptions()
+        val call = AppManager.getSdHttpService().getSleepPrescriptions()
         addCall(call)
-        call.enqueue(object : BaseResponseCallback<SleepPrescription?>() {
-            override fun onSuccess(response: SleepPrescription?) {
-                sleep_prescription_view.setPrescriptionData(response)
+        call.enqueue(object : BaseSdResponseCallback<SleepPrescription?>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+
             }
 
-            override fun onFailure(code: Int, message: String) {
-
+            override fun onSuccess(response: SleepPrescription?) {
+                sleep_prescription_view.setPrescriptionData(response)
             }
         })
 
@@ -102,9 +103,13 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun queryCbti() {
-        val call = AppManager.getHttpService().getCbtiChapters(null)
+        val call = AppManager.getSdHttpService().getCbtiChapters(null)
         addCall(call)
-        call.enqueue(object : BaseResponseCallback<GetCbtiChaptersResponse>() {
+        call.enqueue(object : BaseSdResponseCallback<GetCbtiChaptersResponse>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+
+            }
+
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
                 val isLock = response?.meta?.isLock != false
                 dsiv_cbti.visibility = if (isLock) View.VISIBLE else View.GONE
@@ -114,14 +119,10 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 }
             }
 
-            override fun onFailure(code: Int, message: String) {
-
-            }
-
         })
     }
 
-    fun queryDailyReport() {
+    private fun queryDailyReport() {
         sleep_data_pager_view.queryDailyReport()
     }
 

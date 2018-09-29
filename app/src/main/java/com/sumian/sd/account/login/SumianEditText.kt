@@ -5,9 +5,7 @@ import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import com.scwang.smartrefresh.layout.listener.OnStateChangedListener
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.sumain_edit_text.view.*
 

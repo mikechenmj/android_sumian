@@ -3,22 +3,23 @@ package com.sumian.sd.onlinereport;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseActivity;
-import com.sumian.sd.h5.SimpleWebActivity;
-import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.network.response.PaginationResponse;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.error.EmptyErrorView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,32 +129,31 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     }
 
     private void loadOnlineReports() {
-        Call<PaginationResponse<OnlineReport>> call = AppManager.getHttpService().getReports(mPage, PER_PAGE);
+        Call<PaginationResponse<OnlineReport>> call = AppManager.getSdHttpService().getReports(mPage, PER_PAGE);
         addCall(call);
-        call
-                .enqueue(new BaseResponseCallback<PaginationResponse<OnlineReport>>() {
-                    @Override
-                    protected void onSuccess(PaginationResponse<OnlineReport> response) {
-                        LogUtils.d(response);
-                        List<OnlineReport> reportList = response.data;
-                        mAdapter.addData(reportList);
-                        mPage++;
-                        if (reportList.size() < PER_PAGE) {
-                            mAdapter.setEnableLoadMore(false);
-                        }
-                    }
+        call.enqueue(new BaseSdResponseCallback<PaginationResponse<OnlineReport>>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                LogUtils.d(errorResponse.getMessage());
+            }
 
-                    @Override
-                    protected void onFailure(int code, @NonNull String message) {
-                        LogUtils.d(message);
-                    }
+            @Override
+            protected void onSuccess(PaginationResponse<OnlineReport> response) {
+                LogUtils.d(response);
+                List<OnlineReport> reportList = response.data;
+                mAdapter.addData(reportList);
+                mPage++;
+                if (reportList.size() < PER_PAGE) {
+                    mAdapter.setEnableLoadMore(false);
+                }
+            }
 
-                    @Override
-                    protected void onFinish() {
-                        super.onFinish();
-                        mAdapter.loadMoreComplete();
-                    }
-                });
+            @Override
+            protected void onFinish() {
+                super.onFinish();
+                mAdapter.loadMoreComplete();
+            }
+        });
     }
 
     @Override

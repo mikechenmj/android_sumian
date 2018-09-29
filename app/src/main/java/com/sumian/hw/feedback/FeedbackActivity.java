@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.sdk.android.oss.ClientException;
@@ -17,17 +16,19 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.utils.ColorCompatUtil;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -102,9 +103,9 @@ public class FeedbackActivity extends HwBaseActivity {
 
             LogManager.appendPhoneUSerAgentLog();
 
-            AppManager.getHwV1HttpService()
+            AppManager.getHwHttpService()
                     .feedback(input, "txt")
-                    .enqueue(new BaseResponseCallback<OssResponse>() {
+                    .enqueue(new BaseSdResponseCallback<OssResponse>() {
 
                         @Override
                         protected void onSuccess(OssResponse response) {
@@ -115,8 +116,10 @@ public class FeedbackActivity extends HwBaseActivity {
                         }
 
                         @Override
-                        protected void onFailure(int code, String error) {
-                            showToast(error);
+                        protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                            super.onFailure(errorResponse);
+                            showToast(errorResponse.getMessage());
+
                         }
                     });
         });

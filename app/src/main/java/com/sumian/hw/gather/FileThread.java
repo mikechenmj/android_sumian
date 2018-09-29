@@ -8,16 +8,18 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.sumian.blue.manager.BlueManager;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.common.util.StreamUtil;
-import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.request.RawDataBody;
-import com.sumian.hw.network.request.UploadFileBody;
-import com.sumian.hw.network.response.FileLength;
-import com.sumian.hw.network.response.RawData;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+import com.sumian.sd.network.request.RawDataBody;
+import com.sumian.sd.network.request.UploadFileBody;
+import com.sumian.sd.network.response.FileLength;
+import com.sumian.sd.network.response.RawData;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -146,8 +148,6 @@ public class FileThread extends HandlerThread {
 
             uploadFile(what, dataType, delayMills, data);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -160,15 +160,19 @@ public class FileThread extends HandlerThread {
         if (!BlueManager.init().getBluePeripheral().isConnected()) return;
 
         Call<RawData> emgCall = AppManager
-            .getHwNetEngine()
-            .getHttpService()
-            .uploadRawData(new RawDataBody()
-                .setType(dataType)
-                .setCmd_created_at(String.valueOf(mUnixTime))
-                .setData(data)
-                .setMac(BlueManager.init().getBluePeripheral().getMac()));
+                .getHwHttpService()
+                .uploadRawData(new RawDataBody()
+                        .setType(dataType)
+                        .setCmd_created_at(String.valueOf(mUnixTime))
+                        .setData(data)
+                        .setMac(BlueManager.init().getBluePeripheral().getMac()));
 
-        emgCall.enqueue(new BaseResponseCallback<RawData>() {
+        emgCall.enqueue(new BaseSdResponseCallback<RawData>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                uploadFile(what, dataType, delayMills, data);
+            }
+
             @Override
             protected void onSuccess(RawData response) {
                 long fileLength = response.getFile_length();
@@ -177,12 +181,6 @@ public class FileThread extends HandlerThread {
                 message.obj = fileLength;
                 //Log.e(TAG, "onSuccess: ------>" + fileLength + " dataType=" + dataType);
                 mHandler.sendMessageDelayed(message, delayMills);
-            }
-
-            @Override
-            protected void onFailure(int code, String error) {
-                // Log.e(TAG, "onFailure: ------->" + error);
-                uploadFile(what, dataType, delayMills, data);
             }
 
             @Override
@@ -196,32 +194,36 @@ public class FileThread extends HandlerThread {
 
         List<UploadFileBody> uploadFileBodies = new ArrayList<>();
         UploadFileBody emgFileBody = new UploadFileBody()
-            .setType("emg")
-            .setCmd_created_at(String.valueOf(mUnixTime))
-            .setMac(BlueManager.init().getBluePeripheral().getMac());
+                .setType("emg")
+                .setCmd_created_at(String.valueOf(mUnixTime))
+                .setMac(BlueManager.init().getBluePeripheral().getMac());
 
         uploadFileBodies.add(emgFileBody);
 
         UploadFileBody pulseFileBody = new UploadFileBody()
-            .setType("pulse")
-            .setCmd_created_at(String.valueOf(mUnixTime))
-            .setMac(BlueManager.init().getBluePeripheral().getMac());
+                .setType("pulse")
+                .setCmd_created_at(String.valueOf(mUnixTime))
+                .setMac(BlueManager.init().getBluePeripheral().getMac());
 
         uploadFileBodies.add(pulseFileBody);
 
         UploadFileBody speedFileBody = new UploadFileBody()
-            .setType("speed")
-            .setCmd_created_at(String.valueOf(mUnixTime))
-            .setMac(BlueManager.init().getBluePeripheral().getMac());
+                .setType("speed")
+                .setCmd_created_at(String.valueOf(mUnixTime))
+                .setMac(BlueManager.init().getBluePeripheral().getMac());
 
         uploadFileBodies.add(speedFileBody);
 
         Call<List<FileLength>> emgCall = AppManager
-            .getHwNetEngine()
-            .getHttpService()
-            .getRawFileLength(uploadFileBodies);
+                .getHwHttpService()
+                .getRawFileLength(uploadFileBodies);
 
-        emgCall.enqueue(new BaseResponseCallback<List<FileLength>>() {
+        emgCall.enqueue(new BaseSdResponseCallback<List<FileLength>>() {
+
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+
+            }
 
             @Override
             protected void onSuccess(List<FileLength> response) {
@@ -247,11 +249,6 @@ public class FileThread extends HandlerThread {
                     }
                     tryReadFile(msgWhat, fileLength, delayMills);
                 }
-
-            }
-
-            @Override
-            protected void onFailure(int code, String error) {
 
             }
 

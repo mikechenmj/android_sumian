@@ -1,8 +1,8 @@
 package com.sumian.sd.service.tel.presenter
 
-import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingDetailContract
 
@@ -37,9 +37,9 @@ class TelBookingDetailPresenter private constructor(view: TelBookingDetailContra
         val map = mutableMapOf<String, Any>()
         map["include"] = "package.servicePackage"
 
-        val call = AppManager.getHttpService().getTelBookingDetail(telBookingId = telBookingId, map = map)
+        val call = AppManager.getSdHttpService().getTelBookingDetail(telBookingId = telBookingId, map = map)
 
-        call.enqueue(object : BaseResponseCallback<TelBooking>() {
+        call.enqueue(object : BaseSdResponseCallback<TelBooking>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onGetTelBookingDetailFailed(error = errorResponse.message)

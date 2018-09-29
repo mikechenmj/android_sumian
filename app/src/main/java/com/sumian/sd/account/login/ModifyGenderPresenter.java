@@ -1,9 +1,11 @@
 package com.sumian.sd.account.login;
 
-import com.sumian.hw.network.api.SleepyApi;
-import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -20,18 +22,12 @@ import retrofit2.Call;
 
 public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
 
-    private static final String TAG = ModifyGenderPresenter.class.getSimpleName();
-
     private WeakReference<ModifyUserInfoContract.View<UserInfo>> mViewWeakReference;
-    private WeakReference<SleepyApi> mApiWeakReference;
     private Call mCall;
 
     private ModifyGenderPresenter(ModifyUserInfoContract.View<UserInfo> view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
-        this.mApiWeakReference = new WeakReference<>(AppManager
-            .getHwNetEngine()
-            .getHttpService());
     }
 
     public static void init(ModifyUserInfoContract.View<UserInfo> view) {
@@ -57,26 +53,22 @@ public class ModifyGenderPresenter implements ModifyUserInfoContract.Presenter {
         ModifyUserInfoContract.View<UserInfo> view = viewWeakReference.get();
         if (view == null) return;
 
-        WeakReference<SleepyApi> apiWeakReference = this.mApiWeakReference;
-        SleepyApi sleepyApi = apiWeakReference.get();
-        if (sleepyApi == null) return;
-
         view.onBegin();
 
         Map<String, Object> map = new HashMap<>();
         map.put(formKey, formValue);
         map.put("include", "doctor");
-        Call<UserInfo> call = sleepyApi.doModifyUserInfo(map);
-        call.enqueue(new BaseResponseCallback<UserInfo>() {
+        Call<UserInfo> call = AppManager.getHwHttpService().doModifyUserInfo(map);
+        call.enqueue(new BaseSdResponseCallback<UserInfo>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                view.onModifyFailed(errorResponse.getMessage());
+            }
+
             @Override
             protected void onSuccess(UserInfo response) {
                 view.onModifySuccess(response);
                 AppManager.getAccountViewModel().updateUserInfo(response);
-            }
-
-            @Override
-            protected void onFailure(int code, String error) {
-                view.onModifyFailed(error);
             }
 
             @Override

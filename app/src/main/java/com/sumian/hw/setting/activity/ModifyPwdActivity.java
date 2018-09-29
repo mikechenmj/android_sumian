@@ -13,7 +13,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
-import com.sumian.hw.network.request.ModifyPwdBody;
+import com.sumian.sd.network.request.ModifyPwdBody;
 import com.sumian.hw.setting.contract.ModifyPwdContract;
 import com.sumian.hw.setting.presenter.ModifyPwdPresenter;
 import com.sumian.hw.widget.TitleBar;

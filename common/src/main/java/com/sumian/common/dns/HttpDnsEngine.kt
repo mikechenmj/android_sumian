@@ -11,7 +11,7 @@ import java.net.URL
  *
  * on 2018/9/25
  *
- * desc:
+ * desc:aliyun httpDns 服务
  */
 class HttpDnsEngine : IHttpDns {
 

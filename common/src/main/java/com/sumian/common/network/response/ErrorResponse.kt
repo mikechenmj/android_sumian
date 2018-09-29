@@ -15,6 +15,7 @@ import com.sumian.common.network.error.ErrorInfo499
 data class ErrorResponse(var code: Int, var message: String) {
 
     companion object {
+        @JvmStatic
         fun createFromErrorInfo(errorInfo: ErrorInfo499?): ErrorResponse? {
             if (errorInfo == null) {
                 return null
@@ -22,6 +23,7 @@ data class ErrorResponse(var code: Int, var message: String) {
             return ErrorResponse(errorInfo.error.code, errorInfo.error.userMessage)
         }
 
+        @JvmStatic
         fun createFromErrorInfo(errorInfo: ErrorInfo400?): ErrorResponse? {
             if (errorInfo == null) {
                 return null

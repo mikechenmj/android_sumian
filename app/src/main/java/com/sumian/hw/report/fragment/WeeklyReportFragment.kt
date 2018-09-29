@@ -10,7 +10,7 @@ import android.text.format.DateUtils
 import android.view.View
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
 import com.sumian.hw.log.LogManager
-import com.sumian.hw.network.response.SleepDurationReport
+import com.sumian.sd.network.response.SleepDurationReport
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.report.adapter.WeeklyReportAdapter
 import com.sumian.hw.report.calendar.CalendarDialog

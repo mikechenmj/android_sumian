@@ -1,11 +1,11 @@
 package com.sumian.sd.setting.remind
 
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseActivity
-import com.sumian.hw.network.callback.BaseResponseCallback
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.setting.remind.bean.Reminder
 import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import kotlinx.android.synthetic.main.activity_remind_setting.*
@@ -29,8 +29,14 @@ class RemindSettingActivity : BaseActivity() {
     }
 
     private fun querySleepDiaryReminder() {
-        AppManager.getHttpService().getReminderList(2)
-                .enqueue(object : BaseResponseCallback<ReminderListResponse>() {
+        AppManager
+                .getSdHttpService()
+                .getReminderList(2)
+                .enqueue(object : BaseSdResponseCallback<ReminderListResponse>() {
+                    override fun onFailure(errorResponse: ErrorResponse) {
+                        LogUtils.d(errorResponse.message)
+                    }
+
                     override fun onSuccess(response: ReminderListResponse?) {
                         mReminder = response?.getReminder()
                         sdv_sleep_diary_remind.setContent(
@@ -40,9 +46,6 @@ class RemindSettingActivity : BaseActivity() {
                                     mReminder!!.getReminderHHmm())
                     }
 
-                    override fun onFailure(code: Int, message: String?) {
-                        LogUtils.d(message)
-                    }
                 })
     }
 }

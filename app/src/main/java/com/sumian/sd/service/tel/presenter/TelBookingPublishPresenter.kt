@@ -2,9 +2,9 @@ package com.sumian.sd.service.tel.presenter
 
 import android.text.TextUtils
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
-import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingPublishContract
 
@@ -40,9 +40,9 @@ class TelBookingPublishPresenter private constructor(view: TelBookingPublishCont
 
         map["include"] = "package.servicePackage"
 
-        val call = AppManager.getHttpService().getLatestTelBookingDetail(map = map)
+        val call = AppManager.getSdHttpService().getLatestTelBookingDetail(map = map)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<TelBooking>() {
+        call.enqueue(object : BaseSdResponseCallback<TelBooking>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onGetLatestTelBookingOrderFailed(error = errorResponse.message)
@@ -74,9 +74,9 @@ class TelBookingPublishPresenter private constructor(view: TelBookingPublishCont
             map["include"] = "package.servicePackage"
         }
 
-        val call = AppManager.getHttpService().publishTelBooking(telBookingId, map = map)
+        val call = AppManager.getSdHttpService().publishTelBooking(telBookingId, map = map)
 
-        call.enqueue(object : BaseResponseCallback<TelBooking>() {
+        call.enqueue(object : BaseSdResponseCallback<TelBooking>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onPublishTelBookingOrderFailed(error = errorResponse.message)
             }

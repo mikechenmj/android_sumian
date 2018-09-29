@@ -49,7 +49,7 @@
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:icon,android:theme,android:name,android:label">
+        tools:replace="android:theme,android:label">
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="@string/umeng_app_key" />
@@ -165,9 +165,23 @@
             android:screenOrientation="behind"
             android:theme="@style/BaseAppTheme" />
 
+        <service
+            android:name="com.sumian.hw.log.LogJobIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
         <service android:name="com.avos.avoscloud.PushService" />
+
+        <receiver
+            android:name="com.sumian.hw.push.PushReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.tech.sumian.action.PUSH" />
+            </intent-filter>
+        </receiver>
 
         <receiver
             android:name=".notification.push.PushReceiver"
@@ -475,24 +489,6 @@
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
-        <!-- 实时通信模块、推送（均需要加入以下声明） START -->
-        <!-- 实时通信模块、推送都要使用 PushService -->
-        <service android:name="com.avos.avoscloud.PushService" />
-        <service
-            android:name="com.sumian.hw.log.LogJobIntentService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <receiver
-            android:name="com.sumian.hw.push.PushReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="com.tech.sumian.action.PUSH" />
-            </intent-filter>
-        </receiver>
-        <!-- Hw end -->
-
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
@@ -551,6 +547,7 @@
         <service
             android:name="com.sumian.hw.device.pattern.SyncPatternService"
             android:exported="false" />
+
         <activity android:name=".service.diary.DiaryEvaluationListActivity" />
         <activity android:name=".service.diary.DiaryEvaluationDetailActivity" />
         <activity

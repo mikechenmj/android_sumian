@@ -5,17 +5,19 @@ import android.text.TextUtils;
 
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.network.error.ErrorCode;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
-import com.sumian.hw.network.api.SleepyApi;
-import com.sumian.hw.network.callback.BaseResponseCallback;
-import com.sumian.hw.network.response.AppUpgradeInfo;
-import com.sumian.hw.network.response.FirmwareInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+import com.sumian.sd.network.response.AppUpgradeInfo;
+import com.sumian.sd.network.response.FirmwareInfo;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -61,18 +63,22 @@ public class VersionPresenter implements VersionContract.Presenter {
         if (mViewWeakReference != null) {
             view = this.mViewWeakReference.get();
         }
-        SleepyApi sleepyApi = AppManager.getHwNetEngine().getHttpService();
-        if (sleepyApi == null) return;
-
         if (view != null) {
             view.onBegin();
         }
 
-        Call<FirmwareInfo> call = sleepyApi.syncFirmwareInfo();
+        Call<FirmwareInfo> call = AppManager.getHwHttpService().syncFirmwareInfo();
 
         VersionContract.View finalView = view;
 
-        call.enqueue(new BaseResponseCallback<FirmwareInfo>() {
+        call.enqueue(new BaseSdResponseCallback<FirmwareInfo>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                if (finalView != null) {
+                    finalView.onFailure(errorResponse.getMessage());
+                }
+            }
+
             @Override
             protected void onSuccess(FirmwareInfo response) {
 
@@ -98,13 +104,6 @@ public class VersionPresenter implements VersionContract.Presenter {
             }
 
             @Override
-            protected void onFailure(int code, String error) {
-                if (finalView != null) {
-                    finalView.onFailure(error);
-                }
-            }
-
-            @Override
             protected void onFinish() {
                 if (finalView != null) {
                     finalView.onFinish();
@@ -114,7 +113,7 @@ public class VersionPresenter implements VersionContract.Presenter {
 
     }
 
-    private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) throws CloneNotSupportedException {
+    private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
         if (view == null) return;
         boolean isConnected;
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
@@ -174,9 +173,6 @@ public class VersionPresenter implements VersionContract.Presenter {
             view = mViewWeakReference.get();
         }
 
-        SleepyApi sleepyApi = AppManager.getHwNetEngine().getHttpService();
-        if (sleepyApi == null) return;
-
         Map<String, String> map = new HashMap<>();
 
         PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
@@ -184,11 +180,24 @@ public class VersionPresenter implements VersionContract.Presenter {
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
 
-        Call<AppUpgradeInfo> call = sleepyApi.syncUpgradeAppInfo(map);
+        Call<AppUpgradeInfo> call = AppManager.getHwHttpService().syncUpgradeAppInfo(map);
 
         VersionContract.View finalView = view;
 
-        call.enqueue(new BaseResponseCallback<AppUpgradeInfo>() {
+        call.enqueue(new BaseSdResponseCallback<AppUpgradeInfo>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                if (errorResponse.getCode() == ErrorCode.NOT_FOUND) {
+                    AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
+                    appUpgradeInfo.version = packageInfo.versionName;
+                    if (finalView != null)
+                        finalView.onSyncAppVersionCallback(appUpgradeInfo);
+                    AppManager.getVersionModel().notifyAppDot(false);
+                } else if (finalView != null) {
+                    finalView.onFailure(errorResponse.getMessage());
+                }
+            }
+
             @Override
             protected void onSuccess(AppUpgradeInfo response) {
 
@@ -215,19 +224,6 @@ public class VersionPresenter implements VersionContract.Presenter {
                 }
 
                 AppManager.getVersionModel().setAppUpgradeInfo(appUpgradeInfo);
-            }
-
-            @Override
-            protected void onFailure(int code, String error) {
-                if (code == ErrorCode.NOT_FOUND) {
-                    AppUpgradeInfo appUpgradeInfo = new AppUpgradeInfo();
-                    appUpgradeInfo.version = packageInfo.versionName;
-                    if (finalView != null)
-                        finalView.onSyncAppVersionCallback(appUpgradeInfo);
-                    AppManager.getVersionModel().notifyAppDot(false);
-                } else if (finalView != null) {
-                    finalView.onFailure(error);
-                }
             }
 
             @Override

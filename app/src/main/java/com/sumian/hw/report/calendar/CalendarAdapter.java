@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.network.callback.BaseResponseCallback;
 import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -122,15 +121,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     if (!isRead) {
                         Map<String, Object> map = new HashMap<>(0);
                         map.put("id", String.valueOf(report.id));
-                        AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<ReadSleepRecordEvaluationResponse>() {
-                            @Override
-                            protected void onSuccess(ReadSleepRecordEvaluationResponse response) {
-                            }
+                        AppManager
+                                .getHwHttpService()
+                                .readDayDoctorValuation(map)
+                                .enqueue(new BaseSdResponseCallback<ReadSleepRecordEvaluationResponse>() {
+                                    @Override
+                                    protected void onSuccess(ReadSleepRecordEvaluationResponse response) {
+                                    }
 
-                            @Override
-                            protected void onFailure(int code, String error) {
-                            }
-                        });
+                                });
                     }
                     if (mOnCalenderListener != null) {
                         mOnCalenderListener.showCalender(timeInMillis / 1000);
@@ -253,19 +252,18 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     }
                     setCalendarViewData(mItem);
                     Map<String, Object> map = new HashMap<>(0);
-                    AppManager.getHwV1HttpService().readDayDoctorValuation(map).enqueue(new BaseResponseCallback<ReadSleepRecordEvaluationResponse>() {
+                    AppManager
+                            .getHwHttpService()
+                            .readDayDoctorValuation(map)
+                            .enqueue(new BaseSdResponseCallback<ReadSleepRecordEvaluationResponse>() {
 
-                        @Override
-                        protected void onSuccess(ReadSleepRecordEvaluationResponse response) {
-                            mCalenderView.setDrawDotDays(new int[]{});
-                            mCalenderView.invalidate();
-                        }
+                                @Override
+                                protected void onSuccess(ReadSleepRecordEvaluationResponse response) {
+                                    mCalenderView.setDrawDotDays(new int[]{});
+                                    mCalenderView.invalidate();
+                                }
 
-                        @Override
-                        protected void onFailure(int code, String message) {
-                            LogUtils.d(message);
-                        }
-                    });
+                            });
                     break;
                 default:
                     break;

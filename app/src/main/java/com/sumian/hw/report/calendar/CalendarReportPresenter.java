@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
-import com.sumian.hw.network.callback.BaseResponseCallback;
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -164,10 +167,10 @@ public class CalendarReportPresenter implements CalendarReportContract.Presenter
         map.put("page_size", 3);
         map.put("is_include", isInclude ? 1 : 0);
 
-        Call<JsonObject> call = AppManager.getHwV1HttpService().getCalendarSleepReport(map);
+        Call<JsonObject> call = AppManager.getHwHttpService().getCalendarSleepReport(map);
         mCalls.add(call);
 
-        call.enqueue(new BaseResponseCallback<JsonObject>() {
+        call.enqueue(new BaseSdResponseCallback<JsonObject>() {
 
             @SuppressWarnings("unchecked")
             @Override
@@ -213,8 +216,9 @@ public class CalendarReportPresenter implements CalendarReportContract.Presenter
             }
 
             @Override
-            protected void onFailure(int code, String error) {
-                mView.onFailure(error);
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                super.onFailure(errorResponse);
+                mView.onFailure(errorResponse.getMessage());
             }
 
             @Override

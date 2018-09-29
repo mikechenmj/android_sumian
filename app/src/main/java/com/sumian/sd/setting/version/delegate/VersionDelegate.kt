@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.sd.setting.version.delegate
 
 import android.app.Activity

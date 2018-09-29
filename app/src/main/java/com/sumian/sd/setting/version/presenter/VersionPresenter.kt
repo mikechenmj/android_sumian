@@ -1,8 +1,10 @@
 package com.sumian.sd.setting.version.presenter
 
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.base.SdBasePresenter.mCalls
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.utils.UiUtils
@@ -44,7 +46,13 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
             currentVersion = currentVersion.subSequence(0, currentVersion.indexOf("-")).toString()
         }
 
-        AppManager.getHttpService().getAppVersion(currentVersion = currentVersion).enqueue(object : BaseResponseCallback<Version>() {
+        val call = AppManager.getSdHttpService().getAppVersion(currentVersion = currentVersion)
+        mCalls.add(call)
+
+        call.enqueue(object : BaseSdResponseCallback<Version>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onGetVersionFailed(error = errorResponse.message)
+            }
 
             override fun onSuccess(response: Version?) {
                 response?.let { it ->
@@ -66,10 +74,6 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
                         mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.description)
                     }
                 }
-            }
-
-            override fun onFailure(code: Int, message: String) {
-                mView?.onGetVersionFailed(error = message)
             }
 
             override fun onFinish() {

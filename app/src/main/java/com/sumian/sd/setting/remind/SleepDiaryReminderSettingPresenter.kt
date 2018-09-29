@@ -1,8 +1,9 @@
 package com.sumian.sd.setting.remind
 
 import com.blankj.utilcode.util.LogUtils
-import com.sumian.hw.network.callback.BaseResponseCallback
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.setting.remind.bean.Reminder
 import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import retrofit2.Call
@@ -28,44 +29,46 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
     }
 
     override fun queryReminder() {
-        val call = AppManager.getHttpService().getReminderList(2)
+        val call = AppManager.getSdHttpService().getReminderList(2)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<ReminderListResponse>() {
-            override fun onSuccess(response: ReminderListResponse?) {
-                view.updateReminder(response?.getReminder())
+        call.enqueue(object : BaseSdResponseCallback<ReminderListResponse>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d(errorResponse.message)
             }
 
-            override fun onFailure(code: Int, message: String?) {
-                LogUtils.d(message)
+            override fun onSuccess(response: ReminderListResponse?) {
+                view.updateReminder(response?.getReminder())
             }
         })
     }
 
     override fun addReminder(timeInSecond: Int) {
-        val call = AppManager.getHttpService().addReminder(remindAtInSecond = timeInSecond)
+        val call = AppManager.getSdHttpService().addReminder(remindAtInSecond = timeInSecond)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<Reminder>() {
+        call.enqueue(object : BaseSdResponseCallback<Reminder>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d(errorResponse.message)
+            }
+
             override fun onSuccess(response: Reminder?) {
                 view.updateReminder(reminder = response)
             }
 
-            override fun onFailure(code: Int, message: String?) {
-                LogUtils.d(message)
-            }
         })
     }
 
     override fun modifyReminder(reminderId: Int, timeInSecond: Int, enable: Boolean) {
-        val call = AppManager.getHttpService().modifyReminder(reminderId, timeInSecond, if (enable) 1 else 0)
+        val call = AppManager.getSdHttpService().modifyReminder(reminderId, timeInSecond, if (enable) 1 else 0)
         mCalls.add(call)
-        call.enqueue(object : BaseResponseCallback<Reminder>() {
+        call.enqueue(object : BaseSdResponseCallback<Reminder>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d(errorResponse.message)
+            }
+
             override fun onSuccess(response: Reminder?) {
                 view.updateReminder(reminder = response)
             }
 
-            override fun onFailure(code: Int, message: String?) {
-                LogUtils.d(message)
-            }
         })
     }
 }

@@ -3,7 +3,6 @@ package com.sumian.sd.record;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,20 +10,22 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
-import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.h5.SimpleWebActivity;
-import com.sumian.sd.network.callback.BaseResponseCallback;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.record.bean.SleepRecord;
 import com.sumian.sd.record.bean.SleepRecordSummary;
+import com.sumian.sd.record.calendar.calendarView.CalendarView;
+import com.sumian.sd.record.calendar.custom.SleepCalendarViewWrapper;
 import com.sumian.sd.record.widget.SleepRecordView;
 import com.sumian.sd.utils.TimeUtil;
 import com.sumian.sd.widget.dialog.ActionLoadingDialog;
-import com.sumian.sd.record.calendar.calendarView.CalendarView;
-import com.sumian.sd.record.calendar.custom.SleepCalendarViewWrapper;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -98,7 +99,7 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     }
 
     private void queryServices() {
-//        Call<DoctorService> call = AppManager.getHttpService().getServiceByType(DoctorService.SERVICE_TYPE_ADVISORY);
+//        Call<DoctorService> call = AppManager.getSdHttpService().getServiceByType(DoctorService.SERVICE_TYPE_ADVISORY);
 //        addCall(call);
 //        call.enqueue(new BaseResponseCallback<DoctorService>() {
 //            @Override
@@ -167,20 +168,19 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
         } else {
             mCalendarViewWrapper.addMonthTimes(monthTimes);
         }
-        Call<Map<String, List<SleepRecordSummary>>> call = AppManager.getHttpService().getSleepDiarySummaryList((int) (time / 1000), 1, PAGE_SIZE, 0);
+        Call<Map<String, List<SleepRecordSummary>>> call = AppManager.getSdHttpService().getSleepDiarySummaryList((int) (time / 1000), 1, PAGE_SIZE, 0);
         addCall(call);
-        call
-                .enqueue(new BaseResponseCallback<Map<String, List<SleepRecordSummary>>>() {
-                    @Override
-                    protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
-                        mCalendarViewWrapper.addSleepRecordSummaries(response);
-                    }
+        call.enqueue(new BaseSdResponseCallback<Map<String, List<SleepRecordSummary>>>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+            }
 
-                    @Override
-                    protected void onFailure(int code, @NonNull String message) {
+            @Override
+            protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
+                mCalendarViewWrapper.addSleepRecordSummaries(response);
+            }
 
-                    }
-                });
+        });
     }
 
     @OnClick({
@@ -223,28 +223,27 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
         mSleepRecordView.setTime(time);
         mActionLoadingDialog = new ActionLoadingDialog();
         mActionLoadingDialog.show(getFragmentManager());
-        Call<SleepRecord> call = AppManager.getHttpService().getSleepDiaryDetail((int) (time / 1000L));
+        Call<SleepRecord> call = AppManager.getSdHttpService().getSleepDiaryDetail((int) (time / 1000L));
         addCall(call);
-        call
-                .enqueue(new BaseResponseCallback<SleepRecord>() {
-                    @Override
-                    protected void onSuccess(SleepRecord response) {
-                        updateSleepRecordView(response);
-                    }
+        call.enqueue(new BaseSdResponseCallback<SleepRecord>() {
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                updateSleepRecordView(null);
+            }
 
-                    @Override
-                    protected void onFailure(int code, @NonNull String message) {
-                        updateSleepRecordView(null);
-                    }
+            @Override
+            protected void onSuccess(SleepRecord response) {
+                updateSleepRecordView(response);
+            }
 
-                    @Override
-                    protected void onFinish() {
-                        super.onFinish();
-                        if (mActionLoadingDialog != null) {
-                            mActionLoadingDialog.dismiss();
-                        }
-                    }
-                });
+            @Override
+            protected void onFinish() {
+                super.onFinish();
+                if (mActionLoadingDialog != null) {
+                    mActionLoadingDialog.dismiss();
+                }
+            }
+        });
     }
 
     private void updateSleepRecordView(SleepRecord response) {

@@ -1,13 +1,13 @@
 package com.sumian.sd.account.login
 
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.sd.utils.AppUtil
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.leancloud.LeanCloudManager
-import com.sumian.sd.network.callback.BaseResponseCallback
+import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.utils.AppUtil
 import java.lang.ref.WeakReference
 
 /**
@@ -19,6 +19,7 @@ import java.lang.ref.WeakReference
  * </pre>
  */
 class LoginHelper {
+
     companion object {
         fun onLoginSuccess(token: Token?) {
             if (token == null) {
@@ -41,15 +42,15 @@ class LoginHelper {
         fun requestCaptcha(mobile: String, listener: RequestCaptchaListener) {
             val listenerWf = WeakReference<RequestCaptchaListener>(listener)
             listener.onStart()
-            val call = AppManager.getHttpService().getCaptcha(mobile)
-            call.enqueue(object : BaseResponseCallback<Unit>() {
-                override fun onSuccess(response: Unit?) {
-                    ToastUtils.showShort(R.string.captcha_send_success)
+            val call = AppManager.getSdHttpService().getCaptcha(mobile)
+            call.enqueue(object : BaseSdResponseCallback<Unit>() {
+                override fun onFailure(errorResponse: ErrorResponse) {
+                    ToastUtils.showShort(errorResponse.message)
+                    listenerWf.get()?.onSuccess()
                 }
 
-                override fun onFailure(code: Int, message: String) {
-                    ToastUtils.showShort(message)
-                    listenerWf.get()?.onSuccess()
+                override fun onSuccess(response: Unit?) {
+                    ToastUtils.showShort(R.string.captcha_send_success)
                 }
 
                 override fun onFinish() {
