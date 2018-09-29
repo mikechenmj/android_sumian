@@ -18,26 +18,26 @@ import com.sumian.sd.network.interceptor.TokenAuthInterceptor
 class NetworkManager private constructor() {
 
     private val mSdApi: SdApi  by lazy {
-        NetEngine.NetEngineBuilder<SdApi>()
+        NetEngine.NetEngineBuilder()
                 .isDebug(BuildConfig.DEBUG)
-                .addBaseNetApi(SdApi::class.java)
-                .addBaseUrl(BuildConfig.BASE_URL)
-                .addDns(SdHttpDns.create())
+                .baseUrl(BuildConfig.BASE_URL)
+                .dns(SdHttpDns.create())
                 .addInterceptor(TokenAuthInterceptor.create()
                         , NormalInterceptor.create())
-                .build().getNetEngineApi()
+                .build()
+                .create(SdApi::class.java)
     }
 
     private val mHwApi: HwApi  by lazy {
-        NetEngine.NetEngineBuilder<HwApi>()
+        NetEngine.NetEngineBuilder()
                 .isDebug(BuildConfig.DEBUG)
-                .addBaseNetApi(HwApi::class.java)
-                .addBaseUrl(BuildConfig.HW_BASE_URL)
-                .addDns(SdHttpDns.create())
+                .baseUrl(BuildConfig.HW_BASE_URL)
+                .dns(SdHttpDns.create())
                 .addInterceptor(TokenAuthInterceptor.create()
                         , NormalInterceptor.create()
                         , HwDeviceInfoInterceptor.create())
-                .build().getNetEngineApi()
+                .build()
+                .create(HwApi::class.java)
     }
 
     companion object {

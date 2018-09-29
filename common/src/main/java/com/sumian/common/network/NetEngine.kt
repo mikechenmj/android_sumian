@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
  * desc: 网络引擎
  */
 
-class NetEngine<NetApi> private constructor(baseUrl: String, clx: Class<out NetApi>, isDebug: Boolean = false, dns: Dns = Dns.SYSTEM, interceptors: Array<out Interceptor>) {
+class NetEngine private constructor(baseUrl: String, isDebug: Boolean = false, dns: Dns = Dns.SYSTEM, interceptors: Array<out Interceptor>) {
 
     companion object {
 
@@ -26,10 +26,7 @@ class NetEngine<NetApi> private constructor(baseUrl: String, clx: Class<out NetA
 
     }
 
-    private var mBaseNetApi: NetApi
-
-
-    init {
+    private val mRetrofit by lazy {
 
         val okHttpClientBuilder = OkHttpClient.Builder()
                 .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
@@ -41,29 +38,34 @@ class NetEngine<NetApi> private constructor(baseUrl: String, clx: Class<out NetA
                 .addInterceptor(StatusCodeInterceptor.create())
                 .addInterceptor(SpecialRequestInterceptor.create())
 
-
         interceptors.forEach {
             okHttpClientBuilder.addInterceptor(it)
         }
 
-        val retrofit = Retrofit.Builder()
+        return@lazy Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                 .callFactory(okHttpClientBuilder.build())
                 .build()
-
-        this.mBaseNetApi = retrofit.create(clx)
     }
 
-    fun getNetEngineApi(): NetApi {
-        return mBaseNetApi
+    /**
+     * 可以使用该函数获取相同 base_url 下的 retrofit e.g. 按模块去实例化不同网络请求 Api
+     */
+    fun getInstalledRetrofit(): Retrofit {
+        return mRetrofit
     }
 
-    class NetEngineBuilder<NetApi> {
+    /**
+     * 可以使用该 函数 创建一个网络请求 Api
+     */
+    fun <NetworkApi> create(clx: Class<out NetworkApi>): NetworkApi {
+        return mRetrofit.create(clx)
+    }
 
-        private var mClx: Class<out NetApi>? = null
+    class NetEngineBuilder {
 
-        private var mBaseUrl: String? = null
+        private lateinit var mBaseUrl: String
 
         private var mIsDebug = false
 
@@ -71,22 +73,17 @@ class NetEngine<NetApi> private constructor(baseUrl: String, clx: Class<out NetA
 
         private var mDns: Dns = Dns.SYSTEM
 
-        fun isDebug(isDebug: Boolean = false): NetEngineBuilder<NetApi> {
+        fun isDebug(isDebug: Boolean = false): NetEngineBuilder {
             this.mIsDebug = isDebug
             return this
         }
 
-        fun addBaseUrl(baseUrl: String): NetEngineBuilder<NetApi> {
+        fun baseUrl(baseUrl: String): NetEngineBuilder {
             this.mBaseUrl = baseUrl
             return this
         }
 
-        fun addBaseNetApi(clx: Class<out NetApi>): NetEngineBuilder<NetApi> {
-            this.mClx = clx
-            return this
-        }
-
-        fun addDns(dns: Dns = Dns.SYSTEM): NetEngineBuilder<NetApi> {
+        fun dns(dns: Dns = Dns.SYSTEM): NetEngineBuilder {
             this.mDns = dns
             return this
         }
@@ -94,13 +91,13 @@ class NetEngine<NetApi> private constructor(baseUrl: String, clx: Class<out NetA
         /**
          * you can add many interceptor   e.g. tokenInterceptor
          */
-        fun addInterceptor(vararg interceptors: Interceptor): NetEngineBuilder<NetApi> {
+        fun addInterceptor(vararg interceptors: Interceptor): NetEngineBuilder {
             this.mInterceptors = interceptors
             return this
         }
 
-        fun build(): NetEngine<NetApi> {
-            return NetEngine(this.mBaseUrl!!, this.mClx!!, this.mIsDebug, this.mDns, this.mInterceptors!!)
+        fun build(): NetEngine {
+            return NetEngine(this.mBaseUrl, this.mIsDebug, this.mDns, this.mInterceptors!!)
         }
 
     }
