@@ -1,11 +1,8 @@
 package com.sumian.sd.setting.version.presenter
 
-import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.utils.VersionUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.network.callback.BaseResponseCallback
 import com.sumian.sd.setting.version.bean.Version
 import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.utils.UiUtils
@@ -47,25 +44,32 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
             currentVersion = currentVersion.subSequence(0, currentVersion.indexOf("-")).toString()
         }
 
-        val call = AppManager.getSdHttpService().getAppVersion(currentVersion = currentVersion)
-        mCalls.add(call)
-
-        call.enqueue(object : BaseSdResponseCallback<Version>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onGetVersionFailed(error = errorResponse.message)
-            }
+        AppManager.getHttpService().getAppVersion(currentVersion = currentVersion).enqueue(object : BaseResponseCallback<Version>() {
 
             override fun onSuccess(response: Version?) {
                 response?.let { it ->
                     mView?.onGetVersionSuccess(response)
-                    var isHaveUpgrade: Boolean
+                    var isHaveUpgrade = false
+
                     it.version?.let {
+
                         val onlineVersionCodes = it.split(".")
-                        val currentVersionCodes = currentVersion.split(".")
-                        isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
+
+                        currentVersion.split(".").forEachIndexed { index, currentVersionCode
+                            ->
+                            if (currentVersionCode < onlineVersionCodes[index]) {
+                                isHaveUpgrade = true
+                                return@forEachIndexed
+                            }
+                        }
+
                         mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.description)
                     }
                 }
+            }
+
+            override fun onFailure(code: Int, message: String) {
+                mView?.onGetVersionFailed(error = message)
             }
 
             override fun onFinish() {
