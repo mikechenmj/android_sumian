@@ -47,25 +47,23 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
         AppManager.getHttpService().getAppVersion(currentVersion = currentVersion).enqueue(object : BaseResponseCallback<Version>() {
 
             override fun onSuccess(response: Version?) {
-                response?.let {
+                response?.let { it ->
                     mView?.onGetVersionSuccess(response)
+                    var isHaveUpgrade = false
+
                     it.version?.let {
 
-                        val currentVersions = currentVersion.split(".")
+                        val onlineVersionCodes = it.split(".")
 
-                        var isHaveUpgrade = false
-
-                        it.split(".").forEachIndexed { index, versionCode
+                        currentVersion.split(".").forEachIndexed { index, currentVersionCode
                             ->
-                            run {
-                                if (versionCode > currentVersions[index]) {
-                                    isHaveUpgrade = true
-                                    return@forEachIndexed
-                                }
+                            if (currentVersionCode < onlineVersionCodes[index]) {
+                                isHaveUpgrade = true
+                                return@forEachIndexed
                             }
                         }
 
-                        mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update,response.description)
+                        mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.description)
                     }
                 }
             }
