@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.utils.FragmentUtil
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.base.BaseEventActivity
@@ -63,8 +64,8 @@ class MainActivity : BaseEventActivity() {
     private val mFragmentPositionHw = 0
     private val mFragmentPositionSd = 1
     private val mFragmentTags = arrayOf(HwMainFragment::class.java.name, SdMainFragment::class.java.name)
-    private var mLaunchTabName: String? = TAB_HW_0
-    //private var mLaunchTabName: String? = if (BuildConfig.DEBUG) TAB_SD_0 else TAB_HW_0
+//    private var mLaunchTabName: String? = TAB_HW_0
+    private var mLaunchTabName: String? = if (BuildConfig.DEBUG) TAB_SD_0 else TAB_HW_0
     private var mLaunchTabData: String? = null
 
     private val mDarkPrimaryColor: Int by lazy {

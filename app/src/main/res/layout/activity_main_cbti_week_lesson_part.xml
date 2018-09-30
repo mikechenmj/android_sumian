@@ -11,7 +11,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="第一周 认识睡眠" />
+        tools:text="第一周 认识睡眠" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

@@ -8,9 +8,15 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
+import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.service.cbti.bean.CBTIDataResponse
 import com.sumian.sd.service.cbti.bean.CBTIMeta
+import com.sumian.sd.service.cbti.bean.Course
 import com.sumian.sd.service.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sd.service.cbti.fragment.CourseFragment
 import com.sumian.sd.service.cbti.fragment.ExerciseFragment
@@ -92,6 +98,23 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
                 //TODO  主动同步课程和联系的对应节的状态
             }
         })
+        initTitle()
+    }
+
+    private fun initTitle() {
+        val call = AppManager.getSdHttpService().getCBTICourseWeekPart(mChapterId)
+        call.enqueue(object : BaseSdResponseCallback<CBTIDataResponse<Course>>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(errorResponse.message)
+            }
+
+            override fun onSuccess(response: CBTIDataResponse<Course>?) {
+                response?.let {
+                    title_bar.setTitle(response.meta.chapter.title)
+                }
+            }
+        })
+        addCall(call)
     }
 
     override fun onBack(v: View?) {
