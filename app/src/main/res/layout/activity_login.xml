@@ -25,8 +25,8 @@
         android:id="@+id/et_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_20"
         android:layout_marginTop="@dimen/space_90"
+        android:layout_marginBottom="@dimen/space_20"
         app:set_hint="@string/input_phone_hint"
         app:set_input_type="number"
         app:set_validation_regex="@string/phone_number_validation_regex" />
@@ -109,9 +109,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:paddingBottom="@dimen/space_10"
-            android:paddingEnd="@dimen/space_10"
             android:paddingTop="@dimen/space_10"
+            android:paddingEnd="@dimen/space_10"
+            android:paddingBottom="@dimen/space_10"
             android:src="@drawable/sel_login_check"
             tools:ignore="RtlSymmetry" />
 
@@ -122,6 +122,25 @@
             android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="@string/app_user_agreement"
+            android:textColor="@color/b3_color"
+            android:textSize="13sp" />
+
+        <TextView
+            style="@style/WrapContent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="及"
+            android:textColor="@color/t2_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_user_privacy_policy"
+            style="@style/WrapContent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="@string/user_privacy_policy"
             android:textColor="@color/b3_color"
             android:textSize="13sp" />
 

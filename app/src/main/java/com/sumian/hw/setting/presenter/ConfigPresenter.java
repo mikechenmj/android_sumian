@@ -93,7 +93,7 @@ public class ConfigPresenter implements ConfigContract.Presenter {
         } else {
             if (view == null) return;
             view.onFinish();
-            view.onSyncUrl(configType == ConfigActivity.REGISTER_USER_AGREEMENT_TYPE ? BuildConfig.HW_USER_AGREEMENT_URL : BuildConfig.HW_PRIVACY_POLICY_URL);
+            view.onSyncUrl(configType == ConfigActivity.REGISTER_USER_AGREEMENT_TYPE ? BuildConfig.USER_AGREEMENT_URL : BuildConfig.USER_PRIVACY_POLICY_URL);
         }
 
     }

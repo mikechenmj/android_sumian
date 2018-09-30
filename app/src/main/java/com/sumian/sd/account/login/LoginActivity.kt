@@ -38,7 +38,8 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         }
         bt_login.setOnClickListener { onLoginClick() }
         iv_user_agreement.setOnClickListener { onIvUserAgreementClick() }
-        tv_user_agreement.setOnClickListener { HwSimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.HW_USER_AGREEMENT_URL) }
+        tv_user_agreement.setOnClickListener { HwSimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_AGREEMENT_URL) }
+        tv_user_privacy_policy.setOnClickListener { HwSimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_PRIVACY_POLICY_URL) }
         tv_wechat_login.setOnClickListener { wechatLogin() }
         tv_captcha_login.setOnClickListener { turnOnCaptchaLogin(true) }
         tv_password_login.setOnClickListener { turnOnCaptchaLogin(false) }

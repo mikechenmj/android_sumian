@@ -990,5 +990,6 @@
     <string name="sleep_prescription_introduction_title">睡眠处方介绍</string>
     <string name="sleep_prescription_introduction_content">速眠医生会根据过去7天的睡眠日记整理你的睡眠数据，你可以在此设置起床时间，系统帮你计算建议的上床时间。\n\n请保持过去7天内填写至少3篇以上的睡眠日记，我们将每7天为你更新一次，请认真遵守睡眠处方，你的睡眠效率会慢慢提高，当你的睡眠效率提高后，我们会逐步延长你的睡眠时长，陪你一起改善睡眠！\n\nCBTI课程内有关于睡眠处方更详细的介绍与使用方法，更多内容可通过学习CBTI课程进行了解。</string>
     <string name="none_sleep_status_data">无数据状态</string>
+    <string name="user_privacy_policy">用户隐私政策</string>
     <!-- Hw end-->
 </resources>
