@@ -114,6 +114,7 @@ public class SWebView extends BridgeWebView {
         setWebViewClient(null);
         WebSettings settings = getSettings();
         settings.setJavaScriptEnabled(false);
+        settings.setDomStorageEnabled(true);
         removeAllViews();
         super.destroy();
     }
