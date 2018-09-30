@@ -1,6 +1,7 @@
 package com.sumian.sd.setting.version.presenter
 
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.utils.VersionUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
@@ -57,20 +58,11 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
             override fun onSuccess(response: Version?) {
                 response?.let { it ->
                     mView?.onGetVersionSuccess(response)
-                    var isHaveUpgrade = false
-
+                    var isHaveUpgrade: Boolean
                     it.version?.let {
-
                         val onlineVersionCodes = it.split(".")
-
-                        currentVersion.split(".").forEachIndexed { index, currentVersionCode
-                            ->
-                            if (currentVersionCode < onlineVersionCodes[index]) {
-                                isHaveUpgrade = true
-                                return@forEachIndexed
-                            }
-                        }
-
+                        val currentVersionCodes = currentVersion.split(".")
+                        isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
                         mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.description)
                     }
                 }
