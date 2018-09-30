@@ -41,8 +41,7 @@
                 android:src="@mipmap/ic_close" />
         </FrameLayout>
 
-
-        <com.sumian.sd.widget.webview.SWebViewLayout
+        <com.sumian.common.h5.widget.SWebViewLayout
             android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_500"
