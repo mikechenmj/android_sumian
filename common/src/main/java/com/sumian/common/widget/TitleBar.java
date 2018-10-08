@@ -194,7 +194,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         setBackgroundColor(color);
     }
 
-    public void setTextColor(int color) {
+    public void setTvAndIvColor(int color) {
         mTvTitle.setTextColor(color);
         mTvMenu.setTextColor(color);
         mIvBack.setColorFilter(color);
@@ -214,7 +214,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void setIsDarkTheme(boolean isDarkTheme) {
         setBgColor(ColorCompatUtil.getColor(getContext(), isDarkTheme ? R.color.hw_colorPrimary : R.color.colorPrimary));
-        setTextColor(ColorCompatUtil.getColor(getContext(), isDarkTheme ? R.color.bt_hole_color : R.color.white));
+        setTvAndIvColor(ColorCompatUtil.getColor(getContext(), isDarkTheme ? R.color.bt_hole_color : R.color.white));
     }
 
     public interface OnMenuClickListener {
