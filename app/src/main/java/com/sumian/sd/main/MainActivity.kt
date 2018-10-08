@@ -209,6 +209,6 @@ class MainActivity : BaseEventActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addCategory(Intent.CATEGORY_HOME)
         startActivity(intent)
-        VersionDialogAlertUtils.clearAlertTime()
+//        VersionDialogAlertUtils.clearAlertTime()
     }
 }
