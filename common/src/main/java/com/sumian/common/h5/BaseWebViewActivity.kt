@@ -62,7 +62,7 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
 
     private fun registerBaseHandler(sWebView: SWebView) {
         sWebView.registerHandler("showToast", object : BridgeHandler {
-            override fun handler(data: String, function: CallBackFunction) {
+            override fun handler(data: String?, function: CallBackFunction) {
                 LogUtils.d(data)
                 val toastData = H5ShowToastData.fromJson(data)
                 if (mSumianImageTextDialog != null) {
@@ -74,7 +74,7 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
             }
         })
         sWebView.registerHandler("hideToast", object : BridgeHandler {
-            override fun handler(data: String, function: CallBackFunction) {
+            override fun handler(data: String?, function: CallBackFunction) {
                 LogUtils.d(data)
                 val toastData = H5ShowToastData.fromJson(data)
                 if (mSumianImageTextDialog != null) {
@@ -83,12 +83,12 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
             }
         })
         sWebView.registerHandler("finish", object : BridgeHandler {
-            override fun handler(data: String, function: CallBackFunction) {
+            override fun handler(data: String?, function: CallBackFunction) {
                 finish()
             }
         })
         sWebView.registerHandler("updatePageUI", object : BridgeHandler {
-            override fun handler(data: String, function: CallBackFunction) {
+            override fun handler(data: String?, function: CallBackFunction) {
                 val map = JsonUtil.fromJson<Map<String, Any>>(data, object : TypeToken<Map<String, Any>>() {
 
                 }.type) ?: return
