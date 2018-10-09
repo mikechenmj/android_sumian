@@ -40,4 +40,22 @@ class KotlinTest {
         s = 3600
         System.out.println(TimeUtil.secondToHHMM(s))
     }
+
+    @Test
+    fun test4() {
+        val current = "1.3.0.0"
+        val online = "1.2.2.0".split(".")
+
+        var isHaveVersion = true
+        current.split(".").forEachIndexed { index, version ->
+            if (version < online[index]) {
+                println("cc")
+                isHaveVersion = false
+                return@forEachIndexed
+            } else {
+                isHaveVersion = false
+            }
+        }
+        println(isHaveVersion)
+    }
 }

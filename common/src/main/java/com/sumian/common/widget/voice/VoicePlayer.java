@@ -29,6 +29,7 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     private onPlayStatusListener mStatusListener;
     private int mCurrentPosition = -1;
     private int mProgress = 0;
+    private String mFilePath = null;
     private Handler mHandler = new Handler(Looper.getMainLooper(), this);
 
     public VoicePlayer() {
@@ -93,9 +94,18 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                     notifyPause(position);
                 } else {//当前音频未在播放状态,直接播放该音频
                     //start();
-                    seekTo(progress);
-                    sendTimerMsg();
-                    notifyPlaying();
+                    if (!TextUtils.equals(mFilePath, filePath)) {//第一次加载音频
+                        if (mCurrentPosition != -1) {
+                            removeAllMsg();
+                            notifyPrePause(mCurrentPosition);
+                        }
+                        mCurrentPosition = position;
+                        play(filePath, mMediaPlayer, progress);
+                    } else {
+                        seekTo(progress);
+                        sendTimerMsg();
+                        notifyPlaying();
+                    }
                 }
 
             } else {//不是当前音频,先关闭前一个如果正在播放的音频,然后里面播放当前该音频
@@ -121,6 +131,12 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         mMediaPlayer.pause();
     }
 
+    public void stop() {
+        removeAllMsg();
+        pause();
+        notifyStop();
+    }
+
     public boolean isPlaying() {
         //try {
         return mMediaPlayer.isPlaying();
@@ -131,6 +147,7 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
     private void play(String filePath, MediaPlayer player, int progress) {
         this.mProgress = progress;
+        this.mFilePath = filePath;
         removeAllMsg();
         notifyPrepare();
         try {
@@ -214,6 +231,12 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         }
     }
 
+    private void notifyStop() {
+        if (mStatusListener != null) {
+            mStatusListener.onStopCallback(mCurrentPosition);
+        }
+    }
+
     private void notifyPrePause(int prePosition) {
         if (mStatusListener != null) {
 //            mStatusListener.onPausePreCallback(prePosition, getCurrentPlayPosition());
@@ -241,6 +264,10 @@ public class VoicePlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         void onPlayCallback(int position);
 
         void onPauseCallback(int position);
+
+        default void onStopCallback(int position) {
+
+        }
 
         void onPausePreCallback(int prePosition, int progress);
 

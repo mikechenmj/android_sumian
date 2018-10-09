@@ -111,6 +111,47 @@ class VoicePlayerView : LinearLayout, View.OnClickListener, IVisible {
         return this
     }
 
+    fun invalid(url: String, duration: Int, isRollback: Boolean, progress: Int, status: Int): VoicePlayerView {
+        this.status = status
+        iv_play.setImageResource(when (status) {
+            IDLE_STATUS -> {
+                iv_play.tag = null
+                R.drawable.ic_voice_hear_play
+            }
+            PREPARE_STATUS -> {
+                iv_play.tag = true
+                R.drawable.play_loading_animation
+            }
+            PLAYING_STATUS -> {
+                iv_play.tag = true
+                R.drawable.ic_voice_hear_suspend
+            }
+            else -> {
+                iv_play.tag = null
+                R.drawable.ic_voice_hear_play
+            }
+        })
+
+        //为什么这么做,因为 mediaPlayer  默认是毫秒级   但是服务器 返回的是 s.如果用 ms 那么动画进度看着会细腻点.所以需要特殊处理一下
+        val tmpDuration: Int = if (duration < 1000) {
+            duration * 1000
+        } else {
+            duration
+        }
+
+        tv_duration.text = formatDuration((if (isRollback) {
+            tmpDuration - progress
+        } else {
+            progress
+        }) / 1000)
+
+        sb_progress.progress = progress
+        sb_progress.max = tmpDuration
+
+        return this
+
+    }
+
     private fun formatDuration(duration: Int): String {
         val min = duration / 60
         val sec = duration % 60
