@@ -211,8 +211,8 @@ public class SumianAlertDialog {
         return this;
     }
 
-    public SumianAlertDialog setMessage(CharSequence message) {
-        mMessageCharSequence = message;
+    public SumianAlertDialog setVersionMsg(String versionMsg) {
+        mMessageCharSequence = versionMsg;
         return this;
     }
 

@@ -4,7 +4,6 @@ package com.sumian.sd.setting.version.delegate
 
 import android.app.Activity
 import android.content.DialogInterface
-import android.text.Html
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
@@ -62,10 +61,10 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
                     .hideTopIcon(true)
                     .setTitle(R.string.version_upgrade)
                     .setTheme(createTheme())
-                    .setMessage(
+                    .setVersionMsg(
                             if (TextUtils.isEmpty(versionMsg))
                                 App.getAppContext().getString(R.string.force_upgrade_version)
-                            else Html.fromHtml(versionMsg))
+                            else versionMsg)
                     .setRightBtn(R.string.sure, this)
                     .setCancelable(false)
                     .setOnKeyListener(this)
@@ -77,9 +76,9 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
                         .hideTopIcon(true)
                         .setTitle(R.string.version_upgrade)
                         .setTheme(createTheme())
-                        .setMessage(if (TextUtils.isEmpty(versionMsg))
+                        .setVersionMsg(if (TextUtils.isEmpty(versionMsg))
                             App.getAppContext().getString(R.string.have_a_new_version)
-                        else Html.fromHtml(versionMsg))
+                        else versionMsg)
                         .setLeftBtn(R.string.cancel, null)
                         .setRightBtn(R.string.sure, this)
                         .setCancelable(true)
