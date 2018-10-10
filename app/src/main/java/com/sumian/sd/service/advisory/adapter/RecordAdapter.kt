@@ -128,7 +128,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
                 }
             }
 
-            mTvQuestionTime?.text = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault()).format(Date(item.created_at * 1000L))
+            mTvQuestionTime?.text = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).format(Date(item.created_at * 1000L))
 
             mTvContent?.text = item.content
 

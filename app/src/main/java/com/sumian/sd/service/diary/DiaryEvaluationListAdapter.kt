@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
-import com.sumian.sd.service.util.ServiceTimeUtil
+import com.sumian.sd.service.util.TimeUtilV2
 
 /**
  * <pre>
@@ -21,7 +21,7 @@ class DiaryEvaluationListAdapter() : BaseQuickAdapter<DiaryEvaluationData, BaseV
     override fun convert(helper: BaseViewHolder, data: DiaryEvaluationData) {
         helper
                 .setText(R.id.tv_description, getItemDesc(data))
-                .setText(R.id.tv_time, ServiceTimeUtil.formatTimeYYYYMMDDHHMM(data.getUpdateAtInMillis()))
+                .setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMM(data.getUpdateAtInMillis()))
                 .setText(R.id.tv_status, getStatusString(data.status))
     }
 
@@ -45,7 +45,7 @@ class DiaryEvaluationListAdapter() : BaseQuickAdapter<DiaryEvaluationData, BaseV
     }
 
     private fun getYYYYMMDD(unixTime: Long): String? {
-        return ServiceTimeUtil.formatTimeYYYYMMDD(unixTime)
+        return TimeUtilV2.formatYYYYMMDD(unixTime)
     }
 
     private fun getStatusString(status: Int): String {

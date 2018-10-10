@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sd.R;
 import com.sumian.sd.notification.bean.Notification;
-import com.sumian.sd.utils.TimeUtil;
+import com.sumian.sd.service.util.TimeUtilV2;
 
 import java.util.List;
 
@@ -39,6 +39,6 @@ public class NotificationListAdapter extends BaseQuickAdapter<Notification, Base
         helper.setText(R.id.tv_title, data.getTitle());
         helper.setText(R.id.tv_content, data.getContent());
         long time = item.getCreateAtInMillis();
-        helper.setText(R.id.tv_time, TimeUtil.formatDate("yyyy/MM/dd HH:mm", time));
+        helper.setText(R.id.tv_time, TimeUtilV2.Companion.formatYYYYMMDDHHMM(time));
     }
 }

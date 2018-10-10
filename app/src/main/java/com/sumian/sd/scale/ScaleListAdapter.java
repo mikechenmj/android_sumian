@@ -36,7 +36,7 @@ public class ScaleListAdapter extends BaseQuickAdapter<Scale, BaseViewHolder> {
         helper.setText(R.id.tv_title, scale.getTitle());
         String contentText;
         if (result != null) {
-            contentText = TimeUtil.formatDate("填写日期：yyyy-MM-dd", result.getCreateAtInMillis());
+            contentText = TimeUtil.formatDate("填写日期：yyyy.MM.dd", result.getCreateAtInMillis());
         } else {
             contentText = ResourceUtilKt.getString(R.string.scale_scale_not_finish_yet_hint);
         }

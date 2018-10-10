@@ -17,6 +17,7 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.app.App
+import com.sumian.sd.service.util.TimeUtilV2
 import com.sumian.sd.utils.TimeUtil
 import java.util.*
 
@@ -54,9 +55,9 @@ class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(cont
 
             setText(R.id.tv_title, advisoryTitle)
                     .setText(R.id.tv_advisory_time, if (item.start_at > 0) {
-                        TimeUtil.formatYYYYMMDDHHMM(item.start_at)
+                        TimeUtilV2.formatYYYYMMDDHHMM(item.start_at)
                     } else {
-                        TimeUtil.formatYYYYMMDDHHMM(item.created_at)
+                        TimeUtilV2.formatYYYYMMDDHHMM(item.created_at)
                     })
                     .setText(R.id.tv_advisory_action_status, item.formatStatus()).setVisible(R.id.tv_advisory_action_status, true)
 

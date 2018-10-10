@@ -1,9 +1,6 @@
 package com.sumian.sd.service.diary.bean
 
-import com.alibaba.fastjson.asm.Opcodes.RETURN
 import com.google.gson.annotations.SerializedName
-import com.sumian.sd.service.util.ServiceTimeUtil
-import com.sumian.sd.utils.TimeUtil
 
 /**
  * {

@@ -19,7 +19,7 @@
         android:lineSpacingExtra="@dimen/space_2"
         android:marqueeRepeatLimit="marquee_forever"
         android:maxLines="3"
-        tools:text="评估时间：2018/07/10-2018/07/17
+        tools:text="评估时间：2018.07.10-2018.07.17
 备注详情：我又开始失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两…" />
 
     <FrameLayout

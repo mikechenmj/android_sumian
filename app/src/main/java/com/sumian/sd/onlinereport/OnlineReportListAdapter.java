@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sd.R;
+import com.sumian.sd.service.util.TimeUtilV2;
 import com.sumian.sd.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class OnlineReportListAdapter extends BaseQuickAdapter<OnlineReport, Base
     @Override
     protected void convert(BaseViewHolder helper, OnlineReport item) {
         long createAtInMillis = item.getCreateAtInMillis();
-        String time = TimeUtil.formatDate("yyyy/MM/dd HH:mm:ss", createAtInMillis);
+        String time = TimeUtilV2.Companion.formatYYYYMMDDHHMM(createAtInMillis);
         helper.setText(R.id.tv_title, item.getTitle());
         helper.setText(R.id.tv_time, time);
         ImageView ivSelect = helper.getView(R.id.iv_selected);

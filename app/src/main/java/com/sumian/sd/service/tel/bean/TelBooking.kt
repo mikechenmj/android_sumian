@@ -6,9 +6,8 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import com.google.gson.annotations.SerializedName
 import com.sumian.sd.R
-import com.sumian.sd.R.attr.status
 import com.sumian.sd.app.App
-import com.sumian.sd.utils.TimeUtil
+import com.sumian.sd.service.util.TimeUtilV2
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -115,23 +114,23 @@ data class TelBooking(var id: Int,
     }
 
     fun formatOrderCreateTime(): String {
-        return TimeUtil.formatYYYYMMDDHHMM(updated_at)
+        return TimeUtilV2.formatYYYYMMDDHHMM(updated_at)
     }
 
     private fun formatOrderCreateTimeYYYYMMDD(): String {
-        return TimeUtil.formatYYYYMMDD(created_at)
+        return TimeUtilV2.formatYYYYMMDD(created_at)
     }
 
     private fun formatOrderCreateTimeYYYYMMDDHHMM(): String {
-        return TimeUtil.formatYYYYMMDDHHMM(created_at)
+        return TimeUtilV2.formatYYYYMMDDHHMM(created_at)
     }
 
     private fun formatOrderPlanStartTimeYYYYMMDD(): String {
-        return TimeUtil.formatYYYYMMDD(plan_start_at)
+        return TimeUtilV2.formatYYYYMMDD(plan_start_at)
     }
 
     fun formatOrderPlanStartTimeYYYYMMDDHHMM(): String {
-        return TimeUtil.formatYYYYMMDDHHMM(plan_start_at)
+        return TimeUtilV2.formatYYYYMMDDHHMM(plan_start_at)
     }
 
     fun isNotUsed(): Boolean {

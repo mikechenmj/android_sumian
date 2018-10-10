@@ -56,7 +56,7 @@ class CourseAdapter(context: Context) : BaseRecyclerAdapter<Course>(context) {
 
             val second = item.duration % 60
 
-            mTvDuration.text = "$min’$second”"
+            mTvDuration.text = "$min:$second"
 
             Gone(!item.is_lock, mIvLock)
 

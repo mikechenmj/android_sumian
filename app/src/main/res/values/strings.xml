@@ -195,7 +195,7 @@
     <string name="remote_sleep_management_service_desc">专业医生每天关注您的睡眠情况</string>
     <string name="sleep_scale">睡眠评测量表</string>
     <string name="fill_scale_hint">了解您的睡眠健康及心理状况</string>
-    <string name="scale_fill_date">填写日期：yyyy-MM-dd</string>
+    <string name="scale_fill_date">填写日期：yyyy.MM.dd</string>
     <string name="no_doctor_evaluation_hint">医生建议尚未更新，请耐心等待，更新后，我们会在消息中心通知您查看</string>
     <string name="extra_user_info">以上个人信息仅供医生参考，不予公开。</string>
     <string name="logout_failed_please_check_network">退出登录失败，请检查网络</string>
@@ -374,7 +374,7 @@
 
     <!-- scale -->
     <string name="scale_scale_not_finish_yet_hint">您还未进行该评测，点击开始测评</string>
-    <string name="scale_self_scale">自我测评</string>
+    <string name="scale_self_scale">我的测评</string>
     <string name="scale_sleep_scale">睡眠评测量表</string>
     <string name="no_data">没有数据</string>
     <string name="no_data_hint">这里空空如也~</string>
