@@ -25,7 +25,7 @@
             <com.sumian.sd.service.cbti.widget.CBTIWeekCourseBannerView
                 android:id="@+id/cbti_week_lesson_banner_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_180"
+                android:layout_height="210dp"
                 app:layout_scrollFlags="scroll|enterAlways" />
 
             <View
