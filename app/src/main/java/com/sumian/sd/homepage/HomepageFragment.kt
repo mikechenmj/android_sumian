@@ -18,6 +18,7 @@ import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SleepPrescription
+import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.scale.ScaleListActivity
@@ -95,7 +96,20 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 sleep_prescription_view.setPrescriptionData(response)
             }
         })
+        val call2 = AppManager.getSdHttpService().getSleepPrescriptionStatus()
+        addCall(call2)
+        call2.enqueue(object : BaseSdResponseCallback<SleepPrescriptionStatus?>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
 
+            }
+
+            override fun onSuccess(response: SleepPrescriptionStatus?) {
+                if (response == null) {
+                    return
+                }
+                sleep_prescription_view.setHasNewPrescription(response.meta.update)
+            }
+        })
     }
 
     private fun querySleepRecord() {

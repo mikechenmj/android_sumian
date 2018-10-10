@@ -7,10 +7,7 @@ import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.doctor.bean.PayOrder
-import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
-import com.sumian.sd.homepage.bean.SleepPrescription
-import com.sumian.sd.homepage.bean.SleepPrescriptionWrapper
-import com.sumian.sd.homepage.bean.UpdateSleepPrescriptionWhenFatiguedData
+import com.sumian.sd.homepage.bean.*
 import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.notification.bean.QueryNotificationResponse
@@ -229,6 +226,9 @@ interface SdApi {
     @Headers("Accept: application/vnd.sd.v2+json")
     @GET("sleep-prescriptions")
     fun getSleepPrescriptions(): Call<SleepPrescription?>
+
+    @GET("sleep-prescriptions/status")
+    fun getSleepPrescriptionStatus(): Call<SleepPrescriptionStatus?>
 
     @POST("sleep-prescriptions")
     fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>

@@ -32,4 +32,8 @@ class SleepPrescriptionView(context: Context, attributeSet: AttributeSet) : Fram
             tv_get_up_time.text = data.getUpAt
         }
     }
+
+    fun setHasNewPrescription(hasNewPrescription: Boolean) {
+        tv_new_prescription.visibility = if (hasNewPrescription) View.VISIBLE else View.GONE
+    }
 }
