@@ -9,6 +9,7 @@ import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.BaseEventFragment
 import com.sumian.sd.base.SdBaseFragment
+import com.sumian.sd.diary.DiaryFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.event.SwitchMainActivityEvent
@@ -43,6 +44,7 @@ class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar
     private var mCurrentPosition = -1
     private val mFragmentTags = arrayOf(
             HomepageFragment::class.java.simpleName,
+            DiaryFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
 
@@ -52,9 +54,6 @@ class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar
 
     override fun initWidget(root: View?) {
         nav_tab.setOnSelectedTabChangeListener(this)
-        iv_switch.setOnClickListener {
-            launchAnotherMainActivity()
-        }
     }
 
     override fun initData() {
@@ -75,9 +74,9 @@ class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar
     private fun changeStatusBarColorByPosition(position: Int) {
         val activity = activity ?: return
         if (position == 0) {
-            StatusBarUtil.setStatusBarTextColor(activity, false)
+            StatusBarUtil.setStatusBarTextColorDark(activity, false)
         } else {
-            StatusBarUtil.setStatusBarTextColor(activity, true)
+            StatusBarUtil.setStatusBarTextColorDark(activity, true)
         }
     }
 
@@ -96,8 +95,9 @@ class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar
                     override fun createFragmentByPosition(position: Int): Fragment {
                         return when (position) {
                             0 -> SdBaseFragment.newInstance(HomepageFragment::class.java)
-                            1 -> SdBaseFragment.newInstance(DoctorFragment::class.java)
-                            2 -> SdBaseFragment.newInstance(MeFragment::class.java)
+                            1 -> DiaryFragment()
+                            2 -> SdBaseFragment.newInstance(DoctorFragment::class.java)
+                            3 -> SdBaseFragment.newInstance(MeFragment::class.java)
                             else -> SdBaseFragment.newInstance(HomepageFragment::class.java)
                         }
                     }
@@ -134,6 +134,7 @@ class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar
                 MainActivity.TAB_SD_0 -> nav_tab.selectItem(0, true)
                 MainActivity.TAB_SD_1 -> nav_tab.selectItem(1, true)
                 MainActivity.TAB_SD_2 -> nav_tab.selectItem(2, true)
+                MainActivity.TAB_SD_3 -> nav_tab.selectItem(3, true)
             }
         }
     }

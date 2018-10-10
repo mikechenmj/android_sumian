@@ -25,21 +25,21 @@ class StatusBarUtil {
         }
 
         /**
-         * isStatusBarBgDark true：文字白色，false文字黑色
+         * isDark true：文字白色，false文字黑色
          */
-        fun setStatusBarTextColor(activity: Activity, isStatusBarBgDark: Boolean) {
+        fun setStatusBarTextColorDark(activity: Activity, isDark: Boolean) {
             // Fetch the current flags.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val flags = activity.window.decorView.systemUiVisibility
                 // Update the SystemUiVisibility dependening on whether we want a Light or Dark theme.
                 activity.window.decorView.systemUiVisibility =
-                        if (isStatusBarBgDark) (flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()) else (flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+                        if (!isDark) (flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()) else (flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
             }
         }
 
         fun setStatusBarColor(activity: Activity, color: Int, isStatusBarDark: Boolean) {
             setStatusBarColor(activity, color)
-            setStatusBarTextColor(activity, isStatusBarDark)
+            setStatusBarTextColorDark(activity, isStatusBarDark)
         }
     }
 }

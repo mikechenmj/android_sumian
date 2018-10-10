@@ -2,9 +2,11 @@ package com.sumian.sd.tab
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
+import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -47,41 +49,32 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
         mIsInit = true
 
-        if (AppManager.getAccountViewModel()?.userInfo?.isBindDoctor!!) {
+        val isBindDoctor = AppManager.getAccountViewModel()?.userInfo?.isBindDoctor!!
+        switchUI(isBindDoctor)
+        if (isBindDoctor) {
             request_scan_qr_code_view.hide()
-
             val doctor = AppManager.getAccountViewModel()?.userInfo?.doctor
             doctor?.let {
-                lay_doctor_title_container.visibility = View.VISIBLE
                 doctor_detail_layout.invalidDoctor(doctor)
-                StatusBarUtil.setStatusBarTextColor(activity!!, true)
             }
-
             if (doctor?.services == null) {
                 mIsAutoRefresh = true
                 mPresenter.getBindDoctorInfo()
             }
-
         } else {
-            lay_doctor_title_container.visibility = View.GONE
-            doctor_detail_layout.hide()
-            StatusBarUtil.setStatusBarTextColor(activity!!, false)
-            request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
+            StatusBarUtil.setStatusBarTextColorDark(activity!!, false)
         }
+        request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this)
         ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
                 .get(NotificationViewModel::class.java)
                 .unreadCount
                 .observe(this, Observer { count -> iv_notification.isActivated = count != null && count > 0 })
-
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
-                if (doctor == null) {
-                    StatusBarUtil.setStatusBarTextColor(activity!!, false)
-                    doctor_detail_layout.hide()
-                    lay_doctor_title_container.visibility = View.GONE
-                    request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
-                } else
+                switchUI(doctor != null)
+                if (doctor != null) {
                     onGetDoctorInfoSuccess(doctor)
+                }
             }
         })
 
@@ -130,7 +123,7 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {
         doctor?.let {
-            StatusBarUtil.setStatusBarTextColor(activity!!, true)
+            StatusBarUtil.setStatusBarTextColorDark(activity!!, true)
             lay_doctor_title_container.visibility = View.VISIBLE
             doctor_detail_layout.invalidDoctor(doctor)
             request_scan_qr_code_view.setFragment(null).hide()
@@ -138,10 +131,7 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     override fun onNotBindDoctor() {
-        doctor_detail_layout.hide()
-        StatusBarUtil.setStatusBarTextColor(activity!!, false)
-        lay_doctor_title_container.visibility = View.GONE
-        request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this).show()
+        switchUI(false)
     }
 
     override fun onGetDoctorInfoFailed(error: String) {
@@ -158,7 +148,10 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     override fun onEnter(data: String?) {
-        runOnUiThread { doctor_detail_layout?.showMsgDot(HwLeanCloudHelper.isHaveCustomerMsg()) }
+        runOnUiThread {
+            val isHaveMsg = HwLeanCloudHelper.isHaveCustomerMsg()
+            showMessageDot(isHaveMsg)
+        }
         if (mIsAutoRefresh) return
         onRefresh()
     }
@@ -168,6 +161,20 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        runOnUiThread { doctor_detail_layout?.showMsgDot(customerMsgLen > 0) }
+        runOnUiThread { showMessageDot(customerMsgLen > 0) }
+    }
+
+    private fun showMessageDot(isHaveMsg: Boolean) {
+        doctor_detail_layout.showMsgDot(isHaveMsg)
+        request_scan_qr_code_view.showMsgDot(isHaveMsg)
+    }
+
+    private fun switchUI(hasDoctor: Boolean) {
+        StatusBarUtil.setStatusBarTextColorDark(activity!!, !hasDoctor)
+        doctor_detail_layout.visibility = if (hasDoctor) View.VISIBLE else View.GONE
+        request_scan_qr_code_view.visibility = if (!hasDoctor) View.VISIBLE else View.GONE
+        tv_title.visibility = if (hasDoctor) View.VISIBLE else View.GONE
+        iv_notification.setImageResource(if (hasDoctor) R.drawable.sel_notification else R.drawable.sel_notification_black)
+        lay_doctor_title_container.setBackgroundColor(if (hasDoctor) ColorCompatUtil.getColor(activity!!, R.color.colorPrimary) else Color.TRANSPARENT)
     }
 }

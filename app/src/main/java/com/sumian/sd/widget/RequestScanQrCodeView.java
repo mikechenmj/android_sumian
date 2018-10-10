@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseFragment;
+import com.sumian.sd.kefu.KefuManager;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -38,6 +40,8 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
 
     @BindView(R.id.ib_scan)
     ImageView mIvOpenScan;
+    @BindView(R.id.siv_customer_service)
+    ImageView mIvCustomService;
 
     private WeakReference<Fragment> mFragmentWeakReference;
     private OnGrantedCallback mOnGrantedCallback;
@@ -53,10 +57,8 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
     public RequestScanQrCodeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
-        setPadding(getResources().getDimensionPixelSize(R.dimen.space_32), 0, getResources().getDimensionPixelSize(R.dimen.space_32), 0);
-        setGravity(Gravity.CENTER);
+        setGravity(Gravity.CENTER_HORIZONTAL);
         setOrientation(VERTICAL);
-        setBackgroundColor(getResources().getColor(R.color.b1_color));
         setVisibility(GONE);
     }
 
@@ -120,14 +122,27 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
         setVisibility(GONE);
     }
 
-    @OnClick({R.id.ib_scan})
+    @OnClick({R.id.ib_scan, R.id.siv_customer_service})
     @Override
     public void onClick(View v) {
-        requestCodeQRCodePermissions();
+        switch (v.getId()) {
+            case R.id.ib_scan:
+
+                requestCodeQRCodePermissions();
+                break;
+            case R.id.siv_customer_service:
+                UIProvider.getInstance().clearCacheMsg();
+                KefuManager.launchKefuActivity();
+                break;
+        }
     }
 
     public interface OnGrantedCallback {
 
         void onGrantedSuccess();
+    }
+
+    public void showMsgDot(boolean isHaveMsg) {
+        mIvCustomService.setImageResource(isHaveMsg ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice);
     }
 }

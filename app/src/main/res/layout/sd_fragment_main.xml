@@ -1,71 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/b1_color"
+    android:orientation="vertical"
     tools:context="com.sumian.sd.main.MainActivity">
 
     <FrameLayout
         android:id="@+id/sd_main_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/space_48"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clickable="true"
         android:focusable="true" />
 
-    <LinearLayout
+    <View style="@style/HorizontalDividerLine" />
+
+    <com.sumian.sd.widget.nav.BottomNavigationBar
+        android:id="@+id/nav_tab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_68"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="@drawable/tab_img_bg_white">
+        android:background="@color/white"
+        android:gravity="center_vertical">
 
-        <com.sumian.sd.widget.nav.BottomNavigationBar
-            android:id="@+id/nav_tab"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="3"
-            android:gravity="center_vertical">
+        <com.sumian.sd.widget.nav.NavigationItem
+            android:id="@+id/tb_record"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_record_icon"
+            app:tab_text="@string/tab_homepage" />
 
-            <com.sumian.sd.widget.nav.NavigationItem
-                android:id="@+id/tb_record"
-                style="@style/HorizontalWeight"
-                app:tab_icon="@drawable/sd_sel_tab_record_icon"
-                app:tab_text="@string/tab_homepage" />
+        <include layout="@layout/lay_nav_tab_divider" />
 
-            <include layout="@layout/lay_nav_tab_divider" />
+        <com.sumian.sd.widget.nav.NavigationItem
+            android:id="@+id/tb_diary"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
+            app:tab_text="@string/diary" />
 
-            <com.sumian.sd.widget.nav.NavigationItem
-                android:id="@+id/tb_doctor"
-                style="@style/HorizontalWeight"
-                app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
-                app:tab_text="@string/tab_doctor" />
+        <include layout="@layout/lay_nav_tab_divider" />
 
-            <include layout="@layout/lay_nav_tab_divider" />
+        <com.sumian.sd.widget.nav.NavigationItem
+            android:id="@+id/tb_doctor"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
+            app:tab_text="@string/tab_doctor" />
 
-            <com.sumian.sd.widget.nav.NavigationItem
+        <include layout="@layout/lay_nav_tab_divider" />
 
-                android:id="@+id/tb_me"
-                style="@style/HorizontalWeight"
-                app:tab_icon="@drawable/sd_sel_tab_me_icon"
-                app:tab_text="@string/tab_me" />
+        <com.sumian.sd.widget.nav.NavigationItem
 
-            <include layout="@layout/lay_nav_tab_divider" />
+            android:id="@+id/tb_me"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_me_icon"
+            app:tab_text="@string/tab_me" />
 
-        </com.sumian.sd.widget.nav.BottomNavigationBar>
+        <include layout="@layout/lay_nav_tab_divider" />
 
-        <ImageView
-            android:id="@+id/iv_switch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:contentDescription="@null"
-            android:paddingTop="2dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/tab_icon_equipment" />
-    </LinearLayout>
-</FrameLayout>
+    </com.sumian.sd.widget.nav.BottomNavigationBar>
+</LinearLayout>

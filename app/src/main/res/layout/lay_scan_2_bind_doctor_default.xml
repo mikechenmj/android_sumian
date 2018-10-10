@@ -8,15 +8,11 @@
     android:visibility="gone"
     tools:visibility="visible">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <TextView
         style="@style/text_t3_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="@string/scan_2_bind_doctor"
         android:textSize="@dimen/font_22" />
@@ -26,32 +22,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_30"
-        android:layout_marginRight="@dimen/space_30"
         android:layout_marginTop="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_30"
         android:lineSpacingExtra="@dimen/space_4"
-        android:text="您还未绑定主治医生，点击下方扫码按钮，扫描医生二维码进行绑定。
-
-二维码一般由医生提供，请向主治医生咨询。"
+        android:text="您还未绑定主治医生，点击下方扫码按钮，扫描医生二维码进行绑定。"
         android:textSize="@dimen/font_16"
         tools:ignore="HardcodedText" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="2" />
-
     <ImageView
         android:id="@+id/ib_scan"
-        android:layout_width="@dimen/space_324"
-        android:layout_height="@dimen/space_324"
-        android:layout_marginLeft="@dimen/space_24"
-        android:layout_marginRight="@dimen/space_24"
-        android:background="@drawable/bg_iv"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:layout_weight="1"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_group_btn_scan_code" />
+        android:src="@drawable/sel_scan_btn" />
 
-    <Space
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/siv_customer_service"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.5" />
+        android:contentDescription="@null"
+        android:foreground="@drawable/bg_material_ripple"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_info_customerservice" />
+
 </merge>

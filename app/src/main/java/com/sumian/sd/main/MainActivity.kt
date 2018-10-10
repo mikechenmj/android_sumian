@@ -41,6 +41,7 @@ class MainActivity : BaseEventActivity() {
         const val TAB_SD_0 = "TAB_SD_0"
         const val TAB_SD_1 = "TAB_SD_1"
         const val TAB_SD_2 = "TAB_SD_2"
+        const val TAB_SD_3 = "TAB_SD_3"
 
         private const val KEY_TAB_NAME = "key_tab_name"
         private const val KEY_TAB_DATA = "key_tab_data"

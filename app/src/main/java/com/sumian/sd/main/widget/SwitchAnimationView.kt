@@ -52,7 +52,7 @@ class SwitchAnimationView(context: Context, attributeSet: AttributeSet) : FrameL
             val fraction = it.animatedValue as Float
             val bgColor = evaluate(fraction, startBgColor, endBgColor)
             vBg.setBackgroundColor(bgColor)
-            StatusBarUtil.setStatusBarTextColor(activity, if (fraction > 0.5f) isEndStatusBarColorDark else !isEndStatusBarColorDark)
+            StatusBarUtil.setStatusBarTextColorDark(activity, if (fraction > 0.5f) isEndStatusBarColorDark else !isEndStatusBarColorDark)
         }
         val scaleSmallAnimator = ViewAnimationUtils.createCircularReveal(vBg, centerX, centerY, maxRadius, minRadius)
         scaleSmallAnimator.duration = 520
