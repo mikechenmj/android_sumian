@@ -59,6 +59,7 @@
             android:inputType="text"
             android:paddingLeft="@dimen/space_4"
             android:paddingRight="@dimen/space_4"
+            android:textSize="@dimen/edit_text_text_size"
             android:textColor="@color/bt_hole_color"
             android:textCursorDrawable="@drawable/bg_cursor"
             tools:ignore="LabelFor" />

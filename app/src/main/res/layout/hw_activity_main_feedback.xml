@@ -34,7 +34,7 @@
             android:maxHeight="200dp"
             android:textColor="@color/general_color"
             android:textColorHint="@color/full_general_color"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/edit_text_text_size"
             tools:text="111" />
 
         <Space

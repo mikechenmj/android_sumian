@@ -66,7 +66,7 @@
             android:textColor="@color/general_color"
             android:textColorHint="@color/general_color"
             android:textCursorDrawable="@drawable/bg_cursor"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/edit_text_text_size"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 

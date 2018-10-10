@@ -105,4 +105,6 @@
     <dimen name="home_page_sleep_data_view_height">330dp</dimen>
     <dimen name="home_page_pager_max_margin">42dp</dimen>
     <dimen name="home_page_pager_min_margin">0dp</dimen>
+
+    <dimen name="edit_text_text_size">16sp</dimen>
 </resources>

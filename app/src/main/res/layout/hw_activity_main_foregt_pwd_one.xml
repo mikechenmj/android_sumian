@@ -48,6 +48,7 @@
             android:hint="@string/login_mobile_hint"
             android:inputType="phone"
             android:maxLength="11"
+            android:textSize="@dimen/edit_text_text_size"
             android:textColor="@color/bt_hole_color"
             android:textColorHint="@color/general_color" />
     </LinearLayout>
@@ -94,6 +95,7 @@
             android:inputType="number"
             android:textColor="@color/bt_hole_color"
             android:textColorHint="@color/general_color"
+            android:textSize="@dimen/edit_text_text_size"
             tools:ignore="RtlHardcoded" />
 
         <TextView

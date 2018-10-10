@@ -58,6 +58,7 @@
             android:singleLine="false"
             android:textColor="@color/bt_hole_color"
             android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="@dimen/edit_text_text_size"
             tools:ignore="LabelFor,RtlHardcoded" />
 
     </FrameLayout>
