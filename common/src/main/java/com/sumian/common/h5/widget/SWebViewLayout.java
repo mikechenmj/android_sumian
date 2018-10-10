@@ -12,6 +12,8 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.R;
 
 import static com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR;
@@ -89,6 +91,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
         this.mWebViewProgress.setVisibility(VISIBLE);
         this.mWebViewProgress.setProgress(0);
         this.mSWebView.loadRequestUrl(requestUrl);
+        mLoadTime = System.currentTimeMillis();
     }
 
     @Override
@@ -98,8 +101,15 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
         this.mWebViewProgress.setProgress(0);
     }
 
+    private long mLoadTime;
+
     @Override
     public void onProgressChange(WebView view, int newProgress) {
+        if (newProgress == 100) {
+            long costTime = System.currentTimeMillis() - mLoadTime;
+            LogUtils.d("cost time", costTime);
+            ToastUtils.showLong("" + costTime);
+        }
         this.mWebViewProgress.setProgress(newProgress);
     }
 

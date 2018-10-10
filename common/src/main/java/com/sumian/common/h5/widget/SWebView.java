@@ -191,10 +191,20 @@ public class SWebView extends BridgeWebView {
         @Nullable
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            if (mWebInterceptor != null) {
+                WebResourceResponse webResourceResponse = mWebInterceptor.shouldInterceptRequest(view, request);
+                if (webResourceResponse != null) {
+                    return webResourceResponse;
+                }
+            }
+            return dnsIntercept(view, request);
+        }
+
+        private WebResourceResponse dnsIntercept(WebView view, WebResourceRequest request) {
+            String url = request.getUrl().toString();
             String scheme = request.getUrl().getScheme();
             String method = request.getMethod();
             Map<String, String> headerFields = request.getRequestHeaders();
-            String url = request.getUrl().toString();
             if (isDebug()) {
                 Log.e(TAG, "url:" + url);
             }
@@ -253,15 +263,7 @@ public class SWebView extends BridgeWebView {
                     e.printStackTrace();
                 }
             }
-
             return super.shouldInterceptRequest(view, request);
-        }
-
-        @Nullable
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            // API < 21 只能拦截URL参数
-            return super.shouldInterceptRequest(view, url);
         }
 
         @Override
@@ -490,5 +492,21 @@ public class SWebView extends BridgeWebView {
 
     private boolean isDebug() {
         return WebViewManger.getInstance().isDebug();
+    }
+
+    public interface WebInterceptor{
+        /**
+         * if not interceptor return null, else return non null
+         * @param view
+         * @param request
+         * @return
+         */
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request);
+    }
+
+    private WebInterceptor mWebInterceptor;
+
+    public void setWebInterceptor(WebInterceptor webInterceptor) {
+        mWebInterceptor = webInterceptor;
     }
 }

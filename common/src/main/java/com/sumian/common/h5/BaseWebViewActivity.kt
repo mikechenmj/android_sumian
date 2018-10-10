@@ -206,4 +206,8 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
     protected fun getTitleBar(): TitleBar {
         return title_bar!!
     }
+
+    protected fun getWebView(): SWebView {
+        return sm_webview_container.sWebView
+    }
 }
