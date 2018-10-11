@@ -110,6 +110,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     private String mCurrentVid;
 
     private long mOldFrame;
+    private boolean mResumeOnFocusGain;
 
     public NiceVideoView(Context context) {
         this(context, null);
@@ -387,12 +388,39 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         return 0;
     }
 
+
     private void initAudioManager() {
         if (mAudioManager == null) {
             mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         }
         if (mAudioManager != null) {
-            mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+            mAudioManager.requestAudioFocus(focusChange -> {
+                switch (focusChange) {
+                    case AudioManager.AUDIOFOCUS_GAIN:
+                        if (mResumeOnFocusGain) {
+                            replay();
+                        }
+                        mResumeOnFocusGain = false;
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS:
+                        mResumeOnFocusGain = false;
+                        if (isPlaying() || isBufferingPlaying()) {
+                            pause();
+                        }
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                        if (isPlaying() || isBufferingPlaying()) {
+                            pause();
+                            mResumeOnFocusGain = true;
+                        } else {
+                            mResumeOnFocusGain = false;
+                        }
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                        // ... pausing or ducking depends on your app
+                        break;
+                }
+            }, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         }
     }
 
