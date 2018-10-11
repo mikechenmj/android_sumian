@@ -87,6 +87,11 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
                 finish()
             }
         })
+        sWebView.registerHandler("return", object : BridgeHandler {
+            override fun handler(data: String?, function: CallBackFunction) {
+                onBackPressed()
+            }
+        })
         sWebView.registerHandler("updatePageUI", object : BridgeHandler {
             override fun handler(data: String?, function: CallBackFunction) {
                 val map = JsonUtil.fromJson<Map<String, Any>>(data, object : TypeToken<Map<String, Any>>() {
