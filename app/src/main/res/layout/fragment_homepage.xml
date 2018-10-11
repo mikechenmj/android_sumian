@@ -24,7 +24,7 @@
             <LinearLayout
                 android:id="@+id/ll_name_avatar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_144"
+                android:layout_height="124dp"
                 android:background="@color/white"
                 android:gravity="bottom"
                 android:paddingStart="@dimen/space_20"
@@ -65,13 +65,12 @@
                 android:id="@+id/cbti_progress_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <com.sumian.sd.homepage.widget.SleepPrescriptionView
                 android:id="@+id/sleep_prescription_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp" />
+                android:layout_height="wrap_content" />
 
             <com.sumian.sd.homepage.widget.SleepDataPagerView
                 android:id="@+id/sleep_data_pager_view"
@@ -79,57 +78,59 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
 
-            <com.sumian.sd.widget.doctor.DoctorServiceItemView
-                android:id="@+id/dsiv_cbti"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:dsiv_desc="@string/service_desc_cbti"
-                app:dsiv_image="@drawable/ic_service_icon_cbti"
-                app:dsiv_title="@string/service_title_cbti"
-                tools:visibility="visible" />
-
-            <com.sumian.sd.widget.doctor.DoctorServiceItemView
-                android:id="@+id/dsiv_relaxation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:dsiv_desc="放慢呼吸，让你的心灵喘口气"
-                app:dsiv_image="@drawable/ic_relaxation"
-                app:dsiv_title="心灵减压放松训练"
-                tools:visibility="visible" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:layout_marginTop="@dimen/space_10"
                 android:layout_marginBottom="@dimen/space_10"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/space_3"
                 android:paddingTop="@dimen/space_6"
                 android:paddingEnd="@dimen/space_3">
 
                 <TextView
                     android:id="@+id/tv_scale"
-                    style="@style/text_white_16"
+                    style="@style/text_t1_14"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_home_img_scale"
+                    android:drawableTop="@drawable/ic_home_icon_scale"
+                    android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/scale_evaluation"
-                    android:textStyle="bold" />
+                    android:text="@string/scale_evaluation" />
+
+                <View
+                    style="@style/VerticalDividerLine"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp" />
+
+                <TextView
+                    android:id="@+id/tv_relaxation"
+                    style="@style/text_t1_14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_home_icon_relaxation"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="@string/relax_exercise" />
+
+                <View
+                    style="@style/VerticalDividerLine"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp" />
 
                 <TextView
                     android:id="@+id/tv_sleep_health"
-                    style="@style/text_white_16"
+                    style="@style/text_t1_14"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_home_img_scale"
+                    android:drawableTop="@drawable/ic_home_icon_sleephygiene"
+                    android:drawablePadding="10dp"
                     android:gravity="center"
-                    android:text="@string/sleep_health"
-                    android:textStyle="bold" />
+                    android:text="@string/sleep_health" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -48,7 +48,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         super.initWidget(root)
         initUserInfo()
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
-        dsiv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationActivity::class.java) }
+        tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationActivity::class.java) }
         tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity, H5Uri.CBTI_SLEEP_HEALTH) }
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionSettingActivity.launch() }
@@ -145,8 +145,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     @Subscribe(sticky = true)
     fun onCBTIBoughtEvent(event: CBTIServiceBoughtEvent) {
         EventBusUtil.removeStickyEvent(event)
-        dsiv_cbti.visibility = View.GONE
-        cbti_progress_view.visibility = View.VISIBLE
         queryCbti()
     }
 

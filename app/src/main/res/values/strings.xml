@@ -997,5 +997,6 @@
     <string name="cbti_treatment">CBTI认知行为治疗</string>
     <string name="cbti_treatment_hint">非药物治疗失眠的最佳疗法</string>
     <string name="join_learn">加入学习</string>
+    <string name="relax_exercise">放松训练</string>
     <!-- Hw end-->
 </resources>
