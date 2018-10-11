@@ -1,16 +1,7 @@
 package com.sumian.sd;
 
-import com.google.gson.reflect.TypeToken;
-import com.sumian.hw.command.BlueCmd;
-import com.sumian.hw.command.Cmd;
-import com.sumian.sd.account.bean.UserInfo;
-import com.sumian.sd.h5.bean.H5BaseResponse;
-import com.sumian.sd.utils.JsonUtil;
 
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.Map;
 
 /**
  * <pre>

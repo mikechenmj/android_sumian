@@ -1,3 +1,5 @@
+@file:Suppress("REDUNDANT_LABEL_WARNING", "NOT_A_FUNCTION_LABEL_WARNING")
+
 package com.sumian.sd.setting.version.presenter
 
 import com.sumian.common.network.response.ErrorResponse
@@ -58,11 +60,13 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
             override fun onSuccess(response: Version?) {
                 response?.let { it ->
                     mView?.onGetVersionSuccess(response)
-                    var isHaveUpgrade: Boolean
+
                     it.version?.let {
+
                         val onlineVersionCodes = it.split(".")
                         val currentVersionCodes = currentVersion.split(".")
-                        isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
+                        val isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
+
                         mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.description)
                     }
                 }

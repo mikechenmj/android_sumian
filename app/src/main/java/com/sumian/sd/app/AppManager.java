@@ -172,7 +172,7 @@ public final class AppManager {
     private void initNetWork(Context context) {
         //注册 aliyun httpDns
         this.mHttpDns = new HttpDnsEngine().init(context, BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY);
-        this.mHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL);
+        this.mHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL, BuildConfig.BASE_H5_URL);
         //注册网络引擎框架
         this.mNetworkManager = NetworkManager.create();
     }
