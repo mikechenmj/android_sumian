@@ -14,9 +14,9 @@ import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.order.OrderDetail
 import com.sumian.sd.oss.OssResponse
-import com.sumian.sd.record.bean.DoctorServiceList
-import com.sumian.sd.record.bean.SleepRecord
-import com.sumian.sd.record.bean.SleepRecordSummary
+import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.scale.bean.Scale
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts

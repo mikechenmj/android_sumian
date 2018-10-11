@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/light_sleep_duration" />
 
-                <com.sumian.sd.record.widget.SleepRecordProgressView
+                <com.sumian.sd.diary.sleeprecord.widget.SleepRecordProgressView
                     android:id="@+id/progress_light_sleep"
                     android:layout_width="@dimen/space_100"
                     android:layout_height="@dimen/space_100"
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/deep_sleep_duration_hint" />
 
-                <com.sumian.sd.record.widget.SleepRecordProgressView
+                <com.sumian.sd.diary.sleeprecord.widget.SleepRecordProgressView
                     android:id="@+id/progress_deep_sleep"
                     android:layout_width="@dimen/space_100"
                     android:layout_height="@dimen/space_100"

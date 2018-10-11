@@ -12,8 +12,8 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.sumian.hw.report.bean.DailyReport
 import com.sumian.sd.R
-import com.sumian.sd.record.bean.SleepRecord
-import com.sumian.sd.record.widget.SimpleSleepRecordView
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
+import com.sumian.sd.diary.sleeprecord.widget.SimpleSleepRecordView
 import kotlinx.android.synthetic.main.lay_sleep_data_pager.view.*
 
 /**

@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_10" />
 
-            <com.sumian.sd.record.widget.SleepRecordView
+            <com.sumian.sd.diary.sleeprecord.widget.SleepRecordView
                 android:id="@+id/sleep_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

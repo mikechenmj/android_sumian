@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sumian.sd.record.calendar.calendarView.CalendarView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-</com.sumian.sd.record.calendar.calendarView.CalendarView>
+</com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView>

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import com.sumian.sd.R
-import com.sumian.sd.record.widget.ColorfulProgressView
+import com.sumian.sd.diary.sleeprecord.widget.ColorfulProgressView
 import kotlinx.android.synthetic.main.lay_sleep_percent_view.view.*
 
 /**

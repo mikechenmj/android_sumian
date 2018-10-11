@@ -3,7 +3,7 @@ package com.sumian.sd.notification.push.schemeResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.sd.record.SleepRecordActivity
+import com.sumian.sd.diary.sleeprecord.SleepRecordActivity
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**

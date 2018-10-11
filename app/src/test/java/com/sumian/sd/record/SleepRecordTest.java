@@ -1,9 +1,9 @@
 package com.sumian.sd.record;
 
 import com.google.gson.reflect.TypeToken;
-import com.sumian.sd.record.bean.FillSleepRecordResponse;
-import com.sumian.sd.record.bean.SleepRecord;
-import com.sumian.sd.record.bean.SleepRecordSummary;
+import com.sumian.sd.diary.sleeprecord.bean.FillSleepRecordResponse;
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary;
 import com.sumian.sd.utils.JsonUtil;
 
 import org.junit.Test;

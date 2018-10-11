@@ -7,7 +7,7 @@ import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.report.ReportFragment
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.record.SleepRecordFragment
+import com.sumian.sd.diary.sleeprecord.SleepRecordFragment
 import kotlinx.android.synthetic.main.fragment_diary.*
 
 

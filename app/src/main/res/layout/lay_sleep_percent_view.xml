@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sumian.sd.record.widget.ColorfulProgressView
+    <com.sumian.sd.diary.sleeprecord.widget.ColorfulProgressView
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

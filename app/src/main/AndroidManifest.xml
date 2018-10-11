@@ -249,7 +249,7 @@
 
         <!-- sleep record -->
         <activity
-            android:name=".record.FillSleepRecordActivity"
+            android:name=".diary.sleeprecord.FillSleepRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -338,7 +338,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".record.SleepRecordActivity"
+            android:name=".diary.sleeprecord.SleepRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
