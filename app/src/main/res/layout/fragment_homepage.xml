@@ -65,15 +65,12 @@
                 android:id="@+id/cbti_progress_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_10"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:visibility="visible"/>
 
             <com.sumian.sd.homepage.widget.SleepPrescriptionView
                 android:id="@+id/sleep_prescription_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp" />
 
             <com.sumian.sd.homepage.widget.SleepDataPagerView

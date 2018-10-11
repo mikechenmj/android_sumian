@@ -48,7 +48,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         super.initWidget(root)
         initUserInfo()
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
-        dsiv_cbti.setOnClickListener { launchCbtiActivity() }
         dsiv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationActivity::class.java) }
         tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity, H5Uri.CBTI_SLEEP_HEALTH) }
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
@@ -126,13 +125,12 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
                 val isLock = response?.meta?.isLock != false
-                dsiv_cbti.visibility = if (isLock) View.VISIBLE else View.GONE
-                cbti_progress_view.visibility = if (!isLock) View.VISIBLE else View.GONE
                 if (!isLock) {
-                    cbti_progress_view.initData(response)
+                    cbti_progress_view.setData(response)
+                } else {
+                    cbti_progress_view.setData(null)
                 }
             }
-
         })
     }
 

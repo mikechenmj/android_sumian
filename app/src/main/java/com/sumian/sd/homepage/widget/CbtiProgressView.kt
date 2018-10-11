@@ -3,6 +3,7 @@ package com.sumian.sd.homepage.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import com.sumian.sd.R
 import com.sumian.sd.homepage.bean.CbtiChapterData
@@ -26,13 +27,14 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
         LayoutInflater.from(context).inflate(R.layout.view_cbti_progress, this, true)
     }
 
-    fun initData(chaptersData: GetCbtiChaptersResponse?) {
-        if (chaptersData == null) {
-            return
+    fun setData(chaptersData: GetCbtiChaptersResponse?) {
+        ll_progress.visibility = if (chaptersData != null) View.VISIBLE else View.GONE
+        ll_not_buy.visibility = if (chaptersData == null) View.VISIBLE else View.GONE
+        if (chaptersData != null) {
+            val dataList = chaptersData.data
+            updateProgressViewList(dataList)
+            tv_progress.text = chaptersData.meta.currentStatus
         }
-        val dataList = chaptersData.data
-        updateProgressViewList(dataList)
-        tv_progress.text = chaptersData.meta.currentStatus
     }
 
     private fun updateProgressViewList(dataList: List<CbtiChapterData>) {
@@ -56,5 +58,6 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
 
     fun setOnEnterLearnBtnClickListener(onClickListener: OnClickListener) {
         tv_enter_learn.setOnClickListener(onClickListener)
+        ll_not_buy.setOnClickListener(onClickListener)
     }
 }

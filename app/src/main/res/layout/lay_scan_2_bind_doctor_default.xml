@@ -12,7 +12,6 @@
         style="@style/text_t3_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="@string/scan_2_bind_doctor"
         android:textSize="@dimen/font_22" />

@@ -994,5 +994,8 @@
     <string name="you_have_not_set_sleep_prescription">您还未设置睡眠处方</string>
     <string name="new_prescription">新处方</string>
     <string name="already_paused">已暂停</string>
+    <string name="cbti_treatment">CBTI认知行为治疗</string>
+    <string name="cbti_treatment_hint">非药物治疗失眠的最佳疗法</string>
+    <string name="join_learn">加入学习</string>
     <!-- Hw end-->
 </resources>
