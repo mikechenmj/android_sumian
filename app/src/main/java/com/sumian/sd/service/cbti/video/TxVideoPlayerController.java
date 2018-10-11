@@ -9,7 +9,9 @@ import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sd.R;
 import com.sumian.sd.service.cbti.activity.CBTICoursePlayActivity;
 import com.sumian.sd.service.cbti.bean.CoursePlayAuth;
@@ -562,7 +565,32 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
 
 
     public interface OnControllerCallback {
-
         void onPlayNext();
     }
+
+    private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            performClick();
+            return super.onSingleTapConfirmed(e);
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            if (mNiceVideoPlayer.isPlaying()) {
+                mNiceVideoPlayer.pause();
+                ToastUtils.showLong(R.string.already_paused);
+            } else if (mNiceVideoPlayer.isPaused()) {
+                mNiceVideoPlayer.restart();
+            }
+            return true;
+        }
+    });
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        super.onTouchEvent(event);
+        return mGestureDetector.onTouchEvent(event);
+    }
+
 }

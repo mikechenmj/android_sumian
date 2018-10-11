@@ -993,5 +993,6 @@
     <string name="user_privacy_policy">用户隐私政策</string>
     <string name="you_have_not_set_sleep_prescription">您还未设置睡眠处方</string>
     <string name="new_prescription">新处方</string>
+    <string name="already_paused">已暂停</string>
     <!-- Hw end-->
 </resources>
