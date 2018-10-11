@@ -40,15 +40,12 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
 class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, com.sumian.sd.service.cbti.video.OnVideoViewEvent, com.sumian.sd.service.cbti.video.TxVideoPlayerController.OnControllerCallback {
 
     private val TAG = CBTICoursePlayActivity::class.java.simpleName
-
     private var mCourse: Course? = null
-
     private var mCoursePlayAuth: CoursePlayAuth? = null
-
     private var mCurrentCourse: Course? = null
     private var mCurrentPosition = 0
-
     private var mCBTIQuestionDialog: CBTIQuestionDialog? = null
+    private var mPendingRestart = false
 
     private val mController: com.sumian.sd.service.cbti.video.TxVideoPlayerController by lazy {
         val controller = com.sumian.sd.service.cbti.video.TxVideoPlayerController(this).setup(this@CBTICoursePlayActivity)
@@ -140,11 +137,14 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun onRestart() {
         super.onRestart()
-        NiceVideoPlayerManager.instance().resumeNiceVideoPlayer()
+        if (mPendingRestart) {
+            NiceVideoPlayerManager.instance().resumeNiceVideoPlayer()
+        }
     }
 
     override fun onStop() {
         super.onStop()
+        mPendingRestart = aliyun_player.isPlaying || aliyun_player.isBufferingPlaying
         NiceVideoPlayerManager.instance().suspendNiceVideoPlayer()
     }
 
