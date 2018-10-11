@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:src="@drawable/ic_nav_icon_back_blue" />
+            android:src="@drawable/ic_report_right_day" />
     </LinearLayout>
 
     <View style="@style/HorizontalDividerLineMarginStart20" />
@@ -53,11 +53,11 @@
         tools:visibility="visible">
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:background="@color/colorPrimary"
-            android:contentDescription="@null" />
+            android:contentDescription="@null"
+            android:src="@drawable/ic_home_icon_prescription" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,7 +95,7 @@
             <TextView
                 style="@style/text_t2_14"
                 android:layout_marginTop="@dimen/space_5"
-                android:drawableStart="@drawable/home_icon_fallasleep_white"
+                android:drawableStart="@drawable/ic_home_icon_fallasleep_white"
                 android:drawablePadding="@dimen/space_10"
                 android:text="@string/sleep_time" />
 
@@ -124,7 +124,7 @@
             <TextView
                 style="@style/text_t2_14"
                 android:layout_marginTop="@dimen/space_5"
-                android:drawableStart="@drawable/home_icon_workschedule_white"
+                android:drawableStart="@drawable/ic_home_icon_workschedule_white"
                 android:drawablePadding="@dimen/space_10"
                 android:text="@string/getUpTime" />
 
