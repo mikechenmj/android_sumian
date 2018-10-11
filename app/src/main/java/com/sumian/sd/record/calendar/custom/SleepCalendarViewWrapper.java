@@ -58,20 +58,14 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
 
     @Override
     public int getDayTypeByTime(long timeInMillis) {
-        int dayType = SleepDayType.TYPE_NORMAL;
-        if (timeInMillis == mTodayTime) {
-            dayType = SleepDayType.TYPE_TODAY;
-        } else if (timeInMillis > mTodayTime) {
-            dayType = SleepDayType.TYPE_FEATURE;
-        } else if (mHasSleepRecordDays.contains(timeInMillis)) {
-            if (mHasDoctorEvaluationDays.contains(timeInMillis)) {
-                dayType = SleepDayType.TYPE_HAS_RECORD_HAS_DOCTOR_EVALUATION;
-            } else {
-                dayType = SleepDayType.TYPE_HAS_RECORD_NO_DOCTOR_EVALUATION;
-            }
-        }
+        int dayType;
+        boolean hasData = mHasSleepRecordDays.contains(timeInMillis);
         if (timeInMillis == mSelectDayTime) {
-            dayType = SleepDayType.TYPE_SELECTED_DAY;
+            dayType = hasData ? SleepDayType.SELECT_HAS_DATA : SleepDayType.SELECT_NO_DATA;
+        } else if (timeInMillis > mTodayTime) {
+            dayType = SleepDayType.FEATURE;
+        } else {
+            dayType = hasData ? SleepDayType.HAS_DATA : SleepDayType.NO_DATA;
         }
         return dayType;
     }
@@ -93,7 +87,6 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
         if (newPosition > monthCount - PRELOAD_THRESHOLD) {
             if (mLoadMoreListener != null) {
                 Long time = getMonthTimes().get(monthCount - 1);
-//                LogUtils.d(TimeUtil.formatDate("yyyy/MM", time), time);
                 mLoadMoreListener.loadMore(time);
             }
         }

@@ -53,6 +53,7 @@ public class FeedbackActivity extends HwBaseActivity {
     TextView mTvContentLength;
     TextView mTvSubmit;
     TitleBar mTitleBar;
+    private static final int MAX_LENGTH = 500;
 
     private int mRetryCount;
 
@@ -79,11 +80,11 @@ public class FeedbackActivity extends HwBaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 super.onTextChanged(s, start, before, count);
-                mTvContentLength.setText(String.format(Locale.getDefault(), "%d%s%d", s.length(), "/", 200));
+                mTvContentLength.setText(String.format(Locale.getDefault(), "%d%s%d", s.length(), "/", MAX_LENGTH));
                 if (s.length() <= 0) {
                     mTvContentLength.setVisibility(View.GONE);
                 } else {
-                    if (s.length() >= 200) {
+                    if (s.length() >= MAX_LENGTH) {
                         mTvContentLength.setTextColor(ColorCompatUtil.Companion.getColor(FeedbackActivity.this, R.color.warn_color));
                     } else {
                         mTvContentLength.setTextColor((ColorCompatUtil.Companion.getColor(FeedbackActivity.this, R.color.full_general_color)));

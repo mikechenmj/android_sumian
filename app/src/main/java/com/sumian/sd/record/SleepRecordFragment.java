@@ -98,30 +98,10 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
         }
     }
 
-    private void queryServices() {
-//        Call<DoctorService> call = AppManager.getSdHttpService().getServiceByType(DoctorService.SERVICE_TYPE_ADVISORY);
-//        addCall(call);
-//        call.enqueue(new BaseResponseCallback<DoctorService>() {
-//            @Override
-//            protected void onSuccess(DoctorService response) {
-//                boolean hasSleepReportService = response != null;
-//                if (mSleepRecordView != null) {
-//                    mSleepRecordView.setForceShowDoctorAdvice(hasSleepReportService);
-//                }
-//            }
-//
-//            @Override
-//            protected void onFailure(int code, @NonNull String message) {
-//
-//            }
-//        });
-    }
-
     @Override
     protected void initData() {
         super.initData();
         changeSelectTime(mInitTime);
-        queryServices();
     }
 
     private void launchFillSleepRecordActivity(long time) {

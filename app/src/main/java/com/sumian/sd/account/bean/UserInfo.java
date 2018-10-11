@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
+import com.sumian.hw.common.util.TextUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.doctor.bean.Doctor;
@@ -502,5 +503,9 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
                 ", role=" + role +
                 ", answers=" + answers +
                 '}';
+    }
+
+    public boolean hasDevice() {
+        return !TextUtils.isEmpty(monitor_sn);
     }
 }

@@ -10,10 +10,9 @@ package com.sumian.sd.record.calendar.custom;
  * </pre>
  */
 public class SleepDayType {
-    public static final int TYPE_NORMAL = 0;
-    public static final int TYPE_TODAY = 1;
-    public static final int TYPE_FEATURE = 2;
-    public static final int TYPE_HAS_RECORD_NO_DOCTOR_EVALUATION = 3;
-    public static final int TYPE_HAS_RECORD_HAS_DOCTOR_EVALUATION = 4;
-    public static final int TYPE_SELECTED_DAY = 5;
+    public static final int NO_DATA = 0;
+    public static final int HAS_DATA = 1;
+    public static final int SELECT_NO_DATA = 2;
+    public static final int SELECT_HAS_DATA = 3;
+    public static final int FEATURE = 4;
 }
