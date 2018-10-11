@@ -15,8 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sumian.common.utils.ColorCompatUtil;
 import com.sumian.sd.R;
-import com.sumian.sd.utils.ColorCompatUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -15,9 +15,11 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.sumian.common.utils.ColorCompatUtil;
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.common.util.SpUtil;
-import com.sumian.hw.device.bean.BlueDevice;import com.sumian.hw.device.contract.DeviceContract;
+import com.sumian.hw.device.bean.BlueDevice;
+import com.sumian.hw.device.contract.DeviceContract;
 import com.sumian.hw.device.dialog.PaModeDialog;
 import com.sumian.hw.device.dialog.PairOnDeviceDialog;
 import com.sumian.hw.device.pattern.SyncPatternManager;
@@ -33,7 +35,6 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.OnEnterListener;
-import com.sumian.sd.utils.ColorCompatUtil;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 import com.sumian.sd.widget.dialog.theme.BlackTheme;
 

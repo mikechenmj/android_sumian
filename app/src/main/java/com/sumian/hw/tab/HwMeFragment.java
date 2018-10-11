@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
+import com.sumian.common.utils.ColorCompatUtil;
 import com.sumian.hw.base.HwBaseFragment;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
@@ -21,7 +22,6 @@ import com.sumian.sd.app.AppManager;
 import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.main.OnEnterListener;
 import com.sumian.sd.theme.three.SkinConfig;
-import com.sumian.sd.utils.ColorCompatUtil;
 import com.sumian.sd.widget.divider.SettingDividerView;
 
 import butterknife.BindView;

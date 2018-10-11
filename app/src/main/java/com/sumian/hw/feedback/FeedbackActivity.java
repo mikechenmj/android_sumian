@@ -17,6 +17,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.common.utils.ColorCompatUtil;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.oss.bean.OssResponse;
@@ -26,7 +27,6 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
-import com.sumian.sd.utils.ColorCompatUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
