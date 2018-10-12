@@ -69,9 +69,9 @@
             app:border_width="@dimen/space_2"
             app:bottom_full_half_color="@color/battery_bottom_full_color"
             app:bottom_less_half_color="@color/battery_bottom_less_color"
+            app:bv_text_size="18sp"
             app:full_ah="100"
             app:text_color="@color/white"
-            app:bv_text_size="18sp"
             app:top_full_half_color="@color/battery_top_full_color"
             app:top_less_half_color="@color/battery_top_less_color" />
 

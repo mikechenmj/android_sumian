@@ -78,7 +78,7 @@ public class DeviceIndicatorView extends LinearLayout implements View.OnClickLis
     public void doSync() {
         this.mLoading.setVisibility(GONE);
         this.mBtSync.setVisibility(VISIBLE);
-        this.mBtSync.setText(R.string.syncing);
+        this.mBtSync.setText(R.string.is_syncing_please_wait);
         this.mBtSync.setEnabled(false);
     }
 

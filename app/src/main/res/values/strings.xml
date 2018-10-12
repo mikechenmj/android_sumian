@@ -81,7 +81,7 @@
     <string name="wechat_pay">微信支付</string>
     <string name="alipay">支付宝支付</string>
     <string name="network_error">同步失败，请检查网络</string>
-    <string name="syncing">正在同步，请稍后…</string>
+    <string name="is_syncing_please_wait">正在同步，请稍后…</string>
     <string name="avatar">头像</string>
     <string name="name">真实姓名</string>
     <string name="see_name_for_doctor">真实姓名只有医生才能看到。</string>
@@ -1000,5 +1000,12 @@
     <string name="relax_exercise">放松训练</string>
     <string name="monitor_data">监测数据</string>
     <string name="weekly_data">周数据</string>
+    <string name="bluetooth_not_open">手机蓝牙未开启</string>
+    <string name="please_open_bluetooth_and_connect_monitor">请打开手机蓝牙，与监测仪进行连接</string>
+    <string name="syncing">同步中...</string>
+    <string name="monitor_is_connect_please_sleepers_connectivity">监测仪已连接，请检查速眠仪是否开启</string>
+    <string name="already_connected">已连接</string>
+    <string name="speed_sleeper_already">速眠仪已就绪</string>
+    <string name="start_work">开启工作</string>
     <!-- Hw end-->
 </resources>

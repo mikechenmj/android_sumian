@@ -116,7 +116,7 @@ public class DeviceChaView extends LinearLayout {
                 }
                 break;
             case BlueDevice.STATUS_SYNCHRONIZING://同步数据状态
-                statusText = R.string.syncing;
+                statusText = R.string.is_syncing_please_wait;
                 statusColor = R.color.bt_hole_color;
                 isVisible = View.INVISIBLE;
                 break;
