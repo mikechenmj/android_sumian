@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_40"
+        android:layout_height="62dp"
         android:background="@color/b2_color_day"
         android:gravity="center"
         android:orientation="horizontal"
@@ -31,13 +31,12 @@
 
         <TextView
             android:id="@+id/tv_week_quantum"
-            style="@style/text_t2_16"
-            android:layout_width="0dp"
+            style="@style/text_t2_14"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:gravity="center"
-            android:text="09/08 - 09/14"
+            android:text="09-08 - 09-14"
             skin:enable="true"
             tools:ignore="HardcodedText" />
 

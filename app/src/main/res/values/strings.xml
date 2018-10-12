@@ -999,5 +999,6 @@
     <string name="join_learn">加入学习</string>
     <string name="relax_exercise">放松训练</string>
     <string name="monitor_data">监测数据</string>
+    <string name="weekly_data">周数据</string>
     <!-- Hw end-->
 </resources>

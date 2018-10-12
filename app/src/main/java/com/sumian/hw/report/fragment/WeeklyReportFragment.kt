@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.format.DateUtils
@@ -36,9 +37,18 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
     companion object {
 
         private const val PRELOAD_THRESHOLD = 5
+        private const val KEY_SCROLL_TIME = "scroll_time"
 
         fun newInstance(): WeeklyReportFragment {
             return WeeklyReportFragment()
+        }
+
+        fun newInstance(time: Long): WeeklyReportFragment {
+            val bundle = Bundle()
+            bundle.putLong(KEY_SCROLL_TIME, time)
+            val weeklyReportFragment = WeeklyReportFragment()
+            weeklyReportFragment.arguments = bundle
+            return weeklyReportFragment
         }
     }
 
@@ -79,6 +89,12 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
         recycler.layoutManager = LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)
         recycler.addOnPageChangedListener(this)
         recycler.adapter = mAdapter
+        recycler.post {
+            val time = arguments?.getLong(KEY_SCROLL_TIME, 0L) ?: 0L
+            if (time != 0L) {
+                scrollToTime(time)
+            }
+        }
     }
 
     override fun initData() {

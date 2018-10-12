@@ -217,8 +217,9 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             int nextMonth = calendar.get(Calendar.MONTH);
             int nextDate = calendar.get(Calendar.DATE);
 
-            this.mTvWeekQuantum.setText(String.format(Locale.getDefault(), "%d%s%02d%s%02d%s%d%s%02d%s%02d",
-                    preYear, "/", (preMonth + 1), "/", preDate, " - ", nextYear, "/", (nextMonth + 1), "/", nextDate));
+            this.mTvWeekQuantum.setText(String.format(Locale.getDefault(),
+                    "%02d.%02d-%02d.%02d",
+                    (preMonth + 1), preDate, (nextMonth + 1), nextDate));
 
             this.mLaySleepDataLessContainer.setVisibility(item.getAdvice() == null ? View.GONE : View.VISIBLE);
 

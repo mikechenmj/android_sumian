@@ -48,4 +48,8 @@ abstract class BaseBackActivity : BaseActivity(), TitleBar.OnBackClickListener {
     override fun onBack(v: View) {
         finish()
     }
+
+    override fun setTitle(titleId: Int) {
+        mTitleBar.setTitle(resources.getString(titleId))
+    }
 }

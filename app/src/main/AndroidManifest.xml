@@ -553,6 +553,7 @@
             android:name="com.sumian.hw.report.ReportActivity"
             android:exported="true"
             android:theme="@style/MainActivity" />
+        <activity android:name=".diary.monitorrecord.WeeklyReportActivity" />
     </application>
 
 </manifest>
