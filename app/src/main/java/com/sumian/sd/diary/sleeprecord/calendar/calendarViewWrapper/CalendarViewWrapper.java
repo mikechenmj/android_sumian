@@ -113,8 +113,8 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
         }
     }
 
-    public void addMonthTimes(List<Long> monthTimes) {
-        mPagerAdapter.addMonthTimes(monthTimes);
+    public void addMonthTimes(List<Long> monthTimes, boolean isInit) {
+        mPagerAdapter.addMonthTimes(monthTimes, isInit);
     }
 
     public List<Long> getMonthTimes() {
@@ -122,13 +122,6 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
             return new ArrayList<>();
         }
         return mPagerAdapter.getMonthTimes();
-    }
-
-    public void setMonthTimes(List<Long> monthTimeList) {
-        mPagerAdapter.setMonthTimes(monthTimeList);
-        if (monthTimeList.size() > 0) {
-            mViewPager.setCurrentItem(monthTimeList.size() - 1);
-        }
     }
 
     public void setOnBgClickListener(OnClickListener listener) {

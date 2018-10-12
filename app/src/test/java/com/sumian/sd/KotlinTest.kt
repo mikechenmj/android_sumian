@@ -58,4 +58,8 @@ class KotlinTest {
         }
         println(isHaveVersion)
     }
+
+    @Test
+    fun t1() {
+    }
 }

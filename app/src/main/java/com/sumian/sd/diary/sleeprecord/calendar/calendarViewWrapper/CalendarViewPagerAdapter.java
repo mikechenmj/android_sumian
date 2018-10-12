@@ -84,20 +84,13 @@ public class CalendarViewPagerAdapter extends PagerAdapter {
         return mMonthTimes;
     }
 
-    public void setMonthTimes(List<Long> monthTimes) {
+    public void addMonthTimes(List<Long> monthTimes, boolean isInit) {
         Collections.sort(monthTimes);
-        mMonthTimes = monthTimes;
+        if (isInit) {
+            mMonthTimes = monthTimes;
+        } else {
+            mMonthTimes.addAll(0, monthTimes);
+        }
         notifyDataSetChanged();
-    }
-
-    public void addMonthTimes(List<Long> monthTimes) {
-        Collections.sort(monthTimes);
-        mMonthTimes.addAll(0, monthTimes);
-        notifyDataSetChanged();
-    }
-
-    private void sortAndReverseTime(List<Long> monthTimes) {
-        Collections.sort(monthTimes);
-        Collections.reverse(monthTimes);
     }
 }

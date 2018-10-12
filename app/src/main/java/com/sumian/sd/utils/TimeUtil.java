@@ -413,4 +413,10 @@ public final class TimeUtil {
         calendar.set(Calendar.MINUTE, minute);
         return (int) (calendar.getTimeInMillis() / 1000);
     }
+
+    public static int getMonthDistance(long time1, long time2) {
+        Calendar c1 = getCalendar(time1);
+        Calendar c2 = getCalendar(time2);
+        return (c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR)) * 12 + c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
+    }
 }

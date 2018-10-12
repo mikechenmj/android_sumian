@@ -2,7 +2,6 @@ package com.sumian.sd.diary.sleeprecord.calendar.custom;
 
 import android.content.Context;
 
-import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarViewWrapper.CalendarViewWrapper;
 import com.sumian.sd.utils.TimeUtil;
 
@@ -60,7 +59,6 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
 
     public void addHasDataDays(Set<Long> days) {
         mHasRecordDays.addAll(days);
-        mPagerAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -80,5 +78,13 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
 
     public interface LoadMoreListener {
         void loadMore(long time);
+    }
+
+    @Override
+    public void addMonthTimes(List<Long> monthTimeList, boolean isInit) {
+        super.addMonthTimes(monthTimeList, isInit);
+        if(isInit) {
+            scrollToTime(mSelectDayTime, false);
+        }
     }
 }

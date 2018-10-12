@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -14,16 +12,15 @@ import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
-import com.sumian.sd.h5.H5Uri;
-import com.sumian.sd.h5.SimpleWebActivity;
-import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView;
-import com.sumian.sd.diary.sleeprecord.calendar.custom.SleepCalendarViewWrapper;
+import com.sumian.sd.diary.sleeprecord.calendar.custom.CalendarPopup;
 import com.sumian.sd.diary.sleeprecord.widget.SleepRecordView;
+import com.sumian.sd.h5.H5Uri;
+import com.sumian.sd.h5.SimpleWebActivity;
+import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.utils.TimeUtil;
-import com.sumian.sd.widget.dialog.ActionLoadingDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -55,13 +52,10 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     SleepRecordView mSleepRecordView;
     @BindView(R.id.scroll_view)
     ScrollView mScrollView;
-    private PopupWindow mPopupWindow;
-    private long mPopupDismissTime;
-    private SleepCalendarViewWrapper mCalendarViewWrapper;
     private long mSelectedTime = System.currentTimeMillis();
-    private ActionLoadingDialog mActionLoadingDialog;
     private boolean mNeedScrollToBottom;
     private long mInitTime;
+    private CalendarPopup mCalendarPopup;
 
     public static SleepRecordFragment newInstance(long scrollToTime, boolean needScrollToBottom) {
         Bundle bundle = new Bundle();
@@ -111,47 +105,18 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     }
 
     private void showDatePopup(boolean show) {
-        long currentTimeMillis = System.currentTimeMillis();
-        long timeGap = currentTimeMillis - mPopupDismissTime;
-        if (timeGap < DATE_ARROW_CLICK_COLD_TIME) {
-            return;
-        }
         mIvDateArrow.setActivated(show);
         if (show) {
-            if (mPopupWindow == null) {
-                mPopupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                mCalendarViewWrapper = new SleepCalendarViewWrapper(getContext());
-                mCalendarViewWrapper.setOnDateClickListener(this);
-                mCalendarViewWrapper.setTodayTime(currentTimeMillis);
-                mCalendarViewWrapper.setOnBgClickListener(v -> mPopupWindow.dismiss());
-                mCalendarViewWrapper.setLoadMoreListener(time -> querySleepReportSummaryList(time, false));
-                mPopupWindow.setContentView(mCalendarViewWrapper);
-                mPopupWindow.setOutsideTouchable(true);
-                mPopupWindow.setBackgroundDrawable(null);
-                mPopupWindow.setAnimationStyle(0);
-                mPopupWindow.setFocusable(true);
-                mPopupWindow.setOnDismissListener(() -> {
-                    mPopupDismissTime = System.currentTimeMillis();
-                    mIvDateArrow.setActivated(false);
-                });
-            }
-            mPopupWindow.showAsDropDown(mToolbar, 0, (int) getResources().getDimension(R.dimen.space_10));
-            querySleepReportSummaryList(System.currentTimeMillis(), true);
-        } else {
-            mPopupWindow.dismiss();
-            mPopupWindow = null;
+            mCalendarPopup = new CalendarPopup(getActivity(), this::querySleepReportSummaryList);
+            mCalendarPopup.setOnDateClickListener(this);
+            mCalendarPopup.setOnDismissListener(() -> mIvDateArrow.setActivated(false));
+            mCalendarPopup.setSelectDayTime(mSelectedTime);
+            mCalendarPopup.showAsDropDown(mToolbar, 0, (int) getResources().getDimension(R.dimen.space_10));
         }
     }
 
-    private void querySleepReportSummaryList(long time, boolean isInit) {
-        List<Long> monthTimes = TimeUtil.createMonthTimes(time, PAGE_SIZE, isInit);
-        if (isInit) {
-            mCalendarViewWrapper.setMonthTimes(monthTimes);
-            mCalendarViewWrapper.setSelectDayTime(mSelectedTime);
-        } else {
-            mCalendarViewWrapper.addMonthTimes(monthTimes);
-        }
-        Call<Map<String, List<SleepRecordSummary>>> call = AppManager.getSdHttpService().getSleepDiarySummaryList((int) (time / 1000), 1, PAGE_SIZE, 0);
+    private void querySleepReportSummaryList(long monthTime, int monthCount, boolean isInit) {
+        Call<Map<String, List<SleepRecordSummary>>> call = AppManager.getSdHttpService().getSleepDiarySummaryList((int) (monthTime / 1000), 1, monthCount, 0);
         addCall(call);
         call.enqueue(new BaseSdResponseCallback<Map<String, List<SleepRecordSummary>>>() {
             @Override
@@ -170,7 +135,7 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
                         hasDataDays.add(summaryDate);
                     }
                 }
-                mCalendarViewWrapper.addHasDataDays(hasDataDays);
+                mCalendarPopup.addMonthAndData(monthTime, hasDataDays, isInit);
             }
         });
     }
@@ -201,7 +166,6 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
         if (time > TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis())) {
             return;
         }
-        mPopupWindow.dismiss();
         changeSelectTime(time);
     }
 
@@ -213,8 +177,6 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
 
     private void queryAndShowSleepReportAtTime(long time) {
         mSleepRecordView.setTime(time);
-        mActionLoadingDialog = new ActionLoadingDialog();
-        mActionLoadingDialog.show(getFragmentManager());
         Call<SleepRecord> call = AppManager.getSdHttpService().getSleepDiaryDetail((int) (time / 1000L));
         addCall(call);
         call.enqueue(new BaseSdResponseCallback<SleepRecord>() {
@@ -231,9 +193,6 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
             @Override
             protected void onFinish() {
                 super.onFinish();
-                if (mActionLoadingDialog != null) {
-                    mActionLoadingDialog.dismiss();
-                }
             }
         });
     }
