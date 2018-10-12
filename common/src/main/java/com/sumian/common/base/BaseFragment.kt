@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.sumian.common.dialog.LoadingDialog
 import com.sumian.common.mvp.BaseShowLoadingView
+import retrofit2.Call
 
 /**
  * Created by sm
@@ -21,6 +22,8 @@ import com.sumian.common.mvp.BaseShowLoadingView
  * desc:
  */
 abstract class BaseFragment : Fragment(), BaseShowLoadingView {
+
+    private var mCalls = HashSet<Call<*>>()
 
     protected val mActivity: AppCompatActivity  by lazy {
         activity as AppCompatActivity
@@ -54,7 +57,9 @@ abstract class BaseFragment : Fragment(), BaseShowLoadingView {
     }
 
     protected open fun onRelease() {
-
+        for (call in mCalls) {
+            call.cancel()
+        }
     }
 
     protected open fun initBundle(bundle: Bundle) {
@@ -90,4 +95,7 @@ abstract class BaseFragment : Fragment(), BaseShowLoadingView {
         }
     }
 
+    fun addCall(call: Call<*>) {
+        mCalls.add(call)
+    }
 }

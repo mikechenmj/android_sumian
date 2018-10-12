@@ -109,7 +109,10 @@ public interface HwApi {
 
     //获取多天睡眠日报告 (左右滑动)
     @GET("sleeps/days/flip-show")
-    Call<BaseResultResponse<DailyReport, DailyMeta>> getTodaySleepReport(@QueryMap Map<String, Object> map);
+    Call<BaseResultResponse<DailyReport, DailyMeta>> getSleepReport(@QueryMap Map<String, Object> map);
+
+    @GET("sleeps/days/flip-show")
+    Call<BaseResultResponse<DailyReport, DailyMeta>> getSleepReport(@Query("date") int unixTime, @Query("page_size") int pageSize, @Query("is_include") int isInclude);
 
     //获取多条睡眠周报告
     @GET("sleeps/week-flip-show")

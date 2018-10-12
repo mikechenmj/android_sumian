@@ -27,8 +27,10 @@ import com.sumian.sd.widget.dialog.ActionLoadingDialog;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -115,23 +117,24 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
             return;
         }
         mIvDateArrow.setActivated(show);
-        if (mPopupWindow == null) {
-            mPopupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            mCalendarViewWrapper = new SleepCalendarViewWrapper(getContext());
-            mCalendarViewWrapper.setOnDateClickListener(this);
-            mCalendarViewWrapper.setTodayTime(currentTimeMillis);
-            mCalendarViewWrapper.setOnBgClickListener(v -> mPopupWindow.dismiss());
-            mCalendarViewWrapper.setLoadMoreListener(time -> querySleepReportSummaryList(time, false));
-            mPopupWindow.setContentView(mCalendarViewWrapper);
-            mPopupWindow.setOutsideTouchable(true);
-            mPopupWindow.setBackgroundDrawable(null);
-            mPopupWindow.setAnimationStyle(0);
-            mPopupWindow.setOnDismissListener(() -> {
-                mPopupDismissTime = System.currentTimeMillis();
-                mIvDateArrow.setActivated(false);
-            });
-        }
         if (show) {
+            if (mPopupWindow == null) {
+                mPopupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                mCalendarViewWrapper = new SleepCalendarViewWrapper(getContext());
+                mCalendarViewWrapper.setOnDateClickListener(this);
+                mCalendarViewWrapper.setTodayTime(currentTimeMillis);
+                mCalendarViewWrapper.setOnBgClickListener(v -> mPopupWindow.dismiss());
+                mCalendarViewWrapper.setLoadMoreListener(time -> querySleepReportSummaryList(time, false));
+                mPopupWindow.setContentView(mCalendarViewWrapper);
+                mPopupWindow.setOutsideTouchable(true);
+                mPopupWindow.setBackgroundDrawable(null);
+                mPopupWindow.setAnimationStyle(0);
+                mPopupWindow.setFocusable(true);
+                mPopupWindow.setOnDismissListener(() -> {
+                    mPopupDismissTime = System.currentTimeMillis();
+                    mIvDateArrow.setActivated(false);
+                });
+            }
             mPopupWindow.showAsDropDown(mToolbar, 0, (int) getResources().getDimension(R.dimen.space_10));
             querySleepReportSummaryList(System.currentTimeMillis(), true);
         } else {
@@ -157,9 +160,18 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
 
             @Override
             protected void onSuccess(Map<String, List<SleepRecordSummary>> response) {
-                mCalendarViewWrapper.addSleepRecordSummaries(response);
+                if (response == null) {
+                    return;
+                }
+                Set<Long> hasDataDays = new HashSet<>();
+                for (Map.Entry<String, List<SleepRecordSummary>> entry : response.entrySet()) {
+                    for (SleepRecordSummary summary : entry.getValue()) {
+                        long summaryDate = summary.getDateInMillis();
+                        hasDataDays.add(summaryDate);
+                    }
+                }
+                mCalendarViewWrapper.addHasDataDays(hasDataDays);
             }
-
         });
     }
 

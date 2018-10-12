@@ -56,7 +56,7 @@ public class DailyReportPresenter implements DailyReportContract.Presenter {
         map.put("page_size", pageSize);
         map.put("is_include", include ? 1 : 0);
 
-        Call<BaseResultResponse<DailyReport, DailyMeta>> call = AppManager.getHwHttpService().getTodaySleepReport(map);
+        Call<BaseResultResponse<DailyReport, DailyMeta>> call = AppManager.getHwHttpService().getSleepReport(map);
         mCalls.add(call);
 
         call.enqueue(new BaseSdResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {

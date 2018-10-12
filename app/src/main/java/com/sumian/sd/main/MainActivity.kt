@@ -101,7 +101,7 @@ class MainActivity : BaseEventActivity() {
         showOpenNotificationDialogIfNeeded()
         showUserGuidDialogIfNeed()
         //目前因为默认launch 的是黑色主题  所以必须加这行.保证app 每次初始化都是黑色
-        SkinManager.getInstance().nightMode()
+        SkinManager.getInstance().restoreDefaultTheme()
     }
 
     private fun showUserGuidDialogIfNeed() {
@@ -139,11 +139,6 @@ class MainActivity : BaseEventActivity() {
                 startStatusBarColor, endStatusBarColor, isSwitchToHwFragment,
                 object : SwitchAnimationView.AnimationListener {
                     override fun onFullScreenCovered() {
-                        if (isSwitchToHwFragment) {
-                            SkinManager.getInstance().nightMode()
-                        } else {
-                            SkinManager.getInstance().restoreDefaultTheme()
-                        }
                         showFragmentByPosition(position, subFragmentName)
                     }
                 })

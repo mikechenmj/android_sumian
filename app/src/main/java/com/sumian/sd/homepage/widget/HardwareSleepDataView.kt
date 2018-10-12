@@ -80,7 +80,7 @@ class HardwareSleepDataView(context: Context, attributeSet: AttributeSet? = null
         map["date"] = System.currentTimeMillis() / 1000
         map["page_size"] = 1
         map["is_include"] = 1
-        val call = AppManager.getHwHttpService().getTodaySleepReport(map)
+        val call = AppManager.getHwHttpService().getSleepReport(map)
         HwBasePresenter.mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {
             override fun onFailure(errorResponse: ErrorResponse) {

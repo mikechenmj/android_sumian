@@ -2,17 +2,18 @@ package com.sumian.sd.diary.sleeprecord.calendar.calendarViewWrapper;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.sumian.sd.R;
-import com.sumian.sd.utils.TimeUtil;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView;
+import com.sumian.sd.utils.TimeUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,11 +34,9 @@ import butterknife.OnClick;
  *     version: 1.0
  * </pre>
  */
-public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPager.OnPageChangedListener, CalendarView.DayTypeProvider {
+public class CalendarViewWrapper extends LinearLayout implements CalendarView.DayTypeProvider, ViewPager.OnPageChangeListener {
 
-    protected CalendarWrapperAdapter mAdapter;
-    protected int mCurrentPosition;
-    protected CalendarView.OnDateClickListener mOnDateClickListener;
+
     @BindView(R.id.tv_month)
     TextView tvMonth;
     @BindView(R.id.iv_left)
@@ -46,10 +45,14 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     ImageView ivRight;
     @BindView(R.id.tv_go_to_today)
     TextView tvGoToToday;
-    @BindView(R.id.rvp)
-    RecyclerViewPager mRecyclerViewPager;
     @BindView(R.id.v_bg)
     View vBg;
+    @BindView(R.id.calender_view_pager)
+    ViewPager mViewPager;
+    protected int mCurrentPosition;
+    protected CalendarView.OnDateClickListener mOnDateClickListener;
+    protected CalendarViewPagerAdapter mPagerAdapter;
+
 
     public CalendarViewWrapper(Context context) {
         this(context, null);
@@ -63,10 +66,9 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     }
 
     protected void init() {
-        mAdapter = new CalendarWrapperAdapter(this);
-        mRecyclerViewPager.setAdapter(mAdapter);
-        mRecyclerViewPager.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true));
-        mRecyclerViewPager.addOnPageChangedListener(this);
+        mPagerAdapter = new CalendarViewPagerAdapter(this);
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.addOnPageChangeListener(this);
     }
 
     private void updateTvMonth(long time) {
@@ -77,7 +79,7 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
 
     public void setOnDateClickListener(CalendarView.OnDateClickListener listener) {
         mOnDateClickListener = listener;
-        mAdapter.setOnDateClickListener(mOnDateClickListener);
+        mPagerAdapter.setOnDateClickListener(mOnDateClickListener);
     }
 
     public void scrollToTime(long time, boolean smooth) {
@@ -88,32 +90,20 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
         for (int i = 0; i < getMonthTimes().size(); i++) {
             long monthTime = getMonthTimes().get(i);
             if (TimeUtil.isInTheSameMonth(time, monthTime)) {
-                if (smooth) {
-                    mRecyclerViewPager.smoothScrollToPosition(i);
-                } else {
-                    mRecyclerViewPager.scrollToPosition(i);
-                }
+                mViewPager.setCurrentItem(i, smooth);
                 return;
             }
         }
-    }
-
-    @Override
-    public void OnPageChanged(int oldPosition, int newPosition) {
-        mCurrentPosition = newPosition;
-        updateTvMonth(getMonthTimes().get(newPosition));
-        ivRight.setVisibility(newPosition != 0 ? VISIBLE : GONE);
-        ivLeft.setVisibility(newPosition != getMonthTimes().size() - 1 ? VISIBLE : GONE);
     }
 
     @OnClick({R.id.iv_left, R.id.iv_right, R.id.tv_go_to_today})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_left:
-                mRecyclerViewPager.smoothScrollToPosition(mCurrentPosition + 1);
+                mViewPager.setCurrentItem(mCurrentPosition - 1, true);
                 break;
             case R.id.iv_right:
-                mRecyclerViewPager.smoothScrollToPosition(mCurrentPosition - 1);
+                mViewPager.setCurrentItem(mCurrentPosition + 1, true);
                 break;
             case R.id.tv_go_to_today:
                 mOnDateClickListener.onDateClick(TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis()));
@@ -124,19 +114,21 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
     }
 
     public void addMonthTimes(List<Long> monthTimes) {
-        mAdapter.addMonthTimes(monthTimes);
+        mPagerAdapter.addMonthTimes(monthTimes);
     }
 
     public List<Long> getMonthTimes() {
-        if (mAdapter == null) {
+        if (mPagerAdapter == null) {
             return new ArrayList<>();
         }
-        return mAdapter.getMonthTimes();
+        return mPagerAdapter.getMonthTimes();
     }
 
     public void setMonthTimes(List<Long> monthTimeList) {
-        updateTvMonth(monthTimeList.get(0));
-        mAdapter.setMonthTimes(monthTimeList);
+        mPagerAdapter.setMonthTimes(monthTimeList);
+        if (monthTimeList.size() > 0) {
+            mViewPager.setCurrentItem(monthTimeList.size() - 1);
+        }
     }
 
     public void setOnBgClickListener(OnClickListener listener) {
@@ -148,4 +140,22 @@ public class CalendarViewWrapper extends LinearLayout implements RecyclerViewPag
         return 0;
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mCurrentPosition = position;
+        LogUtils.d(position);
+        updateTvMonth(getMonthTimes().get(position));
+        ivLeft.setVisibility(position != 0 ? VISIBLE : GONE);
+        ivRight.setVisibility(position != getMonthTimes().size() - 1 ? VISIBLE : GONE);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

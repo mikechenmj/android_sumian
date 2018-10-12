@@ -5,8 +5,10 @@ import android.view.View
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.report.ReportFragment
+import com.sumian.hw.report.fragment.DailyReportFragment
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.diary.monitorrecord.DailyReportFragmentV2
 import com.sumian.sd.diary.sleeprecord.SleepRecordFragment
 import kotlinx.android.synthetic.main.fragment_diary.*
 
@@ -48,7 +50,7 @@ class DiaryFragment : BaseFragment() {
         if (fragmentByTag == null) {
             fragmentByTag = when (tag) {
                 T0 -> SleepRecordFragment()
-                else -> ReportFragment()
+                else -> DailyReportFragmentV2()
             }
         }
         return fragmentByTag

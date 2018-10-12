@@ -61,4 +61,8 @@ public class DailyReport implements Comparable<DailyReport> {
     public long getDateInMillis() {
         return date * 1000L;
     }
+
+    public boolean hasReport(){
+        return id != 0;
+    }
 }
