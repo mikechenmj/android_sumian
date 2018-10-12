@@ -119,7 +119,8 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
     }
 
     private fun showFragmentAccordingToData() {
-        showFragmentByPosition(intent.getIntExtra(KEY_TAB_INDEX, TAB_0))
+        val intentPosition = intent.getIntExtra(KEY_TAB_INDEX, TAB_0)
+        changeSelectTab(intentPosition)
     }
 
     override fun onBackPressed() {
@@ -130,14 +131,18 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
     }
 
     private fun changeStatusBarColorByPosition(position: Int) {
-        if (position == 0 || position == 3) {
-            StatusBarUtil.setStatusBarTextColorDark(this, false)
-        } else {
+        if (position == 0 || position == 2) {
             StatusBarUtil.setStatusBarTextColorDark(this, true)
+        } else {
+            StatusBarUtil.setStatusBarTextColorDark(this, false)
         }
     }
 
     override fun onSelectedTabChange(navigationItem: NavigationItem, position: Int) {
+        changeSelectTab(position)
+    }
+
+    private fun changeSelectTab(position: Int) {
         if (mCurrentPosition == position) {
             return
         }
