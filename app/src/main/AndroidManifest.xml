@@ -173,16 +173,6 @@
         <service android:name="com.avos.avoscloud.PushService" />
 
         <receiver
-            android:name="com.sumian.hw.push.PushReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="com.tech.sumian.action.PUSH" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
             android:name=".notification.push.PushReceiver"
             android:exported="false">
             <intent-filter>

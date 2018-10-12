@@ -131,10 +131,10 @@ class SdMainFragment : BaseEventFragment<HwBasePresenter>(), BottomNavigationBar
             }
         } else {
             when (data) {
-                MainActivity.TAB_SD_0 -> nav_tab.selectItem(0, true)
-                MainActivity.TAB_SD_1 -> nav_tab.selectItem(1, true)
-                MainActivity.TAB_SD_2 -> nav_tab.selectItem(2, true)
-                MainActivity.TAB_SD_3 -> nav_tab.selectItem(3, true)
+//                MainActivity.TAB_0 -> nav_tab.selectItem(0, true)
+//                MainActivity.TAB_1 -> nav_tab.selectItem(1, true)
+//                MainActivity.TAB_2 -> nav_tab.selectItem(2, true)
+//                MainActivity.TAB_3 -> nav_tab.selectItem(3, true)
             }
         }
     }

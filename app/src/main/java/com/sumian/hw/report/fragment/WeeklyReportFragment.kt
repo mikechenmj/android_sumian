@@ -100,17 +100,7 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
     override fun initData() {
         super.initData()
         initReceiver()
-        val currentTimeMillis = System.currentTimeMillis()
-        val showPushReport = showPushReportIfNeeded()
-        if (!showPushReport) {
-            mPresenter.getInitReports(currentTimeMillis)
-        }
         initAdapter()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        showPushReportIfNeeded()
     }
 
     override fun initPresenter() {
@@ -120,7 +110,6 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
 
     override fun onEnter(data: String?) {
         LogManager.appendUserOperationLog("点击 '周报告' 界面")
-        showPushReportIfNeeded()
         AppManager.getJobScheduler().checkJobScheduler()
     }
 
@@ -246,31 +235,6 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
 
     private fun getViewHolder(position: Int): WeeklyReportAdapter.ViewHolder? {
         return recycler.findViewHolderForAdapterPosition(position) as? WeeklyReportAdapter.ViewHolder
-    }
-
-    /**
-     * 检查是否有推送消息，如果有，则显示对应数据，同时清空推送消息
-     *
-     * @return 是否有推送消息
-     */
-    private fun showPushReportIfNeeded(): Boolean {
-        return ReportPushManager.getInstance().checkWeeklyPushReportAndRun(context) { pushReport ->
-            mNeedScrollToBottom = true
-            var pushDate = pushReport.pushDate
-            // 这里有坑
-            // 服务器获取的周报列表信息，start_date是从周六晚8点开始计算的，start_date_show是从周一0点开始计算的
-            // "start_date":"2018-04-14 20:00:00",
-            // "end_date":"2018-04-21 19:59:59",
-            // "start_date_show":1523721600, => 2018-04-15 00:00:00:00
-            // "end_date_show":1524240000，=> 2018-04-21 00:00:00:00
-            // 推送的pushDate是2018-04-14 20:00:00:00从周六晚8点开始计算的，要换算成周一0点开始计算的格式，否则后续无法匹配。
-            pushDate += 3600 * 4 // 周六20:00 开始 => 周日00:00 开始
-            if (mCurrentReport != null && mCurrentReport!!.start_date_show == pushDate) {
-                mPresenter.refreshReport(mCurrentReport!!.start_date_show * 1000L)
-            } else {
-                scrollToTime(pushDate * 1000L)
-            }
-        }
     }
 
     private fun preloadData() {

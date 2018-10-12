@@ -1,18 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical"
+    tools:context="com.sumian.sd.main.MainActivity">
 
     <FrameLayout
-        android:id="@+id/main_fragment_container"
+        android:id="@+id/sd_main_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:focusable="true" />
 
-    <com.sumian.sd.main.widget.SwitchAnimationView
-        android:id="@+id/switch_animation_view"
+    <View style="@style/HorizontalDividerLine" />
+
+    <com.sumian.sd.widget.nav.BottomNavigationBar
+        android:id="@+id/nav_tab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center_vertical">
 
-</FrameLayout>
+        <com.sumian.sd.widget.nav.NavigationItem
+            android:id="@+id/tb_record"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_record_icon"
+            app:tab_text="@string/tab_homepage" />
+
+        <include layout="@layout/lay_nav_tab_divider" />
+
+        <com.sumian.sd.widget.nav.NavigationItem
+            android:id="@+id/tb_diary"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
+            app:tab_text="@string/diary" />
+
+        <include layout="@layout/lay_nav_tab_divider" />
+
+        <com.sumian.sd.widget.nav.NavigationItem
+            android:id="@+id/tb_doctor"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
+            app:tab_text="@string/tab_doctor" />
+
+        <include layout="@layout/lay_nav_tab_divider" />
+
+        <com.sumian.sd.widget.nav.NavigationItem
+
+            android:id="@+id/tb_me"
+            style="@style/HorizontalWeight"
+            app:tab_icon="@drawable/sd_sel_tab_me_icon"
+            app:tab_text="@string/tab_me" />
+
+        <include layout="@layout/lay_nav_tab_divider" />
+
+    </com.sumian.sd.widget.nav.BottomNavigationBar>
+</LinearLayout>

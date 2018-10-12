@@ -103,19 +103,10 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
         super.initData()
         initReceiver()
         initAdapter()
-        val showDailyPushReport = showPushReportIfNeeded()
-        if (!showDailyPushReport) {
-            mPresenter.getInitReports(getInitToday())
-        }
     }
 
     override fun setPresenter(presenter: DailyReportContract.Presenter) {
         this.mPresenter = presenter as DailyReportPresenter
-    }
-
-    override fun onResume() {
-        super.onResume()
-        showPushReportIfNeeded()
     }
 
     override fun onRelease() {
@@ -201,7 +192,6 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
     override fun onEnter(data: String?) {
         // check monitor sync sleep data status
         AppManager.getReportModel().setOnSyncCallback(this).checkSyncStatus()
-        showPushReportIfNeeded()
         LogManager.appendUserOperationLog("点击 '日报告' 界面")
         AppManager.getJobScheduler().checkJobScheduler()
     }
@@ -223,23 +213,6 @@ class DailyReportFragment : SkinBaseFragment<DailyReportPresenter>(), DailyRepor
     override fun onSyncFinishedCallback() {
         this.mIsSyncing = false
         //syncing_report_view.hide()
-    }
-
-    /**
-     * 检查是否有推送消息，如果有，则显示对应数据，同时清空推送消息
-     *
-     * @return 是否有推送消息
-     */
-    private fun showPushReportIfNeeded(): Boolean {
-        return ReportPushManager.getInstance().checkDailyPushReportAndRun(context) { pushReport ->
-            mNeedScrollToBottom = true
-            val pushDate = pushReport.pushDate
-            if (mCurrentDailyReport != null && mCurrentDailyReport!!.date == pushDate) {
-                mPresenter.refreshReport(mCurrentDailyReport!!.date.toLong())
-            } else {
-                onScrollToTime(pushDate.toLong())
-            }
-        }
     }
 
     private fun initReceiver() {

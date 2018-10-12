@@ -158,9 +158,9 @@ class HwMainFragment : BaseEventFragment<HwBasePresenter>(), HwLeanCloudHelper.O
             }
         } else {
             when (data) {
-                MainActivity.TAB_HW_0 -> nav_tab.selectItem(0, true)
-                MainActivity.TAB_HW_1 -> nav_tab.selectItem(1, true)
-                MainActivity.TAB_HW_2 -> nav_tab.selectItem(2, true)
+//                MainActivity.TAB_HW_0 -> nav_tab.selectItem(0, true)
+//                MainActivity.TAB_HW_1 -> nav_tab.selectItem(1, true)
+//                MainActivity.TAB_HW_2 -> nav_tab.selectItem(2, true)
             }
         }
     }

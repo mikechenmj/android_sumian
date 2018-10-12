@@ -102,7 +102,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         if (mIsFromRecord) {
             DoctorServiceWebActivity.show(this, mDoctorService, true);
         } else {
-            MainActivity.Companion.launch(MainActivity.TAB_SD_1, null);
+            MainActivity.Companion.launch(MainActivity.TAB_1, null);
         }
     }
 

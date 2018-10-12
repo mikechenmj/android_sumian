@@ -115,12 +115,6 @@ class ReportFragment : SkinBaseFragment<HwBasePresenter>(), TabIndicatorView.OnS
         if (GuidelineUtils.needShowDailyUserGuide()) {
             mReportGuidelineDialog.show()
         }
-        // check push report
-        val showPushReport = showPushReportInNeeded()
-        if (!showPushReport && mCurrentPosition != -1) {
-            tab_indicator_view?.selectTabByPosition(mCurrentPosition)
-        }
-
         tab_indicator_view?.iv_back?.visibility = if (SkinManager.getInstance().isNightMode) View.INVISIBLE else View.VISIBLE
     }
 
@@ -153,23 +147,5 @@ class ReportFragment : SkinBaseFragment<HwBasePresenter>(), TabIndicatorView.OnS
                     }
                 }
                 , FragmentUtil.DefaultRunOnCommitCallbackImpl())
-    }
-
-    /**
-     * 如果有push report，则切换到对应的tab
-     *
-     * @return 是否有push report存在
-     */
-    private fun showPushReportInNeeded(): Boolean {
-        val pushReport = ReportPushManager.getInstance().pushReport
-        if (pushReport != null) {
-            if (pushReport.pushType == PushReport.PUSH_TYPE_DAILY_REPORT) {
-                tab_indicator_view?.selectTabByPosition(0)
-            } else {
-                tab_indicator_view?.selectTabByPosition(1)
-            }
-            return true
-        }
-        return false
     }
 }
