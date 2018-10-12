@@ -21,6 +21,6 @@ data class Meta(
 
 data class Prescription(
         val status: Boolean,
-        val data: Any,
+        val data: SleepPrescription?,
         val sleep_duration_avg_new: Any
 )

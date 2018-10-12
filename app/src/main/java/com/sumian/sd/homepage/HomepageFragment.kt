@@ -84,17 +84,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     private fun querySleepPrescription() {
         SPUtils.getInstance().put(SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME, System.currentTimeMillis())
-        val call = AppManager.getSdHttpService().getSleepPrescriptions()
-        addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<SleepPrescription?>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-
-            }
-
-            override fun onSuccess(response: SleepPrescription?) {
-                sleep_prescription_view.setPrescriptionData(response)
-            }
-        })
         val call2 = AppManager.getSdHttpService().getSleepPrescriptionStatus()
         addCall(call2)
         call2.enqueue(object : BaseSdResponseCallback<SleepPrescriptionStatus?>() {
@@ -107,6 +96,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                     return
                 }
                 sleep_prescription_view.setHasNewPrescription(response.meta.update)
+                sleep_prescription_view.setPrescriptionData(response.meta.prescription.data)
             }
         })
     }
