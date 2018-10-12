@@ -9,7 +9,7 @@ package com.sumian.sd.base
  */
 object  Counter {
     private var count =0
-    public fun count(): Int {
+    fun count(): Int {
         return count++
     }
 }
