@@ -185,7 +185,7 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
     }
 
     override fun onBegin() {
-        mActionLoadingDialog.show(activity!!.supportFragmentManager)
+//        mActionLoadingDialog.show(activity!!.supportFragmentManager)
     }
 
     override fun onFinish() {
@@ -194,7 +194,7 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
     }
 
     private fun dismissLoadingDialog() {
-        mActionLoadingDialog.dismiss()
+//        mActionLoadingDialog.dismiss()
     }
 
     private fun stopRefreshing() {

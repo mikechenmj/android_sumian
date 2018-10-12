@@ -28,6 +28,5 @@ public class BlueRefreshView extends SwipeRefreshLayout {
 
         setColorSchemeColors(progressColor);
         setProgressBackgroundColorSchemeColor(progressBgColor);
-
     }
 }

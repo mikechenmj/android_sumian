@@ -8,8 +8,6 @@
     android:orientation="vertical"
     skin:enable="true">
 
-    <include layout="@layout/layout_diary_date_bar" />
-
     <com.sumian.hw.widget.refresh.BlueRefreshView
         android:id="@+id/refresh"
         android:layout_width="match_parent"
@@ -27,6 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <include layout="@layout/layout_diary_date_bar" />
 
                 <com.sumian.hw.report.widget.histogram.TouchDailySleepHistogramView
                     android:id="@+id/day_sleep_histogram_view"
