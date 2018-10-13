@@ -78,6 +78,7 @@ class ScanDeviceFragment : BaseFragment() {
         mBlueManager.removeBlueScanCallback(mScanCallback)
         super.onDetach()
     }
+
     private val mScanCallback = object : BlueScanCallback {
         override fun onBeginScanCallback() {
             mScanResults.clear()
@@ -152,7 +153,7 @@ class ScanDeviceFragment : BaseFragment() {
 
     @AfterPermissionGranted(REQUEST_CODE_ENABLE_BT)
     private fun checkPermissionStartScan() {
-        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
         if (EasyPermissions.hasPermissions(activity!!, *perms)) {
             startScan()
         } else {
