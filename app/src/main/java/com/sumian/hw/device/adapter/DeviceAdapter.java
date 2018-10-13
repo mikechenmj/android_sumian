@@ -12,6 +12,7 @@ import com.sumian.sd.R;
 import com.sumian.hw.device.bean.BlueDevice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -77,6 +78,13 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         notifyItemRangeInserted(insertPosition, devices.size());
     }
 
+    public void setData(List<BlueDevice> devices) {
+        Collections.sort(devices);
+        mBlueDevices.clear();
+        mBlueDevices.addAll(devices);
+        notifyDataSetChanged();
+    }
+
     public void clear() {
         if (this.mBlueDevices.isEmpty()) return;
         int removeSize = this.mBlueDevices.size();
@@ -111,8 +119,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         }
 
         void initView(BlueDevice blueDevice, OnItemClickListener onItemClickListener) {
-            CharSequence charSequence = QMUISpanHelper.generateSideIconText(true, itemView.getResources().getDimensionPixelSize(R.dimen.space_20), blueDevice.name, itemView.getResources().getDrawable(R.mipmap.equip_icon_bracelet));
-            mTvDeviceName.setText(charSequence);
+            mTvDeviceName.setText(blueDevice.name);
             itemView.setOnClickListener(v -> onItemClickListener.onItemClick(v, getAdapterPosition(), blueDevice));
         }
     }

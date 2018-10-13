@@ -97,6 +97,11 @@ public class BlueManager implements BlueContract.Presenter, BluetoothAdapter.LeS
         mWorkHandler.sendEmptyMessage(MSG_WHAT_START_SCAN_AND_DELAY_STOP);
     }
 
+    public void startScanAndAutoStopAfter(long delayTimes) {
+        removeMsg();
+        mWorkHandler.sendEmptyMessage(MSG_WHAT_START_SCAN);
+        mWorkHandler.sendEmptyMessageDelayed(MSG_WHAT_STOP_SCAN, delayTimes);
+    }
     @Override
     public void doStopScan() {
         removeMsg();

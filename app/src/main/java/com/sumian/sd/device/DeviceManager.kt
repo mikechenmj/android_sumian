@@ -1,5 +1,30 @@
 package com.sumian.sd.device
 
+import android.arch.lifecycle.MutableLiveData
+import android.support.annotation.StringRes
+import android.text.TextUtils
+import com.blankj.utilcode.util.SPUtils
+import com.sumian.blue.callback.BlueAdapterCallback
+import com.sumian.blue.callback.BluePeripheralCallback
+import com.sumian.blue.callback.BluePeripheralDataCallback
+import com.sumian.blue.constant.BlueConstant
+import com.sumian.blue.model.BluePeripheral
+import com.sumian.blue.model.bean.BlueUuidConfig
+import com.sumian.common.helper.ToastHelper
+import com.sumian.common.utils.JsonUtil
+import com.sumian.hw.command.BlueCmd
+import com.sumian.hw.common.util.BlueByteUtil
+import com.sumian.hw.common.util.SpUtil
+import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.hw.device.wrapper.BlueDeviceWrapper
+import com.sumian.hw.gather.FileHelper
+import com.sumian.hw.log.LogManager
+import com.sumian.sd.R
+import com.sumian.sd.app.App
+import com.sumian.sd.app.AppManager
+import com.sumian.sd.utils.StorageUtil
+import java.util.*
+
 /**
  * @author : Zhan Xuzhao
  * e-mail : xuzhao.z@sumian.com
@@ -7,5 +32,739 @@ package com.sumian.sd.device
  * desc   :
  * version: 1.0
  */
-class DeviceManager {
+object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeripheralCallback, MonitorEventListener {
+
+    private val SP_KEY_MONITOR_CACHE = "DeviceManager.MonitorCache"
+    private var mCurrentIndex = -1
+    private val m8fTransData = ArrayList<String>(0)
+    private var mMonitor: BlueDevice? = null
+    private var mIsMonitoring: Boolean = false
+    private var mIsUnbinding: Boolean = false
+    private var mTranType: Int = 0
+    private var mBeginCmd: String? = null
+    private var mReceiveStartedTime: Long = 0
+    private var mBlueDeviceWrapper: BlueDeviceWrapper = BlueDeviceWrapper()
+    private var mTotalDataCount: Int = 0
+    private var mPackageNumber: Int = 0 // 透传数据 包的index
+    private val mMonitorLiveData = MutableLiveData<BlueDevice>()
+    private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
+    private val mMonitorEventListeners = HashSet<MonitorEventListener>()
+
+    init {
+        AppManager.getBlueManager().addBlueAdapterCallback(this)
+//        mMonitorLiveData.value = BlueDevice()
+//        mMonitorLiveData.value?.speedSleeper = BlueDevice()
+//        mMonitorLiveData.value?.name = App.getAppContext().getString(R.string.monitor)
+//        mMonitorLiveData.value?.speedSleeper?.name = App.getAppContext().getString(R.string.speed_sleeper)
+//        notifyMonitorChange()
+        val monitorCache = getCachedMonitor()
+        mMonitorLiveData.value = monitorCache
+    }
+
+    fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
+        return mMonitorLiveData
+    }
+
+    fun getIsBluetoothEnableLiveData(): MutableLiveData<Boolean> {
+        return mIsBluetoothEnableLiveData
+    }
+
+    fun isBluetoothEnable(): Boolean {
+        return mIsBluetoothEnableLiveData.value ?: false
+    }
+
+    fun addMonitorEventListener(listener: MonitorEventListener) {
+        mMonitorEventListeners.add(listener)
+    }
+
+    fun removeMonitorEventListener(listener: MonitorEventListener) {
+        mMonitorEventListeners.remove(listener)
+    }
+
+    fun getCachedMonitor(): BlueDevice? {
+        return JsonUtil.fromJson(SPUtils.getInstance().getString(SP_KEY_MONITOR_CACHE), BlueDevice::class.java)
+    }
+
+    fun connect(monitor: BlueDevice) {
+        AppManager.getBlueManager().clearBluePeripheral()
+        val remoteDevice = AppManager.getBlueManager().getBluetoothDeviceFromMac(monitor.mac)
+        if (remoteDevice != null) {
+            val blueUuidConfig = BlueUuidConfig()
+            blueUuidConfig.serviceUuid = BlueConstant.SERVICE_UUID
+            blueUuidConfig.notifyUuid = BlueConstant.NOTIFY_UUID
+            blueUuidConfig.writeUuid = BlueConstant.WRITE_UUID
+            blueUuidConfig.descUuid = BlueConstant.DESCRIPTORS_UUID
+            val bluePeripheral = BluePeripheral.PeripheralBlueBuilder()
+                    .setContext(App.getAppContext())
+                    .setBlueUuidConfig(blueUuidConfig)
+                    .setName(remoteDevice.name)
+                    .setRemoteDevice(remoteDevice)
+                    .bindWorkThread(AppManager.getBlueManager().workThread)
+                    .build()
+            bluePeripheral.addPeripheralDataCallback(this)
+            bluePeripheral.addPeripheralCallback(this)
+            bluePeripheral.connect()
+            LogManager.appendMonitorLog("主动连接监测仪  connect to   name=" + remoteDevice.name + "  address=" + remoteDevice.address)
+        } else {
+            LogManager.appendMonitorLog("主动连接监测仪  connect to  is invalid   because  init bluetoothDevice is null")
+        }
+    }
+
+    fun scanAndConnect(monitor: BlueDevice) {
+        monitor.status = BlueDevice.STATUS_CONNECTING
+        mMonitorLiveData.value = monitor
+        mBlueDeviceWrapper.scan2Connect(monitor, { connect(monitor) }, {
+            ToastHelper.show("蓝牙连接失败多次,可尝试关闭手机蓝牙待5s后重试...")
+        })
+    }
+
+    fun turnOnSleeperPaMode() {
+        val bluePeripheral = getCurrentBluePeripheral() ?: return
+        bluePeripheral.writeDelay(BlueCmd.cDoSleepyPaMode(), 500)
+        onTurnOnPaModeStart()
+        LogManager.appendSpeedSleeperLog("主动 turn on  速眠仪 pa 模式")
+    }
+
+    fun syncSleepData() {
+        val bluePeripheral = getCurrentBluePeripheral() ?: return
+        bluePeripheral.write(BlueCmd.cSleepData())
+        mPackageNumber = 0
+        LogManager.appendTransparentLog("主动同步睡眠数据")
+        mMonitorLiveData.value?.isSyncing = true
+        notifyMonitorChange()
+    }
+
+    fun unbind() {
+        mIsUnbinding = true
+        getCurrentBluePeripheral()?.close()
+        clearCacheDevice()
+        AppManager.getBlueManager().clearBluePeripheral()
+        mBlueDeviceWrapper.release()
+        LogManager.appendMonitorLog("主动解绑监测仪")
+    }
+
+    fun turnOnMonitoringMode(monitoringMode: Int) {
+        val bluePeripheral = getCurrentBluePeripheral() ?: return
+        bluePeripheral.write(BlueCmd.cDoMonitorMonitoringMode(monitoringMode))
+    }
+
+    fun getCurrentMonitor(): BlueDevice? {
+        return mMonitor
+    }
+
+    fun isConnected(): Boolean {
+        return mMonitorLiveData.value?.isConnected ?: false
+    }
+
+    override fun onAdapterEnable() {
+        mIsBluetoothEnableLiveData.value = true
+        LogManager.appendBluetoothLog("蓝牙 turn on")
+    }
+
+    override fun onAdapterDisable() {
+        mIsBluetoothEnableLiveData.value = false
+        AppManager.getBlueManager().clearBluePeripheral()
+        mBlueDeviceWrapper.release()
+        LogManager.appendBluetoothLog("蓝牙 turn off")
+    }
+
+    override fun onSendSuccess(bluePeripheral: BluePeripheral, data: ByteArray) {
+        val cmd = BlueCmd.bytes2HexString(data)
+        LogManager.appendBluetoothLog("蓝牙发送成功的指令  cmd=$cmd")
+        when (cmd) {
+            "aa4f0101" -> LogManager.appendMonitorLog("0x4f 主动同步睡眠特征数据指令成功")
+            "aa570101" -> LogManager.appendMonitorLog("0x57 主动 turn on 监测仪的监测模式发送指令成功")
+            "aa570100" -> LogManager.appendMonitorLog("0x57 主动 turn off 监测仪的监测模式发送指令成功")
+            "aa580101" -> LogManager.appendSpeedSleeperLog("0x58 turn on 速眠仪的 pa 模式发送指令成功")
+            else -> Unit
+        }
+    }
+
+    override fun onReceiveSuccess(peripheral: BluePeripheral, data: ByteArray) {
+        val cmd = BlueCmd.bytes2HexString(data)
+        if (TextUtils.isEmpty(cmd) || cmd.length <= 2 || "55" != cmd.substring(0, 2)) {
+            //设备命令出问题
+            //不是设备命令,有可能发生粘包,分包,拆包现象. 需要重新发送该命令,再次请求消息
+            return
+        }
+        val cmdIndex = BlueCmd.formatCmdIndex(cmd)
+        when (cmdIndex) {
+            "40"//校正时区
+            -> receiveSyncTimeSuccessCmd()
+            "44"//获取监测仪电量
+            -> receiveMonitorBatteryInfo(cmd)
+            "45"//获取速眠仪电量
+            -> receiveSleeperBatteryInfo(cmd)
+            "4b" -> receiveSetUserInfoResult(cmd)
+            "4e"//获取速眠仪的连接状态
+            -> receiveSleeperConnectionStatus(peripheral, cmd)
+            "4f"//主动获取睡眠特征数据
+            -> receiveRequestSleepDataResponse(cmd)
+            "50"//获取监测仪固件版本信息
+            -> receiveMonitorVersionInfo(cmd)
+            "59"//使速眠仪进入 dfu 模式开启成功
+            -> receiveSleeperEnterDfuSuccessResponse(cmd)
+            "51"//监测仪自己固件 dfu 模式开启成功
+            -> receiveMonitorEnterDfuSuccessResponse(cmd)
+            "52" -> LogManager.appendBluetoothLog("0x52 正在绑定速眠仪中,$cmd")
+            "53"//获取监测仪的 sn 号
+            -> receiveMonitorSnInfo(data, cmd)
+            "54"//获取速眠仪的固件版本信息
+            -> receiveSleeperVersionInfo(cmd)
+            "55"//获取监测仪绑定的并且连接着的速眠仪的 sn 号
+            -> receiveSleeperSnInfo(data, cmd)
+            "56"//获取监测仪绑定的速眠仪的 mac 地址
+            -> receiveSleeperMacInfo(cmd)
+            "57"//开启/关闭监测仪的监测模式  0x01 开启  0x00 关闭
+            -> receiveTurnOnOffMonitoringModeResponse(cmd)
+            "58"//使速眠仪进入 pa 模式之后的反馈
+            -> receiveSleeperEnterPaModeResponse(cmd)
+            "61"//同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
+            -> receiveAllMonitorAndSleeperStatus(peripheral, data, cmd)
+            "d0"//临床原始数据采集时间点
+            -> {
+                val unixTime = java.lang.Long.parseLong(cmd.substring(4, 12), 16)
+                FileHelper.updateFileDate(unixTime)
+            }
+            "d1"//采集临床肌电数据   不回响应包
+            -> {
+                val emg = BlueByteUtil.formatData(data)
+                FileHelper.appendEmgContent(emg)
+            }
+            "d2"//采集临床脉率数据   不回响应包
+            -> {
+                val pulse = BlueByteUtil.formatData(data)
+                FileHelper.appendPulseContent(pulse)
+            }
+            "d3"//采集临床加速度数据  不回响应包
+            -> {
+                val speed = BlueByteUtil.formatData(data)
+                FileHelper.appendSpeedContent(speed)
+            }
+            "8e" // 开始/结束 透传数据
+            -> receiveStartOrFinishTransportCmd(peripheral, data, cmd)
+            "8f" // 透传数据
+            -> receiveSleepData(peripheral, data, cmd)
+            "4a", "4c" -> {
+            }
+            else -> peripheral.write(BlueCmd.cResponseOk(data[1]))
+        }
+    }
+
+    private fun receiveSleepData(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
+        val indexOne = Integer.parseInt(cmd.substring(4, 6), 16) and 0x0f shl 8
+        val indexTwo = Integer.parseInt(cmd.substring(6, 8), 16)
+        val index = indexOne + indexTwo
+
+        if (mCurrentIndex == -1) {
+            mCurrentIndex = index
+            peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
+            m8fTransData.add(cmd)
+        } else {
+            if (index == mCurrentIndex + 1) {
+                mCurrentIndex = index
+                peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
+                m8fTransData.add(cmd)
+            } else if (index > mCurrentIndex + 1) {
+                peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0xff.toByte()))
+                LogManager.appendTransparentLog("index=$index  realCount=$mCurrentIndex  该index 出错,要求重传 cmd=$cmd")
+            }
+        }
+        onSyncDataProgressChange(index, mTotalDataCount)
+    }
+
+    private fun receiveStartOrFinishTransportCmd(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
+        val typeAndCount = Integer.parseInt(cmd.substring(4, 8), 16)
+        //16 bit 包括4bit 类型 12bit 长度 向右移12位,得到高4位的透传数据类型
+        val tranType = typeAndCount shr 12
+        val dataCount: Int
+        LogManager.appendFormatPhoneLog("receiveStartOrFinishTransportCmd: %d", data[4])
+        when (data[4]) {
+            0x01.toByte() //开始透传
+            -> {
+                mPackageNumber = 0
+                mCurrentIndex = -1
+                if (!m8fTransData.isEmpty()) {
+                    m8fTransData.clear()
+                }
+                mTranType = tranType
+                mBeginCmd = cmd
+                mReceiveStartedTime = getActionTimeInSecond()
+                mTotalDataCount = getDataCountFromCmd(cmd)
+                dataCount = mTotalDataCount
+                if (isAvailableStorageEnough(dataCount)) {
+                    writeResponse(peripheral, data, true)
+                    mPackageNumber++
+                    LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,等待设备透传 " + dataCount + "包数据" + "  cmd=" + cmd)
+                    onSyncStart()
+                    mMonitorLiveData.value?.isSyncing = true
+                } else {
+                    writeResponse(peripheral, data, false)
+                    LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,磁盘空间不足 " + dataCount + "包数据" + "  cmd=" + cmd)
+                    onSyncFailed()
+                    mMonitorLiveData.value?.isSyncing = false
+                }
+            }
+            0x0f.toByte()// 结束。透传8f 数据接收完成,保存文件,准备上传数据到后台
+            -> {
+                dataCount = getDataCountFromCmd(cmd)
+                @Suppress("UNCHECKED_CAST")
+                if (dataCount == m8fTransData.size) {
+                    val sleepData = m8fTransData.clone() as ArrayList<String>
+                    m8fTransData.clear()
+                    if (isAvailableStorageEnough(dataCount)) {
+                        if (mTranType == 0x01) {
+                            SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply()
+                        }
+                        LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd)
+                        AppManager.getJobScheduler()
+                                .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,
+                                        AppManager.getDeviceModel().monitorSn,
+                                        AppManager.getDeviceModel().sleepySn,
+                                        mReceiveStartedTime, getActionTimeInSecond())
+                        writeResponse(peripheral, data, true)
+                    } else {
+                        writeResponse(peripheral, data, false)
+                        LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,磁盘空间不足 " + dataCount + "包数据" + "  cmd=" + cmd)
+                    }
+                } else {
+                    LogManager.appendMonitorLog(
+                            "0x8e0f 透传数据" + dataCount + "包接收失败,原因是包数量不一致 实际收到包数量 RealDataCount="
+                                    + mCurrentIndex + " 重新透传数据已准备,等待设备重新透传  cmd=" + cmd)
+                    mCurrentIndex = -1
+                    this.m8fTransData.clear()
+                    writeResponse(peripheral, data, false)
+                }
+                onSyncSuccess()
+                mMonitorLiveData.value?.isSyncing = false
+            }
+            else -> {
+            }
+        }
+        notifyMonitorChange()
+    }
+
+    private fun receiveAllMonitorAndSleeperStatus(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
+        //byte1表示监测仪的监测模式状态
+        //byte2表示速眠仪的 pa 模式状态
+        //5561 xx 01 01
+        val stateLen = Integer.parseInt(cmd.substring(4, 6), 16)
+        val allState = cmd.substring(6)
+        if (stateLen == (allState.length / 2)) {//判断所有状态是否一致
+            peripheral.write(BlueCmd.cResponseOk(data[1]))
+            val monitorSnoopingModeState = Integer.parseInt(allState.substring(0, 2), 16)
+            //独立监测模式
+            val isMonitoring = monitorSnoopingModeState == 0x01
+            mIsMonitoring = isMonitoring
+            val sleepyPaModeState = Integer.parseInt(allState.substring(2, 4), 16)
+            mMonitorLiveData.value?.isMonitoring = isMonitoring
+            mMonitorLiveData.value?.speedSleeper?.isPa = sleepyPaModeState > 0
+            LogManager.appendMonitorLog("0x61 收到监测仪的监测模式变化 监测模式=$monitorSnoopingModeState  cmd=$cmd")
+            LogManager.appendSpeedSleeperLog("0x61 收到速眠仪的pa 模式变化  pa 模式=$sleepyPaModeState  cmd=$cmd")
+            notifyMonitorChange()
+        } else {//指令出错了,需重发所有状态
+            peripheral.write(BlueCmd.cResponseFailed(data[1]))
+            LogManager.appendMonitorLog("0x61  监测仪与速眠仪反馈模式变化的指令不正确  cmd=$cmd")
+        }
+    }
+
+    private fun receiveSleeperEnterPaModeResponse(cmd: String) {
+        //aa58 01  默认 app 只能开启 pa 模式,不可以关闭
+        //  Log.e(TAG, "onReceive: -----set   pa----->" + cmd);
+        //5558 01 88/e0/e1/e2/e3/e4/e5/e6/e7/ff
+        // 0x88 -- 设置成功
+        // 0xE0 -- 监测仪未连接速眠仪
+        // 0xE1 -- 监测仪未佩戴
+        // 0xE2 -- 头部未在枕头上
+        // 0xE3 -- 独立模式已开启,不能开启 pa 模式,提醒先关闭监测仪独立监测模式
+        // 0xE4 -- 用户已经处于睡眠状态
+        // 0xE5 -- 设置参数错误
+        // 0xE6 -- 设置数据长度错误
+        // 0xE7 -- 发送数据到速眠仪发生错误
+        // 0xFF -- 未知错误
+        if (cmd.length == 8) {
+            when (cmd) {
+                "55580188"//开启pa成功
+                -> {
+                    mMonitorLiveData.value?.speedSleeper?.isPa = true
+                    notifyMonitorChange()
+                    LogManager.appendSpeedSleeperLog("0x58 开启速眠仪的 pa 模式成功  cmd=$cmd")
+                }
+                "555801ff"//各种 pa 错误
+                -> {
+                    @StringRes val errorTextId: Int
+                    val errorCode = cmd.substring(6)
+                    errorTextId = when (errorCode) {
+                        "e0" -> R.string.sleepy_not_connected_monitor
+                        "e1" -> R.string.not_wear_monitor
+                        "e2" -> R.string.head_not_at_pillow
+                        "e3" -> R.string.not_turn_on_pa_mode
+                        "e4" -> R.string.not_turn_on_pa_mode_in_sleep_time
+                        "e8" -> R.string.monitor_is_charging
+                        "e5", "e6", "e7", "ff" -> R.string.turn_on_sleepy_pa_mode_error
+                        else -> R.string.turn_on_sleepy_pa_mode_error
+                    }
+                    onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
+                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.getAppContext().resources.getString(errorTextId) + "  cmd=" + cmd)
+                }
+                else -> {
+                    val errorTextId: Int = R.string.turn_on_sleepy_pa_mode_error
+                    onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
+                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.getAppContext().resources.getString(errorTextId) + "  cmd=" + cmd)
+                }
+            }
+        } else {
+            val errorTextId: Int = R.string.turn_on_sleepy_pa_mode_error
+            onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
+            LogManager.appendSpeedSleeperLog("0x58 开启速眠仪的 pa 模式失败,返回的指令长度不为8  cmd=$cmd")
+        }
+    }
+
+    private fun receiveTurnOnOffMonitoringModeResponse(cmd: String) {
+        //55 57 01  88
+        //55 57 01  ff
+        when (cmd) {
+            "55570188"//操作成功
+            -> {
+                mIsMonitoring = !mIsMonitoring
+                if (mIsMonitoring) {
+                    LogManager.appendMonitorLog("0x57 开启监测仪的监测模式成功 cmd=$cmd")
+                } else {
+                    LogManager.appendMonitorLog("0x57 关闭监测仪的监测模式成功 cmd=$cmd")
+                }
+                mMonitorLiveData.value?.isMonitoring = mIsMonitoring
+                notifyMonitorChange()
+            }
+            "555701ff"//操作失败
+            -> {
+                LogManager.appendMonitorLog("0x57 操作(开启/关闭)监测仪的监测模式失败  cmd=$cmd")
+            }
+            else -> {
+                LogManager.appendMonitorLog("0x57 操作(开启/关闭)监测仪的监测模式失败  cmd=$cmd")
+            }
+        }
+    }
+
+    private fun receiveSleeperMacInfo(cmd: String) {
+        val mac = cmd.substring(6)
+        val oldMac = java.lang.Long.parseLong(mac, 16)
+        val newMac = (oldMac and 0xff) + ((oldMac shr 8) shl 8)
+        val macSb = StringBuilder()
+        macSb.delete(0, macSb.length)
+        val hexString = java.lang.Long.toHexString(newMac)
+        if (!TextUtils.isEmpty(hexString) && hexString.length >= 2) {
+            var i = 0
+            val len = hexString.length
+            while (i < len) {
+                if (i % 2 == 0) {
+                    macSb.append(hexString.substring(i, i + 2))
+                    if (i != len - 2) {
+                        macSb.append(":")
+                    }
+                }
+                i++
+            }
+        }
+        mMonitorLiveData.value?.speedSleeper?.mac = macSb.toString().toUpperCase(Locale.getDefault())
+        notifyMonitorChange()
+        LogManager.appendSpeedSleeperLog("0x56 获取到监测仪绑定的速眠仪的 mac address=" + macSb.toString().toUpperCase(Locale.getDefault()) + "  cmd=" + cmd)
+    }
+
+    private fun receiveSleeperSnInfo(data: ByteArray, cmd: String) {
+        val sleepySn = BlueCmd.formatSn(data)
+        mMonitorLiveData.value?.speedSleeper?.sn = sleepySn
+        notifyMonitorChange()
+        LogManager.appendSpeedSleeperLog("0x55 获取到监测仪绑定的速眠仪的 sn=$sleepySn  cmd=$cmd")
+    }
+
+    private fun receiveSleeperVersionInfo(cmd: String) {
+        val sleepyFirmwareVersionOne = Integer.parseInt(cmd.substring(6, 8), 16)
+        val sleepyFirmwareVersionTwo = Integer.parseInt(cmd.substring(8, 10), 16)
+        val sleepyFirmwareVersionThree = Integer.parseInt(cmd.substring(10, 12), 16)
+        val sleepyFirmwareVersion = ((sleepyFirmwareVersionOne).toString() + "." + sleepyFirmwareVersionTwo + "." +
+                sleepyFirmwareVersionThree)
+        LogManager.appendSpeedSleeperLog("0x54 速眠仪的固件版本信息$sleepyFirmwareVersion  cmd=$cmd")
+        mMonitorLiveData.value?.speedSleeper?.version = sleepyFirmwareVersion
+        notifyMonitorChange()
+    }
+
+    private fun receiveMonitorSnInfo(data: ByteArray, cmd: String) {
+        val monitorSn = BlueCmd.formatSn(data)
+        LogManager.appendMonitorLog("0x53 获取到监测仪的sn=$monitorSn  cmd=$cmd")
+        mMonitorLiveData.value?.sn = monitorSn
+        notifyMonitorChange()
+    }
+
+    private fun receiveMonitorEnterDfuSuccessResponse(cmd: String) {
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.battery = 0
+        mMonitorLiveData.value?.sn = null
+        mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.speedSleeper?.battery = 0
+        mMonitorLiveData.value?.speedSleeper?.sn = null
+        notifyMonitorChange()
+        LogManager.appendSpeedSleeperLog("0x51 监测仪进入dfu 模式成功  cmd=$cmd")
+    }
+
+    private fun receiveSleeperEnterDfuSuccessResponse(cmd: String) {
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.battery = 0
+        mMonitorLiveData.value?.sn = null
+        mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.speedSleeper?.battery = 0
+        mMonitorLiveData.value?.speedSleeper?.sn = null
+        notifyMonitorChange()
+        LogManager.appendMonitorLog("0x59 速眠仪进入dfu 模式成功 cmd=$cmd")
+    }
+
+    private fun receiveMonitorVersionInfo(cmd: String) {
+        val monitorFirmwareVersionOne = Integer.parseInt(cmd.substring(6, 8), 16)
+        val monitorFirmwareVersionTwo = Integer.parseInt(cmd.substring(8, 10), 16)
+        val monitorFirmwareVersionThree = Integer.parseInt(cmd.substring(10, 12), 16)
+        val monitorFirmwareVersion = (monitorFirmwareVersionOne).toString() + "." + monitorFirmwareVersionTwo + "." + monitorFirmwareVersionThree
+        LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息$monitorFirmwareVersion  cmd=$cmd")
+        mMonitorLiveData.value?.version = monitorFirmwareVersion
+        notifyMonitorChange()
+    }
+
+    private fun receiveRequestSleepDataResponse(cmd: String) {
+        when (cmd) {
+            "554f020188" -> {
+                mMonitorLiveData.value?.isSyncing = true
+                LogManager.appendTransparentLog("收到0x4f回复 发现设备有睡眠特征数据,准备同步中  cmd=$cmd")
+            }
+            "554f020100" -> {
+                mMonitorLiveData.value?.isSyncing = false
+                onSyncSuccess()
+                LogManager.appendTransparentLog("收到0x4f回复 设备没有睡眠特征数据  cmd=$cmd")
+                SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply()
+            }
+            "554f0201ff" -> {
+                onSyncFailed()
+                mMonitorLiveData.value?.isSyncing = false
+                LogManager.appendTransparentLog("收到0x4f回复 设备4f 指令识别异常  cmd=$cmd")
+            }
+            else -> {
+            }
+        }
+        notifyMonitorChange()
+    }
+
+    private fun receiveSleeperConnectionStatus(peripheral: BluePeripheral, cmd: String) {
+        val sleepyConnectState = Integer.parseInt(cmd.substring(cmd.length - 2), 16)
+        if (sleepyConnectState == 0x00) {
+            mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
+            mMonitorLiveData.value?.speedSleeper?.battery = 0
+            mMonitorLiveData.value?.speedSleeper?.sn = null
+        } else {
+            mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_CONNECTED
+            peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100)
+            peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 300)
+            peripheral.writeDelay(BlueCmd.cSleepyMac(), 500)
+        }
+        notifyMonitorChange()
+        LogManager.appendSpeedSleeperLog("0x4e 收到速眠仪的连接状态变化------>$sleepyConnectState  cmd=$cmd")
+    }
+
+    private fun receiveSetUserInfoResult(cmd: String) {
+        if ("554b0188" == cmd) {
+            LogManager.appendMonitorLog("对设备设置 用户信息成功....$cmd")
+        } else {
+            LogManager.appendMonitorLog("对设备设置 用户信息失败...$cmd")
+        }
+    }
+
+    private fun receiveSleeperBatteryInfo(cmd: String) {
+        val sleepyBattery = Integer.parseInt(cmd.substring(cmd.length - 2), 16)
+        mMonitorLiveData.value?.speedSleeper?.battery = sleepyBattery
+        notifyMonitorChange()
+        LogManager.appendMonitorLog("0x44 收到速眠仪的电量变化---->$sleepyBattery  cmd=$cmd")
+    }
+
+    private fun receiveMonitorBatteryInfo(cmd: String) {
+        val monitorBattery = Integer.parseInt(cmd.substring(cmd.length - 2), 16)
+        mMonitorLiveData.value?.battery = monitorBattery
+//        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
+        notifyMonitorChange()
+        LogManager.appendMonitorLog("0x45 收到监测仪的电量变化---->$monitorBattery  cmd=$cmd")
+    }
+
+    private fun receiveSyncTimeSuccessCmd() {
+        LogManager.appendMonitorLog("收到0x40 监测仪校正时区成功")
+    }
+
+    private fun onSyncDataProgressChange(current: Int, total: Int) {
+        onSyncProgressChange(mPackageNumber, current, total)
+    }
+
+    /**
+     * @param peripheral       peripheral
+     * @param data             data
+     * @param readyForNextData true 准备接受, false 异常
+     */
+    private fun writeResponse(peripheral: BluePeripheral, data: ByteArray, readyForNextData: Boolean) {
+        val command = byteArrayOf(0xaa.toByte(), 0x8e.toByte(), data[2], data[3], data[4], data[5], data[6], data[7], data[8], if (readyForNextData) 0x88.toByte() else 0xff.toByte())
+        peripheral.write(command)
+    }
+
+    /**
+     * dataCount + 2 表示加上了startCmd和endCmd
+     * 每行命令有26个字符，加上换行，共27字符，一个字符占1byte，考虑安全性，这里计算时按30byte/cmd计算
+     * 实测10000个cmd，文件273kb；
+     */
+    private fun isAvailableStorageEnough(dataCount: Int): Boolean {
+        val dataBytes = (dataCount + 2) * 30L
+        val availableExternalStorageSize = StorageUtil.getAvailableExternalStorageSize()
+        return dataBytes < availableExternalStorageSize
+    }
+
+    /**
+     * 获取该次透传数据总条数
+     *
+     * @return 透传数据总条数
+     */
+    private fun getDataCountFromCmd(cmd: String): Int {
+        return Integer.parseInt(cmd.substring(5, 8), 16)
+    }
+
+    override fun onConnecting(peripheral: BluePeripheral, connectState: Int) {
+//        mMonitorLiveData.value?.mac = peripheral.mac
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTING
+        mMonitorLiveData.value?.battery = 0
+        mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.speedSleeper?.battery = 0
+        notifyMonitorChange()
+        LogManager.appendMonitorLog("监测仪正在连接中 " + peripheral.name)
+    }
+
+    override fun onConnectSuccess(peripheral: BluePeripheral, connectState: Int) {
+//        mMonitorLiveData.value?.mac = peripheral.mac
+//        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTING
+//        notifyMonitorChange()
+        AppManager.getBlueManager().saveBluePeripheral(peripheral)
+        LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.name)
+    }
+
+    override fun onConnectFailed(peripheral: BluePeripheral, connectState: Int) {
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+        notifyMonitorChange()
+        AppManager.getBlueManager().refresh()
+        LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.name)
+    }
+
+    override fun onDisconnecting(peripheral: BluePeripheral, connectState: Int) {
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.battery = 0
+        mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.speedSleeper?.battery = 0
+        notifyMonitorChange()
+        AppManager.getBlueManager().refresh()
+        LogManager.appendMonitorLog("监测仪正在断开连接 " + peripheral.name)
+    }
+
+    override fun onDisconnectSuccess(peripheral: BluePeripheral, connectState: Int) {
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.battery = 0
+        mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
+        mMonitorLiveData.value?.speedSleeper?.battery = 0
+        notifyMonitorChange()
+        mIsUnbinding = false
+        if (mIsUnbinding) {
+            LogManager.appendMonitorLog("解绑监测仪成功 " + peripheral.name)
+        } else {
+            LogManager.appendMonitorLog("监测仪成功断开连接 " + peripheral.name)
+        }
+        AppManager.getBlueManager().refresh()
+        AppManager.getBlueManager().clearBluePeripheral()
+    }
+
+    override fun onTransportChannelReady(peripheral: BluePeripheral) {
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
+        notifyMonitorChange()
+        saveCacheFile()
+        peripheral.writeDelay(BlueCmd.cRTC(), 200)
+        peripheral.writeDelay(BlueCmd.cMonitorBattery(), 400)
+        peripheral.writeDelay(BlueCmd.cMonitorAndSleepyState(), 600)
+        peripheral.writeDelay(BlueCmd.cSleepyConnectedState(), 800)
+        peripheral.writeDelay(BlueCmd.cSleepyBattery(), 1000)
+        peripheral.writeDelay(BlueCmd.cMonitorSnNumber(), 1200)
+        peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 1400)
+        peripheral.writeDelay(BlueCmd.cSleepyMac(), 1600)
+        peripheral.writeDelay(BlueCmd.cMonitorFirmwareVersion(), 1800)
+        peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 2000)
+        peripheral.writeDelay(BlueCmd.cUserInfo(), 2200)
+        peripheral.writeDelay(BlueCmd.cSleepData(), 2400)
+        mPackageNumber = 0
+        LogManager.appendMonitorLog("连接成功,开始初始化同步监测仪与速眠仪相关状态数据 " + peripheral.name)
+    }
+
+    private fun getActionTimeInSecond(): Long {
+        return System.currentTimeMillis() / 1000L
+    }
+
+    private fun saveCacheFile() {
+        SPUtils.getInstance().put(SP_KEY_MONITOR_CACHE, JsonUtil.toJson(mMonitorLiveData.value))
+    }
+
+    private fun clearCacheDevice() {
+        SPUtils.getInstance().put(SP_KEY_MONITOR_CACHE, "")
+        LogManager.appendUserOperationLog("设备被成功解绑,并清除掉缓存成功")
+    }
+
+    private fun getCurrentBluePeripheral(): BluePeripheral? {
+        val bluePeripheral = AppManager.getBlueManager().bluePeripheral
+        return if (bluePeripheral == null || !bluePeripheral.isConnected) {
+            null
+        } else bluePeripheral
+    }
+
+    private fun notifyMonitorChange() {
+        // LiveData 调用set时会下发数据
+        mMonitorLiveData.value = mMonitorLiveData.value
+    }
+
+    // ---------------- monitor event listener start ----------------
+
+    override fun onSyncStart() {
+        for (listener in mMonitorEventListeners) {
+            listener.onSyncStart()
+        }
+    }
+
+    override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
+        for (listener in mMonitorEventListeners) {
+            listener.onSyncProgressChange(packageNumber, progress, total)
+        }
+    }
+
+    override fun onSyncSuccess() {
+        for (listener in mMonitorEventListeners) {
+            listener.onSyncSuccess()
+        }
+    }
+
+    override fun onSyncFailed() {
+        for (listener in mMonitorEventListeners) {
+            listener.onSyncFailed()
+        }
+    }
+
+    override fun onTurnOnPaModeStart() {
+        for (listener in mMonitorEventListeners) {
+            listener.onTurnOnPaModeStart()
+        }
+    }
+
+    override fun onTurnOnPaModeSuccess() {
+        for (listener in mMonitorEventListeners) {
+            listener.onTurnOnPaModeSuccess()
+        }
+    }
+
+    override fun onTurnOnPaModeFailed(message: String) {
+        for (listener in mMonitorEventListeners) {
+            listener.onTurnOnPaModeFailed(message)
+        }
+    }
+    // ---------------- monitor event listener end ----------------
 }

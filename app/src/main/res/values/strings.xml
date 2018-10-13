@@ -1005,7 +1005,23 @@
     <string name="syncing">同步中...</string>
     <string name="monitor_is_connect_please_sleepers_connectivity">监测仪已连接，请检查速眠仪是否开启</string>
     <string name="already_connected">已连接</string>
+    <string name="not_connected">未连接</string>
     <string name="speed_sleeper_already">速眠仪已就绪</string>
     <string name="start_work">开启工作</string>
+    <string name="sync_progress_0">第 %d 段</string>
+    <string name="sync_progress_1">%d%%</string>
+    <string name="sleeper_is_working_please_sleep">速眠仪正常工作中，请安心入睡</string>
+    <string name="turn_on_pa_mode_failed_title">开启工作模式失败</string>
+    <string name="turn_on_pa_mode_failed_desc">速眠仪开启工作模式失败，原因是：%s</string>
+    <string name="haode">好的</string>
+    <string name="sleeper_is_working">速眠仪工作中</string>
+    <string name="sync_fail">同步失败</string>
+    <string name="already_latest_data">已是最新数据</string>
+    <string name="bluetooth_not_enable">手机蓝牙未开启</string>
+    <string name="is_not_this_device">不是这台设备？</string>
+    <string name="search_more_u"><u>搜索更多</u></string>
+    <string name="confirm_bind">确认绑定</string>
+    <string name="add_device">添加设备</string>
+    <string name="do_not_see_your_device">"没有看到您的设备？"</string>
     <!-- Hw end-->
 </resources>

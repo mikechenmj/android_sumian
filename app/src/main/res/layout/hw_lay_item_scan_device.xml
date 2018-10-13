@@ -3,33 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ff212329"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_device_item"
-        android:paddingBottom="@dimen/space_16"
-        android:paddingEnd="@dimen/space_16"
-        android:paddingStart="@dimen/space_60"
-        android:paddingTop="@dimen/space_16">
-
-        <TextView
-            android:id="@+id/tv_device"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:textColor="@color/full_general_color"
-            android:textSize="@dimen/font_16"
-            tools:text="S1007501234" />
-
-    </FrameLayout>
+    <TextView
+        android:id="@+id/tv_device"
+        style="@style/text_t1_16"
+        android:layout_height="52dp"
+        android:layout_marginStart="40dp"
+        android:drawableStart="@mipmap/equip_icon_bracelet"
+        android:drawablePadding="20dp"
+        android:gravity="center_vertical"
+        tools:text="S1007501234" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_1"
-        android:layout_marginStart="@dimen/space_60"
-        android:background="#ff2c2f37" />
+        style="@style/HorizontalDividerLine"
+        android:layout_marginStart="40dp" />
 
 </LinearLayout>

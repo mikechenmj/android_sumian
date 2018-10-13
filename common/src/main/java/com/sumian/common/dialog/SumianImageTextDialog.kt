@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatDialog
+import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.R
@@ -26,14 +27,20 @@ class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style
     private val mContext = context
     private val mHandler = Handler()
     private var mType = TYPE_TEXT
+    private var mText: String? = null // 图片下面的文本，不传时取TYPE 对应的文字
 
     companion object {
-        const val TYPE_INVALID = -1
-        const val TYPE_LOADING = 0
-        const val TYPE_SUCCESS = 1
-        const val TYPE_FAIL = 2
-        const val TYPE_WARNING = 3
-        const val TYPE_TEXT = 4
+        private const val INVALID_RES_ID = 0
+        // type
+        const val TYPE_INVALID = "invalid"
+        const val TYPE_LOADING = "loading"
+        const val TYPE_SUCCESS = "success"
+        const val TYPE_FAIL = "fail"
+        const val TYPE_WARNING = "warning"
+        const val TYPE_TEXT = "text"
+        // duration
+        const val SHOW_DURATION_SHORT = 2000L
+        const val SHOW_DURATION_LONG = 3500L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,19 +52,15 @@ class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style
     private fun updateImageAndText() {
         ll_iv_tv_container.visibility = if (mType == TYPE_TEXT) View.GONE else View.VISIBLE
         val imageRes = getImageRes(mType)
-        val textRes = getTextRes(mType)
-        if (imageRes != 0) {
+        if (imageRes != INVALID_RES_ID) {
             iv.setImageResource(imageRes)
             iv.visibility = View.VISIBLE
         } else {
             iv.visibility = View.GONE
         }
-        if (textRes != 0) {
-            tv_desc.setText(textRes)
-            tv_desc.visibility = View.VISIBLE
-        } else {
-            tv_desc.visibility = View.GONE
-        }
+        val text = getText(mType, mText)
+        tv_desc.visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
+        tv_desc.text = text
     }
 
     fun show(delay: Long, duration: Long): SumianImageTextDialog {
@@ -105,10 +108,15 @@ class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style
             return
         }
         mType = type
+        mText = toastData.message
         show(toastData.delay, toastData.duration)
     }
 
-    private fun getType(typeString: String): Int {
+    fun show(type: String, text: String? = null, delay: Long = 0, duration: Long = 0) {
+        show(H5ShowToastData(type, text, delay, duration))
+    }
+
+    private fun getType(typeString: String): String {
         return when (typeString) {
             "text" -> SumianImageTextDialog.TYPE_TEXT
             "success" -> TYPE_SUCCESS
@@ -121,28 +129,41 @@ class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style
         }
     }
 
-    private fun getTextRes(type: Int): Int {
+    private fun getTextRes(type: String): Int {
         return when (type) {
-            TYPE_TEXT -> 0
+            TYPE_TEXT -> INVALID_RES_ID
             TYPE_SUCCESS -> R.string.operation_success
             TYPE_FAIL -> R.string.operation_fail
             TYPE_WARNING -> R.string.operation_warning
-            TYPE_LOADING -> 0
+            TYPE_LOADING -> INVALID_RES_ID
             else -> {
-                0
+                INVALID_RES_ID
             }
         }
     }
 
-    private fun getImageRes(type: Int): Int {
+    private fun getImageRes(type: String): Int {
         return when (type) {
             TYPE_SUCCESS -> R.drawable.ic_dialog_success
             TYPE_FAIL -> R.drawable.ic_dialog_fail
             TYPE_WARNING -> R.drawable.ic_dialog_warning
             TYPE_LOADING -> R.drawable.dialog_loading_animation
             else -> {
-                0
+                INVALID_RES_ID
             }
+        }
+    }
+
+    private fun getText(type: String, text: String?): String? {
+        return if (TextUtils.isEmpty(text)) {
+            val textRes = getTextRes(type)
+            if (textRes != INVALID_RES_ID) {
+                mContext.resources.getString(textRes)
+            } else {
+                null
+            }
+        } else {
+            text
         }
     }
 

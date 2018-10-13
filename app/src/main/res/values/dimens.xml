@@ -109,4 +109,5 @@
     <dimen name="edit_text_text_size">16sp</dimen>
     <dimen name="card_radius">4dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
+    <dimen name="device_card_view_height">278dp</dimen>
 </resources>

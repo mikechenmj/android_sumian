@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/device_card_view_height"
+    tools:layout_height="wrap_content"
     android:background="@color/b2_color"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_no_device"
         android:layout_width="match_parent"
-        android:layout_height="278dp"
+        android:layout_height="@dimen/device_card_view_height"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible">
@@ -36,8 +37,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_device"
         android:layout_width="match_parent"
-        android:layout_height="278dp"
+        android:layout_height="@dimen/device_card_view_height"
         android:orientation="vertical">
 
         <LinearLayout
@@ -167,7 +169,7 @@
             android:text="@string/monitor_is_connect_please_sleepers_connectivity" />
 
         <FrameLayout
-            android:id="@+id/fl_start_work_bt_container"
+            android:id="@+id/fl_turn_pa_bt_container"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center_vertical">
@@ -181,7 +183,7 @@
                 android:text="@string/speed_sleeper_already" />
 
             <Button
-                android:id="@+id/bt_start_work"
+                android:id="@+id/bt_turn_on_pa"
                 style="@style/SumianButton"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
