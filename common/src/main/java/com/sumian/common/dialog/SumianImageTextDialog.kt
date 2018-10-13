@@ -59,8 +59,8 @@ class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style
             iv.visibility = View.GONE
         }
         val text = getText(mType, mText)
-        tv_desc.visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
-        tv_desc.text = text
+        tv_desc?.visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
+        tv_desc?.text = text
     }
 
     fun show(delay: Long, duration: Long): SumianImageTextDialog {
@@ -101,14 +101,14 @@ class SumianImageTextDialog(context: Context) : AppCompatDialog(context, R.style
             ToastUtils.showShort(toastData.message)
             return
         }
-        if (toastData.duration > 0) {
-            val textRes = getTextRes(type)
-            val imageRes = getImageRes(type)
-            SumianImageTextToast.showToast(mContext, imageRes, textRes, toastData.duration > 2000)
-            return
-        }
         mType = type
         mText = toastData.message
+        if (toastData.duration > 0) {
+            val text = getText(type, mText)
+            val imageRes = getImageRes(type)
+            SumianImageTextToast.showToast(mContext, imageRes, text, toastData.duration > 2000)
+            return
+        }
         show(toastData.delay, toastData.duration)
     }
 

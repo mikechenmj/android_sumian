@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/device_card_view_height"
-    tools:layout_height="wrap_content"
     android:background="@color/b2_color"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/ll_no_device"
@@ -47,19 +47,32 @@
             android:layout_height="50dp"
             android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tv_sync"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:background="@drawable/shape_device_sync_bg"
-                android:drawableStart="@drawable/sel_home_sync_tv_bg"
-                android:drawablePadding="8dp"
                 android:enabled="false"
-                android:gravity="center"
-                android:paddingStart="2dp"
-                android:paddingEnd="10dp"
-                android:text="@string/syncing"
-                android:textColor="@color/sel_home_sync_tv" />
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_sync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/shape_device_sync_bg"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:paddingStart="28dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/syncing"
+                    android:textColor="@color/sel_home_sync_tv" />
+
+                <ImageView
+                    android:id="@+id/iv_sync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/sel_home_sync_tv_bg" />
+            </FrameLayout>
 
             <Space
                 android:layout_width="0dp"
@@ -73,10 +86,9 @@
 
             <TextView
                 android:id="@+id/tv_progress_1"
-                style="@style/text_t1_14"
+                style="@style/text_t2_14"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="20dp"
-                android:textColor="#39003F"
                 tools:text="(90%)" />
         </LinearLayout>
 

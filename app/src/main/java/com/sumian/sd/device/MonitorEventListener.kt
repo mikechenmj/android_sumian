@@ -26,4 +26,10 @@ interface MonitorEventListener {
     fun onTurnOnPaModeSuccess()
 
     fun onTurnOnPaModeFailed(message: String)
+
+    fun onConnectStart()
+
+    fun onConnectFailed()
+
+    fun onConnectSuccess()
 }

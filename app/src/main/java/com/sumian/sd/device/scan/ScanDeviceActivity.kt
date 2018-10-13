@@ -2,6 +2,7 @@ package com.sumian.sd.device.scan
 
 import android.app.Activity
 import android.content.Intent
+import android.support.v4.app.Fragment
 import com.sumian.common.base.BaseBackActivity
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.hw.utils.JsonUtil
@@ -20,7 +21,11 @@ class ScanDeviceActivity : BaseBackActivity() {
     }
 
     companion object {
-        const val KEY_DEVICE = "device"
+        const val DATA = "data"
+
+        fun startForResult(fragment: Fragment, requestCode: Int) {
+            fragment.startActivityForResult(Intent(fragment.context, ScanDeviceActivity::class.java), requestCode)
+        }
     }
 
     override fun initWidget() {
@@ -30,7 +35,7 @@ class ScanDeviceActivity : BaseBackActivity() {
         fragment.mOnDeviceSelectedListener = object : ScanDeviceFragment.OnDeviceSelectedListener {
             override fun onDeviceSelected(device: BlueDevice) {
                 val intent = Intent()
-                intent.putExtra(KEY_DEVICE, JsonUtil.toJson(device))
+                intent.putExtra(DATA, JsonUtil.toJson(device))
                 setResult(Activity.RESULT_OK, intent)
                 finish()
             }

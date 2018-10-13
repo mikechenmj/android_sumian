@@ -1,8 +1,10 @@
 package com.sumian.common.dialog
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
@@ -21,6 +23,10 @@ import com.sumian.common.R
 class SumianImageTextToast {
     companion object {
         fun showToast(context: Context, imageResId: Int, textResId: Int, showLong: Boolean) {
+            showToast(context, imageResId, context.resources.getString(textResId), showLong)
+        }
+
+        fun showToast(context: Context, imageResId: Int, text: String?, showLong: Boolean) {
             val view = LayoutInflater.from(context).inflate(R.layout.common_layout_image_text_toast, null)
             val iv = view.findViewById<ImageView>(R.id.iv)
             val tv = view.findViewById<TextView>(R.id.tv_desc)
@@ -30,12 +36,8 @@ class SumianImageTextToast {
                 iv.visibility = VISIBLE
                 iv.setImageResource(imageResId)
             }
-            if (textResId == 0) {
-                tv.visibility = GONE
-            } else {
-                tv.visibility = VISIBLE
-                tv.setText(textResId)
-            }
+            tv.visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
+            tv.setText(text)
             val toast = Toast(context)
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.duration = if (showLong) Toast.LENGTH_LONG else Toast.LENGTH_SHORT

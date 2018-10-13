@@ -59,6 +59,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 //        notifyMonitorChange()
         val monitorCache = getCachedMonitor()
         mMonitorLiveData.value = monitorCache
+        mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
     }
 
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
@@ -85,6 +86,15 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         return JsonUtil.fromJson(SPUtils.getInstance().getString(SP_KEY_MONITOR_CACHE), BlueDevice::class.java)
     }
 
+    fun tryToConnectCacheMonitor() {
+        if (isConnected() || isConnecting()) {
+            return
+        }
+        getCachedMonitor()?.let {
+            scanAndConnect(it)
+        }
+    }
+
     fun connect(monitor: BlueDevice) {
         AppManager.getBlueManager().clearBluePeripheral()
         val remoteDevice = AppManager.getBlueManager().getBluetoothDeviceFromMac(monitor.mac)
@@ -104,6 +114,15 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             bluePeripheral.addPeripheralDataCallback(this)
             bluePeripheral.addPeripheralCallback(this)
             bluePeripheral.connect()
+            monitor.status = BlueDevice.STATUS_CONNECTING
+            if (monitor.speedSleeper == null) {
+                val sleeper = BlueDevice()
+                sleeper.name = App.getAppContext().resources.getString(R.string.speed_sleeper)
+                sleeper.status = BlueDevice.STATUS_UNCONNECTED
+                monitor.speedSleeper = sleeper
+            }
+            mMonitorLiveData.value = monitor
+            onConnectStart()
             LogManager.appendMonitorLog("主动连接监测仪  connect to   name=" + remoteDevice.name + "  address=" + remoteDevice.address)
         } else {
             LogManager.appendMonitorLog("主动连接监测仪  connect to  is invalid   because  init bluetoothDevice is null")
@@ -156,8 +175,13 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         return mMonitorLiveData.value?.isConnected ?: false
     }
 
+    fun isConnecting(): Boolean {
+        return mMonitorLiveData.value?.status == BlueDevice.STATUS_CONNECTING ?: false
+    }
+
     override fun onAdapterEnable() {
         mIsBluetoothEnableLiveData.value = true
+        tryToConnectCacheMonitor()
         LogManager.appendBluetoothLog("蓝牙 turn on")
     }
 
@@ -387,11 +411,12 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 "55580188"//开启pa成功
                 -> {
                     mMonitorLiveData.value?.speedSleeper?.isPa = true
+                    mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_PA
                     notifyMonitorChange()
                     LogManager.appendSpeedSleeperLog("0x58 开启速眠仪的 pa 模式成功  cmd=$cmd")
                 }
-                "555801ff"//各种 pa 错误
-                -> {
+//                "555801ff"//各种 pa 错误
+                else -> {
                     @StringRes val errorTextId: Int
                     val errorCode = cmd.substring(6)
                     errorTextId = when (errorCode) {
@@ -407,11 +432,11 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
                     LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.getAppContext().resources.getString(errorTextId) + "  cmd=" + cmd)
                 }
-                else -> {
-                    val errorTextId: Int = R.string.turn_on_sleepy_pa_mode_error
-                    onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
-                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.getAppContext().resources.getString(errorTextId) + "  cmd=" + cmd)
-                }
+//                else -> {
+//                    val errorTextId: Int = R.string.turn_on_sleepy_pa_mode_error
+//                    onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
+//                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.getAppContext().resources.getString(errorTextId) + "  cmd=" + cmd)
+//                }
             }
         } else {
             val errorTextId: Int = R.string.turn_on_sleepy_pa_mode_error
@@ -639,8 +664,11 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     override fun onConnectSuccess(peripheral: BluePeripheral, connectState: Int) {
 //        mMonitorLiveData.value?.mac = peripheral.mac
-//        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTING
-//        notifyMonitorChange()
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
+        notifyMonitorChange()
+        onConnectSuccess()
+        saveCacheFile()
+
         AppManager.getBlueManager().saveBluePeripheral(peripheral)
         LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.name)
     }
@@ -679,9 +707,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onTransportChannelReady(peripheral: BluePeripheral) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
-        notifyMonitorChange()
-        saveCacheFile()
+//        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
+//        notifyMonitorChange()
+//        onConnectSuccess()
+
         peripheral.writeDelay(BlueCmd.cRTC(), 200)
         peripheral.writeDelay(BlueCmd.cMonitorBattery(), 400)
         peripheral.writeDelay(BlueCmd.cMonitorAndSleepyState(), 600)
@@ -766,5 +795,24 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             listener.onTurnOnPaModeFailed(message)
         }
     }
+
+    override fun onConnectStart() {
+        for (listener in mMonitorEventListeners) {
+            listener.onConnectStart()
+        }
+    }
+
+    override fun onConnectFailed() {
+        for (listener in mMonitorEventListeners) {
+            listener.onConnectFailed()
+        }
+    }
+
+    override fun onConnectSuccess() {
+        for (listener in mMonitorEventListeners) {
+            listener.onConnectSuccess()
+        }
+    }
+
     // ---------------- monitor event listener end ----------------
 }

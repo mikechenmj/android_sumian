@@ -1,15 +1,24 @@
 package com.sumian.sd.homepage
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.bluetooth.BluetoothAdapter
+import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.utils.JsonUtil
+import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
+import com.sumian.sd.device.DeviceManager
+import com.sumian.sd.device.scan.ScanDeviceActivity
+import com.sumian.sd.device.scan.ScanDeviceFragment
+import com.sumian.sd.device.widget.DeviceCardView
 import com.sumian.sd.event.CBTIProgressChangeEvent
 import com.sumian.sd.event.CBTIServiceBoughtEvent
 import com.sumian.sd.event.EventBusUtil
@@ -17,7 +26,6 @@ import com.sumian.sd.event.SleepRecordFilledEvent
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
-import com.sumian.sd.homepage.bean.SleepPrescription
 import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -42,6 +50,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     companion object {
         const val SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME = "update_sleep_prescription_time"
+        const val REQUEST_CODE_SCAN_DEVICE = 1
+        const val REQUEST_CODE_ENABLE_BLUETOOTH = 2
     }
 
     override fun initWidget(root: View) {
@@ -53,6 +63,16 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionSettingActivity.launch() }
         iv_avatar.setOnClickListener { onAvatarClick() }
+        device_card_view.registerLifecycleOwner(this)
+        device_card_view.mHost = object : DeviceCardView.Host {
+            override fun scanForDevice() {
+                ScanDeviceActivity.startForResult(this@HomepageFragment, REQUEST_CODE_SCAN_DEVICE)
+            }
+
+            override fun enableBluetooth() {
+                startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BLUETOOTH)
+            }
+        }
     }
 
     private fun launchCbtiActivity() {
@@ -155,6 +175,16 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     override fun onEnter(data: String?) {
-        initData()
+        DeviceManager.tryToConnectCacheMonitor()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_SCAN_DEVICE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val deviceJson = data?.getStringExtra(ScanDeviceActivity.DATA) ?: null
+                val blueDevice = JsonUtil.fromJson(deviceJson, BlueDevice::class.java) ?: return
+                DeviceManager.connect(blueDevice)
+            }
+        }
     }
 }

@@ -1022,6 +1022,10 @@
     <string name="search_more_u"><u>搜索更多</u></string>
     <string name="confirm_bind">确认绑定</string>
     <string name="add_device">添加设备</string>
-    <string name="do_not_see_your_device">"没有看到您的设备？"</string>
+    <string name="do_not_see_your_device">没有看到您的设备？</string>
+    <string name="monitor_not_connect">监测仪未连接</string>
+    <string name="click_card_try_to_connect_monitor">点击卡片，尝试连接监测仪</string>
+    <string name="you_do_not_bind_device_click_add">您尚未绑定速眠仪设备，点击添加设备</string>
+    <string name="working">工作中</string>
     <!-- Hw end-->
 </resources>

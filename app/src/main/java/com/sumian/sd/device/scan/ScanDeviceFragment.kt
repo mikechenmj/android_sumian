@@ -53,6 +53,7 @@ class ScanDeviceFragment : BaseFragment() {
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mDeviceAdapter
         bt_re_scan.setOnClickListener { startScan() }
+        bt_confirm.setOnClickListener { onDeviceSelected(mScanResults[0]) }
         if (mBlueManager.isEnable) {
             checkPermissionStartScan()
         }
@@ -70,9 +71,13 @@ class ScanDeviceFragment : BaseFragment() {
         super.initData()
         mBlueManager.addBlueAdapterCallback(mBlueAdapterEnableListener)
         mBlueManager.addBlueScanCallback(mScanCallback)
-
     }
 
+    override fun onDetach() {
+        mBlueManager.removeBlueAdapterCallback(mBlueAdapterEnableListener)
+        mBlueManager.removeBlueScanCallback(mScanCallback)
+        super.onDetach()
+    }
     private val mScanCallback = object : BlueScanCallback {
         override fun onBeginScanCallback() {
             mScanResults.clear()
@@ -134,11 +139,6 @@ class ScanDeviceFragment : BaseFragment() {
         vg_scan_more.visibility = View.INVISIBLE
         iv_device.visibility = View.GONE
         bt_confirm.visibility = View.GONE
-    }
-
-    override fun onDetach() {
-        mBlueManager.removeBlueAdapterCallback(mBlueAdapterEnableListener)
-        super.onDetach()
     }
 
     private fun setTitles(@StringRes title: Int, @StringRes subTitle: Int) {
