@@ -32,6 +32,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_cbti_subtitle"
                 style="@style/text_white_14"
                 android:layout_marginTop="@dimen/space_10"
                 android:text="@string/cbti_ing_describe" />
