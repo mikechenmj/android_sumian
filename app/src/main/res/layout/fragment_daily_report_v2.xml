@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/b1_color_day"
@@ -63,10 +64,19 @@
                         android:layout_height="wrap_content" />
 
                 </android.support.v7.widget.CardView>
-
             </LinearLayout>
-
         </android.support.v4.widget.NestedScrollView>
-
     </com.sumian.hw.widget.refresh.BlueRefreshView>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_bottom_hint"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:background="@color/b5_color"
+        android:gravity="center"
+        android:text="@string/device_is_syncing_data_report_will_be_refresh_later"
+        android:textColor="@color/b2_color"
+        android:visibility="gone"
+        tools:visibility="visible" />
+</FrameLayout>

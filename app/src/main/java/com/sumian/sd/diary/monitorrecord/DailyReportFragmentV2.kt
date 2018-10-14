@@ -1,6 +1,7 @@
 package com.sumian.sd.diary.monitorrecord
 
 import android.support.v4.widget.SwipeRefreshLayout
+import android.view.View
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
 import com.blankj.utilcode.util.LogUtils
@@ -14,6 +15,7 @@ import com.sumian.hw.report.bean.DailyReport
 import com.sumian.hw.report.calendar.CalendarItemSleepReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.diary.sleeprecord.calendar.custom.CalendarPopup
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -43,6 +45,9 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
         iv_date_arrow.setOnClickListener { showDatePopup(true) }
         iv_weekly_report.setOnClickListener { WeeklyReportActivity.launch(mSelectedTime) }
         setTvDate(mSelectedTime)
+        DeviceManager.getMonitorLiveData().observe(this, android.arch.lifecycle.Observer {
+            tv_bottom_hint.visibility = if (it != null && it.isSyncing) View.VISIBLE else View.GONE
+        })
     }
 
     override fun initData() {

@@ -1042,5 +1042,6 @@
     <string name="sure_to_unbind">确定解除绑定吗？</string>
     <string name="after_unbind_monitor_will_disconnect_from_phone">解绑后将断开监测仪与手机的连接</string>
     <string name="ji">及</string>
+    <string name="device_is_syncing_data_report_will_be_refresh_later">设备同步中，稍侯自动获取睡眠报告</string>
     <!-- Hw end-->
 </resources>
