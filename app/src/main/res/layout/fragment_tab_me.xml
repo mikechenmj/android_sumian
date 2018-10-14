@@ -100,5 +100,8 @@
             app:type_desc="@string/setting"
             app:type_icon="@mipmap/ic_info_icon_set" />
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10dp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

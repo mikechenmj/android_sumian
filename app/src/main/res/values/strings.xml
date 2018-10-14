@@ -63,7 +63,7 @@
     <string name="time_expired_suffix">天后过期</string>
     <string name="setting">设置</string>
     <string name="martian">火星人</string>
-    <string name="current_app_version">当前版本</string>
+    <string name="current_app_version">应用版本</string>
     <string name="about_us">关于我们</string>
     <string name="logout">退出登录</string>
     <string name="brief">简介</string>
@@ -955,6 +955,8 @@
     <string name="validate_cellphone">验证手机</string>
     <string name="please_set_password">请设置密码</string>
     <string name="repeat_password">再次输入密码</string>
+    <string name="please_set_new_password">请设置新密码</string>
+    <string name="repeat_new_password">再次输入新密码</string>
     <string name="register_with_space_inside">注 册</string>
     <string name="complete_with_space_inside">完 成</string>
     <string name="forget_password_question">忘记密码？</string>
@@ -1044,5 +1046,7 @@
     <string name="ji">及</string>
     <string name="device_is_syncing_data_report_will_be_refresh_later">设备同步中，稍侯自动获取睡眠报告</string>
     <string name="area">地区</string>
+    <string name="modify_password">修改密码</string>
+    <string name="clear_cache">清除缓存</string>
     <!-- Hw end-->
 </resources>

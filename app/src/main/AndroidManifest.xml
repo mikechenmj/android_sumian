@@ -115,6 +115,7 @@
         <activity
             android:name=".setting.SettingActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -386,6 +387,7 @@
         <activity
             android:name="com.sumian.hw.setting.activity.ModifyPwdActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
@@ -405,7 +407,7 @@
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.upgrade.activity.VersionNoticeActivity"
+            android:name="com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -475,7 +477,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
@@ -548,6 +550,7 @@
             android:name=".device.scan.ScanDeviceActivity"
             android:exported="true" />
         <activity android:name=".device.DeviceManageActivity" />
+        <activity android:name=".account.login.ModifyPasswordActivity" />
     </application>
 
 </manifest>

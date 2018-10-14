@@ -8,19 +8,19 @@ import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
-import com.sumian.sd.network.response.AppUpgradeInfo;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.hw.upgrade.presenter.VersionPresenter;
-import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.VersionInfoView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.response.AppUpgradeInfo;
 
 import java.util.Locale;
 
@@ -31,7 +31,7 @@ import java.util.Locale;
  * desc:
  */
 
-public class VersionNoticeActivity extends HwBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+public class DeviceVersionNoticeActivity extends HwBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
         TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
 
     TitleBar mTitleBar;
@@ -47,7 +47,7 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
     private VersionContract.Presenter mPresenter;
 
     public static void show(Context context) {
-        context.startActivity(new Intent(context, VersionNoticeActivity.class));
+        context.startActivity(new Intent(context, DeviceVersionNoticeActivity.class));
     }
 
     @Override
@@ -110,7 +110,7 @@ public class VersionNoticeActivity extends HwBaseActivity implements View.OnClic
     }
 
     @Override
-    public void onBackClick(View v) {
+    public void onBack(View v) {
         finish();
     }
 

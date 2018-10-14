@@ -9,8 +9,14 @@ import android.view.View;
 import com.avos.avoscloud.AVInstallation;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.hw.feedback.FeedbackActivity;
+import com.sumian.hw.qrcode.activity.QrCodeActivity;
+import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity;
 import com.sumian.sd.R;
+import com.sumian.sd.account.login.ModifyPasswordActivity;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.h5.H5Uri;
@@ -40,12 +46,10 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
 
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-
-    @BindView(R.id.version)
-    SettingDividerView mSdvVersion;
+    @BindView(R.id.sdv_app_version)
+    SettingDividerView mSdvAppVersion;
 
     private BottomSheetDialog dialog;
-
 
     @Override
     protected int getLayoutId() {
@@ -69,20 +73,37 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
         finish();
     }
 
-    @OnClick({R.id.version, R.id.about_me, R.id.bt_logout, R.id.sdv_remind})
+    @OnClick({R.id.sdv_app_version, R.id.sdv_about_us, R.id.tv_logout, R.id.sdv_remind, R.id.sdv_device_version, R.id.sdv_change_bind, R.id.sdv_feedback, R.id.sdv_modify_password})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sdv_remind:
                 ActivityUtils.startActivity(RemindSettingActivity.class);
                 break;
-            case R.id.version:
+            case R.id.sdv_app_version:
                 VersionActivity.show(v.getContext(), VersionActivity.class);
                 break;
-            case R.id.about_me:
+            case R.id.sdv_about_us:
                 SimpleWebActivity.launch(this, H5Uri.ABOUT_US);
                 break;
-            case R.id.bt_logout:
+            case R.id.sdv_device_version:
+                DeviceVersionNoticeActivity.show(v.getContext());
+                break;
+            case R.id.sdv_change_bind:
+                BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
+                if (bluePeripheral == null || !bluePeripheral.isConnected()) {
+                    ToastHelper.show(getString(R.string.not_show_monitor_todo));
+                    return;
+                }
+                QrCodeActivity.show(this);
+                break;
+            case R.id.sdv_feedback:
+                FeedbackActivity.show(this);
+                break;
+            case R.id.sdv_modify_password:
+                ActivityUtils.startActivity(ModifyPasswordActivity.class);
+                break;
+            case R.id.tv_logout:
                 showLogoutDialog();
                 break;
             default:
@@ -93,7 +114,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
     private void invalidVersion() {
         PackageInfo packageInfo = UiUtils.getPackageInfo(this);
         String versionName = packageInfo.versionName;
-        mSdvVersion.setContent(versionName);
+        mSdvAppVersion.setContent(versionName);
     }
 
     private void showLogoutDialog() {

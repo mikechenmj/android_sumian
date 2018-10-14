@@ -10,7 +10,7 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.feedback.FeedbackActivity;
 import com.sumian.hw.qrcode.activity.QrCodeActivity;
 import com.sumian.hw.setting.sheet.LogoutBottomSheet;
-import com.sumian.hw.upgrade.activity.VersionNoticeActivity;
+import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -69,7 +69,7 @@ public class HwSettingActivity extends HwBaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.siv_hw_version:
-                VersionNoticeActivity.show(v.getContext());
+                DeviceVersionNoticeActivity.show(v.getContext());
                 break;
             case R.id.siv_change_bind:
                 BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();

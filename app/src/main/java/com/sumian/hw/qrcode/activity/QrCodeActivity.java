@@ -2,6 +2,7 @@ package com.sumian.hw.qrcode.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,25 +10,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.base.HwBaseActivity;
+import com.sumian.common.base.BaseActivity;
+import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.qrcode.fragment.InputSnFragment;
 import com.sumian.hw.qrcode.fragment.QrCodeFragment;
-import com.sumian.hw.qrcode.fragment.InputSnFragment;import com.sumian.hw.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
+public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
 
     private ViewPager mViewPager;
-
+    private TitleBar mTitleBar;
     private BluePeripheral mBluePeripheral;
-
-    // private String mTmpSn;
-
+    private TabLayout mTabLayout;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, QrCodeActivity.class));
@@ -45,18 +45,9 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackCli
     public void bindSn(String sn) {
         mBluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (mBluePeripheral == null || !mBluePeripheral.isConnected()) {
-            showToast("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
+            ToastUtils.showShort("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
             return;
         }
-
-//        String sleepySn = AppManager.getDeviceModel().getSleepySn();
-//        if (!TextUtils.isEmpty(sleepySn) && sleepySn.equals(sn)) {
-//            showCenterToast("该SN码已绑定该设备");
-//            return;
-//        }
-
-        // mTmpSn = sn;
-
         mBluePeripheral.addPeripheralDataCallback(this);
         mBluePeripheral.writeDelay(BlueCmd.cDoMonitor2BindSleepySnNumber(sn), 200);
     }
@@ -72,11 +63,11 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackCli
     @Override
     protected void initWidget() {
         super.initWidget();
-        TitleBar titleBar = findViewById(R.id.title_bar);
-        TabLayout tabLayout = findViewById(R.id.table);
+        mTabLayout = findViewById(R.id.table);
+        mTitleBar = findViewById(R.id.title_bar);
         mViewPager = findViewById(R.id.view_pager);
-
-        titleBar.setOnBackClickListener(this);
+        mTitleBar.setOnBackClickListener(this);
+        mTitleBar.openTopPadding(true);
         this.mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -109,19 +100,38 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackCli
             }
         });
 
-        tabLayout.setupWithViewPager(mViewPager, true);
+        mTabLayout.setupWithViewPager(mViewPager, true);
         this.mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 autoScan(position == 0);
+                changeTabColor(position);
             }
         });
+        changeTabColor(0);
+    }
 
+    private void changeTabColor(int position) {
+        int tabBgColor;
+        int normalTextColor;
+        int selectedTextColor = getResources().getColor(R.color.colorPrimary);
+        if (position == 0) {
+            tabBgColor = Color.TRANSPARENT;
+            normalTextColor = Color.WHITE;
+            mTitleBar.setBgColor(Color.TRANSPARENT);
+        } else {
+            tabBgColor = Color.WHITE;
+            normalTextColor = getResources().getColor(R.color.t2_color);
+            mTitleBar.setBgColor(selectedTextColor);
+        }
+        mTabLayout.setBackgroundColor(tabBgColor);
+        mTabLayout.setSelectedTabIndicatorColor(selectedTextColor);
+        mTabLayout.setTabTextColors(normalTextColor, selectedTextColor);
     }
 
     @Override
-    public void onBackClick(View v) {
+    public void onBack(View v) {
         finish();
     }
 
@@ -131,7 +141,7 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackCli
         String cmdIndex = BlueCmd.formatCmdIndex(cmd);
         switch (cmdIndex) {
             case "52":
-                showCenterToast("正在绑定速眠仪中...");
+                ToastUtils.showShort("正在绑定速眠仪中...");
                 break;
             default:
                 break;
@@ -148,10 +158,10 @@ public class QrCodeActivity extends HwBaseActivity implements TitleBar.OnBackCli
                     if (mBluePeripheral != null) {
                         mBluePeripheral.writeDelay(BlueCmd.cSleepySnNumber(), 200);
                     }
-                    showCenterToast("绑定速眠仪成功");
+                    ToastUtils.showShort("绑定速眠仪成功");
                     finish();
                 } else {
-                    showCenterToast("绑定速眠仪失败,请重新扫码绑定");
+                    ToastUtils.showShort("绑定速眠仪失败,请重新扫码绑定");
                 }
                 break;
             default:

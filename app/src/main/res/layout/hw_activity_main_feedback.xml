@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/hw_colorPrimaryDark"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.sumian.hw.widget.TitleBar
+    <com.sumian.common.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_264"
         android:layout_marginTop="@dimen/space_10"
-        android:background="#2C2F37"
+        android:background="@color/b2_color"
         android:orientation="vertical"
         android:padding="@dimen/space_20">
 
@@ -55,7 +54,7 @@
             tools:visibility="visible" />
     </LinearLayout>
 
-    <TextView
+    <Button
         android:id="@+id/tv_submit"
         style="@style/SumianButton"
         android:layout_marginStart="@dimen/space_36"

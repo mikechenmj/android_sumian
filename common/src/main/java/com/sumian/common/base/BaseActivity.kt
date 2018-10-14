@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
-import android.view.WindowManager
 import com.sumian.common.dialog.LoadingDialog
 import com.sumian.common.mvp.BaseShowLoadingView
+import retrofit2.Call
 
 /**
  * Created by sm
@@ -21,6 +21,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
     private val mLoadingDialog: LoadingDialog by lazy {
         LoadingDialog(this)
     }
+
+    private val mCalls = HashSet<Call<*>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +39,11 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        for (call in mCalls) {
+            call.cancel()
+        }
         onRelease()
+        super.onDestroy()
     }
 
     protected open fun initBundle(bundle: Bundle) {}
@@ -73,5 +78,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         intent?.extras?.let {
             initBundle(it)
         }
+    }
+
+    protected fun addCall(call: Call<*>) {
+        mCalls.add(call)
     }
 }

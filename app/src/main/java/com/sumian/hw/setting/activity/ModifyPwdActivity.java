@@ -10,17 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.CheckUtils;
 import com.sumian.hw.common.util.UiUtil;
-import com.sumian.sd.network.request.ModifyPwdBody;
 import com.sumian.hw.setting.contract.ModifyPwdContract;
 import com.sumian.hw.setting.presenter.ModifyPwdPresenter;
-import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.network.request.ModifyPwdBody;
 
 /**
  * Created by jzz
@@ -113,11 +113,6 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
     }
 
     @Override
-    public void onBackClick(View v) {
-        finish();
-    }
-
-    @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.iv_old_pwd_show) {
@@ -186,5 +181,10 @@ public class ModifyPwdActivity extends HwBaseActivity implements TitleBar.OnBack
         mTvErrorPop.setText(error);
         mLayPwdPop.setVisibility(View.VISIBLE);
         ToastHelper.show(error);
+    }
+
+    @Override
+    public void onBack(View v) {
+        finish();
     }
 }

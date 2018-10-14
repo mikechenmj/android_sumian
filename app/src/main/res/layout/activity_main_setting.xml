@@ -12,44 +12,89 @@
         app:show_back="true"
         app:text="@string/setting" />
 
-    <com.sumian.sd.widget.divider.SettingDividerView
-        android:id="@+id/sdv_remind"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_16"
-        app:divider_line_visible="visible"
-        app:type_desc="@string/remind_setting" />
+        android:layout_height="match_parent">
 
-    <com.sumian.sd.widget.divider.SettingDividerView
-        android:id="@+id/version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="visible"
-        app:type_content="1.0.0"
-        app:type_desc="@string/current_app_version" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <com.sumian.sd.widget.divider.SettingDividerView
-        android:id="@+id/about_me"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="gone"
-        app:type_desc="@string/about_us" />
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_remind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_16"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/remind_setting" />
 
-    <TextView
-        android:id="@+id/bt_logout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_64"
-        android:layout_marginTop="@dimen/space_16"
-        android:background="@color/b2_color"
-        android:clickable="true"
-        android:elevation="0dp"
-        android:focusable="true"
-        android:foreground="@drawable/bg_material"
-        android:gravity="center"
-        android:outlineProvider="none"
-        android:text="@string/logout"
-        android:textColor="@color/t4_color"
-        android:textSize="@dimen/font_16"
-        android:translationZ="0dp" />
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_app_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/current_app_version" />
 
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_device_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/hw_version" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_change_bind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/change_bind" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/feedback" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_about_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/about_us" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_modify_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/modify_password" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_clear_cache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="gone"
+                app:type_desc="@string/clear_cache" />
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_64"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="@color/b2_color"
+                android:clickable="true"
+                android:elevation="0dp"
+                android:focusable="true"
+                android:foreground="@drawable/bg_material"
+                android:gravity="center"
+                android:outlineProvider="none"
+                android:text="@string/logout"
+                android:textColor="@color/t4_color"
+                android:textSize="@dimen/font_16"
+                android:translationZ="0dp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

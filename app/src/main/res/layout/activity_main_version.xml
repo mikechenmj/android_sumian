@@ -21,7 +21,7 @@
         android:layout_marginTop="@dimen/space_60"
         android:contentDescription="@null"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_version_logo" />
+        app:srcCompat="@drawable/login_logo" />
 
     <TextView
         android:id="@+id/tv_current_app_version"
