@@ -552,10 +552,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private fun receiveMonitorEnterDfuSuccessResponse(cmd: String) {
         mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.battery = 0
-//        mMonitorLiveData.value?.sn = null
         mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.speedSleeper?.battery = 0
-//        mMonitorLiveData.value?.speedSleeper?.sn = null
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x51 监测仪进入dfu 模式成功  cmd=$cmd")
     }
@@ -563,10 +561,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private fun receiveSleeperEnterDfuSuccessResponse(cmd: String) {
         mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.battery = 0
-//        mMonitorLiveData.value?.sn = null
         mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.speedSleeper?.battery = 0
-//        mMonitorLiveData.value?.speedSleeper?.sn = null
         notifyMonitorChange()
         LogManager.appendMonitorLog("0x59 速眠仪进入dfu 模式成功 cmd=$cmd")
     }
@@ -609,7 +605,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         if (sleepyConnectState == 0x00) {
             mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
             mMonitorLiveData.value?.speedSleeper?.battery = 0
-//            mMonitorLiveData.value?.speedSleeper?.sn = null
         } else {
             mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_CONNECTED
             peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100)
@@ -734,10 +729,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onTransportChannelReady(peripheral: BluePeripheral) {
-//        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
-//        notifyMonitorChange()
-//        onConnectSuccess()
-
         peripheral.writeDelay(BlueCmd.cRTC(), 200)
         peripheral.writeDelay(BlueCmd.cMonitorBattery(), 400)
         peripheral.writeDelay(BlueCmd.cMonitorAndSleepyState(), 600)

@@ -34,8 +34,8 @@ class DiaryFragment : BaseFragment() {
     override fun initWidget() {
         super.initWidget()
         val hasDevice = AppManager.getAccountViewModel().userInfo.hasDevice()
-//        tab_layout.visibility = if (hasDevice) View.VISIBLE else View.GONE // todo remove comment
-//        tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
+        vg_tabs.visibility = if (hasDevice) View.VISIBLE else View.GONE
+        tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
         tab_sleep_diary.setOnClickListener { selectTab(0) }
         tab_monitor_data.setOnClickListener { selectTab(1) }
         selectTab(0)
