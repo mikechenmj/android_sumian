@@ -7,6 +7,7 @@ import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
@@ -93,6 +94,12 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onStart() {
         super.onStart()
         refreshData()
+        device_card_view.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        device_card_view.onStop()
     }
 
     private fun refreshData() {
@@ -183,7 +190,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
             if (resultCode == Activity.RESULT_OK) {
                 val deviceJson = data?.getStringExtra(ScanDeviceActivity.DATA) ?: null
                 val blueDevice = JsonUtil.fromJson(deviceJson, BlueDevice::class.java) ?: return
-                DeviceManager.connect(blueDevice)
+                DeviceManager.scanAndConnect(blueDevice)
             }
         }
     }

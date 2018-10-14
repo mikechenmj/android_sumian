@@ -3,6 +3,7 @@ package com.sumian.sd.device
 import android.arch.lifecycle.MutableLiveData
 import android.support.annotation.StringRes
 import android.text.TextUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.blue.callback.BlueAdapterCallback
 import com.sumian.blue.callback.BluePeripheralCallback
@@ -11,6 +12,8 @@ import com.sumian.blue.constant.BlueConstant
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.network.response.BaseResponseCallback
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.hw.command.BlueCmd
 import com.sumian.hw.common.util.BlueByteUtil
@@ -20,8 +23,10 @@ import com.sumian.hw.device.wrapper.BlueDeviceWrapper
 import com.sumian.hw.gather.FileHelper
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
+import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.utils.StorageUtil
 import java.util.*
 
@@ -52,11 +57,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     init {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
-//        mMonitorLiveData.value = BlueDevice()
-//        mMonitorLiveData.value?.speedSleeper = BlueDevice()
-//        mMonitorLiveData.value?.name = App.getAppContext().getString(R.string.monitor)
-//        mMonitorLiveData.value?.speedSleeper?.name = App.getAppContext().getString(R.string.speed_sleeper)
-//        notifyMonitorChange()
         val monitorCache = getCachedMonitor()
         mMonitorLiveData.value = monitorCache
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
@@ -64,6 +64,14 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
         return mMonitorLiveData
+    }
+
+    fun getMonitorSn(): String? {
+        return mMonitorLiveData.value?.sn
+    }
+
+    fun getSleeperSn(): String? {
+        return mMonitorLiveData.value?.speedSleeper?.sn
     }
 
     fun getIsBluetoothEnableLiveData(): MutableLiveData<Boolean> {
@@ -95,7 +103,18 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
     }
 
-    fun connect(monitor: BlueDevice) {
+    fun scanAndConnect(monitor: BlueDevice) {
+        monitor.status = BlueDevice.STATUS_CONNECTING
+        mMonitorLiveData.value = monitor
+        mBlueDeviceWrapper.scan2Connect(monitor, { connect(monitor) }, {
+            ToastHelper.show("蓝牙连接失败多次,可尝试关闭手机蓝牙待5s后重试...")
+        })
+    }
+
+    /**
+     * 断开蓝牙后直接connect连不上，需要先扫描，再连接
+     */
+    private fun connect(monitor: BlueDevice) {
         AppManager.getBlueManager().clearBluePeripheral()
         val remoteDevice = AppManager.getBlueManager().getBluetoothDeviceFromMac(monitor.mac)
         if (remoteDevice != null) {
@@ -129,14 +148,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
     }
 
-    fun scanAndConnect(monitor: BlueDevice) {
-        monitor.status = BlueDevice.STATUS_CONNECTING
-        mMonitorLiveData.value = monitor
-        mBlueDeviceWrapper.scan2Connect(monitor, { connect(monitor) }, {
-            ToastHelper.show("蓝牙连接失败多次,可尝试关闭手机蓝牙待5s后重试...")
-        })
-    }
-
     fun turnOnSleeperPaMode() {
         val bluePeripheral = getCurrentBluePeripheral() ?: return
         bluePeripheral.writeDelay(BlueCmd.cDoSleepyPaMode(), 500)
@@ -154,6 +165,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun unbind() {
+        mMonitorLiveData.value = null
         mIsUnbinding = true
         getCurrentBluePeripheral()?.close()
         clearCacheDevice()
@@ -493,6 +505,23 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mMonitorLiveData.value?.speedSleeper?.mac = macSb.toString().toUpperCase(Locale.getDefault())
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x56 获取到监测仪绑定的速眠仪的 mac address=" + macSb.toString().toUpperCase(Locale.getDefault()) + "  cmd=" + cmd)
+        saveCacheFile()
+        uploadDeviceSns()
+    }
+
+    private fun uploadDeviceSns() {
+        val map = HashMap<String, String>()
+        getMonitorSn()?.let { map.put("monitor_sn", it) }
+        getSleeperSn()?.let { map.put("sleeper_sn", it) }
+        AppManager.getSdHttpService().modifyUserProfile(map).enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onSuccess(response: UserInfo?) {
+                LogUtils.d(response)
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d(errorResponse.message)
+            }
+        })
     }
 
     private fun receiveSleeperSnInfo(data: ByteArray, cmd: String) {
@@ -523,10 +552,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private fun receiveMonitorEnterDfuSuccessResponse(cmd: String) {
         mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.battery = 0
-        mMonitorLiveData.value?.sn = null
+//        mMonitorLiveData.value?.sn = null
         mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.speedSleeper?.battery = 0
-        mMonitorLiveData.value?.speedSleeper?.sn = null
+//        mMonitorLiveData.value?.speedSleeper?.sn = null
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x51 监测仪进入dfu 模式成功  cmd=$cmd")
     }
@@ -534,10 +563,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private fun receiveSleeperEnterDfuSuccessResponse(cmd: String) {
         mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.battery = 0
-        mMonitorLiveData.value?.sn = null
+//        mMonitorLiveData.value?.sn = null
         mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
         mMonitorLiveData.value?.speedSleeper?.battery = 0
-        mMonitorLiveData.value?.speedSleeper?.sn = null
+//        mMonitorLiveData.value?.speedSleeper?.sn = null
         notifyMonitorChange()
         LogManager.appendMonitorLog("0x59 速眠仪进入dfu 模式成功 cmd=$cmd")
     }
@@ -580,7 +609,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         if (sleepyConnectState == 0x00) {
             mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_UNCONNECTED
             mMonitorLiveData.value?.speedSleeper?.battery = 0
-            mMonitorLiveData.value?.speedSleeper?.sn = null
+//            mMonitorLiveData.value?.speedSleeper?.sn = null
         } else {
             mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_CONNECTED
             peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100)
@@ -667,8 +696,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
         notifyMonitorChange()
         onConnectSuccess()
-        saveCacheFile()
-
         AppManager.getBlueManager().saveBluePeripheral(peripheral)
         LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.name)
     }

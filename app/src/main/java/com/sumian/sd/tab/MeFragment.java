@@ -1,5 +1,6 @@
 package com.sumian.sd.tab;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
+import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
@@ -16,6 +18,8 @@ import com.sumian.sd.account.userProfile.SdUserProfileActivity;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
+import com.sumian.sd.device.DeviceManageActivity;
+import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.h5.SleepFileWebActivity;
 import com.sumian.sd.kefu.KefuManager;
 import com.sumian.sd.main.OnEnterListener;
@@ -28,6 +32,7 @@ import com.sumian.sd.service.diary.DiaryEvaluationListActivity;
 import com.sumian.sd.service.tel.activity.TelBookingListActivity;
 import com.sumian.sd.setting.SettingActivity;
 import com.sumian.sd.theme.three.SkinConfig;
+import com.sumian.sd.widget.divider.SettingDividerView;
 import com.sumian.sd.widget.tips.PatientRecordTips;
 import com.sumian.sd.widget.tips.PatientServiceTips;
 
@@ -63,6 +68,8 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
     PatientServiceTips mTipsService;
     @BindView(R.id.tips_record)
     PatientRecordTips mTipsRecord;
+    @BindView(R.id.dv_device_manage)
+    SettingDividerView mSdDeviceManage;
 
     @Override
     protected int getLayoutId() {
@@ -92,11 +99,21 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
                 .observe(this, unreadCount -> mIvNotification.setActivated(unreadCount != null && unreadCount > 0));
 
         HwLeanCloudHelper.addOnAdminMsgCallback(this);
+        DeviceManager.INSTANCE.getMonitorLiveData().observe(this, new Observer<BlueDevice>() {
+            @Override
+            public void onChanged(@android.support.annotation.Nullable BlueDevice blueDevice) {
+                String monitorSn = blueDevice == null ? null : blueDevice.sn;
+                if (TextUtils.isEmpty(monitorSn)) {
+                    monitorSn = getString(R.string.add_new_device);
+                }
+                mSdDeviceManage.setContent(monitorSn);
+            }
+        });
 
     }
 
     @Override
-    @OnClick({R.id.iv_avatar, R.id.tv_nickname, R.id.dv_setting, R.id.iv_notification, R.id.siv_customer_service})
+    @OnClick({R.id.iv_avatar, R.id.tv_nickname, R.id.dv_setting, R.id.iv_notification, R.id.siv_customer_service, R.id.dv_device_manage})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_avatar:
@@ -113,6 +130,9 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
                 UIProvider.getInstance().clearCacheMsg();
                 UIProvider.getInstance().setThemeMode(SkinConfig.isInNightMode(App.getAppContext()) ? 0x02 : 0x01);
                 KefuManager.launchKefuActivity();
+                break;
+            case R.id.dv_device_manage:
+                ActivityUtils.startActivity(DeviceManageActivity.class);
                 break;
             default:
                 break;

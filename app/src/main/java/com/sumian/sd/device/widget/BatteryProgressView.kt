@@ -32,10 +32,11 @@ class BatteryProgressView(context: Context, attributeSet: AttributeSet? = null) 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         mPaint.color = getBgColor()
-        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), 30.toFloat(), 30.toFloat(), mPaint)
+        val cornerRadius = height / 6.toFloat()
+        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), cornerRadius, cornerRadius, mPaint)
         canvas.clipRect(0f, 0f, width.toFloat() * mProgress / 100, height.toFloat())
         mPaint.color = getProgressColor()
-        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), 30.toFloat(), 30.toFloat(), mPaint)
+        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), cornerRadius, cornerRadius, mPaint)
     }
 
     private fun getBgColor(): Int {

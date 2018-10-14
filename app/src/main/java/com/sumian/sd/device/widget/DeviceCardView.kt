@@ -108,7 +108,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 else -> Unit
             }
         }
-        DeviceManager.addMonitorEventListener(mMonitorEventListener)
+
     }
 
     fun registerLifecycleOwner(lifecycleOwner: LifecycleOwner) {
@@ -127,7 +127,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        DeviceManager.removeMonitorEventListener(mMonitorEventListener)
+
     }
 
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
@@ -230,5 +230,13 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     }
 
     var mHost: Host? = null
+
+    fun onStart(){
+        DeviceManager.addMonitorEventListener(mMonitorEventListener)
+    }
+
+    fun onStop(){
+        DeviceManager.removeMonitorEventListener(mMonitorEventListener)
+    }
 
 }

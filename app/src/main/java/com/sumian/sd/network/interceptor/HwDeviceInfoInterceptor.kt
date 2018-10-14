@@ -63,7 +63,7 @@ class HwDeviceInfoInterceptor private constructor() : Interceptor {
             return ""
         }
         val speedSleeper = AppManager.getDeviceModel().blueDevice
-        return if (speedSleeper?.speedSleeper != null && !speedSleeper.speedSleeper.isConnected) {
+        return if (speedSleeper?.speedSleeper != null && speedSleeper.speedSleeper?.isConnected != true) {
             ""
         } else {
             speedSleeperInfo ?: ""

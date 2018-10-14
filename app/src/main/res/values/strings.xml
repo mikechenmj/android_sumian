@@ -1028,5 +1028,18 @@
     <string name="click_card_try_to_connect_monitor">点击卡片，尝试连接监测仪</string>
     <string name="you_do_not_bind_device_click_add">您尚未绑定速眠仪设备，点击添加设备</string>
     <string name="working">工作中</string>
+    <string name="device_manage">设备管理</string>
+    <string name="add_new_device">添加新设备</string>
+    <string name="click_btn_add_device">点击按钮，添加设备</string>
+    <string name="connecting">连接中</string>
+    <string name="connected">已连接</string>
+    <string name="monitor_not_connect_click_upper_to_connect">监测仪未连接，点击上方尝试连接</string>
+    <string name="monitor_is_connecting">监测仪连接中…</string>
+    <string name="monitor_is_connected_please_check_sleeper">监测仪已连接\n请检查速眠仪是否开启</string>
+    <string name="sleeper_is_idle">速眠仪已连接，待机中</string>
+    <string name="open_sleep">开启睡眠</string>
+    <string name="sync_progress_package_progress">正在同步睡眠数据/n第 %d 段 (%d%%)</string>
+    <string name="sure_to_unbind">确定解除绑定吗？</string>
+    <string name="after_unbind_monitor_will_disconnect_from_phone">解绑后将断开监测仪与手机的连接</string>
     <!-- Hw end-->
 </resources>

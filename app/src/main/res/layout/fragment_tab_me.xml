@@ -85,6 +85,14 @@
             android:layout_height="@dimen/space_10" />
 
         <com.sumian.sd.widget.divider.SettingDividerView
+            android:id="@+id/dv_device_manage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:divider_line_visible="visible"
+            app:type_desc="@string/device_manage"
+            app:type_icon="@mipmap/ic_info_icon_set" />
+
+        <com.sumian.sd.widget.divider.SettingDividerView
             android:id="@+id/dv_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

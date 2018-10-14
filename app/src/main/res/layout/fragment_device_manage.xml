@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_no_device"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_t3_16"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/add_device"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_sub_title"
+            style="@style/text_t2_14"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/please_keep_nearly" />
+
+        <View
+            style="@style/HorizontalDividerLineMarginStart20"
+            android:layout_marginTop="20dp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_add_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_equip_icon_adddevice" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/click_btn_add_device" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_device"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/vg_monitor"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <TextView
+                style="@style/text_t3_16"
+                android:text="@string/monitor" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/tv_monitor_status"
+                style="@style/text_t2_14"
+                android:padding="2dp"
+                android:text="@string/already_connected" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.sumian.sd.device.widget.BatteryView
+                android:id="@+id/monitor_battery_view"
+                android:layout_width="52dp"
+                android:layout_height="31dp" />
+        </LinearLayout>
+
+        <View style="@style/HorizontalDividerLine" />
+
+        <LinearLayout
+            android:id="@+id/vg_sleeper"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
+
+            <TextView
+                style="@style/text_t3_16"
+                android:text="@string/speed_sleeper" />
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/tv_speed_sleeper_status"
+                style="@style/text_t2_14"
+                android:padding="2dp"
+                android:text="@string/already_connected" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.sumian.sd.device.widget.BatteryView
+                android:id="@+id/sleeper_battery_view"
+                android:layout_width="52dp"
+                android:layout_height="31dp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_float_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_equip_btn_more" />
+
+            <FrameLayout
+                android:layout_width="210dp"
+                android:layout_height="210dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp">
+
+                <ImageView
+                    android:id="@+id/iv_device_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_equip_bg" />
+
+                <com.sumian.hw.widget.ripple.RippleScanningView
+                    android:id="@+id/ripple_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/iv_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_equip_icon_monitor_synchronization" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_bottom"
+                style="@style/text_t1_14"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="270dp"
+                android:gravity="center"
+                tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
+
+            <Button
+                android:id="@+id/bt_turn_on_pa"
+                style="@style/SumianButton"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="330dp"
+                android:text="@string/open_sleep" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+</FrameLayout>
