@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
-import com.sumian.hw.common.util.TextUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.doctor.bean.Doctor;
@@ -132,7 +131,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
     }
 
     public String formatHeight(String height) {
-        return App.Companion.getAppContext().getString(R.string.none_edit).equals(height) ? height : height + "cm";
+        return App.Companion.getAppContext().getString(R.string.none_edit).equals(height) ? height : Float.valueOf(height).intValue() + "cm";
     }
 
     private int[] getBirthday(String birthdayStr) {

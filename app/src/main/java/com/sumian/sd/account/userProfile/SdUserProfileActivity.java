@@ -73,6 +73,8 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
     SettingDividerView mDvGender;
     @BindView(R.id.dv_birthday)
     SettingDividerView mDvBirthday;
+    @BindView(R.id.dv_area)
+    SettingDividerView mDvArea;
     @BindView(R.id.dv_height)
     SettingDividerView mDvHeight;
     @BindView(R.id.dv_weight)
@@ -108,6 +110,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mDvName.setOnShowMoreListener(this);
         mDvGender.setOnShowMoreListener(this);
         mDvBirthday.setOnShowMoreListener(this);
+        mDvArea.setOnShowMoreListener(this);
         mDvHeight.setOnShowMoreListener(this);
         mDvWeight.setOnShowMoreListener(this);
         mDvEduLevel.setOnShowMoreListener(this);
@@ -215,6 +218,10 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
                 break;
             case R.id.dv_birthday:
                 commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY);
+                break;
+            case R.id.dv_area:
+//                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_AREA);
+                // TODO: 2018/10/14  
                 break;
             case R.id.dv_height:
                 commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_HEIGHT_KEY);
@@ -402,15 +409,14 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
     private void updateUserProfileUI(UserInfo userProfile) {
         ImageLoader.loadImage(userProfile.avatar, mIvAvatar, R.mipmap.ic_info_avatar_patient);
         mDvNickname.setContent(userProfile.nickname);
-
         mDvName.setContent(userProfile.formatField(userProfile.name));
         mDvGender.setContent(userProfile.formatGander());
         mDvBirthday.setContent(userProfile.formatField(userProfile.birthday));
+        mDvArea.setContent(userProfile.formatField(userProfile.area));
         mDvHeight.setContent(userProfile.formatHeight(userProfile.formatField(userProfile.height)));
         mDvWeight.setContent(userProfile.formatWeight(userProfile.formatField(userProfile.weight)));
         mDvEduLevel.setContent(userProfile.formatField(userProfile.education));
         mDvCareer.setContent(userProfile.formatField(userProfile.career));
-
         mDvMobile.setContent(userProfile.mobile);
         updateDvWechatUI(userProfile.socialites);
     }

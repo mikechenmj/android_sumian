@@ -119,6 +119,14 @@
                 app:type_desc="@string/birthday" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/dv_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/area" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -61,5 +61,7 @@ class KotlinTest {
 
     @Test
     fun t1() {
+        val s = "13.2"
+        System.out.println(s.toFloat().toInt())
     }
 }

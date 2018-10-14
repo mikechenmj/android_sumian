@@ -89,7 +89,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
                 transformHeight(MIN_HEIGHT, MAX_HEIGHT, userInfo)
 
                 mView.showOnePicker(View.VISIBLE)
-                mView.showTwoPicker(View.VISIBLE)
+                mView.showTwoPicker(View.GONE)
 
                 App.getAppContext().getString(R.string.height)
             }
@@ -146,7 +146,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         return when (modifyKey) {
             ImproveUserProfileContract.IMPROVE_WEIGHT_KEY,
             ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
-                "${mPickerOne.contentByCurrValue}.${mPickerTwo.contentByCurrValue}"
+                mPickerOne.contentByCurrValue
             }
             ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
                 "${mPickerOne.contentByCurrValue}-${mPickerTwo.contentByCurrValue}"
@@ -254,8 +254,8 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             }
         }
 
-        mView.transformOneDisplayedValues(numberOnePosition, ".", heights)
-        mView.transformTwoDisplayedValues(numberTwoPosition, "cm", decimalHeights)
+        mView.transformOneDisplayedValues(numberOnePosition, "cm", heights)
+//        mView.transformTwoDisplayedValues(numberTwoPosition, "cm", decimalHeights)
     }
 
     /**
