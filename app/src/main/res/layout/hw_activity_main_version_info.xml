@@ -27,18 +27,23 @@
                 android:layout_width="@dimen/space_120"
                 android:layout_height="@dimen/space_90"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_100"
+                android:layout_marginTop="@dimen/space_60"
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 app:srcCompat="@mipmap/ic_login_logo" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="50dp" />
 
             <TextView
                 android:id="@+id/tv_app_version_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/space_32"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
+                android:textColor="@color/t2_color"
                 android:textSize="@dimen/font_16"
                 android:visibility="gone"
                 tools:text="APP 版本: 0.0.1"
@@ -51,6 +56,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_8"
                 android:gravity="center"
+                android:textColor="@color/t2_color"
                 android:textSize="@dimen/font_16"
                 tools:text="监测仪版本: 未连接" />
 
@@ -61,17 +67,13 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_8"
                 android:gravity="center"
+                android:textColor="@color/t2_color"
                 android:textSize="@dimen/font_16"
                 tools:text="速眠仪版本: 未连接" />
 
-            <View
-                android:id="@+id/v_divider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_px_1"
-                android:layout_marginTop="@dimen/space_32"
-                android:background="@color/light_line_bg_color"
-                android:visibility="gone"
-                tools:visibility="visible" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="60dp" />
 
             <com.sumian.hw.widget.VersionInfoView
                 android:id="@+id/app_version_info"

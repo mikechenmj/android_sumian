@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,21 +13,11 @@
         android:background="@drawable/bg_material_ripple"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/space_12"
         android:paddingStart="@dimen/space_24"
         android:paddingTop="@dimen/space_12"
+        android:paddingBottom="@dimen/space_12"
         tools:ignore="RtlSymmetry"
         tools:visibility="visible">
-
-        <TextView
-            android:id="@+id/tv_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
-            android:text="@string/monitor_upgrade"
-            android:textColor="@color/general_color"
-            android:textSize="@dimen/font_16"
-            tools:ignore="RtlHardcoded" />
 
         <View
             android:id="@+id/v_upgrade_dot"
@@ -38,6 +29,13 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
+        <TextView
+            android:id="@+id/tv_desc"
+            style="@style/text_t1_16"
+            android:layout_gravity="left|center"
+            android:text="@string/monitor_upgrade"
+            tools:ignore="RtlHardcoded" />
+
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,20 +43,18 @@
 
         <TextView
             android:id="@+id/tv_sn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_t1_16"
             android:layout_gravity="left|center"
-            android:textColor="@color/general_color"
-            android:textSize="@dimen/font_16"
             tools:ignore="RtlHardcoded"
             tools:text="A11171500028" />
 
         <ImageView
-            android:layout_width="@dimen/space_32"
-            android:layout_height="@dimen/space_32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="right|center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:contentDescription="@null"
-            android:padding="@dimen/space_10"
             android:scaleType="fitCenter"
             app:srcCompat="@mipmap/ic_show_redirect"
             tools:ignore="RtlHardcoded" />
@@ -67,9 +63,6 @@
 
     <View
         android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_px_1"
-        android:layout_marginStart="@dimen/space_16"
-        android:background="@color/light_line_bg_color" />
+        style="@style/HorizontalDividerLine" />
 
 </LinearLayout>

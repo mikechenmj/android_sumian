@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/shape_dialog"
+    android:layout_width="345dp"
+    android:layout_height="156dp"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
@@ -11,27 +11,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/space_32"
+        style="@style/text_t3_18"
         android:gravity="center"
         android:text="@string/firmware_download_title_hint"
-        android:textColor="@color/bt_hole_color"
-        android:textSize="@dimen/font_20" />
+        android:layout_margin="@dimen/space_20"/>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_px_1"
-        android:background="@color/general_color" />
+        style="@style/HorizontalDividerLine" />
 
     <TextView
         android:id="@+id/tv_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/space_24"
-        android:layout_marginTop="@dimen/space_24"
+        style="@style/text_t2_14"
+        android:layout_marginTop="@dimen/space_20"
         android:gravity="center"
         android:text="0%"
-        android:textSize="@dimen/font_18"
+        android:layout_marginBottom="@dimen/space_20"
         tools:ignore="HardcodedText" />
 
     <ProgressBar
@@ -42,7 +39,7 @@
         android:layout_marginBottom="@dimen/space_56"
         android:layout_marginEnd="@dimen/space_32"
         android:layout_marginStart="@dimen/space_32"
-        android:progress="100"
+        android:progress="50"
         android:progressDrawable="@drawable/progress_horizontal"
         android:secondaryProgress="0" />
 

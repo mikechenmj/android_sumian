@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.avos.avoscloud.AVInstallation;
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
@@ -27,6 +29,7 @@ import com.sumian.sd.setting.version.VersionActivity;
 import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.utils.UiUtils;
 import com.sumian.sd.widget.TitleBar;
+import com.sumian.sd.widget.dialog.SumianAlertDialog;
 import com.sumian.sd.widget.divider.SettingDividerView;
 
 import org.jetbrains.annotations.NotNull;
@@ -73,7 +76,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
         finish();
     }
 
-    @OnClick({R.id.sdv_app_version, R.id.sdv_about_us, R.id.tv_logout, R.id.sdv_remind, R.id.sdv_device_version, R.id.sdv_change_bind, R.id.sdv_feedback, R.id.sdv_modify_password})
+    @OnClick({R.id.sdv_app_version, R.id.sdv_about_us, R.id.tv_logout, R.id.sdv_remind, R.id.sdv_device_version, R.id.sdv_change_bind, R.id.sdv_feedback, R.id.sdv_modify_password, R.id.sdv_clear_cache})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -105,6 +108,22 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
                 break;
             case R.id.tv_logout:
                 showLogoutDialog();
+                break;
+            case R.id.sdv_clear_cache:
+                new SumianAlertDialog(this)
+                        .hideTopIcon(true)
+                        .setTitle(R.string.clear_cache)
+                        .setMessage(R.string.clear_cache_hint)
+                        .setLeftBtn(R.string.cancel, null)
+                        .setRightBtn(R.string.confirm, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                boolean b = FileUtils.deleteAllInDir(getCacheDir());
+                                LogUtils.d(b);
+                                ToastUtils.showShort(R.string.clear_success);
+                            }
+                        })
+                        .show();
                 break;
             default:
                 break;

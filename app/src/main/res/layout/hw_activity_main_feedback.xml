@@ -32,8 +32,8 @@
             android:inputType="textMultiLine"
             android:maxHeight="200dp"
             android:maxLength="500"
-            android:textColor="@color/general_color"
-            android:textColorHint="@color/full_general_color"
+            android:textColor="@color/t1_color"
+            android:textColorHint="@color/t2_color"
             android:textSize="@dimen/edit_text_text_size"
             tools:text="111" />
 

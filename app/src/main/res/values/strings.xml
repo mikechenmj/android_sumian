@@ -1048,5 +1048,13 @@
     <string name="area">地区</string>
     <string name="modify_password">修改密码</string>
     <string name="clear_cache">清除缓存</string>
+    <string name="phone_bettery_low_title">手机电量不足</string>
+    <string name="monitor_bettery_low_title">监测仪电量不足</string>
+    <string name="sleeper_bettery_low_title">速眠仪量不足</string>
+    <string name="phone_bettery_low_message">手机电量不足50%，无法进行 dfu 升级</string>
+    <string name="monitor_bettery_low_message">监测仪电量不足50%，无法进行 dfu 升级</string>
+    <string name="sleeper_bettery_low_message">速眠仪量不足50%，无法进行 dfu 升级</string>
+    <string name="clear_cache_hint">确定清除本地缓存？</string>
+    <string name="clear_success">清除成功</string>
     <!-- Hw end-->
 </resources>

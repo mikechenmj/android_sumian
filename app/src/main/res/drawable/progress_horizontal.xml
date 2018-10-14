@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item android:id="@android:id/background">
+        <clip>
+            <shape android:dither="true">
+                <corners android:radius="@dimen/space_3" />
+                <solid android:color="@color/b1_color" />
+            </shape>
+        </clip>
+    </item>
 
     <item android:id="@android:id/progress">
         <clip>
             <shape android:dither="true">
                 <corners android:radius="@dimen/space_3" />
-                <solid android:color="@color/hw_colorPrimaryDark" />
+                <solid android:color="@color/b3_color" />
             </shape>
         </clip>
     </item>

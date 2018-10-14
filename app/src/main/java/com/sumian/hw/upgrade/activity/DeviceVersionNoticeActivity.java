@@ -2,14 +2,15 @@ package com.sumian.hw.upgrade.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.base.BaseActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
-import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
@@ -31,7 +32,7 @@ import java.util.Locale;
  * desc:
  */
 
-public class DeviceVersionNoticeActivity extends HwBaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+public class DeviceVersionNoticeActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
         TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
 
     TitleBar mTitleBar;
@@ -39,12 +40,12 @@ public class DeviceVersionNoticeActivity extends HwBaseActivity implements View.
     TextView mTvAppVersionName;
     TextView mTvMonitorVersionName;
     TextView mTvSleepyVersionName;
-    View mDivider;
     VersionInfoView mAppVersionInfo;
     VersionInfoView mMonitorVersionInfo;
     VersionInfoView mSleepVersionInfo;
 
     private VersionContract.Presenter mPresenter;
+    private Handler mHandler = new Handler();
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, DeviceVersionNoticeActivity.class));
@@ -63,7 +64,6 @@ public class DeviceVersionNoticeActivity extends HwBaseActivity implements View.
         mTvAppVersionName = findViewById(R.id.tv_app_version_name);
         mTvMonitorVersionName = findViewById(R.id.tv_monitor_version_name);
         mTvSleepyVersionName = findViewById(R.id.tv_sleepy_version_name);
-        mDivider = findViewById(R.id.v_divider);
         mAppVersionInfo = findViewById(R.id.app_version_info);
         mMonitorVersionInfo = findViewById(R.id.monitor_version_info);
         mSleepVersionInfo = findViewById(R.id.sleepy_version_info);
@@ -139,7 +139,7 @@ public class DeviceVersionNoticeActivity extends HwBaseActivity implements View.
 
     @Override
     public void showDot(boolean isShowAppDot, boolean isShowMonitorDot, boolean isShowSleepyDot) {
-        runUiThread(() -> {
+        mHandler.post(() -> {
             BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral == null || !bluePeripheral.isConnected()) {
                 setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
@@ -147,7 +147,6 @@ public class DeviceVersionNoticeActivity extends HwBaseActivity implements View.
                 setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
                         getString(R.string.speed_sleeper), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
             }
-            mDivider.setVisibility(isShowAppDot || isShowMonitorDot || isShowSleepyDot ? View.VISIBLE : View.GONE);
             mAppVersionInfo.updateUpgradeInfo(isShowAppDot, null);
             mMonitorVersionInfo.updateUpgradeInfo(isShowMonitorDot, AppManager.getDeviceModel().getMonitorSn());
             mSleepVersionInfo.updateUpgradeInfo(isShowSleepyDot, AppManager.getDeviceModel().getSleepySn());
@@ -155,7 +154,7 @@ public class DeviceVersionNoticeActivity extends HwBaseActivity implements View.
     }
 
     private void setText(TextView tv, String text) {
-        runUiThread(() -> tv.setText(text));
+        mHandler.post(() -> tv.setText(text));
     }
 
     @Override

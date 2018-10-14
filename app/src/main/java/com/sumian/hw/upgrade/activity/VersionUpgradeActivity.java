@@ -11,16 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.VersionDialog;
 import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
-import com.sumian.hw.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.widget.dialog.SumianAlertDialog;
 
 import java.util.Locale;
 
@@ -135,7 +136,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                 break;
         }
 
-        mIvUpgrade.setImageResource(mIsLatestVersion ? R.mipmap.ic_firmware_upgrade_icon_download : R.mipmap.ic_upgrade_icon_newest);
+        mIvUpgrade.setImageResource(mIsLatestVersion ? R.mipmap.set_icon_download : R.mipmap.set_icon_success);
         mTvVersionLatest.setText(mIsLatestVersion ? String.format(Locale.getDefault(), getString(R.string.latest_version), newVersion) : getString(R.string.firmware_note_hint));
         mTvVersionCurrent.setText(String.format(Locale.getDefault(), getString(R.string.current_version_hint), currentVersion));
         mBtDownload.setText(mIsLatestVersion ? R.string.firmware_download_hint : R.string.firmware_upgrade_hint);
@@ -150,18 +151,18 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
             if (mBtDownload.getText().equals(getString(R.string.firmware_upgrade_hint))) {
                 if (mVersionType != VERSION_TYPE_APP) {
                     if (this.mobileBatteryLow()) {
-                        ToastHelper.show("手机电量不足50%，请连接电源再升级");
                         LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级");
+                        showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message);
                         return;
                     }
                     if (mVersionType == VERSION_TYPE_MONITOR && this.monitorBatteryLow()) {
-                        ToastHelper.show("监测仪电量不足50%，请确保电量充足再升级");
                         LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
+                        showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
                         return;
                     }
                     if (mVersionType == VERSION_TYPE_SLEEPY && this.sleepyBatterLow()) {
-                        ToastHelper.show("速眠仪电量不足50%，请确保电量充足再升级");
                         LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
+                        showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
                         return;
                     }
 
@@ -183,6 +184,15 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         }
     }
 
+    private void showErrorDialog(int title, int message) {
+        new SumianAlertDialog(this)
+                .hideTopIcon(true)
+                .setTitle(title)
+                .setMessage(message)
+                .setRightBtn(R.string.confirm, null)
+                .show();
+    }
+
     @Override
     protected void onRelease() {
         DfuServiceListenerHelper.unregisterProgressListener(this, this);
@@ -191,7 +201,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     }
 
     @Override
-    public void onBackClick(View v) {
+    public void onBack(View v) {
         finish();
     }
 
@@ -210,7 +220,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     @Override
     public void onDownloadFirmwareSuccess() {
         runUiThread(() -> {
-            mIvUpgrade.setImageResource(R.mipmap.ic_firmware_upgrade_icon_upgrade);
+            mIvUpgrade.setImageResource(R.mipmap.set_icon_upgrade);
             mBtDownload.setText(R.string.firmware_upgrade_hint);
             mVersionDialog.cancel();
             if (mVersionType == VERSION_TYPE_APP) {

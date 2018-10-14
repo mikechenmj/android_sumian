@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/hw_colorPrimaryDark"
     android:orientation="vertical">
 
-    <com.sumian.hw.widget.TitleBar
+    <com.sumian.common.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/hw_colorPrimary"
         android:gravity="center"
         app:text="@string/firmware_update_notice_hint" />
 
@@ -28,16 +26,17 @@
             android:layout_marginTop="@dimen/space_80"
             android:contentDescription="@null"
             android:scaleType="fitCenter"
-            app:srcCompat="@mipmap/ic_upgrade_icon_newest" />
+            app:srcCompat="@mipmap/set_icon_success" />
 
         <TextView
             android:id="@+id/tv_version_latest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/space_32"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="@string/firmware_note_hint"
+            android:textColor="@color/t2_color"
             android:textSize="@dimen/font_16" />
 
         <TextView
@@ -48,17 +47,18 @@
             android:layout_marginTop="@dimen/space_8"
             android:gravity="center"
             android:text="@string/current_version_hint"
+            android:textColor="@color/t2_color"
             android:textSize="@dimen/font_16" />
 
         <Button
             android:id="@+id/bt_download"
+            style="@style/SumianButton"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_56"
+            android:layout_height="@dimen/space_50"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/space_32"
-            android:layout_marginRight="@dimen/space_32"
             android:layout_marginTop="@dimen/space_100"
-            android:background="@drawable/bt_circle_bg"
+            android:layout_marginRight="@dimen/space_32"
             android:gravity="center"
             android:text="@string/firmware_download_hint"
             android:textColor="@color/white"

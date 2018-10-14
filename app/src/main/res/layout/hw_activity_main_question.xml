@@ -82,7 +82,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_100"
                 android:contentDescription="@null"
-                app:srcCompat="@mipmap/ic_upgrade_icon_newest" />
+                app:srcCompat="@mipmap/set_icon_success" />
 
             <TextView
                 android:layout_width="wrap_content"
