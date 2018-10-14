@@ -7,8 +7,9 @@ import com.sumian.common.base.BasePresenterActivity
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.h5.HwSimpleWebActivity
+import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.setting.version.delegate.VersionDelegate
+import com.sumian.sd.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginContract.View {
@@ -28,6 +29,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
 
     override fun initWidget() {
         super.initWidget()
+        StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_user_agreement.isSelected = true
         tv_send_captcha.setOnClickListener {
             val number = getPhoneNumberWithCheck()
@@ -38,8 +40,8 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         }
         bt_login.setOnClickListener { onLoginClick() }
         iv_user_agreement.setOnClickListener { onIvUserAgreementClick() }
-        tv_user_agreement.setOnClickListener { HwSimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_AGREEMENT_URL) }
-        tv_user_privacy_policy.setOnClickListener { HwSimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_PRIVACY_POLICY_URL) }
+        tv_user_agreement.setOnClickListener { SimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_AGREEMENT_URL) }
+        tv_user_privacy_policy.setOnClickListener { SimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_PRIVACY_POLICY_URL) }
         tv_wechat_login.setOnClickListener { wechatLogin() }
         tv_captcha_login.setOnClickListener { turnOnCaptchaLogin(true) }
         tv_password_login.setOnClickListener { turnOnCaptchaLogin(false) }

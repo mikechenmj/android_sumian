@@ -327,6 +327,7 @@
         <item name="android:textSize">@dimen/font_16</item>
         <item name="android:textColor">@color/t1_color</item>
         <item name="android:drawableEnd">@drawable/sel_et_drawable_end</item>
+        <item name="android:textColorHint">@color/t2_color</item>
     </style>
 
     <style name="EditTextClearIv">

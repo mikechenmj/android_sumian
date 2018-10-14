@@ -15,7 +15,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.main.HwWelcomeActivity;
+import com.sumian.sd.main.WelcomeActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +59,7 @@ public class LeanCloudManager {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(context, HwWelcomeActivity.class);
+        PushService.setDefaultPushCallback(context, WelcomeActivity.class);
     }
 
     public static void uploadPushId() {

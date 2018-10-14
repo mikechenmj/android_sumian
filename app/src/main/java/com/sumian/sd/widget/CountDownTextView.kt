@@ -3,7 +3,7 @@ package com.sumian.sd.widget
 import android.content.Context
 import android.os.CountDownTimer
 import android.util.AttributeSet
-import android.widget.TextView
+import android.widget.Button
 import com.sumian.sd.R
 
 /**
@@ -15,7 +15,7 @@ import com.sumian.sd.R
  *     version: 1.0
  * </pre>
  */
-class CountDownTextView(context: Context, attrs: AttributeSet?) : TextView(context, attrs) {
+class CountDownTextView(context: Context, attrs: AttributeSet?) : Button(context, attrs) {
     private val mCountDownTimer: CountDownTimer
 
     init {

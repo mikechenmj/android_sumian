@@ -1041,5 +1041,6 @@
     <string name="sync_progress_package_progress">正在同步睡眠数据/n第 %d 段 (%d%%)</string>
     <string name="sure_to_unbind">确定解除绑定吗？</string>
     <string name="after_unbind_monitor_will_disconnect_from_phone">解绑后将断开监测仪与手机的连接</string>
+    <string name="ji">及</string>
     <!-- Hw end-->
 </resources>

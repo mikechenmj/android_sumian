@@ -6,11 +6,10 @@ import android.text.TextUtils
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BasePresenterActivity
-import com.sumian.sd.utils.AppUtil
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
-import com.sumian.sd.app.AppManager
+import com.sumian.sd.utils.AppUtil
 import kotlinx.android.synthetic.main.activity_set_password.*
 
 class SetPasswordActivity : BasePresenterActivity<SetPasswordContract.Presenter>(), SetPasswordContract.View {

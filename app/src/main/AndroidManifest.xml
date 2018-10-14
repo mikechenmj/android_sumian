@@ -60,12 +60,12 @@
             android:value="true" />
 
         <activity
-            android:name=".main.HwWelcomeActivity"
+            android:name=".main.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -450,7 +450,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
+            android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name="com.sumian.hw.guideline.activity.UserGuidelineActivity"
@@ -462,7 +462,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
+            android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <service
@@ -475,7 +475,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
+            android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
@@ -487,18 +487,18 @@
             android:name=".account.login.LoginActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/HwAppTheme" />
+            android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
             android:name=".account.login.ValidatePhoneNumberActivity"
             android:exported="true"
-            android:theme="@style/HwAppTheme" />
+            android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".account.login.SetPasswordActivity"
             android:exported="true"
-            android:theme="@style/HwAppTheme" />
+            android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".h5.HwSimpleWebActivity"
-            android:theme="@style/HwAppTheme" />
+            android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".service.tel.activity.TelBookingPublishActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -544,7 +544,9 @@
             android:exported="true"
             android:theme="@style/MainActivity" />
         <activity android:name=".diary.monitorrecord.WeeklyReportActivity" />
-        <activity android:name=".device.scan.ScanDeviceActivity" android:exported="true"/>
+        <activity
+            android:name=".device.scan.ScanDeviceActivity"
+            android:exported="true" />
         <activity android:name=".device.DeviceManageActivity" />
     </application>
 

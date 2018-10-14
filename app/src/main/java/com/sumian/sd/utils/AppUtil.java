@@ -62,6 +62,7 @@ public class AppUtil {
         Token token = AppManager.getAccountViewModel().getToken();
         if (token != null && token.is_new) {
             ActivityUtils.startActivity(NewUserGuideActivity.class);
+            ActivityUtils.finishAllActivities();
         } else {
             launchMainAndFinishAll();
         }

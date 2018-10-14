@@ -16,7 +16,6 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
     override fun initWidget() {
         super.initWidget()
-        getTitleBar().setIsDarkTheme(true)
         getTitleBar().openTopPadding(true)
         getTitleBar().showTitle(false)
         getTitleBar().showBackArrow(false)
@@ -47,5 +46,9 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
     }
 
     override fun monitorKeyboard() {
+    }
+
+    override fun onBackPressed() {
+        // do nothing
     }
 }

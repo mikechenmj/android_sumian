@@ -28,14 +28,14 @@ import com.sumian.sd.app.AppManager;
  */
 
 public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.OnMoreListener, TitleBar.OnBackClickListener,
-    ModifyUserInfoContract.View<UserInfo> {
+        ModifyUserInfoContract.View<UserInfo> {
 
     public static final String MODIFY_TYPE = "modify_type";
 
     public static final int NICKNAME_TYPE = 0x01;
     public static final int CAREER_TYPE = 0x02;
 
-    TitleBar mTitleBar;
+    com.sumian.common.widget.TitleBar mTitleBar;
     FrameLayout mAdapterPop;
     TextView mTvPopError;
     EditText mEtMobile;
@@ -69,11 +69,11 @@ public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.O
     protected void initWidget() {
         super.initWidget();
         mTitleBar = findViewById(R.id.title_bar);
-        mAdapterPop= findViewById(R.id.lay_pop);
-        mTvPopError= findViewById(R.id.tv_pop_error);
-        mEtMobile= findViewById(R.id.et_nickname);
-        mTvModifyLabel= findViewById(R.id.tv_modify_label);
-        mTvWarnLabel= findViewById(R.id.tv_warn_label);
+        mAdapterPop = findViewById(R.id.lay_pop);
+        mTvPopError = findViewById(R.id.tv_pop_error);
+        mEtMobile = findViewById(R.id.et_nickname);
+        mTvModifyLabel = findViewById(R.id.tv_modify_label);
+        mTvWarnLabel = findViewById(R.id.tv_warn_label);
 
         if (mType == NICKNAME_TYPE) {
             this.mEtMobile.setHint(R.string.new_nickname_hint);
@@ -87,7 +87,7 @@ public class ModifyNicknameActivity extends HwBaseActivity implements TitleBar.O
             this.mTvWarnLabel.setText(R.string.career_warn_label);
             this.mEtMobile.setMaxEms(12);
         }
-        this.mTitleBar.showMoreIcon(R.mipmap.ic_nav_ok).addOnMoreListener(this).setOnBackClickListener(this);
+        this.mTitleBar.showMoreIcon(R.mipmap.ic_nav_ok).setOnMenuClickListener(this::onMore).setOnBackClickListener(v -> onBackPressed());
     }
 
     @Override
