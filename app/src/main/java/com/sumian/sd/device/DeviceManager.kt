@@ -54,6 +54,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private val mMonitorLiveData = MutableLiveData<BlueDevice>()
     private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
     private val mMonitorEventListeners = HashSet<MonitorEventListener>()
+    private var mIsTurningOnPa = false
 
     init {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
@@ -390,7 +391,12 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             mIsMonitoring = isMonitoring
             val sleepyPaModeState = Integer.parseInt(allState.substring(2, 4), 16)
             mMonitorLiveData.value?.isMonitoring = isMonitoring
-            mMonitorLiveData.value?.speedSleeper?.isPa = sleepyPaModeState > 0
+            val isPa = sleepyPaModeState > 0
+            mMonitorLiveData.value?.speedSleeper?.isPa = isPa
+            if (mIsTurningOnPa && isPa) {
+                onTurnOnPaModeSuccess()
+                mIsTurningOnPa = false
+            }
             LogManager.appendMonitorLog("0x61 收到监测仪的监测模式变化 监测模式=$monitorSnoopingModeState  cmd=$cmd")
             LogManager.appendSpeedSleeperLog("0x61 收到速眠仪的pa 模式变化  pa 模式=$sleepyPaModeState  cmd=$cmd")
             notifyMonitorChange()
@@ -814,6 +820,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onTurnOnPaModeStart() {
+        mIsTurningOnPa = true
         for (listener in mMonitorEventListeners) {
             listener.onTurnOnPaModeStart()
         }
