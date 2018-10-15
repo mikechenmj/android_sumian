@@ -35,14 +35,14 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     companion object {
 
         private const val MIN_YEAR = 1920
-        private const val MIN_HEIGHT = 80
-        private const val MAX_HEIGHT = 250
+        private const val MIN_HEIGHT = 30
+        private const val MAX_HEIGHT = 241
         private const val MIN_WEIGHT = 20
-        private const val MAX_WEIGHT = 200
+        private const val MAX_WEIGHT = 201
 
         private const val DEFAULT_YEAR = 1980
         private const val DEFAULT_WEIGHT = 50
-        private const val DEFAULT_HEIGHT = 170
+        private const val DEFAULT_HEIGHT = 165
 
         @JvmStatic
         fun init(view: ModifyUserInfoContract.View) {
@@ -163,7 +163,9 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
     override fun transformModify(modifyKey: String, pickerOne: NumberPickerView, pickerTwo: NumberPickerView, pickerThree: NumberPickerView): String {
         return when (modifyKey) {
-            ImproveUserProfileContract.IMPROVE_WEIGHT_KEY,
+            ImproveUserProfileContract.IMPROVE_WEIGHT_KEY -> {
+                pickerOne.contentByCurrValue + "." + pickerTwo.contentByCurrValue
+            }
             ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
                 pickerOne.contentByCurrValue
             }
