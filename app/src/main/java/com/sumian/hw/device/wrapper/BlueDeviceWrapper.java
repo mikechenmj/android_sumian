@@ -12,7 +12,7 @@ import com.sumian.sd.app.AppManager;
 
 public class BlueDeviceWrapper implements BlueScanCallback, Handler.Callback {
 
-    private static final long SCAN_TIME_OUT_MILLISECOND = 30 * 1000L;
+    private static final long SCAN_TIME_OUT_MILLISECOND = 5 * 1000L;
 
     private static final int MSG_WHAT_STOP_SCAN = 0x01;
 

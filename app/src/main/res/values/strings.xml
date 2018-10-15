@@ -1057,5 +1057,7 @@
     <string name="clear_success">清除成功</string>
     <string name="rescan">重新扫描</string>
     <string name="open_bluetooth">开启蓝牙</string>
+    <string name="connect_time_out">连接超时</string>
+    <string name="connect_time_out_message">可关闭蓝牙5s后再次尝试连接</string>
     <!-- Hw end-->
 </resources>

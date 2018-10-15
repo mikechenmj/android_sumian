@@ -13,7 +13,6 @@ import com.sumian.blue.callback.BluePeripheralDataCallback
 import com.sumian.blue.constant.BlueConstant
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
-import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.hw.command.BlueCmd
@@ -107,8 +106,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     fun scanAndConnect(monitor: BlueDevice) {
         monitor.status = BlueDevice.STATUS_CONNECTING
         setMonitorToLiveData(monitor)
+        onConnectStart()
         mBlueDeviceWrapper.scan2Connect(monitor, { connect(monitor) }, {
-            ToastHelper.show("蓝牙连接失败多次,可尝试关闭手机蓝牙待5s后重试...")
+            onConnectFailed()
         })
     }
 
@@ -142,7 +142,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 monitor.speedSleeper = sleeper
             }
             setMonitorToLiveData(monitor)
-            onConnectStart()
             LogManager.appendMonitorLog("主动连接监测仪  connect to   name=" + remoteDevice.name + "  address=" + remoteDevice.address)
         } else {
             LogManager.appendMonitorLog("主动连接监测仪  connect to  is invalid   because  init bluetoothDevice is null")
@@ -712,8 +711,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onConnectFailed(peripheral: BluePeripheral, connectState: Int) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
-        notifyMonitorChange()
+        onConnectFailed()
         AppManager.getBlueManager().refresh()
         LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.name)
     }
@@ -834,12 +832,18 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onConnectStart() {
+        if (mMonitorLiveData.value?.status != BlueDevice.STATUS_CONNECTING) {
+            mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTING
+            notifyMonitorChange()
+        }
         for (listener in mMonitorEventListeners) {
             listener.onConnectStart()
         }
     }
 
     override fun onConnectFailed() {
+        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+        notifyMonitorChange()
         for (listener in mMonitorEventListeners) {
             listener.onConnectFailed()
         }

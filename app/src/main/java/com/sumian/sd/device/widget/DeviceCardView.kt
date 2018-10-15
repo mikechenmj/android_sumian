@@ -87,6 +87,12 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onConnectFailed() {
             dismissSumianImageTextDialog()
+            SumianAlertDialog(context)
+                    .hideTopIcon(true)
+                    .setTitle(R.string.connect_time_out)
+                    .setMessage(R.string.connect_time_out_message)
+                    .setRightBtn(R.string.confirm, null)
+                    .show()
         }
 
         override fun onConnectSuccess() {
@@ -231,11 +237,11 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     var mHost: Host? = null
 
-    fun onStart(){
+    fun onStart() {
         DeviceManager.addMonitorEventListener(mMonitorEventListener)
     }
 
-    fun onStop(){
+    fun onStop() {
         DeviceManager.removeMonitorEventListener(mMonitorEventListener)
     }
 
