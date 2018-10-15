@@ -773,6 +773,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         SPUtils.getInstance().put(SP_KEY_MONITOR_CACHE, JsonUtil.toJson(mMonitorLiveData.value))
     }
 
+    fun cacheBlueDevice(blueDevice: BlueDevice) {
+        SPUtils.getInstance().put(SP_KEY_MONITOR_CACHE, JsonUtil.toJson(blueDevice))
+    }
+
     private fun clearCacheDevice() {
         SPUtils.getInstance().put(SP_KEY_MONITOR_CACHE, "")
         LogManager.appendUserOperationLog("设备被成功解绑,并清除掉缓存成功")

@@ -18,6 +18,7 @@ import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.device.DeviceManager
 import kotlinx.android.synthetic.main.fragment_scan_device.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -224,6 +225,7 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun onDeviceSelected(device: BlueDevice) {
+        DeviceManager.cacheBlueDevice(device)
         mOnDeviceSelectedListener?.onDeviceSelected(device)
     }
 
