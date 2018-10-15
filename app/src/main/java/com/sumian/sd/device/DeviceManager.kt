@@ -12,7 +12,6 @@ import com.sumian.blue.constant.BlueConstant
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
 import com.sumian.common.helper.ToastHelper
-import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.hw.command.BlueCmd
@@ -90,7 +89,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mMonitorEventListeners.remove(listener)
     }
 
-    fun getCachedMonitor(): BlueDevice? {
+    private fun getCachedMonitor(): BlueDevice? {
         return JsonUtil.fromJson(SPUtils.getInstance().getString(SP_KEY_MONITOR_CACHE), BlueDevice::class.java)
     }
 
@@ -505,8 +504,19 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mMonitorLiveData.value?.speedSleeper?.mac = macSb.toString().toUpperCase(Locale.getDefault())
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x56 获取到监测仪绑定的速眠仪的 mac address=" + macSb.toString().toUpperCase(Locale.getDefault()) + "  cmd=" + cmd)
+        onLastDeviceDataReceived()
+    }
+
+    private fun onLastDeviceDataReceived() {
         saveCacheFile()
         uploadDeviceSns()
+        turnOffMonitoringModeIfNeeded()
+    }
+
+    private fun turnOffMonitoringModeIfNeeded() {
+        if (mMonitorLiveData.value?.isMonitoring == true) {
+            turnOnMonitoringMode(BlueDevice.MONITORING_CMD_CLOSE)
+        }
     }
 
     private fun uploadDeviceSns() {
