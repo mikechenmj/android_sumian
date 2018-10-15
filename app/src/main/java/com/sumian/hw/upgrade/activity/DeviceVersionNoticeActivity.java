@@ -35,14 +35,13 @@ import java.util.Locale;
 public class DeviceVersionNoticeActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
         TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
 
-    TitleBar mTitleBar;
-    BlueRefreshView mRefresh;
-    TextView mTvAppVersionName;
-    TextView mTvMonitorVersionName;
-    TextView mTvSleepyVersionName;
-    VersionInfoView mAppVersionInfo;
-    VersionInfoView mMonitorVersionInfo;
-    VersionInfoView mSleepVersionInfo;
+    private BlueRefreshView mRefresh;
+    private TextView mTvAppVersionName;
+    private TextView mTvMonitorVersionName;
+    private TextView mTvSleepyVersionName;
+    private VersionInfoView mAppVersionInfo;
+    private VersionInfoView mMonitorVersionInfo;
+    private VersionInfoView mSleepVersionInfo;
 
     private VersionContract.Presenter mPresenter;
     private Handler mHandler = new Handler();
@@ -59,8 +58,11 @@ public class DeviceVersionNoticeActivity extends BaseActivity implements View.On
     @Override
     protected void initWidget() {
         super.initWidget();
-        mTitleBar = findViewById(R.id.title_bar);
+        TitleBar mTitleBar = findViewById(R.id.title_bar);
+        mTitleBar.setOnBackClickListener(this);
         mRefresh = findViewById(R.id.refresh);
+        mRefresh.setOnRefreshListener(this);
+
         mTvAppVersionName = findViewById(R.id.tv_app_version_name);
         mTvMonitorVersionName = findViewById(R.id.tv_monitor_version_name);
         mTvSleepyVersionName = findViewById(R.id.tv_sleepy_version_name);
@@ -72,8 +74,6 @@ public class DeviceVersionNoticeActivity extends BaseActivity implements View.On
         findViewById(R.id.monitor_version_info).setOnClickListener(this);
         findViewById(R.id.sleepy_version_info).setOnClickListener(this);
 
-        mTitleBar.setOnBackClickListener(this);
-        mRefresh.setOnRefreshListener(this);
         AppManager.getVersionModel().registerShowDotCallback(this);
         VersionPresenter.init(this);
     }
