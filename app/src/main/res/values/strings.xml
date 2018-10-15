@@ -1056,5 +1056,6 @@
     <string name="sleeper_bettery_low_message">速眠仪量不足50%，无法进行 dfu 升级</string>
     <string name="clear_cache_hint">确定清除本地缓存？</string>
     <string name="clear_success">清除成功</string>
+    <string name="rescan">重新扫描</string>
     <!-- Hw end-->
 </resources>

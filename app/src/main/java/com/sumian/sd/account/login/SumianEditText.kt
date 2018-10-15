@@ -35,7 +35,7 @@ class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayou
         mValidateRegex = a.getString(R.styleable.SumianEditText_set_validation_regex)
         a.recycle()
         if (showBg) {
-            setBackgroundResource(R.drawable.hw_et_bg_sel)
+            setBackgroundResource(R.drawable.et_bg_sel)
         }
         et.setText(text)
         et.hint = hint

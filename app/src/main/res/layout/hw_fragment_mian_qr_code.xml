@@ -28,17 +28,18 @@
         app:qrcv_isTipTextBelowRect="true"
         app:qrcv_maskColor="#33ffffff"
         app:qrcv_qrCodeTipText="扫描速眠仪上的二维码"
-        app:qrcv_rectWidth="200dp"
+        app:qrcv_rectWidth="250dp"
         app:qrcv_scanLineMargin="2dp"
         app:qrcv_tipTextColor="@android:color/white"
-        app:qrcv_tipTextSize="14sp" />
+        app:qrcv_tipTextSize="14sp"
+        app:qrcv_topOffset="210dp" />
 
     <LinearLayout
         android:id="@+id/lay_scan_action_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/space_68"
+        android:layout_marginBottom="@dimen/space_48"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone"
@@ -46,25 +47,23 @@
 
         <Button
             android:id="@+id/bt_re_scan"
-            android:layout_width="@dimen/space_120"
-            android:layout_height="@dimen/space_48"
-            android:layout_marginLeft="@dimen/space_5"
-            android:layout_marginRight="@dimen/space_5"
-            android:background="@drawable/bt_circle_light_bg"
-            android:text="重新扫描"
-            android:textColor="#ff7ea5f4"
-            tools:ignore="ButtonStyle,HardcodedText" />
+            android:layout_width="150dp"
+            android:layout_height="@dimen/button_height"
+            android:background="@drawable/bt_sn_rescan"
+            android:text="@string/rescan"
+            android:textColor="@color/white" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="0dp" />
 
         <Button
             android:id="@+id/bt_action"
-            android:layout_width="@dimen/space_120"
-            android:layout_height="@dimen/space_48"
-            android:layout_marginLeft="@dimen/space_5"
-            android:layout_marginRight="@dimen/space_5"
-            android:background="@drawable/bt_circle_bg"
-            android:text="确定"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
+            style="@style/SumianButton"
+            android:layout_width="150dp"
+            android:layout_height="@dimen/button_height"
+            android:text="@string/confirm"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

@@ -349,7 +349,7 @@
     <style name="HwEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/space_48</item>
-        <item name="android:background">@drawable/hw_et_bg_sel</item>
+        <item name="android:background">@drawable/et_bg_sel</item>
         <item name="android:textColor">@color/hw_tv_normal</item>
         <item name="android:textColorHint">@color/hw_tv_normal</item>
         <item name="android:textSize">@dimen/font_16</item>

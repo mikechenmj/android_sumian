@@ -34,7 +34,7 @@
         android:id="@+id/ll_password_et_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_48"
-        android:background="@drawable/hw_et_bg_sel"
+        android:background="@drawable/et_bg_sel"
         android:orientation="horizontal"
         android:visibility="gone"
         tools:visibility="visible">
