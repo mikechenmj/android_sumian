@@ -49,7 +49,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
             tv_progress_0.text = resources.getString(R.string.sync_progress_0, packageNumber)
-            tv_progress_1.text = resources.getString(R.string.sync_progress_1, progress)
+            tv_progress_1.text = resources.getString(R.string.sync_progress_1, progress * 100 / total)
         }
 
         override fun onSyncSuccess() {
@@ -87,6 +87,12 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onConnectFailed() {
             dismissSumianImageTextDialog()
+            SumianAlertDialog(context)
+                    .hideTopIcon(true)
+                    .setTitle(R.string.connect_time_out)
+                    .setMessage(R.string.connect_time_out_message)
+                    .setRightBtn(R.string.confirm, null)
+                    .show()
         }
 
         override fun onConnectSuccess() {
@@ -231,11 +237,11 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     var mHost: Host? = null
 
-    fun onStart(){
+    fun onStart() {
         DeviceManager.addMonitorEventListener(mMonitorEventListener)
     }
 
-    fun onStop(){
+    fun onStop() {
         DeviceManager.removeMonitorEventListener(mMonitorEventListener)
     }
 

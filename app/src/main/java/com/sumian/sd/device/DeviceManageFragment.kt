@@ -180,14 +180,19 @@ class DeviceManageFragment : BaseFragment() {
     }
 
     private fun updateDeviceIv(monitor: BlueDevice) {
-        val deviceIvRes = if (monitor.speedSleeper?.status == BlueDevice.STATUS_CONNECTED)
-            R.drawable.ic_equip_icon_sleeper
-        else
-            R.drawable.ic_equip_icon_monitor_synchronization
+        val deviceIvRes =
+                if (monitor.isSyncing) {
+                    R.drawable.ic_equip_icon_monitor_synchronization
+                } else {
+                    if (monitor.isSleeperConnected)
+                        R.drawable.ic_equip_icon_sleeper
+                    else
+                        R.drawable.ic_equip_icon_monitor
+                }
         iv_device.setImageResource(deviceIvRes)
         iv_device_bg.setImageResource(if (monitor.isSyncing) R.drawable.ic_equip_bg_synchronization else R.drawable.ic_equip_bg)
         iv_device.alpha = if (monitor.status == BlueDevice.STATUS_UNCONNECTED) .5f else 1f
-        bt_turn_on_pa.visibility = if (!monitor.isSleeperPa) View.VISIBLE else View.GONE
+        bt_turn_on_pa.visibility = if (monitor.isConnected && monitor.isSleeperConnected && !monitor.isSleeperPa) View.VISIBLE else View.GONE
     }
 
     private fun showAddDeviceOrOpenBluetoothUI(showAddDevice: Boolean) {

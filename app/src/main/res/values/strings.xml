@@ -1039,8 +1039,7 @@
     <string name="monitor_is_connecting">监测仪连接中…</string>
     <string name="monitor_is_connected_please_check_sleeper">监测仪已连接\n请检查速眠仪是否开启</string>
     <string name="sleeper_is_idle">速眠仪已连接，待机中</string>
-    <string name="open_sleep">开启睡眠</string>
-    <string name="sync_progress_package_progress">正在同步睡眠数据/n第 %d 段 (%d%%)</string>
+    <string name="sync_progress_package_progress">正在同步睡眠数据\n第 %d 段 (%d%%)</string>
     <string name="sure_to_unbind">确定解除绑定吗？</string>
     <string name="after_unbind_monitor_will_disconnect_from_phone">解绑后将断开监测仪与手机的连接</string>
     <string name="ji">及</string>
@@ -1058,5 +1057,7 @@
     <string name="clear_success">清除成功</string>
     <string name="rescan">重新扫描</string>
     <string name="open_bluetooth">开启蓝牙</string>
+    <string name="connect_time_out">连接超时</string>
+    <string name="connect_time_out_message">可关闭蓝牙5s后再次尝试连接</string>
     <!-- Hw end-->
 </resources>
