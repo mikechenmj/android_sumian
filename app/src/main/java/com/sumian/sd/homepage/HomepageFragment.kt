@@ -7,7 +7,6 @@ import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
@@ -18,7 +17,6 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.scan.ScanDeviceActivity
-import com.sumian.sd.device.scan.ScanDeviceFragment
 import com.sumian.sd.device.widget.DeviceCardView
 import com.sumian.sd.event.CBTIProgressChangeEvent
 import com.sumian.sd.event.CBTIServiceBoughtEvent
@@ -188,7 +186,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_SCAN_DEVICE) {
             if (resultCode == Activity.RESULT_OK) {
-                val deviceJson = data?.getStringExtra(ScanDeviceActivity.DATA) ?: null
+                val deviceJson = data?.getStringExtra(ScanDeviceActivity.DATA)
                 val blueDevice = JsonUtil.fromJson(deviceJson, BlueDevice::class.java) ?: return
                 DeviceManager.scanAndConnect(blueDevice)
             }

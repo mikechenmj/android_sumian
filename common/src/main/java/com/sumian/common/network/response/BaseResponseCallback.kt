@@ -3,6 +3,7 @@ package com.sumian.common.network.response
 import android.util.Log
 import com.sumian.common.network.error.ErrorCode
 import com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR
+import com.sumian.common.network.error.ErrorCode.FORBIDDEN
 import com.sumian.common.network.error.ErrorInfo400
 import com.sumian.common.network.error.ErrorInfo499
 import com.sumian.common.utils.JsonUtil
@@ -78,12 +79,19 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
 
     private fun getErrorResponseFromErrorBody(code: Int, errorBody: ResponseBody): ErrorResponse? {
         val errorJson = errorBody.string()
-        return if (code == BUSINESS_ERROR) {
-            val errorInfo = JsonUtil.fromJson(errorJson, ErrorInfo499::class.java)
-            ErrorResponse.createFromErrorInfo(errorInfo)
-        } else {
-            val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorInfo400::class.java)
-            ErrorResponse.createFromErrorInfo(errorInfo400)
+        return when (code) {
+            BUSINESS_ERROR -> {
+                val errorInfo = JsonUtil.fromJson(errorJson, ErrorInfo499::class.java)
+                ErrorResponse.createFromErrorInfo(errorInfo)
+            }
+            FORBIDDEN -> {
+                val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorInfo400::class.java)
+                ErrorResponse(code = code, message = errorInfo400!!.message)
+            }
+            else -> {
+                val errorInfo400 = JsonUtil.fromJson(errorJson, ErrorInfo400::class.java)
+                ErrorResponse.createFromErrorInfo(errorInfo400)
+            }
         }
     }
 

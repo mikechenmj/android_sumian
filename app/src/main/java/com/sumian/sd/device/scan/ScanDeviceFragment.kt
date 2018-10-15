@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_ANONYMOUS_PARAMETER")
+
 package com.sumian.sd.device.scan
 
 import android.Manifest
@@ -34,6 +36,8 @@ class ScanDeviceFragment : BaseFragment() {
     private val mBlueManager = AppManager.getBlueManager()
     private val mScanResults = ArrayList<BlueDevice>()
 
+    private var mIsScanMore = false
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_scan_device
     }
@@ -41,6 +45,8 @@ class ScanDeviceFragment : BaseFragment() {
     companion object {
         private const val REQUEST_CODE_ENABLE_BT = 1
         private const val SCAN_DURATION = 3000L
+        private const val SCAN_MORE_DURATION = 17 * 1000L
+
     }
 
     private val mDeviceAdapter = DeviceAdapter().apply { setOnItemClickListener { v, position, blueDevice -> onDeviceSelected(blueDevice) } }
@@ -49,7 +55,7 @@ class ScanDeviceFragment : BaseFragment() {
         super.initWidget()
         iv_bt.setOnClickListener { startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BT) }
         vg_bt_not_enable.visibility = if (mBlueManager.isEnable) View.GONE else View.VISIBLE
-        tv_scan_more.setOnClickListener { startScan() }
+        tv_scan_more.setOnClickListener { startScanMore() }
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mDeviceAdapter
         bt_re_scan.setOnClickListener { startScan() }
@@ -80,28 +86,41 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private val mScanCallback = object : BlueScanCallback {
+
         override fun onBeginScanCallback() {
             mScanResults.clear()
             setTitles(R.string.scanning_device, R.string.scan_label_h2)
+            if (mIsScanMore) {
+                setTitles(R.string.bind_device, R.string.select_bind_device_label)
+                recycler_view.visibility = View.VISIBLE
+                vg_scan_more.visibility = View.VISIBLE
+                tv_scan_more.text = resources.getString(R.string.re_scan_u)
+                mDeviceAdapter.clear()
+            } else {
+                tv_scan_more.text = resources.getString(R.string.search_more_u)
+            }
         }
 
         override fun onLeScanCallback(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray?) {
-            if (!device.getName().startsWith("M-SUMIAN") || rssi <= -80) {
+            if (!device.name.startsWith("M-SUMIAN") || rssi <= -80) {
                 return
             }
             val blueDevice = BlueDevice()
-            blueDevice.name = device.getName()
-            blueDevice.mac = device.getAddress()
+            blueDevice.name = device.name
+            blueDevice.mac = device.address
             blueDevice.rssi = rssi
             val isDeviceVersionValid = DeviceValidateUtil.isDeviceValid(scanRecord, blueDevice.name, blueDevice.mac)
             LogManager.appendBluetoothLog(
                     String.format(Locale.getDefault(),
                             "搜索到 %s %s, isVersionValid: %b",
-                            device.getName(),
-                            device.getAddress(),
+                            device.name,
+                            device.address,
                             isDeviceVersionValid))
             if (isDeviceVersionValid && !mScanResults.contains(blueDevice)) {
                 mScanResults.add(blueDevice)
+                if (mIsScanMore) {
+                    mDeviceAdapter.setData(mScanResults)
+                }
             }
         }
 
@@ -114,12 +133,15 @@ class ScanDeviceFragment : BaseFragment() {
                     LogManager.appendBluetoothLog("该次没有搜索到任何设备")
                 }
                 1 -> {
-                    setTitles(mScanResults[0].name, getString(R.string.is_sure_device_2_bind))
-                    vg_scan.visibility = View.VISIBLE
-                    iv_device.visibility = View.VISIBLE
-                    bt_confirm.visibility = View.VISIBLE
-                    vg_scan_more.visibility = View.VISIBLE
-                    LogManager.appendBluetoothLog("该次搜索到一台设备 " + mScanResults.get(0).name + " " + mScanResults.get(0).mac)
+                    if (!mIsScanMore) {
+                        setTitles(mScanResults[0].name, getString(R.string.is_sure_device_2_bind))
+                        vg_scan.visibility = View.VISIBLE
+                        iv_device.visibility = View.VISIBLE
+                        bt_confirm.visibility = View.VISIBLE
+                        vg_scan_more.visibility = View.VISIBLE
+                        tv_scan_more.text = resources.getString(R.string.re_scan_u)
+                        LogManager.appendBluetoothLog("该次搜索到一台设备 " + mScanResults[0].name + " " + mScanResults[0].mac)
+                    }
                 }
                 else -> {
                     setTitles(R.string.bind_device, R.string.select_bind_device_label)
@@ -178,7 +200,23 @@ class ScanDeviceFragment : BaseFragment() {
         }
     }
 
+    private fun startScanMore() {
+        mIsScanMore = true
+        vg_scan.visibility = View.GONE
+        vg_bt_not_enable.visibility = View.GONE
+        vg_no_device.visibility = View.GONE
+        mScanResults.clear()
+        mDeviceAdapter.clear()
+        recycler_view.visibility = View.VISIBLE
+        vg_scan_more.visibility = View.VISIBLE
+        iv_device.visibility = View.GONE
+        bt_confirm.visibility = View.GONE
+        //ripple_view.startAnimation()
+        mBlueManager.startScanAndAutoStopAfter(SCAN_MORE_DURATION)
+    }
+
     private fun startScan() {
+        mIsScanMore = false
         hideVgs()
         vg_scan.visibility = View.VISIBLE
         ripple_view.startAnimation()
@@ -187,6 +225,12 @@ class ScanDeviceFragment : BaseFragment() {
 
     private fun onDeviceSelected(device: BlueDevice) {
         mOnDeviceSelectedListener?.onDeviceSelected(device)
+    }
+
+    fun rollback() {
+        if (mBlueManager.isEnable) {
+            checkPermissionStartScan()
+        }
     }
 
     interface OnDeviceSelectedListener {
