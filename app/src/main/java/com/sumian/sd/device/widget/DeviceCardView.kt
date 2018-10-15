@@ -4,12 +4,12 @@ import android.animation.ObjectAnimator
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
 import android.content.Context
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.blankj.utilcode.util.LogUtils
-import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.sd.R
 import com.sumian.sd.app.App
@@ -38,6 +38,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     private var mCardStatus = 0
     private var mRotateAnimator: ObjectAnimator? = null
+    private val mHandler = Handler()
 
     private val mMonitorEventListener = object : MonitorEventListener {
         override fun onSyncStart() {
@@ -51,24 +52,24 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onSyncSuccess() {
             mRotateAnimator?.cancel()
-            dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_SUCCESS, resources.getString(R.string.already_latest_data), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
+            showMessageDialog(true, resources.getString(R.string.already_latest_data))
         }
 
         override fun onSyncFailed() {
             mRotateAnimator?.cancel()
-            dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_FAIL, resources.getString(R.string.sync_fail), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
+            showMessageDialog(false, resources.getString(R.string.sync_fail))
         }
 
         override fun onTurnOnPaModeStart() {
-            dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_LOADING)
+            showLoadingDialog(true)
         }
 
         override fun onTurnOnPaModeSuccess() {
-            dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_SUCCESS, resources.getString(R.string.sleeper_is_working), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
+            showMessageDialog(true, resources.getString(R.string.sleeper_is_working))
         }
 
         override fun onTurnOnPaModeFailed(message: String) {
-            dismissSumianImageTextDialog()
+            showLoadingDialog(false)
             SumianAlertDialog(context)
                     .hideTopIcon(true)
                     .setTitle(R.string.turn_on_pa_mode_failed_title)
@@ -79,11 +80,11 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onConnectStart() {
             LogUtils.d("onConnectStart")
-            dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_LOADING)
+            showLoadingDialog(true)
         }
 
         override fun onConnectFailed() {
-            dismissSumianImageTextDialog()
+            showLoadingDialog(false)
             SumianAlertDialog(context)
                     .hideTopIcon(true)
                     .setTitle(R.string.connect_time_out)
@@ -94,7 +95,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onConnectSuccess() {
             LogUtils.d()
-            dismissSumianImageTextDialog()
+            showLoadingDialog(false)
         }
     }
 
@@ -111,7 +112,6 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 else -> Unit
             }
         }
-
     }
 
     fun registerLifecycleOwner(lifecycleOwner: LifecycleOwner) {
@@ -130,7 +130,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-
+        mHandler.removeCallbacks(null)
     }
 
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
@@ -223,22 +223,6 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         ll_device.visibility = if (!isNoDevice) VISIBLE else View.GONE
     }
 
-    private var mSumianImageTextDialog: SumianImageTextDialog? = null
-
-
-    private fun dismissOldCreateNewSumianImageTextDialog(): SumianImageTextDialog {
-        dismissSumianImageTextDialog()
-        mSumianImageTextDialog = SumianImageTextDialog(context)
-        return mSumianImageTextDialog!!
-    }
-
-    private fun dismissSumianImageTextDialog() {
-        if (mSumianImageTextDialog != null && mSumianImageTextDialog!!.isShowing) {
-            mSumianImageTextDialog?.dismiss()
-            mSumianImageTextDialog = null
-        }
-    }
-
     interface Host {
         fun scanForDevice()
         fun enableBluetooth()
@@ -254,4 +238,19 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         DeviceManager.removeMonitorEventListener(mMonitorEventListener)
     }
 
+    private fun showLoadingDialog(show: Boolean) {
+        vg_dialog.visibility = if (show) View.VISIBLE else View.GONE
+        iv_dialog.setImageResource(R.drawable.dialog_loading_animation)
+        tv_dialog.visibility = View.GONE
+        mHandler.removeCallbacks(null)
+    }
+
+    private fun showMessageDialog(success: Boolean, message: String) {
+        vg_dialog.visibility = View.VISIBLE
+        iv_dialog.setImageResource(if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail)
+        tv_dialog.visibility = View.VISIBLE
+        tv_dialog.text = message
+        mHandler.removeCallbacks(null)
+        mHandler.postDelayed({ vg_dialog.visibility = View.GONE }, 2000)
+    }
 }
