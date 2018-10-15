@@ -12,7 +12,6 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.h5.bean.H5ShowToastData
 import com.sumian.common.h5.widget.SWebView
-import com.sumian.common.h5.widget.SWebViewLayout
 import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.ScreenUtil
 import com.sumian.common.widget.TitleBar
@@ -27,7 +26,7 @@ import kotlinx.android.synthetic.main.common_activity_main_base_webview.*
  * </pre>
  */
 @Suppress("ObjectLiteralToLambda", "MemberVisibilityCanBePrivate")
-abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener {
+abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener {
 
     protected var mSoftKeyBoardListener: SoftKeyBoardListener? = null
     protected var mSumianImageTextDialog: SumianImageTextDialog? = null
@@ -182,9 +181,6 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
         return WebViewManger.getInstance().getToken()
     }
 
-    override fun onReceiveTitle(webView: WebView, title: String) {
-        title_bar?.setTitle(title)
-    }
 
     protected open fun monitorKeyboard() {
         mSoftKeyBoardListener = SoftKeyBoardListener.registerListener(this, object : SoftKeyBoardListener.OnSoftKeyBoardChangeListener {
@@ -215,4 +211,29 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebViewLayout.WebListener 
     protected fun getWebView(): SWebView {
         return sm_webview_container.sWebView
     }
+
+    // ----------- OnWebViewListener start -----------
+    protected fun canWebGoBack(): Boolean {
+        return getWebView().canGoBack()
+    }
+
+    override fun onPageStarted(view: WebView?) {
+    }
+
+    override fun onProgressChange(view: WebView?, newProgress: Int) {
+    }
+
+    override fun onPageFinish(view: WebView?) {
+    }
+
+    override fun onRequestErrorCallback(view: WebView?, responseCode: Int) {
+    }
+
+    override fun onRequestNetworkErrorCallback(view: WebView?) {
+    }
+
+    override fun onReceiveTitle(webView: WebView, title: String) {
+        title_bar?.setTitle(title)
+    }
+    // ----------- OnWebViewListener end -----------
 }

@@ -154,7 +154,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public void setTitle(String text) {
         mTvTitle.setText(text);
-        mTvTitle.setVisibility(VISIBLE);
     }
 
     @SuppressWarnings("deprecation")
