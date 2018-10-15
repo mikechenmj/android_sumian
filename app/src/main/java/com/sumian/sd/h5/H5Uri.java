@@ -21,7 +21,7 @@ public interface H5Uri {
     String BIND_DOCTOR = "doctor/{id}";
     String ABOUT_US = "about-us";
     String ADVISORY_GUIDE = "advisory-guide";
-    String USER_AGREEMENT_URL = "user-agreement";
+    String USER_AGREEMENT_URL = "user-agreement?theme=white";
     String USER_POLICY_URL = "privacy-policy";
     String MY_TARGET = "my-target?from=";// from=mine 表示从我的目标进入，from=newUser 表示新用户登录时进入
     String MY_TARGET_FROM_MINE = MY_TARGET + "mine";
