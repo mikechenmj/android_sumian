@@ -189,7 +189,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
                 pickerOne.contentByCurrValue
             }
             ImproveUserProfileContract.IMPROVE_AREA_KEY -> {
-                "${pickerOne.contentByCurrValue}/${pickerTwo.contentByCurrValue}/${pickerThree.contentByCurrValue}"
+                "${pickerOne.contentByCurrValue}\\${pickerTwo.contentByCurrValue}\\${pickerThree.contentByCurrValue}"
             }
             else -> {
                 ""
