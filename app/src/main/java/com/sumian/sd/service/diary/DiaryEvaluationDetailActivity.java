@@ -88,7 +88,7 @@ public class DiaryEvaluationDetailActivity extends SimpleWebActivity {
             @Override
             public void handler(String data) {
                 LogUtils.d(data);
-                MainActivity.Companion.launch(MainActivity.TAB_1, null);
+                MainActivity.Companion.launch(MainActivity.TAB_2, null);
                 finish();
             }
         });

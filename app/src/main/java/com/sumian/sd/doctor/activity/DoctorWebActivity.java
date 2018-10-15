@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.google.gson.reflect.TypeToken;
-import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.bean.SBridgeResult;
+import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseWebViewActivity;
@@ -102,7 +102,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         if (mIsFromRecord) {
             DoctorServiceWebActivity.show(this, mDoctorService, true);
         } else {
-            MainActivity.Companion.launch(MainActivity.TAB_1, null);
+            MainActivity.Companion.launch(MainActivity.TAB_2, null);
         }
     }
 

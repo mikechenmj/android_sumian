@@ -119,8 +119,7 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
     }
 
     private fun showFragmentAccordingToData() {
-        val intentPosition = intent.getIntExtra(KEY_TAB_INDEX, TAB_0)
-        changeSelectTab(intentPosition)
+        nav_tab.selectItem(mLaunchTab, true)
     }
 
     override fun onBackPressed() {
