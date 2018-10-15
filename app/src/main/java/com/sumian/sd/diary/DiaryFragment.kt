@@ -1,11 +1,10 @@
 package com.sumian.sd.diary
 
+import android.arch.lifecycle.Observer
 import android.support.v4.app.Fragment
 import android.view.View
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
-import com.sumian.hw.report.ReportFragment
-import com.sumian.hw.report.fragment.DailyReportFragment
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.diary.monitorrecord.DailyReportFragmentV2
@@ -33,9 +32,11 @@ class DiaryFragment : BaseFragment() {
 
     override fun initWidget() {
         super.initWidget()
-        val hasDevice = AppManager.getAccountViewModel().userInfo.hasDevice()
-        vg_tabs.visibility = if (hasDevice) View.VISIBLE else View.GONE
-        tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
+        AppManager.getAccountViewModel().liveDataToken.observe(this, Observer {
+            val hasDevice = it?.user?.hasDevice() == true
+            vg_tabs.visibility = if (hasDevice) View.VISIBLE else View.GONE
+            tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
+        })
         tab_sleep_diary.setOnClickListener { selectTab(0) }
         tab_monitor_data.setOnClickListener { selectTab(1) }
         selectTab(0)
