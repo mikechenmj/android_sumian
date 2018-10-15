@@ -37,7 +37,7 @@ public class SleepRecordAnswer {
     private int other_sleep_times;
     private int other_sleep_total_minutes;
     private String remark;
-    private List<String> sleepless_factor;
+//    private List<String> sleepless_factor;
     private List<SleepPill> sleep_pills;
 
     public String getBed_at() {
@@ -118,14 +118,6 @@ public class SleepRecordAnswer {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public List<String> getSleepless_factor() {
-        return sleepless_factor;
-    }
-
-    public void setSleepless_factor(List<String> sleepless_factor) {
-        this.sleepless_factor = sleepless_factor;
     }
 
     public List<SleepPill> getSleep_pills() {

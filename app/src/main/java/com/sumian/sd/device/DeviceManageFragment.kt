@@ -12,6 +12,7 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.sd.R
+import com.sumian.sd.device.widget.SyncAnimatorUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_device_manage.*
 
@@ -43,10 +44,7 @@ class DeviceManageFragment : BaseFragment() {
 
     private val mMonitorEventListener = object : MonitorEventListener {
         override fun onSyncStart() {
-            mRotateAnimator?.cancel()
-            mRotateAnimator = ObjectAnimator.ofFloat(iv_device_bg, "rotation", 0f, 360 * 100f)
-            mRotateAnimator?.duration = 1000 * 100
-            mRotateAnimator?.start()
+            startSyncAnimation()
         }
 
         override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
@@ -92,6 +90,12 @@ class DeviceManageFragment : BaseFragment() {
         override fun onConnectSuccess() {
             showRipple(false)
         }
+    }
+
+    private fun startSyncAnimation() {
+        mRotateAnimator?.cancel()
+        mRotateAnimator = SyncAnimatorUtil.createSyncRotateAnimator(iv_device_bg)
+        mRotateAnimator?.start()
     }
 
     private fun showRipple(show: Boolean) {
@@ -172,8 +176,8 @@ class DeviceManageFragment : BaseFragment() {
         } else {
             mCardStatus = if (monitor.isConnected) CARD_STATUS_MONITOR_CONNECTED else CARD_STATUS_MONITOR_NOT_CONNECTED
             switchNoDeviceVg(false)
-            showMonitorUI(monitor)
-            showSleeperUI(monitor.speedSleeper)
+            updateMonitorUI(monitor)
+            updateSleeperUI(monitor.speedSleeper)
             updateDeviceIv(monitor)
             updateBottomTv(monitor)
         }
@@ -192,7 +196,7 @@ class DeviceManageFragment : BaseFragment() {
         iv_device.setImageResource(deviceIvRes)
         iv_device_bg.setImageResource(if (monitor.isSyncing) R.drawable.ic_equip_bg_synchronization else R.drawable.ic_equip_bg)
         iv_device.alpha = if (monitor.status == BlueDevice.STATUS_UNCONNECTED) .5f else 1f
-        bt_turn_on_pa.visibility = if (monitor.isConnected && monitor.isSleeperConnected && !monitor.isSleeperPa) View.VISIBLE else View.GONE
+        bt_turn_on_pa.visibility = if (monitor.isConnected && !monitor.isSyncing && monitor.isSleeperConnected && !monitor.isSleeperPa) View.VISIBLE else View.GONE
     }
 
     private fun showAddDeviceOrOpenBluetoothUI(showAddDevice: Boolean) {
@@ -204,7 +208,7 @@ class DeviceManageFragment : BaseFragment() {
         iv_open_bluetooth.visibility = if (!showAddDevice) View.VISIBLE else View.GONE
     }
 
-    private fun showMonitorUI(monitor: BlueDevice) {
+    private fun updateMonitorUI(monitor: BlueDevice) {
         tv_monitor_status.text = resources.getString(when (monitor.status) {
             BlueDevice.STATUS_UNCONNECTED -> R.string.not_connected
             BlueDevice.STATUS_CONNECTING -> R.string.connecting
@@ -214,6 +218,11 @@ class DeviceManageFragment : BaseFragment() {
         monitor_battery_view.setProgress(monitor.battery)
         vg_monitor.alpha = if (monitor.status == BlueDevice.STATUS_UNCONNECTED) .5f else 1f
         vg_sleeper.visibility = if (monitor.status == BlueDevice.STATUS_CONNECTED) View.VISIBLE else View.INVISIBLE
+        if (monitor.isSyncing) {
+            if (mRotateAnimator == null || !mRotateAnimator!!.isRunning) {
+                startSyncAnimation()
+            }
+        }
     }
 
     private fun updateBottomTv(monitor: BlueDevice) {
@@ -230,7 +239,7 @@ class DeviceManageFragment : BaseFragment() {
         })
     }
 
-    private fun showSleeperUI(sleeper: BlueDevice?) {
+    private fun updateSleeperUI(sleeper: BlueDevice?) {
         // sleeper ui
         sleeper_battery_view.setProgress(sleeper?.battery ?: 0)
         tv_speed_sleeper_status.text = getString(when (sleeper?.status) {
