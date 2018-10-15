@@ -1,6 +1,5 @@
 package com.sumian.sd.diary.monitorrecord
 
-import android.content.Context
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseBackActivity
@@ -33,6 +32,6 @@ class WeeklyReportActivity : BaseBackActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.weekly_data)
-        supportFragmentManager.beginTransaction().replace(R.id.fl_container, WeeklyReportFragment.newInstance(intent.getLongExtra(KEY_SCROLL_TIME, 0))).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fl_container, WeeklyReportFragment.newInstance(intent.getLongExtra(KEY_SCROLL_TIME, 0))).commitNowAllowingStateLoss()
     }
 }

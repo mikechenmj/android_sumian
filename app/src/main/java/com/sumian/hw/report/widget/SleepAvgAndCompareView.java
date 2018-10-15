@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
+import com.sumian.hw.common.util.TextUtil;
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.hw.report.widget.text.CountSleepDurationTextView;
 import com.sumian.sd.R;
@@ -81,11 +82,17 @@ public class SleepAvgAndCompareView extends ConstraintLayout {
         if (duration == null) {
             mTvCompareDuration.setText(R.string.none_sleep_status_data);
         } else if (duration == 0) {
-            Drawable defaultDrawable = getResources().getDrawable(R.drawable.bg_text_t5);
-            defaultDrawable.setTint(mTvCompareDuration.getCurrentTextColor());
-            CharSequence charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", defaultDrawable);
-            CharSequence concat = TextUtils.concat(charSequence, " ");
-            mTvCompareDuration.setText(concat);
+//            Drawable defaultDrawable = getResources().getDrawable(R.drawable.bg_text_t5);
+//            defaultDrawable.setTint(mTvCompareDuration.getCurrentTextColor());
+//            CharSequence charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", defaultDrawable);
+//            CharSequence concat = TextUtils.concat(charSequence, " ");
+//            mTvCompareDuration.setText(concat);
+
+            int numberSize = getResources().getDimensionPixelSize(R.dimen.font_22);
+            int unitSize = getResources().getDimensionPixelSize(R.dimen.font_12);
+
+            CharSequence formatDuration = TextUtils.concat(TextUtil.getSpannableString(0, numberSize), TextUtil.getSpannableString("分钟", unitSize));
+            mTvCompareDuration.setText(formatDuration);
         } else {
 
             CharSequence formatDuration = TimeUtil.formatSleepDurationText(getContext(), duration);
