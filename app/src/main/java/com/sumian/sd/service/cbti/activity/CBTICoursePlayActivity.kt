@@ -39,7 +39,6 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
  */
 class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, com.sumian.sd.service.cbti.video.OnVideoViewEvent, com.sumian.sd.service.cbti.video.TxVideoPlayerController.OnControllerCallback {
 
-    private val TAG = CBTICoursePlayActivity::class.java.simpleName
     private var mCourse: Course? = null
     private var mCoursePlayAuth: CoursePlayAuth? = null
     private var mCurrentCourse: Course? = null
@@ -59,6 +58,8 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     companion object {
+
+        private val TAG = CBTICoursePlayActivity::class.java.simpleName
 
         private const val EXTRA_CBTI_COURSE = "com.sumian.sleepdoctor.extras.cbti.course"
         private const val EXTRA_SELECT_POSITION = "com.sumian.sleepdoctor.extras.select.position"
@@ -123,7 +124,6 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
             }
             R.id.nav_tab_lesson_practice -> {
                 CBTIExerciseWebActivity.show(v.context, mCurrentCourse?.id!!)
-
             }
             R.id.nav_tab_lesson_review_last_week -> {
 
@@ -276,7 +276,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
         //PlayLog.e(TAG, "currentFrame=$currentFrame    oldFrame=$oldFrame   totalFrame=$totalFrame")
 
-        mPresenter.calculatePlayFrame(mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
+        mPresenter.calculatePlayFrame(mCoursePlayAuth?.meta?.video_id!!, mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
         // PlayLog.e(TAG, "finalFrame=$hexPlayFrame   fl=$fl")
     }
 

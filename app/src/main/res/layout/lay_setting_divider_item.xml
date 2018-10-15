@@ -72,9 +72,9 @@
             android:layout_width="@dimen/space_32"
             android:layout_height="@dimen/space_32"
             android:contentDescription="@null"
-            android:paddingBottom="@dimen/space_10"
             android:paddingLeft="@dimen/space_8"
             android:paddingTop="@dimen/space_10"
+            android:paddingBottom="@dimen/space_10"
             android:scaleType="fitCenter"
             app:srcCompat="@mipmap/ic_info_icon_enter"
             tools:ignore="RtlHardcoded" />

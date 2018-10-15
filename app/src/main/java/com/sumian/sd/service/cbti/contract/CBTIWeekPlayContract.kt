@@ -39,9 +39,9 @@ interface CBTIWeekPlayContract {
 
         fun getCBTIPlayAuthInfo(courseId: Int)
 
-        fun uploadCBTIVideoLog(courseId: Int, videoProgress: String, endpoint: Int)
+        fun uploadCBTIVideoLog(videoId: String, courseId: Int, videoProgress: String, endpoint: Int)
 
-        fun calculatePlayFrame(currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long)
+        fun calculatePlayFrame(videoId: String, currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long)
 
         fun playNextCBTIVideo(courseId: Int)
 

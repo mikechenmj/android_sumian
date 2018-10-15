@@ -29,7 +29,7 @@ interface ImproveUserProfileContract {
         const val IMPROVE_NAME_KEY = "name"
         const val IMPROVE_CAREER_KEY = "career"
         const val IMPROVE_BIRTHDAY_KEY = "birthday"
-        const val IMPROVE_AREA = "area"
+        const val IMPROVE_AREA_KEY = "area"
         const val IMPROVE_HEIGHT_KEY = "height"
         const val IMPROVE_WEIGHT_KEY = "weight"
         const val IMPROVE_GENDER_KEY = "gender"

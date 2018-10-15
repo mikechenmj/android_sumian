@@ -12,8 +12,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.sumian.common.image.ImageLoader;
 import com.sumian.common.media.SelectImageActivity;
@@ -51,6 +53,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:用户信息
  */
 
+@SuppressWarnings("ALL")
 public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, SdUserInfoContract.View, UMAuthListener, Observer<Token> {
@@ -106,16 +109,20 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mTitleBar.setOnBackClickListener(this);
 
         mDvNickname.setOnShowMoreListener(this);
-
         mDvName.setOnShowMoreListener(this);
         mDvGender.setOnShowMoreListener(this);
         mDvBirthday.setOnShowMoreListener(this);
         mDvArea.setOnShowMoreListener(this);
+        mDvArea.getContentView().setMaxLines(1);
+        mDvArea.getContentView().setMaxEms(11);
+        mDvArea.getContentView().setEllipsize(TextUtils.TruncateAt.END);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mDvArea.getContentView().getLayoutParams();
+        layoutParams.rightMargin = 0;
+        mDvArea.getContentView().setLayoutParams(layoutParams);
         mDvHeight.setOnShowMoreListener(this);
         mDvWeight.setOnShowMoreListener(this);
         mDvEduLevel.setOnShowMoreListener(this);
         mDvCareer.setOnShowMoreListener(this);
-
         mDvWechat.setOnCheckedChangeListener(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
     }
@@ -220,8 +227,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
                 commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY);
                 break;
             case R.id.dv_area:
-//                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_AREA);
-                // TODO: 2018/10/14  
+                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_AREA_KEY);
                 break;
             case R.id.dv_height:
                 commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_HEIGHT_KEY);
@@ -244,7 +250,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(ModifySelectBottomSheet.Companion.newInstance(modifyKey), ModifySelectBottomSheet.class.getSimpleName())
-                .commitNow();
+                .commitNowAllowingStateLoss();
     }
 
     @AfterPermissionGranted(PIC_REQUEST_CODE_CAMERA)
