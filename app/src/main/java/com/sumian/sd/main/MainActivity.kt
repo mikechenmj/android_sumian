@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.sumian.sd.main
 
 import android.arch.lifecycle.ViewModelProviders
@@ -62,8 +64,6 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
             MeFragment::class.java.simpleName)
     private var mLaunchTab = TAB_0
     private var mLaunchTabData: String? = null
-
-    var mIsBlackTheme = true
 
     private val mVersionDelegate: VersionDelegate  by lazy {
         VersionDelegate.init()
