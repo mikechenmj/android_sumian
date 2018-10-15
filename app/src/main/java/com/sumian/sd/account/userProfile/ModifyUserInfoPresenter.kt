@@ -3,13 +3,19 @@ package com.sumian.sd.account.userProfile
 import android.text.TextUtils
 import android.view.View
 import cn.carbswang.android.numberpickerview.library.NumberPickerView
+import com.alibaba.fastjson.JSON
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.operator.AppOperator
+import com.sumian.hw.common.util.StreamUtil
 import com.sumian.sd.R
+import com.sumian.sd.account.bean.City
+import com.sumian.sd.account.bean.Province
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by sm
@@ -38,10 +44,15 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         private const val DEFAULT_WEIGHT = 50
         private const val DEFAULT_HEIGHT = 170
 
+        @JvmStatic
         fun init(view: ModifyUserInfoContract.View) {
             ModifyUserInfoPresenter(view)
         }
     }
+
+    private var mProvinces: List<Province>? = null
+    //private Map<Province, List<City>> mMapCities;
+    private var mMapArea: MutableMap<City, MutableList<String>>? = null
 
     override fun improveUserProfile(improveKey: String, newUserProfile: String) {
 
@@ -52,7 +63,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         map[improveKey] = newUserProfile
 
         val call = AppManager.getSdHttpService().modifyUserProfile(map)
-
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView.onFailure(errorResponse.message)
@@ -69,7 +80,6 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             }
         })
 
-        addCall(call)
     }
 
     override fun transformTitle(modifyKey: String) {
@@ -136,23 +146,32 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
                 mView.showTwoPicker(View.GONE)
                 App.getAppContext().getString(R.string.edu_level)
             }
+            ImproveUserProfileContract.IMPROVE_AREA_KEY -> {
+
+                transformProvince()
+
+                mView.showOnePicker(View.VISIBLE)
+                mView.showTwoPicker(View.VISIBLE)
+                mView.showThreePicker(View.VISIBLE)
+                App.getAppContext().getString(R.string.area)
+            }
             else -> {
                 ""
             }
         })
     }
 
-    override fun transformModify(modifyKey: String, mPickerOne: NumberPickerView, mPickerTwo: NumberPickerView): String {
+    override fun transformModify(modifyKey: String, pickerOne: NumberPickerView, pickerTwo: NumberPickerView, pickerThree: NumberPickerView): String {
         return when (modifyKey) {
             ImproveUserProfileContract.IMPROVE_WEIGHT_KEY,
             ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
-                mPickerOne.contentByCurrValue
+                pickerOne.contentByCurrValue
             }
             ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
-                "${mPickerOne.contentByCurrValue}-${mPickerTwo.contentByCurrValue}"
+                "${pickerOne.contentByCurrValue}-${pickerTwo.contentByCurrValue}"
             }
             ImproveUserProfileContract.IMPROVE_GENDER_KEY -> {
-                when (mPickerOne.contentByCurrValue) {
+                when (pickerOne.contentByCurrValue) {
                     "女" -> {
                         "female"
                     }
@@ -165,11 +184,46 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
                 }
             }
             ImproveUserProfileContract.IMPROVE_EDUCATION_KEY -> {
-                mPickerOne.contentByCurrValue
+                pickerOne.contentByCurrValue
+            }
+            ImproveUserProfileContract.IMPROVE_AREA_KEY -> {
+                "${pickerOne.contentByCurrValue}/${pickerTwo.contentByCurrValue}/${pickerThree.contentByCurrValue}"
             }
             else -> {
                 ""
             }
+        }
+    }
+
+    override fun transformCityForProvince(province: String) {
+        AppOperator.runOnThread {
+            val provinces = this.mProvinces
+            if (provinces == null || provinces.isEmpty()) return@runOnThread
+
+            var p: Province? = null
+            var i = 0
+            val len = provinces.size
+            while (i < len) {
+                p = provinces[i]
+                if (province == p.name) {
+                    break
+                }
+                i++
+            }
+            transformCity(p!!)
+        }
+    }
+
+    override fun transformAreaForCity(city: String) {
+        AppOperator.runOnThread {
+            var areas: MutableList<String>? = null
+            for ((key) in mMapArea!!) {
+                if (key.name == city) {
+                    areas = key.area
+                    break
+                }
+            }
+            transformArea(areas)
         }
     }
 
@@ -246,7 +300,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         if (numberOnePosition < 0) {
             numberOnePosition = calculateDefaultPosition(DEFAULT_HEIGHT, minHeight)
         }
-        val numberTwoPosition = valueX10 % 10
+        // val numberTwoPosition = valueX10 % 10
         for (i in 0 until count) {
             heights[i] = (minHeight + i).toString()
             if (i < 10) {
@@ -256,6 +310,78 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
         mView.transformOneDisplayedValues(numberOnePosition, "cm", heights)
 //        mView.transformTwoDisplayedValues(numberTwoPosition, "cm", decimalHeights)
+    }
+
+    private fun transformProvince() {
+        AppOperator.runOnThread {
+            val provinceJson = StreamUtil.getJson("province.json")
+            if (TextUtils.isEmpty(provinceJson)) return@runOnThread
+            val provinces = JSON.parseArray(provinceJson, Province::class.java)
+            var mapArea: MutableMap<City, MutableList<String>>? = mMapArea
+            if (mapArea == null) {
+                mapArea = HashMap()
+            }
+            val provinceNames = arrayOfNulls<String>(provinces.size)
+            var position = 0
+            var i = 0
+            val len = provinces.size
+            while (i < len) {
+                val province = provinces[i]
+                val name = province.name
+                if (name != null && name == AppManager.getAccountViewModel().userInfo.addressArray[0]) {
+                    position = i
+                }
+                provinceNames[i] = name
+                val cities = province.city
+                for (city in cities) {
+                    val areas = city.area
+                    if (mapArea.containsKey(city)) {
+                        mapArea[city]?.addAll(areas)
+                    } else {
+                        mapArea[city] = areas
+                    }
+                }
+                i++
+            }
+            mView.transformOneDisplayedValues(position, null, provinceNames)
+            transformCity(provinces[position])
+            this.mProvinces = provinces
+            this.mMapArea = mapArea
+        }
+    }
+
+    private fun transformCity(province: Province) {
+        val cities = province.city
+        val cityNames = ArrayList<String>()
+        var cityName: String?
+        var position = 0
+        for (i in cities.indices) {
+            val city = cities[i]
+            cityName = city.name
+            if (cityName != null && cityName == AppManager.getAccountViewModel().userInfo.addressArray[1]) {
+                position = i
+            }
+            if ("其他" == cityName || "其他市" == cityName) continue
+            cityNames.add(cityName)
+        }
+        mView.transformTwoDisplayedValues(position, null, cityNames.toTypedArray())
+        transformArea(cities[position].area)
+
+    }
+
+    private fun transformArea(areas: MutableList<String>?) {
+        if (areas == null) {
+            return
+        }
+        var position = 0
+        for (i in areas.indices) {
+            val areaName = areas[i]
+            if (areaName == AppManager.getAccountViewModel().userInfo.addressArray[2]) {
+                position = i
+            }
+            if ("其他" == areaName) areas.remove(areaName)
+        }
+        mView.transformThreeDisplayedValues(position, null, areas.toTypedArray())
     }
 
     /**

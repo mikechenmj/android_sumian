@@ -4,22 +4,22 @@ import com.sumian.hw.device.pattern.PatternData
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
+import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.doctor.bean.PayOrder
 import com.sumian.sd.homepage.bean.*
-import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.order.OrderDetail
 import com.sumian.sd.oss.OssResponse
-import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
-import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
-import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.scale.bean.Scale
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts
+import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.service.cbti.bean.*
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
@@ -269,7 +269,7 @@ interface SdApi {
      */
     @FormUrlEncoded
     @POST("cbti-course/{id}/logs")
-    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
+    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
     /**
      * 上传视频问卷

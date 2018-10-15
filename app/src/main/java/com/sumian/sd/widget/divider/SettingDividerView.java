@@ -155,6 +155,10 @@ public class SettingDividerView extends LinearLayout implements View.OnClickList
         mTvSettingContent.setVisibility(TextUtils.isEmpty(content) ? GONE : VISIBLE);
     }
 
+    public TextView getContentView() {
+        return mTvSettingContent;
+    }
+
     public void setLabel(String label) {
         mTvTypeDesc.setText(label);
     }
