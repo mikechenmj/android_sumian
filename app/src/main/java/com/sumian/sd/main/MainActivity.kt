@@ -25,14 +25,13 @@ import com.sumian.sd.utils.NotificationUtil
 import com.sumian.sd.utils.StatusBarUtil
 import com.sumian.sd.utils.SumianExecutor
 import com.sumian.sd.widget.dialog.SumianAlertDialog
-import com.sumian.sd.widget.nav.BottomNavigationBar
-import com.sumian.sd.widget.nav.NavigationItem
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 
-class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChangeListener, HwLeanCloudHelper.OnShowMsgDotCallback {
+class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback {
 
     companion object {
+        const val TAB_INVALID = -1
         const val TAB_0 = 0
         const val TAB_1 = 1
         const val TAB_2 = 2
@@ -60,7 +59,7 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
             DiaryFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
-    private var mLaunchTab = TAB_0
+    private var mLaunchTab = TAB_INVALID
     private var mLaunchTabData: String? = null
 
     var mIsBlackTheme = true
@@ -79,16 +78,11 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
         updateNotificationUnreadCount()
     }
 
-    override fun initBundle(bundle: Bundle) {
-        mLaunchTab = bundle.getInt(KEY_TAB_INDEX)
-        mLaunchTabData = bundle.getString(KEY_TAB_DATA)
-    }
-
     override fun initWidget() {
         super.initWidget()
-        showFragmentAccordingToData()
         showOpenNotificationDialogIfNeeded()
-        nav_tab.setOnSelectedTabChangeListener(this)
+        nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectTab(position) }
+        nav_tab.selectItem(TAB_0, true)
     }
 
     override fun initData() {
@@ -97,9 +91,15 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
     }
 
+    override fun initBundle(bundle: Bundle) {
+        mLaunchTab = bundle.getInt(KEY_TAB_INDEX)
+        mLaunchTabData = bundle.getString(KEY_TAB_DATA)
+    }
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        showFragmentAccordingToData()
+        // mLaunchTab会在 initBundle中赋值
+        nav_tab.selectItem(mLaunchTab, true)
     }
 
     private fun showOpenNotificationDialogIfNeeded() {
@@ -118,11 +118,11 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
         SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis())
     }
 
-    private fun showFragmentAccordingToData() {
-        nav_tab.selectItem(mLaunchTab, true)
+    override fun onBackPressed() {
+        returnToPhoneLauncher()
     }
 
-    override fun onBackPressed() {
+    private fun returnToPhoneLauncher() {
         val intent = Intent(Intent.ACTION_MAIN)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addCategory(Intent.CATEGORY_HOME)
@@ -135,10 +135,6 @@ class MainActivity : BaseEventActivity(), BottomNavigationBar.OnSelectedTabChang
         } else {
             StatusBarUtil.setStatusBarTextColorDark(this, false)
         }
-    }
-
-    override fun onSelectedTabChange(navigationItem: NavigationItem, position: Int) {
-        changeSelectTab(position)
     }
 
     private fun changeSelectTab(position: Int) {
