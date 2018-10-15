@@ -41,10 +41,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     private val mMonitorEventListener = object : MonitorEventListener {
         override fun onSyncStart() {
-            mRotateAnimator?.cancel()
-            mRotateAnimator = ObjectAnimator.ofFloat(iv_sync, "rotation", 0f, 360 * 100f)
-            mRotateAnimator?.duration = 1000 * 100
-            mRotateAnimator?.start()
+            startSyncAnimation()
         }
 
         override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
@@ -179,10 +176,22 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 sleeper.status = BlueDevice.STATUS_UNCONNECTED
             }
             showSleeperUI(sleeper)
+            iv_sync.isEnabled = !monitor.isSyncing
+            if (monitor.isSyncing) {
+                if (mRotateAnimator == null || !mRotateAnimator!!.isRunning) {
+                    startSyncAnimation()
+                }
+            }
         } else {
             setNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
         }
         LogUtils.d(monitor)
+    }
+
+    private fun startSyncAnimation() {
+        mRotateAnimator?.cancel()
+        mRotateAnimator = SyncAnimatorUtil.createSyncRotateAnimator(iv_sync)
+        mRotateAnimator?.start()
     }
 
     private fun setNoDeviceUI(iconRes: Int, titleRes: Int, messageRes: Int) {
