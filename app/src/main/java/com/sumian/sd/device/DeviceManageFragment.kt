@@ -32,6 +32,8 @@ class DeviceManageFragment : BaseFragment() {
         const val CARD_STATUS_MONITOR_NOT_CONNECTED = 1
         const val CARD_STATUS_MONITOR_CONNECTED = 2
         const val CARD_STATUS_BLUETOOTH_NOT_ENABLE = 3
+
+        const val REQUEST_CODE_OPEN_BLUETOOTH = 1
     }
 
     private var mCardStatus = 0
@@ -118,7 +120,10 @@ class DeviceManageFragment : BaseFragment() {
             }
         }
         iv_float_menu.setOnClickListener { showUnbindPopup() }
-
+        iv_open_bluetooth.setOnClickListener {
+            // 由于监听了蓝牙装填的live data， 蓝牙状态改变会自动update ui
+            BluetoothUtil.startActivityForOpenBluetooth(this, REQUEST_CODE_OPEN_BLUETOOTH)
+        }
     }
 
     private fun showUnbindPopup() {
@@ -160,13 +165,13 @@ class DeviceManageFragment : BaseFragment() {
         LogUtils.d(monitor)
         if (monitor == null) {
             mCardStatus = CARD_STATUS_NO_DEVICE
-            switchNoDeviceUI(true)
+            showAddDeviceOrOpenBluetoothUI(true)
         } else if (!isBluetoothEnable) {
             mCardStatus = CARD_STATUS_BLUETOOTH_NOT_ENABLE
-            showBluetoothNotEnableUI()
+            showAddDeviceOrOpenBluetoothUI(false)
         } else {
             mCardStatus = if (monitor.isConnected) CARD_STATUS_MONITOR_CONNECTED else CARD_STATUS_MONITOR_NOT_CONNECTED
-            switchNoDeviceUI(false)
+            switchNoDeviceVg(false)
             showMonitorUI(monitor)
             showSleeperUI(monitor.speedSleeper)
             updateDeviceIv(monitor)
@@ -185,8 +190,13 @@ class DeviceManageFragment : BaseFragment() {
         bt_turn_on_pa.visibility = if (!monitor.isSleeperPa) View.VISIBLE else View.GONE
     }
 
-    private fun showBluetoothNotEnableUI() {
-        mHost?.showBluetoothNotEnableUI()
+    private fun showAddDeviceOrOpenBluetoothUI(showAddDevice: Boolean) {
+        switchNoDeviceVg(true)
+        tv_title.setText(if (showAddDevice) R.string.add_device else R.string.open_bluetooth)
+        tv_sub_title.setText(if (showAddDevice) R.string.please_keep_nearly else R.string.please_turn_on_bluetooth_adapter)
+        tv_add_device_hint.setText(if (showAddDevice) R.string.click_btn_add_device else R.string.bluetooth_not_enable)
+        iv_add_device.visibility = if (showAddDevice) View.VISIBLE else View.GONE
+        iv_open_bluetooth.visibility = if (!showAddDevice) View.VISIBLE else View.GONE
     }
 
     private fun showMonitorUI(monitor: BlueDevice) {
@@ -225,7 +235,7 @@ class DeviceManageFragment : BaseFragment() {
         })
     }
 
-    private fun switchNoDeviceUI(isNoDevice: Boolean) {
+    private fun switchNoDeviceVg(isNoDevice: Boolean) {
         ll_no_device.visibility = if (isNoDevice) View.VISIBLE else View.GONE
         ll_device.visibility = if (!isNoDevice) View.VISIBLE else View.GONE
     }

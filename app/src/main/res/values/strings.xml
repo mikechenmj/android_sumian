@@ -1057,5 +1057,6 @@
     <string name="clear_cache_hint">确定清除本地缓存？</string>
     <string name="clear_success">清除成功</string>
     <string name="rescan">重新扫描</string>
+    <string name="open_bluetooth">开启蓝牙</string>
     <!-- Hw end-->
 </resources>
