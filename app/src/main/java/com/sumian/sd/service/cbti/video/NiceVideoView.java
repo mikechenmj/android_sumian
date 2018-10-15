@@ -522,6 +522,11 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             // 从上次的保存位置播放
             if (continueFromLastPosition) {
                 long savedPlayPosition = NiceUtil.getSavedPlayPosition(mContext, mCurrentVid);
+                if (savedPlayPosition >= 10 * 1000) {
+                    savedPlayPosition -= 10000;
+                } else {
+                    savedPlayPosition = 0;
+                }
                 mp.seekTo(savedPlayPosition);
             }
             // 跳到指定位置播放

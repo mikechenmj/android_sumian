@@ -1,14 +1,17 @@
 package com.sumian.hw.upgrade.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
@@ -23,11 +26,15 @@ import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 
+import java.util.List;
 import java.util.Locale;
 
 import no.nordicsemi.android.dfu.DfuBaseService;
 import no.nordicsemi.android.dfu.DfuProgressListener;
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by jzz
@@ -38,9 +45,7 @@ import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
 
 @SuppressWarnings("ConstantConditions")
 public class VersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
-        , VersionUpgradeContract.View, DfuProgressListener {
-
-    private static final String TAG = VersionUpgradeActivity.class.getSimpleName();
+        , VersionUpgradeContract.View, DfuProgressListener, EasyPermissions.PermissionCallbacks {
 
     private static final String EXTRA_VERSION_TYPE = "extra_version_type";
     private static final String EXTRA_VERSION_IS_LATEST = "extra_version_latest";
@@ -51,11 +56,12 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     public static final int VERSION_TYPE_MONITOR = 0x02;
     public static final int VERSION_TYPE_SLEEPY = 0x03;
 
-    TitleBar mTitleBar;
-    ImageView mIvUpgrade;
-    TextView mTvVersionLatest;
-    TextView mTvVersionCurrent;
-    Button mBtDownload;
+    private static final int REQUEST_WRITE_PERMISSION = 0xff;
+
+    private ImageView mIvUpgrade;
+    private TextView mTvVersionLatest;
+    private TextView mTvVersionCurrent;
+    private Button mBtDownload;
 
     private VersionUpgradeContract.Presenter mPresenter;
 
@@ -100,14 +106,15 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     @Override
     protected void initWidget() {
         super.initWidget();
-        mTitleBar = findViewById(R.id.title_bar);
+        TitleBar titleBar = findViewById(R.id.title_bar);
+        titleBar.setOnBackClickListener(this);
+
         mIvUpgrade = findViewById(R.id.iv_upgrade);
         mTvVersionLatest = findViewById(R.id.tv_version_latest);
         mTvVersionCurrent = findViewById(R.id.tv_version_current);
         mBtDownload = findViewById(R.id.bt_download);
         findViewById(R.id.bt_download).setOnClickListener(this);
 
-        this.mTitleBar.setOnBackClickListener(this);
         if (mVersionType != VERSION_TYPE_APP) {
             mPresenter.showDfuProgressNotification(this);
             DfuServiceListenerHelper.registerProgressListener(this, this);
@@ -143,6 +150,37 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         mBtDownload.setVisibility(mIsLatestVersion ? View.VISIBLE : View.GONE);
     }
 
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        Toast.makeText(this, R.string.gallery_save_file_not_have_external_storage_permission, Toast.LENGTH_SHORT).show();
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @AfterPermissionGranted(REQUEST_WRITE_PERMISSION)
+    private void downloadVersionFile() {
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            ToastHelper.show(R.string.firmware_downloading_hint);
+            mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? AppManager.getVersionModel().getMonitorVersion() : AppManager.getVersionModel().getSleepyVersion());
+        } else {
+            EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启文件读写权限.", REQUEST_WRITE_PERMISSION, perms);
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -176,8 +214,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                 if (mVersionType == VERSION_TYPE_APP) {
                     UiUtil.openAppInMarket(v.getContext());
                 } else {
-                    ToastHelper.show(R.string.firmware_downloading_hint);
-                    mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? AppManager.getVersionModel().getMonitorVersion() : AppManager.getVersionModel().getSleepyVersion());
+                    downloadVersionFile();
                 }
             }
 

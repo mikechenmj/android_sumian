@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.sumian.sd.device
 
 import android.arch.lifecycle.MutableLiveData
@@ -38,10 +40,10 @@ import java.util.*
  */
 object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeripheralCallback, MonitorEventListener {
 
-    private val SP_KEY_MONITOR_CACHE = "DeviceManager.MonitorCache"
+    private const val SP_KEY_MONITOR_CACHE = "DeviceManager.MonitorCache"
+
     private var mCurrentIndex = -1
     private val m8fTransData = ArrayList<String>(0)
-    private var mMonitor: BlueDevice? = null
     private var mIsMonitoring: Boolean = false
     private var mIsUnbinding: Boolean = false
     private var mTranType: Int = 0
@@ -176,10 +178,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     fun turnOnMonitoringMode(monitoringMode: Int) {
         val bluePeripheral = getCurrentBluePeripheral() ?: return
         bluePeripheral.write(BlueCmd.cDoMonitorMonitoringMode(monitoringMode))
-    }
-
-    fun getCurrentMonitor(): BlueDevice? {
-        return mMonitor
     }
 
     fun isConnected(): Boolean {
@@ -503,6 +501,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
         mMonitorLiveData.value?.speedSleeper?.mac = macSb.toString().toUpperCase(Locale.getDefault())
         notifyMonitorChange()
+        AppManager.getDeviceModel().sleepyMac = macSb.toString().toUpperCase(Locale.getDefault())
         LogManager.appendSpeedSleeperLog("0x56 获取到监测仪绑定的速眠仪的 mac address=" + macSb.toString().toUpperCase(Locale.getDefault()) + "  cmd=" + cmd)
         onLastDeviceDataReceived()
     }
@@ -538,6 +537,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val sleepySn = BlueCmd.formatSn(data)
         mMonitorLiveData.value?.speedSleeper?.sn = sleepySn
         notifyMonitorChange()
+        AppManager.getDeviceModel().sleepySn = sleepySn
         LogManager.appendSpeedSleeperLog("0x55 获取到监测仪绑定的速眠仪的 sn=$sleepySn  cmd=$cmd")
     }
 
@@ -549,6 +549,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 sleepyFirmwareVersionThree)
         LogManager.appendSpeedSleeperLog("0x54 速眠仪的固件版本信息$sleepyFirmwareVersion  cmd=$cmd")
         mMonitorLiveData.value?.speedSleeper?.version = sleepyFirmwareVersion
+        AppManager.getDeviceModel().sleepyVersion = sleepyFirmwareVersion
         notifyMonitorChange()
     }
 
@@ -556,6 +557,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val monitorSn = BlueCmd.formatSn(data)
         LogManager.appendMonitorLog("0x53 获取到监测仪的sn=$monitorSn  cmd=$cmd")
         mMonitorLiveData.value?.sn = monitorSn
+        AppManager.getDeviceModel().monitorSn = monitorSn
         notifyMonitorChange()
     }
 
@@ -584,6 +586,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val monitorFirmwareVersion = (monitorFirmwareVersionOne).toString() + "." + monitorFirmwareVersionTwo + "." + monitorFirmwareVersionThree
         LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息$monitorFirmwareVersion  cmd=$cmd")
         mMonitorLiveData.value?.version = monitorFirmwareVersion
+        AppManager.getDeviceModel().monitorVersion = monitorFirmwareVersion
         notifyMonitorChange()
     }
 
@@ -622,6 +625,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             peripheral.writeDelay(BlueCmd.cSleepyMac(), 500)
         }
         notifyMonitorChange()
+        AppManager.getDeviceModel().sleepyConnectState = sleepyConnectState
         LogManager.appendSpeedSleeperLog("0x4e 收到速眠仪的连接状态变化------>$sleepyConnectState  cmd=$cmd")
     }
 
@@ -637,6 +641,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val sleepyBattery = Integer.parseInt(cmd.substring(cmd.length - 2), 16)
         mMonitorLiveData.value?.speedSleeper?.battery = sleepyBattery
         notifyMonitorChange()
+        AppManager.getDeviceModel().sleepyBattery = sleepyBattery
         LogManager.appendMonitorLog("0x44 收到速眠仪的电量变化---->$sleepyBattery  cmd=$cmd")
     }
 
@@ -645,6 +650,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mMonitorLiveData.value?.battery = monitorBattery
 //        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
         notifyMonitorChange()
+        AppManager.getDeviceModel().monitorBattery = monitorBattery
         LogManager.appendMonitorLog("0x45 收到监测仪的电量变化---->$monitorBattery  cmd=$cmd")
     }
 
@@ -778,6 +784,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private fun notifyMonitorChange() {
         // LiveData 调用set时会下发数据
         setMonitorToLiveData(mMonitorLiveData.value)
+        mMonitorLiveData.value?.let {
+            AppManager.getReportModel().notifySyncStatus(it.status)
+        }
     }
 
     // ---------------- monitor event listener start ----------------

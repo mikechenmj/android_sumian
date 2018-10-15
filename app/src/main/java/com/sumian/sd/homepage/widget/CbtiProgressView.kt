@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import com.sumian.sd.R
 import com.sumian.sd.homepage.bean.CbtiChapterData
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
-import com.sumian.sd.utils.getString
 import kotlinx.android.synthetic.main.view_cbti_progress.view.*
 
 /**
@@ -34,7 +33,8 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
             tv_cbti_subtitle.text = resources.getString(if (chaptersData.meta.allFinished) R.string.cbti_ing_all_finished_desc else R.string.cbti_ing_describe)
             val dataList = chaptersData.data
             updateProgressViewList(dataList)
-            tv_progress.text = chaptersData.meta.currentStatus
+
+            tv_progress.text = if (chaptersData.meta.allFinished) resources.getString(R.string.is_finished) else chaptersData.meta.currentStatus
         }
     }
 

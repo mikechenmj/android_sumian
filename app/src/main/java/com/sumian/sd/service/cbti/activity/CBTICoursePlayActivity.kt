@@ -270,7 +270,9 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onPlayErrorCallback() {
-        this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
+        mCurrentCourse?.let {
+            this.mPresenter.getCBTIPlayAuthInfo(it.id)
+        }
     }
 
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {

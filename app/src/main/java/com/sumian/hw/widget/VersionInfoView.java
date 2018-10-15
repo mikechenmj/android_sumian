@@ -18,10 +18,9 @@ import com.sumian.sd.R;
 
 public class VersionInfoView extends LinearLayout {
 
-    TextView mTvDesc;
-    View mUpgradeDot;
-    TextView mTvSn;
-    View mLine;
+    private View mUpgradeDot;
+    private TextView mTvSn;
+    private View mLine;
 
     public VersionInfoView(Context context) {
         this(context, null);
@@ -39,10 +38,10 @@ public class VersionInfoView extends LinearLayout {
         View inflate = inflate(context, R.layout.hw_lay_version_info_item, this);
         mUpgradeDot = inflate.findViewById(R.id.v_upgrade_dot);
         mLine = inflate.findViewById(R.id.line);
-        mTvDesc = inflate.findViewById(R.id.tv_desc);
-        mTvSn = inflate.findViewById(R.id.tv_sn);
+        TextView tvDesc = inflate.findViewById(R.id.tv_desc);
+        tvDesc.setText(upgradeLabel);
 
-        mTvDesc.setText(upgradeLabel);
+        mTvSn = inflate.findViewById(R.id.tv_sn);
         setVisibility(GONE);
     }
 

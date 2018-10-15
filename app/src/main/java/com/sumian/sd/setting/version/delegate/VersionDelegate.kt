@@ -16,7 +16,6 @@ import com.sumian.sd.setting.version.contract.VersionContract
 import com.sumian.sd.setting.version.presenter.VersionPresenter
 import com.sumian.sd.utils.UiUtils
 import com.sumian.sd.widget.dialog.SumianAlertDialog
-import com.sumian.sd.widget.dialog.theme.BlackTheme
 import com.sumian.sd.widget.dialog.theme.ITheme
 import com.sumian.sd.widget.dialog.theme.LightTheme
 import com.sumian.sd.widget.dialog.theme.ThemeFactory
@@ -107,16 +106,10 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     }
 
     private fun createTheme(): ITheme {
-        return if (mActivity is MainActivity) {
-            if ((mActivity as MainActivity).mIsBlackTheme) {
-                ThemeFactory.create(BlackTheme::class.java)
-            } else {
-                ThemeFactory.create(LightTheme::class.java)
-            }
-        } else if (mActivity is LoginActivity) {
-            ThemeFactory.create(BlackTheme::class.java)
-        } else {
-            ThemeFactory.create(LightTheme::class.java)
+        return when (mActivity) {
+            is MainActivity -> ThemeFactory.create(LightTheme::class.java)
+            is LoginActivity -> ThemeFactory.create(LightTheme::class.java)
+            else -> ThemeFactory.create(LightTheme::class.java)
         }
     }
 

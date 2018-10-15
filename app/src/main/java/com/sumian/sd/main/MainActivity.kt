@@ -1,22 +1,31 @@
+@file:Suppress("unused")
+
 package com.sumian.sd.main
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
+import com.hyphenate.helpdesk.easeui.UIProvider
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.leancloud.HwLeanCloudHelper
+import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
+import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.diary.DiaryFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.tab.DoctorFragment
@@ -28,7 +37,7 @@ import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 
-class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback {
+class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     companion object {
         const val TAB_INVALID = -1
@@ -62,8 +71,6 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
     private var mLaunchTab = TAB_INVALID
     private var mLaunchTabData: String? = null
 
-    var mIsBlackTheme = true
-
     private val mVersionDelegate: VersionDelegate  by lazy {
         VersionDelegate.init()
     }
@@ -83,12 +90,34 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         showOpenNotificationDialogIfNeeded()
         nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectTab(position) }
         nav_tab.selectItem(TAB_0, true)
+
+        //注册站内信消息接收容器
+        HwLeanCloudHelper.addOnAdminMsgCallback(this)
+        AppManager.getVersionModel().registerShowDotCallback(this)
     }
 
     override fun initData() {
         super.initData()
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
+        if (AppManager.getAccountViewModel().isLogin) {
+            HwLeanCloudHelper.loginLeanCloud()
+            HwLeanCloudHelper.registerPushService()
+        }
+
+        AppManager.getJobScheduler().checkJobScheduler()
+
+        UIProvider.getInstance().showDotCallback { msgLength ->
+            HwLeanCloudHelper.haveCustomerMsg(msgLength)
+            onShowMsgDotCallback(0, 0, msgLength)
+        }
+
+        SumianExecutor.runOnUiThread(({
+            syncUserInfo()
+            sendHeartBeats()
+        }), 200)
+
+        SumianExecutor.runOnUiThread(({ HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize) }), 500)
     }
 
     override fun initBundle(bundle: Bundle) {
@@ -100,6 +129,12 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         super.onNewIntent(intent)
         // mLaunchTab会在 initBundle中赋值
         nav_tab.selectItem(mLaunchTab, true)
+    }
+
+    override fun onRelease() {
+        super.onRelease()
+        HwLeanCloudHelper.removeOnAdminMsgCallback(this)
+        AppManager.getVersionModel().unRegisterShowDotCallback(this)
     }
 
     private fun showOpenNotificationDialogIfNeeded() {
@@ -120,6 +155,31 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
 
     override fun onBackPressed() {
         returnToPhoneLauncher()
+    }
+
+    private fun sendHeartBeats() {
+        val call = AppManager.getHwHttpService().sendHeartbeats("open_app")
+        call.enqueue(object : BaseSdResponseCallback<Any?>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+
+            }
+
+            override fun onSuccess(response: Any?) {
+
+            }
+        })
+    }
+
+    private fun syncUserInfo() {
+        val call = AppManager.getSdHttpService().getUserProfile()
+        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+            }
+
+            override fun onSuccess(response: UserInfo?) {
+                AppManager.getAccountViewModel().updateUserInfo(response)
+            }
+        })
     }
 
     private fun returnToPhoneLauncher() {
@@ -186,5 +246,9 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
             this.tb_doctor?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
             this.tb_me?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
         })
+    }
+
+    override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
+       // SumianExecutor.runOnUiThread({ this.tb_me.showDot(if (isShowAppDot || isShowMonitorDot || isShowSleepyDot) View.VISIBLE else View.GONE) })
     }
 }
