@@ -59,6 +59,14 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
         queryDiary(mSelectedTime)
     }
 
+    override fun showLoading() {
+        //super.showLoading()
+    }
+
+    override fun dismissLoading() {
+        //super.dismissLoading()
+    }
+
 
     private fun queryDiary(time: Long) {
         showLoading()
@@ -76,7 +84,6 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
 
             override fun onFinish() {
                 super.onFinish()
-                dismissLoading()
                 refresh.isRefreshing = false
             }
         })
