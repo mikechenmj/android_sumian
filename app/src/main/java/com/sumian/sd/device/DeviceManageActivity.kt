@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 import com.sumian.common.base.BaseBackActivity
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.hw.utils.FragmentUtil
+import com.sumian.hw.utils.FragmentUtil.Companion.switchFragment
 import com.sumian.sd.R
 import com.sumian.sd.device.scan.ScanDeviceFragment
 
@@ -16,11 +17,16 @@ import com.sumian.sd.device.scan.ScanDeviceFragment
  */
 class DeviceManageActivity : BaseBackActivity() {
 
+    companion object {
+
+        private val FRAGMENT_TAGS = arrayOf(DeviceManageFragment::class.java.simpleName, ScanDeviceFragment::class.java.simpleName)
+
+    }
+
     override fun getChildContentId(): Int {
         return R.layout.activity_device_manage
     }
 
-    private val FRAGMENT_TAGS = arrayOf(DeviceManageFragment::class.java.simpleName, ScanDeviceFragment::class.java.simpleName)
 
     override fun initWidget() {
         super.initWidget()
@@ -30,7 +36,7 @@ class DeviceManageActivity : BaseBackActivity() {
     }
 
     private fun switchFragment(position: Int) {
-        FragmentUtil.switchFragment(R.id.vg, supportFragmentManager, FRAGMENT_TAGS, position, object : FragmentUtil.FragmentCreator {
+        switchFragment(R.id.vg, supportFragmentManager, FRAGMENT_TAGS, position, object : FragmentUtil.FragmentCreator {
             override fun createFragmentByPosition(position: Int): Fragment {
                 return when (position) {
                     0 -> {
@@ -43,6 +49,12 @@ class DeviceManageActivity : BaseBackActivity() {
                         scanDeviceFragment.mOnDeviceSelectedListener = mOnDeviceSelectedListener
                         scanDeviceFragment
                     }
+                }
+            }
+        }, object : FragmentUtil.RunOnCommitCallback {
+            override fun runOnCommit(selectFragment: Fragment) {
+                if (selectFragment is ScanDeviceFragment) {
+                    selectFragment.rollback()
                 }
             }
         })
