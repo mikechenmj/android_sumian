@@ -57,7 +57,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     init {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
         val monitorCache = getCachedMonitor()
-        mMonitorLiveData.value = monitorCache
+        setMonitorToLiveData(monitorCache)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
     }
 
@@ -104,7 +104,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     fun scanAndConnect(monitor: BlueDevice) {
         monitor.status = BlueDevice.STATUS_CONNECTING
-        mMonitorLiveData.value = monitor
+        setMonitorToLiveData(monitor)
         mBlueDeviceWrapper.scan2Connect(monitor, { connect(monitor) }, {
             ToastHelper.show("蓝牙连接失败多次,可尝试关闭手机蓝牙待5s后重试...")
         })
@@ -139,7 +139,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 sleeper.status = BlueDevice.STATUS_UNCONNECTED
                 monitor.speedSleeper = sleeper
             }
-            mMonitorLiveData.value = monitor
+            setMonitorToLiveData(monitor)
             onConnectStart()
             LogManager.appendMonitorLog("主动连接监测仪  connect to   name=" + remoteDevice.name + "  address=" + remoteDevice.address)
         } else {
@@ -164,7 +164,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun unbind() {
-        mMonitorLiveData.value = null
+        setMonitorToLiveData(null)
         mIsUnbinding = true
         getCurrentBluePeripheral()?.close()
         clearCacheDevice()
@@ -777,7 +777,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     private fun notifyMonitorChange() {
         // LiveData 调用set时会下发数据
-        mMonitorLiveData.value = mMonitorLiveData.value
+        setMonitorToLiveData(mMonitorLiveData.value)
     }
 
     // ---------------- monitor event listener start ----------------
@@ -843,4 +843,13 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     // ---------------- monitor event listener end ----------------
+
+    private fun setMonitorToLiveData(monitor: BlueDevice?) {
+        if (monitor != null && monitor.speedSleeper == null) {
+            val sleeper = BlueDevice()
+            sleeper.name = App.getAppContext().getString(R.string.speed_sleeper)
+            monitor.speedSleeper = sleeper
+        }
+        mMonitorLiveData.value = monitor
+    }
 }
