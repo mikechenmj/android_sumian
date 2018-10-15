@@ -39,7 +39,7 @@ public class PillsDialog extends Dialog {
     private List<SleepPill> mSleepPills;
 
     private PillsDialog(@NonNull Context context, List<SleepPill> pills) {
-        super(context);
+        super(context, R.style.SumianDialog);
         mSleepPills = pills;
         init(context);
     }

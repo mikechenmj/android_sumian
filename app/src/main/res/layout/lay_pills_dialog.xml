@@ -2,16 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/space_340"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_rect_solid_white_radius_4dp">
 
     <LinearLayout
         android:layout_width="@dimen/space_340"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        tools:background="@color/white"
-        tools:ignore="UselessParent"
-        tools:layout_marginTop="30dp">
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -42,8 +40,8 @@
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_20"
             android:layout_marginTop="@dimen/space_20"
+            android:layout_marginBottom="@dimen/space_20"
             android:overScrollMode="never"
             tools:layout_height="300dp" />
     </LinearLayout>
