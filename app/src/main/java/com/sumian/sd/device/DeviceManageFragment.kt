@@ -53,12 +53,12 @@ class DeviceManageFragment : BaseFragment() {
 
         override fun onSyncSuccess() {
             mRotateAnimator?.cancel()
+            dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_SUCCESS, resources.getString(R.string.already_latest_data), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
         }
 
         override fun onSyncFailed() {
             mRotateAnimator?.cancel()
             dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_FAIL, resources.getString(R.string.sync_fail), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
-
         }
 
         override fun onTurnOnPaModeStart() {

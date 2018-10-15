@@ -178,7 +178,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:text="@string/monitor_is_connect_please_sleepers_connectivity" />
+            android:text="@string/monitor_is_connect_please_check_sleepers_connectivity" />
 
         <FrameLayout
             android:id="@+id/fl_turn_pa_bt_container"

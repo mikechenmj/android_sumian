@@ -125,4 +125,11 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
         return speedSleeper != null && speedSleeper.isPa;
     }
 
+    public int getSleeperStatus() {
+        return speedSleeper == null ? BlueDevice.STATUS_UNCONNECTED : speedSleeper.status;
+    }
+
+    public int getSleeperBattery() {
+        return speedSleeper == null ? 0 : speedSleeper.battery;
+    }
 }
