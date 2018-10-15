@@ -187,7 +187,7 @@ class DeviceManageFragment : BaseFragment() {
         iv_device.setImageResource(deviceIvRes)
         iv_device_bg.setImageResource(if (monitor.isSyncing) R.drawable.ic_equip_bg_synchronization else R.drawable.ic_equip_bg)
         iv_device.alpha = if (monitor.status == BlueDevice.STATUS_UNCONNECTED) .5f else 1f
-        bt_turn_on_pa.visibility = if (!monitor.isSleeperPa) View.VISIBLE else View.GONE
+        bt_turn_on_pa.visibility = if (monitor.isConnected && monitor.speedSleeper != null && monitor.speedSleeper!!.status == BlueDevice.STATUS_CONNECTED && !monitor.speedSleeper!!.isPa) View.VISIBLE else View.GONE
     }
 
     private fun showAddDeviceOrOpenBluetoothUI(showAddDevice: Boolean) {

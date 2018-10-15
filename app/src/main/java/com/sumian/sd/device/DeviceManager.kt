@@ -420,7 +420,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 "55580188"//开启pa成功
                 -> {
                     mMonitorLiveData.value?.speedSleeper?.isPa = true
-                    mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_PA
+                    mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_CONNECTED
                     notifyMonitorChange()
                     LogManager.appendSpeedSleeperLog("0x58 开启速眠仪的 pa 模式成功  cmd=$cmd")
                 }

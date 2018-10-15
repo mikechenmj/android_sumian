@@ -49,7 +49,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
             tv_progress_0.text = resources.getString(R.string.sync_progress_0, packageNumber)
-            tv_progress_1.text = resources.getString(R.string.sync_progress_1, progress)
+            tv_progress_1.text = resources.getString(R.string.sync_progress_1, progress * 100 / total)
         }
 
         override fun onSyncSuccess() {

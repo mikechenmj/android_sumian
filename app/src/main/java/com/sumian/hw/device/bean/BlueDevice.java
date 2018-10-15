@@ -32,8 +32,11 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public static final int STATUS_UNCONNECTED = 0;
     public static final int STATUS_CONNECTING = 1;
     public static final int STATUS_CONNECTED = 2;
+    @Deprecated
     public static final int STATUS_SYNCHRONIZING = 3;
+    @Deprecated
     public static final int STATUS_PA = 4;
+    // cmd
     public static final int MONITORING_CMD_CLOSE = 0x00;
     public static final int MONITORING_CMD_OPEN = 0x01;
 

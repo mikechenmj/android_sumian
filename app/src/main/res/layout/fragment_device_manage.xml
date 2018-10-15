@@ -200,7 +200,8 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="330dp"
-                android:text="@string/open_sleep" />
+                android:text="@string/start_work"
+                android:visibility="gone" />
 
         </FrameLayout>
 
