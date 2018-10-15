@@ -12,8 +12,6 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.R;
 
 import static com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR;
@@ -29,7 +27,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
     EmptyErrorView mEmptyErrorView;
 
     private SWebView mSWebView;
-    private WebListener mWebListener;
+    private SWebView.OnWebViewListener mWebListener;
 
     public SWebViewLayout(@NonNull Context context) {
         this(context, null);
@@ -142,15 +140,11 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
     }
 
 
-    public void setWebListener(WebListener webListener) {
+    public void setWebListener(SWebView.OnWebViewListener webListener) {
         mWebListener = webListener;
     }
 
     public ProgressBar getWebViewProgress() {
         return mWebViewProgress;
-    }
-
-    public interface WebListener {
-        void onReceiveTitle(WebView webView, String title);
     }
 }
