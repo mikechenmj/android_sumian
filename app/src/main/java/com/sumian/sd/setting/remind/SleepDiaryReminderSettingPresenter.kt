@@ -1,6 +1,6 @@
 package com.sumian.sd.setting.remind
 
-import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -33,7 +33,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<ReminderListResponse>() {
             override fun onFailure(errorResponse: ErrorResponse) {
-                LogUtils.d(errorResponse.message)
+                ToastUtils.showShort(errorResponse.message)
             }
 
             override fun onSuccess(response: ReminderListResponse?) {
@@ -47,13 +47,13 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Reminder>() {
             override fun onFailure(errorResponse: ErrorResponse) {
-                LogUtils.d(errorResponse.message)
+                ToastUtils.showShort(errorResponse.message)
+                view.rollbackReminderUI()
             }
 
             override fun onSuccess(response: Reminder?) {
                 view.updateReminder(reminder = response)
             }
-
         })
     }
 
@@ -62,13 +62,13 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Reminder>() {
             override fun onFailure(errorResponse: ErrorResponse) {
-                LogUtils.d(errorResponse.message)
+                ToastUtils.showShort(errorResponse.message)
+                view.rollbackReminderUI()
             }
 
             override fun onSuccess(response: Reminder?) {
                 view.updateReminder(reminder = response)
             }
-
         })
     }
 }

@@ -76,6 +76,10 @@ class SleepDiaryRemindSettingActivity :
         tv_time.text = reminder?.getReminderHHmm()
     }
 
+    override fun rollbackReminderUI() {
+        updateReminder(mReminder)
+    }
+
     private fun showTimePicker() {
         mOnTimePicked = false
         val initHour = mReminder?.getRemindAtHour() ?: DEFAULT_HOUR

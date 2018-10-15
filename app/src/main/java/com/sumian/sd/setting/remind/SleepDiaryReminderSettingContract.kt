@@ -1,10 +1,8 @@
 package com.sumian.sd.setting.remind
 
-import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.BaseShowLoadingView
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.setting.remind.bean.Reminder
-import java.util.*
 
 /**
  * <pre>
@@ -17,6 +15,7 @@ import java.util.*
 class SleepDiaryReminderSettingContract {
     interface View : BaseShowLoadingView {
         fun updateReminder(reminder: Reminder?)
+        fun rollbackReminderUI()
     }
 
     interface Presenter : IPresenter {
