@@ -97,6 +97,7 @@ public class SWebView extends BridgeWebView {
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebSettings() {
         WebSettings webSettings = this.getSettings();
+        webSettings.setDomStorageEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         }
@@ -114,7 +115,7 @@ public class SWebView extends BridgeWebView {
         setWebViewClient(null);
         WebSettings settings = getSettings();
         settings.setJavaScriptEnabled(false);
-        settings.setDomStorageEnabled(true);
+        settings.setDomStorageEnabled(false);
         removeAllViews();
         super.destroy();
     }
@@ -494,9 +495,10 @@ public class SWebView extends BridgeWebView {
         return WebViewManger.getInstance().isDebug();
     }
 
-    public interface WebInterceptor{
+    public interface WebInterceptor {
         /**
          * if not interceptor return null, else return non null
+         *
          * @param view
          * @param request
          * @return
