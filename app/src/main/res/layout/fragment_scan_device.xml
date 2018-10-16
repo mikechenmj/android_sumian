@@ -11,7 +11,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
-        android:text="@string/sumian_welcome"
+        android:text="@string/open_bluetooth"
         android:textStyle="bold" />
 
     <TextView
