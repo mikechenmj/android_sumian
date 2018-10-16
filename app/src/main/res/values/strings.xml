@@ -1067,5 +1067,8 @@
     <string name="set_success">设置成功</string>
     <string name="are_sure_2_bind">确定更换绑定？</string>
     <string name="setting_pwd">设置密码</string>
+    <string name="sync_sleep_data_to_server_error">获取异常，请联系在线客服咨询反馈</string>
+    <string name="sleep_version_message">速眠仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
+    <string name="monitor_version_message">监测仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
     <!-- Hw end-->
 </resources>

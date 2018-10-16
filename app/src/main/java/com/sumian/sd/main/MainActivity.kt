@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "UNUSED_ANONYMOUS_PARAMETER")
 
 package com.sumian.sd.main
 
@@ -21,6 +21,7 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.constants.SpKeys
+import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.DiaryFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
@@ -69,9 +70,14 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
     private var mLaunchTabData: String? = null
+    private var mIsResume = false
 
     private val mVersionDelegate: VersionDelegate  by lazy {
         VersionDelegate.init()
+    }
+
+    private val mDeviceVersionDialog: SumianAlertDialog by lazy {
+        SumianAlertDialog(this@MainActivity)
     }
 
     override fun getLayoutId(): Int {
@@ -82,6 +88,16 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         super.onStart()
         mVersionDelegate.checkVersion(this)
         updateNotificationUnreadCount()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mIsResume = true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mIsResume = false
     }
 
     override fun initWidget() {
@@ -244,31 +260,32 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
     override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
         SumianExecutor.runOnUiThread({
             this.tb_doctor?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
-            this.tb_me?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
+            // this.tb_me?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
         })
     }
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
 
-        var title = 0
-        var message = ""
+        if (mIsResume && DeviceManager.isConnected()) {
+            var titleResId = R.string.monitor_version_title
+            var message = R.string.monitor_version_message
 
-        if (isShowSleepyDot) {
-            title = R.string.sleep_version_title
-            message = "速眠仪固件新版本发布，为了保证给您的最佳体验，请及时升级"
-        }
-
-        if (isShowMonitorDot) {
-            title = R.string.monitor_version_title
-            message = "监测仪固件新版本发布，为了保证给您的最佳体验，请及时升级"
-        }
-
-        runOnUiThread {
-            SumianAlertDialog(this@MainActivity)
+            if (isShowSleepyDot) {
+                titleResId = R.string.sleep_version_title
+                message = R.string.sleep_version_message
+            }
+            if (isShowMonitorDot) {
+                titleResId = R.string.monitor_version_title
+                message = R.string.monitor_version_message
+            }
+            if (mDeviceVersionDialog.isShowing) {
+                mDeviceVersionDialog.hide()
+            }
+            mDeviceVersionDialog
                     .setCancelable(true)
                     .setCloseIconVisible(false)
                     .hideTopIcon(true)
-                    .setTitle(title)
+                    .setTitle(titleResId)
                     .setMessage(message)
                     .whitenLeft()
                     .setLeftBtn(R.string.cancel, null)
