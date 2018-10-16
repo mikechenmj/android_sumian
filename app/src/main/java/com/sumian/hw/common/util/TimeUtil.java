@@ -343,7 +343,11 @@ public final class TimeUtil {
         }
         charSequences[2] = TextUtil.getSpannableString(Math.abs(minute), numberSizeInPx);
         charSequences[3] = TextUtil.getSpannableString("分", unitSizeInPx);
-        return TextUtils.concat(charSequences);
+        if (hour > 0) {
+            return TextUtils.concat(charSequences);
+        } else {
+            return TextUtils.concat(charSequences[0] == null ? "" : charSequences[0], charSequences[1] == null ? "" : charSequences[1], charSequences[2], charSequences[3]);
+        }
     }
 
     public static String secondToHHMM(int second) {
