@@ -1065,5 +1065,7 @@
     <string name="sync_sleep_data_to_server_error">获取异常，请联系在线客服咨询反馈</string>
     <string name="set_password">设置密码</string>
     <string name="set_success">设置成功</string>
+    <string name="are_sure_2_bind">确定更换绑定？</string>
+    <string name="setting_pwd">设置密码</string>
     <!-- Hw end-->
 </resources>

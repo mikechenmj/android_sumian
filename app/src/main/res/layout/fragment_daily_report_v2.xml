@@ -35,10 +35,11 @@
                     android:layout_height="@dimen/space_200"
                     android:gravity="center"
                     app:tdshv_coordinate_color="@color/l3_color_day"
-                    app:tdshv_deep_color="@color/g3_color_day"
+                    app:tdshv_deep_color="@color/g1_color_day"
                     app:tdshv_empty_text_color="@color/t5_color_day"
                     app:tdshv_eog_color="@color/g2_color_day"
-                    app:tdshv_light_color="@color/g1_color_day"
+                    app:tdshv_light_color="@color/g2_color_day"
+                    app:tdshv_sober_color="@color/g3_color_day"
                     skin:enable="true" />
 
                 <com.sumian.hw.report.widget.ReportIndicatorRuleView
