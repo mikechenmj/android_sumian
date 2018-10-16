@@ -96,8 +96,8 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         mIsResume = true
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         mIsResume = false
     }
 
@@ -291,6 +291,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
                     .whitenLeft()
                     .setLeftBtn(R.string.cancel, null)
                     .setRightBtn(R.string.sure) {
+                        mDeviceVersionDialog.hide()
                         DeviceVersionNoticeActivity.show(this@MainActivity)
                     }
                     .show()
