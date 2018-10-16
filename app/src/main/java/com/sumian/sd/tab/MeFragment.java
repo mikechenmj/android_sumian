@@ -12,6 +12,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
+import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.account.userProfile.SdUserProfileActivity;
@@ -52,7 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ALL")
 public class MeFragment extends SdBaseFragment implements View.OnClickListener, PatientServiceTips.OnServiceTipsCallback,
-        PatientRecordTips.OnRecordTipsCallback, HwLeanCloudHelper.OnShowMsgDotCallback, OnEnterListener {
+        PatientRecordTips.OnRecordTipsCallback, HwLeanCloudHelper.OnShowMsgDotCallback, OnEnterListener, VersionModel.ShowDotCallback {
 
     @BindView(R.id.iv_avatar)
     CircleImageView mIvAvatar;
@@ -190,5 +191,10 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
         // if (mSivKefu != null) {
         //    runOnUiThread(() -> mSivKefu.setImageResource((HwLeanCloudHelper.isHaveCustomerMsg()) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
         // }
+    }
+
+    @Override
+    public void showDot(boolean isShowAppDot, boolean isShowMonitorDot, boolean isShowSleepyDot) {
+
     }
 }

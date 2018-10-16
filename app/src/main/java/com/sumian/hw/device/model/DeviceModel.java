@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.device.bean.BlueDevice;
+import com.sumian.hw.upgrade.presenter.VersionPresenter;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.account.model.AccountViewModel;
 import com.sumian.sd.app.AppManager;
@@ -23,7 +24,7 @@ import java.util.Set;
  * desc:负责Device相关业务逻辑，例如维护Device的status，读写Device
  */
 
-@SuppressWarnings({"UnusedReturnValue", "unused", "WeakerAccess"})
+@SuppressWarnings("ALL")
 public class DeviceModel {
 
     @SuppressWarnings("unused")
@@ -99,7 +100,9 @@ public class DeviceModel {
     public DeviceModel setSleepySn(String sleepySn) {
         mSleepySn = sleepySn;
         if (mBlueDevice != null) {
-            mBlueDevice.speedSleeper.sn = sleepySn;
+            if (mBlueDevice.speedSleeper != null) {
+                mBlueDevice.speedSleeper.sn = sleepySn;
+            }
         }
         uploadBindSn(sleepySn, this.mMonitorSn);
         return this;
@@ -111,6 +114,7 @@ public class DeviceModel {
 
     public DeviceModel setMonitorVersion(String monitorVersion) {
         mMonitorVersion = monitorVersion;
+        VersionPresenter.init().syncMonitorVersionInfo();
         return this;
     }
 
@@ -120,6 +124,7 @@ public class DeviceModel {
 
     public DeviceModel setSleepyVersion(String sleepyVersion) {
         mSleepyVersion = sleepyVersion;
+        VersionPresenter.init().syncMonitorVersionInfo();
         return this;
     }
 

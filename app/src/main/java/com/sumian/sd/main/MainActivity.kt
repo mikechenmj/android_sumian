@@ -13,6 +13,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.leancloud.HwLeanCloudHelper
+import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
@@ -249,6 +250,33 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
     }
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
-       // SumianExecutor.runOnUiThread({ this.tb_me.showDot(if (isShowAppDot || isShowMonitorDot || isShowSleepyDot) View.VISIBLE else View.GONE) })
+
+        var title = 0
+        var message = ""
+
+        if (isShowSleepyDot) {
+            title = R.string.sleep_version_title
+            message = "速眠仪固件新版本发布，为了保证给您的最佳体验，请及时升级"
+        }
+
+        if (isShowMonitorDot) {
+            title = R.string.monitor_version_title
+            message = "监测仪固件新版本发布，为了保证给您的最佳体验，请及时升级"
+        }
+
+        runOnUiThread {
+            SumianAlertDialog(this@MainActivity)
+                    .setCancelable(true)
+                    .setCloseIconVisible(false)
+                    .hideTopIcon(true)
+                    .setTitle(title)
+                    .setMessage(message)
+                    .whitenLeft()
+                    .setLeftBtn(R.string.cancel, null)
+                    .setRightBtn(R.string.sure) {
+                        DeviceVersionNoticeActivity.show(this@MainActivity)
+                    }
+                    .show()
+        }
     }
 }

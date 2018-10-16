@@ -1060,5 +1060,7 @@
     <string name="connect_time_out">连接超时</string>
     <string name="connect_time_out_message">可关闭蓝牙5s后再次尝试连接</string>
     <string name="please_connect_monitor_before_change_bind">请先连接监测仪，再使用换绑功能</string>
+    <string name="sleep_version_title">速眠仪固件升级</string>
+    <string name="monitor_version_title">监测仪固件升级</string>
     <!-- Hw end-->
 </resources>
