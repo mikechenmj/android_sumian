@@ -55,6 +55,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
     private val mMonitorEventListeners = HashSet<MonitorEventListener>()
     private var mIsTurningOnPa = false
+    private val mIsUploadingSleepDataToServerLiveData = MutableLiveData<Boolean>()
 
     init {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
@@ -62,6 +63,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         setMonitorToLiveData(monitorCache)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
         uploadDeviceSns()
+        mIsUploadingSleepDataToServerLiveData.value = false
     }
 
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
@@ -355,6 +357,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                             SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply()
                         }
                         LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd)
+                        postIsUploadingSleepDataToServer(true)
                         AppManager.getJobScheduler()
                                 .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,
                                         AppManager.getDeviceModel().monitorSn,
@@ -883,5 +886,17 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             monitor.speedSleeper = sleeper
         }
         mMonitorLiveData.value = monitor
+    }
+
+    fun setIsUploadingSleepDataToServer(isUploading: Boolean) {
+        mIsUploadingSleepDataToServerLiveData.value = isUploading
+    }
+
+    fun postIsUploadingSleepDataToServer(isUploading: Boolean) {
+        mIsUploadingSleepDataToServerLiveData.postValue(isUploading)
+    }
+
+    fun getIsUploadingSleepDataToServerLiveData(): MutableLiveData<Boolean> {
+        return mIsUploadingSleepDataToServerLiveData
     }
 }
