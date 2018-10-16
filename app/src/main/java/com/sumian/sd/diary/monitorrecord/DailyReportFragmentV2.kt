@@ -1,5 +1,6 @@
 package com.sumian.sd.diary.monitorrecord
 
+import android.arch.lifecycle.Observer
 import android.os.Handler
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
@@ -10,7 +11,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonObject
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.report.base.BaseResultResponse
 import com.sumian.hw.report.bean.DailyMeta
 import com.sumian.hw.report.bean.DailyReport
@@ -21,7 +21,7 @@ import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.diary.sleeprecord.calendar.custom.CalendarPopup
 import com.sumian.sd.event.EventBusUtil
-import com.sumian.sd.event.UploadSleepDataFailedEvent
+import com.sumian.sd.event.UploadSleepDataFinishedEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.utils.TimeUtil
 import kotlinx.android.synthetic.main.fragment_daily_report_v2.*
@@ -53,15 +53,18 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
         iv_date_arrow.setOnClickListener { showDatePopup(true) }
         iv_weekly_report.setOnClickListener { WeeklyReportActivity.launch(mSelectedTime) }
         setTvDate(mSelectedTime)
-        DeviceManager.getMonitorLiveData().observe(this, android.arch.lifecycle.Observer {
-            mHandler.removeCallbacks(mDismissBottomHintRunnable)
-            val isSyncing = it != null && it.isSyncing
-            tv_bottom_hint.visibility = if (isSyncing) View.VISIBLE else View.GONE
-            if (isSyncing) {
-                tv_bottom_hint.text = getString(R.string.device_is_syncing_data_report_will_be_refresh_later)
-                tv_bottom_hint.setBackgroundColor(ColorCompatUtil.getColor(activity!!, R.color.b5_color))
-            }
+        DeviceManager.getMonitorLiveData().observe(this, Observer {
+            updateSyncingTv(it?.isSyncing == true, DeviceManager.getIsUploadingSleepDataToServerLiveData().value == true)
         })
+        DeviceManager.getIsUploadingSleepDataToServerLiveData().observe(this, Observer {
+            LogUtils.d("getIsUploadingSleepDataToServerLiveData", DeviceManager.getIsUploadingSleepDataToServerLiveData().value)
+            updateSyncingTv(DeviceManager.getMonitorLiveData().value?.isSyncing == true, it == true)
+        })
+    }
+
+    private fun updateSyncingTv(isSyncMonitorData: Boolean, isUpload: Boolean) {
+        LogUtils.d(isSyncMonitorData, isUpload)
+        tv_is_syncing_hint.visibility = if (isSyncMonitorData || isUpload) View.VISIBLE else View.GONE
     }
 
     override fun initData() {
@@ -81,17 +84,19 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onUploadSleepDataFailedEvent(event: UploadSleepDataFailedEvent) {
+    fun onUploadSleepDataFailedEvent(event: UploadSleepDataFinishedEvent) {
         LogUtils.d(event)
         mHandler.removeCallbacks(mDismissBottomHintRunnable)
-        tv_bottom_hint.visibility = View.VISIBLE
-        tv_bottom_hint.text = getString(R.string.sync_sleep_data_to_server_error)
-        tv_bottom_hint.setBackgroundColor(ColorCompatUtil.getColor(activity!!, R.color.t4_color))
-        mHandler.postDelayed(mDismissBottomHintRunnable, 3000)
+        if (event.success) {
+            queryDiary(mSelectedTime) // refresh
+        } else {
+            tv_sync_fail_hint.visibility = View.VISIBLE
+            mHandler.postDelayed(mDismissBottomHintRunnable, 3000)
+        }
     }
 
     private val mDismissBottomHintRunnable = {
-        tv_bottom_hint.visibility = View.GONE
+        tv_sync_fail_hint.visibility = View.GONE
     }
 
     override fun onRefresh() {

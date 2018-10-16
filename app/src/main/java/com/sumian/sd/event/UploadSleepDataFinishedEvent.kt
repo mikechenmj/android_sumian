@@ -7,4 +7,4 @@ package com.sumian.sd.event
  * desc   :
  * version: 1.0
  */
-data class UploadSleepDataFailedEvent(val message: String)
+data class UploadSleepDataFinishedEvent(val success: Boolean)

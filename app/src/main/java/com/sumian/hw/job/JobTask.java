@@ -28,8 +28,9 @@ import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.event.EventBusUtil;
-import com.sumian.sd.event.UploadSleepDataFailedEvent;
+import com.sumian.sd.event.UploadSleepDataFinishedEvent;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 
 import org.jetbrains.annotations.NotNull;
@@ -151,6 +152,8 @@ public class JobTask implements Serializable, Cloneable {
                     LogManager.appendTransparentLog("2.该组透传数据请求服务器获取 OssResponse 令牌失败,进入队列末尾等待重新上传  错误信息=" + errorResponse.getMessage());
                     mTaskCallback.executeCallbackFailed(JobTask.this);
                 }
+                EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(false));
+                DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
             }
 
             @Override
@@ -191,6 +194,7 @@ public class JobTask implements Serializable, Cloneable {
             @SuppressWarnings("unchecked")
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                boolean uploadSuccess = false;
                 Log.e(TAG, "onSuccess: -------->");
                 String returnBody = result.getServerCallbackReturnBody();
 
@@ -211,13 +215,12 @@ public class JobTask implements Serializable, Cloneable {
                             List<DailyReport> dailyReports = JSON.parseArray(data, DailyReport.class);
                             AppManager.getReportModel().setCacheDailyReport(dailyReports.get(0));
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功--是睡眠特征数据-->" + " dailyReports=" + dailyReports.toString());
+                            uploadSuccess = true;
                         } else if (returnBody.contains("errors")) {//透传成功睡眠特征数据,但是出现错误信息.比如采集时间重叠  解析失败  文件名存在
                             String errors = jsonObject.getString("errors");
                             OssTransDataError ossTransDataError = JSON.parseObject(errors, OssTransDataError.class);
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功--但出现错误信息  ossTransDataError=" + ossTransDataError.toString());
-                            EventBusUtil.postEvent(new UploadSleepDataFailedEvent("该组透传数据 oss服务上传成功--但出现错误信息  ossTransDataError=\" + ossTransDataError.toString()"));
                             AppManager.getReportModel().notifySyncStatus(0xff);
-
                         } else {
                             //透传成功,不是睡眠特征数据
                             OssTransData ossTransData = JSON.parseObject(returnBody, OssTransData.class);
@@ -231,6 +234,9 @@ public class JobTask implements Serializable, Cloneable {
                 }
 
                 mTaskCallback.executeCallbackSuccess(JobTask.this);
+                EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(uploadSuccess));
+                DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
+                Log.e(TAG, "thread: " + Thread.currentThread());
             }
 
             @Override
@@ -250,6 +256,8 @@ public class JobTask implements Serializable, Cloneable {
                 }
 
                 mTaskCallback.executeCallbackFailed(JobTask.this);
+                EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(false));
+                DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
             }
         });
 
