@@ -160,7 +160,7 @@ class ScanDeviceFragment : BaseFragment() {
 
     @AfterPermissionGranted(REQUEST_CODE_ENABLE_BT)
     private fun checkPermissionStartScan() {
-        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION)
+        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(activity!!, *perms)) {
             startScan()
         } else {
