@@ -30,7 +30,7 @@
             android:text="@string/please_keep_nearly" />
 
         <View
-            style="@style/HorizontalDividerLineMarginStart20"
+            style="@style/HorizontalDividerLineMarginStart20L3"
             android:layout_marginTop="20dp" />
 
         <Space
@@ -85,6 +85,7 @@
             android:paddingEnd="20dp">
 
             <TextView
+                android:id="@+id/tv_monitor"
                 style="@style/text_t3_16"
                 android:text="@string/monitor" />
 
@@ -120,6 +121,7 @@
             android:paddingEnd="20dp">
 
             <TextView
+                android:id="@+id/tv_sleeper"
                 style="@style/text_t3_16"
                 android:text="@string/speed_sleeper" />
 

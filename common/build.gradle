@@ -90,7 +90,7 @@ dependencies {
     api project(':jsbridge')
 
     //aliyun httpdns
-    implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar') {
+    implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.9@aar') {
         transitive true
     }
 
