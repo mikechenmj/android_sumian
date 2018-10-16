@@ -16,7 +16,6 @@ import java.net.InetAddress
 class SdHttpDns private constructor() : Dns {
 
     companion object {
-
         @JvmStatic
         fun create(): Dns {
             return SdHttpDns()
@@ -24,7 +23,7 @@ class SdHttpDns private constructor() : Dns {
     }
 
     override fun lookup(hostname: String): MutableList<InetAddress> {
-        val hostIpFrom = AppManager.getHttpDns().getHostIpFromHostname(hostname)
+        val hostIpFrom = AppManager.getHttpDns()?.getHostIpFromHostname(hostname)
         return if (TextUtils.isEmpty(hostIpFrom)) {
             Dns.SYSTEM.lookup(hostname)
         } else {

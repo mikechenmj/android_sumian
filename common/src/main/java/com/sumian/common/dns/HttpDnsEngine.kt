@@ -15,7 +15,7 @@ import java.net.URL
  */
 class HttpDnsEngine : IHttpDns {
 
-    private lateinit var httpDnsService: HttpDnsService
+    private var httpDnsService: HttpDnsService? = null
 
     override fun init(context: Context, isDebug: Boolean, accountId: String, secret: String): IHttpDns {
         val httpDnsService = HttpDns.getService(context, accountId, secret)
@@ -34,23 +34,23 @@ class HttpDnsEngine : IHttpDns {
         baseUrl.forEach {
             hosts.add(URL(it).host)
         }
-        httpDnsService.setPreResolveHosts(hosts)
+        httpDnsService?.setPreResolveHosts(hosts)
     }
 
     override fun getBaseUrlFromHostIp(baseUrl: String): String {
         val url = URL(baseUrl)
         val tmpHost = url.host
-        val ipByHostAsync = httpDnsService.getIpByHostAsync(tmpHost)
+        val ipByHostAsync = httpDnsService?.getIpByHostAsync(tmpHost)
         return if (TextUtils.isEmpty(ipByHostAsync)) {
             baseUrl
             //tmpHost
         } else {
-            baseUrl.replace(tmpHost, ipByHostAsync)
+            baseUrl.replace(tmpHost, ipByHostAsync!!)
             //ipByHostAsync
         }
     }
 
     override fun getHostIpFromHostname(hostname: String): String? {
-        return httpDnsService.getIpByHostAsync(hostname)
+        return httpDnsService?.getIpByHostAsync(hostname)
     }
 }

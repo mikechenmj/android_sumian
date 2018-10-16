@@ -23,6 +23,7 @@ import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.sumian.common.BuildConfig;
+import com.sumian.common.dns.IHttpDns;
 import com.sumian.common.h5.WebViewManger;
 import com.sumian.common.h5.factory.WebViewTlsSniSocketFactory;
 
@@ -400,7 +401,11 @@ public class SWebView extends BridgeWebView {
         try {
             url = new URL(path);
             // 异步接口获取IP
-            String ip = WebViewManger.getInstance().getHttpDnsEngine().getHostIpFromHostname(url.getHost());
+            String ip = null;
+            IHttpDns httpDnsEngine = WebViewManger.getInstance().getHttpDnsEngine();
+            if (httpDnsEngine != null) {
+                ip = httpDnsEngine.getHostIpFromHostname(url.getHost());
+            }
             if (ip != null) {
                 // 通过HTTPDNS获取IP成功，进行URL替换和HOST头设置
                 if (isDebug()) {

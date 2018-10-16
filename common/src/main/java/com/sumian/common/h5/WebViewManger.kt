@@ -48,8 +48,8 @@ class WebViewManger private constructor() {
         mIHttpDns = iHttpDns
     }
 
-    fun getHttpDnsEngine(): IHttpDns {
-        return mIHttpDns!!
+    fun getHttpDnsEngine(): IHttpDns? {
+        return mIHttpDns
     }
 
     fun setDebug(isDebug: Boolean) {
