@@ -141,13 +141,14 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     }
 
     private fun showMonitorUI(monitor: BlueDevice) {
-        showLoadingDialog(monitor.status == BlueDevice.STATUS_CONNECTING)
         when (monitor.status) {
             BlueDevice.STATUS_UNCONNECTED -> {
+                showLoadingDialog(false)
                 switchNoDeviceUI(true)
                 updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
             }
             BlueDevice.STATUS_CONNECTING -> {
+                showLoadingDialog(true)
                 switchNoDeviceUI(true)
                 updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
             }
