@@ -250,6 +250,8 @@ android {
     androidExtensions {
         experimental = true
     }
+
+   // useLibrary 'org.apache.http.legacy'
 }
 
 static def formatDate() {
@@ -294,9 +296,9 @@ dependencies {
     implementation 'android.arch.lifecycle:common-java8:1.1.1'
 
     // LeanCloud 基础包
-    implementation 'cn.leancloud.android:avoscloud-sdk:v4.6.7'
+    implementation 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
     // 推送与实时聊天需要的包
-    implementation('cn.leancloud.android:avoscloud-push:v4.6.7@aar') { transitive = true }
+    implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
 
     //support emoji
     implementation 'com.android.support:support-emoji-appcompat:' + rootProject.ext.supportVersion
