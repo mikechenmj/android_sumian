@@ -31,6 +31,8 @@ class DiaryFragment : BaseFragment() {
         private var T1 = DiaryFragment::class.java.simpleName + ".TAB_1"
     }
 
+    private var mCurrentPosition = -1;
+
     override fun initWidget() {
         super.initWidget()
         DeviceManager.getMonitorLiveData().observe(this, Observer {
@@ -63,10 +65,14 @@ class DiaryFragment : BaseFragment() {
     }
 
     private fun selectTab(position: Int) {
+        if (mCurrentPosition == position) {
+            return
+        }
         tab_sleep_diary.setTextColor(ColorCompatUtil.getColor(activity!!, if (position == 0) R.color.white else R.color.white_50))
         tab_monitor_data.setTextColor(ColorCompatUtil.getColor(activity!!, if (position != 0) R.color.white else R.color.white_50))
         v_line_0.visibility = if (position == 0) View.VISIBLE else View.GONE
         v_line_1.visibility = if (position != 0) View.VISIBLE else View.GONE
         switchFragment(if (position == 0) T0 else T1)
+        mCurrentPosition = position
     }
 }

@@ -88,6 +88,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         super.onStart()
         mVersionDelegate.checkVersion(this)
         updateNotificationUnreadCount()
+        DeviceManager.uploadCacheSn()
     }
 
     override fun onResume() {

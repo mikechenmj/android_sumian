@@ -54,12 +54,12 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
         iv_weekly_report.setOnClickListener { WeeklyReportActivity.launch(mSelectedTime) }
         setTvDate(mSelectedTime)
         DeviceManager.getMonitorLiveData().observe(this, Observer {
-            updateSyncingTv(it?.isSyncing == true, DeviceManager.getIsUploadingSleepDataToServerLiveData().value == true)
+            tv_is_syncing_hint.visibility = if(it?.isSyncing == true) View.VISIBLE else View.GONE
         })
-        DeviceManager.getIsUploadingSleepDataToServerLiveData().observe(this, Observer {
-            LogUtils.d("getIsUploadingSleepDataToServerLiveData", DeviceManager.getIsUploadingSleepDataToServerLiveData().value)
-            updateSyncingTv(DeviceManager.getMonitorLiveData().value?.isSyncing == true, it == true)
-        })
+//        DeviceManager.getIsUploadingSleepDataToServerLiveData().observe(this, Observer {
+//            LogUtils.d("getIsUploadingSleepDataToServerLiveData", DeviceManager.getIsUploadingSleepDataToServerLiveData().value)
+//            updateSyncingTv(DeviceManager.getMonitorLiveData().value?.isSyncing == true, it == true)
+//        })
     }
 
     private fun updateSyncingTv(isSyncMonitorData: Boolean, isUpload: Boolean) {
