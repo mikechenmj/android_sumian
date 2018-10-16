@@ -1062,7 +1062,6 @@
     <string name="please_connect_monitor_before_change_bind">请先连接监测仪，再使用换绑功能</string>
     <string name="sleep_version_title">速眠仪固件升级</string>
     <string name="monitor_version_title">监测仪固件升级</string>
-    <string name="sync_sleep_data_to_server_error">获取异常，请联系在线客服咨询反馈</string>
     <string name="set_password">设置密码</string>
     <string name="set_success">设置成功</string>
     <string name="are_sure_2_bind">确定更换绑定？</string>
