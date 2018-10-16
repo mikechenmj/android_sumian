@@ -328,7 +328,7 @@
 
     <!--version-->
     <string name="none_market">"您的手机没有安装应用市场!"</string>
-    <string name="soft_upgrade">软件升级</string>
+    <string name="soft_upgrade">应用版本</string>
     <string name="version_upgrade">版本更新</string>
     <string name="current_version">当前版本号:</string>
     <string name="new_version">最新版本号:</string>
@@ -508,7 +508,7 @@
     <!--<string name="user_info_center">个人信息</string>-->
     <string name="msg_notice_hint">我的消息</string>
     <string name="sleepy_notice_hint">睡眠提醒</string>
-    <string name="firmware_update_notice_hint">版本升级</string>
+    <string name="firmware_update_notice_hint">版本更新</string>
     <string name="sleepy_notice_state_off_hint">未开启</string>
     <string name="unbind_device_hint">确定解除当前绑定的设备?</string>
     <string name="unbind_text_hint">解除绑定</string>

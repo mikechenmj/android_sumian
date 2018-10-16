@@ -61,8 +61,8 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
     @BindView(R.id.iv_notification)
     ImageView mIvNotification;
 
-    @BindView(R.id.siv_customer_service)
-    ImageView mSivKefu;
+    //@BindView(R.id.siv_customer_service)
+    //ImageView mSivKefu;
 
     @BindView(R.id.tips_service)
     PatientServiceTips mTipsService;
@@ -98,7 +98,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
                 .getUnreadCount()
                 .observe(this, unreadCount -> mIvNotification.setActivated(unreadCount != null && unreadCount > 0));
 
-        HwLeanCloudHelper.addOnAdminMsgCallback(this);
+        // HwLeanCloudHelper.addOnAdminMsgCallback(this);
         DeviceManager.INSTANCE.getMonitorLiveData().observe(this, new Observer<BlueDevice>() {
             @Override
             public void onChanged(@android.support.annotation.Nullable BlueDevice blueDevice) {
@@ -177,18 +177,18 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
 
     @Override
     public void onShowMsgDotCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
-        onHideMsgCallback(adminMsgLen, doctorMsgLen, customerMsgLen);
+        // onHideMsgCallback(adminMsgLen, doctorMsgLen, customerMsgLen);
     }
 
     @Override
     public void onHideMsgCallback(int adminMsgLen, int doctorMsgLen, int customerMsgLen) {
-        runOnUiThread(() -> mSivKefu.setImageResource((customerMsgLen > 0) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
+        // runOnUiThread(() -> mSivKefu.setImageResource((customerMsgLen > 0) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
     }
 
     @Override
     public void onEnter(@Nullable String data) {
-        if (mSivKefu != null) {
-            runOnUiThread(() -> mSivKefu.setImageResource((HwLeanCloudHelper.isHaveCustomerMsg()) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
-        }
+        // if (mSivKefu != null) {
+        //    runOnUiThread(() -> mSivKefu.setImageResource((HwLeanCloudHelper.isHaveCustomerMsg()) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
+        // }
     }
 }

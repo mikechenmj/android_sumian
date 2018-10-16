@@ -64,7 +64,12 @@
             android:contentDescription="@null"
             android:foreground="@drawable/bg_material_ripple"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_info_customerservice" />
+            android:src="@drawable/ic_info_customerservice"
+            android:visibility="gone" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_10" />
 
         <com.sumian.sd.widget.tips.PatientServiceTips
             android:id="@+id/tips_service"
