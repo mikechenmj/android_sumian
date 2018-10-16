@@ -221,6 +221,7 @@ class ScanDeviceFragment : BaseFragment() {
         } else {
             hideVgs()
             vg_bt_not_enable.visibility = View.VISIBLE
+            setTitles(R.string.open_bluetooth, R.string.please_turn_on_bluetooth_adapter)
         }
     }
 

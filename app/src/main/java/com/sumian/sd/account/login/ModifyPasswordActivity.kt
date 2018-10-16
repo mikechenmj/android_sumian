@@ -31,8 +31,6 @@ class ModifyPasswordActivity : BaseBackActivity() {
         et_old_password.visibility = if (mHasPassword) View.VISIBLE else View.GONE
         et_password.setHint(if (mHasPassword) R.string.please_set_new_password else R.string.please_set_password)
         et_password_confirm.setHint(if (mHasPassword) R.string.repeat_new_password else R.string.repeat_password)
-        setTitle(R.string.setting_pwd)
-
         btn_confirm.setOnClickListener {
             val oldPassword = et_old_password.getValidText()
             val password = et_password.getValidText()

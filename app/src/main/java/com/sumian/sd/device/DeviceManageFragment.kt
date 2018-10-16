@@ -130,6 +130,8 @@ class DeviceManageFragment : BaseFragment() {
             // 由于监听了蓝牙装填的live data， 蓝牙状态改变会自动update ui
             BluetoothUtil.startActivityForOpenBluetooth(this, REQUEST_CODE_OPEN_BLUETOOTH)
         }
+        monitor_battery_view.setTextSize(14f)
+        sleeper_battery_view.setTextSize(14f)
     }
 
     private fun showUnbindPopup() {

@@ -7,6 +7,7 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.monitorrecord.DailyReportFragmentV2
 import com.sumian.sd.diary.sleeprecord.SleepRecordFragment
 import kotlinx.android.synthetic.main.fragment_diary.*
@@ -32,14 +33,18 @@ class DiaryFragment : BaseFragment() {
 
     override fun initWidget() {
         super.initWidget()
-        AppManager.getAccountViewModel().liveDataToken.observe(this, Observer {
-            val hasDevice = it?.user?.hasDevice() == true
-            vg_tabs.visibility = if (hasDevice) View.VISIBLE else View.GONE
-            tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
+        DeviceManager.getMonitorLiveData().observe(this, Observer {
+            val hasDevice = it != null || AppManager.getAccountViewModel().liveDataToken.value?.user?.hasDevice() == true
+            switchTabs(hasDevice)
         })
         tab_sleep_diary.setOnClickListener { selectTab(0) }
         tab_monitor_data.setOnClickListener { selectTab(1) }
         selectTab(0)
+    }
+
+    private fun switchTabs(hasDevice: Boolean) {
+        vg_tabs.visibility = if (hasDevice) View.VISIBLE else View.GONE
+        tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
     }
 
     private fun switchFragment(tag: String) {
