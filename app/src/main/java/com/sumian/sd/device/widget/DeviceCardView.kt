@@ -127,30 +127,26 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
         if (monitor == null) {
-            showNoDeviceUI()
+            switchNoDeviceUI(true)
+            updateNoDeviceUI(R.drawable.ic_home_icon_adddevice, R.string.add_device, R.string.you_do_not_bind_device_click_add)
         } else {
             if (!isBluetoothEnable) {
-                showBluetoothNotEnableUI()
+                switchNoDeviceUI(true)
+                updateNoDeviceUI(R.drawable.ic_home_icon_bluetooth, R.string.bluetooth_not_open, R.string.please_open_bluetooth_and_connect_monitor)
             } else {
                 showMonitorUI(monitor)
             }
         }
     }
 
-    private fun showNoDeviceUI() {
-        switchNoDeviceUI(true)
-        updateNoDeviceUI(R.drawable.ic_home_icon_adddevice, R.string.add_device, R.string.you_do_not_bind_device_click_add)
-    }
-
-    private fun showBluetoothNotEnableUI() {
-        switchNoDeviceUI(true)
-        updateNoDeviceUI(R.drawable.ic_home_icon_bluetooth, R.string.bluetooth_not_open, R.string.please_open_bluetooth_and_connect_monitor)
-    }
-
     private fun showMonitorUI(monitor: BlueDevice) {
         when (monitor.status) {
-            BlueDevice.STATUS_UNCONNECTED -> updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
+            BlueDevice.STATUS_UNCONNECTED -> {
+                switchNoDeviceUI(true)
+                updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
+            }
             BlueDevice.STATUS_CONNECTING -> {
+                switchNoDeviceUI(true)
                 updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
                 showLoadingDialog(true)
             }

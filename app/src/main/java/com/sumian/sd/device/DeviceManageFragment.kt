@@ -85,6 +85,12 @@ class DeviceManageFragment : BaseFragment() {
 
         override fun onConnectFailed() {
             showRipple(false)
+            SumianAlertDialog(context)
+                    .hideTopIcon(true)
+                    .setTitle(R.string.connect_time_out)
+                    .setMessage(R.string.connect_time_out_message)
+                    .setRightBtn(R.string.confirm, null)
+                    .show()
         }
 
         override fun onConnectSuccess() {
@@ -103,7 +109,6 @@ class DeviceManageFragment : BaseFragment() {
             ripple_view.startAnimation()
         }
         ripple_view.visibility = if (show) View.VISIBLE else View.GONE
-        iv_device_bg.visibility = if (!show) View.VISIBLE else View.GONE
     }
 
     init {
@@ -116,10 +121,7 @@ class DeviceManageFragment : BaseFragment() {
         iv_add_device.setOnClickListener { mHost?.scanForDevice() }
         bt_turn_on_pa.setOnClickListener { DeviceManager.turnOnSleeperPaMode() }
         iv_device.setOnClickListener {
-            if (mMonitor != null) {
-                return@setOnClickListener
-            }
-            if (mMonitor!!.status == BlueDevice.STATUS_UNCONNECTED) {
+            if (mMonitor != null && mMonitor!!.status == BlueDevice.STATUS_UNCONNECTED) {
                 DeviceManager.scanAndConnect(mMonitor!!)
             }
         }
@@ -195,6 +197,7 @@ class DeviceManageFragment : BaseFragment() {
                 }
         iv_device.setImageResource(deviceIvRes)
         iv_device_bg.setImageResource(if (monitor.isSyncing) R.drawable.ic_equip_bg_synchronization else R.drawable.ic_equip_bg)
+        iv_device_bg.visibility = if (monitor.status == BlueDevice.STATUS_CONNECTING) View.GONE else View.VISIBLE
         iv_device.alpha = if (monitor.status == BlueDevice.STATUS_UNCONNECTED) .5f else 1f
         bt_turn_on_pa.visibility = if (monitor.isConnected && !monitor.isSyncing && monitor.isSleeperConnected && !monitor.isSleeperPa) View.VISIBLE else View.GONE
     }
@@ -219,10 +222,15 @@ class DeviceManageFragment : BaseFragment() {
         vg_monitor.alpha = if (monitor.status == BlueDevice.STATUS_UNCONNECTED) .5f else 1f
         vg_sleeper.visibility = if (monitor.status == BlueDevice.STATUS_CONNECTED) View.VISIBLE else View.INVISIBLE
         if (monitor.isSyncing) {
-            if (mRotateAnimator == null || !mRotateAnimator!!.isRunning) {
+            if ((mRotateAnimator == null || !mRotateAnimator!!.isRunning)) {
                 startSyncAnimation()
             }
+        } else {
+            if (mRotateAnimator != null && mRotateAnimator?.isRunning!!) {
+                mRotateAnimator?.cancel()
+            }
         }
+        showRipple(monitor.status == BlueDevice.STATUS_CONNECTING)
     }
 
     private fun updateBottomTv(monitor: BlueDevice) {
