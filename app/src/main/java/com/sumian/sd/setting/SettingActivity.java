@@ -165,6 +165,11 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
     }
 
     private void logout() {
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
+        if (bluePeripheral != null && bluePeripheral.isConnected()) {
+            bluePeripheral.disconnect();
+            bluePeripheral.close();
+        }
         Call<Unit> call = AppManager.getSdHttpService().logout(AVInstallation.getCurrentInstallation().getInstallationId());
         addCall(call);
         call.enqueue(new BaseSdResponseCallback<Unit>() {

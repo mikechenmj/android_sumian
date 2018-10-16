@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import com.sumian.hw.common.util.StreamUtil;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 
@@ -334,10 +335,10 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
         }
         // create and add JobTask
         JobTask jobTask = new JobTask(sleepFile.getAbsolutePath(),
-            sleepDataBean.beginCmd, sleepDataBean.endCmd,
-            sleepDataBean.monitorSn, sleepDataBean.speedSleeperSn,
-            sleepDataBean.receiveStartedTime, sleepDataBean.receiveEndedTime,
-            sleepDataBean.type);
+                sleepDataBean.beginCmd, sleepDataBean.endCmd,
+                sleepDataBean.monitorSn, sleepDataBean.speedSleeperSn,
+                sleepDataBean.receiveStartedTime, sleepDataBean.receiveEndedTime,
+                sleepDataBean.type);
         addAndRunTaskSync(jobTask);
         return true;
     }
@@ -361,10 +362,12 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
     @NonNull
     private String getFileNameByCommand(String endCmd) {
         int dataType = Integer.parseInt(endCmd.substring(4, 8), 16) >> 12;
+        UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
+        int userId = userInfo.id;
         return dataType + "_" + endCmd.substring(10) +
-            "_sn" + AppManager.getDeviceModel().getMonitorSn() +
-            "_" + AppManager.getAccountViewModel().getUserInfo().getId() +
-            ".txt";
+                "_sn" + AppManager.getDeviceModel().getMonitorSn() +
+                "_" + userId +
+                ".txt";
     }
 
     private boolean writeCommandsToFile(List<String> commands, File sleepFile) {
