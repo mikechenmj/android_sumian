@@ -11,17 +11,15 @@ import android.text.format.DateUtils
 import android.view.View
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
 import com.sumian.hw.log.LogManager
-import com.sumian.sd.network.response.SleepDurationReport
-import com.sumian.hw.push.ReportPushManager
 import com.sumian.hw.report.adapter.WeeklyReportAdapter
 import com.sumian.hw.report.calendar.CalendarDialog
 import com.sumian.hw.report.contract.WeeklyReportContact
-import com.sumian.hw.report.presenter.WeeklyReportPresenter
 import com.sumian.hw.report.dialog.SleepAdviceDialog
-import com.sumian.hw.widget.refresh.ActionLoadingDialog
+import com.sumian.hw.report.presenter.WeeklyReportPresenter
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
+import com.sumian.sd.network.response.SleepDurationReport
 import com.sumian.sd.theme.three.base.SkinBaseFragment
 import kotlinx.android.synthetic.main.hw_fragment_week_report.*
 import java.util.*
@@ -73,10 +71,6 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
     private var mNeedScrollToBottom: Boolean = false
     private var mCurrentPosition: Int = 0
 
-    private val mActionLoadingDialog: ActionLoadingDialog  by lazy {
-        ActionLoadingDialog()
-    }
-
     private var mNeedUpdateWhenLoad: Boolean = false
 
     override fun getLayoutId(): Int {
@@ -101,6 +95,8 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
         super.initData()
         initReceiver()
         initAdapter()
+        val currentTimeMillis = System.currentTimeMillis()
+        mPresenter.getInitReports(currentTimeMillis)
     }
 
     override fun initPresenter() {
@@ -184,17 +180,8 @@ class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyRe
         SleepAdviceDialog(activity!!).setAdvice(mAdapter.getItem(position).advice).show()
     }
 
-    override fun onBegin() {
-//        mActionLoadingDialog.show(activity!!.supportFragmentManager)
-    }
-
     override fun onFinish() {
-        dismissLoadingDialog()
         stopRefreshing()
-    }
-
-    private fun dismissLoadingDialog() {
-//        mActionLoadingDialog.dismiss()
     }
 
     private fun stopRefreshing() {

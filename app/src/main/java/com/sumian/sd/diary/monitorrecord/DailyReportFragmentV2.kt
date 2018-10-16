@@ -59,6 +59,15 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
         queryDiary(mSelectedTime)
     }
 
+    override fun showLoading() {
+        //super.showLoading()
+    }
+
+    override fun dismissLoading() {
+        //super.dismissLoading()
+    }
+
+
     private fun queryDiary(time: Long) {
         showLoading()
         val call = AppManager.getHwHttpService().getSleepReport((time / 1000).toInt(), 1, 1)
@@ -66,7 +75,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
         call.enqueue(object : BaseSdResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {
             override fun onSuccess(response: BaseResultResponse<DailyReport, DailyMeta>?) {
                 val data = response?.data
-                if (data != null && data.size > 0) updateDailyReport(data.get(0))
+                if (data != null && data.size > 0) updateDailyReport(data[0])
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -75,7 +84,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
 
             override fun onFinish() {
                 super.onFinish()
-                dismissLoading()
+                refresh.isRefreshing = false
             }
         })
     }
@@ -89,7 +98,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
                 }
             })
             mCalendarPopup?.setOnDateClickListener(this)
-            mCalendarPopup?.setOnDismissListener({ iv_date_arrow.setActivated(false) })
+            mCalendarPopup?.setOnDismissListener { iv_date_arrow.isActivated = false }
             mCalendarPopup?.setSelectDayTime(mSelectedTime)
             mCalendarPopup?.showAsDropDown(rl_toolbar, 0, resources.getDimension(R.dimen.space_10).toInt())
         }
