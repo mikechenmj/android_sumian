@@ -61,6 +61,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val monitorCache = getCachedMonitor()
         setMonitorToLiveData(monitorCache)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
+        uploadDeviceSns()
     }
 
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
@@ -517,7 +518,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     private fun onLastDeviceDataReceived() {
         saveCacheFile()
-        uploadDeviceSns()
         turnOffMonitoringModeIfNeeded()
     }
 

@@ -62,7 +62,6 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
                 tv_bottom_hint.setBackgroundColor(ColorCompatUtil.getColor(activity!!, R.color.b5_color))
             }
         })
-        tv_bottom_hint.setOnClickListener { EventBusUtil.postEvent(UploadSleepDataFailedEvent("jjj")) }
     }
 
     override fun initData() {

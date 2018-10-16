@@ -63,6 +63,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         sleep_prescription_view.setOnClickListener { SleepPrescriptionSettingActivity.launch() }
         iv_avatar.setOnClickListener { onAvatarClick() }
         device_card_view.registerLifecycleOwner(this)
+        DeviceManager.tryToConnectCacheMonitor()
         device_card_view.mHost = object : DeviceCardView.Host {
             override fun scanForDevice() {
                 ScanDeviceActivity.startForResult(this@HomepageFragment, REQUEST_CODE_SCAN_DEVICE)
@@ -180,7 +181,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     override fun onEnter(data: String?) {
-        DeviceManager.tryToConnectCacheMonitor()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

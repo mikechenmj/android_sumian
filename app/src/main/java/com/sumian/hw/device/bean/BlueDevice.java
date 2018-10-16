@@ -114,7 +114,7 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     }
 
     public boolean isConnected() {
-        return status != STATUS_UNCONNECTED && status != STATUS_CONNECTING;
+        return status == STATUS_CONNECTED;
     }
 
     public boolean isSleeperConnected() {

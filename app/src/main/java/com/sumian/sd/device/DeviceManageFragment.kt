@@ -10,6 +10,7 @@ import android.widget.PopupWindow
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
+import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.sd.R
 import com.sumian.sd.device.widget.SyncAnimatorUtil
@@ -233,6 +234,8 @@ class DeviceManageFragment : BaseFragment() {
             }
         }
         showRipple(monitor.status == BlueDevice.STATUS_CONNECTING)
+        tv_monitor.setTextColor(ColorCompatUtil.getColor(activity!!, if (monitor.isConnected) R.color.t3_color else R.color.t2_color))
+        tv_sleeper.setTextColor(ColorCompatUtil.getColor(activity!!, if (monitor.isSleeperConnected) R.color.t3_color else R.color.t2_color))
     }
 
     private fun updateBottomTv(monitor: BlueDevice) {
