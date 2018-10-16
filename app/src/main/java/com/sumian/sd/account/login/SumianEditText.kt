@@ -88,4 +88,8 @@ class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayou
         mStateChangeListener = stateChangedListener
     }
 
+    fun setHint(hintRes: Int) {
+        et.setHint(hintRes)
+    }
+
 }

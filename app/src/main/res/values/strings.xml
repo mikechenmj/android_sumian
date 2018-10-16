@@ -1063,5 +1063,7 @@
     <string name="sleep_version_title">速眠仪固件升级</string>
     <string name="monitor_version_title">监测仪固件升级</string>
     <string name="sync_sleep_data_to_server_error">获取异常，请联系在线客服咨询反馈</string>
+    <string name="set_password">设置密码</string>
+    <string name="set_success">设置成功</string>
     <!-- Hw end-->
 </resources>
