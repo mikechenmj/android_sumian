@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="345dp"
+    android:layout_height="@dimen/space_180"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_version_title"
+        style="@style/text_t3_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/space_20"
+        android:gravity="center"
+        android:text="断开监测仪，连接速眠仪"
+        tools:ignore="HardcodedText" />
+
+    <View
+        style="@style/HorizontalDividerLine"
+        android:layout_height="1dp"
+        android:background="@color/l1_color_day" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_90">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_90"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <ImageView
+                android:layout_width="@dimen/space_26"
+                android:layout_height="@dimen/space_36"
+                android:contentDescription="@null"
+                android:src="@drawable/firmwareupgrade_icon_phone" />
+
+            <View
+                android:layout_width="@dimen/dp_4"
+                android:layout_height="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/space_24"
+                android:layout_marginRight="@dimen/space_5"
+                android:background="@drawable/shape_version_dot"
+                tools:ignore="RtlHardcoded" />
+
+            <View
+                android:layout_width="@dimen/dp_4"
+                android:layout_height="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginRight="@dimen/space_5"
+                android:background="@drawable/shape_version_dot" />
+
+            <View
+                android:layout_width="@dimen/dp_4"
+                android:layout_height="@dimen/dp_4"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginRight="@dimen/space_24"
+                android:background="@drawable/shape_version_dot_2"
+                tools:ignore="RtlHardcoded" />
+
+            <ImageView
+                android:layout_width="@dimen/space_32"
+                android:layout_height="@dimen/space_40"
+                android:contentDescription="@null"
+                android:src="@drawable/firmwareupgrade_icon_equip" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

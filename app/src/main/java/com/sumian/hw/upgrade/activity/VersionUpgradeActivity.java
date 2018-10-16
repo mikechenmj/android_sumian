@@ -19,6 +19,7 @@ import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.common.util.UiUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
+import com.sumian.hw.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.hw.upgrade.dialog.VersionDialog;
 import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
 import com.sumian.sd.R;
@@ -66,6 +67,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     private VersionUpgradeContract.Presenter mPresenter;
 
     private VersionDialog mVersionDialog;
+    private Version2ConnectingDialog mVersion2ConnectingDialog;
 
     private int mVersionType;
     private boolean mIsLatestVersion;
@@ -195,6 +197,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                         return;
                     }
                     if (mVersionType == VERSION_TYPE_MONITOR && this.monitorBatteryLow()) {
+                        initDialog(0x01);
                         LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
                         showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
                         return;
@@ -202,11 +205,10 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                     if (mVersionType == VERSION_TYPE_SLEEPY && this.sleepyBatterLow()) {
                         LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
                         showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
-                        return;
+                        // return;
                     }
 
                     ToastHelper.show(R.string.firmware_upgrade_ing_hint);
-                    initDialog(0x01);
                 }
                 mDfuCount++;
                 mPresenter.upgrade(mVersionType);
@@ -288,6 +290,21 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     public void onScanFailed(String deviceAddress) {
         mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
         onError(deviceAddress, 0, DfuBaseService.ERROR_TYPE_OTHER, "未扫描到 对应 mac 地址的dfu 模式的并且有广播的设备");
+    }
+
+    @Override
+    public void showSleepConnectingDialog() {
+        Version2ConnectingDialog version2ConnectingDialog = Version2ConnectingDialog.newInstance();
+        version2ConnectingDialog.show(getSupportFragmentManager(), Version2ConnectingDialog.class.getSimpleName());
+        this.mVersion2ConnectingDialog = version2ConnectingDialog;
+    }
+
+    @Override
+    public void dismissSleepConnectingDialog() {
+        if (mVersion2ConnectingDialog != null) {
+            mVersion2ConnectingDialog.dismissAllowingStateLoss();
+        }
+        initDialog(0x01);
     }
 
     @Override

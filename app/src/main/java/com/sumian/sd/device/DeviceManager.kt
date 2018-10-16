@@ -630,8 +630,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         } else {
             mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_CONNECTED
             peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100)
-            peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 300)
-            peripheral.writeDelay(BlueCmd.cSleepyMac(), 500)
+            //peripheral.writeDelay(BlueCmd.cSleepyMac(), 500)
+            peripheral.writeDelay(BlueCmd.cSleepyBattery(), 700)
         }
         notifyMonitorChange()
         AppManager.getDeviceModel().sleepyConnectState = sleepyConnectState
@@ -763,12 +763,12 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         peripheral.writeDelay(BlueCmd.cSleepyConnectedState(), 800)
         peripheral.writeDelay(BlueCmd.cSleepyBattery(), 1000)
         peripheral.writeDelay(BlueCmd.cMonitorSnNumber(), 1200)
-        peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 1400)
-        peripheral.writeDelay(BlueCmd.cSleepyMac(), 1600)
-        peripheral.writeDelay(BlueCmd.cMonitorFirmwareVersion(), 1800)
-        peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 2000)
-        peripheral.writeDelay(BlueCmd.cUserInfo(), 2200)
-        peripheral.writeDelay(BlueCmd.cSleepData(), 2400)
+        //peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 1400)
+        peripheral.writeDelay(BlueCmd.cSleepyMac(), 1400)
+        peripheral.writeDelay(BlueCmd.cMonitorFirmwareVersion(), 1600)
+        peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 1800)
+        peripheral.writeDelay(BlueCmd.cUserInfo(), 2000)
+        peripheral.writeDelay(BlueCmd.cSleepData(), 2200)
         mPackageNumber = 0
         LogManager.appendMonitorLog("连接成功,开始初始化同步监测仪与速眠仪相关状态数据 " + peripheral.name)
     }

@@ -29,6 +29,10 @@ public interface VersionUpgradeContract {
 
         void onScanFailed(String deviceAddress);
 
+        void showSleepConnectingDialog();
+
+        void dismissSleepConnectingDialog();
+
     }
 
     interface Presenter extends HwBasePresenter {

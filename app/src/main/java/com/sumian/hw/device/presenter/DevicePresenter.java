@@ -16,12 +16,11 @@ import com.sumian.hw.command.BlueCmd;
 import com.sumian.hw.common.util.BlueByteUtil;
 import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.common.util.StreamUtil;
-import com.sumian.hw.device.contract.DeviceContract;
-import com.sumian.hw.device.pattern.SyncPatternManager;
-import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.device.bean.BlueDevice;
+import com.sumian.hw.device.contract.DeviceContract;
 import com.sumian.hw.device.model.DeviceModel;
 import com.sumian.hw.device.wrapper.BlueDeviceWrapper;
+import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
@@ -728,7 +727,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
                 mMonitor.speedSleeper.status = BlueDevice.STATUS_CONNECTED;
             }
             peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 100);
-            peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 300);
+            //peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 300);
             peripheral.writeDelay(BlueCmd.cSleepyMac(), 500);
         }
         notifyDeviceDataChanged();
@@ -906,7 +905,7 @@ public class DevicePresenter implements DeviceContract.Presenter, BlueAdapterCal
         peripheral.writeDelay(BlueCmd.cSleepySnNumber(), 1400);
         peripheral.writeDelay(BlueCmd.cSleepyMac(), 1600);
         peripheral.writeDelay(BlueCmd.cMonitorFirmwareVersion(), 1800);
-        peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 2000);
+        //peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 2000);
         peripheral.writeDelay(BlueCmd.cUserInfo(), 2200);
         peripheral.writeDelay(BlueCmd.cSleepData(), 2400);
         mPackageNumber = 0;
