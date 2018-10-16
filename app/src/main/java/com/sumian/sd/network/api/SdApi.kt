@@ -346,4 +346,8 @@ interface SdApi {
 
     @GET("diary-evaluation/latest")
     fun getLatestDiaryEvaluation(@Query("include") include: String? = null): Call<DiaryEvaluationData>
+
+    @FormUrlEncoded
+    @POST("feedback")
+    fun feedback(@Field("content") content: String, @Field("suffix") suffix: String): Call<com.sumian.hw.oss.bean.OssResponse>
 }

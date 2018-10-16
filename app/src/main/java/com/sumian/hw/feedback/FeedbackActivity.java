@@ -104,7 +104,7 @@ public class FeedbackActivity extends HwBaseActivity {
 
             LogManager.appendPhoneUSerAgentLog();
 
-            AppManager.getHwHttpService()
+            AppManager.getSdHttpService()
                     .feedback(input, "txt")
                     .enqueue(new BaseSdResponseCallback<OssResponse>() {
 
