@@ -102,7 +102,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
                 new SumianAlertDialog(this)
                         .hideTopIcon(true)
                         .setCancelable(true)
-                        .setCloseIconVisible(true)
+                        .setCloseIconVisible(false)
                         .setTitle(R.string.are_sure_2_bind)
                         .setMessage("此功能适用于监测仪或速眠仪发生故障，更换设备后重新绑定速眠仪的操作，是否继续？")
                         .setLeftBtn(R.string.cancel, null)

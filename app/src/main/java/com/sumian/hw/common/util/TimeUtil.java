@@ -334,21 +334,16 @@ public final class TimeUtil {
         }
 
         List<SpannableString> charSequenceList = new ArrayList<>();
-        CharSequence[] charSequences;
         int hour = TimeUtil.getHourFromSecond(second);
         int minute = TimeUtil.getMinuteFromSecond(second);
-        charSequences = new CharSequence[4];
+        CharSequence[] charSequences = new CharSequence[4];
         if (hour != 0) {
             charSequences[0] = TextUtil.getSpannableString(Math.abs(hour), numberSizeInPx);
             charSequences[1] = TextUtil.getSpannableString("小时", unitSizeInPx);
         }
         charSequences[2] = TextUtil.getSpannableString(Math.abs(minute), numberSizeInPx);
         charSequences[3] = TextUtil.getSpannableString("分", unitSizeInPx);
-        if (hour > 0) {
-            return TextUtils.concat(charSequences);
-        } else {
-            return TextUtils.concat(charSequences[2], charSequences[3]);
-        }
+        return TextUtils.concat(charSequences);
     }
 
     public static String secondToHHMM(int second) {
