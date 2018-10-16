@@ -108,6 +108,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         super.initWidget();
         TitleBar titleBar = findViewById(R.id.title_bar);
         titleBar.setOnBackClickListener(this);
+        titleBar.setTitle(mVersionType == VERSION_TYPE_MONITOR ? "监测仪升级" : "速眠仪升级");
 
         mIvUpgrade = findViewById(R.id.iv_upgrade);
         mTvVersionLatest = findViewById(R.id.tv_version_latest);

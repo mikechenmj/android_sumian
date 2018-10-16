@@ -3,7 +3,6 @@ package com.sumian.sd.account.sheet
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import butterknife.OnClick
 import cn.carbswang.android.numberpickerview.library.NumberPickerView
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
@@ -66,11 +65,11 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.Vi
         picker_two.setOnScrollListener(this)
 
         picker_three.setOnScrollListener(this)
+        tv_sure.setOnClickListener(this)
 
         mPresenter.transformTitle(mModifyKey)
     }
 
-    @OnClick(R.id.tv_sure)
     override fun onClick(v: View?) {
         val modifyInfo = mPresenter.transformModify(mModifyKey, picker_one, picker_two, picker_three)
         mPresenter.improveUserProfile(mModifyKey, modifyInfo)
