@@ -4,6 +4,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.Utils;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.setting.contract.LogoutContract;
@@ -53,8 +54,9 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.tv_logout) {
+        int id = v.getId();
+        if (id == R.id.tv_logout) {
+            AppManager.getJobScheduler().release(Utils.getApp().getApplicationContext());
             BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral != null && bluePeripheral.isConnected()) {
                 bluePeripheral.disconnect();
@@ -62,7 +64,7 @@ public class LogoutBottomSheet extends BottomSheetView implements View.OnClickLi
             }
             mPresenter.doLogout();
             dismiss();
-        } else if (i == R.id.tv_cancel) {
+        } else if (id == R.id.tv_cancel) {
             dismiss();
         }
     }
