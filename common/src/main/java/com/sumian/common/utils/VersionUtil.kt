@@ -25,6 +25,7 @@ class VersionUtil {
             return false
         }
 
+        @JvmStatic
         fun hasNewVersion(latestVersion: List<String>, currentVersion: List<String>): Boolean {
             if (currentVersion.size != latestVersion.size) {
                 return true

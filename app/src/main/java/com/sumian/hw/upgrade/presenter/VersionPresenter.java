@@ -114,7 +114,6 @@ public class VersionPresenter implements VersionContract.Presenter {
     }
 
     private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
-        if (view == null) return;
         boolean isConnected;
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (versionType == MONITOR_VERSION_TYPE) {
@@ -124,6 +123,7 @@ public class VersionPresenter implements VersionContract.Presenter {
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
+                //if (VersionUtil.hasNewVersion(Arrays.asList(versionInfo.getVersion().split(".")), Arrays.asList(currentVersionInfo.split(".")))) {
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
 
                     versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
@@ -151,9 +151,13 @@ public class VersionPresenter implements VersionContract.Presenter {
         }
 
         if (versionType == MONITOR_VERSION_TYPE) {
-            view.onSyncMonitorCallback(versionInfo);
+            if (view != null) {
+                view.onSyncMonitorCallback(versionInfo);
+            }
         } else {
-            view.onSyncSleepyCallback(versionInfo);
+            if (view != null) {
+                view.onSyncSleepyCallback(versionInfo);
+            }
         }
     }
 

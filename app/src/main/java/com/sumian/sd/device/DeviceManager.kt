@@ -593,10 +593,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val monitorFirmwareVersionTwo = Integer.parseInt(cmd.substring(8, 10), 16)
         val monitorFirmwareVersionThree = Integer.parseInt(cmd.substring(10, 12), 16)
         val monitorFirmwareVersion = (monitorFirmwareVersionOne).toString() + "." + monitorFirmwareVersionTwo + "." + monitorFirmwareVersionThree
-        LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息$monitorFirmwareVersion  cmd=$cmd")
         mMonitorLiveData.value?.version = monitorFirmwareVersion
         AppManager.getDeviceModel().monitorVersion = monitorFirmwareVersion
         notifyMonitorChange()
+        LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息$monitorFirmwareVersion  cmd=$cmd")
     }
 
     private fun receiveRequestSleepDataResponse(cmd: String) {

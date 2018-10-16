@@ -235,6 +235,16 @@ public class SumianAlertDialog {
         mDialog.show();
     }
 
+    public void hide() {
+        if (mDialog.isShowing()) {
+            mDialog.cancel();
+        }
+    }
+
+    public boolean isShowing() {
+        return mDialog.isShowing();
+    }
+
     public SumianAlertDialog setCancelable(boolean cancelable) {
         mDialog.setCancelable(cancelable);
         return this;

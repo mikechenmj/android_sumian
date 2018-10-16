@@ -26,36 +26,43 @@
     <application>
         <activity
             android:name="com.hyphenate.helpdesk.easeui.ui.ShowBigImageActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <activity
             android:name="com.hyphenate.helpdesk.easeui.ui.ShowNormalFileActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <activity
             android:name="com.hyphenate.helpdesk.easeui.ui.ShowVideoActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
         <activity
             android:name=".easeui.ui.BaseChatActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|navigation"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
         <!-- choose video -->
         <activity
             android:name="com.hyphenate.helpdesk.easeui.ui.ImageGridActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.hyphenate.helpdesk.easeui.ui.RecorderVideoActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity
             android:name=".easeui.ui.SatisfactionActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" />
 
