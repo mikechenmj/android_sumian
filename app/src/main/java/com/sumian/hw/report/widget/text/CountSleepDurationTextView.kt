@@ -9,6 +9,7 @@ import android.text.style.AbsoluteSizeSpan
 import android.util.AttributeSet
 import android.widget.TextView
 import com.qmuiteam.qmui.util.QMUISpanHelper
+import com.sumian.hw.common.util.TextUtil
 import com.sumian.hw.common.util.TimeUtil
 import com.sumian.sd.R
 
@@ -42,13 +43,19 @@ class CountSleepDurationTextView : TextView {
      * 设置统计的睡眠时间长度
      */
     fun setDuration(second: Int?) {
-        text = if (second == null || second == 0) {
-            //val drawable = App.getAppContext().resources.getDrawable(R.drawable.bg_text_t5)
-            defaultDrawable?.setTint(currentTextColor)
-            val charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", defaultDrawable)
-            TextUtils.concat(charSequence, " ")
-        } else {
-            TimeUtil.formatSleepDurationText(second, numberTextSize, unitTextSize)
+        text = when (second) {
+            null -> {
+                //val drawable = App.getAppContext().resources.getDrawable(R.drawable.bg_text_t5)
+                defaultDrawable?.setTint(currentTextColor)
+                val charSequence = QMUISpanHelper.generateSideIconText(false, 0, " ", defaultDrawable)
+                TextUtils.concat(charSequence, " ")
+            }
+            0 -> {
+                val numberSize = resources.getDimensionPixelSize(R.dimen.font_22)
+                val unitSize = resources.getDimensionPixelSize(R.dimen.font_12)
+                TextUtils.concat(TextUtil.getSpannableString(0, numberSize), TextUtil.getSpannableString("分钟", unitSize))
+            }
+            else -> TimeUtil.formatSleepDurationText(second, numberTextSize, unitTextSize)
         }
     }
 

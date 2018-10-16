@@ -338,7 +338,7 @@ public final class TimeUtil {
         int hour = TimeUtil.getHourFromSecond(second);
         int minute = TimeUtil.getMinuteFromSecond(second);
         charSequences = new CharSequence[4];
-        if (hour > 0) {
+        if (hour != 0) {
             charSequences[0] = TextUtil.getSpannableString(Math.abs(hour), numberSizeInPx);
             charSequences[1] = TextUtil.getSpannableString("小时", unitSizeInPx);
         }
