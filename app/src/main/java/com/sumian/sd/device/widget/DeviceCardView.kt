@@ -128,6 +128,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
         if (monitor == null) {
             switchNoDeviceUI(true)
+            showLoadingDialog(false)
             updateNoDeviceUI(R.drawable.ic_home_icon_adddevice, R.string.add_device, R.string.you_do_not_bind_device_click_add)
         } else {
             if (!isBluetoothEnable) {
