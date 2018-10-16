@@ -29,13 +29,12 @@
     <LinearLayout
         android:id="@+id/vg_no_device"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <TextView
             style="@style/text_t1_16"
@@ -79,12 +78,11 @@
     <LinearLayout
         android:id="@+id/vg_bt_not_enable"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_bt"
@@ -99,77 +97,106 @@
             android:text="@string/bluetooth_not_enable" />
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/vg_scan"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:visibility="visible">
 
-            <com.sumian.hw.widget.ripple.RippleScanningView
-                android:id="@+id/ripple_view"
-                android:layout_width="@dimen/space_200"
-                android:layout_height="@dimen/space_200"
-                android:layout_gravity="center"
-                android:visibility="visible" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="60dp">
 
-            <ImageView
-                android:id="@+id/iv_device"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_equip_icon_monitor"
-                android:visibility="gone"
+                <com.sumian.hw.widget.ripple.RippleScanningView
+                    android:id="@+id/ripple_view"
+                    android:layout_width="@dimen/space_200"
+                    android:layout_height="@dimen/space_200"
+                    android:layout_gravity="center"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_equip_icon_monitor"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/bt_confirm"
+                style="@style/SumianButton"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:text="@string/confirm_bind"
+                android:visibility="invisible"
                 tools:visibility="visible" />
+
         </FrameLayout>
 
-        <Button
-            android:id="@+id/bt_confirm"
-            style="@style/SumianButton"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:text="@string/confirm_bind"
-            android:visibility="invisible"
-            tools:visibility="visible" />
+        <LinearLayout
+            android:id="@+id/vg_scan_more_tvs"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-    </FrameLayout>
+            <TextView
+                style="@style/text_t2_13"
+                android:text="@string/is_not_this_device" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/vg_scan_more"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <TextView
-            style="@style/text_t2_13"
-            android:text="@string/is_not_this_device" />
-
-        <TextView
-            android:id="@+id/tv_scan_more"
-            style="@style/text_t2_13"
-            android:text="@string/search_more_u"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="" />
+            <TextView
+                android:id="@+id/tv_scan_more"
+                style="@style/text_t2_13"
+                android:text="@string/search_more_u"
+                android:textColor="@color/colorPrimary" />
+        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/vg_device_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            tools:visibility="visible">
+
+            <TextView
+                style="@style/text_t2_13"
+                android:text="@string/do_not_see_your_device" />
+
+            <TextView
+                android:id="@+id/tv_rescan"
+                style="@style/text_t2_13"
+                android:text="@string/re_scan_u"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
