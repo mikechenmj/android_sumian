@@ -62,7 +62,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val monitorCache = getCachedMonitor()
         setMonitorToLiveData(monitorCache)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
-        uploadDeviceSns()
+        uploadDeviceSns(monitorCache)
         mIsUploadingSleepDataToServerLiveData.value = false
     }
 
@@ -530,19 +530,24 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
     }
 
-    private fun uploadDeviceSns() {
+    private fun uploadDeviceSns(monitorCache: BlueDevice?) {
         val map = HashMap<String, String>()
-        getMonitorSn()?.let { map.put("monitor_sn", it) }
-        getSleeperSn()?.let { map.put("sleeper_sn", it) }
-        AppManager.getSdHttpService().modifyUserProfile(map).enqueue(object : BaseSdResponseCallback<UserInfo>() {
-            override fun onSuccess(response: UserInfo?) {
-                LogUtils.d(response)
-            }
+        val monitorSn = monitorCache?.sn
+        monitorSn?.let { map.put("monitor_sn", it) }
+        val sleeperSn = monitorCache?.speedSleeper?.sn
+        sleeperSn?.let { map.put("sleeper_sn", it) }
+        if (monitorSn != null || sleeperSn != null) {
+            AppManager.getSdHttpService().modifyUserProfile(map).enqueue(object : BaseSdResponseCallback<UserInfo>() {
+                override fun onSuccess(response: UserInfo?) {
+                    LogUtils.d(response)
+                    AppManager.getAccountViewModel().updateUserInfo(response)
+                }
 
-            override fun onFailure(errorResponse: ErrorResponse) {
-                LogUtils.d(errorResponse.message)
-            }
-        })
+                override fun onFailure(errorResponse: ErrorResponse) {
+                    LogUtils.d(errorResponse.message)
+                }
+            })
+        }
     }
 
     private fun receiveSleeperSnInfo(data: ByteArray, cmd: String) {
@@ -898,5 +903,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     fun getIsUploadingSleepDataToServerLiveData(): MutableLiveData<Boolean> {
         return mIsUploadingSleepDataToServerLiveData
+    }
+
+    fun uploadCacheSn() {
+        val monitorCache = getCachedMonitor()
+        uploadDeviceSns(monitorCache)
     }
 }
