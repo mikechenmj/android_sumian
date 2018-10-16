@@ -80,6 +80,9 @@ interface SdApi {
     @PATCH("user/profile")
     fun modifyUserProfile(@FieldMap map: MutableMap<String, String>): Call<UserInfo>
 
+    /**
+     * oldPassword 如果没设置过密码可传入null
+     */
     @FormUrlEncoded
     @PATCH("user/password")
     fun modifyPassword(@Field("old_password") oldPassword: String?, @Field("password") password: String, @Field("password_confirmation") passwordConfirm: String): Call<UserInfo>

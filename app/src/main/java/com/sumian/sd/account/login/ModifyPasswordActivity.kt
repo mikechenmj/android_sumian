@@ -22,15 +22,21 @@ class ModifyPasswordActivity : BaseBackActivity() {
         return R.layout.activity_modify_password
     }
 
+    private val mHasPassword = AppManager.getAccountViewModel().userInfo.hasPassword
+
     override fun initWidget() {
         super.initWidget()
+        setTitle(R.string.set_password)
+        et_old_password.visibility = if (mHasPassword) View.VISIBLE else View.GONE
+        et_password.setHint(if (mHasPassword) R.string.please_set_new_password else R.string.please_set_password)
+        et_password_confirm.setHint(if (mHasPassword) R.string.repeat_new_password else R.string.repeat_password)
         setTitle(R.string.setting_pwd)
 
         btn_confirm.setOnClickListener {
             val oldPassword = et_old_password.getValidText()
             val password = et_password.getValidText()
             val passwordConfirm = et_password_confirm.getValidText()
-            if (!InputCheckUtil.isPasswordValid(oldPassword)) {
+            if (mHasPassword && !InputCheckUtil.isPasswordValid(oldPassword)) {
                 InputCheckUtil.toastPasswordInvalidate()
                 return@setOnClickListener
             }
@@ -49,19 +55,28 @@ class ModifyPasswordActivity : BaseBackActivity() {
                 return@setOnClickListener
             }
 
-            val call = AppManager.getSdHttpService().modifyPassword(oldPassword, password!!, passwordConfirm!!)
-            addCall(call)
-            call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
-                override fun onSuccess(response: UserInfo?) {
-                    AppManager.getAccountViewModel().updateUserInfo(response)
-                    ToastUtils.showShort(R.string.modify_success)
-                    finish()
-                }
-
-                override fun onFailure(errorResponse: ErrorResponse) {
-                    ToastUtils.showShort(errorResponse.message)
-                }
-            })
+            if (mHasPassword) {
+                changePassword(oldPassword, password, passwordConfirm)
+            } else {
+                changePassword(null, password, passwordConfirm)
+            }
         }
+    }
+
+
+    private fun changePassword(oldPassword: String?, password: String?, passwordConfirm: String?) {
+        val call = AppManager.getSdHttpService().modifyPassword(oldPassword, password!!, passwordConfirm!!)
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onSuccess(response: UserInfo?) {
+                AppManager.getAccountViewModel().updateUserInfo(response)
+                ToastUtils.showShort(R.string.set_success)
+                finish()
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(errorResponse.message)
+            }
+        })
     }
 }

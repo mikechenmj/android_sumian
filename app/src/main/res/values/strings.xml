@@ -71,7 +71,7 @@
     <string name="zero_money">0.00</string>
     <string name="money_for_month">元/月</string>
     <string name="join">加入</string>
-    <string name="re_scan">重新扫描</string>
+    <string name="re_scan">重新搜索</string>
     <string name="pay">支付</string>
     <string name="advisory_one">咨询费用:</string>
     <string name="pay_money">支付金额</string>
@@ -1065,6 +1065,8 @@
     <string name="are_sure_2_bind">确定更换绑定？</string>
     <string name="setting_pwd">设置密码</string>
     <string name="sync_sleep_data_to_server_error">获取异常，请联系在线客服咨询反馈</string>
+    <string name="set_password">设置密码</string>
+    <string name="set_success">设置成功</string>
     <string name="sleep_version_message">速眠仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
     <string name="monitor_version_message">监测仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
     <!-- Hw end-->
