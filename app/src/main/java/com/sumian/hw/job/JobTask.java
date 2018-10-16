@@ -28,6 +28,8 @@ import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.event.EventBusUtil;
+import com.sumian.sd.event.UploadSleepDataFailedEvent;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 
 import org.jetbrains.annotations.NotNull;
@@ -213,7 +215,7 @@ public class JobTask implements Serializable, Cloneable {
                             String errors = jsonObject.getString("errors");
                             OssTransDataError ossTransDataError = JSON.parseObject(errors, OssTransDataError.class);
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功--但出现错误信息  ossTransDataError=" + ossTransDataError.toString());
-
+                            EventBusUtil.postEvent(new UploadSleepDataFailedEvent("该组透传数据 oss服务上传成功--但出现错误信息  ossTransDataError=\" + ossTransDataError.toString()"));
                             AppManager.getReportModel().notifySyncStatus(0xff);
 
                         } else {

@@ -174,7 +174,7 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
     }
 
     private fun getUrlToken(): String {
-        return "token=" + getToken()!!
+        return "token=" + getToken()
     }
 
     protected fun getToken(): String? {

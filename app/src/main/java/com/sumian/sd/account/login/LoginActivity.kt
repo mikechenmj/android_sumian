@@ -4,9 +4,9 @@ import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
-import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.utils.StatusBarUtil
@@ -40,8 +40,8 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         }
         bt_login.setOnClickListener { onLoginClick() }
         iv_user_agreement.setOnClickListener { onIvUserAgreementClick() }
-        tv_user_agreement.setOnClickListener { SimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_AGREEMENT_URL) }
-        tv_user_privacy_policy.setOnClickListener { SimpleWebActivity.launchWithCompleteUrl(this, BuildConfig.USER_PRIVACY_POLICY_URL) }
+        tv_user_agreement.setOnClickListener { SimpleWebActivity.launch(this, H5Uri.USER_AGREEMENT_URL) }
+        tv_user_privacy_policy.setOnClickListener { SimpleWebActivity.launch(this, H5Uri.USER_POLICY_URL) }
         tv_wechat_login.setOnClickListener { wechatLogin() }
         tv_captcha_login.setOnClickListener { turnOnCaptchaLogin(true) }
         tv_password_login.setOnClickListener { turnOnCaptchaLogin(false) }
