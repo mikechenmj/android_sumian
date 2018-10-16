@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
@@ -50,7 +49,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         private const val KEY_TAB_INDEX = "key_tab_name"
         private const val KEY_TAB_DATA = "key_tab_data"
         private const val REQUEST_CODE_OPEN_NOTIFICATION = 1
-        private var mCurrentPosition = -1
+        private var mCurrentPosition = TAB_INVALID
 
         fun launch(tab: Int, tabData: String? = null) {
             ActivityUtils.startActivity(getLaunchIntentForTab(tab, tabData))
@@ -69,7 +68,6 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
             DiaryFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
-    private var mLaunchTab = TAB_INVALID
     private var mLaunchTabData: String? = null
 
     private val mVersionDelegate: VersionDelegate  by lazy {
@@ -122,14 +120,12 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
     }
 
     override fun initBundle(bundle: Bundle) {
-        mLaunchTab = bundle.getInt(KEY_TAB_INDEX)
+        var launchTabPosition = bundle.getInt(KEY_TAB_INDEX, mCurrentPosition)
         mLaunchTabData = bundle.getString(KEY_TAB_DATA)
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        // mLaunchTab会在 initBundle中赋值
-        nav_tab.selectItem(mLaunchTab, true)
+        if (launchTabPosition == TAB_INVALID) {
+            launchTabPosition = 0
+        }
+        nav_tab.selectItem(launchTabPosition, true)
     }
 
     override fun onRelease() {
@@ -205,6 +201,9 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         showFragmentByPosition(position)
         changeStatusBarColorByPosition(position)
         mCurrentPosition = position
+//        if (position == 2) {
+//            invalidToken()
+//        }
     }
 
     private fun showFragmentByPosition(position: Int) {
@@ -278,5 +277,12 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
                     }
                     .show()
         }
+    }
+
+    private fun invalidToken() {
+        val viewModel = AppManager.getAccountViewModel()
+        val token = viewModel.token
+        token.token = "123"
+        viewModel.updateToken(token)
     }
 }
