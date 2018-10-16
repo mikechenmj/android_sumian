@@ -2,7 +2,6 @@ package com.sumian.common.base
 
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.LinearLayout
 import com.sumian.common.R
 import com.sumian.common.widget.TitleBar
@@ -16,7 +15,7 @@ import com.sumian.common.widget.TitleBar
  *
  * desc:
  */
-abstract class BaseBackActivity : BaseActivity(), TitleBar.OnBackClickListener {
+abstract class BaseBackActivity : BaseActivity() {
 
     private val mParent: LinearLayout  by lazy {
         findViewById<LinearLayout>(R.id.lay_child_content_container)
@@ -35,7 +34,7 @@ abstract class BaseBackActivity : BaseActivity(), TitleBar.OnBackClickListener {
     protected abstract fun getChildContentId(): Int
 
     override fun initWidget() {
-        mTitleBar.setOnBackClickListener(this@BaseBackActivity)
+        mTitleBar.setOnBackClickListener { onBackPressed() }
         val childContent = LayoutInflater.from(this).inflate(getChildContentId(), mParent, false)
         this.mParent.addView(childContent)
     }
@@ -43,10 +42,6 @@ abstract class BaseBackActivity : BaseActivity(), TitleBar.OnBackClickListener {
 
     override fun initData() {
 
-    }
-
-    override fun onBack(v: View) {
-        finish()
     }
 
     override fun setTitle(titleId: Int) {

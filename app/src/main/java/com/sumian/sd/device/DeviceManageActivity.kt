@@ -18,10 +18,10 @@ import com.sumian.sd.device.scan.ScanDeviceFragment
 class DeviceManageActivity : BaseBackActivity() {
 
     companion object {
-
         private val FRAGMENT_TAGS = arrayOf(DeviceManageFragment::class.java.simpleName, ScanDeviceFragment::class.java.simpleName)
-
     }
+
+    private var mCurrentFragmentIndex = 0
 
     override fun getChildContentId(): Int {
         return R.layout.activity_device_manage
@@ -36,6 +36,7 @@ class DeviceManageActivity : BaseBackActivity() {
     }
 
     private fun switchFragment(position: Int) {
+        mCurrentFragmentIndex = position
         switchFragment(R.id.vg, supportFragmentManager, FRAGMENT_TAGS, position, object : FragmentUtil.FragmentCreator {
             override fun createFragmentByPosition(position: Int): Fragment {
                 return when (position) {
@@ -78,4 +79,12 @@ class DeviceManageActivity : BaseBackActivity() {
         }
     }
 
+
+    override fun onBackPressed() {
+        if (mCurrentFragmentIndex == 1) {
+            switchFragment(0)
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
