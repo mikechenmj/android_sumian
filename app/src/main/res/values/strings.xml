@@ -1062,5 +1062,7 @@
     <string name="please_connect_monitor_before_change_bind">请先连接监测仪，再使用换绑功能</string>
     <string name="sleep_version_title">速眠仪固件升级</string>
     <string name="monitor_version_title">监测仪固件升级</string>
+    <string name="are_sure_2_bind">确定更换绑定？</string>
+    <string name="setting_pwd">设置密码</string>
     <!-- Hw end-->
 </resources>

@@ -24,7 +24,8 @@
 
     <View
         style="@style/HorizontalDividerLineMarginStart20"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:background="@color/l3_color_day" />
 
     <LinearLayout
         android:id="@+id/vg_no_device"
@@ -196,7 +197,7 @@
                 android:id="@+id/tv_rescan"
                 style="@style/text_t2_13"
                 android:text="@string/re_scan_u"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

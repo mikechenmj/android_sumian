@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_line_visible="visible"
-                app:type_desc="@string/modify_password" />
+                app:type_desc="@string/setting_pwd" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/sdv_clear_cache"

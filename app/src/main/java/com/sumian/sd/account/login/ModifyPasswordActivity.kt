@@ -24,7 +24,7 @@ class ModifyPasswordActivity : BaseBackActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.modify_password)
+        setTitle(R.string.setting_pwd)
 
         btn_confirm.setOnClickListener {
             val oldPassword = et_old_password.getValidText()

@@ -37,7 +37,7 @@
         <com.sumian.sd.widget.nav.NavigationItem
             android:id="@+id/tb_diary"
             style="@style/HorizontalWeight"
-            app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
+            app:tab_icon="@drawable/sd_sel_tab_diary_icon"
             app:tab_text="@string/diary" />
 
         <include layout="@layout/lay_nav_tab_divider" />

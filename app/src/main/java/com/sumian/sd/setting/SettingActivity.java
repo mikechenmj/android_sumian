@@ -98,7 +98,18 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
                     ToastHelper.show(getString(R.string.please_connect_monitor_before_change_bind));
                     return;
                 }
-                QrCodeActivity.show(this);
+
+                new SumianAlertDialog(this)
+                        .hideTopIcon(true)
+                        .setCancelable(true)
+                        .setCloseIconVisible(true)
+                        .setTitle(R.string.are_sure_2_bind)
+                        .setMessage("此功能适用于监测仪或速眠仪发生故障，更换设备后重新绑定速眠仪的操作，是否继续？")
+                        .setLeftBtn(R.string.cancel, null)
+                        .whitenLeft()
+                        .setRightBtn(R.string.sure, v1 -> QrCodeActivity.show(SettingActivity.this))
+                        .show();
+
                 break;
             case R.id.sdv_feedback:
                 FeedbackActivity.show(this);
