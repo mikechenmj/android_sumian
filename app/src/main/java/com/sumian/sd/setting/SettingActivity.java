@@ -95,7 +95,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
             case R.id.sdv_change_bind:
                 BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
                 if (bluePeripheral == null || !bluePeripheral.isConnected()) {
-                    ToastHelper.show(getString(R.string.not_show_monitor_todo));
+                    ToastHelper.show(getString(R.string.please_connect_monitor_before_change_bind));
                     return;
                 }
                 QrCodeActivity.show(this);
