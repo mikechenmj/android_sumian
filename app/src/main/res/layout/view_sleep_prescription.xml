@@ -105,7 +105,6 @@
                 android:drawablePadding="@dimen/space_10"
                 android:textColor="@color/t3_color"
                 android:textSize="30sp"
-                android:textStyle="bold"
                 tools:text="22:35" />
         </LinearLayout>
 
@@ -134,7 +133,6 @@
                 android:drawablePadding="@dimen/space_10"
                 android:textColor="@color/t3_color"
                 android:textSize="30sp"
-                android:textStyle="bold"
                 tools:text="06:35" />
         </LinearLayout>
     </LinearLayout>
