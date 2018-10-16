@@ -78,20 +78,22 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.Vi
     override fun onValueChange(picker: NumberPickerView, oldVal: Int, newVal: Int) {
         when (mModifyKey) {
             ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
-                val year: Int = Integer.parseInt(picker.contentByCurrValue, 10)
-                if (year == Calendar.getInstance().get(Calendar.YEAR)) {
-                    val monthCount = Calendar.getInstance().get(Calendar.MONTH) + 1
-                    val months = arrayOfNulls<String>(monthCount)
-                    for (i in months.indices) {
-                        months[i] = String.format(Locale.getDefault(), "%02d", i + 1)
+                if (picker.id == R.id.picker_one) {
+                    val year: Int = Integer.parseInt(picker.contentByCurrValue, 10)
+                    if (year == Calendar.getInstance().get(Calendar.YEAR)) {
+                        val monthCount = Calendar.getInstance().get(Calendar.MONTH) + 1
+                        val months = arrayOfNulls<String>(monthCount)
+                        for (i in months.indices) {
+                            months[i] = String.format(Locale.getDefault(), "%02d", i + 1)
+                        }
+                        picker_two.refreshByNewDisplayedValues(months)
+                    } else {
+                        val months = arrayOfNulls<String>(12)
+                        for (i in months.indices) {
+                            months[i] = String.format(Locale.getDefault(), "%02d", i + 1)
+                        }
+                        picker_two.refreshByNewDisplayedValues(months)
                     }
-                    picker_two.refreshByNewDisplayedValues(months)
-                } else {
-                    val months = arrayOfNulls<String>(12)
-                    for (i in months.indices) {
-                        months[i] = String.format(Locale.getDefault(), "%02d", i + 1)
-                    }
-                    picker_two.refreshByNewDisplayedValues(months)
                 }
             }
             ImproveUserProfileContract.IMPROVE_AREA_KEY -> {

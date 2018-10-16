@@ -22,7 +22,7 @@ public class BlueRefreshView extends SwipeRefreshLayout {
     public BlueRefreshView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.BlueRefreshView);
-        int progressColor = attributes.getColor(R.styleable.BlueRefreshView_brv_progress_color, getResources().getColor(R.color.n2_color_day));
+        int progressColor = attributes.getColor(R.styleable.BlueRefreshView_brv_progress_color, getResources().getColor(R.color.n1_color_day));
         int progressBgColor = attributes.getColor(R.styleable.BlueRefreshView_brv_progress_bg_color, getResources().getColor(R.color.b2_color_day));
         attributes.recycle();
 

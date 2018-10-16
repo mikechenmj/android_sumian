@@ -287,7 +287,23 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
 
         boolean isBluetoothAddress = BluetoothAdapter.checkBluetoothAddress(dfuMac);
         if (isBluetoothAddress) {
+
+            if (mVersionType == VersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                VersionUpgradeContract.View view = mViewWeakReference.get();
+                if (view != null) {
+                    view.showSleepConnectingDialog();
+                }
+            }
+
             mDfuWrapper.scan2Connect(mDfuMac, () -> {
+
+                if (mVersionType == VersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                    VersionUpgradeContract.View view = mViewWeakReference.get();
+                    if (view != null) {
+                        view.dismissSleepConnectingDialog();
+                    }
+                }
+
                 mDfuServiceController = new DfuServiceInitiator(dfuMac)
                         //.setDeviceName(currentDevice.getName())
                         //.setKeepBond(true)
@@ -303,6 +319,12 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                 VersionUpgradeContract.View view = mViewWeakReference.get();
                 if (view != null) {
                     view.onScanFailed(mDfuMac);
+                }
+
+                if (mVersionType == VersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                    if (view != null) {
+                        view.dismissSleepConnectingDialog();
+                    }
                 }
             });
 

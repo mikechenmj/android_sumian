@@ -2,6 +2,7 @@ package com.sumian.sd.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.text.emoji.EmojiCompat;
 import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
@@ -170,9 +171,11 @@ public final class AppManager {
     }
 
     private void initNetWork(Context context) {
-        //注册 aliyun httpDns
-        this.mHttpDns = new HttpDnsEngine().init(context, BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY);
-        this.mHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL, BuildConfig.BASE_H5_URL);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            //注册 aliyun httpDns
+            this.mHttpDns = new HttpDnsEngine().init(context, BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY);
+            this.mHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL, BuildConfig.BASE_H5_URL);
+        }
         //注册网络引擎框架
         this.mNetworkManager = NetworkManager.create();
     }
@@ -245,7 +248,9 @@ public final class AppManager {
     private void initWebView() {
         WebViewManger webViewManger = WebViewManger.getInstance();
         webViewManger.setBaseUrl(BuildConfig.BASE_H5_URL);
-        webViewManger.registerHttpDnsEngine(this.mHttpDns);
+        if (this.mHttpDns != null) {
+            webViewManger.registerHttpDnsEngine(this.mHttpDns);
+        }
         webViewManger.setDebug(BuildConfig.DEBUG);
         AppManager.getAccountViewModel().getLiveDataToken().observeForever(token -> webViewManger.setToken(token == null ? null : token.token));
     }
