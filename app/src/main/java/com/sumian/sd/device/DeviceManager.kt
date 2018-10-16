@@ -188,6 +188,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         return mMonitorLiveData.value?.status == BlueDevice.STATUS_CONNECTING ?: false
     }
 
+    fun isSyncing(): Boolean {
+        return mMonitorLiveData.value?.isSyncing ?: false
+    }
+
     override fun onAdapterEnable() {
         mIsBluetoothEnableLiveData.value = true
         tryToConnectCacheMonitor()
@@ -717,6 +721,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onConnectFailed(peripheral: BluePeripheral, connectState: Int) {
+        if (isSyncing()) {
+            mMonitorLiveData.value?.isSyncing = false
+            onSyncFailed()
+        }
         onConnectFailed()
         AppManager.getBlueManager().refresh()
         LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.name)

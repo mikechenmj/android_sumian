@@ -9,13 +9,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -117,7 +116,6 @@
             android:id="@+id/calender_view_pager"
             android:layout_width="match_parent"
             android:layout_height="326dp" />
-        <!--android:layout_height="276dp" />-->
     </LinearLayout>
 
     <View

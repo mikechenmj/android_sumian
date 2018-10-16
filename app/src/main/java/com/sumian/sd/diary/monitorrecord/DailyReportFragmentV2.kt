@@ -42,6 +42,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
 
     override fun initWidget() {
         super.initWidget()
+        tv_date.setOnClickListener { showDatePopup(true) }
         iv_date_arrow.setOnClickListener { showDatePopup(true) }
         iv_weekly_report.setOnClickListener { WeeklyReportActivity.launch(mSelectedTime) }
         setTvDate(mSelectedTime)
