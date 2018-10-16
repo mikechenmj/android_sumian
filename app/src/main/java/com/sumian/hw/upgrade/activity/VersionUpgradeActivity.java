@@ -205,7 +205,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                     if (mVersionType == VERSION_TYPE_SLEEPY && this.sleepyBatterLow()) {
                         LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
                         showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
-                        // return;
+                        return;
                     }
 
                     ToastHelper.show(R.string.firmware_upgrade_ing_hint);
