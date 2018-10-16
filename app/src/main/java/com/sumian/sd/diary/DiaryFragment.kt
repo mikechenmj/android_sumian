@@ -49,8 +49,27 @@ class DiaryFragment : BaseFragment() {
         tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
     }
 
-    private fun switchFragment(tag: String) {
-        fragmentManager!!.beginTransaction().replace(R.id.fl_container, getFragment(tag)).commit()
+    private fun switchFragment(position: Int) {
+        val currentTag = getTagByPosition(mCurrentPosition)
+        val currentFragment = getFragment(currentTag)
+        if (currentFragment.isAdded) {
+            fragmentManager!!.beginTransaction().hide(currentFragment).commit()
+        }
+
+        val tag = getTagByPosition(position)
+        val fragment = getFragment(tag)
+        if (fragment.isAdded) {
+            fragmentManager!!.beginTransaction().show(fragment).commit()
+        } else {
+            fragmentManager!!.beginTransaction().add(R.id.fl_container, fragment).commit()
+        }
+    }
+
+    private fun getTagByPosition(position: Int): String {
+        return when (position) {
+            0 -> T0
+            else -> T1
+        }
     }
 
     private fun getFragment(tag: String): Fragment {
@@ -72,7 +91,7 @@ class DiaryFragment : BaseFragment() {
         tab_monitor_data.setTextColor(ColorCompatUtil.getColor(activity!!, if (position != 0) R.color.white else R.color.white_50))
         v_line_0.visibility = if (position == 0) View.VISIBLE else View.GONE
         v_line_1.visibility = if (position != 0) View.VISIBLE else View.GONE
-        switchFragment(if (position == 0) T0 else T1)
+        switchFragment(position)
         mCurrentPosition = position
     }
 }
