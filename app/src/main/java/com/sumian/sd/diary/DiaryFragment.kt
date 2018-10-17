@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.View
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceManager
@@ -29,6 +30,7 @@ class DiaryFragment : BaseFragment() {
     companion object {
         private var T0 = DiaryFragment::class.java.simpleName + ".TAB_0"
         private var T1 = DiaryFragment::class.java.simpleName + ".TAB_1"
+        private var TAGS = arrayOf(T0, T1)
     }
 
     private var mCurrentPosition = -1;
@@ -50,48 +52,29 @@ class DiaryFragment : BaseFragment() {
     }
 
     private fun switchFragment(position: Int) {
-        val currentTag = getTagByPosition(mCurrentPosition)
-        val currentFragment = getFragment(currentTag)
-        if (currentFragment.isAdded) {
-            fragmentManager!!.beginTransaction().hide(currentFragment).commit()
-        }
-
-        val tag = getTagByPosition(position)
-        val fragment = getFragment(tag)
-        if (fragment.isAdded) {
-            fragmentManager!!.beginTransaction().show(fragment).commit()
-        } else {
-            fragmentManager!!.beginTransaction().add(R.id.fl_container, fragment).commit()
-        }
-    }
-
-    private fun getTagByPosition(position: Int): String {
-        return when (position) {
-            0 -> T0
-            else -> T1
-        }
-    }
-
-    private fun getFragment(tag: String): Fragment {
-        var fragmentByTag = fragmentManager!!.findFragmentByTag(tag)
-        if (fragmentByTag == null) {
-            fragmentByTag = when (tag) {
-                T0 -> SleepRecordFragment()
-                else -> DailyReportFragmentV2()
+        FragmentUtil.switchFragment(R.id.fl_container, fragmentManager!!, TAGS, position,object:FragmentUtil.FragmentCreator{
+            override fun createFragmentByPosition(position: Int): Fragment {
+                return when (position) {
+                    0 -> SleepRecordFragment()
+                    else -> DailyReportFragmentV2()
+                }
             }
-        }
-        return fragmentByTag
+        })
     }
 
     private fun selectTab(position: Int) {
         if (mCurrentPosition == position) {
             return
         }
+        updateTopTabUI(position)
+        switchFragment(position)
+        mCurrentPosition = position
+    }
+
+    private fun updateTopTabUI(position: Int) {
         tab_sleep_diary.setTextColor(ColorCompatUtil.getColor(activity!!, if (position == 0) R.color.white else R.color.white_50))
         tab_monitor_data.setTextColor(ColorCompatUtil.getColor(activity!!, if (position != 0) R.color.white else R.color.white_50))
         v_line_0.visibility = if (position == 0) View.VISIBLE else View.GONE
         v_line_1.visibility = if (position != 0) View.VISIBLE else View.GONE
-        switchFragment(position)
-        mCurrentPosition = position
     }
 }
