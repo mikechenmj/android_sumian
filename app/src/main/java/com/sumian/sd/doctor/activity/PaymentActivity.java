@@ -197,7 +197,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     public void onFailure(String error) {
         showCenterToast(error);
         if (mActionLoadingDialog != null) {
-            mActionLoadingDialog.dismiss();
+            mActionLoadingDialog.dismissAllowingStateLoss();
         }
     }
 
@@ -209,7 +209,7 @@ public class PaymentActivity extends SdBaseActivity<PayPresenter> implements Vie
     @Override
     public void onFinish() {
         if (mActionLoadingDialog != null) {
-            mActionLoadingDialog.getDialog().cancel();
+            mActionLoadingDialog.dismissAllowingStateLoss();
         }
     }
 
