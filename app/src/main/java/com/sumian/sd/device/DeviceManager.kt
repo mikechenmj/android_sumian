@@ -99,7 +99,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun tryToConnectCacheMonitor() {
-        if (isConnected() || isConnecting()) {
+        if (isConnected() || isConnecting() || !isBluetoothEnable()) {
             return
         }
         getCachedMonitor()?.let {
