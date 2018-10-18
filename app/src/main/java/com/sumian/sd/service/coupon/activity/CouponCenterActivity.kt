@@ -40,6 +40,7 @@ class CouponCenterActivity : BaseBackActivity(), ViewPager.OnPageChangeListener 
 
     override fun initWidget() {
         super.initWidget()
+        mTitleBar.openTopPadding(true)
         mTitleBar.setTitle(R.string.coupon_center)
         view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
 
