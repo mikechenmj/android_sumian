@@ -182,7 +182,7 @@ class DeviceManageFragment : BaseFragment() {
             mCardStatus = if (monitor.isConnected) CARD_STATUS_MONITOR_CONNECTED else CARD_STATUS_MONITOR_NOT_CONNECTED
             switchNoDeviceVg(false)
             updateMonitorUI(monitor)
-            updateSleeperUI(monitor.speedSleeper)
+            updateSleeperUI(monitor)
             updateDeviceIv(monitor)
             updateBottomTv(monitor)
         }
@@ -252,11 +252,12 @@ class DeviceManageFragment : BaseFragment() {
         })
     }
 
-    private fun updateSleeperUI(sleeper: BlueDevice?) {
+    private fun updateSleeperUI(monitor: BlueDevice?) {
+        val sleeper = monitor?.speedSleeper
         // sleeper ui
         sleeper_battery_view.setProgress(sleeper?.battery ?: 0)
         tv_speed_sleeper_status.text = getString(when (sleeper?.status) {
-            BlueDevice.STATUS_CONNECTED -> if (sleeper.isPa) R.string.working else R.string.already_connected
+            BlueDevice.STATUS_CONNECTED -> if (monitor.paStatus == BlueDevice.PA_STATUS_PA) R.string.working else R.string.already_connected
             BlueDevice.STATUS_UNCONNECTED -> R.string.not_connected
             else -> R.string.not_connected
         })

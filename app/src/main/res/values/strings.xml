@@ -1011,6 +1011,7 @@
     <string name="not_connected">未连接</string>
     <string name="speed_sleeper_already">速眠仪已就绪</string>
     <string name="start_work">开启工作</string>
+    <string name="starting_work">开启中...</string>
     <string name="sync_progress_0">第 %d 段</string>
     <string name="sync_progress_1">(%d%%)</string>
     <string name="sleeper_is_working_please_sleep">速眠仪正常工作中，请安心入睡</string>
@@ -1037,6 +1038,7 @@
     <string name="connected">已连接</string>
     <string name="monitor_not_connect_click_upper_to_connect">监测仪未连接，点击上方尝试连接</string>
     <string name="monitor_is_connecting">监测仪连接中…</string>
+    <string name="please_keep_monito_in_5m">请保持监测仪与手机距离在5米内</string>
     <string name="monitor_is_connected_please_check_sleeper">监测仪已连接\n请检查速眠仪是否开启</string>
     <string name="sleeper_is_idle">速眠仪已连接，待机中</string>
     <string name="sync_progress_package_progress">正在同步睡眠数据\n第 %d 段 (%d%%)</string>

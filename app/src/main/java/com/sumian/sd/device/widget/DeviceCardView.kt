@@ -16,6 +16,9 @@ import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.MonitorEventListener
 import com.sumian.sd.utils.getString
 import com.sumian.sd.widget.dialog.SumianAlertDialog
+import com.sumian.sd.widget.dialog.SumianImageTextToast
+import kotlinx.android.synthetic.main.layout_device_card_view_device.view.*
+import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
 import kotlinx.android.synthetic.main.view_device_card.view.*
 
 
@@ -51,7 +54,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         }
 
         override fun onTurnOnPaModeStart() {
-            showLoadingDialog(true)
+//            showLoadingDialog(true)
         }
 
         override fun onTurnOnPaModeSuccess() {
@@ -59,7 +62,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         }
 
         override fun onTurnOnPaModeFailed(message: String) {
-            showLoadingDialog(false)
+//            showLoadingDialog(false)
             SumianAlertDialog(context)
                     .hideTopIcon(true)
                     .setTitle(R.string.turn_on_pa_mode_failed_title)
@@ -70,11 +73,11 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onConnectStart() {
             LogUtils.d("onConnectStart")
-            showLoadingDialog(true)
+//            showLoadingDialog(true)
         }
 
         override fun onConnectFailed() {
-            showLoadingDialog(false)
+//            showLoadingDialog(false)
             SumianAlertDialog(context)
                     .hideTopIcon(true)
                     .setTitle(R.string.connect_time_out)
@@ -85,7 +88,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onConnectSuccess() {
             LogUtils.d()
-            showLoadingDialog(false)
+//            showLoadingDialog(false)
         }
     }
 
@@ -122,13 +125,13 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        mHandler.removeCallbacks(null)
+//        mHandler.removeCallbacks(null)
     }
 
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
         if (monitor == null) {
             switchNoDeviceUI(true)
-            showLoadingDialog(false)
+//            showLoadingDialog(false)
             updateNoDeviceUI(R.drawable.ic_home_icon_adddevice, R.string.add_device, R.string.you_do_not_bind_device_click_add)
         } else {
             if (!isBluetoothEnable) {
@@ -143,14 +146,14 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     private fun showMonitorUI(monitor: BlueDevice) {
         when (monitor.status) {
             BlueDevice.STATUS_UNCONNECTED -> {
-                showLoadingDialog(false)
+//                showLoadingDialog(false)
                 switchNoDeviceUI(true)
                 updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
             }
             BlueDevice.STATUS_CONNECTING -> {
-                showLoadingDialog(true)
+//                showLoadingDialog(true)
                 switchNoDeviceUI(true)
-                updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
+                updateNoDeviceUI(R.drawable.rotate_device_card_view_connect_device, R.string.monitor_is_connecting, R.string.please_keep_monito_in_5m)
             }
             BlueDevice.STATUS_CONNECTED -> {
                 switchNoDeviceUI(false)
@@ -180,6 +183,10 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 tv_bottom_hint.text = resources.getString(if (isPa) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity)
                 tv_bottom_hint.visibility = if (!monitor.isSleeperConnected || isPa) View.VISIBLE else View.GONE
                 fl_turn_pa_bt_container.visibility = if (monitor.isSleeperConnected && !isPa) View.VISIBLE else View.GONE
+                val isTurningOnPa = monitor.paStatus == BlueDevice.PA_STATUS_TURNING_ON_PA
+                bt_turn_on_pa.isEnabled = !isTurningOnPa
+                bt_turn_on_pa.setCompoundDrawablesWithIntrinsicBounds(if (isTurningOnPa) R.drawable.rotate_device_card_view_sync else 0, 0, 0, 0)
+                bt_turn_on_pa.setText(R.string.starting_work)
             }
         }
     }
@@ -219,19 +226,20 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         DeviceManager.removeMonitorEventListener(mMonitorEventListener)
     }
 
-    private fun showLoadingDialog(show: Boolean) {
-        vg_dialog.visibility = if (show) View.VISIBLE else View.GONE
-        iv_dialog.setImageResource(R.drawable.dialog_loading_animation)
-        tv_dialog.visibility = View.GONE
-        mHandler.removeCallbacks(null)
-    }
+//    private fun showLoadingDialog(show: Boolean) {
+//        vg_dialog.visibility = if (show) View.VISIBLE else View.GONE
+//        iv_dialog.setImageResource(R.drawable.dialog_loading_animation)
+//        tv_dialog.visibility = View.GONE
+//        mHandler.removeCallbacks(null)
+//    }
 
     private fun showMessageDialog(success: Boolean, message: String) {
-        vg_dialog.visibility = View.VISIBLE
-        iv_dialog.setImageResource(if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail)
-        tv_dialog.visibility = View.VISIBLE
-        tv_dialog.text = message
-        mHandler.removeCallbacks(null)
-        mHandler.postDelayed({ vg_dialog.visibility = View.GONE }, 2000)
+//        vg_dialog.visibility = View.VISIBLE
+//        iv_dialog.setImageResource(if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail)
+//        tv_dialog.visibility = View.VISIBLE
+//        tv_dialog.text = message
+//        mHandler.removeCallbacks(null)
+//        mHandler.postDelayed({ vg_dialog.visibility = View.GONE }, 2000)
+        SumianImageTextToast.showToast(context, if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail, message, false)
     }
 }

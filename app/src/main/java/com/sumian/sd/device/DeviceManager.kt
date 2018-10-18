@@ -400,7 +400,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             val sleepyPaModeState = Integer.parseInt(allState.substring(2, 4), 16)
             mMonitorLiveData.value?.isMonitoring = isMonitoring
             val isPa = sleepyPaModeState > 0
-            mMonitorLiveData.value?.speedSleeper?.isPa = isPa
+//            mMonitorLiveData.value?.speedSleeper?.isPa = isPa
+            mMonitorLiveData.value?.paStatus = if (isPa) BlueDevice.PA_STATUS_PA else BlueDevice.PA_STATUS_NOT_PA
             if (mIsTurningOnPa && isPa) {
                 onTurnOnPaModeSuccess()
                 mIsTurningOnPa = false
@@ -428,11 +429,13 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         // 0xE6 -- 设置数据长度错误
         // 0xE7 -- 发送数据到速眠仪发生错误
         // 0xFF -- 未知错误
+        var isPa = false
         if (cmd.length == 8) {
             when (cmd) {
                 "55580188"//开启pa成功
                 -> {
-                    mMonitorLiveData.value?.speedSleeper?.isPa = true
+//                    mMonitorLiveData.value?.speedSleeper?.isPa = true
+                    isPa = true
                     mMonitorLiveData.value?.speedSleeper?.status = BlueDevice.STATUS_CONNECTED
                     notifyMonitorChange()
                     LogManager.appendSpeedSleeperLog("0x58 开启速眠仪的 pa 模式成功  cmd=$cmd")
@@ -454,17 +457,13 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
                     LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.getAppContext().resources.getString(errorTextId) + "  cmd=" + cmd)
                 }
-//                else -> {
-//                    val errorTextId: Int = R.string.turn_on_sleepy_pa_mode_error
-//                    onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
-//                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + App.getAppContext().resources.getString(errorTextId) + "  cmd=" + cmd)
-//                }
             }
         } else {
             val errorTextId: Int = R.string.turn_on_sleepy_pa_mode_error
             onTurnOnPaModeFailed(App.getAppContext().resources.getString(errorTextId))
             LogManager.appendSpeedSleeperLog("0x58 开启速眠仪的 pa 模式失败,返回的指令长度不为8  cmd=$cmd")
         }
+        mMonitorLiveData.value?.speedSleeper?.status = if (isPa) BlueDevice.PA_STATUS_PA else BlueDevice.PA_STATUS_NOT_PA
     }
 
     private fun receiveTurnOnOffMonitoringModeResponse(cmd: String) {
@@ -841,6 +840,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     override fun onTurnOnPaModeStart() {
         mIsTurningOnPa = true
+        mMonitorLiveData.value?.paStatus = BlueDevice.PA_STATUS_TURNING_ON_PA
         for (listener in mMonitorEventListeners) {
             listener.onTurnOnPaModeStart()
         }

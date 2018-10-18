@@ -28,11 +28,17 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     BlueDevice speedSleeper;//监测仪下属的速眠仪;
     public transient boolean isMonitoring;
     public transient boolean isSyncing;
+    @Deprecated // see paStatus
     public transient boolean isPa;
+    public transient int paStatus;
 
     public static final int STATUS_UNCONNECTED = 0;
     public static final int STATUS_CONNECTING = 1;
     public static final int STATUS_CONNECTED = 2;
+
+    public static final int PA_STATUS_NOT_PA = 0;
+    public static final int PA_STATUS_TURNING_ON_PA = 1;
+    public static final int PA_STATUS_PA = 2;
     @Deprecated
     public static final int STATUS_SYNCHRONIZING = 3;
     @Deprecated
@@ -122,7 +128,7 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     }
 
     public boolean isSleeperPa() {
-        return speedSleeper != null && speedSleeper.isPa;
+        return speedSleeper != null && paStatus == PA_STATUS_PA;
     }
 
     public int getSleeperStatus() {
