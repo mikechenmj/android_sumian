@@ -1,6 +1,7 @@
 package com.sumian.sd
 
 import com.google.gson.Gson
+import com.sumian.common.utils.TimeUtilV2
 import com.sumian.hw.common.util.TimeUtil
 import com.sumian.sd.account.config.SumianConfig
 import com.sumian.sd.bean.ClassA
@@ -61,7 +62,8 @@ class KotlinTest {
 
     @Test
     fun t1() {
-        val s = "13.2"
-        System.out.println(s.toFloat().toInt())
+        System.out.println(TimeUtilV2.formatTimeYYYYMMDD(System.currentTimeMillis()))
+        System.out.println(TimeUtilV2.formatTimeYYYYMMDD_HHMM(System.currentTimeMillis()))
     }
+
 }
