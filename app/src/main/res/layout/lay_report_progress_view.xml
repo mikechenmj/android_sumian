@@ -42,6 +42,6 @@
             android:id="@+id/tv_center_message"
             style="@style/text_t2_14"
             android:layout_marginTop="@dimen/space_4"
-            android:text="@string/sleep_efficient" />
+            tools:text="@string/sleep_efficient" />
     </LinearLayout>
 </FrameLayout>

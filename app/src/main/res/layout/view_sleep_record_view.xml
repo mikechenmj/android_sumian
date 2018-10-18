@@ -38,13 +38,14 @@
                 android:id="@+id/progress_view_sleep"
                 android:layout_width="@dimen/space_150"
                 android:layout_height="@dimen/space_150"
-                android:layout_marginStart="@dimen/space_20" />
+                android:layout_marginStart="@dimen/space_20"
+                app:srpv_center_message="@string/sleep_efficient" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/space_20"
                 android:layout_marginStart="@dimen/space_20"
+                android:layout_marginEnd="@dimen/space_20"
                 android:orientation="vertical">
 
                 <TextView
@@ -58,9 +59,9 @@
                     tools:text="咪达唑仑、氟西泮、咪达唑仑、氟西泮、咪达唑仑、氟西泮、咪达唑仑、氟西泮、" />
 
                 <!--<TextView-->
-                    <!--android:id="@+id/tv_wakeup_duration"-->
-                    <!--style="@style/SleepRecordMedicineTv"-->
-                    <!--tools:text="夜醒：2h45min" />-->
+                <!--android:id="@+id/tv_wakeup_duration"-->
+                <!--style="@style/SleepRecordMedicineTv"-->
+                <!--tools:text="夜醒：2h45min" />-->
 
                 <TextView
                     android:id="@+id/tv_little_sleep_duration"
@@ -120,8 +121,8 @@
 
         <View
             style="@style/HorizontalDividerLine"
-            android:layout_marginEnd="@dimen/space_20"
-            android:layout_marginStart="@dimen/space_20" />
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -230,10 +231,10 @@
         <TextView
             android:id="@+id/btn_for_no_data"
             style="@style/SumianButton"
-            android:layout_marginBottom="@dimen/space_30"
-            android:layout_marginEnd="@dimen/space_36"
             android:layout_marginStart="@dimen/space_36"
             android:layout_marginTop="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_36"
+            android:layout_marginBottom="@dimen/space_30"
             android:text="@string/go_record" />
     </LinearLayout>
 
