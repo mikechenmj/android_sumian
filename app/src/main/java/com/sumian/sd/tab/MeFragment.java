@@ -29,6 +29,7 @@ import com.sumian.sd.notification.NotificationViewModel;
 import com.sumian.sd.onlinereport.OnlineReportListActivity;
 import com.sumian.sd.scale.ScaleListActivity;
 import com.sumian.sd.service.advisory.activity.AdvisoryListActivity;
+import com.sumian.sd.service.coupon.activity.CouponCenterActivity;
 import com.sumian.sd.service.diary.DiaryEvaluationListActivity;
 import com.sumian.sd.service.tel.activity.TelBookingListActivity;
 import com.sumian.sd.setting.SettingActivity;
@@ -114,7 +115,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    @OnClick({R.id.iv_avatar, R.id.tv_nickname, R.id.dv_setting, R.id.iv_notification, R.id.siv_customer_service, R.id.dv_device_manage})
+    @OnClick({R.id.iv_avatar, R.id.tv_nickname, R.id.dv_setting, R.id.iv_notification, R.id.siv_customer_service, R.id.dv_device_manage, R.id.dv_coupon_center})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_avatar:
@@ -134,6 +135,9 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
                 break;
             case R.id.dv_device_manage:
                 ActivityUtils.startActivity(DeviceManageActivity.class);
+                break;
+            case R.id.dv_coupon_center:
+                CouponCenterActivity.show();
                 break;
             default:
                 break;

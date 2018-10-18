@@ -7,7 +7,6 @@ import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingListContract
-import retrofit2.Callback
 
 /**
  *
@@ -58,7 +57,7 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
 
         val call = AppManager.getSdHttpService().getTelBookingList(map)
         mCalls.add(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponse<TelBooking>>(), Callback<PaginationResponse<TelBooking>> {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponse<TelBooking>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
                 mView?.onGetTelBookingListFailed(errorResponse.message)

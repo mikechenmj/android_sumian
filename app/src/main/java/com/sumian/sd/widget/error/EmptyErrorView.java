@@ -121,6 +121,14 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
         invalid(R.mipmap.ic_empty_state_advisory, R.string.emtpy_advisory_msg, R.string.emtpy_advisory_desc);
     }
 
+    /**
+     * desc: 暂无兑换记录
+     */
+    public void invalidCouponError() {
+        invalid(R.mipmap.ic_empty_state_report, R.string.empty_coupon_msg, R.string.empty_coupon_desc);
+    }
+
+
     private void invalid(@DrawableRes int emptyId, @StringRes int emptyTitleId, @StringRes int emptyDescId) {
         this.mIvEmptyIcon.setImageResource(emptyId);
         this.mTvEmptyMsgTitle.setText(emptyTitleId);

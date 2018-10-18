@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_50"
+        app:tabBackground="@color/b2_color"
+        app:tabIndicatorColor="@color/b3_color"
+        app:tabIndicatorHeight="@dimen/space_1"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/b3_color"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabTextColor="@color/t2_color">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_item_un_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coupon_code"
+            tools:ignore="HardcodedText" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_item_is_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coupon_history"
+            tools:ignore="HardcodedText" />
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

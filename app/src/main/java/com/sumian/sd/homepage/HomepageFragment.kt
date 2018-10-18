@@ -13,6 +13,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
+import com.sumian.sd.account.userProfile.SdUserProfileActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.device.DeviceManager
@@ -178,6 +179,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun onAvatarClick() {
+        SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
     }
 
     override fun onEnter(data: String?) {
