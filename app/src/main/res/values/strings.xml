@@ -266,6 +266,9 @@
     <string name="emtpy_advisory_msg">暂无相关记录</string>
     <string name="emtpy_advisory_desc">绑定医生后，可向主治医生咨询</string>
 
+    <string name="empty_coupon_msg">暂无相关兑换记录</string>
+    <string name="empty_coupon_desc">""</string>
+
     <!--doctor  service-->
     <string name="bind_doctor">绑定医生</string>
     <string name="bind_other_doctor_state">"您已绑定了其他医生，如需换绑请联系客服"</string>
@@ -1031,6 +1034,7 @@
     <string name="you_do_not_bind_device_click_add">您尚未绑定速眠仪设备，点击添加设备</string>
     <string name="working">工作中</string>
     <string name="device_manage">设备管理</string>
+    <string name="coupon_center">兑换中心</string>
     <string name="add_new_device">添加新设备</string>
     <string name="click_btn_add_device">点击按钮，添加设备</string>
     <string name="connecting">连接中</string>
@@ -1069,5 +1073,9 @@
     <string name="sync_sleep_data_to_server_error">获取异常，请联系在线客服咨询反馈</string>
     <string name="sleep_version_message">速眠仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
     <string name="monitor_version_message">监测仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
+    <string name="coupon_code">兑换码</string>
+    <string name="coupon_history">兑换记录</string>
+    <string name="input_coupon">请输入您的兑换码</string>
+    <string name="coupon">兑换</string>
     <!-- Hw end-->
 </resources>

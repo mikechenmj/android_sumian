@@ -21,6 +21,7 @@ import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts
 import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.service.cbti.bean.*
+import com.sumian.sd.service.coupon.bean.Coupon
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import com.sumian.sd.service.tel.bean.TelBooking
@@ -353,4 +354,18 @@ interface SdApi {
     @FormUrlEncoded
     @POST("feedback")
     fun feedback(@Field("content") content: String, @Field("suffix") suffix: String): Call<com.sumian.hw.oss.bean.OssResponse>
+
+    /**
+     * 兑换码  兑换
+     */
+    @FormUrlEncoded
+    @POST("coupon")
+    fun couponAction(@Field("coupon") coupon: String): Call<Any>
+
+    /**
+     * 获取兑换码  兑换列表
+     */
+    @GET("coupon")
+    fun getCouponList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Coupon>>
+
 }
