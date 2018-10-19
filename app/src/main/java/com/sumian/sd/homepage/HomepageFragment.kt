@@ -4,6 +4,7 @@ import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
+import android.net.Uri
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
@@ -29,6 +30,7 @@ import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.notification.push.schemeResolver.CbtiFinishReportSchemeResolver
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
@@ -180,6 +182,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
     private fun onAvatarClick() {
         SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
+//        ActivityUtils.startActivity(CbtiFinishReportSchemeResolver().resolveScheme(activity!!, Uri.parse("")))
     }
 
     override fun onEnter(data: String?) {

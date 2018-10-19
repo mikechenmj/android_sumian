@@ -56,6 +56,7 @@ class SchemeResolveUtil {
                 "scale-distributions" -> ScaleSchemeResolver()
                 "referral-notice", "life-notice" -> NotificationSchemeResolver()
                 "cbti-chapters" -> CbtiChapterSchemeResolver()
+                "cbti-finish-result" -> CbtiChapterSchemeResolver()
                 else -> null
             }
         }

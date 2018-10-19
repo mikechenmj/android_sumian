@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.sumian.common.h5.bean.H5PayloadData;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseWebViewActivity;
+
+import java.util.Map;
 
 public class SimpleWebActivity extends SdBaseWebViewActivity {
 
@@ -65,7 +68,10 @@ public class SimpleWebActivity extends SdBaseWebViewActivity {
         return getLaunchIntentWithRouteData(context, routePageData, SimpleWebActivity.class);
     }
 
-    @SuppressWarnings("ConstantConditions")
+    public static Intent getLaunchIntentWithRouteData(Context context, String pageName, Map<String, Object> data) {
+        return getLaunchIntentWithRouteData(context, new H5PayloadData(pageName, data).toJson(), SimpleWebActivity.class);
+    }
+
     public static Intent getLaunchIntentWithRouteData(Context context, String routePageData, Class<? extends SimpleWebActivity> cls) {
         String urlContent = H5Uri.NATIVE_ROUTE
                 .replace("{pageData}", routePageData)
