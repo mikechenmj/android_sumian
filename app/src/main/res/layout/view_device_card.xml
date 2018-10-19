@@ -11,32 +11,4 @@
 
     <include layout="@layout/layout_device_card_view_device" />
 
-    <LinearLayout
-        android:id="@+id/vg_dialog"
-        android:layout_width="@dimen/space_120"
-        android:layout_height="@dimen/space_120"
-        android:layout_gravity="center"
-        android:background="@drawable/rect_black_70_corner_5dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@null"
-            android:src="@drawable/dialog_loading_animation" />
-
-        <TextView
-            android:id="@+id/tv_dialog"
-            style="@style/text_white_14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_8"
-            android:visibility="gone"
-            tools:text="@string/operation_fail"
-            tools:visibility="visible" />
-    </LinearLayout>
 </FrameLayout>
