@@ -351,7 +351,7 @@
     <string name="week">周</string>
 
     <!-- me -->
-    <string name="my_evaluation">我的测评</string>
+    <string name="my_evaluation">量表评估</string>
     <string name="my_consulting">我的咨询</string>
     <string name="electric_report">电子报告</string>
     <string name="wechat_bind">微信绑定</string>
@@ -872,6 +872,7 @@
     <string name="input_career_error">您输入的新职业信息不合法,请重新输入</string>
     <string name="new_areer_too_much_more_error">职业信息太长了,超过了12个字符</string>
     <string name="diary">日记</string>
+    <string name="tab_data">数据</string>
     <string name="re_do">重做</string>
     <!--<string name="complete">已完成评估</string>-->
     <string name="go_today">回到今天</string>
