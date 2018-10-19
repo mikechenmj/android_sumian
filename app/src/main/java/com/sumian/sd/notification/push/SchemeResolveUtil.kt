@@ -14,26 +14,22 @@ import java.net.URLDecoder
  *     time   : 2018/6/9 9:57
  *     desc   :
  *     version: 1.0
+ *     测试方式
+ *     在LeanCloud(https://leancloud.cn/dashboard/messaging.html?appid=LcAuCbiNkFzWcJiWKdw5gkI5-gzGzoHsz#/message/push/create)
+ *     在线发送推送
+ *     注意:
+ *     推送条件：自定义 -> installationId ,填上logcat 中 打印的installationId，如果发送不成功，卸载重装APP（APP覆盖安装dev，test不同版本的时候，installationId不会刷新）
+ *     推送内容：
+ *     action要和APP manifest中注册的一致，患者版:"action":"com.sumian.sd.action.PUSH",医生版："action":"com.sumian.sdd.action.PUSH",
+ *     scheme中要填写替换的user_id
+ *     {
+ *          "action":"com.sumian.sd.action.PUSH",
+ *          "alert":"CBTI解锁通知",
+ *          "scheme":"sleepdoctor://cbti-chapters?notification_id=8e194802-a2bb-47f4-a695-f03ccb5d92ad&user_id=2102&cbti_chapter_id=1"
+ *      }
  * </pre>
  */
 
-/**
- *
-医生建议更新
-"scheme" => 'sleepdoctor://diaries?date=1525763199&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
-电子报告更新
-"scheme" => 'sleepdoctor://online-reports?id=1&url=www.baidu.com&notification_id=9f3f9091-ab98-421c-ac2c-47709c80ba16&user_id=1',   //urlencode后
-退款成功通知
-"scheme" => 'sleepdoctor://refund?order_no=1525763199&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
-图文咨询-医生回复
-"scheme" => 'sleepdoctor://advisories?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
-医生发送了新的量表
-"scheme" => 'sleepdoctor://scale-distributions?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
-医生随访提醒 - 复诊提醒
-"scheme" => 'sleepdoctor://referral-notice?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c',   //urlencode后
-医生随访提醒 - 生活提醒
-"scheme" => 'sleepdoctor://life-notice?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c',   //urlencode后
- */
 class SchemeResolveUtil {
     companion object {
         fun getUserIdFromScheme(scheme: String?): String? {
@@ -53,24 +49,13 @@ class SchemeResolveUtil {
 
         private fun createSchemeResolver(uri: Uri): SchemeResolver? {
             return when (uri.host) {
-                "diaries" -> {
-                    DiarySchemeResolver()
-                }
-                "online-reports" -> {
-                    OnlineReportSchemeResolver()
-                }
-                "refund" -> {
-                    RefundSchemeResolver()
-                }
-                "advisories" -> {
-                    AdvisoriesSchemeResolver()
-                }
-                "scale-distributions" -> {
-                    ScaleSchemeResolver()
-                }
-                "referral-notice", "life-notice" -> {
-                    NotificationSchemeResolver()
-                }
+                "diaries" -> DiarySchemeResolver()
+                "online-reports" -> OnlineReportSchemeResolver()
+                "refund" -> RefundSchemeResolver()
+                "advisories" -> AdvisoriesSchemeResolver()
+                "scale-distributions" -> ScaleSchemeResolver()
+                "referral-notice", "life-notice" -> NotificationSchemeResolver()
+                "cbti-chapters" -> CbtiChapterSchemeResolver()
                 else -> null
             }
         }

@@ -7,6 +7,7 @@ import android.util.Log;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.LogUtil;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
@@ -68,7 +69,6 @@ public class LeanCloudManager {
             public void done(AVException e) {
                 if (e == null) {
                     String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
-                    LogUtils.d("LeanCloud push installationId", installationId);
                     uploadDeviceInfo(installationId);
                 }
             }
@@ -76,6 +76,7 @@ public class LeanCloudManager {
     }
 
     private static void uploadDeviceInfo(String installationId) {
+        LogUtils.d("installationId", installationId);
         Call<Object> call = AppManager
                 .getSdHttpService()
                 .uploadDeviceInfo("0", installationId, String.valueOf(Build.VERSION.SDK_INT));
