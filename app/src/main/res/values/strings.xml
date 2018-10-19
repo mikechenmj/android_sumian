@@ -266,8 +266,8 @@
     <string name="emtpy_advisory_msg">暂无相关记录</string>
     <string name="emtpy_advisory_desc">绑定医生后，可向主治医生咨询</string>
 
-    <string name="empty_coupon_msg">暂无相关兑换记录</string>
-    <string name="empty_coupon_desc">""</string>
+    <string name="empty_coupon_msg">暂无兑换记录</string>
+    <string name="empty_coupon_desc">绑定兑换码后，可在此查看兑换记录</string>
 
     <!--doctor  service-->
     <string name="bind_doctor">绑定医生</string>

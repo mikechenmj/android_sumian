@@ -131,7 +131,7 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
     override fun onRefreshCouponListSuccess(couponList: List<Coupon>) {
         mListAdapter.clear()
         if (couponList.isEmpty()) {
-            empty_error_view.invalidAdvisoryError()
+            empty_error_view.invalidCouponError()
         } else {
             mListAdapter.resetItem(couponList)
             recycler.visibility = View.VISIBLE

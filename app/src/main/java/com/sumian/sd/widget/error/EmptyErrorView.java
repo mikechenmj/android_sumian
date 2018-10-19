@@ -125,7 +125,7 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
      * desc: 暂无兑换记录
      */
     public void invalidCouponError() {
-        invalid(R.mipmap.ic_empty_state_report, R.string.empty_coupon_msg, R.string.empty_coupon_desc);
+        invalid(R.drawable.ic_empty_state_redemption, R.string.empty_coupon_msg, R.string.empty_coupon_desc);
     }
 
 
