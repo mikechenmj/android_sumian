@@ -1,5 +1,6 @@
 package com.sumian.sd.service.cbti.sheet
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.util.Log
@@ -69,6 +70,7 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
 
     override fun initView(rootView: View?) {
         super.initView(rootView)
+        cbtiLessonListCallback?.onShow()
     }
 
     override fun initData() {
@@ -86,6 +88,16 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
 
     override fun onGetCBTIWeekLessonFailed(error: String) {
         ToastHelper.show(context, error, Gravity.CENTER)
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        cbtiLessonListCallback?.onDismiss()
+    }
+
+    override fun onCancel(dialog: DialogInterface?) {
+        super.onCancel(dialog)
+        cbtiLessonListCallback?.onDismiss()
     }
 
     private fun invalidateItem(position: Int, courses: List<Course>?) {
@@ -128,5 +140,10 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
     interface OnCBTILessonListCallback {
 
         fun onSelectLesson(position: Int, course: Course): Boolean
+
+        fun onShow()
+
+        fun onDismiss()
+
     }
 }

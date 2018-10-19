@@ -128,15 +128,12 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun onRestart() {
         super.onRestart()
-        if (mPendingRestart) {
-            NiceVideoPlayerManager.instance().resumeNiceVideoPlayer()
-        }
+        autoPlay()
     }
 
     override fun onStop() {
         super.onStop()
-        mPendingRestart = aliyun_player.isPlaying || aliyun_player.isBufferingPlaying
-        NiceVideoPlayerManager.instance().suspendNiceVideoPlayer()
+        autoPause()
     }
 
     override fun onBackPressed() {
@@ -238,6 +235,14 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         this.mIsSelect = true
         this.mPresenter.getCBTIPlayAuthInfo(course.id)
         return true
+    }
+
+    override fun onShow() {
+        autoPause()
+    }
+
+    override fun onDismiss() {
+        autoPlay()
     }
 
     override fun onPlayReadyCallback() {
@@ -362,5 +367,16 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     override fun onRelease() {
         super.onRelease()
         aliyun_player.release()
+    }
+
+    private fun autoPlay() {
+        if (mPendingRestart) {
+            NiceVideoPlayerManager.instance().resumeNiceVideoPlayer()
+        }
+    }
+
+    private fun autoPause() {
+        mPendingRestart = aliyun_player.isPlaying || aliyun_player.isBufferingPlaying
+        NiceVideoPlayerManager.instance().suspendNiceVideoPlayer()
     }
 }
