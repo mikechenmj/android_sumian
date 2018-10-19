@@ -19,11 +19,11 @@ import android.view.ViewGroup;
 import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.R;
-import com.sumian.sd.app.App;
 import com.sumian.sd.widget.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -55,17 +55,17 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
     }
 
     public static Fragment newInstance(Class<? extends Fragment> clx, Bundle args) {
-//        Fragment fragment = null;
-//        try {
-//            fragment = clx.getConstructor().newInstance();
-//            if (args != null) {
-//                args.setClassLoader(fragment.getClass().getClassLoader());
-//                fragment.setArguments(args);
-//            }
-//        } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-//            e.printStackTrace();
-//        }
-        return Fragment.instantiate(App.getAppContext(), clx.getSimpleName(), args);
+        Fragment fragment = null;
+        try {
+            fragment = clx.getConstructor().newInstance();
+            if (args != null) {
+                args.setClassLoader(fragment.getClass().getClassLoader());
+                fragment.setArguments(args);
+            }
+        } catch (java.lang.InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return fragment;//Fragment.instantiate(App.getAppContext(), clx.getSimpleName(), args);
     }
 
     @Override
