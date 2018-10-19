@@ -44,23 +44,6 @@
                     android:gravity="center"
                     app:tab_icon="@mipmap/ic_cbti_icon_exercise"
                     app:tab_text="@string/lesson_practice" />
-
-                <View
-                    android:id="@+id/v_divider"
-                    android:layout_width="@dimen/space_1"
-                    android:layout_height="@dimen/space_24"
-                    android:layout_gravity="center"
-                    android:background="@color/l1_color" />
-
-                <com.sumian.sd.widget.nav.NavigationItem
-                    android:id="@+id/nav_tab_lesson_review_last_week"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    app:tab_icon="@mipmap/ic_cbti_icon_review"
-                    app:tab_text="@string/lesson_review_last_week" />
             </LinearLayout>
 
             <LinearLayout

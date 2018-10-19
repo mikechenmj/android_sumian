@@ -6,22 +6,19 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import android.text.TextUtils
 import android.view.View
-import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
-import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.service.cbti.bean.CBTIDataResponse
+import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.service.cbti.bean.CBTIMeta
-import com.sumian.sd.service.cbti.bean.Course
 import com.sumian.sd.service.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sd.service.cbti.fragment.CourseFragment
 import com.sumian.sd.service.cbti.fragment.ExerciseFragment
 import com.sumian.sd.service.cbti.model.CbtiChapterViewModel
 import com.sumian.sd.widget.TitleBar
+import com.sumian.sd.widget.dialog.SumianWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
 
 /**
@@ -59,7 +56,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         return R.layout.activity_main_cbti_week_lesson_part
     }
 
-    override fun initWidget(root: View?) {
+    override fun initWidget(root: View) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
         ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICourseMetaLiveData().observe(this, this)
@@ -92,29 +89,6 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         }
 
         tab_layout.setupWithViewPager(view_pager, true)
-        view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                //TODO  主动同步课程和联系的对应节的状态
-            }
-        })
-        initTitle()
-    }
-
-    private fun initTitle() {
-        val call = AppManager.getSdHttpService().getCBTICourseWeekPart(mChapterId)
-        call.enqueue(object : BaseSdResponseCallback<CBTIDataResponse<Course>>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-                ToastUtils.showShort(errorResponse.message)
-            }
-
-            override fun onSuccess(response: CBTIDataResponse<Course>?) {
-                response?.let {
-                    title_bar.setTitle(response.meta.chapter.title)
-                }
-            }
-        })
-        addCall(call)
     }
 
     override fun onBack(v: View?) {
@@ -122,8 +96,21 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
     }
 
     override fun onChanged(t: CBTIMeta?) {
-        t?.let {
-            cbti_week_lesson_banner_view.invalidateBanner(t.chapter.title, t.chapter.introduction, t.chapter.banner, t.chapter_progress)
+        t?.let { it ->
+            title_bar.setTitle(it.chapter.title)
+            cbti_week_lesson_banner_view.invalidateBanner(it.chapter.title, it.chapter.introduction, it.chapter.banner, it.chapter_progress)
+
+            nav_tab_lesson_summary.setOnClickListener {
+                val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.chapter.summary.replace("\r\n", "<br>")) + "&token=" + AppManager.getAccountViewModel().token.token
+                SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.the_week_lesson_summary)).show(supportFragmentManager)
+            }
+
+            v_divider.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary)) View.VISIBLE else View.GONE
+            nav_tab_lesson_review_last_week.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary)) View.VISIBLE else View.GONE
+            nav_tab_lesson_review_last_week.setOnClickListener {
+                val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.last_chapter_summary!!.replace("\r\n", "<br>")) + "&token=" + AppManager.getAccountViewModel().token.token
+                SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.lesson_review_last_week)).show(supportFragmentManager)
+            }
         }
     }
 }

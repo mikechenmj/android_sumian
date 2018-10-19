@@ -9,11 +9,9 @@ import android.view.View
 import android.view.WindowManager
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.event.CBTIProgressChangeEvent
 import com.sumian.sd.event.EventBusUtil
-import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.service.cbti.bean.Course
 import com.sumian.sd.service.cbti.bean.CoursePlayAuth
 import com.sumian.sd.service.cbti.bean.CoursePlayLog
@@ -22,11 +20,11 @@ import com.sumian.sd.service.cbti.dialog.CBTIQuestionDialog
 import com.sumian.sd.service.cbti.presenter.CBTICoursePlayAuthPresenter
 import com.sumian.sd.service.cbti.sheet.CBTICourseListBottomSheet
 import com.sumian.sd.service.cbti.video.NiceVideoPlayerManager
+import com.sumian.sd.service.cbti.video.OnVideoViewEvent
+import com.sumian.sd.service.cbti.video.TxVideoPlayerController
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianAlertDialog
-import com.sumian.sd.widget.dialog.SumianWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
-
 
 @Suppress("REDUNDANT_LABEL_WARNING")
 /**
@@ -37,7 +35,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
  * desc:CBTI 一个课时详情中心,包含播放视频,课程列表,以及课程总结等模块
  *
  */
-class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, com.sumian.sd.service.cbti.video.OnVideoViewEvent, com.sumian.sd.service.cbti.video.TxVideoPlayerController.OnControllerCallback {
+class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
 
     private var mCourse: Course? = null
     private var mCoursePlayAuth: CoursePlayAuth? = null
@@ -98,15 +96,11 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         title_bar.setOnBackClickListener(this)
         tv_lesson_list.setOnClickListener(this)
         nav_tab_lesson_practice.setOnClickListener(this)
-        nav_tab_lesson_review_last_week.setOnClickListener(this)
+        //nav_tab_lesson_review_last_week.setOnClickListener(this)
         aliyun_player.apply {
             setPlayerType(com.sumian.sd.service.cbti.video.NiceVideoView.TYPE_ALIYUN)
             setOnVideoViewEvent(this@CBTICoursePlayActivity)
             setController(mController)
-        }
-        nav_tab_lesson_review_last_week.setOnClickListener {
-            val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", mCoursePlayAuth!!.summary!!) + "&token=" + AppManager.getAccountViewModel().token.token
-            SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.lesson_review_last_week)).show(supportFragmentManager)
         }
     }
 
@@ -124,9 +118,6 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
             }
             R.id.nav_tab_lesson_practice -> {
                 CBTIExerciseWebActivity.show(v.context, mCurrentCourse?.id!!)
-            }
-            R.id.nav_tab_lesson_review_last_week -> {
-
             }
         }
     }
@@ -185,9 +176,9 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
         nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
 
-        v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+        //v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 
-        nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
+        //nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
 
         lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 
@@ -317,9 +308,9 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
         nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
 
-        v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+        // v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 
-        nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
+        // nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
 
         lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 

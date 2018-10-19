@@ -30,7 +30,7 @@ class CBTIWeekCourseBannerView : LinearLayout {
     private fun initView(context: Context) {
         inflate(context, R.layout.lay_cbti_lesson_banner_view, this)
         orientation = VERTICAL
-        setBackgroundResource(R.mipmap.ic_img_cbti_banner)
+        // setBackgroundResource(R.mipmap.ic_img_cbti_banner)
     }
 
     fun invalidateBanner(title: String, desc: String, bannerUrl: String, lessonPlanProgress: Int) {
