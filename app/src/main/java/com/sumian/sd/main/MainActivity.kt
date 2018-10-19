@@ -213,7 +213,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
 
     private fun changeSelectTab(position: Int) {
         if (mCurrentPosition == position) {
-            return
+          //  return
         }
         showFragmentByPosition(position)
         changeStatusBarColorByPosition(position)
