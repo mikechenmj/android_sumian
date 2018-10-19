@@ -7,14 +7,36 @@
     android:orientation="vertical"
     tools:context=".scale.ScaleListActivity">
 
-    <com.sumian.sd.widget.TitleBar
-        android:id="@+id/title_bar"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:text="@string/scale_self_scale" />
+        android:layout_height="@dimen/space_50"
+        app:tabBackground="@color/b2_color"
+        app:tabIndicatorColor="@color/b3_color"
+        app:tabIndicatorHeight="@dimen/space_1"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/b3_color"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabTextColor="@color/t2_color">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_item_scan_qr_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_evaluated"
+            tools:ignore="HardcodedText" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_item_input_sn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/evaluated"
+            tools:ignore="HardcodedText" />
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

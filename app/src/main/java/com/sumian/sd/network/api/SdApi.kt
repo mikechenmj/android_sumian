@@ -16,6 +16,9 @@ import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.order.OrderDetail
 import com.sumian.sd.oss.OssResponse
+import com.sumian.sd.scale.bean.NotFilledScale
+import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.sd.scale.bean.FilledScale
 import com.sumian.sd.scale.bean.Scale
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts
@@ -175,8 +178,17 @@ interface SdApi {
     // ---------- scale ----------
     @GET("scale-distributions")
     fun getScaleList(@Query("page") page: Int,
-                     @Query("per_page") perPage: Int,
+                     @Query("per_page") perPage: Int = 15,
                      @Query("type") type: String): Call<PaginationResponse<Scale>>
+
+    @GET("scale-distributions")
+    fun getNotFilledScaleList(@Query("page") page: Int,
+                              @Query("per_page") perPage: Int = 15,
+                              @Query("type") type: String = "not_filled"): Call<PaginationResponseV2<NotFilledScale>>
+
+    @GET("filled-scales")
+    fun getFilledScaleList(@Query("page") page: Int,
+                           @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FilledScale>>
 
     // ---------- device info ----------
     /**

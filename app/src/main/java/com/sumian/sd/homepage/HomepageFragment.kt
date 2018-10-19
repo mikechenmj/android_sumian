@@ -60,7 +60,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
         tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationActivity::class.java) }
         tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity, H5Uri.CBTI_SLEEP_HEALTH) }
-        tv_scale.setOnClickListener { ScaleListActivity.launch(context, ScaleListActivity.TYPE_ALL) }
+        tv_scale.setOnClickListener { ScaleListActivity.launch() }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionSettingActivity.launch() }
         iv_avatar.setOnClickListener { onAvatarClick() }
         device_card_view.registerLifecycleOwner(this)
