@@ -1,9 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.sd.service.cbti.activity
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -150,7 +153,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
         title_bar.setTitle(mCurrentCourse?.title)
 
-        tv_summary.text = mCurrentCourse?.summary
+        tv_summary.text = Html.fromHtml(mCurrentCourse?.summary_rtf)
 
         mController.run {
 
@@ -293,7 +296,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
         title_bar.setTitle(mCurrentCourse?.title)
 
-        tv_summary.text = mCurrentCourse?.summary
+        tv_summary.text = Html.fromHtml(mCurrentCourse?.summary_rtf)
 
         mController.run {
 
