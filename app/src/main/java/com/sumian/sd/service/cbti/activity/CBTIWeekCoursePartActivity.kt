@@ -3,11 +3,15 @@ package com.sumian.sd.service.cbti.activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.text.TextUtils
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
@@ -38,10 +42,13 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         const val CHAPTER_ID = "com.sumian.sleepdoctor.extras.chapter.id"
 
         fun show(context: Context, chapterId: Int) {
-            val extras = Bundle().apply {
-                putInt(CHAPTER_ID, chapterId)
-            }
-            show(context, CBTIWeekCoursePartActivity::class.java, extras)
+            ActivityUtils.startActivity(getLaunchIntent(context, chapterId))
+        }
+
+        fun getLaunchIntent(context: Context, chapterId: Int): Intent {
+            val intent = Intent(context, CBTIWeekCoursePartActivity::class.java)
+            intent.putExtra(CHAPTER_ID, chapterId)
+            return intent
         }
     }
 
