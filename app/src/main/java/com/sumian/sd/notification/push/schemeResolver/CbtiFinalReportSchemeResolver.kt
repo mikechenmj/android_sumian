@@ -14,17 +14,16 @@ import java.util.HashMap
  * desc   :
  * version: 1.0
  */
-class CbtiFinishReportSchemeResolver : SchemeResolver {
+class CbtiFinalReportSchemeResolver : SchemeResolver {
 
     /**
-     * sleepdoctor://cbti-chapters?notification_id=8e194802-a2bb-47f4-a695-f03ccb5d92ad&user_id=2172&cbti_chapter_id=2"  //urlencode后
+     * "scheme": "sleepdoctor://cbti-final-reports?scale_distribution_ids=1,2,3&cbti_id=1&chapter_id=1&notification_id=6e9ea5a4-8559-45ca-a5e4-9b495d5ebb2f&user_id=2102"
      */
     override fun resolveScheme(context: Context, uri: Uri): Intent {
-        val data = uri.getQueryParameter("cbti_chapter_id")
-        val payloadMap = HashMap<String, Any>(2)
-        payloadMap["scale_id"] = "2001,2002,2003"
-        payloadMap["chapter_id"] = "1"
-        payloadMap["cbti_id"] = "1"
+        val payloadMap = HashMap<String, Any?>(3)
+        payloadMap["scale_distribution_ids"] = uri.getQueryParameter("scale_distribution_ids")
+        payloadMap["cbti_id"] = uri.getQueryParameter("cbti_id")
+        payloadMap["chapter_id"] = uri.getQueryParameter("chapter_id")
         return SimpleWebActivity.getLaunchIntentWithRouteData(context, "openCbtiScales", payloadMap)
     }
 }

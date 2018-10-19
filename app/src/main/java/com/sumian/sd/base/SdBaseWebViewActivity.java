@@ -43,13 +43,13 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
                 return;
             }
             boolean useLocalJs = Counter.INSTANCE.count() % 2 == 0;
-            ToastUtils.showShort("h5 speed up");
+//            ToastUtils.showShort("h5 speed up"); // test code
             webView.setWebInterceptor((view, request) -> {
                 String url = request.getUrl().toString();
                 WebResourceResponse resourceResponse = null;
-                if (!useLocalJs) { // test code
-                    return null;
-                }
+//                if (!useLocalJs) { // test code
+//                    return null;
+//                }
                 String dirPath = getLocalFileDirPath(url);
                 if (dirPath == null) {
                     return null;
