@@ -11,6 +11,7 @@ import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.event.EventBusUtil;
 import com.sumian.sd.event.ScaleFinishFillingEvent;
+import com.sumian.sd.event.ScaleFinishFillingEvent2;
 import com.sumian.sd.h5.H5Uri;
 
 public class ScaleDetailActivity extends SdBaseWebViewActivity {
@@ -58,6 +59,7 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
             public void handler(String data) {
                 LogUtils.d(data);
                 EventBusUtil.postStickyEvent(new ScaleFinishFillingEvent());
+                EventBusUtil.postStickyEvent(new ScaleFinishFillingEvent2());
             }
         });
     }

@@ -15,7 +15,6 @@ public class Pagination {
     private int per_page;
     private int current_page;
     private int total_pages;
-    private List<Link> links;
 
 
     public int getTotal() {
@@ -63,15 +62,6 @@ public class Pagination {
         return this;
     }
 
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public Pagination setLinks(List<Link> links) {
-        this.links = links;
-        return this;
-    }
-
     @Override
     public String toString() {
         return "Pagination{" +
@@ -80,28 +70,7 @@ public class Pagination {
             ", per_page=" + per_page +
             ", current_page=" + current_page +
             ", total_pages=" + total_pages +
-            ", links=" + links +
             '}';
     }
 
-    public static class Link {
-
-        private String next;
-
-        public String getNext() {
-            return next;
-        }
-
-        public Link setNext(String next) {
-            this.next = next;
-            return this;
-        }
-
-        @Override
-        public String toString() {
-            return "Link{" +
-                "next='" + next + '\'' +
-                '}';
-        }
-    }
 }

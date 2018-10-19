@@ -1079,5 +1079,8 @@
     <string name="coupon_history">兑换记录</string>
     <string name="input_coupon">请输入您的兑换码</string>
     <string name="coupon">兑换</string>
+    <string name="know_your_sleep_health_situation">了解您的睡眠健康及心理状况</string>
+    <string name="not_evaluated">待测评</string>
+    <string name="evaluated">已测评</string>
     <!-- Hw end-->
 </resources>

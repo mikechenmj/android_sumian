@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="94dp"
+    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <TextView
+        android:id="@+id/tv_scale_name"
+        style="@style/text_t1_16"
+        android:textStyle="bold"
+        tools:text="抑郁情绪评测表" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_t2_13"
+        android:layout_marginTop="10dp"
+        tools:text="最近测评：2018.05.11  16:27"
+        tools:visibility="visible" />
+</LinearLayout>
