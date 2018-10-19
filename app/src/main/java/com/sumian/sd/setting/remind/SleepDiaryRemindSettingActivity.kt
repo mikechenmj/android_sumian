@@ -1,7 +1,7 @@
 package com.sumian.sd.setting.remind
 
-import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
@@ -12,8 +12,7 @@ import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
 import kotlinx.android.synthetic.main.activity_sleep_diary_remind_setting.*
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class SleepDiaryRemindSettingActivity :
-        BasePresenterActivity<SleepDiaryReminderSettingContract.Presenter>(),
+class SleepDiaryRemindSettingActivity : BasePresenterActivity<SleepDiaryReminderSettingContract.Presenter>(),
         SleepDiaryReminderSettingContract.View {
 
     companion object {
@@ -21,23 +20,33 @@ class SleepDiaryRemindSettingActivity :
         private const val DEFAULT_HOUR = 9
         private const val DEFAULT_MINUTE = 30
 
-        fun launch(context: Context, reminder: Reminder?) {
-            val intent = Intent(context, SleepDiaryRemindSettingActivity::class.java)
-            intent.putExtra(KEY_REMINDER, reminder)
-            ActivityUtils.startActivity(intent)
+        @JvmStatic
+        fun launch(reminderType: Int) {
+            ActivityUtils.getTopActivity()?.let {
+                val intent = Intent(it, SleepDiaryRemindSettingActivity::class.java)
+                intent.putExtra(KEY_REMINDER, reminderType)
+                it.startActivity(intent)
+            }
         }
 
+        @JvmStatic
         fun launch() {
             ActivityUtils.startActivity(SleepDiaryRemindSettingActivity::class.java)
         }
     }
 
     private var mReminder: Reminder? = null
+    private var mReminderType: Int = Reminder.SLEEP_DIARY_TYPE
     private var mOnTimePicked = false
     private var mSwitchPendingOff = false  // switch 点击后，如果没有pick 时间，则会回滚。
 
     init {
         mPresenter = SleepDiaryReminderSettingPresenter(this)
+    }
+
+    override fun initBundle(bundle: Bundle) {
+        super.initBundle(bundle)
+        mReminderType = bundle.getInt(KEY_REMINDER, Reminder.SLEEP_DIARY_TYPE)
     }
 
     override fun getLayoutId(): Int {
@@ -46,6 +55,18 @@ class SleepDiaryRemindSettingActivity :
 
     override fun initWidget() {
         super.initWidget()
+        when (mReminderType) {
+            Reminder.SLEEP_DIARY_TYPE -> {
+                title_bar.setTitle(R.string.sleep_diary_remind)
+                sdv_sleep_diary_remind.setLabel(getString(R.string.sleep_diary_remind))
+                tv_open_sleep_diary_remind_hint.setText(R.string.open_sleep_diary_remind_hint)
+            }
+            Reminder.RELAXATION_TRAINING_TYPE -> {
+                title_bar.setTitle(R.string.sd_relaxation_training)
+                sdv_sleep_diary_remind.setLabel(getString(R.string.sd_relaxation_training))
+                tv_open_sleep_diary_remind_hint.setText(R.string.open_relaxation_training_hint)
+            }
+        }
         title_bar.setOnBackClickListener { onBackPressed() }
         sdv_sleep_diary_remind.setOnCheckedChangeListener { button, checked ->
             run {
@@ -65,7 +86,7 @@ class SleepDiaryRemindSettingActivity :
 
     override fun initData() {
         super.initData()
-        mPresenter?.queryReminder()
+        mPresenter?.queryReminder(mReminderType)
     }
 
     override fun updateReminder(reminder: Reminder?) {
@@ -105,7 +126,7 @@ class SleepDiaryRemindSettingActivity :
         if (mReminder != null) {
             mPresenter?.modifyReminder(mReminder!!.id, getUnixTime(hour, minute), true)
         } else {
-            mPresenter?.addReminder(getUnixTime(hour, minute))
+            mPresenter?.addReminder(mReminderType, getUnixTime(hour, minute))
         }
     }
 

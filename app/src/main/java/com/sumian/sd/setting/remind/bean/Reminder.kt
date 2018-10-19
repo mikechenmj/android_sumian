@@ -14,6 +14,11 @@ data class Reminder(
         @SerializedName("enable") val enable: Int
 ) : Parcelable {
 
+    companion object {
+        const val SLEEP_DIARY_TYPE=2
+        const val RELAXATION_TRAINING_TYPE=3
+    }
+
     fun getRemindAtHour(): Int {
         return remindAt.split(":")[0].toInt()
     }

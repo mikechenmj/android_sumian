@@ -81,7 +81,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sdv_remind:
-                ActivityUtils.startActivity(RemindSettingActivity.class);
+                RemindSettingActivity.show();
                 break;
             case R.id.sdv_app_version:
                 VersionActivity.show(v.getContext(), VersionActivity.class);
@@ -126,13 +126,10 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
                         .setTitle(R.string.clear_cache)
                         .setMessage(R.string.clear_cache_hint)
                         .setLeftBtn(R.string.cancel, null)
-                        .setRightBtn(R.string.confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                boolean b = FileUtils.deleteAllInDir(getCacheDir());
-                                LogUtils.d(b);
-                                ToastUtils.showShort(R.string.clear_success);
-                            }
+                        .setRightBtn(R.string.confirm, v12 -> {
+                            boolean b = FileUtils.deleteAllInDir(getCacheDir());
+                            LogUtils.d(b);
+                            ToastUtils.showShort(R.string.clear_success);
                         })
                         .show();
                 break;

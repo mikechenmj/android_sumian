@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             app:divider_line_visible="visible"
             app:type_desc="@string/device_manage"
-            app:type_icon="@mipmap/ic_info_icon_set" />
+            app:type_icon="@drawable/ic_info_equipment" />
 
         <com.sumian.sd.widget.divider.SettingDividerView
             android:id="@+id/dv_coupon_center"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             app:divider_line_visible="visible"
             app:type_desc="@string/coupon_center"
-            app:type_icon="@mipmap/ic_info_icon_set" />
+            app:type_icon="@drawable/ic_info_card" />
 
         <com.sumian.sd.widget.divider.SettingDividerView
             android:id="@+id/dv_setting"

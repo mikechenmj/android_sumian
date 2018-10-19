@@ -22,4 +22,12 @@
         app:type_desc="@string/sd_sleep_diary_remind"
         tools:type_content="@string/not_set_yet" />
 
+    <com.sumian.sd.widget.divider.SettingDividerView
+        android:id="@+id/sdv_relaxation_training"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="visible"
+        app:type_desc="@string/sd_relaxation_training"
+        tools:type_content="@string/not_set_yet" />
+
 </LinearLayout>

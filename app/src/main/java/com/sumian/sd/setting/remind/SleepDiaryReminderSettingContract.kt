@@ -19,8 +19,8 @@ class SleepDiaryReminderSettingContract {
     }
 
     interface Presenter : IPresenter {
-        fun queryReminder()
-        fun addReminder(timeInSecond: Int)
+        fun queryReminder(reminderType: Int)
+        fun addReminder(reminderType: Int = Reminder.SLEEP_DIARY_TYPE, timeInSecond: Int)
         fun modifyReminder(reminderId: Int, timeInSecond: Int, enable: Boolean)
         fun release()
     }

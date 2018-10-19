@@ -315,13 +315,13 @@ interface SdApi {
 
 
     /**
-     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒
+     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒 3:放松训练提醒
      */
     @GET("reminders/subscriptions")
-    fun getReminderList(@Query("type") type: Int = 2): Call<ReminderListResponse>
+    fun getReminderList(@Query("type") reminderType: Int = 2): Call<ReminderListResponse>
 
     /**
-     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒
+     * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒 3:放松训练提醒
      * enable 0 false ,1 true
      */
     @FormUrlEncoded

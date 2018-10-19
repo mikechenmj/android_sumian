@@ -28,8 +28,8 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         mCalls.clear()
     }
 
-    override fun queryReminder() {
-        val call = AppManager.getSdHttpService().getReminderList(2)
+    override fun queryReminder(reminderType: Int) {
+        val call = AppManager.getSdHttpService().getReminderList(reminderType)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<ReminderListResponse>() {
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -42,8 +42,8 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         })
     }
 
-    override fun addReminder(timeInSecond: Int) {
-        val call = AppManager.getSdHttpService().addReminder(remindAtInSecond = timeInSecond)
+    override fun addReminder(reminderType: Int, timeInSecond: Int) {
+        val call = AppManager.getSdHttpService().addReminder(reminderType, remindAtInSecond = timeInSecond)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Reminder>() {
             override fun onFailure(errorResponse: ErrorResponse) {
