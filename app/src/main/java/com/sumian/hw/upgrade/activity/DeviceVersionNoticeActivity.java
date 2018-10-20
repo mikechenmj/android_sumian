@@ -21,6 +21,7 @@ import com.sumian.hw.widget.refresh.BlueRefreshView;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.network.response.AppUpgradeInfo;
 
 import java.util.Locale;
@@ -148,8 +149,8 @@ public class DeviceVersionNoticeActivity extends BaseActivity implements View.On
                         getString(R.string.speed_sleeper), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
             }
             mAppVersionInfo.updateUpgradeInfo(isShowAppDot, null);
-            mMonitorVersionInfo.updateUpgradeInfo(isShowMonitorDot, AppManager.getDeviceModel().getMonitorSn());
-            mSleepVersionInfo.updateUpgradeInfo(isShowSleepyDot, AppManager.getDeviceModel().getSleepySn());
+            mMonitorVersionInfo.updateUpgradeInfo(isShowMonitorDot, DeviceManager.INSTANCE.getMonitorSn());
+            mSleepVersionInfo.updateUpgradeInfo(isShowSleepyDot, DeviceManager.INSTANCE.getSleeperSn());
         });
     }
 

@@ -171,10 +171,10 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 tv_bottom_hint.text = resources.getString(if (isPa) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity)
                 tv_bottom_hint.visibility = if (!monitor.isSleeperConnected || isPa) View.VISIBLE else View.GONE
                 fl_turn_pa_bt_container.visibility = if (monitor.isSleeperConnected && !isPa) View.VISIBLE else View.GONE
-                val isTurningOnPa = monitor.paStatus == BlueDevice.PA_STATUS_TURNING_ON_PA
+                val isTurningOnPa = monitor.sleeperPaStatus == BlueDevice.PA_STATUS_TURNING_ON_PA
                 bt_turn_on_pa.isEnabled = !isTurningOnPa
                 bt_turn_on_pa.setCompoundDrawablesWithIntrinsicBounds(if (isTurningOnPa) R.drawable.rotate_device_card_view_sync else 0, 0, 0, 0)
-                bt_turn_on_pa.setText(R.string.starting_work)
+                bt_turn_on_pa.setText(if(isTurningOnPa) R.string.starting_work else R.string.start_work)
             }
         }
     }

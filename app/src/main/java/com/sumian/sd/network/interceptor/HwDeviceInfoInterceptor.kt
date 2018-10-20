@@ -2,8 +2,10 @@ package com.sumian.sd.network.interceptor
 
 import android.net.Uri
 import com.sumian.hw.common.util.SystemUtil
+import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.device.DeviceManager
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -43,10 +45,10 @@ class HwDeviceInfoInterceptor private constructor() : Interceptor {
         return ("app_version=" + SystemUtil.getPackageInfo(App.getAppContext()).versionName
                 + WITH_SIGN + "model=" + SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
                 + WITH_SIGN + "system=" + SystemUtil.getSystemVersion()
-                + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(AppManager.getDeviceModel().monitorVersion)
-                + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(AppManager.getDeviceModel().monitorSn)
-                + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().sleepyVersion)
-                + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(AppManager.getDeviceModel().sleepySn))
+                + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(DeviceManager.getMonitorVersion())
+                + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(DeviceManager.getMonitorSn())
+                + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(DeviceManager.getSleeperVersion())
+                + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(DeviceManager.getSleeperSn()))
     }
 
     private fun formatMonitorInfo(monitorInfo: String?): String {
@@ -62,8 +64,9 @@ class HwDeviceInfoInterceptor private constructor() : Interceptor {
         if (bluePeripheral == null || !bluePeripheral.isConnected) {
             return ""
         }
-        val speedSleeper = AppManager.getDeviceModel().blueDevice
-        return if (speedSleeper?.speedSleeper != null && speedSleeper.speedSleeper?.isConnected != true) {
+        val monitor = DeviceManager.getMonitorLiveData().value
+//        return if (monitor?.speedSleeper != null && monitor.speedSleeper?.isConnected != true) {
+        return if (monitor == null || monitor.sleeperStatus != BlueDevice.STATUS_CONNECTED) {
             ""
         } else {
             speedSleeperInfo ?: ""

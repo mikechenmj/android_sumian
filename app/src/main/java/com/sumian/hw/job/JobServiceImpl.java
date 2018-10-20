@@ -20,6 +20,7 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.DeviceManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -365,7 +366,7 @@ public class JobServiceImpl implements JobService, JobTask.TaskCallback {
         UserInfo userInfo = AppManager.getAccountViewModel().getUserInfo();
         int userId = userInfo.id;
         return dataType + "_" + endCmd.substring(10) +
-                "_sn" + AppManager.getDeviceModel().getMonitorSn() +
+                "_sn" + DeviceManager.INSTANCE.getMonitorSn() +
                 "_" + userId +
                 ".txt";
     }

@@ -244,7 +244,7 @@ class DeviceManageFragment : BaseFragment() {
         } else if (monitor.status == BlueDevice.STATUS_CONNECTING) {
             R.string.monitor_is_connecting
         } else {
-            if (monitor.speedSleeper?.status == BlueDevice.STATUS_UNCONNECTED) {
+            if (monitor.sleeperStatus == BlueDevice.STATUS_UNCONNECTED) {
                 R.string.monitor_is_connected_please_check_sleeper
             } else {
                 if (monitor.isSleeperPa) R.string.sleeper_is_working else R.string.sleeper_is_idle
@@ -253,11 +253,10 @@ class DeviceManageFragment : BaseFragment() {
     }
 
     private fun updateSleeperUI(monitor: BlueDevice?) {
-        val sleeper = monitor?.speedSleeper
         // sleeper ui
-        sleeper_battery_view.setProgress(sleeper?.battery ?: 0)
-        tv_speed_sleeper_status.text = getString(when (sleeper?.status) {
-            BlueDevice.STATUS_CONNECTED -> if (monitor.paStatus == BlueDevice.PA_STATUS_PA) R.string.working else R.string.already_connected
+        sleeper_battery_view.setProgress(monitor?.sleeperBattery?: 0)
+        tv_speed_sleeper_status.text = getString(when (monitor?.sleeperStatus) {
+            BlueDevice.STATUS_CONNECTED -> if (monitor.sleeperPaStatus == BlueDevice.PA_STATUS_PA) R.string.working else R.string.already_connected
             BlueDevice.STATUS_UNCONNECTED -> R.string.not_connected
             else -> R.string.not_connected
         })

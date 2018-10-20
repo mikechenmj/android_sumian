@@ -25,6 +25,7 @@ import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 
 import java.util.List;
@@ -136,11 +137,11 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                 break;
             case VERSION_TYPE_MONITOR:
                 newVersion = AppManager.getVersionModel().getMonitorVersion().getVersion();
-                currentVersion = AppManager.getDeviceModel().getMonitorVersion();
+                currentVersion = DeviceManager.INSTANCE.getMonitorVersion();
                 break;
             case VERSION_TYPE_SLEEPY:
                 newVersion = AppManager.getVersionModel().getSleepyVersion().getVersion();
-                currentVersion = AppManager.getDeviceModel().getSleepyVersion();
+                currentVersion = DeviceManager.INSTANCE.getSleeperVersion();
                 break;
             default:
                 break;
@@ -446,7 +447,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
 
     // private methods
     private boolean monitorBatteryLow() {
-        return AppManager.getDeviceModel().getMonitorBattery() < 50;
+        return DeviceManager.INSTANCE.getMonitorBattery() < 50;
     }
 
     private boolean mobileBatteryLow() {
@@ -466,7 +467,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     }
 
     private boolean sleepyBatterLow() {
-        return AppManager.getDeviceModel().getSleepyBattery() < 50;
+        return DeviceManager.INSTANCE.getSleeperBattery() < 50;
     }
 
 

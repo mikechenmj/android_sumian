@@ -22,6 +22,7 @@ import com.sumian.hw.upgrade.wrapper.DfuWrapper;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.DeviceManager;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -385,8 +386,8 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                 break;
             case "56"://获取监测仪绑定的速眠仪的 mac 地址
                 String mac = cmd.substring(6);
-                AppManager.getDeviceModel().setSleepyMac(mac);
-                this.mDfuMac = AppManager.getDeviceModel().getSleepyDfuMac();
+                DeviceManager.INSTANCE.setSleeperMac(mac);
+                this.mDfuMac = DeviceManager.INSTANCE.getSleeperDfuMac();
                 peripheral.writeDelay(BlueCmd.cDoSleepyDfuMode(), 200);
                 break;
             case "59"://使速眠仪进入 dfu 模式开启成功

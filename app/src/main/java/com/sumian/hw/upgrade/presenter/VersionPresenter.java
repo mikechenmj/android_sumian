@@ -8,11 +8,13 @@ import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.common.util.NumberUtil;
 import com.sumian.hw.common.util.UiUtil;
+import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.network.response.AppUpgradeInfo;
 import com.sumian.sd.network.response.FirmwareInfo;
@@ -89,7 +91,7 @@ public class VersionPresenter implements VersionContract.Presenter {
                     if (monitorVersionInfo != null) {
                         monitorVersionInfo = monitorVersionInfo.clone();
                     }
-                    checkVersionInfo(finalView, MONITOR_VERSION_TYPE, monitorVersionInfo, AppManager.getDeviceModel().getMonitorVersion());
+                    checkVersionInfo(finalView, MONITOR_VERSION_TYPE, monitorVersionInfo, DeviceManager.INSTANCE.getMonitorVersion());
 
                     VersionInfo sleeperVersionInfo = response.sleeper;
                     AppManager.getVersionModel().setSleepyVersion(sleeperVersionInfo);
@@ -97,7 +99,7 @@ public class VersionPresenter implements VersionContract.Presenter {
                     if (sleeperVersionInfo != null) {
                         sleeperVersionInfo = sleeperVersionInfo.clone();
                     }
-                    checkVersionInfo(finalView, SLEEPY_VERSION_TYPE, sleeperVersionInfo, AppManager.getDeviceModel().getSleepyVersion());
+                    checkVersionInfo(finalView, SLEEPY_VERSION_TYPE, sleeperVersionInfo, DeviceManager.INSTANCE.getSleeperVersion());
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
                 }
@@ -119,7 +121,7 @@ public class VersionPresenter implements VersionContract.Presenter {
         if (versionType == MONITOR_VERSION_TYPE) {
             isConnected = bluePeripheral != null && bluePeripheral.isConnected();
         } else {
-            isConnected = (bluePeripheral != null && bluePeripheral.isConnected()) && AppManager.getDeviceModel().sleepyIsConnected();
+            isConnected = (bluePeripheral != null && bluePeripheral.isConnected()) && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED;
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
