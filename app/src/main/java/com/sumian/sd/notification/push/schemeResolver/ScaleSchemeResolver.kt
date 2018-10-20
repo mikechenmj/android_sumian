@@ -25,6 +25,6 @@ class ScaleSchemeResolver : SchemeResolver {
     override fun resolveScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("id")
         val title = context.getString(R.string.record_weekly_report) // td 让服务器在 scheme 加上 title 字段
-        return ScaleDetailActivity.getLaunchIntent(context, title, data.toLong())
+        return ScaleDetailActivity.getLaunchIntent(context, title, data.toLong(), 0L)
     }
 }

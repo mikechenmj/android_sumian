@@ -1,7 +1,7 @@
 package com.sumian.sd.scale.bean
 
 data class NotFilledScale(
-        val id: Long,
+        val id: Long,   // scale distribution id
         val doctor_id: Int,
         val scale_result_id: Int,
         val created_at: Int,

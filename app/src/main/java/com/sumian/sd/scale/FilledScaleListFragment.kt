@@ -43,7 +43,7 @@ class FilledScaleListFragment : BaseFragment() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
             run {
                 val filledScale = mAdapter.getItem(position) as FilledScale
-                ScaleDetailActivity.launch(activity!!, filledScale.title, filledScale.id)
+                ScaleDetailActivity.launch(activity!!, filledScale.title, filledScale.latest_scale_distribution.id, filledScale.id)
             }
         }
         mAdapter.emptyView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)

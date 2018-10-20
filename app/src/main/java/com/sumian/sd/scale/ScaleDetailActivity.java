@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
@@ -18,16 +19,19 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_SCALE_ID = "scale_id";
+    public static final String KEY_SCALE_DISTRIBUTION_ID = "scale_distribution_id";
     private String mTitle;
     private long mScaleId;
+    private long mScaleDistributionId;
 
-    public static void launch(Context context, String title, long scaleId) {
-        context.startActivity(getLaunchIntent(context, title, scaleId));
+    public static void launch(Context context, String title, long scaleDistributionId, long scaleId) {
+        ActivityUtils.startActivity(getLaunchIntent(context, title, scaleDistributionId, scaleId));
     }
 
-    public static Intent getLaunchIntent(Context context, String title, long scaleId) {
+    public static Intent getLaunchIntent(Context context, String title, long scaleDistributionId, long scaleId) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TITLE, title);
+        bundle.putLong(KEY_SCALE_DISTRIBUTION_ID, scaleDistributionId);
         bundle.putLong(KEY_SCALE_ID, scaleId);
         Intent intent = new Intent(context, ScaleDetailActivity.class);
         intent.putExtras(bundle);
@@ -38,6 +42,7 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
     protected void initBundle(@NonNull Bundle bundle) {
         mTitle = bundle.getString(KEY_TITLE);
         mScaleId = bundle.getLong(KEY_SCALE_ID);
+        mScaleDistributionId = bundle.getLong(KEY_SCALE_DISTRIBUTION_ID);
     }
 
     @Override
@@ -48,7 +53,10 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
     @Override
     protected String getUrlContentPart() {
         String uri = H5Uri.FILL_SCALE;
-        uri = uri.replace("{id}", String.valueOf(mScaleId));
+        uri = uri.replace("{scale_distribution_id}", String.valueOf(mScaleDistributionId));
+        if (mScaleId != 0) {
+            uri = uri + "?scale_id_v2=" + mScaleId;
+        }
         return uri;
     }
 

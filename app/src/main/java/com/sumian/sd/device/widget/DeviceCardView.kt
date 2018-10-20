@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
 import android.content.Context
-import android.os.Handler
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,6 @@ import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.dialog.SumianImageTextToast
 import kotlinx.android.synthetic.main.layout_device_card_view_device.view.*
 import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
-
 
 /**
  * @author : Zhan Xuzhao

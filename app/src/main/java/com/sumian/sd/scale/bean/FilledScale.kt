@@ -8,7 +8,7 @@ data class FilledScale(
 )
 
 data class LatestScaleDistribution(
-        val id: Int,
+        val id: Long,
         val scale_id: Int,
         val user_id: Int,
         val doctor_id: Int,
