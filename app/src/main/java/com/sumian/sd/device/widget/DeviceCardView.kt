@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
 class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : FrameLayout(context, attributeSet) {
 
     private var mRotateAnimator: ObjectAnimator? = null
+    private var isStopped = false
     private val mMonitorEventListener = object : MonitorEventListener {
         override fun onSyncStart() {
             startSyncAnimation()
@@ -115,8 +116,14 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         })
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        DeviceManager.addMonitorEventListener(mMonitorEventListener)
+    }
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
+        DeviceManager.removeMonitorEventListener(mMonitorEventListener)
     }
 
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
@@ -167,6 +174,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                     else -> R.string.not_connected
                 })
                 tv_speed_sleeper_status.setTextColor(ColorCompatUtil.getColor(context, if (isPa) R.color.white else R.color.t2_color))
+                @Suppress("DEPRECATION")
                 tv_speed_sleeper_status.background = if (isPa) resources.getDrawable(R.drawable.sleeper_pa_tv_bg) else null
                 tv_bottom_hint.text = resources.getString(if (isPa) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity)
                 tv_bottom_hint.visibility = if (!monitor.isSleeperConnected || isPa) View.VISIBLE else View.GONE
@@ -174,7 +182,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 val isTurningOnPa = monitor.sleeperPaStatus == BlueDevice.PA_STATUS_TURNING_ON_PA
                 bt_turn_on_pa.isEnabled = !isTurningOnPa
                 bt_turn_on_pa.setCompoundDrawablesWithIntrinsicBounds(if (isTurningOnPa) R.drawable.rotate_device_card_view_sync else 0, 0, 0, 0)
-                bt_turn_on_pa.setText(if(isTurningOnPa) R.string.starting_work else R.string.start_work)
+                bt_turn_on_pa.setText(if (isTurningOnPa) R.string.starting_work else R.string.start_work)
             }
         }
     }
@@ -207,14 +215,16 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     var mHost: Host? = null
 
     fun onStart() {
-        DeviceManager.addMonitorEventListener(mMonitorEventListener)
+        isStopped = false
     }
 
     fun onStop() {
-        DeviceManager.removeMonitorEventListener(mMonitorEventListener)
+        isStopped = true
     }
 
-    private fun showMessageDialog(success: Boolean, message: String) {
-        SumianImageTextToast.showToast(context, if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail, message, false)
+    private fun showMessageDialog(success: Boolean, message: String?) {
+        if(!isStopped) {
+            SumianImageTextToast.showToast(context, if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail, message, false)
+        }
     }
 }
