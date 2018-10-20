@@ -1,5 +1,6 @@
 package com.sumian.sd
 
+import android.webkit.MimeTypeMap
 import com.google.gson.Gson
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.hw.common.util.TimeUtil
@@ -62,8 +63,10 @@ class KotlinTest {
 
     @Test
     fun t1() {
-        System.out.println(TimeUtilV2.formatTimeYYYYMMDD(System.currentTimeMillis()))
-        System.out.println(TimeUtilV2.formatTimeYYYYMMDD_HHMM(System.currentTimeMillis()))
+        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.png")));
+        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.jpg")));
+        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.css")));
+        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.js")));
     }
 
 }
