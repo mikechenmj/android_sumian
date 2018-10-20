@@ -19,6 +19,7 @@ import com.sumian.hw.command.BlueCmd
 import com.sumian.hw.common.util.BlueByteUtil
 import com.sumian.hw.common.util.SpUtil
 import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.hw.device.pattern.SyncPatternManager
 import com.sumian.hw.device.wrapper.BlueDeviceWrapper
 import com.sumian.hw.gather.FileHelper
 import com.sumian.hw.log.LogManager
@@ -827,6 +828,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onSyncSuccess() {
+        SyncPatternManager.syncPatternInPossible(App.getAppContext())
         for (listener in mMonitorEventListeners) {
             listener.onSyncSuccess()
         }
