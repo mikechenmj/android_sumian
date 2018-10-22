@@ -12,7 +12,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.monitorrecord.DailyReportFragmentV2
 import com.sumian.sd.diary.sleeprecord.SleepRecordFragment
-import kotlinx.android.synthetic.main.fragment_diary.*
+import kotlinx.android.synthetic.main.fragment_data.*
 
 
 /**
@@ -22,32 +22,42 @@ import kotlinx.android.synthetic.main.fragment_diary.*
  * desc   :
  * version: 1.0
  */
-class DiaryFragment : BaseFragment() {
+class DataFragment : BaseFragment() {
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_diary
+        return R.layout.fragment_data
     }
 
     companion object {
-        private var T0 = DiaryFragment::class.java.simpleName + ".TAB_0"
-        private var T1 = DiaryFragment::class.java.simpleName + ".TAB_1"
+        private var T0 = DataFragment::class.java.simpleName + ".TAB_0"
+        private var T1 = DataFragment::class.java.simpleName + ".TAB_1"
         private var TAGS = arrayOf(T0, T1)
     }
 
-    private var mCurrentPosition = -1;
+    private var mCurrentPosition = -1
 
     override fun initWidget() {
         super.initWidget()
         DeviceManager.getMonitorLiveData().observe(this, Observer {
             val hasDevice = it != null || AppManager.getAccountViewModel().liveDataToken.value?.user?.hasDevice() == true
-            switchTabs(hasDevice)
+            switchTabUI(hasDevice)
         })
         tab_sleep_diary.setOnClickListener { selectTab(0) }
         tab_monitor_data.setOnClickListener { selectTab(1) }
         selectTab(0, true)
     }
 
-    private fun switchTabs(hasDevice: Boolean) {
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            val findFragmentByTag = fragmentManager?.findFragmentByTag(TAGS[mCurrentPosition])
+            if (findFragmentByTag is DailyReportFragmentV2) {
+                findFragmentByTag.updateCurrentTimeData()
+            }
+        }
+    }
+
+    private fun switchTabUI(hasDevice: Boolean) {
         vg_tabs.visibility = if (hasDevice) View.VISIBLE else View.GONE
         tv_sleep_diary.visibility = if (!hasDevice) View.VISIBLE else View.GONE
     }
@@ -64,9 +74,6 @@ class DiaryFragment : BaseFragment() {
     }
 
     private fun selectTab(position: Int, isInit: Boolean = false) {
-        if (mCurrentPosition == position) {
-            return
-        }
         updateTopTabUI(position)
         switchFragment(position)
         if (!isInit) {

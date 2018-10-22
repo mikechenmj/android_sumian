@@ -22,7 +22,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.device.DeviceManager
-import com.sumian.sd.diary.DiaryFragment
+import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
@@ -66,7 +66,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
 
     private val mFragmentTags = arrayOf(
             HomepageFragment::class.java.simpleName,
-            DiaryFragment::class.java.simpleName,
+            DataFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
     private var mLaunchTabData: String? = null
@@ -229,7 +229,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
                     override fun createFragmentByPosition(position: Int): Fragment {
                         return when (position) {
                             0 -> HomepageFragment()
-                            1 -> DiaryFragment()
+                            1 -> DataFragment()
                             2 -> DoctorFragment()
                             3 -> MeFragment()
                             else -> HomepageFragment()

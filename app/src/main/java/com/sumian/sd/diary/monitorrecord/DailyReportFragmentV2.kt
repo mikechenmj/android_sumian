@@ -70,7 +70,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
 
     override fun initData() {
         super.initData()
-        queryDiary(mSelectedTime)
+        updateCurrentTimeData()
     }
 
     override fun onStart() {
@@ -85,11 +85,11 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onUploadSleepDataFailedEvent(event: UploadSleepDataFinishedEvent) {
+    fun onUploadSleepDataFinishedEvent(event: UploadSleepDataFinishedEvent) {
         LogUtils.d(event)
         mHandler.removeCallbacks(mDismissBottomHintRunnable)
         if (event.success) {
-            queryDiary(mSelectedTime) // refresh
+            updateCurrentTimeData() // refresh
         } else {
             tv_sync_fail_hint.visibility = View.VISIBLE
             mHandler.postDelayed(mDismissBottomHintRunnable, 3000)
@@ -102,6 +102,11 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
 
     override fun onRefresh() {
         LogManager.appendUserOperationLog("'检测数据' 下拉刷新")
+        updateCurrentTimeData()
+    }
+
+    fun updateCurrentTimeData() {
+        LogManager.appendUserOperationLog("'检测数据' 刷新")
         queryDiary(mSelectedTime)
     }
 
@@ -175,7 +180,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
                 val hasDataDays = HashSet<Long>()
                 val jsonObject = JSON.parseObject(response.toString())
                 val entries = jsonObject.entries
-                for ((key, value) in entries) {
+                for ((_, value) in entries) {
                     if (value is JSONArray) {
                         val calendarItemSleepReports = value.toJavaList(CalendarItemSleepReport::class.java)
                         for (report in calendarItemSleepReports) {
