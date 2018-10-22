@@ -32,6 +32,10 @@ import com.sumian.sd.app.App
  */
 object AutoSyncDeviceDataUtil {
 
+
+    private const val AUTO_SYNC_FILE_NAME = "upload_sleep_cha_time"
+    private const val AUTO_SYNC_KEY = "time"
+
     private val mGlobalReceiver: BroadcastReceiver by lazy {
         object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -82,13 +86,13 @@ object AutoSyncDeviceDataUtil {
      * 保存同步事件时间戳
      */
     fun saveAutoSyncTime() {
-        SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply()
+        SpUtil.initEdit(AUTO_SYNC_FILE_NAME).putLong(AUTO_SYNC_KEY, System.currentTimeMillis()).apply()
     }
 
     /**
      * 获取同步事件时间戳
      */
     private fun getAutoSyncTime(): Long {
-        return SpUtil.initSp("upload_sleep_cha_time").getLong("time", 0)
+        return SpUtil.initSp(AUTO_SYNC_FILE_NAME).getLong(AUTO_SYNC_KEY, 0)
     }
 }

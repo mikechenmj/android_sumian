@@ -9,6 +9,7 @@ import com.sumian.hw.log.LogManager
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.device.AutoSyncDeviceDataUtil
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.monitorrecord.DailyReportFragmentV2
 import com.sumian.sd.diary.sleeprecord.SleepRecordFragment
@@ -80,7 +81,8 @@ class DataFragment : BaseFragment() {
             if (position == 0) {
                 LogManager.appendUserOperationLog("点击TAB '睡眠日记'")
             } else {
-                LogManager.appendUserOperationLog("点击TAB '检测数据'")
+                AutoSyncDeviceDataUtil.autoSyncSleepData()
+                LogManager.appendUserOperationLog("点击TAB '监测数据'")
             }
         }
         mCurrentPosition = position
