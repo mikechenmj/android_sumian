@@ -66,6 +66,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mIsUploadingSleepDataToServerLiveData.value = false
     }
 
+    fun init() {
+
+    }
+
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
         return mMonitorLiveData
     }
@@ -244,7 +248,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun isConnecting(): Boolean {
-        return mMonitorLiveData.value?.status == BlueDevice.STATUS_CONNECTING ?: false
+        return mMonitorLiveData.value?.status == BlueDevice.STATUS_CONNECTING
     }
 
     fun isSyncing(): Boolean {
