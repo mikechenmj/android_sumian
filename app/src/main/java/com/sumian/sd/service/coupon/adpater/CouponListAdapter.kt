@@ -1,7 +1,6 @@
 package com.sumian.sd.service.coupon.adpater
 
 import android.content.Context
-import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -32,16 +31,12 @@ class CouponListAdapter(context: Context) : BaseRecyclerAdapter<Coupon>(context)
     inner class ViewHolder constructor(itemView: View) : BaseViewHolder(itemView) {
 
         fun init(item: Coupon, isGoneDivider: Boolean = false) {
-            setText(R.id.tv_title, item.Title)
+            setText(R.id.tv_title, item.batch.name)
                     .setText(R.id.tv_advisory_time, item.formatTime())
                     .setText(R.id.tv_advisory_action_status, item.formatStatus())
                     .setVisible(R.id.tv_advisory_action_status, true)
                     .setGone(R.id.tv_timer, false)
                     .setVisible(R.id.divider, !isGoneDivider)
-        }
-
-        fun getString(@StringRes textId: Int = 0): String {
-            return itemView.resources.getString(textId)
         }
     }
 }

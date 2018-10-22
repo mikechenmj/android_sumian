@@ -82,7 +82,6 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
 
     override fun onRefresh() {
         mIsRefresh = true
-        refresh.showRefreshAnim()
         this.mPresenter?.refreshCouponList()
     }
 
@@ -97,6 +96,7 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
 
     override fun showLoading() {
         //super.showLoading()
+        refresh.showRefreshAnim()
     }
 
     override fun dismissLoading() {
@@ -107,14 +107,13 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
 
     override fun onGetCouponListSuccess(couponList: List<Coupon>) {
         if (couponList.isEmpty()) {
-            empty_error_view.invalidAdvisoryError()
+            empty_error_view.invalidCouponError()
             recycler.visibility = View.GONE
         } else {
             mListAdapter.resetItem(couponList)
             recycler.visibility = View.VISIBLE
             empty_error_view.hide()
         }
-
     }
 
     override fun onGetCouponListCouponFailed(error: String) {

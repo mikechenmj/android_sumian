@@ -16,16 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jaeger.library.StatusBarUtil;
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.sd.R;
 import com.sumian.sd.widget.dialog.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import butterknife.ButterKnife;
@@ -257,13 +254,6 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
         showCenterToast(getString(messageId));
     }
 
-    protected void setStatusBarColor() {
-        StatusBarUtil.setColorNoTranslucent(getActivity(), getResources().getColor(R.color.colorPrimary));
-    }
-
-    protected void setStatusBarTranslucent() {
-        StatusBarUtil.hideFakeStatusBarView(Objects.requireNonNull(getActivity()));
-    }
 
     protected void addCall(Call call) {
         mCalls.add(call);

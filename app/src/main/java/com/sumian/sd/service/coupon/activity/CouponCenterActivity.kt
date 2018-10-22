@@ -23,14 +23,12 @@ class CouponCenterActivity : BaseBackActivity(), ViewPager.OnPageChangeListener 
     private var onKeyBoardCallback: OnKeyBoardCallback? = null
 
     companion object {
-
         @JvmStatic
         fun show() {
             ActivityUtils.getTopActivity()?.let {
                 it.startActivity(Intent(it, CouponCenterActivity::class.java))
             }
         }
-
     }
 
     override fun getChildContentId(): Int {
