@@ -17,7 +17,6 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.hw.command.BlueCmd
 import com.sumian.hw.common.util.BlueByteUtil
-import com.sumian.hw.common.util.SpUtil
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.hw.device.pattern.SyncPatternManager
 import com.sumian.hw.device.wrapper.BlueDeviceWrapper
@@ -394,6 +393,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     mPackageNumber++
                     LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,等待设备透传 " + dataCount + "包数据" + "  cmd=" + cmd)
                     onSyncStart()
+                    AutoSyncDeviceDataUtil.saveAutoSyncTime()
                     mMonitorLiveData.value?.isSyncing = true
                 } else {
                     writeResponse(peripheral, data, false)
@@ -411,7 +411,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     m8fTransData.clear()
                     if (isAvailableStorageEnough(dataCount)) {
                         if (mTranType == 0x01) {
-                            SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply()
+                            AutoSyncDeviceDataUtil.saveAutoSyncTime()
                         }
                         LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd)
                         postIsUploadingSleepDataToServer(true)
@@ -675,7 +675,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 mMonitorLiveData.value?.isSyncing = false
                 onSyncSuccess()
                 LogManager.appendTransparentLog("收到0x4f回复 设备没有睡眠特征数据  cmd=$cmd")
-                SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply()
+                AutoSyncDeviceDataUtil.saveAutoSyncTime()
             }
             "554f0201ff" -> {
                 onSyncFailed()

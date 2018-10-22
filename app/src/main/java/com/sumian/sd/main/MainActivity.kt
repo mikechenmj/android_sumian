@@ -22,6 +22,7 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.constants.SpKeys
+import com.sumian.sd.device.AutoSyncDeviceDataUtil
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.event.EventBusUtil
@@ -95,11 +96,13 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
     override fun onResume() {
         super.onResume()
         mIsResume = true
+        AutoSyncDeviceDataUtil.register(this)
     }
 
     override fun onPause() {
         super.onPause()
         mIsResume = false
+        AutoSyncDeviceDataUtil.unRegister(this)
     }
 
     override fun initWidget() {
