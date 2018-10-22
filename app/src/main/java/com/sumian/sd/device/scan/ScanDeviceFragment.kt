@@ -6,6 +6,7 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.os.Handler
 import android.support.annotation.StringRes
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -30,14 +31,17 @@ import java.util.*
  * e-mail : xuzhao.z@sumian.com
  * time   : 2018/10/13 22:23
  * desc   :
+ * 搜索逻辑：搜索三秒，如果无结果，继续搜索，直到搜索到一台设备为止（显示一台设备，停止搜索）；如果有一台设备，显示一台设备，停止搜索；如果有多台设备，显示设备列表；
+ * 搜索更多逻辑：不断搜索，列表动态显示搜索结果
  * version: 1.0
  */
 class ScanDeviceFragment : BaseFragment() {
 
     private val mBlueManager = AppManager.getBlueManager()
     private val mScanResults = ArrayList<BlueDevice>()
-
+    private val mHandler = Handler()
     private var mIsScanMore = false
+    private var mStartScanTime = 0L
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_scan_device
@@ -45,8 +49,8 @@ class ScanDeviceFragment : BaseFragment() {
 
     companion object {
         private const val REQUEST_CODE_ENABLE_BT = 1
-        private const val SCAN_DURATION = 3000L
-        private const val SCAN_MORE_DURATION = 17 * 1000L
+        private const val SCAN_CHECK_DURATION = 3000L
+        private const val SCAN_DURATION = 17 * 1000L
     }
 
     private val mDeviceAdapter = DeviceAdapter().apply { setOnItemClickListener { v, position, blueDevice -> onDeviceSelected(blueDevice) } }
@@ -111,33 +115,48 @@ class ScanDeviceFragment : BaseFragment() {
                 mScanResults.add(blueDevice)
                 mDeviceAdapter.setData(mScanResults)
             }
+            if (System.currentTimeMillis() - mStartScanTime > SCAN_CHECK_DURATION && !mIsScanMore) {
+                stopScan()
+            }
         }
 
         override fun onFinishScanCallback() {
             hideVgs()
             when (mScanResults.size) {
-                0 -> {
-                    setTitles(R.string.do_not_see_your_device, 0)
-                    vg_no_device.visibility = View.VISIBLE
-                    LogManager.appendBluetoothLog("该次没有搜索到任何设备")
-                }
-                1 -> {
-                    switchDeviceListUI(mIsScanMore)
-                    if (!mIsScanMore) {
-                        setTitles(mScanResults[0].name, getString(R.string.is_sure_device_2_bind))
-                        iv_device.visibility = View.VISIBLE
-                        bt_confirm.visibility = View.VISIBLE
-                        vg_scan_more_tvs.visibility = View.VISIBLE
-                    }
-                    LogManager.appendBluetoothLog("该次搜索到一台设备 " + mScanResults[0].name + " " + mScanResults[0].mac)
-                }
-                else -> {
-                    switchDeviceListUI(true)
-                    mDeviceAdapter.setData(mScanResults)
-                    LogManager.appendBluetoothLog("该次搜索到" + mScanResults.size + "台设备 " + mScanResults.toString())
-                }
+                0 -> showNoDeviceUI()
+                1 -> showOneDeviceUI()
+                else -> showMultiDeviceUI()
             }
         }
+    }
+
+    private fun stopScan() {
+        mBlueManager.doStopScan()
+    }
+
+    private fun showNoDeviceUI() {
+        setTitles(R.string.do_not_see_your_device, 0)
+        vg_no_device.visibility = View.VISIBLE
+        LogManager.appendBluetoothLog("该次没有搜索到任何设备")
+    }
+
+    private fun showMultiDeviceUI() {
+        hideVgs()
+        switchDeviceListUI(true)
+        mDeviceAdapter.setData(mScanResults)
+        LogManager.appendBluetoothLog("该次搜索到" + mScanResults.size + "台设备 " + mScanResults.toString())
+    }
+
+    private fun showOneDeviceUI() {
+        hideVgs()
+        switchDeviceListUI(mIsScanMore)
+        if (!mIsScanMore) {
+            setTitles(mScanResults[0].name, getString(R.string.is_sure_device_2_bind))
+            iv_device.visibility = View.VISIBLE
+            bt_confirm.visibility = View.VISIBLE
+            vg_scan_more_tvs.visibility = View.VISIBLE
+        }
+        LogManager.appendBluetoothLog("该次搜索到一台设备 " + mScanResults[0].name + " " + mScanResults[0].mac)
     }
 
     private fun hideVgs() {
@@ -187,17 +206,28 @@ class ScanDeviceFragment : BaseFragment() {
 
     private fun startScan() {
         resetScanResults()
+        mStartScanTime = System.currentTimeMillis()
         mIsScanMore = false
         mBlueManager.startScanAndAutoStopAfter(SCAN_DURATION)
+        mHandler.postDelayed({ checkScanResult() }, SCAN_CHECK_DURATION)
         switchDeviceListUI(false)
         iv_device.visibility = View.GONE
         vg_scan_more_tvs.visibility = View.GONE
         ripple_view.startAnimation()
     }
 
+    private fun checkScanResult() {
+        if (mScanResults.size == 1) {
+            stopScan()
+        } else if (mScanResults.size > 1) {
+            showMultiDeviceUI()
+        }
+    }
+
     private fun startScanMore() {
         mIsScanMore = true
-        mBlueManager.startScanAndAutoStopAfter(SCAN_MORE_DURATION)
+        mBlueManager.startScanAndAutoStopAfter(SCAN_DURATION)
+        mStartScanTime = System.currentTimeMillis()
         switchDeviceListUI(true)
     }
 
