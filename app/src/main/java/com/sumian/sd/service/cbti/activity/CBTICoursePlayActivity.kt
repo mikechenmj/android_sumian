@@ -189,23 +189,26 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
                     .setOnSubmitQuestionCallback(object : CBTIQuestionDialog.OnSubmitQuestionCallback {
 
                         override fun submitQuestionCallback(position: Int) {
-
                             // coursePlayAuth.courses.forEach {
                             //if (it.current_course) {
                             mPresenter?.uploadCBTIQuestionnaires(mCurrentCourse!!.id, position)
+                            aliyun_player.start()
                             // return@forEach
                             //}
                             // }
                         }
 
-                    }).setQuestionnaire(coursePlayAuth.meta.questionnaire[0])
+                        override fun onShowQuestionDialog() {
+                            autoPause()
+                        }
 
+                    }).setQuestionnaire(coursePlayAuth.meta.questionnaire[0])
+            mCBTIQuestionDialog?.ownerActivity = this@CBTICoursePlayActivity
             mCBTIQuestionDialog?.show()
         } else {
             Log.e(TAG, "无调查问卷")
+            aliyun_player.start()
         }
-
-        aliyun_player.start()
     }
 
     override fun onGetCBTIPlayAuthFailed(error: String) {
@@ -330,19 +333,23 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
                             // coursePlayAuth.courses.forEach {
                             // if (it.current_course) {
                             mPresenter?.uploadCBTIQuestionnaires(mCurrentCourse?.id!!, position)
+                            aliyun_player.start()
                             //      return@forEach
                             // }
                             //  }
                         }
 
+                        override fun onShowQuestionDialog() {
+                            autoPause()
+                        }
+
                     }).setQuestionnaire(coursePlayAuth.meta.questionnaire[0])
+            mCBTIQuestionDialog?.ownerActivity = this@CBTICoursePlayActivity
             mCBTIQuestionDialog?.show()
         } else {
             Log.e(TAG, "无调查问卷")
+            aliyun_player.start()
         }
-
-        aliyun_player.start()
-
     }
 
     override fun onGetCBTINextPlayAuthFailed(error: String) {
