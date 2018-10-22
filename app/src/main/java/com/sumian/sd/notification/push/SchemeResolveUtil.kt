@@ -57,6 +57,7 @@ class SchemeResolveUtil {
                 "referral-notice", "life-notice" -> NotificationSchemeResolver()
                 "cbti-chapters" -> CbtiChapterSchemeResolver()
                 "cbti-final-reports" -> CbtiFinalReportSchemeResolver()
+                "relaxations" -> RelaxationSchemeResolver()
                 else -> null
             }
         }
