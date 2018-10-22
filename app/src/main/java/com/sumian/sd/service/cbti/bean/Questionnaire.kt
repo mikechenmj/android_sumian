@@ -13,7 +13,7 @@ import java.io.Serializable
  */
 @Parcelize
 data class Questionnaire(var question: String,//题目/问题
-                         var explanation: String?,//说明
+                         var explanation: List<String>,//说明
                          var answer: Boolean,//是否回答
                          var selection: List<String>)// 选项
     : Serializable, Parcelable
