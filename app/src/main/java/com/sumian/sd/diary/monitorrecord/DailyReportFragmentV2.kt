@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonObject
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.hw.log.LogManager
 import com.sumian.hw.report.base.BaseResultResponse
 import com.sumian.hw.report.bean.DailyMeta
 import com.sumian.hw.report.bean.DailyReport
@@ -100,6 +101,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
     }
 
     override fun onRefresh() {
+        LogManager.appendUserOperationLog("'检测数据' 下拉刷新")
         queryDiary(mSelectedTime)
     }
 

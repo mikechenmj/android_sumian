@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.View
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.hw.log.LogManager
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -43,7 +44,7 @@ class DiaryFragment : BaseFragment() {
         })
         tab_sleep_diary.setOnClickListener { selectTab(0) }
         tab_monitor_data.setOnClickListener { selectTab(1) }
-        selectTab(0)
+        selectTab(0, true)
     }
 
     private fun switchTabs(hasDevice: Boolean) {
@@ -52,7 +53,7 @@ class DiaryFragment : BaseFragment() {
     }
 
     private fun switchFragment(position: Int) {
-        FragmentUtil.switchFragment(R.id.fl_container, fragmentManager!!, TAGS, position,object:FragmentUtil.FragmentCreator{
+        FragmentUtil.switchFragment(R.id.fl_container, fragmentManager!!, TAGS, position, object : FragmentUtil.FragmentCreator {
             override fun createFragmentByPosition(position: Int): Fragment {
                 return when (position) {
                     0 -> SleepRecordFragment()
@@ -62,12 +63,19 @@ class DiaryFragment : BaseFragment() {
         })
     }
 
-    private fun selectTab(position: Int) {
+    private fun selectTab(position: Int, isInit: Boolean = false) {
         if (mCurrentPosition == position) {
             return
         }
         updateTopTabUI(position)
         switchFragment(position)
+        if (!isInit) {
+            if (position == 0) {
+                LogManager.appendUserOperationLog("点击 '睡眠日记' 界面")
+            } else {
+                LogManager.appendUserOperationLog("点击 '检测数据' 界面")
+            }
+        }
         mCurrentPosition = position
     }
 
