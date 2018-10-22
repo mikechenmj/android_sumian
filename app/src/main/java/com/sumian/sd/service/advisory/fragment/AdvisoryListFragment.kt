@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.service.advisory.activity.AdvisoryDetailActivity
@@ -14,7 +15,6 @@ import com.sumian.sd.service.advisory.adapter.AdvisoryListAdapter
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.contract.AdvisoryListContract
 import com.sumian.sd.service.advisory.presenter.AdvisoryListPresenter
-import com.sumian.sd.widget.LoadMoreRecyclerView
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**

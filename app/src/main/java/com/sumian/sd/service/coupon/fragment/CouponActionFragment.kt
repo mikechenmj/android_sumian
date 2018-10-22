@@ -1,6 +1,8 @@
 package com.sumian.sd.service.coupon.fragment
 
+import android.content.Intent
 import android.support.v4.app.Fragment
+import android.support.v4.content.LocalBroadcastManager
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.View
@@ -47,7 +49,9 @@ class CouponActionFragment : BasePresenterFragment<CouponActionContract.Presente
     }
 
     override fun onInputCouponSuccess() {
-        onInputCouponFailed("兑换成功")
+        onInputCouponFailed(getString(R.string.coupon_success))
+        (mActivity as CouponCenterActivity).switchTab(1)
+        LocalBroadcastManager.getInstance(activity!!).sendBroadcast(Intent(CouponListFragment.AUTO_REFRESH_ACTION))
     }
 
     override fun onInputCouponFailed(error: String) {

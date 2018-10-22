@@ -1,6 +1,11 @@
 package com.sumian.sd.service.coupon.fragment
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.support.v4.app.Fragment
+import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
@@ -8,12 +13,12 @@ import android.view.View
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
 import com.sumian.sd.service.coupon.adpater.CouponListAdapter
 import com.sumian.sd.service.coupon.bean.Coupon
 import com.sumian.sd.service.coupon.contract.CouponListContract
 import com.sumian.sd.service.coupon.presenter.CouponListPresenter
-import com.sumian.sd.widget.LoadMoreRecyclerView
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**
@@ -28,6 +33,8 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
 
     companion object {
 
+        const val AUTO_REFRESH_ACTION = "com.sumian.sd.action.auto_refresh"
+
         @JvmStatic
         fun newInstance(): Fragment {
             return CouponListFragment()
@@ -37,6 +44,18 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
 
     private val mListAdapter: CouponListAdapter  by lazy {
         CouponListAdapter(context!!)
+    }
+
+    private val mDataBroadcastReceiver: BroadcastReceiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent) {
+                when (intent.action) {
+                    AUTO_REFRESH_ACTION -> {
+                        onRefresh()
+                    }
+                }
+            }
+        }
     }
 
     private var mIsRefresh = false
@@ -66,6 +85,12 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
         super.initData()
         mIsRefresh = true
         this.mPresenter?.getCouponList()
+        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mDataBroadcastReceiver, IntentFilter(AUTO_REFRESH_ACTION))
+    }
+
+    override fun onRelease() {
+        super.onRelease()
+        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(mDataBroadcastReceiver)
     }
 
     override fun onResume() {

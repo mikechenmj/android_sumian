@@ -2,6 +2,7 @@ package com.sumian.sd.app
 
 import android.app.Activity
 import com.blankj.utilcode.util.AppUtils
+import com.sumian.common.lifecycle.EmptyActivityLifecycleCallbacks
 import com.sumian.hw.log.LogJobIntentService
 import com.sumian.hw.log.LogManager
 
@@ -13,7 +14,7 @@ import com.sumian.hw.log.LogManager
  *     version: 1.0
  * </pre>
  */
-class ActivityLifecycleCallbackForUploadLog : ActivityLifecycleCallbacksImpl() {
+class ActivityLifecycleCallbackForUploadLog : EmptyActivityLifecycleCallbacks() {
     private var mIsForeground = false
 
     override fun onActivityStarted(activity: Activity?) {
