@@ -10,8 +10,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
@@ -107,6 +105,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
             title_bar.setTitle(it.chapter.title)
             cbti_week_lesson_banner_view.invalidateBanner(it.chapter.title, it.chapter.introduction, it.chapter.banner, it.chapter_progress)
 
+            nav_tab_lesson_summary.visibility = if (it.chapter_progress == 100) View.VISIBLE else View.GONE
             nav_tab_lesson_summary.setOnClickListener {
                 val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.chapter.summary.replace("\r\n", "<br>")) + "&token=" + AppManager.getAccountViewModel().token.token
                 SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.the_week_lesson_summary)).show(supportFragmentManager)
