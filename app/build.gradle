@@ -286,7 +286,7 @@ dependencies {
     implementation 'com.qmuiteam:arch:0.0.1'
 
     //status bar util
-    implementation 'com.jaeger.statusbarutil:library:1.4.0'
+    //implementation 'com.jaeger.statusbarutil:library:1.4.0'
 
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'

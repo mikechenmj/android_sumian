@@ -1,5 +1,6 @@
 package com.sumian.sd.network.api
 
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.hw.device.pattern.PatternData
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
@@ -16,9 +17,8 @@ import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.order.OrderDetail
 import com.sumian.sd.oss.OssResponse
-import com.sumian.sd.scale.bean.NotFilledScale
-import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.scale.bean.FilledScale
+import com.sumian.sd.scale.bean.NotFilledScale
 import com.sumian.sd.scale.bean.Scale
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts
@@ -371,13 +371,13 @@ interface SdApi {
      * 兑换码  兑换
      */
     @FormUrlEncoded
-    @POST("coupon")
-    fun couponAction(@Field("coupon") coupon: String): Call<Any>
+    @POST("redeem-codes/exchange")
+    fun couponAction(@Field("code") coupon: String): Call<Any>
 
     /**
      * 获取兑换码  兑换列表
      */
-    @GET("coupon")
+    @GET("redeem-codes")
     fun getCouponList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Coupon>>
 
 }

@@ -1,7 +1,5 @@
 package com.sumian.sd.network.response;
 
-import java.util.List;
-
 /**
  * Created by jzz
  * on 2017/10/11.
@@ -65,12 +63,12 @@ public class Pagination {
     @Override
     public String toString() {
         return "Pagination{" +
-            "total=" + total +
-            ", count=" + count +
-            ", per_page=" + per_page +
-            ", current_page=" + current_page +
-            ", total_pages=" + total_pages +
-            '}';
+                "total=" + total +
+                ", count=" + count +
+                ", per_page=" + per_page +
+                ", current_page=" + current_page +
+                ", total_pages=" + total_pages +
+                '}';
     }
 
 }
