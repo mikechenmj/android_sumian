@@ -31,6 +31,7 @@ class DeviceManageActivity : BaseBackActivity() {
         super.initWidget()
         setTitle(R.string.device_manage)
         switchFragment(0)
+        AutoSyncDeviceDataUtil.autoSyncSleepData()
     }
 
     private fun switchFragment(position: Int) {

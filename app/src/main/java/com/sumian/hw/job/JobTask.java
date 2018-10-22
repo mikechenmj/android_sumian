@@ -19,7 +19,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.common.util.NetUtil;
-import com.sumian.hw.common.util.SpUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.bean.OssTransData;
@@ -28,6 +27,7 @@ import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.AutoSyncDeviceDataUtil;
 import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.event.EventBusUtil;
 import com.sumian.sd.event.UploadSleepDataFinishedEvent;
@@ -145,7 +145,7 @@ public class JobTask implements Serializable, Cloneable {
                     LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
                     LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + errorResponse.getMessage());
                     if (transDataType == 0x01) {
-                        SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                        AutoSyncDeviceDataUtil.INSTANCE.saveAutoSyncTime();
                     }
                     mTaskCallback.executeCallbackSuccess(JobTask.this);
                 } else {
@@ -203,7 +203,7 @@ public class JobTask implements Serializable, Cloneable {
                 LocalBroadcastManager.getInstance(App.Companion.getAppContext()).sendBroadcast(intent);
 
                 if (trasDataType == 0x01) {
-                    SpUtil.initEdit("upload_sleep_cha_time").putLong("time", System.currentTimeMillis()).apply();
+                    AutoSyncDeviceDataUtil.INSTANCE.saveAutoSyncTime();
                 }
 
                 if (!TextUtils.isEmpty(returnBody)) {
