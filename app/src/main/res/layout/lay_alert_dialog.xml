@@ -31,7 +31,7 @@
                 android:layout_marginBottom="@dimen/space_20"
                 android:contentDescription="@null"
                 tools:src="@mipmap/ic_notification_alert"
-                tools:visibility="gone" />
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_close"

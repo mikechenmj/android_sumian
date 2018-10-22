@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.sumian.common.utils.ColorCompatUtil;
+import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.bean.SleepPill;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
@@ -70,8 +72,11 @@ public class SleepRecordView extends LinearLayout {
     TextView btnGoRecord;
     @BindView(R.id.ll_no_sleep_record)
     LinearLayout llNoSleepRecord;
+    @BindView(R.id.tv_sleep_record_not_enable_hint)
+    TextView tvSleepRecordNotEnableHint;
     private SleepRecord mSleepRecord;
     private boolean mForceShowDoctorAdvice;
+    private long mTime;
 
     public SleepRecordView(Context context) {
         this(context, null);
@@ -99,6 +104,10 @@ public class SleepRecordView extends LinearLayout {
         if (hasRecord) {
             showSleepRecord(sleepRecord);
         }
+        boolean isFillSleepRecordEnable = isFillSleepRecordEnable(mTime);
+        btnGoRecord.setEnabled(isFillSleepRecordEnable);
+        tvSleepRecordNotEnableHint.setVisibility(isFillSleepRecordEnable ? GONE : VISIBLE);
+        titleViewSleepRecord.tvMenu.setTextColor(ColorCompatUtil.getColor(getContext(), isFillSleepRecordEnable ? R.color.t1_color : R.color.t2_color));
     }
 
     private void showSleepRecord(SleepRecord sleepRecord) {
@@ -184,11 +193,16 @@ public class SleepRecordView extends LinearLayout {
     }
 
     public void setTime(long timeInMillis) {
+        mTime = timeInMillis;
         tvNoRecordDate.setText(TimeUtil.formatDate("M月d日", timeInMillis));
     }
 
     public void setForceShowDoctorAdvice(boolean forceShowDoctorAdvice) {
         mForceShowDoctorAdvice = forceShowDoctorAdvice;
         setSleepRecord(mSleepRecord);
+    }
+
+    private boolean isFillSleepRecordEnable(long recordTime) {
+        return TimeUtilV2.Companion.getDayDistance(System.currentTimeMillis(), recordTime) < 3;
     }
 }

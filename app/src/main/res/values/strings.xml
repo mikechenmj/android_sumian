@@ -1025,6 +1025,7 @@
     <string name="turn_on_pa_mode_failed_title">开启工作模式失败</string>
     <string name="turn_on_pa_mode_failed_desc">速眠仪开启工作模式失败，原因是：%s</string>
     <string name="haode">好的</string>
+    <string name="hao_de">好 的</string>
     <string name="sleeper_is_working">速眠仪工作中</string>
     <string name="sync_fail">同步失败</string>
     <string name="already_latest_data">已是最新数据</string>
@@ -1086,5 +1087,7 @@
     <string name="know_your_sleep_health_situation">了解您的睡眠健康及心理状况</string>
     <string name="not_evaluated">待测评</string>
     <string name="evaluated">已测评</string>
+    <string name="only_last_3_days_can_fill_sleep_diary">只能填写3天内的睡眠日记</string>
+    <string name="only_last_3_days_can_refill_sleep_diary">只能修改3天内的睡眠日记</string>
     <!-- Hw end-->
 </resources>

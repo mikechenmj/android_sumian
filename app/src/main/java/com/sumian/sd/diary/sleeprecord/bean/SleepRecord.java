@@ -119,6 +119,10 @@ public class SleepRecord {
         this.on_bed_duration = on_bed_duration;
     }
 
+    public long getDateInMillis() {
+        return getDate() * 1000L;
+    }
+
     @Override
     public String toString() {
         return "SleepResultBean{" +

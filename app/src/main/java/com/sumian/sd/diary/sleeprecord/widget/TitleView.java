@@ -25,11 +25,11 @@ import butterknife.ButterKnife;
  */
 public class TitleView extends LinearLayout {
     @BindView(R.id.tv_title)
-    TextView tvTitle;
+    public TextView tvTitle;
     @BindView(R.id.tv_menu)
-    TextView tvMenu;
+    public TextView tvMenu;
     @BindView(R.id.iv_right_arrow)
-    ImageView ivRightArrow;
+    public ImageView ivRightArrow;
 
     public TitleView(Context context) {
         this(context, null);

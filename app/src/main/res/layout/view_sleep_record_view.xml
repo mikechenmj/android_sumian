@@ -23,7 +23,7 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <LinearLayout
             android:id="@+id/ll_progress"
@@ -234,8 +234,20 @@
             android:layout_marginStart="@dimen/space_36"
             android:layout_marginTop="@dimen/space_20"
             android:layout_marginEnd="@dimen/space_36"
-            android:layout_marginBottom="@dimen/space_30"
             android:text="@string/go_record" />
+
+        <TextView
+            android:id="@+id/tv_sleep_record_not_enable_hint"
+            style="@style/text_t2_13"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_report_icon_caveat"
+            android:drawablePadding="10dp"
+            android:visibility="gone"
+            android:text="@string/only_last_3_days_can_fill_sleep_diary" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="30dp" />
     </LinearLayout>
 
     <LinearLayout

@@ -1,8 +1,10 @@
 package com.sumian.sd
 
+import android.text.format.DateUtils
 import android.webkit.MimeTypeMap
 import com.google.gson.Gson
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.hw.common.util.SystemUtil
 import com.sumian.hw.common.util.TimeUtil
 import com.sumian.sd.account.config.SumianConfig
 import com.sumian.sd.bean.ClassA
@@ -63,10 +65,11 @@ class KotlinTest {
 
     @Test
     fun t1() {
-        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.png")));
-        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.jpg")));
-        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.css")));
-        System.out.println(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl("www.123.js")));
+        val t1 = System.currentTimeMillis()
+        System.out.println(TimeUtilV2.getDayDistance(t1, t1 - 3000))
+        System.out.println(TimeUtilV2.getDayDistance(t1, t1 - DateUtils.DAY_IN_MILLIS))
+        System.out.println(TimeUtilV2.getDayDistance(t1, t1 - DateUtils.DAY_IN_MILLIS - 3000))
+        System.out.println(TimeUtilV2.getDayDistance(t1, t1 - DateUtils.DAY_IN_MILLIS * 10 - 3000))
     }
 
 }

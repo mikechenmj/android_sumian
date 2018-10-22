@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
@@ -21,6 +22,9 @@ import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.utils.TimeUtil;
+import com.sumian.sd.widget.dialog.SumianAlertDialog;
+import com.sumian.sd.widget.dialog.SumianAlertDialogV2;
+import com.sumian.sd.widget.dialog.theme.LightTheme;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -74,8 +78,23 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mSleepRecordView.setOnClickRefillSleepRecordListener(v -> launchFillSleepRecordActivity(mSelectedTime));
+        mSleepRecordView.setOnClickRefillSleepRecordListener(v -> {
+            boolean refillable = TimeUtilV2.Companion.getDayDistance(System.currentTimeMillis(), mSelectedTime) < 3;
+            if (refillable) {
+                launchFillSleepRecordActivity(mSelectedTime);
+            } else {
+                showRefillNotEnableDialog();
+            }
+        });
         mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> launchFillSleepRecordActivity(mSelectedTime));
+    }
+
+    private void showRefillNotEnableDialog() {
+        new SumianAlertDialogV2(getActivity())
+                .setMessageText(R.string.only_last_3_days_can_refill_sleep_diary)
+                .setTopIcon(R.mipmap.ic_msg_icon_abnormal)
+                .setOnBtnClickListener(R.string.hao_de, null)
+                .show();
     }
 
     private void setTvDate(long timeInMillis) {
