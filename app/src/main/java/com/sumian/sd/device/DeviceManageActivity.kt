@@ -27,11 +27,9 @@ class DeviceManageActivity : BaseBackActivity() {
         return R.layout.activity_device_manage
     }
 
-
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.device_manage)
-
         switchFragment(0)
     }
 

@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.MonitorEventListener
@@ -94,12 +95,15 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
             val monitor = DeviceManager.getMonitorLiveData().value
             if (monitor == null) {
                 mHost?.scanForDevice()
+                LogManager.appendUserOperationLog("首页 设备卡片 点击 添加设备")
             } else {
                 if (!DeviceManager.isBluetoothEnable()) {
                     mHost?.enableBluetooth()
+                    LogManager.appendUserOperationLog("首页 设备卡片 点击 开启蓝牙")
                 } else {
                     if (monitor.status == BlueDevice.STATUS_UNCONNECTED) {
                         DeviceManager.tryToConnectCacheMonitor()
+                        LogManager.appendUserOperationLog("首页 设备卡片 点击 连接设备")
                     }
                 }
             }
@@ -223,7 +227,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     }
 
     private fun showMessageDialog(success: Boolean, message: String?) {
-        if(!isStopped) {
+        if (!isStopped) {
             SumianImageTextToast.showToast(context, if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail, message, false)
         }
     }
