@@ -1,10 +1,9 @@
 package com.sumian.sd.app
 
 import android.app.Activity
-import android.app.Application
-import android.content.Intent
-import android.os.Bundle
+import com.blankj.utilcode.util.AppUtils
 import com.sumian.hw.log.LogJobIntentService
+import com.sumian.hw.log.LogManager
 
 /**
  * <pre>
@@ -14,26 +13,22 @@ import com.sumian.hw.log.LogJobIntentService
  *     version: 1.0
  * </pre>
  */
-class ActivityLifecycleCallbackForUploadLog : Application.ActivityLifecycleCallbacks {
-    override fun onActivityPaused(activity: Activity?) {
-    }
-
-    override fun onActivityResumed(activity: Activity?) {
-    }
+class ActivityLifecycleCallbackForUploadLog : ActivityLifecycleCallbacksImpl() {
+    private var mIsForeground = false
 
     override fun onActivityStarted(activity: Activity?) {
-    }
-
-    override fun onActivityDestroyed(activity: Activity?) {
-    }
-
-    override fun onActivitySaveInstanceState(activity: Activity?, p1: Bundle?) {
+        super.onActivityStarted(activity)
+        if (!mIsForeground) {
+            LogManager.appendPhoneLog("APP 切换到 前台")
+        }
+        mIsForeground = true
     }
 
     override fun onActivityStopped(activity: Activity?) {
+        if (!AppUtils.isAppForeground()) {
+            mIsForeground = false
+            LogManager.appendPhoneLog("APP 切换到 后台")
+        }
         LogJobIntentService.uploadLogIfNeed(activity)
-    }
-
-    override fun onActivityCreated(activity: Activity?, bundle: Bundle?) {
     }
 }

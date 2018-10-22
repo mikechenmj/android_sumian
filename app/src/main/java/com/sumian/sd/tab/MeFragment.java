@@ -12,6 +12,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.hw.device.bean.BlueDevice;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
+import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
@@ -134,6 +135,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
                 KefuManager.launchKefuActivity();
                 break;
             case R.id.dv_device_manage:
+                LogManager.appendUserOperationLog("点击【设备管理】");
                 ActivityUtils.startActivity(DeviceManageActivity.class);
                 break;
             case R.id.dv_coupon_center:

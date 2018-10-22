@@ -78,9 +78,9 @@ class DataFragment : BaseFragment() {
         switchFragment(position)
         if (!isInit) {
             if (position == 0) {
-                LogManager.appendUserOperationLog("点击 '睡眠日记' 界面")
+                LogManager.appendUserOperationLog("点击TAB '睡眠日记'")
             } else {
-                LogManager.appendUserOperationLog("点击 '检测数据' 界面")
+                LogManager.appendUserOperationLog("点击TAB '检测数据'")
             }
         }
         mCurrentPosition = position

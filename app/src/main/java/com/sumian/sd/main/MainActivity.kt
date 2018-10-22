@@ -12,6 +12,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.leancloud.HwLeanCloudHelper
+import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.FragmentUtil
@@ -212,15 +213,15 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
     }
 
     private fun changeSelectTab(position: Int) {
-        if (mCurrentPosition == position) {
-          //  return
-        }
         showFragmentByPosition(position)
         changeStatusBarColorByPosition(position)
         mCurrentPosition = position
-//        if (position == 2) {
-//            invalidToken()
-//        }
+        when (position) {
+            0 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 首页")
+            1 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 数据")
+            2 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 医生")
+            3 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 我的")
+        }
     }
 
     private fun showFragmentByPosition(position: Int) {
