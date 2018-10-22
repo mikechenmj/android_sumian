@@ -39,6 +39,7 @@ class CBTIQuestionDialog(context: Context) : AppCompatDialog(context, R.style.Su
     fun setQuestionnaire(questionnaire: Questionnaire): CBTIQuestionDialog {
         tv_title.text = questionnaire.question
         updateItem(-1, questionnaire)
+        onSubmitQuestionCallback?.onShowQuestionDialog()
         return this
     }
 
@@ -70,6 +71,8 @@ class CBTIQuestionDialog(context: Context) : AppCompatDialog(context, R.style.Su
     interface OnSubmitQuestionCallback {
 
         fun submitQuestionCallback(position: Int)
+
+        fun onShowQuestionDialog()
 
     }
 
