@@ -90,6 +90,7 @@ class SleepDiaryRemindSettingActivity : BasePresenterActivity<SleepDiaryReminder
     }
 
     override fun updateReminder(reminder: Reminder?) {
+        mSwitchPendingOff = false
         mReminder = reminder
         val reminderEnable = reminder != null && reminder.isEnable()
         sdv_sleep_diary_remind.setSwitchCheckedWithoutCallback(reminderEnable)
