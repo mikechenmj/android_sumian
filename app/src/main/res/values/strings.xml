@@ -1090,5 +1090,6 @@
     <string name="only_last_3_days_can_fill_sleep_diary">只能填写3天内的睡眠日记</string>
     <string name="only_last_3_days_can_refill_sleep_diary">只能修改3天内的睡眠日记</string>
     <string name="coupon_success">兑换成功</string>
+    <string name="fine">好的</string>
     <!-- Hw end-->
 </resources>
