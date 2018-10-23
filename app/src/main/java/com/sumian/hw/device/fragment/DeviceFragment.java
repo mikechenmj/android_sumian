@@ -30,7 +30,6 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.LocationManagerUtil;
 import com.sumian.hw.widget.device.DeviceGuideStepOneView;
 import com.sumian.hw.widget.device.DeviceStatusView;
-import com.sumian.hw.widget.dialog.SumianDialog;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -405,11 +404,11 @@ public class DeviceFragment extends HwBaseFragment<DeviceContract.Presenter> imp
         if (locationProviderEnable) {
             return true;
         } else {
-            SumianDialog.create(getContext())
-                    .setTitleText(R.string.open_location_service_for_blue_scan_hint)
-                    .setLeftText(R.string.cancel, null)
-                    .setRightText(R.string.confirm, v -> LocationManagerUtil.startLocationSettingActivityForResult(DeviceFragment.this, requestCode))
-                    .show();
+//            SumianDialog.create(getContext())
+//                    .setTitleText(R.string.open_location_service_for_blue_scan_hint)
+//                    .setLeftText(R.string.cancel, null)
+//                    .setRightText(R.string.confirm, v -> LocationManagerUtil.startLocationSettingActivityForResult(DeviceFragment.this, requestCode))
+//                    .show();
             return false;
         }
     }

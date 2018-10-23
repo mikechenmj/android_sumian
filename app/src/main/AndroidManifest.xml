@@ -549,7 +549,7 @@
             android:name="com.sumian.hw.report.ReportActivity"
             android:theme="@style/MainActivity" />
         <activity android:name=".diary.monitorrecord.WeeklyReportActivity" />
-        <activity android:name=".device.scan.ScanDeviceActivity" />
+        <activity android:name=".device.scan.ScanDeviceActivity" android:exported="true"/>
         <activity android:name=".device.DeviceManageActivity" />
         <activity android:name=".account.login.ModifyPasswordActivity" />
         <activity

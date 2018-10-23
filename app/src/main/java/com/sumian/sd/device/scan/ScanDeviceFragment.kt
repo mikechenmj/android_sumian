@@ -14,9 +14,11 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.blue.callback.BlueAdapterCallback
 import com.sumian.blue.callback.BlueScanCallback
 import com.sumian.common.base.BaseFragment
+import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.hw.device.adapter.DeviceAdapter
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.hw.log.LogManager
+import com.sumian.hw.utils.LocationManagerUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceManager
@@ -49,6 +51,7 @@ class ScanDeviceFragment : BaseFragment() {
 
     companion object {
         private const val REQUEST_CODE_ENABLE_BT = 1
+        private const val REQUEST_CODE_ENABLE_LOCATION = 2
         private const val SCAN_CHECK_DURATION = 3000L
         private const val SCAN_DURATION = 17 * 1000L
     }
@@ -181,9 +184,26 @@ class ScanDeviceFragment : BaseFragment() {
     private fun checkPermissionStartScan() {
         val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(activity!!, *perms)) {
-            startScan()
+            if (checkLocationService()) {
+                startScan()
+            }
         } else {
             EasyPermissions.requestPermissions(this, resources.getString(R.string.request_permission_hint), REQUEST_CODE_ENABLE_BT, *perms)
+        }
+    }
+
+    private fun checkLocationService(): Boolean {
+        val locationProviderEnable = LocationManagerUtil.isLocationProviderEnable(context!!)
+        return if (locationProviderEnable) {
+            true
+        } else {
+            SumianDialog(context!!)
+                    .setTitleText(R.string.open_location_service_dialog_title)
+                    .setMessageText(R.string.open_location_service_for_blue_scan_hint)
+                    .setRightBtn(R.string.confirm, View.OnClickListener { LocationManagerUtil.startLocationSettingActivityForResult(this@ScanDeviceFragment, REQUEST_CODE_ENABLE_LOCATION) })
+                    .setCanceledOnTouchOutsideV2(false)
+                    .show()
+            false
         }
     }
 
@@ -199,6 +219,8 @@ class ScanDeviceFragment : BaseFragment() {
             } else {
                 ToastUtils.showShort("蓝牙未开启，无法搜索蓝牙设备")
             }
+        } else if (requestCode == REQUEST_CODE_ENABLE_LOCATION) {
+            checkPermissionStartScan()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
