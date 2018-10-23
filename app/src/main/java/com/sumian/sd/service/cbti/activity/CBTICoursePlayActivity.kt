@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.sumian.common.image.ImageLoader
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.event.CBTIProgressChangeEvent
@@ -44,6 +45,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     private var mCurrentCourse: Course? = null
     private var mCurrentPosition = 0
     private var mCBTIQuestionDialog: CBTIQuestionDialog? = null
+    private var mCurrentQuestionPosition = 0
     private var mPendingRestart = false
 
     private val mController: TxVideoPlayerController by lazy {
@@ -146,68 +148,10 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onGetCBTIPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
-
-        mCoursePlayAuth = coursePlayAuth
-        mCurrentCourse = coursePlayAuth.courses[mCurrentPosition]
-
-        title_bar.setTitle(mCurrentCourse?.title)
-
-        tv_summary.loadData(mCurrentCourse?.summary_rtf, "text/html", "utf-8")
-
-        mController.run {
-
-            setTitle(mCurrentCourse?.title)
-
-            setPlayAuth(mCoursePlayAuth!!)
-
-            setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
-
-            if (!isDestroyed) {
-                ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
-            }
-        }
-
-        aliyun_player.setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
-
         if (mIsSelect) {
             mIsSelect = false
         }
-
-        nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
-
-        //v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
-
-        //nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
-
-        lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
-
-        if (coursePlayAuth.meta.is_pop_questionnaire) {
-            Log.e(TAG, "有调查问卷" + coursePlayAuth.meta.questionnaire.toString())
-
-            mCBTIQuestionDialog = CBTIQuestionDialog(CBTICoursePlayActivity@ this)
-                    .setOnSubmitQuestionCallback(object : CBTIQuestionDialog.OnSubmitQuestionCallback {
-
-                        override fun submitQuestionCallback(position: Int) {
-                            // coursePlayAuth.courses.forEach {
-                            //if (it.current_course) {
-                            mPresenter?.uploadCBTIQuestionnaires(mCurrentCourse!!.id, position)
-                            aliyun_player.start()
-                            // return@forEach
-                            //}
-                            // }
-                        }
-
-                        override fun onShowQuestionDialog() {
-                            autoPause()
-                        }
-
-                    }).setQuestionnaire(coursePlayAuth.meta.questionnaire[0])
-            mCBTIQuestionDialog?.ownerActivity = this@CBTICoursePlayActivity
-            mCBTIQuestionDialog?.show()
-        } else {
-            Log.e(TAG, "无调查问卷")
-            aliyun_player.start()
-        }
+        updateView(coursePlayAuth)
     }
 
     override fun onGetCBTIPlayAuthFailed(error: String) {
@@ -223,9 +167,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onUploadCBTIQuestionnairesSuccess(coursePlayAuth: CoursePlayAuth) {
-        if (mCBTIQuestionDialog?.isShowing!!) {
-            mCBTIQuestionDialog?.cancel()
-        }
+        mCBTIQuestionDialog?.updateQuestionResult()
     }
 
     override fun onUploadCBTIQuestionnairesFailed(error: String) {
@@ -292,63 +234,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onGetCBTINextPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
-
-        mCoursePlayAuth = coursePlayAuth
-        mCurrentCourse = coursePlayAuth.courses[mCurrentPosition]
-
-        title_bar.setTitle(mCurrentCourse?.title)
-
-        tv_summary.loadData(mCurrentCourse?.summary_rtf, "text/html", "utf-8")
-
-        mController.run {
-
-            setTitle(mCurrentCourse?.title)
-
-            setPlayAuth(mCoursePlayAuth!!)
-
-            setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
-
-            if (!isDestroyed) {
-                ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
-            }
-
-        }
-
-        aliyun_player.setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
-
-        nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
-
-        // v_divider.visibility = if (coursePlayAuth.last_chapter_summary != null && coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
-
-        // nav_tab_lesson_review_last_week.visibility = if (coursePlayAuth.last_chapter_summary != null) View.VISIBLE else View.GONE
-
-        lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
-
-        if (coursePlayAuth.meta.is_pop_questionnaire) {
-            mCBTIQuestionDialog = CBTIQuestionDialog(CBTICoursePlayActivity@ this)
-                    .setOnSubmitQuestionCallback(object : CBTIQuestionDialog.OnSubmitQuestionCallback {
-
-                        override fun submitQuestionCallback(position: Int) {
-                            // coursePlayAuth.courses.forEach {
-                            // if (it.current_course) {
-                            mPresenter?.uploadCBTIQuestionnaires(mCurrentCourse?.id!!, position)
-                            aliyun_player.start()
-                            //      return@forEach
-                            // }
-                            //  }
-                        }
-
-                        override fun onShowQuestionDialog() {
-                            autoPause()
-                        }
-
-                    }).setQuestionnaire(coursePlayAuth.meta.questionnaire[0])
-            mCBTIQuestionDialog?.ownerActivity = this@CBTICoursePlayActivity
-            mCBTIQuestionDialog?.show()
-        } else {
-            Log.e(TAG, "无调查问卷")
-            aliyun_player.start()
-        }
+        updateView(coursePlayAuth)
     }
 
     override fun onGetCBTINextPlayAuthFailed(error: String) {
@@ -387,5 +273,59 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     private fun autoPause() {
         mPendingRestart = aliyun_player.isPlaying || aliyun_player.isBufferingPlaying
         NiceVideoPlayerManager.instance().suspendNiceVideoPlayer()
+    }
+
+    private fun updateView(coursePlayAuth: CoursePlayAuth) {
+        mCoursePlayAuth = coursePlayAuth
+        mCurrentCourse = coursePlayAuth.courses[mCurrentPosition]
+
+        title_bar.setTitle(mCurrentCourse?.title)
+
+        tv_summary.loadData(mCurrentCourse?.summary_rtf, "text/html", "utf-8")
+
+        mController.run {
+
+            setTitle(mCurrentCourse?.title)
+
+            setPlayAuth(mCoursePlayAuth!!)
+
+            setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
+
+            if (!isDestroyed) {
+                ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+            }
+        }
+
+        aliyun_player.setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
+
+        nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
+
+        lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
+
+        if (coursePlayAuth.meta.is_pop_questionnaire) {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, "有调查问卷" + coursePlayAuth.meta.questionnaire.toString())
+            }
+            mCBTIQuestionDialog = CBTIQuestionDialog(CBTICoursePlayActivity@ this)
+                    .setOnSubmitQuestionCallback(object : CBTIQuestionDialog.OnSubmitQuestionCallback {
+
+                        override fun submitQuestionCallback(position: Int) {
+                            mCurrentQuestionPosition = position
+                            mPresenter?.uploadCBTIQuestionnaires(mCurrentCourse!!.id, position)
+                        }
+
+                        override fun dismissQuestionDialog(): Boolean {
+                            aliyun_player.start()
+                            return true
+                        }
+                    }).setQuestionnaire(coursePlayAuth.meta.questionnaire[0])
+            mCBTIQuestionDialog?.ownerActivity = this@CBTICoursePlayActivity
+            mCBTIQuestionDialog?.show()
+        } else {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, "无调查问卷")
+            }
+            aliyun_player.start()
+        }
     }
 }
