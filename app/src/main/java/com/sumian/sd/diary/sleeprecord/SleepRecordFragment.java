@@ -79,14 +79,21 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     protected void initWidget(View root) {
         super.initWidget(root);
         mSleepRecordView.setOnClickRefillSleepRecordListener(v -> {
-            boolean refillable = TimeUtilV2.Companion.getDayDistance(System.currentTimeMillis(), mSelectedTime) < 3;
-            if (refillable) {
+            if (isRefillable()) {
                 launchFillSleepRecordActivity(mSelectedTime);
             } else {
                 showRefillNotEnableDialog();
             }
         });
-        mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> launchFillSleepRecordActivity(mSelectedTime));
+        mSleepRecordView.setOnClickFillSleepRecordBtnListener(v -> {
+            if (isRefillable()) {
+                launchFillSleepRecordActivity(mSelectedTime);
+            }
+        });
+    }
+
+    private boolean isRefillable() {
+        return TimeUtilV2.Companion.getDayDistance(System.currentTimeMillis(), mSelectedTime) < 3;
     }
 
     private void showRefillNotEnableDialog() {

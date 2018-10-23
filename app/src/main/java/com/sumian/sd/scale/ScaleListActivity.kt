@@ -1,5 +1,6 @@
 package com.sumian.sd.scale
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
@@ -14,8 +15,16 @@ class ScaleListActivity : BaseBackActivity() {
     }
 
     companion object {
+        private const val KEY_TAB_INDEX = "tab_index"
+
         fun launch() {
             ActivityUtils.startActivity(ScaleListActivity::class.java)
+        }
+
+        fun launch(tabIndex: Int) {
+            val intent = Intent(ActivityUtils.getTopActivity(), ScaleListActivity::class.java)
+            intent.putExtra(KEY_TAB_INDEX, tabIndex)
+            ActivityUtils.startActivity(intent)
         }
     }
 
@@ -42,5 +51,6 @@ class ScaleListActivity : BaseBackActivity() {
                 }
             }
         }
+        view_pager.currentItem = intent.getIntExtra(KEY_TAB_INDEX, 0)
     }
 }
