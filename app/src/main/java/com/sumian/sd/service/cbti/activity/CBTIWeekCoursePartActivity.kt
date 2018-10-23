@@ -11,16 +11,14 @@ import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
-import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.service.cbti.bean.CBTIMeta
 import com.sumian.sd.service.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sd.service.cbti.fragment.CourseFragment
 import com.sumian.sd.service.cbti.fragment.ExerciseFragment
 import com.sumian.sd.service.cbti.model.CbtiChapterViewModel
 import com.sumian.sd.widget.TitleBar
-import com.sumian.sd.widget.dialog.SumianWebDialog
+import com.sumian.sd.widget.dialog.SumianDataWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
 
 /**
@@ -107,15 +105,15 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
 
             nav_tab_lesson_summary.visibility = if (it.chapter_progress == 100) View.VISIBLE else View.GONE
             nav_tab_lesson_summary.setOnClickListener {
-                val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.chapter.summary.replace("\r\n", "<br>")) + "&token=" + AppManager.getAccountViewModel().token.token
-                SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.the_week_lesson_summary)).show(supportFragmentManager)
+                //val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.chapter.summary) + "&token=" + AppManager.getAccountViewModel().token.token
+                SumianDataWebDialog(null, resources.getString(R.string.the_week_lesson_summary), t.chapter.summary).show(supportFragmentManager)
             }
 
             v_divider.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary)) View.VISIBLE else View.GONE
             nav_tab_lesson_review_last_week.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary)) View.VISIBLE else View.GONE
             nav_tab_lesson_review_last_week.setOnClickListener {
-                val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.last_chapter_summary!!.replace("\r\n", "<br>")) + "&token=" + AppManager.getAccountViewModel().token.token
-                SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.lesson_review_last_week)).show(supportFragmentManager)
+                //val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.last_chapter_summary!!) + "&token=" + AppManager.getAccountViewModel().token.token
+                SumianDataWebDialog(null, resources.getString(R.string.lesson_review_last_week), t.last_chapter_summary).show(supportFragmentManager)
             }
 
             lay_lesson_tips.visibility = if (it.chapter_progress == 100 || !TextUtils.isEmpty(it.last_chapter_summary)) {
