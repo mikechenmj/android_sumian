@@ -5,6 +5,7 @@ import android.content.Context
 import android.support.v7.app.AppCompatDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
@@ -57,15 +58,21 @@ class CBTIQuestionDialog(context: Context) : AppCompatDialog(context, R.style.Su
             }
         }
         flow_layout.removeAllViewsInLayout()
-        val itemView = LayoutInflater.from(context).inflate(R.layout.lay_cbti_question_item, flow_layout, false)
-        val tvSelect = itemView.findViewById<TextView>(R.id.tv_select)
-        val layoutParams = tvSelect.layoutParams
+        val tvSelect = TextView(context)
+        val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+        val margin = context.resources.getDimensionPixelOffset(R.dimen.space_16)
+        layoutParams.setMargins(margin, margin, margin, margin)
         tvSelect.layoutParams = layoutParams
+        tvSelect.background = null
+        tvSelect.textSize = 14.0f
         tvSelect.setTextColor(tvSelect.resources.getColor(R.color.t2_color))
         val explanation = mCurrentQuestionnaire.explanation[mSelectPosition]
         tvSelect.text = explanation
-        flow_layout.addView(itemView)
+        flow_layout.setHorizontalSpacing(0.0f)
+        flow_layout.setVerticalSpacing(0.0f)
+        flow_layout.addView(tvSelect)
     }
 
     private fun updateItem(position: Int, questionnaire: Questionnaire) {

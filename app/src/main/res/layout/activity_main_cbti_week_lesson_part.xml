@@ -34,7 +34,9 @@
                 android:layout_height="@dimen/space_62"
                 android:background="@color/b2_color"
                 android:orientation="horizontal"
-                app:layout_scrollFlags="scroll|enterAlways">
+                android:visibility="gone"
+                app:layout_scrollFlags="scroll|enterAlways"
+                tools:visibility="visible">
 
                 <com.sumian.sd.widget.nav.NavigationItem
                     android:id="@+id/nav_tab_lesson_summary"

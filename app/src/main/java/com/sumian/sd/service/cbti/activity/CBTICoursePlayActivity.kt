@@ -11,7 +11,6 @@ import android.view.View
 import android.view.WindowManager
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.image.ImageLoader
-import com.sumian.common.operator.AppOperator
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
@@ -331,16 +330,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     private fun formatWebViewString(summaryRtf: String?, webView: SWebView) {
         summaryRtf?.let {
-            AppOperator.runOnThread {
-                var formatString = it.replace("\"", "\\")
-                formatString = formatString.replace("<", "<")
-                formatString = formatString.replace(">", ">")
-                formatString = formatString.replace("\n", "<br>")//换行
-                formatString = formatString.replace("<img", "<img width=\"100%\"")//图片不超出屏幕
-                runOnUiThread {
-                    webView.loadDataWithBaseURL(null, formatString, "text/html", "utf-8", null)
-                }
-            }
+            webView.loadDataWithBaseURL(null,it, "text/html", "utf-8",null)
         }
     }
 }

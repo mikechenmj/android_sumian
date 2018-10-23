@@ -117,6 +117,12 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
                 val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.last_chapter_summary!!.replace("\r\n", "<br>")) + "&token=" + AppManager.getAccountViewModel().token.token
                 SumianWebDialog.createWithPartUrl(url, resources.getString(R.string.lesson_review_last_week)).show(supportFragmentManager)
             }
+
+            lay_lesson_tips.visibility = if (it.chapter_progress == 100 || !TextUtils.isEmpty(it.last_chapter_summary)) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 }
