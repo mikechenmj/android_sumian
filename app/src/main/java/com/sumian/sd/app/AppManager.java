@@ -30,6 +30,7 @@ import com.sumian.hw.report.viewModel.ReportModel;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.model.AccountViewModel;
+import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.doctor.model.DoctorViewModel;
 import com.sumian.sd.leancloud.LeanCloudManager;
 import com.sumian.sd.network.NetworkManager;
@@ -157,13 +158,14 @@ public final class AppManager {
     }
 
     public void init(@NonNull Context context) {
+        initBlueManager(context);
+        DeviceManager.INSTANCE.init();
         initNetWork(context);
         initUtils(context);
         initEmojiCompat(context);
         initAccountViewModel((Application) context);
         initLeanCloud(context);
         initOpenEngine(context);
-        initBlueManager(context);
         HwLeanCloudHelper.init(context);
         initKefu(context);
         initWebView();
@@ -269,13 +271,11 @@ public final class AppManager {
     }
 
     private void initBlueManager(Context context) {
-        AppOperator.runOnThread(() -> {
-            FileHelper.init();
-            boolean externalStorageWritable = FileHelper.init().isExternalStorageWritable();
-            if (externalStorageWritable) {
-                FileHelper.createSDDir(FileHelper.FILE_DIR);
-            }
-            BlueManager.init().with(context);
-        });
+        FileHelper.init();
+        boolean externalStorageWritable = FileHelper.init().isExternalStorageWritable();
+        if (externalStorageWritable) {
+            FileHelper.createSDDir(FileHelper.FILE_DIR);
+        }
+        BlueManager.init().with(context);
     }
 }
