@@ -60,13 +60,12 @@ class CBTIQuestionDialog(context: Context) : AppCompatDialog(context, R.style.Su
         flow_layout.removeAllViewsInLayout()
         val tvSelect = TextView(context)
         val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-
         val margin = context.resources.getDimensionPixelOffset(R.dimen.space_16)
         layoutParams.setMargins(margin, margin, margin, margin)
         tvSelect.layoutParams = layoutParams
         tvSelect.background = null
         tvSelect.textSize = 14.0f
+        tvSelect.setLineSpacing(6.0f, 1.0f)
         tvSelect.setTextColor(tvSelect.resources.getColor(R.color.t2_color))
         val explanation = mCurrentQuestionnaire.explanation[mSelectPosition]
         tvSelect.text = explanation

@@ -30,6 +30,8 @@
             android:id="@+id/flow_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_20"
+            android:layout_marginRight="@dimen/space_20"
             android:orientation="horizontal"
             app:horizontalSpace="@dimen/space_6"
             app:verticalSpace="@dimen/space_6" />
