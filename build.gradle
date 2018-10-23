@@ -67,7 +67,7 @@ ext {
 
     supportVersion = '27.1.1'
 
-    abortOnError = false
+    abortOnError = true
     debuggable = true
     zipAlignEnabled = true
     minifyEnabled = false

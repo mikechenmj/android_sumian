@@ -12,7 +12,6 @@ import com.sumian.sd.R;
 import com.sumian.sd.doctor.contract.PayContract;
 
 import java.lang.ref.WeakReference;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,32 +52,34 @@ public class PayDialog extends QMUIDialog implements View.OnClickListener {
 
     public PayDialog setPayStatus(int payStatus) {
         this.mPayStatus = payStatus;
-
         switch (payStatus) {
             case PAY_SUCCESS:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_success);
                 mTvPayDesc.setText(R.string.pay_success);
                 mBtJoin.setText(R.string.complete);
+                setCancelable(false);
                 break;
             case PAY_FAILED:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_fail);
                 mTvPayDesc.setText(R.string.pay_failed);
                 mBtJoin.setText(R.string.re_pay);
+                setCancelable(true);
                 break;
             case PAY_INVALID:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_abnormal);
                 mTvPayDesc.setText(R.string.pay_invalid);
                 mBtJoin.setText(R.string.back);
+                setCancelable(true);
                 break;
             case PAY_CANCELED:
                 mIvPayStatus.setImageResource(R.mipmap.ic_msg_icon_fail);
                 mTvPayDesc.setText(R.string.pay_cancel);
                 mBtJoin.setText(R.string.repay);
+                setCancelable(true);
                 break;
             default:
                 break;
         }
-
         return this;
     }
 
