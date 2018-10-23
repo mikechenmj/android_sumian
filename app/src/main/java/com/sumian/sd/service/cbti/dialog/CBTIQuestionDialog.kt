@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.support.v7.app.AppCompatDialog
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.TextView
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
@@ -58,6 +59,10 @@ class CBTIQuestionDialog(context: Context) : AppCompatDialog(context, R.style.Su
         flow_layout.removeAllViewsInLayout()
         val itemView = LayoutInflater.from(context).inflate(R.layout.lay_cbti_question_item, flow_layout, false)
         val tvSelect = itemView.findViewById<TextView>(R.id.tv_select)
+        val layoutParams = tvSelect.layoutParams
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        tvSelect.layoutParams = layoutParams
+        tvSelect.setTextColor(tvSelect.resources.getColor(R.color.t2_color))
         val explanation = mCurrentQuestionnaire.explanation[mSelectPosition]
         tvSelect.text = explanation
         flow_layout.addView(itemView)
