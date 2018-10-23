@@ -62,7 +62,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val monitorCache = getCachedMonitor()
         setMonitorToLiveData(monitorCache)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
-        uploadDeviceSns(monitorCache)
         mIsUploadingSleepDataToServerLiveData.value = false
     }
 
