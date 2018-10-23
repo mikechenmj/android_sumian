@@ -6,7 +6,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -47,8 +46,8 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     private var mCBTIQuestionDialog: CBTIQuestionDialog? = null
     private var mPendingRestart = false
 
-    private val mController: com.sumian.sd.service.cbti.video.TxVideoPlayerController by lazy {
-        val controller = com.sumian.sd.service.cbti.video.TxVideoPlayerController(this).setup(this@CBTICoursePlayActivity)
+    private val mController: TxVideoPlayerController by lazy {
+        val controller = TxVideoPlayerController(this).setup(this@CBTICoursePlayActivity)
         controller.setControllerCallback(this@CBTICoursePlayActivity)
         controller
     }
@@ -153,7 +152,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
         title_bar.setTitle(mCurrentCourse?.title)
 
-        tv_summary.text = Html.fromHtml(mCurrentCourse?.summary_rtf)
+        tv_summary.loadData(mCurrentCourse?.summary_rtf, "text/html", "utf-8")
 
         mController.run {
 
@@ -299,7 +298,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
         title_bar.setTitle(mCurrentCourse?.title)
 
-        tv_summary.text = Html.fromHtml(mCurrentCourse?.summary_rtf)
+        tv_summary.loadData(mCurrentCourse?.summary_rtf, "text/html", "utf-8")
 
         mController.run {
 

@@ -87,9 +87,11 @@
                     android:layout_marginStart="@dimen/space_20"
                     android:background="@color/l1_color" />
 
-                <TextView
+                <com.sumian.common.h5.widget.SWebView
                     android:id="@+id/tv_summary"
                     style="@style/text_t2_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_margin="@dimen/space_20"
                     android:lineSpacingExtra="@dimen/space_4"
                     tools:ignore="HardcodedText"
@@ -101,6 +103,5 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
 
 </LinearLayout>
