@@ -1,4 +1,4 @@
-package com.sumian.sd.app
+package com.sumian.common.lifecycle
 
 import android.app.Activity
 import android.app.Application
@@ -11,7 +11,7 @@ import android.os.Bundle
  * desc   :
  * version: 1.0
  */
-open class ActivityLifecycleCallbacksImpl: Application.ActivityLifecycleCallbacks {
+open class EmptyActivityLifecycleCallbacks: Application.ActivityLifecycleCallbacks {
     override fun onActivityPaused(activity: Activity?) {
     }
 

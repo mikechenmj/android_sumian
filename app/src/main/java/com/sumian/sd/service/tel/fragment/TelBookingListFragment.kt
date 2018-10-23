@@ -17,7 +17,7 @@ import com.sumian.sd.service.tel.adpater.TelBookingListAdapter
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingListContract
 import com.sumian.sd.service.tel.presenter.TelBookingListPresenter
-import com.sumian.sd.widget.LoadMoreRecyclerView
+import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**

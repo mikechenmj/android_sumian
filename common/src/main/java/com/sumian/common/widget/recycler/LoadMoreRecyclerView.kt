@@ -1,4 +1,4 @@
-package com.sumian.sd.widget
+package com.sumian.common.widget.recycler
 
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager

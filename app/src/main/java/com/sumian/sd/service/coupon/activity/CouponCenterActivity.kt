@@ -35,7 +35,6 @@ class CouponCenterActivity : BaseBackActivity(), ViewPager.OnPageChangeListener 
         return R.layout.activity_main_coupon_center
     }
 
-
     override fun initWidget() {
         super.initWidget()
         mTitleBar.openTopPadding(true)
@@ -58,7 +57,7 @@ class CouponCenterActivity : BaseBackActivity(), ViewPager.OnPageChangeListener 
                 return when (position) {
                     0 -> getString(R.string.coupon_code)
                     1 -> getString(R.string.coupon_history)
-                    else -> getString(R.string.coupon_code)
+                    else -> throw IllegalStateException("invalid position")
                 }
             }
         }
@@ -86,11 +85,16 @@ class CouponCenterActivity : BaseBackActivity(), ViewPager.OnPageChangeListener 
         this.onKeyBoardCallback = onKeyBoardCallback
     }
 
+    fun switchTab(position: Int) {
+        view_pager?.setCurrentItem(position, true)
+    }
+
 
     interface OnKeyBoardCallback {
 
         fun closeKeyBoard()
 
         fun showKeyBoard()
+
     }
 }
