@@ -3,19 +3,15 @@ import org.apache.tools.ant.taskdefs.condition.Os
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     signingConfigs {
-
         configs {
             keyAlias APP_KEY_ALIAS
             keyPassword APP_KEY_PASSWORD
@@ -35,7 +31,6 @@ android {
 
             storeFile file(keystore_path)
         }
-
     }
 
     defaultConfig {
@@ -251,7 +246,7 @@ android {
         experimental = true
     }
 
-   // useLibrary 'org.apache.http.legacy'
+    // useLibrary 'org.apache.http.legacy'
 }
 
 static def formatDate() {
