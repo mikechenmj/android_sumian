@@ -21,7 +21,7 @@ class CbtiFinalReportSchemeResolver : SchemeResolver {
      */
     override fun resolveScheme(context: Context, uri: Uri): Intent {
         val payloadMap = HashMap<String, Any?>(3)
-        payloadMap["scale_distribution_ids"] = uri.getQueryParameter("scale_distribution_ids")
+        payloadMap["scale_id"] = uri.getQueryParameter("scale_distribution_ids")
         payloadMap["cbti_id"] = uri.getQueryParameter("cbti_id")
         payloadMap["chapter_id"] = uri.getQueryParameter("chapter_id")
         return SimpleWebActivity.getLaunchIntentWithRouteData(context, "openCbtiScales", payloadMap)

@@ -174,7 +174,7 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
 
     @Override
     public void showEvaluation() {
-        ScaleListActivity.Companion.launch();
+        ScaleListActivity.Companion.launch(1);
     }
 
     @Override
