@@ -16,17 +16,17 @@ import java.io.IOException
 class H5LocalCacheInterceptor(context: Context, h5FileDir: String) {
     private var mContext: Context = context
 
-    private val H5_ASSET_PATH = "h5/static"
-    private val H5_ASSET_JS = "$H5_ASSET_PATH/js"
-    private val H5_ASSET_CSS = "$H5_ASSET_PATH/css"
-    private val H5_ASSET_IMG = "$H5_ASSET_PATH/img"
+    private val mH5AssetPath = h5FileDir
+    private val mJsPath = "$mH5AssetPath/js"
+    private val mCssPath = "$mH5AssetPath/css"
+    private val mImgPath = "$mH5AssetPath/img"
 
     fun interceptH5Request(webView: SWebView) {
         try {
             val assets = mContext.assets
-            val jsFiles = assets.list(H5_ASSET_JS)
-            val cssFiles = assets.list(H5_ASSET_CSS)
-            val imgFiles = assets.list(H5_ASSET_IMG)
+            val jsFiles = assets.list(mJsPath)
+            val cssFiles = assets.list(mCssPath)
+            val imgFiles = assets.list(mImgPath)
             if (jsFiles == null) {
                 return
             }
@@ -54,11 +54,11 @@ class H5LocalCacheInterceptor(context: Context, h5FileDir: String) {
     private fun getLocalFileDirPath(url: String): String? {
         var dir: String? = null
         if (url.endsWith(".js")) {
-            dir = H5_ASSET_JS
+            dir = mJsPath
         } else if (url.endsWith(".css")) {
-            dir = H5_ASSET_CSS
+            dir = mCssPath
         } else if (url.endsWith(".png") || url.endsWith(".jpg")) {
-            dir = H5_ASSET_IMG
+            dir = mImgPath
         }
         return dir
     }
@@ -83,6 +83,7 @@ class H5LocalCacheInterceptor(context: Context, h5FileDir: String) {
         }
         for (file in files) {
             if (url.endsWith(file)) {
+                LogUtils.d(file)
                 return file
             }
         }
