@@ -57,17 +57,13 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private var mIsTurningOnPa = false
     private val mIsUploadingSleepDataToServerLiveData = MutableLiveData<Boolean>()
 
-    init {
+    fun init() {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
         val monitorCache = getCachedMonitor()
         setMonitorToLiveData(monitorCache)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
         uploadDeviceSns(monitorCache)
         mIsUploadingSleepDataToServerLiveData.value = false
-    }
-
-    fun init() {
-
     }
 
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
