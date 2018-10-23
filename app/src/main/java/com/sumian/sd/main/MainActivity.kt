@@ -90,7 +90,6 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         super.onStart()
         mVersionDelegate.checkVersion(this)
         updateNotificationUnreadCount()
-        DeviceManager.uploadCacheSn()
     }
 
     override fun onResume() {
@@ -118,6 +117,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
 
     override fun initData() {
         super.initData()
+        DeviceManager.uploadCacheSn()
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         if (AppManager.getAccountViewModel().isLogin) {
