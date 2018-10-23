@@ -9,7 +9,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.image.ImageLoader
+import com.sumian.common.operator.AppOperator
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
@@ -280,9 +282,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         mCurrentCourse = coursePlayAuth.courses[mCurrentPosition]
 
         title_bar.setTitle(mCurrentCourse?.title)
-
-        tv_summary.loadData(mCurrentCourse?.summary_rtf, "text/html", "utf-8")
-
+        formatWebViewString(mCurrentCourse?.summary_rtf, tv_summary)
         mController.run {
 
             setTitle(mCurrentCourse?.title)
@@ -326,6 +326,21 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
                 Log.e(TAG, "无调查问卷")
             }
             aliyun_player.start()
+        }
+    }
+
+    private fun formatWebViewString(summaryRtf: String?, webView: SWebView) {
+        summaryRtf?.let {
+            AppOperator.runOnThread {
+                var formatString = it.replace("\"", "\\")
+                formatString = formatString.replace("<", "<")
+                formatString = formatString.replace(">", ">")
+                formatString = formatString.replace("\n", "<br>")//换行
+                formatString = formatString.replace("<img", "<img width=\"100%\"")//图片不超出屏幕
+                runOnUiThread {
+                    webView.loadDataWithBaseURL(null, formatString, "text/html", "utf-8", null)
+                }
+            }
         }
     }
 }
