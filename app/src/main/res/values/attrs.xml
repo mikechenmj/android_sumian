@@ -152,24 +152,6 @@
         <attr name="spotColor" format="reference|color" />
     </declare-styleable>
 
-    <!--battery-->
-    <declare-styleable name="BatteryView">
-
-        <attr name="ah" format="reference|integer" />
-        <attr name="full_ah" format="reference|integer" />
-        <attr name="border_color" format="reference|color" />
-        <attr name="border_width" format="reference|dimension" />
-        <attr name="bv_text_size" format="reference|dimension" />
-        <attr name="text_color" format="reference|color" />
-        <attr name="top_full_half_color" format="reference|color" />
-        <attr name="bottom_full_half_color" format="reference|color" />
-        <attr name="top_less_half_color" format="reference|color" />
-        <attr name="bottom_less_half_color" format="reference|color" />
-        <attr name="border_radius" format="reference|dimension" />
-        <attr name="ah_radius" format="reference|dimension" />
-
-    </declare-styleable>
-
     <declare-styleable name="PickerView">
         <attr name="lineColor" format="color|reference" />
         <attr name="selectedTextColor" format="color|reference" />
@@ -219,16 +201,6 @@
 
     <declare-styleable name="VersionInfoView">
         <attr name="upgrade_label" format="string|reference" />
-    </declare-styleable>
-
-
-    <declare-styleable name="DeviceStateItemView">
-        <attr name="device_name" format="string|reference" />
-    </declare-styleable>
-
-    <declare-styleable name="DeviceChaView">
-        <attr name="name" format="string|reference" />
-        <attr name="status" format="integer|reference" />
     </declare-styleable>
 
     <!--睡眠数据均值对比统计 view-->
