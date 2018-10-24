@@ -208,11 +208,13 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
     }
 
     private fun changeStatusBarColorByPosition(position: Int) {
-        if (position == 0 || position == 2) {
-            StatusBarUtil.setStatusBarTextColorDark(this, true)
-        } else {
-            StatusBarUtil.setStatusBarTextColorDark(this, false)
+        val isDark = when (position) {
+            0 -> true
+            1 -> false
+            2 -> !AppManager.getAccountViewModel().isBindDoctor()
+            else -> false
         }
+        StatusBarUtil.setStatusBarTextColorDark(this, isDark)
     }
 
     private fun changeSelectTab(position: Int) {

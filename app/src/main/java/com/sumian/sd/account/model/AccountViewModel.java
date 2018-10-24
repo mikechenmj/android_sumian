@@ -126,4 +126,9 @@ public class AccountViewModel extends AndroidViewModel {
         UserInfo userInfo = getUserInfo();
         return userInfo != null && userInfo.isHaveFullUserInfo();
     }
+
+    public boolean isBindDoctor() {
+        UserInfo userInfo = getUserInfo();
+        return userInfo != null && userInfo.isBindDoctor();
+    }
 }

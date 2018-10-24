@@ -25,7 +25,7 @@ class StatusBarUtil {
         }
 
         /**
-         * isDark true：文字白色，false文字黑色
+         * isDark true：文字黑色，false文字白色
          */
         fun setStatusBarTextColorDark(activity: Activity, isDark: Boolean) {
             // Fetch the current flags.
