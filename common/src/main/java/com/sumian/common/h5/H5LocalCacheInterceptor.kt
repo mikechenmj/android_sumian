@@ -2,7 +2,6 @@ package com.sumian.common.h5
 
 import android.content.Context
 import android.webkit.WebResourceResponse
-import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.h5.widget.SWebView
 import java.io.IOException
 
@@ -37,7 +36,6 @@ class H5LocalCacheInterceptor(context: Context, h5FileDir: String) {
                 val localFile = getLocalFile(url, jsFiles, cssFiles, imgFiles)
                         ?: return@setWebInterceptor resourceResponse
                 val mimeType = getMimeType(url)
-                LogUtils.d(localFile)
                 try {
                     resourceResponse = WebResourceResponse(mimeType, "UTF-8", mContext.assets.open("$dirPath/$localFile"))
                 } catch (e: IOException) {
@@ -96,16 +94,12 @@ class H5LocalCacheInterceptor(context: Context, h5FileDir: String) {
      * @return
      */
     private fun getMimeType(url: String): String? {
-        var mimeType: String? = null
-        if (url.endsWith(".js")) {
-            mimeType = "application/javascript"
-        } else if (url.endsWith(".css")) {
-            mimeType = "text/css"
-        } else if (url.endsWith(".png")) {
-            mimeType = "image/png"
-        } else if (url.endsWith(".jpg")) {
-            mimeType = "image/jpeg"
+        return when {
+            url.endsWith(".js") -> "application/javascript"
+            url.endsWith(".css") -> "text/css"
+            url.endsWith(".png") -> "image/png"
+            url.endsWith(".jpg") -> "image/jpeg"
+            else -> null
         }
-        return mimeType
     }
 }
