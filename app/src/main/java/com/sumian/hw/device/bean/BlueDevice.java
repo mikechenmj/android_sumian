@@ -30,8 +30,6 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public transient boolean isSyncing;
 
     // sleeper status
-    @Deprecated
-    public transient BlueDevice speedSleeper;//监测仪下属的速眠仪;
     public String sleeperName;
     public String sleeperMac;
     public String sleeperSn;
@@ -48,10 +46,6 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public static final int PA_STATUS_NOT_PA = 0;
     public static final int PA_STATUS_TURNING_ON_PA = 1;
     public static final int PA_STATUS_PA = 2;
-    @Deprecated // see isMonitoring
-    public static final int STATUS_SYNCHRONIZING = 3;
-    @Deprecated // see sleeperPaStatus
-    public static final int STATUS_PA = 4;
     // cmd
     public static final int MONITORING_CMD_CLOSE = 0x00;
     public static final int MONITORING_CMD_OPEN = 0x01;
@@ -126,7 +120,7 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
         return sleeperBattery;
     }
 
-    public void resetSleeper(){
+    public void resetSleeper() {
         sleeperName = App.Companion.getAppContext().getString(R.string.speed_sleeper);
         sleeperStatus = STATUS_UNCONNECTED;
         sleeperBattery = 0;

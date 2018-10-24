@@ -61,8 +61,6 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
                 mIsAutoRefresh = true
                 mPresenter.getBindDoctorInfo()
             }
-        } else {
-            StatusBarUtil.setStatusBarTextColorDark(activity!!, false)
         }
         request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this)
         ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
@@ -123,7 +121,6 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {
         doctor?.let {
-            StatusBarUtil.setStatusBarTextColorDark(activity!!, true)
             lay_doctor_title_container.visibility = View.VISIBLE
             doctor_detail_layout.invalidDoctor(doctor)
             request_scan_qr_code_view.setFragment(null).hide()

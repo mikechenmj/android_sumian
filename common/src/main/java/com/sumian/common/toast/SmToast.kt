@@ -82,7 +82,7 @@ class SmToast constructor(context: Context) : AsyncLayoutInflater.OnInflateFinis
 
     @SuppressLint("InflateParams")
     private fun initLayout() {
-        AsyncLayoutInflater(mContext).inflate(R.layout.layout_sumian_dialog, null, this)
+        AsyncLayoutInflater(mContext).inflate(R.layout.layout_sm_toast, null, this)
     }
 
     override fun onInflateFinished(view: View, resid: Int, parent: ViewGroup?) {

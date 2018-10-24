@@ -17,11 +17,9 @@ import com.sumian.common.dns.HttpDnsEngine;
 import com.sumian.common.dns.IHttpDns;
 import com.sumian.common.h5.WebViewManger;
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.common.operator.AppOperator;
 import com.sumian.common.social.OpenEngine;
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
-import com.sumian.hw.device.model.DeviceModel;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.job.JobScheduler;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
@@ -74,7 +72,6 @@ public final class AppManager {
     private OpenEngine mOpenEngine;
 
     private volatile VersionModel mVersionModel;
-    private volatile DeviceModel mDeviceModel;
     private volatile ReportModel mReportModel;
 
     private volatile NetworkManager mNetworkManager;
@@ -133,11 +130,6 @@ public final class AppManager {
     public static synchronized VersionModel getVersionModel() {
         return Holder.INSTANCE.mVersionModel == null ? Holder.INSTANCE.mVersionModel = new VersionModel() : Holder.INSTANCE
                 .mVersionModel;
-    }
-
-    public static synchronized DeviceModel getDeviceModel() {
-        return Holder.INSTANCE.mDeviceModel == null ? Holder.INSTANCE.mDeviceModel = new DeviceModel() : Holder.INSTANCE
-                .mDeviceModel;
     }
 
     public static synchronized ReportModel getReportModel() {

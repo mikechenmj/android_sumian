@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools"  tools:ignore="MissingTranslation">
     <!--<string name="app_name">Sleep_Doctor</string>-->
 
     <!--main tab-->
@@ -918,7 +918,8 @@
     <string name="require_permission">获取权限</string>
     <string name="reconnect_device">未找扫描到当前设备,请点击设备重新连接</string>
     <string name="doctor_advice">医生建议:</string>
-    <string name="open_location_service_for_blue_scan_hint">扫描蓝牙需要定位权限，是否现在开启？</string>
+    <string name="open_location_service_dialog_title">提示</string>
+    <string name="open_location_service_for_blue_scan_hint">扫描蓝牙需要开启位置服务，是否现在开启？</string>
     <!--<string name="confirm">确认</string>-->
     <!--<string name="cancel">取消</string>-->
     <string name="syncing_report">设备正在同步中，稍侯自动获取最新睡眠报告</string>

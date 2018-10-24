@@ -74,7 +74,7 @@
 
     <style name="SumianButton">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/bg_bt</item>
         <item name="android:textColor">@color/sel_btn_text</item>
         <item name="android:gravity">center</item>
