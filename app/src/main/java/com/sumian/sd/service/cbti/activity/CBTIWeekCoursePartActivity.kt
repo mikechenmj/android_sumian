@@ -106,17 +106,17 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
             nav_tab_lesson_summary.visibility = if (it.chapter_progress == 100) View.VISIBLE else View.GONE
             nav_tab_lesson_summary.setOnClickListener {
                 //val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.chapter.summary) + "&token=" + AppManager.getAccountViewModel().token.token
-                SumianDataWebDialog(null, resources.getString(R.string.the_week_lesson_summary), t.chapter.summary).show(supportFragmentManager)
+                SumianDataWebDialog(null, resources.getString(R.string.the_week_lesson_summary), t.chapter.summary_rtf).show(supportFragmentManager)
             }
 
-            v_divider.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary)) View.VISIBLE else View.GONE
-            nav_tab_lesson_review_last_week.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary)) View.VISIBLE else View.GONE
+            v_divider.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary_rtf)) View.VISIBLE else View.GONE
+            nav_tab_lesson_review_last_week.visibility = if (!TextUtils.isEmpty(it.last_chapter_summary_rtf)) View.VISIBLE else View.GONE
             nav_tab_lesson_review_last_week.setOnClickListener {
                 //val url = H5Uri.CBTI_WEEK_REVIEW.replace("{last_chapter_summary}", t.last_chapter_summary!!) + "&token=" + AppManager.getAccountViewModel().token.token
-                SumianDataWebDialog(null, resources.getString(R.string.lesson_review_last_week), t.last_chapter_summary).show(supportFragmentManager)
+                SumianDataWebDialog(null, resources.getString(R.string.lesson_review_last_week), t.last_chapter_summary_rtf).show(supportFragmentManager)
             }
 
-            lay_lesson_tips.visibility = if (it.chapter_progress == 100 || !TextUtils.isEmpty(it.last_chapter_summary)) {
+            lay_lesson_tips.visibility = if (it.chapter_progress == 100 || !TextUtils.isEmpty(it.last_chapter_summary_rtf)) {
                 View.VISIBLE
             } else {
                 View.GONE

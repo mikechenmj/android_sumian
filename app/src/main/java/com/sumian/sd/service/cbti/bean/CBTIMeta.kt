@@ -9,6 +9,7 @@ package com.sumian.sd.service.cbti.bean
  */
 data class CBTIMeta(val chapter_progress: Int,
                     val last_chapter_summary: String?,
+                    val last_chapter_summary_rtf: String?,
                     val chapter: Chapter) {
 
     data class Chapter(var id: Int,
@@ -16,5 +17,6 @@ data class CBTIMeta(val chapter_progress: Int,
                        var banner: String,
                        var introduction: String,
                        var summary: String,
+                       var summary_rtf: String,
                        var index: Int)
 }
