@@ -67,7 +67,7 @@ class CBTIQuestionDialog(context: Context) : AppCompatDialog(context, R.style.Su
         tvSelect.textSize = 14.0f
         tvSelect.setLineSpacing(6.0f, 1.0f)
         tvSelect.setTextColor(tvSelect.resources.getColor(R.color.t2_color))
-        val explanation = mCurrentQuestionnaire.explanation[mSelectPosition]
+        val explanation = mCurrentQuestionnaire.explanations[mSelectPosition]
         tvSelect.text = explanation
         flow_layout.setHorizontalSpacing(0.0f)
         flow_layout.setVerticalSpacing(0.0f)
