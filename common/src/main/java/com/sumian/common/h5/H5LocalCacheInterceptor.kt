@@ -83,7 +83,6 @@ class H5LocalCacheInterceptor(context: Context, h5FileDir: String) {
         }
         for (file in files) {
             if (url.endsWith(file)) {
-                LogUtils.d(file)
                 return file
             }
         }
