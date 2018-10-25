@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.sd.R;
+import com.sumian.sd.main.MainActivity;
 
 /**
  * Created by sm
@@ -73,6 +75,10 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
         this.mIvEmptyIcon = rootView.findViewById(R.id.iv_empty_icon);
         this.mTvEmptyMsgTitle = rootView.findViewById(R.id.tv_empty_msg_title);
         this.mTvEmptyMsgDesc = rootView.findViewById(R.id.tv_empty_msg_desc);
+        rootView.findViewById(R.id.bt_show_service).setOnClickListener(v -> {
+            ActivityUtils.getTopActivity().finish();
+            MainActivity.launch(MainActivity.TAB_2, null);
+        });
     }
 
     public void setOnEmptyCallback(OnEmptyCallback onEmptyCallback) {
@@ -175,4 +181,5 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
 
         void reload();
     }
+
 }

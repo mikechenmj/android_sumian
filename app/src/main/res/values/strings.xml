@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"  tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!--<string name="app_name">Sleep_Doctor</string>-->
 
     <!--main tab-->
@@ -1092,5 +1092,8 @@
     <string name="only_last_3_days_can_refill_sleep_diary">只能修改3天内的睡眠日记</string>
     <string name="coupon_success">兑换成功</string>
     <string name="fine">好的</string>
+    <string name="doctor_service_introduction">服务介绍</string>
+    <string name="cbti_course_plan_introduction">总进度：第%d周/共%d周</string>
+    <string name="cbti_invalid_time">%s 到期</string>
     <!-- Hw end-->
 </resources>

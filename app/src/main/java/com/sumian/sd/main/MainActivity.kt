@@ -54,6 +54,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         private const val REQUEST_CODE_OPEN_NOTIFICATION = 1
         private var mCurrentPosition = TAB_INVALID
 
+        @JvmStatic
         fun launch(tab: Int, tabData: String? = null) {
             ActivityUtils.startActivity(getLaunchIntentForTab(tab, tabData))
         }

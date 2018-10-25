@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="72dp"
     android:gravity="center"
     android:orientation="vertical">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
     <ImageView
         android:id="@+id/iv_empty_icon"
@@ -30,5 +34,18 @@
         android:lineSpacingExtra="4dp"
         android:textSize="14sp"
         tools:text="您收到医生回复、建议或报告更新，\n都会在这里收到消息提醒" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/bt_show_service"
+        style="@style/SumianButton"
+        android:layout_width="@dimen/space_150"
+        android:layout_height="@dimen/space_50"
+        android:layout_marginBottom="@dimen/space_40"
+        android:text="@string/doctor_service_introduction" />
 
 </LinearLayout>
