@@ -3,7 +3,6 @@ package com.sumian.sd.diary.sleeprecord.calendar.custom
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.PopupWindow
-import com.blankj.utilcode.util.LogUtils
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.utils.TimeUtil
 
@@ -17,7 +16,7 @@ import com.sumian.sd.utils.TimeUtil
 class CalendarPopup(context: Context, dataLoader: DataLoader)
     : PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
     companion object {
-        private const val PRELOAD_MONTH_COUNT = 12;
+        private const val PRELOAD_MONTH_COUNT = 12
     }
 
     private val mCurrentTimeInMillis = System.currentTimeMillis()

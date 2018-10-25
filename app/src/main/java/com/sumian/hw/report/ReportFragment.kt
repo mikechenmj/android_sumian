@@ -11,8 +11,6 @@ import com.sumian.hw.base.HwBasePresenter
 import com.sumian.hw.guideline.dialog.ReportGuidelineDialog
 import com.sumian.hw.guideline.utils.GuidelineUtils
 import com.sumian.hw.log.LogManager
-import com.sumian.hw.push.ReportPushManager
-import com.sumian.hw.report.bean.PushReport
 import com.sumian.hw.report.calendar.CalendarDialog
 import com.sumian.hw.report.fragment.DailyReportFragment
 import com.sumian.hw.report.fragment.WeeklyReportFragment

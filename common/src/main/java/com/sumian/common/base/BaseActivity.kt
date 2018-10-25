@@ -80,7 +80,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         }
     }
 
-    protected fun addCall(call: Call<*>) {
+    fun addCall(call: Call<*>) {
         mCalls.add(call)
     }
 }
