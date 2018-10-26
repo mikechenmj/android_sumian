@@ -132,7 +132,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
             } else {
                 ft.show(this);
             }
-            ft.commit();
+            ft.commitNowAllowingStateLoss();
         }
         ChatClient.getInstance().emojiconManager().addDelegate(this);
     }
