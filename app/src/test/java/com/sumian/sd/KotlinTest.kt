@@ -72,4 +72,10 @@ class KotlinTest {
         System.out.println(TimeUtilV2.getDayDistance(t1, t1 - DateUtils.DAY_IN_MILLIS * 10 - 3000))
     }
 
+    @Test
+    fun t2() {
+        for (i in 0 until 3)
+            System.out.println(i)
+    }
+
 }

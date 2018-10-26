@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_emotion"
+        style="@style/text_b3_14"
+        android:drawableStart="@drawable/belief_icon_facial4_s"
+        android:drawablePadding="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:visibility="gone"
+        tools:text="平静"
+        tools:visibility="visible" />
+
+    <Space style="@style/space_height_5" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_t3_14"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="今天的需求很多啊，明天就要开评审会啦，asdfasdfasdf就要做…" />
+
+    <Space style="@style/space_height_5" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        style="@style/text_t2_14"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="今天的需求很多啊，明天就要开评审会啦，asdfasdfasdf就要做…" />
+
+    <Space style="@style/space_height_5" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/text_t2_14"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="2018.10.23 17:05" />
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="end"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_more" />
+    </FrameLayout>
+
+
+</LinearLayout>

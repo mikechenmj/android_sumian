@@ -582,6 +582,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".anxiousandbelief.AnxiousAndBeliefActivity"
+            android:exported="true" />
+        <activity
+            android:name=".anxiousandbelief.AnxietyActivity"
+            android:exported="true" />
+        <activity android:name=".anxiousandbelief.AnxietyListActivity" />
     </application>
 
 </manifest>

@@ -127,6 +127,21 @@
                 android:drawablePadding="10dp"
                 android:gravity="center"
                 android:text="@string/sleep_health" />
+            <View
+                style="@style/VerticalDividerLine"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp" />
+
+            <TextView
+                android:id="@+id/tv_anxious_and_belief"
+                style="@style/text_t1_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/home_icon_anxietybelief"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="@string/anxious_and_belief" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

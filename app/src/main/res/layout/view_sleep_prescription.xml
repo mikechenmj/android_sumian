@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:src="@drawable/ic_report_right_day" />
+            android:src="@drawable/ic_arrow_right_light_blue" />
     </LinearLayout>
 
     <View style="@style/HorizontalDividerLineMarginStart20" />

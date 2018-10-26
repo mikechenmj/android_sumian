@@ -36,8 +36,8 @@
         <item name="n2">@color/n2_color_day</item>
 
         <item name="report_calendar_src">@drawable/ic_nav_calendar_day</item>
-        <item name="switch_report_date_navigation_left_src">@drawable/ic_report_left_day</item>
-        <item name="switch_report_date_navigation_right_src">@drawable/ic_report_right_day</item>
+        <item name="switch_report_date_navigation_left_src">@drawable/ic_arrow_left_light_blue</item>
+        <item name="switch_report_date_navigation_right_src">@drawable/ic_arrow_right_light_blue</item>
         <item name="sleep_drawable_start_src">@drawable/ic_home_sleep_time_day</item>
         <item name="sleep_all_duration_src">@drawable/bg_text_t5</item>
 
@@ -78,8 +78,8 @@
         <item name="n2">@color/n2_color_night</item>
 
         <item name="report_calendar_src">@drawable/ic_nav_calendar_night</item>
-        <item name="switch_report_date_navigation_left_src">@drawable/ic_report_left_night</item>
-        <item name="switch_report_date_navigation_right_src">@drawable/ic_report_right_night</item>
+        <item name="switch_report_date_navigation_left_src">@drawable/ic_arrow_left_dark_blue</item>
+        <item name="switch_report_date_navigation_right_src">@drawable/ic_arrow_right_dark_blue</item>
         <item name="sleep_drawable_start_src">@drawable/ic_home_sleep_time_night</item>
         <item name="sleep_all_duration_src">@drawable/bg_text_t5</item>
 

@@ -147,6 +147,15 @@
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
+    <style name="tv_title_with_white_bg_and_bottom_line" parent="text_t1_16">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">62dp</item>
+        <item name="android:background">@drawable/bg_line_l1_margin_start_20dp_white_bg</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
     <!--button-->
     <style name="bt_t1_style">
         <item name="android:padding">@dimen/space_16</item>
