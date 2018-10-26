@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.hw.log.LogManager
@@ -73,12 +74,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         }
 
         override fun onConnectFailed() {
-            SumianAlertDialog(context)
-                    .hideTopIcon(true)
-                    .setTitle(R.string.connect_time_out)
-                    .setMessage(R.string.connect_time_out_message)
-                    .setRightBtn(R.string.confirm, null)
-                    .show()
+            ToastUtils.showShort(R.string.device_connect_timeout)
         }
 
         override fun onConnectSuccess() {
