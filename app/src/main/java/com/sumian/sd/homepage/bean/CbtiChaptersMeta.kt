@@ -16,5 +16,6 @@ data class CbtiChaptersMeta(
         @SerializedName("count") val count: Int,
         @SerializedName("total_progress_text") val totalProgressText: String,
         @SerializedName("current_status") val currentStatus: String,
+        @SerializedName("expired_at") val expiredAt: Int,
         @SerializedName("all_finished") val allFinished: Boolean
 )

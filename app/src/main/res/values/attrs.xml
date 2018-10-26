@@ -133,6 +133,14 @@
         <attr name="pv_max_progress" format="integer|reference" />
     </declare-styleable>
 
+    <declare-styleable name="RingProgressView">
+        <attr name="rpv_ring_width" format="float|dimension" />
+        <attr name="rpv_ring_bg_color" format="color|reference" />
+        <attr name="rpv_progress_color" format="color|reference" />
+        <attr name="rpv_progress" format="integer|reference" />
+        <attr name="rpv_max_progress" format="integer|reference" />
+    </declare-styleable>
+
     <declare-styleable name="TitleView">
         <attr name="title_text" format="string|reference" />
         <attr name="content_text" format="string|reference" />

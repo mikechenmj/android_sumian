@@ -3,9 +3,8 @@ package com.sumian.sd.notification.push.schemeResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.sd.h5.SimpleWebActivity
-import java.util.HashMap
+import java.util.*
 
 /**
  * @author : Zhan Xuzhao

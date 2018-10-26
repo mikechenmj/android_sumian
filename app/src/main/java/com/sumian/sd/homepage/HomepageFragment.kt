@@ -31,6 +31,7 @@ import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.scale.ScaleListActivity
+import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe
@@ -54,6 +55,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         const val REQUEST_CODE_SCAN_DEVICE = 1
         const val REQUEST_CODE_ENABLE_BLUETOOTH = 2
     }
+
+    private var isLock: Boolean = false
 
     override fun initWidget(root: View) {
         super.initWidget(root)
@@ -79,7 +82,12 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun launchCbtiActivity() {
-        ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
+        if (isLock) {//未购买
+            CBTIIntroductionWebActivity.show()
+        } else {//已购买
+            CBTIIntroductionActivity.show()
+        }
+        //ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
     }
 
     private fun initUserInfo() {
@@ -143,8 +151,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
             }
 
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
-                val isLock = response?.meta?.isLock != false
-                if (!isLock) {
+                isLock = response?.meta?.isLock != false
+                if (!isLock!!) {
                     cbti_progress_view.setData(response)
                 } else {
                     cbti_progress_view.setData(null)

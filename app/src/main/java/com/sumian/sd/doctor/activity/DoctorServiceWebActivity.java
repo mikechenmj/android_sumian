@@ -7,8 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.google.gson.reflect.TypeToken;
-import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.bean.SBridgeResult;
+import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseWebViewActivity;

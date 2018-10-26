@@ -6,8 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.sumian.common.widget.voice.IVisible
 import com.sumian.sd.R
-import com.sumian.sd.utils.TimeUtil
-import com.sumian.sd.utils.getString
+import com.sumian.sd.service.cbti.activity.CBTIIntroduction2WebActivity
 import kotlinx.android.synthetic.main.lay_cbti_lesson_introduction_home_view.view.*
 
 /**
@@ -27,14 +26,14 @@ class CBTICoursePlanHomeView : ConstraintLayout, IVisible {
 
     private fun initView(context: Context) {
         View.inflate(context, R.layout.lay_cbti_lesson_introduction_home_view, this)
+        setBackgroundResource(R.drawable.ic_cbti_banner_mask)
     }
 
-    fun invalidCBTICOurse(progress: Int, totalProgress: Int, invalidTime: Int) {
-        tv_cbti_progress.text = String.format(context.getString(R.string.cbti_course_plan_introduction), "$progress", "$totalProgress")
-        val formatDate = TimeUtil.formatDate("yyyy.mm.dd", invalidTime * 1000L)
-        tv_cbti_invalid_time.text = String.format(getString(R.string.cbti_invalid_time), formatDate)
+    fun invalidView(formatExpiredTime: String, formatTotalProgress: String) {
+        tv_cbti_progress.text = formatTotalProgress
+        tv_cbti_invalid_time.text = formatExpiredTime
         tv_cbti_introduction.setOnClickListener {
-
+            CBTIIntroduction2WebActivity.show()
         }
     }
 

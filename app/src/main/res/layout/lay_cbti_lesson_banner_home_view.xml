@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,8 +16,8 @@
         android:lines="1"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        tools:ignore="HardcodedText"
-        tools:text="第1周 认识睡眠" />
+        android:text="失眠的认知行为治疗 CBTi"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tv_cbti_week_lesson_desc"
@@ -31,12 +31,17 @@
         android:lineSpacingExtra="@dimen/space_4"
         android:lines="2"
         android:marqueeRepeatLimit="marquee_forever"
-        tools:ignore="HardcodedText"
-        tools:text="这节课将会带你学习睡眠的科学和与失眠有关的定义和引起失眠的因素，赶紧打开视频一起学习吧。" />
+        android:text="失眠认知行为治疗是世界上公认的、非药物治疗失眠的最佳疗法，能使各年龄段的失眠人群获益。"
+        tools:ignore="HardcodedText" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <com.sumian.sd.service.cbti.widget.CBTICoursePlanHomeView
         android:id="@+id/cbti_lesson_plan_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</merge>

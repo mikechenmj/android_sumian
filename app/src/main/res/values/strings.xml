@@ -1116,6 +1116,12 @@
     <string name="anxiety_record">忧虑记录</string>
     <string name="delete_record">删除记录</string>
     <string name="delete_record_confirm_hint">确定要删除此条记录吗？</string>
+    <string name="cbti_introduction_more"><![CDATA[了解更多 >]]></string>
+    <string name="cbti_title_bar">失眠认知行为治疗(CBTi)</string>
+    <string name="go_to_evaluation">去评估</string>
+    <string name="cbti_chapter_no_lock">本周课程还未解锁</string>
+    <string name="go_to_evaluation_title">CBTi评估</string>
+    <string name="go_to_evaluation_message">为更好地追踪治疗效果，我们需要您配合定进行评估，请您耐心完成评估</string>
     <string name="click_top_button_add_record">- 点击上方按钮，添加记录 -</string>
     <string name="event">事件</string>
     <string name="thought">想法</string>
