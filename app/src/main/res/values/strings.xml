@@ -1013,13 +1013,13 @@
     <string name="weekly_data">周数据</string>
     <string name="bluetooth_not_open">手机蓝牙未开启</string>
     <string name="please_open_bluetooth_and_connect_monitor">请打开手机蓝牙，与监测仪进行连接</string>
-    <string name="syncing">同步中...</string>
+    <string name="syncing" tools:ignore="TypographyEllipsis">同步中...</string>
     <string name="monitor_is_connect_please_check_sleepers_connectivity">监测仪已连接，请检查速眠仪是否开启</string>
     <string name="already_connected">已连接</string>
     <string name="not_connected">未连接</string>
     <string name="speed_sleeper_already">速眠仪已就绪</string>
     <string name="start_work">开启工作</string>
-    <string name="starting_work">开启中...</string>
+    <string name="starting_work" tools:ignore="TypographyEllipsis">开启中...</string>
     <string name="sync_progress_0">第 %d 段</string>
     <string name="sync_progress_1">(%d%%)</string>
     <string name="sleeper_is_working_please_sleep">速眠仪正常工作中，请安心入睡</string>
@@ -1095,5 +1095,26 @@
     <string name="doctor_service_introduction">服务介绍</string>
     <string name="cbti_course_plan_introduction">总进度：第%d周/共%d周</string>
     <string name="cbti_invalid_time">%s 到期</string>
+    <string name="anxious_and_belief">忧虑与信念</string>
+    <string name="add_anxious">添加忧虑</string>
+    <string name="what_s_the_meaning_of_recording_your_anxious_and_belief">记录自己的忧虑、信念有什么用</string>
+    <string name="anxious_record">忧虑记录</string>
+    <string name="device_connect_timeout">设备连接超时</string>
+    <string name="add_belief">添加信念</string>
+    <string name="anxiety_and_belief">忧虑与信念</string>
+    <string name="anxiety_and_belief_explain">忧虑:\n记录忧虑事件是为了把我们忧虑的事情在睡前较早的一个时段内处理和安排好，这有助于减少我们在睡前因此而引起烦恼。设定一个忧虑时间，每天在同一个时间段把所需要处理的事情想好办法，如果目前不能解决，可以安排另一个时间段来思考，坚持这么做，你会发现，我们在睡前会受到更少忧虑的困扰。\n\n信念:\n信念平时并不太容易被发现，因为他经常是自动化的。记录它一是可以让我们识别出我们有哪些信念，二来是有助于我们判断哪些是不合理信念并用认知重构的方法来重建他们，经过反复练习让理性的信念变成自动化。</string>
+    <string name="anxiety">忧虑</string>
+    <string name="anxiety_input_hint">今天，有什么事情让你感到忧虑、烦恼？（点击这里开始输入）</string>
+    <string name="anxiety_solution_input_hint">你是怎么解决你的忧虑的？（点击这里开始输入）</string>
+    <string name="solution">解决办法</string>
+    <string name="add_anxiety_bottom_hint">速眠医生建议：把忧虑的事情都集中在日间一个时间处理哦。</string>
+    <string name="save">保存</string>
+    <string name="add_success">添加成功</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="delete_success">删除成功</string>
+    <string name="anxiety_record">忧虑记录</string>
+    <string name="delete_record">删除记录</string>
+    <string name="delete_record_confirm_hint">确定要删除此条记录吗？</string>
     <!-- Hw end-->
 </resources>

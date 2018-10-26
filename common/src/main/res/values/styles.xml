@@ -101,4 +101,63 @@
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
+    <style name="ll_mp_wc_bg_white_vertical">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ll_mp_wc_bg_white_vertical_padding_20" parent="ll_mp_wc_bg_white_vertical">
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="space">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="space_height_5" parent="space">
+        <item name="android:layout_height">5dp</item>
+    </style>
+
+    <style name="space_height_10" parent="space">
+        <item name="android:layout_height">10dp</item>
+    </style>
+
+    <style name="space_height_20" parent="space">
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="space_horizontal_weight_1">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="mp_wc">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="mp_wc_horizontal_padding_20" parent="mp_wc">
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="SimpleSleepRecordGreyIconTv">
+        <item name="android:layout_marginBottom">@dimen/space_5</item>
+        <item name="android:drawablePadding">@dimen/space_10</item>
+    </style>
+
+    <style name="SumianEditTextWhiteBg">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/t1_color</item>
+        <item name="android:textColorHint">@color/t2_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">start</item>
+    </style>
 </resources>

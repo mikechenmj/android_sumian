@@ -26,6 +26,10 @@ class TimeUtilV2 {
             return formatDate("yyyy.MM.dd HH:mm", time)
         }
 
+        fun formatTimeYYYYMMDD_HHMM(unixTime: Int): String {
+            return formatDate("yyyy.MM.dd HH:mm", unixTime * 1000L)
+        }
+
         fun getCalendar(time: Long): Calendar {
             val calendar = Calendar.getInstance()
             calendar.time = Date(time)

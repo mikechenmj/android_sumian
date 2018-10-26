@@ -2,9 +2,11 @@ package com.sumian.sd.network.api
 
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.hw.device.pattern.PatternData
+import com.sumian.sd.R.string.anxiety
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
+import com.sumian.sd.anxiousandbelief.bean.AnxietyData
 import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
@@ -379,5 +381,21 @@ interface SdApi {
      */
     @GET("redeem-codes")
     fun getCouponList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Coupon>>
+
+    @GET("user/anxieties")
+    fun getAnxieties(@Query("page") page: Int = 1,
+                     @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<AnxietyData>>
+
+    @FormUrlEncoded
+    @POST("user/anxieties")
+    fun addAnxiety(@Field("anxiety") anxiety: String, @Field("solution") solution: String): Call<AnxietyData>
+
+    @FormUrlEncoded
+    @PATCH("user/anxieties/{id}")
+    fun updateAnxiety(@Path("id") id: Int, @Field("anxiety") anxiety: String, @Field("solution") solution: String): Call<AnxietyData>
+
+    @DELETE("user/anxieties/{id}")
+    fun deleteAnxiety(@Path("id") id: Int): Call<Any>
+
 
 }

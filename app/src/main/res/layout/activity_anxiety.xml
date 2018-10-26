@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space style="@style/space_height_10" />
+
+    <TextView
+        style="@style/tv_title_with_white_bg_and_bottom_line"
+        android:text="@string/anxiety" />
+
+    <EditText
+        android:id="@+id/et_anxiety"
+        style="@style/SumianEditTextWhiteBg"
+        android:layout_height="85dp"
+        android:hint="@string/anxiety_input_hint"
+        android:maxLength="200"
+        android:padding="20dp"
+        tools:ignore="Autofill,TextFields" />
+
+    <TextView
+        android:id="@+id/tv_anxiety_text_count"
+        style="@style/text_t2_13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical|end"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="0/200"
+        tools:ignore="HardcodedText" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white" />
+
+    <Space style="@style/space_height_10" />
+
+    <TextView
+        style="@style/tv_title_with_white_bg_and_bottom_line"
+        android:text="@string/solution" />
+
+    <EditText
+        android:id="@+id/et_anxiety_solution"
+        style="@style/SumianEditTextWhiteBg"
+        android:height="85dp"
+        android:hint="@string/anxiety_solution_input_hint"
+        android:padding="20dp"
+        tools:ignore="Autofill,TextFields" />
+
+    <TextView
+        android:id="@+id/tv_anxiety_solution_text_count"
+        style="@style/text_t2_13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical|end"
+        android:maxLength="200"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="0/200"
+        tools:ignore="HardcodedText" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white" />
+
+    <TextView
+        style="@style/text_t2_14"
+        android:layout_margin="20dp"
+        android:text="@string/add_anxiety_bottom_hint" />
+
+    <Button
+        android:id="@+id/bt_save"
+        style="@style/SumianButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/save" />
+</LinearLayout>

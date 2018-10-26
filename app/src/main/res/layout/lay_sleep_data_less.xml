@@ -65,7 +65,7 @@
                 android:contentDescription="@null"
                 android:padding="@dimen/space_10"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_report_right_day"
+                android:src="@drawable/ic_arrow_right_light_blue"
                 skin:enable="true"
                 tools:ignore="MissingPrefix,RtlHardcoded" />
 

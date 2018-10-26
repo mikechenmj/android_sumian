@@ -2,6 +2,7 @@ package com.sumian.common.widget.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.sumian.common.R
@@ -38,6 +39,26 @@ class SumianDialog(context: Context) : Dialog(context, R.style.SumianDialog) {
         } else {
             tv_title.text = context.getText(textRes)
             tv_title.visibility = View.VISIBLE
+        }
+        return this
+    }
+
+    fun setTitleText(text: String): SumianDialog {
+        if (TextUtils.isEmpty(text)) {
+            tv_title.visibility = View.GONE
+        } else {
+            tv_title.text = text
+            tv_title.visibility = View.VISIBLE
+        }
+        return this
+    }
+
+    fun setMessageText(text: String): SumianDialog {
+        if (TextUtils.isEmpty(text)) {
+            tv_message.visibility = View.GONE
+        } else {
+            tv_message.text = text
+            tv_message.visibility = View.VISIBLE
         }
         return this
     }

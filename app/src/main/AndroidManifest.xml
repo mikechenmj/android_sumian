@@ -549,7 +549,9 @@
             android:name="com.sumian.hw.report.ReportActivity"
             android:theme="@style/MainActivity" />
         <activity android:name=".diary.monitorrecord.WeeklyReportActivity" />
-        <activity android:name=".device.scan.ScanDeviceActivity" android:exported="true"/>
+        <activity
+            android:name=".device.scan.ScanDeviceActivity"
+            android:exported="true" />
         <activity android:name=".device.DeviceManageActivity" />
         <activity android:name=".account.login.ModifyPasswordActivity" />
         <activity
@@ -559,6 +561,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".anxiousandbelief.AnxiousAndBeliefActivity"
+            android:exported="true" />
+        <activity
+            android:name=".anxiousandbelief.AnxietyActivity"
+            android:exported="true" />
+        <activity android:name=".anxiousandbelief.AnxietyListActivity" />
     </application>
 
 </manifest>

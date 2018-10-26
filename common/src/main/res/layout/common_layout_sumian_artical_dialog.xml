@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_shape_rect_solid_white_radius_4dp"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_close" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_t3_18"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        tools:text="信念" />
+
+    <Space style="@style/space_height_20" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        style="@style/text_t2_16"
+        android:layout_gravity="center"
+        tools:text="忧虑:
+记录忧虑事件是为了把我们忧虑的事情在睡前较早的一个时段内处理和安排好，这有助于减少我们在睡前因此而引起烦恼。设定一个忧虑时间，每天在同一个时间段把所需要处理的事情想好办法，如果目前不能解决，可以安排另一个时间段来思考，坚持这么做，你会发现，我们在睡前会受到更少忧虑的困扰。
+
+信念:
+信念平时并不太容易被发现，因为他经常是自动化的。记录它一是可以让我们识别出我们有哪些信念，二来是有助于我们判断哪些是不合理信念并用认知重构的方法来重建他们，经过反复练习让理性的信念变成自动化。" />
+</LinearLayout>
