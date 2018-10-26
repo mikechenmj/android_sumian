@@ -549,11 +549,34 @@
             android:name="com.sumian.hw.report.ReportActivity"
             android:theme="@style/MainActivity" />
         <activity android:name=".diary.monitorrecord.WeeklyReportActivity" />
-        <activity android:name=".device.scan.ScanDeviceActivity" android:exported="true"/>
+        <activity
+            android:name=".device.scan.ScanDeviceActivity"
+            android:exported="true" />
         <activity android:name=".device.DeviceManageActivity" />
         <activity android:name=".account.login.ModifyPasswordActivity" />
         <activity
             android:name=".service.coupon.activity.CouponCenterActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".service.cbti.activity.CBTIIntroductionActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".service.cbti.activity.CBTIEvaluationWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".service.cbti.activity.CBTIIntroduction2WebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

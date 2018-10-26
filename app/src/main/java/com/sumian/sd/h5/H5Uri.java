@@ -26,7 +26,9 @@ public interface H5Uri {
     String MY_TARGET = "my-target?from=";// from=mine 表示从我的目标进入，from=newUser 表示新用户登录时进入
     String MY_TARGET_FROM_MINE = MY_TARGET + "mine";
     String MY_TARGET_FROM_NEW_USER = MY_TARGET + "newUser";
-    String CBTI_INTRODUCTION = "cbti";
+    String CBTI = "cbti";//CBTI 详情页（如果未购买过）
+    String CBTI_INTRODUCTION = "cbtiIntroduce";//CBTI 了解更多
+    String CBTI_OPEN_SCALES = "openCbtiScales?data={data}";
     String SLEEP_PRESCRIPTION = "prescription";
     String CBTI_EXERCISES = "cbti/exercises?id={course-id}";
     String CBTI_WEEK_REVIEW = "cbti/week-review?review={last_chapter_summary}";
@@ -34,4 +36,5 @@ public interface H5Uri {
     String CBTI_RELAXATIONS = "cbti/relaxations";
     String CBTI_SLEEP_HEALTH = "cbti/sleep-health";
     String NATIVE_ROUTE = "native-route?data={pageData}&token={token}";
+
 }

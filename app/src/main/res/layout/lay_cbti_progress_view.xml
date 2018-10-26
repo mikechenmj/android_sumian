@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.sumian.sd.service.cbti.widget.RingProgressView
+        android:id="@+id/progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:rpv_progress_color="@color/b3_color"
+        app:rpv_ring_bg_color="@color/l3_color"
+        app:rpv_ring_width="@dimen/space_3"
+        tools:progress="50" />
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        tools:src="@drawable/ic_home_icon_cbti_complete" />
+
+</merge>

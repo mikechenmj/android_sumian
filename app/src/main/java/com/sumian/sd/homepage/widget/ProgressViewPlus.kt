@@ -18,18 +18,26 @@ import kotlinx.android.synthetic.main.view_progress_plus.view.*
  * </pre>
  */
 class ProgressViewPlus(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
+
+    private var isLock = false
+    private var progress = 0
+
     init {
         LayoutInflater.from(context).inflate(R.layout.view_progress_plus, this, true)
         setProgress(0)
     }
 
     fun setProgress(progress: Int) {
+        this.progress = progress
         val showProgress = progress in 1..99
-        iv_cover.visibility = if (showProgress) View.VISIBLE else GONE
         iv_cover.visibility = if (!showProgress) View.VISIBLE else GONE
         when (progress) {
             0 -> {
-                iv_cover.setImageResource(R.drawable.circle_l3)
+                if (!isLock) {
+                    iv_cover.setImageResource(R.drawable.circle_l3)
+                } else {
+                    iv_cover.setImageResource(R.drawable.ic_cbti_exercise_lock)
+                }
             }
             100 -> {
                 iv_cover.setImageResource(R.drawable.ic_home_icon_cbti_complete)
@@ -38,5 +46,11 @@ class ProgressViewPlus(context: Context, attributeSet: AttributeSet) : FrameLayo
                 progress_view.progress = progress
             }
         }
+    }
+
+    fun setIsLock(isLock: Boolean) {
+        this.isLock = isLock
+        if (!isLock)
+            progress_view.progress = progress
     }
 }

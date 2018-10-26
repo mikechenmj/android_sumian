@@ -1095,5 +1095,7 @@
     <string name="doctor_service_introduction">服务介绍</string>
     <string name="cbti_course_plan_introduction">总进度：第%d周/共%d周</string>
     <string name="cbti_invalid_time">%s 到期</string>
+    <string name="cbti_introduction_more"><![CDATA[了解更多 >]]></string>
+    <string name="cbti_title_bar">失眠认知行为治疗(CBTi)</string>
     <!-- Hw end-->
 </resources>
