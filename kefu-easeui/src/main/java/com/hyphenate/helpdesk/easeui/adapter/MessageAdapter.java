@@ -3,6 +3,7 @@ package com.hyphenate.helpdesk.easeui.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import android.widget.ListView;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Conversation;
+import com.hyphenate.chat.EMMessageBody;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.Message;
+import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
 import com.hyphenate.helpdesk.easeui.widget.MessageList.MessageListItemClickListener;
 import com.hyphenate.helpdesk.easeui.widget.chatrow.ChatRow;
@@ -32,6 +36,7 @@ import com.hyphenate.helpdesk.model.MessageHelper;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class MessageAdapter extends BaseAdapter {
     private final static String TAG = "msg";
@@ -91,7 +96,7 @@ public class MessageAdapter extends BaseAdapter {
      */
     private WeakHandler handler;
 
-    private static class WeakHandler extends android.os.Handler {
+    private static class WeakHandler extends Handler {
         WeakReference<MessageAdapter> weakReference;
 
         public WeakHandler(MessageAdapter adapter) {
@@ -159,6 +164,17 @@ public class MessageAdapter extends BaseAdapter {
         wm.getDefaultDisplay().getMetrics(displayMetrics);
         mMaxItemWidth = (int) (displayMetrics.widthPixels * 0.4f);
         mMinItemWidth = (int) (displayMetrics.widthPixels * 0.15f);
+
+        int allMsgCount = conversation.getAllMsgCount();
+        if (allMsgCount <= 0) {
+            Message message = Message.createReceiveMessage(Message.Type.TXT);
+            EMMessageBody msgBody = new EMTextMessageBody(context.getString(R.string.doctor_say_hello));
+            message.setBody(msgBody);
+            message.setTo(username);
+            message.setMsgId(UUID.randomUUID().toString());
+            message.setStatus(Message.Status.SUCCESS);
+            conversation.addMessage(message);
+        }
     }
 
     /**
@@ -248,14 +264,14 @@ public class MessageAdapter extends BaseAdapter {
                 case ToCustomServiceMsg:
                     //转人工消息
                     return message.direct() == Message.Direct.RECEIVE ?
-                        MESSAGE_TYPE_RECV_TRANSFER_TO_KEFU : MESSAGE_TYPE_SENT_TRANSFER_TO_KEFU;
+                            MESSAGE_TYPE_RECV_TRANSFER_TO_KEFU : MESSAGE_TYPE_SENT_TRANSFER_TO_KEFU;
                 case BigExpressionMsg:
                     //大表情消息
                     return message.direct() == Message.Direct.RECEIVE ?
-                        MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
+                            MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
                 case CustomEmojiMsg:
                     return message.direct() == Message.Direct.RECEIVE ?
-                        MESSAGE_TYPE_RECV_CUSTOMEMOJI : MESSAGE_TYPE_SENT_CUSTOMEMOJI;
+                            MESSAGE_TYPE_RECV_CUSTOMEMOJI : MESSAGE_TYPE_SENT_CUSTOMEMOJI;
                 case EvaluationMsg:
                     return message.direct() == Message.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EVALUATION : MESSAGE_TYPE_SENT_EVALUATION;
                 default:
