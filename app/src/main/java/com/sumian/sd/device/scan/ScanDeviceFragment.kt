@@ -90,6 +90,8 @@ class ScanDeviceFragment : BaseFragment() {
     override fun onDetach() {
         mBlueManager.removeBlueAdapterCallback(mBlueAdapterEnableListener)
         mBlueManager.removeBlueScanCallback(mScanCallback)
+        stopScan()
+        mHandler.removeCallbacks(null)
         super.onDetach()
     }
 
