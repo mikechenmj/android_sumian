@@ -5,12 +5,14 @@ import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.bean.H5BaseResponse
+import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
+import com.sumian.sd.BuildConfig
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
-import com.sumian.sd.service.cbti.bean.CBTIEvaluationH5Data
 import com.sumian.sd.utils.JsonUtil
 
 /**
@@ -51,11 +53,13 @@ class CBTIEvaluationWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
         getTitleBar().openTopPadding(true)
     }
 
-    override fun getUrlContentPart(): String? {
-        val cbtiEvaluationH5Data = CBTIEvaluationH5Data(scaleIds, chapterId)
-        val cbtiEvaluationJson = JsonUtil.toJson(cbtiEvaluationH5Data)
-        val uri = H5Uri.CBTI_OPEN_SCALES
-        return uri.replace("{data}", cbtiEvaluationJson)
+    override fun getCompleteUrl(): String {
+        val map = mutableMapOf<String, Any>()
+        map["chapter_id"] = chapterId
+        map["scale_id"] = scaleIds
+        val urlContent = H5Uri.NATIVE_ROUTE.replace("{pageData}", H5PayloadData(H5Uri.CBTI_OPEN_SCALES, map).toJson())
+                .replace("{token}", AppManager.getAccountViewModel().token.token)
+        return BuildConfig.BASE_H5_URL + urlContent
     }
 
     override fun registerHandler(sWebView: SWebView) {

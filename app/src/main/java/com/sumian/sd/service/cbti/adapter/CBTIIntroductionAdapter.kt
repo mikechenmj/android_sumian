@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.utils.ColorCompatUtil
@@ -45,6 +46,10 @@ class CBTIIntroductionAdapter(context: Context) : BaseRecyclerAdapter<CbtiChapte
             itemView.findViewById<CBTIProgressView>(R.id.cbti_progress_view)
         }
 
+        private val ivNav: ImageView by lazy {
+            itemView.findViewById<ImageView>(R.id.iv_nav)
+        }
+
         fun initView(cbtiChapterData: CbtiChapterData) {
             tvTitle.text = cbtiChapterData.title
             val isLock = cbtiChapterData.isLock
@@ -63,6 +68,14 @@ class CBTIIntroductionAdapter(context: Context) : BaseRecyclerAdapter<CbtiChapte
                     tvProgress.setTextColor(ColorCompatUtil.getColor(itemView.context, R.color.b3_color_day))
                 }
             }
+
+            ivNav.setColorFilter(ColorCompatUtil.getColor(itemView.context,
+                    if (isLock) {
+                        R.color.l3_color_day
+                    } else {
+                        R.color.b5_color_day
+                    })
+            )
             tvProgress.text = cbtiChapterData.formatProgress()
             cbtiProgressView.setProgress(cbtiChapterData.chapterProgress, isLock)
         }
