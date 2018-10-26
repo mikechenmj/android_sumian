@@ -15,7 +15,7 @@ import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.ScaleFinishFillingEvent2
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.scale.bean.FilledScale
-import kotlinx.android.synthetic.main.recycler_view.*
+import kotlinx.android.synthetic.main.recycler_view_with_top_padding.*
 import org.greenrobot.eventbus.Subscribe
 
 
@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.Subscribe
  */
 class FilledScaleListFragment : BaseFragment() {
     override fun getLayoutId(): Int {
-        return R.layout.recycler_view
+        return R.layout.recycler_view_with_top_padding
     }
 
     private var mAdapter = FilledScaleListAdapter()

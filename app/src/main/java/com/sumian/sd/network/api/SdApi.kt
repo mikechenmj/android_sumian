@@ -7,6 +7,7 @@ import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.anxiousandbelief.bean.AnxietyData
+import com.sumian.sd.anxiousandbelief.bean.FaithData
 import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
@@ -382,6 +383,9 @@ interface SdApi {
     @GET("redeem-codes")
     fun getCouponList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Coupon>>
 
+    /**
+     * anxiety
+     */
     @GET("user/anxieties")
     fun getAnxieties(@Query("page") page: Int = 1,
                      @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<AnxietyData>>
@@ -397,5 +401,22 @@ interface SdApi {
     @DELETE("user/anxieties/{id}")
     fun deleteAnxiety(@Path("id") id: Int): Call<Any>
 
+    /**
+     * faiths
+     */
+    @FormUrlEncoded
+    @PATCH("user/faiths/{id}")
+    fun updateFaiths(@Path("id") id: Int, @Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<FaithData>
+
+    @DELETE("user/faiths/{id}")
+    fun deleteFaiths(@Path("id") id: Int): Call<Any>
+
+    @FormUrlEncoded
+    @POST("user/faiths")
+    fun addFaiths(@Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<FaithData>
+
+    @GET("user/faiths")
+    fun getFaiths(@Query("page") page: Int = 1,
+                  @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FaithData>>
 
 }

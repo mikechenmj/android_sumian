@@ -37,7 +37,7 @@ class AnxiousAndBeliefActivity : BaseBackActivity() {
         super.initWidget()
         setTitle(R.string.anxious_and_belief)
         tv_add_anxiety.setOnClickListener { AnxietyActivity.launch() }
-        tv_add_belief.setOnClickListener { }
+        tv_add_belief.setOnClickListener { BeliefActivity.launch() }
         vg_question.setOnClickListener { showExplainDialog() }
         tv_anxious_record.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(AnxietyListActivity::class.java) }
         tv_belief_record.setOnClickListener { }

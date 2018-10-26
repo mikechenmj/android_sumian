@@ -157,7 +157,22 @@
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/t1_color</item>
         <item name="android:textColorHint">@color/t2_color</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:gravity">start</item>
+    </style>
+
+    <style name="RegisterDot">
+        <item name="android:layout_width">@dimen/space_10</item>
+        <item name="android:layout_height">@dimen/space_10</item>
+        <item name="android:src">@drawable/register_dot</item>
+        <item name="android:layout_margin">@dimen/space_5</item>
+    </style>
+
+    <style name="RegisterLine">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/rect_b1_b5</item>
+        <item name="android:layout_height">@dimen/space_1</item>
+        <item name="android:layout_marginStart">@dimen/space_5</item>
     </style>
 </resources>

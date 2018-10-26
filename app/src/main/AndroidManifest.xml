@@ -568,6 +568,7 @@
             android:name=".anxiousandbelief.AnxietyActivity"
             android:exported="true" />
         <activity android:name=".anxiousandbelief.AnxietyListActivity" />
+        <activity android:name=".anxiousandbelief.BeliefActivity" />
     </application>
 
 </manifest>

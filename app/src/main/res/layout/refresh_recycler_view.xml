@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingTop="10dp">
-
-    </android.support.v7.widget.RecyclerView>
+        android:overScrollMode="never"
+        android:paddingTop="10dp"
+        android:scrollbars="none" />
 </com.sumian.sd.widget.refresh.SumianRefreshLayout>

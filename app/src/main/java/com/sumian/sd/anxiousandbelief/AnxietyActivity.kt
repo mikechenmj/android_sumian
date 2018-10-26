@@ -10,6 +10,7 @@ import com.sumian.common.base.BaseBackActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
+import com.sumian.sd.R.*
 import com.sumian.sd.anxiousandbelief.bean.AnxietyData
 import com.sumian.sd.anxiousandbelief.event.AnxietyChangeEvent
 import com.sumian.sd.app.AppManager
@@ -28,7 +29,7 @@ class AnxietyActivity : BaseBackActivity() {
     private var mAnxietyData: AnxietyData? = null
 
     override fun getChildContentId(): Int {
-        return R.layout.activity_anxiety
+        return layout.activity_anxiety
     }
 
     companion object {
@@ -48,7 +49,7 @@ class AnxietyActivity : BaseBackActivity() {
     @SuppressLint("SetTextI18n")
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.add_anxious)
+        setTitle(string.add_anxious)
         et_anxiety.addTextChangedListener(object : EmptyTextWatcher() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
@@ -95,7 +96,7 @@ class AnxietyActivity : BaseBackActivity() {
 
     private fun checkEt(text: String): Boolean {
         return if (TextUtils.isEmpty(text)) {
-            ToastUtils.showShort("请先完成题目内容")
+            ToastUtils.showShort(getString(string.please_finish_question_first))
             false
         } else {
             true

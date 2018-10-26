@@ -1116,5 +1116,21 @@
     <string name="anxiety_record">忧虑记录</string>
     <string name="delete_record">删除记录</string>
     <string name="delete_record_confirm_hint">确定要删除此条记录吗？</string>
+    <string name="click_top_button_add_record">- 点击上方按钮，添加记录 -</string>
+    <string name="event">事件</string>
+    <string name="thought">想法</string>
+    <string name="emotion">情绪</string>
+    <string name="belief_title_0" tools:ignore="TypographyFractions">1/3. 事件</string>
+    <string name="belief_title_1" tools:ignore="TypographyFractions">2/3. 想法</string>
+    <string name="belief_title_2" tools:ignore="TypographyFractions">3/3. 情绪</string>
+    <string name="input_event_hint">是发生了什么事情？引起了你的想法与情绪？如：在旅途中，你有一瓶水，喝了一半。（点击这里开始输入）</string>
+    <string name="when_you_thought_what_is_the_emotion">当你对这件事产生了想法时，你的情绪如何？</string>
+    <string name="emotion_0">难过</string>
+    <string name="emotion_1">焦虑</string>
+    <string name="emotion_2">愤怒</string>
+    <string name="emotion_3">平静</string>
+    <string name="emotion_4">轻松</string>
+    <string name="emotion_5">愉快</string>
+    <string name="please_finish_question_first">请先完成题目内容</string>
     <!-- Hw end-->
 </resources>

@@ -156,6 +156,10 @@
         <item name="android:paddingEnd">20dp</item>
     </style>
 
+    <style name="tv_title_with_transparent_bg_and_bottom_line" parent="tv_title_with_white_bg_and_bottom_line">
+        <item name="android:background">@drawable/bg_line_l1_margin_start_20dp</item>
+    </style>
+
     <!--button-->
     <style name="bt_t1_style">
         <item name="android:padding">@dimen/space_16</item>
