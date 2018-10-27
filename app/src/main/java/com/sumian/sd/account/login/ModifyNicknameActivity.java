@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.hw.base.HwBaseActivity;
-import com.sumian.hw.common.util.UiUtil;
+import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.hw.widget.refresh.ActionLoadingDialog;
 import com.sumian.sd.R;

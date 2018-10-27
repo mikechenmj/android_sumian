@@ -5,7 +5,7 @@
     android:layout_height="@dimen/space_64"
     android:orientation="vertical">
 
-    <com.sumian.sd.widget.pay.PayItemView
+    <com.sumian.sd.pay.pay.PayItemView
         android:id="@+id/wechat_pay_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:layout_height="@dimen/space_1"
         android:background="@color/l1_color" />
 
-    <com.sumian.sd.widget.pay.PayItemView
+    <com.sumian.sd.pay.pay.PayItemView
         android:id="@+id/alipay_pay_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

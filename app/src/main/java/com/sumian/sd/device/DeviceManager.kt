@@ -15,12 +15,10 @@ import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
-import com.sumian.hw.command.BlueCmd
-import com.sumian.hw.common.util.BlueByteUtil
-import com.sumian.hw.device.bean.BlueDevice
-import com.sumian.hw.device.pattern.SyncPatternManager
-import com.sumian.hw.device.wrapper.BlueDeviceWrapper
-import com.sumian.hw.gather.FileHelper
+import com.sumian.sd.device.command.BlueCmd
+import com.sumian.sd.device.bean.BlueDevice
+import com.sumian.sd.device.pattern.SyncPatternManager
+import com.sumian.sd.device.wrapper.BlueDeviceWrapper
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
@@ -318,23 +316,19 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             -> receiveAllMonitorAndSleeperStatus(peripheral, data, cmd)
             "d0"//临床原始数据采集时间点
             -> {
-                val unixTime = java.lang.Long.parseLong(cmd.substring(4, 12), 16)
-                FileHelper.updateFileDate(unixTime)
+                //val unixTime = java.lang.Long.parseLong(cmd.substring(4, 12), 16)
             }
             "d1"//采集临床肌电数据   不回响应包
             -> {
-                val emg = BlueByteUtil.formatData(data)
-                FileHelper.appendEmgContent(emg)
+                //val emg = BlueByteUtil.formatData(data)
             }
             "d2"//采集临床脉率数据   不回响应包
             -> {
-                val pulse = BlueByteUtil.formatData(data)
-                FileHelper.appendPulseContent(pulse)
+                //val pulse = BlueByteUtil.formatData(data)
             }
             "d3"//采集临床加速度数据  不回响应包
             -> {
-                val speed = BlueByteUtil.formatData(data)
-                FileHelper.appendSpeedContent(speed)
+                //val speed = BlueByteUtil.formatData(data)
             }
             "8e" // 开始/结束 透传数据
             -> receiveStartOrFinishTransportCmd(peripheral, data, cmd)
@@ -506,7 +500,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                         else -> R.string.turn_on_sleepy_pa_mode_error
                     }
                     errorMessage = App.getAppContext().resources.getString(errorTextId)
-                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是" + errorMessage + "  cmd=" + cmd)
+                    LogManager.appendSpeedSleeperLog("0x58 开始速眠的 pa 模式失败,原因是$errorMessage  cmd=$cmd")
                 }
             }
         } else {
@@ -572,7 +566,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 //        AppManager.getDeviceModel().sleepyMac = sleeperMac
         mMonitorLiveData.value?.sleeperMac = sleeperMac
         notifyMonitorChange()
-        LogManager.appendSpeedSleeperLog("0x56 获取到监测仪绑定的速眠仪的 mac address=" + sleeperMac + "  cmd=" + cmd)
+        LogManager.appendSpeedSleeperLog("0x56 获取到监测仪绑定的速眠仪的 mac address=$sleeperMac  cmd=$cmd")
         onLastDeviceDataReceived()
     }
 

@@ -19,10 +19,10 @@ import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts
+import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.service.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sd.utils.JsonUtil
 import org.json.JSONObject
@@ -72,13 +72,12 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Advisory>() {
             override fun onFailure(errorResponse: ErrorResponse) {
-                Log.e(TAG, "上传失败")
+                if (BuildConfig.DEBUG) Log.e(TAG, "上传失败")
                 mView?.onPublishAdvisoryRecordFailed(error = errorResponse.message)
             }
 
             override fun onSuccess(response: Advisory?) {
-                AppManager.getAdvisoryViewModel().notifyAdvisory(advisory = response!!)
-                mView?.onPublishAdvisoryRecordSuccess(response)
+                mView?.onPublishAdvisoryRecordSuccess(response!!)
             }
 
             override fun onFinish() {
@@ -138,8 +137,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
             }
 
             override fun onSuccess(response: Advisory?) {
-                AppManager.getAdvisoryViewModel().notifyAdvisory(response!!)
-                mView?.onGetLastAdvisorySuccess(response)
+                mView?.onGetLastAdvisorySuccess(response!!)
             }
 
             override fun onFinish() {
@@ -225,7 +223,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
             }
 
             override fun onFailure(request: PutObjectRequest?, clientException: ClientException?, serviceException: ServiceException?) {
-                Log.e(TAG, "上传失败")
+                if (BuildConfig.DEBUG) Log.e(TAG, "上传失败")
                 mView?.onEndUploadImagesCallback()
                 mView?.onPublishAdvisoryRecordFailed("图片上传失败,请重试")
             }

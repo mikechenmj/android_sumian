@@ -44,10 +44,11 @@
                 android:id="@+id/iv_avatar"
                 android:layout_width="@dimen/space_60"
                 android:layout_height="@dimen/space_60"
-                android:elevation="@dimen/space_4"
-                android:translationZ="@dimen/space_4"
                 app:civ_border_color="@color/white"
+                app:civ_border_overlay="true"
                 app:civ_border_width="@dimen/space_5"
+                app:civ_circle_background_color="@color/white"
+                app:civ_fill_color="@color/white"
                 tools:src="@mipmap/ic_info_avatar_patient" />
         </LinearLayout>
 
@@ -66,8 +67,8 @@
             android:id="@+id/sleep_data_pager_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:visibility="visible"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <com.sumian.sd.device.widget.DeviceCardView
             android:id="@+id/device_card_view"
@@ -128,6 +129,7 @@
                 android:drawablePadding="10dp"
                 android:gravity="center"
                 android:text="@string/sleep_health" />
+
             <View
                 style="@style/VerticalDividerLine"
                 android:layout_marginTop="20dp"

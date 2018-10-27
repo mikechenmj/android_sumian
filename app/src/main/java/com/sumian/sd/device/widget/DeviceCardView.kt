@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
-import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.device.DeviceManager
@@ -175,7 +175,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 })
                 tv_speed_sleeper_status.setTextColor(ColorCompatUtil.getColor(context, if (isPa) R.color.white else R.color.t2_color))
                 @Suppress("DEPRECATION")
-                tv_speed_sleeper_status.background = if (isPa) resources.getDrawable(R.drawable.sleeper_pa_tv_bg) else null
+                tv_speed_sleeper_status.background = if (isPa) resources.getDrawable(R.drawable.bg_sleeper_pa_tv) else null
                 tv_bottom_hint.text = resources.getString(if (isPa) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity)
                 tv_bottom_hint.visibility = if (!monitor.isSleeperConnected || isPa) View.VISIBLE else View.GONE
                 fl_turn_pa_bt_container.visibility = if (monitor.isSleeperConnected && !isPa) View.VISIBLE else View.GONE

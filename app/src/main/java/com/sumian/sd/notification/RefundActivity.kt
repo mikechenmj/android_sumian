@@ -11,7 +11,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.order.OrderDetail
+import com.sumian.sd.pay.bean.OrderDetail
 import com.sumian.sd.utils.TimeUtil
 import kotlinx.android.synthetic.main.activity_refund.*
 

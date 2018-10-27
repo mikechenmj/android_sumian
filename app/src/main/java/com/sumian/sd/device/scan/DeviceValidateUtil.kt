@@ -1,6 +1,6 @@
 package com.sumian.sd.device.scan
 
-import com.sumian.hw.device.util.BluetoothDeviceUtil
+import com.sumian.sd.device.util.BluetoothDeviceUtil
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.BuildConfig
 
@@ -14,9 +14,9 @@ import com.sumian.sd.BuildConfig
 object DeviceValidateUtil {
     fun isDeviceValid(scanRecord: ByteArray?, deviceName: String, deviceMac: String): Boolean {
         val deviceVersion = BluetoothDeviceUtil.getBluetoothDeviceVersion(scanRecord)
-        if (BuildConfig.IS_CLINICAL_VERSION) { // clinical version app
+        return if (BuildConfig.IS_CLINICAL_VERSION) { // clinical version app
             LogManager.appendBluetoothLog("临床版本app 搜索到一台设备 name=$deviceName  mac=$deviceMac")
-            return true
+            true
         } else { // release version app
             when (deviceVersion) {
                 BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE -> LogManager.appendBluetoothLog("常规版本app 搜索到一台正式版本设备 name=$deviceName  mac=$deviceMac")
@@ -24,7 +24,7 @@ object DeviceValidateUtil {
                 BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_OLD -> LogManager.appendBluetoothLog("常规版本app 搜索到一台老版本设备 name=$deviceName  mac=$deviceMac")
                 else -> LogManager.appendBluetoothLog("常规版本app 搜索到一台未知版本设备 name=$deviceName  mac=$deviceMac")
             }
-            return deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE
+            deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE
         }
     }
 }

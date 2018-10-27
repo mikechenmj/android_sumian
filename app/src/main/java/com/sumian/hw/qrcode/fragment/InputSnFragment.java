@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.hw.base.HwBaseFragment;
-import com.sumian.hw.common.util.UiUtil;
+import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.qrcode.activity.QrCodeActivity;
 import com.sumian.sd.R;
 

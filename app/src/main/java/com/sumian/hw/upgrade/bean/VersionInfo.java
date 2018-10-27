@@ -1,6 +1,6 @@
 package com.sumian.hw.upgrade.bean;
 
-import com.sumian.hw.common.util.NumberUtil;
+import com.sumian.hw.utils.NumberUtil;
 
 import java.io.Serializable;
 

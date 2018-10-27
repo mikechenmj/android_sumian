@@ -12,7 +12,7 @@ import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
-import com.sumian.sd.doctor.activity.PaymentActivity
+import com.sumian.sd.pay.activity.PaymentActivity
 import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.event.CBTIServiceBoughtEvent
 import com.sumian.sd.event.EventBusUtil

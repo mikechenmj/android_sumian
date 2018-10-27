@@ -10,7 +10,7 @@ import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.helper.ToastHelper
-import com.sumian.hw.common.util.TimeUtil
+import com.sumian.hw.utils.TimeUtil
 import com.sumian.hw.report.widget.LoadViewPagerRecyclerView
 import com.sumian.hw.widget.BaseDialogFragment
 import com.sumian.sd.R

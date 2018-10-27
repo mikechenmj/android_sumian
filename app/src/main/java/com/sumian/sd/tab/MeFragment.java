@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.image.ImageLoader;
-import com.sumian.hw.device.bean.BlueDevice;
+import com.sumian.sd.device.bean.BlueDevice;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.model.VersionModel;

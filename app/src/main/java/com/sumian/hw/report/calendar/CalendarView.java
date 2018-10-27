@@ -13,7 +13,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.sumian.hw.common.util.TimeUtil;
+import com.sumian.hw.utils.TimeUtil;
 import com.sumian.sd.R;
 
 import java.util.Calendar;

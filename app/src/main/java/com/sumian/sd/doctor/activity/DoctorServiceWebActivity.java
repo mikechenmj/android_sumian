@@ -15,6 +15,7 @@ import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.doctor.bean.DoctorService;
 import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult;
 import com.sumian.sd.h5.H5Uri;
+import com.sumian.sd.pay.activity.PaymentActivity;
 import com.sumian.sd.service.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sd.service.diary.DiaryEvaluationDetailActivity;
 import com.sumian.sd.service.tel.activity.TelBookingPublishActivity;

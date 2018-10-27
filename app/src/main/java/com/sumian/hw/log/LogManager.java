@@ -7,7 +7,7 @@ import android.os.HandlerThread;
 import android.util.Log;
 import android.webkit.WebSettings;
 
-import com.sumian.hw.common.util.StreamUtil;
+import com.sumian.hw.utils.StreamUtil;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.App;
 

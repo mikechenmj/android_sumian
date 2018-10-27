@@ -7,7 +7,6 @@ import com.hyphenate.chat.ChatClient;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.operator.AppOperator;
-import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.utils.NotificationUtil;
 import com.sumian.sd.account.bean.Token;
@@ -33,7 +32,6 @@ public class AppUtil {
         if (bluePeripheral != null) {
             bluePeripheral.close();
         }
-        FileHelper.closeUploadThread();
         LogManager.appendUserOperationLog("用户退出 app.......");
         ActivityUtils.finishAllActivities();
     }

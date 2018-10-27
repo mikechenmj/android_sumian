@@ -15,7 +15,7 @@ import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BaseActivity;
 import com.sumian.common.widget.TitleBar;
-import com.sumian.hw.command.BlueCmd;
+import com.sumian.sd.device.command.BlueCmd;
 import com.sumian.hw.qrcode.fragment.InputSnFragment;
 import com.sumian.hw.qrcode.fragment.QrCodeFragment;
 import com.sumian.sd.R;

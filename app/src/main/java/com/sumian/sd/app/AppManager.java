@@ -18,7 +18,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.social.OpenEngine;
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
-import com.sumian.hw.gather.FileHelper;
+import com.sumian.sd.device.FileHelper;
 import com.sumian.hw.job.JobScheduler;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.hw.upgrade.model.VersionModel;
@@ -30,7 +30,6 @@ import com.sumian.sd.leancloud.LeanCloudManager;
 import com.sumian.sd.network.NetworkManager;
 import com.sumian.sd.network.api.HwApi;
 import com.sumian.sd.network.api.SdApi;
-import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
 
 /**
  * Created by jzz
@@ -41,7 +40,6 @@ import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
 public final class AppManager {
 
     private AccountViewModel mAccountViewModel;
-    private AdvisoryViewModel mAdvisoryViewModel;
     private DoctorViewModel mDoctorViewModel;
     private OpenEngine mOpenEngine;
 
@@ -69,10 +67,6 @@ public final class AppManager {
 
     public static synchronized AccountViewModel getAccountViewModel() {
         return Holder.INSTANCE.mAccountViewModel;
-    }
-
-    public static synchronized AdvisoryViewModel getAdvisoryViewModel() {
-        return Holder.INSTANCE.mAdvisoryViewModel == null ? Holder.INSTANCE.mAdvisoryViewModel = new AdvisoryViewModel() : Holder.INSTANCE.mAdvisoryViewModel;
     }
 
     public static synchronized DoctorViewModel getDoctorViewModel() {

@@ -15,8 +15,8 @@ import com.sumian.blue.callback.BlueAdapterCallback
 import com.sumian.blue.callback.BlueScanCallback
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.widget.dialog.SumianDialog
-import com.sumian.hw.device.adapter.DeviceAdapter
-import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.sd.device.adapter.DeviceAdapter
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.utils.LocationManagerUtil
 import com.sumian.sd.R

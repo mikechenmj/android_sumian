@@ -14,8 +14,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.text.TextUtils;
 
-import com.sumian.hw.common.util.StreamUtil;
-import com.sumian.hw.gather.FileHelper;
+import com.sumian.hw.utils.StreamUtil;
+import com.sumian.sd.device.FileHelper;
 import com.sumian.hw.log.LogManager;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.App;

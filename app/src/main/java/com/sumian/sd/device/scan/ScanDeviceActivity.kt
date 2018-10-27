@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
 import com.sumian.common.base.BaseBackActivity
-import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
 

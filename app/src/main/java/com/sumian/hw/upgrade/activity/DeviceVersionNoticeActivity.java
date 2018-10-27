@@ -11,7 +11,7 @@ import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BaseActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
-import com.sumian.hw.common.util.UiUtil;
+import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.hw.upgrade.model.VersionModel;

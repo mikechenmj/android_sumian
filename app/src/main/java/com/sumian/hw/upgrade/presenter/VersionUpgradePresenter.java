@@ -11,8 +11,8 @@ import android.webkit.MimeTypeMap;
 
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.hw.command.BlueCmd;
-import com.sumian.hw.common.util.HashUtils;
+import com.sumian.sd.device.command.BlueCmd;
+import com.sumian.sd.device.util.HashUtils;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.activity.VersionUpgradeActivity;
 import com.sumian.hw.upgrade.bean.VersionInfo;

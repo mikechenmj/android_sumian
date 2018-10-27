@@ -53,12 +53,6 @@
         <attr name="is_select" format="boolean|reference" />
     </declare-styleable>
 
-    <!--BubbleImageView-->
-    <declare-styleable name="BubbleImageView">
-        <attr name="chat_image_mask" format="reference" />
-    </declare-styleable>
-
-
     <declare-styleable name="PaletteImageView">
         <attr name="paletteRadius" format="dimension" />
         <attr name="paletteSrc" format="reference" />
@@ -208,19 +202,6 @@
         <attr name="label_icon" format="reference" />
         <attr name="compare_label_text" format="string|reference" />
         <attr name="is_gone_divider" format="boolean|reference" />
-    </declare-styleable>
-
-    <declare-styleable name="RippleAnimationView">
-        <attr name="ripple_anim_scale" format="float|reference" />
-        <attr name="ripple_anim_color" format="color|reference" />
-        <attr name="ripple_anim_amount" format="integer|reference" />
-        <attr name="ripple_anim_duration" format="integer|reference" />
-        <attr name="ripple_anim_radius" format="dimension|reference" />
-        <attr name="ripple_anim_strokeWidth" format="dimension|reference" />
-        <attr name="ripple_anim_type" format="enum">
-            <enum name="fillRipple" value="0" />
-            <enum name="strokeRipple" value="1" />
-        </attr>
     </declare-styleable>
 
     <declare-styleable name="CountDownTextView">

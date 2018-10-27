@@ -1,6 +1,6 @@
 package com.sumian.sd.network.response;
 
-import com.sumian.hw.common.util.TimeUtil;
+import com.sumian.hw.utils.TimeUtil;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

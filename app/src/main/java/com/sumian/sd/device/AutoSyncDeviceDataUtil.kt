@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.PowerManager
-import com.sumian.hw.common.util.SpUtil
+import com.sumian.hw.utils.SpUtil
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.app.App
 

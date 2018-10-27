@@ -22,7 +22,8 @@ import java.util.*
  * desc:修改用户数据 e.g. gender/weight/height/birthday/education/area
  *
  */
-class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.View, View.OnClickListener, NumberPickerView.OnValueChangeListener, NumberPickerView.OnScrollListener {
+class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.View, View.OnClickListener,
+        NumberPickerView.OnValueChangeListener, NumberPickerView.OnScrollListener {
 
 
     private lateinit var mPresenter: ModifyUserInfoContract.Presenter

@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.base.HwBaseActivity;
-import com.sumian.hw.common.util.UiUtil;
+import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.Version2ConnectingDialog;

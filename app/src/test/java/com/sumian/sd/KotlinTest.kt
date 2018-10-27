@@ -1,11 +1,9 @@
 package com.sumian.sd
 
 import android.text.format.DateUtils
-import android.webkit.MimeTypeMap
 import com.google.gson.Gson
 import com.sumian.common.utils.TimeUtilV2
-import com.sumian.hw.common.util.SystemUtil
-import com.sumian.hw.common.util.TimeUtil
+import com.sumian.hw.utils.TimeUtil
 import com.sumian.sd.account.config.SumianConfig
 import com.sumian.sd.bean.ClassA
 import org.junit.Test

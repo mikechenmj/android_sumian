@@ -1,8 +1,8 @@
 package com.sumian.sd.network.interceptor
 
 import android.net.Uri
-import com.sumian.hw.common.util.SystemUtil
-import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.hw.utils.SystemUtil
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceManager

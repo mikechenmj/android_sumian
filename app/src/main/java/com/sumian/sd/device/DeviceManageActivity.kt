@@ -2,7 +2,7 @@ package com.sumian.sd.device
 
 import android.support.v4.app.Fragment
 import com.sumian.common.base.BaseBackActivity
-import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.hw.utils.FragmentUtil.Companion.switchFragment
 import com.sumian.sd.R

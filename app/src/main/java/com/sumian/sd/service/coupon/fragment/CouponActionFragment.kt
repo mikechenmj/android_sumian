@@ -8,7 +8,7 @@ import android.view.Gravity
 import android.view.View
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.helper.ToastHelper
-import com.sumian.hw.common.util.UiUtil
+import com.sumian.hw.utils.UiUtil
 import com.sumian.sd.R
 import com.sumian.sd.service.coupon.activity.CouponCenterActivity
 import com.sumian.sd.service.coupon.contract.CouponActionContract

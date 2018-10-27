@@ -11,7 +11,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.utils.ColorCompatUtil
-import com.sumian.hw.device.bean.BlueDevice
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.R
 import com.sumian.sd.device.widget.SyncAnimatorUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog

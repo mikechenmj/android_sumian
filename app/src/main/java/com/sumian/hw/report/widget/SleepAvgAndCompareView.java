@@ -15,8 +15,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
-import com.sumian.hw.common.util.TextUtil;
-import com.sumian.hw.common.util.TimeUtil;
+import com.sumian.hw.utils.TextUtil;
+import com.sumian.hw.utils.TimeUtil;
 import com.sumian.hw.report.widget.text.CountSleepDurationTextView;
 import com.sumian.sd.R;
 

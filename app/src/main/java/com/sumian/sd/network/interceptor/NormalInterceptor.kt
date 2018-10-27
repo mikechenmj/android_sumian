@@ -1,7 +1,7 @@
 package com.sumian.sd.network.interceptor
 
 import android.webkit.WebSettings
-import com.sumian.hw.common.util.SystemUtil
+import com.sumian.hw.utils.SystemUtil
 import com.sumian.sd.app.App
 import okhttp3.Interceptor
 import okhttp3.Response

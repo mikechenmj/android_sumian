@@ -81,13 +81,13 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <com.sumian.sd.widget.pay.PayCalculateItemView
+            <com.sumian.sd.pay.pay.PayCalculateItemView
                 android:id="@+id/pay_calculate_item_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_16" />
 
-            <com.sumian.sd.widget.pay.PayItemGroupView
+            <com.sumian.sd.pay.pay.PayItemGroupView
                 android:id="@+id/pay_group_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
