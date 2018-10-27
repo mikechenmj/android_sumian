@@ -43,7 +43,6 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
         initView(context);
         setOrientation(VERTICAL);
         setBackgroundColor(getResources().getColor(R.color.b1_color));
-        setOnClickListener(this);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EmptyErrorView);
         Drawable icon = a.getDrawable(R.styleable.EmptyErrorView_eev_icon);
         String title = a.getString(R.styleable.EmptyErrorView_eev_title);
@@ -83,6 +82,7 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
 
     public void setOnEmptyCallback(OnEmptyCallback onEmptyCallback) {
         mOnEmptyCallback = onEmptyCallback;
+        setOnClickListener(this);
     }
 
     /**

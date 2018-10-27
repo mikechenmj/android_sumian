@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.emojicon.Emojicon;
 
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class EmojiconMenu extends EmojiconMenuBase {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_widget_emojicon : R.layout.night_hd_widget_emojicon, this);
+        LayoutInflater.from(context).inflate(R.layout.light_hd_widget_emojicon, this);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.HDEmojiconMenu);
         emojiconColumns = ta.getInt(R.styleable.HDEmojiconMenu_hdEmojiconColumns, defaultColumns);
         bigEmojiconColumns = ta.getInt(R.styleable.HDEmojiconMenu_hdBigEmojiconRows, defaultBigColumns);

@@ -5,9 +5,8 @@ import android.support.v7.app.AppCompatDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import com.sumian.sd.network.response.SleepAdvice
 import com.sumian.sd.R
-import com.sumian.sd.theme.three.SkinConfig
+import com.sumian.sd.network.response.SleepAdvice
 
 /**
  * Created by jzz
@@ -26,7 +25,7 @@ class SleepAdviceDialog(context: Context) : AppCompatDialog(context, R.style.Sum
     private var mSleepAdvice: SleepAdvice? = null
 
     init {
-        val layoutId = if (SkinConfig.isInNightMode(context)) R.layout.lay_bottom_sheet_sleep_advice_night else R.layout.lay_bottom_sheet_sleep_advice_day
+        val layoutId = R.layout.lay_bottom_sheet_sleep_advice_day
         val rootView = LayoutInflater.from(context).inflate(layoutId, null, false)
         mTvSleepAdviceElement = rootView.findViewById(R.id.tv_sleep_advice_element)
         mTvSleepDataLess = rootView.findViewById(R.id.tv_sleep_data_less)

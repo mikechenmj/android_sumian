@@ -18,7 +18,6 @@ import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.ImageCache;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
 import com.hyphenate.helpdesk.easeui.ui.ShowBigImageActivity;
 import com.hyphenate.helpdesk.easeui.util.CommonUtils;
@@ -38,7 +37,7 @@ public class ChatRowImage extends ChatRowFile {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_picture : R.layout.night_hd_row_received_picture) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_picture : R.layout.night_hd_row_sent_picture), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_picture : R.layout.light_hd_row_sent_picture, this);
     }
 
     @Override

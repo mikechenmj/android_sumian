@@ -15,7 +15,7 @@
 
         <include
             android:id="@+id/rl_back"
-            layout="@layout/night_em_commom_back_btn" />
+            layout="@layout/light_em_commom_back_btn" />
 
         <TextView
             android:id="@+id/name"

@@ -139,7 +139,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_fragment_chat : R.layout.night_hd_fragment_chat, container, false);
+        return inflater.inflate(R.layout.light_hd_fragment_chat, container, false);
     }
 
     @Override

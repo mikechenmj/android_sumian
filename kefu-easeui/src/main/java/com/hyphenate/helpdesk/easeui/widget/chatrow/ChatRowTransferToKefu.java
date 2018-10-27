@@ -13,12 +13,12 @@ import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.util.SmileUtils;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.helpdesk.model.ToCustomServiceInfo;
 
 /**
+ *
  */
 @SuppressLint("ViewConstructor")
 public class ChatRowTransferToKefu extends ChatRow {
@@ -32,8 +32,7 @@ public class ChatRowTransferToKefu extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_transfertokefu : R.layout.night_hd_row_received_transfertokefu)
-                : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_transfertokefu : R.layout.night_hd_row_sent_transfertokefu), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_transfertokefu : R.layout.light_hd_row_sent_transfertokefu, this);
     }
 
     @Override

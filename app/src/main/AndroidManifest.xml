@@ -360,37 +360,8 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.userProfile.HwUserInfoActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.setting.activity.HwSettingActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.setting.activity.ConfigActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name="com.sumian.hw.leancloud.activity.MsgActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.setting.activity.ModifyPwdActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
@@ -437,31 +408,12 @@
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.assessment.AssessmentUserInfoActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.assessment.AssessmentActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name="com.sumian.hw.feedback.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.guideline.activity.UserGuidelineActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.Fullscreen" />
         <activity
             android:name="com.sumian.hw.guideline.activity.ManualActivity"
             android:configChanges="keyboardHidden|orientation"

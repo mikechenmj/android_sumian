@@ -32,7 +32,7 @@ public class DialogManager {
     public void showRecordingDialog() {
         mDialog = new Dialog(mContext, R.style.Theme_Audio_Dialog);
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.night_hd_widget_voice_recorder, null);
+        View view = inflater.inflate(R.layout.light_hd_widget_voice_recorder, null);
         mDialog.setContentView(view);
         mVoice = (ImageView) mDialog.findViewById(R.id.mic_image);
         mLabel = (TextView) mDialog.findViewById(R.id.recording_hint);

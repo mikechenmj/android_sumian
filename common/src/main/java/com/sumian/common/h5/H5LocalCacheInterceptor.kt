@@ -5,6 +5,7 @@ import android.webkit.WebResourceResponse
 import com.sumian.common.h5.widget.SWebView
 import java.io.IOException
 
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 /**
  * @author : Zhan Xuzhao
  * e-mail : xuzhao.z@sumian.com

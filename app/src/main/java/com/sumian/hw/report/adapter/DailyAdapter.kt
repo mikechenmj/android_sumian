@@ -13,9 +13,6 @@ import com.sumian.hw.report.widget.SwitchDateView
 import com.sumian.hw.report.widget.histogram.TouchDailySleepHistogramView
 import com.sumian.hw.widget.refresh.BlueRefreshView
 import com.sumian.sd.R
-import com.sumian.sd.theme.three.IDynamicNewView
-import kotlinx.android.synthetic.main.hw_lay_sleep_duration_view.view.*
-import kotlinx.android.synthetic.main.hw_lay_sleep_state_duration_view.view.*
 import java.util.*
 
 /**
@@ -159,29 +156,6 @@ class DailyAdapter : RecyclerView.Adapter<DailyAdapter.ViewHolder>() {
                 this.mNestedScrollView.post { mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN) }
                 this.mDailyReport.needScrollToBottom = false
             }
-            registerThemeChangeEvent()
-
-        }
-
-        private fun registerThemeChangeEvent() {
-            val iDynamicNewView = itemView.context as? IDynamicNewView
-
-            iDynamicNewView?.dynamicAddView(mBlueRefreshView, "brv_progress_color", R.color.n2_color_day)
-            iDynamicNewView?.dynamicAddView(mBlueRefreshView, "brv_progress_bg_color", R.color.l2_color_day)
-
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_coordinate_color", R.color.l3_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_label_text_color", R.color.t2_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_empty_text_color", R.color.t5_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_light_color", R.color.g2_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_eog_color", R.color.g2_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_deep_color", R.color.g1_color_day)
-            iDynamicNewView?.dynamicAddView(mDaySleepHistogramView, "tdshv_sober_color", R.color.g3_color_day)
-
-            iDynamicNewView?.dynamicAddView(mReportSleepDurationView.light_sleep_duration_view.tv_sleep_duration_percent.getProgressView(), "cpv_ring_bg_color", R.color.b1_color_day)
-            iDynamicNewView?.dynamicAddView(mReportSleepDurationView.light_sleep_duration_view.tv_sleep_duration_percent.getCountPercentView(), "csdtv_default_drawable", R.drawable.bg_text_b3)
-            iDynamicNewView?.dynamicAddView(mReportSleepDurationView.deep_sleep_duration_view.tv_sleep_duration_percent.getProgressView(), "cpv_ring_bg_color", R.color.b1_color_day)
-            iDynamicNewView?.dynamicAddView(mReportSleepDurationView.deep_sleep_duration_view.tv_sleep_duration_percent.getCountPercentView(), "csdtv_default_drawable", R.drawable.bg_text_b3)
-
         }
 
         override fun onRefresh() {

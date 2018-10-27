@@ -17,7 +17,6 @@
 
     <color name="title_bg_color">#b81616</color>
     <color name="main_text_color">#FFFFFF</color>
-    <color name="new_leave_text_color">#4c4c4c</color>
     <color name="articles_divider_color">#e3e3e3</color>
     <color name="emoji_send_btn_disable_bg_color">#D8D8D8</color>
     <color name="emoji_send_btn_enable_bg_color">#b81616</color>
@@ -25,9 +24,6 @@
     <color name="grid_state_focused">#80000000</color>
     <color name="article_row_text_color">#FF000000</color>
 
-
-    <color name="colorPrimary">@color/light_content_bg_color</color>
-    <color name="colorPrimaryDark">@color/deep_content_bg_color</color>
 
     <!--content color-->
     <color name="light_content_bg_color">#ff2c2f37</color>
@@ -43,7 +39,6 @@
     <color name="send_text_color">#ffbfc9d4</color>
 
     <!--bg color-->
-    <color name="consultant_bg_color">#FF313642</color>
     <color name="refresh_bg_color">#ff434b5b</color>
     <color name="white">#ffffffff</color>
 
@@ -55,8 +50,6 @@
     <color name="dot_red_color">#FFDB514F</color>
 
     <color name="timeline_color">#4d000000</color>
-
-    <color name="normal_bg_color">#FFFFFF</color>
 
     <color name="gray_pressed">#b5b5b6</color>
 

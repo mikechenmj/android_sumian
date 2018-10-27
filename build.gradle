@@ -3,7 +3,7 @@ apply from: "./config/config.gradle"
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-    ext.kotlin_version = '1.2.70'
+    ext.kotlin_version = '1.2.71'
 
     repositories {
         google()
@@ -42,6 +42,8 @@ allprojects {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
+        //umeng
+        maven { url 'https://dl.bintray.com/umsdk/release' }
     }
 }
 
@@ -70,7 +72,7 @@ ext {
     abortOnError = true
     debuggable = true
     zipAlignEnabled = true
-    minifyEnabled = false
+    minifyEnabled = true
     pseudoLocalesEnabled = true
     jniDebuggable = debuggable
     renderscriptDebuggable = debuggable

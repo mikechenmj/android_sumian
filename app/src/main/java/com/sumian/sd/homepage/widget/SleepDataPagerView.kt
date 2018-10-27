@@ -61,15 +61,19 @@ class SleepDataPagerView(context: Context, attributeSet: AttributeSet) : FrameLa
 
     private fun changePagerMargin(marginStart: Float, marginEnd: Float) {
         val layoutParams = view_pager.layoutParams
-        if (layoutParams is FrameLayout.LayoutParams) {
-            layoutParams.marginStart = marginStart.toInt()
-            layoutParams.marginEnd = marginEnd.toInt()
-        } else if (layoutParams is LinearLayout.LayoutParams) {
-            layoutParams.marginStart = marginStart.toInt()
-            layoutParams.marginEnd = marginEnd.toInt()
-        } else if (layoutParams is RelativeLayout.LayoutParams) {
-            layoutParams.marginStart = marginStart.toInt()
-            layoutParams.marginEnd = marginEnd.toInt()
+        when (layoutParams) {
+            is FrameLayout.LayoutParams -> {
+                layoutParams.marginStart = marginStart.toInt()
+                layoutParams.marginEnd = marginEnd.toInt()
+            }
+            is LinearLayout.LayoutParams -> {
+                layoutParams.marginStart = marginStart.toInt()
+                layoutParams.marginEnd = marginEnd.toInt()
+            }
+            is RelativeLayout.LayoutParams -> {
+                layoutParams.marginStart = marginStart.toInt()
+                layoutParams.marginEnd = marginEnd.toInt()
+            }
         }
         view_pager.layoutParams = layoutParams
     }
@@ -83,7 +87,7 @@ class SleepDataPagerView(context: Context, attributeSet: AttributeSet) : FrameLa
     }
 
     fun queryDailyReport() {
-        mAdapter.mHardwareSleepDataView.queryDailyReport()
+        // mAdapter.mHardwareSleepDataView.queryDailyReport()
     }
 
     class MyAdapter(context: Context) : PagerAdapter() {
@@ -91,17 +95,17 @@ class SleepDataPagerView(context: Context, attributeSet: AttributeSet) : FrameLa
             val simpleSleepRecordView = SimpleSleepRecordView(context)
             simpleSleepRecordView
         }
-        val mHardwareSleepDataView by lazy {
-            val hardwareSleepDataView = HardwareSleepDataView(context)
-            hardwareSleepDataView
-        }
+//        val mHardwareSleepDataView by lazy {
+//            val hardwareSleepDataView = HardwareSleepDataView(context)
+//            hardwareSleepDataView
+//        }
 
         fun setSleepRecord(sleepRecord: SleepRecord?) {
             mSleepRecordView.setSleepRecord(sleepRecord)
         }
 
         fun setDailyReport(dailyReport: DailyReport?) {
-            mHardwareSleepDataView.setDailyReport(dailyReport)
+            // mHardwareSleepDataView.setDailyReport(dailyReport)
         }
 
         override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -109,13 +113,13 @@ class SleepDataPagerView(context: Context, attributeSet: AttributeSet) : FrameLa
         }
 
         override fun getCount(): Int {
-            return 2
+            return 1
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val view = when (position) {
                 0 -> mSleepRecordView
-                1 -> mHardwareSleepDataView
+                // 1 -> mHardwareSleepDataView
                 else -> throw RuntimeException("invalid position")
             }
             container.addView(view)

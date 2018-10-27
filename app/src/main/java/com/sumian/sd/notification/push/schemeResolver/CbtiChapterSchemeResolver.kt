@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import com.sumian.sd.service.cbti.activity.CBTIWeekCoursePartActivity
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
  * @author : Zhan Xuzhao
  * e-mail : xuzhao.z@sumian.com
@@ -19,6 +20,6 @@ class CbtiChapterSchemeResolver : SchemeResolver {
      */
     override fun resolveScheme(context: Context, uri: Uri): Intent {
         val data = uri.getQueryParameter("cbti_chapter_id")
-        return CBTIWeekCoursePartActivity.getLaunchIntent(context, data.toInt())
+        return CBTIWeekCoursePartActivity.getLaunchIntent(context, chapterId = data.toInt())
     }
 }

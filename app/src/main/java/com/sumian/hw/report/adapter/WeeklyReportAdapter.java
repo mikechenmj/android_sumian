@@ -1,6 +1,5 @@
 package com.sumian.hw.report.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,12 +13,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sumian.hw.log.LogManager;
-import com.sumian.sd.network.response.SleepDurationReport;
 import com.sumian.hw.report.widget.SleepAvgAndCompareView;
 import com.sumian.hw.report.widget.histogram.SleepHistogramView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
 import com.sumian.sd.R;
-import com.sumian.sd.theme.three.IDynamicNewView;
+import com.sumian.sd.network.response.SleepDurationReport;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -208,12 +206,12 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(item.getStart_date_show() * 1000L);
-            int preYear = calendar.get(Calendar.YEAR);
+            //int preYear = calendar.get(Calendar.YEAR);
             int preMonth = calendar.get(Calendar.MONTH);
             int preDate = calendar.get(Calendar.DATE);
 
             calendar.setTimeInMillis(item.getEnd_date_show() * 1000L);
-            int nextYear = calendar.get(Calendar.YEAR);
+            //int nextYear = calendar.get(Calendar.YEAR);
             int nextMonth = calendar.get(Calendar.MONTH);
             int nextDate = calendar.get(Calendar.DATE);
 
@@ -226,33 +224,6 @@ public class WeeklyReportAdapter extends RecyclerView.Adapter<WeeklyReportAdapte
             if (mItem.needScrollToBottom) {
                 mNestedScrollView.post(() -> mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN));
                 mItem.needScrollToBottom = false;
-            }
-            registerThemeChangeEvent();
-        }
-
-        private void registerThemeChangeEvent() {
-            Context context = itemView.getContext();
-
-            if (context instanceof IDynamicNewView) {
-
-                IDynamicNewView iDynamicNewView = (IDynamicNewView) context;
-
-                iDynamicNewView.dynamicAddView(mRefresh, "brv_progress_color", R.color.n2_color_day);
-                iDynamicNewView.dynamicAddView(mRefresh, "brv_progress_bg_color", R.color.l2_color_day);
-
-                iDynamicNewView.dynamicAddView(mSleepHistogramView, "deep_color", R.color.g1_color_day);
-                iDynamicNewView.dynamicAddView(mSleepHistogramView, "light_color", R.color.g2_color_day);
-                iDynamicNewView.dynamicAddView(mSleepHistogramView, "eog_color", R.color.g2_color_day);
-                iDynamicNewView.dynamicAddView(mSleepHistogramView, "sober_color", R.color.g3_color_day);
-                iDynamicNewView.dynamicAddView(mSleepHistogramView, "coordinate_color", R.color.l3_color_day);
-                iDynamicNewView.dynamicAddView(mSleepHistogramView, "label_text_color", R.color.t2_color_day);
-                iDynamicNewView.dynamicAddView(mSleepHistogramView, "empty_text_color", R.color.t5_color_day);
-
-
-                iDynamicNewView.dynamicAddView(mDailySleepAvgCompareView, "label_icon", R.drawable.ic_home_sleep_time_day);
-                iDynamicNewView.dynamicAddView(mDailySleepLightAvgCompareView, "label_icon", R.drawable.ic_report_light_sleep_day);
-                iDynamicNewView.dynamicAddView(mDailySleepDeepAvgCompareView, "label_icon", R.drawable.ic_report_deep_sleep_day);
-                iDynamicNewView.dynamicAddView(mDailySleepAwakeAvgCompareView, "label_icon", R.drawable.ic_report_awake_day);
             }
         }
 

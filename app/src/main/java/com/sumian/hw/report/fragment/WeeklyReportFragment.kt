@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.format.DateUtils
 import android.view.View
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+import com.sumian.hw.base.HwBaseFragment
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.report.adapter.WeeklyReportAdapter
 import com.sumian.hw.report.calendar.CalendarDialog
@@ -20,7 +21,6 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.response.SleepDurationReport
-import com.sumian.sd.theme.three.base.SkinBaseFragment
 import kotlinx.android.synthetic.main.hw_fragment_week_report.*
 import java.util.*
 
@@ -30,7 +30,7 @@ import java.util.*
  * desc:
  */
 
-class WeeklyReportFragment : SkinBaseFragment<WeeklyReportPresenter>(), WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback, OnEnterListener {
+class WeeklyReportFragment : HwBaseFragment<WeeklyReportPresenter>(), WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback, OnEnterListener {
 
     companion object {
 

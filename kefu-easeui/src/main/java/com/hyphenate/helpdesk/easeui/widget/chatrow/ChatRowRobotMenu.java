@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.model.ContentFactory;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.helpdesk.model.RobotMenuInfo;
@@ -31,8 +30,7 @@ public class ChatRowRobotMenu extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_menu : R.layout.night_hd_row_received_menu)
-                : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_message : R.layout.night_hd_row_sent_message), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_menu : R.layout.light_hd_row_sent_message, this);
     }
 
     @Override

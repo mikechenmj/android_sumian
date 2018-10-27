@@ -15,8 +15,6 @@ import android.view.View;
 
 import com.sumian.hw.common.util.TimeUtil;
 import com.sumian.sd.R;
-import com.sumian.sd.app.App;
-import com.sumian.sd.theme.three.SkinConfig;
 
 import java.util.Calendar;
 
@@ -27,6 +25,7 @@ import java.util.Calendar;
  * desc: CalendarView 按照常见日历格式，是7列（一周7点）7行（第1行，星期几，2-7行日期）的结构
  */
 
+@SuppressWarnings("ALL")
 public class CalendarView extends View implements View.OnClickListener {
 
     public static final String TAG = CalendarView.class.getSimpleName();
@@ -121,21 +120,13 @@ public class CalendarView extends View implements View.OnClickListener {
     }
 
     private void initColors() {
-        if (SkinConfig.isInNightMode(App.getAppContext())) {//夜间模式
-            mDefaultTextColor = getResources().getColor(R.color.t2_color_night);
-            mHighlightTextColor = getResources().getColor(R.color.t5_color_night);
-            mWithBgTextColor = getResources().getColor(R.color.t5_color_night);
-            mBgCircleColor = getResources().getColor(R.color.b1_color_night);
-            mDotColor = getResources().getColor(R.color.b8_color_night);
-            mTodayColor = getResources().getColor(R.color.b2_color_day);
-        } else {//正常模式
-            mDefaultTextColor = getResources().getColor(R.color.t2_color_day);
-            mHighlightTextColor = getResources().getColor(R.color.t5_color_day);
-            mWithBgTextColor = getResources().getColor(R.color.t5_color_day);
-            mBgCircleColor = getResources().getColor(R.color.b1_color_day);
-            mDotColor = getResources().getColor(R.color.b8_color_day);
-            mTodayColor = getResources().getColor(R.color.b3_color_day);
-        }
+        //正常模式
+        mDefaultTextColor = getResources().getColor(R.color.t2_color_day);
+        mHighlightTextColor = getResources().getColor(R.color.t5_color_day);
+        mWithBgTextColor = getResources().getColor(R.color.t5_color_day);
+        mBgCircleColor = getResources().getColor(R.color.b1_color_day);
+        mDotColor = getResources().getColor(R.color.b8_color_day);
+        mTodayColor = getResources().getColor(R.color.b3_color_day);
     }
 
     @Override
@@ -227,7 +218,7 @@ public class CalendarView extends View implements View.OnClickListener {
 
     private void drawDot(Canvas canvas) {
         mDotPaint.setColor(mDotColor);
-        canvas.drawCircle(mX + mTextBound.width(), mY - mTextBound.height() / 2, 10, mDotPaint);
+        canvas.drawCircle(mX + mTextBound.width(), mY - (mTextBound.height() >> 1), 10, mDotPaint);
     }
 
     private void drawUnderline(Canvas canvas) {
@@ -241,6 +232,7 @@ public class CalendarView extends View implements View.OnClickListener {
         canvas.drawCircle(mItemRect.centerX(), mItemRect.centerY(), mRadius, mBgPaint);
     }
 
+    @SuppressWarnings("unused")
     private void drawDate(Canvas canvas, int dayOfMonth, int index) {
         if (dayIn(dayOfMonth, drawDotDays)) {
             drawDot(canvas);

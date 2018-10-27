@@ -4,8 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.text.emoji.EmojiCompat;
-import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -23,8 +21,6 @@ import com.sumian.common.social.login.OpenLogin;
 import com.sumian.hw.gather.FileHelper;
 import com.sumian.hw.job.JobScheduler;
 import com.sumian.hw.leancloud.HwLeanCloudHelper;
-import com.sumian.hw.leancloud.player.VoicePlayer;
-import com.sumian.hw.report.viewModel.ReportModel;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.model.AccountViewModel;
@@ -35,28 +31,6 @@ import com.sumian.sd.network.NetworkManager;
 import com.sumian.sd.network.api.HwApi;
 import com.sumian.sd.network.api.SdApi;
 import com.sumian.sd.service.advisory.model.AdvisoryViewModel;
-import com.sumian.sd.theme.three.SkinConfig;
-import com.sumian.sd.theme.three.attr.CardViewAttr;
-import com.sumian.sd.theme.three.attr.ColorfulProgressRingBgAttr;
-import com.sumian.sd.theme.three.attr.CountSleepDurationTextViewAttr;
-import com.sumian.sd.theme.three.attr.SleepAvgAndCompareAttr;
-import com.sumian.sd.theme.three.attr.SwipeRefreshLayoutAttr;
-import com.sumian.sd.theme.three.attr.SwipeRefreshLayoutBgAttr;
-import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewCoordinateAttr;
-import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewDeepAttr;
-import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewEmptyLableTextAttr;
-import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewEogAttr;
-import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewLightAttr;
-import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewSoberAttr;
-import com.sumian.sd.theme.three.attr.TouchDailySleepHistogramViewTextAttr;
-import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewCoordinateAttr;
-import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewDeepAttr;
-import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewEmptyTextAttr;
-import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewEogAttr;
-import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewLableTextAttr;
-import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewLightTextAttr;
-import com.sumian.sd.theme.three.attr.WeekSleepHistogramViewSoberTextAttr;
-import com.sumian.sd.theme.three.loader.SkinManager;
 
 /**
  * Created by jzz
@@ -72,12 +46,10 @@ public final class AppManager {
     private OpenEngine mOpenEngine;
 
     private volatile VersionModel mVersionModel;
-    private volatile ReportModel mReportModel;
 
     private volatile NetworkManager mNetworkManager;
 
     private JobScheduler mJobScheduler;
-    private VoicePlayer mVoicePlayer;
 
     private SdApi mSdApi;
     private HwApi mHwApi;
@@ -132,17 +104,9 @@ public final class AppManager {
                 .mVersionModel;
     }
 
-    public static synchronized ReportModel getReportModel() {
-        return Holder.INSTANCE.mReportModel == null ? Holder.INSTANCE.mReportModel = new ReportModel() : Holder.INSTANCE.mReportModel;
-    }
-
     public static synchronized JobScheduler getJobScheduler() {
         return Holder.INSTANCE.mJobScheduler == null ? Holder.INSTANCE.mJobScheduler = new JobScheduler(App.Companion.getAppContext()) : Holder.INSTANCE
                 .mJobScheduler;
-    }
-
-    public static synchronized VoicePlayer getVoicePlayer() {
-        return Holder.INSTANCE.mVoicePlayer == null ? Holder.INSTANCE.mVoicePlayer = new VoicePlayer() : Holder.INSTANCE.mVoicePlayer;
     }
 
     public static synchronized BlueManager getBlueManager() {
@@ -154,14 +118,12 @@ public final class AppManager {
         DeviceManager.INSTANCE.init();
         initNetWork(context);
         initUtils(context);
-        initEmojiCompat(context);
         initAccountViewModel((Application) context);
         initLeanCloud(context);
         initOpenEngine(context);
         HwLeanCloudHelper.init(context);
         initKefu(context);
         initWebView();
-        initSkin(context);
     }
 
     private void initNetWork(Context context) {
@@ -176,10 +138,6 @@ public final class AppManager {
 
     private void initLeanCloud(Context context) {
         LeanCloudManager.init(context);
-    }
-
-    private void initEmojiCompat(Context context) {
-        EmojiCompat.init(new BundledEmojiCompatConfig(context));
     }
 
     private void initOpenEngine(Context context) {
@@ -200,43 +158,6 @@ public final class AppManager {
         ToastHelper.init(context);
         Utils.init(context);
         ToastUtils.setGravity(Gravity.CENTER, 0, 0);
-    }
-
-    private void initSkin(@NonNull Context context) {
-        //第三方皮肤插件初始化
-        SkinManager.getInstance().init(context);
-        SkinConfig.setCanChangeStatusColor(false);
-        SkinConfig.setCanChangeFont(false);
-        if (BuildConfig.DEBUG) {
-            SkinConfig.setDebug(true);
-        }
-        SkinConfig.addSupportAttr("csdtv_default_drawable", new CountSleepDurationTextViewAttr());
-        SkinConfig.addSupportAttr("cardBackgroundColor", new CardViewAttr());
-        SkinConfig.addSupportAttr("brv_progress_color", new SwipeRefreshLayoutAttr());
-        SkinConfig.addSupportAttr("brv_progress_bg_color", new SwipeRefreshLayoutBgAttr());
-
-        SkinConfig.addSupportAttr("tdshv_coordinate_color", new TouchDailySleepHistogramViewCoordinateAttr());
-        SkinConfig.addSupportAttr("tdshv_deep_color", new TouchDailySleepHistogramViewDeepAttr());
-        SkinConfig.addSupportAttr("tdshv_empty_text_color", new TouchDailySleepHistogramViewEmptyLableTextAttr());
-        SkinConfig.addSupportAttr("tdshv_eog_color", new TouchDailySleepHistogramViewEogAttr());
-        SkinConfig.addSupportAttr("tdshv_light_color", new TouchDailySleepHistogramViewLightAttr());
-        SkinConfig.addSupportAttr("tdshv_sober_color", new TouchDailySleepHistogramViewSoberAttr());
-        SkinConfig.addSupportAttr("tdshv_label_text_color", new TouchDailySleepHistogramViewTextAttr());
-
-        SkinConfig.addSupportAttr("coordinate_color", new WeekSleepHistogramViewCoordinateAttr());
-        SkinConfig.addSupportAttr("deep_color", new WeekSleepHistogramViewDeepAttr());
-        SkinConfig.addSupportAttr("eog_color", new WeekSleepHistogramViewEogAttr());
-        SkinConfig.addSupportAttr("light_color", new WeekSleepHistogramViewLightTextAttr());
-        SkinConfig.addSupportAttr("sober_color", new WeekSleepHistogramViewSoberTextAttr());
-        SkinConfig.addSupportAttr("label_text_color", new WeekSleepHistogramViewLableTextAttr());
-        SkinConfig.addSupportAttr("empty_text_color", new WeekSleepHistogramViewEmptyTextAttr());
-
-        SkinConfig.addSupportAttr("label_icon", new SleepAvgAndCompareAttr());
-
-        SkinConfig.addSupportAttr("cpv_ring_bg_color", new ColorfulProgressRingBgAttr());
-        //SkinConfig.addSupportAttr("label_icon", new SleepAvgAndCompareAttr());
-
-        // SkinConfig.enableGlobalSkinApply();
     }
 
     private void initWebView() {

@@ -16,7 +16,6 @@ import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.ImageCache;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.ui.ShowVideoActivity;
 import com.hyphenate.helpdesk.easeui.util.CommonUtils;
 import com.hyphenate.helpdesk.util.Log;
@@ -39,8 +38,7 @@ public class ChatRowVideo extends ChatRowFile {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_video : R.layout.night_hd_row_received_video) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_video : R.layout.night_hd_row_sent_video), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_video : R.layout.light_hd_row_sent_video, this);
     }
 
     @Override

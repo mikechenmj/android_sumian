@@ -1,3 +1,4 @@
+//noinspection GradleDependency
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -65,7 +66,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:' + rootProject.ext.supportVersion
 
     //glide
     api 'com.github.bumptech.glide:glide:4.8.0'
@@ -86,7 +87,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
-    //implementation 'net.qiujuer.genius:ui:latest.integration'
     api project(':jsbridge')
 
     //aliyun httpdns

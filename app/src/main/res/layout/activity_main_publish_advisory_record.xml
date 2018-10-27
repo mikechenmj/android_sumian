@@ -31,7 +31,7 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <android.support.text.emoji.widget.EmojiAppCompatEditText
+                <EditText
                     android:id="@+id/et_input"
                     style="@style/text_t1_16"
                     android:layout_width="match_parent"
@@ -48,8 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_marginBottom="@dimen/space_20"
                     android:layout_marginEnd="@dimen/space_20"
+                    android:layout_marginBottom="@dimen/space_20"
                     android:text="0/500"
                     tools:ignore="HardcodedText,RtlHardcoded" />
 
@@ -84,8 +84,8 @@
                         android:layout_width="@dimen/space_80"
                         android:layout_height="@dimen/space_80"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="@dimen/space_20"
                         android:layout_marginStart="@dimen/space_20"
+                        android:layout_marginEnd="@dimen/space_20"
                         android:contentDescription="@null"
                         app:srcCompat="@mipmap/ic_advisory_btn_uploadphoto" />
 
@@ -139,8 +139,8 @@
                     android:layout_width="@dimen/space_10"
                     android:layout_height="@dimen/space_16"
                     android:layout_gravity="center|right"
-                    android:layout_marginEnd="@dimen/space_20"
                     android:layout_marginStart="@dimen/space_20"
+                    android:layout_marginEnd="@dimen/space_20"
                     android:contentDescription="@null"
                     app:srcCompat="@mipmap/ic_record_icon_right"
                     tools:ignore="RtlHardcoded" />

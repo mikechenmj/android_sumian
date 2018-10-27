@@ -30,7 +30,6 @@ import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.hw.report.bean.SleepPackage;
 import com.sumian.hw.report.widget.bean.SleepSegment;
 import com.sumian.sd.R;
-import com.sumian.sd.theme.three.SkinConfig;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +42,7 @@ import java.util.Map;
  * desc:可触摸查看睡眠时间段的日睡眠数据统计报表
  */
 
+@SuppressWarnings("ALL")
 public class TouchDailySleepHistogramView extends View implements View.OnLongClickListener {
 
     // private static final String TAG = TouchDailySleepHistogramView.class.getSimpleName();
@@ -558,7 +558,9 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
                 mSegmentArrayMap.put(p.sleep_id, tmpSegment);
             } else {//已存在的睡眠特征区间
                 tmpSegment = mSegmentArrayMap.get(p.sleep_id);
-                tmpSegment.id = p.sleep_id;
+                if (tmpSegment != null) {
+                    tmpSegment.id = p.sleep_id;
+                }
                 tmpSegment.sleepPackage.add(p);
                 //tmpSegment.showToTimeIndicator = p.to_time;
             }
@@ -753,11 +755,11 @@ public class TouchDailySleepHistogramView extends View implements View.OnLongCli
         if (popView == null) {
             popView = LayoutInflater.from(getContext()).inflate(R.layout.hw_lay_sleep_data_indicator_pop, null, false);
             CardView popCardView = popView.findViewById(R.id.pop_container);
-            popCardView.setCardBackgroundColor(SkinConfig.isInNightMode(v.getContext()) ? getResources().getColor(R.color.b2_color_night) : getResources().getColor(R.color.b2_color_day));
+            popCardView.setCardBackgroundColor(getResources().getColor(R.color.b2_color_day));
             tvTop = popView.findViewById(R.id.tv_indicator_top);
-            tvTop.setTextColor(SkinConfig.isInNightMode(v.getContext()) ? getResources().getColor(R.color.t5_color_night) : getResources().getColor(R.color.t5_color_day));
+            tvTop.setTextColor(getResources().getColor(R.color.t5_color_day));
             tvBottom = popView.findViewById(R.id.tv_indicator_bottom);
-            tvBottom.setTextColor(SkinConfig.isInNightMode(v.getContext()) ? getResources().getColor(R.color.t5_color_night) : getResources().getColor(R.color.t5_color_day));
+            tvBottom.setTextColor(getResources().getColor(R.color.t5_color_day));
             popLayoutParams = createPopupLayout(getWindowToken());
         }
 

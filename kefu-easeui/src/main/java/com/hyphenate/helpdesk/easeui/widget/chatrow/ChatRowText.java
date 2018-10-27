@@ -27,8 +27,7 @@ public class ChatRowText extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ?
-                (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_message : R.layout.night_hd_row_received_message) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_message : R.layout.night_hd_row_sent_message), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_message : R.layout.light_hd_row_sent_message, this);
     }
 
     @Override

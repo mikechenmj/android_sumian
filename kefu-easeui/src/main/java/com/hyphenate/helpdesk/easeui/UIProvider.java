@@ -196,14 +196,6 @@ public class UIProvider {
         return settingsProvider;
     }
 
-    public void setThemeMode(int themeMode) {
-        this.mThemeMode = themeMode;
-    }
-
-    public boolean isLightThemeMode() {
-        return this.mThemeMode == LIGHT_THEME;
-    }
-
     public interface UserProfileProvider {
         void setNickAndAvatar(Context context, Message message, ImageView userAvatarView, TextView usernickView);
     }

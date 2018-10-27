@@ -36,6 +36,7 @@ import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import org.greenrobot.eventbus.Subscribe
 
+@Suppress("unused")
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -91,13 +92,11 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun initUserInfo() {
-        AppManager.getAccountViewModel().liveDataToken.observe(this, object : Observer<Token> {
-            override fun onChanged(t: Token?) {
-                val userProfile = t?.user ?: return
-                tv_name.text = userProfile.nameOrNickname
-                val defaultAvatar = R.mipmap.ic_info_avatar_patient
-                ImageLoader.loadImage(userProfile.avatar, iv_avatar, defaultAvatar)
-            }
+        AppManager.getAccountViewModel().liveDataToken.observe(this, Observer<Token> { t ->
+            val userProfile = t?.user ?: return@Observer
+            tv_name.text = userProfile.nameOrNickname
+            val defaultAvatar = R.mipmap.ic_info_avatar_patient
+            ImageLoader.loadImage(userProfile.avatar, iv_avatar, defaultAvatar)
         })
     }
 
@@ -152,7 +151,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
                 isLock = response?.meta?.isLock != false
-                if (!isLock!!) {
+                if (!isLock) {
                     cbti_progress_view.setData(response)
                 } else {
                     cbti_progress_view.setData(null)

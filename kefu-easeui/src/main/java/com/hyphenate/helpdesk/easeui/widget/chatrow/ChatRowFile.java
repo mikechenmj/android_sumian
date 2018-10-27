@@ -32,8 +32,7 @@ public class ChatRowFile extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_file :
-                R.layout.night_hd_row_received_file) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_file : R.layout.night_hd_row_sent_file), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_file : R.layout.light_hd_row_sent_file, this);
     }
 
     @Override

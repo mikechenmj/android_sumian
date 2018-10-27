@@ -16,7 +16,7 @@ public class BaseChatActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        setContentView(R.layout.night_hd_activity_chat);
+        setContentView(R.layout.light_hd_activity_chat);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         //IM服务号

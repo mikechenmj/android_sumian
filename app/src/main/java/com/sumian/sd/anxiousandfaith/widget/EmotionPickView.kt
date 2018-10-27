@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_ANONYMOUS_PARAMETER")
+
 package com.sumian.sd.anxiousandfaith.widget
 
 import android.content.Context

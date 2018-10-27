@@ -14,8 +14,6 @@ import com.sumian.hw.common.util.TimeUtil
 import com.sumian.hw.report.widget.LoadViewPagerRecyclerView
 import com.sumian.hw.widget.BaseDialogFragment
 import com.sumian.sd.R
-import com.sumian.sd.app.App
-import com.sumian.sd.theme.three.SkinConfig
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -53,13 +51,7 @@ class CalendarDialog : BaseDialogFragment(), CalendarView.OnCalenderListener, Ca
         super.initView(rootView)
 
         val cardView = rootView.findViewById<CardView>(R.id.card_view)
-
-        val inNightMode = SkinConfig.isInNightMode(App.getAppContext())
-        if (inNightMode) {//夜间模式
-            cardView.setCardBackgroundColor(resources.getColor(R.color.b2_color_night))
-        } else {//正常模式
-            cardView.setCardBackgroundColor(resources.getColor(R.color.b2_color_day))
-        }
+        cardView.setCardBackgroundColor(resources.getColor(R.color.b2_color_day))
 
         val arguments = arguments
         if (arguments != null) {

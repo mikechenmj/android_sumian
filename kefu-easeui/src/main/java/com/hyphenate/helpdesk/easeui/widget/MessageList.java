@@ -52,15 +52,11 @@ public class MessageList extends RelativeLayout {
 
     private void init(Context context) {
         this.context = context;
-        LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_chat_message_list : R.layout.night_hd_chat_message_list, this);
+        LayoutInflater.from(context).inflate( R.layout.light_hd_chat_message_list, this);
         swipeRefreshLayout = findViewById(R.id.chat_swipe_layout);
-        if (UIProvider.getInstance().isLightThemeMode()) {
             swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.parseColor("#FF6595F4"));
             swipeRefreshLayout.setColorSchemeResources(R.color.white);
-        } else {
-            swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.refresh_bg_color);
-            swipeRefreshLayout.setColorSchemeResources(R.color.white);
-        }
+
         listView = (ListView) findViewById(R.id.list);
     }
 

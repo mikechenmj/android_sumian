@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sumian.common.image.ImageLoader;
-import com.sumian.sd.account.sheet.SelectPictureBottomSheet;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.widget.TitleBar;
 import com.sumian.sd.R;
+import com.sumian.sd.account.sheet.SelectPictureBottomSheet;
 
 import java.util.List;
 
@@ -102,7 +102,7 @@ public class AvatarImageActivity extends HwBaseActivity implements EasyPermissio
                 .addOnMoreListener(this);
 
         String imageSource = mImageSources[0];
-        ImageLoader.loadImage(imageSource, mImagePager, R.mipmap.ic_default_avatar, R.mipmap.ic_default_avatar);
+        ImageLoader.loadImage(imageSource, mImagePager, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient);
 
     }
 
@@ -199,7 +199,7 @@ public class AvatarImageActivity extends HwBaseActivity implements EasyPermissio
 
     @Override
     public void uploadSuccess(String url) {
-        ImageLoader.loadImage(url, mImagePager, R.mipmap.ic_default_avatar, R.mipmap.ic_default_avatar);
+        ImageLoader.loadImage(url, mImagePager, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient);
     }
 
     @Override

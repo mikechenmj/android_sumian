@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
 import com.hyphenate.helpdesk.easeui.ui.ShowBigImageActivity;
 import com.hyphenate.helpdesk.manager.EmojiconManager.EmojiconEntity;
@@ -39,7 +38,7 @@ public class ChatRowCustomEmoji extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_custom_emoji : R.layout.night_hd_row_received_custom_emoji) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_custom_emoji : R.layout.night_hd_row_sent_custom_emoji), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_custom_emoji : R.layout.light_hd_row_sent_custom_emoji, this);
     }
 
     @Override

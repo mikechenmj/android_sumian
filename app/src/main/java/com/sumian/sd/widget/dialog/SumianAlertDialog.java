@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
-import com.sumian.sd.widget.dialog.theme.BlackTheme;
 import com.sumian.sd.widget.dialog.theme.ITheme;
 import com.sumian.sd.widget.dialog.theme.LightTheme;
 import com.sumian.sd.widget.dialog.theme.ThemeFactory;
@@ -120,21 +119,12 @@ public class SumianAlertDialog {
     }
 
     private void updateView() {
-        if (mITheme instanceof LightTheme) {
-            LightTheme lightTheme = (LightTheme) mITheme;
+        LightTheme lightTheme = (LightTheme) mITheme;
 
-            setupTheme(lightTheme.getBgColorRes(), lightTheme.getDismissImageRes(),
-                    lightTheme.getNoticeImageRes(), lightTheme.getTitleColorRes(),
-                    lightTheme.getMessageColorRes(), lightTheme.getLeftButtonBgRes(),
-                    lightTheme.getLeftButtonFontColorRes(), lightTheme.getRightButtonBgRes(), lightTheme.getRightButtonFontColorRes());
-        } else if (mITheme instanceof BlackTheme) {
-            BlackTheme blackTheme = (BlackTheme) mITheme;
-
-            setupTheme(blackTheme.getBgColorRes(), blackTheme.getDismissImageRes(),
-                    blackTheme.getNoticeImageRes(), blackTheme.getTitleColorRes(),
-                    blackTheme.getMessageColorRes(), blackTheme.getLeftButtonBgRes(),
-                    blackTheme.getLeftButtonFontColorRes(), blackTheme.getRightButtonBgRes(), blackTheme.getRightButtonFontColorRes());
-        }
+        setupTheme(lightTheme.getBgColorRes(), lightTheme.getDismissImageRes(),
+                lightTheme.getNoticeImageRes(), lightTheme.getTitleColorRes(),
+                lightTheme.getMessageColorRes(), lightTheme.getLeftButtonBgRes(),
+                lightTheme.getLeftButtonFontColorRes(), lightTheme.getRightButtonBgRes(), lightTheme.getRightButtonFontColorRes());
 
         mCardView.setCardBackgroundColor(mContext.getResources().getColor(mBgColorRes));
 

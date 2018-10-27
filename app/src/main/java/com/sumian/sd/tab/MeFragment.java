@@ -17,7 +17,6 @@ import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.account.userProfile.SdUserProfileActivity;
-import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
 import com.sumian.sd.device.DeviceManageActivity;
@@ -34,7 +33,6 @@ import com.sumian.sd.service.coupon.activity.CouponCenterActivity;
 import com.sumian.sd.service.diary.DiaryEvaluationListActivity;
 import com.sumian.sd.service.tel.activity.TelBookingListActivity;
 import com.sumian.sd.setting.SettingActivity;
-import com.sumian.sd.theme.three.SkinConfig;
 import com.sumian.sd.widget.divider.SettingDividerView;
 import com.sumian.sd.widget.tips.PatientRecordTips;
 import com.sumian.sd.widget.tips.PatientServiceTips;
@@ -131,7 +129,6 @@ public class MeFragment extends SdBaseFragment implements View.OnClickListener, 
                 break;
             case R.id.siv_customer_service:
                 UIProvider.getInstance().clearCacheMsg();
-                UIProvider.getInstance().setThemeMode(SkinConfig.isInNightMode(App.getAppContext()) ? 0x02 : 0x01);
                 KefuManager.launchKefuActivity();
                 break;
             case R.id.dv_device_manage:

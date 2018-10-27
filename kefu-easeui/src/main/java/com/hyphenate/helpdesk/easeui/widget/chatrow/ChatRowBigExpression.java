@@ -27,8 +27,7 @@ public class ChatRowBigExpression extends ChatRowText {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_bigexpression :
-                R.layout.night_hd_row_received_bigexpression) : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_sent_bigexpression : R.layout.night_hd_row_sent_bigexpression), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_hd_row_received_bigexpression : R.layout.light_hd_row_sent_bigexpression, this);
     }
 
     @Override

@@ -13,26 +13,9 @@
     <string name="user_info_center">个人信息</string>
 
     <!--user account-->
-    <string name="hello_comment_mark">你好,</string>
-    <string name="login_welcome">欢迎使用睡眠医生，请登录</string>
-    <string name="input_mobil">请输入手机号码</string>
-    <string name="input_captcha">请输入验证码</string>
     <string name="send_captcha">发送验证码</string>
-    <string name="ok_captcha_hint">验证码已发送成功，请注意查收</string>
-    <string name="error_captcha_failed_hint">验证码获取失败，请60s后重新获取</string>
-    <string name="register_rule_one">注册即代表同意</string>
-    <string name="register_rule_two"><u>睡眠医生用户协议</u></string>
-    <string name="register_rule_three">及</string>
-    <string name="register_rule_four"><u>隐私政策</u></string>
-    <string name="register_rule_user_agreement_title">用户协议</string>
-    <string name="register_rule_privacy_policy_title">隐私政策</string>
 
     <!--network error-->
-    <string name="error_network_hint">网络不给力，请检查网络设置&#8230;</string>
-    <string name="error_request_failed_hint">网络异常，请检查您的网络情况</string>
-    <string name="error_token_past_hint">token已失效，请重新登录</string>
-    <string name="login">登录</string>
-    <string name="mobile_error">手机号格式错误</string>
     <string name="improve_user_profile_one_part_one">你好，很高兴认识你。</string>
     <string name="improve_user_profile_one_part_two">请问怎么称呼?</string>
     <string name="jump">跳过</string>
@@ -47,109 +30,47 @@
     <string name="input_real_name">请输入真实姓名</string>
     <string name="warn_real_name">真实姓名只有医生才能看到</string>
     <string name="complete">完成</string>
-    <string name="scan_qr_code_join_group">扫码入群</string>
-    <string name="qr_code_desc_part_one">还未加入群组，点击下方扫码按钮，扫描医生群组二维码入群。</string>
-    <string name="qr_code_desc_part_two">二维码一般由医生提供，如果想加入医生随访群，请向主治医生咨询。</string>
 
     <string name="scan_qr_code">扫描二维码</string>
-    <string name="scan_qr_code_note">将医生群组二维码放入框中，可自动扫描</string>
     <string name="scan_qr_code_warn">扫描二维码，需要授予相机权限，是否授予?</string>
     <string name="scan_qr_code_denied">扫描二维码，授予相机权限失败，请检查该权限是否正确授予，并授予</string>
-    <string name="open_camera_failed">打开相机失败，请进入系统设置检查相机权限是否正确授予，并授予</string>
-    <string name="no_have_more_data">我也是有底线的…</string>
-    <string name="refresh">刷新</string>
-    <string name="expired">已过期</string>
-    <string name="doctor">医生</string>
-    <string name="time_expired_suffix">天后过期</string>
     <string name="setting">设置</string>
     <string name="martian">火星人</string>
     <string name="current_app_version">应用版本</string>
     <string name="about_us">关于我们</string>
     <string name="logout">退出登录</string>
-    <string name="brief">简介</string>
-    <string name="advisory">咨询费用</string>
     <string name="zero_money">0.00</string>
-    <string name="money_for_month">元/月</string>
-    <string name="join">加入</string>
     <string name="re_scan">重新搜索</string>
     <string name="pay">支付</string>
-    <string name="advisory_one">咨询费用:</string>
     <string name="pay_money">支付金额</string>
     <string name="yuan">元</string>
-    <string name="pay_duration">购买时长(月)</string>
     <string name="one">1</string>
     <string name="wechat_pay">微信支付</string>
     <string name="alipay">支付宝支付</string>
-    <string name="network_error">同步失败，请检查网络</string>
-    <string name="is_syncing_please_wait">正在同步，请稍后…</string>
     <string name="avatar">头像</string>
-    <string name="name">真实姓名</string>
-    <string name="see_name_for_doctor">真实姓名只有医生才能看到。</string>
     <string name="register_mobile">注册手机</string>
     <string name="take_photo">拍照</string>
     <string name="sd_select_photo_from_gallery">从手机相册选择</string>
     <string name="cancel">取消</string>
-    <string name="group_detail">群详情</string>
 
     <string name="pay_success">支付成功</string>
     <string name="pay_failed">支付失败</string>
     <string name="pay_cancel">支付取消</string>
     <string name="pay_unknown">未知错误，支付失败</string>
     <string name="pay_invalid">支付异常，未找到支付app</string>
-    <string name="create_order">正在创建订单…</string>
     <string name="create_order_success">支付中，请稍后</string>
     <string name="join_group">进入群组</string>
     <string name="re_pay">重新支付</string>
     <string name="back">返回</string>
-    <string name="ask">提问</string>
-    <string name="send">发送</string>
-    <string name="talk">按住说话</string>
     <string name="repay">重新支付</string>
 
     <string name="str_request_camera_message">请求获取相机权限</string>
-    <string name="str_request_record_message">请求获取录音权限</string>
-    <string name="permissions_camera_error">相机无法完成初始化，请正确授权。</string>
-    <string name="permissions_record_error">麦克风无法完成初始化，请正确授权。</string>
-    <string name="answer_the_question">管理员回答了你的问题</string>
-    <string name="answer">回答:</string>
-    <string name="answer_msg_question">回答</string>
-    <string name="patient">患者</string>
-    <string name="dbo">运营</string>
-    <string name="assistant">助理</string>
-    <string name="remain_days">剩余天数</string>
-    <string name="renewal">续费</string>
-    <string name="join_up_group">退出群组</string>
-    <string name="from_qr_code_join_group">扫一扫上面的二维码图案，加入此群</string>
-    <string name="is_renew">是否续费?</string>
-    <string name="group_invalid">该群已过期，续费后可继续使用</string>
-    <string name="go_renew">去续费</string>
     <string name="modify_nickname">修改昵称</string>
     <string name="error_nickname">昵称太简单了，不容易让人记住哦</string>
     <string name="name_error">真实姓名太长或太短，不容易让人记住哦</string>
-    <string name="pay_faq">咨询费用按月收费，一个月按30天计算</string>
-    <string name="qr_code">二维码</string>
-    <string name="welcome_join_title">欢迎加入%s，目前暂无新消息</string>
-    <string name="up_cancel_record">松开手指，取消发送</string>
-    <string name="start_record">按住说话</string>
-    <string name="turn_right_cancel_record">向右滑动，取消发送</string>
-    <string name="members">群成员列表</string>
-    <string name="invalid_qr_code">二维码无效</string>
-    <string name="pic_label">[图片]</string>
-    <string name="voice_label">[语音]</string>
-    <string name="re_scan_qr_code">重新扫描</string>
     <string name="wechat_login">微信登录</string>
 
     <!--error  view-->
-    <string name="error_apology">很抱歉！</string>
-    <string name="error_404">您要访问的页面不存在</string>
-    <string name="error_network">网络连接异常</string>
-    <string name="error_network_desc">请查看网络设置或稍后重试</string>
-    <string name="error_advisory">暂无咨询记录</string>
-    <string name="error_advisory_desc">绑定医生后，可向主治医生咨询</string>
-    <string name="error_not_found_desc">您要访问的页面不存在</string>
-    <string name="error_report">暂无电子报告</string>
-    <string name="error_message_center">没有消息提醒</string>
-    <string name="error_message_center_desc">您收到医生回复、建议或报告更新，都会在这里收到消息提醒</string>
     <string name="scan_2_bind_doctor">扫码绑定医生</string>
     <string name="scan_2_doctor_desc">将医生二维码放入框内，可自动扫描</string>
     <string name="opening_wechat">正在打开微信中…</string>
@@ -158,9 +79,6 @@
     <!--doctor module-->
 
     <!-- common -->
-    <string name="success">成功</string>
-    <string name="fail">失败</string>
-    <string name="unbind_failed">解绑失败</string>
     <string name="bind">绑定</string>
     <string name="unbind">解绑</string>
     <string name="not_bind_yet">未绑定</string>
@@ -177,8 +95,6 @@
     <string name="sleep_record">睡眠记录</string>
     <string name="sleep_diary">睡眠日记</string>
     <string name="refill">重填</string>
-    <string name="actual_work_and_reset">实际作息</string>
-    <string name="record_sleep_time">睡眠时间</string>
     <string name="record_sleep_duration">睡眠时长</string>
     <string name="fall_asleep_duration">入睡时长</string>
     <string name="doctor_advise">医生建议</string>
@@ -191,10 +107,6 @@
     <string name="percent_mart">%</string>
     <string name="sleep_efficient">睡眠效率</string>
     <string name="do_not_eat_pills">未使用药物</string>
-    <string name="remote_sleep_management_service">远程睡眠管理服务</string>
-    <string name="remote_sleep_management_service_desc">专业医生每天关注您的睡眠情况</string>
-    <string name="sleep_scale">睡眠评测量表</string>
-    <string name="fill_scale_hint">了解您的睡眠健康及心理状况</string>
     <string name="scale_fill_date">填写日期：yyyy.MM.dd</string>
     <string name="no_doctor_evaluation_hint">医生建议尚未更新，请耐心等待，更新后，我们会在消息中心通知您查看</string>
     <string name="extra_user_info">以上个人信息仅供医生参考，不予公开。</string>
@@ -206,10 +118,6 @@
     <string name="system_maintain_desc">系统正在维护中，请稍后重试</string>
     <string name="today_no_record">今日暂无记录</string>
     <string name="today_no_record_hint">您今天还没有填写睡眠日记</string>
-    <string name="cbti_title">失眠的认知行为治疗 CBTi</string>
-    <string name="cbti_desc">失眠认知行为治疗是世界上公认的、非药物治疗失眠的最佳疗法，能使各年龄段的失眠人群获益。</string>
-    <string name="cbti_progress_ratio">总进度：第2周/共7周</string>
-    <string name="see_more"><![CDATA[了解更多 >]]></string>
     <string name="finished">已完成</string>
     <string name="cbti_ing">失眠的认知行为治疗进行中</string>
     <string name="cbti_ing_describe">建议在开课当天完成本周课程学习，自完成之日起7天后开放下阶段课程。</string>
@@ -218,41 +126,20 @@
     <string name="enter_and_learn">进入学习</string>
     <string name="my_sleep_prescription">我的睡眠处方</string>
     <string name="my_sleep_prescription_desc">解读睡眠日记，定制睡眠处方</string>
-    <string name="service_title_cbti">失眠认知行为治疗(CBTi)</string>
-    <string name="service_desc_cbti">非药物治疗失眠的最佳疗法</string>
     <string name="scale_evaluation">量表评估</string>
     <string name="sleep_health">睡眠卫生</string>
-    <string name="cbti_chapters_progress">第%d章-已学习 %d%%</string>
     <string name="homepage_sleep_slogan">好的睡眠离不开您一点一滴的努力</string>
-    <string name="comming_soon">暂未开放，敬请期待</string>
     <string name="my_target">我的目标</string>
-    <string name="save_success">保存成功</string>
     <string name="sleep_time">就寝时间</string>
     <string name="getUpTime">起床时间</string>
-    <string name="sleep_data_no_enough">睡眠数据不足</string>
-    <string name="sleep_data_no_enough_hint">您近三周的睡眠数据不足，无法为您提供睡眠处方，请坚持填写睡眠日记</string>
-    <string name="last_week_tired_enquire">上周日间疲劳情况调查</string>
-    <string name="last_week_tired_enquire_hint">过去一周你常常会感到日间疲惫吗？</string>
-    <string name="yes">是</string>
-    <string name="no">否</string>
-    <string name="update_sleep_prescription">更新睡眠处方</string>
-    <string name="update_sleep_prescription_hint">系统根据您近7天数据为您更新睡眠处方</string>
-    <string name="update">更新</string>
-    <string name="i_got_it">我知道了</string>
     <string name="on_bed_duration">卧床时长</string>
     <string name="sleep_duration">睡眠时长</string>
     <string name="night_wake_up_duration">夜醒时长</string>
 
-    <string name="tab_device_hint">设备</string>
-    <string name="tab_report_hint">报告</string>
-    <string name="tab_consultant_hint">咨询</string>
-    <string name="tab_service">服务</string>
-    <string name="tab_me_hint">我的</string>
     <string name="empty_msg_center_msg">没有消息提醒</string>
     <string name="empty_msg_center_desc"><b>您收到医生回复、建议或报告更新，</b>都会在这里收到消息提醒</string>
 
     <string name="empty_report_msg">暂无电子报告</string>
-    <string name="empty_report_desc">报告更新后，我们会在消息中心通知您</string>
 
     <string name="empty_evaluation_msg">暂无测评记录</string>
     <string name="empty_evaluation_desc">了解您的睡眠健康及心理状况</string>
@@ -276,10 +163,7 @@
     <string name="doctor_service">医生服务</string>
     <string name="doctor_details_label">详细信息</string>
 
-    <string name="graphic_service">图文咨询服务</string>
-    <string name="remote_sleep_manage_service">远程睡眠管理服务</string>
     <string name="ask_questions">去提问</string>
-    <string name="go_records">去记录</string>
     <string name="buy_count">购买数量</string>
 
     <!-- advisory -->
@@ -288,11 +172,7 @@
     <string name="my_advisory">我的咨询</string>
 
     <string name="waiting_for_reply">待回复</string>
-    <string name="replied">已回复</string>
-    <string name="over">已结束</string>
     <string name="closed">已关闭</string>
-    <string name="cancelled">已取消</string>
-    <string name="have_a_question">待提问</string>
     <string name="first_question">第一次提问</string>
     <string name="second_question">第二次提问</string>
     <string name="third_question">第三次提问</string>
@@ -314,7 +194,6 @@
     <string name="input_career_hint">请填写您所从事的职业</string>
     <string name="male">男</string>
     <string name="female">女</string>
-    <string name="secrecy">保密</string>
     <string name="sure">确定</string>
     <string name="lesson_progress_title">课程进度</string>
     <string name="course">课程</string>
@@ -326,7 +205,6 @@
     <string name="the_week_lesson_summary">本周总结</string>
     <string name="lesson_summary">课程总结</string>
     <string name="lesson_review_last_week">上周回顾</string>
-    <string name="list">列表</string>
     <string name="see_lesson_2_unlock">观看课程后解锁</string>
     <string name="finished_pre_lesson_2_unlock">完成上节课程后解锁</string>
 
@@ -341,18 +219,14 @@
     <string name="force_upgrade_version">当前版本太低，请到应用市场升级后再使用</string>
     <string name="practice_dialog_title">下节课程待开放</string>
     <string name="good">好的</string>
-    <string name="are_you_exit_practice">是否确定退出练习？</string>
 
     <!-- record -->
     <string name="open_notification">开启通知</string>
     <string name="open_notification_and_receive_doctor_response">开启通知，及时获取医生回复</string>
     <string name="record_weekly_report">周报告</string>
-    <string name="today">日</string>
-    <string name="week">周</string>
 
     <!-- me -->
     <string name="my_evaluation">量表评估</string>
-    <string name="my_consulting">我的咨询</string>
     <string name="electric_report">电子报告</string>
     <string name="wechat_bind">微信绑定</string>
     <string name="unbind_success">解绑成功</string>
@@ -365,7 +239,6 @@
     <!-- online report -->
     <string name="online_report_list_empty_title">暂无测评记录</string>
     <string name="online_report_list_empty_desc">了解您的睡眠健康及心理状况</string>
-    <string name="online_report">电子报告</string>
     <string name="you_can_select_9_reports_at_most_hint">最多只能选择9份报告</string>
 
     <!-- notification -->
@@ -379,13 +252,8 @@
 
     <!-- scale -->
     <string name="scale_scale_not_finish_yet_hint">您还未进行该评测，点击开始测评</string>
-    <string name="scale_self_scale">我的测评</string>
-    <string name="scale_sleep_scale">睡眠评测量表</string>
-    <string name="no_data">没有数据</string>
     <string name="no_data_hint">这里空空如也~</string>
-    <string name="scale">量表</string>
     <string name="refund_success_notification">退款成功通知</string>
-    <string name="loading">Loading</string>
     <string name="loading_dot">Loading&#8230;</string>
 
     <!-- order -->
@@ -398,105 +266,29 @@
     <string name="yuan_">￥%s</string>
     <string name="score">分</string>
     <string name="already_finish">已完成</string>
-    <string name="bind_failed">绑定失败</string>
-    <string name="bind_success">绑定成功</string>
     <string name="bind_canceled">绑定取消</string>
 
 
     <!-- HW -->
     <!--device-->
-    <string name="connect_device_hint">连接设备</string>
-    <string name="device_connect_title_hint">设备连接</string>
-    <string name="switch_bluetooth_advice_hint">开启连接设备按钮以搜索附近可用设备,此操作会开启手机的蓝牙功能.</string>
-    <string name="no_adapter_hint">手机蓝牙未开启</string>
-    <string name="select_device_hint">选择设备</string>
 
-    <string name="monitor_name_hint">监测仪:</string>
-    <string name="sleeping_name_hint">速眠仪:</string>
-    <string name="ring_power_less_hint">%s电量不足%d%s,请及时充电</string>
     <string name="monitor">监测仪</string>
     <string name="speed_sleeper">速眠仪</string>
     <string name="none_connected_state_hint">未连接</string>
-    <string name="connecting_state_hint">连接中</string>
     <string name="connected_state_hint">已连接</string>
-    <string name="disconnected_state_hint">已断开</string>
-    <string name="working_state_hint">工作中</string>
-
-    <string name="battery_indicator_hint">电量: </string>
-
-    <string name="switch_hint">档位调节:</string>
 
     <string name="request_permission_hint">当前 App 未获取蓝牙权限，是否获取?</string>
-    <string name="request_write_external_storage_permission_hint">当前 App 没有读写文件权限，将无法同步数据，是否获取?</string>
-    <string name="device_connected_failed_toast">蓝牙连接失败,可以尝试关闭手机蓝牙后,再次打开蓝牙连接</string>
-    <string name="device_connected_failed_hint">蓝牙连接失败</string>
-    <string name="device_disconnected_success_hint">连接已断开</string>
-    <string name="device_connected_success_hint">连接成功</string>
-    <string name="device_disconnected_state_hint">当前设备未连接,无法检测固件版本</string>
-    <string name="device_re_connecting_state_hint">正在重新连接</string>
-    <string name="sync_ing_device_data_hint">正在同步数据</string>
-    <string name="sync_ing_sleep_data_hint">正在同步睡眠数据</string>
-    <string name="device_connecting_hint">设备正在连接中</string>
-    <string name="sync_device_data_success_hint">数据同步已完成</string>
-    <string name="device_disconnect_hint">监测仪未连接,点击此处尝试连接</string>
-    <string name="device_battery_less_hint">设备电量不足,请及时充电</string>
-    <string name="scan_finished_hint">蓝牙扫描已完成</string>
-    <string name="scanning_hint">正在扫描蓝牙设备</string>
-    <string name="unbinding_device">设备解绑中</string>
-    <string name="unbind_device_success_hint">设备已解绑,您可以扫描新的设备啦</string>
-    <string name="device_connecting_error_hint">有设备正在连接中…请稍后再试</string>
-    <string name="switch_ing_power_hint">正在调节速眠仪档位中</string>
-    <string name="switch_power_success_hint">速眠仪档位调节成功</string>
-    <string name="switch_power_failed_hint">速眠仪档位调节失败，请重试</string>
     <string name="cancel_hint">取消</string>
-    <string name="ok_hint">确认</string>
-    <string name="ensure_hint">确定</string>
-    <string name="turn_off_monitoring_mode_title">确定关闭监测模式？</string>
-    <string name="turn_off_monitoring_mode_message">关闭后不影响监测仪工作，速眠仪将正常开启工作模式，是否确定？</string>
-    <string name="turn_on_monitoring_mode_title">确定开启监测模式？</string>
-    <string name="turn_on_monitoring_mode_message">开启监测模式后，速眠仪将一直处于待机状态，此状态下将不会开启工作，是否开启？</string>
 
     <!--account-->
-    <string name="login_hint">登录</string>
-    <string name="register_hint">注册</string>
-    <string name="login_mobile_hint">请输入手机号码</string>
-    <string name="login_pwd_hint">请输入密码</string>
-    <string name="forget_pwd_hint">忘记密码?</string>
-    <string name="forget_pwd_title_hint">忘记密码</string>
-    <string name="mobile_error_hint">请输入正确的手机号码</string>
-    <string name="captcha_error_hint">请输入正确的验证码</string>
-    <string name="pwd_error_hint">密码格式不对,请输入正确的密码</string>
     <string name="input_captcha_hint">请输入验证码</string>
-    <string name="captcha_hint">发送验证码</string>
-    <string name="bind_mobile">绑定手机</string>
-    <string name="bind_set_pwd">请设置密码</string>
     <!--<string name="bind">绑定</string>-->
 
-    <string name="tip_double_click_exit_hint">再按一次退出APP</string>
-
-    <string name="register_success_hint">恭喜,您的账号注册成功啦</string>
-    <string name="set_pwd_success_hint">您的密码已重置成功</string>
-    <string name="login_success_hint">您的账户登录成功啦</string>
-    <string name="logout_success_hint">您的账户已安全退出</string>
-    <string name="logout_failed_hint">您的账户未安全退出，请重试</string>
-    <string name="in_login_hint">正在登录中</string>
-
     <string name="user_none_default_hint">未设置</string>
-    <string name="user_none_default_select_hint">请选择</string>
-    <string name="user_info_hint">个人信息</string>
-    <string name="user_nickname_hint">昵称</string>
-    <string name="user_mobile_hint">手机</string>
-    <string name="user_address_hint">地区</string>
-    <string name="user_sex_hint">性别</string>
-    <string name="user_birthday_hint">出生年月</string>
-    <string name="user_height_hint">身高</string>
-    <string name="user_weight_hint">体重</string>
 
     <string name="gender_male_hint">男</string>
     <string name="gender_female_hint">女</string>
     <string name="gender_secrecy_hint">保密</string>
-
-    <string name="refresh_user_info_ing_hint">正在更新用户信息</string>
 
     <!--error-->
     <!--<string name="error_network_hint">网络不给力,请检查网络设置&#8230;</string>-->
@@ -507,211 +299,51 @@
 
     <!--me-->
     <string name="avatar_hint">头像</string>
-    <string name="tel_me_hint">联系我们</string>
-    <string name="setting_hint">设置</string>
     <!--<string name="user_info_center">个人信息</string>-->
-    <string name="msg_notice_hint">我的消息</string>
-    <string name="sleepy_notice_hint">睡眠提醒</string>
     <string name="firmware_update_notice_hint">版本更新</string>
-    <string name="sleepy_notice_state_off_hint">未开启</string>
-    <string name="unbind_device_hint">确定解除当前绑定的设备?</string>
-    <string name="unbind_text_hint">解除绑定</string>
 
     <!--sleep-->
-    <string name="day_hint">日</string>
-    <string name="week_hint">周</string>
-    <string name="month_hint">月</string>
 
-    <string name="day_sleep_hour_count">睡眠时长</string>
-    <string name="day_sleep_quality_hint">睡眠质量</string>
-    <string name="day_sleep_deep_hint">深层睡眠</string>
-    <string name="day_sleep_light_hint">浅层睡眠</string>
-    <string name="day_sleep_sober_hint">清醒时长</string>
-    <string name="day_sleep_eog_hint">眼动时长</string>
-
-    <string name="week_sleep_duration">周睡眠总时长</string>
     <string name="week_sleep_average_duration">日均睡眠时长</string>
     <string name="week_sleep_deep_average_duration">日均深睡时长</string>
     <string name="week_sleep_light_average_duration">日均浅睡时长</string>
     <string name="week_sleep_sober_average_duration">日均清醒时长</string>
-    <string name="week_sleep_night_awake_average_duration">日均夜醒时长</string>
-
-    <string name="month_sleep_duration">月睡眠总时长</string>
 
     <string name="sleep_deep_hint">深睡</string>
     <string name="sleep_light_hint">浅睡</string>
     <string name="sleep_sober_hint">清醒</string>
-    <string name="sleep_eog_hint">眼动</string>
 
-    <string name="sleep_night_awake_duration_hint">夜醒时长</string>
-
-    <string-array name="label_text">
-        <item>清醒</item>
-        <!--<item>快速眼动睡眠</item>-->
-        <item>浅睡</item>
-        <item>深睡</item>
-    </string-array>
-
-    <string name="fall_sleep_time_hint">入睡时间</string>
-    <string name="today_hint">日报告</string>
-    <string name="seven_day_hint">周报告</string>
-    <string name="thirty_day_hint">月报告</string>
-    <string name="hour_hint">小时</string>
-    <string name="min_hint">分</string>
-    <string name="zero_hint">0</string>
-    <string name="today_sleep_duration_hint">最新睡眠时长</string>
-    <string name="wake_up_time_hint">睡醒时间</string>
-    <string name="sober_sleep_duration_hint">清醒时长</string>
     <string name="deep_sleep_duration_hint">深睡时长</string>
     <string name="light_sleep_duration_hint">浅睡时长</string>
-    <string name="none_duration_hint">--</string>
-    <string name="short_none_duration_hint">--</string>
     <string name="compare_week_hint">同比上周</string>
-    <string name="compare_month_hint">同比上月</string>
-    <string name="minute_hint">分钟</string>
     <string name="sleep_advice_hint">影响因素及建议</string>
     <string name="sleep_data_less_hint">睡眠数据不全</string>
-    <string name="sleep_advice_cancel">知道了</string>
     <string name="sleep_note_advice_hint">【建议】</string>
     <string name="sleep_advice_explain">【解释】</string>
     <string name="sleep_advice_element">【因素】</string>
 
-    <string name="none_sleep_hint">当前没有更多睡眠数据</string>
-    <string name="now_none_have_sleep_data">暂无睡眠记录</string>
-
     <!--reminder-->
 
-    <string-array name="reminder_hour">
-        <item>00</item>
-        <item>01</item>
-        <item>02</item>
-        <item>03</item>
-        <item>04</item>
-        <item>05</item>
-        <item>06</item>
-        <item>07</item>
-        <item>08</item>
-        <item>09</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-    </string-array>
-
-    <string-array name="reminder_min">
-        <item>00</item>
-        <item>01</item>
-        <item>02</item>
-        <item>03</item>
-        <item>04</item>
-        <item>05</item>
-        <item>06</item>
-        <item>07</item>
-        <item>08</item>
-        <item>09</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
-        <item>25</item>
-        <item>26</item>
-        <item>27</item>
-        <item>28</item>
-        <item>29</item>
-        <item>30</item>
-        <item>31</item>
-        <item>32</item>
-        <item>33</item>
-        <item>34</item>
-        <item>35</item>
-        <item>36</item>
-        <item>37</item>
-        <item>38</item>
-        <item>39</item>
-        <item>40</item>
-        <item>41</item>
-        <item>42</item>
-        <item>43</item>
-        <item>44</item>
-        <item>45</item>
-        <item>46</item>
-        <item>47</item>
-        <item>48</item>
-        <item>49</item>
-        <item>50</item>
-        <item>51</item>
-        <item>52</item>
-        <item>53</item>
-        <item>54</item>
-        <item>55</item>
-        <item>56</item>
-        <item>57</item>
-        <item>58</item>
-        <item>59</item>
-    </string-array>
-
-    <string name="reminder_add_success_hint">您睡眠提醒设置成功啦</string>
     <string name="doctor_info">医生简介</string>
 
     <!--setting-->
-    <string name="setting_about_me_hint">关于我们</string>
-    <string name="setting_modify_pwd_hint">修改密码</string>
-    <string name="setting_reset_pwd">重置密码</string>
     <string name="set_pwd">设置密码</string>
-    <string name="setting_logout_hint">退出登录</string>
-    <string name="setting_new_pwd_hint">请设置新密码</string>
-    <string name="setting_re_set_new_pwd_hint">再次输入新密码</string>
-    <string name="setting_save_hint">保存</string>
     <string name="setting_set_old_pwd_hint">请输入旧密码</string>
-    <string name="setting_set_pwd_success_hint">恭喜您,密码修改成功啦</string>
 
-    <string name="call_me_hint">即将拨打客服电话</string>
-    <string name="tel_hint">400–878–9088</string>
-    <string name="call_hint">拨打</string>
-    <string name="msg_notice_setting_hint">消息通知</string>
     <string name="change_bind">更换绑定</string>
     <string name="logout_hint">退出后不会删除任何历史数据，下次登录依然可以使用此账号</string>
 
-    <string name="setting_call_me_hint">电话咨询</string>
     <string name="setting_send_msg_hint">在线客服</string>
-    <string name="verify_pwd_error_hint">两次密码不一致</string>
     <string name="nickname_hint">昵称</string>
     <string name="new_nickname_hint">请输入您的新昵称</string>
     <string name="new_nickname_error_hint">您的新昵称不合法,请重新输入</string>
     <string name="new_nickname_less_error">您新昵称少于1个字符</string>
     <string name="new_nickname_too_much_more_error">昵称不能超过16个字符</string>
     <string name="modify_user_info_success">您的用户信息已修改成功</string>
-    <string name="update_user_info_hint">是否更新您的用户信息？</string>
-    <string name="no_have_msg_hint">没有更多消息了…</string>
-
-    <string name="sleepy_notice_note_hint">开启睡眠提醒功能后，APP
-        将会每日定时提醒您就寝。请确保手机系统"设置>通知>速眠>允许通知"保持开启</string>
 
     <!--firmware-->
     <string name="firmware_note_hint">版本已是最新版本</string>
     <string name="firmware_downloading_hint">固件正在拼命下载中</string>
-    <string name="app_downloading_hint">APP正在拼命下载中</string>
     <string name="firmware_upgrade_ing_hint">当前设备固件正在升级中,请勿操作手机和设备</string>
     <string name="firmware_upgrade_success_hint">固件升级成功,设备正在重启中,请切换到设备中心重新连接即可</string>
     <string name="firmware_upgrade_failed_hint">固件升级失败,请重试</string>
@@ -726,7 +358,6 @@
     <string name="app_download_title_hint">APP下载中</string>
     <string name="firmware_upgrade_title_hint">固件升级中</string>
     <string name="firmware_md5_invalid_hint">固件更新包已损坏,请重新下载</string>
-    <string name="age_hint">岁</string>
 
     <!--media preview-->
     <string name="gallery_save_file_not_have_external_storage_permission">没有外部存储权限!</string>
@@ -741,8 +372,6 @@
     <!--<string name="str_request_record_message">请求获取录音权限</string>-->
     <!--<string name="permissions_camera_error">相机无法完成初始化,请正确授权.</string>-->
     <!--<string name="permissions_record_error">麦克风无法完成初始化,请正确授权.</string>-->
-    <string name="qr_scan_tips">将二维码/条码放入框内，即可自动扫描</string>
-    <string name="actionbar_title_qr_scan">二维码/条码</string>
     <string name="change_binding">更换绑定</string>
 
 
@@ -751,33 +380,8 @@
     <string name="app_upgrade">APP升级</string>
     <string name="monitor_upgrade">监测仪升级</string>
     <string name="sleepy_upgrade">速眠仪升级</string>
-    <string name="note">记录日记</string>
-    <string name="ignore">忽略</string>
-    <string name="sleep_note_hint">睡眠日记</string>
-    <string name="report_sleep_remark">睡眠备注</string>
-    <string name="report_sleep_state">睡前状态</string>
-    <string name="report_sleep_evaluate">医生评价</string>
-    <string name="report_sleep_mood">苏醒情绪</string>
-    <string name="not_bad">不太好</string>
-    <string name="general">一般般</string>
     <!--<string name="good">还可以</string>-->
-    <string name="very_good">好极了</string>
     <!--<string name="submit">提交</string>-->
-    <string name="upload_sleep_note">您的睡眠日记已上传成功啦</string>
-    <string name="none_sleep_note">睡醒后并未记录睡眠日记哦,坚持每次都记下睡眠日记,可以对你的睡眠情况有更深入的了解,
-        医生才能给出最准确的建议~</string>
-    <string name="sleep_report_remark">坚持每天记下睡眠日记,可以对你的睡眠情况有更深入的了解,医生才能给出最准确的建议哦~</string>
-    <string name="sleep_note_error_one">请选择您的苏醒情绪</string>
-    <string name="sleep_note_error_two">请填写您的睡眠备注信息</string>
-    <string name="sleep_note_error_three">睡眠备注信息请不要超过200字</string>
-
-    <string name="turn_on_snoop_mode">开启监测模式</string>
-    <string name="turn_off_snoop_mode">关闭监测模式</string>
-    <string name="turn_on_snoop_mode_success">监测模式开启成功啦</string>
-    <string name="turn_off_snoop_mode_success">监测模式关闭成功啦</string>
-    <string name="turning_on_snoop_mode">监测仪监测模式开启中</string>
-    <string name="turning_off_snoop_mode">监测仪监测模式关闭中</string>
-    <string name="turn_on_snoop_mode_error">打开监测模式失败,请重试</string>
 
     <string name="sleepy_not_connected_monitor">监测仪未连接速眠仪,请让监测仪连接上速眠仪</string>
     <string name="not_wear_monitor">监测仪未佩戴,请佩戴监测仪</string>
@@ -785,155 +389,60 @@
     <string name="monitor_is_charging">速眠仪不能开启工作模式，原因是设备正在充电</string>
     <string name="not_turn_on_pa_mode">设备独立模式已开启,不能开启,请先关闭独立模式</string>
     <string name="not_turn_on_pa_mode_in_sleep_time">正在睡眠中,请勿再次开启</string>
-    <string name="turn_on_sleepy_pa_none_mode_error">开启睡眠模式失败,请重试</string>
     <string name="turn_on_sleepy_pa_mode_error">未知错误,请重启设备或联系客服</string>
-    <string name="monitoring_mode_warn">监测模式已开启，此模式下监测仪不会控制速眠仪.</string>
-    <string name="turn_on_sleep_pa_mode">开启睡眠</string>
-    <string name="turning_on_toast">速眠仪睡眠模式开启中</string>
-    <string name="turn_on_sleepy_pa_mode_success">速眠仪睡眠模式开启成功啦</string>
-    <string name="unbind_sleepy">解绑速眠仪</string>
-    <string name="sn_warn">点击确定,解绑现在的监测仪与速眠仪</string>
-    <string name="scan_note">将速眠仪上的条形码放入框内,即可自动识别</string>
-    <string name="scan_sleepy">扫描速眠仪</string>
 
-    <string name="device_log">设备日志</string>
-    <string name="doctor_idea">来自医生的睡眠处方</string>
     <!--<string name="wechat_login">微信登录</string>-->
-    <string name="register_rule">注册即代表同意  <u><font color="#ff7ea5f4" size="14">速眠用户协议</font></u>  及  <u><font color="#ff7ea5f4" size="14">速眠隐私政策</font></u></string>
-    <string name="zero_percent">0/200</string>
-    <string name="consultant_doctor">速眠医生</string>
-    <string name="consultant_customer_service">线上客服</string>
-    <string name="consultant_customer_call_service">客服电话</string>
-    <string name="consultant_doctor_advice_desc">立即向专业睡眠医生咨询你的睡眠问题</string>
-    <string name="consultant_customer_service_call_desc">预约医生电话回拨</string>
-    <string name="consultant_customer_service_online_desc">售前售后咨询服务</string>
-    <string name="loading_data">睡眠数据同步中,请保持蓝牙连接…</string>
-    <string name="loading_success">已是最新数据</string>
-    <string name="loading_failed">数据同步失败,请稍后重试</string>
-    <string name="loading_idle_success">当前数据已是最新</string>
-    <string name="pull_down">下拉刷新睡眠数据</string>
-    <string name="pull_release">释放更新睡眠数据</string>
 
 
     <!--<string name="none_market">"您的手机没有安装应用市场!"</string>-->
-    <string name="none_have_upgrade_info">当前app已是最新版本</string>
-    <string name="bind_wechat">绑定微信</string>
-    <string name="sleep_notification_remark">关闭睡眠日记功能后,生成新的睡眠报告时,系统将不显示填写睡眠日记的窗口.</string>
     <!--<string name="register_rule_one">注册即代表同意</string>-->
     <!--<string name="register_rule_two"><u>速眠用户协议</u></string>-->
     <!--<string name="register_rule_three">及</string>-->
     <!--<string name="register_rule_four"><u>速眠隐私政策</u></string>-->
     <!--<string name="register_rule_user_agreement_title">用户协议</string>-->
     <!--<string name="register_rule_privacy_policy_title">隐私政策</string>-->
-    <string name="leancloud_login_failed_hint">无法发送消息,请检查网络或重试…</string>
-    <string name="none_have_sleep_data">您还未有睡眠数据记录</string>
     <string name="none_week_have_sleep_data">本周无睡眠记录</string>
-    <string name="empty_msg">你的消息空空如也~</string>
-    <string name="unbind_social_title">解绑后,你将无法使用%s帐号登陆速眠</string>
     <!--<string name="unbind">解绑</string>-->
-    <string name="wechat">微信</string>
-    <string name="qq">QQ</string>
-    <string name="sina">微博</string>
-    <string name="bind_open_platform_success">绑定成功</string>
-    <string name="not_show_monitor_todo">监测仪未连接,无法使用该功能</string>
     <!--<string name="opening_wechat">正在打开微信中…</string>-->
     <!--<string name="no_have_wechat">手机上未安装微信客户端</string>-->
-    <string name="unbind_open_platform_failed">解绑失败</string>
-    <string name="unbind_open_platform_success">解绑成功…</string>
 
-    <string name="show_save_picture_permission">请授予保存图片权限</string>
     <!--<string name="take_photo">拍照</string>-->
     <!--<string name="network_error">网络异常,请检查你的网络设置</string>-->
 
-    <string name="click_voice_hint">按住说话</string>
-    <string name="lcim_chat_record_button_slideUpToCancel">手指上滑，取消发送</string>
-    <string name="lcim_chat_record_button_releaseToCancel">松开手指，取消录音</string>
-    <string name="lcim_chat_cancelRecord">取消录音</string>
-    <string name="lcim_chat_record_button_pleaseSayMore">多说点吧～</string>
-    <string name="record_duration_only_60">一次录音不能超过60s…</string>
-    <string name="percent_zero">0%</string>
-    <string name="pull_down_sync_sleep_data">下拉更新睡眠数</string>
-    <string name="oh_i_see">我知道了</string>
-    <string name="pull_down_refresh_data">下拉刷新睡眠数据</string>
-    <string name="release_pull_to_load_data">释放更新睡眠数据</string>
-    <string name="load_data">加载中…</string>
-    <string name="open_bluetooth_adapter">手机蓝牙未开启,请开启手机蓝牙</string>
     <string name="sync">同步</string>
     <!--<string name="syncing">同步中</string>-->
     <string name="all_today_duration">全天睡眠时长</string>
     <string name="light_sleep_duration">浅睡时长</string>
     <string name="no_have_sleep_data">暂无睡眠报告</string>
     <string name="no_have_sleep_data_low_label">使用设备后，打开手机蓝牙，自动上传睡眠数据</string>
-    <string name="sleep_assessment_default_mode">当前未匹配为默认模式</string>
     <string name="career_hint">职业</string>
     <string name="nickname_warn_label">昵称需保证在1–16个字符内，且不能与他人重复.</string>
     <string name="career_warn_label">请填写你所从事的职业类型</string>
     <!--<string name="input_career_hint">请输入您的职业</string>-->
-    <string name="input_career_error">您输入的新职业信息不合法,请重新输入</string>
     <string name="new_areer_too_much_more_error">职业信息太长了,超过了12个字符</string>
-    <string name="diary">日记</string>
     <string name="tab_data">数据</string>
-    <string name="re_do">重做</string>
     <!--<string name="complete">已完成评估</string>-->
     <string name="go_today">回到今天</string>
     <string name="is_read">全部已读</string>
-    <string name="user_guide">新手指南</string>
     <string name="feedback">意见反馈</string>
-    <string name="question_and_advice">问题或建议</string>
-    <string name="feedback_input_hint">请尽可能详细地描述您遇到的问题或您的建议，我们将尽快反馈，并致力于为您提供完善的服务。</string>
-    <string name="guide_step_left">左滑查看上一条</string>
-    <string name="guide_step_right">右滑查看下一条</string>
-    <string name="guide_step_two">打开日历，快速查看某一天的睡眠数据</string>
-    <string name="go_next_step">下一条</string>
-    <string name="first_use">开始使用</string>
-    <string name="guideline_one_h1">绑定监测仪</string>
-    <string name="guideline_one_h2">打开蓝牙，与监测仪绑定。</string>
-    <string name="guideline_two_h1">佩戴监测仪</string>
-    <string name="guideline_two_h2">佩戴上监测仪，距离腕骨至少一指，按一下按钮，确保显示“正确佩戴”的图标。</string>
-    <string name="guideline_three_h1">开启速眠仪</string>
-    <string name="guideline_three_h2">长按速眠仪3秒，直至绿灯亮起，将速眠仪放置在枕头下。</string>
-    <string name="guideline_four_h1">开启睡眠</string>
-    <string name="guideline_four_h2">点击“开启睡眠”，一夜好眠。</string>
-    <string name="sumian_welcome">欢迎使用速眠SUMIAN</string>
     <string name="please_turn_on_bluetooth_adapter">请打开手机蓝牙，与监测仪进行连接。</string>
-    <string name="bluetooth_adapter_is_turn_off">手机蓝牙未开启</string>
     <string name="bind_device">绑定设备</string>
     <string name="please_keep_nearly">请将手机与设备的范围保持在5m内。</string>
-    <string name="click_to_bind">点击按钮，开始绑定</string>
     <string name="scanning_device">设备搜索中…</string>
     <string name="scan_label_h2">点击需要连接的监测仪屏幕按键，搜索设备。</string>
-    <string name="sure_bind">确定绑定</string>
-    <string name="no_this_device">不是这台设备?</string>
     <!--<string name="re_scan">重新搜索</string>-->
     <string name="re_scan_u"><u>重新搜索</u></string>
     <string name="scan_error_two">确保速眠产品与手机的距离在5米内；</string>
     <string name="scan_error_one">将监测仪关机后再打开；</string>
     <string name="scan_error_three">关闭其他设备上的速眠APP。</string>
-    <string name="is_not_your_device">没看到您的设备？</string>
     <string name="select_bind_device_label">请选择要绑定的设备</string>
     <string name="is_sure_device_2_bind">已为您选择此监测仪，是否绑定？</string>
-    <string name="turning_on_pa_mode">正在启动工作模式</string>
-    <string name="note_not_null">日记内容不能为空</string>
-    <string name="require_location_permission_for_bluetooth_connection_rationale">连接蓝牙需要位置权限</string>
-    <string name="require_permission">获取权限</string>
-    <string name="reconnect_device">未找扫描到当前设备,请点击设备重新连接</string>
-    <string name="doctor_advice">医生建议:</string>
     <string name="open_location_service_dialog_title">提示</string>
     <string name="open_location_service_for_blue_scan_hint">扫描蓝牙需要开启位置服务，是否现在开启？</string>
     <!--<string name="confirm">确认</string>-->
     <!--<string name="cancel">取消</string>-->
-    <string name="syncing_report">设备正在同步中，稍侯自动获取最新睡眠报告</string>
     <string name="syncing_error_result">获取异常，请联系在线客服咨询反馈</string>
-    <string name="sync_sleep_data_progress">正在同步第 %d 段睡眠数据…%d/%d</string>
-    <string name="synchronize">同步</string>
-    <string name="sync_data_fail_please_ensure_the_connection_is_stable">同步失败，请保持监测仪连接稳定</string>
     <!--<string name="version_upgrade">版本更新</string>-->
-    <string name="go_upgrade">立即更新</string>
-    <string name="last_see">以后再说</string>
-    <string name="device">设备</string>
-    <string name="hw_setting_customer_service_7x24">7x24小时客服</string>
-    <string name="hw_setting_bind_wechat_hint">你可以使用已绑定的账号登录速眠医生。</string>
-    <string name="hw_not_write_yet">未填写</string>
     <string name="hw_version">固件版本</string>
     <string name="my_service">我的服务</string>
     <string name="media_service">图文咨询</string>
@@ -954,16 +463,13 @@
     <string name="input_password_hint">请输入密码</string>
     <string name="login_with_space_inside">登 录</string>
     <string name="app_user_agreement">速眠医生用户协议</string>
-    <string name="register">注册</string>
     <string name="captcha_login">验证码登录</string>
     <string name="password_login">密码登录</string>
     <string name="captcha_already_sent">已发送%ds</string>
-    <string name="validate_cellphone">验证手机</string>
     <string name="please_set_password">请设置密码</string>
     <string name="repeat_password">再次输入密码</string>
     <string name="please_set_new_password">请设置新密码</string>
     <string name="repeat_new_password">再次输入新密码</string>
-    <string name="register_with_space_inside">注 册</string>
     <string name="complete_with_space_inside">完 成</string>
     <string name="forget_password_question">忘记密码？</string>
     <string name="validate_phone_number">验证手机</string>
@@ -976,7 +482,6 @@
     <string name="phone_number_validation_regex" tools:ignore="TypographyDashes">1([0-9]{10})</string>
     <string name="captcha_validation_regex">\\d{6}</string>
     <string name="password_validation_regex">.{6,16}</string>
-    <string name="modify_success">修改成功</string>
     <string name="feedback_hint">请详细描述您的意见或建议，我们将及时处理并给予反馈，速眠医生致力于为您提供专业贴心的服务。</string>
     <string name="remind_setting">提醒设置</string>
     <string name="sd_sleep_diary_remind">睡眠日记填写提醒</string>
@@ -991,10 +496,6 @@
     <string name="service_is_canceled">服务已取消</string>
     <string name="any_question_ask_kefu">如有疑问，请咨询客服</string>
     <string name="relate_service_is_canceled">相关服务已取消</string>
-    <string name="sleep_data">睡眠数据</string>
-    <string name="hardware">硬件</string>
-    <string name="is_the_latest_data_already">已是最新数据</string>
-    <string name="refresh_sleep_dairy_hint">尝试刷新数据获取您的睡眠报告</string>
     <string name="diary_evaluation">日记评估</string>
     <string name="no_data_yet">暂无相关记录</string>
     <string name="after_bind_doctor_you_can_consult_the_doctor">绑定医生后，可向主治医生咨询</string>
@@ -1057,7 +558,6 @@
     <string name="ji">及</string>
     <string name="device_is_syncing_data_report_will_be_refresh_later">设备同步中，稍侯自动获取睡眠报告</string>
     <string name="area">地区</string>
-    <string name="modify_password">修改密码</string>
     <string name="clear_cache">清除缓存</string>
     <string name="phone_bettery_low_title">手机电量不足</string>
     <string name="monitor_bettery_low_title">监测仪电量不足</string>
@@ -1077,8 +577,6 @@
     <string name="set_password">设置密码</string>
     <string name="set_success">设置成功</string>
     <string name="are_sure_2_bind">确定更换绑定？</string>
-    <string name="setting_pwd">设置密码</string>
-    <string name="sync_sleep_data_to_server_error">获取异常，请联系在线客服咨询反馈</string>
     <string name="sleep_version_message">速眠仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
     <string name="monitor_version_message">监测仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
     <string name="coupon_code">兑换码</string>
@@ -1093,8 +591,6 @@
     <string name="coupon_success">兑换成功</string>
     <string name="fine">好的</string>
     <string name="doctor_service_introduction">服务介绍</string>
-    <string name="cbti_course_plan_introduction">总进度：第%d周/共%d周</string>
-    <string name="cbti_invalid_time">%s 到期</string>
     <string name="anxious_and_belief">忧虑与信念</string>
     <string name="add_anxious">添加忧虑</string>
     <string name="what_s_the_meaning_of_recording_your_anxious_and_belief">记录自己的忧虑、信念有什么用</string>
@@ -1109,10 +605,8 @@
     <string name="solution">解决办法</string>
     <string name="add_anxiety_bottom_hint">速眠医生建议：把忧虑的事情都集中在日间一个时间处理哦。</string>
     <string name="save">保存</string>
-    <string name="add_success">添加成功</string>
     <string name="edit">编辑</string>
     <string name="delete">删除</string>
-    <string name="delete_success">删除成功</string>
     <string name="anxiety_record">忧虑记录</string>
     <string name="delete_record">删除记录</string>
     <string name="delete_record_confirm_hint">确定要删除此条记录吗？</string>

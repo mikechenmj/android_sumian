@@ -87,20 +87,22 @@ public class DeviceVersionNoticeActivity extends BaseActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.app_version_info) {
-            UiUtil.openAppInMarket(v.getContext());
-        } else if (id == R.id.monitor_version_info) {
-            VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
-        } else if (id == R.id.sleepy_version_info) {
-            VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
+        switch (v.getId()) {
+            case R.id.app_version_info:
+                UiUtil.openAppInMarket(v.getContext());
+                break;
+            case R.id.monitor_version_info:
+                VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
+                break;
+            case R.id.sleepy_version_info:
+                VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
+                break;
         }
     }
 
     @Override
     public void onRefresh() {
         mRefresh.setRefreshing(true);
-        //mPresenter.syncAppVersionInfo();
         mPresenter.syncMonitorVersionInfo();
     }
 

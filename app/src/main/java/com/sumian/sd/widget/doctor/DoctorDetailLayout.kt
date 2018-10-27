@@ -7,12 +7,10 @@ import android.widget.LinearLayout
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
-import com.sumian.sd.app.App
 import com.sumian.sd.doctor.activity.DoctorServiceWebActivity
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.kefu.KefuManager
-import com.sumian.sd.theme.three.SkinConfig
 import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
 import com.sumian.sd.widget.refresh.SumianRefreshLayout
 import kotlinx.android.synthetic.main.lay_doctor_detail_view.view.*
@@ -40,7 +38,6 @@ class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: Attr
         tv_department?.text = String.format(Locale.getDefault(), "%s %s", doctor.hospital, doctor.department)
         fold_layout?.setText(doctor.introduction_no_tag)
         siv_customer_service?.setOnClickListener { _ ->
-            UIProvider.getInstance().setThemeMode(if (SkinConfig.isInNightMode(App.getAppContext())) 0x02 else 0x01)
             UIProvider.getInstance().clearCacheMsg()
             KefuManager.launchKefuActivity()
         }

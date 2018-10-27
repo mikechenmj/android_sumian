@@ -66,6 +66,7 @@ public class RecorderVideoActivity extends BaseActivity implements
 	private SurfaceHolder mSurfaceHolder;
 	int defaultVideoFrameRate = -1;
 
+	@SuppressLint("InvalidWakeLockTag")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,11 +75,10 @@ public class RecorderVideoActivity extends BaseActivity implements
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);// full screen
 		// translucency mode，used in surface view
 		getWindow().setFormat(PixelFormat.TRANSLUCENT);
-		setContentView(R.layout.night_hd_recorder_activity);
+		setContentView(R.layout.light_hd_recorder_activity);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		assert pm != null;
-		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
-				CLASS_LABEL);
+		mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, CLASS_LABEL);
 		mWakeLock.acquire();
 		initViews();
 	}

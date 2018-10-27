@@ -57,7 +57,7 @@ public class SatisfactionActivity extends BaseActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_em_activity_satisfaction : R.layout.night_em_activity_satisfaction);
+        setContentView( R.layout.light_em_activity_satisfaction);
         String msgId = getIntent().getStringExtra("msgId");
         initView();
         currentMessage = ChatClient.getInstance().chatManager().getMessage(msgId);

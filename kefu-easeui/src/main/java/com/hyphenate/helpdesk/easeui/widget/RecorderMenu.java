@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.recorder.AudioManager;
 import com.hyphenate.helpdesk.easeui.recorder.DialogManager;
 import com.hyphenate.util.PathUtil;
@@ -138,7 +137,7 @@ public class RecorderMenu extends RelativeLayout implements AudioManager.AudioSt
 
     @SuppressLint("ClickableViewAccessibility")
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_widget_recorder_menu : R.layout.night_hd_widget_recorder_menu, this, true);
+        LayoutInflater.from(context).inflate(R.layout.light_hd_widget_recorder_menu, this, true);
         mRecordText = (TextView) findViewById(R.id.record_menu_text);
         mRecordBtn = (ImageButton) findViewById(R.id.record_menu_image_btn);
         setMotionEventSplittingEnabled(false);

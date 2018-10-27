@@ -1,8 +1,8 @@
 package com.sumian.sd.base
 
 import android.annotation.SuppressLint
+import com.sumian.common.base.BaseActivity
 import com.sumian.sd.event.EventBusUtil
-import com.sumian.sd.theme.three.base.SkinBaseActivity
 
 
 /**
@@ -13,7 +13,7 @@ import com.sumian.sd.theme.three.base.SkinBaseActivity
  *     version: 1.0
  * </pre>
  */
-abstract class BaseEventActivity : SkinBaseActivity() {
+abstract class BaseEventActivity : BaseActivity() {
     @SuppressLint("MissingSuperCall")
     override fun onStart() {
         super.onStart()

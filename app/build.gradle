@@ -64,6 +64,8 @@ android {
             //设置支持的SO库架构
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
+
+        resConfigs "zh"//,"en"
     }
 
     testOptions {
@@ -76,9 +78,9 @@ android {
             debuggable false
             jniDebuggable false
             signingConfig signingConfigs.configs
-            minifyEnabled false
-            shrinkResources false
-            useProguard false
+            useProguard true  //默认 false，如果开启了混淆， 但是我们可以不应用 proguard 文件
+            shrinkResources true
+            minifyEnabled true
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -93,9 +95,9 @@ android {
             debuggable true
             jniDebuggable true
             signingConfig signingConfigs.configs
-            minifyEnabled false
-            shrinkResources false
-            useProguard false
+            useProguard true  //默认 false，如果开启了混淆， 但是我们可以不应用 proguard 文件
+            shrinkResources true
+            minifyEnabled true
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -264,24 +266,23 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
     implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
     implementation 'com.android.support:design:' + rootProject.ext.supportVersion
     implementation 'com.android.support:cardview-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support:support-vector-drawable:' + rootProject.ext.supportVersion
-    implementation 'com.android.support:palette-v7:' + rootProject.ext.supportVersion
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation 'pub.devrel:easypermissions:1.2.0'
-    implementation 'de.hdodenhof:circleimageview:2.1.0'
+
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
     implementation 'com.jakewharton:butterknife:8.8.1'
     kapt 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.qmuiteam:qmui:1.1.3'
     implementation 'com.qmuiteam:arch:0.0.1'
-
-    //status bar util
-    //implementation 'com.jaeger.statusbarutil:library:1.4.0'
 
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'
@@ -295,10 +296,6 @@ dependencies {
     // 推送与实时聊天需要的包
     implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
 
-    //support emoji
-    implementation 'com.android.support:support-emoji-appcompat:' + rootProject.ext.supportVersion
-    implementation 'com.android.support:support-emoji-bundled:' + rootProject.ext.supportVersion
-
     //aliyun oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.8.5'
     //aliyun player sdk
@@ -307,9 +304,9 @@ dependencies {
     implementation(name: 'AliyunVodPlayer-3.4.6', ext: 'aar')
 
     //ping++
-    implementation 'com.pingxx:pingpp-core:2.1.17'
+    implementation 'com.pingxx:pingpp-core:2.1.18'
     // 使用支付宝时添加
-    implementation 'com.pingxx:pingpp-alipay:2.1.17'
+    implementation 'com.pingxx:pingpp-alipay:2.1.18'
 
     //拼音分词
     implementation 'com.belerweb:pinyin4j:2.5.1'

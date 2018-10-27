@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.ui.ChatFragment;
 import com.hyphenate.helpdesk.easeui.ui.SatisfactionActivity;
 import com.hyphenate.helpdesk.model.MessageHelper;
@@ -26,8 +25,7 @@ public class ChatRowEvaluation extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_em_row_received_satisfaction : R.layout.night_em_row_received_satisfaction)
-                : (UIProvider.getInstance().isLightThemeMode() ? R.layout.light_em_row_sent_satisfaction : R.layout.night_em_row_sent_satisfaction), this);
+        inflater.inflate(message.direct() == Message.Direct.RECEIVE ? R.layout.light_em_row_received_satisfaction : R.layout.light_em_row_sent_satisfaction, this);
     }
 
     @Override

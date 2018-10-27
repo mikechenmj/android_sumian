@@ -1,6 +1,7 @@
 package com.hyphenate.helpdesk.easeui.widget;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.IdRes;
@@ -16,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -96,6 +96,7 @@ public class ExtendMenu extends GridView {
 
         private Context context;
 
+        @SuppressLint("ResourceType")
         public ItemAdapter(Context context, List<ChatMenuItemModel> objects) {
             super(context, 1, objects);
             this.context = context;
@@ -158,7 +159,7 @@ public class ExtendMenu extends GridView {
         }
 
         private void init(Context context, AttributeSet attrs) {
-            LayoutInflater.from(context).inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_chat_menu_item : R.layout.night_hd_chat_menu_item, this);
+            LayoutInflater.from(context).inflate(R.layout.light_hd_chat_menu_item, this);
             imageView = (ImageView) findViewById(R.id.image);
             textView = (TextView) findViewById(R.id.text);
         }

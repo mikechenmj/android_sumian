@@ -867,7 +867,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         // LiveData 调用set时会下发数据
         setMonitorToLiveData(mMonitorLiveData.value)
         mMonitorLiveData.value?.let {
-            AppManager.getReportModel().notifySyncStatus(it.status)
         }
     }
 

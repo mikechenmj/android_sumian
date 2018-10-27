@@ -46,7 +46,7 @@ public class TagAdapter<T> extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		@SuppressLint("ViewHolder") View view = LayoutInflater.from(mContext).inflate(R.layout.night_tag_item, null,false);
+		@SuppressLint("ViewHolder") View view = LayoutInflater.from(mContext).inflate(R.layout.light_tag_item, null,false);
 		TextView textView = (TextView) view.findViewById(R.id.tv_tag);
 		T t = mDataList.get(position);
 		if (t instanceof String){

@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_ANONYMOUS_PARAMETER")
+
 package com.sumian.sd.scale
 
 import android.support.v7.widget.LinearLayoutManager

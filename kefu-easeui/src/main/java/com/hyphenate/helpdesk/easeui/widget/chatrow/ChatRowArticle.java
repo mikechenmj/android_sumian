@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.model.ArticlesInfo;
 import com.hyphenate.helpdesk.model.MessageHelper;
 import com.hyphenate.util.DensityUtil;
@@ -36,7 +35,7 @@ public class ChatRowArticle extends ChatRow {
 
     @Override
     protected void onInflatView() {
-        inflater.inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_received_articles : R.layout.night_hd_row_received_articles, this);
+        inflater.inflate(R.layout.light_hd_row_received_articles, this);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class ChatRowArticle extends ChatRow {
 
         if (msgArticles.getArticles().size() == 1) {
             final ArticlesInfo.ArticleItem bean = msgArticles.getArticles().get(0);
-            View view = inflater.inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_article_single_main : R.layout.night_hd_row_article_single_main, null);
+            View view = inflater.inflate(R.layout.light_hd_row_article_single_main, null);
 
             if (view == null) {
                 return;
@@ -121,7 +120,7 @@ public class ChatRowArticle extends ChatRow {
         RelativeLayout view;
 
         if (isFirst) {
-            view = (RelativeLayout) inflater.inflate(UIProvider.getInstance().isLightThemeMode() ? R.layout.light_hd_row_article_main : R.layout.night_hd_row_article_main, null);
+            view = (RelativeLayout) inflater.inflate(R.layout.light_hd_row_article_main, null);
             RelativeLayout mainLayout = (RelativeLayout) view.findViewById(R.id.rl_main);
             ImageView mainImage = (ImageView) view.findViewById(R.id.iv_main);
             TextView mainText = (TextView) view.findViewById(R.id.tv_main);
