@@ -92,6 +92,7 @@ class AnxietyListActivity : BaseBackActivity() {
     inner class AnxietyAdapter : BaseQuickAdapter<AnxietyData, BaseViewHolder>(R.layout.list_item_anxiety_faith) {
         override fun convert(helper: BaseViewHolder, item: AnxietyData) {
             val itemView = helper.getView<AnxiousFaithItemView>(R.id.anxiety_faith_view)
+            itemView.setTextMaxLines(true)
             itemView.setData(AnxietyFaithItemViewData.create(item), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
                     AnxietyActivity.launch(item)

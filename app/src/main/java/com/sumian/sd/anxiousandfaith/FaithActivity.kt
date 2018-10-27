@@ -2,6 +2,7 @@ package com.sumian.sd.anxiousandfaith
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.view.View
@@ -31,6 +32,7 @@ class FaithActivity : BaseBackActivity() {
     private var mEvent = ""
     private var mThought = ""
     private var mEmotion = -1
+    private var mId = -1;
     override fun getChildContentId(): Int {
         return R.layout.activity_faith
     }
@@ -42,6 +44,17 @@ class FaithActivity : BaseBackActivity() {
             val intent = Intent(ActivityUtils.getTopActivity(), FaithActivity::class.java)
             intent.putExtra(KEY_FAITH_DATA, faithData)
             ActivityUtils.startActivity(intent)
+        }
+    }
+
+    override fun initBundle(bundle: Bundle) {
+        super.initBundle(bundle)
+        val faithData = bundle.getParcelable<FaithData>(KEY_FAITH_DATA)
+        if (faithData != null) {
+            mId = faithData.id
+            mEvent = faithData.scene
+            mThought = faithData.idea
+            mEmotion = faithData.emotion_type
         }
     }
 
@@ -60,6 +73,8 @@ class FaithActivity : BaseBackActivity() {
                 }
             }
         })
+        et_belief.setText(mEvent)
+        emotion_view.setSelectedEmotion(mEmotion)
     }
 
     private fun updateUIByProgress(progress: Int) {
@@ -68,6 +83,7 @@ class FaithActivity : BaseBackActivity() {
         tv_belief_text_count.visibility = if (progress < 2) View.VISIBLE else View.GONE
         vg_emotion.visibility = if (progress == 2) View.VISIBLE else View.GONE
         et_belief.setText(if (progress == 0) mEvent else mThought)
+        bt_next_step.text = getText(if (progress == 2) R.string.save else R.string.next_step)
         tv_title.text = getString(when (progress) {
             0 -> R.string.belief_title_0
             1 -> R.string.belief_title_1
@@ -88,7 +104,6 @@ class FaithActivity : BaseBackActivity() {
                 addOrUpdateBelief()
             }
         }
-
     }
 
     private fun checkInput(text: String): Boolean {
@@ -104,7 +119,11 @@ class FaithActivity : BaseBackActivity() {
     }
 
     private fun addOrUpdateBelief() {
-        val call = AppManager.getSdHttpService().addFaiths(mEvent, mThought, mEmotion)
+        val call = if (mId == -1) {
+            AppManager.getSdHttpService().addFaiths(mEvent, mThought, mEmotion)
+        } else {
+            AppManager.getSdHttpService().updateFaiths(mId, mEvent, mThought, mEmotion)
+        }
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<FaithData>() {
             override fun onSuccess(response: FaithData?) {

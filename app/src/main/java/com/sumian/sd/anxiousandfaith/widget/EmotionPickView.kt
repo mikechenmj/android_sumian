@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
+import com.sumian.sd.anxiousandfaith.bean.AnxietyFaithItemViewData
 import com.sumian.sd.anxiousandfaith.event.EmotionData
 import kotlinx.android.synthetic.main.recycler_view.view.*
 
@@ -22,20 +23,12 @@ import kotlinx.android.synthetic.main.recycler_view.view.*
 class EmotionPickView(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
     private var mSelectedPosition = -1
     private var mAdapter = EmotionAdapter()
-    private val emotions = listOf(
-            EmotionData(0, R.string.emotion_0, R.drawable.belief_icon_facial1_default, R.drawable.belief_icon_facial1_selected),
-            EmotionData(1, R.string.emotion_1, R.drawable.belief_icon_facial2_default, R.drawable.belief_icon_facial2_selected),
-            EmotionData(2, R.string.emotion_2, R.drawable.belief_icon_facial3_default, R.drawable.belief_icon_facial3_selected),
-            EmotionData(3, R.string.emotion_3, R.drawable.belief_icon_facial4_default, R.drawable.belief_icon_facial4_selected),
-            EmotionData(4, R.string.emotion_4, R.drawable.belief_icon_facial5_default, R.drawable.belief_icon_facial5_selected),
-            EmotionData(5, R.string.emotion_5, R.drawable.belief_icon_facial6_default, R.drawable.belief_icon_facial6_selected)
-    )
 
     init {
         LayoutInflater.from(context).inflate(R.layout.recycler_view, this, true)
         recycler_view.layoutManager = GridLayoutManager(context, 4)
         recycler_view.adapter = mAdapter
-        mAdapter.setNewData(emotions)
+        mAdapter.setNewData(AnxietyFaithItemViewData.EMOTION_LIST)
         mAdapter.setOnItemClickListener { adapter, view, position -> onItemClick(position) }
     }
 
@@ -57,5 +50,10 @@ class EmotionPickView(context: Context, attributeSet: AttributeSet) : FrameLayou
 
     fun getSelectedEmotion(): Int {
         return mSelectedPosition
+    }
+
+    fun setSelectedEmotion(emotion: Int) {
+        mSelectedPosition = emotion
+        mAdapter.notifyDataSetChanged()
     }
 }

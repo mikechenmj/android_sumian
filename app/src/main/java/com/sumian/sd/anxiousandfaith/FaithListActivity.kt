@@ -92,6 +92,7 @@ class FaithListActivity : BaseBackActivity() {
     inner class FaithAdapter : BaseQuickAdapter<FaithData, BaseViewHolder>(R.layout.list_item_anxiety_faith) {
         override fun convert(helper: BaseViewHolder, item: FaithData) {
             val itemView = helper.getView<AnxiousFaithItemView>(R.id.anxiety_faith_view)
+            itemView.setTextMaxLines(true)
             itemView.setData(AnxietyFaithItemViewData.create(item), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
                     FaithActivity.launch(item)
