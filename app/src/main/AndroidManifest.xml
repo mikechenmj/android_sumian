@@ -583,13 +583,13 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".anxiousandbelief.AnxiousAndBeliefActivity"
+            android:name=".anxiousandfaith.AnxiousAndFaithActivity"
             android:exported="true" />
         <activity
-            android:name=".anxiousandbelief.AnxietyActivity"
+            android:name=".anxiousandfaith.AnxietyActivity"
             android:exported="true" />
-        <activity android:name=".anxiousandbelief.AnxietyListActivity" />
-        <activity android:name=".anxiousandbelief.BeliefActivity" />
+        <activity android:name=".anxiousandfaith.FaithActivity" />
+        <activity android:name=".anxiousandfaith.AnxietyListActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.sumian.sd.anxiousandbelief.event
+package com.sumian.sd.anxiousandfaith.event
 
 /**
  * @author : Zhan Xuzhao

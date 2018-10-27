@@ -1138,5 +1138,6 @@
     <string name="emotion_4">轻松</string>
     <string name="emotion_5">愉快</string>
     <string name="please_finish_question_first">请先完成题目内容</string>
+    <string name="faith_record">信念记录</string>
     <!-- Hw end-->
 </resources>

@@ -1,4 +1,4 @@
-package com.sumian.sd.anxiousandbelief
+package com.sumian.sd.anxiousandfaith
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -11,12 +11,12 @@ import com.sumian.common.base.BaseBackActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
-import com.sumian.sd.anxiousandbelief.bean.FaithData
-import com.sumian.sd.anxiousandbelief.event.FaithChangeEvent
+import com.sumian.sd.anxiousandfaith.bean.FaithData
+import com.sumian.sd.anxiousandfaith.event.FaithChangeEvent
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import kotlinx.android.synthetic.main.activity_belief.*
+import kotlinx.android.synthetic.main.activity_faith.*
 
 /**
  * @author : Zhan Xuzhao
@@ -26,18 +26,21 @@ import kotlinx.android.synthetic.main.activity_belief.*
  * version: 1.0
  */
 @SuppressLint("SetTextI18n")
-class BeliefActivity : BaseBackActivity() {
+class FaithActivity : BaseBackActivity() {
     private var mProgress = 0
     private var mEvent = ""
     private var mThought = ""
     private var mEmotion = -1
     override fun getChildContentId(): Int {
-        return R.layout.activity_belief
+        return R.layout.activity_faith
     }
 
     companion object {
-        fun launch() {
-            val intent = Intent(ActivityUtils.getTopActivity(), BeliefActivity::class.java)
+        private const val KEY_FAITH_DATA = "faith_data"
+
+        fun launch(faithData: FaithData? = null) {
+            val intent = Intent(ActivityUtils.getTopActivity(), FaithActivity::class.java)
+            intent.putExtra(KEY_FAITH_DATA, faithData)
             ActivityUtils.startActivity(intent)
         }
     }

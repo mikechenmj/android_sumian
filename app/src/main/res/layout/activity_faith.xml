@@ -67,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp" />
 
-            <com.sumian.sd.anxiousandbelief.widget.EmotionPickView
+            <com.sumian.sd.anxiousandfaith.widget.EmotionPickView
                 android:id="@+id/emotion_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

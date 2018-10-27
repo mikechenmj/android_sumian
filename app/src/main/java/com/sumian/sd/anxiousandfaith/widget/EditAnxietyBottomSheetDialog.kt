@@ -1,10 +1,8 @@
-package com.sumian.sd.anxiousandbelief.widget
+package com.sumian.sd.anxiousandfaith.widget
 
 import android.content.Context
 import android.support.design.widget.BottomSheetDialog
-import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sd.R
-import com.umeng.socialize.utils.DeviceConfig.context
 import kotlinx.android.synthetic.main.layout_bottom_sheet_edit_anxiety.*
 
 /**

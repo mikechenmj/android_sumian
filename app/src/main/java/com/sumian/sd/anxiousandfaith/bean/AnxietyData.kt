@@ -1,4 +1,4 @@
-package com.sumian.sd.anxiousandbelief.bean
+package com.sumian.sd.anxiousandfaith.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

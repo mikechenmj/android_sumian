@@ -1,10 +1,12 @@
-package com.sumian.sd.anxiousandbelief.widget
+package com.sumian.sd.anxiousandfaith.widget
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
+import com.sumian.sd.anxiousandfaith.bean.AnxietyFaithItemViewData
 import com.sumian.sd.utils.getString
 import kotlinx.android.synthetic.main.view_anxious_belief_item.view.*
 
@@ -15,7 +17,7 @@ import kotlinx.android.synthetic.main.view_anxious_belief_item.view.*
  * desc   :
  * version: 1.0
  */
-class AnxiousBeliefItemView(context: Context, attributeSet: AttributeSet? = null) : LinearLayout(context, attributeSet) {
+class AnxiousFaithItemView(context: Context, attributeSet: AttributeSet? = null) : LinearLayout(context, attributeSet) {
     init {
         LayoutInflater.from(context).inflate(R.layout.view_anxious_belief_item, this, true)
     }
@@ -31,6 +33,13 @@ class AnxiousBeliefItemView(context: Context, attributeSet: AttributeSet? = null
 
     private fun getEmotionIcRes(): Int {
         return 1
+    }
+
+    fun setData(data: AnxietyFaithItemViewData, listener: EditAnxietyBottomSheetDialog.OnItemClickListener) {
+        tv_title.text = data.title
+        tv_message.text = data.message
+        tv_time.text = TimeUtilV2.formatTimeYYYYMMDD_HHMM(data.time)
+        iv_more.setOnClickListener { EditAnxietyBottomSheetDialog(context, listener).show() }
     }
 
 }

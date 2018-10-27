@@ -78,10 +78,10 @@
             android:id="@+id/tv_belief_record"
             style="@style/tv_title_with_white_bg_and_bottom_line"
             android:drawableEnd="@drawable/ic_arrow_right_light_blue"
-            android:text="@string/anxious_record" />
+            android:text="@string/faith_record" />
 
         <LinearLayout
-            android:id="@+id/vg_belief_record"
+            android:id="@+id/vg_faith_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />

@@ -14,7 +14,7 @@ import com.sumian.hw.device.bean.BlueDevice
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.userProfile.SdUserProfileActivity
-import com.sumian.sd.anxiousandbelief.AnxiousAndBeliefActivity
+import com.sumian.sd.anxiousandfaith.AnxiousAndFaithActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.device.DeviceManager
@@ -78,7 +78,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BLUETOOTH)
             }
         }
-        tv_anxious_and_belief.setOnClickListener { ActivityUtils.startActivity(AnxiousAndBeliefActivity::class.java) }
+        tv_anxious_and_faith.setOnClickListener { ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java) }
     }
 
     private fun launchCbtiActivity() {

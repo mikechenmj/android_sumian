@@ -1,4 +1,4 @@
-package com.sumian.sd.anxiousandbelief
+package com.sumian.sd.anxiousandfaith
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -12,9 +12,9 @@ import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
-import com.sumian.sd.anxiousandbelief.bean.AnxietyData
-import com.sumian.sd.anxiousandbelief.event.AnxietyChangeEvent
-import com.sumian.sd.anxiousandbelief.widget.EditAnxietyBottomSheetDialog
+import com.sumian.sd.anxiousandfaith.bean.AnxietyData
+import com.sumian.sd.anxiousandfaith.event.AnxietyChangeEvent
+import com.sumian.sd.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.network.callback.BaseSdResponseCallback

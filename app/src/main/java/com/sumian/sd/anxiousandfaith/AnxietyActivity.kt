@@ -1,4 +1,4 @@
-package com.sumian.sd.anxiousandbelief
+package com.sumian.sd.anxiousandfaith
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,10 +9,9 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseBackActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
-import com.sumian.sd.R
 import com.sumian.sd.R.*
-import com.sumian.sd.anxiousandbelief.bean.AnxietyData
-import com.sumian.sd.anxiousandbelief.event.AnxietyChangeEvent
+import com.sumian.sd.anxiousandfaith.bean.AnxietyData
+import com.sumian.sd.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.network.callback.BaseSdResponseCallback

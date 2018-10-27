@@ -1,16 +1,15 @@
-package com.sumian.sd.anxiousandbelief.widget
+package com.sumian.sd.anxiousandfaith.widget
 
 import android.content.Context
 import android.support.v7.widget.GridLayoutManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.FrameLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
-import com.sumian.sd.anxiousandbelief.event.EmotionData
+import com.sumian.sd.anxiousandfaith.event.EmotionData
 import kotlinx.android.synthetic.main.recycler_view.view.*
 
 /**

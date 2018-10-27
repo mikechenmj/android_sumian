@@ -2,12 +2,11 @@ package com.sumian.sd.network.api
 
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.hw.device.pattern.PatternData
-import com.sumian.sd.R.string.anxiety
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.anxiousandbelief.bean.AnxietyData
-import com.sumian.sd.anxiousandbelief.bean.FaithData
+import com.sumian.sd.anxiousandfaith.bean.AnxietyData
+import com.sumian.sd.anxiousandfaith.bean.FaithData
 import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary

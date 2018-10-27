@@ -1,6 +1,6 @@
-package com.sumian.sd.anxiousandbelief.event
+package com.sumian.sd.anxiousandfaith.event
 
-import com.sumian.sd.anxiousandbelief.bean.AnxietyData
+import com.sumian.sd.anxiousandfaith.bean.AnxietyData
 
 /**
  * @author : Zhan Xuzhao
