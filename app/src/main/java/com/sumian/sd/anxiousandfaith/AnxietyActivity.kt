@@ -38,6 +38,10 @@ class AnxietyActivity : BaseBackActivity() {
             intent.putExtra(KEY_ANXIETY, anxiety)
             ActivityUtils.startActivity(intent)
         }
+
+        fun getLaunchIntent(): Intent {
+            return Intent(ActivityUtils.getTopActivity(), AnxietyActivity::class.java)
+        }
     }
 
     override fun initBundle(bundle: Bundle) {

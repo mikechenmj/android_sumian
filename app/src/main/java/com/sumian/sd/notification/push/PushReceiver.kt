@@ -22,16 +22,16 @@ import com.sumian.sd.utils.NotificationUtil
 class PushReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        LogUtils.d(intent.action)
         val pushData: PushData = PushDataResolveUtil.getPushData(intent) ?: return
         val scheme = pushData.scheme ?: return
+        LogUtils.d(pushData)
         if (!isUserIdValid(scheme)) {
+            LogUtils.d("push data user id invalid")
             return
         }
         val notificationIntent = SchemeResolveUtil.schemeResolver(context, scheme) ?: return
         val contentText = pushData.alert ?: return
         NotificationUtil.showNotification(context, contentText, notificationIntent)
-        LogUtils.d(pushData)
     }
 
     private fun isUserIdValid(scheme: String): Boolean {

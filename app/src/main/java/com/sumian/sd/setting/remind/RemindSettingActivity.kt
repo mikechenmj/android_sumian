@@ -28,17 +28,19 @@ class RemindSettingActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         title_bar.setOnBackClickListener { onBackPressed() }
-        sdv_sleep_diary_remind.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.SLEEP_DIARY_TYPE) }
-        sdv_relaxation_training.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.RELAXATION_TRAINING_TYPE) }
+        sdv_sleep_diary_remind.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_SLEEP_DIARY) }
+        sdv_relaxation_training.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_RELAXATION_TRAINING) }
+        sdv_anxiety.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_ANXIETY) }
     }
 
     override fun onStart() {
         super.onStart()
-        querySleepDiaryReminder(Reminder.SLEEP_DIARY_TYPE)
-        querySleepDiaryReminder(Reminder.RELAXATION_TRAINING_TYPE)
+        querySleepDiaryReminder(Reminder.TYPE_SLEEP_DIARY)
+        querySleepDiaryReminder(Reminder.TYPE_RELAXATION_TRAINING)
+        querySleepDiaryReminder(Reminder.TYPE_ANXIETY)
     }
 
-    private fun querySleepDiaryReminder(reminderType: Int = Reminder.SLEEP_DIARY_TYPE) {
+    private fun querySleepDiaryReminder(reminderType: Int = Reminder.TYPE_SLEEP_DIARY) {
         AppManager
                 .getSdHttpService()
                 .getReminderList(reminderType)
@@ -50,11 +52,14 @@ class RemindSettingActivity : BaseActivity() {
                     override fun onSuccess(response: ReminderListResponse?) {
                         mReminder = response?.getReminder()
                         when (reminderType) {
-                            Reminder.SLEEP_DIARY_TYPE -> {
+                            Reminder.TYPE_SLEEP_DIARY -> {
                                 sdv_sleep_diary_remind.setContent(formatReminder())
                             }
-                            Reminder.RELAXATION_TRAINING_TYPE -> {
+                            Reminder.TYPE_RELAXATION_TRAINING -> {
                                 sdv_relaxation_training.setContent(formatReminder())
+                            }
+                            Reminder.TYPE_ANXIETY -> {
+                                sdv_anxiety.setContent(formatReminder())
                             }
                         }
                     }

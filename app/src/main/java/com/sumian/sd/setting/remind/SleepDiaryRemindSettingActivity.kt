@@ -36,7 +36,7 @@ class SleepDiaryRemindSettingActivity : BasePresenterActivity<SleepDiaryReminder
     }
 
     private var mReminder: Reminder? = null
-    private var mReminderType: Int = Reminder.SLEEP_DIARY_TYPE
+    private var mReminderType: Int = Reminder.TYPE_SLEEP_DIARY
     private var mOnTimePicked = false
     private var mSwitchPendingOff = false  // switch 点击后，如果没有pick 时间，则会回滚。
 
@@ -46,7 +46,7 @@ class SleepDiaryRemindSettingActivity : BasePresenterActivity<SleepDiaryReminder
 
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        mReminderType = bundle.getInt(KEY_REMINDER, Reminder.SLEEP_DIARY_TYPE)
+        mReminderType = bundle.getInt(KEY_REMINDER, Reminder.TYPE_SLEEP_DIARY)
     }
 
     override fun getLayoutId(): Int {
@@ -56,15 +56,20 @@ class SleepDiaryRemindSettingActivity : BasePresenterActivity<SleepDiaryReminder
     override fun initWidget() {
         super.initWidget()
         when (mReminderType) {
-            Reminder.SLEEP_DIARY_TYPE -> {
+            Reminder.TYPE_SLEEP_DIARY -> {
                 title_bar.setTitle(R.string.sleep_diary_remind)
                 sdv_sleep_diary_remind.setLabel(getString(R.string.sleep_diary_remind))
                 tv_open_sleep_diary_remind_hint.setText(R.string.open_sleep_diary_remind_hint)
             }
-            Reminder.RELAXATION_TRAINING_TYPE -> {
+            Reminder.TYPE_RELAXATION_TRAINING -> {
                 title_bar.setTitle(R.string.sd_relaxation_training)
                 sdv_sleep_diary_remind.setLabel(getString(R.string.sd_relaxation_training))
                 tv_open_sleep_diary_remind_hint.setText(R.string.open_relaxation_training_hint)
+            }
+            Reminder.TYPE_ANXIETY -> {
+                title_bar.setTitle(R.string.anxiety_time_reminder)
+                sdv_sleep_diary_remind.setLabel(getString(R.string.anxiety_time_reminder))
+                tv_open_sleep_diary_remind_hint.setText(R.string.anxiety_time_reminder_hint)
             }
         }
         title_bar.setOnBackClickListener { onBackPressed() }

@@ -1139,5 +1139,7 @@
     <string name="emotion_5">愉快</string>
     <string name="please_finish_question_first">请先完成题目内容</string>
     <string name="faith_record">信念记录</string>
+    <string name="anxiety_time_reminder">忧虑时间提醒</string>
+    <string name="anxiety_time_reminder_hint">开启忧虑时间提醒，速眠医生将会每日定时提醒您添加忧虑。请确保APP通知权限开启。</string>
     <!-- Hw end-->
 </resources>

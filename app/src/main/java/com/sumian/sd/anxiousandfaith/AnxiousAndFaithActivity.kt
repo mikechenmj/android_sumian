@@ -1,5 +1,6 @@
 package com.sumian.sd.anxiousandfaith
 
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.ActivityUtils
@@ -32,6 +33,12 @@ class AnxiousAndFaithActivity : BaseBackActivity() {
 
     override fun getChildContentId(): Int {
         return R.layout.activity_anxious_and_faith
+    }
+
+    companion object {
+        fun getLaunchIntent(): Intent {
+            return Intent(ActivityUtils.getTopActivity(), AnxiousAndFaithActivity::class.java)
+        }
     }
 
     override fun initWidget() {
