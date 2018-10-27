@@ -10,9 +10,9 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
-import com.sumian.sd.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.anxiousandfaith.bean.AnxietyFaithItemViewData
-import com.sumian.sd.anxiousandfaith.event.AnxietyChangeEvent
+import com.sumian.sd.anxiousandfaith.bean.FaithData
+import com.sumian.sd.anxiousandfaith.event.FaithChangeEvent
 import com.sumian.sd.anxiousandfaith.widget.AnxiousFaithItemView
 import com.sumian.sd.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.app.AppManager
@@ -28,9 +28,9 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class AnxietyListActivity : BaseBackActivity() {
+class FaithListActivity : BaseBackActivity() {
 
-    private val mAdapter = AnxietyAdapter()
+    private val mAdapter = FaithAdapter()
     private var mPage = 1
 
     override fun getChildContentId(): Int {
@@ -49,7 +49,7 @@ class AnxietyListActivity : BaseBackActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.anxiety_record)
+        setTitle(R.string.faith_record)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = mAdapter
         mAdapter.setOnLoadMoreListener({ loadData() }, recycler_view)
@@ -61,10 +61,10 @@ class AnxietyListActivity : BaseBackActivity() {
     }
 
     private fun loadData() {
-        val call = AppManager.getSdHttpService().getAnxieties(mPage)
+        val call = AppManager.getSdHttpService().getFaiths(mPage)
         addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<AnxietyData>>() {
-            override fun onSuccess(response: PaginationResponseV2<AnxietyData>?) {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<FaithData>>() {
+            override fun onSuccess(response: PaginationResponseV2<FaithData>?) {
                 if (response == null) {
                     return
                 }
@@ -89,24 +89,24 @@ class AnxietyListActivity : BaseBackActivity() {
         })
     }
 
-    inner class AnxietyAdapter : BaseQuickAdapter<AnxietyData, BaseViewHolder>(R.layout.list_item_anxiety_faith) {
-        override fun convert(helper: BaseViewHolder, item: AnxietyData) {
+    inner class FaithAdapter : BaseQuickAdapter<FaithData, BaseViewHolder>(R.layout.list_item_anxiety_faith) {
+        override fun convert(helper: BaseViewHolder, item: FaithData) {
             val itemView = helper.getView<AnxiousFaithItemView>(R.id.anxiety_faith_view)
             itemView.setData(AnxietyFaithItemViewData.create(item), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    AnxietyActivity.launch(item)
+                    FaithActivity.launch(item)
                 }
 
                 override fun onDeleteClick() {
-                    deleteAnxiety(item.id)
+                    deleteFaith(item.id)
                 }
             })
         }
     }
 
-    private fun deleteAnxiety(id: Int) {
+    private fun deleteFaith(id: Int) {
         showDeleteDialog(View.OnClickListener {
-            val call = AppManager.getSdHttpService().deleteAnxiety(id)
+            val call = AppManager.getSdHttpService().deleteFaiths(id)
             addCall(call)
             call.enqueue(object : BaseSdResponseCallback<Any>() {
                 override fun onSuccess(response: Any?) {
@@ -135,11 +135,11 @@ class AnxietyListActivity : BaseBackActivity() {
     }
 
     @Subscribe(sticky = true)
-    fun onAnxietyChangeEvent(event: AnxietyChangeEvent) {
+    fun onFaithChangeEvent(event: FaithChangeEvent) {
         EventBusUtil.removeStickyEvent(event)
-        val anxiety = event.anxiety
-        val position = getItemPosition(anxietyId = anxiety.id)
-        mAdapter.data[position] = anxiety
+        val faith = event.faith
+        val position = getItemPosition(anxietyId = faith.id)
+        mAdapter.data[position] = faith
         mAdapter.notifyItemChanged(position)
     }
 

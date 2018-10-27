@@ -41,7 +41,7 @@ class AnxiousAndFaithActivity : BaseBackActivity() {
         tv_add_belief.setOnClickListener { FaithActivity.launch() }
         vg_question.setOnClickListener { showExplainDialog() }
         tv_anxious_record.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(AnxietyListActivity::class.java) }
-        tv_belief_record.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(AnxietyListActivity::class.java)}
+        tv_belief_record.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(FaithListActivity::class.java) }
     }
 
     private fun showExplainDialog() {

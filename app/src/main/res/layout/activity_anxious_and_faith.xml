@@ -1,95 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:background="@color/b3_color">
-
-            <TextView
-                android:id="@+id/tv_add_anxiety"
-                style="@style/text_b2_14"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/icon_concern"
-                android:gravity="center"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:text="@string/add_anxious" />
-
-            <View
-                style="@style/VerticalDividerLine"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:background="@color/white" />
-
-            <TextView
-                android:id="@+id/tv_add_belief"
-                style="@style/text_b2_14"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/icon_belief"
-                android:gravity="center"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:text="@string/add_belief" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/vg_question"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/b5_color">
-
-            <TextView
-                style="@style/text_b2_14"
-                android:layout_gravity="center"
-                android:drawableStart="@drawable/nav_icon_details"
-                android:drawablePadding="5dp"
-                android:text="@string/what_s_the_meaning_of_recording_your_anxious_and_belief" />
-        </FrameLayout>
-
-        <Space style="@style/space_height_10" />
+        android:layout_height="130dp"
+        android:background="@color/b3_color">
 
         <TextView
-            android:id="@+id/tv_anxious_record"
-            style="@style/tv_title_with_white_bg_and_bottom_line"
-            android:drawableEnd="@drawable/ic_arrow_right_light_blue"
-            android:text="@string/anxious_record" />
+            android:id="@+id/tv_add_anxiety"
+            style="@style/text_b2_14"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/icon_concern"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/add_anxious" />
 
-        <LinearLayout
-            android:id="@+id/vg_anxious_record"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-        <Space style="@style/space_height_10" />
-
-        <TextView
-            android:id="@+id/tv_belief_record"
-            style="@style/tv_title_with_white_bg_and_bottom_line"
-            android:drawableEnd="@drawable/ic_arrow_right_light_blue"
-            android:text="@string/faith_record" />
-
-        <LinearLayout
-            android:id="@+id/vg_faith_record"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+        <View
+            style="@style/VerticalDividerLine"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/white" />
 
         <TextView
-            style="@style/text_t2_14"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="20dp"
-            android:text="@string/click_top_button_add_record" />
+            android:id="@+id/tv_add_belief"
+            style="@style/text_b2_14"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/icon_belief"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/add_belief" />
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/vg_question"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/b5_color">
+
+        <TextView
+            style="@style/text_b2_14"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/nav_icon_details"
+            android:drawablePadding="5dp"
+            android:text="@string/what_s_the_meaning_of_recording_your_anxious_and_belief" />
+    </FrameLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space style="@style/space_height_10" />
+
+            <TextView
+                android:id="@+id/tv_anxious_record"
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:drawableEnd="@drawable/ic_arrow_right_light_blue"
+                android:text="@string/anxious_record" />
+
+            <LinearLayout
+                android:id="@+id/vg_anxious_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <Space style="@style/space_height_10" />
+
+            <TextView
+                android:id="@+id/tv_belief_record"
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:drawableEnd="@drawable/ic_arrow_right_light_blue"
+                android:text="@string/faith_record" />
+
+            <LinearLayout
+                android:id="@+id/vg_faith_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                style="@style/text_t2_14"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="20dp"
+                android:text="@string/click_top_button_add_record" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

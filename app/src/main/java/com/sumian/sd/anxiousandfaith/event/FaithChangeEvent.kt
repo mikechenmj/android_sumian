@@ -9,5 +9,5 @@ import com.sumian.sd.anxiousandfaith.bean.FaithData
  * desc   :
  * version: 1.0
  */
-data class FaithChangeEvent(val faith:FaithData) {
+data class FaithChangeEvent(val faith: FaithData) {
 }

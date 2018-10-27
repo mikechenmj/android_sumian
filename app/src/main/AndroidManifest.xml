@@ -590,6 +590,7 @@
             android:exported="true" />
         <activity android:name=".anxiousandfaith.FaithActivity" />
         <activity android:name=".anxiousandfaith.AnxietyListActivity" />
+        <activity android:name=".anxiousandfaith.FaithListActivity" />
     </application>
 
 </manifest>
