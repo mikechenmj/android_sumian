@@ -37,6 +37,7 @@ class AnxiousFaithItemView(context: Context, attributeSet: AttributeSet? = null)
 
     fun setTextMaxLines(noLimit: Boolean) {
         tv_title.maxLines = if (noLimit) Integer.MAX_VALUE else 1
+        tv_message.maxLines = if (noLimit) Integer.MAX_VALUE else 1
     }
 
 }

@@ -48,6 +48,7 @@
         style="@style/SumianEditTextWhiteBg"
         android:height="85dp"
         android:hint="@string/anxiety_solution_input_hint"
+        android:maxLength="200"
         android:padding="20dp"
         tools:ignore="Autofill,TextFields" />
 

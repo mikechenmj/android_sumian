@@ -86,6 +86,10 @@
         <item name="android:layout_marginEnd">35dp</item>
     </style>
 
+    <style name="SumianButton_150dp" parent="SumianButton">
+        <item name="android:layout_width">150dp</item>
+    </style>
+
     <!--<style name="SumianButton.RightCorner">-->
         <!--<item name="android:background">@drawable/bg_bt_right_corner</item>-->
         <!--<item name="android:height">@dimen/normal_item_height_62</item>-->

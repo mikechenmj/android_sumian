@@ -84,7 +84,7 @@ class FaithActivity : BaseBackActivity() {
         vg_emotion.visibility = if (progress == 2) View.VISIBLE else View.GONE
         et_belief.setText(if (progress == 0) mEvent else mThought)
         bt_next_step.text = getText(if (progress == 2) R.string.save else R.string.next_step)
-        tv_title.text = getString(when (progress) {
+        tv_progress_title.text = getString(when (progress) {
             0 -> R.string.belief_title_0
             1 -> R.string.belief_title_1
             else -> R.string.belief_title_2

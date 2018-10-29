@@ -22,7 +22,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_progress_title"
             style="@style/tv_title_with_transparent_bg_and_bottom_line"
             android:text="@string/belief_title_0" />
 

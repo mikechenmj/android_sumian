@@ -47,8 +47,8 @@ class AnxiousAndFaithActivity : BaseBackActivity() {
         tv_add_anxiety.setOnClickListener { AnxietyActivity.launch() }
         tv_add_belief.setOnClickListener { FaithActivity.launch() }
         vg_question.setOnClickListener { showExplainDialog() }
-        tv_anxious_record.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(AnxietyListActivity::class.java) }
-        tv_belief_record.setOnClickListener { if (mHasBelief) ActivityUtils.startActivity(FaithListActivity::class.java) }
+        vg_anxiety_label.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(AnxietyListActivity::class.java) }
+        vg_faith_label.setOnClickListener { if (mHasBelief) ActivityUtils.startActivity(FaithListActivity::class.java) }
     }
 
     private fun showExplainDialog() {
@@ -83,7 +83,10 @@ class AnxiousAndFaithActivity : BaseBackActivity() {
     }
 
     private fun updateAnxietyList(list: ArrayList<AnxietyData>) {
-        mHasAnxiety = list.size > 0
+        val hasData = list.size > 0
+        mHasAnxiety = hasData
+        tv_anxiety_no_record.visibility = if (hasData) View.GONE else View.VISIBLE
+        iv_anxiety_arrow.visibility = if (!hasData) View.GONE else View.VISIBLE
         vg_anxious_record.removeAllViews()
         for (data in list) {
             val itemView = AnxiousFaithItemView(this@AnxiousAndFaithActivity)
@@ -120,8 +123,14 @@ class AnxiousAndFaithActivity : BaseBackActivity() {
     }
 
     private fun updateFaithList(list: ArrayList<FaithData>) {
-        mHasBelief = list.size > 0
+        val hasData = list.size > 0
+        mHasBelief = hasData
+        tv_faith_no_record.visibility = if (hasData) View.GONE else View.VISIBLE
+        iv_faith_arrow.visibility = if (!hasData) View.GONE else View.VISIBLE
         vg_faith_record.removeAllViews()
+        if (list.size == 0) {
+
+        }
         for (data in list) {
             val itemView = AnxiousFaithItemView(this@AnxiousAndFaithActivity)
             itemView.setData(AnxietyFaithItemViewData.create(data), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
