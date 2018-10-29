@@ -81,6 +81,7 @@ android {
             useProguard true  //默认 false，如果开启了混淆， 但是我们可以不应用 proguard 文件
             shrinkResources true
             minifyEnabled true
+            zipAlignEnabled true
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -96,8 +97,9 @@ android {
             jniDebuggable true
             signingConfig signingConfigs.configs
             useProguard true  //默认 false，如果开启了混淆， 但是我们可以不应用 proguard 文件
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
+            zipAlignEnabled true
             pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
             zipAlignEnabled rootProject.ext.zipAlignEnabled
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -334,7 +336,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     //hw
-    implementation 'no.nordicsemi.android:dfu:1.6.1'
+    implementation 'no.nordicsemi.android:dfu:1.7.0'
 
     //sumian component
 //    implementation 'com.sumian.sd:common:1.0.21'
