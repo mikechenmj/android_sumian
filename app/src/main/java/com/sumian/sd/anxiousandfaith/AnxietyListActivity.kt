@@ -18,7 +18,7 @@ import com.sumian.sd.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import kotlinx.android.synthetic.main.refresh_recycler_view.*
+import kotlinx.android.synthetic.main.activity_anxiety_faith_list.*
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -34,12 +34,13 @@ class AnxietyListActivity : BaseBackActivity() {
     private var mPage = 1
 
     override fun getChildContentId(): Int {
-        return R.layout.refresh_recycler_view
+        return R.layout.activity_anxiety_faith_list
     }
 
     override fun onStart() {
         super.onStart()
         EventBusUtil.register(this)
+        refreshData()
     }
 
     override fun onStop() {
@@ -54,9 +55,13 @@ class AnxietyListActivity : BaseBackActivity() {
         recycler_view.adapter = mAdapter
         mAdapter.setOnLoadMoreListener({ loadData() }, recycler_view)
         refresh_layout.setOnRefreshListener {
-            mPage = 1
-            loadData()
+            refreshData()
         }
+        bt_add_record.setOnClickListener { AnxietyActivity.launch() }
+    }
+
+    private fun refreshData() {
+        mPage = 1
         loadData()
     }
 

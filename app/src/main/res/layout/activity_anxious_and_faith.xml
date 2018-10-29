@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -66,11 +67,41 @@
 
             <Space style="@style/space_height_10" />
 
-            <TextView
-                android:id="@+id/tv_anxious_record"
-                style="@style/tv_title_with_white_bg_and_bottom_line"
-                android:drawableEnd="@drawable/ic_arrow_right_light_blue"
-                android:text="@string/anxious_record" />
+            <LinearLayout
+                android:id="@+id/vg_anxiety_label"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normal_item_height_62"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <TextView
+                    android:id="@+id/tv_anxious_record"
+                    style="@style/tv_title_with_white_bg_and_bottom_line"
+                    android:layout_width="wrap_content"
+                    android:background="@null"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/anxious_record" />
+
+                <Space style="@style/space_horizontal_weight_1" />
+
+                <ImageView
+                    android:id="@+id/iv_anxiety_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_right_light_blue"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tv_anxiety_no_record"
+                    style="@style/text_t2_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_record_yet"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/vg_anxious_record"
@@ -80,11 +111,41 @@
 
             <Space style="@style/space_height_10" />
 
-            <TextView
-                android:id="@+id/tv_belief_record"
-                style="@style/tv_title_with_white_bg_and_bottom_line"
-                android:drawableEnd="@drawable/ic_arrow_right_light_blue"
-                android:text="@string/faith_record" />
+            <LinearLayout
+                android:id="@+id/vg_faith_label"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normal_item_height_62"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <TextView
+                    android:id="@+id/tv_belief_record"
+                    style="@style/tv_title_with_white_bg_and_bottom_line"
+                    android:layout_width="wrap_content"
+                    android:background="@null"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/faith_record" />
+
+                <Space style="@style/space_horizontal_weight_1" />
+
+                <ImageView
+                    android:id="@+id/iv_faith_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_right_light_blue"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tv_faith_no_record"
+                    style="@style/text_t2_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_record_yet"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/vg_faith_record"
