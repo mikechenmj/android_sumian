@@ -3,6 +3,7 @@ package com.sumian.sd.service.cbti.presenter
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.cbti.contract.CBTIIntroductionContract
@@ -26,10 +27,29 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
         }
     }
 
-    override fun getCBTIIntroductionList() {
-
+    override fun getCBTIServiceDetail() {
         view?.showLoading()
+        val call = AppManager.getSdHttpService().getServiceByType(DoctorService.SERVICE_TYPE_CBTI)
+        mCalls.add(call)
+        call.enqueue(object : BaseSdResponseCallback<DoctorService>() {
+            override fun onSuccess(response: DoctorService?) {
+                response?.let {
+                    view?.getCBTIServiceDetailSuccess(it.name, it.introduction, it.picture)
+                }
+            }
+            override fun onFailure(errorResponse: ErrorResponse) {
+                view?.getCBTIServiceDetailFailed(errorResponse.message)
+            }
 
+            override fun onFinish() {
+                super.onFinish()
+                view?.dismissLoading()
+            }
+        })
+    }
+
+    override fun getCBTIIntroductionList() {
+        view?.showLoading()
         val call = AppManager.getSdHttpService().getCbtiChapters("courses")
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<GetCbtiChaptersResponse>() {
@@ -52,7 +72,5 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
             }
 
         })
-
-
     }
 }

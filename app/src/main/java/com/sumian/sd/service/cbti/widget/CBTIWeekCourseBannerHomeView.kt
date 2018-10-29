@@ -3,8 +3,13 @@
 package com.sumian.sd.service.cbti.widget
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_cbti_lesson_banner_home_view.view.*
 
@@ -31,5 +36,15 @@ class CBTIWeekCourseBannerHomeView : LinearLayout {
 
     fun invalidateBanner(formatExpiredTime: String, formatTotalProgress: String) {
         cbti_lesson_plan_view.invalidView(formatExpiredTime, formatTotalProgress)
+    }
+
+    fun invalidateBannerExtras(bannerUrl: String, name: String, introduction: String) {
+        tv_cbti_name.text = name
+        tv_cbti_introduction.text = introduction
+        Glide.with(this).asDrawable().load(bannerUrl).apply(RequestOptions.placeholderOf(R.drawable.ic_cbti_banner).error(R.drawable.ic_cbti_banner)).into(object : SimpleTarget<Drawable>() {
+            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                background = resource
+            }
+        })
     }
 }

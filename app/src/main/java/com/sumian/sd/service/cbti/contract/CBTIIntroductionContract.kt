@@ -22,10 +22,15 @@ interface CBTIIntroductionContract {
         fun getCBTIIntroductionListFailed(error: String)
 
         fun getBannerInfo(formatExpiredTime: String, formatTotalProgress: String)
+
+        fun getCBTIServiceDetailSuccess(name: String, introduction: String, bannerUrl: String)
+
+        fun getCBTIServiceDetailFailed(error: String)
     }
 
     interface Presenter : IPresenter {
 
+        fun getCBTIServiceDetail()
 
         fun getCBTIIntroductionList()
     }

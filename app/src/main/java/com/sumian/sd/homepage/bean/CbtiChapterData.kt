@@ -23,17 +23,16 @@ data class CbtiChapterData(
         @SerializedName("summary") val summary: String,
         @SerializedName("index") val index: Int,
         @SerializedName("is_lock") val isLock: Boolean,
-        @SerializedName("open_date_text") val openDateText: Any,
+        @SerializedName("open_date_text") val openDateText: String?,
         @SerializedName("chapter_progress") val chapterProgress: Int,
         @SerializedName("scale_distribution_ids") val scale_distribution_ids: String //需要评估则返回scale_distribution_ids否则返回空字符串
 ) {
-
 
     fun formatProgress(): String {
         return when (chapterProgress) {
             0 -> {
                 if (isLock) {
-                    "请先完成上周课程"
+                    openDateText ?: "请先完成上周课程"
                 } else {
                     "进度：$chapterProgress%"
                 }

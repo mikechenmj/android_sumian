@@ -7,7 +7,7 @@
     tools:ignore="UselessParent">
 
     <TextView
-        android:id="@+id/tv_cbti_week_lesson_title"
+        android:id="@+id/tv_cbti_name"
         style="@style/text_b2_22"
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginTop="@dimen/space_44"
@@ -20,7 +20,7 @@
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/tv_cbti_week_lesson_desc"
+        android:id="@+id/tv_cbti_introduction"
         style="@style/text_b2_14"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

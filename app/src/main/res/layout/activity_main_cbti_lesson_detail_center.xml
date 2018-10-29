@@ -33,7 +33,9 @@
                 android:layout_height="@dimen/space_62"
                 android:layout_marginBottom="@dimen/space_10"
                 android:background="@color/b2_color"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <com.sumian.sd.widget.nav.NavigationItem
                     android:id="@+id/nav_tab_lesson_practice"
@@ -42,8 +44,10 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:visibility="gone"
                     app:tab_icon="@mipmap/ic_cbti_icon_exercise"
-                    app:tab_text="@string/lesson_practice" />
+                    app:tab_text="@string/lesson_practice"
+                    tools:visibility="visible" />
             </LinearLayout>
 
             <LinearLayout

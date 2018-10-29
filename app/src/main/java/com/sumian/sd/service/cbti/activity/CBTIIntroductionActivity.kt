@@ -63,6 +63,7 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
 
     override fun onResume() {
         super.onResume()
+        mPresenter?.getCBTIServiceDetail()
         mPresenter?.getCBTIIntroductionList()
     }
 
@@ -76,12 +77,14 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
 
     override fun onItemClick(position: Int, itemId: Long) {
         val cbtiChapterData: CbtiChapterData = mAdapter.getItem(position)
+
+        if (cbtiChapterData.isLock) {
+            ToastHelper.show(this, getString(R.string.cbti_chapter_no_lock), Gravity.CENTER)
+            return
+        }
+
         if (TextUtils.isEmpty(cbtiChapterData.scale_distribution_ids)) {//为 null 需要评估
-            if (cbtiChapterData.isLock) {
-                ToastHelper.show(this, getString(R.string.cbti_chapter_no_lock), Gravity.CENTER)
-            } else {
-                CBTIWeekCoursePartActivity.show(this, cbtiChapterData.id)
-            }
+            CBTIWeekCoursePartActivity.show(this, cbtiChapterData.id)
         } else {//需要做评估
             SumianDialog(this)
                     .setTitleText(R.string.go_to_evaluation_title)
@@ -101,5 +104,13 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
 
     override fun getBannerInfo(formatExpiredTime: String, formatTotalProgress: String) {
         cbti_introduction_list_home_banner.invalidateBanner(formatExpiredTime, formatTotalProgress)
+    }
+
+    override fun getCBTIServiceDetailSuccess(name: String, introduction: String, bannerUrl: String) {
+        cbti_introduction_list_home_banner.invalidateBannerExtras(bannerUrl, name, introduction)
+    }
+
+    override fun getCBTIServiceDetailFailed(error: String) {
+        getCBTIIntroductionListFailed(error)
     }
 }

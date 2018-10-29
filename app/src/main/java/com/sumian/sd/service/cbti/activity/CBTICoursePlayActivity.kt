@@ -100,7 +100,6 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
         tv_lesson_list.setOnClickListener(this)
-        nav_tab_lesson_practice.setOnClickListener(this)
         //nav_tab_lesson_review_last_week.setOnClickListener(this)
         aliyun_player.apply {
             setPlayerType(com.sumian.sd.service.cbti.video.NiceVideoView.TYPE_ALIYUN)
@@ -114,15 +113,17 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         this.mPresenter.getCBTIPlayAuthInfo(mCourse?.id!!)
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
+    override fun onClick(v: View) {
+        when (v.id) {
             R.id.tv_lesson_list -> {
                 mCoursePlayAuth?.let {
                     CBTICourseListBottomSheet.show(supportFragmentManager, mCourse?.cbti_chapter_id!!, mCurrentPosition, this)
                 }
             }
             R.id.nav_tab_lesson_practice -> {
-                CBTIExerciseWebActivity.show(v.context, mCurrentCourse?.id!!)
+                mCurrentCourse?.let {
+                    CBTIExerciseWebActivity.show(v.context, it.id)
+                }
             }
         }
     }
@@ -297,8 +298,13 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
         aliyun_player.setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
 
-        nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) View.VISIBLE else View.GONE
-
+        nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) {
+            nav_tab_lesson_practice.setOnClickListener(this)
+            View.VISIBLE
+        } else {
+            nav_tab_lesson_practice.setOnClickListener(null)
+            View.GONE
+        }
         lay_lesson_tips.visibility = if (coursePlayAuth.isHavePractice() || coursePlayAuth.last_chapter_summary != null || coursePlayAuth.meta.exercise_is_filled) View.VISIBLE else View.GONE
 
         if (coursePlayAuth.meta.is_pop_questionnaire) {
@@ -330,7 +336,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     private fun formatWebViewString(summaryRtf: String?, webView: SWebView) {
         summaryRtf?.let {
-            webView.loadDataWithBaseURL(null,it, "text/html", "utf-8",null)
+            webView.loadDataWithBaseURL(null, it, "text/html", "utf-8", null)
         }
     }
 }
