@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class OssTransDataError implements Serializable {
 
-    private int code;
+    private int code;    //code=3 文件名存在
     private String user_message;
     private String internal_message;
     private String more_info;
@@ -44,10 +44,10 @@ public class OssTransDataError implements Serializable {
     @Override
     public String toString() {
         return "OssTransDataError{" +
-            "code=" + code +
-            ", user_message='" + user_message + '\'' +
-            ", internal_message='" + internal_message + '\'' +
-            ", more_info='" + more_info + '\'' +
-            '}';
+                "code=" + code +
+                ", user_message='" + user_message + '\'' +
+                ", internal_message='" + internal_message + '\'' +
+                ", more_info='" + more_info + '\'' +
+                '}';
     }
 }
