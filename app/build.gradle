@@ -297,7 +297,7 @@ dependencies {
     implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
 
     //aliyun oss
-    implementation 'com.aliyun.dpa:oss-android-sdk:2.8.5'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
     //aliyun player sdk
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')
     implementation(name: 'AlivcPlayer-3.4.6', ext: 'aar')
