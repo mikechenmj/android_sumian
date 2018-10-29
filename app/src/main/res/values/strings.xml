@@ -345,7 +345,8 @@
     <string name="firmware_note_hint">版本已是最新版本</string>
     <string name="firmware_downloading_hint">固件正在拼命下载中</string>
     <string name="firmware_upgrade_ing_hint">当前设备固件正在升级中,请勿操作手机和设备</string>
-    <string name="firmware_upgrade_success_hint">固件升级成功,设备正在重启中,请切换到设备中心重新连接即可</string>
+    <string name="firmware_upgrade_success_hint">监测仪固件升级成功,设备正在重启中,请切换到设备中心重新连接即可</string>
+    <string name="sleeper_firmware_upgrade_success_hint">速眠仪固件升级成功,请重新启动速眠仪</string>
     <string name="firmware_upgrade_failed_hint">固件升级失败,请重试</string>
     <string name="current_version_hint">当前版本: %s</string>
     <string name="latest_version">最新版本: %s</string>

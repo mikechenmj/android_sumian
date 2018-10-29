@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -197,20 +199,25 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                         showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message);
                         return;
                     }
-                    if (mVersionType == VERSION_TYPE_MONITOR && this.monitorBatteryLow()) {
-                        LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
-                        showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
-                        return;
-                    } else {
-                        initDialog(0x01);
+                    switch (mVersionType) {
+                        case VERSION_TYPE_MONITOR:
+                            if (monitorBatteryLow()) {
+                                LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
+                                showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
+                                return;
+                            } else {
+                                initDialog(0x01);
+                            }
+                            break;
+                        case VERSION_TYPE_SLEEPY:
+                            if (sleepyBatterLow()) {
+                                LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
+                                showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
+                                return;
+                            }
+                            break;
                     }
-                    if (mVersionType == VERSION_TYPE_SLEEPY && this.sleepyBatterLow()) {
-                        LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
-                        showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
-                        return;
-                    }
-
-                    ToastHelper.show(R.string.firmware_upgrade_ing_hint);
+                    ToastHelper.show(this, getString(R.string.firmware_upgrade_ing_hint), Gravity.CENTER);
                 }
                 mDfuCount++;
                 mPresenter.upgrade(mVersionType);
@@ -389,7 +396,16 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     public void onDfuCompleted(String deviceAddress) {
         //   Log.e(TAG, "onDfuCompleted: ------>" + deviceAddress);
         cancelDialog();
-        ToastHelper.show(R.string.firmware_upgrade_success_hint);
+        @StringRes int stringId = R.string.firmware_upgrade_success_hint;
+        switch (mVersionType) {
+            case VERSION_TYPE_MONITOR:
+                stringId = R.string.firmware_upgrade_success_hint;
+                break;
+            case VERSION_TYPE_SLEEPY:
+                stringId = R.string.sleeper_firmware_upgrade_success_hint;
+                break;
+        }
+        ToastHelper.show(this, getString(stringId), Gravity.CENTER);
         LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
         AppManager.getVersionModel().notifyMonitorDot(false);
         AppManager.getVersionModel().notifySleepyDot(false);
