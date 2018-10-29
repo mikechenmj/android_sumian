@@ -83,7 +83,12 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/iv_bt"
@@ -94,8 +99,13 @@
 
         <TextView
             style="@style/text_t2_14"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/bluetooth_not_enable" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="2" />
     </LinearLayout>
 
     <LinearLayout
