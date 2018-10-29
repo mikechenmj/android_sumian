@@ -16,12 +16,12 @@ import android.widget.Toast;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.base.HwBaseActivity;
-import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.hw.upgrade.dialog.VersionDialog;
 import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
+import com.sumian.hw.utils.UiUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -198,10 +198,11 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
                         return;
                     }
                     if (mVersionType == VERSION_TYPE_MONITOR && this.monitorBatteryLow()) {
-                        initDialog(0x01);
                         LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
                         showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
                         return;
+                    } else {
+                        initDialog(0x01);
                     }
                     if (mVersionType == VERSION_TYPE_SLEEPY && this.sleepyBatterLow()) {
                         LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");

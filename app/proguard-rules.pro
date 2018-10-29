@@ -252,6 +252,9 @@ public static final int *;
 
 #---------------------------------第三方包-------------------------------
 
+#Nordic  Bluetooth  dfu
+-keep class no.nordicsemi.android.dfu.** { *; }
+
 #支付宝支付
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}
