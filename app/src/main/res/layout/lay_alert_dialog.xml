@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="@dimen/space_20"
                 android:contentDescription="@null"
                 android:src="@mipmap/ic_close"
