@@ -140,7 +140,7 @@ public class SleepRecordView extends LinearLayout {
         if (quality < 0 || quality >= qualityStrings.length) {
             throw new RuntimeException("Run sleep quality");
         }
-        return "醒来情绪" + qualityStrings[quality];
+        return "自我评价：" + qualityStrings[quality];
     }
 
     private String getDurationString(String label, int minutes) {
