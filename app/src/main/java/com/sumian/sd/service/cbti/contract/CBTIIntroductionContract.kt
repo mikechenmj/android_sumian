@@ -26,6 +26,8 @@ interface CBTIIntroductionContract {
         fun getCBTIServiceDetailSuccess(name: String, introduction: String, bannerUrl: String)
 
         fun getCBTIServiceDetailFailed(error: String)
+
+        fun onCBTIServiceIsExpired()
     }
 
     interface Presenter : IPresenter {

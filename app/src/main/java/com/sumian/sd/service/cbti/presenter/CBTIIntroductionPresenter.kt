@@ -37,6 +37,7 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
                     view?.getCBTIServiceDetailSuccess(it.name, it.introduction, it.picture)
                 }
             }
+
             override fun onFailure(errorResponse: ErrorResponse) {
                 view?.getCBTIServiceDetailFailed(errorResponse.message)
             }
@@ -58,7 +59,15 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
                     val data = it.data
                     view?.getCBTIIntroductionListSuccess(data)
                     val formatExpiredDate = TimeUtil.formatDate("yyyy.MM.dd 到期", it.meta.expiredAt * 1000L)
-                    view?.getBannerInfo(formatExpiredDate, it.meta.totalProgressText)
+                    val isLock = it.meta.isLock
+                    if (isLock) {
+                        view?.onCBTIServiceIsExpired()
+                    }
+                    view?.getBannerInfo(formatExpiredDate, if (isLock) {
+                        "已过期"
+                    } else {
+                        it.meta.totalProgressText
+                    })
                 }
             }
 
