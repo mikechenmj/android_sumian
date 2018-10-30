@@ -79,7 +79,7 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
         val cbtiChapterData: CbtiChapterData = mAdapter.getItem(position)
 
         if (cbtiChapterData.isLock) {
-            ToastHelper.show(this, getString(R.string.cbti_chapter_no_lock), Gravity.CENTER)
+            //ToastHelper.show(this, getString(R.string.cbti_chapter_no_lock), Gravity.CENTER)
             return
         }
 
