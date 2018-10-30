@@ -3,6 +3,7 @@ package com.sumian.sd.diary.sleeprecord;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -11,7 +12,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.R;
-import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.event.EventBusUtil;
 import com.sumian.sd.event.SleepRecordFilledEvent;
@@ -36,8 +36,8 @@ public class FillSleepRecordActivity extends SdBaseWebViewActivity {
     public static final String SLEEP_RESPONSE = "sleep_response";
     public static final String KEY_TIME = "TIME";
 
-    public static void launchForResult(ActivityLauncher launcher, long time, int requestCode) {
-        Intent intent = new Intent(launcher.getActivity(), FillSleepRecordActivity.class);
+    public static void launchForResult(Fragment launcher, long time, int requestCode) {
+        Intent intent = new Intent(ActivityUtils.getTopActivity(), FillSleepRecordActivity.class);
         intent.putExtra(KEY_TIME, time);
         launcher.startActivityForResult(intent, requestCode);
     }
