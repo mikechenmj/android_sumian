@@ -3,6 +3,7 @@ package com.sumian.common.dialog
 import android.content.Context
 import android.support.v7.app.AppCompatDialog
 import com.sumian.common.R
+import kotlinx.android.synthetic.main.common_lay_loading_dialog.*
 
 /**
  * <pre>
@@ -15,6 +16,7 @@ import com.sumian.common.R
  */
 class LoadingDialog(ctx: Context) : AppCompatDialog(ctx, R.style.SumianLoadingDialog) {
     init {
-        setContentView(R.layout.lay_loading_dialog)
+        setContentView(R.layout.common_lay_loading_dialog)
+        common_loading_progress_bar.indeterminateDrawable.setTint(context.resources.getColor(R.color.colorPrimary))
     }
 }
