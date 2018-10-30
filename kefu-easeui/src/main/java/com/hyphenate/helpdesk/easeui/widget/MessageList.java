@@ -17,7 +17,6 @@ import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.Conversation;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
 import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
 
@@ -54,7 +53,7 @@ public class MessageList extends RelativeLayout {
         this.context = context;
         LayoutInflater.from(context).inflate( R.layout.light_hd_chat_message_list, this);
         swipeRefreshLayout = findViewById(R.id.chat_swipe_layout);
-            swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.parseColor("#FF6595F4"));
+            swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.parseColor("#FFFFFFFF"));
             swipeRefreshLayout.setColorSchemeResources(R.color.white);
 
         listView = (ListView) findViewById(R.id.list);
