@@ -27,6 +27,7 @@ public class AccountViewModel extends AndroidViewModel {
 
     public AccountViewModel(@NonNull Application application) {
         super(application);
+        loadTokenFromSp();
     }
 
     public void loadTokenFromSp() {

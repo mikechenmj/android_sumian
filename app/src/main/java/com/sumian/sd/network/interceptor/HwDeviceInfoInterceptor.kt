@@ -2,10 +2,10 @@ package com.sumian.sd.network.interceptor
 
 import android.net.Uri
 import com.sumian.hw.utils.SystemUtil
-import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceManager
+import com.sumian.sd.device.bean.BlueDevice
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

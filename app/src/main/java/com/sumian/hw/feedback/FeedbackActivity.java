@@ -19,10 +19,10 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.utils.ColorCompatUtil;
 import com.sumian.common.widget.TitleBar;
+import com.sumian.common.widget.adapter.EmptyTextWatcher;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.oss.bean.OssResponse;
-import com.sumian.hw.widget.adapter.OnTextWatcherAdapter;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -75,7 +75,7 @@ public class FeedbackActivity extends HwBaseActivity {
         mTvContentLength = findViewById(R.id.tv_content_length);
         mTvSubmit = findViewById(R.id.tv_submit);
 
-        mEtInput.addTextChangedListener(new OnTextWatcherAdapter() {
+        mEtInput.addTextChangedListener(new EmptyTextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

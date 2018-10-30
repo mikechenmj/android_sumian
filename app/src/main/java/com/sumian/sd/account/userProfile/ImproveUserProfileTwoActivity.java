@@ -7,11 +7,11 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
+import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.widget.TitleBar;
 
 import butterknife.BindView;

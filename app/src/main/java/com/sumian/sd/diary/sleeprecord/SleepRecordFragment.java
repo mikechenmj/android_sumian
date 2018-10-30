@@ -22,9 +22,7 @@ import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.utils.TimeUtil;
-import com.sumian.sd.widget.dialog.SumianAlertDialog;
 import com.sumian.sd.widget.dialog.SumianAlertDialogV2;
-import com.sumian.sd.widget.dialog.theme.LightTheme;
 
 import org.jetbrains.annotations.NotNull;
 

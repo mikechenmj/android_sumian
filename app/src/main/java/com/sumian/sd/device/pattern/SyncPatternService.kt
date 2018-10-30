@@ -12,11 +12,11 @@ import com.sumian.blue.callback.BluePeripheralDataCallback
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
-import com.sumian.sd.device.command.BlueCmd
-import com.sumian.sd.device.command.Cmd
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.constants.SpKeys
+import com.sumian.sd.device.command.BlueCmd
+import com.sumian.sd.device.command.Cmd
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 
 /**

@@ -11,8 +11,8 @@ import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.widget.dialog.SumianArticleDialog
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
-import com.sumian.sd.anxiousandfaith.bean.AnxietyFaithItemViewData
 import com.sumian.sd.anxiousandfaith.bean.AnxietyData
+import com.sumian.sd.anxiousandfaith.bean.AnxietyFaithItemViewData
 import com.sumian.sd.anxiousandfaith.bean.FaithData
 import com.sumian.sd.anxiousandfaith.widget.AnxiousFaithItemView
 import com.sumian.sd.anxiousandfaith.widget.EditAnxietyBottomSheetDialog

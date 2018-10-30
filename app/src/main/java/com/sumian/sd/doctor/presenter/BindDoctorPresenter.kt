@@ -1,11 +1,11 @@
 package com.sumian.sd.doctor.presenter
 
+import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.contract.BindDoctorContract
-import com.sumian.common.h5.bean.SBridgeResult
 
 class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : BindDoctorContract.Presenter {
 

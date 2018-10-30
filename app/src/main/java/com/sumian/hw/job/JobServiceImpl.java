@@ -14,13 +14,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.text.TextUtils;
 
-import com.sumian.hw.utils.StreamUtil;
-import com.sumian.sd.device.FileHelper;
 import com.sumian.hw.log.LogManager;
+import com.sumian.hw.utils.StreamUtil;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.DeviceManager;
+import com.sumian.sd.device.FileHelper;
 
 import java.io.BufferedWriter;
 import java.io.File;

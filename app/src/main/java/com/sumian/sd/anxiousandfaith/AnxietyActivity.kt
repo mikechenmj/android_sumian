@@ -9,7 +9,8 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseBackActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
-import com.sumian.sd.R.*
+import com.sumian.sd.R.layout
+import com.sumian.sd.R.string
 import com.sumian.sd.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.app.AppManager

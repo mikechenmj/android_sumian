@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.sumian.sd.device.util.BlueByteUtil;
 import com.sumian.sd.account.bean.Answers;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.util.BlueByteUtil;
 
 import java.math.BigInteger;
 import java.util.Arrays;

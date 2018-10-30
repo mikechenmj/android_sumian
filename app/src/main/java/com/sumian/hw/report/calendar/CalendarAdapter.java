@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sumian.common.network.response.ErrorResponse;
-import com.sumian.hw.utils.TimeUtil;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
+import com.sumian.hw.utils.TimeUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;

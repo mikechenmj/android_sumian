@@ -15,11 +15,11 @@ import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BaseActivity;
 import com.sumian.common.widget.TitleBar;
-import com.sumian.sd.device.command.BlueCmd;
 import com.sumian.hw.qrcode.fragment.InputSnFragment;
 import com.sumian.hw.qrcode.fragment.QrCodeFragment;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.device.command.BlueCmd;
 
 @SuppressWarnings("ConstantConditions")
 public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
