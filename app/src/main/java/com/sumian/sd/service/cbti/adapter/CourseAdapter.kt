@@ -13,6 +13,7 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.base.holder.SdBaseViewHolder
 import com.sumian.sd.service.cbti.bean.Course
+import java.util.*
 
 /**
  * Created by dq
@@ -56,7 +57,7 @@ class CourseAdapter(context: Context) : BaseRecyclerAdapter<Course>(context) {
 
             val second = item.duration % 60
 
-            mTvDuration.text = "$min:$second"
+            mTvDuration.text = String.format(Locale.getDefault(), "%d%s%02d", min, ":", second)
 
             Gone(!item.is_lock, mIvLock)
 

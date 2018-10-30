@@ -47,7 +47,8 @@
         android:supportsRtl="true"
         android:theme="@style/BaseAppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:theme,android:label">
+        tools:replace="android:theme,android:label"
+        tools:targetApi="n">
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -361,13 +362,6 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.leancloud.activity.MsgActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".account.login.ModifyNicknameActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
@@ -389,12 +383,6 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.setting.activity.DeviceLogActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".account.login.AvatarImageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
@@ -402,21 +390,7 @@
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.assessment.QuestionActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name="com.sumian.hw.feedback.FeedbackActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name="com.sumian.hw.guideline.activity.ManualActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -498,9 +472,6 @@
 
         <activity android:name=".service.diary.DiaryEvaluationListActivity" />
         <activity android:name=".service.diary.DiaryEvaluationDetailActivity" />
-        <activity
-            android:name="com.sumian.hw.report.ReportActivity"
-            android:theme="@style/MainActivity" />
         <activity android:name=".diary.monitorrecord.WeeklyReportActivity" />
         <activity
             android:name=".device.scan.ScanDeviceActivity"

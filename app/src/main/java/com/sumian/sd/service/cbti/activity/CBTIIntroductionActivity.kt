@@ -79,7 +79,7 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
         val cbtiChapterData: CbtiChapterData = mAdapter.getItem(position)
 
         if (cbtiChapterData.isLock) {
-            ToastHelper.show(this, getString(R.string.cbti_chapter_no_lock), Gravity.CENTER)
+            //ToastHelper.show(this, getString(R.string.cbti_chapter_no_lock), Gravity.CENTER)
             return
         }
 
@@ -112,5 +112,10 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
 
     override fun getCBTIServiceDetailFailed(error: String) {
         getCBTIIntroductionListFailed(error)
+    }
+
+    override fun onCBTIServiceIsExpired() {
+        finish()
+        CBTIIntroductionWebActivity.show()//已过期，跳转去购买服务
     }
 }
