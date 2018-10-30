@@ -9,7 +9,7 @@ package com.sumian.common.utils
  */
 class VersionUtil {
     companion object {
-        fun hasNewVersion(latestVersion: IntArray, currentVersion: IntArray): Boolean {
+        fun hasNewVersion(latestVersion: ArrayList<Int>, currentVersion: ArrayList<Int>): Boolean {
             if (currentVersion.size != latestVersion.size) {
                 return true
             }
@@ -27,19 +27,15 @@ class VersionUtil {
 
         @JvmStatic
         fun hasNewVersion(latestVersion: List<String>, currentVersion: List<String>): Boolean {
-            if (currentVersion.size != latestVersion.size) {
-                return true
+            return hasNewVersion(stringListToIntList(latestVersion), stringListToIntList(currentVersion))
+        }
+
+        private fun stringListToIntList(sList: List<String>): ArrayList<Int> {
+            val iList = ArrayList<Int>()
+            for (s in sList) {
+                iList.add(s.toInt())
             }
-            for (i in 0 until currentVersion.size) {
-                return if (latestVersion[i] > currentVersion[i]) {
-                    true
-                } else if (latestVersion[i] < currentVersion[i]) {
-                    false
-                } else {
-                    continue
-                }
-            }
-            return false
+            return iList
         }
     }
 }
