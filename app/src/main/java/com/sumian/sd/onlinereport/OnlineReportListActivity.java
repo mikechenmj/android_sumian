@@ -1,18 +1,20 @@
 package com.sumian.sd.onlinereport;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.base.ActivityLauncher;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.network.response.PaginationResponse;
@@ -56,8 +58,8 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     private boolean mIsPickMode;
     private boolean mIsShowListMode;
 
-    public static void launchForShowAll(ActivityLauncher launcher) {
-        Intent intent = new Intent(launcher.getActivity(), OnlineReportListActivity.class);
+    public static void launchForShowAll(Fragment launcher) {
+        Intent intent = new Intent(ActivityUtils.getTopActivity(), OnlineReportListActivity.class);
         intent.putExtra(KEY_LAUNCH_TYPE, LAUNCH_TYPE_SHOW_ALL);
         launcher.startActivity(intent);
     }
@@ -73,8 +75,8 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
      * Get data in onActivityResult:
      * ArrayList<OnlineReport> reports = data.getParcelableArrayListExtra("data");
      */
-    public static void launchForPick(ActivityLauncher launcher, int requestCode, ArrayList<OnlineReport> data) {
-        Intent intent = new Intent(launcher.getActivity(), OnlineReportListActivity.class);
+    public static void launchForPick(Activity launcher, int requestCode, ArrayList<OnlineReport> data) {
+        Intent intent = new Intent(ActivityUtils.getTopActivity(), OnlineReportListActivity.class);
         intent.putExtra(KEY_LAUNCH_TYPE, LAUNCH_TYPE_PICK);
         intent.putExtra(KEY_LAUNCH_DATA, data);
         launcher.startActivityForResult(intent, requestCode);

@@ -40,7 +40,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver, ActivityLauncher {
+public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
     private static final String TAG = SdBaseActivity.class.getSimpleName();
     protected View mRoot;
@@ -281,11 +281,6 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
 
     protected void showCenterToast(@StringRes int messageId) {
         showCenterToast(getString(messageId));
-    }
-
-    @Override
-    public Activity getActivity() {
-        return this;
     }
 
     protected boolean openEventBus() {
