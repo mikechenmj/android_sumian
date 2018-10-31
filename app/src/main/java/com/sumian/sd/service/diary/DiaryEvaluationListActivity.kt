@@ -1,16 +1,36 @@
 package com.sumian.sd.service.diary
 
+import android.content.Intent
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseBackActivity
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.activity_main_tel_booking.*
 
 class DiaryEvaluationListActivity : BaseBackActivity() {
+    private var mType = DiaryEvaluationListFragment.TYPE_UNFINISHED
+
+    companion object {
+        private const val KEY_TYPE = "type"
+
+        fun getLaunchIntent(type: Int): Intent {
+            val intent = Intent(ActivityUtils.getTopActivity(), DiaryEvaluationListActivity::class.java)
+            intent.putExtra(KEY_TYPE, type)
+            return intent
+        }
+    }
 
     override fun getChildContentId(): Int {
         return R.layout.activity_diary_evaluation_list
     }
+
+    override fun initBundle(bundle: Bundle) {
+        super.initBundle(bundle)
+        mType = bundle.getInt(KEY_TYPE, DiaryEvaluationListFragment.TYPE_UNFINISHED)
+    }
+
 
     override fun initWidget() {
         super.initWidget()
@@ -38,5 +58,6 @@ class DiaryEvaluationListActivity : BaseBackActivity() {
             }
         }
         tab_layout.setupWithViewPager(view_pager, true)
+        view_pager.currentItem = if (mType == DiaryEvaluationListFragment.TYPE_UNFINISHED) 0 else 1
     }
 }
