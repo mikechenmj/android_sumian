@@ -1,13 +1,16 @@
 package com.sumian.sd.service.advisory.activity
 
+import android.content.Intent
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R
+import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.fragment.AdvisoryListFragment
 import com.sumian.sd.service.advisory.presenter.AdvisoryListPresenter
-import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.widget.TitleBar
 import kotlinx.android.synthetic.main.activity_main_advisory.*
 
@@ -17,6 +20,21 @@ import kotlinx.android.synthetic.main.activity_main_advisory.*
  * desc: 用户图文咨询列表
  */
 class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackClickListener {
+    private var mType = Advisory.UNFINISHED_TYPE
+
+    companion object {
+        private const val KEY_TYPE = "type"
+        fun getLaunchIntent(type: Int): Intent {
+            val intent = Intent(ActivityUtils.getTopActivity(), AdvisoryListActivity::class.java)
+            intent.putExtra(KEY_TYPE, type)
+            return intent
+        }
+    }
+
+    override fun initBundle(bundle: Bundle?): Boolean {
+        mType = bundle?.getInt(KEY_TYPE) ?: Advisory.UNFINISHED_TYPE
+        return super.initBundle(bundle)
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory
@@ -52,6 +70,7 @@ class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.O
         }
 
         tab_layout?.setupWithViewPager(view_pager, true)
+        view_pager.currentItem = if (mType == Advisory.UNFINISHED_TYPE) 0 else 1
     }
 
     override fun onBack(v: View?) {

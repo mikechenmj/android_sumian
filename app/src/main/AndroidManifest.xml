@@ -120,7 +120,7 @@
         <activity
             android:name=".setting.SettingActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
+
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -221,7 +221,7 @@
         <activity
             android:name=".onlinereport.OnlineReportListActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
+
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -254,7 +254,7 @@
         <activity
             android:name=".service.advisory.activity.AdvisoryListActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
+
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -262,7 +262,7 @@
         <activity
             android:name=".service.advisory.activity.AdvisoryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
+
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -321,7 +321,7 @@
         <activity
             android:name=".service.cbti.activity.CBTIIntroductionWebActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
+
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -361,6 +361,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <activity
             android:name=".account.login.ModifyNicknameActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -382,6 +383,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <activity
             android:name=".account.login.AvatarImageActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -389,6 +391,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/HwAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <activity
             android:name="com.sumian.hw.feedback.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -399,13 +402,11 @@
 
         <service
             android:name="com.sumian.hw.upgrade.service.DfuService"
-            android:exported="true"
             tools:ignore="ExportedService" />
 
         <activity
             android:name="com.sumian.hw.qrcode.activity.QrCodeActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
@@ -418,16 +419,13 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
             android:name=".account.login.LoginActivity"
-            android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
             android:name=".account.login.ValidatePhoneNumberActivity"
-            android:exported="true"
             android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".account.login.SetPasswordActivity"
-            android:exported="true"
             android:theme="@style/BaseAppTheme" />
         <activity
             android:name=".h5.HwSimpleWebActivity"
@@ -455,29 +453,56 @@
         <activity android:name=".setting.remind.RemindSettingActivity" />
         <activity
             android:name=".setting.remind.SleepDiaryRemindSettingActivity"
-            android:exported="true" />
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".account.login.NewUserGuideActivity"
-            android:exported="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
             android:name=".homepage.RelaxationActivity"
-            android:exported="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
 
         <service
             android:name="com.sumian.sd.device.pattern.SyncPatternService"
             android:exported="false" />
 
-        <activity android:name=".service.diary.DiaryEvaluationListActivity" />
-        <activity android:name=".service.diary.DiaryEvaluationDetailActivity" />
-        <activity android:name=".diary.monitorrecord.WeeklyReportActivity" />
+        <activity
+            android:name=".service.diary.DiaryEvaluationListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".service.diary.DiaryEvaluationDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".diary.monitorrecord.WeeklyReportActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".device.scan.ScanDeviceActivity"
-            android:exported="true" />
-        <activity android:name=".device.DeviceManageActivity" />
-        <activity android:name=".account.login.ModifyPasswordActivity" />
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".device.DeviceManageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.login.ModifyPasswordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".service.coupon.activity.CouponCenterActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -508,13 +533,29 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".anxiousandfaith.AnxiousAndFaithActivity"
-            android:exported="true" />
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".anxiousandfaith.AnxietyActivity"
-            android:exported="true" />
-        <activity android:name=".anxiousandfaith.FaithActivity" />
-        <activity android:name=".anxiousandfaith.AnxietyListActivity" />
-        <activity android:name=".anxiousandfaith.FaithListActivity" />
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".anxiousandfaith.FaithActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".anxiousandfaith.AnxietyListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".anxiousandfaith.FaithListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.sumian.sd.service.tel.activity
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
@@ -18,8 +19,10 @@ import kotlinx.android.synthetic.main.activity_main_tel_booking.*
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
 class TelBookingListActivity : BaseBackPresenterActivity<IPresenter>() {
+    private var mType = TelBooking.UN_FINISHED_TYPE
 
     companion object {
+        private const val KEY_TYPE = "type"
 
         @JvmStatic
         fun show() {
@@ -28,6 +31,17 @@ class TelBookingListActivity : BaseBackPresenterActivity<IPresenter>() {
             }
         }
 
+        fun getLaunchIntent(type: Int): Intent {
+            val intent = Intent(ActivityUtils.getTopActivity(), TelBookingListActivity::class.java)
+            intent.putExtra(KEY_TYPE, type)
+            return intent
+        }
+
+    }
+
+    override fun initBundle(bundle: Bundle) {
+        super.initBundle(bundle)
+        mType = bundle.getInt(KEY_TYPE, TelBooking.UN_FINISHED_TYPE)
     }
 
     override fun getChildContentId(): Int {
@@ -61,6 +75,7 @@ class TelBookingListActivity : BaseBackPresenterActivity<IPresenter>() {
         }
 
         tab_layout.setupWithViewPager(view_pager, true)
+        view_pager.currentItem = if (mType == TelBooking.UN_FINISHED_TYPE) 0 else 1
     }
 
 }

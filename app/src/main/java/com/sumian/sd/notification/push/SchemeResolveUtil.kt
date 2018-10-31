@@ -59,6 +59,9 @@ class SchemeResolveUtil {
                 "cbti-final-reports" -> CbtiFinalReportSchemeResolver()
                 "relaxations" -> RelaxationSchemeResolver()
                 "anxieties-and-faiths" -> AnxietyFaithReminderSchemeResolver()
+                "advisory-list" -> AdvisoryListSchemeResolver()
+                "booking-list" -> BookingListSchemeResolver()
+                "diary-evaluation-list" -> DiaryEvaluationListSchemeResolver()
                 else -> null
             }
         }
