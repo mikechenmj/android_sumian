@@ -12,21 +12,21 @@ import java.util.ArrayList;
 
 public class JobScheduler {
 
-    private JobService mJobService;
+    private JobSchedulerDelegate mJobScheduler;
 
     public JobScheduler(Context context) {
-        mJobService = JobServiceImpl.getInstance(context);
+        mJobScheduler = JobSchedulerDelegate.getInstance(context);
     }
 
-    public void release(Context context) {
-        mJobService.release(context);
+    public void release() {
+        mJobScheduler.release();
     }
 
     public void checkJobScheduler() {
-        mJobService.runTask();
+        mJobScheduler.checkPendingTaskAndRun();
     }
 
-    public void saveSleepData(ArrayList<String> sleepData, int type, String beginCmd, String endCmd,String monitorSn,String speedSleepSn, long receiveStartedTime, long receiveEndedTime) {
-        mJobService.saveSleepData(sleepData, type, beginCmd, endCmd,monitorSn,speedSleepSn, receiveStartedTime, receiveEndedTime);
+    public void saveSleepData(ArrayList<String> sleepData, int type, String beginCmd, String endCmd, String monitorSn, String speedSleepSn, long receiveStartedTime, long receiveEndedTime) {
+        mJobScheduler.saveSleepData(sleepData, type, beginCmd, endCmd, monitorSn, speedSleepSn, receiveStartedTime, receiveEndedTime);
     }
 }

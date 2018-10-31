@@ -27,7 +27,7 @@ import com.sumian.sd.main.MainActivity;
 public class AppUtil {
 
     public static void exitApp() {
-        AppManager.getJobScheduler().release(Utils.getApp().getApplicationContext());
+        AppManager.getJobScheduler().release();
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.close();

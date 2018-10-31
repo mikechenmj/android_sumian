@@ -1,6 +1,7 @@
 package com.sumian.hw.job;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -55,8 +56,8 @@ import retrofit2.Call;
 public class JobTask implements Serializable, Cloneable {
 
     private static final String TAG = JobTask.class.getSimpleName();
-    public static final String ACTION_SYNC = "com.sumian.app.action.SYNC";
-    public static final String EXTRA_SYNC_STATUS = "com.sumian.app.extra.SYNC_STATUS";
+    private static final String ACTION_SYNC = "com.sumian.app.action.SYNC";
+    private static final String EXTRA_SYNC_STATUS = "com.sumian.app.extra.SYNC_STATUS";
 
     private String filePath;//文件保存路径
     private String beginCmd;
@@ -88,6 +89,7 @@ public class JobTask implements Serializable, Cloneable {
         return this;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "JobTask{" +
@@ -101,12 +103,12 @@ public class JobTask implements Serializable, Cloneable {
                 '}';
     }
 
-    public JobTask setTaskCallback(TaskCallback taskCallback) {
+    JobTask setTaskCallback(TaskCallback taskCallback) {
         mTaskCallback = taskCallback;
         return this;
     }
 
-    public void execute() {
+    void execute() {
         //执行任务,首先缓存到本地文件,然后进行透传
         if (!TextUtils.isEmpty(filePath)) {
             if (!NetUtil.hasInternet()) {//没有网络直接返回任务执行失败,使任务进入队列末尾排队等待
@@ -204,7 +206,7 @@ public class JobTask implements Serializable, Cloneable {
                 if (trasDataType == 0x01) {
                     AutoSyncDeviceDataUtil.INSTANCE.saveAutoSyncTime();
                 }
-
+                boolean mIsUploadSuccess = false;
                 if (!TextUtils.isEmpty(returnBody)) {
                     try {
                         JSONObject jsonObject = new JSONObject(returnBody);
@@ -213,16 +215,12 @@ public class JobTask implements Serializable, Cloneable {
                             String data = jsonObject.getString("data");
                             List<DailyReport> dailyReports = JSON.parseArray(data, DailyReport.class);
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功--是睡眠特征数据-->" + " dailyReports=" + dailyReports.toString());
-                            EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(true));
-                            DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(true);
+                            mIsUploadSuccess = true;
                         } else if (returnBody.contains("errors")) {//透传成功睡眠特征数据,但是出现错误信息.比如采集时间重叠  解析失败  文件名存在
+                            //{"errors":{"code":1,"user_message":"\u91c7\u96c6\u65f6\u95f4\u91cd\u53e0","internal_message":"coverage","more_info":""}}
                             String errors = jsonObject.getString("errors");
                             OssTransDataError ossTransDataError = JSON.parseObject(errors, OssTransDataError.class);
-                            boolean isFailed = ossTransDataError.getCode() != 3;//code==3  服务器, 透传数据的文件名存在.忽略该业务异常,不弹出error loading
-                            if (isFailed) {
-                                EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(false));
-                                DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
-                            }
+                            mIsUploadSuccess = ossTransDataError.getCode() == 3;//code==3  服务器, 透传数据的文件名存在，当成功处理
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功--但出现错误信息  ossTransDataError=" + ossTransDataError.toString());
                         } else {
                             //透传成功,不是睡眠特征数据
@@ -235,7 +233,8 @@ public class JobTask implements Serializable, Cloneable {
                 } else {
                     LogManager.appendTransparentLog("oss success response=" + returnBody);
                 }
-
+                EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(mIsUploadSuccess));
+                DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
                 mTaskCallback.executeCallbackSuccess(JobTask.this);
                 Log.e(TAG, "thread: " + Thread.currentThread());
             }
