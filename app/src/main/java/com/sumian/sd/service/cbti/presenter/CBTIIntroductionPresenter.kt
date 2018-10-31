@@ -60,9 +60,7 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
                     view?.getCBTIIntroductionListSuccess(data)
                     val formatExpiredDate = TimeUtil.formatDate("yyyy.MM.dd 到期", it.meta.expiredAt * 1000L)
                     val isLock = it.meta.isLock
-                    if (isLock) {
-                        view?.onCBTIServiceIsExpired()
-                    }
+                    view?.onCBTIServiceIsExpired(isLock)
                     view?.getBannerInfo(formatExpiredDate, if (isLock) {
                         "已过期"
                     } else {
