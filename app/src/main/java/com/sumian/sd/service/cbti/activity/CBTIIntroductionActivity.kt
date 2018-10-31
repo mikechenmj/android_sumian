@@ -1,20 +1,27 @@
 package com.sumian.sd.service.cbti.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseBackPresenterActivity
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
+import com.sumian.sd.event.CBTIServiceBoughtEvent
+import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.homepage.bean.CbtiChapterData
 import com.sumian.sd.service.cbti.adapter.CBTIIntroductionAdapter
 import com.sumian.sd.service.cbti.contract.CBTIIntroductionContract
 import com.sumian.sd.service.cbti.presenter.CBTIIntroductionPresenter
+import com.sumian.sd.service.cbti.widget.CBTIIntroductionWebView
 import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
 
 /**
@@ -43,6 +50,8 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
         adapter
     }
 
+    private var mCbtiIntroductionWebView: CBTIIntroductionWebView? = null
+
     override fun getChildContentId(): Int {
         return R.layout.activity_main_cbti_introduction
     }
@@ -63,8 +72,23 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
 
     override fun onResume() {
         super.onResume()
+        requestData()
+        mCbtiIntroductionWebView?.resumeWebView()
+    }
+
+    private fun requestData() {
         mPresenter?.getCBTIServiceDetail()
         mPresenter?.getCBTIIntroductionList()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mCbtiIntroductionWebView?.pauseWebView()
+    }
+
+    override fun onRelease() {
+        releaseWebView()
+        super.onRelease()
     }
 
     override fun showLoading() {
@@ -114,8 +138,58 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
         getCBTIIntroductionListFailed(error)
     }
 
-    override fun onCBTIServiceIsExpired() {
-        finish()
-        CBTIIntroductionWebActivity.show()//已过期，跳转去购买服务
+    override fun onCBTIServiceIsExpired(isExpired: Boolean) {
+        // finish()
+        if (isExpired) {
+            showCBTIIntroductionWebView()
+        } else {
+            hideCBTIIntroductionWebView()
+        }
+        // CBTIIntroductionWebActivity.show()//已过期，跳转去购买服务
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            requestData()
+            EventBusUtil.postStickyEvent(CBTIServiceBoughtEvent())
+        }
+    }
+
+    private fun initCBTIIntroductionWebView() {
+        val indexOfChild = cbti_introduction_container.indexOfChild(mCbtiIntroductionWebView)
+        if (mCbtiIntroductionWebView == null) {
+            val cbtiIntroductionWebView = CBTIIntroductionWebView(this)
+            cbtiIntroductionWebView.post {
+                cbtiIntroductionWebView.setTitleBar(mTitleBar)
+                cbtiIntroductionWebView.requestCBTIIntroductionUrl()
+            }
+            val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            layoutParams.gravity = Gravity.CENTER
+            cbti_introduction_container.addView(cbtiIntroductionWebView, layoutParams)
+            this.mCbtiIntroductionWebView = cbtiIntroductionWebView
+            Log.e("TAG", "initCBTIIntroductionWebView: --------init---->")
+        } else {
+            mCbtiIntroductionWebView?.requestCBTIIntroductionUrl()
+            Log.e("TAG", "initCBTIIntroductionWebView: --------直接 request---->")
+        }
+    }
+
+    private fun showCBTIIntroductionWebView() {
+        coordinator_cbti_info.visibility = View.GONE
+        initCBTIIntroductionWebView()
+    }
+
+    private fun hideCBTIIntroductionWebView() {
+        coordinator_cbti_info.visibility = View.VISIBLE
+        mCbtiIntroductionWebView?.let {
+            cbti_introduction_container.removeViewInLayout(it)
+        }
+        releaseWebView()
+        mCbtiIntroductionWebView = null
+    }
+
+    private fun releaseWebView() {
+        this.mCbtiIntroductionWebView?.destroyWebView()
     }
 }

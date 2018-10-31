@@ -31,19 +31,11 @@ class CBTIIntroductionWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() 
 
     companion object {
         private const val REQUEST_CODE_BUY_SERVICE = 1000
-        private const val REQUEST_CODE_BUY_SERVICE_FROM_INTRODUCTION = 1001
 
         @JvmStatic
         fun show() {
             ActivityUtils.getTopActivity()?.let {
                 it.startActivity(Intent(it, CBTIIntroductionWebActivity::class.java))
-            }
-        }
-
-        @JvmStatic
-        fun showForResult() {
-            ActivityUtils.getTopActivity()?.let {
-                it.startActivityForResult(Intent(it, CBTIIntroductionWebActivity::class.java), REQUEST_CODE_BUY_SERVICE_FROM_INTRODUCTION)
             }
         }
     }
