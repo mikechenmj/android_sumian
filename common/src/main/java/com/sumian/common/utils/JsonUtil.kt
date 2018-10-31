@@ -18,10 +18,12 @@ class JsonUtil {
 
         private val gson = Gson()
 
+        @JvmStatic
         fun toJson(any: Any?): String {
             return gson.toJson(any)
         }
 
+        @JvmStatic
         fun <T> fromJson(json: String?, clazz: Class<T>): T? {
             return try {
                 gson.fromJson(json, clazz)
@@ -34,6 +36,7 @@ class JsonUtil {
         /**
          * @param type Such as new TypeToken<Map></Map><String></String>, Integer>>() {}.getType(); new TypeToken<List></List><String>>(){}.getType();
         </String> */
+        @JvmStatic
         fun <T> fromJson(json: String?, type: Type): T? {
             return try {
                 gson.fromJson(json, type)
