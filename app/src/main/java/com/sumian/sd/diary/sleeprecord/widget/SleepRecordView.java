@@ -67,7 +67,6 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
 
     private void init(Context context) {
         View inflate = inflate(context, R.layout.view_sleep_record_view, this);
-        ButterKnife.bind(this, inflate);
         findViewById(R.id.tv_go_to_set_diary_reminder).setOnClickListener((v) -> SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_SLEEP_DIARY));
         titleViewSleepRecord = inflate.findViewById(R.id.title_view_sleep_record);
         llProgress = inflate.findViewById(R.id.ll_progress);
