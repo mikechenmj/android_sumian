@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.hw.widget.refresh
 
 import android.content.DialogInterface

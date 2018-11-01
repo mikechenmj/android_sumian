@@ -1,4 +1,4 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
+@file:Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
 
 package com.sumian.sd.pay.pay
 
