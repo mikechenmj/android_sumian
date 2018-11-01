@@ -34,6 +34,7 @@ import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
+import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
 import org.greenrobot.eventbus.Subscribe
 
 @Suppress("unused")
