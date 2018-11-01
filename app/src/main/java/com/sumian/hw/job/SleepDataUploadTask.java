@@ -38,7 +38,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -50,9 +49,9 @@ import retrofit2.Call;
  */
 
 @SuppressWarnings("UnusedReturnValue")
-public class JobTask implements Serializable, Cloneable {
+public class SleepDataUploadTask implements Serializable, Cloneable {
 
-    private static final String TAG = JobTask.class.getSimpleName();
+    private static final String TAG = SleepDataUploadTask.class.getSimpleName();
     String filePath;//文件保存路径
     private String beginCmd;
     private String endCmd;
@@ -63,7 +62,7 @@ public class JobTask implements Serializable, Cloneable {
     private int type;//透传数据的类型
     private transient TaskCallback mTaskCallback;
 
-    JobTask(String filePath, String beginCmd, String endCmd, String monitorSn, String speedSleeperSn, long receiveStartedTime, long receiveEndedTime, int type) {
+    SleepDataUploadTask(String filePath, String beginCmd, String endCmd, String monitorSn, String speedSleeperSn, long receiveStartedTime, long receiveEndedTime, int type) {
         this.filePath = filePath;
         this.beginCmd = beginCmd;
         this.endCmd = endCmd;
@@ -74,7 +73,7 @@ public class JobTask implements Serializable, Cloneable {
         this.type = type;
     }
 
-    public JobTask setType(int type) {
+    public SleepDataUploadTask setType(int type) {
         this.type = type;
         return this;
     }
@@ -82,7 +81,7 @@ public class JobTask implements Serializable, Cloneable {
     @NonNull
     @Override
     public String toString() {
-        return "JobTask{" +
+        return "SleepDataUploadTask{" +
                 "filePath='" + filePath + '\'' +
                 ", beginCmd='" + beginCmd + '\'' +
                 ", endCmd='" + endCmd + '\'' +
@@ -92,7 +91,7 @@ public class JobTask implements Serializable, Cloneable {
                 '}';
     }
 
-    JobTask setTaskCallback(TaskCallback taskCallback) {
+    SleepDataUploadTask setTaskCallback(TaskCallback taskCallback) {
         mTaskCallback = taskCallback;
         return this;
     }
@@ -226,12 +225,12 @@ public class JobTask implements Serializable, Cloneable {
     }
 
     @Override
-    public JobTask clone() throws CloneNotSupportedException {
-        return (JobTask) super.clone();
+    public SleepDataUploadTask clone() throws CloneNotSupportedException {
+        return (SleepDataUploadTask) super.clone();
     }
 
     public interface TaskCallback {
-        void executeTaskFinish(JobTask jobTask, boolean isSuccess, boolean retry, @Nullable String message);
+        void executeTaskFinish(SleepDataUploadTask sleepDataUploadTask, boolean isSuccess, boolean retry, @Nullable String message);
     }
 
     /**
@@ -251,6 +250,6 @@ public class JobTask implements Serializable, Cloneable {
      * @param retry     是否重试
      */
     private void onUploadFinish(boolean isSuccess, boolean retry) {
-        SumianExecutor.INSTANCE.runOnUiThread(() -> mTaskCallback.executeTaskFinish(JobTask.this, isSuccess, retry, null));
+        SumianExecutor.INSTANCE.runOnUiThread(() -> mTaskCallback.executeTaskFinish(SleepDataUploadTask.this, isSuccess, retry, null));
     }
 }

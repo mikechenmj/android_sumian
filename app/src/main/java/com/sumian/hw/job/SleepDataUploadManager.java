@@ -38,10 +38,10 @@ import java.util.List;
  * desc:
  */
 
-public class JobScheduler {
+public class SleepDataUploadManager {
     private static final String SP_NAME = "SyncSleepDataTask";
     private static final String SP_KEY_PENDING_TASKS = "pending_tasks";
-    private volatile List<JobTask> mJobTasks = new ArrayList<>(0);
+    private volatile List<SleepDataUploadTask> mSleepDataUploadTasks = new ArrayList<>(0);
     private volatile boolean mIsBusy;
     private volatile boolean mIsNetworkEnable;
     private BroadcastReceiver mNetworkReceiver;
@@ -49,7 +49,7 @@ public class JobScheduler {
     private int mRetryTime = 0;
     private static final int MAX_RETRY_TIME = 3;
 
-    public JobScheduler(Context context) {
+    public SleepDataUploadManager(Context context) {
         loadCacheJobTaskAndRun();
         registerNetworkStateChangeListener(context);
     }
@@ -99,7 +99,7 @@ public class JobScheduler {
             LogManager.appendTransparentLog("收到网络变化情况,网络可用  开始加载本地缓存的透传队列,并执行...");
             loadCacheJobTaskAndRun();
         } else {
-            LogManager.appendTransparentLog("收到网络变化情况,网络不可用  缓存透传队列到本地..." + mJobTasks.toString());
+            LogManager.appendTransparentLog("收到网络变化情况,网络不可用  缓存透传队列到本地..." + mSleepDataUploadTasks.toString());
             persistPendingTask();
         }
     }
@@ -113,23 +113,23 @@ public class JobScheduler {
 
     private void loadCacheJobTaskAndRun() {
         String pendingTaskJson = SPUtils.getInstance(SP_NAME).getString(SP_KEY_PENDING_TASKS);
-        List<JobTask> list = JsonUtil.fromJson(pendingTaskJson, new TypeToken<List<JobTask>>() {
+        List<SleepDataUploadTask> list = JsonUtil.fromJson(pendingTaskJson, new TypeToken<List<SleepDataUploadTask>>() {
         }.getType());
         if (list != null) {
-            mJobTasks = list;
+            mSleepDataUploadTasks = list;
         }
         startNextTaskIfPossible();
     }
 
-    private void addTaskAndRun(JobTask jobTask) {
+    private void addTaskAndRun(SleepDataUploadTask sleepDataUploadTask) {
         LogManager.appendTransparentLog("透传任务加入队列");
-        mJobTasks.add(jobTask);
+        mSleepDataUploadTasks.add(sleepDataUploadTask);
         persistPendingTask();
         startNextTaskIfPossible();
     }
 
     private void persistPendingTask() {
-        SPUtils.getInstance(SP_NAME).put(SP_KEY_PENDING_TASKS, JsonUtil.toJson(mJobTasks));
+        SPUtils.getInstance(SP_NAME).put(SP_KEY_PENDING_TASKS, JsonUtil.toJson(mSleepDataUploadTasks));
     }
 
     /**
@@ -137,8 +137,8 @@ public class JobScheduler {
      *
      * @return 下一个要执行的任务
      */
-    private JobTask getNextTask() {
-        return mJobTasks.isEmpty() ? null : mJobTasks.get(0);
+    private SleepDataUploadTask getNextTask() {
+        return mSleepDataUploadTasks.isEmpty() ? null : mSleepDataUploadTasks.get(0);
     }
 
     private void startNextTaskIfPossible() {
@@ -149,7 +149,7 @@ public class JobScheduler {
             LogManager.appendTransparentLog("网络不可用，直接缓存任务到本地,等待网络可用,重启任务队列");
             return;
         }
-        JobTask nextTask = getNextTask();
+        SleepDataUploadTask nextTask = getNextTask();
         if (nextTask == null) {
             LogManager.appendTransparentLog("上传队列中所有透传任务已全部执行完成");
             return;
@@ -158,18 +158,18 @@ public class JobScheduler {
         nextTask.setTaskCallback(mTaskCallback).execute();
     }
 
-    private JobTask.TaskCallback mTaskCallback = new JobTask.TaskCallback() {
+    private SleepDataUploadTask.TaskCallback mTaskCallback = new SleepDataUploadTask.TaskCallback() {
 
         @Override
-        public void executeTaskFinish(JobTask jobTask, boolean isSuccess, boolean retry, @Nullable String message) {
+        public void executeTaskFinish(SleepDataUploadTask sleepDataUploadTask, boolean isSuccess, boolean retry, @Nullable String message) {
             EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(isSuccess));
             DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
             mIsBusy = false;
-            mJobTasks.remove(jobTask);
+            mSleepDataUploadTasks.remove(sleepDataUploadTask);
             if (retry) {
-                mJobTasks.add(jobTask);
+                mSleepDataUploadTasks.add(sleepDataUploadTask);
             } else {
-                deleteSleepDataFile(jobTask);
+                deleteSleepDataFile(sleepDataUploadTask);
             }
             persistPendingTask();
             if (retry) {
@@ -184,8 +184,8 @@ public class JobScheduler {
     };
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void deleteSleepDataFile(JobTask jobTask) {
-        File file = new File(jobTask.filePath);
+    private void deleteSleepDataFile(SleepDataUploadTask sleepDataUploadTask) {
+        File file = new File(sleepDataUploadTask.filePath);
         if (file.exists()) {
             file.delete();
         }
@@ -211,13 +211,13 @@ public class JobScheduler {
             if (!writeResult) {
                 return;
             }
-            // create and add JobTask
-            JobTask jobTask = new JobTask(sleepFile.getAbsolutePath(),
+            // create and add SleepDataUploadTask
+            SleepDataUploadTask sleepDataUploadTask = new SleepDataUploadTask(sleepFile.getAbsolutePath(),
                     sleepDataBean.beginCmd, sleepDataBean.endCmd,
                     sleepDataBean.monitorSn, sleepDataBean.speedSleeperSn,
                     sleepDataBean.receiveStartedTime, sleepDataBean.receiveEndedTime,
                     sleepDataBean.type);
-            mHandler.post(() -> addTaskAndRun(jobTask));
+            mHandler.post(() -> addTaskAndRun(sleepDataUploadTask));
         });
     }
 

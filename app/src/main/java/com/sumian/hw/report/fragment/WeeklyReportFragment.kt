@@ -106,7 +106,7 @@ class WeeklyReportFragment : HwBaseFragment<WeeklyReportPresenter>(), WeeklyRepo
 
     override fun onEnter(data: String?) {
         LogManager.appendUserOperationLog("点击 '周报告' 界面")
-        AppManager.getJobScheduler().checkPendingTaskAndRun()
+        AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
     }
 
     override fun onRelease() {
