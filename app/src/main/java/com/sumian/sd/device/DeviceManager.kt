@@ -408,11 +408,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                         }
                         LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd)
                         postIsUploadingSleepDataToServer(true)
-                        AppManager.getJobScheduler()
+                        AppManager.getSleepDataUploadManager()
                                 .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,
-//                                        AppManager.getDeviceModel().monitorSn,
                                         mMonitorLiveData.value?.sn,
-//                                        AppManager.getDeviceModel().sleepySn,
                                         mMonitorLiveData.value?.sleeperSn,
                                         mReceiveStartedTime, getActionTimeInSecond())
                         writeResponse(peripheral, data, true)

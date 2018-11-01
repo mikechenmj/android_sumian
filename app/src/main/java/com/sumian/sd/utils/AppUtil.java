@@ -2,7 +2,6 @@ package com.sumian.sd.utils;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.Utils;
 import com.hyphenate.chat.ChatClient;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.blue.model.BluePeripheral;
@@ -27,7 +26,7 @@ import com.sumian.sd.main.MainActivity;
 public class AppUtil {
 
     public static void exitApp() {
-        AppManager.getJobScheduler().release(Utils.getApp().getApplicationContext());
+        AppManager.getSleepDataUploadManager().release();
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.close();

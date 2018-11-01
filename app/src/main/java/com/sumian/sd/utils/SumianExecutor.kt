@@ -14,33 +14,28 @@ import java.util.concurrent.Executors
  *     version: 1.0
  * </pre>
  */
-class SumianExecutor private constructor() {
+object SumianExecutor {
 
     private val mHandler: Handler = Handler(Looper.getMainLooper())
     private val mCachedThreadPool: ExecutorService = Executors.newCachedThreadPool()
 
-    companion object {
-        val instance: SumianExecutor = SumianExecutor()
+    fun runOnUiThread(runnable: Runnable) {
+        mHandler.postDelayed(runnable, 0)
+    }
 
+    fun runOnUiThread(runnable: () -> Unit, delay: Long = 0) {
+        mHandler.postDelayed(runnable, delay)
+    }
 
-        fun runOnUiThread(runnable: Runnable) {
-            instance.mHandler.postDelayed(runnable, 0)
-        }
+    fun runOnUiThread(runnable: Runnable, delay: Long = 0) {
+        mHandler.postDelayed(runnable, delay)
+    }
 
-        fun runOnUiThread(runnable: () -> Unit, delay: Long = 0) {
-            instance.mHandler.postDelayed(runnable, delay)
-        }
+    fun runOnBackgroundThread(runnable: () -> Unit) {
+        mCachedThreadPool.execute(runnable)
+    }
 
-        fun runOnUiThread(runnable: Runnable, delay: Long = 0) {
-            instance.mHandler.postDelayed(runnable, delay)
-        }
-
-        fun runOnBackgroundThread(runnable: () -> Unit) {
-            instance.mCachedThreadPool.execute(runnable)
-        }
-
-        fun runOnBackgroundThread(runnable: Runnable) {
-            instance.mCachedThreadPool.execute(runnable)
-        }
+    fun runOnBackgroundThread(runnable: Runnable) {
+        mCachedThreadPool.execute(runnable)
     }
 }
