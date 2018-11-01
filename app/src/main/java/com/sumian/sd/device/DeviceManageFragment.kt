@@ -263,7 +263,7 @@ class DeviceManageFragment : BaseFragment() {
     }
 
     private fun switchNoDeviceVg(isNoDevice: Boolean) {
-        ll_no_device.visibility = if (isNoDevice) View.VISIBLE else View.GONE
+        vg_no_device.visibility = if (isNoDevice) View.VISIBLE else View.GONE
         ll_device.visibility = if (!isNoDevice) View.VISIBLE else View.GONE
     }
 

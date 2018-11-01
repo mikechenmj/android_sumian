@@ -1,29 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_no_device"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vg_no_device"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:visibility="visible">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_no_device"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_home_icon_notconnected" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_no_device"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_home_icon_notconnected" />
+
+        <TextView
+            android:id="@+id/tv_no_device_title"
+            style="@style/text_t3_16"
+            android:layout_marginTop="20dp"
+            android:text="@string/bluetooth_not_open" />
+
+        <TextView
+            android:id="@+id/tv_no_device_desc"
+            style="@style/text_t2_14"
+            android:layout_marginTop="10dp"
+            android:text="@string/please_open_bluetooth_and_connect_monitor" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_no_device_title"
-        style="@style/text_t3_16"
-        android:layout_marginTop="20dp"
-        android:text="@string/bluetooth_not_open" />
-
-    <TextView
-        android:id="@+id/tv_no_device_desc"
-        style="@style/text_t2_14"
-        android:layout_marginTop="10dp"
-        android:text="@string/please_open_bluetooth_and_connect_monitor" />
-
-</LinearLayout>
+        android:id="@+id/tv_know_device"
+        style="@style/text_b3_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:drawableEnd="@drawable/home_icon_understandmore"
+        android:drawablePadding="5dp"
+        android:padding="10dp"
+        android:text="@string/know_device" />
+</FrameLayout>
