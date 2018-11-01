@@ -17,9 +17,6 @@ import com.sumian.common.helper.ToastHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * created by jzz
  * <p>
@@ -34,7 +31,6 @@ public abstract class HwBaseFragment<Presenter extends HwBasePresenter> extends 
     public Bundle mBundle;
     protected View mRootView;
     protected Activity mHostActivity;
-    private Unbinder mUnbinder;
 
     public Presenter mPresenter;
 
@@ -59,8 +55,6 @@ public abstract class HwBaseFragment<Presenter extends HwBasePresenter> extends 
         View rootView = inflater.inflate(getLayoutId(), container, false);
         // Do something
         onBindViewBefore(rootView);
-        // Bind view
-        this.mUnbinder = ButterKnife.bind(this, rootView);
         // Get savedInstanceState
         if (savedInstanceState != null) {
             onRestartInstance(savedInstanceState);

@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView;
 import com.sumian.sd.utils.TimeUtil;
@@ -21,10 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -34,21 +29,14 @@ import butterknife.OnClick;
  *     version: 1.0
  * </pre>
  */
-public class CalendarViewWrapper extends LinearLayout implements CalendarView.DayTypeProvider, ViewPager.OnPageChangeListener {
+public class CalendarViewWrapper extends LinearLayout implements CalendarView.DayTypeProvider, ViewPager.OnPageChangeListener, View.OnClickListener {
 
 
-    @BindView(R.id.tv_month)
-    TextView tvMonth;
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
-    @BindView(R.id.iv_right)
-    ImageView ivRight;
-    @BindView(R.id.tv_go_to_today)
-    TextView tvGoToToday;
-    @BindView(R.id.v_bg)
-    View vBg;
-    @BindView(R.id.calender_view_pager)
-    ViewPager mViewPager;
+    private TextView tvMonth;
+    private ImageView ivLeft;
+    private ImageView ivRight;
+    private View vBg;
+    private ViewPager mViewPager;
     protected int mCurrentPosition;
     protected CalendarView.OnDateClickListener mOnDateClickListener;
     protected CalendarViewPagerAdapter mPagerAdapter;
@@ -61,7 +49,16 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
     public CalendarViewWrapper(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         View inflate = inflate(context, R.layout.view_calendar_wrapper, this);
-        ButterKnife.bind(this, inflate);
+        tvMonth = inflate.findViewById(R.id.tv_month);
+        ivLeft = inflate.findViewById(R.id.iv_left);
+        ivLeft.setOnClickListener(this);
+        ivRight = inflate.findViewById(R.id.iv_right);
+        ivRight.setOnClickListener(this);
+        TextView tvGoToToday = inflate.findViewById(R.id.tv_go_to_today);
+        tvGoToToday.setOnClickListener(this);
+        vBg = inflate.findViewById(R.id.v_bg);
+        mViewPager = inflate.findViewById(R.id.calender_view_pager);
+
         init();
     }
 
@@ -96,7 +93,6 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
         }
     }
 
-    @OnClick({R.id.iv_left, R.id.iv_right, R.id.tv_go_to_today})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_left:

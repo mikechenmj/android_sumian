@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -63,12 +62,19 @@ public class SelectPictureBottomSheet extends BaseBottomSheetView implements Vie
     }
 
     @Override
+    protected void initView(View rootView) {
+        super.initView(rootView);
+        rootView.findViewById(R.id.tv_take_photo).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_pic_photo).setOnClickListener(this);
+        rootView.findViewById(R.id.tv_cancel).setOnClickListener(this);
+    }
+
+    @Override
     protected int getLayout() {
         return R.layout.lay_bottom_sheet_take_picture;
     }
 
     @Override
-    @OnClick({R.id.tv_take_photo, R.id.tv_pic_photo, R.id.tv_cancel})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_take_photo:

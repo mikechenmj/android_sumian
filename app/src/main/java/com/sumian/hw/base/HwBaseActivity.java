@@ -15,13 +15,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.sumian.common.helper.ToastHelper;
-import com.sumian.hw.log.LogJobIntentService;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by jzz
@@ -33,7 +29,6 @@ import butterknife.Unbinder;
 public abstract class HwBaseActivity<Presenter> extends AppCompatActivity {
 
     private static final String TAG = HwBaseActivity.class.getName();
-    private Unbinder mBind;
     private View mRoot;
 
     protected Presenter mPresenter;
@@ -166,7 +161,6 @@ public abstract class HwBaseActivity<Presenter> extends AppCompatActivity {
         if (initBundle(getIntent().getExtras())) {
             setContentView(getLayoutId());
             initWindow();
-            this.mBind = ButterKnife.bind(this);
             this.mRoot = getWindow().getDecorView();
             initWidget();
             initPresenter();

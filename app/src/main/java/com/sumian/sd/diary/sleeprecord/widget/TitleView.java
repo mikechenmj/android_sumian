@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.sumian.sd.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -24,11 +21,8 @@ import butterknife.ButterKnife;
  * </pre>
  */
 public class TitleView extends LinearLayout {
-    @BindView(R.id.tv_title)
     public TextView tvTitle;
-    @BindView(R.id.tv_menu)
     public TextView tvMenu;
-    @BindView(R.id.iv_right_arrow)
     public ImageView ivRightArrow;
 
     public TitleView(Context context) {
@@ -42,7 +36,10 @@ public class TitleView extends LinearLayout {
 
     private void init(Context context, AttributeSet attrs) {
         View inflate = inflate(context, R.layout.view_title, this);
-        ButterKnife.bind(this, inflate);
+        tvTitle = inflate.findViewById(R.id.tv_title);
+        tvMenu = inflate.findViewById(R.id.tv_menu);
+        ivRightArrow = inflate.findViewById(R.id.iv_right_arrow);
+
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleView);
         String title = typedArray.getString(R.styleable.TitleView_title_text);
         String menu = typedArray.getString(R.styleable.TitleView_content_text);

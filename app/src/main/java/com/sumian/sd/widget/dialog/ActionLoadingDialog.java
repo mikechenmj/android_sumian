@@ -12,9 +12,6 @@ import android.view.Window;
 
 import com.sumian.sd.R;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by jzz
  * on 2017/11/3.
@@ -22,9 +19,9 @@ import butterknife.Unbinder;
  * desc:
  */
 
+@SuppressWarnings("deprecation")
 public class ActionLoadingDialog extends DialogFragment {
 
-    private Unbinder mUnbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,14 +35,11 @@ public class ActionLoadingDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View rootView = inflater.inflate(R.layout.lay_action_loading, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+        return inflater.inflate(R.layout.lay_action_loading, container, false);
     }
 
     @Override
     public void onDestroyView() {
-        mUnbinder.unbind();
         super.onDestroyView();
     }
 

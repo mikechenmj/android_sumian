@@ -53,13 +53,13 @@ class RemindSettingActivity : BaseActivity() {
                         mReminder = response?.getReminder()
                         when (reminderType) {
                             Reminder.TYPE_SLEEP_DIARY -> {
-                                sdv_sleep_diary_remind.setContent(formatReminder())
+                                sdv_sleep_diary_remind.setContent(formatReminder() ?: "")
                             }
                             Reminder.TYPE_RELAXATION_TRAINING -> {
-                                sdv_relaxation_training.setContent(formatReminder())
+                                sdv_relaxation_training.setContent(formatReminder() ?: "")
                             }
                             Reminder.TYPE_ANXIETY -> {
-                                sdv_anxiety.setContent(formatReminder())
+                                sdv_anxiety.setContent(formatReminder() ?: "")
                             }
                         }
                     }

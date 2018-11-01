@@ -15,9 +15,6 @@ import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.utils.EditTextUtil;
 import com.sumian.sd.widget.TitleBar;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * Created by sm
  * on 2018/2/9.
@@ -28,12 +25,9 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
 
     private static final String EXTRA_MODIFY = "com.sumian.sleepdoctor.extra.MODIFY";
 
-    @BindView(R.id.title_bar)
-    TitleBar mTitleBar;
-    @BindView(R.id.tv_label)
-    TextView mTvLabel;
-    @BindView(R.id.et_name)
-    TextInputEditText mEtName;
+    private TitleBar mTitleBar;
+    private TextView mTvLabel;
+    private TextInputEditText mEtName;
 
     private String mModifyType;
 
@@ -65,6 +59,10 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mTitleBar = findViewById(R.id.title_bar);
+        mTvLabel = findViewById(R.id.tv_label);
+        mEtName = findViewById(R.id.et_name);
+        findViewById(R.id.bt_finish).setOnClickListener(this);
         mTitleBar.setOnBackClickListener(this);
         if (mModifyType.equals(ImproveUserProfileContract.IMPROVE_NICKNAME_KEY)) {
             EditTextUtil.Companion.setMaxLength(mEtName, SumianConfig.NICK_NAME_LENGTH_MAX);
@@ -114,7 +112,6 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
         mEtName.setSelection(input.length());
     }
 
-    @OnClick(R.id.bt_finish)
     @Override
     public void onClick(View v) {
         String input = mEtName.getText().toString().trim();

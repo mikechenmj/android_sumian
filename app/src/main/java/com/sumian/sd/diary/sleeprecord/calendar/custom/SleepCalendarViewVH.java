@@ -35,10 +35,10 @@ public class SleepCalendarViewVH extends CalendarViewVH {
     @Override
     public void setDay(int day, int dayType) {
         String text = day > 0 ? String.valueOf(day) : "";
-        mTextView.setText(text);
-        mTextView.setTextColor(getTextColor(dayType));
-        mTextView.setBackground(getBgDrawable(dayType));
-        mTextView.setTypeface(Typeface.DEFAULT, isBold(dayType) ? Typeface.BOLD : Typeface.NORMAL);
+        getMTextView().setText(text);
+        getMTextView().setTextColor(getTextColor(dayType));
+        getMTextView().setBackground(getBgDrawable(dayType));
+        getMTextView().setTypeface(Typeface.DEFAULT, isBold(dayType) ? Typeface.BOLD : Typeface.NORMAL);
     }
 
     private boolean isBold(int dayType) {
@@ -64,7 +64,7 @@ public class SleepCalendarViewVH extends CalendarViewVH {
                 textColor = R.color.t1_color;
                 break;
         }
-        return mContext.getResources().getColor(textColor);
+        return getMContext().getResources().getColor(textColor);
     }
 
     @Override
@@ -83,6 +83,6 @@ public class SleepCalendarViewVH extends CalendarViewVH {
             default:
                 return null;
         }
-        return mContext.getResources().getDrawable(drawableRes);
+        return getMContext().getResources().getDrawable(drawableRes);
     }
 }

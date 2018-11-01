@@ -3,9 +3,9 @@ package com.sumian.sd.account.userProfile;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.Token;
@@ -14,8 +14,6 @@ import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.widget.TitleBar;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by jzz
@@ -26,13 +24,7 @@ import butterknife.OnClick;
 public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, ImproveUserProfileContract.View, Observer<Token> {
 
-    @BindView(R.id.title_bar)
-    TitleBar mTitleBar;
-
-    @BindView(R.id.et_captcha)
-    TextInputEditText mEtCaptcha;
-    @BindView(R.id.bt_complete)
-    AppCompatButton mBtComplete;
+    private TextInputEditText mEtCaptcha;
 
     @Override
     protected int getLayoutId() {
@@ -42,7 +34,13 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
+        TitleBar titleBar = findViewById(R.id.title_bar);
+        titleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
+
+        mEtCaptcha = findViewById(R.id.et_captcha);
+
+        Button btComplete = findViewById(R.id.bt_complete);
+        btComplete.setOnClickListener(this);
     }
 
     @Override
@@ -56,7 +54,6 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
         ImproveUserProfilePresenter.init(this);
     }
 
-    @OnClick(R.id.bt_complete)
     @Override
     public void onClick(View v) {
         String name = mEtCaptcha.getText().toString().trim();

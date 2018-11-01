@@ -26,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import retrofit2.Call;
 
 /**
@@ -46,11 +45,6 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     public static final String LAUNCH_TYPE_SHOW_INPUT_DATA = "LAUNCH_TYPE_SHOW_INPUT_DATA";
     public static final String LAUNCH_TYPE_PICK = "LAUNCH_TYPE_PICK";
     private static final int PER_PAGE = 15;
-
-    @BindView(R.id.title_bar)
-    TitleBar titleBar;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
 
     private OnlineReportListAdapter mAdapter;
     private int mPage = 1;
@@ -101,6 +95,7 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        TitleBar titleBar = findViewById(R.id.title_bar);
         titleBar.setOnBackClickListener(v -> finish());
         titleBar.setMenuVisibility(mIsPickMode ? View.VISIBLE : View.GONE);
         titleBar.setOnMenuClickListener(v -> {
@@ -110,6 +105,8 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
             finish();
         });
         mAdapter = new OnlineReportListAdapter(null);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);

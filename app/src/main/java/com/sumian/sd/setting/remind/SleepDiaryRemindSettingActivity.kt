@@ -3,6 +3,7 @@ package com.sumian.sd.setting.remind
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.sd.R
@@ -73,19 +74,17 @@ class SleepDiaryRemindSettingActivity : BasePresenterActivity<SleepDiaryReminder
             }
         }
         title_bar.setOnBackClickListener { onBackPressed() }
-        sdv_sleep_diary_remind.setOnCheckedChangeListener { button, checked ->
-            run {
-                fl_remind_time.visibility = if (checked) View.VISIBLE else View.GONE
-                if (checked) {
-                    mSwitchPendingOff = true
-                    showTimePicker()
-                } else {
-                    if (mReminder != null) {
-                        mPresenter?.modifyReminder(mReminder!!.id, mReminder!!.getRemindAtUnixTime(), false)
-                    }
+        sdv_sleep_diary_remind.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            fl_remind_time.visibility = if (isChecked) View.VISIBLE else View.GONE
+            if (isChecked) {
+                mSwitchPendingOff = true
+                showTimePicker()
+            } else {
+                if (mReminder != null) {
+                    mPresenter?.modifyReminder(mReminder!!.id, mReminder!!.getRemindAtUnixTime(), false)
                 }
             }
-        }
+        })
         fl_remind_time.setOnClickListener { showTimePicker() }
     }
 

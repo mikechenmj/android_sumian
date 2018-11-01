@@ -21,8 +21,6 @@ import com.sumian.sd.widget.qr.QrCodeView;
 import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -36,8 +34,8 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
     public static final String EXTRAS_FROM_RECORD = "com.sumian.sleepdoctor.extras.from.record";
     public static final String EXTRAS_DOCTOR_SERVICE = "com.sumian.sleepdoctor.extras.doctor.service";
     private static final String TAG = ScanDoctorQrCodeActivity.class.getSimpleName();
-    @BindView(R.id.zxing_view)
-    QrCodeView mZXingView;
+
+    private QrCodeView mZXingView;
 
     private BroadcastReceiver mBroadcastReceiver;
 
@@ -69,7 +67,9 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mZXingView = findViewById(R.id.zxing_view);
         mZXingView.setOnShowQrCodeCallback(this);
+        findViewById(R.id.iv_back).setOnClickListener(this);
         registerFinishBroadcastReceiver();
     }
 
@@ -118,7 +118,6 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
         }
     }
 
-    @OnClick({R.id.iv_back})
     @Override
     public void onClick(View v) {
         finish();

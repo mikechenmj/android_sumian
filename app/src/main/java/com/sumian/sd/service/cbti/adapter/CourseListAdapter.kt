@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.base.holder.SdBaseViewHolder
@@ -32,8 +31,9 @@ class CourseListAdapter(context: Context) : BaseRecyclerAdapter<Course>(context)
 
     class ViewHolder(itemView: View) : SdBaseViewHolder<Course>(itemView) {
 
-        @BindView(R.id.tv_title)
-        lateinit var mTvTitle: TextView
+        private val mTvTitle: TextView  by lazy {
+            itemView.findViewById<TextView>(R.id.tv_title)
+        }
 
         override fun initView(item: Course) {
             super.initView(item)

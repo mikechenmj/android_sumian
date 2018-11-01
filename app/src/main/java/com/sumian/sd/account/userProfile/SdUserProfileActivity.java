@@ -41,8 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -63,34 +61,21 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
     private final static String imagePathName = "/image/";
     private static final int PIC_REQUEST_CODE_CAMERA = 0x02;
 
-    @BindView(R.id.title_bar)
-    TitleBar mTitleBar;
-    @BindView(R.id.iv_avatar)
-    CircleImageView mIvAvatar;
-    @BindView(R.id.dv_nickname)
-    SettingDividerView mDvNickname;
+    private TitleBar mTitleBar;
+    private CircleImageView mIvAvatar;
+    private SettingDividerView mDvNickname;
 
-    @BindView(R.id.dv_name)
-    SettingDividerView mDvName;
-    @BindView(R.id.dv_gender)
-    SettingDividerView mDvGender;
-    @BindView(R.id.dv_birthday)
-    SettingDividerView mDvBirthday;
-    @BindView(R.id.dv_area)
-    SettingDividerView mDvArea;
-    @BindView(R.id.dv_height)
-    SettingDividerView mDvHeight;
-    @BindView(R.id.dv_weight)
-    SettingDividerView mDvWeight;
-    @BindView(R.id.dv_edu_level)
-    SettingDividerView mDvEduLevel;
-    @BindView(R.id.dv_career)
-    SettingDividerView mDvCareer;
+    private SettingDividerView mDvName;
+    private SettingDividerView mDvGender;
+    private SettingDividerView mDvBirthday;
+    private SettingDividerView mDvArea;
+    private SettingDividerView mDvHeight;
+    private SettingDividerView mDvWeight;
+    private SettingDividerView mDvEduLevel;
+    private SettingDividerView mDvCareer;
 
-    @BindView(R.id.dv_mobile)
-    SettingDividerView mDvMobile;
-    @BindView(R.id.dv_wechat_bind)
-    SettingDividerView mDvWechat;
+    private SettingDividerView mDvMobile;
+    private SettingDividerView mDvWechat;
 
     private UserInfo mUserProfile;
 
@@ -106,13 +91,28 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mTitleBar.setOnBackClickListener(this);
+        mTitleBar = findViewById(R.id.title_bar);
+        mIvAvatar = findViewById(R.id.iv_avatar);
+        mDvNickname = findViewById(R.id.dv_nickname);
+        mDvName = findViewById(R.id.dv_name);
+        mDvGender = findViewById(R.id.dv_gender);
+        mDvBirthday = findViewById(R.id.dv_birthday);
+        mDvArea = findViewById(R.id.dv_area);
+        mDvHeight = findViewById(R.id.dv_height);
+        mDvWeight = findViewById(R.id.dv_weight);
+        mDvEduLevel = findViewById(R.id.dv_edu_level);
+        mDvCareer = findViewById(R.id.dv_career);
+        mDvMobile = findViewById(R.id.dv_mobile);
+        mDvWechat = findViewById(R.id.dv_wechat_bind);
+        findViewById(R.id.dv_my_target).setOnClickListener(this);
 
+        mTitleBar.setOnBackClickListener(this);
         mDvNickname.setOnShowMoreListener(this);
         mDvName.setOnShowMoreListener(this);
         mDvGender.setOnShowMoreListener(this);
         mDvBirthday.setOnShowMoreListener(this);
         mDvArea.setOnShowMoreListener(this);
+        mDvArea.setOnClickListener(this);
         mDvArea.getContentView().setMaxLines(1);
         mDvArea.getContentView().setMaxEms(11);
         mDvArea.getContentView().setEllipsize(TextUtils.TruncateAt.END);
@@ -150,11 +150,6 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         AppManager.getAccountViewModel().getLiveDataToken().removeObserver(this);
     }
 
-    @SuppressWarnings("ConstantConditions")
-    @OnClick({
-            R.id.lay_avatar,
-            R.id.dv_my_target,
-    })
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

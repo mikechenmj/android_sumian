@@ -5,13 +5,11 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * <pre>
@@ -23,14 +21,10 @@ import butterknife.ButterKnife;
  * </pre>
  */
 public class SleepRecordProgressView extends FrameLayout {
-    @BindView(R.id.progress_view)
-    ColorfulProgressView progressView;
-    @BindView(R.id.tv_percent)
-    TextView tvPercent;
-    @BindView(R.id.tv_percent_mark)
-    TextView tvPercentMark;
-    @BindView(R.id.tv_center_message)
-    TextView tvCenterMessage;
+
+    private ColorfulProgressView progressView;
+    private TextView tvPercent;
+    private TextView tvPercentMark;
 
     private int mColor0 = getResources().getColor(R.color.b3_color);
     private int mColor1 = getResources().getColor(R.color.b4_color);
@@ -46,8 +40,12 @@ public class SleepRecordProgressView extends FrameLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.lay_report_progress_view, this);
-        ButterKnife.bind(this);
+        View inflate = inflate(context, R.layout.lay_report_progress_view, this);
+        progressView = inflate.findViewById(R.id.progress_view);
+        tvPercent = inflate.findViewById(R.id.tv_percent);
+        tvPercentMark = inflate.findViewById(R.id.tv_percent_mark);
+        TextView tvCenterMessage = inflate.findViewById(R.id.tv_center_message);
+
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SleepRecordProgressView);
         boolean showCenterMessage = typedArray.getBoolean(R.styleable.SleepRecordProgressView_srpv_show_center_message, true);
         String centerMessage = typedArray.getString(R.styleable.SleepRecordProgressView_srpv_center_message);

@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by jzz
  * on 2017/11/3.
@@ -21,10 +18,9 @@ import butterknife.Unbinder;
  * desc:
  */
 
+@SuppressWarnings("ALL")
 public abstract class BaseDialogFragment extends DialogFragment {
 
-
-    private Unbinder mUnbinder;
 
     @Override
     public void onAttach(Context context) {
@@ -47,7 +43,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View rootView = inflater.inflate(getLayout(), container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
         initView(rootView);
         return rootView;
     }

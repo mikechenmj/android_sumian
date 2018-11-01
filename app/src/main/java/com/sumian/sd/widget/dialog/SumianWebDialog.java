@@ -16,23 +16,15 @@ import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
 import com.sumian.sd.h5.H5Uri;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
 /**
  *
  */
 @SuppressWarnings("ALL")
 public class SumianWebDialog extends DialogFragment implements View.OnClickListener {
 
-    @BindView(R.id.web_view)
-    SWebViewLayout mWebView;
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
+    private SWebViewLayout mWebView;
+    private TextView mTvTitle;
 
-    private Unbinder mBind;
     private String mUrl;
     private String mTitle;
 
@@ -73,13 +65,15 @@ public class SumianWebDialog extends DialogFragment implements View.OnClickListe
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         //getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View inflate = inflater.inflate(R.layout.lay_alert_dialog_web, container, false);
-        mBind = ButterKnife.bind(this, inflate);
         return inflate;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mWebView = view.findViewById(R.id.web_view);
+        mTvTitle = view.findViewById(R.id.tv_title);
+        view.findViewById(R.id.iv_close).setOnClickListener(this);
         String h5Url = BuildConfig.BASE_H5_URL + H5Uri.ADVISORY_GUIDE;
         mWebView.loadRequestUrl(mUrl);
         mTvTitle.setVisibility(TextUtils.isEmpty(mTitle) ? View.GONE : View.VISIBLE);
@@ -102,14 +96,12 @@ public class SumianWebDialog extends DialogFragment implements View.OnClickListe
     public void onDestroyView() {
         super.onDestroyView();
         mWebView.destroyWebView();
-        mBind.unbind();
     }
 
     public void show(FragmentManager fragmentManager) {
         show(fragmentManager, getClass().getSimpleName());
     }
 
-    @OnClick(R.id.iv_close)
     @Override
     public void onClick(View v) {
         dismiss();

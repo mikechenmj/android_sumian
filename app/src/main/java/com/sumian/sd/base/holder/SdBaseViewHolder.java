@@ -15,8 +15,6 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.Locale;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by jzz
  * on 2018/1/21.
@@ -33,7 +31,6 @@ public abstract class SdBaseViewHolder<Item> extends RecyclerView.ViewHolder {
 
     public SdBaseViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
         mLoader = Glide.with(itemView.getContext());
     }
 

@@ -19,16 +19,12 @@ import com.sumian.sd.widget.error.EmptyErrorView;
 
 import java.util.List;
 
-import butterknife.BindView;
 
 public class NotificationListActivity extends SdBaseActivity<NotificationListContract.Presenter>
         implements BaseQuickAdapter.OnItemClickListener, NotificationListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;
-    @BindView(R.id.title_bar)
-    TitleBar titleBar;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    private TitleBar titleBar;
     private NotificationListAdapter mAdapter;
     private NotificationListHeadView mHeaderView;
 
@@ -48,8 +44,10 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        titleBar = findViewById(R.id.title_bar);
         titleBar.setOnBackClickListener(v -> finish());
         titleBar.setOnMenuClickListener(v -> markAllAsRead());
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new NotificationListAdapter(this, null);
         recyclerView.setAdapter(mAdapter);

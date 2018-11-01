@@ -20,10 +20,6 @@ import com.sumian.sd.utils.TimeUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -33,46 +29,26 @@ import butterknife.OnClick;
  *     version: 1.0
  * </pre>
  */
-public class SleepRecordView extends LinearLayout {
-    @BindView(R.id.title_view_sleep_record)
+public class SleepRecordView extends LinearLayout implements View.OnClickListener {
     TitleView titleViewSleepRecord;
-    @BindView(R.id.ll_progress)
     LinearLayout llProgress;
-    @BindView(R.id.tv_on_bed_duration)
     TextView tvOnBedDuration;
-    @BindView(R.id.tv_sleep_duration)
     TextView tvSleepDuration;
-    @BindView(R.id.tv_fall_asleep_duration)
     TextView tvFallAsleepDuration;
-    @BindView(R.id.tv_night_wake_up_duration)
     TextView tvWakeupDuration;
-    @BindView(R.id.tv_sleep_desc)
     TextView tvSleepDesc;
-    @BindView(R.id.ll_sleep_record)
     LinearLayout llSleepRecord;
-    @BindView(R.id.title_view_doctor_advise)
     TitleView titleViewDoctorAdvise;
-    @BindView(R.id.tv_doctor_evaluation)
     TextView tvDoctorEvaluation;
-    @BindView(R.id.ll_doctor_evaluation)
     LinearLayout llDoctorEvaluation;
-    @BindView(R.id.ll_root)
     LinearLayout llRoot;
-    @BindView(R.id.progress_view_sleep)
     SleepRecordProgressView progressViewSleep;
-    @BindView(R.id.tv_sleep_quality)
     TextView tvSleepQuality;
-    @BindView(R.id.tv_pills)
     TextView tvPills;
-    @BindView(R.id.tv_little_sleep_duration)
     TextView tvLittleSleepDuration;
-    @BindView(R.id.tv_no_record_date)
     TextView tvNoRecordDate;
-    @BindView(R.id.btn_for_no_data)
     TextView btnGoRecord;
-    @BindView(R.id.ll_no_sleep_record)
     LinearLayout llNoSleepRecord;
-    @BindView(R.id.tv_sleep_record_not_enable_hint)
     TextView tvSleepRecordNotEnableHint;
     private SleepRecord mSleepRecord;
     private boolean mForceShowDoctorAdvice;
@@ -89,7 +65,27 @@ public class SleepRecordView extends LinearLayout {
 
     private void init(Context context) {
         View inflate = inflate(context, R.layout.view_sleep_record_view, this);
-        ButterKnife.bind(this, inflate);
+        titleViewSleepRecord = inflate.findViewById(R.id.title_view_sleep_record);
+        llProgress = inflate.findViewById(R.id.ll_progress);
+        tvOnBedDuration = inflate.findViewById(R.id.tv_on_bed_duration);
+        tvSleepDuration = inflate.findViewById(R.id.tv_sleep_duration);
+        tvFallAsleepDuration = inflate.findViewById(R.id.tv_fall_asleep_duration);
+        tvWakeupDuration = inflate.findViewById(R.id.tv_night_wake_up_duration);
+        tvSleepDesc = inflate.findViewById(R.id.tv_sleep_desc);
+        llSleepRecord = inflate.findViewById(R.id.ll_sleep_record);
+        titleViewDoctorAdvise = inflate.findViewById(R.id.title_view_doctor_advise);
+        tvDoctorEvaluation = inflate.findViewById(R.id.tv_doctor_evaluation);
+        llDoctorEvaluation = inflate.findViewById(R.id.ll_doctor_evaluation);
+        llRoot = inflate.findViewById(R.id.ll_root);
+        progressViewSleep = inflate.findViewById(R.id.progress_view_sleep);
+        tvSleepQuality = inflate.findViewById(R.id.tv_sleep_quality);
+        tvPills = inflate.findViewById(R.id.tv_pills);
+        tvPills.setOnClickListener(this);
+        tvLittleSleepDuration = inflate.findViewById(R.id.tv_little_sleep_duration);
+        tvNoRecordDate = inflate.findViewById(R.id.tv_no_record_date);
+        btnGoRecord = inflate.findViewById(R.id.btn_for_no_data);
+        llNoSleepRecord = inflate.findViewById(R.id.ll_no_sleep_record);
+        tvSleepRecordNotEnableHint = inflate.findViewById(R.id.tv_sleep_record_not_enable_hint);
     }
 
     public void setSleepRecord(SleepRecord sleepRecord) {
@@ -170,11 +166,6 @@ public class SleepRecordView extends LinearLayout {
         return getStringArray(strList);
     }
 
-    @OnClick(R.id.tv_pills)
-    public void onViewClicked() {
-        showPillsDialogIfNeed();
-    }
-
     private void showPillsDialogIfNeed() {
         List<SleepPill> sleep_pills = mSleepRecord.getAnswer().getSleep_pills();
         if (sleep_pills.size() == 0) {
@@ -204,5 +195,10 @@ public class SleepRecordView extends LinearLayout {
 
     private boolean isFillSleepRecordEnable(long recordTime) {
         return TimeUtilV2.Companion.getDayDistance(System.currentTimeMillis(), recordTime) < 3;
+    }
+
+    @Override
+    public void onClick(View v) {
+        showPillsDialogIfNeed();
     }
 }

@@ -303,7 +303,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
 
     @Override
     public void showSleepConnectingDialog() {
-        Version2ConnectingDialog version2ConnectingDialog = Version2ConnectingDialog.newInstance();
+        Version2ConnectingDialog version2ConnectingDialog = Version2ConnectingDialog.Companion.newInstance();
         version2ConnectingDialog.show(getSupportFragmentManager(), Version2ConnectingDialog.class.getSimpleName());
         this.mVersion2ConnectingDialog = version2ConnectingDialog;
     }

@@ -22,10 +22,6 @@ import com.sumian.sd.widget.dialog.theme.ITheme;
 import com.sumian.sd.widget.dialog.theme.LightTheme;
 import com.sumian.sd.widget.dialog.theme.ThemeFactory;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -41,33 +37,19 @@ import butterknife.OnClick;
  *     desc:加入黑白主题
  * </pre>
  */
-public class SumianAlertDialog {
+public class SumianAlertDialog implements View.OnClickListener {
 
     private final Context mContext;
 
     private final Dialog mDialog;
 
-    @BindView(R.id.card_view)
-    CardView mCardView;
-
-    @BindView(R.id.iv_close)
-    ImageView mIvClose;
-
-    @BindView(R.id.iv_top)
-    ImageView mIvTop;
-
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
-
-    @BindView(R.id.tv_message)
-    TextView mTvMessage;
-
-    @BindView(R.id.btn_left)
-    Button mBtnLeft;
-
-    @BindView(R.id.btn_right)
-    Button mBtnRight;
-
+    private CardView mCardView;
+    private ImageView mIvClose;
+    private ImageView mIvTop;
+    private TextView mTvTitle;
+    private TextView mTvMessage;
+    private Button mBtnLeft;
+    private Button mBtnRight;
 
     private boolean mIsCloseBtnVisible;
 
@@ -109,7 +91,18 @@ public class SumianAlertDialog {
         mITheme = ThemeFactory.create(LightTheme.class);
         mDialog = new AppCompatDialog(context, R.style.SumianDialog);
         @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.lay_alert_dialog, null, false);
-        ButterKnife.bind(this, inflate);
+
+        mCardView = inflate.findViewById(R.id.card_view);
+        mIvClose = inflate.findViewById(R.id.iv_close);
+        mIvClose.setOnClickListener(this);
+        mIvTop = inflate.findViewById(R.id.iv_top);
+        mTvTitle = inflate.findViewById(R.id.tv_title);
+        mTvMessage = inflate.findViewById(R.id.tv_message);
+        mBtnLeft = inflate.findViewById(R.id.btn_left);
+        mBtnLeft.setOnClickListener(this);
+        mBtnRight = inflate.findViewById(R.id.btn_right);
+        mBtnRight.setOnClickListener(this);
+
         mDialog.setContentView(inflate);
     }
 
@@ -250,19 +243,19 @@ public class SumianAlertDialog {
         return this;
     }
 
-    @OnClick({R.id.iv_close, R.id.btn_left, R.id.btn_right})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.iv_close:
                 break;
             case R.id.btn_left:
                 if (mLeftBtnClickListener != null) {
-                    mLeftBtnClickListener.onClick(view);
+                    mLeftBtnClickListener.onClick(v);
                 }
                 break;
             case R.id.btn_right:
                 if (mRightBtnClickListener != null) {
-                    mRightBtnClickListener.onClick(view);
+                    mRightBtnClickListener.onClick(v);
                 }
                 break;
             default:

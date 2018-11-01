@@ -6,8 +6,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog
 import com.sumian.sd.R
 import com.sumian.sd.pay.contract.PayContract
@@ -30,7 +28,9 @@ class PayDialog(context: Context, private val listener: Listener) : QMUIDialog(c
 
     }
     private val mBtJoin: Button by lazy {
-        findViewById<Button>(R.id.bt_join)
+        val btJoin = findViewById<Button>(R.id.bt_join)
+        btJoin.setOnClickListener(this@PayDialog)
+        btJoin
     }
 
     private var mPresenterWeakReference: WeakReference<PayContract.Presenter>? = null
@@ -75,16 +75,12 @@ class PayDialog(context: Context, private val listener: Listener) : QMUIDialog(c
 
     fun bindContentView(@LayoutRes id: Int): PayDialog {
         setContentView(id)
-        ButterKnife.bind(this)
         return this
     }
 
-    @OnClick(R.id.bt_join)
     override fun onClick(v: View) {
         val presenterWeakReference = this.mPresenterWeakReference
-
         val presenter = presenterWeakReference!!.get() ?: return
-
         when (v.id) {
             R.id.bt_join -> when (mPayStatus) {
                 PAY_SUCCESS -> presenter.checkPayOrder()

@@ -34,8 +34,6 @@ import com.sumian.sd.widget.divider.SettingDividerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import kotlin.Unit;
 import retrofit2.Call;
 
@@ -47,9 +45,7 @@ import retrofit2.Call;
 
 public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackClickListener, View.OnClickListener {
 
-    @BindView(R.id.title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.sdv_app_version)
     SettingDividerView mSdvAppVersion;
 
     private BottomSheetDialog dialog;
@@ -62,7 +58,18 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mTitleBar = findViewById(R.id.title_bar);
         mTitleBar.setOnBackClickListener(this);
+        mSdvAppVersion = findViewById(R.id.sdv_app_version);
+        findViewById(R.id.sdv_app_version).setOnClickListener(this);
+        findViewById(R.id.sdv_about_us).setOnClickListener(this);
+        findViewById(R.id.tv_logout).setOnClickListener(this);
+        findViewById(R.id.sdv_remind).setOnClickListener(this);
+        findViewById(R.id.sdv_device_version).setOnClickListener(this);
+        findViewById(R.id.sdv_change_bind).setOnClickListener(this);
+        findViewById(R.id.sdv_feedback).setOnClickListener(this);
+        findViewById(R.id.sdv_modify_password).setOnClickListener(this);
+        findViewById(R.id.sdv_clear_cache).setOnClickListener(this);
     }
 
     @Override
@@ -76,7 +83,6 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
         finish();
     }
 
-    @OnClick({R.id.sdv_app_version, R.id.sdv_about_us, R.id.tv_logout, R.id.sdv_remind, R.id.sdv_device_version, R.id.sdv_change_bind, R.id.sdv_feedback, R.id.sdv_modify_password, R.id.sdv_clear_cache})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
