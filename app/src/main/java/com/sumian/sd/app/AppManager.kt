@@ -92,6 +92,12 @@ object AppManager {
 
     @JvmStatic
     @Synchronized
+    fun getOpenEngine(): OpenEngine {
+        return mOpenEngine
+    }
+
+    @JvmStatic
+    @Synchronized
     fun getAccountViewModel(): AccountViewModel {
         return mAccountViewModel
     }

@@ -143,6 +143,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         return mTvMenu;
     }
 
+    public ImageView getIvMenu() {
+        return mIvMenu;
+    }
+
     @SuppressLint("ResourceType")
     public TitleBar setTitle(@StringRes int titleRes) {
         if (titleRes <= 0x00) {

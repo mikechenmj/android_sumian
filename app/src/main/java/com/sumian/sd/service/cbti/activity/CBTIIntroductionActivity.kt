@@ -18,6 +18,7 @@ import com.sumian.sd.homepage.bean.CbtiChapterData
 import com.sumian.sd.service.cbti.adapter.CBTIIntroductionAdapter
 import com.sumian.sd.service.cbti.contract.CBTIIntroductionContract
 import com.sumian.sd.service.cbti.presenter.CBTIIntroductionPresenter
+import com.sumian.sd.service.cbti.sheet.CBTIShareBottomSheet
 import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
 
 /**
@@ -61,6 +62,10 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
         super.initWidget()
         mTitleBar.setTitle(R.string.cbti_title_bar)
         mTitleBar.openTopPadding(true)
+        mTitleBar.showMoreIcon(R.drawable.ic_nav_share)
+        mTitleBar.setOnMenuClickListener {
+            CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
+        }
         recycler.adapter = mAdapter
         recycler.itemAnimator = null
         recycler.layoutManager = LinearLayoutManager(this)
