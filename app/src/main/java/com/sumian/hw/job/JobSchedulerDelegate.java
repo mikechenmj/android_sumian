@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.net.ConnectivityManagerCompat;
 import android.text.TextUtils;
 
@@ -20,6 +21,8 @@ import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.device.FileHelper;
+import com.sumian.sd.event.EventBusUtil;
+import com.sumian.sd.event.UploadSleepDataFinishedEvent;
 import com.sumian.sd.utils.SumianExecutor;
 
 import java.io.BufferedWriter;
@@ -173,27 +176,36 @@ public class JobSchedulerDelegate {
     }
 
     private JobTask.TaskCallback mTaskCallback = new JobTask.TaskCallback() {
+
         @Override
-        public void executeCallbackFailed(JobTask jobTask) {
+        public void executeTaskFinish(JobTask jobTask, boolean isSuccess, boolean retry, @Nullable String message) {
+            EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(isSuccess));
+            DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
             mIsBusy = false;
-            // 将失败任务置于队列末尾，避免阻塞后续任务。
             mJobTasks.remove(jobTask);
-            mJobTasks.add(jobTask);
+            if (retry) {
+                mJobTasks.add(jobTask);
+            } else {
+                deleteSleepDataFile(jobTask);
+            }
             persistPendingTask();
-            mRetryTime++;
-            if (mRetryTime <= MAX_RETRY_TIME) {
+            if (retry) {
+                mRetryTime++;
+                if (mRetryTime <= MAX_RETRY_TIME) {
+                    startNextTaskIfPossible();
+                }
+            } else {
                 startNextTaskIfPossible();
             }
         }
-
-        @Override
-        public void executeCallbackSuccess(JobTask jobTask) {
-            mIsBusy = false;
-            mJobTasks.remove(jobTask);
-            persistPendingTask();
-            startNextTaskIfPossible();
-        }
     };
+
+    private void deleteSleepDataFile(JobTask jobTask) {
+        File file = new File(jobTask.filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 
     void saveSleepData(ArrayList<String> sleepData, int type, String beginCmd, String endCmd, String monitorSn, String speedSleepSn, long receiveStartedTime, long receiveEndedTime) {
         SleepDataBean sleepDataBean = new SleepDataBean(sleepData, beginCmd, endCmd, monitorSn, speedSleepSn, receiveStartedTime, receiveEndedTime, type);
@@ -227,9 +239,7 @@ public class JobSchedulerDelegate {
 
     private File createSleepDataFile(String endCmd) {
         try {
-            File sleepFileDir = FileHelper.createSDDir(FileHelper.FILE_DIR);
-            String fileName = getFileNameByCommand(endCmd);
-            File sleepFile = new File(sleepFileDir, fileName);
+            File sleepFile = getSleepDataFile(endCmd);
             if (sleepFile.exists()) {
                 sleepFile.delete();
                 sleepFile.createNewFile();
@@ -239,6 +249,13 @@ public class JobSchedulerDelegate {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @NonNull
+    private File getSleepDataFile(String endCmd) {
+        File sleepFileDir = FileHelper.createSDDir(FileHelper.FILE_DIR);
+        String fileName = getFileNameByCommand(endCmd);
+        return new File(sleepFileDir, fileName);
     }
 
     @NonNull
