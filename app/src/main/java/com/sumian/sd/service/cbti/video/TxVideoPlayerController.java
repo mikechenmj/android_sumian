@@ -188,7 +188,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
             case NiceVideoView.STATE_PREPARING:
                 mImage.setVisibility(View.GONE);
                 mLoading.setVisibility(View.VISIBLE);
-                mLoadText.setText("正在准备...");
+                mLoadText.setText("正在加载中...");
                 mError.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.GONE);
                 mTop.setVisibility(View.GONE);
@@ -211,13 +211,13 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
             case NiceVideoView.STATE_BUFFERING_PLAYING:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
-                mLoadText.setText("正在缓冲...");
+                mLoadText.setText("正在加载中...");
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoView.STATE_BUFFERING_PAUSED:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
-                mLoadText.setText("正在缓冲...");
+                mLoadText.setText("正在加载中...");
                 cancelDismissTopBottomTimer();
                 break;
             case NiceVideoView.STATE_ERROR:
