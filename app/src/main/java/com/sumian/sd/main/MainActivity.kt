@@ -126,7 +126,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
             HwLeanCloudHelper.registerPushService()
         }
 
-        AppManager.getJobScheduler().checkJobScheduler()
+        AppManager.getJobScheduler().checkPendingTaskAndRun()
 
         UIProvider.getInstance().showDotCallback { msgLength ->
             HwLeanCloudHelper.haveCustomerMsg(msgLength)
