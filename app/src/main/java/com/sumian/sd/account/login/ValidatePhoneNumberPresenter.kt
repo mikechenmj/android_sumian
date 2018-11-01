@@ -72,11 +72,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
                     return
                 }
                 AppManager.getAccountViewModel().updateToken(response)
-                if (response.user.hasPassword) {
-                    AppUtil.launchMainAndFinishAll()
-                } else {
-                    SetPasswordActivity.launch()
-                }
+                AppUtil.launchMainAndFinishAll()
             }
 
             override fun onFinish() {
