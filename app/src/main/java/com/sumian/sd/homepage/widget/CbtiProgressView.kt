@@ -58,7 +58,6 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
     }
 
     fun setOnEnterLearnBtnClickListener(onClickListener: OnClickListener) {
-        tv_enter_learn.setOnClickListener(onClickListener)
         ll_not_buy.setOnClickListener(onClickListener)
         ll_progress.setOnClickListener(onClickListener)
     }

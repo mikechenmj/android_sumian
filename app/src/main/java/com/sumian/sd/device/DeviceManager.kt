@@ -83,6 +83,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         return mMonitorLiveData.value?.sleeperMac
     }
 
+    fun getSleeperBom(): String? {
+        return mMonitorLiveData.value?.sleeperBom
+    }
+
     fun setSleeperMac(mac: String) {
         mMonitorLiveData.value?.sleeperMac = mac
         notifyMonitorChange()

@@ -642,4 +642,9 @@
     <string name="wechat_friend">微信好友</string>
     <string name="wechat_circle">朋友圈</string>
     <string name="share_to_wechat">分享到</string>
+    <string name="sleep_prescription_desc">遵守睡眠处方规定的作息时间，逐步稳固睡眠，进而提升睡眠效率。</string>
+    <string name="data">数据</string>
+    <string name="know_device">了解设备</string>
+    <string name="set_diary_reminder_hint">养成坚持填写好习惯？去</string>
+    <string name="set_diary_reminder_hint_2"><u>设置填写提醒</u></string>
 </resources>

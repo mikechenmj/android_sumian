@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.base.holder.SdBaseViewHolder
@@ -32,14 +31,17 @@ class ExerciseAdapter(context: Context) : BaseRecyclerAdapter<Exercise>(context)
 
     class ViewHolder(itemView: View) : SdBaseViewHolder<Exercise>(itemView) {
 
-        @BindView(R.id.tv_title)
-        lateinit var mTvTitle: TextView
+        private val mTvTitle: TextView  by lazy {
+            itemView.findViewById<TextView>(R.id.tv_title)
+        }
 
-        @BindView(R.id.iv_lock)
-        lateinit var mIvLock: ImageView
+        private val mIvLock: ImageView by lazy {
+            itemView.findViewById<ImageView>(R.id.iv_lock)
+        }
 
-        @BindView(R.id.v_divider)
-        lateinit var mDivider: View
+        private val mDivider: View  by lazy {
+            itemView.findViewById<View>(R.id.v_divider)
+        }
 
         override fun initView(item: Exercise) {
             super.initView(item)

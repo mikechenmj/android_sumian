@@ -1,16 +1,13 @@
 package com.sumian.sd.account.userProfile;
 
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.widget.TitleBar;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by jzz
@@ -21,14 +18,7 @@ import butterknife.OnClick;
 public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener,
         TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, ImproveUserProfileContract.View {
 
-    @BindView(R.id.title_bar)
-    TitleBar mTitleBar;
-
-    @BindView(R.id.et_captcha)
-    TextInputEditText mEtCaptcha;
-
-    @BindView(R.id.bt_next_step)
-    AppCompatButton mBtNextStep;
+    private TextInputEditText mEtCaptcha;
 
     @Override
     protected int getLayoutId() {
@@ -38,9 +28,15 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        TitleBar titleBar = findViewById(R.id.title_bar);
+
+        mEtCaptcha = findViewById(R.id.et_captcha);
+        Button btNextStep = findViewById(R.id.bt_next_step);
+        btNextStep.setOnClickListener(this);
+
         // mTitleBar.getTitle().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_16);
         //mTitleBar.getMore().setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.font_14);
-        mTitleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
+        titleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
     }
 
     @Override
@@ -49,7 +45,6 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
         ImproveUserProfilePresenter.init(this);
     }
 
-    @OnClick(R.id.bt_next_step)
     @Override
     public void onClick(View v) {
 

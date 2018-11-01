@@ -4,7 +4,8 @@
     android:id="@+id/ll_device"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,17 +36,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"
-                android:src="@drawable/sel_home_sync_tv_bg" />
+                android:src="@drawable/sel_home_sync_tv_bg"
+                tools:ignore="ContentDescription" />
         </FrameLayout>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tv_progress_0"
             style="@style/text_t1_14"
+            android:layout_marginStart="20dp"
             tools:text="第 1 段" />
 
         <TextView
@@ -54,11 +52,23 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="20dp"
             tools:text="(90%)" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+        <TextView
+            android:id="@+id/tv_device_data"
+            style="@style/text_b3_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:drawableStart="@drawable/home_icon_devicedate"
+            android:drawablePadding="5dp"
+            android:text="@string/data" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <LinearLayout
@@ -66,7 +76,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
 
             <LinearLayout
                 android:layout_width="wrap_content"

@@ -20,9 +20,6 @@ import com.sumian.sd.kefu.KefuManager;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -38,10 +35,8 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
 
     private static final int REQUEST_CODE_QR_CODE_PERMISSIONS = 1;
 
-    @BindView(R.id.ib_scan)
-    ImageView mIvOpenScan;
-    @BindView(R.id.siv_customer_service)
-    ImageView mIvCustomService;
+    private ImageView mIvOpenScan;
+    private ImageView mIvCustomService;
 
     private WeakReference<Fragment> mFragmentWeakReference;
     private OnGrantedCallback mOnGrantedCallback;
@@ -63,7 +58,11 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
     }
 
     private void init(Context context) {
-        ButterKnife.bind(inflate(context, R.layout.lay_scan_2_bind_doctor_default, this));
+        View rootView = inflate(context, R.layout.lay_scan_2_bind_doctor_default, this);
+        this.mIvOpenScan = rootView.findViewById(R.id.ib_scan);
+        mIvOpenScan.setOnClickListener(this);
+        this.mIvCustomService = rootView.findViewById(R.id.siv_customer_service);
+        mIvCustomService.setOnClickListener(this);
     }
 
     public RequestScanQrCodeView setOnGrantedCallback(OnGrantedCallback onGrantedCallback) {
@@ -122,12 +121,10 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
         setVisibility(GONE);
     }
 
-    @OnClick({R.id.ib_scan, R.id.siv_customer_service})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_scan:
-
                 requestCodeQRCodePermissions();
                 break;
             case R.id.siv_customer_service:

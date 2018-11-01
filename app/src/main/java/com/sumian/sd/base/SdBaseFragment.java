@@ -25,8 +25,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 
 /**
@@ -43,7 +41,6 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
     protected Activity mActivity;
     protected View mRootView;
     protected Presenter mPresenter;
-    private Unbinder mUnBinder;
     private Set<Call> mCalls = new HashSet<>();
     private LoadingDialog mLoadingDialog;
 
@@ -89,8 +86,6 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
         View rootView = inflater.inflate(getLayoutId(), container, false);
         // Do something
         onBindViewBefore(rootView);
-        // Bind view
-        this.mUnBinder = ButterKnife.bind(this, rootView);
         // Get savedInstanceState
         if (savedInstanceState != null) {
             onRestartInstance(savedInstanceState);
@@ -136,7 +131,6 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
             }
         }
         mCalls.clear();
-        this.mUnBinder.unbind();
     }
 
     @Override

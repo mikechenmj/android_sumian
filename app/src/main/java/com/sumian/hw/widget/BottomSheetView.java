@@ -9,9 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * Created by jzz
  * on 2017/10/05.
@@ -21,8 +18,6 @@ import butterknife.Unbinder;
 
 public abstract class BottomSheetView extends BottomSheetDialogFragment {
 
-
-    private Unbinder mUnbinder;
 
     @Override
     public void onAttach(Context context) {
@@ -36,7 +31,6 @@ public abstract class BottomSheetView extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayout(), container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
         getView();
         initView(rootView);
         return rootView;
@@ -50,7 +44,6 @@ public abstract class BottomSheetView extends BottomSheetDialogFragment {
 
     @Override
     public void onDestroyView() {
-        mUnbinder.unbind();
         release();
         super.onDestroyView();
     }

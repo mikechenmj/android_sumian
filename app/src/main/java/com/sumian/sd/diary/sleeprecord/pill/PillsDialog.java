@@ -8,16 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.bean.SleepPill;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * <pre>
@@ -28,14 +23,10 @@ import butterknife.OnClick;
  *     version: 1.0
  * </pre>
  */
-public class PillsDialog extends Dialog {
+public class PillsDialog extends Dialog implements View.OnClickListener {
 
     public static final String KEY_PILLS = "pills";
 
-    @BindView(R.id.iv_close)
-    ImageView ivClose;
-    @BindView(R.id.rv)
-    RecyclerView recyclerView;
     private List<SleepPill> mSleepPills;
 
     private PillsDialog(@NonNull Context context, List<SleepPill> pills) {
@@ -51,7 +42,10 @@ public class PillsDialog extends Dialog {
 
     private void init(Context context) {
         @SuppressLint("InflateParams") View inflate = LayoutInflater.from(context).inflate(R.layout.lay_pills_dialog, null);
-        ButterKnife.bind(this, inflate);
+        //ImageView ivClose = inflate.findViewById(R.id.iv_close);
+        RecyclerView recyclerView = inflate.findViewById(R.id.rv);
+        inflate.findViewById(R.id.iv_close).setOnClickListener(this);
+
         PillAdapter adapter = new PillAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -59,12 +53,12 @@ public class PillsDialog extends Dialog {
         setContentView(inflate);
     }
 
-    @OnClick(R.id.iv_close)
-    public void onViewClicked() {
-        dismiss();
-    }
-
     public void setSleepPills(List<SleepPill> sleepPills) {
         mSleepPills = sleepPills;
+    }
+
+    @Override
+    public void onClick(View v) {
+        dismiss();
     }
 }

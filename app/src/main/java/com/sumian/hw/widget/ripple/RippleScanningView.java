@@ -2,10 +2,11 @@ package com.sumian.hw.widget.ripple;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
+
+import com.sumian.sd.R;
 
 
 /**
@@ -14,8 +15,6 @@ import android.widget.RelativeLayout;
  * desc:
  */
 public class RippleScanningView extends RelativeLayout implements Runnable {
-
-    private static final String TAG = RippleScanningView.class.getSimpleName();
 
     private int mMaxRadius;
     private int mInterval = 100;
@@ -43,7 +42,7 @@ public class RippleScanningView extends RelativeLayout implements Runnable {
         mRipplePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mRipplePaint.setAntiAlias(true);
         mRipplePaint.setStyle(Paint.Style.STROKE);
-        mRipplePaint.setColor(Color.parseColor("#FF7EA5F4"));
+        mRipplePaint.setColor(getResources().getColor(R.color.t1_color_day));
         mRipplePaint.setStrokeWidth(2.f);
     }
 

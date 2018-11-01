@@ -48,7 +48,8 @@ class HwDeviceInfoInterceptor private constructor() : Interceptor {
                 + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(DeviceManager.getMonitorVersion())
                 + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(DeviceManager.getMonitorSn())
                 + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(DeviceManager.getSleeperVersion())
-                + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(DeviceManager.getSleeperSn()))
+                + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(DeviceManager.getSleeperSn())
+                + WITH_SIGN + "bom_version=" + formatSpeedSleeperInfo(DeviceManager.getSleeperBom()))
     }
 
     private fun formatMonitorInfo(monitorInfo: String?): String {

@@ -29,8 +29,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashSet;
 import java.util.Set;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 
 /**
@@ -46,7 +44,6 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
     protected View mRoot;
     protected Presenter mPresenter;
     protected Activity mActivity;
-    private Unbinder mBind;
     private Set<Call> mCalls = new HashSet<>();
     private LoadingDialog mLoadingDialog;
 
@@ -145,7 +142,6 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         if (initBundle(getIntent().getExtras())) {
             setContentView(getLayoutId());
             initWindow();
-            this.mBind = ButterKnife.bind(this);
             this.mRoot = getWindow().getDecorView();
             initPresenter();
             initWidget(mRoot);

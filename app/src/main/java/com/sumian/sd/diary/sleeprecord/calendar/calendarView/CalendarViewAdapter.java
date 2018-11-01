@@ -29,14 +29,14 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
     @NonNull
     @Override
     public CalendarViewVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return CalendarViewVH.create(parent);
+        return CalendarViewVH.Companion.create(parent);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewVH holder, int position) {
         final int dayInMonth = getDayInMonthByPosition(position);
         holder.setDay(dayInMonth, getDayType(position));
-        holder.mTextView.setOnClickListener(v -> {
+        holder.getMTextView().setOnClickListener(v -> {
             if (isDayInMonthInvalid(dayInMonth)) {
                 return;
             }

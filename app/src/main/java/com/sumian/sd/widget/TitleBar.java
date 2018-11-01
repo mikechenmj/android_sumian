@@ -18,9 +18,6 @@ import android.widget.TextView;
 import com.sumian.common.utils.ColorCompatUtil;
 import com.sumian.sd.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by jzz
  * on 2017/09/30.
@@ -30,16 +27,11 @@ import butterknife.ButterKnife;
 
 public class TitleBar extends FrameLayout implements View.OnClickListener {
 
-    @BindView(R.id.iv_back)
-    ImageView mIvBack;
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
-    @BindView(R.id.iv_menu)
-    ImageView mIvMenu;
-    @BindView(R.id.tv_menu)
-    TextView mTvMenu;
-    @BindView(R.id.v_root)
-    View mRootView;
+    private ImageView mIvBack;
+    private TextView mTvTitle;
+    private ImageView mIvMenu;
+    private TextView mTvMenu;
+    private View mRootView;
 
     private OnSpannerListener mOnSpannerListener;
     private OnBackClickListener mOnBackClickListener;
@@ -73,7 +65,15 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_menu_icon);
         boolean isDarkTheme = a.getBoolean(R.styleable.TitleBar_tb_dark_theme, false);
         a.recycle();
-        ButterKnife.bind(inflate(context, R.layout.lay_title_bar, this));
+        View rootView = inflate(context, R.layout.lay_title_bar, this);
+        mIvBack = rootView.findViewById(R.id.iv_back);
+
+        mTvTitle = rootView.findViewById(R.id.tv_title);
+        mIvMenu = rootView.findViewById(R.id.iv_menu);
+        mTvMenu = rootView.findViewById(R.id.tv_menu);
+        mRootView = rootView.findViewById(R.id.v_root);
+
+
         if (showBack) {
             mIvBack.setOnClickListener(this);
             mIvBack.setVisibility(VISIBLE);
@@ -159,7 +159,6 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     @SuppressWarnings("deprecation")
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.iv_back:
                 OnBackClickListener onBackClickListener = this.mOnBackClickListener;

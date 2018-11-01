@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.BindView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.base.holder.SdBaseViewHolder
@@ -34,18 +33,24 @@ class CourseAdapter(context: Context) : BaseRecyclerAdapter<Course>(context) {
 
     class ViewHolder(itemView: View) : SdBaseViewHolder<Course>(itemView) {
 
-        @BindView(R.id.tv_title)
-        lateinit var mTvTitle: TextView
-        @BindView(R.id.tv_duration)
-        lateinit var mTvDuration: TextView
+        private val mTvTitle: TextView  by lazy {
+            itemView.findViewById<TextView>(R.id.tv_title)
+        }
 
-        @BindView(R.id.iv_lock)
-        lateinit var mIvLock: ImageView
-        @BindView(R.id.bt_learn)
-        lateinit var mTvLearn: TextView
+        private val mTvDuration: TextView by lazy {
+            itemView.findViewById<TextView>(R.id.tv_duration)
+        }
 
-        @BindView(R.id.v_divider)
-        lateinit var mDivider: View
+        private val mIvLock: ImageView by lazy {
+            itemView.findViewById<ImageView>(R.id.iv_lock)
+        }
+        private val mTvLearn: TextView  by lazy {
+            itemView.findViewById<TextView>(R.id.bt_learn)
+        }
+
+        private val mDivider: View  by lazy {
+            itemView.findViewById<View>(R.id.v_divider)
+        }
 
         @SuppressLint("SetTextI18n")
         override fun initView(item: Course) {

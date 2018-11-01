@@ -49,11 +49,11 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
         mIsInit = true
 
-        val isBindDoctor = AppManager.getAccountViewModel()?.userInfo?.isBindDoctor!!
+        val isBindDoctor = AppManager.getAccountViewModel().userInfo?.isBindDoctor!!
         switchUI(isBindDoctor)
         if (isBindDoctor) {
             request_scan_qr_code_view.hide()
-            val doctor = AppManager.getAccountViewModel()?.userInfo?.doctor
+            val doctor = AppManager.getAccountViewModel().userInfo?.doctor
             doctor?.let {
                 doctor_detail_layout.invalidDoctor(doctor)
             }

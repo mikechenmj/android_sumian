@@ -58,6 +58,8 @@
             android:layout_height="wrap_content"
             android:visibility="visible" />
 
+        <include layout="@layout/layout_homepage_fragment_grid_items" />
+
         <com.sumian.sd.homepage.widget.SleepPrescriptionView
             android:id="@+id/sleep_prescription_view"
             android:layout_width="match_parent"
@@ -76,75 +78,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="@dimen/space_10"
-            android:layout_marginBottom="@dimen/space_10"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/space_3"
-            android:paddingTop="@dimen/space_6"
-            android:paddingEnd="@dimen/space_3">
-
-            <TextView
-                android:id="@+id/tv_scale"
-                style="@style/text_t1_14"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_home_icon_scale"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text="@string/scale_evaluation" />
-
-            <View
-                style="@style/VerticalDividerLine"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp" />
-
-            <TextView
-                android:id="@+id/tv_relaxation"
-                style="@style/text_t1_14"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_home_icon_relaxation"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text="@string/relax_exercise" />
-
-            <View
-                style="@style/VerticalDividerLine"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp" />
-
-            <TextView
-                android:id="@+id/tv_sleep_health"
-                style="@style/text_t1_14"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_home_icon_sleephygiene"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text="@string/sleep_health" />
-
-            <View
-                style="@style/VerticalDividerLine"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp" />
-
-            <TextView
-                android:id="@+id/tv_anxious_and_faith"
-                style="@style/text_t1_14"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/home_icon_anxiety_faith"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:text="@string/anxious_and_belief" />
-        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

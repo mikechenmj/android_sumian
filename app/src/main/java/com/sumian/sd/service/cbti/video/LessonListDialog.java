@@ -26,17 +26,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * 视频全屏下的课程列表
  */
 @SuppressWarnings("ConstantConditions")
 public class LessonListDialog extends DialogFragment implements CBTIWeekLessonContract.View, View.OnClickListener {
 
-    @BindView(R.id.lay_container)
     LinearLayout mLayContainer;
 
     private CBTIWeekLessonContract.Presenter mPresenter;
@@ -44,7 +39,6 @@ public class LessonListDialog extends DialogFragment implements CBTIWeekLessonCo
 
     private OnCBTILessonListListener mListener;
 
-    private Unbinder mUnbinder;
 
     private int mChapterId;
     private int mCurrentPosition;
@@ -66,19 +60,18 @@ public class LessonListDialog extends DialogFragment implements CBTIWeekLessonCo
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View rootView = inflater.inflate(R.layout.lay_pop_cbti_lesson_list, container, false);
         rootView.setOnClickListener(this);
-        mUnbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mLayContainer = view.findViewById(R.id.lay_container);
         mPresenter.getCBTIWeekLesson(mChapterId);
     }
 
     @Override
     public void onDestroyView() {
-        mUnbinder.unbind();
         super.onDestroyView();
     }
 

@@ -24,7 +24,7 @@ public class PillAdapter extends RecyclerView.Adapter<PillVH> {
     @NonNull
     @Override
     public PillVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return PillVH.create(parent);
+        return PillVH.Companion.create(parent);
     }
 
     @Override

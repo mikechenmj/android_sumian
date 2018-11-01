@@ -24,10 +24,18 @@ class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.O
 
     companion object {
         private const val KEY_TYPE = "type"
+        @JvmStatic
         fun getLaunchIntent(type: Int): Intent {
             val intent = Intent(ActivityUtils.getTopActivity(), AdvisoryListActivity::class.java)
             intent.putExtra(KEY_TYPE, type)
             return intent
+        }
+
+        @JvmStatic
+        fun show() {
+            ActivityUtils.getTopActivity()?.let {
+                it.startActivity(Intent(it, AdvisoryListActivity::class.java))
+            }
         }
     }
 

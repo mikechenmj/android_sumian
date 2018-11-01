@@ -12,9 +12,6 @@ import android.widget.FrameLayout;
 import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.calendar.custom.SleepCalendarViewAdapter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -25,7 +22,6 @@ import butterknife.ButterKnife;
  * </pre>
  */
 public class CalendarView extends FrameLayout {
-    @BindView(R.id.rv)
     RecyclerView mRecyclerView;
     private CalendarViewAdapter mAdapter;
 
@@ -40,7 +36,7 @@ public class CalendarView extends FrameLayout {
 
     private void init(Context context) {
         View inflate = inflate(context, R.layout.view_calendar, this);
-        ButterKnife.bind(this, inflate);
+        mRecyclerView = inflate.findViewById(R.id.rv);
         mRecyclerView.setLayoutManager(new GridLayoutManager(context, 7));
         mAdapter = new SleepCalendarViewAdapter();
         mRecyclerView.setAdapter(mAdapter);

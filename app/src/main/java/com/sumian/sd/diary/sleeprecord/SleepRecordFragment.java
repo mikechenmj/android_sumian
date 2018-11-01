@@ -31,11 +31,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import retrofit2.Call;
 
-public class SleepRecordFragment extends SdBaseFragment implements CalendarView.OnDateClickListener {
+@SuppressWarnings("ALL")
+public class SleepRecordFragment extends SdBaseFragment implements CalendarView.OnDateClickListener, View.OnClickListener {
 
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
@@ -44,15 +43,10 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
     private static final String KEY_SCROLL_TO_BOTTOM = "key_scroll_to_bottom";
 
-    @BindView(R.id.rl_toolbar)
     View mToolbar;
-    @BindView(R.id.iv_date_arrow)
     ImageView mIvDateArrow;
-    @BindView(R.id.tv_date)
     TextView mTvDate;
-    @BindView(R.id.sleep_record)
     SleepRecordView mSleepRecordView;
-    @BindView(R.id.scroll_view)
     ScrollView mScrollView;
     private long mSelectedTime = System.currentTimeMillis();
     private boolean mNeedScrollToBottom;
@@ -76,6 +70,14 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+        mToolbar = root.findViewById(R.id.rl_toolbar);
+        mIvDateArrow = root.findViewById(R.id.iv_date_arrow);
+        mIvDateArrow.setOnClickListener(this);
+        mTvDate = root.findViewById(R.id.tv_date);
+        mTvDate.setOnClickListener(this);
+        mSleepRecordView = root.findViewById(R.id.sleep_record);
+        mScrollView = root.findViewById(R.id.scroll_view);
+        root.findViewById(R.id.iv_weekly_report).setOnClickListener(this);
         mSleepRecordView.setOnClickRefillSleepRecordListener(v -> {
             if (isRefillable()) {
                 launchFillSleepRecordActivity(mSelectedTime);
@@ -164,11 +166,6 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
         });
     }
 
-    @OnClick({
-            R.id.tv_date,
-            R.id.iv_date_arrow,
-            R.id.iv_weekly_report,
-    })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_date:
