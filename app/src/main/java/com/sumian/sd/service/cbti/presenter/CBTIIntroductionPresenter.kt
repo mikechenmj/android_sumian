@@ -1,5 +1,6 @@
 package com.sumian.sd.service.cbti.presenter
 
+import android.text.TextUtils
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
@@ -64,7 +65,11 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
                     view?.getBannerInfo(formatExpiredDate, if (isLock) {
                         "已过期"
                     } else {
-                        it.meta.totalProgressText
+                        if (TextUtils.isEmpty(it.meta.totalProgressText)) {
+                            "已过期"
+                        } else {
+                            it.meta.totalProgressText
+                        }
                     })
                 }
             }
