@@ -27,11 +27,7 @@ class LoginHelper {
                 return
             }
             updateTokenAndUploadInstallationId(token)
-            if (token.user.hasPassword) {
-                AppUtil.launchMainOrNewUserGuide()
-            } else {
-                SetPasswordActivity.launch()
-            }
+            AppUtil.launchMainOrNewUserGuide()
         }
 
         fun updateTokenAndUploadInstallationId(response: Token?) {

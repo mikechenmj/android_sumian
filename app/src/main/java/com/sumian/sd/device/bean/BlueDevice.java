@@ -34,6 +34,7 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public String sleeperMac;
     public String sleeperSn;
     public String sleeperVersion;
+    public String sleeperBom;
     public transient int sleeperStatus;
     public transient int sleeperBattery;
     public transient int sleeperPaStatus;

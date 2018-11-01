@@ -16,11 +16,20 @@ import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.MonitorEventListener
+import com.sumian.sd.diary.DataFragment
+import com.sumian.sd.diary.event.ChangeDataFragmentTabEvent
+import com.sumian.sd.event.EventBusUtil
+import com.sumian.sd.main.MainActivity
+import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.utils.getString
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.dialog.SumianImageTextToast
 import kotlinx.android.synthetic.main.layout_device_card_view_device.view.*
 import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
+import android.content.Intent
+import android.net.Uri
+import com.blankj.utilcode.util.ActivityUtils
+
 
 /**
  * @author : Zhan Xuzhao
@@ -102,6 +111,14 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                         LogManager.appendUserOperationLog("首页 设备卡片 点击 连接设备")
                     }
                 }
+            }
+            tv_device_data.setOnClickListener {
+                EventBusUtil.postEvent(ChangeMainTabEvent(MainActivity.TAB_1))
+                EventBusUtil.postEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
+            }
+            tv_know_device.setOnClickListener {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sumian.com"))
+                ActivityUtils.getTopActivity().startActivity(browserIntent)
             }
         }
     }
@@ -203,7 +220,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
             resources.getString(if (connected) R.string.already_connected else R.string.not_connected)
 
     private fun switchNoDeviceUI(isNoDevice: Boolean) {
-        ll_no_device.visibility = if (isNoDevice) VISIBLE else View.GONE
+        vg_no_device.visibility = if (isNoDevice) VISIBLE else View.GONE
         ll_device.visibility = if (!isNoDevice) VISIBLE else View.GONE
     }
 

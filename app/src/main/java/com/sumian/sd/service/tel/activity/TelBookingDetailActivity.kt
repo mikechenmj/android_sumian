@@ -29,11 +29,13 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
         private const val EXTRA_TEL_BOOKING_ID = "com.sumian.sd.extra.tel.booking.id"
 
         fun show(telBookingId: Int) {
-            ActivityUtils.getTopActivity()?.let {
-                it.startActivity(Intent(it, TelBookingDetailActivity::class.java).apply {
-                    putExtra(EXTRA_TEL_BOOKING_ID, telBookingId)
-                })
-            }
+            ActivityUtils.startActivity(getLaunchIntent(telBookingId))
+        }
+
+        fun getLaunchIntent(telBookingId: Int): Intent {
+            val intent = Intent(ActivityUtils.getTopActivity(), TelBookingDetailActivity::class.java)
+            intent.putExtra(EXTRA_TEL_BOOKING_ID, telBookingId)
+            return intent
         }
     }
 

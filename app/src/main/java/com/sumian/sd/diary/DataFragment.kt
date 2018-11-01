@@ -11,9 +11,12 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.AutoSyncDeviceDataUtil
 import com.sumian.sd.device.DeviceManager
+import com.sumian.sd.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.diary.monitorrecord.DailyReportFragmentV2
 import com.sumian.sd.diary.sleeprecord.SleepRecordFragment
+import com.sumian.sd.event.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_data.*
+import org.greenrobot.eventbus.Subscribe
 
 
 /**
@@ -30,6 +33,8 @@ class DataFragment : BaseFragment() {
     }
 
     companion object {
+        const val TAB_0 = 0
+        const val TAB_1 = 1
         private var T0 = DataFragment::class.java.simpleName + ".TAB_0"
         private var T1 = DataFragment::class.java.simpleName + ".TAB_1"
         private var TAGS = arrayOf(T0, T1)
@@ -56,6 +61,16 @@ class DataFragment : BaseFragment() {
                 findFragmentByTag.updateCurrentTimeData()
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBusUtil.register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBusUtil.unregister(this)
     }
 
     private fun switchTabUI(hasDevice: Boolean) {
@@ -93,5 +108,11 @@ class DataFragment : BaseFragment() {
         tab_monitor_data.setTextColor(ColorCompatUtil.getColor(activity!!, if (position != 0) R.color.white else R.color.white_50))
         v_line_0.visibility = if (position == 0) View.VISIBLE else View.GONE
         v_line_1.visibility = if (position != 0) View.VISIBLE else View.GONE
+    }
+
+    @Subscribe(sticky = true)
+    fun onChangeTabEvent(event: ChangeDataFragmentTabEvent) {
+        EventBusUtil.removeStickyEvent(event)
+        selectTab(event.tabIndex)
     }
 }

@@ -242,12 +242,33 @@
             android:layout_marginTop="20dp"
             android:drawableStart="@drawable/ic_report_icon_caveat"
             android:drawablePadding="10dp"
-            android:visibility="gone"
-            android:text="@string/only_last_3_days_can_fill_sleep_diary" />
+            android:text="@string/only_last_3_days_can_fill_sleep_diary"
+            android:visibility="gone" />
 
         <Space
             android:layout_width="0dp"
             android:layout_height="30dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_diary_reminder_hint" />
+
+        <TextView
+            android:id="@+id/tv_go_to_set_diary_reminder"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_diary_reminder_hint_2"
+            android:textColor="@color/b3_color" />
     </LinearLayout>
 
     <LinearLayout

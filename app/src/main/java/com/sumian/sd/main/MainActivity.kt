@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.leancloud.HwLeanCloudHelper
@@ -20,7 +21,6 @@ import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.BaseEventActivity
 import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.device.AutoSyncDeviceDataUtil
 import com.sumian.sd.device.DeviceManager
@@ -28,6 +28,7 @@ import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
+import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.setting.version.delegate.VersionDelegate
@@ -39,8 +40,9 @@ import com.sumian.sd.utils.SumianExecutor
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     companion object {
         const val TAB_INVALID = -1
@@ -91,6 +93,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         super.onStart()
         mVersionDelegate.checkVersion(this)
         updateNotificationUnreadCount()
+        EventBusUtil.register(this)
     }
 
     override fun onResume() {
@@ -105,12 +108,16 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         AutoSyncDeviceDataUtil.unRegister(this)
     }
 
+    override fun onStop() {
+        super.onStop()
+        EventBusUtil.unregister(this)
+    }
+
     override fun initWidget() {
         super.initWidget()
         showOpenNotificationDialogIfNeeded()
-        nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectTab(position) }
-        nav_tab.selectItem(TAB_0, true)
-
+        nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectFragment(position) }
+        changeSelectTab(TAB_0)
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)
@@ -147,7 +154,15 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         if (launchTabPosition == TAB_INVALID) {
             launchTabPosition = 0
         }
-        nav_tab.selectItem(launchTabPosition, true)
+        changeSelectTab(launchTabPosition)
+    }
+
+    /**
+     * nav_tab 改变后会回调 {@link #changeSelectFragment}
+     * @see changeSelectFragment
+     */
+    private fun changeSelectTab(position: Int) {
+        nav_tab.selectItem(position, true)
     }
 
     override fun onRelease() {
@@ -218,7 +233,7 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         StatusBarUtil.setStatusBarTextColorDark(this, isDark)
     }
 
-    private fun changeSelectTab(position: Int) {
+    private fun changeSelectFragment(position: Int) {
         showFragmentByPosition(position)
         changeStatusBarColorByPosition(position)
         mCurrentPosition = position
@@ -243,10 +258,6 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
                         }
                     }
                 })
-    }
-
-    override fun openEventBus(): Boolean {
-        return true
     }
 
     @Subscribe(sticky = true)
@@ -310,5 +321,11 @@ class MainActivity : BaseEventActivity(), HwLeanCloudHelper.OnShowMsgDotCallback
         val token = viewModel.token
         token.token = "123"
         viewModel.updateToken(token)
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    fun onChangeTabEvent(event: ChangeMainTabEvent) {
+        EventBusUtil.removeStickyEvent(event)
+        changeSelectTab(event.tabIndex)
     }
 }

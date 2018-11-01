@@ -15,6 +15,8 @@ import com.sumian.sd.diary.sleeprecord.bean.SleepPill;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordAnswer;
 import com.sumian.sd.diary.sleeprecord.pill.PillsDialog;
+import com.sumian.sd.setting.remind.SleepDiaryRemindSettingActivity;
+import com.sumian.sd.setting.remind.bean.Reminder;
 import com.sumian.sd.utils.TimeUtil;
 
 import java.util.ArrayList;
@@ -65,6 +67,8 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
 
     private void init(Context context) {
         View inflate = inflate(context, R.layout.view_sleep_record_view, this);
+        ButterKnife.bind(this, inflate);
+        findViewById(R.id.tv_go_to_set_diary_reminder).setOnClickListener((v) -> SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_SLEEP_DIARY));
         titleViewSleepRecord = inflate.findViewById(R.id.title_view_sleep_record);
         llProgress = inflate.findViewById(R.id.ll_progress);
         tvOnBedDuration = inflate.findViewById(R.id.tv_on_bed_duration);
