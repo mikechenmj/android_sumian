@@ -637,4 +637,9 @@
     <string name="anxiety_time_reminder">忧虑时间提醒</string>
     <string name="anxiety_time_reminder_hint">开启忧虑时间提醒，速眠医生将会每日定时提醒您添加忧虑。请确保APP通知权限开启。</string>
     <!-- Hw end-->
+
+    <!-- share -->
+    <string name="wechat_friend">微信好友</string>
+    <string name="wechat_circle">朋友圈</string>
+    <string name="share_to_wechat">分享到</string>
 </resources>

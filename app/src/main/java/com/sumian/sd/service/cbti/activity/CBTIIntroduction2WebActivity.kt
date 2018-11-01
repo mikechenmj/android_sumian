@@ -4,10 +4,12 @@ import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.sd.BuildConfig
+import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
+import com.sumian.sd.service.cbti.sheet.CBTIShareBottomSheet
 
 /**
  * Created by sm
@@ -31,6 +33,10 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>()
     override fun initWidget() {
         super.initWidget()
         getTitleBar().openTopPadding(true)
+        getTitleBar().showMoreIcon(R.drawable.ic_nav_share)
+        getTitleBar().setOnMenuClickListener {
+            CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
+        }
     }
 
     override fun getCompleteUrl(): String {

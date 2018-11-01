@@ -80,6 +80,9 @@ public interface HwApi {
     @GET("sleeps/week-flip-show")
     Call<BaseResultResponse<SleepDurationReport, WeekMeta>> getWeeksSleepReport(@QueryMap Map<String, Object> map);
 
+    /**
+     * @param map 数据类型，1：睡眠特征值，2：事件日志
+     */
     @FormUrlEncoded
     @POST("raw-data/pass-through-file")
     Call<OssResponse> uploadTransData(@FieldMap Map<String, Object> map);

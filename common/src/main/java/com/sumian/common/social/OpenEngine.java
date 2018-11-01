@@ -2,12 +2,14 @@ package com.sumian.common.social;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
@@ -62,6 +64,18 @@ public class OpenEngine {
         web.setThumb(new UMImage(activity, thumb));
         new ShareAction(activity)
                 .withMedia(web)
+                .setPlatform(shareMedia)
+                .share();
+    }
+
+    public void shareWebForCallback(Activity activity, String url, String title, String description, @DrawableRes int thumb, SHARE_MEDIA shareMedia, UMShareListener umShareListener) {
+        UMWeb web = new UMWeb(url);
+        web.setTitle(title);
+        web.setDescription(description);
+        web.setThumb(new UMImage(activity, thumb));
+        new ShareAction(activity)
+                .withMedia(web)
+                .setCallback(umShareListener)
                 .setPlatform(shareMedia)
                 .share();
     }

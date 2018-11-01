@@ -15,7 +15,7 @@ import com.sumian.common.helper.ToastHelper
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
-import com.sumian.hw.job.JobScheduler
+import com.sumian.hw.job.SleepDataUploadManager
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.BuildConfig
@@ -57,8 +57,8 @@ object AppManager {
         NetworkManager.create()
     }
 
-    private val mJobScheduler: JobScheduler  by lazy {
-        JobScheduler(App.getAppContext())
+    private val M_SLEEP_DATA_UPLOAD_MANAGER: SleepDataUploadManager  by lazy {
+        SleepDataUploadManager(App.getAppContext())
     }
 
     private val mBlueManager: BlueManager by lazy {
@@ -88,6 +88,12 @@ object AppManager {
         } else {
             null
         }
+    }
+
+    @JvmStatic
+    @Synchronized
+    fun getOpenEngine(): OpenEngine {
+        return mOpenEngine
     }
 
     @JvmStatic
@@ -134,8 +140,8 @@ object AppManager {
 
     @JvmStatic
     @Synchronized
-    fun getJobScheduler(): JobScheduler {
-        return mJobScheduler
+    fun getSleepDataUploadManager(): SleepDataUploadManager {
+        return M_SLEEP_DATA_UPLOAD_MANAGER
     }
 
     @JvmStatic
