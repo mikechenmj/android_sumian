@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
  *
  * on 2018-10-26.
  *
- * desc:CBTI 课程介绍页   包括课程列表、banner，学习进度，过期时间，了解更多 h5
+ * desc:CBTI 课程介绍页  (已购买/未购买状态) 包括课程列表、banner，学习进度，过期时间，了解更多 h5
  *
  */
 class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContract.Presenter>(), CBTIIntroductionContract.View,
@@ -77,14 +77,15 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
         cbti_introduction_webview?.resumeWebView()
     }
 
-    private fun requestData() {
-        mPresenter?.getCBTIServiceDetail()
-        mPresenter?.getCBTIIntroductionList()
-    }
-
     override fun onPause() {
         super.onPause()
         cbti_introduction_webview?.pauseWebView()
+    }
+
+    override fun onBackPressed() {
+        if (!cbti_introduction_webview.webViewCanGoBack()) {
+            super.onBackPressed()
+        }
     }
 
     override fun onRelease() {
@@ -155,6 +156,11 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
             requestData()
             EventBusUtil.postStickyEvent(CBTIServiceBoughtEvent())
         }
+    }
+
+    private fun requestData() {
+        mPresenter?.getCBTIServiceDetail()
+        mPresenter?.getCBTIIntroductionList()
     }
 
     private fun initCBTIIntroductionWebView() {
