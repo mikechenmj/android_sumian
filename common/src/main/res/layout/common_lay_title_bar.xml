@@ -26,8 +26,8 @@
         android:layout_height="@dimen/tool_bar_height"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Title_Bar"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        tools:text='Title_Bar' />
 
     <ImageView
         android:id="@+id/iv_menu"
