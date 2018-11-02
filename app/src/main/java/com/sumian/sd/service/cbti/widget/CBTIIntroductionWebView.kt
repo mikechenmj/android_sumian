@@ -12,7 +12,6 @@ import com.github.lzyzsd.jsbridge.BridgeHandler
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.dialog.SumianImageTextDialog
-import com.sumian.common.h5.SoftKeyBoardListener
 import com.sumian.common.h5.bean.H5BaseResponse
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.h5.bean.H5ShowToastData
@@ -36,8 +35,9 @@ class CBTIIntroductionWebView : SWebViewLayout {
         private const val REQUEST_CODE_BUY_SERVICE = 1000
     }
 
-    private var mSoftKeyBoardListener: SoftKeyBoardListener? = null
-    private var mSumianImageTextDialog: SumianImageTextDialog? = null
+    private val mSumianImageTextDialog: SumianImageTextDialog  by lazy {
+        SumianImageTextDialog(context)
+    }
     private var mTitleBar: TitleBar? = null
 
     constructor(context: Context) : this(context, null)
@@ -69,21 +69,15 @@ class CBTIIntroductionWebView : SWebViewLayout {
             override fun handler(data: String?, function: CallBackFunction) {
                 LogUtils.d(data)
                 val toastData = H5ShowToastData.fromJson(data)
-                if (mSumianImageTextDialog != null) {
-                    mSumianImageTextDialog!!.dismiss()
-                } else {
-                    mSumianImageTextDialog = SumianImageTextDialog(context)
-                }
-                mSumianImageTextDialog!!.show(toastData)
+                mSumianImageTextDialog.dismiss()
+                mSumianImageTextDialog.show(toastData)
             }
         })
         sWebView.registerHandler("hideToast", object : BridgeHandler {
             override fun handler(data: String?, function: CallBackFunction) {
                 LogUtils.d(data)
                 val toastData = H5ShowToastData.fromJson(data)
-                if (mSumianImageTextDialog != null) {
-                    mSumianImageTextDialog!!.dismiss(toastData.delay)
-                }
+                mSumianImageTextDialog.dismiss(toastData.delay)
             }
         })
         sWebView.registerHandler("finish", object : BridgeHandler {
