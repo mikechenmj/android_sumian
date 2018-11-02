@@ -54,6 +54,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
     private String mDfuMac;
     private DfuWrapper mDfuWrapper;
     private DfuServiceController mDfuServiceController;
+
     private DeviceVersionUpgradePresenter(VersionUpgradeContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
@@ -70,11 +71,10 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
 
     @Override
     public void release() {
-
-            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-            if (bluePeripheral != null) {
-                bluePeripheral.removePeripheralDataCallback(this);
-            }
+        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
+        if (bluePeripheral != null) {
+            bluePeripheral.removePeripheralDataCallback(this);
+        }
         if (mDfuWrapper != null) {
             mDfuWrapper.release();
         }
@@ -85,8 +85,6 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         //创建下载任务
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(versionUrl));
         request.setAllowedOverRoaming(false);//漫游网络是否可以下载
-        //request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-
         //设置文件类型，可以在下载结束后自动打开该文件
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         String mimeString = mimeTypeMap.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(versionUrl));
@@ -96,12 +94,8 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         request.setTitle("download soft...");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION);
         request.setVisibleInDownloadsUi(true);
-        //sdcard的目录下的download文件夹，必须设置
-        //request.setDestinationInExternalPublicDir("/downloadFile/", versionName + ".zip");
         request.setDestinationInExternalPublicDir(App.Companion.getAppContext().getCacheDir().getAbsolutePath(), versionName + ".zip");
-        //request.setDestinationInExternalFilesDir(),也可以自己制定下载路径
         request.allowScanningByMediaScanner();
-        //将下载请求加入下载队列
         mDownloadManager = (DownloadManager) App.Companion.getAppContext().getSystemService(Context.DOWNLOAD_SERVICE);
         //加入下载队列后会给该任务返回一个long型的id，
         //通过该id可以取消任务，重启任务等等，看上面源码中框起来的方法
@@ -122,13 +116,10 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
                     int downloadStatus = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
                     switch (downloadStatus) {
                         case DownloadManager.STATUS_PAUSED:
-                            //Log.e(TAG, ">>>下载暂停");
                             break;
                         case DownloadManager.STATUS_PENDING:
-                            //Log.e(TAG, ">>>下载延迟");
                             break;
                         case DownloadManager.STATUS_RUNNING:
-                            //Log.e(TAG, ">>>正在下载");
                             //已经下载文件大小
                             int downloadByteSize = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
                             //下载文件的总大小
@@ -179,7 +170,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
     public void downloadFile(int versionType, VersionInfo versionInfo) {
         mVersionType = versionType;
         this.mVersionInfo = versionInfo;
-            downloadFile(versionInfo.getUrl(), versionInfo.getVersion());
+        downloadFile(versionInfo.getUrl(), versionInfo.getVersion());
     }
 
     @Override
@@ -309,6 +300,13 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         switch (cmdIndex) {
             case "51"://监测仪自己固件 dfu 模式开启成功
                 //CD:9D:C4:08:D8:9D --> CD:9D:C4:08:D8:9E
+                // cmd.substring(3,5)
+//                成功：0x88
+//                失败：
+//                0xE1 -- 监测仪电量过低
+//                0xE2 -- 正在上传睡眠数据
+//                0xE3 -- 正在透传速眠仪 LOG 数据
+//                0xFF -- 其他
                 LogManager.appendMonitorLog("0x51 监测仪dfu 模式开启成功...." + mDfuMac);
                 this.mIsEnableDfu = true;
                 doDfu(App.Companion.getAppContext(), mDfuMac);
