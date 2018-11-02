@@ -55,15 +55,7 @@
 
         <Space style="@style/space_horizontal_weight_1" />
 
-        <TextView
-            android:id="@+id/tv_device_data"
-            style="@style/text_b3_14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:drawableStart="@drawable/home_icon_devicedate"
-            android:drawablePadding="5dp"
-            android:text="@string/data" />
+
     </LinearLayout>
 
     <LinearLayout

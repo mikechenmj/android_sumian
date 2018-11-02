@@ -119,7 +119,7 @@
     <string name="today_no_record">今日暂无记录</string>
     <string name="today_no_record_hint">您今天还没有填写睡眠日记</string>
     <string name="finished">已完成</string>
-    <string name="cbti_ing">失眠的认知行为治疗进行中</string>
+    <string name="cbti_ing">CBTI认知行为治疗进行中</string>
     <string name="cbti_ing_describe">建议在开课当天完成本周课程学习，自完成之日起7天后开放下阶段课程。</string>
     <string name="cbti_ing_all_finished_desc">恭喜你完成CBTI课程！希望你能继续保持良好的睡眠卫生习惯，早日告别失眠。</string>
     <string name="current_progress_colon">当前进度：</string>
