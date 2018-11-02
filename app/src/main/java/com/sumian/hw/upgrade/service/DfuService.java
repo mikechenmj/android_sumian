@@ -5,7 +5,7 @@ import android.app.Activity;
 import no.nordicsemi.android.dfu.DfuBaseService;
 
 import com.sumian.sd.BuildConfig;
-import com.sumian.hw.upgrade.activity.VersionUpgradeActivity;
+import com.sumian.hw.upgrade.activity.DeviceVersionUpgradeActivity;
 
 /**
  * Created by jzz
@@ -19,7 +19,7 @@ public class DfuService extends DfuBaseService {
 
     @Override
     protected Class<? extends Activity> getNotificationTarget() {
-        return VersionUpgradeActivity.class;
+        return DeviceVersionUpgradeActivity.class;
     }
 
     @Override

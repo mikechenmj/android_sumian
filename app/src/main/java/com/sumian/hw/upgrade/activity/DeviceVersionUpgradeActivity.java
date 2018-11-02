@@ -22,10 +22,8 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.hw.upgrade.dialog.VersionDialog;
-import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
-import com.sumian.hw.utils.UiUtil;
+import com.sumian.hw.upgrade.presenter.DeviceVersionUpgradePresenter;
 import com.sumian.sd.R;
-import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
@@ -48,7 +46,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class VersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
+public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
         , VersionUpgradeContract.View, DfuProgressListener, EasyPermissions.PermissionCallbacks {
     private static final String EXTRA_VERSION_TYPE = "extra_version_type";
     private static final String EXTRA_VERSION_IS_LATEST = "extra_version_latest";
@@ -78,7 +76,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     };
 
     public static void show(Context context, int versionType, boolean haveLatestVersion) {
-        Intent intent = new Intent(context, VersionUpgradeActivity.class);
+        Intent intent = new Intent(context, DeviceVersionUpgradeActivity.class);
         intent.putExtra(EXTRA_VERSION_TYPE, versionType);
         intent.putExtra(EXTRA_VERSION_IS_LATEST, haveLatestVersion);
         context.startActivity(intent);
@@ -88,7 +86,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     protected boolean initBundle(Bundle bundle) {
         mVersionType = bundle.getInt(EXTRA_VERSION_TYPE);
         mIsLatestVersion = bundle.getBoolean(EXTRA_VERSION_IS_LATEST);
-        VersionUpgradePresenter.init(this);
+        DeviceVersionUpgradePresenter.init(this);
         return super.initBundle(bundle);
     }
 

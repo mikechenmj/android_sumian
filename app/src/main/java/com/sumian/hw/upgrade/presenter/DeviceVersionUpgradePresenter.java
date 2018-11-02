@@ -12,7 +12,7 @@ import android.webkit.MimeTypeMap;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.log.LogManager;
-import com.sumian.hw.upgrade.activity.VersionUpgradeActivity;
+import com.sumian.hw.upgrade.activity.DeviceVersionUpgradeActivity;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.service.DfuService;
@@ -40,9 +40,9 @@ import no.nordicsemi.android.dfu.DfuServiceInitiator;
  * desc:
  */
 
-public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter, BluePeripheralDataCallback {
+public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Presenter, BluePeripheralDataCallback {
 
-    private static final String TAG = VersionUpgradePresenter.class.getSimpleName();
+    private static final String TAG = DeviceVersionUpgradePresenter.class.getSimpleName();
 
     private WeakReference<VersionUpgradeContract.View> mViewWeakReference;
     private long mTaskId;
@@ -54,7 +54,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
     private String mDfuMac;
     private DfuWrapper mDfuWrapper;
     private DfuServiceController mDfuServiceController;
-    private VersionUpgradePresenter(VersionUpgradeContract.View view) {
+    private DeviceVersionUpgradePresenter(VersionUpgradeContract.View view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
@@ -64,8 +64,8 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         this.mDfuWrapper = new DfuWrapper();
     }
 
-    public static VersionUpgradePresenter init(VersionUpgradeContract.View view) {
-        return new VersionUpgradePresenter(view);
+    public static DeviceVersionUpgradePresenter init(VersionUpgradeContract.View view) {
+        return new DeviceVersionUpgradePresenter(view);
     }
 
     @Override
@@ -116,9 +116,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             DownloadManager.Query query = new DownloadManager.Query().setFilterById(mTaskId);
-            Cursor cursor = null;
-            try {
-                cursor = mDownloadManager.query(query);
+            try (Cursor cursor = mDownloadManager.query(query)) {
                 if (cursor != null && cursor.moveToNext()) {
                     //下载状态
                     int downloadStatus = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
@@ -173,10 +171,6 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                             break;
                     }
                 }
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
             }
         }, 0, 10, TimeUnit.MILLISECONDS);
     }
@@ -194,7 +188,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         this.mVersionType = versionType;
         switch (versionType) {
-            case VersionUpgradeActivity.VERSION_TYPE_MONITOR:
+            case DeviceVersionUpgradeActivity.VERSION_TYPE_MONITOR:
                 if (!this.mIsEnableDfu) {
                     if (bluePeripheral != null && bluePeripheral.isConnected()) {
                         this.mDfuMac = bluePeripheral.getDfuMac();
@@ -206,7 +200,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                     doDfu(context, mDfuMac);
                 }
                 break;
-            case VersionUpgradeActivity.VERSION_TYPE_SLEEPY:
+            case DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY:
                 if (!this.mIsEnableDfu) {
                     if (bluePeripheral != null && bluePeripheral.isConnected()) {
                         bluePeripheral.writeDelay(BlueCmd.cSleepyMac(), 200);
@@ -230,7 +224,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
         boolean isBluetoothAddress = BluetoothAdapter.checkBluetoothAddress(dfuMac);
         if (isBluetoothAddress) {
 
-            if (mVersionType == VersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+            if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
                 VersionUpgradeContract.View view = mViewWeakReference.get();
                 if (view != null) {
                     view.showSleepConnectingDialog();
@@ -239,7 +233,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
 
             mDfuWrapper.scan2Connect(mDfuMac, () -> {
 
-                if (mVersionType == VersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
                     VersionUpgradeContract.View view = mViewWeakReference.get();
                     if (view != null) {
                         view.dismissSleepConnectingDialog();
@@ -263,7 +257,7 @@ public class VersionUpgradePresenter implements VersionUpgradeContract.Presenter
                     view.onScanFailed(mDfuMac);
                 }
 
-                if (mVersionType == VersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
                     if (view != null) {
                         view.dismissSleepConnectingDialog();
                     }

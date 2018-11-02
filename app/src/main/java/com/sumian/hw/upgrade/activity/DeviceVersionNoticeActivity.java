@@ -14,7 +14,7 @@ import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.hw.upgrade.model.VersionModel;
-import com.sumian.hw.upgrade.presenter.VersionPresenter;
+import com.sumian.hw.upgrade.presenter.DeviceVersionNoticePresenter;
 import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.widget.VersionInfoView;
 import com.sumian.hw.widget.refresh.BlueRefreshView;
@@ -76,7 +76,7 @@ public class DeviceVersionNoticeActivity extends BaseActivity implements View.On
         findViewById(R.id.sleepy_version_info).setOnClickListener(this);
 
         AppManager.getVersionModel().registerShowDotCallback(this);
-        VersionPresenter.init(this);
+        DeviceVersionNoticePresenter.init(this);
     }
 
     @Override
@@ -92,10 +92,10 @@ public class DeviceVersionNoticeActivity extends BaseActivity implements View.On
                 UiUtil.openAppInMarket(v.getContext());
                 break;
             case R.id.monitor_version_info:
-                VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
+                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
                 break;
             case R.id.sleepy_version_info:
-                VersionUpgradeActivity.show(this, VersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
+                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
                 break;
         }
     }
