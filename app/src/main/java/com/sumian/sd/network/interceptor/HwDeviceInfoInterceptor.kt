@@ -1,6 +1,7 @@
 package com.sumian.sd.network.interceptor
 
 import android.net.Uri
+import com.blankj.utilcode.util.LogUtils
 import com.sumian.hw.utils.SystemUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
@@ -42,14 +43,41 @@ class HwDeviceInfoInterceptor private constructor() : Interceptor {
 
     private fun formatDeviceInfo(): String {
         //Device-Info": "app_version=速眠-test_1.2.3.1&model=iPhone10,3&system=iOS_11.3.1&monitor_fw=&monitor_sn=&sleeper_fw=&sleeper_sn="
-        return ("app_version=" + SystemUtil.getPackageInfo(App.getAppContext()).versionName
-                + WITH_SIGN + "model=" + SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
-                + WITH_SIGN + "system=" + SystemUtil.getSystemVersion()
-                + WITH_SIGN + "monitor_fw=" + formatMonitorInfo(DeviceManager.getMonitorVersion())
-                + WITH_SIGN + "monitor_sn=" + formatMonitorInfo(DeviceManager.getMonitorSn())
-                + WITH_SIGN + "sleeper_fw=" + formatSpeedSleeperInfo(DeviceManager.getSleeperVersion())
-                + WITH_SIGN + "sleeper_sn=" + formatSpeedSleeperInfo(DeviceManager.getSleeperSn())
-                + WITH_SIGN + "bom_version=" + formatSpeedSleeperInfo(DeviceManager.getSleeperBom()))
+        val appVersion = SystemUtil.getPackageInfo(App.getAppContext()).versionName
+        val model = SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
+        val systemVersion = SystemUtil.getSystemVersion()
+        val monitorFw = formatMonitorInfo(getFormatMonitorFw())
+        val monitorSn = formatMonitorInfo(DeviceManager.getMonitorSn())
+        val sleeperFw = formatSpeedSleeperInfo(getFormatSleeperFw())
+        val sleeperSn = formatSpeedSleeperInfo(DeviceManager.getSleeperSn())
+        val deviceInfo = ("app_version=" + appVersion
+                + WITH_SIGN + "model=" + model
+                + WITH_SIGN + "system=" + systemVersion
+                + WITH_SIGN + "monitor_fw=" + monitorFw
+                + WITH_SIGN + "monitor_sn=" + monitorSn
+                + WITH_SIGN + "sleeper_fw=" + sleeperFw
+                + WITH_SIGN + "sleeper_sn=" + sleeperSn)
+        LogUtils.d("device info", deviceInfo)
+        return deviceInfo
+    }
+
+    private fun getFormatMonitorFw(): String? {
+        val monitor = DeviceManager.getMonitorLiveData().value ?: return null
+        val channel = when (monitor.channelType) {
+            BlueDevice.CHANNEL_TYPE_CLINIC -> "临床"
+            BlueDevice.CHANNEL_TYPE_NORMAL -> "正式"
+            else -> "null"
+        }
+        val bomVersion = monitor.sleeperBomVersion
+        val bomVersionStr = if (bomVersion == null) "null" else "V$bomVersion"
+        return "${monitor.version}-$channel-$bomVersionStr}"
+    }
+
+    private fun getFormatSleeperFw(): String? {
+        val monitor = DeviceManager.getMonitorLiveData().value ?: return null
+        val sleeperBomVersion = monitor.sleeperBomVersion
+        val sleeperBomVersionStr = if (sleeperBomVersion == null) "null" else "V$sleeperBomVersion"
+        return "${monitor.sleeperVersion}-$sleeperBomVersionStr}"
     }
 
     private fun formatMonitorInfo(monitorInfo: String?): String {

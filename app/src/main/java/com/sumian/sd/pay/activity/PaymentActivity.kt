@@ -25,14 +25,43 @@ import kotlinx.android.synthetic.main.activity_main_shopping_car.*
  * desc:
  */
 
-class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
+class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
 
+    companion object {
 
-    private var mPayChannel = "wx"
+        private const val WECHAT_PAY_TYPE = "wx"
+        private const val ALIPAY_PAY_TYPE = "alipay"
 
-    private var mActionLoadingDialog: ActionLoadingDialog? = null
+        private const val ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service"
+        private const val ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId"
 
-    private var mPayDialog: PayDialog? = null
+        fun startForResult(activity: Activity, doctorService: DoctorService, packageId: Int, requestCode: Int) {
+            val extras = Bundle()
+            extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService)
+            val intent = Intent(activity, PaymentActivity::class.java).apply {
+                putExtras(extras)
+                putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId)
+            }
+            activity.startActivityForResult(intent, requestCode)
+        }
+    }
+
+    private var mPayChannel = WECHAT_PAY_TYPE
+
+    private val mActionLoadingDialog: ActionLoadingDialog  by lazy {
+        ActionLoadingDialog()
+    }
+
+    private val mPayDialog: PayDialog  by lazy {
+        val payDialog = PayDialog(this, object : PayDialog.Listener {
+            override fun onRepayClick() {
+                return pay()
+            }
+        }).bindContentView(R.layout.dialog_pay)
+        payDialog.ownerActivity = this@PaymentActivity
+        payDialog.bindPresenter(mPresenter)
+        return@lazy payDialog
+    }
 
     private var mDoctorService: DoctorService? = null
 
@@ -65,13 +94,6 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
         bt_pay.setOnClickListener(this)
         pay_group_view.setOnSelectPayWayListener(this)
         pay_calculate_item_view.setOnMoneyChangeCallback(this)
-        mPayDialog = PayDialog(this, object : PayDialog.Listener {
-            override fun onRepayClick() {
-                return pay()
-            }
-        }).bindContentView(R.layout.dialog_pay)
-        mPayDialog!!.ownerActivity = this
-        mPayDialog!!.bindPresenter(mPresenter)
     }
 
     override fun initData() {
@@ -107,11 +129,11 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
     }
 
     override fun onSelectWechatPayWay() {
-        this.mPayChannel = "wx"
+        this.mPayChannel = WECHAT_PAY_TYPE
     }
 
     override fun onSelectAlipayWay() {
-        this.mPayChannel = "alipay"
+        this.mPayChannel = ALIPAY_PAY_TYPE
     }
 
     override fun onBack(v: View) {
@@ -124,9 +146,7 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
     }
 
     private fun onBack() {
-        if (mActionLoadingDialog != null) {
-            mActionLoadingDialog!!.dismiss()
-        }
+        mActionLoadingDialog.dismissAllowingStateLoss()
         cancelDialog()
         finish()
     }
@@ -137,24 +157,20 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
     }
 
     override fun setPresenter(presenter: PayContract.Presenter) {
-        this.mPresenter = presenter as PayPresenter
+        this.mPresenter = presenter
     }
 
     override fun onFailure(error: String) {
         showCenterToast(error)
-        if (mActionLoadingDialog != null) {
-            mActionLoadingDialog!!.dismissAllowingStateLoss()
-        }
+        mActionLoadingDialog.dismissAllowingStateLoss()
     }
 
     override fun onBegin() {
-        mActionLoadingDialog = ActionLoadingDialog().show(supportFragmentManager)
+        mActionLoadingDialog.show(supportFragmentManager)
     }
 
     override fun onFinish() {
-        if (mActionLoadingDialog != null) {
-            mActionLoadingDialog!!.dismissAllowingStateLoss()
-        }
+        mActionLoadingDialog.dismissAllowingStateLoss()
     }
 
     override fun onCreatePayOrderSuccess() {
@@ -163,32 +179,30 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
     }
 
     override fun onOrderPaySuccess(payMsg: String) {
-        if (!mPayDialog!!.isShowing) {
-            mPayDialog!!.setPayStatus(PayDialog.PAY_SUCCESS).show()
+        if (!mPayDialog.isShowing) {
+            mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show()
         }
     }
 
     override fun onOrderPayFailed(payMsg: String) {
         //showCenterToast(payMsg);
-        if (!mPayDialog!!.isShowing) {
-            mPayDialog!!.setPayStatus(PayDialog.PAY_FAILED).show()
+        if (!mPayDialog.isShowing) {
+            mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show()
         }
     }
 
     override fun onOrderPayInvalid(payMsg: String) {
         //showCenterToast(payMsg);
-        if (!mPayDialog!!.isShowing) {
-            mPayDialog!!.setPayStatus(PayDialog.PAY_INVALID).show()
+        if (!mPayDialog.isShowing) {
+            mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show()
         }
     }
 
     override fun onOrderPayCancel(payMsg: String) {
-        if (!mPayDialog!!.isShowing) {
-            mPayDialog!!.setPayStatus(PayDialog.PAY_CANCELED).show()
+        if (!mPayDialog.isShowing) {
+            mPayDialog.setPayStatus(PayDialog.PAY_CANCELED).show()
         }
-        if (mActionLoadingDialog != null) {
-            mActionLoadingDialog!!.dismiss()
-        }
+        mActionLoadingDialog.dismissAllowingStateLoss()
     }
 
     override fun onCheckOrderPayIsOk() {
@@ -198,19 +212,17 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
     }
 
     private fun cancelDialog() {
-        if (mPayDialog != null && mPayDialog!!.isShowing) {
-            mPayDialog!!.cancel()
+        if (mPayDialog.isShowing) {
+            mPayDialog.cancel()
         }
     }
 
     override fun onCheckOrderPayIsInvalid(invalidError: String) {
         showCenterToast(invalidError)
-        if (mPayDialog != null) {
-            if (!mPayDialog!!.isShowing) {
-                mPayDialog!!.setPayStatus(PayDialog.PAY_INVALID).show()
-            } else {
-                mPayDialog!!.setPayStatus(PayDialog.PAY_INVALID)
-            }
+        if (!mPayDialog.isShowing) {
+            mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show()
+        } else {
+            mPayDialog.setPayStatus(PayDialog.PAY_INVALID)
         }
     }
 
@@ -219,20 +231,5 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
         cancelDialog()
         setResult(Activity.RESULT_CANCELED)
         finish()
-    }
-
-    companion object {
-
-        private const val ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service"
-        private const val ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId"
-
-        fun startForResult(activity: Activity, doctorService: DoctorService, packageId: Int, requestCode: Int) {
-            val intent = Intent(activity, PaymentActivity::class.java)
-            val extras = Bundle()
-            extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService)
-            intent.putExtras(extras)
-            intent.putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId)
-            activity.startActivityForResult(intent, requestCode)
-        }
     }
 }

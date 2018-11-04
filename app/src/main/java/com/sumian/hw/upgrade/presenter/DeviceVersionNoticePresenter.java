@@ -34,28 +34,28 @@ import retrofit2.Call;
  * desc:
  */
 
-public class VersionPresenter implements VersionContract.Presenter {
+public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
 
     private WeakReference<VersionContract.View> mViewWeakReference;
 
     private static final int MONITOR_VERSION_TYPE = 0x01;
     private static final int SLEEPY_VERSION_TYPE = 0x02;
 
-    private VersionPresenter() {
+    private DeviceVersionNoticePresenter() {
     }
 
-    private VersionPresenter(VersionContract.View view) {
+    private DeviceVersionNoticePresenter(VersionContract.View view) {
         this();
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
     }
 
-    public static VersionPresenter init(VersionContract.View view) {
-        return new VersionPresenter(view);
+    public static DeviceVersionNoticePresenter init(VersionContract.View view) {
+        return new DeviceVersionNoticePresenter(view);
     }
 
-    public static VersionPresenter init() {
-        return new VersionPresenter();
+    public static DeviceVersionNoticePresenter init() {
+        return new DeviceVersionNoticePresenter();
     }
 
     @Override

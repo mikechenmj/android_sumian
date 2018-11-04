@@ -22,10 +22,8 @@ import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.hw.upgrade.dialog.VersionDialog;
-import com.sumian.hw.upgrade.presenter.VersionUpgradePresenter;
-import com.sumian.hw.utils.UiUtil;
+import com.sumian.hw.upgrade.presenter.DeviceVersionUpgradePresenter;
 import com.sumian.sd.R;
-import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
@@ -48,35 +46,24 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class VersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
-        , VersionUpgradeContract.View, DfuProgressListener, EasyPermissions.PermissionCallbacks {
-
+public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
+        , VersionUpgradeContract.View, EasyPermissions.PermissionCallbacks {
     private static final String EXTRA_VERSION_TYPE = "extra_version_type";
     private static final String EXTRA_VERSION_IS_LATEST = "extra_version_latest";
-
     private static final long DISMISS_DIALOG_DELAY = 1200L;
-
-    public static final int VERSION_TYPE_APP = 0x01;
     public static final int VERSION_TYPE_MONITOR = 0x02;
     public static final int VERSION_TYPE_SLEEPY = 0x03;
-
     private static final int REQUEST_WRITE_PERMISSION = 0xff;
-
     private ImageView mIvUpgrade;
     private TextView mTvVersionLatest;
     private TextView mTvVersionCurrent;
     private Button mBtDownload;
-
     private VersionUpgradeContract.Presenter mPresenter;
-
     private VersionDialog mVersionDialog;
     private Version2ConnectingDialog mVersion2ConnectingDialog;
-
     private int mVersionType;
     private boolean mIsLatestVersion;
-
     private int mDfuCount;
-
     private Runnable mDismissDialogRunnable = new Runnable() {
         @Override
         public void run() {
@@ -89,7 +76,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     };
 
     public static void show(Context context, int versionType, boolean haveLatestVersion) {
-        Intent intent = new Intent(context, VersionUpgradeActivity.class);
+        Intent intent = new Intent(context, DeviceVersionUpgradeActivity.class);
         intent.putExtra(EXTRA_VERSION_TYPE, versionType);
         intent.putExtra(EXTRA_VERSION_IS_LATEST, haveLatestVersion);
         context.startActivity(intent);
@@ -99,7 +86,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     protected boolean initBundle(Bundle bundle) {
         mVersionType = bundle.getInt(EXTRA_VERSION_TYPE);
         mIsLatestVersion = bundle.getBoolean(EXTRA_VERSION_IS_LATEST);
-        VersionUpgradePresenter.init(this);
+        DeviceVersionUpgradePresenter.init(this);
         return super.initBundle(bundle);
     }
 
@@ -114,17 +101,13 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         TitleBar titleBar = findViewById(R.id.title_bar);
         titleBar.setOnBackClickListener(this);
         titleBar.setTitle(mVersionType == VERSION_TYPE_MONITOR ? "监测仪升级" : "速眠仪升级");
-
         mIvUpgrade = findViewById(R.id.iv_upgrade);
         mTvVersionLatest = findViewById(R.id.tv_version_latest);
         mTvVersionCurrent = findViewById(R.id.tv_version_current);
         mBtDownload = findViewById(R.id.bt_download);
         findViewById(R.id.bt_download).setOnClickListener(this);
-
-        if (mVersionType != VERSION_TYPE_APP) {
-            mPresenter.showDfuProgressNotification(this);
-            DfuServiceListenerHelper.registerProgressListener(this, this);
-        }
+        mPresenter.showDfuProgressNotification(this);
+        DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener);
     }
 
     @Override
@@ -133,10 +116,6 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         String newVersion = null;
         String currentVersion = null;
         switch (mVersionType) {
-            case VERSION_TYPE_APP:
-                newVersion = AppManager.getVersionModel().getAppUpgradeInfo().version;
-                currentVersion = UiUtil.getPackageInfo(App.Companion.getAppContext()).versionName;
-                break;
             case VERSION_TYPE_MONITOR:
                 newVersion = AppManager.getVersionModel().getMonitorVersion().getVersion();
                 currentVersion = DeviceManager.INSTANCE.getMonitorVersion();
@@ -155,6 +134,116 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         mBtDownload.setText(mIsLatestVersion ? R.string.firmware_download_hint : R.string.firmware_upgrade_hint);
         mBtDownload.setVisibility(mIsLatestVersion ? View.VISIBLE : View.GONE);
     }
+
+    private DfuProgressListener mDfuProgressListener = new DfuProgressListener() {
+        @Override
+        public void onDeviceConnecting(String deviceAddress) {
+            mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
+            mTvVersionCurrent.postDelayed(mDismissDialogRunnable, DISMISS_DIALOG_DELAY);
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,设备正在连接中  mac=" + deviceAddress);
+        }
+
+        @Override
+        public void onDeviceConnected(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,设备已连接上  mac=" + deviceAddress);
+        }
+
+        @Override
+        public void onDfuProcessStarting(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,设备正在准备进度回调  mac=" + deviceAddress);
+        }
+
+        @Override
+        public void onDfuProcessStarted(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,设备进度回调已开始  mac=" + deviceAddress);
+        }
+
+        @Override
+        public void onEnablingDfuMode(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,正在进入 dfu模式  mac=" + deviceAddress);
+        }
+
+        @Override
+        public void onProgressChanged(String deviceAddress, int percent, float speed,
+                                      float avgSpeed, int currentPart, int partsTotal) {
+            LogManager.appendUserOperationLog("固件更新进度反馈   deviceAddress=" + deviceAddress + "  percent=" + percent);
+            if (mVersionDialog != null) {
+                mVersionDialog.updateProgress(percent);
+            }
+            if (percent == 1) {
+                mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
+            }
+            if (!(percent < 100)) {
+                if (mVersionType == VERSION_TYPE_MONITOR) {
+                    AppManager.getVersionModel().notifyMonitorDot(false);
+                } else if (mVersionType == VERSION_TYPE_SLEEPY) {
+                    AppManager.getVersionModel().notifySleepyDot(false);
+                } else {
+                    AppManager.getVersionModel().notifyAppDot(false);
+                }
+                runUiThread(() -> ToastHelper.show(R.string.firmware_upgrade_success_hint));
+            }
+        }
+
+        @Override
+        public void onFirmwareValidating(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,正在验证固件文件中  mac=" + deviceAddress);
+
+        }
+
+        @Override
+        public void onDeviceDisconnecting(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,正在断开连接中  mac=" + deviceAddress);
+        }
+
+        @Override
+        public void onDeviceDisconnected(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级,已断开连接  mac=" + deviceAddress);
+        }
+
+        @Override
+        public void onDfuCompleted(String deviceAddress) {
+            cancelDialog();
+            @StringRes int stringId = R.string.firmware_upgrade_success_hint;
+            switch (mVersionType) {
+                case VERSION_TYPE_MONITOR:
+                    stringId = R.string.firmware_upgrade_success_hint;
+                    break;
+                case VERSION_TYPE_SLEEPY:
+                    stringId = R.string.sleeper_firmware_upgrade_success_hint;
+                    break;
+            }
+            ToastHelper.show(DeviceVersionUpgradeActivity.this, getString(stringId), Gravity.CENTER);
+            LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
+            AppManager.getVersionModel().notifyMonitorDot(false);
+            AppManager.getVersionModel().notifySleepyDot(false);
+            finish();
+        }
+
+        @Override
+        public void onDfuAborted(String deviceAddress) {
+            LogManager.appendUserOperationLog("设备 dfu 固件升级被终止  mac=" + deviceAddress);
+            cancelDialog();
+            ToastHelper.show("固件升级已被取消");
+        }
+
+        @Override
+        public void onError(String deviceAddress, int error, int errorType, String message) {
+            if (mDfuCount > 2) {
+                runUiThread(() -> {
+                    ToastHelper.show(R.string.firmware_upgrade_failed_hint);
+                    cancelDialog();
+                });
+            } else {
+                mDfuCount++;
+                runUiThread(() -> mPresenter.upgrade(mVersionType), 1000);
+            }
+            if (error == 4096) {
+                AppManager.getBlueManager().refresh();
+            }
+            LogManager.appendUserOperationLog("设备 dfu 固件升级失败  mac=" + deviceAddress + "  error=" + error + "  errorMessage=" + message);
+        }
+    };
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
@@ -193,41 +282,35 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         int i = v.getId();
         if (i == R.id.bt_download) {
             if (mBtDownload.getText().equals(getString(R.string.firmware_upgrade_hint))) {
-                if (mVersionType != VERSION_TYPE_APP) {
-                    if (this.mobileBatteryLow()) {
-                        LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级");
-                        showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message);
-                        return;
-                    }
-                    switch (mVersionType) {
-                        case VERSION_TYPE_MONITOR:
-                            if (monitorBatteryLow()) {
-                                LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
-                                showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
-                                return;
-                            } else {
-                                initDialog(0x01);
-                            }
-                            break;
-                        case VERSION_TYPE_SLEEPY:
-                            if (sleepyBatterLow()) {
-                                LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
-                                showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
-                                return;
-                            }
-                            break;
-                    }
-                    ToastHelper.show(this, getString(R.string.firmware_upgrade_ing_hint), Gravity.CENTER);
+                if (this.mobileBatteryLow()) {
+                    LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级");
+                    showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message);
+                    return;
                 }
+                switch (mVersionType) {
+                    case VERSION_TYPE_MONITOR:
+                        if (monitorBatteryLow()) {
+                            LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
+                            showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
+                            return;
+                        } else {
+                            initDialog(0x01);
+                        }
+                        break;
+                    case VERSION_TYPE_SLEEPY:
+                        if (sleepyBatterLow()) {
+                            LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
+                            showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
+                            return;
+                        }
+                        break;
+                }
+                ToastHelper.show(this, getString(R.string.firmware_upgrade_ing_hint), Gravity.CENTER);
                 mDfuCount++;
                 mPresenter.upgrade(mVersionType);
             } else {
                 initDialog(0x00);
-                if (mVersionType == VERSION_TYPE_APP) {
-                    UiUtil.openAppInMarket(v.getContext());
-                } else {
-                    downloadVersionFile();
-                }
+                downloadVersionFile();
             }
 
         }
@@ -244,7 +327,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
 
     @Override
     protected void onRelease() {
-        DfuServiceListenerHelper.unregisterProgressListener(this, this);
+        DfuServiceListenerHelper.unregisterProgressListener(this, mDfuProgressListener);
         super.onRelease();
         mPresenter.release();
     }
@@ -256,7 +339,6 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
 
     @Override
     public void onDownloadStartCallback() {
-        // runUiThread(() -> showFirmwareDialog(0x00));
     }
 
     @Override
@@ -272,11 +354,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
             mIvUpgrade.setImageResource(R.mipmap.set_icon_upgrade);
             mBtDownload.setText(R.string.firmware_upgrade_hint);
             mVersionDialog.cancel();
-            if (mVersionType == VERSION_TYPE_APP) {
-                ToastHelper.show(R.string.app_download_success_hint);
-            } else {
-                ToastHelper.show(R.string.firmware_download_success_hint);
-            }
+            ToastHelper.show(R.string.firmware_download_success_hint);
         });
     }
 
@@ -298,7 +376,7 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     @Override
     public void onScanFailed(String deviceAddress) {
         mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
-        onError(deviceAddress, 0, DfuBaseService.ERROR_TYPE_OTHER, "未扫描到 对应 mac 地址的dfu 模式的并且有广播的设备");
+        mDfuProgressListener.onError(deviceAddress, 0, DfuBaseService.ERROR_TYPE_OTHER, "未扫描到 对应 mac 地址的dfu 模式的并且有广播的设备");
     }
 
     @Override
@@ -316,101 +394,6 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         initDialog(0x01);
     }
 
-    @Override
-    public void onDeviceConnecting(String deviceAddress) {
-        mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
-        mTvVersionCurrent.postDelayed(mDismissDialogRunnable, DISMISS_DIALOG_DELAY);
-        // Log.e(TAG, "onDeviceConnecting: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,设备正在连接中  mac=" + deviceAddress);
-    }
-
-    @Override
-    public void onDeviceConnected(String deviceAddress) {
-        // Log.e(TAG, "onDeviceConnected: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,设备已连接上  mac=" + deviceAddress);
-    }
-
-    @Override
-    public void onDfuProcessStarting(String deviceAddress) {
-        //  Log.e(TAG, "onDfuProcessStarting: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,设备正在准备进度回调  mac=" + deviceAddress);
-    }
-
-    @Override
-    public void onDfuProcessStarted(String deviceAddress) {
-        // Log.e(TAG, "onDfuProcessStarted: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,设备进度回调已开始  mac=" + deviceAddress);
-    }
-
-    @Override
-    public void onEnablingDfuMode(String deviceAddress) {
-        //   Log.e(TAG, "onEnablingDfuMode: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,正在进入 dfu模式  mac=" + deviceAddress);
-    }
-
-    @Override
-    public void onProgressChanged(String deviceAddress, int percent, float speed,
-                                  float avgSpeed, int currentPart, int partsTotal) {
-        //Log.e(TAG, "onProgressChanged: ------>" + deviceAddress + "  percent=" + percent + "  speed=" + speed);
-        LogManager.appendUserOperationLog("固件更新进度反馈   deviceAddress=" + deviceAddress + "  percent=" + percent);
-        if (mVersionDialog != null) {
-            mVersionDialog.updateProgress(percent);
-        }
-
-        if (percent == 1) {
-            mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
-        }
-
-        if (!(percent < 100)) {
-            if (mVersionType == VERSION_TYPE_MONITOR) {
-                AppManager.getVersionModel().notifyMonitorDot(false);
-            } else if (mVersionType == VERSION_TYPE_SLEEPY) {
-                AppManager.getVersionModel().notifySleepyDot(false);
-            } else {
-                AppManager.getVersionModel().notifyAppDot(false);
-            }
-            runUiThread(() -> ToastHelper.show(R.string.firmware_upgrade_success_hint));
-        }
-    }
-
-    @Override
-    public void onFirmwareValidating(String deviceAddress) {
-        // Log.e(TAG, "onFirmwareValidating: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,正在验证固件文件中  mac=" + deviceAddress);
-
-    }
-
-    @Override
-    public void onDeviceDisconnecting(String deviceAddress) {
-        // Log.e(TAG, "onDeviceDisconnecting: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,正在断开连接中  mac=" + deviceAddress);
-    }
-
-    @Override
-    public void onDeviceDisconnected(String deviceAddress) {
-        // Log.e(TAG, "onDeviceDisconnected: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级,已断开连接  mac=" + deviceAddress);
-    }
-
-    @Override
-    public void onDfuCompleted(String deviceAddress) {
-        //   Log.e(TAG, "onDfuCompleted: ------>" + deviceAddress);
-        cancelDialog();
-        @StringRes int stringId = R.string.firmware_upgrade_success_hint;
-        switch (mVersionType) {
-            case VERSION_TYPE_MONITOR:
-                stringId = R.string.firmware_upgrade_success_hint;
-                break;
-            case VERSION_TYPE_SLEEPY:
-                stringId = R.string.sleeper_firmware_upgrade_success_hint;
-                break;
-        }
-        ToastHelper.show(this, getString(stringId), Gravity.CENTER);
-        LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
-        AppManager.getVersionModel().notifyMonitorDot(false);
-        AppManager.getVersionModel().notifySleepyDot(false);
-        finish();
-    }
 
     private void cancelDialog() {
         if (mDismissDialogRunnable != null) {
@@ -422,36 +405,9 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         mDfuCount = 0;
     }
 
-    @Override
-    public void onDfuAborted(String deviceAddress) {
-        // Log.e(TAG, "onDfuAborted: ------>" + deviceAddress);
-        LogManager.appendUserOperationLog("设备 dfu 固件升级被终止  mac=" + deviceAddress);
-        cancelDialog();
-        ToastHelper.show("固件升级已被取消");
-    }
-
-    @Override
-    public void onError(String deviceAddress, int error, int errorType, String message) {
-        if (mDfuCount > 2) {
-            runUiThread(() -> {
-                ToastHelper.show(R.string.firmware_upgrade_failed_hint);
-                cancelDialog();
-            });
-        } else {
-            mDfuCount++;
-            runUiThread(() -> mPresenter.upgrade(mVersionType), 1000);
-        }
-
-        if (error == 4096) {
-            AppManager.getBlueManager().refresh();
-        }
-
-        LogManager.appendUserOperationLog("设备 dfu 固件升级失败  mac=" + deviceAddress + "  error=" + error + "  errorMessage=" + message);
-    }
 
     private void initDialog(int dialogType) {
-        VersionDialog versionDialog = VersionDialog.newInstance(dialogType,
-                mVersionType == VERSION_TYPE_APP ? getString(R.string.app_download_title_hint) : getString(R.string.firmware_download_title_hint));
+        VersionDialog versionDialog = VersionDialog.newInstance(dialogType, getString(R.string.firmware_download_title_hint));
         versionDialog.show(getSupportFragmentManager(), versionDialog.getClass().getSimpleName());
         this.mVersionDialog = versionDialog;
     }
@@ -461,8 +417,6 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
         this.mPresenter = presenter;
     }
 
-
-    // private methods
     private boolean monitorBatteryLow() {
         return DeviceManager.INSTANCE.getMonitorBattery() < 50;
     }
@@ -470,15 +424,12 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     private boolean mobileBatteryLow() {
         IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatus = this.registerReceiver(null, iFilter);
-
         int level = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) : -1;
         int scale = batteryStatus != null ? batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1) : -1;
         float batteryPct = level / (float) scale;
         int batteryQuantity = (int) (batteryPct * 100);
-
         int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL;
-
         // 电量小于50，而且不在充电状态
         return batteryQuantity < 50 && !isCharging;
     }
@@ -486,6 +437,4 @@ public class VersionUpgradeActivity extends HwBaseActivity implements View.OnCli
     private boolean sleepyBatterLow() {
         return DeviceManager.INSTANCE.getSleeperBattery() < 50;
     }
-
-
 }

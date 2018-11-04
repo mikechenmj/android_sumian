@@ -10,7 +10,6 @@ import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
-import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.userProfile.SdUserProfileActivity
@@ -18,6 +17,7 @@ import com.sumian.sd.anxiousandfaith.AnxiousAndFaithActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.device.DeviceManager
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.device.scan.ScanDeviceActivity
 import com.sumian.sd.device.widget.DeviceCardView
 import com.sumian.sd.event.CBTIProgressChangeEvent
@@ -32,7 +32,6 @@ import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
-import com.sumian.sd.service.cbti.activity.CBTIIntroductionWebActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
 import org.greenrobot.eventbus.Subscribe
@@ -84,11 +83,11 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun launchCbtiActivity() {
-        if (isLock) {//未购买
-            CBTIIntroductionWebActivity.show()
-        } else {//已购买
-            CBTIIntroductionActivity.show()
-        }
+        //if (isLock) {//未购买
+        //    CBTIIntroductionWebActivity.show()
+        //} else {//已购买
+        CBTIIntroductionActivity.show()
+        //}
         //ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
     }
 

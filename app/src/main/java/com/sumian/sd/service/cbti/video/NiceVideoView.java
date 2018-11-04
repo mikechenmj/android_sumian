@@ -608,7 +608,10 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
                 }
             } else if (what == IMediaPlayer.MEDIA_INFO_NOT_SEEKABLE) {
                 LogUtil.e("视频不能seekTo，为直播视频");
-            } else {
+            } else if (what == 105) {
+                mCurrentState = STATE_ERROR;
+                mController.onPlayStateChanged(mCurrentState);
+                mOnVideoViewEvent.onPlayErrorCallback();
                 LogUtil.e("onInfo ——> what：" + what);
             }
             return true;

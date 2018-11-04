@@ -221,6 +221,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 cancelDismissTopBottomTimer();
                 break;
             case NiceVideoView.STATE_ERROR:
+                mLoading.setVisibility(View.GONE);
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mTop.setVisibility(View.VISIBLE);
