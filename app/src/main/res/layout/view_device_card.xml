@@ -11,4 +11,29 @@
 
     <include layout="@layout/layout_device_card_view_device" />
 
+    <TextView
+        android:id="@+id/tv_device_data"
+        style="@style/text_b3_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:drawableStart="@drawable/home_icon_devicedate"
+        android:drawablePadding="5dp"
+        android:padding="20dp"
+        android:text="@string/data"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_know_device"
+        style="@style/text_b3_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:drawableEnd="@drawable/home_icon_understandmore"
+        android:drawablePadding="5dp"
+        android:padding="10dp"
+        android:text="@string/know_device"
+        android:visibility="gone"
+        tools:visibility="visible" />
 </FrameLayout>

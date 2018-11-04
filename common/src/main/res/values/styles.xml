@@ -83,6 +83,7 @@
 
     <style name="text_b2_16" parent="BaseText">
         <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="text_b3" parent="BaseText">
