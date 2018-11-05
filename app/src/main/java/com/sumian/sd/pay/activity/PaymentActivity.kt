@@ -141,8 +141,8 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         onBack()
+        super.onBackPressed()
     }
 
     private fun onBack() {
