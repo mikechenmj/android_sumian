@@ -187,17 +187,21 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 break;
             case NiceVideoView.STATE_PREPARING:
                 mImage.setVisibility(View.GONE);
-                mLoading.setVisibility(View.VISIBLE);
-                mLoadText.setText("正在加载中...");
+                mLoading.setVisibility(View.GONE);
                 mError.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.GONE);
-                mTop.setVisibility(View.GONE);
-                mBottom.setVisibility(View.GONE);
+                setTopBottomVisible(false);
                 mCenterStart.setVisibility(View.GONE);
                 Log.e(TAG, "onPlayStateChanged: --------->preparing");
                 break;
             case NiceVideoView.STATE_PREPARED:
                 startUpdateProgressTimer();
+                mImage.setVisibility(View.GONE);
+                mLoading.setVisibility(View.GONE);
+                mError.setVisibility(View.GONE);
+                mCompleted.setVisibility(View.GONE);
+                setTopBottomVisible(false);
+                mCenterStart.setVisibility(View.GONE);
                 Log.e(TAG, "onPlayStateChanged: --------->prepared");
                 break;
             case NiceVideoView.STATE_PLAYING:
@@ -206,8 +210,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 startDismissTopBottomTimer();
                 mError.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.GONE);
-                mTop.setVisibility(View.GONE);
-                mBottom.setVisibility(View.GONE);
+                setTopBottomVisible(false);
                 mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_PAUSED:
@@ -216,8 +219,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 cancelDismissTopBottomTimer();
                 mError.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.GONE);
-                mTop.setVisibility(View.VISIBLE);
-                mBottom.setVisibility(View.VISIBLE);
+                setTopBottomVisible(true);
                 mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_BUFFERING_PLAYING:
@@ -227,8 +229,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 startDismissTopBottomTimer();
                 mError.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.GONE);
-                mTop.setVisibility(View.GONE);
-                mBottom.setVisibility(View.GONE);
+                setTopBottomVisible(false);
                 mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_BUFFERING_PAUSED:
@@ -238,8 +239,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 cancelDismissTopBottomTimer();
                 mError.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.GONE);
-                mTop.setVisibility(View.VISIBLE);
-                mBottom.setVisibility(View.VISIBLE);
+                setTopBottomVisible(true);
                 mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_ERROR:

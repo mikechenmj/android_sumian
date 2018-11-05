@@ -41,7 +41,6 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
  */
 class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
 
-    private var mCourse: Course? = null
     private var mCoursePlayAuth: CoursePlayAuth? = null
     private var mCurrentCourse: Course? = null
     private var mCurrentPosition = 0
@@ -79,7 +78,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
-            this.mCourse = it.getParcelable(EXTRA_CBTI_COURSE)
+            this.mCurrentCourse = it.getParcelable(EXTRA_CBTI_COURSE)
             this.mCurrentPosition = it.getInt(EXTRA_SELECT_POSITION, 0)
         }
 
@@ -110,14 +109,14 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun initData() {
         super.initData()
-        this.mPresenter.getCBTIPlayAuthInfo(mCourse?.id!!)
+        this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tv_lesson_list -> {
                 mCoursePlayAuth?.let {
-                    CBTICourseListBottomSheet.show(supportFragmentManager, mCourse?.cbti_chapter_id!!, mCurrentPosition, this)
+                    CBTICourseListBottomSheet.show(supportFragmentManager, mCurrentCourse?.cbti_chapter_id!!, mCurrentPosition, this)
                 }
             }
             R.id.nav_tab_lesson_practice -> {
@@ -165,7 +164,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onUploadLessonLogFailed(error: String) {
-        onGetCBTIPlayAuthFailed(error)
+        //onGetCBTIPlayAuthFailed(error)
     }
 
     override fun onUploadCBTIQuestionnairesSuccess(coursePlayAuth: CoursePlayAuth) {
@@ -220,8 +219,9 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
         //PlayLog.e(TAG, "currentFrame=$currentFrame    oldFrame=$oldFrame   totalFrame=$totalFrame")
-
-        mPresenter.calculatePlayFrame(mCoursePlayAuth?.meta?.video_id!!, mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
+        mCurrentCourse?.video_id?.let {
+            mPresenter.calculatePlayFrame(it, mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
+        }
         // PlayLog.e(TAG, "finalFrame=$hexPlayFrame   fl=$fl")
     }
 
@@ -255,7 +255,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     override fun onPlayRetry() {
         //遇到错误后,尝试重新播放
         if (mCurrentCourse == null) {
-            this.mPresenter.getCBTIPlayAuthInfo(mCourse?.id!!)
+            this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
         } else {
             this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
         }
@@ -298,7 +298,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
             setPlayAuth(mCoursePlayAuth!!)
 
-            setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
+            setChapterId(this@CBTICoursePlayActivity, mCurrentCourse?.cbti_chapter_id!!, mCurrentPosition)
 
             if (!isDestroyed) {
                 ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
