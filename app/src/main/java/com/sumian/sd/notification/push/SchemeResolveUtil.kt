@@ -47,6 +47,15 @@ class SchemeResolveUtil {
             return createSchemeResolver(uri)?.resolveScheme(context, uri) ?: return null
         }
 
+        fun getNotificationIdFromScheme(scheme: String?): String? {
+            if (TextUtils.isEmpty(scheme)) {
+                return null
+            }
+            val decodedScheme = URLDecoder.decode(scheme, "UTF-8")
+            val uri = Uri.parse(decodedScheme)
+            return uri.getQueryParameter("notification_id")
+        }
+
         private fun createSchemeResolver(uri: Uri): SchemeResolver? {
             return when (uri.host) {
                 "diaries" -> DiarySchemeResolver()
