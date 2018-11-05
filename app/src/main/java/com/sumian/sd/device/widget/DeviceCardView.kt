@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
 import android.content.Intent
 import android.net.Uri
 import com.blankj.utilcode.util.ActivityUtils
+import kotlinx.android.synthetic.main.view_device_card.view.*
 
 
 /**
@@ -113,8 +114,8 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 }
             }
             tv_device_data.setOnClickListener {
-                EventBusUtil.postEvent(ChangeMainTabEvent(MainActivity.TAB_1))
-                EventBusUtil.postEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
+                EventBusUtil.postStickyEvent(ChangeMainTabEvent(MainActivity.TAB_1))
+                EventBusUtil.postStickyEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
             }
             tv_know_device.setOnClickListener {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sumian.com"))
@@ -126,6 +127,8 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     fun registerLifecycleOwner(lifecycleOwner: LifecycleOwner) {
         DeviceManager.getMonitorLiveData().observe(lifecycleOwner, Observer {
             LogUtils.d("on monitor status change", it)
+            tv_know_device.visibility = if (it == null) View.VISIBLE else View.GONE
+            tv_device_data.visibility = if (it != null) View.VISIBLE else View.GONE
             updateUI(DeviceManager.isBluetoothEnable(), it)
         })
         DeviceManager.getIsBluetoothEnableLiveData().observe(lifecycleOwner, Observer {
