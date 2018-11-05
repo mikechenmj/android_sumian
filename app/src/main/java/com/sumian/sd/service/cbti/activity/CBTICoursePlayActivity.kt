@@ -41,6 +41,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
  */
 class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
 
+    private var mCourse: Course? = null
     private var mCoursePlayAuth: CoursePlayAuth? = null
     private var mCurrentCourse: Course? = null
     private var mCurrentPosition = 0
@@ -78,7 +79,8 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
-            this.mCurrentCourse = it.getParcelable(EXTRA_CBTI_COURSE)
+            this.mCourse = it.getParcelable(EXTRA_CBTI_COURSE)
+            this.mCurrentCourse = mCourse
             this.mCurrentPosition = it.getInt(EXTRA_SELECT_POSITION, 0)
         }
 
@@ -116,7 +118,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         when (v.id) {
             R.id.tv_lesson_list -> {
                 mCoursePlayAuth?.let {
-                    CBTICourseListBottomSheet.show(supportFragmentManager, mCurrentCourse?.cbti_chapter_id!!, mCurrentPosition, this)
+                    CBTICourseListBottomSheet.show(supportFragmentManager, mCourse?.cbti_chapter_id!!, mCurrentPosition, this)
                 }
             }
             R.id.nav_tab_lesson_practice -> {
@@ -254,11 +256,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun onPlayRetry() {
         //遇到错误后,尝试重新播放
-        if (mCurrentCourse == null) {
-            this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
-        } else {
-            this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
-        }
+        this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -298,7 +296,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
             setPlayAuth(mCoursePlayAuth!!)
 
-            setChapterId(this@CBTICoursePlayActivity, mCurrentCourse?.cbti_chapter_id!!, mCurrentPosition)
+            setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
 
             if (!isDestroyed) {
                 ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)

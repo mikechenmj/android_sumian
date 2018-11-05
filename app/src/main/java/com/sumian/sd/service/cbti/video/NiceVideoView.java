@@ -200,7 +200,6 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             initMediaPlayer();
             addTextureView();
             continueFromLastPosition = true;
-            mCurrentState = STATE_PREPARING;
             mController.onPlayStateChanged(mCurrentState);
             mMediaPlayer.prepareAsync();
         } else {
