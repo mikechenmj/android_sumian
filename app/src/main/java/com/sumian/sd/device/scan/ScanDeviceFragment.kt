@@ -44,6 +44,7 @@ class ScanDeviceFragment : BaseFragment() {
     private val mHandler = Handler()
     private var mIsScanMore = false
     private var mStartScanTime = 0L
+    private var mIsScanning = false
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_scan_device
@@ -62,7 +63,7 @@ class ScanDeviceFragment : BaseFragment() {
         super.initWidget()
         iv_bt.setOnClickListener { startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BT) }
         vg_bt_not_enable.visibility = if (mBlueManager.isEnable) View.GONE else View.VISIBLE
-        tv_scan_more.setOnClickListener { startScanMore() }
+        tv_scan_more.setOnClickListener { startScan(true) }
         tv_rescan.setOnClickListener { startScan() }
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mDeviceAdapter
@@ -87,18 +88,22 @@ class ScanDeviceFragment : BaseFragment() {
         mBlueManager.addBlueScanCallback(mScanCallback)
     }
 
-    override fun onDetach() {
+    override fun onDestroy() {
+        unregisterBlueCallbacks()
+        mHandler.removeCallbacks(null)
+        stopScanIfIsScanning()
+        super.onDestroy()
+    }
+
+    private fun unregisterBlueCallbacks() {
         mBlueManager.removeBlueAdapterCallback(mBlueAdapterEnableListener)
         mBlueManager.removeBlueScanCallback(mScanCallback)
-        stopScan()
-        mHandler.removeCallbacks(null)
-        super.onDetach()
     }
 
     private val mScanCallback = object : BlueScanCallback {
 
         override fun onBeginScanCallback() {
-
+            mIsScanning = true
         }
 
         override fun onLeScanCallback(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray?) {
@@ -121,11 +126,12 @@ class ScanDeviceFragment : BaseFragment() {
                 mDeviceAdapter.setData(mScanResults)
             }
             if (System.currentTimeMillis() - mStartScanTime > SCAN_CHECK_DURATION && !mIsScanMore) {
-                stopScan()
+                stopScanIfIsScanning()
             }
         }
 
         override fun onFinishScanCallback() {
+            mIsScanning = false
             hideVgs()
             when (mScanResults.size) {
                 0 -> showNoDeviceUI()
@@ -135,8 +141,11 @@ class ScanDeviceFragment : BaseFragment() {
         }
     }
 
-    private fun stopScan() {
-        mBlueManager.doStopScan()
+    private fun stopScanIfIsScanning() {
+        if (mIsScanning) {
+            mBlueManager.doStopScan()
+        }
+        mIsScanning = false
     }
 
     private fun showNoDeviceUI() {
@@ -228,31 +237,27 @@ class ScanDeviceFragment : BaseFragment() {
         }
     }
 
-    private fun startScan() {
-        resetScanResults()
-        mStartScanTime = System.currentTimeMillis()
-        mIsScanMore = false
+    private fun startScan(isScanMore: Boolean = false) {
+        if (!isScanMore) {
+            resetScanResults()
+            mHandler.postDelayed({ checkScanResult() }, SCAN_CHECK_DURATION)
+            iv_device.visibility = View.GONE
+            vg_scan_more_tvs.visibility = View.GONE
+            ripple_view.startAnimation()
+        }
+
+        mIsScanMore = isScanMore
         mBlueManager.startScanAndAutoStopAfter(SCAN_DURATION)
-        mHandler.postDelayed({ checkScanResult() }, SCAN_CHECK_DURATION)
-        switchDeviceListUI(false)
-        iv_device.visibility = View.GONE
-        vg_scan_more_tvs.visibility = View.GONE
-        ripple_view.startAnimation()
+        mStartScanTime = System.currentTimeMillis()
+        switchDeviceListUI(isScanMore)
     }
 
     private fun checkScanResult() {
         if (mScanResults.size == 1) {
-            stopScan()
+            stopScanIfIsScanning()
         } else if (mScanResults.size > 1) {
             showMultiDeviceUI()
         }
-    }
-
-    private fun startScanMore() {
-        mIsScanMore = true
-        mBlueManager.startScanAndAutoStopAfter(SCAN_DURATION)
-        mStartScanTime = System.currentTimeMillis()
-        switchDeviceListUI(true)
     }
 
     private fun resetScanResults() {
@@ -261,6 +266,8 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun onDeviceSelected(device: BlueDevice) {
+        unregisterBlueCallbacks()
+        stopScanIfIsScanning()
         DeviceManager.cacheBlueDevice(device)
         mOnDeviceSelectedListener?.onDeviceSelected(device)
     }
