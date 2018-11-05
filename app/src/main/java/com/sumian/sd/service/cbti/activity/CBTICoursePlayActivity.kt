@@ -207,7 +207,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onResetPlayCallback() {
-
+        // Log.e(TAG, "onResetPlayCallback: --------->")
     }
 
     override fun onRePlayCallbck() {
@@ -215,9 +215,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onPlayErrorCallback() {
-        mCurrentCourse?.let {
-            this.mPresenter.getCBTIPlayAuthInfo(it.id)
-        }
+        // Log.e(TAG, "onPlayErrorCallback: -------->error")
     }
 
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
@@ -247,8 +245,19 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     override fun onPlayNext() {
         if (mCurrentPosition < mCoursePlayAuth?.courses?.size!! - 1) {
             mCurrentPosition += 1
-            val course = mCoursePlayAuth?.courses?.get(mCurrentPosition)
-            mPresenter.playNextCBTIVideo(course?.id!!)
+            mCurrentCourse = mCoursePlayAuth?.courses?.get(mCurrentPosition)
+            mCurrentCourse?.let {
+                mPresenter.playNextCBTIVideo(it.id)
+            }
+        }
+    }
+
+    override fun onPlayRetry() {
+        //遇到错误后,尝试重新播放
+        if (mCurrentCourse == null) {
+            this.mPresenter.getCBTIPlayAuthInfo(mCourse?.id!!)
+        } else {
+            this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
         }
     }
 

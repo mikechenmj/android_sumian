@@ -198,7 +198,6 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             NiceVideoPlayerManager.instance().setCurrentNiceVideoPlayer(this);
             initAudioManager();
             initMediaPlayer();
-            initTextureView();
             addTextureView();
             continueFromLastPosition = true;
             mCurrentState = STATE_PREPARING;
@@ -232,8 +231,10 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             mController.onPlayStateChanged(mCurrentState);
             //mMediaPlayer.replay();
         } else if (mCurrentState == STATE_ERROR) {
+            mController.onPlayStateChanged(mCurrentState);
             mMediaPlayer.reset();
-            openMediaPlayer();
+            Log.e(TAG, "restart: ------------->error");
+            //openMediaPlayer();
         } else {
             LogUtil.d("NiceVideoPlayer在mCurrentState == " + mCurrentState + "时不能调用restart()方法.");
         }
@@ -445,14 +446,11 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         }
     }
 
-    private void initTextureView() {
+    private void addTextureView() {
         if (mTextureView == null) {
             mTextureView = new NiceTextureView(mContext);
             mTextureView.setSurfaceTextureListener(this);
         }
-    }
-
-    private void addTextureView() {
         mContainer.removeView(mTextureView);
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         mContainer.addView(mTextureView, 0, params);
@@ -467,6 +465,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         mMediaPlayer.setOnCompletionListener(mOnCompletionListener);
         mMediaPlayer.setOnErrorListener(mOnErrorListener);
         mMediaPlayer.setOnInfoListener(mOnInfoListener);
+        mMediaPlayer.setOnLoadingListener(mOnLoadingListener);
         mMediaPlayer.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
         // 设置dataSource
         //try {
@@ -475,10 +474,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             mSurface = new Surface(mSurfaceTexture);
         }
         mMediaPlayer.setSurface(mSurface);
-        mMediaPlayer.prepareAsync();
-        mCurrentState = STATE_PREPARING;
+        //mMediaPlayer.prepareAsync();
         mController.onPlayStateChanged(mCurrentState);
-        LogUtil.d("STATE_PREPARING");
+        Log.e(TAG, "openMediaPlayer: STATE_PREPARING");
         // } catch (IOException e) {
         //   e.printStackTrace();
         //  LogUtil.e("打开播放器发生错误", e);
@@ -560,12 +558,12 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         @Override
         public boolean onError(IMediaPlayer mp, int what, int extra) {
             // 直播流播放时去调用mediaPlayer.getDuration会导致-38和-2147483648错误，忽略该错误
-            if (what != -38 && what != -2147483648 && extra != -38 && extra != -2147483648) {
-                mCurrentState = STATE_ERROR;
-                mController.onPlayStateChanged(mCurrentState);
-                mOnVideoViewEvent.onPlayErrorCallback();
-                LogUtil.d("onError ——> STATE_ERROR ———— what：" + what + ", extra: " + extra);
-            }
+            //if (what != -38 && what != -2147483648 && extra != -38 && extra != -2147483648) {
+            mCurrentState = STATE_ERROR;
+            mController.onPlayStateChanged(mCurrentState);
+            mOnVideoViewEvent.onPlayErrorCallback();
+            Log.e(TAG, "onError ——> STATE_ERROR ———— what：" + what + ", extra: " + extra);
+            // }
             return true;
         }
     };
@@ -573,46 +571,57 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     private IMediaPlayer.OnInfoListener mOnInfoListener = new IMediaPlayer.OnInfoListener() {
         @Override
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
-            if (what == IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                // 播放器开始渲染
-                mCurrentState = STATE_PLAYING;
-                mController.onPlayStateChanged(mCurrentState);
-                LogUtil.e("onInfo ——> MEDIA_INFO_VIDEO_RENDERING_START：STATE_PLAYING");
-            } else if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_START) {
-                // MediaPlayer暂时不播放，以缓冲更多的数据
-                if (mCurrentState == STATE_PAUSED || mCurrentState == STATE_BUFFERING_PAUSED) {
-                    mCurrentState = STATE_BUFFERING_PAUSED;
-                    LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PAUSED");
-                } else {
-                    mCurrentState = STATE_BUFFERING_PLAYING;
-                    LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PLAYING");
-                }
-                mController.onPlayStateChanged(mCurrentState);
-            } else if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_END) {
-                // 填充缓冲区后，MediaPlayer恢复播放/暂停
-                if (mCurrentState == STATE_BUFFERING_PLAYING) {
+            switch (what) {
+                case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:// 播放器开始渲染
                     mCurrentState = STATE_PLAYING;
                     mController.onPlayStateChanged(mCurrentState);
-                    LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PLAYING");
-                }
-                if (mCurrentState == STATE_BUFFERING_PAUSED) {
-                    mCurrentState = STATE_PAUSED;
+                    LogUtil.e("onInfo ——> MEDIA_INFO_VIDEO_RENDERING_START：STATE_PLAYING");
+                    break;
+                case IMediaPlayer.MEDIA_INFO_BUFFERING_START:// MediaPlayer暂时不播放，以缓冲更多的数据
+                    if (mCurrentState == STATE_PAUSED || mCurrentState == STATE_BUFFERING_PAUSED) {
+                        mCurrentState = STATE_BUFFERING_PAUSED;
+                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PAUSED");
+                    } else {
+                        mCurrentState = STATE_BUFFERING_PLAYING;
+                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PLAYING");
+                    }
                     mController.onPlayStateChanged(mCurrentState);
-                    LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PAUSED");
-                }
-            } else if (what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED) {
-                // 视频旋转了extra度，需要恢复
-                if (mTextureView != null) {
-                    mTextureView.setRotation(extra);
-                    LogUtil.e("视频旋转角度：" + extra);
-                }
-            } else if (what == IMediaPlayer.MEDIA_INFO_NOT_SEEKABLE) {
-                LogUtil.e("视频不能seekTo，为直播视频");
-            } else if (what == 105) {
-                mCurrentState = STATE_ERROR;
-                mController.onPlayStateChanged(mCurrentState);
-                mOnVideoViewEvent.onPlayErrorCallback();
-                LogUtil.e("onInfo ——> what：" + what);
+                    break;
+                case IMediaPlayer.MEDIA_INFO_BUFFERING_END:// 填充缓冲区后，MediaPlayer恢复播放/暂停
+                    if (mCurrentState == STATE_BUFFERING_PLAYING) {
+                        mCurrentState = STATE_PLAYING;
+                        mController.onPlayStateChanged(mCurrentState);
+                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PLAYING");
+                    }
+                    if (mCurrentState == STATE_BUFFERING_PAUSED) {
+                        mCurrentState = STATE_PAUSED;
+                        mController.onPlayStateChanged(mCurrentState);
+                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PAUSED");
+                    }
+                    break;
+                case IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:// 视频旋转了extra度，需要恢复
+                    if (mTextureView != null) {
+                        mTextureView.setRotation(extra);
+                        LogUtil.e("视频旋转角度：" + extra);
+                    }
+                    break;
+                case IMediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
+                    LogUtil.e("视频不能seekTo，为直播视频");
+                    break;
+                case IMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START://获取到视频的第一帧
+                    //Log.e(TAG, "onInfo: --------->视频的第一帧");
+                    break;
+                case IMediaPlayer.MEDIA_INFO_BUFFERING_PROGRESS://视频在不停的缓冲中,缓冲未完毕
+                    //Log.e(TAG, "onInfo: -------->视频在缓冲进度 progress=" + extra);
+                    break;
+                case IMediaPlayer.MEDIA_INFO_NETWORK_BANDWIDTH://网络出问题
+                case IMediaPlayer.MEDIA_INFO_UNKNOWN:
+                default:
+                    mCurrentState = STATE_ERROR;
+                    mController.onPlayStateChanged(mCurrentState);
+                    mOnVideoViewEvent.onPlayErrorCallback();
+                    // Log.e(TAG, "onInfo ——> what：" + what);
+                    break;
             }
             return true;
         }
@@ -622,6 +631,24 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
             mBufferPercentage = percent;
+            Log.e(TAG, "onBufferingUpdate: -------->buffering  percent=" + percent);
+        }
+    };
+
+    private IMediaPlayer.OnLoadingLister mOnLoadingListener = new IMediaPlayer.OnLoadingLister() {
+        @Override
+        public void onLoadStart() {
+            // Log.e(TAG, "onLoadStart: ------->正在缓冲");
+        }
+
+        @Override
+        public void onLoadEnd() {
+            // Log.e(TAG, "onLoadStart: ------->缓冲结束");
+        }
+
+        @Override
+        public void onLoadProgress(int percent) {
+            //Log.e(TAG, "onLoadProgress: --------->缓冲进度   progress=" + percent);
         }
     };
 
