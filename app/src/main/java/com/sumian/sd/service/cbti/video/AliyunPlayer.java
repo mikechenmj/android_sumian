@@ -2,9 +2,11 @@ package com.sumian.sd.service.cbti.video;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
+import com.alivc.player.MediaPlayer;
 import com.aliyun.vodplayer.media.AliyunPlayAuth;
 import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
@@ -22,6 +24,8 @@ import java.util.concurrent.Executors;
  */
 public class AliyunPlayer extends AbstractMediaPlayer {
 
+    private static final String TAG = AliyunPlayer.class.getSimpleName();
+
     private AliyunVodPlayer mAliyunPlayer;
 
     private AliyunPlayAuth mAliyunPlayAuth;
@@ -31,8 +35,25 @@ public class AliyunPlayer extends AbstractMediaPlayer {
         this.mAliyunPlayer = new AliyunVodPlayer(context);
         //this.mAliyunPlayer.enableNativeLog();
         this.mAliyunPlayer.setThreadExecutorService(Executors.newSingleThreadExecutor());
+        this.mAliyunPlayer.setNetworkTimeout(5 * 1000);
         this.mAliyunPlayer.setVideoScalingMode(IAliyunVodPlayer.VideoScalingMode.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
         // this.mAliyunPlayer.setUiPlayer(true);
+        this.mAliyunPlayer.setOnTimeExpiredErrorListener(new IAliyunVodPlayer.OnTimeExpiredErrorListener() {
+            @Override
+            public void onTimeExpiredError() {
+                if (mOnErrorListener != null) {
+                    mOnErrorListener.onError(AliyunPlayer.this, MediaPlayer.MEDIA_ERROR_UNKNOW, MediaPlayer.MEDIA_ERROR_UNKNOW);
+                }
+            }
+        });
+        this.mAliyunPlayer.setOnUrlTimeExpiredListener(new IAliyunVodPlayer.OnUrlTimeExpiredListener() {
+            @Override
+            public void onUrlTimeExpired(String vid, String quality) {
+                if (mOnErrorListener != null) {
+                    mOnErrorListener.onError(AliyunPlayer.this, MediaPlayer.MEDIA_ERROR_UNKNOW, MediaPlayer.MEDIA_ERROR_UNKNOW);
+                }
+            }
+        });
     }
 
     @Override
@@ -64,7 +85,7 @@ public class AliyunPlayer extends AbstractMediaPlayer {
         AliyunPlayAuth.AliyunPlayAuthBuilder playAuthBuilder = new AliyunPlayAuth.AliyunPlayAuthBuilder();
         playAuthBuilder.setVid(vid);
         playAuthBuilder.setPlayAuth(playAuth);
-        playAuthBuilder.setQuality(IAliyunVodPlayer.QualityValue.QUALITY_LOW);
+        playAuthBuilder.setQuality(IAliyunVodPlayer.QualityValue.QUALITY_HIGH);
         this.mAliyunPlayAuth = playAuthBuilder.build();
     }
 
@@ -220,6 +241,7 @@ public class AliyunPlayer extends AbstractMediaPlayer {
             this.mAliyunPlayer.setOnErrorListener(new IAliyunVodPlayer.OnErrorListener() {
                 @Override
                 public void onError(int i, int i1, String s) {
+                    Log.e(TAG, "onError: ------->i=" + i + "  i1=" + i1 + "  s=" + s);
                     var1.onError(AliyunPlayer.this, i, i1);
                 }
             });
@@ -232,7 +254,52 @@ public class AliyunPlayer extends AbstractMediaPlayer {
             this.mAliyunPlayer.setOnInfoListener(new IAliyunVodPlayer.OnInfoListener() {
                 @Override
                 public void onInfo(int i, int i1) {
+                    Log.e(TAG, "onInfo: ------->i=" + i + "  i1=" + i1);
+                    switch (i) {
+                        case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+                            i = MEDIA_INFO_BUFFERING_START;
+                            break;
+                        case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                            i = MEDIA_INFO_BUFFERING_END;
+                            break;
+                        case MediaPlayer.MEDIA_INFO_NETWORK_ERROR:
+                            i = MEDIA_INFO_NETWORK_BANDWIDTH;
+                            break;
+                        case MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
+                            i = MEDIA_INFO_VIDEO_RENDERING_START;
+                            break;
+                        case MediaPlayer.MEDIA_INFO_UNKNOW:
+                            i = MEDIA_INFO_UNKNOWN;
+                            break;
+                        case MediaPlayer.MEDIA_INFO_BUFFERING_PROGRESS:
+                            i = MEDIA_INFO_BUFFERING_PROGRESS;
+                            break;
+                        default:
+                            break;
+                    }
                     var1.onInfo(AliyunPlayer.this, i, i1);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void setOnLoadingListener(OnLoadingLister loadingListener) {
+        if (loadingListener != null) {
+            this.mAliyunPlayer.setOnLoadingListener(new IAliyunVodPlayer.OnLoadingListener() {
+                @Override
+                public void onLoadStart() {
+                    loadingListener.onLoadStart();
+                }
+
+                @Override
+                public void onLoadEnd() {
+                    loadingListener.onLoadEnd();
+                }
+
+                @Override
+                public void onLoadProgress(int percent) {
+                    loadingListener.onLoadProgress(percent);
                 }
             });
         }
