@@ -200,7 +200,6 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             initMediaPlayer();
             addTextureView();
             continueFromLastPosition = true;
-            mCurrentState = STATE_PREPARING;
             mController.onPlayStateChanged(mCurrentState);
             mMediaPlayer.prepareAsync();
         } else {
@@ -610,6 +609,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
                     break;
                 case IMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START://获取到视频的第一帧
                     //Log.e(TAG, "onInfo: --------->视频的第一帧");
+                    mCurrentState = STATE_PLAYING;
+                    mController.onPlayStateChanged(mCurrentState);
+                    mOnVideoViewEvent.onPlayErrorCallback();
                     break;
                 case IMediaPlayer.MEDIA_INFO_BUFFERING_PROGRESS://视频在不停的缓冲中,缓冲未完毕
                     //Log.e(TAG, "onInfo: -------->视频在缓冲进度 progress=" + extra);
@@ -644,6 +646,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         @Override
         public void onLoadEnd() {
             // Log.e(TAG, "onLoadStart: ------->缓冲结束");
+            mCurrentState = STATE_PLAYING;
+            mController.onPlayStateChanged(mCurrentState);
+            mOnVideoViewEvent.onPlayErrorCallback();
         }
 
         @Override

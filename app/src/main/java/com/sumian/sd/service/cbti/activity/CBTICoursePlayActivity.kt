@@ -80,6 +80,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
             this.mCourse = it.getParcelable(EXTRA_CBTI_COURSE)
+            this.mCurrentCourse = mCourse
             this.mCurrentPosition = it.getInt(EXTRA_SELECT_POSITION, 0)
         }
 
@@ -110,7 +111,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun initData() {
         super.initData()
-        this.mPresenter.getCBTIPlayAuthInfo(mCourse?.id!!)
+        this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
     }
 
     override fun onClick(v: View) {
@@ -165,7 +166,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onUploadLessonLogFailed(error: String) {
-        onGetCBTIPlayAuthFailed(error)
+        //onGetCBTIPlayAuthFailed(error)
     }
 
     override fun onUploadCBTIQuestionnairesSuccess(coursePlayAuth: CoursePlayAuth) {
@@ -220,8 +221,9 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
         //PlayLog.e(TAG, "currentFrame=$currentFrame    oldFrame=$oldFrame   totalFrame=$totalFrame")
-
-        mPresenter.calculatePlayFrame(mCoursePlayAuth?.meta?.video_id!!, mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
+        mCurrentCourse?.video_id?.let {
+            mPresenter.calculatePlayFrame(it, mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
+        }
         // PlayLog.e(TAG, "finalFrame=$hexPlayFrame   fl=$fl")
     }
 
@@ -254,11 +256,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
 
     override fun onPlayRetry() {
         //遇到错误后,尝试重新播放
-        if (mCurrentCourse == null) {
-            this.mPresenter.getCBTIPlayAuthInfo(mCourse?.id!!)
-        } else {
-            this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
-        }
+        this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
