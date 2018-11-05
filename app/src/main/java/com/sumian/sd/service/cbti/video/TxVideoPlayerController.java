@@ -194,9 +194,11 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 mTop.setVisibility(View.GONE);
                 mBottom.setVisibility(View.GONE);
                 mCenterStart.setVisibility(View.GONE);
+                Log.e(TAG, "onPlayStateChanged: --------->preparing");
                 break;
             case NiceVideoView.STATE_PREPARED:
                 startUpdateProgressTimer();
+                Log.e(TAG, "onPlayStateChanged: --------->prepared");
                 break;
             case NiceVideoView.STATE_PLAYING:
                 mLoading.setVisibility(View.GONE);
@@ -226,6 +228,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 setTopBottomVisible(false);
                 mTop.setVisibility(View.VISIBLE);
                 mError.setVisibility(View.VISIBLE);
+                Log.e(TAG, "onPlayStateChanged: --------->error");
                 break;
             case NiceVideoView.STATE_COMPLETED:
                 cancelUpdateProgressTimer();
@@ -354,7 +357,13 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     public void onClick(View v) {
         if (v == mCenterStart) {
             if (mNiceVideoPlayer.isIdle()) {
-                mNiceVideoPlayer.start();
+                if (mPlayAuth == null) {
+                    if (mControllerCallback != null) {
+                        mControllerCallback.onPlayRetry();
+                    }
+                } else {
+                    mNiceVideoPlayer.start();
+                }
             }
         } else if (v == mBack) {
             if (mNiceVideoPlayer.isFullScreen()) {
@@ -377,8 +386,10 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         } else if (v == mClarity) {
             setTopBottomVisible(false); // 隐藏top、bottom
             mLessonListDialog.show();     // 显示清晰度对话框
-        } else if (v == mRetry) {
-            mNiceVideoPlayer.restart();
+        } else if (v == mRetry) {//遇到错误时,重新播放
+            if (mControllerCallback != null) {
+                mControllerCallback.onPlayRetry();
+            }
         } else if (v == mReplay) {
 
             mHavePractice.setVisibility(GONE);
@@ -567,6 +578,11 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
 
     public interface OnControllerCallback {
         void onPlayNext();
+
+        /**
+         * 当遇到 error错误时,点击 重播按钮,重新播放
+         */
+        void onPlayRetry();
     }
 
     private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
