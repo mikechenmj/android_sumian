@@ -105,6 +105,7 @@ public class BlueManager implements BlueContract.Presenter, BluetoothAdapter.LeS
     @Override
     public void doStopScan() {
         removeMsg();
+        Log.d(TAG, "蓝牙 stopLeScan");
         mBluetoothAdapter.stopLeScan(this);
         mIsScanning = false;
         for (BlueScanCallback blueScanCallback : mBlueScanCallbacks) {
@@ -365,6 +366,7 @@ public class BlueManager implements BlueContract.Presenter, BluetoothAdapter.LeS
 
     private void startScan() {
         if (isEnable()) {
+            Log.d(TAG, "蓝牙 startLeScan");
             mIsScanning = mBluetoothAdapter.startLeScan(this);
             if (mIsScanning) {
                 for (BlueScanCallback blueScanCallback : mBlueScanCallbacks) {

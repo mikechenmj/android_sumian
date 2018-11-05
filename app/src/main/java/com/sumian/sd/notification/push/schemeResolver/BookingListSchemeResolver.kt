@@ -18,11 +18,10 @@ import com.sumian.sd.service.tel.activity.TelBookingListActivity
 class BookingListSchemeResolver : SchemeResolver {
 
     /**
-    医生发送了新的量表
     "scheme" => "sleepdoctor://booking-list?list_type=0&notification_id=6e9ea5a4-8559-45ca-a5e4-9b495d5ebb2f&user_id=2040" //urlencode后
      */
     override fun resolveScheme(context: Context, uri: Uri): Intent {
-        val data = uri.getQueryParameter("type").toInt()
+        val data = uri.getQueryParameter("list_type").toInt()
         return TelBookingListActivity.getLaunchIntent(data)
     }
 }
