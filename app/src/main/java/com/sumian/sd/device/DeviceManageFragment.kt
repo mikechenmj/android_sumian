@@ -49,7 +49,7 @@ class DeviceManageFragment : BaseFragment() {
         }
 
         override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
-            tv_bottom.text = getString(R.string.sync_progress_package_progress, packageNumber, progress * 100 / total)
+            tv_bottom_progress.text = getString(R.string.sync_progress_package_progress, packageNumber, progress * 100 / total)
         }
 
         override fun onSyncSuccess() {
@@ -239,7 +239,7 @@ class DeviceManageFragment : BaseFragment() {
     }
 
     private fun updateBottomTv(monitor: BlueDevice) {
-        tv_bottom.text = getString(if (monitor.status == BlueDevice.STATUS_UNCONNECTED) {
+        tv_bottom_hint.text = getString(if (monitor.status == BlueDevice.STATUS_UNCONNECTED) {
             R.string.monitor_not_connect_click_upper_to_connect
         } else if (monitor.status == BlueDevice.STATUS_CONNECTING) {
             R.string.monitor_is_connecting
@@ -250,11 +250,13 @@ class DeviceManageFragment : BaseFragment() {
                 if (monitor.isSleeperPa) R.string.sleeper_is_working else R.string.sleeper_is_idle
             }
         })
+        tv_bottom_hint.visibility = if (monitor.isSyncing) View.GONE else View.VISIBLE
+        tv_bottom_progress.visibility = if (monitor.isSyncing) View.VISIBLE else View.GONE
     }
 
     private fun updateSleeperUI(monitor: BlueDevice?) {
         // sleeper ui
-        sleeper_battery_view.setProgress(monitor?.sleeperBattery?: 0)
+        sleeper_battery_view.setProgress(monitor?.sleeperBattery ?: 0)
         tv_speed_sleeper_status.text = getString(when (monitor?.sleeperStatus) {
             BlueDevice.STATUS_CONNECTED -> if (monitor.sleeperPaStatus == BlueDevice.PA_STATUS_PA) R.string.working else R.string.already_connected
             BlueDevice.STATUS_UNCONNECTED -> R.string.not_connected
