@@ -16,7 +16,7 @@ import com.sumian.sd.pay.pay.PayCalculateItemView
 import com.sumian.sd.pay.pay.PayItemGroupView
 import com.sumian.sd.pay.presenter.PayPresenter
 import com.sumian.sd.widget.TitleBar
-import com.sumian.sd.widget.dialog.ActionLoadingDialog
+import com.sumian.sd.widget.dialog.ActionLoadingDialogV2
 import kotlinx.android.synthetic.main.activity_main_shopping_car.*
 
 /**
@@ -48,8 +48,8 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     private var mPayChannel = WECHAT_PAY_TYPE
 
-    private val mActionLoadingDialog: ActionLoadingDialog  by lazy {
-        ActionLoadingDialog()
+    private val mActionLoadingDialog: ActionLoadingDialogV2  by lazy {
+        ActionLoadingDialogV2(this)
     }
 
     private val mPayDialog: PayDialog  by lazy {
@@ -137,17 +137,12 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onBack(v: View) {
-        onBack()
+        onBackPressed()
     }
 
     override fun onBackPressed() {
-        onBack()
-        super.onBackPressed()
-    }
-
-    private fun onBack() {
-        mActionLoadingDialog.dismissAllowingStateLoss()
-        cancelDialog()
+        dismissLoading()
+        cancelPayDialog()
         finish()
     }
 
@@ -162,15 +157,16 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun onFailure(error: String) {
         showCenterToast(error)
-        mActionLoadingDialog.dismissAllowingStateLoss()
+        dismissLoading()
     }
 
     override fun onBegin() {
-        mActionLoadingDialog.show(supportFragmentManager)
+        showLoading()
     }
 
+
     override fun onFinish() {
-        mActionLoadingDialog.dismissAllowingStateLoss()
+        dismissLoading()
     }
 
     override fun onCreatePayOrderSuccess() {
@@ -185,14 +181,12 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onOrderPayFailed(payMsg: String) {
-        //showCenterToast(payMsg);
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show()
         }
     }
 
     override fun onOrderPayInvalid(payMsg: String) {
-        //showCenterToast(payMsg);
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show()
         }
@@ -202,16 +196,16 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_CANCELED).show()
         }
-        mActionLoadingDialog.dismissAllowingStateLoss()
+        dismissLoading()
     }
 
     override fun onCheckOrderPayIsOk() {
-        cancelDialog()
+        cancelPayDialog()
         setResult(Activity.RESULT_OK)
         finish()
     }
 
-    private fun cancelDialog() {
+    private fun cancelPayDialog() {
         if (mPayDialog.isShowing) {
             mPayDialog.cancel()
         }
@@ -228,8 +222,18 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun onCheckOrderPayFinialIsInvalid(invalidError: String) {
         showCenterToast(invalidError)
-        cancelDialog()
+        cancelPayDialog()
         setResult(Activity.RESULT_CANCELED)
         finish()
+    }
+
+    override fun showLoading() {
+        mActionLoadingDialog.show()
+    }
+
+    override fun dismissLoading() {
+        if (mActionLoadingDialog.isShowing) {
+            mActionLoadingDialog.dismiss()
+        }
     }
 }

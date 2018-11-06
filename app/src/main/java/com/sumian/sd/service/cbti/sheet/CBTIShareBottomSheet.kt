@@ -47,10 +47,25 @@ class CBTIShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClic
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tv_wechat_friend -> {
-                AppManager.getOpenEngine().shareWebForCallback(activity, BuildConfig.CBTI_SHARE_WEBSITE, "CBTI简介", "针对失眠的认知行为治疗 (CBTI)是治疗失眠的非药物疗法。因其疗效已经得到大量的临床研究证实，CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。CBTI的原理旨在改变失眠人群的不良睡眠行为、习惯以及与失眠有关的不良认知等多方面因素，以达到改善失眠的效果。", R.drawable.ic_share_launcher, SHARE_MEDIA.WEIXIN, this@CBTIShareBottomSheet)
+                AppManager
+                        .getOpenEngine()
+                        .shareWebForCallback(activity,
+                                BuildConfig.CBTI_SHARE_WEBSITE,
+                                "CBTI（失眠的认知行为治疗）", "治疗失眠的非药物疗法，国内外睡眠医学领域推荐为治疗失眠的首选方案",
+                                R.drawable.ic_share_launcher,
+                                SHARE_MEDIA.WEIXIN,
+                                this@CBTIShareBottomSheet)
             }
             R.id.tv_wechat_circle -> {
-                AppManager.getOpenEngine().shareWebForCallback(activity, BuildConfig.CBTI_SHARE_WEBSITE, "CBTI简介", "针对失眠的认知行为治疗 (CBTI)是治疗失眠的非药物疗法。因其疗效已经得到大量的临床研究证实，CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。CBTI的原理旨在改变失眠人群的不良睡眠行为、习惯以及与失眠有关的不良认知等多方面因素，以达到改善失眠的效果。", R.drawable.ic_share_launcher, SHARE_MEDIA.WEIXIN_CIRCLE, this@CBTIShareBottomSheet)
+                AppManager
+                        .getOpenEngine()
+                        .shareWebForCallback(activity,
+                                BuildConfig.CBTI_SHARE_WEBSITE,
+                                "CBTI（失眠的认知行为治疗），国内外睡眠医学领域首推的非药物治疗方案",
+                                "治疗失眠的非药物疗法，国内外睡眠医学领域推荐为治疗失眠的首选方案",
+                                R.drawable.ic_share_launcher,
+                                SHARE_MEDIA.WEIXIN_CIRCLE,
+                                this@CBTIShareBottomSheet)
             }
             R.id.tv_cancel -> {
                 dismissAllowingStateLoss()
