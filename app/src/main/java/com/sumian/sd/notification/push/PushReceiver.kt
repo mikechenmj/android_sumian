@@ -30,7 +30,7 @@ class PushReceiver : BroadcastReceiver() {
             return
         }
         val notificationIntent = SchemeResolveUtil.schemeResolver(context, scheme) ?: return
-        val notificationId = SchemeResolveUtil.getNotificationIdFromScheme(scheme) ?: return
+        val notificationId = SchemeResolveUtil.getNotificationIdFromScheme(scheme) ?: ""
         val contentText = pushData.alert ?: return
         NotificationUtil.showNotification(context, contentText, notificationId, notificationIntent)
     }
