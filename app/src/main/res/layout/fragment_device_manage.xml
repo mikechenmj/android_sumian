@@ -188,11 +188,21 @@
             </FrameLayout>
 
             <TextView
-                android:id="@+id/tv_bottom"
+                android:id="@+id/tv_bottom_hint"
                 style="@style/text_t1_14"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="270dp"
                 android:gravity="center"
+                android:visibility="visible"
+                tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
+
+            <TextView
+                android:id="@+id/tv_bottom_progress"
+                style="@style/text_t1_14"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="270dp"
+                android:gravity="center"
+                android:visibility="gone"
                 tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
 
             <Button

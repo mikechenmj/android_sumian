@@ -167,7 +167,6 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     private fun switchUI(hasDoctor: Boolean) {
-        StatusBarUtil.setStatusBarTextColorDark(activity!!, !hasDoctor)
         doctor_detail_layout.visibility = if (hasDoctor) View.VISIBLE else View.GONE
         request_scan_qr_code_view.visibility = if (!hasDoctor) View.VISIBLE else View.GONE
         tv_title.visibility = if (hasDoctor) View.VISIBLE else View.GONE

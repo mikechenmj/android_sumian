@@ -1,22 +1,12 @@
-package com.sumian.hw.report.fragment
+package com.sumian.hw.report.weeklyreport
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
-import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.format.DateUtils
 import android.view.View
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
 import com.sumian.hw.base.HwBaseFragment
 import com.sumian.hw.log.LogManager
-import com.sumian.hw.report.adapter.WeeklyReportAdapter
-import com.sumian.hw.report.calendar.CalendarDialog
-import com.sumian.hw.report.contract.WeeklyReportContact
-import com.sumian.hw.report.dialog.SleepAdviceDialog
-import com.sumian.hw.report.presenter.WeeklyReportPresenter
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
@@ -30,7 +20,8 @@ import java.util.*
  * desc:
  */
 
-class WeeklyReportFragment : HwBaseFragment<WeeklyReportPresenter>(), WeeklyReportContact.View, RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback, OnEnterListener {
+class WeeklyReportFragment : HwBaseFragment<WeeklyReportPresenter>(), WeeklyReportContact.View,
+        RecyclerViewPager.OnPageChangedListener, WeeklyReportAdapter.OnWeekReportCallback, OnEnterListener {
 
     companion object {
 
@@ -56,18 +47,18 @@ class WeeklyReportFragment : HwBaseFragment<WeeklyReportPresenter>(), WeeklyRepo
         WeeklyReportAdapter().setWeekReportCallback(this)
     }
 
-    private val mBroadcastReceiver: BroadcastReceiver  by lazy {
-        object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent) {
-                when (intent.action) {
-                    CalendarDialog.ACTION_SELECT_DATE -> {
-                        val selectUnixTime = intent.getLongExtra(CalendarDialog.EXTRA_DATE, 0)
-                        scrollToTime(selectUnixTime * 1000L)
-                    }
-                }
-            }
-        }
-    }
+    //    private val mBroadcastReceiver: BroadcastReceiver  by lazy {
+//        object : BroadcastReceiver() {
+//            override fun onReceive(context: Context?, intent: Intent) {
+//                when (intent.action) {
+//                    CalendarDialog.ACTION_SELECT_DATE -> {
+//                        val selectUnixTime = intent.getLongExtra(CalendarDialog.EXTRA_DATE, 0)
+//                        scrollToTime(selectUnixTime * 1000L)
+//                    }
+//                }
+//            }
+//        }
+//    }
     private var mNeedScrollToBottom: Boolean = false
     private var mCurrentPosition: Int = 0
 
@@ -111,7 +102,7 @@ class WeeklyReportFragment : HwBaseFragment<WeeklyReportPresenter>(), WeeklyRepo
 
     override fun onRelease() {
         super.onRelease()
-        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(mBroadcastReceiver)
+//        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(mBroadcastReceiver)
     }
 
     override fun setReportsData(reports: List<SleepDurationReport>?) {
@@ -197,9 +188,9 @@ class WeeklyReportFragment : HwBaseFragment<WeeklyReportPresenter>(), WeeklyRepo
     }
 
     private fun initReceiver() {
-        val filter = IntentFilter()
-        filter.addAction(CalendarDialog.ACTION_SELECT_DATE)
-        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mBroadcastReceiver, filter)
+//        val filter = IntentFilter()
+//        filter.addAction(CalendarDialog.ACTION_SELECT_DATE)
+//        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mBroadcastReceiver, filter)
     }
 
     private fun scrollToTime(time: Long) {
