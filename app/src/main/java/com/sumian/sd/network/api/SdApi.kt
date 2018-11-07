@@ -1,24 +1,24 @@
 package com.sumian.sd.network.api
 
 import com.sumian.common.network.response.PaginationResponseV2
-import com.sumian.sd.device.pattern.PatternData
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.anxiousandfaith.bean.FaithData
+import com.sumian.sd.device.pattern.PatternData
 import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
-import com.sumian.sd.pay.bean.PayOrder
 import com.sumian.sd.homepage.bean.*
 import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
-import com.sumian.sd.pay.bean.OrderDetail
 import com.sumian.sd.oss.OssResponse
+import com.sumian.sd.pay.bean.OrderDetail
+import com.sumian.sd.pay.bean.PayOrder
 import com.sumian.sd.scale.bean.FilledScale
 import com.sumian.sd.scale.bean.NotFilledScale
 import com.sumian.sd.scale.bean.Scale
@@ -367,7 +367,7 @@ interface SdApi {
 
     @FormUrlEncoded
     @POST("feedback")
-    fun feedback(@Field("content") content: String, @Field("suffix") suffix: String): Call<com.sumian.hw.oss.bean.OssResponse>
+    fun feedback(@Field("content") content: String, @Field("suffix") suffix: String = "text"): Call<com.sumian.hw.oss.bean.OssResponse>
 
     /**
      * 兑换码  兑换

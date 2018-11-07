@@ -385,14 +385,6 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <activity
-            android:name=".account.login.AvatarImageActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
             android:name="com.sumian.hw.feedback.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
@@ -556,6 +548,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity android:name=".setting.FeedbackActivity" />
     </application>
 
 </manifest>
