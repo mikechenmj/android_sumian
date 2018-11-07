@@ -1,4 +1,6 @@
-package com.sumian.sd.network.response;
+package com.sumian.hw.report.widget.bean;
+
+import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
@@ -42,6 +44,7 @@ public class SleepAdvice implements Serializable {
         return this;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "SleepAdvice{" +

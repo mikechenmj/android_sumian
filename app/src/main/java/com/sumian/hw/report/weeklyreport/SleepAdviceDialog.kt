@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.sumian.sd.R
-import com.sumian.sd.network.response.SleepAdvice
+import com.sumian.hw.report.widget.bean.SleepAdvice
 
 /**
  * Created by jzz

@@ -2,56 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:skin="http://schemas.android.com/android/skin"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/b1_color_day"
     android:orientation="vertical"
     skin:enable="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:background="@color/b2_color_day"
-        android:gravity="center"
-        android:orientation="horizontal"
-        skin:enable="true"
-        tools:ignore="MissingPrefix">
-
-        <ImageView
-            android:id="@+id/iv_pre"
-            android:layout_width="@dimen/space_40"
-            android:layout_height="@dimen/space_40"
-            android:background="@drawable/bg_material_ripple"
-            android:contentDescription="@null"
-            android:padding="@dimen/space_14"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_arrow_left_light_blue"
-            skin:enable="true" />
-
-        <TextView
-            android:id="@+id/tv_week_quantum"
-            style="@style/text_t2_14"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="09-08 - 09-14"
-            skin:enable="true"
-            tools:ignore="HardcodedText" />
-
-        <ImageView
-            android:id="@+id/iv_next"
-            android:layout_width="@dimen/space_40"
-            android:layout_height="@dimen/space_40"
-            android:background="@drawable/bg_material_ripple"
-            android:contentDescription="@null"
-            android:padding="@dimen/space_14"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_arrow_right_light_blue"
-            skin:enable="true" />
-
-    </LinearLayout>
+    <include layout="@layout/weekly_report_calendar_bar" />
 
     <com.sumian.hw.widget.refresh.BlueRefreshView
         android:id="@+id/refresh"

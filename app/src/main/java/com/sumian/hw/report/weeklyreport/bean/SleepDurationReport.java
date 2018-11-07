@@ -1,5 +1,9 @@
-package com.sumian.sd.network.response;
+package com.sumian.hw.report.weeklyreport.bean;
 
+import android.support.annotation.NonNull;
+
+import com.sumian.hw.report.widget.bean.SleepAdvice;
+import com.sumian.hw.report.widget.bean.SleepDuration;
 import com.sumian.hw.utils.TimeUtil;
 
 import java.io.Serializable;
@@ -247,6 +251,7 @@ public class SleepDurationReport implements Serializable {
         return start_date_show * 1000L <= unixTime && unixTime <= end_date_show * 1000L;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "SleepDurationReport{" +

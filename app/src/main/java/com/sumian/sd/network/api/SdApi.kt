@@ -1,6 +1,7 @@
 package com.sumian.sd.network.api
 
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.hw.report.weeklyreport.bean.WeeklyReportResponse
 import com.sumian.sd.device.pattern.PatternData
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
@@ -417,5 +418,20 @@ interface SdApi {
     @GET("user/faiths")
     fun getFaiths(@Query("page") page: Int = 1,
                   @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FaithData>>
+
+
+    /**
+     * date unix time
+     * is_include 是否包括此时间戳，1：是，0：否
+     * page_size 请求数量不传默认为1
+     * direction 请求方向 0：小于查询时间戳，1：大于查询时间戳
+     */
+    @GET("sleeps/week-flip-show")
+    fun getWeeksSleepReportV2(
+            @Query("date") date: Int,
+            @Query("is_include") is_include: Int = 1,
+            @Query("page_size") pageSize: Int = 1,
+            @Query("direction") direction: Int = 0
+    ): Call<WeeklyReportResponse>
 
 }

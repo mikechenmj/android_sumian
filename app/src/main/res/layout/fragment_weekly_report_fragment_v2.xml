@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sumian.sd.widget.refresh.SumianRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/weekly_report_calendar_bar" />
+
+        <com.sumian.hw.report.weeklyreport.widget.WeeklyReportView
+            android:id="@+id/weekly_report_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</com.sumian.sd.widget.refresh.SumianRefreshLayout>
+
