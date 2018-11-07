@@ -1,4 +1,4 @@
-package com.sumian.hw.report.dialog
+package com.sumian.hw.report.weeklyreport
 
 import android.content.Context
 import android.support.v7.app.AppCompatDialog

@@ -1,4 +1,4 @@
-package com.sumian.hw.report.fragment
+package com.sumian.hw.report.weeklyreport
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -7,10 +7,6 @@ import android.view.View
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
 import com.sumian.hw.base.HwBaseFragment
 import com.sumian.hw.log.LogManager
-import com.sumian.hw.report.adapter.WeeklyReportAdapter
-import com.sumian.hw.report.contract.WeeklyReportContact
-import com.sumian.hw.report.dialog.SleepAdviceDialog
-import com.sumian.hw.report.presenter.WeeklyReportPresenter
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
