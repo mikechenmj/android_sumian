@@ -1,4 +1,6 @@
-package com.sumian.hw.report.calendar;
+package com.sumian.hw.report.weeklyreport;
+
+import android.support.annotation.NonNull;
 
 /**
  * Created by jzz
@@ -13,8 +15,8 @@ public class CalendarItemSleepReport {
     public boolean is_read;//是否已读
     @SuppressWarnings("WeakerAccess")
     public boolean is_today;//是否是今天
-    public boolean has_doctors_evaluation;//是否有医生评价
 
+    @NonNull
     @Override
     public String toString() {
         return "CalendarItemSleepReport{" +
@@ -22,7 +24,6 @@ public class CalendarItemSleepReport {
             ", date=" + date +
             ", is_read=" + is_read +
             ", is_today=" + is_today +
-            ", has_doctors_evaluation=" + has_doctors_evaluation +
             '}';
     }
 

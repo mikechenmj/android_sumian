@@ -15,7 +15,7 @@ import com.sumian.hw.log.LogManager
 import com.sumian.hw.report.base.BaseResultResponse
 import com.sumian.hw.report.bean.DailyMeta
 import com.sumian.hw.report.bean.DailyReport
-import com.sumian.hw.report.calendar.CalendarItemSleepReport
+import com.sumian.hw.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceManager

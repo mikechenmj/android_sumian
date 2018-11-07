@@ -1,9 +1,7 @@
-package com.sumian.hw.report.presenter;
+package com.sumian.hw.report.weeklyreport;
 
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.hw.report.base.BaseResultResponse;
-import com.sumian.hw.report.bean.WeekMeta;
-import com.sumian.hw.report.contract.WeeklyReportContact;
 import com.sumian.hw.utils.TimeUtil;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;

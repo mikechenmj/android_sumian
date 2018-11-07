@@ -1,4 +1,6 @@
-package com.sumian.hw.report.bean;
+package com.sumian.hw.report.weeklyreport;
+
+import android.support.annotation.NonNull;
 
 public class WeekMeta {
 
@@ -13,6 +15,7 @@ public class WeekMeta {
         return this;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "WeekMeta{" +

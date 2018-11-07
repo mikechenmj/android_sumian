@@ -1,4 +1,4 @@
-package com.sumian.hw.report.contract;
+package com.sumian.hw.report.weeklyreport;
 
 import com.sumian.hw.base.HwBaseNetView;
 import com.sumian.hw.base.HwBasePresenter;
