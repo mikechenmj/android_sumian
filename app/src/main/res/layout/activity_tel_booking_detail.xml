@@ -11,10 +11,11 @@
         style="@style/text_white_16"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_40"
-        android:background="@color/b4_color"
+        android:background="@color/b4_color_day"
         android:gravity="center"
-        android:text="@string/service_is_canceled"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:text="@string/service_is_canceled"
+        tools:visibility="visible" />
 
     <com.sumian.sd.widget.error.EmptyErrorView
         android:id="@+id/empty_error_view"
