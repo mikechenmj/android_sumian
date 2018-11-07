@@ -31,7 +31,6 @@ interface CBTIWeekPlayContract {
         fun onUploadCBTIQuestionnairesSuccess(coursePlayAuth: CoursePlayAuth)
 
         fun onUploadCBTIQuestionnairesFailed(error: String)
-
     }
 
 
@@ -46,5 +45,7 @@ interface CBTIWeekPlayContract {
         fun playNextCBTIVideo(courseId: Int)
 
         fun uploadCBTIQuestionnaires(courseId: Int, position: Int)
+
+        fun uploadCBTICourseWatchLog(courseId: Int, videoId: String)
     }
 }
