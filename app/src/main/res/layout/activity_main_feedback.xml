@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.sumian.common.widget.TitleBar
-        android:id="@+id/title_bar"
+    <TextView
+        android:id="@+id/tv_error"
+        style="@style/text_b2_16"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:text="@string/feedback" />
+        android:layout_height="@dimen/space_40"
+        android:background="@color/b8_color_day"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:text="网络异常，请检查你的网络设置"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +37,7 @@
             android:maxLength="500"
             android:textColor="@color/t1_color"
             android:textColorHint="@color/t2_color"
-            android:textSize="@dimen/edit_text_text_size"
+            tools:ignore="Autofill"
             tools:text="111" />
 
         <Space
