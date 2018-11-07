@@ -5,7 +5,7 @@ import com.sumian.hw.report.base.BaseResultResponse;
 import com.sumian.hw.utils.TimeUtil;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
-import com.sumian.sd.network.response.SleepDurationReport;
+import com.sumian.hw.report.weeklyreport.bean.SleepDurationReport;
 
 import org.jetbrains.annotations.NotNull;
 

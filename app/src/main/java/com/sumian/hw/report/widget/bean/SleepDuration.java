@@ -1,4 +1,6 @@
-package com.sumian.sd.network.response;
+package com.sumian.hw.report.widget.bean;
+
+import android.support.annotation.NonNull;
 
 /**
  * Created by jzz
@@ -54,6 +56,7 @@ public class SleepDuration {
         this.eog_duration = eog_duration;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "SleepDuration{" +

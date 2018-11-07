@@ -10,7 +10,7 @@ import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.main.OnEnterListener
-import com.sumian.sd.network.response.SleepDurationReport
+import com.sumian.hw.report.weeklyreport.bean.SleepDurationReport
 import kotlinx.android.synthetic.main.hw_fragment_week_report.*
 import java.util.*
 

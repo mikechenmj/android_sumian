@@ -15,7 +15,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.sumian.sd.network.response.SleepDuration;
+import com.sumian.hw.report.widget.bean.SleepDuration;
 import com.sumian.sd.R;
 
 import java.util.ArrayList;
