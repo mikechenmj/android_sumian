@@ -14,7 +14,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.network.response.ErrorResponse;
-import com.sumian.hw.feedback.FeedbackActivity;
 import com.sumian.hw.qrcode.activity.QrCodeActivity;
 import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity;
 import com.sumian.sd.R;
@@ -118,7 +117,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
 
                 break;
             case R.id.sdv_feedback:
-                FeedbackActivity.show(this);
+                FeedbackActivity.show();
                 break;
             case R.id.sdv_modify_password:
                 ActivityUtils.startActivity(ModifyPasswordActivity.class);

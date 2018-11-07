@@ -93,6 +93,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         super.initWidget(root);
         mTitleBar = findViewById(R.id.title_bar);
         mIvAvatar = findViewById(R.id.iv_avatar);
+        findViewById(R.id.lay_avatar).setOnClickListener(this);
         mDvNickname = findViewById(R.id.dv_nickname);
         mDvName = findViewById(R.id.dv_name);
         mDvGender = findViewById(R.id.dv_gender);
@@ -157,7 +158,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(PictureBottomSheet.newInstance().addOnTakePhotoCallback(this), PictureBottomSheet.class.getSimpleName())
-                        .commitNow();
+                        .commitNowAllowingStateLoss();
                 break;
             case R.id.dv_my_target:
                 MyTargetAndInformationActivity.launchForResult(this, true, 0);
