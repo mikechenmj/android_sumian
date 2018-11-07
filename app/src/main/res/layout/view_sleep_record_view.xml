@@ -271,29 +271,4 @@
             android:textColor="@color/b3_color" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_doctor_evaluation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/space_10"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <com.sumian.sd.diary.sleeprecord.widget.TitleView
-            android:id="@+id/title_view_doctor_advise"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:title_text="@string/doctor_advise" />
-
-        <TextView
-            android:id="@+id/tv_doctor_evaluation"
-            style="@style/text_t2_14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_20"
-            android:layout_marginTop="@dimen/space_10"
-            tools:text="我今天失眠了，晚上的时候内心有点慌乱，会胡思乱想，睡前有服用咪达唑仑、氟西泮这两种药物，但是感觉对睡眠并没有什么帮助，醒来之后感觉很沮丧，不知道要怎么改善这种状态比较好。" />
-    </LinearLayout>
 </LinearLayout>

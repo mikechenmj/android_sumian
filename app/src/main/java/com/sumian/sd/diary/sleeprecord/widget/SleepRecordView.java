@@ -40,9 +40,6 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
     TextView tvWakeupDuration;
     TextView tvSleepDesc;
     LinearLayout llSleepRecord;
-    TitleView titleViewDoctorAdvise;
-    TextView tvDoctorEvaluation;
-    LinearLayout llDoctorEvaluation;
     LinearLayout llRoot;
     SleepRecordProgressView progressViewSleep;
     TextView tvSleepQuality;
@@ -53,7 +50,6 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
     LinearLayout llNoSleepRecord;
     TextView tvSleepRecordNotEnableHint;
     private SleepRecord mSleepRecord;
-    private boolean mForceShowDoctorAdvice;
     private long mTime;
 
     public SleepRecordView(Context context) {
@@ -76,9 +72,6 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
         tvWakeupDuration = inflate.findViewById(R.id.tv_night_wake_up_duration);
         tvSleepDesc = inflate.findViewById(R.id.tv_sleep_desc);
         llSleepRecord = inflate.findViewById(R.id.ll_sleep_record);
-        titleViewDoctorAdvise = inflate.findViewById(R.id.title_view_doctor_advise);
-        tvDoctorEvaluation = inflate.findViewById(R.id.tv_doctor_evaluation);
-        llDoctorEvaluation = inflate.findViewById(R.id.ll_doctor_evaluation);
         llRoot = inflate.findViewById(R.id.ll_root);
         progressViewSleep = inflate.findViewById(R.id.progress_view_sleep);
         tvSleepQuality = inflate.findViewById(R.id.tv_sleep_quality);
@@ -96,7 +89,6 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
         boolean hasRecord = mSleepRecord != null;
         llSleepRecord.setVisibility(hasRecord ? VISIBLE : GONE);
         llNoSleepRecord.setVisibility(hasRecord ? GONE : VISIBLE);
-        llDoctorEvaluation.setVisibility(hasRecord ? VISIBLE : GONE);
         titleViewSleepRecord.setVisibility(VISIBLE);
         boolean showRefill = hasRecord && TextUtils.isEmpty(sleepRecord.getDoctor_evaluation());
         titleViewSleepRecord.setTvMenuVisibility(showRefill ? VISIBLE : GONE);
@@ -123,8 +115,6 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
 
         tvSleepDesc.setText(answer.getRemark());
         tvSleepDesc.setVisibility(TextUtils.isEmpty(answer.getRemark()) ? GONE : VISIBLE);
-        llDoctorEvaluation.setVisibility(sleepRecord.hasDoctorEvaluation() || mForceShowDoctorAdvice ? VISIBLE : GONE);
-        tvDoctorEvaluation.setText(sleepRecord.hasDoctorEvaluation() ? sleepRecord.getDoctor_evaluation() : getContext().getString(R.string.no_doctor_evaluation_hint));
         progressViewSleep.setProgress(sleepRecord.getSleep_efficiency());
     }
 
@@ -192,7 +182,6 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
     }
 
     public void setForceShowDoctorAdvice(boolean forceShowDoctorAdvice) {
-        mForceShowDoctorAdvice = forceShowDoctorAdvice;
         setSleepRecord(mSleepRecord);
     }
 
