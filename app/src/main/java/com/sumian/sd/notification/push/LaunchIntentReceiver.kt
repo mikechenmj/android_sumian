@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.text.TextUtils
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.network.response.ErrorResponse
@@ -49,6 +50,9 @@ class LaunchIntentReceiver : BroadcastReceiver() {
     }
 
     private fun markNotificationAsRead(notificationId: String) {
+        if (TextUtils.isEmpty(notificationId)) {
+            return
+        }
         AppManager.getSdHttpService().readNotification(notificationId = notificationId).enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 LogUtils.d("mark as read fail", errorResponse)

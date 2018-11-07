@@ -72,6 +72,7 @@ class SchemeResolveUtil {
                 "booking-list" -> BookingListSchemeResolver()
                 "diary-evaluation-list" -> DiaryEvaluationListSchemeResolver()
                 "booking-detail" -> TelBookingDetailSchemeResolver()
+                "diary-evaluations" -> DiaryEvaluationSchemeResolver()
                 else -> null
             }
         }
