@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.sd.service.tel.activity
 
 import android.content.Intent
@@ -75,9 +77,19 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
 
     override fun onGetTelBookingDetailSuccess(telBooking: TelBooking) {
         if (telBooking.status == TelBooking.STATUS_7_CANCELED && telBooking.isNotUsed()) {
+            tv_top_bar.text = ""
+            tv_top_bar.setBackgroundColor(resources.getColor(R.color.b4_color_day))
             tv_top_bar.visibility = View.VISIBLE
             empty_error_view.visibility = View.VISIBLE
         } else {
+            tv_top_bar.visibility = if (telBooking.status == TelBooking.STATUS_0_WAITING_CONFIRM || telBooking.status == TelBooking.STATUS_1_CONFIRMED) {
+                tv_top_bar.text = telBooking.topMsg()
+                tv_top_bar.setBackgroundColor(resources.getColor(R.color.b5_color_day))
+                View.VISIBLE
+            } else {
+                tv_top_bar.text = ""
+                View.GONE
+            }
             scroll_view.visibility = View.VISIBLE
             sdv_border_status.visibility = View.VISIBLE
             sdv_border_status.setContent(telBooking.formatStatus())
