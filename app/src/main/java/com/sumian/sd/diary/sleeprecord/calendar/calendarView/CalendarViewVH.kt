@@ -27,18 +27,20 @@ open class CalendarViewVH protected constructor(itemView: View) : RecyclerView.V
         itemView.findViewById<TextView>(R.id.tv)
     }
 
-    open fun setDay(day: Int, dayType: Int) {
+    val mViewBg: View by lazy { itemView.findViewById<View>(R.id.v_bg_layer) }
+
+    open fun setDay(day: Int, dayType: Int, secondType: Int) {
         val text = if (day > 0) day.toString() else ""
         mTextView.text = text
-        mTextView.setTextColor(getTextColor(dayType))
+        mTextView.setTextColor(getTextColor(dayType, secondType))
         mTextView.background = getBgDrawable(dayType)
     }
 
-    protected open fun getTextColor(textType: Int): Int {
+    protected open fun getTextColor(dayType: Int, secondType: Int): Int {
         return Color.DKGRAY
     }
 
-    protected open fun getBgDrawable(textType: Int): Drawable? {
+    protected open fun getBgDrawable(dayType: Int): Drawable? {
         return null
     }
 

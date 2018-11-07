@@ -2,7 +2,6 @@ package com.sumian.sd.network.api
 
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.hw.report.weeklyreport.bean.WeeklyReportResponse
-import com.sumian.sd.device.pattern.PatternData
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo

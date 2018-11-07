@@ -221,8 +221,7 @@ public final class TimeUtil {
      */
     public static long getWeekStartDayTime(long time) {
         Calendar calendar = getDayStartCalendar(time);
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        calendar.roll(Calendar.DAY_OF_WEEK, -(dayOfWeek - 1));
+        calendar.set(Calendar.DAY_OF_WEEK, 1);
         return calendar.getTimeInMillis();
     }
 
@@ -234,9 +233,37 @@ public final class TimeUtil {
      */
     public static long getWeekEndDayTime(long time) {
         Calendar calendar = getDayStartCalendar(time);
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        calendar.roll(Calendar.DAY_OF_WEEK, 7 - dayOfWeek);
+        calendar.set(Calendar.DAY_OF_WEEK, 7);
         return calendar.getTimeInMillis();
+    }
+
+    public static long getMonthStartDayTime(long time) {
+        Calendar calendar = getDayStartCalendar(time);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTimeInMillis();
+    }
+
+    public static long getMonthEndDayTime(long time) {
+        Calendar calendar = getDayStartCalendar(time);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return calendar.getTimeInMillis();
+    }
+
+    public static boolean isAtStartOfWeek(long time) {
+        return getDayStartCalendar(time).get(Calendar.DAY_OF_WEEK) == 1;
+    }
+
+    public static boolean isAtEndOfWeek(long time) {
+        return getDayStartCalendar(time).get(Calendar.DAY_OF_WEEK) == 7;
+    }
+
+    public static boolean isAtStartOfMonth(long time) {
+        return getDayStartCalendar(time).get(Calendar.DAY_OF_MONTH) == 1;
+    }
+
+    public static boolean isAtEndOfMonth(long time) {
+        Calendar calendar = getDayStartCalendar(time);
+        return calendar.get(Calendar.DAY_OF_MONTH) == calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     public static String formatCalendar(Calendar calendar) {
