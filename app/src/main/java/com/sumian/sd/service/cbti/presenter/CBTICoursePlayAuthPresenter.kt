@@ -9,6 +9,7 @@ import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.cbti.bean.CoursePlayAuth
 import com.sumian.sd.service.cbti.bean.CoursePlayLog
 import com.sumian.sd.service.cbti.contract.CBTIWeekPlayContract
+import com.sumian.sd.service.cbti.job.CBTICourseWatchLogJobService
 import java.util.regex.Pattern
 
 /**
@@ -91,8 +92,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
     }
 
     override fun calculatePlayFrame(videoId: String, currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long) {
-
-        if (currentFrame.toInt() == 0) {
+        if (currentFrame <= 0L) {
             mBrowseFrame.delete(0, mBrowseFrame.length)
         }
 
@@ -123,7 +123,6 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
     }
 
     override fun playNextCBTIVideo(courseId: Int) {
-
         mView?.onBegin()
 
         val call = AppManager.getSdHttpService().getCBTIPLayAuth(id = courseId)
@@ -170,6 +169,14 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
 
         })
 
+    }
+
+    override fun uploadCBTICourseWatchLog(courseId: Int,videoId: String) {
+        val hexWatchLength = appearNumber(mBrowseFrame.toString(), "1")
+        if (hexWatchLength <= 0) {
+            return
+        }
+        CBTICourseWatchLogJobService.execute(courseId, videoId, hexWatchLength)
     }
 
     /**

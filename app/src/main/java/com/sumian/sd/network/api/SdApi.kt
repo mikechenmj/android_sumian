@@ -290,6 +290,13 @@ interface SdApi {
     fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
     /**
+     * 上传当前课时的视频观看记录日志
+     */
+    @FormUrlEncoded
+    @POST("cbti-courses/{id}/watch-records")
+    fun uploadCBTICourseWatchLog(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("watch_length") watchLength: Int): Call<CBTIWatchLog>
+
+    /**
      * 上传视频问卷
      */
     @FormUrlEncoded

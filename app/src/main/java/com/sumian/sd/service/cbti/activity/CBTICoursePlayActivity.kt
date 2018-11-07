@@ -48,6 +48,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     private var mCBTIQuestionDialog: CBTIQuestionDialog? = null
     private var mCurrentQuestionPosition = 0
     private var mPendingRestart = false
+    private var mIsSelect: Boolean = false
 
     private val mController: TxVideoPlayerController by lazy {
         val controller = TxVideoPlayerController(this).setup(this@CBTICoursePlayActivity)
@@ -177,9 +178,8 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         showCenterToast(error)
     }
 
-    private var mIsSelect: Boolean = false
-
     override fun onSelectLesson(position: Int, course: Course): Boolean {
+        uploadCBTICourseWatchLog()
         this.mCurrentCourse = course
         this.mCurrentPosition = position
         this.mIsSelect = true
@@ -232,7 +232,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun showPracticeDialog() {
-        SumianAlertDialog(this).setTitle(R.string.practice_dialog_title).setMessage("完成本节课程学习后自动解锁下节内容").setRightBtn(R.string.good) { aliyun_player.replay() }.show()
+        SumianAlertDialog(this).setTitle(R.string.practice_dialog_title).setMessage(getString(R.string.dialog_finish_practice_msg)).setRightBtn(R.string.good) { aliyun_player.replay() }.show()
     }
 
     override fun onGetCBTINextPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
@@ -245,6 +245,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onPlayNext() {
+        uploadCBTICourseWatchLog()
         if (mCurrentPosition < mCoursePlayAuth?.courses?.size!! - 1) {
             mCurrentPosition += 1
             mCurrentCourse = mCoursePlayAuth?.courses?.get(mCurrentPosition)
@@ -269,6 +270,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onRelease() {
+        uploadCBTICourseWatchLog()
         super.onRelease()
         aliyun_player.release()
     }
@@ -287,6 +289,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     private fun updateView(coursePlayAuth: CoursePlayAuth) {
         mCoursePlayAuth = coursePlayAuth
         mCurrentCourse = coursePlayAuth.courses[mCurrentPosition]
+        mCurrentCourse?.video_id = coursePlayAuth.meta.video_id
 
         title_bar.setTitle(mCurrentCourse?.title)
         formatWebViewString(mCurrentCourse?.summary_rtf, tv_summary)
@@ -344,6 +347,12 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     private fun formatWebViewString(summaryRtf: String?, webView: SWebView) {
         summaryRtf?.let {
             webView.loadDataWithBaseURL(null, it, "text/html", "utf-8", null)
+        }
+    }
+
+    private fun uploadCBTICourseWatchLog() {
+        mCurrentCourse?.video_id?.let {
+            mPresenter.uploadCBTICourseWatchLog(mCurrentCourse!!.id, it)
         }
     }
 }

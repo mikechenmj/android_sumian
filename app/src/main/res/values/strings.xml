@@ -649,4 +649,5 @@
     <string name="know_device">了解设备</string>
     <string name="set_diary_reminder_hint">养成坚持填写好习惯？去</string>
     <string name="set_diary_reminder_hint_2"><u>设置填写提醒</u></string>
+    <string name="dialog_finish_practice_msg">完成本节课程学习后自动解锁下节内容</string>
 </resources>
