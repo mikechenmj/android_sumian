@@ -286,7 +286,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
 
     @Override
     public void onReceiveSuccess(BluePeripheral peripheral, byte[] data) {
-        //55 51 01 88
+        //55510188
         String cmd = BlueCmd.bytes2HexString(data);
         if (TextUtils.isEmpty(cmd) || cmd.length() < 2 || !"55".equals(cmd.substring(0, 2))) {
             //设备命令出问题
@@ -334,10 +334,10 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
                 startDfuSuccess = true;
                 break;
             case "e1"://监测仪电量过低
-                errorMessage = R.string.monitor_is_syncing_please_try_it_later;
+                errorMessage = R.string.monitor_energy_is_low_please_try_it_later;
                 break;
             case "e2"://正在上传睡眠数据
-                errorMessage = R.string.monitor_energy_is_low_please_try_it_later;
+                errorMessage = R.string.monitor_is_syncing_please_try_it_later;
                 break;
             case "e3"://正在透传速眠仪 LOG 数据
                 errorMessage = R.string.monitor_is_syncing_please_try_it_later;
@@ -351,7 +351,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
             doDfu(App.Companion.getAppContext(), mDfuMac);
             mViewWeakReference.get().showUpgradeDialog();
         } else {
-            ToastUtils.showShort(errorMessage);
+            ToastUtils.showLong(errorMessage);
         }
     }
 
@@ -372,7 +372,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
             doDfu(App.Companion.getAppContext(), mDfuMac);
             mViewWeakReference.get().showUpgradeDialog();
         } else {
-            ToastUtils.showShort(sleeperErrorMessage);
+            ToastUtils.showLong(sleeperErrorMessage);
         }
     }
 
