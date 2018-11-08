@@ -33,6 +33,7 @@ class NotificationUtil {
         private const val CHANNEL_NAME: String = "com.sumian.sleepdoctor"
         private const val REQUEST_CODE = 100
         private val ATOMIC_NOTIFICATION_ID = AtomicInteger(0)
+        const val KEY_PUSH_NOTIFICATION_ID = "push_notification_id"
 
         fun getNotificationId(): Int {
             return ATOMIC_NOTIFICATION_ID.incrementAndGet()
@@ -66,6 +67,7 @@ class NotificationUtil {
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true)
 //            val pendingIntent = getBroadcastIntent(context, notificationId, intent)
+            intent.putExtra(KEY_PUSH_NOTIFICATION_ID, notificationId)
             val pendingIntent = getPendingIntent(context, intent)
             if (pendingIntent != null) builder.setContentIntent(pendingIntent)
             NotificationManagerCompat.from(context).notify(Random().nextInt(), builder.build())

@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.sumian.common.base.BaseActivityManager;
+import com.sumian.common.base.IActivityDelegate;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.R;
 import com.sumian.sd.widget.TitleBar;
@@ -46,6 +48,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
     protected Activity mActivity;
     private Set<Call> mCalls = new HashSet<>();
     private LoadingDialog mLoadingDialog;
+    private IActivityDelegate mActivityDelegate = BaseActivityManager.INSTANCE.createActivityDelegate(this);
 
     public static void show(Context context, Class<? extends SdBaseActivity> clx) {
         show(context, clx, null);
@@ -133,6 +136,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         if (!initBundle(intent.getExtras())) {
             finish();
         }
+        mActivityDelegate.onNewIntent(intent);
     }
 
     @Override
@@ -150,6 +154,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         } else {
             finish();
         }
+        mActivityDelegate.onCreate(savedInstanceState);
     }
 
     @Override
@@ -158,6 +163,19 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         if (openEventBus()) {
             EventBus.getDefault().register(this);
         }
+        mActivityDelegate.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mActivityDelegate.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mActivityDelegate.onPause();
     }
 
     @Override
@@ -166,6 +184,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
             EventBus.getDefault().unregister(this);
         }
         super.onStop();
+        mActivityDelegate.onStop();
     }
 
     @Override
@@ -184,6 +203,13 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
             }
         }
         mCalls.clear();
+        mActivityDelegate.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mActivityDelegate.onActivityResult(requestCode, resultCode, data);
     }
 
     public void setStatusBar() {
@@ -309,4 +335,6 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
             mLoadingDialog.dismiss();
         }
     }
+
+
 }

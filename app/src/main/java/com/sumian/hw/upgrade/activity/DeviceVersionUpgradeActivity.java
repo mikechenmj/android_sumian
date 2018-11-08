@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.base.HwBaseActivity;
@@ -213,7 +214,7 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
                     stringId = R.string.sleeper_firmware_upgrade_success_hint;
                     break;
             }
-            ToastHelper.show(DeviceVersionUpgradeActivity.this, getString(stringId), Gravity.CENTER);
+            ToastUtils.showLong(stringId);
             LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
             AppManager.getVersionModel().notifyMonitorDot(false);
             AppManager.getVersionModel().notifySleepyDot(false);
@@ -307,8 +308,6 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
                     LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
                     showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
                     return;
-                } else {
-                    showUpgradeDialog();
                 }
                 break;
             case VERSION_TYPE_SLEEPY:
