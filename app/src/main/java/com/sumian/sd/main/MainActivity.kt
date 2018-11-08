@@ -2,10 +2,12 @@
 
 package com.sumian.sd.main
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
@@ -121,6 +123,12 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)
+        ViewModelProviders.of(this@MainActivity)
+                .get(NotificationViewModel::class.java)
+                .unreadCount
+                .observe(this, Observer<Int> { unreadCount ->
+                    tb_me?.showDot(if (unreadCount != null && unreadCount > 0) View.VISIBLE else View.GONE)
+                })
     }
 
     override fun initData() {
@@ -227,7 +235,7 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         val isDark = when (position) {
             0 -> true
             1 -> false
-            2 -> !AppManager.getAccountViewModel().isBindDoctor()
+            2 -> !AppManager.getAccountViewModel().isBindDoctor
             else -> false
         }
         StatusBarUtil.setStatusBarTextColorDark(this, isDark)

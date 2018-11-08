@@ -1,9 +1,7 @@
 package com.sumian.sd.tab
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
-import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
 import com.sumian.common.utils.ColorCompatUtil
@@ -17,11 +15,9 @@ import com.sumian.sd.doctor.contract.DoctorContract
 import com.sumian.sd.doctor.presenter.DoctorPresenter
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.notification.NotificationListActivity
-import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.utils.StatusBarUtil
 import com.sumian.sd.widget.RequestScanQrCodeView
 import kotlinx.android.synthetic.main.fragment_tab_doctor.*
-import java.util.*
 
 /**
  * Created by jzz
@@ -63,10 +59,11 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
             }
         }
         request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this)
-        ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
-                .get(NotificationViewModel::class.java)
-                .unreadCount
-                .observe(this, Observer { count -> iv_notification.isActivated = count != null && count > 0 })
+        //去掉医生模块的通知提醒
+//        ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
+//                .get(NotificationViewModel::class.java)
+//                .unreadCount
+//                .observe(this, Observer { count -> iv_notification.isActivated = count != null && count > 0 })
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
                 switchUI(doctor != null)
