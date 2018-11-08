@@ -121,12 +121,12 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
 
     override fun showLoading() {
         //super.showLoading()
-        refresh.showRefreshAnim()
+        refresh?.showRefreshAnim()
     }
 
     override fun dismissLoading() {
         //super.dismissLoading()
-        refresh.hideRefreshAnim()
+        refresh?.hideRefreshAnim()
         mIsRefresh = false
     }
 

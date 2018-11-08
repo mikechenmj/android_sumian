@@ -21,6 +21,6 @@ public class SleepCalendarViewAdapter extends CalendarViewAdapter {
     @NonNull
     @Override
     public CalendarViewVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return SleepCalendarViewVH.create(parent);
+        return SleepCalendarViewVH.Companion.create(parent);
     }
 }

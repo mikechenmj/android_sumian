@@ -187,49 +187,74 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 break;
             case NiceVideoView.STATE_PREPARING:
                 mImage.setVisibility(View.GONE);
-                mLoading.setVisibility(View.VISIBLE);
-                mLoadText.setText("正在加载中...");
+                mLoading.setVisibility(View.GONE);
                 mError.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.GONE);
-                mTop.setVisibility(View.GONE);
-                mBottom.setVisibility(View.GONE);
+                setTopBottomVisible(false);
                 mCenterStart.setVisibility(View.GONE);
+                Log.e(TAG, "onPlayStateChanged: --------->preparing");
                 break;
             case NiceVideoView.STATE_PREPARED:
                 startUpdateProgressTimer();
+                mImage.setVisibility(View.GONE);
+                mLoading.setVisibility(View.GONE);
+                mError.setVisibility(View.GONE);
+                mCompleted.setVisibility(View.GONE);
+                setTopBottomVisible(false);
+                mCenterStart.setVisibility(View.GONE);
+                Log.e(TAG, "onPlayStateChanged: --------->prepared");
                 break;
             case NiceVideoView.STATE_PLAYING:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 startDismissTopBottomTimer();
+                mError.setVisibility(View.GONE);
+                mCompleted.setVisibility(View.GONE);
+                setTopBottomVisible(false);
+                mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_PAUSED:
                 mLoading.setVisibility(View.GONE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 cancelDismissTopBottomTimer();
+                mError.setVisibility(View.GONE);
+                mCompleted.setVisibility(View.GONE);
+                setTopBottomVisible(true);
+                mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_BUFFERING_PLAYING:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_pause);
                 mLoadText.setText("正在加载中...");
                 startDismissTopBottomTimer();
+                mError.setVisibility(View.GONE);
+                mCompleted.setVisibility(View.GONE);
+                setTopBottomVisible(false);
+                mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_BUFFERING_PAUSED:
                 mLoading.setVisibility(View.VISIBLE);
                 mRestartPause.setImageResource(R.drawable.ic_player_start);
                 mLoadText.setText("正在加载中...");
                 cancelDismissTopBottomTimer();
+                mError.setVisibility(View.GONE);
+                mCompleted.setVisibility(View.GONE);
+                setTopBottomVisible(true);
+                mCenterStart.setVisibility(View.GONE);
                 break;
             case NiceVideoView.STATE_ERROR:
+                mLoading.setVisibility(View.GONE);
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
-                mTop.setVisibility(View.VISIBLE);
                 mError.setVisibility(View.VISIBLE);
+                Log.e(TAG, "onPlayStateChanged: --------->error");
                 break;
             case NiceVideoView.STATE_COMPLETED:
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
-                mImage.setVisibility(View.VISIBLE);
+                mLoading.setVisibility(View.GONE);
+                mError.setVisibility(View.GONE);
+                mImage.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.VISIBLE);
                 Log.e(TAG, "onPlayStateChanged: ------播放完成---->");
                 // mHavePractice.setVisibility(VISIBLE);
@@ -353,7 +378,13 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     public void onClick(View v) {
         if (v == mCenterStart) {
             if (mNiceVideoPlayer.isIdle()) {
-                mNiceVideoPlayer.start();
+                if (mPlayAuth == null) {
+                    if (mControllerCallback != null) {
+                        mControllerCallback.onPlayRetry();
+                    }
+                } else {
+                    mNiceVideoPlayer.start();
+                }
             }
         } else if (v == mBack) {
             if (mNiceVideoPlayer.isFullScreen()) {
@@ -376,8 +407,10 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         } else if (v == mClarity) {
             setTopBottomVisible(false); // 隐藏top、bottom
             mLessonListDialog.show();     // 显示清晰度对话框
-        } else if (v == mRetry) {
-            mNiceVideoPlayer.restart();
+        } else if (v == mRetry) {//遇到错误时,重新播放
+            if (mControllerCallback != null) {
+                mControllerCallback.onPlayRetry();
+            }
         } else if (v == mReplay) {
 
             mHavePractice.setVisibility(GONE);
@@ -566,6 +599,11 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
 
     public interface OnControllerCallback {
         void onPlayNext();
+
+        /**
+         * 当遇到 error错误时,点击 重播按钮,重新播放
+         */
+        void onPlayRetry();
     }
 
     private GestureDetector mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {

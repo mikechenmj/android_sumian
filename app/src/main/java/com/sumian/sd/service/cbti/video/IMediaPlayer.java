@@ -21,6 +21,7 @@ public interface IMediaPlayer {
 
     int MEDIA_INFO_UNKNOWN = 1;
     int MEDIA_INFO_STARTED_AS_NEXT = 2;
+    int MEDIA_INFO_BUFFERING_PROGRESS = 4;
     int MEDIA_INFO_VIDEO_RENDERING_START = 3;
     int MEDIA_INFO_VIDEO_TRACK_LAGGING = 700;
     int MEDIA_INFO_BUFFERING_START = 701;
@@ -106,6 +107,8 @@ public interface IMediaPlayer {
 
     void setOnTimedTextListener(IMediaPlayer.OnTimedTextListener var1);
 
+    void setOnLoadingListener(IMediaPlayer.OnLoadingLister loadingListener);
+
     void setAudioStreamType(int var1);
 
     /**
@@ -162,5 +165,14 @@ public interface IMediaPlayer {
 
     public interface OnPreparedListener {
         void onPrepared(IMediaPlayer var1);
+    }
+
+    public interface OnLoadingLister {
+
+        void onLoadStart(); //视频开始缓冲
+
+        void onLoadEnd(); //视频缓冲结束
+
+        void onLoadProgress(int percent); //视频缓冲进度百分比
     }
 }

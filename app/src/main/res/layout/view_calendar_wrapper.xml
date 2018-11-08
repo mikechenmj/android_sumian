@@ -50,6 +50,8 @@
                     android:layout_toEndOf="@id/tv_month"
                     android:contentDescription="@null"
                     android:padding="@dimen/space_10"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:scaleType="centerInside"
                     android:src="@mipmap/ic_record_icon_right" />
 
@@ -60,7 +62,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/space_20"
                     android:gravity="center"
-                    android:text="@string/go_to_today"
+                    android:text="@string/return_to_today"
                     android:textColor="@color/b3_color"
                     android:textSize="@dimen/font_14"
                     tools:ignore="RelativeOverlap" />

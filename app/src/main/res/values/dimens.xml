@@ -74,4 +74,5 @@
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="device_card_view_height">278dp</dimen>
     <dimen name="button_height">50dp</dimen>
+    <dimen name="calendar_week_bg_radius">20dp</dimen>
 </resources>

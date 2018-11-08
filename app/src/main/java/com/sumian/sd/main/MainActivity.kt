@@ -154,6 +154,18 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         }), 200)
 
         SumianExecutor.runOnUiThread(({ HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize) }), 500)
+        // 中途医生绑定状态发生改变时，如果处于doctor tab，改变status 颜色
+        AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
+            run {
+                if (mCurrentPosition == 2) {
+                    changeStatusBarTextColor(doctor == null)
+                }
+            }
+        })
+    }
+
+    private fun changeStatusBarTextColor(isDark: Boolean) {
+        StatusBarUtil.setStatusBarTextColorDark(this@MainActivity, isDark)
     }
 
     override fun initBundle(bundle: Bundle) {
@@ -238,7 +250,7 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
             2 -> !AppManager.getAccountViewModel().isBindDoctor
             else -> false
         }
-        StatusBarUtil.setStatusBarTextColorDark(this, isDark)
+        changeStatusBarTextColor(isDark)
     }
 
     private fun changeSelectFragment(position: Int) {

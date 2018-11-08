@@ -14,9 +14,10 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
     private OnBufferingUpdateListener mOnBufferingUpdateListener;
     private OnSeekCompleteListener mOnSeekCompleteListener;
     private OnVideoSizeChangedListener mOnVideoSizeChangedListener;
-    private OnErrorListener mOnErrorListener;
+    protected OnErrorListener mOnErrorListener;
     private OnInfoListener mOnInfoListener;
     private OnTimedTextListener mOnTimedTextListener;
+    private OnLoadingLister mOnLoadingListener;
 
     public AbstractMediaPlayer() {
     }
@@ -45,6 +46,10 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
         this.mOnErrorListener = listener;
     }
 
+    public void setOnLoadingListener(OnLoadingLister loadingListener) {
+        this.mOnLoadingListener = loadingListener;
+    }
+
     public void setOnInfoListener(OnInfoListener listener) {
         this.mOnInfoListener = listener;
     }
@@ -62,6 +67,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
         this.mOnErrorListener = null;
         this.mOnInfoListener = null;
         this.mOnTimedTextListener = null;
+        this.mOnLoadingListener = null;
     }
 
     protected final void notifyOnPrepared() {
@@ -111,7 +117,6 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer {
         if (this.mOnTimedTextListener != null) {
             this.mOnTimedTextListener.onTimedText(this, text);
         }
-
     }
 
 }

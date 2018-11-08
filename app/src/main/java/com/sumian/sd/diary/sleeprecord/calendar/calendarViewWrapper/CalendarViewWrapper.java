@@ -40,6 +40,7 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
     protected int mCurrentPosition;
     protected CalendarView.OnDateClickListener mOnDateClickListener;
     protected CalendarViewPagerAdapter mPagerAdapter;
+    protected TextView mTvGoBack;
 
 
     public CalendarViewWrapper(Context context) {
@@ -54,8 +55,8 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
         ivLeft.setOnClickListener(this);
         ivRight = inflate.findViewById(R.id.iv_right);
         ivRight.setOnClickListener(this);
-        TextView tvGoToToday = inflate.findViewById(R.id.tv_go_to_today);
-        tvGoToToday.setOnClickListener(this);
+        mTvGoBack = inflate.findViewById(R.id.tv_go_to_today);
+        mTvGoBack.setOnClickListener(this);
         vBg = inflate.findViewById(R.id.v_bg);
         mViewPager = inflate.findViewById(R.id.calender_view_pager);
 
@@ -126,6 +127,11 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
 
     @Override
     public int getDayTypeByTime(long timeInMillis) {
+        return 0;
+    }
+
+    @Override
+    public int getSecondDayType(long timeInMillis) {
         return 0;
     }
 

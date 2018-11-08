@@ -35,7 +35,7 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
     @Override
     public void onBindViewHolder(@NonNull CalendarViewVH holder, int position) {
         final int dayInMonth = getDayInMonthByPosition(position);
-        holder.setDay(dayInMonth, getDayType(position));
+        holder.setDay(dayInMonth, getDayType(position), getSecondBgType(position));
         holder.getMTextView().setOnClickListener(v -> {
             if (isDayInMonthInvalid(dayInMonth)) {
                 return;
@@ -72,6 +72,15 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
         }
     }
 
+    private int getSecondBgType(int position) {
+        int dayInMonth = getDayInMonthByPosition(position);
+        if (isDayInMonthInvalid(dayInMonth) || mDayTypeProvider == null) {
+            return 0;
+        } else {
+            return mDayTypeProvider.getSecondDayType(getDayTimeByDayInMonth(dayInMonth));
+        }
+    }
+
     private boolean isDayInMonthInvalid(int dayInMonth) {
         return dayInMonth == INVALID_DAY_IN_MONTH;
     }
@@ -84,7 +93,7 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
         return TimeUtil.getDayCountInTheMonth(mMonthTime) + mWeekdayShift;
     }
 
-    public void setOnDateClickListener(CalendarView.OnDateClickListener onDateClickListener) {
+    void setOnDateClickListener(CalendarView.OnDateClickListener onDateClickListener) {
         mOnDateClickListener = onDateClickListener;
     }
 
@@ -94,11 +103,11 @@ public class CalendarViewAdapter extends RecyclerView.Adapter<CalendarViewVH> {
         mWeekdayShift = dayOfWeek - 1;
     }
 
-    public void setDayTypeProvider(CalendarView.DayTypeProvider dayTypeProvider) {
+    void setDayTypeProvider(CalendarView.DayTypeProvider dayTypeProvider) {
         mDayTypeProvider = dayTypeProvider;
     }
 
-    public void setMonthTime(long monthTime) {
+    void setMonthTime(long monthTime) {
         mMonthTime = TimeUtil.getStartDayOfMonth(monthTime).getTimeInMillis();
         initDayShift();
         notifyDataSetChanged();

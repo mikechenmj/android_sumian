@@ -1,5 +1,6 @@
 package com.sumian.sd.account.login
 
+import android.graphics.Color
 import android.webkit.WebView
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.bean.H5BaseResponse
@@ -26,7 +27,7 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
         super.initWidget()
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         mTitleBar.openTopPadding(true)
-        mTitleBar.setBackgroundColor(ColorCompatUtil.getColor(this, R.color.transparent))
+        mTitleBar.setBackgroundColor(Color.WHITE)
         mTitleBar.showTitle(false)
         mTitleBar.showBackArrow(false)
         mTitleBar.mIvBack.setColorFilter(ColorCompatUtil.getColor(this, R.color.colorPrimary))

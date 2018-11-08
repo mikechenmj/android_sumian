@@ -22,6 +22,7 @@ public class NiceTextureView extends TextureView {
             this.videoWidth = videoWidth;
             this.videoHeight = videoHeight;
             requestLayout();
+            postInvalidate();
         }
     }
 

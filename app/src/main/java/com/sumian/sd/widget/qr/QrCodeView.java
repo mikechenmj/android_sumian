@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 
 import com.sumian.common.helper.ToastHelper;
 
@@ -40,6 +41,11 @@ public class QrCodeView extends ZBarView implements QRCodeView.Delegate {
             mOnShowQrCodeCallback.onShowQrCode(result);
         }
         vibrate();
+    }
+
+    @Override
+    public void onCameraAmbientBrightnessChanged(boolean isDark) {
+
     }
 
     @Override
@@ -79,7 +85,7 @@ public class QrCodeView extends ZBarView implements QRCodeView.Delegate {
     }
 
     private void showToast(String content) {
-        ToastHelper.show(content);
+        ToastHelper.show(getContext(), content, Gravity.CENTER);
     }
 
 

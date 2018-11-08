@@ -58,6 +58,10 @@ class CalendarPopup(context: Context, dataLoader: DataLoader)
         mCalendarViewWrapper.setSelectDayTime(selectedTime)
     }
 
+    fun setWeekMode(weekMode: Boolean) {
+        mCalendarViewWrapper.setIsWeekMode(weekMode)
+    }
+
     fun addMonthAndData(startMonthTime: Long, hasDataDays: Set<Long>, isInit: Boolean) {
         mCalendarViewWrapper.addHasDataDays(hasDataDays)
         mCalendarViewWrapper.addMonthTimes(TimeUtil.createMonthTimes(startMonthTime, PRELOAD_MONTH_COUNT, isInit), isInit)

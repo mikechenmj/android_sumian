@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 #代码混淆压缩比，在0~7之间，默认为5，一般不做修改
--optimizationpasses 5
+-optimizationpasses 7
 #把混淆类中的方法名也混淆了
 -useuniqueclassmembernames
 #优化时允许访问并修改有修饰符的类和类的成员
@@ -272,10 +272,8 @@ public static final int *;
 
 -keep class sun.misc.Unsafe { *; }
 
--keep class com.taobao.** {*;}
 -keep class com.alibaba.** {*;}
 -keep class com.alipay.** {*;}
--dontwarn com.taobao.**
 -dontwarn com.alibaba.**
 -dontwarn com.alipay.**
 
@@ -291,11 +289,6 @@ public static final int *;
 -dontwarn anet.**
 -dontwarn org.android.spdy.**
 -dontwarn org.android.agoo.**
-
--keepclasseswithmembernames class com.xiaomi.**{*;}
--keep public class * extends com.xiaomi.mipush.sdk.PushMessageReceiver
-
--dontwarn com.xiaomi.push.service.b
 
 -keep class org.apache.http.**
 -keep interface org.apache.http.**
@@ -321,7 +314,6 @@ public static final int *;
 
 #sharesdk
 -keep class cn.sharesdk.**{*;}
--keep class com.sina.**{*;}
 -keep class **.R$* {*;}
 -keep class **.R{*;}
 
@@ -333,6 +325,11 @@ public static final int *;
 #zxing
 -keep class com.google.zxing.** {*;}
 -dontwarn com.google.zxing.**
+#zbar
+-keep class net.sourceforge.zbar.ImageScanner { *; }
+-keep class net.sourceforge.zbar.Image { *; }
+-keep class net.sourceforge.zbar.SymbolSet { *; }
+-keep class net.sourceforge.zbar.Symbol { *; }
 
 ## okhttp
 -dontwarn com.squareup.okhttp.**
@@ -351,11 +348,8 @@ public static final int *;
 #umeng
 -dontshrink
 -dontoptimize
--dontwarn com.google.android.maps.**
 -dontwarn android.webkit.WebView
 -dontwarn com.umeng.**
--dontwarn com.tencent.weibo.sdk.**
--dontwarn com.facebook.**
 
 -keep class com.umeng.** {*;}
 -keepclassmembers class * {
@@ -367,12 +361,10 @@ public static final int *;
 }
 
 
--keep enum com.facebook.**
 -keepattributes Exceptions,InnerClasses,Signature
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 
--keep public interface com.facebook.**
 -keep public interface com.tencent.**
 -keep public interface com.umeng.socialize.**
 -keep public interface com.umeng.socialize.sensor.**
@@ -382,7 +374,6 @@ public static final int *;
 -keep public class javax.**
 -keep public class android.webkit.**
 
--keep class com.facebook.**
 -keep class com.umeng.scrshot.**
 -keep public class com.tencent.** {*;}
 -keep class com.umeng.socialize.sensor.**
@@ -391,8 +382,6 @@ public static final int *;
 
 -keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
 
--keep class im.yixin.sdk.api.YXMessage {*;}
--keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
 -keep public class com.sumian.sd.R$*{
     public static final int *;
 }
@@ -408,18 +397,6 @@ public static final int *;
 -keep public class * extends com.umeng.**
 # 以下包不进行过滤
 -keep class com.umeng.** { *; }
-
-
-#-ButterKnife 8.0
- -keep class butterknife.** { *; }
- -dontwarn butterknife.internal.**
- -keep class **$$ViewBinder { *; }
- -keepclasseswithmembernames class * {
-  @butterknife.* <fields>;
- }
- -keepclasseswithmembernames class * {
- @butterknife.* <methods>;
- }
 
 #eventbus 3.0
 -keepattributes *Annotation*
@@ -514,11 +491,9 @@ public void xxxxxx(**);
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
-
 #fastJson
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.** { *; }
-
 
 # Okio
 -dontwarn com.squareup.**
@@ -545,24 +520,59 @@ public void xxxxxx(**);
 -dontwarn  com.tencent.**
 -keep class com.tencent.** {*;}
 
-# 银联支付混淆过滤
--dontwarn  com.unionpay.**
--keep class com.unionpay.** {*;}
-
-# 招行一网通混淆过滤
--keepclasseswithmembers class cmb.pb.util.CMBKeyboardFunc {
-    public <init>(android.app.Activity);
-    public boolean HandleUrlCall(android.webkit.WebView,java.lang.String);
-    public void callKeyBoardActivity();
-}
-
 # 内部WebView混淆过滤
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
 
+# leancloud
+-dontwarn com.jcraft.jzlib.**
+-keep class com.jcraft.jzlib.**  { *;}
 
--keepattributes Signature
+-dontwarn sun.misc.**
+-keep class sun.misc.** { *;}
+
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *;}
+
+-dontwarn sun.security.**
+-keep class sun.security.** { *; }
+
+-dontwarn com.google.**
+-keep class com.google.** { *;}
+
+-dontwarn com.avos.**
+-keep class com.avos.** { *;}
+
+-keep public class android.net.http.SslError
+-keep public class android.webkit.WebViewClient
+
+-dontwarn android.webkit.WebView
+-dontwarn android.net.http.SslError
+-dontwarn android.webkit.WebViewClient
+
+-dontwarn android.support.**
+
+-dontwarn org.apache.**
+-keep class org.apache.** { *;}
+
+-dontwarn org.jivesoftware.smack.**
+-keep class org.jivesoftware.smack.** { *;}
+
+-dontwarn com.loopj.**
+-keep class com.loopj.** { *;}
+
+-dontwarn com.squareup.okhttp.**
+-keep class com.squareup.okhttp.** { *;}
+-keep interface com.squareup.okhttp.** { *; }
+
+-dontwarn okio.**
+
+-dontwarn org.xbill.**
+-keep class org.xbill.** { *;}
+
+-keepattributes *Annotation*
+
 -dontwarn com.jcraft.jzlib.**
 -keep class com.jcraft.jzlib.**  { *;}
 
