@@ -30,6 +30,7 @@ import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
+import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
@@ -139,6 +140,7 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         if (AppManager.getAccountViewModel().isLogin) {
             HwLeanCloudHelper.loginLeanCloud()
             HwLeanCloudHelper.registerPushService()
+            LeanCloudManager.uploadPushId()
         }
 
         AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()

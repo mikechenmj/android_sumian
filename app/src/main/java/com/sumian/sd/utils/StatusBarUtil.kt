@@ -17,6 +17,7 @@ import android.view.WindowManager
  */
 class StatusBarUtil {
     companion object {
+        @JvmStatic
         fun setStatusBarColor(activity: Activity, color: Int) {
             val window = activity.window
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -27,6 +28,7 @@ class StatusBarUtil {
         /**
          * isDark true：文字黑色，false文字白色
          */
+        @JvmStatic
         fun setStatusBarTextColorDark(activity: Activity, isDark: Boolean) {
             // Fetch the current flags.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -37,6 +39,7 @@ class StatusBarUtil {
             }
         }
 
+        @JvmStatic
         fun setStatusBarColor(activity: Activity, color: Int, isStatusBarDark: Boolean) {
             setStatusBarColor(activity, color)
             setStatusBarTextColorDark(activity, isStatusBarDark)

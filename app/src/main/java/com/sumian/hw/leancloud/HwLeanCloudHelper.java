@@ -107,16 +107,12 @@ public final class HwLeanCloudHelper {
     }
 
     public static HwLeanCloudHelper init(Context context) {
-        ReentrantLock lock = mLock;
-        try {
-            if (INSTANCE == null) {
-                lock.lock();
+        if (INSTANCE == null) {
+            synchronized (HwLeanCloudHelper.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new HwLeanCloudHelper(context);
                 }
             }
-        } finally {
-            lock.unlock();
         }
         return INSTANCE;
     }
