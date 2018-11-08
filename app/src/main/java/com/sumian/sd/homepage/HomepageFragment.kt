@@ -103,12 +103,16 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onStart() {
         super.onStart()
         refreshData()
-        device_card_view.onStart()
     }
 
-    override fun onStop() {
-        super.onStop()
-        device_card_view.onStop()
+    override fun onResume() {
+        super.onResume()
+        device_card_view.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        device_card_view.onPause()
     }
 
     private fun refreshData() {

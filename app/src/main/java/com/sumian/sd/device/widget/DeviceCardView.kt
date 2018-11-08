@@ -4,18 +4,21 @@ import android.animation.ObjectAnimator
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.Observer
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
-import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.MonitorEventListener
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.event.EventBusUtil
@@ -26,9 +29,6 @@ import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.dialog.SumianImageTextToast
 import kotlinx.android.synthetic.main.layout_device_card_view_device.view.*
 import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
-import android.content.Intent
-import android.net.Uri
-import com.blankj.utilcode.util.ActivityUtils
 import kotlinx.android.synthetic.main.view_device_card.view.*
 
 
@@ -42,7 +42,7 @@ import kotlinx.android.synthetic.main.view_device_card.view.*
 class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : FrameLayout(context, attributeSet) {
 
     private var mRotateAnimator: ObjectAnimator? = null
-    private var isStopped = false
+    private var mIsUIActive = false
     private val mMonitorEventListener = object : MonitorEventListener {
         override fun onSyncStart() {
             startSyncAnimation()
@@ -84,7 +84,9 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         }
 
         override fun onConnectFailed() {
-            ToastUtils.showShort(R.string.device_connect_timeout)
+            if (mIsUIActive) {
+                ToastUtils.showShort(R.string.device_connect_timeout)
+            }
         }
 
         override fun onConnectSuccess() {
@@ -97,7 +99,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         LayoutInflater.from(context).inflate(R.layout.view_device_card, this, true)
         tv_sync.setOnClickListener { DeviceManager.syncSleepData() }
         bt_turn_on_pa.setOnClickListener { DeviceManager.turnOnSleeperPaMode() }
-        setOnClickListener {
+        setOnClickListener { it ->
             val monitor = DeviceManager.getMonitorLiveData().value
             if (monitor == null) {
                 mHost?.scanForDevice()
@@ -234,16 +236,16 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     var mHost: Host? = null
 
-    fun onStart() {
-        isStopped = false
+    fun onResume() {
+        mIsUIActive = true
     }
 
-    fun onStop() {
-        isStopped = true
+    fun onPause() {
+        mIsUIActive = false
     }
 
     private fun showMessageDialog(success: Boolean, message: String?) {
-        if (!isStopped) {
+        if (mIsUIActive) {
             SumianImageTextToast.showToast(context, if (success) R.drawable.ic_dialog_success else R.drawable.ic_dialog_fail, message, false)
         }
     }
