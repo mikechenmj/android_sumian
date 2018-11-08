@@ -2,7 +2,6 @@ package com.sumian.sd.tab
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.support.v4.app.FragmentActivity
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
@@ -35,7 +34,6 @@ import com.sumian.sd.setting.SettingActivity
 import com.sumian.sd.widget.tips.PatientRecordTips
 import com.sumian.sd.widget.tips.PatientServiceTips
 import kotlinx.android.synthetic.main.fragment_tab_me.*
-import java.util.*
 
 /**
  * Created by jzz
@@ -77,7 +75,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener, P
                 }
             }
         })
-        ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
+        ViewModelProviders.of(activity!!)
                 .get(NotificationViewModel::class.java)
                 .unreadCount
                 .observe(this, Observer<Int> { unreadCount -> iv_notification.isActivated = unreadCount != null && unreadCount > 0 })
