@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.Utils
 import com.hyphenate.chat.ChatClient
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.blue.manager.BlueManager
+import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
@@ -21,6 +22,7 @@ import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.account.model.AccountViewModel
+import com.sumian.sd.base.ActivityDelegateFactory
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.FileHelper
 import com.sumian.sd.doctor.model.DoctorViewModel
@@ -159,8 +161,12 @@ object AppManager {
         return mHttpDns
     }
 
+    fun initOnAppStart() {
+        BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
+    }
+
     @JvmStatic
-    fun init(context: Context) {
+    fun initOnFirstActivityStart(context: Context) {
         synchronized(AppManager::class.java) {
             DeviceManager.init()
             initUtils(context)

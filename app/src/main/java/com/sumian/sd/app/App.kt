@@ -22,7 +22,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppContext = this
-        //AppManager.getInstance().init(this)
+        AppManager.initOnAppStart()
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
         LogManager.appendPhoneLog("APP 启动")

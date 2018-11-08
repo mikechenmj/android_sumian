@@ -23,6 +23,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
     }
 
     private val mCalls = HashSet<Call<*>>()
+    private val mActivityDelegate = BaseActivityManager.createActivityDelegate(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +32,39 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         initWidgetBefore()
         initWidget()
         initData()
+        mActivityDelegate.onCreate(savedInstanceState)
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         checkBundle(intent)
+        mActivityDelegate.onNewIntent(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mActivityDelegate.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mActivityDelegate.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mActivityDelegate.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mActivityDelegate.onStop()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        super.onActivityResult(requestCode, resultCode, data)
+        mActivityDelegate.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
@@ -44,6 +73,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         }
         onRelease()
         super.onDestroy()
+        mActivityDelegate.onDestroy()
     }
 
     protected open fun initBundle(bundle: Bundle) {}

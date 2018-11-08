@@ -38,7 +38,7 @@ class WelcomeActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        AppManager.init(App.getAppContext())
+        AppManager.initOnFirstActivityStart(App.getAppContext())
         LogManager.appendUserOperationLog("用户启动 app.......")
         Handler().postDelayed({
             val login = AppManager.getAccountViewModel().isLogin
