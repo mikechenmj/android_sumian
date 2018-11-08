@@ -9,6 +9,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.log.LogManager;
@@ -285,6 +286,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
 
     @Override
     public void onReceiveSuccess(BluePeripheral peripheral, byte[] data) {
+        //55 51 01 88
         String cmd = BlueCmd.bytes2HexString(data);
         if (TextUtils.isEmpty(cmd) || cmd.length() < 2 || !"55".equals(cmd.substring(0, 2))) {
             //设备命令出问题
@@ -296,21 +298,11 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         //558f 0c 02d0 0001 faaf8bb8a55a3ee3
         //558E 15DC 01 21A56150 00AAC2E7
         //558E 15DC 0F 21A56150
-        LogManager.appendBluetoothLog("on receive upgrade cmd: " + cmd);
+        LogManager.appendMonitorLog("on receive upgrade cmd: " + cmd);
         String cmdIndex = BlueCmd.formatCmdIndex(cmd);
         switch (cmdIndex) {
-            case "51"://监测仪自己固件 dfu 模式开启成功
-                //CD:9D:C4:08:D8:9D --> CD:9D:C4:08:D8:9E
-                // cmd.substring(3,5)
-//                成功：0x88
-//                失败：
-//                0xE1 -- 监测仪电量过低
-//                0xE2 -- 正在上传睡眠数据
-//                0xE3 -- 正在透传速眠仪 LOG 数据
-//                0xFF -- 其他
-                LogManager.appendMonitorLog("0x51 监测仪dfu 模式开启成功...." + mDfuMac);
-                this.mIsEnableDfu = true;
-                doDfu(App.Companion.getAppContext(), mDfuMac);
+            case "51"://监测仪自己固件 dfu 模式开启 相应
+                onEnterMonitorDfuModeResponse(cmd);
                 break;
             case "56"://获取监测仪绑定的速眠仪的 mac 地址
                 String mac = cmd.substring(6);
@@ -319,12 +311,68 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
                 peripheral.writeDelay(BlueCmd.cDoSleepyDfuMode(), 200);
                 break;
             case "59"://使速眠仪进入 dfu 模式开启成功
-                LogManager.appendMonitorLog("0x59 速眠仪dfu 模式开启成功....mac=" + mDfuMac);
-                this.mIsEnableDfu = true;
-                doDfu(App.Companion.getAppContext(), mDfuMac);
+                onEnterSleeperDfuResponse(cmd);
                 break;
             default:
                 break;
+        }
+    }
+
+    private void onEnterMonitorDfuModeResponse(String cmd) {
+        //55510188
+        String respCode = cmd.substring(6, 8);
+        // 成功：0x88
+        // 失败：
+        // 0xE1 -- 监测仪电量过低
+        // 0xE2 -- 正在上传睡眠数据
+        // 0xE3 -- 正在透传速眠仪 LOG 数据
+        // 0xFF -- 其他
+        boolean startDfuSuccess = false;
+        int errorMessage = R.string.error_unknown;
+        switch (respCode) {
+            case "88":
+                startDfuSuccess = true;
+                break;
+            case "e1"://监测仪电量过低
+                errorMessage = R.string.monitor_is_syncing_please_try_it_later;
+                break;
+            case "e2"://正在上传睡眠数据
+                errorMessage = R.string.monitor_energy_is_low_please_try_it_later;
+                break;
+            case "e3"://正在透传速眠仪 LOG 数据
+                errorMessage = R.string.monitor_is_syncing_please_try_it_later;
+                break;
+            default:
+                break;
+        }
+        if (startDfuSuccess) {
+            LogManager.appendMonitorLog("0x51 监测仪dfu 模式开启成功...." + mDfuMac);
+            this.mIsEnableDfu = true;
+            doDfu(App.Companion.getAppContext(), mDfuMac);
+            mViewWeakReference.get().showUpgradeDialog();
+        } else {
+            ToastUtils.showShort(errorMessage);
+        }
+    }
+
+    private void onEnterSleeperDfuResponse(String cmd) {
+        String respCode = cmd.substring(6, 8);
+        boolean isEnterSuccess = false;
+        int sleeperErrorMessage = R.string.error_unknown;
+        switch (respCode) {
+            case "88":
+                isEnterSuccess = true;
+                break;
+            default:
+                break;
+        }
+        if (isEnterSuccess) {
+            LogManager.appendMonitorLog("0x59 速眠仪dfu 模式开启成功....mac=" + mDfuMac);
+            this.mIsEnableDfu = true;
+            doDfu(App.Companion.getAppContext(), mDfuMac);
+            mViewWeakReference.get().showUpgradeDialog();
+        } else {
+            ToastUtils.showShort(sleeperErrorMessage);
         }
     }
 

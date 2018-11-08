@@ -33,6 +33,8 @@ public interface VersionUpgradeContract {
 
         void dismissSleepConnectingDialog();
 
+        void showUpgradeDialog();
+
     }
 
     interface Presenter extends HwBasePresenter {
