@@ -256,7 +256,7 @@
             android:maxLines="2"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            tools:text="真实死亡游戏“蓝鲸”疑似进入国内，家长们要注意了" />
+            tools:text="Title title title" />
 
         <LinearLayout
             android:id="@+id/battery_time"

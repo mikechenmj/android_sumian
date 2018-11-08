@@ -296,6 +296,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         //558f 0c 02d0 0001 faaf8bb8a55a3ee3
         //558E 15DC 01 21A56150 00AAC2E7
         //558E 15DC 0F 21A56150
+        LogManager.appendBluetoothLog("on receive upgrade cmd: " + cmd);
         String cmdIndex = BlueCmd.formatCmdIndex(cmd);
         switch (cmdIndex) {
             case "51"://监测仪自己固件 dfu 模式开启成功
