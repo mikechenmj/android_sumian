@@ -3,7 +3,8 @@ package com.sumian.sd.diary.monitorrecord
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseBackActivity
-import com.sumian.hw.report.fragment.WeeklyReportFragment
+import com.sumian.hw.report.weeklyreport.WeeklyReportFragment
+import com.sumian.hw.report.weeklyreport.WeeklyReportFragmentV2
 import com.sumian.sd.R
 
 /**
@@ -32,6 +33,6 @@ class WeeklyReportActivity : BaseBackActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.weekly_data)
-        supportFragmentManager.beginTransaction().replace(R.id.fl_container, WeeklyReportFragment.newInstance(intent.getLongExtra(KEY_SCROLL_TIME, 0))).commitNowAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(R.id.fl_container, WeeklyReportFragmentV2.newInstance(intent.getLongExtra(KEY_SCROLL_TIME, 0))).commitNowAllowingStateLoss()
     }
 }

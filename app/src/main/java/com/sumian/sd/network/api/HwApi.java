@@ -7,11 +7,11 @@ import com.sumian.hw.report.base.BaseResultResponse;
 import com.sumian.hw.report.bean.DailyMeta;
 import com.sumian.hw.report.bean.DailyReport;
 import com.sumian.hw.report.bean.ReadSleepRecordEvaluationResponse;
-import com.sumian.hw.report.bean.WeekMeta;
+import com.sumian.hw.report.weeklyreport.WeekMeta;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.network.response.AppUpgradeInfo;
 import com.sumian.sd.network.response.FirmwareInfo;
-import com.sumian.sd.network.response.SleepDurationReport;
+import com.sumian.hw.report.weeklyreport.bean.SleepDurationReport;
 
 import java.util.Map;
 

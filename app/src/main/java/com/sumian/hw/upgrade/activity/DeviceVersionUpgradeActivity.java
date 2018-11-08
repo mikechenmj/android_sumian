@@ -282,38 +282,46 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
         int i = v.getId();
         if (i == R.id.bt_download) {
             if (mBtDownload.getText().equals(getString(R.string.firmware_upgrade_hint))) {
-                if (this.mobileBatteryLow()) {
-                    LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级");
-                    showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message);
-                    return;
-                }
-                switch (mVersionType) {
-                    case VERSION_TYPE_MONITOR:
-                        if (monitorBatteryLow()) {
-                            LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
-                            showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
-                            return;
-                        } else {
-                            initDialog(0x01);
-                        }
-                        break;
-                    case VERSION_TYPE_SLEEPY:
-                        if (sleepyBatterLow()) {
-                            LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
-                            showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
-                            return;
-                        }
-                        break;
-                }
-                ToastHelper.show(this, getString(R.string.firmware_upgrade_ing_hint), Gravity.CENTER);
-                mDfuCount++;
-                mPresenter.upgrade(mVersionType);
+                onUpgradeClick();
             } else {
-                initDialog(0x00);
-                downloadVersionFile();
+                onDownloadClick();
             }
 
         }
+    }
+
+    private void onDownloadClick() {
+        showDownloadDialog();
+        downloadVersionFile();
+    }
+
+    private void onUpgradeClick() {
+        if (this.mobileBatteryLow()) {
+            LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级");
+            showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message);
+            return;
+        }
+        switch (mVersionType) {
+            case VERSION_TYPE_MONITOR:
+                if (monitorBatteryLow()) {
+                    LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级");
+                    showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message);
+                    return;
+                } else {
+                    showUpgradeDialog();
+                }
+                break;
+            case VERSION_TYPE_SLEEPY:
+                if (sleepyBatterLow()) {
+                    LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
+                    showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);
+                    return;
+                }
+                break;
+        }
+        ToastHelper.show(this, getString(R.string.firmware_upgrade_ing_hint), Gravity.CENTER);
+        mDfuCount++;
+        mPresenter.upgrade(mVersionType);
     }
 
     private void showErrorDialog(int title, int message) {
@@ -391,7 +399,7 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
         if (mVersion2ConnectingDialog != null) {
             mVersion2ConnectingDialog.dismissAllowingStateLoss();
         }
-        initDialog(0x01);
+//        showUpgradeDialog();
     }
 
 
@@ -405,11 +413,18 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
         mDfuCount = 0;
     }
 
-
-    private void initDialog(int dialogType) {
-        VersionDialog versionDialog = VersionDialog.newInstance(dialogType, getString(R.string.firmware_download_title_hint));
+    private void showDialogByTitle(int titleResId) {
+        VersionDialog versionDialog = VersionDialog.newInstance(getString(titleResId));
         versionDialog.show(getSupportFragmentManager(), versionDialog.getClass().getSimpleName());
         this.mVersionDialog = versionDialog;
+    }
+
+    private void showDownloadDialog() {
+        showDialogByTitle(R.string.firmware_download_title_hint);
+    }
+
+    public void showUpgradeDialog() {
+        showDialogByTitle(R.string.firmware_upgrade_title_hint);
     }
 
     @Override

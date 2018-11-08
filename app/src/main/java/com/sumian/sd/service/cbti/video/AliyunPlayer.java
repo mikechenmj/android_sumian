@@ -254,7 +254,6 @@ public class AliyunPlayer extends AbstractMediaPlayer {
             this.mAliyunPlayer.setOnInfoListener(new IAliyunVodPlayer.OnInfoListener() {
                 @Override
                 public void onInfo(int i, int i1) {
-                    Log.e(TAG, "onInfo: ------->i=" + i + "  i1=" + i1);
                     switch (i) {
                         case MediaPlayer.MEDIA_INFO_BUFFERING_START:
                             i = MEDIA_INFO_BUFFERING_START;

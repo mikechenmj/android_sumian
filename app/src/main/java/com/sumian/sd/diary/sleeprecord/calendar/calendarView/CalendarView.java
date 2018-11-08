@@ -56,6 +56,8 @@ public class CalendarView extends FrameLayout {
 
     public interface DayTypeProvider {
         int getDayTypeByTime(long timeInMillis);
+
+        int getSecondDayType(long timeInMillis);
     }
 
     public interface OnDateClickListener {

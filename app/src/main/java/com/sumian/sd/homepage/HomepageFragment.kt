@@ -103,18 +103,20 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onStart() {
         super.onStart()
         refreshData()
-        device_card_view.onStart()
     }
 
-    override fun onStop() {
-        super.onStop()
-        device_card_view.onStop()
+    override fun onResume() {
+        super.onResume()
+        device_card_view.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        device_card_view.onPause()
     }
 
     private fun refreshData() {
         queryCbti()
-        querySleepRecord()
-        queryDailyReport()
         querySleepPrescription()
     }
 
@@ -137,10 +139,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         })
     }
 
-    private fun querySleepRecord() {
-        sleep_data_pager_view.querySleepRecord()
-    }
-
     private fun queryCbti() {
         val call = AppManager.getSdHttpService().getCbtiChapters(null)
         addCall(call)
@@ -160,10 +158,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         })
     }
 
-    private fun queryDailyReport() {
-        sleep_data_pager_view.queryDailyReport()
-    }
-
     override fun openEventBus(): Boolean {
         return true
     }
@@ -180,16 +174,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         queryCbti()
     }
 
-    @Subscribe(sticky = true)
-    fun onSleepRecordFilledEvent(event: SleepRecordFilledEvent) {
-        EventBusUtil.removeStickyEvent(event)
-        querySleepRecord()
-        querySleepPrescription()
-    }
-
     private fun onAvatarClick() {
         SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
-//        ActivityUtils.startActivity(CbtiFinalReportSchemeResolver().resolveScheme(activity!!, Uri.parse("")))
     }
 
     override fun onEnter(data: String?) {

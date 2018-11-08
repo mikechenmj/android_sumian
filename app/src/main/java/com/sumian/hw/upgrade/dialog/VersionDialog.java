@@ -23,13 +23,11 @@ public class VersionDialog extends BaseDialogFragment {
     TextView mTvProgress;
     ProgressBar mProgressBar;
 
-    private int mDialogType;
     private String mDialogTitle;
 
-    public static VersionDialog newInstance(int dialogType, String title) {
+    public static VersionDialog newInstance(String title) {
         VersionDialog versionDialog = new VersionDialog();
         Bundle args = new Bundle();
-        args.putInt("dialogType", dialogType);
         args.putString("dialogTitle", title);
         versionDialog.setArguments(args);
         return versionDialog;
@@ -38,7 +36,6 @@ public class VersionDialog extends BaseDialogFragment {
     @Override
     protected void initBundle(Bundle arguments) {
         super.initBundle(arguments);
-        this.mDialogType = arguments.getInt("dialogType", 0);
         this.mDialogTitle = arguments.getString("dialogTitle");
     }
 
@@ -59,13 +56,13 @@ public class VersionDialog extends BaseDialogFragment {
     @Override
     protected void initData() {
         super.initData();
-        this.mTvFirmwareTitle.setText(mDialogType == 0x00 ? mDialogTitle : getString(R.string.firmware_upgrade_title_hint));
+        this.mTvFirmwareTitle.setText(mDialogTitle);
     }
 
     public void updateProgress(int progress) {
         runUiThread(() -> {
             this.mTvProgress.setText(String.format(Locale.getDefault(), "%d%s", progress, "%"));
-            this.mProgressBar.setSecondaryProgress(progress);
+            this.mProgressBar.setProgress(progress);
         });
     }
 

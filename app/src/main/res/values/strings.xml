@@ -91,7 +91,8 @@
     <string name="thu">四</string>
     <string name="fri">五</string>
     <string name="sat">六</string>
-    <string name="go_to_today">回到今天</string>
+    <string name="return_to_today">回到今天</string>
+    <string name="return_to_this_week">回到今天</string>
     <string name="sleep_record">睡眠记录</string>
     <string name="sleep_diary">睡眠日记</string>
     <string name="refill">重填</string>
@@ -484,6 +485,7 @@
     <string name="captcha_validation_regex">\\d{6}</string>
     <string name="password_validation_regex">.{6,16}</string>
     <string name="feedback_hint">请详细描述您的意见或建议，我们将及时处理并给予反馈，速眠医生致力于为您提供专业贴心的服务。</string>
+    <string name="none_feedback_hint">您未填写反馈意见及建议</string>
     <string name="remind_setting">提醒设置</string>
     <string name="sd_sleep_diary_remind">睡眠日记填写提醒</string>
     <string name="sd_relaxation_training">放松训练提醒</string>
@@ -501,7 +503,8 @@
     <string name="no_data_yet">暂无相关记录</string>
     <string name="after_bind_doctor_you_can_consult_the_doctor">绑定医生后，可向主治医生咨询</string>
     <string name="sleep_prescription_introduction_title">睡眠处方介绍</string>
-    <string name="sleep_prescription_introduction_content">速眠医生会根据过去7天的睡眠日记整理你的睡眠数据，你可以在此设置起床时间，系统帮你计算建议的上床时间。\n\n请保持过去7天内填写至少3篇以上的睡眠日记，我们将每7天为你更新一次，请认真遵守睡眠处方，你的睡眠效率会慢慢提高，当你的睡眠效率提高后，我们会逐步延长你的睡眠时长，陪你一起改善睡眠！\n\nCBTI课程内有关于睡眠处方更详细的介绍与使用方法，更多内容可通过学习CBTI课程进行了解。</string>
+    <string name="sleep_prescription_introduction_content">睡眠效率差的人，躺在床上太久，反而会胡思乱想，限制其卧床时间，可能会提高睡眠效率。执行睡眠处方的步骤是：\n（1）填写7天的睡眠日记，计算出每晚平均睡眠时长和睡眠效率；\n（2）以平均每晚睡眠时长作为本周每晚可躺在床上的时间，但要固定起床时间，且卧床时长不能低于5小时；\n（3）上周的睡眠效率决定本周的睡眠时长以及上床时间是否需要调整；\n（4）请认真遵守睡眠处方，你的睡眠效率会慢慢提高，当你的睡眠效率提高后，我们会逐步延长你的睡眠时长，陪你一起改善睡眠！\n\n速眠医生建议在过去7天内填写至少3篇以上的睡眠日记，有助于提供更精准的上床时间。\n更多睡眠处方的内容可通过学习CBTI课程进行了解。
+</string>
     <string name="none_sleep_status_data">无数据状态</string>
     <string name="user_privacy_policy">用户隐私政策</string>
     <string name="you_have_not_set_sleep_prescription">您还未设置睡眠处方</string>
@@ -647,4 +650,8 @@
     <string name="know_device">了解设备</string>
     <string name="set_diary_reminder_hint">养成坚持填写好习惯？去</string>
     <string name="set_diary_reminder_hint_2"><u>设置填写提醒</u></string>
+    <string name="dialog_finish_practice_msg">完成本节课程学习后自动解锁下节内容</string>
+    <string name="error_unknown">未知错误</string>
+    <string name="monitor_is_syncing_please_try_it_later">监测仪同步中，请稍后重试</string>
+    <string name="monitor_energy_is_low_please_try_it_later">监测仪电量过低，请充点后重试</string>
 </resources>

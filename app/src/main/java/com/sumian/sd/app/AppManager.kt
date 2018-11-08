@@ -12,6 +12,7 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.operator.AppOperator
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
@@ -63,10 +64,11 @@ object AppManager {
     }
 
     private val mBlueManager: BlueManager by lazy {
-        FileHelper.init()
-        val externalStorageWritable = FileHelper.init().isExternalStorageWritable
-        if (externalStorageWritable) {
-            FileHelper.createSDDir(FileHelper.FILE_DIR)
+        AppOperator.runOnThread {
+            val externalStorageWritable = FileHelper.init().isExternalStorageWritable
+            if (externalStorageWritable) {
+                FileHelper.createSDDir(FileHelper.FILE_DIR)
+            }
         }
         val blueManager = BlueManager.init()
         blueManager.with(App.getAppContext())
@@ -158,10 +160,8 @@ object AppManager {
     }
 
     @JvmStatic
-    @Synchronized
     fun init(context: Context) {
         synchronized(AppManager::class.java) {
-            //initBlueManager(context)
             DeviceManager.init()
             initUtils(context)
             initLeanCloud(context)
@@ -203,14 +203,5 @@ object AppManager {
         }
         // Kefu EaseUI的初始化
         UIProvider.getInstance().init(context)
-    }
-
-    private fun initBlueManager(context: Context) {
-        FileHelper.init()
-        val externalStorageWritable = FileHelper.init().isExternalStorageWritable
-        if (externalStorageWritable) {
-            FileHelper.createSDDir(FileHelper.FILE_DIR)
-        }
-        BlueManager.init().with(context)
     }
 }

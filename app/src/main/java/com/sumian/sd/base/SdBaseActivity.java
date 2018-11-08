@@ -305,7 +305,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
     }
 
     public void dismissLoading() {
-        if (mLoadingDialog.isShowing()) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
     }

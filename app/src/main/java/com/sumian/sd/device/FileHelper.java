@@ -31,7 +31,7 @@ public final class FileHelper {
 
     private long mUnixTime;
 
-    private File mDirFile;
+    private volatile File mDirFile;
 
     private File mEmgFile;
     private File mPulseFile;

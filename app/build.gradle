@@ -132,6 +132,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+
         main {
             jniLibs.srcDirs = ['libs']
         }
@@ -289,16 +290,19 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     kapt 'android.arch.lifecycle:compiler:1.1.1'
     implementation 'android.arch.lifecycle:viewmodel:1.1.1'
+
     // Java8 support for Lifecycles
     implementation 'android.arch.lifecycle:common-java8:1.1.1'
 
     // LeanCloud 基础包
     implementation 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
+
     // 推送与实时聊天需要的包
     implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
 
     //aliyun oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
+
     //aliyun player sdk
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')
     implementation(name: 'AlivcPlayer-3.4.6', ext: 'aar')
@@ -306,14 +310,16 @@ dependencies {
 
     //ping++
     implementation 'com.pingxx:pingpp-core:2.1.18'
+
     // 使用支付宝时添加
     implementation 'com.pingxx:pingpp-alipay:2.1.18'
 
     //拼音分词
-    implementation 'com.belerweb:pinyin4j:2.5.1'
+    //implementation 'com.belerweb:pinyin4j:2.5.1'
 
     //scan qr code
     implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.3.4'
+
     //implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.3'
 
     // RecyclerViewPager
@@ -335,12 +341,17 @@ dependencies {
     implementation 'no.nordicsemi.android:dfu:1.7.0'
 
     //sumian component
-//    implementation 'com.sumian.sd:common:1.0.21'
-//    implementation 'com.sumian.sd:blue:1.0.2'
-//    implementation 'com.sumian.sd:kefu-easeui:1.0.3'
-//    implementation 'com.sumian.sd:jsbridge:1.0.0'
+
+    //    implementation 'com.sumian.sd:common:1.0.21'
+
+    //    implementation 'com.sumian.sd:blue:1.0.2'
+
+    //    implementation 'com.sumian.sd:kefu-easeui:1.0.3'
+
+    //    implementation 'com.sumian.sd:jsbridge:1.0.0'
     implementation project(':blue')
     implementation project(':common')
+
     //implementation project(':jsbridge')
     implementation project(':kefu-easeui')
 }

@@ -78,6 +78,20 @@ data class TelBooking(var id: Int,
 
     }
 
+    fun topMsg(): String {
+        return when (status) {
+            STATUS_0_WAITING_CONFIRM -> {
+                "请耐心等待医生确认预约信息"
+            }
+            STATUS_1_CONFIRMED -> {
+                "预约已确认，请保持电话畅通"
+            }
+            else -> {
+                ""
+            }
+        }
+    }
+
     fun formatOrderContent(): String {
         return when (status) {
             9 -> "您的${p_package.servicePackage.formatPackageNameAndIntro()}还未使用，点击预约 >"

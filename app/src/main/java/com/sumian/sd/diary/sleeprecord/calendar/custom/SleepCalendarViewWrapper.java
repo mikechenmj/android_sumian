@@ -2,6 +2,7 @@ package com.sumian.sd.diary.sleeprecord.calendar.custom;
 
 import android.content.Context;
 
+import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarViewWrapper.CalendarViewWrapper;
 import com.sumian.sd.utils.TimeUtil;
 
@@ -24,6 +25,9 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
     private long mSelectDayTime;
     private long mTodayTime;
     private LoadMoreListener mLoadMoreListener;
+    private boolean mIsWeekMode = false;
+    private long mWeekStartDayTime;
+    private long mWeekEndDayTime;
 
     public SleepCalendarViewWrapper(Context context) {
         super(context);
@@ -36,6 +40,8 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
 
     public void setSelectDayTime(long selectDayTime) {
         mSelectDayTime = TimeUtil.getDayStartTime(selectDayTime);
+        mWeekStartDayTime = TimeUtil.getWeekStartDayTime(selectDayTime);
+        mWeekEndDayTime = TimeUtil.getWeekEndDayTime(selectDayTime);
         scrollToTime(mSelectDayTime, false);
     }
 
@@ -47,7 +53,7 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
     public int getDayTypeByTime(long timeInMillis) {
         int dayType;
         boolean hasData = mHasRecordDays.contains(timeInMillis);
-        if (timeInMillis == mSelectDayTime) {
+        if (!mIsWeekMode && timeInMillis == mSelectDayTime) {
             dayType = hasData ? SleepDayType.SELECT_HAS_DATA : SleepDayType.SELECT_NO_DATA;
         } else if (timeInMillis > mTodayTime) {
             dayType = SleepDayType.FEATURE;
@@ -55,6 +61,34 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
             dayType = hasData ? SleepDayType.HAS_DATA : SleepDayType.NO_DATA;
         }
         return dayType;
+    }
+
+    @Override
+    public int getSecondDayType(long timeInMillis) {
+        if (mIsWeekMode) {
+            if (mWeekStartDayTime <= timeInMillis && timeInMillis <= mWeekEndDayTime) {
+                if (TimeUtil.isAtStartOfWeek(timeInMillis) || TimeUtil.isAtStartOfMonth(timeInMillis)) {
+                    if (TimeUtil.isAtEndOfWeek(timeInMillis) || TimeUtil.isAtEndOfMonth(timeInMillis)) {
+                        return SleepCalendarViewVH.Companion.getSECOND_BG_TYPE_START_END();
+                    } else {
+                        return SleepCalendarViewVH.Companion.getSECOND_BG_TYPE_START();
+                    }
+                } else if (TimeUtil.isAtEndOfWeek(timeInMillis) || TimeUtil.isAtEndOfMonth(timeInMillis)) {
+                    //noinspection ConstantConditions
+                    if (TimeUtil.isAtStartOfWeek(timeInMillis) || TimeUtil.isAtStartOfMonth(timeInMillis)) {
+                        return SleepCalendarViewVH.Companion.getSECOND_BG_TYPE_START_END();
+                    } else {
+                        return SleepCalendarViewVH.Companion.getSECOND_BG_TYPE_END();
+                    }
+                } else {
+                    return SleepCalendarViewVH.Companion.getSECOND_BG_TYPE_MIDDLE();
+                }
+            } else {
+                return SleepCalendarViewVH.Companion.getSECOND_BG_TYPE_NONE();
+            }
+        } else {
+            return SleepCalendarViewVH.Companion.getSECOND_BG_TYPE_NONE();
+        }
     }
 
     public void addHasDataDays(Set<Long> days) {
@@ -83,8 +117,29 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
     @Override
     public void addMonthTimes(List<Long> monthTimeList, boolean isInit) {
         super.addMonthTimes(monthTimeList, isInit);
-        if(isInit) {
+        if (isInit) {
             scrollToTime(mSelectDayTime, false);
         }
+    }
+
+    public void setIsWeekMode(boolean isWeekMode) {
+        mIsWeekMode = isWeekMode;
+        mTvGoBack.setText(isWeekMode ? R.string.return_to_this_week : R.string.return_to_today);
+    }
+
+    private boolean isInTheWeek() {
+        return false;
+    }
+
+    private boolean isFirstDayOfTheWeek() {
+        return false;
+    }
+
+    private boolean isLastDayOfTheWeek() {
+        return false;
+    }
+
+    private boolean isLastDayOfTheMonth() {
+        return false;
     }
 }

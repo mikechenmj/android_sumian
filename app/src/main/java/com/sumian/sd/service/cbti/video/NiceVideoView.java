@@ -514,7 +514,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         public void onPrepared(IMediaPlayer mp) {
             mCurrentState = STATE_PREPARED;
             mController.onPlayStateChanged(mCurrentState);
-            LogUtil.d("onPrepared ——> STATE_PREPARED");
+            //LogUtil.d("onPrepared ——> STATE_PREPARED");
             mp.start();
             // 从上次的保存位置播放
             if (continueFromLastPosition) {
@@ -537,7 +537,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         @Override
         public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
             mTextureView.adaptVideoSize(width, height);
-            Log.e(TAG, "onVideoSizeChanged: ----------->width=" + width + "   height=" + height);
+            //Log.e(TAG, "onVideoSizeChanged: ----------->width=" + width + "   height=" + height);
         }
     };
 
@@ -574,15 +574,15 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
                 case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:// 播放器开始渲染
                     mCurrentState = STATE_PLAYING;
                     mController.onPlayStateChanged(mCurrentState);
-                    LogUtil.e("onInfo ——> MEDIA_INFO_VIDEO_RENDERING_START：STATE_PLAYING");
+                    //LogUtil.e("onInfo ——> MEDIA_INFO_VIDEO_RENDERING_START：STATE_PLAYING");
                     break;
                 case IMediaPlayer.MEDIA_INFO_BUFFERING_START:// MediaPlayer暂时不播放，以缓冲更多的数据
                     if (mCurrentState == STATE_PAUSED || mCurrentState == STATE_BUFFERING_PAUSED) {
                         mCurrentState = STATE_BUFFERING_PAUSED;
-                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PAUSED");
+                        // LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PAUSED");
                     } else {
                         mCurrentState = STATE_BUFFERING_PLAYING;
-                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PLAYING");
+                        // LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_START：STATE_BUFFERING_PLAYING");
                     }
                     mController.onPlayStateChanged(mCurrentState);
                     break;
@@ -590,12 +590,12 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
                     if (mCurrentState == STATE_BUFFERING_PLAYING) {
                         mCurrentState = STATE_PLAYING;
                         mController.onPlayStateChanged(mCurrentState);
-                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PLAYING");
+                        //LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PLAYING");
                     }
                     if (mCurrentState == STATE_BUFFERING_PAUSED) {
                         mCurrentState = STATE_PAUSED;
                         mController.onPlayStateChanged(mCurrentState);
-                        LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PAUSED");
+                        // LogUtil.e("onInfo ——> MEDIA_INFO_BUFFERING_END： STATE_PAUSED");
                     }
                     break;
                 case IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED:// 视频旋转了extra度，需要恢复
@@ -605,7 +605,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
                     }
                     break;
                 case IMediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
-                    LogUtil.e("视频不能seekTo，为直播视频");
+                    //LogUtil.e("视频不能seekTo，为直播视频");
                     break;
                 case IMediaPlayer.MEDIA_INFO_AUDIO_RENDERING_START://获取到视频的第一帧
                     //Log.e(TAG, "onInfo: --------->视频的第一帧");

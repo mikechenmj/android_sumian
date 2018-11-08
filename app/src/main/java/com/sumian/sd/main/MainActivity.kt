@@ -2,10 +2,12 @@
 
 package com.sumian.sd.main
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
@@ -28,6 +30,7 @@ import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
+import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
@@ -121,6 +124,12 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)
+        ViewModelProviders.of(this@MainActivity)
+                .get(NotificationViewModel::class.java)
+                .unreadCount
+                .observe(this, Observer<Int> { unreadCount ->
+                    tb_me?.showDot(if (unreadCount != null && unreadCount > 0) View.VISIBLE else View.GONE)
+                })
     }
 
     override fun initData() {
@@ -131,6 +140,7 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         if (AppManager.getAccountViewModel().isLogin) {
             HwLeanCloudHelper.loginLeanCloud()
             HwLeanCloudHelper.registerPushService()
+            LeanCloudManager.uploadPushId()
         }
 
         AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
@@ -146,6 +156,18 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         }), 200)
 
         SumianExecutor.runOnUiThread(({ HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize) }), 500)
+        // 中途医生绑定状态发生改变时，如果处于doctor tab，改变status 颜色
+        AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
+            run {
+                if (mCurrentPosition == 2) {
+                    changeStatusBarTextColor(doctor == null)
+                }
+            }
+        })
+    }
+
+    private fun changeStatusBarTextColor(isDark: Boolean) {
+        StatusBarUtil.setStatusBarTextColorDark(this@MainActivity, isDark)
     }
 
     override fun initBundle(bundle: Bundle) {
@@ -227,10 +249,10 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         val isDark = when (position) {
             0 -> true
             1 -> false
-            2 -> !AppManager.getAccountViewModel().isBindDoctor()
+            2 -> !AppManager.getAccountViewModel().isBindDoctor
             else -> false
         }
-        StatusBarUtil.setStatusBarTextColorDark(this, isDark)
+        changeStatusBarTextColor(isDark)
     }
 
     private fun changeSelectFragment(position: Int) {
