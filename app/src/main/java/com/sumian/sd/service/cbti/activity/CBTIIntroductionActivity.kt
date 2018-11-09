@@ -150,7 +150,7 @@ class CBTIIntroductionActivity : BaseBackPresenterActivity<CBTIIntroductionContr
         // CBTIIntroductionWebActivity.show()//已过期，跳转去购买服务
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             requestData()

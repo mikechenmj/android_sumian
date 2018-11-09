@@ -61,8 +61,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         mActivityDelegate.onStop()
     }
 
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mActivityDelegate.onActivityResult(requestCode, resultCode, data)
     }
