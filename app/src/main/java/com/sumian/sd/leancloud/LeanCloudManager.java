@@ -14,6 +14,7 @@ import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.BuildConfig;
+import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.WelcomeActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
@@ -63,6 +64,7 @@ public class LeanCloudManager {
     }
 
     public static void uploadPushId() {
+        PushService.subscribe(App.getAppContext(), "app-sd", null);
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {

@@ -467,7 +467,7 @@
     <string name="app_user_agreement">速眠医生用户协议</string>
     <string name="captcha_login">验证码登录</string>
     <string name="password_login">密码登录</string>
-    <string name="captcha_already_sent">已发送%ds</string>
+    <string name="captcha_already_sent">%ds</string>
     <string name="please_set_password">请设置密码</string>
     <string name="repeat_password">再次输入密码</string>
     <string name="please_set_new_password">请设置新密码</string>
