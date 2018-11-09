@@ -30,7 +30,6 @@ import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.HwApi
 import com.sumian.sd.network.api.SdApi
-import com.sumian.sd.notification.push.LaunchIntentReceiver
 
 /**
  * Created by jzz
@@ -174,7 +173,6 @@ object AppManager {
             HwLeanCloudHelper.init(context)
             initKefu(context)
             initWebView()
-            LaunchIntentReceiver.registerLaunchIntentReceiver(context)
         }
     }
 

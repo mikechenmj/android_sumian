@@ -6,6 +6,7 @@ import android.content.Intent
 import android.text.TextUtils
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.main.MainActivity
 import com.sumian.sd.utils.NotificationUtil
 
 
@@ -29,11 +30,14 @@ class PushReceiver : BroadcastReceiver() {
             LogUtils.d("push data user id invalid")
             return
         }
-        val notificationIntent = SchemeResolveUtil.schemeResolver(context, scheme) ?: return
         val notificationId = SchemeResolveUtil.getNotificationIdFromScheme(scheme) ?: ""
+        val notificationIntent = SchemeResolveUtil.schemeResolver(context, scheme)
+                ?: getDefaultIntent(context)
         val contentText = pushData.alert ?: return
         NotificationUtil.showNotification(context, contentText, notificationId, notificationIntent)
     }
+
+    private fun getDefaultIntent(context: Context?) = Intent(context, MainActivity::class.java)
 
     private fun isUserIdValid(scheme: String): Boolean {
         val userIdStr = SchemeResolveUtil.getUserIdFromScheme(scheme)
