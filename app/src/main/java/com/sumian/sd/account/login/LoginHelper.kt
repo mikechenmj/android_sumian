@@ -5,7 +5,6 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.utils.AppUtil
 import java.lang.ref.WeakReference
@@ -32,7 +31,6 @@ class LoginHelper {
 
         fun updateTokenAndUploadInstallationId(response: Token?) {
             AppManager.getAccountViewModel().updateToken(response)
-            LeanCloudManager.uploadPushId()
         }
 
         fun requestCaptcha(mobile: String, listener: RequestCaptchaListener) {

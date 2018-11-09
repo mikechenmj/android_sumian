@@ -18,6 +18,7 @@ import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.main.WelcomeActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
+import com.sumian.sd.utils.AppUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -74,6 +75,10 @@ public class LeanCloudManager {
                 }
             }
         });
+        //设置后台自动重启
+        PushService.setAutoWakeUp(true);
+        // 设置默认打开的 Activity
+        PushService.setDefaultPushCallback(App.Companion.getAppContext(), AppUtil.getMainClass());
     }
 
     private static void uploadDeviceInfo(String installationId) {

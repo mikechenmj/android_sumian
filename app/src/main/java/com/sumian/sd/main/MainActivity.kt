@@ -138,8 +138,7 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         //注册站内信消息接收容器
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         if (AppManager.getAccountViewModel().isLogin) {
-            HwLeanCloudHelper.loginLeanCloud()
-            HwLeanCloudHelper.registerPushService()
+            HwLeanCloudHelper.loginEasemob(null)
             LeanCloudManager.uploadPushId()
         }
 
