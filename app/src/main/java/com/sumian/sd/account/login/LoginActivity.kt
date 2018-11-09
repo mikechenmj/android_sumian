@@ -110,7 +110,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         tv_send_captcha.startCountDown()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data)
     }

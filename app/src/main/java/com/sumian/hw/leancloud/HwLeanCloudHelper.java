@@ -16,15 +16,9 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
-import com.avos.avoscloud.im.v2.AVIMMessageOption;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
-import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
-import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
-import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.hyphenate.chat.ChatClient;
@@ -47,13 +41,10 @@ import com.sumian.sd.utils.AppUtil;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
 
 import retrofit2.Call;
 
@@ -71,21 +62,11 @@ public final class HwLeanCloudHelper {
     public static final int SERVICE_TYPE_ONLINE_CUSTOMER = 0x02;//线上客服
     public static final int SERVICE_TYPE_MAIL = 0x03;//站内信
 
-    private static final int MSG_TYPE_TEXT = 0x21;
-    private static final int MSG_TYPE_IMAGE = 0x22;
-    private static final int MSG_TYPE_VOICE = 0x23;
-
     private static volatile HwLeanCloudHelper INSTANCE;
-    private static ReentrantLock mLock = new ReentrantLock();
 
-    private List<OnMsgCallback> mOnMsgCallbacks;
+    private List<OnMsgCallback> mOnMsgCallbacks = new ArrayList<>(0);
 
-    private OnConversationCallback mOnConversationCallback;
-
-    private List<OnShowMsgDotCallback> mOnShowMsgDotCallbacks;
-
-    private AVIMConversation mCustomerConversations;
-    private AVIMConversation mDoctorConversations;
+    private List<OnShowMsgDotCallback> mOnShowMsgDotCallbacks = new ArrayList<>(0);
 
     private List<AVIMMessage> mCustomerMessages;//线上客服聊天消息
     private List<AVIMMessage> mDoctorMessages;//速眠医生聊天消息
@@ -117,52 +98,18 @@ public final class HwLeanCloudHelper {
         return INSTANCE;
     }
 
-    public static void addOnMsgCallback(OnMsgCallback onMsgCallback) {
-        List<OnMsgCallback> onMsgCallbacks = INSTANCE.mOnMsgCallbacks;
-        if (onMsgCallbacks == null) {
-            onMsgCallbacks = new ArrayList<>();
-            INSTANCE.mOnMsgCallbacks = onMsgCallbacks;
-        }
-        if (onMsgCallbacks.contains(onMsgCallback)) {
-            return;
-        }
-        onMsgCallbacks.add(onMsgCallback);
-    }
-
-    public static void removeOnMsgCallback(OnMsgCallback onMsgCallback) {
-        List<OnMsgCallback> onMsgCallbacks = INSTANCE.mOnMsgCallbacks;
-        if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) {
-            return;
-        }
-        onMsgCallbacks.remove(onMsgCallback);
-    }
-
     public static void addOnAdminMsgCallback(OnShowMsgDotCallback onShowMsgDotCallback) {
-        List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
-        if (onShowMsgDotCallbacks == null) {
-            onShowMsgDotCallbacks = new ArrayList<>();
-            INSTANCE.mOnShowMsgDotCallbacks = onShowMsgDotCallbacks;
-        }
-        if (onShowMsgDotCallbacks.contains(onShowMsgDotCallback)) {
+        if (INSTANCE.mOnShowMsgDotCallbacks.contains(onShowMsgDotCallback)) {
             return;
         }
-        onShowMsgDotCallbacks.add(onShowMsgDotCallback);
+        INSTANCE.mOnShowMsgDotCallbacks.add(onShowMsgDotCallback);
     }
 
     public static void removeOnAdminMsgCallback(OnShowMsgDotCallback onShowMsgDotCallback) {
-        List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
-        if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) {
+        if (INSTANCE.mOnShowMsgDotCallbacks == null || INSTANCE.mOnShowMsgDotCallbacks.isEmpty()) {
             return;
         }
-        onShowMsgDotCallbacks.remove(onShowMsgDotCallback);
-    }
-
-    public static void addOnConversationCallback(OnConversationCallback conversationCallback) {
-        INSTANCE.mOnConversationCallback = conversationCallback;
-    }
-
-    public static void removeOnConversationCallback() {
-        INSTANCE.mOnConversationCallback = null;
+        INSTANCE.mOnShowMsgDotCallbacks.remove(onShowMsgDotCallback);
     }
 
     public static void loginLeanCloud() {
@@ -251,59 +198,6 @@ public final class HwLeanCloudHelper {
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
                 .setShowUserNick(false)
                 .setVisitorInfo(visitorInfo).build();
-    }
-
-    public static void establishConversationWithService(int serviceType) {
-
-        String conversationMembers = serviceType == SERVICE_TYPE_ONLINE_DOCTOR ? BuildConfig.LEANCLOUD_DOCTOR_SERVICE_ID
-                : BuildConfig.LEANCLOUD_ONLINE_SERVICE_ID;
-        String conversationTag = AppManager.getAccountViewModel().getLeanCloudId() + " & " + conversationMembers;
-
-        AVIMClient avimClient = INSTANCE.mAVIMClient;
-
-        if (INSTANCE.mOnConversationCallback != null) {
-            INSTANCE.mOnConversationCallback.onEstablishConversationCallback();
-        }
-        // 创建与server之间的对话
-        avimClient.createConversation(Collections.singletonList(conversationMembers), conversationTag
-                , null, false, true,
-                new AVIMConversationCreatedCallback() {
-
-                    @Override
-                    public void done(AVIMConversation conversation, AVIMException e) {
-                        if (e == null) {
-                            Log.d(TAG, "done: ------建立会话成功------>" + serviceType);
-                            if (serviceType == SERVICE_TYPE_ONLINE_CUSTOMER) {
-                                INSTANCE.mCustomerConversations = conversation;
-                            } else {
-                                INSTANCE.mDoctorConversations = conversation;
-                            }
-
-                            if (INSTANCE.mOnConversationCallback != null) {
-                                INSTANCE.mOnConversationCallback.onEstablishConversationSuccessCallback();
-                            }
-
-                        } else {
-                            Log.d(TAG, "done: ------建立会话失败----->" + serviceType);
-                            if (INSTANCE.mOnConversationCallback != null) {
-                                INSTANCE.mOnConversationCallback.onEstablishConversationFailedCallback();
-                            }
-                        }
-                    }
-                });
-    }
-
-    public static AVIMConversation getConversation(int serviceType) {
-        switch (serviceType) {
-            case SERVICE_TYPE_MAIL:
-                return INSTANCE.mAVIMClient.getServiceConversation(BuildConfig.LEANCLOUD_BROADCAST_CONVERSATION_ID);
-            case SERVICE_TYPE_ONLINE_CUSTOMER:
-                return INSTANCE.mCustomerConversations;
-            case SERVICE_TYPE_ONLINE_DOCTOR:
-                return INSTANCE.mDoctorConversations;
-            default:
-                return INSTANCE.mCustomerConversations;
-        }
     }
 
     public static void registerPushService() {
@@ -404,89 +298,6 @@ public final class HwLeanCloudHelper {
         }
     }
 
-    private static void sendMsg(int serviceType, int msgType, String content) {
-        AVIMMessage avimMessage = null;
-        switch (msgType) {
-            case MSG_TYPE_TEXT:
-                AVIMTextMessage textMsg = new AVIMTextMessage();
-                textMsg.setText(content);
-                avimMessage = textMsg;
-                break;
-            case MSG_TYPE_IMAGE:
-                try {
-                    avimMessage = new AVIMImageMessage(content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case MSG_TYPE_VOICE:
-                try {
-                    avimMessage = new AVIMAudioMessage(content);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                break;
-        }
-
-        if (avimMessage != null) {
-            avimMessage.setMessageStatus(AVIMMessage.AVIMMessageStatus.AVIMMessageStatusSending);
-            avimMessage.setTimestamp(System.currentTimeMillis());
-
-            // 发送消息
-            List<OnMsgCallback> onMsgCallbacks = INSTANCE.mOnMsgCallbacks;
-            if (onMsgCallbacks != null && !onMsgCallbacks.isEmpty()) {
-                for (OnMsgCallback onMsgCallback : onMsgCallbacks) {
-                    //Log.e(TAG, "sendTextMsg: ------------->msgStatus=" + msg.getMessageStatus() + "  timestamp=" + msg.getTimestamp());
-                    onMsgCallback.onSendingMsgCallback(avimMessage);
-                }
-            }
-
-            AVIMConversation avimConversation = serviceType == SERVICE_TYPE_ONLINE_CUSTOMER ? INSTANCE.mCustomerConversations : INSTANCE.mDoctorConversations;
-
-            if (avimConversation != null) {
-                //设置消息回执
-                AVIMMessageOption messageOption = new AVIMMessageOption();
-                messageOption.setReceipt(true);
-                AVIMMessage finalMsg = avimMessage;
-                avimConversation.sendMessage(avimMessage, messageOption, new AVIMConversationCallback() {
-
-                    @Override
-                    public void done(AVIMException e) {
-                        if (onMsgCallbacks == null || onMsgCallbacks.isEmpty()) {
-                            return;
-                        }
-                        for (OnMsgCallback onMsgCallback : onMsgCallbacks) {
-                            if (e == null) {
-                                Log.d(TAG, "done: ------->发送成功----->msgStatus=" + finalMsg.getMessageStatus() + "     timestamp=" + finalMsg.getTimestamp());
-                                finalMsg.setMessageStatus(AVIMMessage.AVIMMessageStatus.AVIMMessageStatusSent);
-                                onMsgCallback.onSendMsgSuccess(finalMsg);
-                            } else {
-                                Log.d(TAG, "done: ------>发送失败！");
-                                finalMsg.setMessageStatus(AVIMMessage.AVIMMessageStatus.AVIMMessageStatusFailed);
-                                onMsgCallback.onSendMsgFailed(finalMsg);
-                            }
-                            avimConversation.addToLocalCache(finalMsg);
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    public static void sendTextMsg(int serviceType, String content) {
-        sendMsg(serviceType, MSG_TYPE_TEXT, content);
-    }
-
-    public static void sendImageMsg(int serviceType, String localImagePath) {
-        sendMsg(serviceType, MSG_TYPE_IMAGE, localImagePath);
-    }
-
-    public static void sendVoiceMsg(int serviceType, String localVoicePath) {
-        sendMsg(serviceType, MSG_TYPE_VOICE, localVoicePath);
-    }
-
     private void register() {
         //注册默认的消息处理逻辑
         AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new AVIMTypedMessageHandler<AVIMTypedMessage>() {
@@ -554,15 +365,6 @@ public final class HwLeanCloudHelper {
                 }
             }
         });
-    }
-
-    public interface OnConversationCallback {
-
-        void onEstablishConversationCallback();
-
-        void onEstablishConversationSuccessCallback();
-
-        void onEstablishConversationFailedCallback();
     }
 
     public interface OnMsgCallback {

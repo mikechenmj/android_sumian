@@ -20,17 +20,16 @@ import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
 import com.sumian.common.media.widget.PicturesPreviewer
-import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
-import com.sumian.sd.service.advisory.bean.Advisory
-import com.sumian.sd.service.advisory.contract.PublishAdvisoryRecordContact
-import com.sumian.sd.service.advisory.presenter.PublishAdvisoryRecordPresenter
-import com.sumian.sd.service.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.onlinereport.OnlineReportListActivity
+import com.sumian.sd.service.advisory.bean.Advisory
+import com.sumian.sd.service.advisory.contract.PublishAdvisoryRecordContact
+import com.sumian.sd.service.advisory.presenter.PublishAdvisoryRecordPresenter
+import com.sumian.sd.service.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import com.sumian.sd.widget.dialog.ActionLoadingDialog
@@ -251,9 +250,6 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     }
 
     override fun onProgress(request: PutObjectRequest?, currentSize: Long, totalSize: Long) {
-        if (BuildConfig.DEBUG) {
-            Log.e(TAG, "progress=${currentSize * 1.0f / totalSize * 100.0f}")
-        }
     }
 
     override fun onGetPublishUploadStsSuccess(successMsg: String) {
