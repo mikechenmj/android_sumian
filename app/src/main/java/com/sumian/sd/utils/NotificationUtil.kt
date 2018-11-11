@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.AppUtils
 import com.sumian.sd.R
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
-import com.sumian.sd.notification.push.LaunchIntentReceiver
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -66,7 +65,6 @@ class NotificationUtil {
                     .setContentText(contentText)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true)
-//            val pendingIntent = getBroadcastIntent(context, notificationId, intent)
             intent.putExtra(KEY_PUSH_NOTIFICATION_ID, notificationId)
             val pendingIntent = getPendingIntent(context, intent)
             if (pendingIntent != null) builder.setContentIntent(pendingIntent)
@@ -77,11 +75,6 @@ class NotificationUtil {
         private fun getPendingIntent(context: Context?, intent: Intent?): PendingIntent? {
             if (intent == null) return null
             return PendingIntent.getActivity(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        }
-
-        private fun getBroadcastIntent(context: Context, notificationId: String, launchIntent: Intent): PendingIntent? {
-            val intent = LaunchIntentReceiver.getIntent(notificationId, launchIntent)
-            return PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
         fun cancelNotification(context: Context, notificationId: Int) {

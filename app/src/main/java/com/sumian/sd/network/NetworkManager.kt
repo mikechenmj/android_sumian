@@ -31,7 +31,7 @@ class NetworkManager private constructor() {
     private val mHwApi: HwApi  by lazy {
         NetEngine.NetEngineBuilder()
                 .isDebug(BuildConfig.DEBUG)
-                .baseUrl(BuildConfig.HW_BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .dns(SdHttpDns.create())
                 .addInterceptor(TokenAuthInterceptor.create()
                         , NormalInterceptor.create()
