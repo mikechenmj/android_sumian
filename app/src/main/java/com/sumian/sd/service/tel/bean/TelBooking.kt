@@ -83,7 +83,7 @@ data class TelBooking(var id: Int,
             STATUS_0_WAITING_CONFIRM -> {
                 "请耐心等待医生确认预约信息"
             }
-            STATUS_1_CONFIRMED -> {
+            STATUS_1_CONFIRMED, STATUS_2_GOING, STATUS_3_ON_CALL -> {
                 "预约已确认，请保持电话畅通"
             }
             else -> {
@@ -149,6 +149,17 @@ data class TelBooking(var id: Int,
 
     fun isNotUsed(): Boolean {
         return plan_start_at == 0
+    }
+
+    fun showTopTips(): Boolean {
+        return when (status) {
+            STATUS_0_WAITING_CONFIRM, STATUS_1_CONFIRMED, STATUS_2_GOING, STATUS_3_ON_CALL -> {
+                return true
+            }
+            else -> {
+                false
+            }
+        }
     }
 
     /**
