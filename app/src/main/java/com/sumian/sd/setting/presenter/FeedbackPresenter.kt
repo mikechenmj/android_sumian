@@ -2,7 +2,6 @@ package com.sumian.sd.setting.presenter
 
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.sd.setting.contract.FeedbackContract
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager

@@ -5,7 +5,6 @@ package com.sumian.sd.setting
 import android.content.Intent
 import android.text.InputFilter
 import android.text.TextUtils
-import com.sumian.common.base.BaseBackPresenterActivity
 import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils

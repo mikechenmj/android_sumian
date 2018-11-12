@@ -82,7 +82,7 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
             tv_top_bar.visibility = View.VISIBLE
             empty_error_view.visibility = View.VISIBLE
         } else {
-            tv_top_bar.visibility = if (telBooking.status == TelBooking.STATUS_0_WAITING_CONFIRM || telBooking.status == TelBooking.STATUS_1_CONFIRMED) {
+            tv_top_bar.visibility = if (telBooking.status == TelBooking.STATUS_0_WAITING_CONFIRM || telBooking.status == TelBooking.STATUS_1_CONFIRMED || telBooking.status == TelBooking.STATUS_2_GOING || telBooking.status == TelBooking.STATUS_3_ON_CALL) {
                 tv_top_bar.text = telBooking.topMsg()
                 tv_top_bar.setBackgroundColor(resources.getColor(R.color.b5_color_day))
                 View.VISIBLE

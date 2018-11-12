@@ -1,6 +1,7 @@
 package com.sumian.sd.network.api
 
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.hw.report.weeklyreport.bean.WeeklyReportResponse
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
@@ -288,7 +289,7 @@ interface SdApi {
      */
     @FormUrlEncoded
     @POST("cbti-course/{id}/logs")
-    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int, @Field("watch_length") watchLength: Int = 0): Call<CoursePlayLog>
+    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int, @Field("watch_length") watchLength: Int): Call<CoursePlayLog>
 
     /**
      * 上传视频问卷
