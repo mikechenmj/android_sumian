@@ -289,7 +289,15 @@ interface SdApi {
      */
     @FormUrlEncoded
     @POST("cbti-course/{id}/logs")
-    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int, @Field("watch_length") watchLength: Int): Call<CoursePlayLog>
+    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
+
+    /**
+     * 上传当前课时的视频观看时长 log 日志
+     * ps：观看时长，需要更新观看时长的时候才传这个参数，有这个参数的时候，后台会增加一次观看次数，并累加观看时长
+     */
+    @FormUrlEncoded
+    @POST("cbti-course/{id}/logs")
+    fun uploadCBTICourseWatchLengthLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int, @Field("watch_length") watchLength: Int): Call<CoursePlayLog>
 
     /**
      * 上传视频问卷

@@ -69,11 +69,11 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         })
     }
 
-    override fun uploadCBTIVideoLog(videoId: String, courseId: Int, videoProgress: String, endpoint: Int, watchLength: Int) {
+    override fun uploadCBTIVideoLog(videoId: String, courseId: Int, videoProgress: String, endpoint: Int) {
 
         mView?.onBegin()
 
-        val call = AppManager.getSdHttpService().uploadCBTICourseLogs(courseId, videoId, videoProgress.toUpperCase(), endpoint, watchLength)
+        val call = AppManager.getSdHttpService().uploadCBTICourseLogs(courseId, videoId, videoProgress.toUpperCase(), endpoint)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<CoursePlayLog>() {
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -119,7 +119,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         }
         // playFrame=0.7f/jump Frame/ 60frame/s /play finished 都上传一次
         if (currentFrame.toInt() <= 1 || (fl > 0.68f && fl <= 0.70f) || jumpFrame > 1 || currentFrame.toInt() % 60 == 0 || currentFrame == totalFrame) {
-            uploadCBTIVideoLog(videoId, currentCourseId, hexPlayFrame, currentFrame.toInt(), appearNumber)
+            uploadCBTIVideoLog(videoId, currentCourseId, hexPlayFrame, currentFrame.toInt())
         }
     }
 
