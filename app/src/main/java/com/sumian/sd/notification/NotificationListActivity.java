@@ -9,13 +9,13 @@ import android.view.View;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.common.utils.SettingsUtil;
+import com.sumian.common.widget.CommonEmptyView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.notification.bean.Notification;
 import com.sumian.sd.notification.push.SchemeResolveUtil;
 import com.sumian.sd.utils.NotificationUtil;
 import com.sumian.sd.widget.TitleBar;
-import com.sumian.sd.widget.error.EmptyErrorView;
 
 import java.util.List;
 
@@ -79,10 +79,11 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     }
 
     private View getEmptyView() {
-        return EmptyErrorView.create(this,
-                R.mipmap.ic_empty_state_alarm,
-                R.string.notification_list_empty_title,
-                R.string.notification_list_empty_desc);
+        return new CommonEmptyView(this, null)
+                .setImage(R.mipmap.ic_empty_state_alarm)
+                .setTitle(R.string.notification_list_empty_title)
+                .setMessage(R.string.notification_list_empty_desc);
+
     }
 
 

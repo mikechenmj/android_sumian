@@ -48,11 +48,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private var mReceiveStartedTime: Long = 0
     private var mBlueDeviceWrapper: BlueDeviceWrapper = BlueDeviceWrapper()
     private var mTotalDataCount: Int = 0
-    private var mPackageNumber: Int = 0 // 透传数据 包的index
+    private var mPackageNumber: Int = 1 // 透传数据 包的index
     private val mMonitorLiveData = MutableLiveData<BlueDevice>()
     private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
     private val mMonitorEventListeners = HashSet<MonitorEventListener>()
-    private var mIsTurningOnPa = false
     private val mIsUploadingSleepDataToServerLiveData = MutableLiveData<Boolean>()
 
     fun init() {
@@ -214,8 +213,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     fun syncSleepData() {
         val bluePeripheral = getCurrentBluePeripheral() ?: return
+        if (mMonitorLiveData.value?.isSyncing == true) return
         bluePeripheral.write(BlueCmd.cSleepData())
-        mPackageNumber = 0
+        mPackageNumber = 1
         LogManager.appendTransparentLog("主动同步睡眠数据")
         mMonitorLiveData.value?.isSyncing = true
         notifyMonitorChange()
@@ -263,7 +263,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     override fun onSendSuccess(bluePeripheral: BluePeripheral, data: ByteArray) {
         val cmd = BlueCmd.bytes2HexString(data)
-        LogManager.appendBluetoothLog("蓝牙发送成功的指令  cmd=$cmd")
+        if (BlueCmd.formatCmdIndex(cmd) != "8f") {
+            LogManager.appendBluetoothLog("蓝牙发送成功的指令  cmd=$cmd")
+        }
         when (cmd) {
             "aa4f0101" -> LogManager.appendMonitorLog("0x4f 主动同步睡眠特征数据指令成功")
             "aa570101" -> LogManager.appendMonitorLog("0x57 主动 turn on 监测仪的监测模式发送指令成功")
@@ -371,7 +373,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         when (data[4]) {
             0x01.toByte() //开始透传
             -> {
-                mPackageNumber = 0
                 mCurrentIndex = -1
                 if (!m8fTransData.isEmpty()) {
                     m8fTransData.clear()
@@ -383,7 +384,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 dataCount = mTotalDataCount
                 if (isAvailableStorageEnough(dataCount)) {
                     writeResponse(peripheral, data, true)
-                    mPackageNumber++
                     LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,等待设备透传 " + dataCount + "包数据" + "  cmd=" + cmd)
                     onSyncStart()
                     AutoSyncDeviceDataUtil.saveAutoSyncTime()
@@ -397,6 +397,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             }
             0x0f.toByte()// 结束。透传8f 数据接收完成,保存文件,准备上传数据到后台
             -> {
+                mPackageNumber++
                 dataCount = getDataCountFromCmd(cmd)
                 @Suppress("UNCHECKED_CAST")
                 if (dataCount == m8fTransData.size) {
@@ -822,7 +823,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 1800)
         peripheral.writeDelay(BlueCmd.cUserInfo(), 2000)
         peripheral.writeDelay(BlueCmd.cSleepData(), 2200)
-        mPackageNumber = 0
         LogManager.appendMonitorLog("连接成功,开始初始化同步监测仪与速眠仪相关状态数据 " + peripheral.name)
     }
 

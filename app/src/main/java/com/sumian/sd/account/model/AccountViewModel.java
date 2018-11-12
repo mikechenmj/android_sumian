@@ -33,7 +33,7 @@ public class AccountViewModel extends AndroidViewModel {
     public void loadTokenFromSp() {
         String tokenJson = SPUtils.getInstance().getString(SP_KEY_TOKEN, null);
         Token token = JsonUtil.fromJson(tokenJson, Token.class);
-        mTokenLiveData.setValue(token);
+        mTokenLiveData.postValue(token);
     }
 
     public LiveData<Token> getLiveDataToken() {

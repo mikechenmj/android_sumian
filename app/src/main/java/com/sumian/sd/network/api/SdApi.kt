@@ -31,6 +31,7 @@ import com.sumian.sd.service.coupon.bean.Coupon
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import com.sumian.sd.service.tel.bean.TelBooking
+import com.sumian.sd.setting.bean.Feedback
 import com.sumian.sd.setting.remind.bean.Reminder
 import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import com.sumian.sd.setting.version.bean.Version
@@ -290,13 +291,13 @@ interface SdApi {
     @POST("cbti-course/{id}/logs")
     fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
-
     /**
-     * 上传当前课时的视频观看记录日志
+     * 上传当前课时的视频观看时长 log 日志
+     * ps：观看时长，需要更新观看时长的时候才传这个参数，有这个参数的时候，后台会增加一次观看次数，并累加观看时长
      */
     @FormUrlEncoded
-    @POST("cbti-courses/{id}/watch-records")
-    fun uploadCBTICourseWatchLog(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("watch_length") watchLength: Int): Call<CBTIWatchLog>
+    @POST("cbti-course/{id}/logs")
+    fun uploadCBTICourseWatchLengthLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int, @Field("watch_length") watchLength: Int): Call<CoursePlayLog>
 
     /**
      * 上传视频问卷
@@ -376,7 +377,7 @@ interface SdApi {
 
     @FormUrlEncoded
     @POST("feedback")
-    fun feedback(@Field("content") content: String, @Field("suffix") suffix: String = "text"): Call<com.sumian.hw.oss.bean.OssResponse>
+    fun feedback(@Field("content") content: String, @Field("suffix") suffix: String = "text"): Call<Feedback>
 
     /**
      * 兑换码  兑换

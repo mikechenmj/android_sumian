@@ -26,6 +26,7 @@
             app:eev_auto_hide="false"
             app:eev_desc="@string/after_bind_doctor_you_can_consult_the_doctor"
             app:eev_icon="@drawable/ic_emptystate_img_advisory"
+            app:eev_show_service="true"
             app:eev_title="@string/no_data_yet"
             tools:visibility="visible" />
 

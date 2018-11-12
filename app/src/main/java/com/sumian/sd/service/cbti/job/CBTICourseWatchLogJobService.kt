@@ -8,7 +8,7 @@ import com.sumian.common.utils.NetUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.service.cbti.bean.CBTIWatchLog
+import com.sumian.sd.service.cbti.bean.CoursePlayLog
 
 class CBTICourseWatchLogJobService : JobIntentService() {
     companion object {
@@ -19,13 +19,17 @@ class CBTICourseWatchLogJobService : JobIntentService() {
 
         private const val EXTRAS_CBTI_COURSE_ID = "com.sumian.sd.extras.cbti_course_id"
         private const val EXTRAS_CBTI_VIDEO_ID = "com.sumian.sd.extras.cbti_video_id"
+        private const val EXTRAS_CBTI_VIDEO_PROGRESS = "com.sumian.sd.extras.cbti_video_progress"
+        private const val EXTRAS_CBTI_ENDPOINT = "com.sumian.sd.extras.cbti_endpoint"
         private const val EXTRAS_CBTI_WATCH_LENGTH = "com.sumian.sd.extras.cbti_watch_length"
 
         @JvmStatic
-        fun execute(cbtiCourseId: Int, videoId: String, cbtiCourseWatchLength: Int) {
+        fun execute(cbtiCourseId: Int, videoId: String, hexVideoProgress: String, endpoint: Int, cbtiCourseWatchLength: Int) {
             val intent = Intent(App.getAppContext(), CBTICourseWatchLogJobService::class.java).apply {
                 putExtra(EXTRAS_CBTI_COURSE_ID, cbtiCourseId)
                 putExtra(EXTRAS_CBTI_VIDEO_ID, videoId)
+                putExtra(EXTRAS_CBTI_VIDEO_PROGRESS, hexVideoProgress)
+                putExtra(EXTRAS_CBTI_ENDPOINT, endpoint)
                 putExtra(EXTRAS_CBTI_WATCH_LENGTH, cbtiCourseWatchLength)
 
             }
@@ -36,30 +40,30 @@ class CBTICourseWatchLogJobService : JobIntentService() {
     override fun onHandleWork(intent: Intent) {
         val cbtiCourseId = intent.getIntExtra(EXTRAS_CBTI_COURSE_ID, 0)
         val videoId = intent.getStringExtra(EXTRAS_CBTI_VIDEO_ID)
+        val hexVideoProgress = intent.getStringExtra(EXTRAS_CBTI_VIDEO_PROGRESS)
+        val videoEndpoint = intent.getIntExtra(EXTRAS_CBTI_ENDPOINT, 0)
         val cbtiCourseWatchLength = intent.getIntExtra(EXTRAS_CBTI_WATCH_LENGTH, 0)
 
         if (cbtiCourseId == 0 && TextUtils.isEmpty(videoId) && cbtiCourseWatchLength <= 0) {
             return
         }
-        uploadCBTICourseWatchLog(cbtiCourseId, videoId, cbtiCourseWatchLength)
+        uploadCBTICourseWatchLog(cbtiCourseId, videoId, hexVideoProgress, videoEndpoint, cbtiCourseWatchLength)
     }
 
-    private fun uploadCBTICourseWatchLog(cbtiCourseId: Int, videoId: String, cbtiCourseWatchLength: Int) {
+    private fun uploadCBTICourseWatchLog(cbtiCourseId: Int, videoId: String, hexVideoProgress: String, endpoint: Int, cbtiCourseWatchLength: Int) {
         if (!NetUtil.isHaveNet(App.getAppContext())) {
-            uploadCBTICourseWatchLog(cbtiCourseId, videoId, cbtiCourseWatchLength)
+            uploadCBTICourseWatchLog(cbtiCourseId, videoId, hexVideoProgress, endpoint, cbtiCourseWatchLength)
+            return
         }
-        AppManager
-                .getSdHttpService()
-                .uploadCBTICourseWatchLog(cbtiCourseId,
-                        videoId,
-                        cbtiCourseWatchLength)
-                .enqueue(object : BaseSdResponseCallback<CBTIWatchLog>() {
-                    override fun onSuccess(response: CBTIWatchLog?) {
-                    }
 
-                    override fun onFailure(errorResponse: ErrorResponse) {
+        val call = AppManager.getSdHttpService().uploadCBTICourseWatchLengthLogs(cbtiCourseId, videoId, hexVideoProgress.toUpperCase(), endpoint, cbtiCourseWatchLength)
+        call.enqueue(object : BaseSdResponseCallback<CoursePlayLog>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+            }
 
-                    }
-                })
+            override fun onSuccess(response: CoursePlayLog?) {
+            }
+
+        })
     }
 }
