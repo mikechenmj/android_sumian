@@ -16,4 +16,10 @@
 
     <attr name="SwipeBackLayoutStyle" format="reference" />
 
+    <declare-styleable name="CommonEmptyView">
+        <attr name="cev_image" format="reference" />
+        <attr name="cev_title" format="string|reference" />
+        <attr name="cev_content" format="string|reference" />
+    </declare-styleable>
+
 </resources>
