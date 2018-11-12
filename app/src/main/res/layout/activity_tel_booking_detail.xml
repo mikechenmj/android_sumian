@@ -25,6 +25,7 @@
         app:eev_auto_hide="false"
         app:eev_desc="@string/any_question_ask_kefu"
         app:eev_icon="@drawable/ic_service_cancel"
+        app:eev_show_service="true"
         app:eev_title="@string/relate_service_is_canceled"
         tools:visibility="gone" />
 

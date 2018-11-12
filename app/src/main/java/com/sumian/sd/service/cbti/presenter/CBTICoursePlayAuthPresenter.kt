@@ -24,7 +24,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
     private var mView: CBTIWeekPlayContract.View? = null
 
     private var mCurrentCourseId = -1
-
+    private var mCurrentFrame: Long = 0
     private val mBrowseFrame: StringBuilder by lazy {
         StringBuilder()
     }
@@ -94,54 +94,29 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         })
     }
 
-    private var mCurrentFrame: Long = 0
-
     override fun calculatePlayFrame(videoId: String, currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long) {
+        this.mCurrentFrame = currentFrame
         if (mCurrentCourseId != currentCourseId) {//不一致说明是第一次播放，或者不是同一个视频,需要重新初始化
             mBrowseFrame.clear()
             for (i in 0 until totalFrame) {
                 mBrowseFrame.append("0")
             }
             mCurrentCourseId = currentCourseId
-            Log.e(TAG, "calculatePlayFrame: --------->初始化frame  size=${mBrowseFrame.length}")
         }
 
         if (currentFrame.toInt() >= 0 && currentFrame < totalFrame) {
             if (mBrowseFrame[currentFrame.toInt()] == '0') {
                 mBrowseFrame[currentFrame.toInt()] = '1'
             }
-            Log.e(TAG, "calculatePlayFrame: -----1------>size=${mBrowseFrame.length} browseFrame=$mBrowseFrame")
-        } else {
-            Log.e(TAG, "calculatePlayFrame: ------2----->size=${mBrowseFrame.length} browseFrame=$mBrowseFrame")
         }
 
-
-        //if (currentFrame.toInt() == 0) {
-        //    mBrowseFrame.delete(0, mBrowseFrame.length)
-        //}
-
         val jumpFrame = currentFrame - oldFrame
-        //if (jumpFrame > 1) {//补0,表示跳过了jumpFrame,未观看该帧数
-//            for (i in 0 until jumpFrame) {
-//                mBrowseFrame.append("0")
-//            }
-        // }// else {
-        //mBrowseFrame.append("1")
-        //}
-        //  PlayLog.e(TAG, "tmpFrame=$mBrowseFrame")
-
-        this.mCurrentFrame = currentFrame
-
         val hexPlayFrame = mBrowseFrame.toString().toBigInteger(2).toString(16)
-
         val appearNumber = appearNumber(mBrowseFrame.toString(), "1")
-
         val fl = appearNumber * 1.0f / totalFrame
-
         if (fl == 0.7f) {
             Log.e(TAG, "看超过了70%")
         }
-
         // playFrame=0.7f/jump Frame/ 60frame/s /play finished 都上传一次
         if (currentFrame.toInt() <= 1 || (fl > 0.68f && fl <= 0.70f) || jumpFrame > 1 || currentFrame.toInt() % 60 == 0 || currentFrame == totalFrame) {
             uploadCBTIVideoLog(videoId, currentCourseId, hexPlayFrame, currentFrame.toInt(), appearNumber)
@@ -149,9 +124,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
     }
 
     override fun playNextCBTIVideo(courseId: Int) {
-
         mView?.onBegin()
-
         val call = AppManager.getSdHttpService().getCBTIPLayAuth(id = courseId)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<CoursePlayAuth>() {
