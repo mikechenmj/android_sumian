@@ -263,7 +263,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     override fun onSendSuccess(bluePeripheral: BluePeripheral, data: ByteArray) {
         val cmd = BlueCmd.bytes2HexString(data)
-        LogManager.appendBluetoothLog("蓝牙发送成功的指令  cmd=$cmd")
+        if (BlueCmd.formatCmdIndex(cmd) != "8f") {
+            LogManager.appendBluetoothLog("蓝牙发送成功的指令  cmd=$cmd")
+        }
         when (cmd) {
             "aa4f0101" -> LogManager.appendMonitorLog("0x4f 主动同步睡眠特征数据指令成功")
             "aa570101" -> LogManager.appendMonitorLog("0x57 主动 turn on 监测仪的监测模式发送指令成功")

@@ -60,16 +60,16 @@ data class TelBooking(var id: Int,
 
     fun formatStatus(): CharSequence {
         return when (status) {
-            0 -> {
+            STATUS_0_WAITING_CONFIRM -> {
                 val formatStatus = "待确认"
                 val spannableString = SpannableString(formatStatus)
                 spannableString.setSpan(ForegroundColorSpan(App.getAppContext().resources.getColor(R.color.b3_color)), 0, formatStatus.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 return spannableString
             }
-            1, 2, 3 -> "已确认"
-            4, 7 -> "已完成"
-            5, 8 -> "已关闭"
-            6 -> "挂起中"
+            STATUS_1_CONFIRMED, STATUS_2_GOING, STATUS_3_ON_CALL -> "已确认"
+            STATUS_4_COMPLETE, STATUS_7_CANCELED -> "已完成"
+            STATUS_5_CLOSED, STATUS_8_FINISH -> "已关闭"
+            STATUS_6_HANG_ON -> "挂起中"
             //9 未使用,不显示
             else -> {
                 ""
@@ -94,8 +94,8 @@ data class TelBooking(var id: Int,
 
     fun formatOrderContent(): String {
         return when (status) {
-            9 -> "您的${p_package.servicePackage.formatPackageNameAndIntro()}还未使用，点击预约 >"
-            7 -> {
+            STATUS_9_UNUSED -> "您的${p_package.servicePackage.formatPackageNameAndIntro()}还未使用，点击预约 >"
+            STATUS_7_CANCELED -> {
                 if (isNotUsed()) {
                     getCancelString()
                 } else {

@@ -31,6 +31,7 @@ import com.sumian.sd.service.coupon.bean.Coupon
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
 import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import com.sumian.sd.service.tel.bean.TelBooking
+import com.sumian.sd.setting.bean.Feedback
 import com.sumian.sd.setting.remind.bean.Reminder
 import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import com.sumian.sd.setting.version.bean.Version
@@ -288,15 +289,7 @@ interface SdApi {
      */
     @FormUrlEncoded
     @POST("cbti-course/{id}/logs")
-    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
-
-
-    /**
-     * 上传当前课时的视频观看记录日志
-     */
-    @FormUrlEncoded
-    @POST("cbti-courses/{id}/watch-records")
-    fun uploadCBTICourseWatchLog(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("watch_length") watchLength: Int): Call<CBTIWatchLog>
+    fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int, @Field("watch_length") watchLength: Int): Call<CoursePlayLog>
 
     /**
      * 上传视频问卷
@@ -376,7 +369,7 @@ interface SdApi {
 
     @FormUrlEncoded
     @POST("feedback")
-    fun feedback(@Field("content") content: String, @Field("suffix") suffix: String = "text"): Call<com.sumian.hw.oss.bean.OssResponse>
+    fun feedback(@Field("content") content: String, @Field("suffix") suffix: String = "text"): Call<Feedback>
 
     /**
      * 兑换码  兑换
