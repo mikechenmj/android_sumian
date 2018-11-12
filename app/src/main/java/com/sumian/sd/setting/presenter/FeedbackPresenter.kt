@@ -2,9 +2,12 @@ package com.sumian.sd.setting.presenter
 
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.hw.oss.bean.OssResponse
+import com.sumian.sd.setting.contract.FeedbackContract
+import com.sumian.sd.R
+import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.setting.bean.Feedback
 import com.sumian.sd.setting.contract.FeedbackContract
 
 class FeedbackPresenter private constructor(view: FeedbackContract.View) : FeedbackContract.Presenter {
@@ -25,16 +28,17 @@ class FeedbackPresenter private constructor(view: FeedbackContract.View) : Feedb
 
     override fun feedback(feedback: String) {
         mView?.showLoading()
+
         val call = AppManager.getSdHttpService().feedback(feedback)
         mCalls.add(call)
 
-        call.enqueue(object : BaseSdResponseCallback<OssResponse>() {
+        call.enqueue(object : BaseSdResponseCallback<Feedback>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onFeedbackFailed(error = errorResponse.message)
             }
 
-            override fun onSuccess(response: OssResponse?) {
-                mView?.onFeedbackSuccess("")
+            override fun onSuccess(response: Feedback?) {
+                mView?.onFeedbackSuccess(App.getAppContext().getString(R.string.feedback_success))
             }
 
             override fun onFinish() {

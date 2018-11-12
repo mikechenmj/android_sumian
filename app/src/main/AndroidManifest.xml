@@ -318,6 +318,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/PlayActivityTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
 
         <activity
             android:name=".service.cbti.activity.CBTIWeekCoursePartActivity"
@@ -375,6 +376,22 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
+            android:name=".account.login.AvatarImageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/HwAppTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
+            android:name=".setting.FeedbackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <service
