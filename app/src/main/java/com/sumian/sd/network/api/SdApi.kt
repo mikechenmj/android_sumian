@@ -1,6 +1,13 @@
 package com.sumian.sd.network.api
 
+import com.google.gson.JsonObject
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.hw.log.LogOssResponse
+import com.sumian.hw.report.base.BaseResultResponse
+import com.sumian.hw.report.bean.DailyMeta
+import com.sumian.hw.report.bean.DailyReport
+import com.sumian.hw.report.weeklyreport.WeekMeta
+import com.sumian.hw.report.weeklyreport.bean.SleepDurationReport
 import com.sumian.hw.report.weeklyreport.bean.WeeklyReportResponse
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
@@ -14,6 +21,8 @@ import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.homepage.bean.*
+import com.sumian.sd.network.response.AppUpgradeInfo
+import com.sumian.sd.network.response.FirmwareInfo
 import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
@@ -420,6 +429,41 @@ interface SdApi {
     fun getFaiths(@Query("page") page: Int = 1,
                   @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FaithData>>
 
+    // hw api start ---
+    @Headers("Accept: application/vnd.sumianapi.v2+json")
+    @GET("firmware/latest")
+    fun syncFirmwareInfo(): Call<FirmwareInfo>
+
+    @GET("app-version/latest")
+    fun syncUpgradeAppInfo(@QueryMap map: MutableMap<String, String>): Call<AppUpgradeInfo>
+
+    @POST("heartbeats")
+    @FormUrlEncoded
+    fun sendHeartbeats(@Field("type") type: String): Call<Any>
+
+    //在日历中获取日报告信息
+    @GET("sleeps/days/month-unread")
+    fun getCalendarSleepReport(@QueryMap map: MutableMap<String, Any>): Call<JsonObject>
+
+    @GET("sleeps/days/flip-show")
+    fun getSleepReport(@Query("date") unixTime: Int, @Query("page_size") pageSize: Int, @Query("is_include") isInclude: Int): Call<BaseResultResponse<DailyReport, DailyMeta>>
+
+    //获取多条睡眠周报告
+    @GET("sleeps/week-flip-show")
+    fun getWeeksSleepReport(@QueryMap map: MutableMap<String, Any>): Call<BaseResultResponse<SleepDurationReport, WeekMeta>>
+
+    /**
+     * @param map 数据类型，1：睡眠特征值，2：事件日志
+     */
+    @FormUrlEncoded
+    @POST("raw-data/pass-through-file")
+    fun uploadTransData(@FieldMap map: MutableMap<String, Any>): Call<com.sumian.hw.oss.bean.OssResponse>
+
+    @FormUrlEncoded
+    @POST("feedback-auto")
+    fun autoUploadLog(@FieldMap map: MutableMap<String, Any>): Call<LogOssResponse>
+
+    // -- hwapi end
 
     /**
      * date unix time
@@ -434,5 +478,4 @@ interface SdApi {
             @Query("page_size") pageSize: Int = 1,
             @Query("direction") direction: Int = 0
     ): Call<WeeklyReportResponse>
-
 }

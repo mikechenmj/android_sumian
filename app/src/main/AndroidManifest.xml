@@ -354,14 +354,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <activity
-            android:name=".account.login.ModifyNicknameActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/HwAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name="com.sumian.hw.upgrade.activity.DeviceVersionUpgradeActivity"
             android:configChanges="keyboardHidden|orientation"

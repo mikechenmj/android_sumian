@@ -66,7 +66,7 @@ public class LogJobIntentService extends JobIntentService {
         }
         Map<String, Object> map = new HashMap<>(0);
         map.put("suffix", "txt");
-        Call<LogOssResponse> call = AppManager.getHwHttpService().autoUploadLog(map);
+        Call<LogOssResponse> call = AppManager.getSdHttpService().autoUploadLog(map);
         call.enqueue(new BaseSdResponseCallback<LogOssResponse>() {
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {

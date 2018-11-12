@@ -65,7 +65,7 @@ class WeeklyReportFragmentV2 : BaseFragment() {
                 map["date"] = (startMonthTime / 1000).toInt()
                 map["page_size"] = monthCount
                 map["is_include"] = if (isInit) 1 else 0
-                val call = AppManager.getHwHttpService().getCalendarSleepReport(map)
+                val call = AppManager.getSdHttpService().getCalendarSleepReport(map)
                 addCall(call)
                 call.enqueue(object : BaseSdResponseCallback<JsonObject>() {
                     override fun onSuccess(response: JsonObject?) {

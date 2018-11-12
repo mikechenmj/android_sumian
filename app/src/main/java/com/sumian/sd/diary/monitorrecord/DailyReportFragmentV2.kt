@@ -121,7 +121,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
 
     private fun queryDiary(time: Long) {
         showLoading()
-        val call = AppManager.getHwHttpService().getSleepReport((time / 1000).toInt(), 1, 1)
+        val call = AppManager.getSdHttpService().getSleepReport((time / 1000).toInt(), 1, 1)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<BaseResultResponse<DailyReport, DailyMeta>>() {
             override fun onSuccess(response: BaseResultResponse<DailyReport, DailyMeta>?) {
@@ -173,7 +173,7 @@ class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListen
         map["date"] = (monthTime / 1000).toInt()
         map["page_size"] = monthCount
         map["is_include"] = if (isInit) 1 else 0
-        val call = AppManager.getHwHttpService().getCalendarSleepReport(map)
+        val call = AppManager.getSdHttpService().getCalendarSleepReport(map)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<JsonObject>() {
             override fun onSuccess(response: JsonObject?) {

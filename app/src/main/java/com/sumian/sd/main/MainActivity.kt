@@ -213,7 +213,7 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
     }
 
     private fun sendHeartBeats() {
-        val call = AppManager.getHwHttpService().sendHeartbeats("open_app")
+        val call = AppManager.getSdHttpService().sendHeartbeats("open_app")
         call.enqueue(object : BaseSdResponseCallback<Any?>() {
             override fun onFailure(errorResponse: ErrorResponse) {
 

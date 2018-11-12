@@ -69,7 +69,7 @@ public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
             view.onBegin();
         }
 
-        Call<FirmwareInfo> call = AppManager.getHwHttpService().syncFirmwareInfo();
+        Call<FirmwareInfo> call = AppManager.getSdHttpService().syncFirmwareInfo();
 
         VersionContract.View finalView = view;
 
@@ -186,7 +186,7 @@ public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
 
-        Call<AppUpgradeInfo> call = AppManager.getHwHttpService().syncUpgradeAppInfo(map);
+        Call<AppUpgradeInfo> call = AppManager.getSdHttpService().syncUpgradeAppInfo(map);
 
         VersionContract.View finalView = view;
 

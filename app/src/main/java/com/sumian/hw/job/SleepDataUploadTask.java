@@ -120,7 +120,7 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
         map.put("app_receive_started_at", receiveStartedTime);
         map.put("app_receive_ended_at", receiveEndedTime);
         LogManager.appendTransparentLog("1.开始请求透传数据的 oss  凭证");
-        Call<OssResponse> call = AppManager.getHwHttpService().uploadTransData(map);
+        Call<OssResponse> call = AppManager.getSdHttpService().uploadTransData(map);
         call.enqueue(new BaseSdResponseCallback<OssResponse>() {
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {

@@ -54,7 +54,7 @@ public class WeeklyReportPresenter implements WeeklyReportContact.Presenter {
         map.put("page_size", pageSize);
         map.put("is_include", isInclude ? 1 : 0);
         map.put("direction", 0);
-        Call<BaseResultResponse<SleepDurationReport, WeekMeta>> call = AppManager.getHwHttpService().getWeeksSleepReport(map);
+        Call<BaseResultResponse<SleepDurationReport, WeekMeta>> call = AppManager.getSdHttpService().getWeeksSleepReport(map);
         mCalls.add(call);
         call.enqueue(new BaseSdResponseCallback<BaseResultResponse<SleepDurationReport, WeekMeta>>() {
             @Override

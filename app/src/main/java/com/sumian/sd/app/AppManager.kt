@@ -28,7 +28,6 @@ import com.sumian.sd.device.FileHelper
 import com.sumian.sd.doctor.model.DoctorViewModel
 import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.network.NetworkManager
-import com.sumian.sd.network.api.HwApi
 import com.sumian.sd.network.api.SdApi
 
 /**
@@ -79,9 +78,6 @@ object AppManager {
     private val mSdApi: SdApi by lazy {
         mNetworkManager.installSdHttpRequest()
     }
-    private val mHwApi: HwApi by lazy {
-        mNetworkManager.installHwHttpRequest()
-    }
 
     private val mHttpDns: IHttpDns? by lazy {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
@@ -122,12 +118,6 @@ object AppManager {
     @Synchronized
     fun getSdHttpService(): SdApi {
         return mSdApi
-    }
-
-    @JvmStatic
-    @Synchronized
-    fun getHwHttpService(): HwApi {
-        return mHwApi
     }
 
     @JvmStatic
