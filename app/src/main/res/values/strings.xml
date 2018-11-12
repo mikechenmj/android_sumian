@@ -485,8 +485,10 @@
     <string name="captcha_validation_regex">\\d{6}</string>
     <string name="password_validation_regex">.{6,16}</string>
     <string name="feedback_hint">请详细描述您的意见或建议，我们将及时处理并给予反馈，速眠医生致力于为您提供专业贴心的服务。</string>
-    <string name="none_feedback_hint">您未填写反馈意见及建议</string>
+    <string name="feedback_text_count">0/500</string>
     <string name="remind_setting">提醒设置</string>
+    <string name="none_feedback_hint">您未填写反馈意见及建议</string>
+    <string name="feedback_success">反馈成功</string>
     <string name="sd_sleep_diary_remind">睡眠日记填写提醒</string>
     <string name="sd_relaxation_training">放松训练提醒</string>
     <string name="not_set_yet">未设置</string>
