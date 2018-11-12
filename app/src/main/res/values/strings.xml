@@ -92,7 +92,7 @@
     <string name="fri">五</string>
     <string name="sat">六</string>
     <string name="return_to_today">回到今天</string>
-    <string name="return_to_this_week">回到今天</string>
+    <string name="return_to_this_week">回到本周</string>
     <string name="sleep_record">睡眠记录</string>
     <string name="sleep_diary">睡眠日记</string>
     <string name="refill">重填</string>
