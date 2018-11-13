@@ -4,6 +4,7 @@ import com.sumian.common.network.NetEngine
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.network.api.SdApi
 import com.sumian.sd.network.dns.SdHttpDns
+import com.sumian.sd.network.interceptor.HwDeviceInfoInterceptor
 import com.sumian.sd.network.interceptor.NormalInterceptor
 import com.sumian.sd.network.interceptor.TokenAuthInterceptor
 
@@ -21,7 +22,8 @@ class NetworkManager private constructor() {
                 .baseUrl(BuildConfig.BASE_URL)
                 .dns(SdHttpDns.create())
                 .addInterceptor(TokenAuthInterceptor.create()
-                        , NormalInterceptor.create())
+                        , NormalInterceptor.create()
+                        , HwDeviceInfoInterceptor.create())
                 .build()
                 .create(SdApi::class.java)
     }
