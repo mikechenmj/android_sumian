@@ -56,7 +56,7 @@ class CBTICourseWatchLogJobService : JobIntentService() {
             return
         }
 
-        val call = AppManager.getSdHttpService().uploadCBTICourseLogs(cbtiCourseId, videoId, hexVideoProgress.toUpperCase(), endpoint, cbtiCourseWatchLength)
+        val call = AppManager.getSdHttpService().uploadCBTICourseWatchLengthLogs(cbtiCourseId, videoId, hexVideoProgress.toUpperCase(), endpoint, cbtiCourseWatchLength)
         call.enqueue(object : BaseSdResponseCallback<CoursePlayLog>() {
             override fun onFailure(errorResponse: ErrorResponse) {
             }

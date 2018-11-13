@@ -117,6 +117,7 @@ class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishCon
 
     override fun onPublishTelBookingOrderSuccess(telBooking: TelBooking) {//publish success
         invalidTelBooking(telBooking)
+        TelBookingDetailActivity.show(telBookingId = telBooking.id)
         finish()
     }
 

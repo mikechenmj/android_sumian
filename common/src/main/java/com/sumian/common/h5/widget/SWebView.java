@@ -99,6 +99,14 @@ public class SWebView extends BridgeWebView {
     private void initWebSettings() {
         WebSettings webSettings = this.getSettings();
         webSettings.setDomStorageEnabled(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        //设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
+        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         }

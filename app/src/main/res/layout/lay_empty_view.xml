@@ -46,6 +46,8 @@
         android:layout_width="@dimen/space_150"
         android:layout_height="@dimen/space_50"
         android:layout_marginBottom="@dimen/space_40"
-        android:text="@string/doctor_service_introduction" />
+        android:text="@string/doctor_service_introduction"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </LinearLayout>

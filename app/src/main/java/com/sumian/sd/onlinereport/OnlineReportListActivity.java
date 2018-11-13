@@ -174,7 +174,7 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     }
 
     public View getEmptyView() {
-        return EmptyErrorView.create(this,
+        return EmptyErrorView.Companion.create(this,
                 R.mipmap.ic_empty_state_report,
                 R.string.online_report_list_empty_title,
                 R.string.online_report_list_empty_desc);
