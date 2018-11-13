@@ -77,7 +77,7 @@ object AppManager {
                 FileHelper.createSDDir(FileHelper.FILE_DIR)
             }
         }
-        val blueManager = BlueManager.init()
+        val blueManager = BlueManager.getInstance()
         blueManager.with(App.getAppContext())
         blueManager
     }
@@ -214,12 +214,20 @@ object AppManager {
     }
 
     fun logoutAndLaunchLoginActivity() {
+        // user report
         AppManager.getOpenAnalytics().onProfileSignOff()
-        AppOperator.runOnThread { BlueManager.init().doStopScan() }
+        // release bluetooth
+        AppOperator.runOnThread { BlueManager.getInstance().doStopScan() }
+        AppManager.getBlueManager().release()
+        // logout chat
         ChatClient.getInstance().logout(true, null)
+        // cancel notification
         NotificationUtil.cancelAllNotification(App.getAppContext())
+        // update token
         AppManager.getAccountViewModel().updateToken(null)
+        // update WeChat token cache
         AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
+        // finish all and start LoginActivity
         ActivityUtils.finishAllActivities()
         ActivityUtils.startActivity(LoginActivity::class.java)
     }

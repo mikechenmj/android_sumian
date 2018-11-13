@@ -68,7 +68,7 @@ public class BlueManager implements BlueContract.Presenter, BluetoothAdapter.LeS
         mHandlerThread.start();
     }
 
-    public static BlueManager init() {
+    public static BlueManager getInstance() {
         if (INSTANCE == null) {
             synchronized (BlueManager.class) {
                 if (INSTANCE == null) {
@@ -233,22 +233,11 @@ public class BlueManager implements BlueContract.Presenter, BluetoothAdapter.LeS
     @Override
     public void release() {
         removeMsg();
-        //if (mBlueReceiver != null) {
-        // mContext.unregisterReceiver(mBlueReceiver);
-        // mBlueReceiver = null;
-        // }
         if (mBluePeripheral != null) {
-            mBluePeripheral.close();
+            mBluePeripheral.release();
         }
-        for (int i = 0; i < mBlueAdapterCallbacks.size(); i++) {
-            mBlueAdapterCallbacks.remove(i);
-        }
-
-        for (int i = 0; i < mBlueScanCallbacks.size(); i++) {
-            mBlueScanCallbacks.remove(i);
-        }
-
-        //mHandlerThread.quitSafely();
+        mBlueAdapterCallbacks.clear();
+        mBlueScanCallbacks.clear();
     }
 
     @Override
@@ -266,6 +255,7 @@ public class BlueManager implements BlueContract.Presenter, BluetoothAdapter.LeS
 
     private void registerBluetoothReceiver(Context context) {
         BroadcastReceiver blueReceiver = new BroadcastReceiver() {
+            @SuppressWarnings("ConstantConditions")
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
