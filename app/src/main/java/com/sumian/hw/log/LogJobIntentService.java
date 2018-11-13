@@ -22,7 +22,6 @@ import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
-import com.sumian.sd.utils.AppUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -47,7 +46,7 @@ public class LogJobIntentService extends JobIntentService {
     static final int JOB_ID = 1001;
 
     public static void uploadLogIfNeed(Context context) {
-        if (!AppUtil.isAppForeground()) {
+        if (! AppManager.INSTANCE.isAppForeground()) {
             enqueueWork(context, LogJobIntentService.class, JOB_ID, new Intent(context, LogJobIntentService.class));
         }
     }

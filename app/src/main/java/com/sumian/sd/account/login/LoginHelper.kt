@@ -6,7 +6,6 @@ import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.utils.AppUtil
 import java.lang.ref.WeakReference
 
 /**
@@ -26,7 +25,7 @@ class LoginHelper {
                 return
             }
             updateTokenAndUploadInstallationId(token)
-            AppUtil.launchMainOrNewUserGuide()
+             AppManager.launchMainOrNewUserGuide()
         }
 
         fun updateTokenAndUploadInstallationId(response: Token?) {

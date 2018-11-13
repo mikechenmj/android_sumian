@@ -11,7 +11,6 @@ import com.sumian.sd.R;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
-import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.widget.TitleBar;
 
 
@@ -95,7 +94,7 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void onImproveUserProfileSuccess() {
-        AppUtil.launchMainAndFinishAll();
+        AppManager.INSTANCE.launchMainAndFinishAll();
     }
 
     @Override

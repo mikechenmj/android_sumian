@@ -7,7 +7,6 @@ import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.utils.AppUtil
 
 /**
  * <pre>
@@ -72,7 +71,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
                     return
                 }
                 AppManager.getAccountViewModel().updateToken(response)
-                AppUtil.launchMainAndFinishAll()
+                 AppManager.launchMainAndFinishAll()
             }
 
             override fun onFinish() {

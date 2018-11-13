@@ -3,6 +3,8 @@ package com.sumian.sd.app
 import android.content.Context
 import android.os.Build
 import android.view.Gravity
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.hyphenate.chat.ChatClient
@@ -19,14 +21,19 @@ import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.hw.job.SleepDataUploadManager
 import com.sumian.hw.leancloud.HwLeanCloudHelper
+import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
+import com.sumian.hw.utils.NotificationUtil
 import com.sumian.sd.BuildConfig
+import com.sumian.sd.account.login.LoginActivity
+import com.sumian.sd.account.login.NewUserGuideActivity
 import com.sumian.sd.account.model.AccountViewModel
 import com.sumian.sd.base.ActivityDelegateFactory
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.FileHelper
 import com.sumian.sd.doctor.model.DoctorViewModel
 import com.sumian.sd.leancloud.LeanCloudManager
+import com.sumian.sd.main.MainActivity
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.SdApi
 
@@ -197,5 +204,50 @@ object AppManager {
         }
         // Kefu EaseUI的初始化
         UIProvider.getInstance().init(context)
+    }
+
+    fun exitApp() {
+        AppManager.getSleepDataUploadManager().release()
+        AppManager.getBlueManager().bluePeripheral?.close()
+        ActivityUtils.finishAllActivities()
+        LogManager.appendUserOperationLog("用户退出 app.......")
+    }
+
+    fun logoutAndLaunchLoginActivity() {
+        AppManager.getOpenAnalytics().onProfileSignOff()
+        AppOperator.runOnThread { BlueManager.init().doStopScan() }
+        ChatClient.getInstance().logout(true, null)
+        NotificationUtil.cancelAllNotification(App.getAppContext())
+        AppManager.getAccountViewModel().updateToken(null)
+        AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
+        ActivityUtils.finishAllActivities()
+        ActivityUtils.startActivity(LoginActivity::class.java)
+    }
+
+    fun launchMainAndFinishAll() {
+        ActivityUtils.finishAllActivities()
+        launchMain()
+    }
+
+    fun launchMain() {
+        ActivityUtils.startActivity(MainActivity::class.java)
+    }
+
+    fun launchMainOrNewUserGuide() {
+        val token = AppManager.getAccountViewModel().token
+        if (token != null && token.is_new) {
+            ActivityUtils.startActivity(NewUserGuideActivity::class.java)
+            ActivityUtils.finishAllActivities()
+        } else {
+            launchMainAndFinishAll()
+        }
+    }
+
+    fun getMainClass(): Class<MainActivity> {
+        return MainActivity::class.java
+    }
+
+    fun isAppForeground(): Boolean {
+        return AppUtils.isAppForeground()
     }
 }

@@ -6,7 +6,6 @@ import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.utils.AppUtil
 
 /**
  * <pre>
@@ -48,7 +47,7 @@ class SetPasswordPresenter(var view: SetPasswordContract.View) : SetPasswordCont
             override fun onSuccess(response: UserInfo?) {
                 token.user = response
                 AppManager.getAccountViewModel().updateToken(token)
-                AppUtil.launchMain()
+                 AppManager.launchMain()
             }
 
             override fun onFinish() {

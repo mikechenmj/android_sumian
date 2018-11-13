@@ -14,7 +14,6 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
-import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.utils.JsonUtil
 import com.sumian.sd.utils.StatusBarUtil
 
@@ -45,7 +44,7 @@ class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
                 val response: H5BaseResponse<UserInfo>? = JsonUtil.fromJson(data, typeToken.type)
                 if (response != null && response.isSuccess()) {
                     AppManager.getAccountViewModel().updateUserInfo(response.result)
-                    AppUtil.launchMainAndFinishAll()
+                     AppManager.launchMainAndFinishAll()
                 }
             }
         })

@@ -9,7 +9,6 @@ import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.kefu.KefuManager
-import com.sumian.sd.utils.AppUtil
 import com.sumian.sd.utils.StatusBarUtil
 
 
@@ -43,7 +42,7 @@ class WelcomeActivity : BaseActivity() {
         Handler().postDelayed({
             val login = AppManager.getAccountViewModel().isLogin
             if (login) {
-                AppUtil.launchMain()
+                 AppManager.launchMain()
                 val launchCustomerServiceActivity = intent.getBooleanExtra("key_launch_online_customer_service_activity", false)
                 if (launchCustomerServiceActivity) {
                     KefuManager.launchKefuActivity()

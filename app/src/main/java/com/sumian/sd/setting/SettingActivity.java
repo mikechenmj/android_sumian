@@ -25,7 +25,6 @@ import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.setting.remind.RemindSettingActivity;
 import com.sumian.sd.setting.version.VersionActivity;
-import com.sumian.sd.utils.AppUtil;
 import com.sumian.sd.utils.UiUtils;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
@@ -182,7 +181,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
 
             @Override
             protected void onSuccess(Unit response) {
-                AppUtil.logoutAndLaunchLoginActivity();
+                 AppManager.INSTANCE.logoutAndLaunchLoginActivity();
             }
         });
     }
