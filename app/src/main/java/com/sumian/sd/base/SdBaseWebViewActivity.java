@@ -3,7 +3,6 @@ package com.sumian.sd.base;
 import android.view.Gravity;
 
 import com.sumian.common.h5.BaseWebViewActivity;
-import com.sumian.common.h5.H5LocalCacheInterceptor;
 import com.sumian.common.helper.ToastHelper;
 
 /**
@@ -20,7 +19,6 @@ public abstract class SdBaseWebViewActivity<Presenter extends SdBasePresenter> e
     @Override
     protected void initWidget() {
         super.initWidget();
-        new H5LocalCacheInterceptor(this, H5_ASSET_PATH).interceptH5Request(getWebView());
     }
 
     protected void showCenterToast(String message) {

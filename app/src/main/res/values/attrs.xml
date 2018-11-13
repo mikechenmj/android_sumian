@@ -227,6 +227,7 @@
         <attr name="eev_title" format="string|reference" />
         <attr name="eev_desc" format="string|reference" />
         <attr name="eev_auto_hide" format="boolean|reference" />
+        <attr name="eev_show_service" format="boolean|reference" />
     </declare-styleable>
 
     <declare-styleable name="SleepRecordProgressView">

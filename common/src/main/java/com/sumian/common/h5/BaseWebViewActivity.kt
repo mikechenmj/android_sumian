@@ -14,6 +14,7 @@ import com.sumian.common.h5.bean.H5ShowToastData
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.ScreenUtil
+import com.sumian.common.utils.StatusBarUtil
 import com.sumian.common.widget.TitleBar
 import kotlinx.android.synthetic.main.common_activity_main_base_webview.*
 
@@ -106,6 +107,9 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
                         }
                         "showBackArrow" -> if (value is Boolean) {
                             title_bar!!.showBackArrow(value)
+                        }
+                        "setStatusBarTextColorDark" -> if (value is Boolean) {
+                            StatusBarUtil.setStatusBarTextColorDark(this@BaseWebViewActivity, value)
                         }
                         else -> {
                         }

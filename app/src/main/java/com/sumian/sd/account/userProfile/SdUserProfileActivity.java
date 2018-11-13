@@ -99,6 +99,13 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mDvGender = findViewById(R.id.dv_gender);
         mDvBirthday = findViewById(R.id.dv_birthday);
         mDvArea = findViewById(R.id.dv_area);
+        mDvArea.setOnShowMoreListener(this);
+        mDvArea.getContentView().setMaxLines(1);
+        mDvArea.getContentView().setMaxEms(11);
+        mDvArea.getContentView().setEllipsize(TextUtils.TruncateAt.END);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mDvArea.getContentView().getLayoutParams();
+        layoutParams.rightMargin = 0;
+        mDvArea.getContentView().setLayoutParams(layoutParams);
         mDvHeight = findViewById(R.id.dv_height);
         mDvWeight = findViewById(R.id.dv_weight);
         mDvEduLevel = findViewById(R.id.dv_edu_level);
@@ -112,14 +119,6 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mDvName.setOnShowMoreListener(this);
         mDvGender.setOnShowMoreListener(this);
         mDvBirthday.setOnShowMoreListener(this);
-        mDvArea.setOnShowMoreListener(this);
-        mDvArea.setOnClickListener(this);
-        mDvArea.getContentView().setMaxLines(1);
-        mDvArea.getContentView().setMaxEms(11);
-        mDvArea.getContentView().setEllipsize(TextUtils.TruncateAt.END);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mDvArea.getContentView().getLayoutParams();
-        layoutParams.rightMargin = 0;
-        mDvArea.getContentView().setLayoutParams(layoutParams);
         mDvHeight.setOnShowMoreListener(this);
         mDvWeight.setOnShowMoreListener(this);
         mDvEduLevel.setOnShowMoreListener(this);
