@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -78,7 +77,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
 
     public boolean webViewCanGoBack() {
         if (mSWebView != null && mSWebView.canGoBack()) {
-            mSWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            //mSWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             mSWebView.goBack();
             return true;
         } else {
