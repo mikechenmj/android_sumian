@@ -6,7 +6,6 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.account.login.LoginActivity
-import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.kefu.KefuManager
 import com.sumian.sd.utils.StatusBarUtil
@@ -37,12 +36,11 @@ class WelcomeActivity : BaseActivity() {
 
     override fun initData() {
         super.initData()
-        AppManager.initOnFirstActivityStart(App.getAppContext())
         LogManager.appendUserOperationLog("用户启动 app.......")
         Handler().postDelayed({
             val login = AppManager.getAccountViewModel().isLogin
             if (login) {
-                 AppManager.launchMain()
+                AppManager.launchMain()
                 val launchCustomerServiceActivity = intent.getBooleanExtra("key_launch_online_customer_service_activity", false)
                 if (launchCustomerServiceActivity) {
                     KefuManager.launchKefuActivity()
