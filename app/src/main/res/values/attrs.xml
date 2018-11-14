@@ -135,12 +135,6 @@
         <attr name="rpv_max_progress" format="integer|reference" />
     </declare-styleable>
 
-    <declare-styleable name="TitleView">
-        <attr name="title_text" format="string|reference" />
-        <attr name="content_text" format="string|reference" />
-        <attr name="tv_show_right_arrow" format="boolean|reference" />
-    </declare-styleable>
-
     <declare-styleable name="WithLineProgressView">
         <attr name="wlpv_show_line" format="boolean|reference" />
     </declare-styleable>
