@@ -399,4 +399,13 @@
     <style name="HwVerticalDividerLine" parent="HwDividerLine">
         <item name="android:layout_width">@dimen/divider_px_1</item>
     </style>
+
+    <style name="SimpleTitleItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/normal_item_height_62</item>
+        <item name="android:background">@drawable/bg_line_l1_margin_start_20dp_white_bg</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
 </resources>

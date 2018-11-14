@@ -1,5 +1,6 @@
 package com.sumian.sd.diary.sleeprecord.bean;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 /**
@@ -13,15 +14,53 @@ import android.text.TextUtils;
  */
 public class SleepRecord {
     /**
-     * id : 838
-     * date : 1527782400
-     * answer : {"bed_at":"23:00","sleep_at":"23:00","wake_up_at":"07:00","get_up_at":"07:00","wake_times":2,"wake_minutes":30,"energetic":4,"sleepless_factor":["饮酒","喝茶/咖啡","身体不适","吃太饱","有心事","睡前运动过量"],"other_sleep_times":1,"other_sleep_total_minutes":15,"sleep_pills":[{"name":"唑吡坦","amount":"1片","time":"早饭前／后"},{"name":"唑吡坦","amount":"1片","time":"午饭前／后"},{"name":"咪达唑仑","amount":"1.75片","time":"午饭前／后"},{"name":"硝西泮","amount":"2.75片","time":"午饭前／后"},{"name":"艾司唑仑","amount":"2.75片","time":"午饭前／后"},{"name":"艾司唑仑","amount":"2.75片","time":"午饭前／后"},{"name":"艾司唑仑","amount":"2.75片","time":"午饭前／后"}],"remark":"我昨晚睡得很好^_^"}
-     * sleep_duration : 27000
-     * fall_asleep_duration : 0
-     * sleep_efficiency : 94
-     * doctor_evaluation :
-     * created_at : 1527815172
-     * updated_at : 1527815617
+     {
+     "id":1797,
+     "date":1542124800,
+     "answer":{
+     "bed_at":"18:00",
+     "try_to_sleep_at":"18:00",
+     "sleep_cost":"00:10",
+     "wake_up_at":"00:00",
+     "get_up_at":"00:00",
+     "wake_times":2,
+     "wake_minutes":60,
+     "energetic":4,
+     "sleepless_factor":[
+
+     ],
+     "other_sleep_times":2,
+     "other_sleep_total_minutes":15,
+     "sleep_pills":[
+     {
+     "name":"唑吡坦(思诺思)",
+     "amount":"1/4片",
+     "time":"早饭前／后"
+     },
+     {
+     "name":"唑吡坦(思诺思)",
+     "amount":"1/4片",
+     "time":"早饭前／后"
+     },
+     {
+     "name":"唑吡坦(思诺思)",
+     "amount":"1/3片",
+     "time":"早饭前／后"
+     }
+     ],
+     "remark":"good哦OK了身体不适,饮酒,喝茶/咖啡,身体不适,",
+     "sleep_at":"18:10"
+     },
+     "sleep_duration":17400,
+     "fall_asleep_duration":600,
+     "sleep_efficiency":81,
+     "doctor_evaluation":"",
+     "created_at":1542195299,
+     "updated_at":1542195299,
+     "on_bed_duration":21600
+     }
+
+
      */
 
     private int id;
@@ -123,6 +162,7 @@ public class SleepRecord {
         return getDate() * 1000L;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "SleepResultBean{" +

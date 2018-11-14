@@ -1,10 +1,14 @@
 package com.sumian.sd.diary.sleeprecord.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,9 +40,9 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
     LinearLayout llProgress;
     TextView tvOnBedDuration;
     TextView tvSleepDuration;
-    TextView tvFallAsleepDuration;
     TextView tvWakeupDuration;
     TextView tvSleepDesc;
+    ViewGroup vgSleepDesc;
     LinearLayout llSleepRecord;
     LinearLayout llRoot;
     SleepRecordProgressView progressViewSleep;
@@ -49,6 +53,8 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
     TextView btnGoRecord;
     LinearLayout llNoSleepRecord;
     TextView tvSleepRecordNotEnableHint;
+    ImageView ivEmotion;
+    SleepRecordDiagramView sleepRecordDiagramView;
     private SleepRecord mSleepRecord;
     private long mTime;
 
@@ -68,9 +74,9 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
         llProgress = inflate.findViewById(R.id.ll_progress);
         tvOnBedDuration = inflate.findViewById(R.id.tv_on_bed_duration);
         tvSleepDuration = inflate.findViewById(R.id.tv_sleep_duration);
-        tvFallAsleepDuration = inflate.findViewById(R.id.tv_fall_asleep_duration);
         tvWakeupDuration = inflate.findViewById(R.id.tv_night_wake_up_duration);
         tvSleepDesc = inflate.findViewById(R.id.tv_sleep_desc);
+        vgSleepDesc = inflate.findViewById(R.id.vg_sleep_desc);
         llSleepRecord = inflate.findViewById(R.id.ll_sleep_record);
         llRoot = inflate.findViewById(R.id.ll_root);
         progressViewSleep = inflate.findViewById(R.id.progress_view_sleep);
@@ -82,6 +88,8 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
         btnGoRecord = inflate.findViewById(R.id.btn_for_no_data);
         llNoSleepRecord = inflate.findViewById(R.id.ll_no_sleep_record);
         tvSleepRecordNotEnableHint = inflate.findViewById(R.id.tv_sleep_record_not_enable_hint);
+        ivEmotion = inflate.findViewById(R.id.iv_emotion);
+        sleepRecordDiagramView = inflate.findViewById(R.id.sleep_record_diagram_view);
     }
 
     public void setSleepRecord(SleepRecord sleepRecord) {
@@ -101,21 +109,42 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
         titleViewSleepRecord.tvMenu.setTextColor(ColorCompatUtil.getColor(getContext(), isFillSleepRecordEnable ? R.color.t1_color : R.color.t2_color));
     }
 
+    @SuppressLint("SetTextI18n")
     private void showSleepRecord(SleepRecord sleepRecord) {
         SleepRecordAnswer answer = sleepRecord.getAnswer();
+        // 睡眠效率
+        progressViewSleep.setProgress(sleepRecord.getSleep_efficiency());
+        // 睡眠时长
+        tvSleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getSleep_duration()));
+        // 卧床时长
+        tvOnBedDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getOn_bed_duration()));
+        // 睡眠图
+        sleepRecordDiagramView.setData(
+                answer.getBedAtInMillis(), answer.getSleepAtInMillis(),
+                answer.getWakeUpAtInMillis(), answer.getGetUpAtInMillis(),
+                answer.getWake_times(), answer.getWakeDurationInMillis());
+        // 情绪
         tvSleepQuality.setText(getSleepQualityString(answer.getEnergetic()));
+        ivEmotion.setImageResource(getSleepQualityIcon(answer.getEnergetic()));
+        // 夜醒
+        tvWakeupDuration.setText(getWakeupOrOtherSleepString("没醒过", answer.getWake_times(), answer.getWake_minutes() * 60));
+        // 小睡
+        tvLittleSleepDuration.setText(getWakeupOrOtherSleepString("没小睡", answer.getOther_sleep_total_minutes(), answer.getOther_sleep_total_minutes() * 60));
+        // 服药
         tvPills.setText(getPillsString(answer.getSleep_pills()));
         tvPills.setClickable(answer.getSleep_pills() != null && answer.getSleep_pills().size() != 0);
-        tvLittleSleepDuration.setText(getDurationString("小睡：", answer.getOther_sleep_total_minutes()));
-
-        tvOnBedDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getOn_bed_duration()));
-        tvSleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getSleep_duration()));
-        tvFallAsleepDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.getFall_asleep_duration()));
-        tvWakeupDuration.setText(TimeUtil.getHourMinuteStringFromSecondInZh(answer.getWake_minutes() * 60));
-
+        // 睡眠备注
+        vgSleepDesc.setVisibility(TextUtils.isEmpty(answer.getRemark()) ? GONE : VISIBLE);
         tvSleepDesc.setText(answer.getRemark());
-        tvSleepDesc.setVisibility(TextUtils.isEmpty(answer.getRemark()) ? GONE : VISIBLE);
-        progressViewSleep.setProgress(sleepRecord.getSleep_efficiency());
+    }
+
+    @NonNull
+    private String getWakeupOrOtherSleepString(String emptyString, int times, int duration) {
+        if (times == 0) {
+            return emptyString;
+        } else {
+            return "" + times + "次，" + TimeUtil.getHourMinuteStringFromSecondInZh(duration);
+        }
     }
 
     private String getSleepQualityString(int quality) {
@@ -129,7 +158,21 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
         if (quality < 0 || quality >= qualityStrings.length) {
             throw new RuntimeException("Run sleep quality");
         }
-        return "自我评价：" + qualityStrings[quality];
+        return qualityStrings[quality];
+    }
+
+    private int getSleepQualityIcon(int quality) {
+        int[] qualityIcons = new int[]{
+                R.drawable.record_icon_facial_1,
+                R.drawable.record_icon_facial_2,
+                R.drawable.record_icon_facial_3,
+                R.drawable.record_icon_facial_4,
+                R.drawable.record_icon_facial_5,
+        };
+        if (quality < 0 || quality >= qualityIcons.length) {
+            throw new RuntimeException("Run sleep quality");
+        }
+        return qualityIcons[quality];
     }
 
     private String getDurationString(String label, int minutes) {
@@ -161,7 +204,7 @@ public class SleepRecordView extends LinearLayout implements View.OnClickListene
 
     private void showPillsDialogIfNeed() {
         List<SleepPill> sleep_pills = mSleepRecord.getAnswer().getSleep_pills();
-        if (sleep_pills.size() == 0) {
+        if (sleep_pills == null || sleep_pills.size() == 0) {
             return;
         }
         PillsDialog.show(getContext(), sleep_pills);
