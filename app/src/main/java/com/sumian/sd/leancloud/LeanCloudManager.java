@@ -13,6 +13,7 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.hw.leancloud.HwLeanCloudHelper;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -61,9 +62,12 @@ public class LeanCloudManager {
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
         PushService.setDefaultPushCallback(context, WelcomeActivity.class);
+        //注册 hw 相关leanClound  service
+        HwLeanCloudHelper.init();
     }
 
     public static void uploadPushId() {
+        init(App.getAppContext());
         PushService.subscribe(App.getAppContext(), "app-sd", null);
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
@@ -77,7 +81,7 @@ public class LeanCloudManager {
         //设置后台自动重启
         PushService.setAutoWakeUp(true);
         // 设置默认打开的 Activity
-        PushService.setDefaultPushCallback(App.Companion.getAppContext(),  AppManager.INSTANCE.getMainClass());
+        PushService.setDefaultPushCallback(App.getAppContext(), AppManager.INSTANCE.getMainClass());
     }
 
     private static void uploadDeviceInfo(String installationId) {

@@ -121,8 +121,6 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         showOpenNotificationDialogIfNeeded()
         nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectFragment(position) }
         changeSelectTab(TAB_0)
-        //注册站内信消息接收容器
-        HwLeanCloudHelper.addOnAdminMsgCallback(this)
         AppManager.getVersionModel().registerShowDotCallback(this)
         ViewModelProviders.of(this@MainActivity)
                 .get(NotificationViewModel::class.java)
@@ -150,8 +148,8 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         }
 
         SumianExecutor.runOnUiThread(({
-            syncUserInfo()
             sendHeartBeats()
+            syncUserInfo()
         }), 200)
 
         SumianExecutor.runOnUiThread(({ HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize) }), 500)

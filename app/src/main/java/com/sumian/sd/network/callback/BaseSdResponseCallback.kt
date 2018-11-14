@@ -17,7 +17,7 @@ import com.sumian.sd.widget.dialog.SumianAlertDialog
 abstract class BaseSdResponseCallback<Data> : BaseResponseCallback<Data>() {
 
     override fun onUnauthorized() {
-        ActivityUtils.startActivity(LoginActivity::class.java)
+        LoginActivity.show()
     }
 
     override fun showSystemIsMaintainDialog() {

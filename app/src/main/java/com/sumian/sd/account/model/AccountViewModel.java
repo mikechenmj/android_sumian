@@ -4,15 +4,19 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.os.Looper;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.doctor.bean.Doctor;
 import com.sumian.sd.utils.JsonUtil;
+import com.sumian.sd.utils.SumianExecutor;
 
 /**
  * Created by jzz
@@ -30,10 +34,23 @@ public class AccountViewModel extends AndroidViewModel {
         loadTokenFromSp();
     }
 
-    public void loadTokenFromSp() {
+    private void loadTokenFromSp() {
         String tokenJson = SPUtils.getInstance().getString(SP_KEY_TOKEN, null);
         Token token = JsonUtil.fromJson(tokenJson, Token.class);
-        mTokenLiveData.postValue(token);
+        if (BuildConfig.DEBUG) {
+            if (token != null) {
+                LogUtils.d(token.getToken());
+            }
+        }
+        runUiThread(() -> mTokenLiveData.setValue(token));
+    }
+
+    private void runUiThread(Runnable run) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            run.run();
+        } else {
+            SumianExecutor.INSTANCE.runOnUiThread(run);
+        }
     }
 
     public LiveData<Token> getLiveDataToken() {
@@ -65,7 +82,7 @@ public class AccountViewModel extends AndroidViewModel {
     }
 
     public void updateToken(Token token) {
-        mTokenLiveData.setValue(token);
+        runUiThread(() -> mTokenLiveData.setValue(token));
         persistentTokenInSp();
     }
 

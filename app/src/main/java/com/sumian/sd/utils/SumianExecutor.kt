@@ -19,15 +19,13 @@ object SumianExecutor {
     private val mHandler: Handler = Handler(Looper.getMainLooper())
     private val mCachedThreadPool: ExecutorService = Executors.newCachedThreadPool()
 
-    fun runOnUiThread(runnable: Runnable) {
-        mHandler.postDelayed(runnable, 0)
-    }
-
-    fun runOnUiThread(runnable: () -> Unit, delay: Long = 0) {
+    @JvmOverloads
+    fun runOnUiThread(runnable: Runnable, delay: Long = 0) {
         mHandler.postDelayed(runnable, delay)
     }
 
-    fun runOnUiThread(runnable: Runnable, delay: Long = 0) {
+    @JvmOverloads
+    fun runOnUiThread(runnable: () -> Unit, delay: Long = 0) {
         mHandler.postDelayed(runnable, delay)
     }
 

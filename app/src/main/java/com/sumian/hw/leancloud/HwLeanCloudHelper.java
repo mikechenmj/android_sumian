@@ -1,11 +1,8 @@
 package com.sumian.hw.leancloud;
 
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.avos.avoscloud.AVOSCloud;
-import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -35,24 +32,19 @@ import java.util.List;
 
 public final class HwLeanCloudHelper {
 
-    public static final String TAG = HwLeanCloudHelper.class.getSimpleName();
     private static volatile HwLeanCloudHelper INSTANCE;
     private List<OnShowMsgDotCallback> mOnShowMsgDotCallbacks = new ArrayList<>(0);
-    private List<AVIMMessage> mCustomerMessages;//线上客服聊天消息
+    private List<AVIMMessage> mCustomerMessages = new ArrayList<>(0);//线上客服聊天消息
     private boolean mHaveCuostomrMsg;
 
-    private HwLeanCloudHelper(Context context) {
-        // 初始化参数依次为 context, AppId, AppKey
-        PushService.setDefaultChannelId(context, "push_channel");
-        AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
-        this.mCustomerMessages = new ArrayList<>();
+    private HwLeanCloudHelper() {
     }
 
-    public static HwLeanCloudHelper init(Context context) {
+    public static HwLeanCloudHelper init() {
         if (INSTANCE == null) {
             synchronized (HwLeanCloudHelper.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new HwLeanCloudHelper(context);
+                    INSTANCE = new HwLeanCloudHelper();
                 }
             }
         }
@@ -60,14 +52,14 @@ public final class HwLeanCloudHelper {
     }
 
     public static void addOnAdminMsgCallback(OnShowMsgDotCallback onShowMsgDotCallback) {
-        if (INSTANCE.mOnShowMsgDotCallbacks.contains(onShowMsgDotCallback)) {
+        if (init().mOnShowMsgDotCallbacks.contains(onShowMsgDotCallback)) {
             return;
         }
         INSTANCE.mOnShowMsgDotCallbacks.add(onShowMsgDotCallback);
     }
 
     public static void removeOnAdminMsgCallback(OnShowMsgDotCallback onShowMsgDotCallback) {
-        if (INSTANCE.mOnShowMsgDotCallbacks == null || INSTANCE.mOnShowMsgDotCallbacks.isEmpty()) {
+        if (init().mOnShowMsgDotCallbacks == null || init().mOnShowMsgDotCallbacks.isEmpty()) {
             return;
         }
         INSTANCE.mOnShowMsgDotCallbacks.remove(onShowMsgDotCallback);
@@ -86,6 +78,7 @@ public final class HwLeanCloudHelper {
             return;
         }
 
+        AppManager.initKefu(App.getAppContext());
         ChatClient.getInstance().login(imId, md5Pwd, new Callback() {
 
             @Override
@@ -130,18 +123,18 @@ public final class HwLeanCloudHelper {
             }
         });
 
-        return new IntentBuilder(App.Companion.getAppContext())
+        return new IntentBuilder(App.getAppContext())
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
                 .setShowUserNick(false)
                 .setVisitorInfo(visitorInfo).build();
     }
 
     public static boolean isHaveCustomerMsg() {
-        return INSTANCE.mHaveCuostomrMsg;
+        return init().mHaveCuostomrMsg;
     }
 
     public static void haveCustomerMsg(int msgLength) {
-        INSTANCE.mHaveCuostomrMsg = msgLength > 0;
+        init().mHaveCuostomrMsg = msgLength > 0;
         List<OnShowMsgDotCallback> onShowMsgDotCallbacks = INSTANCE.mOnShowMsgDotCallbacks;
         if (onShowMsgDotCallbacks == null || onShowMsgDotCallbacks.isEmpty()) {
             return;

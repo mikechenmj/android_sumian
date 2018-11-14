@@ -48,7 +48,7 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
 
     @Override
     public void getUserInfo() {
-        mView.onBegin();
+        //mView.onBegin();
         Call<UserInfo> call = AppManager.getSdHttpService().getUserProfile();
         addCall(call);
         call.enqueue(new BaseSdResponseCallback<UserInfo>() {
@@ -66,7 +66,7 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
             @Override
             protected void onFinish() {
                 super.onFinish();
-                mView.onFinish();
+                //mView.onFinish();
             }
         });
 

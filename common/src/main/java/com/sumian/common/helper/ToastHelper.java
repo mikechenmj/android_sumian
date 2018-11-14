@@ -36,7 +36,7 @@ public class ToastHelper {
         this.mToast = toast;
     }
 
-    public static void init(@NonNull Context context) {
+    public static ToastHelper init(@NonNull Context context) {
         if (INSTANCE == null) {
             synchronized (ToastHelper.class) {
                 if (INSTANCE == null) {
@@ -44,6 +44,7 @@ public class ToastHelper {
                 }
             }
         }
+        return INSTANCE;
     }
 
     public static void show(String content) {
@@ -68,7 +69,7 @@ public class ToastHelper {
     }
 
     public static void show(Context context, String content, int gravity, int duration) {
-        show(context, content, gravity, duration, INSTANCE.mYOffset);
+        show(context, content, gravity, duration, init(context).mYOffset);
     }
 
     public static void show(Context context, String content, int gravity, int duration, int yOffset) {

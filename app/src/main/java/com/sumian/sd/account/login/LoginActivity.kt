@@ -14,6 +14,13 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginContract.View {
 
+    companion object {
+        @JvmStatic
+        fun show() {
+            ActivityUtils.startActivity(LoginActivity::class.java)
+        }
+    }
+
     private val mVersionDelegate: VersionDelegate by lazy {
         VersionDelegate.init()
     }

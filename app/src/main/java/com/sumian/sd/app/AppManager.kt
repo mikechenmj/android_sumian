@@ -20,7 +20,6 @@ import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.hw.job.SleepDataUploadManager
-import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.NotificationUtil
@@ -164,17 +163,12 @@ object AppManager {
     @JvmStatic
     fun initOnFirstActivityStart(context: Context) {
         synchronized(AppManager::class.java) {
+            initKefu(context)
+            LeanCloudManager.init(context)
             DeviceManager.init()
             initUtils(context)
-            initLeanCloud(context)
-            HwLeanCloudHelper.init(context)
-            initKefu(context)
             initWebView()
         }
-    }
-
-    private fun initLeanCloud(context: Context) {
-        LeanCloudManager.init(context)
     }
 
     private fun initUtils(context: Context) {
@@ -190,20 +184,23 @@ object AppManager {
             webViewManger.registerHttpDnsEngine(it)
         }
         webViewManger.setDebug(BuildConfig.DEBUG)
-        mAccountViewModel.liveDataToken.observeForever { token -> webViewManger.setToken(token?.token) }
+        mAccountViewModel.liveDataToken.observeForever { token ->
+            webViewManger.setToken(token = token?.token)
+        }
     }
 
-    private fun initKefu(context: Context) {
-        // Kefu SDK 初始化
-        val options = ChatClient.Options()
-        options.setConsoleLog(BuildConfig.DEBUG)
-        options.setAppkey(BuildConfig.EASEMOB_APP_KEY)//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
-        options.setTenantId(BuildConfig.EASEMOB_TENANT_ID)//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
-        if (!ChatClient.getInstance().init(context, options)) {
-            return
+    @JvmStatic
+    fun initKefu(context: Context) {
+        synchronized(AppManager::class) {
+            // Kefu SDK 初始化
+            val options = ChatClient.Options()
+            options.setConsoleLog(BuildConfig.DEBUG)
+            options.setAppkey(BuildConfig.EASEMOB_APP_KEY)//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
+            options.setTenantId(BuildConfig.EASEMOB_TENANT_ID)//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
+            ChatClient.getInstance().init(context, options)
+            // Kefu EaseUI的初始化
+            UIProvider.getInstance().init(context)
         }
-        // Kefu EaseUI的初始化
-        UIProvider.getInstance().init(context)
     }
 
     fun exitApp() {
@@ -229,7 +226,7 @@ object AppManager {
         AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
         // finish all and start LoginActivity
         ActivityUtils.finishAllActivities()
-        ActivityUtils.startActivity(LoginActivity::class.java)
+        LoginActivity.show()
     }
 
     fun launchMainAndFinishAll() {

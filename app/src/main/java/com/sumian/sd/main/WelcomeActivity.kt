@@ -1,7 +1,6 @@
 package com.sumian.sd.main
 
 import android.os.Handler
-import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
@@ -46,7 +45,7 @@ class WelcomeActivity : BaseActivity() {
                     KefuManager.launchKefuActivity()
                 }
             } else {
-                ActivityUtils.startActivity(LoginActivity::class.java)
+                LoginActivity.show()
             }
         }, SPLASH_DURATION)
     }
