@@ -24,27 +24,27 @@
 
     <ImageView
         android:id="@+id/iv_pre"
-        android:layout_width="@dimen/space_40"
-        android:layout_height="@dimen/space_40"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/tv_week_quantum"
         android:background="@drawable/bg_material_ripple"
         android:contentDescription="@null"
         android:padding="@dimen/space_14"
-        android:scaleType="fitCenter"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_arrow_left_light_blue"
         skin:enable="true" />
 
     <ImageView
         android:id="@+id/iv_next"
-        android:layout_width="@dimen/space_40"
-        android:layout_height="@dimen/space_40"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/tv_week_quantum"
         android:background="@drawable/bg_material_ripple"
         android:contentDescription="@null"
         android:padding="@dimen/space_14"
-        android:scaleType="fitCenter"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_arrow_right_light_blue"
         android:visibility="gone"
         skin:enable="true"
