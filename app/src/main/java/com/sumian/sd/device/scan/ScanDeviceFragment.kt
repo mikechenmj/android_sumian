@@ -149,7 +149,7 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun showNoDeviceUI() {
-        setTitles(R.string.do_not_see_your_device, 0)
+        setTitles(R.string.do_not_see_your_device, R.string.please_check_items_below)
         vg_no_device.visibility = View.VISIBLE
         LogManager.appendBluetoothLog("该次没有搜索到任何设备")
     }

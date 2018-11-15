@@ -35,6 +35,8 @@ class TokenAuthInterceptor private constructor() : Interceptor {
 
         AppManager.getAccountViewModel().tokenString?.let {
             builder.addHeader(AUTHORIZATION_HEADER, "$AUTHORIZATION_HEADER_BEARER_PART$it")
+//            val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vc2RhcGkuc3VtaWFuLmNvbSIsImlhdCI6MTU0MjI0NzQyNSwiZXhwIjoxNTQ0ODM5NDI1LCJuYmYiOjE1NDIyNDc0MjUsImp0aSI6ImRsZnJ4cFRudHNEbGhNNE8iLCJzdWIiOjMxMzYsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.mCIxx60e8g3_4gI2NfcoQ94KWTeUQ8wVuW5eB5dUsGk"
+//            builder.addHeader(AUTHORIZATION_HEADER, "$AUTHORIZATION_HEADER_BEARER_PART$token") // test code
         }
 
         val response = chain.proceed(builder.build())

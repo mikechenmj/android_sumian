@@ -434,9 +434,10 @@
     <string name="scan_label_h2">点击需要连接的监测仪屏幕按键，搜索设备。</string>
     <!--<string name="re_scan">重新搜索</string>-->
     <string name="re_scan_u"><u>重新搜索</u></string>
-    <string name="scan_error_two">确保速眠产品与手机的距离在5米内；</string>
-    <string name="scan_error_one">将监测仪关机后再打开；</string>
-    <string name="scan_error_three">关闭其他设备上的速眠APP。</string>
+    <string name="scan_error_one">①  按下监测仪按键查看是否已开机，如未开机，请连接电源，充电开启监测仪；</string>
+    <string name="scan_error_two">②  检查监测仪是否已与其它手机连接。如有，请解绑后重新尝试连接；</string>
+    <string name="scan_error_three">③  确保监测仪与手机距离保持在5米内，去除墙壁、厚物遮挡等信号干扰因素；</string>
+    <string name="scan_error_four">④  关闭手机蓝牙重试。</string>
     <string name="select_bind_device_label">请选择要绑定的设备</string>
     <string name="is_sure_device_2_bind">已为您选择此监测仪，是否绑定？</string>
     <string name="open_location_service_dialog_title">提示</string>
@@ -661,4 +662,5 @@
     <string name="night_wakeup">夜醒</string>
     <string name="little_sleep">小睡</string>
     <string name="pills_history">服药记录</string>
+    <string name="please_check_items_below">请检查以下情况：</string>
 </resources>

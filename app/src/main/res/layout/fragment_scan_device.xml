@@ -35,34 +35,32 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <TextView
             style="@style/text_t1_16"
             android:layout_marginTop="40dp"
-            android:drawableStart="@drawable/equip_icon_1"
-            android:drawablePadding="@dimen/dp_10"
             android:text="@string/scan_error_one" />
 
         <TextView
             style="@style/text_t1_16"
             android:layout_marginTop="40dp"
-            android:drawableStart="@drawable/equip_icon_2"
-            android:drawablePadding="@dimen/dp_10"
             android:text="@string/scan_error_two" />
 
         <TextView
             style="@style/text_t1_16"
             android:layout_marginTop="40dp"
-            android:drawableStart="@drawable/equip_icon_3"
-            android:drawablePadding="@dimen/dp_10"
             android:text="@string/scan_error_three" />
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_marginTop="40dp"
+            android:text="@string/scan_error_four" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:drawableStart="@drawable/equip_icon_3"
             tools:ignore="NestedWeights" />
 
         <Button
@@ -184,7 +182,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
