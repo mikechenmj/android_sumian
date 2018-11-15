@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
@@ -60,7 +61,8 @@ class NotificationUtil {
             if (context == null) return
             createNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME)
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_notification_small)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher))
                     .setContentTitle(AppUtils.getAppName())
                     .setContentText(contentText)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
