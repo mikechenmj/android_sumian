@@ -27,6 +27,7 @@ import com.sumian.hw.upgrade.presenter.DeviceVersionUpgradePresenter;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.DeviceManager;
+import com.sumian.sd.utils.SumianExecutor;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
     private static final String EXTRA_VERSION_TYPE = "extra_version_type";
     private static final String EXTRA_VERSION_IS_LATEST = "extra_version_latest";
     private static final long DISMISS_DIALOG_DELAY = 1200L;
+    private static final long UPGRADE_RECONNECT_WAIT_DURATION = 1000 * 45;
     public static final int VERSION_TYPE_MONITOR = 0x02;
     public static final int VERSION_TYPE_SLEEPY = 0x03;
     private static final int REQUEST_WRITE_PERMISSION = 0xff;
@@ -174,16 +176,16 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
             if (percent == 1) {
                 mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
             }
-            if (!(percent < 100)) {
-                if (mVersionType == VERSION_TYPE_MONITOR) {
-                    AppManager.getVersionModel().notifyMonitorDot(false);
-                } else if (mVersionType == VERSION_TYPE_SLEEPY) {
-                    AppManager.getVersionModel().notifySleepyDot(false);
-                } else {
-                    AppManager.getVersionModel().notifyAppDot(false);
-                }
-                runUiThread(() -> ToastHelper.show(R.string.firmware_upgrade_success_hint));
-            }
+//            if (!(percent < 100)) {
+//                if (mVersionType == VERSION_TYPE_MONITOR) {
+//                    AppManager.getVersionModel().notifyMonitorDot(false);
+//                } else if (mVersionType == VERSION_TYPE_SLEEPY) {
+//                    AppManager.getVersionModel().notifySleepyDot(false);
+//                } else {
+//                    AppManager.getVersionModel().notifyAppDot(false);
+//                }
+//                runUiThread(() -> ToastHelper.show(R.string.firmware_upgrade_success_hint));
+//            }
         }
 
         @Override
@@ -204,20 +206,22 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
 
         @Override
         public void onDfuCompleted(String deviceAddress) {
+            // 该方法毁掉会比progress change 100 慢3秒左右
             cancelDialog();
             @StringRes int stringId = R.string.firmware_upgrade_success_hint;
             switch (mVersionType) {
                 case VERSION_TYPE_MONITOR:
                     stringId = R.string.firmware_upgrade_success_hint;
+                    AppManager.getVersionModel().notifyMonitorDot(false);
                     break;
                 case VERSION_TYPE_SLEEPY:
                     stringId = R.string.sleeper_firmware_upgrade_success_hint;
+                    AppManager.getVersionModel().notifySleepyDot(false);
                     break;
             }
             ToastUtils.showLong(stringId);
             LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
-            AppManager.getVersionModel().notifyMonitorDot(false);
-            AppManager.getVersionModel().notifySleepyDot(false);
+            SumianExecutor.INSTANCE.runOnUiThread(DeviceManager.INSTANCE::tryToConnectCacheMonitor, UPGRADE_RECONNECT_WAIT_DURATION);
             finish();
         }
 
