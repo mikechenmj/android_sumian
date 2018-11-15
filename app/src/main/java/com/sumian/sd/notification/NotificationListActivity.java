@@ -17,6 +17,7 @@ import com.sumian.sd.notification.push.SchemeResolveUtil;
 import com.sumian.sd.utils.NotificationUtil;
 import com.sumian.sd.widget.TitleBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -119,13 +120,13 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     }
 
     private void markAsRead(Notification notification, int position) {
-        mPresenter.readNotification(notification.getId());
+        mPresenter.readNotification(notification.getId(), notification.getData_id());
         notification.setRead_at((int) (System.currentTimeMillis() / 1000L));
         mAdapter.setData(position, notification);
     }
 
     private void markAllAsRead() {
-        mPresenter.readNotification("0");
+        mPresenter.readNotification("0", null);
         List<Notification> data = mAdapter.getData();
         long currentTimeMillis = System.currentTimeMillis();
         for (Notification notification : data) {
@@ -152,6 +153,9 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     @Override
     public void onLoadMore(List<Notification> notificationList, boolean hasMore) {
         titleBar.setMenuVisibility(mAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
+        if (notificationList == null) {
+            notificationList = new ArrayList<>();
+        }
         mAdapter.addData(notificationList);
         mAdapter.loadMoreComplete();
         mAdapter.setEnableLoadMore(hasMore);

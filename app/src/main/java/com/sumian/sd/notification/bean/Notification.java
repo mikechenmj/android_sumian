@@ -1,5 +1,7 @@
 package com.sumian.sd.notification.bean;
 
+import android.support.annotation.NonNull;
+
 /**
  * <pre>
  *     @author : Zhan Xuzhao
@@ -28,6 +30,7 @@ public class Notification {
     public static final String TYPE_FOLLOW_UP_LIFE_NOTICE = NOTIFICATION_TYPE_PREFIX + "FollowUpLifeNotice";
 
     private String id;
+    private String data_id;
     private String type;    //医生反馈：HwApp\Notifications\DiaryEvaluated，电子报告：HwApp\Notifications\DiaryEvaluated）
     private DataBean data;
     private int read_at;
@@ -81,6 +84,15 @@ public class Notification {
         return created_at * 1000L;
     }
 
+    public String getData_id() {
+        return data_id;
+    }
+
+    public void setData_id(String data_id) {
+        this.data_id = data_id;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return "Notification{" +

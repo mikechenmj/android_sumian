@@ -34,6 +34,7 @@ class NotificationUtil {
         private const val REQUEST_CODE = 100
         private val ATOMIC_NOTIFICATION_ID = AtomicInteger(0)
         const val KEY_PUSH_NOTIFICATION_ID = "push_notification_id"
+        const val KEY_PUSH_NOTIFICATION_DATA_ID = "push_notification_data_id"
 
         fun getNotificationId(): Int {
             return ATOMIC_NOTIFICATION_ID.incrementAndGet()
@@ -57,7 +58,11 @@ class NotificationUtil {
             }
         }
 
-        fun showNotification(context: Context?, contentText: String, notificationId: String, intent: Intent) {
+        fun showNotification(context: Context?,
+                             contentText: String,
+                             notificationId: String,
+                             notificationDataId: String,
+                             intent: Intent) {
             if (context == null) return
             createNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME)
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -68,6 +73,7 @@ class NotificationUtil {
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true)
             intent.putExtra(KEY_PUSH_NOTIFICATION_ID, notificationId)
+            intent.putExtra(KEY_PUSH_NOTIFICATION_DATA_ID, notificationDataId)
             val pendingIntent = getPendingIntent(context, intent)
             if (pendingIntent != null) builder.setContentIntent(pendingIntent)
             NotificationManagerCompat.from(context).notify(Random().nextInt(), builder.build())

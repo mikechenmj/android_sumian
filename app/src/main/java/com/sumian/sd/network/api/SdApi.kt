@@ -185,8 +185,20 @@ interface SdApi {
     fun getNotificationList(@Query("page") page: Int,
                             @Query("per_page") perPage: Int): Call<QueryNotificationResponse>
 
+    /**
+     * notificationId 单消息id
+     * dataId 群消息id，
+     *
+     * 单消息 notificationId != null，dataId = null，
+     * 群消息 notificationId="0", dataId != null
+     *
+     * 单消息 标为已读 notificationId != 0， dataId = null
+     * 群消息 标为已读 notificationId = 0， dataId != null
+     * 全部 标为已读 notificationId = 0， dataId = null
+     */
     @PATCH("notifications/{id}")
-    fun readNotification(@Path("id") notificationId: String): Call<Any>
+    fun readNotification(@Path("id") notificationId: String,
+                         @Query("data_id") dataId: String?): Call<Any>
 
     // ---------- scale ----------
     @GET("scale-distributions")

@@ -18,20 +18,23 @@ import com.sumian.sd.network.callback.BaseSdResponseCallback
 class AppNotificationManager {
     companion object {
 
-        fun markNotificationAsRead(notificationId: String?) {
+        fun markNotificationAsRead(notificationId: String?, data_id: String? = null) {
             if (TextUtils.isEmpty(notificationId)) {
                 return
             }
-            AppManager.getSdHttpService().readNotification(notificationId = notificationId!!).enqueue(object : BaseSdResponseCallback<Any>() {
-                override fun onFailure(errorResponse: ErrorResponse) {
-                    LogUtils.d("mark as read fail", errorResponse)
-                }
+            AppManager.getSdHttpService()
+                    .readNotification(notificationId!!, data_id)
+                    .enqueue(
+                            object : BaseSdResponseCallback<Any>() {
+                                override fun onFailure(errorResponse: ErrorResponse) {
+                                    LogUtils.d("mark as read fail", errorResponse)
+                                }
 
-                override fun onSuccess(response: Any?) {
-                    LogUtils.d("mark as read success")
-                    EventBusUtil.postStickyEvent(NotificationUnreadCountChangeEvent())
-                }
-            })
+                                override fun onSuccess(response: Any?) {
+                                    LogUtils.d("mark as read success")
+                                    EventBusUtil.postStickyEvent(NotificationUnreadCountChangeEvent())
+                                }
+                            })
         }
     }
 }
