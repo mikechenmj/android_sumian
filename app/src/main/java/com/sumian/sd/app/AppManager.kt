@@ -22,7 +22,6 @@ import com.sumian.common.social.login.OpenLogin
 import com.sumian.hw.job.SleepDataUploadManager
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
-import com.sumian.hw.utils.NotificationUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.account.login.NewUserGuideActivity
@@ -35,6 +34,7 @@ import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.SdApi
+import com.sumian.sd.utils.NotificationUtil
 
 /**
  * Created by jzz
