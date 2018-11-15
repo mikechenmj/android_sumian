@@ -486,4 +486,18 @@ interface SdApi {
             @Query("page_size") pageSize: Int = 1,
             @Query("direction") direction: Int = 0
     ): Call<WeeklyReportResponse>
+
+    /**
+     * 获取留言板列表
+     */
+    @GET("message-boards")
+    fun getCBTIMessageBoardList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponseV2<MessageBoard>>
+
+    /**
+     * 发送留言
+     */
+    @FormUrlEncoded
+    @POST("message-boards")
+    fun writeCBTIMessageBoard(@FieldMap map: MutableMap<String, Any>): Call<Any>
+
 }

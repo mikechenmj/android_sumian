@@ -116,6 +116,25 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <TextView
+            android:id="@+id/tv_write_message"
+            style="@style/text_b2_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_64"
+            android:layout_gravity="bottom"
+            android:background="@color/b3_color_day"
+            android:gravity="center"
+            android:text="@string/write_message"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.sumian.sd.service.cbti.widget.keyboard.MsgBoardKeyBoard
+            android:id="@+id/keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

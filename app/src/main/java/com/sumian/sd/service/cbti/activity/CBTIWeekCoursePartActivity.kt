@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
@@ -16,7 +18,10 @@ import com.sumian.sd.service.cbti.bean.CBTIMeta
 import com.sumian.sd.service.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sd.service.cbti.fragment.CourseFragment
 import com.sumian.sd.service.cbti.fragment.ExerciseFragment
+import com.sumian.sd.service.cbti.fragment.MessageBoardFragment
 import com.sumian.sd.service.cbti.model.CbtiChapterViewModel
+import com.sumian.sd.service.cbti.widget.adapter.EmptyOnTabSelectedListener
+import com.sumian.sd.service.cbti.widget.keyboard.MsgBoardKeyBoard
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianDataWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
@@ -29,9 +34,19 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  * desc: CBTI 周阶段课程模块  包含一周的课时/练习  e.g.  1-1/1-2/1-3   2-1/2-2/2-3
  *
  */
-class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener, Observer<CBTIMeta> {
+class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener,
+        Observer<CBTIMeta>, MsgBoardKeyBoard.OnKeyBoardCallback {
+
+    private fun position(position: Int) {
+        tv_write_message?.visibility = if (position == 2) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
 
     private var mChapterId = 1
+    private var mCbtiType = 1
 
     companion object {
 
@@ -62,6 +77,30 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
     override fun initWidget(root: View) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
+        view_pager.offscreenPageLimit = 2
+        view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                position(position)
+            }
+        })
+        tab_layout.setupWithViewPager(view_pager, true)
+        tab_layout.addOnTabSelectedListener(object : EmptyOnTabSelectedListener() {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                super.onTabReselected(tab)
+                position(tab?.position!!)
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                super.onTabSelected(tab)
+                position(tab?.position!!)
+            }
+        })
+        tv_write_message.setOnClickListener {
+            tv_write_message.visibility = View.GONE
+            keyboard.show()
+        }
+        keyboard.setOnKeyBoardCallback(this)
         ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICourseMetaLiveData().observe(this, this)
     }
 
@@ -72,6 +111,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
                 return when (position) {
                     0 -> CourseFragment.newInstance(mChapterId)
                     1 -> ExerciseFragment.newInstance(mChapterId)
+                    2 -> MessageBoardFragment.newInstance(mCbtiType)
                     else -> {
                         throw NullPointerException("index is invalid")
                     }
@@ -79,27 +119,37 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
             }
 
             override fun getCount(): Int {
-                return 2
+                return 3
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                when (position) {
-                    0 -> return getString(R.string.course)
-                    1 -> return getString(R.string.practice)
+                return when (position) {
+                    0 -> getString(R.string.course)
+                    1 -> getString(R.string.practice)
+                    2 -> getString(R.string.message_board)
+                    else -> {
+                        super.getPageTitle(position)
+                    }
+
                 }
-                return super.getPageTitle(position)
             }
         }
-
-        tab_layout.setupWithViewPager(view_pager, true)
     }
 
     override fun onBack(v: View?) {
         finish()
     }
 
+    override fun sendContent(content: String) {
+
+
+    }
+
+
     override fun onChanged(t: CBTIMeta?) {
         t?.let { it ->
+
+            this.mCbtiType = t.chapter.index
             title_bar.setTitle(it.chapter.title)
             cbti_week_lesson_banner_view.invalidateBanner(it.chapter.title, it.chapter.introduction, it.chapter.banner, it.chapter_progress)
 
