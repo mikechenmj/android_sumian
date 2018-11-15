@@ -1,6 +1,7 @@
 package com.sumian.sd.app
 
 import android.app.Application
+import android.arch.lifecycle.ProcessLifecycleOwner
 import com.sumian.common.social.analytics.ActivityLifecycleCallbackForUserAnalysis
 import com.sumian.hw.log.LogManager
 
@@ -27,6 +28,7 @@ class App : Application() {
         registerActivityLifecycleCallbacks(AppInitThirdPlatformLifecycleCallback.create())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
+        ProcessLifecycleOwner.get().lifecycle.addObserver(ForegroundBackgroundListener())
     }
 }
 

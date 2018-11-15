@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.base.BaseActivity
@@ -21,7 +20,6 @@ import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
-import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
@@ -99,19 +97,6 @@ class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, Ver
         mVersionDelegate.checkVersion(this)
         updateNotificationUnreadCount()
         EventBusUtil.register(this)
-
-////        SumianExecutor.runOnBackgroundThread {
-//        SumianExecutor.runOnUiThread( {
-//            val token = AppManager.getAccountViewModel().token
-//            LogUtils.d("token ", token.expired_at)
-//            val token1 = Token()
-//            token1.token = token.token
-//            token1.user = token.user
-//            token1.expired_at = token.expired_at + 1
-//            AppManager.getAccountViewModel().updateToken(token1)
-//            LogUtils.d("token ", AppManager.getAccountViewModel().token.expired_at)
-//        })
-
     }
 
     override fun onResume() {
