@@ -67,6 +67,7 @@ class SchemeResolveUtil {
 
         private fun createSchemeResolver(uri: Uri): SchemeResolver? {
             return when (uri.host) {
+                "not-jump" -> null
                 "diaries" -> DiarySchemeResolver()
                 "online-reports" -> OnlineReportSchemeResolver()
                 "refund" -> RefundSchemeResolver()
@@ -82,6 +83,7 @@ class SchemeResolveUtil {
                 "diary-evaluation-list" -> DiaryEvaluationListSchemeResolver()
                 "booking-detail" -> TelBookingDetailSchemeResolver()
                 "diary-evaluations" -> DiaryEvaluationSchemeResolver()
+                "message-boards" -> null
                 else -> null
             }
         }
