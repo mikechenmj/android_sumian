@@ -3,7 +3,8 @@ package com.sumian.sd.account.userProfile;
 
 import android.support.annotation.NonNull;
 
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+import com.sumian.common.widget.picker.NumberPickerView;
+
 
 /**
  * Created by sm
@@ -36,7 +37,7 @@ public interface ModifyUserInfoContract extends ImproveUserProfileContract {
 
         void transformTitle(String modifyKey);
 
-        String transformModify(@NonNull String modifyKey, @NonNull NumberPickerView pickerView, @NonNull NumberPickerView pickerTwo,@NonNull NumberPickerView pickerThree);
+        String transformModify(@NonNull String modifyKey, @NonNull NumberPickerView pickerView, @NonNull NumberPickerView pickerTwo, @NonNull NumberPickerView pickerThree);
 
         void transformCityForProvince(@NonNull String province);
 

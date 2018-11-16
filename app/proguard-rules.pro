@@ -251,8 +251,6 @@ public static final int *;
 #-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
 #---------------------------------第三方包-------------------------------
-# NumberPickerView
--keep class cn.carbswang.android.numberpickerview.library.**{*;}
 
 #Nordic  Bluetooth  dfu
 -keep class no.nordicsemi.android.dfu.** { *; }

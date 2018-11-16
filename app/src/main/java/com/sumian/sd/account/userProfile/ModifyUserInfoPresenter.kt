@@ -2,10 +2,10 @@ package com.sumian.sd.account.userProfile
 
 import android.text.TextUtils
 import android.view.View
-import cn.carbswang.android.numberpickerview.library.NumberPickerView
 import com.alibaba.fastjson.JSON
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.operator.AppOperator
+import com.sumian.common.widget.picker.NumberPickerView
 import com.sumian.hw.utils.StreamUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.City
