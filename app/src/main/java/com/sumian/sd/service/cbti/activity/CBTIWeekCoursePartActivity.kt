@@ -15,11 +15,13 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.service.cbti.bean.CBTIMeta
+import com.sumian.sd.service.cbti.contract.CBTIMessageBoardActionContract
 import com.sumian.sd.service.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sd.service.cbti.fragment.CourseFragment
 import com.sumian.sd.service.cbti.fragment.ExerciseFragment
 import com.sumian.sd.service.cbti.fragment.MessageBoardFragment
 import com.sumian.sd.service.cbti.model.CbtiChapterViewModel
+import com.sumian.sd.service.cbti.presenter.CBTIMessageBoardActionPresenter
 import com.sumian.sd.service.cbti.widget.adapter.EmptyOnTabSelectedListener
 import com.sumian.sd.service.cbti.widget.keyboard.MsgBoardKeyBoard
 import com.sumian.sd.widget.TitleBar
@@ -35,15 +37,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  *
  */
 class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener,
-        Observer<CBTIMeta>, MsgBoardKeyBoard.OnKeyBoardCallback {
-
-    private fun position(position: Int) {
-        tv_write_message?.visibility = if (position == 2) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-    }
+        Observer<CBTIMeta>, MsgBoardKeyBoard.OnKeyBoardCallback, CBTIMessageBoardActionContract.View {
 
     private var mChapterId = 1
     private var mCbtiType = 1
@@ -70,6 +64,11 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         return super.initBundle(bundle)
     }
 
+    override fun initPresenter() {
+        super.initPresenter()
+        CBTIMessageBoardActionPresenter.init(this)
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_main_cbti_week_lesson_part
     }
@@ -81,19 +80,19 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                position(position)
+                showMessageBoard(position)
             }
         })
         tab_layout.setupWithViewPager(view_pager, true)
         tab_layout.addOnTabSelectedListener(object : EmptyOnTabSelectedListener() {
             override fun onTabReselected(tab: TabLayout.Tab?) {
                 super.onTabReselected(tab)
-                position(tab?.position!!)
+                showMessageBoard(tab?.position!!)
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 super.onTabSelected(tab)
-                position(tab?.position!!)
+                showMessageBoard(tab?.position!!)
             }
         })
         tv_write_message.setOnClickListener {
@@ -140,11 +139,9 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         finish()
     }
 
-    override fun sendContent(content: String) {
-
-
+    override fun sendContent(content: String, anonymousType: Int) {
+        CBTIMessageBoardActionPresenter.init(this).publishMessage(message = content, type = mCbtiType, isAnonymous = anonymousType)
     }
-
 
     override fun onChanged(t: CBTIMeta?) {
         t?.let { it ->
@@ -172,5 +169,24 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
                 View.GONE
             }
         }
+    }
+
+    override fun onPublishMessageBoardSuccess(success: String) {
+        showMessageBoard(2)
+        keyboard.hide()
+        showCenterToast(success)
+    }
+
+    override fun onPublishMessageBoardFailed(error: String) {
+        showCenterToast(error)
+    }
+
+    private fun showMessageBoard(position: Int) {
+        tv_write_message?.visibility = if (position == 2) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+        keyboard.hide()
     }
 }

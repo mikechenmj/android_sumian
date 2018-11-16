@@ -5,7 +5,6 @@ import android.graphics.Paint
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.AttributeSet
-import cn.carbswang.android.numberpickerview.library.NumberPickerView
 
 class AutoScaleNumberPicker : NumberPickerView, NumberPickerView.OnValueChangeListenerInScrolling {
 

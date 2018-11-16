@@ -3,7 +3,7 @@ package com.sumian.sd.service.tel.sheet
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.view.View
-import cn.carbswang.android.numberpickerview.library.NumberPickerView
+import com.sumian.common.widget.picker.NumberPickerView
 import com.sumian.sd.R
 import com.sumian.sd.service.tel.contract.TelBookingSelectTimeContract
 import com.sumian.sd.service.tel.presenter.TelBookingSelectTimePresenter
