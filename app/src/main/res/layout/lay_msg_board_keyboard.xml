@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_shape_input"
         android:cursorVisible="true"
-        android:digits="@string/send"
         android:gravity="top"
         android:hint="@string/msg_board_hint"
         android:inputType="textMultiLine"
