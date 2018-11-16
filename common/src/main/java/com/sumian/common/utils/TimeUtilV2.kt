@@ -91,24 +91,19 @@ class TimeUtilV2 {
             return getDayStartCalendar(time).timeInMillis
         }
 
-        /**
-         * 获取入参时间戳所在周 周日0点时间
-         *
-         * @param time 某个时间戳
-         * @return 周日0点时间戳
-         */
+
+        fun getWeekStartDayCalendar(time: Long): Calendar {
+            val calendar = getDayStartCalendar(time)
+            calendar.set(Calendar.DAY_OF_WEEK, 1)
+            return calendar
+        }
+
         fun getWeekStartDayTime(time: Long): Long {
             val calendar = getDayStartCalendar(time)
             calendar.set(Calendar.DAY_OF_WEEK, 1)
             return calendar.timeInMillis
         }
 
-        /**
-         * 获取入参时间戳所在周 周六0点时间
-         *
-         * @param time 某个时间戳
-         * @return 周六0点时间戳
-         */
         fun getWeekEndDayTime(time: Long): Long {
             val calendar = getDayStartCalendar(time)
             calendar.set(Calendar.DAY_OF_WEEK, 7)
@@ -155,12 +150,24 @@ class TimeUtilV2 {
             calendar.time = Date(time)
         }
 
-        fun createDays(time: Long, dayCount: Int, increase: Boolean, include: Boolean): ArrayList<Long> {
+        fun createDays(time: Long, count: Int, increase: Boolean, include: Boolean): ArrayList<Long> {
             val calendar = getDayStartCalendar(time)
             val list = ArrayList<Long>()
-            for (i in 0..dayCount) {
+            for (i in 0..count) {
                 list.add(calendar.timeInMillis)
                 rollDay(calendar, if (increase) 1 else -1)
+            }
+            list.removeAt(if (include) list.size - 1 else 0)
+            list.sort()
+            return list
+        }
+
+        fun createWeeks(time: Long, count: Int, increase: Boolean, include: Boolean): ArrayList<Long> {
+            val calendar = getWeekStartDayCalendar(time)
+            val list = ArrayList<Long>()
+            for (i in 0..count) {
+                list.add(calendar.timeInMillis)
+                rollDay(calendar, if (increase) 7 else -7)
             }
             list.removeAt(if (include) list.size - 1 else 0)
             list.sort()

@@ -4,17 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.sumian.hw.report.weeklyreport.widget.WeeklyReportView
+        android:id="@+id/weekly_report_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/weekly_report_calendar_bar" />
-
-        <com.sumian.hw.report.weeklyreport.widget.WeeklyReportView
-            android:id="@+id/weekly_report_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </com.sumian.sd.widget.refresh.SumianRefreshLayout>
 
