@@ -104,6 +104,6 @@ class FilledScaleListFragment : BaseFragment() {
 class FilledScaleListAdapter : BaseQuickAdapter<FilledScale, BaseViewHolder>(R.layout.item_scale_filled) {
     override fun convert(helper: BaseViewHolder, item: FilledScale) {
         helper.setText(R.id.tv_scale_name, item.title)
-        helper.setText(R.id.tv_time, TimeUtilV2.formatTimeYYYYMMDD_HHMM(item.latest_scale_distribution.getUpdateAtInMillis()))
+        helper.setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMM(item.latest_scale_distribution.getUpdateAtInMillis()))
     }
 }

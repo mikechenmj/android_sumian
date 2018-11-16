@@ -7,7 +7,7 @@ import android.text.style.ForegroundColorSpan
 import com.google.gson.annotations.SerializedName
 import com.sumian.sd.R
 import com.sumian.sd.app.App
-import com.sumian.sd.service.util.TimeUtilV2
+import com.sumian.common.utils.TimeUtilV2
 import kotlinx.android.parcel.Parcelize
 
 /**

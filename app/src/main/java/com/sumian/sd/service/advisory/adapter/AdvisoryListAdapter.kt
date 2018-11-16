@@ -17,8 +17,7 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.app.App
-import com.sumian.sd.service.util.TimeUtilV2
-import com.sumian.sd.utils.TimeUtil
+import com.sumian.common.utils.TimeUtilV2
 import java.util.*
 
 @Suppress("DEPRECATION")

@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.anxiousandfaith.bean.AnxietyFaithItemViewData
-import com.sumian.sd.utils.getString
 import kotlinx.android.synthetic.main.view_anxious_belief_item.view.*
 
 /**
@@ -26,7 +25,7 @@ class AnxiousFaithItemView(context: Context, attributeSet: AttributeSet? = null)
     fun setData(data: AnxietyFaithItemViewData, listener: EditAnxietyBottomSheetDialog.OnItemClickListener) {
         tv_title.text = data.title
         tv_message.text = data.message
-        tv_time.text = TimeUtilV2.formatTimeYYYYMMDD_HHMM(data.time)
+        tv_time.text = TimeUtilV2.formatYYYYMMDDHHMM(data.time)
         iv_more.setOnClickListener { EditAnxietyBottomSheetDialog(context, listener).show() }
         if (data.type == AnxietyFaithItemViewData.TYPE_BELIEF) {
             vg_emotion.visibility = View.VISIBLE

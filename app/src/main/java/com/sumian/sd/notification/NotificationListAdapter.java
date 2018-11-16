@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.sd.R;
 import com.sumian.sd.notification.bean.Notification;
-import com.sumian.sd.service.util.TimeUtilV2;
 
 import java.util.List;
 

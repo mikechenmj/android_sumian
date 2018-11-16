@@ -13,7 +13,7 @@ import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingPublishContract
 import com.sumian.sd.service.tel.presenter.TelBookingPublishPresenter
 import com.sumian.sd.service.tel.sheet.TelBookingBottomSheet
-import com.sumian.sd.service.util.TimeUtilV2
+import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
 

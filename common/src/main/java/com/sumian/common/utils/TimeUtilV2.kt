@@ -13,6 +13,14 @@ import java.util.*
  */
 class TimeUtilV2 {
     companion object {
+        fun formatYYYYMMDD(time: Long): String {
+            return SimpleDateFormat("yyyy.MM.dd", Locale.getDefault()).format(time)
+        }
+
+        fun formatYYYYMMDD(unixTime: Int): String {
+            return formatYYYYMMDD(unixTime * 1000L)
+        }
+
         fun formatDate(pattern: String, timeInMillis: Long): String {
             val format = SimpleDateFormat(pattern, Locale.getDefault())
             return format.format(Date(timeInMillis))
@@ -22,11 +30,11 @@ class TimeUtilV2 {
             return formatDate("yyyy.MM.dd", time)
         }
 
-        fun formatTimeYYYYMMDD_HHMM(time: Long): String {
+        fun formatYYYYMMDDHHMM(time: Long): String {
             return formatDate("yyyy.MM.dd HH:mm", time)
         }
 
-        fun formatTimeYYYYMMDD_HHMM(unixTime: Int): String {
+        fun formatYYYYMMDDHHMM(unixTime: Int): String {
             return formatDate("yyyy.MM.dd HH:mm", unixTime * 1000L)
         }
 

@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.sd.R;
-import com.sumian.sd.service.util.TimeUtilV2;
+import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.sd.utils.TimeUtil;
 
 import java.util.ArrayList;
