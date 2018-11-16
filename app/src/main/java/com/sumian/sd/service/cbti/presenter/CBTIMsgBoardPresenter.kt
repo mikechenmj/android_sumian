@@ -87,28 +87,4 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
         mIsGetNext = true
         getMessageBoardList(mType)
     }
-
-    override fun publishMessage(message: String, isAnonymous: Int) {
-        mView?.onBegin()
-        val map = mutableMapOf<String, Any>()
-        map["type"] = mType
-        map["message"] = message
-        map["anonymous"] = isAnonymous
-        val call = AppManager.getSdHttpService().writeCBTIMessageBoard(map = map)
-        mCalls.add(call)
-        call.enqueue(object : BaseSdResponseCallback<Any>() {
-            override fun onSuccess(response: Any?) {
-                mView?.onPublishMessageBoardSuccess("留言成功")
-            }
-
-            override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onPublishMessageBoardFailed(error = errorResponse.message)
-            }
-
-            override fun onFinish() {
-                super.onFinish()
-                mView?.onFinish()
-            }
-        })
-    }
 }

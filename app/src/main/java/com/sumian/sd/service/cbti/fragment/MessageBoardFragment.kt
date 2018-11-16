@@ -80,7 +80,6 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
     override fun loadMore() {
         super.loadMore()
         mPresenter.getNextMessageBoardList()
-        mPresenter.publishMessage("这是一个测试留言版的提交")
     }
 
     override fun setPresenter(presenter: CBTIMessageBoardContract.Presenter?) {
@@ -105,17 +104,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
     }
 
     override fun onGetMessageBoardListFailed(error: String) {
-        onPublishMessageBoardFailed(error = error)
         mIsInit = false
-    }
-
-    override fun onPublishMessageBoardSuccess(success: String) {
-        mPresenter.refreshMessageBoardList()
-        onPublishMessageBoardFailed(error = success)
-    }
-
-    override fun onPublishMessageBoardFailed(error: String) {
-        showCenterToast(error)
     }
 
     override fun onChanged(t: CBTIMeta?) {
