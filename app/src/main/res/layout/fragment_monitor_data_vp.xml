@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.sd.diary.sleeprecord.widget.SleepDataDateBar
+        android:id="@+id/date_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager_monitor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/tv_is_syncing_hint"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@color/b5_color"
+                android:gravity="center"
+                android:text="@string/device_is_syncing_data_report_will_be_refresh_later"
+                android:textColor="@color/b2_color"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_sync_fail_hint"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@color/t4_color"
+                android:gravity="center"
+                android:text="@string/syncing_error_result"
+                android:textColor="@color/b2_color"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </FrameLayout>
+    </FrameLayout>
+
+</LinearLayout>

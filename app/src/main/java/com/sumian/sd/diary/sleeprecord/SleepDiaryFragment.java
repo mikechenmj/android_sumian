@@ -25,19 +25,18 @@ import retrofit2.Call;
 @SuppressWarnings("ALL")
 public class SleepDiaryFragment extends SdBaseFragment {
 
-    private static final String KEY_SLEEP_RECORD_TIME = "key_sleep_record_time";
+    private static final String KEY_TIME = "key_time";
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
 
     View mToolbar;
     SleepRecordView mSleepRecordView;
     private long mSelectedTime = System.currentTimeMillis();
     private CalendarPopup mCalendarPopup;
-    private long mInitTime = 0;
     private SumianRefreshLayout mRefreshLayout;
 
     public static SleepDiaryFragment newInstance(long time) {
         Bundle bundle = new Bundle();
-        bundle.putLong(KEY_SLEEP_RECORD_TIME, time);
+        bundle.putLong(KEY_TIME, time);
         SleepDiaryFragment sleepDiaryFragment = new SleepDiaryFragment();
         sleepDiaryFragment.setArguments(bundle);
         return sleepDiaryFragment;
@@ -86,14 +85,14 @@ public class SleepDiaryFragment extends SdBaseFragment {
                 .show();
     }
 
-    public long getInitTime() {
-        return getArguments().getLong(KEY_SLEEP_RECORD_TIME);
+    public long getSelectedTime() {
+        return mSelectedTime;
     }
 
     @Override
     protected void initData() {
         super.initData();
-        changeSelectTime(getInitTime());
+        changeSelectTime(getArguments().getLong(KEY_TIME));
     }
 
     private void launchFillSleepRecordActivity(long time) {

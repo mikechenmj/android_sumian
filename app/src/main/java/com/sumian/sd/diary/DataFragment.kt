@@ -12,8 +12,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.AutoSyncDeviceDataUtil
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.event.ChangeDataFragmentTabEvent
-import com.sumian.sd.diary.monitorrecord.MonitorDataFragment
-import com.sumian.sd.diary.sleeprecord.SleepDiaryFragment
+import com.sumian.sd.diary.monitorrecord.MonitorDataVpFragment
 import com.sumian.sd.diary.sleeprecord.SleepDiaryVpFragment
 import com.sumian.sd.event.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_data.*
@@ -58,8 +57,8 @@ class DataFragment : BaseFragment() {
         super.onHiddenChanged(hidden)
         if (!hidden) {
             val findFragmentByTag = fragmentManager?.findFragmentByTag(TAGS[mCurrentPosition])
-            if (findFragmentByTag is MonitorDataFragment) {
-                findFragmentByTag.updateCurrentTimeData()
+            if (findFragmentByTag is MonitorDataVpFragment) {
+//                findFragmentByTag.updateCurrentTimeData()
             }
         }
     }
@@ -84,7 +83,8 @@ class DataFragment : BaseFragment() {
             override fun createFragmentByPosition(position: Int): Fragment {
                 return when (position) {
                     0 -> SleepDiaryVpFragment()
-                    else -> MonitorDataFragment()
+                    else -> MonitorDataVpFragment()
+//                    else -> MonitorDataFragment.newInstance(TimeUtilV2.getDayStartTime(System.currentTimeMillis()))
                 }
             }
         })
