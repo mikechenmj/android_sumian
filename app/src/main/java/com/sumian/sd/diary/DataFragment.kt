@@ -14,6 +14,7 @@ import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.diary.monitorrecord.MonitorDataFragment
 import com.sumian.sd.diary.sleeprecord.SleepDiaryFragment
+import com.sumian.sd.diary.sleeprecord.SleepDiaryVpFragment
 import com.sumian.sd.event.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_data.*
 import org.greenrobot.eventbus.Subscribe
@@ -82,7 +83,7 @@ class DataFragment : BaseFragment() {
         FragmentUtil.switchFragment(R.id.fl_container, fragmentManager!!, TAGS, position, object : FragmentUtil.FragmentCreator {
             override fun createFragmentByPosition(position: Int): Fragment {
                 return when (position) {
-                    0 -> SleepDiaryFragment()
+                    0 -> SleepDiaryVpFragment()
                     else -> MonitorDataFragment()
                 }
             }
