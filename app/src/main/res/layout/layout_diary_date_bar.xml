@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/space_62"
     android:background="@color/white"
-    tools:showIn="@layout/fragment_sleep_record">
+    tools:showIn="@layout/fragment_sleep_diary">
 
     <TextView
         android:id="@+id/tv_date"

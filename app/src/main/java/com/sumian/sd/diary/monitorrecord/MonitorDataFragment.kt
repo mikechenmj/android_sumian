@@ -25,7 +25,7 @@ import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.UploadSleepDataFinishedEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.utils.TimeUtil
-import kotlinx.android.synthetic.main.fragment_daily_report_v2.*
+import kotlinx.android.synthetic.main.fragment_monitor_data.*
 import kotlinx.android.synthetic.main.layout_diary_date_bar.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -38,14 +38,14 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class DailyReportFragmentV2 : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, CalendarView.OnDateClickListener {
+class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, CalendarView.OnDateClickListener {
 
     private var mSelectedTime = System.currentTimeMillis()
     private var mCalendarPopup: CalendarPopup? = null
     private val mHandler: Handler = Handler()
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_daily_report_v2
+        return R.layout.fragment_monitor_data
     }
 
     override fun initWidget() {

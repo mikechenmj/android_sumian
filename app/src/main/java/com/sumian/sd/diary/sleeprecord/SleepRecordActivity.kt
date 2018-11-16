@@ -49,7 +49,7 @@ class SleepRecordActivity : SdBaseActivity<SdBasePresenter<Any>>() {
     override fun initWidget(root: android.view.View) {
         title_bar.setOnBackClickListener { onBackPressed() }
 
-        val sleepRecordFragment = SleepRecordFragment.newInstance(intent?.getLongExtra(KEY_SLEEP_RECORD_TIME, 0L)
+        val sleepRecordFragment = SleepDiaryFragment.newInstance(intent?.getLongExtra(KEY_SLEEP_RECORD_TIME, 0L)
                 ?: 0L, false)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.fl_content, sleepRecordFragment)

@@ -34,7 +34,7 @@ import java.util.Set;
 import retrofit2.Call;
 
 @SuppressWarnings("ALL")
-public class SleepRecordFragment extends SdBaseFragment implements CalendarView.OnDateClickListener, View.OnClickListener {
+public class SleepDiaryFragment extends SdBaseFragment implements CalendarView.OnDateClickListener, View.OnClickListener {
 
     public static final int DATE_ARROW_CLICK_COLD_TIME = 300;
     public static final int REQUEST_CODE_FILL_SLEEP_RECORD = 1;
@@ -53,18 +53,18 @@ public class SleepRecordFragment extends SdBaseFragment implements CalendarView.
     private long mInitTime;
     private CalendarPopup mCalendarPopup;
 
-    public static SleepRecordFragment newInstance(long scrollToTime, boolean needScrollToBottom) {
+    public static SleepDiaryFragment newInstance(long scrollToTime, boolean needScrollToBottom) {
         Bundle bundle = new Bundle();
         bundle.putLong(KEY_SLEEP_RECORD_TIME, scrollToTime);
         bundle.putBoolean(KEY_SCROLL_TO_BOTTOM, needScrollToBottom);
-        SleepRecordFragment sleepRecordFragment = new SleepRecordFragment();
-        sleepRecordFragment.setArguments(bundle);
-        return sleepRecordFragment;
+        SleepDiaryFragment sleepDiaryFragment = new SleepDiaryFragment();
+        sleepDiaryFragment.setArguments(bundle);
+        return sleepDiaryFragment;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_sleep_record;
+        return R.layout.fragment_sleep_diary;
     }
 
     @Override
