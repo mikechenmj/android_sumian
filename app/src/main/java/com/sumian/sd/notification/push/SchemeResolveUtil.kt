@@ -67,7 +67,6 @@ class SchemeResolveUtil {
 
         private fun createSchemeResolver(uri: Uri): SchemeResolver? {
             return when (uri.host) {
-                "diaries" -> DiarySchemeResolver()
                 "online-reports" -> OnlineReportSchemeResolver()
                 "refund" -> RefundSchemeResolver()
                 "advisories" -> AdvisoriesSchemeResolver()

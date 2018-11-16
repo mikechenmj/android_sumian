@@ -328,13 +328,6 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".diary.sleeprecord.SleepRecordActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".account.userProfile.MyTargetAndInformationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
