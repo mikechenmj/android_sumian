@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/space_10"
         android:orientation="horizontal">
 
-        <com.sumian.sd.account.AutoScaleNumberPicker
+        <com.sumian.common.widget.picker.AutoScaleNumberPicker
             android:id="@+id/picker_one"
             android:layout_width="0dp"
             android:layout_height="@dimen/space_170"
@@ -45,7 +45,7 @@
             app:npv_WrapSelectorWheel="true"
             tools:visibility="visible" />
 
-        <com.sumian.sd.account.AutoScaleNumberPicker
+        <com.sumian.common.widget.picker.AutoScaleNumberPicker
             android:id="@+id/picker_two"
             android:layout_width="0dp"
             android:layout_height="@dimen/space_170"
@@ -68,7 +68,7 @@
             app:npv_WrapSelectorWheel="true"
             tools:visibility="visible" />
 
-        <com.sumian.sd.account.AutoScaleNumberPicker
+        <com.sumian.common.widget.picker.AutoScaleNumberPicker
             android:id="@+id/picker_three"
             android:layout_width="0dp"
             android:layout_height="@dimen/space_170"

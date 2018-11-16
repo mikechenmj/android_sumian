@@ -324,7 +324,6 @@ dependencies {
 
     // RecyclerViewPager
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
-    implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
 
     //implementation 'com.github.wendux:DSBridge-Android:x5-3.0-SNAPSHOT'
 

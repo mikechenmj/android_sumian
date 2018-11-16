@@ -200,6 +200,7 @@
     <string name="course">课程</string>
     <string name="practice">练习</string>
     <string name="review">复习</string>
+    <string name="message_board">留言</string>
     <string name="learn">学习</string>
     <string name="lesson_practice">课程练习</string>
     <string name="lesson_list">课程表</string>
@@ -663,4 +664,11 @@
     <string name="little_sleep">小睡</string>
     <string name="pills_history">服药记录</string>
     <string name="please_check_items_below">请检查以下情况：</string>
+    <string name="write_message">写留言</string>
+    <string name="anonymous_nickname">匿名用户</string>
+    <string name="ssd_replay">速眠医生回复：</string>
+    <string name="message_board_empty_hint">- 期待您写下这里的第一条留言 -</string>
+    <string name="msg_board_hint">写下你想说的话</string>
+    <string name="send">发送</string>
+    <string name="anonymous_submit">匿名提交</string>
 </resources>
