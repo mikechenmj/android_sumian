@@ -61,7 +61,7 @@ class NotificationUtil {
         fun showNotification(context: Context?,
                              contentText: String,
                              notificationId: String,
-                             notificationDataId: String,
+                             notificationDataId: Int?,
                              intent: Intent) {
             if (context == null) return
             createNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME)

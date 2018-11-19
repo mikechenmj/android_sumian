@@ -56,13 +56,14 @@ class SchemeResolveUtil {
             return uri.getQueryParameter("notification_id")
         }
 
-        fun getNotificationDataIdFromScheme(scheme: String?): String? {
+        fun getNotificationDataIdFromScheme(scheme: String?): Int? {
             if (TextUtils.isEmpty(scheme)) {
                 return null
             }
             val decodedScheme = URLDecoder.decode(scheme, "UTF-8")
             val uri = Uri.parse(decodedScheme)
-            return uri.getQueryParameter("data_id")
+            val data_id = uri.getQueryParameter("data_id")
+            return if (data_id == null) null else data_id.toInt()
         }
 
         private fun createSchemeResolver(uri: Uri): SchemeResolver? {

@@ -20,7 +20,7 @@ class NotificationListContract {
     interface Presenter extends SdBasePresenter {
         void loadData(boolean isInitLoad);
 
-        void readNotification(String notificationId, String notificationDataId);
+        void readNotification(String notificationId, int notificationDataId);
     }
 
     interface View extends SdBaseView<Presenter> {

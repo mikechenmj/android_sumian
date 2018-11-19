@@ -198,7 +198,7 @@ interface SdApi {
      */
     @PATCH("notifications/{id}")
     fun readNotification(@Path("id") notificationId: String,
-                         @Query("data_id") dataId: String?): Call<Any>
+                         @Query("data_id") dataId: Int?): Call<Any>
 
     // ---------- scale ----------
     @GET("scale-distributions")

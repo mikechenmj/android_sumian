@@ -120,25 +120,25 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     }
 
     private void markAsRead(Notification notification, int position) {
-        mPresenter.readNotification(notification.getId(), notification.getData_id());
-        notification.setRead_at((int) (System.currentTimeMillis() / 1000L));
+        mPresenter.readNotification(notification.getId(), notification.getDataId());
+        notification.setReadAt((int) (System.currentTimeMillis() / 1000L));
         mAdapter.setData(position, notification);
     }
 
     private void markAllAsRead() {
-        mPresenter.readNotification("0", null);
+        mPresenter.readNotification("0", 0);
         List<Notification> data = mAdapter.getData();
         long currentTimeMillis = System.currentTimeMillis();
         for (Notification notification : data) {
-            notification.setRead_at((int) (currentTimeMillis / 1000L));
+            notification.setReadAt((int) (currentTimeMillis / 1000L));
         }
         mAdapter.notifyDataSetChanged();
     }
 
     private void launchActivityIfNeed(Notification notification) {
         String type = notification.getType();
-        if (Notification.TYPE_FOLLOW_UP_LIFE_NOTICE.equals(type)
-                || Notification.TYPE_FOLLOW_UP_REFERRAL_NOTICE.equals(type)) {
+        if (Notification.Companion.getTYPE_FOLLOW_UP_LIFE_NOTICE().equals(type)
+                || Notification.Companion.getTYPE_FOLLOW_UP_REFERRAL_NOTICE().equals(type)) {
             return;
         }
         String scheme = notification.getData().getScheme();

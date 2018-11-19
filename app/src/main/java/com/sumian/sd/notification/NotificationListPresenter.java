@@ -64,7 +64,7 @@ public class NotificationListPresenter implements NotificationListContract.Prese
      * @param notificationId notification id or "0" for reading all
      */
     @Override
-    public void readNotification(String notificationId, String notificationDataId) {
+    public void readNotification(String notificationId, int notificationDataId) {
         Call<Object> call = AppManager.getSdHttpService().readNotification(notificationId, notificationDataId);
         addCall(call);
         call.enqueue(new BaseSdResponseCallback<Object>() {

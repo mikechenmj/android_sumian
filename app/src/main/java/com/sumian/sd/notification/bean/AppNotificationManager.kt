@@ -18,7 +18,7 @@ import com.sumian.sd.network.callback.BaseSdResponseCallback
 class AppNotificationManager {
     companion object {
 
-        fun markNotificationAsRead(notificationId: String?, data_id: String? = null) {
+        fun markNotificationAsRead(notificationId: String?, data_id: Int? = null) {
             if (TextUtils.isEmpty(notificationId)) {
                 return
             }
