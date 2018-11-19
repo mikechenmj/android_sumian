@@ -8,9 +8,13 @@
     android:paddingLeft="@dimen/activity_horizontal_padding"
     android:paddingRight="@dimen/activity_horizontal_padding">
 
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <TextView
         style="@style/text_t3_style"
-        android:layout_marginTop="@dimen/space_80"
         android:text="@string/hello_comment"
         android:textColor="@color/t3_color"
         android:textSize="@dimen/font_30" />
@@ -20,11 +24,15 @@
         android:layout_marginTop="@dimen/space_10"
         android:text="@string/welcome_use_this_app_please_login" />
 
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <com.sumian.sd.account.login.SumianEditText
         android:id="@+id/et_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_90"
         android:layout_marginBottom="@dimen/space_20"
         app:set_hint="@string/input_phone_hint"
         app:set_input_type="number"
