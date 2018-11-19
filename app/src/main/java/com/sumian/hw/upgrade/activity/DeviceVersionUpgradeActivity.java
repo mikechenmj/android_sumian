@@ -16,10 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.common.base.BaseActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.utils.SumianExecutor;
 import com.sumian.common.widget.TitleBar;
-import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.dialog.Version2ConnectingDialog;
@@ -48,7 +48,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
+public class DeviceVersionUpgradeActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
         , VersionUpgradeContract.View, EasyPermissions.PermissionCallbacks {
     private static final String EXTRA_VERSION_TYPE = "extra_version_type";
     private static final String EXTRA_VERSION_IS_LATEST = "extra_version_latest";
@@ -83,59 +83,6 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
         intent.putExtra(EXTRA_VERSION_TYPE, versionType);
         intent.putExtra(EXTRA_VERSION_IS_LATEST, haveLatestVersion);
         context.startActivity(intent);
-    }
-
-    @Override
-    protected boolean initBundle(Bundle bundle) {
-        mVersionType = bundle.getInt(EXTRA_VERSION_TYPE);
-        mIsLatestVersion = bundle.getBoolean(EXTRA_VERSION_IS_LATEST);
-        DeviceVersionUpgradePresenter.init(this);
-        return super.initBundle(bundle);
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.hw_activity_main_version_upgrade;
-    }
-
-    @Override
-    protected void initWidget() {
-        super.initWidget();
-        TitleBar titleBar = findViewById(R.id.title_bar);
-        titleBar.setOnBackClickListener(this);
-        titleBar.setTitle(mVersionType == VERSION_TYPE_MONITOR ? "监测仪升级" : "速眠仪升级");
-        mIvUpgrade = findViewById(R.id.iv_upgrade);
-        mTvVersionLatest = findViewById(R.id.tv_version_latest);
-        mTvVersionCurrent = findViewById(R.id.tv_version_current);
-        mBtDownload = findViewById(R.id.bt_download);
-        findViewById(R.id.bt_download).setOnClickListener(this);
-        mPresenter.showDfuProgressNotification(this);
-        DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener);
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
-        String newVersion = null;
-        String currentVersion = null;
-        switch (mVersionType) {
-            case VERSION_TYPE_MONITOR:
-                newVersion = AppManager.getVersionModel().getMonitorVersion().getVersion();
-                currentVersion = DeviceManager.INSTANCE.getMonitorVersion();
-                break;
-            case VERSION_TYPE_SLEEPY:
-                newVersion = AppManager.getVersionModel().getSleepyVersion().getVersion();
-                currentVersion = DeviceManager.INSTANCE.getSleeperVersion();
-                break;
-            default:
-                break;
-        }
-
-        mIvUpgrade.setImageResource(mIsLatestVersion ? R.mipmap.set_icon_download : R.mipmap.set_icon_success);
-        mTvVersionLatest.setText(mIsLatestVersion ? String.format(Locale.getDefault(), getString(R.string.latest_version), newVersion) : getString(R.string.firmware_note_hint));
-        mTvVersionCurrent.setText(String.format(Locale.getDefault(), getString(R.string.current_version_hint), currentVersion));
-        mBtDownload.setText(mIsLatestVersion ? R.string.firmware_download_hint : R.string.firmware_upgrade_hint);
-        mBtDownload.setVisibility(mIsLatestVersion ? View.VISIBLE : View.GONE);
     }
 
     private DfuProgressListener mDfuProgressListener = new DfuProgressListener() {
@@ -235,13 +182,13 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
         @Override
         public void onError(String deviceAddress, int error, int errorType, String message) {
             if (mDfuCount > 2) {
-                runUiThread(() -> {
+                SumianExecutor.INSTANCE.runOnUiThread(() -> {
                     ToastHelper.show(R.string.firmware_upgrade_failed_hint);
                     cancelDialog();
                 });
             } else {
                 mDfuCount++;
-                runUiThread(() -> mPresenter.upgrade(mVersionType), 1000);
+                SumianExecutor.INSTANCE.runOnUiThread(() -> mPresenter.upgrade(mVersionType), 1000);
             }
             if (error == 4096) {
                 AppManager.getBlueManager().refresh();
@@ -249,6 +196,58 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
             LogManager.appendUserOperationLog("设备 dfu 固件升级失败  mac=" + deviceAddress + "  error=" + error + "  errorMessage=" + message);
         }
     };
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.hw_activity_main_version_upgrade;
+    }
+
+    @Override
+    protected void initWidget() {
+        super.initWidget();
+        TitleBar titleBar = findViewById(R.id.title_bar);
+        titleBar.setOnBackClickListener(this);
+        titleBar.setTitle(mVersionType == VERSION_TYPE_MONITOR ? "监测仪升级" : "速眠仪升级");
+        mIvUpgrade = findViewById(R.id.iv_upgrade);
+        mTvVersionLatest = findViewById(R.id.tv_version_latest);
+        mTvVersionCurrent = findViewById(R.id.tv_version_current);
+        mBtDownload = findViewById(R.id.bt_download);
+        findViewById(R.id.bt_download).setOnClickListener(this);
+        mPresenter.showDfuProgressNotification(this);
+        DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        String newVersion = null;
+        String currentVersion = null;
+        switch (mVersionType) {
+            case VERSION_TYPE_MONITOR:
+                newVersion = AppManager.getVersionModel().getMonitorVersion().getVersion();
+                currentVersion = DeviceManager.INSTANCE.getMonitorVersion();
+                break;
+            case VERSION_TYPE_SLEEPY:
+                newVersion = AppManager.getVersionModel().getSleepyVersion().getVersion();
+                currentVersion = DeviceManager.INSTANCE.getSleeperVersion();
+                break;
+            default:
+                break;
+        }
+
+        mIvUpgrade.setImageResource(mIsLatestVersion ? R.mipmap.set_icon_download : R.mipmap.set_icon_success);
+        mTvVersionLatest.setText(mIsLatestVersion ? String.format(Locale.getDefault(), getString(R.string.latest_version), newVersion) : getString(R.string.firmware_note_hint));
+        mTvVersionCurrent.setText(String.format(Locale.getDefault(), getString(R.string.current_version_hint), currentVersion));
+        mBtDownload.setText(mIsLatestVersion ? R.string.firmware_download_hint : R.string.firmware_upgrade_hint);
+        mBtDownload.setVisibility(mIsLatestVersion ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    protected void initBundle(Bundle bundle) {
+        mVersionType = bundle.getInt(EXTRA_VERSION_TYPE);
+        mIsLatestVersion = bundle.getBoolean(EXTRA_VERSION_IS_LATEST);
+        DeviceVersionUpgradePresenter.init(this);
+    }
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
@@ -361,7 +360,7 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
 
     @Override
     public void onDownloadFirmwareSuccess() {
-        runUiThread(() -> {
+        SumianExecutor.INSTANCE.runOnUiThread(() -> {
             mIvUpgrade.setImageResource(R.mipmap.set_icon_upgrade);
             mBtDownload.setText(R.string.firmware_upgrade_hint);
             mVersionDialog.cancel();
@@ -371,7 +370,7 @@ public class DeviceVersionUpgradeActivity extends HwBaseActivity implements View
 
     @Override
     public void onDownloadFirmwareFailed(String error) {
-        runUiThread(() -> {
+        SumianExecutor.INSTANCE.runOnUiThread(() -> {
             mBtDownload.setText(R.string.firmware_download_hint);
             mVersionDialog.cancel();
             ToastHelper.show(error);
