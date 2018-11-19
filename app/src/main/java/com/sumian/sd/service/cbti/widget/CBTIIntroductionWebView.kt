@@ -5,7 +5,6 @@ package com.sumian.sd.service.cbti.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.webkit.WebView
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.BridgeHandler
@@ -25,6 +24,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.pay.activity.PaymentActivity
+import com.tencent.smtt.sdk.WebView
 
 /**
  * CBTI  介绍购买页 webView

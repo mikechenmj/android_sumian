@@ -1,8 +1,8 @@
 package com.sumian.common.h5
 
 import android.content.Context
-import android.webkit.WebResourceResponse
 import com.sumian.common.h5.widget.SWebView
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse
 import java.io.IOException
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")

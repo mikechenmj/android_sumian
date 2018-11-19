@@ -41,6 +41,11 @@
         <activity android:name=".media.LargeImageActivity" />
         <activity android:name=".media.SelectImageActivity" />
 
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" />
+
     </application>
 
 </manifest>

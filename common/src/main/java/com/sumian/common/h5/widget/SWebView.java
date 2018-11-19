@@ -4,19 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.webkit.SslErrorHandler;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
@@ -26,6 +18,16 @@ import com.sumian.common.BuildConfig;
 import com.sumian.common.dns.IHttpDns;
 import com.sumian.common.h5.WebViewManger;
 import com.sumian.common.h5.factory.WebViewTlsSniSocketFactory;
+import com.tencent.smtt.export.external.interfaces.SslError;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -47,7 +49,6 @@ import javax.net.ssl.SSLSession;
  * on 2018/5/24 17:08
  * desc:
  **/
-@SuppressWarnings("ALL")
 public class SWebView extends BridgeWebView {
 
     private static final String TAG = SWebView.class.getSimpleName();
@@ -85,7 +86,7 @@ public class SWebView extends BridgeWebView {
 
     private void initView() {
         if (BuildConfig.DEBUG) {
-            setWebContentsDebuggingEnabled(true);
+            WebView.setWebContentsDebuggingEnabled(true);
         }
 
         initWebSettings();
@@ -107,7 +108,7 @@ public class SWebView extends BridgeWebView {
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+            webSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         }
     }
 
@@ -308,7 +309,7 @@ public class SWebView extends BridgeWebView {
         }
 
         @Override
-        public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
+        public void onPageStarted(@NotNull WebView webView, @NotNull String s, @NotNull Bitmap bitmap) {
             super.onPageStarted(webView, s, bitmap);
             if (isDebug()) {
                 Log.e(TAG, "onPageStarted: ----------->" + s);
@@ -511,9 +512,9 @@ public class SWebView extends BridgeWebView {
         /**
          * if not interceptor return null, else return non null
          *
-         * @param view
-         * @param request
-         * @return
+         * @param view    view
+         * @param request request
+         * @return WebResourceResponse
          */
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request);
     }

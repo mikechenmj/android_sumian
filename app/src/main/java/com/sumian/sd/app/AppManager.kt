@@ -167,7 +167,7 @@ object AppManager {
             LeanCloudManager.init(context)
             DeviceManager.init()
             initUtils(context)
-            initWebView()
+            initWebView(context)
         }
     }
 
@@ -177,8 +177,9 @@ object AppManager {
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
     }
 
-    private fun initWebView() {
+    private fun initWebView(context: Context) {
         val webViewManger = WebViewManger.getInstance()
+        webViewManger.registerX5WebView(context)
         webViewManger.setBaseUrl(BuildConfig.BASE_H5_URL)
         mHttpDns?.let {
             webViewManger.registerHttpDnsEngine(it)
