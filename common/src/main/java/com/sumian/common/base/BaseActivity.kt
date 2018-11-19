@@ -4,8 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.widget.LinearLayout
+import com.sumian.common.R
 import com.sumian.common.dialog.LoadingDialog
 import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.widget.TitleBar
 import retrofit2.Call
 
 /**
@@ -18,6 +22,18 @@ import retrofit2.Call
  */
 abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
+    protected val mBackRootView: LinearLayout  by lazy {
+        val layout = findViewById<LinearLayout>(R.id.lay_child_content_container)
+                ?: throw RuntimeException("please return true in showBackNav()")
+        layout
+    }
+
+    protected val mTitleBar: TitleBar by lazy {
+        val titleBar = findViewById<TitleBar>(R.id.title_bar)
+                ?: throw RuntimeException("please return true in showBackNav()")
+        titleBar
+    }
+
     private val mLoadingDialog: LoadingDialog by lazy {
         LoadingDialog(this)
     }
@@ -28,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         checkBundle(intent)
-        setContentView(getLayoutId())
+        setContentView(if (showBackNav()) R.layout.activity_main_back_container else getLayoutId())
         initWidgetBefore()
         initWidget()
         initData()
@@ -82,7 +98,13 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
     protected open fun initData() {}
 
-    protected open fun initWidget() {}
+    protected open fun initWidget() {
+        if (showBackNav()) {
+            mTitleBar.setOnBackClickListener { onBackPressed() }
+            val childContent = LayoutInflater.from(this).inflate(getLayoutId(), mBackRootView, false)
+            mBackRootView.addView(childContent)
+        }
+    }
 
     protected open fun onRelease() {}
 
@@ -111,5 +133,13 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
     fun addCall(call: Call<*>) {
         mCalls.add(call)
+    }
+
+    open fun showBackNav(): Boolean {
+        return false
+    }
+
+    override fun setTitle(titleId: Int) {
+        mTitleBar.setTitle(resources.getString(titleId))
     }
 }

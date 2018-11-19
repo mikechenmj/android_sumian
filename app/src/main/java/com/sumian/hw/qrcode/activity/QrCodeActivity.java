@@ -13,7 +13,7 @@ import android.view.View;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.common.base.BaseActivity;
+import com.sumian.common.base.BasePresenterActivity;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.qrcode.fragment.InputSnFragment;
 import com.sumian.hw.qrcode.fragment.QrCodeFragment;
@@ -22,7 +22,7 @@ import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.command.BlueCmd;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeActivity extends BaseActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
+public class QrCodeActivity extends BasePresenterActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
 
     private ViewPager mViewPager;
     private TitleBar mTitleBar;

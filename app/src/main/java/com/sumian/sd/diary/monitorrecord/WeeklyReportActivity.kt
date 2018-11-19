@@ -11,7 +11,8 @@ import com.alibaba.fastjson.JSONArray
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.JsonObject
-import com.sumian.common.base.BaseBackActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.hw.report.weeklyreport.CalendarItemSleepReport
@@ -32,7 +33,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class WeeklyReportActivity : BaseBackActivity() {
+class WeeklyReportActivity : BasePresenterActivity<IPresenter>() {
     private val mAdapter by lazy { InnerPagerAdapter(supportFragmentManager!!) }
 
     companion object {
@@ -45,7 +46,11 @@ class WeeklyReportActivity : BaseBackActivity() {
         }
     }
 
-    override fun getChildContentId(): Int {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_weekly_report
     }
 

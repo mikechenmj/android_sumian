@@ -4,13 +4,18 @@ import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseBackActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.activity_main_advisory.*
 
-class ScaleListActivity : BaseBackActivity() {
+class ScaleListActivity : BasePresenterActivity<IPresenter>() {
 
-    override fun getChildContentId(): Int {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_scale_list
     }
 

@@ -1,11 +1,12 @@
 package com.sumian.sd.device
 
 import android.support.v4.app.Fragment
-import com.sumian.common.base.BaseBackActivity
-import com.sumian.sd.device.bean.BlueDevice
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.hw.utils.FragmentUtil.Companion.switchFragment
 import com.sumian.sd.R
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.device.scan.ScanDeviceFragment
 
 /**
@@ -15,7 +16,7 @@ import com.sumian.sd.device.scan.ScanDeviceFragment
  * desc   :
  * version: 1.0
  */
-class DeviceManageActivity : BaseBackActivity() {
+class DeviceManageActivity : BasePresenterActivity<IPresenter>() {
 
     companion object {
         private val FRAGMENT_TAGS = arrayOf(DeviceManageFragment::class.java.simpleName, ScanDeviceFragment::class.java.simpleName)
@@ -23,7 +24,11 @@ class DeviceManageActivity : BaseBackActivity() {
 
     private var mCurrentFragmentIndex = 0
 
-    override fun getChildContentId(): Int {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_device_manage
     }
 

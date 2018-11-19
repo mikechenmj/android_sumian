@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.common.base.BaseActivity;
+import com.sumian.common.base.BasePresenterActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.utils.SumianExecutor;
 import com.sumian.common.widget.TitleBar;
@@ -48,7 +48,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DeviceVersionUpgradeActivity extends BaseActivity implements View.OnClickListener, TitleBar.OnBackClickListener
+public class DeviceVersionUpgradeActivity extends BasePresenterActivity implements View.OnClickListener, TitleBar.OnBackClickListener
         , VersionUpgradeContract.View, EasyPermissions.PermissionCallbacks {
     private static final String EXTRA_VERSION_TYPE = "extra_version_type";
     private static final String EXTRA_VERSION_IS_LATEST = "extra_version_latest";
@@ -243,7 +243,7 @@ public class DeviceVersionUpgradeActivity extends BaseActivity implements View.O
     }
 
     @Override
-    protected void initBundle(Bundle bundle) {
+    protected void initBundle(@NonNull Bundle bundle) {
         mVersionType = bundle.getInt(EXTRA_VERSION_TYPE);
         mIsLatestVersion = bundle.getBoolean(EXTRA_VERSION_IS_LATEST);
         DeviceVersionUpgradePresenter.init(this);

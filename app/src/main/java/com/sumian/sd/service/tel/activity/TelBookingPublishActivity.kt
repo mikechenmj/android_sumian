@@ -6,14 +6,14 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseBackPresenterActivity
+import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingPublishContract
 import com.sumian.sd.service.tel.presenter.TelBookingPublishPresenter
 import com.sumian.sd.service.tel.sheet.TelBookingBottomSheet
-import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
 
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
  * desc:电话预约服务
  *
  */
-class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishContract.Presenter>(), View.OnClickListener,
+class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContract.Presenter>(), View.OnClickListener,
         TelBookingPublishContract.View, TelBookingBottomSheet.OnSelectTelBookingCallback {
 
     companion object {
@@ -59,7 +59,11 @@ class TelBookingPublishActivity : BaseBackPresenterActivity<TelBookingPublishCon
         this.mTelBooking = bundle.getParcelable(EXTRA_TEL_BOOKING)
     }
 
-    override fun getChildContentId(): Int {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_main_publish_tel_booking
     }
 

@@ -11,7 +11,8 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
-import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.common.utils.SumianExecutor
@@ -45,7 +46,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : BaseActivity(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
 
     companion object {
         const val TAB_INVALID = -1
