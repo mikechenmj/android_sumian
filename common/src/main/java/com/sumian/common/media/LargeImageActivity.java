@@ -25,9 +25,9 @@ import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.sumian.common.R;
 import com.sumian.common.base.BaseActivity;
-import com.sumian.common.operator.AppOperator;
 import com.sumian.common.utils.BitmapUtil;
 import com.sumian.common.utils.StreamUtil;
+import com.sumian.common.utils.SumianExecutor;
 import com.sumian.common.widget.Loading;
 
 import java.io.File;
@@ -134,7 +134,7 @@ public class LargeImageActivity extends BaseActivity implements EasyPermissions.
                 .load(mPath)
                 .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL);
 
-        AppOperator.runOnThread(() -> {
+        SumianExecutor.INSTANCE.runOnBackgroundThread(() -> {
             try {
                 File sourceFile = future.get();
                 if (sourceFile == null || !sourceFile.exists())

@@ -4,7 +4,7 @@ import android.text.TextUtils
 import android.view.View
 import com.alibaba.fastjson.JSON
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.operator.AppOperator
+import com.sumian.common.utils.SumianExecutor
 import com.sumian.common.widget.picker.NumberPickerView
 import com.sumian.hw.utils.StreamUtil
 import com.sumian.sd.R
@@ -198,9 +198,9 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     }
 
     override fun transformCityForProvince(province: String) {
-        AppOperator.runOnThread {
+        SumianExecutor.runOnBackgroundThread {
             val provinces = this.mProvinces
-            if (provinces == null || provinces.isEmpty()) return@runOnThread
+            if (provinces == null || provinces.isEmpty()) return@runOnBackgroundThread
 
             var p: Province? = null
             var i = 0
@@ -217,7 +217,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     }
 
     override fun transformAreaForCity(city: String) {
-        AppOperator.runOnThread {
+        SumianExecutor.runOnBackgroundThread {
             var areas: MutableList<String>? = null
             for ((key) in mMapArea!!) {
                 if (key.name == city) {
@@ -315,9 +315,9 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     }
 
     private fun transformProvince() {
-        AppOperator.runOnThread {
+        SumianExecutor.runOnBackgroundThread {
             val provinceJson = StreamUtil.getJson("province.json")
-            if (TextUtils.isEmpty(provinceJson)) return@runOnThread
+            if (TextUtils.isEmpty(provinceJson)) return@runOnBackgroundThread
             val provinces = JSON.parseArray(provinceJson, Province::class.java)
             var mapArea: MutableMap<City, MutableList<String>>? = mMapArea
             if (mapArea == null) {

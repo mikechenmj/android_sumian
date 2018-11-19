@@ -9,10 +9,10 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.sumian.common.operator.AppOperator;
-import com.sumian.common.utils.StreamUtil;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
+import com.sumian.common.utils.StreamUtil;
+import com.sumian.common.utils.SumianExecutor;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.h5.bean.ImageCount;
 import com.sumian.sd.utils.JsonUtil;
@@ -84,7 +84,7 @@ public class SleepFileWebActivity extends SdBaseWebViewActivity {
     }
 
     private void enCodeBase64(String[] images, OnDecodeBase64Callback onDecodeBase64Callback) {
-        AppOperator.runOnThread(() -> {
+        SumianExecutor.INSTANCE.runOnBackgroundThread(() -> {
             //image array ------> base64  array
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;

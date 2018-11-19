@@ -10,9 +10,9 @@ import com.alibaba.sdk.android.oss.internal.OSSAsyncTask
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.App
-import com.sumian.sd.utils.SumianExecutor
 import java.util.*
 
 /**

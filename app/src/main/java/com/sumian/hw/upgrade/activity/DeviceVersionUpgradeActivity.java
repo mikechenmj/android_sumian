@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.utils.SumianExecutor;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.base.HwBaseActivity;
 import com.sumian.hw.log.LogManager;
@@ -27,7 +28,6 @@ import com.sumian.hw.upgrade.presenter.DeviceVersionUpgradePresenter;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.DeviceManager;
-import com.sumian.sd.utils.SumianExecutor;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 
 import java.util.List;

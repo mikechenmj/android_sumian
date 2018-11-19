@@ -18,6 +18,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.common.utils.SumianExecutor;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.oss.bean.OssResponse;
 import com.sumian.hw.oss.bean.OssTransData;
@@ -29,7 +30,6 @@ import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.AutoSyncDeviceDataUtil;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
-import com.sumian.sd.utils.SumianExecutor;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;

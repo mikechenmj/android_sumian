@@ -11,12 +11,12 @@ import android.text.TextUtils;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.sumian.common.utils.SumianExecutor;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.doctor.bean.Doctor;
 import com.sumian.sd.utils.JsonUtil;
-import com.sumian.sd.utils.SumianExecutor;
 
 /**
  * Created by jzz

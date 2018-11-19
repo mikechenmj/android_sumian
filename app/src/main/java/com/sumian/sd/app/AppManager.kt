@@ -15,10 +15,10 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
-import com.sumian.common.operator.AppOperator
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
+import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.job.SleepDataUploadManager
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
@@ -70,7 +70,7 @@ object AppManager {
     }
 
     private val mBlueManager: BlueManager by lazy {
-        AppOperator.runOnThread {
+        SumianExecutor.runOnBackgroundThread {
             val externalStorageWritable = FileHelper.init().isExternalStorageWritable
             if (externalStorageWritable) {
                 FileHelper.createSDDir(FileHelper.FILE_DIR)
@@ -214,7 +214,7 @@ object AppManager {
         // user report
         AppManager.getOpenAnalytics().onProfileSignOff()
         // release bluetooth
-        AppOperator.runOnThread { BlueManager.getInstance().doStopScan() }
+        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().doStopScan() }
         AppManager.getBlueManager().release()
         // logout chat
         ChatClient.getInstance().logout(true, null)

@@ -14,6 +14,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SettingsUtil
+import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
@@ -39,7 +40,6 @@ import com.sumian.sd.tab.DoctorFragment
 import com.sumian.sd.tab.MeFragment
 import com.sumian.sd.utils.NotificationUtil
 import com.sumian.sd.utils.StatusBarUtil
-import com.sumian.sd.utils.SumianExecutor
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe

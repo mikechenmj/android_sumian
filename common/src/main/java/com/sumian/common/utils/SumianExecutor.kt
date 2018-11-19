@@ -1,4 +1,4 @@
-package com.sumian.sd.utils
+package com.sumian.common.utils
 
 import android.os.Handler
 import android.os.Looper
