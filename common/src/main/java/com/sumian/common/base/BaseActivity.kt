@@ -140,6 +140,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
     }
 
     override fun setTitle(titleId: Int) {
-        mTitleBar.setTitle(resources.getString(titleId))
+        setTitle(resources.getString(titleId))
+    }
+
+    fun setTitle(title: String) {
+        mTitleBar.setTitle(title)
     }
 }
