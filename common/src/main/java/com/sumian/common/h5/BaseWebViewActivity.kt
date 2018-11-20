@@ -2,7 +2,6 @@ package com.sumian.common.h5
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebView
 import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.BridgeHandler
 import com.github.lzyzsd.jsbridge.CallBackFunction
@@ -17,6 +16,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.ScreenUtil
 import com.sumian.common.utils.StatusBarUtil
 import com.sumian.common.widget.TitleBar
+import com.tencent.smtt.sdk.WebView
 import kotlinx.android.synthetic.main.common_activity_base_webview.*
 
 /**

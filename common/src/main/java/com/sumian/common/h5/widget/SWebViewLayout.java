@@ -8,11 +8,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.sumian.common.R;
+import com.tencent.smtt.sdk.WebView;
 
 import static com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR;
 

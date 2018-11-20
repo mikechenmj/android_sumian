@@ -1,7 +1,6 @@
 package com.sumian.sd.account.login
 
 import android.graphics.Color
-import android.webkit.WebView
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.bean.H5BaseResponse
 import com.sumian.common.h5.handler.SBridgeHandler
@@ -15,6 +14,7 @@ import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.utils.JsonUtil
 import com.sumian.sd.utils.StatusBarUtil
+import com.tencent.smtt.sdk.WebView
 
 class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
     override fun initWidget() {
