@@ -58,12 +58,12 @@ class WeeklySleepDataDateBar(context: Context, attributeSet: AttributeSet) : Fra
         val dayStartTime = TimeUtil.getDayStartTime(System.currentTimeMillis())
         val weekStartDayTime = TimeUtil.getWeekStartDayTime(time)
         val weekEndDayTime = TimeUtil.getWeekEndDayTime(time)
-        tv_time.text = "${formatDate(weekStartDayTime)} - ${formatDate(weekEndDayTime)}"
+        tv_time.text = "${formatDate(weekStartDayTime)}-${formatDate(weekEndDayTime)}"
         iv_next.visibility = if (dayStartTime < weekEndDayTime) View.GONE else View.VISIBLE
     }
 
     private fun formatDate(time: Long): CharSequence? {
-        return DateFormat.format("MM-dd", Date(time))
+        return DateFormat.format("MM.dd", Date(time))
     }
 
     fun setDataLoader(dataLoader: CalendarPopup.DataLoader) {
