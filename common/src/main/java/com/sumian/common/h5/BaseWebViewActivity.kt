@@ -7,14 +7,16 @@ import com.github.lzyzsd.jsbridge.BridgeHandler
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.R
-import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.h5.bean.H5ShowToastData
 import com.sumian.common.h5.widget.SWebView
+import com.sumian.common.mvp.IPresenter
 import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.ScreenUtil
 import com.sumian.common.utils.StatusBarUtil
 import com.sumian.common.widget.TitleBar
+import kotlinx.android.synthetic.main.common_activity_base_webview.*
 import com.tencent.smtt.sdk.WebView
 import kotlinx.android.synthetic.main.common_activity_main_base_webview.*
 
@@ -27,13 +29,13 @@ import kotlinx.android.synthetic.main.common_activity_main_base_webview.*
  * </pre>
  */
 @Suppress("ObjectLiteralToLambda", "MemberVisibilityCanBePrivate")
-abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener {
+abstract class BaseWebViewActivity : BasePresenterActivity<IPresenter>(), SWebView.OnWebViewListener {
 
     protected var mSoftKeyBoardListener: SoftKeyBoardListener? = null
     protected var mSumianImageTextDialog: SumianImageTextDialog? = null
 
     override fun getLayoutId(): Int {
-        return R.layout.common_activity_main_base_webview
+        return R.layout.common_activity_base_webview
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,9 +48,8 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
         mSoftKeyBoardListener?.release()
     }
 
-    override fun initWidget() {
-        super.initWidget()
-        title_bar!!.setOnBackClickListener { onBackPressed() }
+    override fun showBackNav(): Boolean {
+        return true
     }
 
     override fun initData() {
@@ -100,13 +101,13 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
                 for ((key, value) in map) {
                     when (key) {
                         "showNavigationBar" -> if (value is Boolean) {
-                            title_bar!!.visibility = if (value) View.VISIBLE else View.GONE
+                            mTitleBar.visibility = if (value) View.VISIBLE else View.GONE
                         }
                         "showTitle" -> if (value is Boolean) {
-                            title_bar!!.showTitle(value)
+                            mTitleBar.showTitle(value)
                         }
                         "showBackArrow" -> if (value is Boolean) {
-                            title_bar!!.showBackArrow(value)
+                            mTitleBar.showBackArrow(value)
                         }
                         "setStatusBarTextColorDark" -> if (value is Boolean) {
                             StatusBarUtil.setStatusBarTextColorDark(this@BaseWebViewActivity, value)
@@ -199,9 +200,9 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
     }
 
     private fun updateRootViewHeight(height: Int) {
-        val layoutParams = root_view!!.layoutParams
+        val layoutParams = mBackRootView.layoutParams
         layoutParams.height = height
-        root_view!!.requestLayout()
+        mBackRootView.requestLayout()
     }
 
     protected fun reload() {
@@ -209,7 +210,7 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
     }
 
     protected fun getTitleBar(): TitleBar {
-        return title_bar!!
+        return mTitleBar
     }
 
     protected fun getWebView(): SWebView {
@@ -237,7 +238,7 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
     }
 
     override fun onReceiveTitle(webView: WebView, title: String) {
-        title_bar?.setTitle(title)
+        mTitleBar.setTitle(title)
     }
     // ----------- OnWebViewListener end -----------
 }

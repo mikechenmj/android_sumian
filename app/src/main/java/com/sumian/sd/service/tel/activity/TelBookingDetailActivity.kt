@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseBackPresenterActivity
+import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.service.tel.bean.TelBooking
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_tel_booking_detail.*
  * desc:电话预约详情
  *
  */
-class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContract.Presenter>(), TelBookingDetailContract.View {
+class TelBookingDetailActivity : BasePresenterActivity<TelBookingDetailContract.Presenter>(), TelBookingDetailContract.View {
 
     companion object {
 
@@ -48,8 +48,11 @@ class TelBookingDetailActivity : BaseBackPresenterActivity<TelBookingDetailContr
         this.mTelBookingId = bundle.getInt(EXTRA_TEL_BOOKING_ID, 0)
     }
 
+    override fun showBackNav(): Boolean {
+        return true
+    }
 
-    override fun getChildContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_tel_booking_detail
     }
 

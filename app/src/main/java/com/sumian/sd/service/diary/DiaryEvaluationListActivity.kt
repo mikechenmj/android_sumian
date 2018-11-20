@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseBackActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.activity_main_tel_booking.*
 
-class DiaryEvaluationListActivity : BaseBackActivity() {
+class DiaryEvaluationListActivity : BasePresenterActivity<IPresenter>() {
     private var mType = DiaryEvaluationListFragment.TYPE_UNFINISHED
 
     companion object {
@@ -22,7 +23,11 @@ class DiaryEvaluationListActivity : BaseBackActivity() {
         }
     }
 
-    override fun getChildContentId(): Int {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_diary_evaluation_list
     }
 

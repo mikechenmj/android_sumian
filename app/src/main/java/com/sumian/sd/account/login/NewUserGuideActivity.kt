@@ -6,7 +6,6 @@ import com.sumian.common.h5.bean.H5BaseResponse
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.ColorCompatUtil
-import com.sumian.common.widget.TitleBar
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.AppManager
@@ -18,10 +17,6 @@ import com.sumian.sd.utils.StatusBarUtil
 import com.tencent.smtt.sdk.WebView
 
 class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
-    private val mTitleBar: TitleBar by lazy {
-        getTitleBar()
-    }
-
     override fun initWidget() {
         super.initWidget()
         StatusBarUtil.setStatusBarTextColorDark(this, true)

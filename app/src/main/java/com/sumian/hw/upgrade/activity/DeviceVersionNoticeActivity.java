@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.common.base.BaseActivity;
+import com.sumian.common.base.BasePresenterActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.hw.upgrade.bean.VersionInfo;
@@ -33,7 +33,7 @@ import java.util.Locale;
  * desc:
  */
 
-public class DeviceVersionNoticeActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+public class DeviceVersionNoticeActivity extends BasePresenterActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
         TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
 
     private BlueRefreshView mRefresh;

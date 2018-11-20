@@ -5,7 +5,8 @@ import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.base.BaseBackActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.widget.dialog.SumianDialog
@@ -28,12 +29,16 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class AnxietyListActivity : BaseBackActivity() {
+class AnxietyListActivity : BasePresenterActivity<IPresenter>() {
 
     private val mAdapter = AnxietyAdapter()
     private var mPage = 1
 
-    override fun getChildContentId(): Int {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_anxiety_faith_list
     }
 

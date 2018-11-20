@@ -3,7 +3,8 @@ package com.sumian.sd.account.login
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BaseBackActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
@@ -18,8 +19,12 @@ import kotlinx.android.synthetic.main.activity_modify_password.*
  * desc   :
  * version: 1.0
  */
-class ModifyPasswordActivity : BaseBackActivity() {
-    override fun getChildContentId(): Int {
+class ModifyPasswordActivity : BasePresenterActivity<IPresenter>() {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_modify_password
     }
 

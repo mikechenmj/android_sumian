@@ -3,10 +3,11 @@ package com.sumian.sd.device.scan
 import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
-import com.sumian.common.base.BaseBackActivity
-import com.sumian.sd.device.bean.BlueDevice
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
+import com.sumian.sd.device.bean.BlueDevice
 
 /**
  * @author : Zhan Xuzhao
@@ -15,8 +16,12 @@ import com.sumian.sd.R
  * desc   :
  * version: 1.0
  */
-class ScanDeviceActivity : BaseBackActivity() {
-    override fun getChildContentId(): Int {
+class ScanDeviceActivity : BasePresenterActivity<IPresenter>() {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_scan_device
     }
 

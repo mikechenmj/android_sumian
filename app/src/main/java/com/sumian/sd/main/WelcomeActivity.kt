@@ -1,7 +1,8 @@
 package com.sumian.sd.main
 
 import android.os.Handler
-import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.account.login.LoginActivity
@@ -18,7 +19,7 @@ import com.sumian.sd.utils.StatusBarUtil
  * desc:
  */
 
-class WelcomeActivity : BaseActivity() {
+class WelcomeActivity : BasePresenterActivity<IPresenter>() {
 
     companion object {
         private const val SPLASH_DURATION = 500L

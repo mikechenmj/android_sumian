@@ -8,7 +8,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseBackPresenterActivity
+import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.common.widget.adapter.EmptyTextWatcher
@@ -24,7 +24,7 @@ import java.util.*
  * desc:
  */
 
-class FeedbackActivity : BaseBackPresenterActivity<FeedbackContract.Presenter>(), FeedbackContract.View {
+class FeedbackActivity : BasePresenterActivity<FeedbackContract.Presenter>(), FeedbackContract.View {
 
     companion object {
         private const val MAX_LENGTH = 500
@@ -37,7 +37,11 @@ class FeedbackActivity : BaseBackPresenterActivity<FeedbackContract.Presenter>()
         }
     }
 
-    override fun getChildContentId(): Int {
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_main_feedback
     }
 

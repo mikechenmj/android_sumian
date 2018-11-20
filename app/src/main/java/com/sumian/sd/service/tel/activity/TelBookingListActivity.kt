@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseBackPresenterActivity
+import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import com.sumian.sd.service.tel.bean.TelBooking
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main_tel_booking.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class TelBookingListActivity : BaseBackPresenterActivity<IPresenter>() {
+class TelBookingListActivity : BasePresenterActivity<IPresenter>() {
     private var mType = TelBooking.UN_FINISHED_TYPE
 
     companion object {
@@ -39,12 +39,16 @@ class TelBookingListActivity : BaseBackPresenterActivity<IPresenter>() {
 
     }
 
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
         mType = bundle.getInt(KEY_TYPE, TelBooking.UN_FINISHED_TYPE)
     }
 
-    override fun getChildContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_main_tel_booking
     }
 

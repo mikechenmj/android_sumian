@@ -8,7 +8,8 @@ import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BaseBackActivity
+import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
@@ -27,13 +28,17 @@ import kotlinx.android.synthetic.main.activity_faith.*
  * version: 1.0
  */
 @SuppressLint("SetTextI18n")
-class FaithActivity : BaseBackActivity() {
+class FaithActivity : BasePresenterActivity<IPresenter>() {
     private var mProgress = 0
     private var mEvent = ""
     private var mThought = ""
     private var mEmotion = -1
-    private var mId = -1;
-    override fun getChildContentId(): Int {
+    private var mId = -1
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun getLayoutId(): Int {
         return R.layout.activity_faith
     }
 
