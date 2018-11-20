@@ -3,9 +3,12 @@ package com.sumian.sd.diary.sleeprecord.widget
 import android.content.Context
 import android.graphics.*
 import android.text.format.DateUtils
+import android.text.format.DateUtils.DAY_IN_MILLIS
+import android.text.format.DateUtils.HOUR_IN_MILLIS
 import android.util.AttributeSet
 import android.view.View
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +32,7 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     var nwc = 0    // night wake count
     var tnwd = 0L   // total night wake duration
     var tobd = 0L   // total on bad duration
-    val DAY_IN_MILLIS = DateUtils.DAY_IN_MILLIS
+
     val barColorNotSleep = Color.parseColor("#52CCA3")
     val barColorSleep = ColorCompatUtil.getColor(context, R.color.b3_color)
     var wdr = 0f // wdr = width / tobd
@@ -41,7 +44,14 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     val textSize = context.resources.getDimension(R.dimen.font_14)
     val nwkBitmap: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.record_icon_workschedule)
     val iconBottomMargin = context.resources.getDimension(R.dimen.space_5)
+    private val DAY_THRESHOLD_TIME = TimeUtilV2.parseTimeStr("18:00")
+
     val iconSize = context.resources.getDimension(R.dimen.space_15)
+
+    companion object {
+        private const val DAY_IN_MILLIS = DateUtils.DAY_IN_MILLIS
+        private const val HOUR_IN_MILLIS = DateUtils.HOUR_IN_MILLIS
+    }
 
     init {
         paint.color = Color.GREEN
@@ -124,31 +134,22 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     }
 
     /**
-     * t0 - t3 依次是
+     * t0 - t3 依次是 上床时间，睡着时间，醒来时间，起床时间
+     * 上床时间 睡着时间 18:00~23:55 算昨天 00:00~17:55(18:00) 算今天
+     * 醒来时间 起床时间 永远是算今天
+     *
      */
     fun setData(t0: Long, t1: Long, t2: Long, t3: Long, nightWakeCount: Int, nightWakeTotalDuration: Long) {
-        this.t0 = t0
-        this.t1 = t1
-        this.t2 = t2
-        this.t3 = t3
+        this.t0 = if (t0 < DAY_THRESHOLD_TIME) t0 + DAY_IN_MILLIS else t0
+        this.t1 = if (t1 < DAY_THRESHOLD_TIME) t1 + DAY_IN_MILLIS else t1
+        this.t2 = t2 + DAY_IN_MILLIS
+        this.t3 = t3 + DAY_IN_MILLIS
+        tobd = this.t3 - this.t0
+        calWidthDurationRatio()
+
         nwc = nightWakeCount
         tnwd = nightWakeTotalDuration
-        calData()
         invalidate()
-    }
-
-    private fun calData() {
-        if (t1 < t0) {
-            t1 += DAY_IN_MILLIS
-        }
-        if (t2 < t0) {
-            t2 += DAY_IN_MILLIS
-        }
-        if (t3 < t0) {
-            t3 += DAY_IN_MILLIS
-        }
-        tobd = t3 - t0
-        calWidthDurationRatio()
     }
 
     private fun calWidthDurationRatio() {
