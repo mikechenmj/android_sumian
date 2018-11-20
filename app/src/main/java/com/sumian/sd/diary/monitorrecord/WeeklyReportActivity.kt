@@ -113,7 +113,7 @@ class WeeklyReportActivity : BasePresenterActivity<IPresenter>() {
                 })
             }
         })
-        date_bar.setOnDateClickListener(CalendarView.OnDateClickListener { time -> scrollToTime(time) })
+        date_bar.setOnDateClickListener(CalendarView.OnDateClickListener { time -> scrollToTime(TimeUtilV2.getWeekStartDayTime(time)) })
     }
 
     private fun scrollToTime(time: Long) {

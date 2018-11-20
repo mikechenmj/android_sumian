@@ -1,5 +1,6 @@
 package com.sumian.sd.diary.sleeprecord.bean
 
+import com.sumian.common.utils.TimeUtilV2
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -42,15 +43,7 @@ class SleepRecordAnswer {
     var sleep_pills: List<SleepPill>? = null
 
     private fun parseTimeStr(s: String): Long {
-        val format = SimpleDateFormat("HH:mm", Locale.US)
-        var time = 0L
-        try {
-            val date = format.parse(s)
-            time = date.time
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return time
+        return TimeUtilV2.parseTimeStr(s)
     }
 
     fun getBedAtInMillis(): Long {

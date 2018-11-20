@@ -154,9 +154,17 @@
                 android:id="@+id/dv_career"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:divider_line_visible="invisible"
+                app:divider_line_visible="visible"
                 app:type_content="@string/none_edit"
                 app:type_desc="@string/career" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/dv_medicine_history"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="invisible"
+                app:type_content="@string/none_edit"
+                app:type_desc="@string/medicine_history" />
 
             <TextView
                 style="@style/text_t2_style"

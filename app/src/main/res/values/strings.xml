@@ -192,6 +192,7 @@
     <string name="weight">体重</string>
     <string name="edu_level">教育程度</string>
     <string name="career">职业</string>
+    <string name="is_using_sleep_pills">当前是否服用促进睡眠类药物？</string>
     <string name="input_career_hint">请填写您所从事的职业</string>
     <string name="male">男</string>
     <string name="female">女</string>
@@ -671,4 +672,7 @@
     <string name="msg_board_hint">写下你想说的话</string>
     <string name="send">发送</string>
     <string name="anonymous_submit">匿名提交</string>
+    <string name="medicine_history">服用促进睡眠类药物</string>
+    <string name="is_using_medicine">有服用</string>
+    <string name="not_using_medicine">没有</string>
 </resources>

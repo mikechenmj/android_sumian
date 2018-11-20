@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView;
 import com.sumian.sd.utils.TimeUtil;
@@ -103,7 +104,7 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
                 mViewPager.setCurrentItem(mCurrentPosition + 1, true);
                 break;
             case R.id.tv_go_to_today:
-                mOnDateClickListener.onDateClick(TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis()));
+                mOnDateClickListener.onDateClick(TimeUtilV2.Companion.getDayStartTime(System.currentTimeMillis()));
                 break;
             default:
                 break;

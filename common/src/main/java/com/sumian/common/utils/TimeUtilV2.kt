@@ -1,6 +1,7 @@
 package com.sumian.common.utils
 
 import android.text.format.DateUtils
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -190,6 +191,18 @@ class TimeUtilV2 {
             list.removeAt(if (include) list.size - 1 else 0)
             list.sort()
             return list
+        }
+
+        fun parseTimeStr(s: String): Long {
+            val format = SimpleDateFormat("HH:mm", Locale.US)
+            var time = 0L
+            try {
+                val date = format.parse(s)
+                time = date.time
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return time
         }
     }
 }
