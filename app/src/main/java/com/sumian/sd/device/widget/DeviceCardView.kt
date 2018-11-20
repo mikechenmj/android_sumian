@@ -149,12 +149,11 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     }
 
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
+        switchDeviceUI(monitor!= null && isBluetoothEnable && monitor.status == BlueDevice.STATUS_CONNECTED)
         if (monitor == null) {
-            switchNoDeviceUI(true)
             updateNoDeviceUI(R.drawable.ic_home_icon_adddevice, R.string.add_device, R.string.you_do_not_bind_device_click_add)
         } else {
             if (!isBluetoothEnable) {
-                switchNoDeviceUI(true)
                 updateNoDeviceUI(R.drawable.ic_home_icon_bluetooth, R.string.bluetooth_not_open, R.string.please_open_bluetooth_and_connect_monitor)
             } else {
                 showMonitorUI(monitor)
@@ -163,17 +162,15 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     }
 
     private fun showMonitorUI(monitor: BlueDevice) {
+
         when (monitor.status) {
             BlueDevice.STATUS_UNCONNECTED -> {
-                switchNoDeviceUI(true)
                 updateNoDeviceUI(R.drawable.ic_home_icon_notconnected, R.string.monitor_not_connect, R.string.click_card_try_to_connect_monitor)
             }
             BlueDevice.STATUS_CONNECTING -> {
-                switchNoDeviceUI(true)
                 updateNoDeviceUI(R.drawable.rotate_device_card_view_connect_device, R.string.monitor_is_connecting, R.string.please_keep_monito_in_5m)
             }
             BlueDevice.STATUS_CONNECTED -> {
-                switchNoDeviceUI(false)
                 // sync ui
                 val isSyncing = monitor.isSyncing
                 iv_sync.isEnabled = !isSyncing
@@ -224,9 +221,9 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     private fun getConnectString(connected: Boolean) =
             resources.getString(if (connected) R.string.already_connected else R.string.not_connected)
 
-    private fun switchNoDeviceUI(isNoDevice: Boolean) {
-        vg_no_device.visibility = if (isNoDevice) VISIBLE else View.GONE
-        ll_device.visibility = if (!isNoDevice) VISIBLE else View.GONE
+    private fun switchDeviceUI(showDevice: Boolean) {
+        ll_device.visibility = if (showDevice) VISIBLE else View.GONE
+        vg_no_device.visibility = if (!showDevice) VISIBLE else View.GONE
     }
 
     interface Host {

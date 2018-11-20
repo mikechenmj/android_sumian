@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:background="@color/white">
+    android:visibility="gone"
+    tools:background="@color/white"
+    tools:visibility="visible">
 
     <LinearLayout
         android:layout_width="match_parent"
