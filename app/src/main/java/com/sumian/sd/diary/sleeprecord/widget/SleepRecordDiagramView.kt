@@ -3,8 +3,6 @@ package com.sumian.sd.diary.sleeprecord.widget
 import android.content.Context
 import android.graphics.*
 import android.text.format.DateUtils
-import android.text.format.DateUtils.DAY_IN_MILLIS
-import android.text.format.DateUtils.HOUR_IN_MILLIS
 import android.util.AttributeSet
 import android.view.View
 import com.sumian.common.utils.ColorCompatUtil
