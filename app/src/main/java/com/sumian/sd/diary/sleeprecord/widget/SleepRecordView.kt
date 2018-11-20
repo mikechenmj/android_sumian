@@ -97,7 +97,8 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
     private fun getSleepQualityString(quality: Int): String {
         val qualityStrings = arrayOf("十分差", "较差", "正常", "较好", "超级棒")
         if (quality < 0 || quality >= qualityStrings.size) {
-            throw RuntimeException("Run sleep quality")
+            IllegalArgumentException("不合法的睡眠质量:$quality").printStackTrace()
+            return qualityStrings[0]
         }
         return qualityStrings[quality]
     }
@@ -105,7 +106,8 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
     private fun getSleepQualityIcon(quality: Int): Int {
         val qualityIcons = intArrayOf(R.drawable.record_icon_facial_1, R.drawable.record_icon_facial_2, R.drawable.record_icon_facial_3, R.drawable.record_icon_facial_4, R.drawable.record_icon_facial_5)
         if (quality < 0 || quality >= qualityIcons.size) {
-            throw RuntimeException("Run sleep quality")
+            IllegalArgumentException("不合法的睡眠质量:$quality").printStackTrace()
+            return qualityIcons[0]
         }
         return qualityIcons[quality]
     }
