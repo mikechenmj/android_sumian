@@ -6,16 +6,12 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.text.format.DateUtils
 import android.view.View
-import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONArray
-import com.blankj.utilcode.util.LogUtils
-import com.google.gson.JsonObject
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
-import com.sumian.hw.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.diary.sleeprecord.calendar.custom.CalendarPopup
 import com.sumian.sd.h5.H5Uri
@@ -68,30 +64,23 @@ class SleepDiaryVpFragment : BaseFragment() {
     private fun initDateBar() {
         date_bar.setDataLoader(object : CalendarPopup.DataLoader {
             override fun loadData(startMonthTime: Long, monthCount: Int, isInit: Boolean) {
-                val map = HashMap<String, Any>(0)
-                map["date"] = (startMonthTime / 1000).toInt()
-                map["page_size"] = monthCount
-                map["is_include"] = if (isInit) 1 else 0
-                val call = AppManager.getSdHttpService().getCalendarSleepReport(map)
+                val call = AppManager.getSdHttpService().getSleepDiarySummaryList((startMonthTime / 1000).toInt(), 1, monthCount, 0)
                 addCall(call)
-                call.enqueue(object : BaseSdResponseCallback<JsonObject>() {
-                    override fun onSuccess(response: JsonObject?) {
+                call.enqueue(object : BaseSdResponseCallback<Map<String, List<SleepRecordSummary>>>() {
+                    override fun onFailure(errorResponse: ErrorResponse) {}
+
+                    override fun onSuccess(response: Map<String, List<SleepRecordSummary>>?) {
+                        if (response == null) {
+                            return
+                        }
                         val hasDataDays = HashSet<Long>()
-                        val jsonObject = JSON.parseObject(response.toString())
-                        val entries = jsonObject.entries
-                        for ((_, value) in entries) {
-                            if (value is JSONArray) {
-                                val calendarItemSleepReports = value.toJavaList(CalendarItemSleepReport::class.java)
-                                for (report in calendarItemSleepReports) {
-                                    hasDataDays.add(report.dateInMillis)
-                                }
+                        for ((_, value) in response) {
+                            for (summary in value) {
+                                val summaryDate = summary.dateInMillis
+                                hasDataDays.add(summaryDate)
                             }
                         }
                         date_bar.addMonthAndData(startMonthTime, hasDataDays, isInit)
-                    }
-
-                    override fun onFailure(errorResponse: ErrorResponse) {
-                        LogUtils.d(errorResponse.message)
                     }
                 })
             }
