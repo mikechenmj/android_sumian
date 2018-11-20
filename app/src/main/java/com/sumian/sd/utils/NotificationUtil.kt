@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.sumian.sd.R
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
+import com.sumian.sd.notification.MarkNotificationAsReadService
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -62,7 +63,7 @@ class NotificationUtil {
                              contentText: String,
                              notificationId: String,
                              notificationDataId: Int?,
-                             intent: Intent) {
+                             intent: Intent?) {
             if (context == null) return
             createNotificationChannel(context, CHANNEL_ID, CHANNEL_NAME)
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -72,9 +73,13 @@ class NotificationUtil {
                     .setContentText(contentText)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true)
-            intent.putExtra(KEY_PUSH_NOTIFICATION_ID, notificationId)
-            intent.putExtra(KEY_PUSH_NOTIFICATION_DATA_ID, notificationDataId)
-            val pendingIntent = getPendingIntent(context, intent)
+            val pendingIntent = if (intent != null) {
+                intent.putExtra(KEY_PUSH_NOTIFICATION_ID, notificationId)
+                intent.putExtra(KEY_PUSH_NOTIFICATION_DATA_ID, notificationDataId)
+                getPendingIntent(context, intent)
+            } else {
+                getMarkNotificationAsReadService(context, notificationId, notificationDataId)
+            }
             if (pendingIntent != null) builder.setContentIntent(pendingIntent)
             NotificationManagerCompat.from(context).notify(Random().nextInt(), builder.build())
             EventBusUtil.postStickyEvent(NotificationUnreadCountChangeEvent())
@@ -94,5 +99,14 @@ class NotificationUtil {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.cancelAll()
         }
+
+        private fun getMarkNotificationAsReadService(context: Context, notificationId: String,
+                                                     notificationDataId: Int?): PendingIntent? {
+            val intent = Intent(context, MarkNotificationAsReadService::class.java)
+            intent.putExtra(NotificationUtil.KEY_PUSH_NOTIFICATION_ID, notificationId)
+            intent.putExtra(NotificationUtil.KEY_PUSH_NOTIFICATION_DATA_ID, notificationDataId)
+            return PendingIntent.getService(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
     }
 }

@@ -48,8 +48,6 @@ class BaseActivityDelegate(activity: Activity) : IActivityDelegate {
     }
 
     private fun markNotificationAsReadIfNeed(intent: Intent?) {
-        val notificationId = intent?.getStringExtra(NotificationUtil.KEY_PUSH_NOTIFICATION_ID)
-        val notificationDataId = intent?.getIntExtra(NotificationUtil.KEY_PUSH_NOTIFICATION_DATA_ID, 0)
-        AppNotificationManager.markNotificationAsRead(notificationId, notificationDataId)
+        AppNotificationManager.markNotificationAsRead(intent)
     }
 }

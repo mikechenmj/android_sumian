@@ -529,6 +529,7 @@
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".notification.MarkNotificationAsReadService" />
     </application>
 
 </manifest>
