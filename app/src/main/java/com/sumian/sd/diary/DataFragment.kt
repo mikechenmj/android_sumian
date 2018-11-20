@@ -58,7 +58,7 @@ class DataFragment : BaseFragment() {
         if (!hidden) {
             val findFragmentByTag = fragmentManager?.findFragmentByTag(TAGS[mCurrentPosition])
             if (findFragmentByTag is MonitorDataVpFragment) {
-//                findFragmentByTag.updateCurrentTimeData()
+                findFragmentByTag.updateCurrentTimeData()
             }
         }
     }
@@ -84,7 +84,6 @@ class DataFragment : BaseFragment() {
                 return when (position) {
                     0 -> SleepDiaryVpFragment()
                     else -> MonitorDataVpFragment()
-//                    else -> MonitorDataFragment.newInstance(TimeUtilV2.getDayStartTime(System.currentTimeMillis()))
                 }
             }
         })

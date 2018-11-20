@@ -12,6 +12,7 @@ import com.sumian.hw.report.bean.DailyMeta
 import com.sumian.hw.report.bean.DailyReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.UploadSleepDataFinishedEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -68,6 +69,12 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
         if (event.success) {
             updateCurrentTimeData() // refresh
         }
+    }
+
+    @Suppress("unused")
+    @Subscribe
+    fun onUploadMonitorDataEvent(event: UpdateMonitorDataEvent) {
+        updateCurrentTimeData()
     }
 
     override fun onRefresh() {

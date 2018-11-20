@@ -19,8 +19,10 @@ import com.sumian.hw.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceManager
+import com.sumian.sd.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.diary.sleeprecord.calendar.custom.CalendarPopup
+import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.UploadSleepDataFinishedEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
@@ -74,6 +76,13 @@ class MonitorDataVpFragment : BaseFragment() {
     override fun onDestroy() {
         mHandler.removeCallbacks(null)
         super.onDestroy()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            updateCurrentTimeData()
+        }
     }
 
     private fun initViewPager() {
@@ -139,6 +148,10 @@ class MonitorDataVpFragment : BaseFragment() {
             mAdapter.addDays(firstTime, count.toInt(), false)
         }
         view_pager_monitor.setCurrentItem(mAdapter.times.indexOf(time), false)
+    }
+
+    fun updateCurrentTimeData() {
+        EventBusUtil.postEvent(UpdateMonitorDataEvent())
     }
 
     class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
