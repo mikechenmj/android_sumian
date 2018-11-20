@@ -88,14 +88,22 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
     }
 
     override fun onGetMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
-        messageBoardAdapter.resetItem(msgBoardList)
         mIsInit = false
-        hideEmptyView()
+        if (msgBoardList.isNullOrEmpty()) {
+            showEmptyView()
+        } else {
+            messageBoardAdapter.resetItem(msgBoardList)
+            hideEmptyView()
+        }
     }
 
     override fun onRefreshMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
-        messageBoardAdapter.resetItem(msgBoardList)
-        hideEmptyView()
+        if (msgBoardList.isNullOrEmpty()) {
+            showEmptyView()
+        } else {
+            messageBoardAdapter.resetItem(msgBoardList)
+            hideEmptyView()
+        }
     }
 
     override fun onGetNextMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
@@ -119,5 +127,9 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
 
     private fun hideEmptyView() {
         tv_msg_board_empty?.visibility = View.GONE
+    }
+
+    private fun showEmptyView() {
+        tv_msg_board_empty?.visibility = View.VISIBLE
     }
 }
