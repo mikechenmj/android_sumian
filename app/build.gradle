@@ -341,7 +341,7 @@ dependencies {
 
     //sumian component
 
-    implementation 'com.sumian.sd:common:1.0.48'
+    //implementation 'com.sumian.sd:common:1.0.48'
 
     //    implementation 'com.sumian.sd:blue:1.0.2'
 
@@ -349,7 +349,7 @@ dependencies {
 
     //    implementation 'com.sumian.sd:jsbridge:1.0.0'
     implementation project(':blue')
-    //implementation project(':common')
+    implementation project(':common')
 
     //implementation project(':jsbridge')
     implementation project(':kefu-easeui')

@@ -76,7 +76,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
     override fun initWidget(root: View) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
-        view_pager.offscreenPageLimit = 2
+        //view_pager.offscreenPageLimit = 2
         view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -105,34 +105,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
 
     override fun initData() {
         super.initData()
-        view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): Fragment {
-                return when (position) {
-                    0 -> CourseFragment.newInstance(mChapterId)
-                    1 -> ExerciseFragment.newInstance(mChapterId)
-                    2 -> MessageBoardFragment.newInstance(mCbtiType)
-                    else -> {
-                        throw NullPointerException("index is invalid")
-                    }
-                }
-            }
-
-            override fun getCount(): Int {
-                return 3
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 -> getString(R.string.course)
-                    1 -> getString(R.string.practice)
-                    2 -> getString(R.string.message_board)
-                    else -> {
-                        super.getPageTitle(position)
-                    }
-
-                }
-            }
-        }
+        view_pager.adapter = initAdapter()
     }
 
     override fun onBack(v: View?) {
@@ -188,5 +161,35 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
             View.GONE
         }
         keyboard.hide()
+    }
+
+    private fun initAdapter(): FragmentPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> CourseFragment.newInstance(mChapterId)
+                1 -> ExerciseFragment.newInstance(mChapterId)
+                2 -> MessageBoardFragment.newInstance(mCbtiType)
+                else -> {
+                    throw NullPointerException("index is invalid")
+                }
+            }
+        }
+
+        override fun getCount(): Int {
+            return 3
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return when (position) {
+                0 -> getString(R.string.course)
+                1 -> getString(R.string.practice)
+                2 -> getString(R.string.message_board)
+                else -> {
+                    super.getPageTitle(position)
+                }
+
+            }
+
+        }
     }
 }
