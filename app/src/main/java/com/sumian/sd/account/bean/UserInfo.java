@@ -2,6 +2,7 @@ package com.sumian.sd.account.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
@@ -42,6 +43,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
     public String sleeper_sn;
     public String career;
     public String education;
+    public int sleep_pills; //1:没有 2：有服用 0：未填写
     public String im_id;
     public String im_password;
     public List<Social> socialites;//绑定信息
@@ -120,6 +122,30 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
             default:
                 return App.Companion.getAppContext().getString(R.string.none_edit);
         }
+    }
+
+    public String formatIsUsingSleepPills() {
+        int res;
+        switch (sleep_pills) {
+            case 0:
+                res = R.string.none_edit;
+                break;
+            case 1:
+                res = R.string.not_using_medicine;
+                break;
+            case 2:
+                res = R.string.is_using_medicine;
+                break;
+            default:
+                res = R.string.none_edit;
+                break;
+        }
+        return getString(res);
+    }
+
+    @NonNull
+    private String getString(int res) {
+        return App.getAppContext().getResources().getString(res);
     }
 
     public String formatField(String field) {
@@ -471,6 +497,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
         return isHaveAnswers() && isHaveFullUserInfo();
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "UserInfo{" +

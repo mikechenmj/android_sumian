@@ -64,7 +64,6 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
     private TitleBar mTitleBar;
     private CircleImageView mIvAvatar;
     private SettingDividerView mDvNickname;
-
     private SettingDividerView mDvName;
     private SettingDividerView mDvGender;
     private SettingDividerView mDvBirthday;
@@ -73,12 +72,10 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
     private SettingDividerView mDvWeight;
     private SettingDividerView mDvEduLevel;
     private SettingDividerView mDvCareer;
-
     private SettingDividerView mDvMobile;
     private SettingDividerView mDvWechat;
-
+    private SettingDividerView mDvMedicineHistory;
     private UserInfo mUserProfile;
-
     private File cameraFile;
     private File storageDir = null;
     private String mLocalImagePath;
@@ -112,6 +109,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mDvCareer = findViewById(R.id.dv_career);
         mDvMobile = findViewById(R.id.dv_mobile);
         mDvWechat = findViewById(R.id.dv_wechat_bind);
+        mDvMedicineHistory = findViewById(R.id.dv_medicine_history);
         findViewById(R.id.dv_my_target).setOnClickListener(this);
 
         mTitleBar.setOnBackClickListener(this);
@@ -124,6 +122,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mDvEduLevel.setOnShowMoreListener(this);
         mDvCareer.setOnShowMoreListener(this);
         mDvWechat.setOnCheckedChangeListener(this);
+        mDvMedicineHistory.setOnShowMoreListener(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
     }
 
@@ -232,6 +231,9 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
                 break;
             case R.id.dv_edu_level:
                 commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_EDUCATION_KEY);
+                break;
+            case R.id.dv_medicine_history:
+                commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_MEDICINE_HISTORY);
                 break;
             case R.id.dv_career:
                 ModifyUserInfoActivity.show(this, ImproveUserProfileContract.IMPROVE_CAREER_KEY);
@@ -419,6 +421,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mDvEduLevel.setContent(userProfile.formatField(userProfile.education));
         mDvCareer.setContent(userProfile.formatField(userProfile.career));
         mDvMobile.setContent(userProfile.mobile);
+        mDvMedicineHistory.setContent(userProfile.formatIsUsingSleepPills());
         updateDvWechatUI(userProfile.socialites);
     }
 

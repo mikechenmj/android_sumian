@@ -146,6 +146,15 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
                 mView.showTwoPicker(View.GONE)
                 App.getAppContext().getString(R.string.edu_level)
             }
+            ImproveUserProfileContract.IMPROVE_MEDICINE_HISTORY
+            -> {
+                val position = if (userInfo.sleep_pills == 1) 1 else 0
+                val displayedValues: Array<out String> = App.getAppContext().resources.getStringArray(R.array.medicine_history)
+                mView.transformOneDisplayedValues(position, null, displayedValues)
+                mView.showOnePicker(View.VISIBLE)
+                mView.showTwoPicker(View.GONE)
+                App.getAppContext().getString(R.string.is_using_sleep_pills)
+            }
             ImproveUserProfileContract.IMPROVE_AREA_KEY -> {
 
                 transformProvince()
@@ -187,6 +196,13 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             }
             ImproveUserProfileContract.IMPROVE_EDUCATION_KEY -> {
                 pickerOne.contentByCurrValue
+            }
+            ImproveUserProfileContract.IMPROVE_MEDICINE_HISTORY -> {
+                if (pickerOne.contentByCurrValue == "有服用") {
+                    "2"
+                } else {
+                    "1"
+                }
             }
             ImproveUserProfileContract.IMPROVE_AREA_KEY -> {
                 "${pickerOne.contentByCurrValue}\\${pickerTwo.contentByCurrValue}\\${pickerThree.contentByCurrValue}"
