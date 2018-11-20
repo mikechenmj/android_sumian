@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.InputFilter
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -13,6 +14,7 @@ import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.common.widget.voice.IVisible
 import com.sumian.hw.utils.UiUtil
 import com.sumian.sd.R
+import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.view.*
 import kotlinx.android.synthetic.main.lay_msg_board_keyboard.view.*
 
 class MsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
@@ -40,6 +42,9 @@ class MsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
                 tv_send.isEnabled = !TextUtils.isEmpty(s)
             }
         })
+        coordinator_layout?.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            Log.e("TAG", "initView:verticalOffset$verticalOffset")
+        }
         tv_send.setOnClickListener(this)
         invalidSpan()
         tv_is_anonymous.setOnClickListener(this)

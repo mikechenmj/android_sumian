@@ -21,6 +21,8 @@ class LoadMoreRecyclerView @JvmOverloads constructor(context: Context, attrs: At
 
     private var mOnLoadCallback: OnLoadCallback? = null
 
+    private var mPreYOffset = 0
+
     init {
         addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -41,6 +43,17 @@ class LoadMoreRecyclerView @JvmOverloads constructor(context: Context, attrs: At
                     }
                 }
             }
+
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy == 0) return
+                if (dy > 0) {//向上滑动
+                    mOnLoadCallback?.onScrollUp()
+                } else {//向下滑动
+                    mOnLoadCallback?.onScrollDown()
+                }
+                //Log.e(TAG, "onScrollStateChanged: ------->newState   dx=$dx  dy=$dy")
+            }
         })
     }
 
@@ -53,6 +66,10 @@ class LoadMoreRecyclerView @JvmOverloads constructor(context: Context, attrs: At
         fun loadMore() {}
 
         fun loadPre() {}
+
+        fun onScrollUp() {}
+
+        fun onScrollDown() {}
     }
 
 

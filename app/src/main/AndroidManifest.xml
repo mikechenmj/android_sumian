@@ -327,7 +327,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".account.userProfile.MyTargetAndInformationActivity"
             android:configChanges="keyboardHidden|orientation"
