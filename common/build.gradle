@@ -88,7 +88,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
-    api project(':jsbridge')
+    //api project(':jsbridge')
+    api 'com.sumian.sd:jsbridge:1.0.1'
 
     //aliyun httpdns
     implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar') {
@@ -110,7 +111,7 @@ def libName = "common"
 //compile 'com.sumian.sd:common:1.0.0'
 group = "com.sumian.sd"
 // 版本号，下次更新是只需要更改版本号即可
-version = "1.0.46"
+version = "1.0.47"
 // 更新完运行 gradlew install, 再bintrayUpload
 
 //生成源文件
