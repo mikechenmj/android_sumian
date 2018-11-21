@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.service.cbti.adapter.CBTIMessageBoardAdapter
 import com.sumian.sd.service.cbti.bean.CBTIMeta
@@ -82,20 +83,28 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
         mPresenter.getNextMessageBoardList()
     }
 
+    override fun onScrollUp() {
+        super.onScrollUp()
+        ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyKeyBoard(true)
+    }
+
+    override fun onScrollDown() {
+        super.onScrollDown()
+        ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyKeyBoard(false)
+    }
+
     override fun setPresenter(presenter: CBTIMessageBoardContract.Presenter?) {
         //super.setPresenter(presenter)
         this.mPresenter = presenter
     }
 
     override fun onGetMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
-        messageBoardAdapter.resetItem(msgBoardList)
         mIsInit = false
-        hideEmptyView()
+        updateUi(msgBoardList)
     }
 
     override fun onRefreshMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
-        messageBoardAdapter.resetItem(msgBoardList)
-        hideEmptyView()
+        updateUi(msgBoardList)
     }
 
     override fun onGetNextMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
@@ -119,5 +128,18 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
 
     private fun hideEmptyView() {
         tv_msg_board_empty?.visibility = View.GONE
+    }
+
+    private fun showEmptyView() {
+        tv_msg_board_empty?.visibility = View.VISIBLE
+    }
+
+    private fun updateUi(msgBoardList: List<MessageBoard>) {
+        if (msgBoardList.isEmpty()) {
+            showEmptyView()
+        } else {
+            messageBoardAdapter.resetItem(msgBoardList)
+            hideEmptyView()
+        }
     }
 }

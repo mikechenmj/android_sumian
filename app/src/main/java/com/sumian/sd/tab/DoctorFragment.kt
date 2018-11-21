@@ -48,17 +48,17 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
         val isBindDoctor = AppManager.getAccountViewModel().userInfo?.isBindDoctor!!
         switchUI(isBindDoctor)
         if (isBindDoctor) {
-            request_scan_qr_code_view.hide()
+            request_scan_qr_code_view?.hide()
             val doctor = AppManager.getAccountViewModel().userInfo?.doctor
             doctor?.let {
-                doctor_detail_layout.invalidDoctor(doctor)
+                doctor_detail_layout?.invalidDoctor(doctor)
             }
             if (doctor?.services == null) {
                 mIsAutoRefresh = true
                 mPresenter.getBindDoctorInfo()
             }
         }
-        request_scan_qr_code_view.setFragment(this).setOnGrantedCallback(this)
+        request_scan_qr_code_view?.setFragment(this)?.setOnGrantedCallback(this)
         //去掉医生模块的通知提醒
 //        ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
 //                .get(NotificationViewModel::class.java)
@@ -118,9 +118,9 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
 
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {
         doctor?.let {
-            lay_doctor_title_container.visibility = View.VISIBLE
-            doctor_detail_layout.invalidDoctor(doctor)
-            request_scan_qr_code_view.setFragment(null).hide()
+            lay_doctor_title_container?.visibility = View.VISIBLE
+            doctor_detail_layout?.invalidDoctor(doctor)
+            request_scan_qr_code_view?.setFragment(null)?.hide()
         }
     }
 
@@ -159,15 +159,15 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     private fun showMessageDot(isHaveMsg: Boolean) {
-        doctor_detail_layout.showMsgDot(isHaveMsg)
-        request_scan_qr_code_view.showMsgDot(isHaveMsg)
+        doctor_detail_layout?.showMsgDot(isHaveMsg)
+        request_scan_qr_code_view?.showMsgDot(isHaveMsg)
     }
 
     private fun switchUI(hasDoctor: Boolean) {
-        doctor_detail_layout.visibility = if (hasDoctor) View.VISIBLE else View.GONE
-        request_scan_qr_code_view.visibility = if (!hasDoctor) View.VISIBLE else View.GONE
-        tv_title.visibility = if (hasDoctor) View.VISIBLE else View.GONE
-        iv_notification.setImageResource(if (hasDoctor) R.drawable.sel_notification else R.drawable.sel_notification_black)
-        lay_doctor_title_container.setBackgroundColor(if (hasDoctor) ColorCompatUtil.getColor(activity!!, R.color.colorPrimary) else Color.TRANSPARENT)
+        doctor_detail_layout?.visibility = if (hasDoctor) View.VISIBLE else View.GONE
+        request_scan_qr_code_view?.visibility = if (!hasDoctor) View.VISIBLE else View.GONE
+        tv_title?.visibility = if (hasDoctor) View.VISIBLE else View.GONE
+        iv_notification?.setImageResource(if (hasDoctor) R.drawable.sel_notification else R.drawable.sel_notification_black)
+        lay_doctor_title_container?.setBackgroundColor(if (hasDoctor) ColorCompatUtil.getColor(activity!!, R.color.colorPrimary) else Color.TRANSPARENT)
     }
 }

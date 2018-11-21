@@ -135,7 +135,6 @@ android {
 
         main {
             jniLibs.srcDirs = ['libs']
-            jniLibs.srcDirs = ['src/jniLibs']
         }
     }
 
@@ -342,7 +341,7 @@ dependencies {
 
     //sumian component
 
-    //    implementation 'com.sumian.sd:common:1.0.21'
+    //implementation 'com.sumian.sd:common:1.0.48'
 
     //    implementation 'com.sumian.sd:blue:1.0.2'
 

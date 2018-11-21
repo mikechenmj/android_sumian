@@ -29,6 +29,10 @@ class CbtiChapterViewModel : ViewModel() {
         MutableLiveData<List<Exercise>>()
     }
 
+    private val mIsShowKeyboardLiveData: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
+
     fun getCBTICourses(): List<Course>? {
         return this.mCBTICoursesLiveData.value
     }
@@ -41,6 +45,8 @@ class CbtiChapterViewModel : ViewModel() {
         return mCBTICourseMetaLiveData
     }
 
+    fun getKeyboardLiveData(): LiveData<Boolean> = mIsShowKeyboardLiveData
+
     fun notifyCourses(courses: List<Course>) {
         mCBTICoursesLiveData.postValue(courses)
     }
@@ -49,5 +55,9 @@ class CbtiChapterViewModel : ViewModel() {
         mCBTICourseMetaLiveData.postValue(cbtiMeta)
     }
 
+    fun notifyKeyBoard(isShowKeyBoard: Boolean) {
+        if (mIsShowKeyboardLiveData.value == isShowKeyBoard) return
+        mIsShowKeyboardLiveData.postValue(isShowKeyBoard)
+    }
 
 }

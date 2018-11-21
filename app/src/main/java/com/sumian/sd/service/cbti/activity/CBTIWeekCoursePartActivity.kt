@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.hw.utils.UiUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.service.cbti.bean.CBTIMeta
@@ -27,6 +28,7 @@ import com.sumian.sd.service.cbti.widget.keyboard.MsgBoardKeyBoard
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianDataWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
+import kotlinx.android.synthetic.main.lay_msg_board_keyboard.*
 
 /**
  * Created by sm
@@ -76,7 +78,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
     override fun initWidget(root: View) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
-        view_pager.offscreenPageLimit = 2
+        //view_pager.offscreenPageLimit = 2
         view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -101,38 +103,19 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         }
         keyboard.setOnKeyBoardCallback(this)
         ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICourseMetaLiveData().observe(this, this)
+        ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getKeyboardLiveData().observe(this, Observer<Boolean> {
+            if (keyboard.visibility != View.VISIBLE) return@Observer
+            if (it!!) {
+                UiUtil.showSoftKeyboard(et_msg_board_input)
+            } else {
+                UiUtil.closeKeyboard(et_msg_board_input)
+            }
+        })
     }
 
     override fun initData() {
         super.initData()
-        view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): Fragment {
-                return when (position) {
-                    0 -> CourseFragment.newInstance(mChapterId)
-                    1 -> ExerciseFragment.newInstance(mChapterId)
-                    2 -> MessageBoardFragment.newInstance(mCbtiType)
-                    else -> {
-                        throw NullPointerException("index is invalid")
-                    }
-                }
-            }
-
-            override fun getCount(): Int {
-                return 3
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return when (position) {
-                    0 -> getString(R.string.course)
-                    1 -> getString(R.string.practice)
-                    2 -> getString(R.string.message_board)
-                    else -> {
-                        super.getPageTitle(position)
-                    }
-
-                }
-            }
-        }
+        view_pager.adapter = initAdapter()
     }
 
     override fun onBack(v: View?) {
@@ -188,5 +171,35 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
             View.GONE
         }
         keyboard.hide()
+    }
+
+    private fun initAdapter(): FragmentPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> CourseFragment.newInstance(mChapterId)
+                1 -> ExerciseFragment.newInstance(mChapterId)
+                2 -> MessageBoardFragment.newInstance(mCbtiType)
+                else -> {
+                    throw NullPointerException("index is invalid")
+                }
+            }
+        }
+
+        override fun getCount(): Int {
+            return 3
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return when (position) {
+                0 -> getString(R.string.course)
+                1 -> getString(R.string.practice)
+                2 -> getString(R.string.message_board)
+                else -> {
+                    super.getPageTitle(position)
+                }
+
+            }
+
+        }
     }
 }

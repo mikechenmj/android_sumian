@@ -18,6 +18,7 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/trans">
@@ -133,8 +134,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/space_40"
             android:visibility="gone"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             tools:visibility="visible" />
 
     </android.support.design.widget.CoordinatorLayout>

@@ -22,6 +22,13 @@ android {
         versionCode rootProject.ext.android.libVersionCode
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi-v7a'
+        }
+
+        resConfigs "zh"//,"en"
     }
 
     compileOptions {
@@ -37,19 +44,19 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-        main() {
+        main {
             jniLibs.srcDirs = ['libs']
         }
     }
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    //api fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-
     //noinspection GradleCompatible
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    api files('libs/tbs_sdk_thirdapp_v3.6.0.1352_43618_sharewithdownload_withoutGame_obfs_20180918_120327.jar')
 }
 
 //项目主页
@@ -63,7 +70,7 @@ def libName = "sm-jsbridge"
 //compile 'com.sumian.sd:common:1.0.0'
 group = "com.sumian.sd"
 // 版本号，下次更新是只需要更改版本号即可
-version = "1.0.0"
+version = "1.0.2"
 
 //生成源文件
 task sourcesJar(type: Jar) {
