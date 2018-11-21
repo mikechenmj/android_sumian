@@ -31,6 +31,7 @@ class SleepRecordAnswer {
      */
 
     var bed_at: String = ""
+    var try_to_sleep_at: String = ""
     var sleep_at: String = ""
     var wake_up_at: String = ""
     var get_up_at: String = ""
@@ -46,8 +47,8 @@ class SleepRecordAnswer {
         return TimeUtilV2.parseTimeStr(s)
     }
 
-    fun getBedAtInMillis(): Long {
-        return parseTimeStr(bed_at)
+    fun getTryToSleepAtInMillis(): Long {
+        return parseTimeStr(try_to_sleep_at)
     }
 
     fun getSleepAtInMillis(): Long {
