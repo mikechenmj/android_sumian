@@ -1,10 +1,11 @@
+@file:Suppress("UNUSED_ANONYMOUS_PARAMETER")
+
 package com.sumian.sd.service.cbti.widget.keyboard
 
 import android.content.Context
 import android.text.InputFilter
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -14,7 +15,6 @@ import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.common.widget.voice.IVisible
 import com.sumian.hw.utils.UiUtil
 import com.sumian.sd.R
-import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.view.*
 import kotlinx.android.synthetic.main.lay_msg_board_keyboard.view.*
 
 class MsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
@@ -34,7 +34,7 @@ class MsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
 
     private fun initView(context: Context) {
         View.inflate(context, R.layout.lay_msg_board_keyboard, this)
-        et_msg_board_input.filters = arrayOf(InputFilter.LengthFilter(201))
+        et_msg_board_input.filters = arrayOf(InputFilter.LengthFilter(200))
         et_msg_board_input.addTextChangedListener(object : EmptyTextWatcher() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -42,9 +42,6 @@ class MsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
                 tv_send.isEnabled = !TextUtils.isEmpty(s)
             }
         })
-        coordinator_layout?.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-            Log.e("TAG", "initView:verticalOffset$verticalOffset")
-        }
         tv_send.setOnClickListener(this)
         invalidSpan()
         tv_is_anonymous.setOnClickListener(this)

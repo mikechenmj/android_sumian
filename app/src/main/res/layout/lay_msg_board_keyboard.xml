@@ -52,8 +52,10 @@
             android:layout_width="@dimen/space_68"
             android:layout_height="@dimen/space_36"
             android:background="@drawable/bg_bt_cbti_msg_board"
+            android:enabled="false"
             android:gravity="center"
-            android:text="@string/send" />
+            android:text="@string/send"
+            android:textColor="@color/sel_btn_text" />
 
 
     </LinearLayout>
