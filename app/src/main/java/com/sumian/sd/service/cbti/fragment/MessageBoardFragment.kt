@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.service.cbti.adapter.CBTIMessageBoardAdapter
 import com.sumian.sd.service.cbti.bean.CBTIMeta
