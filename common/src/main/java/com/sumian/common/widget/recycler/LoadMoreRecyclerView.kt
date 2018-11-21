@@ -1,8 +1,9 @@
 package com.sumian.common.widget.recycler
 
 import android.content.Context
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-import android.util.Log
 
 /**
  * Created by sm
