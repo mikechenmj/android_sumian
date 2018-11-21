@@ -75,6 +75,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     implementation 'com.android.support:recyclerview-v7:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
+    implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
 
     //glide
     api 'com.github.bumptech.glide:glide:4.8.0'
@@ -107,6 +109,10 @@ dependencies {
 
     // utils
     api 'com.blankj:utilcode:1.19.0'
+    // LeanCloud 基础包
+    api 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
+    // 推送与实时聊天需要的包
+    api('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
 }
 
 //项目主页

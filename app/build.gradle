@@ -294,11 +294,11 @@ dependencies {
     // Java8 support for Lifecycles
     implementation 'android.arch.lifecycle:common-java8:1.1.1'
 
-    // LeanCloud 基础包
-    implementation 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
-
-    // 推送与实时聊天需要的包
-    implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
+//    // LeanCloud 基础包
+//    implementation 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
+//
+//    // 推送与实时聊天需要的包
+//    implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
 
     //aliyun oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'

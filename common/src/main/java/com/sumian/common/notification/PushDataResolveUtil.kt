@@ -1,7 +1,7 @@
-package com.sumian.sd.notification.push
+package com.sumian.common.notification
 
 import android.content.Intent
-import com.sumian.sd.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 
 /**
  * <pre>

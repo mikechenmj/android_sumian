@@ -4,8 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.sumian.common.base.IActivityDelegate
-import com.sumian.sd.notification.bean.AppNotificationManager
-import com.sumian.sd.utils.NotificationUtil
+import com.sumian.common.notification.AppNotificationManager
 
 /**
  * @author : Zhan Xuzhao

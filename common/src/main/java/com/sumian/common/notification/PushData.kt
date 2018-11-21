@@ -1,4 +1,4 @@
-package com.sumian.sd.notification.push
+package com.sumian.common.notification
 
 import android.os.Bundle
 

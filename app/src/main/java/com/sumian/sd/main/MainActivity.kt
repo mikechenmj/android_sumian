@@ -14,6 +14,7 @@ import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.leancloud.HwLeanCloudHelper
@@ -32,14 +33,13 @@ import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
-import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.tab.DoctorFragment
 import com.sumian.sd.tab.MeFragment
-import com.sumian.sd.utils.NotificationUtil
+import com.sumian.common.notification.NotificationUtil
 import com.sumian.sd.utils.StatusBarUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -138,7 +138,7 @@ class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnSh
         HwLeanCloudHelper.addOnAdminMsgCallback(this)
         if (AppManager.getAccountViewModel().isLogin) {
             HwLeanCloudHelper.loginEasemob(null)
-            LeanCloudManager.uploadPushId()
+            AppNotificationManager.uploadPushId()
         }
 
         AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()

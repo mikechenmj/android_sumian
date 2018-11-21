@@ -181,7 +181,7 @@
         <service android:name="com.avos.avoscloud.PushService" />
 
         <receiver
-            android:name=".notification.push.PushReceiver"
+            android:name="com.sumian.common.notification.PushReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.sumian.sd.action.PUSH" />

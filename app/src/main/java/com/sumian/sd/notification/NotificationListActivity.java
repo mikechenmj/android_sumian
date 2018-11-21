@@ -13,8 +13,7 @@ import com.sumian.common.widget.CommonEmptyView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.notification.bean.Notification;
-import com.sumian.sd.notification.push.SchemeResolveUtil;
-import com.sumian.sd.utils.NotificationUtil;
+import com.sumian.common.notification.NotificationUtil;
 import com.sumian.sd.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     }
 
     private boolean isNotificationEnabled() {
-        return NotificationUtil.Companion.areNotificationsEnabled(this);
+        return NotificationUtil.INSTANCE.areNotificationsEnabled(this);
     }
 
     private void removeHeadViewInNeeded() {
@@ -142,7 +141,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
             return;
         }
         String scheme = notification.getData().getScheme();
-        Intent intent = SchemeResolveUtil.Companion.schemeResolver(this, scheme);
+        Intent intent = SchemeResolver.INSTANCE.schemeResolver(this, scheme);
         if (intent == null) {
             LogUtils.d("Unresolved scheme", scheme);
             return;

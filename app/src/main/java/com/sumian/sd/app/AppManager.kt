@@ -1,12 +1,10 @@
 package com.sumian.sd.app
 
+import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.view.Gravity
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.*
 import com.hyphenate.chat.ChatClient
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.blue.manager.BlueManager
@@ -15,6 +13,7 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
@@ -30,11 +29,13 @@ import com.sumian.sd.base.ActivityDelegateFactory
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.FileHelper
 import com.sumian.sd.doctor.model.DoctorViewModel
-import com.sumian.sd.leancloud.LeanCloudManager
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.SdApi
-import com.sumian.sd.utils.NotificationUtil
+import com.sumian.sd.notification.NotificationConst
+import com.sumian.sd.notification.NotificationDelegate
+import com.sumian.sd.notification.SchemeResolver
+import com.sumian.common.notification.NotificationUtil
 
 /**
  * Created by jzz
@@ -156,17 +157,18 @@ object AppManager {
         return mHttpDns
     }
 
-    fun initOnAppStart() {
+    fun initOnAppStart(app: Application) {
+        initUtils(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
+        initAppNotificationManager(app)
     }
+
 
     @JvmStatic
     fun initOnFirstActivityStart(context: Context) {
         synchronized(AppManager::class.java) {
             initKefu(context)
-            LeanCloudManager.init(context)
             DeviceManager.init()
-            initUtils(context)
             initWebView(context)
         }
     }
@@ -175,6 +177,15 @@ object AppManager {
         ToastHelper.init(context)
         Utils.init(context)
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
+    }
+
+    private fun initAppNotificationManager(app: Application) {
+        AppNotificationManager.init(app,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_ID,
+                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG,
+                NotificationConst.CHANNEL_ID, NotificationConst.CHANNEL_NAME,
+                NotificationDelegate(), SchemeResolver)
+
     }
 
     private fun initWebView(context: Context) {

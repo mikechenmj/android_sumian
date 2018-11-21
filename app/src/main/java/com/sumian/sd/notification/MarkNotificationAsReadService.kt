@@ -2,9 +2,8 @@ package com.sumian.sd.notification
 
 import android.app.IntentService
 import android.content.Intent
-import com.blankj.utilcode.util.LogUtils
+import com.sumian.common.notification.AppNotificationManager
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.notification.bean.AppNotificationManager
 
 /**
  * @author : Zhan Xuzhao

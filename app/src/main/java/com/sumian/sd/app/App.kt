@@ -24,7 +24,7 @@ class App : Application() {
         super.onCreate()
         mAppContext = this
         LogManager.appendPhoneLog("APP 启动")
-        AppManager.initOnAppStart()
+        AppManager.initOnAppStart(this)
         registerActivityLifecycleCallbacks(AppInitThirdPlatformLifecycleCallback.create())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
