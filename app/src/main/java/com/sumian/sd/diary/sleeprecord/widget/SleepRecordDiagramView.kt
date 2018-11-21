@@ -19,30 +19,30 @@ import java.util.*
  * version: 1.0
  */
 class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
-    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    val barHeight = 120f
-    var width = 0f
-    var height = 0f
-    var t0 = 0L
-    var t1 = 0L
-    var t2 = 0L
-    var t3 = 0L
-    var nwc = 0    // night wake count
-    var tnwd = 0L   // total night wake duration
-    var tobd = 0L   // total on bad duration
-
-    val barColorNotSleep = Color.parseColor("#52CCA3")
-    val barColorSleep = ColorCompatUtil.getColor(context, R.color.b3_color)
-    var wdr = 0f // wdr = width / tobd
-    var lineWidth = context.resources.getDimension(R.dimen.space_1)
-    var lineHeightShort = context.resources.getDimension(R.dimen.space_56)
-    var lineHeightLong = context.resources.getDimension(R.dimen.space_80)
-    val lineAndTextColor = ColorCompatUtil.getColor(context, R.color.t2_color)
-    val textBottomMargin = context.resources.getDimension(R.dimen.space_10)
-    val textSize = context.resources.getDimension(R.dimen.font_14)
-    val nwkBitmap: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.record_icon_workschedule)
-    val iconBottomMargin = context.resources.getDimension(R.dimen.space_5)
-    private val DAY_THRESHOLD_TIME = TimeUtilV2.parseTimeStr("18:00")
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val barHeight = 120f
+    private var width = 0f
+    private var height = 0f
+    private var t0 = 0L
+    private var t1 = 0L
+    private var t2 = 0L
+    private var t3 = 0L
+    private var nwc = 0    // night wake count
+    private var tnwd = 0L   // total night wake duration
+    private var tobd = 0L   // total on bad duration
+    private val barColorNotSleep = Color.parseColor("#52CCA3")
+    private val barColorSleep = ColorCompatUtil.getColor(context, R.color.b3_color)
+    private var wdr = 0f // wdr = width / tobd
+    private var lineWidth = context.resources.getDimension(R.dimen.space_1)
+    private var lineHeightShort = context.resources.getDimension(R.dimen.space_56)
+    private var lineHeightLong = context.resources.getDimension(R.dimen.space_80)
+    private val textColor = ColorCompatUtil.getColor(context, R.color.t2_color)
+    private val lineColor = ColorCompatUtil.getColor(context, R.color.l3_color)
+    private val textBottomMargin = context.resources.getDimension(R.dimen.space_10)
+    private val textSize = context.resources.getDimension(R.dimen.font_14)
+    private val nwkBitmap: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.record_icon_workschedule)
+    private val iconBottomMargin = context.resources.getDimension(R.dimen.space_5)
+    private val dayThresholdTime = TimeUtilV2.parseTimeStr("18:00")
 
     val iconSize = context.resources.getDimension(R.dimen.space_15)
 
@@ -94,7 +94,6 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
         drawLine(canvas, getXByTime(t3) - lineWidth, true)
 
         // draw text
-        paint.color = lineAndTextColor
         drawText(canvas, "${timeToString(t0)} 睡觉", getXByTime(t0), true, false)
         drawText(canvas, "${timeToString(t1)} 睡着", getXByTime(t1), false, false)
         drawText(canvas, "${timeToString(t2)} 醒来", getXByTime(t2), false, true)
@@ -114,14 +113,14 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     }
 
     private fun drawText(canvas: Canvas, text: String, x: Float, isHeight: Boolean, isRightToLeft: Boolean) {
-        paint.color = lineAndTextColor
+        paint.color = textColor
         paint.textAlign = if (isRightToLeft) Paint.Align.RIGHT else Paint.Align.LEFT
         val lineHeight = if (isHeight) lineHeightLong else lineHeightShort
         canvas.drawText(text, x, height - lineHeight - textBottomMargin, paint)
     }
 
     private fun drawLine(canvas: Canvas, x: Float, isHeight: Boolean) {
-        paint.color = lineAndTextColor
+        paint.color = lineColor
         val lineHeight = if (isHeight) lineHeightLong else lineHeightShort
         canvas.drawRect(x, height, x + lineWidth, height - lineHeight, paint)
     }
@@ -138,9 +137,9 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
      *
      */
     fun setData(t0: Long, t1: Long, t2: Long, t3: Long, nightWakeCount: Int, nightWakeTotalDuration: Long) {
-        val isBedAtToday = t0 < DAY_THRESHOLD_TIME
+        val isBedAtToday = t0 < dayThresholdTime
         this.t0 = t0 + if (isBedAtToday) DAY_IN_MILLIS else 0
-        this.t1 = t1 + if (isBedAtToday || t1 < DAY_THRESHOLD_TIME) DAY_IN_MILLIS else 0
+        this.t1 = t1 + if (isBedAtToday || t1 < dayThresholdTime) DAY_IN_MILLIS else 0
         this.t2 = t2 + DAY_IN_MILLIS
         this.t3 = t3 + DAY_IN_MILLIS
         tobd = this.t3 - this.t0
