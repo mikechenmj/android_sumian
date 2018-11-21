@@ -71,7 +71,7 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
         }
     }
 
-    @Suppress("unused")
+    @Suppress("unused", "UNUSED_PARAMETER")
     @Subscribe
     fun onUploadMonitorDataEvent(event: UpdateMonitorDataEvent) {
         updateCurrentTimeData()
@@ -111,7 +111,7 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
 
             override fun onFinish() {
                 super.onFinish()
-                refresh.isRefreshing = false
+                refresh?.isRefreshing = false
             }
         })
     }
@@ -121,6 +121,9 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     }
 
     fun updateDailyReport(dailyReport: DailyReport) {
+        if (refresh == null) {
+            return
+        }
         refresh.isRefreshing = false
         refresh.setOnRefreshListener(this)
         day_sleep_histogram_view.setData(dailyReport)
