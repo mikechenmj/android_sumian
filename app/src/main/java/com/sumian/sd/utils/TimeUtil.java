@@ -379,9 +379,9 @@ public final class TimeUtil {
     }
 
     public static String getHourMinuteStringFromSecond(int second, String hourString, String minuteString) {
-        if (second == 0) {
-            return "——";
-        }
+//        if (second == 0) {
+//            return "——";
+//        }
         int hour = getHourFromSecond(second);
         int min = getMinuteFromSecond(second);
         String hourMinuteStr;
@@ -390,10 +390,8 @@ public final class TimeUtil {
             stringBuilder.append(hour)
                     .append(hourString);
         }
-        if (min != 0) {
-            stringBuilder.append(min)
-                    .append(minuteString);
-        }
+        stringBuilder.append(min)
+                .append(minuteString);
         hourMinuteStr = stringBuilder.toString();
         return hourMinuteStr;
     }

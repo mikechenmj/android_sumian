@@ -112,10 +112,6 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
         return qualityIcons[quality]
     }
 
-    private fun getDurationString(label: String, minutes: Int): String {
-        return label + TimeUtil.getHourMinuteStringFromSecondInZh(minutes * 60)
-    }
-
     private fun getStringArray(strings: List<String>): String {
         val stringBuilder = StringBuilder()
         val size = strings.size
