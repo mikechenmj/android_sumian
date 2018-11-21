@@ -51,9 +51,9 @@ abstract class BaseFragment : Fragment(), BaseShowLoadingView {
         initData()
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onDestroyView() {
         onRelease()
+        super.onDestroyView()
     }
 
     protected open fun onRelease() {

@@ -33,9 +33,12 @@ class PushReceiver : BroadcastReceiver() {
         val notificationId = SchemeResolveUtil.getNotificationIdFromScheme(scheme) ?: ""
         val notificationDataId = SchemeResolveUtil.getNotificationDataIdFromScheme(scheme)
         val notificationIntent = SchemeResolveUtil.schemeResolver(context, scheme)
+                ?: getDefaultIntent(context)
         val contentText = pushData.alert ?: return
         NotificationUtil.showNotification(context, contentText, notificationId, notificationDataId, notificationIntent)
     }
+
+    private fun getDefaultIntent(context: Context?) = Intent(context, MainActivity::class.java)
 
     private fun isUserIdValid(scheme: String): Boolean {
         val userIdStr = SchemeResolveUtil.getUserIdFromScheme(scheme)

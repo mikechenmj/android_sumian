@@ -68,7 +68,7 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
         tv_on_bed_duration.text = TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.on_bed_duration)
         // 睡眠图
         sleep_record_diagram_view.setData(
-                answer.getBedAtInMillis(), answer.getSleepAtInMillis(),
+                answer.getTryToSleepAtInMillis(), answer.getSleepAtInMillis(),
                 answer.getWakeUpAtInMillis(), answer.getGetUpAtInMillis(),
                 answer.wake_times, answer.getWakeDurationInMillis().toLong())
         // 情绪
