@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.hw.utils.UiUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.service.cbti.bean.CBTIMeta
@@ -28,7 +27,6 @@ import com.sumian.sd.service.cbti.widget.keyboard.MsgBoardKeyBoard
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianDataWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
-import kotlinx.android.synthetic.main.lay_msg_board_keyboard.*
 
 /**
  * Created by sm
@@ -103,14 +101,6 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         }
         keyboard.setOnKeyBoardCallback(this)
         ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICourseMetaLiveData().observe(this, this)
-        ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getKeyboardLiveData().observe(this, Observer<Boolean> {
-            if (keyboard.visibility != View.VISIBLE) return@Observer
-            if (it!!) {
-                UiUtil.showSoftKeyboard(et_msg_board_input)
-            } else {
-                UiUtil.closeKeyboard(et_msg_board_input)
-            }
-        })
     }
 
     override fun initData() {
@@ -124,6 +114,10 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
 
     override fun sendContent(content: String, anonymousType: Int) {
         CBTIMessageBoardActionPresenter.init(this).publishMessage(message = content, type = mCbtiType, isAnonymous = anonymousType)
+    }
+
+    override fun close() {
+        showMessageBoard(2)
     }
 
     override fun onChanged(t: CBTIMeta?) {

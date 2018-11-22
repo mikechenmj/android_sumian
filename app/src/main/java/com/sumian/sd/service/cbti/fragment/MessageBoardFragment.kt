@@ -82,16 +82,6 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
         mPresenter.getNextMessageBoardList()
     }
 
-    override fun onScrollUp() {
-        super.onScrollUp()
-        ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyKeyBoard(true)
-    }
-
-    override fun onScrollDown() {
-        super.onScrollDown()
-        ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyKeyBoard(false)
-    }
-
     override fun setPresenter(presenter: CBTIMessageBoardContract.Presenter?) {
         //super.setPresenter(presenter)
         this.mPresenter = presenter
