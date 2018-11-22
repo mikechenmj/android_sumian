@@ -34,16 +34,12 @@ class SchemeResolveUtil {
             return Uri.parse(url)
         }
 
-        private fun getParamFromScheme(scheme: String?, key: String): String? {
+        fun getParamFromScheme(scheme: String?, key: String): String? {
             if (TextUtils.isEmpty(scheme)) {
                 return null
             }
             val uri = stringToUri(scheme!!)
             return uri.getQueryParameter(key)
-        }
-
-        fun getUserIdFromScheme(scheme: String?): String? {
-            return getParamFromScheme(scheme, "user_id")
         }
 
         fun getNotificationIdFromScheme(scheme: String?): String? {

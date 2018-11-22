@@ -186,7 +186,7 @@ object AppManager {
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
                 NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG,
                 NotificationConst.CHANNEL_ID, NotificationConst.CHANNEL_NAME,
-                NotificationDelegate(), SchemeResolver)
+                NotificationDelegate(), SchemeResolver, NotificationConst.USER_ID_KEY)
 
     }
 

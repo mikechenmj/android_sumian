@@ -28,6 +28,7 @@ object AppNotificationManager {
     private lateinit var mChannelName: String
     private var mSmallIcon: Int = 0
     private var mLargeIcon: Int = 0
+    private var mUserIdKey = ""
 
 
     fun init(context: Context,
@@ -36,7 +37,8 @@ object AppNotificationManager {
              pushChannel: String, isDebug: Boolean,
              channelId: String, channelName: String,
              notificationDelegate: INotificationDelegate,
-             schemeResolver: ISchemeResolver) {
+             schemeResolver: ISchemeResolver,
+             userIdKey:String) {
         NotificationUtil.createNotificationChannel(context, channelId, channelName)
         LeanCloudManager.init(context, leanCloudAppId, leanCloudAppKey, pushChannel, isDebug)
         mSmallIcon = smallIcon
@@ -45,6 +47,7 @@ object AppNotificationManager {
         mChannelName = channelName
         mNotificationDelegate = notificationDelegate
         mSchemeResolver = schemeResolver
+        mUserIdKey = userIdKey
     }
 
     fun markNotificationAsRead(intent: Intent?) {
@@ -103,7 +106,7 @@ object AppNotificationManager {
     }
 
     private fun isUserIdValid(scheme: String): Boolean {
-        val userIdStr = SchemeResolveUtil.getUserIdFromScheme(scheme)
+        val userIdStr = SchemeResolveUtil.getParamFromScheme(scheme, mUserIdKey)
         if (TextUtils.isEmpty(userIdStr)) {
             return true
         }
