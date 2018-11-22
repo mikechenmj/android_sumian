@@ -18,18 +18,20 @@ import com.blankj.utilcode.util.LogUtils
  * version: 1.0
  */
 object AppNotificationManager {
-    @Suppress("MemberVisibilityCanBePrivate")
-    const val KEY_PUSH_NOTIFICATION_ID = "push_notification_id"
-    @Suppress("MemberVisibilityCanBePrivate")
-    const val KEY_PUSH_NOTIFICATION_DATA_ID = "push_notification_data_id"
+    private const val KEY_PUSH_NOTIFICATION_ID = "com.sumian.common.notification.AppNotificationManager.push_notification_id"
+    private const val KEY_PUSH_NOTIFICATION_DATA_ID = "com.sumian.common.notification.AppNotificationManager.push_notification_data_id"
     private const val REQUEST_CODE = 100
 
     private lateinit var mNotificationDelegate: INotificationDelegate
     private lateinit var mSchemeResolver: ISchemeResolver
     private lateinit var mChannelId: String
     private lateinit var mChannelName: String
+    private var mSmallIcon: Int = 0
+    private var mLargeIcon: Int = 0
+
 
     fun init(context: Context,
+             smallIcon: Int, largeIcon: Int,
              leanCloudAppId: String, leanCloudAppKey: String,
              pushChannel: String, isDebug: Boolean,
              channelId: String, channelName: String,
@@ -37,6 +39,8 @@ object AppNotificationManager {
              schemeResolver: ISchemeResolver) {
         NotificationUtil.createNotificationChannel(context, channelId, channelName)
         LeanCloudManager.init(context, leanCloudAppId, leanCloudAppKey, pushChannel, isDebug)
+        mSmallIcon = smallIcon
+        mLargeIcon = largeIcon
         mChannelId = channelId
         mChannelName = channelName
         mNotificationDelegate = notificationDelegate
@@ -44,12 +48,11 @@ object AppNotificationManager {
     }
 
     fun markNotificationAsRead(intent: Intent?) {
-        if (intent == null) {
-            return
+        intent?.let {
+            val notificationId = it.getStringExtra(KEY_PUSH_NOTIFICATION_ID)
+            val notificationDataId = it.getIntExtra(KEY_PUSH_NOTIFICATION_DATA_ID, 0)
+            markNotificationAsRead(notificationId, notificationDataId)
         }
-        val notificationId = intent.getStringExtra(KEY_PUSH_NOTIFICATION_ID)
-        val notificationDataId = intent.getIntExtra(KEY_PUSH_NOTIFICATION_DATA_ID, 0)
-        markNotificationAsRead(notificationId, notificationDataId)
     }
 
     private fun markNotificationAsRead(notificationId: String?, data_id: Int? = null) {
@@ -60,7 +63,7 @@ object AppNotificationManager {
     }
 
     fun showNotificationIfPossible(context: Context, pushData: PushData) {
-        LogUtils.d(pushData)
+        LogUtils.d("pushData", pushData)
         val scheme = pushData.scheme ?: return
         if (!isUserIdValid(scheme)) {
             LogUtils.d("push data user id invalid")
@@ -76,8 +79,8 @@ object AppNotificationManager {
         NotificationUtil.showNotification(
                 context,
                 mChannelId,
-                mNotificationDelegate.getSmallIcon(),
-                mNotificationDelegate.getLargeIcon(),
+                mSmallIcon,
+                mLargeIcon,
                 AppUtils.getAppName(), contentText,
                 getPendingIntent(context, intent)
         )
@@ -88,7 +91,7 @@ object AppNotificationManager {
         AVInstallation.getCurrentInstallation().saveInBackground(object : SaveCallback() {
             override fun done(p0: AVException?) {
                 val installationId = AVInstallation.getCurrentInstallation().installationId
-                LogUtils.d(installationId)
+                LogUtils.d("installationId", installationId)
                 mNotificationDelegate.uploadInstallationId(installationId)
             }
         })
@@ -123,12 +126,7 @@ interface INotificationDelegate {
 
     fun notifyNotificationCountChange()
 
-    fun getSmallIcon(): Int
-
-    fun getLargeIcon(): Int
-
     fun uploadInstallationId(installationId: String)
-
 }
 
 interface ISchemeResolver {

@@ -36,6 +36,7 @@ import com.sumian.sd.notification.NotificationConst
 import com.sumian.sd.notification.NotificationDelegate
 import com.sumian.sd.notification.SchemeResolver
 import com.sumian.common.notification.NotificationUtil
+import com.sumian.sd.R
 
 /**
  * Created by jzz
@@ -181,7 +182,8 @@ object AppManager {
 
     private fun initAppNotificationManager(app: Application) {
         AppNotificationManager.init(app,
-                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_ID,
+                R.drawable.ic_notification_small, R.mipmap.ic_launcher,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
                 NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG,
                 NotificationConst.CHANNEL_ID, NotificationConst.CHANNEL_NAME,
                 NotificationDelegate(), SchemeResolver)

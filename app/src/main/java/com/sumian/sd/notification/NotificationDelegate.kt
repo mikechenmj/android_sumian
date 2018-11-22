@@ -50,14 +50,6 @@ class NotificationDelegate : INotificationDelegate {
         EventBusUtil.postStickyEvent(NotificationUnreadCountChangeEvent())
     }
 
-    override fun getSmallIcon(): Int {
-        return R.drawable.ic_notification_small
-    }
-
-    override fun getLargeIcon(): Int {
-        return R.mipmap.ic_launcher
-    }
-
     override fun uploadInstallationId(installationId: String) {
         val call = AppManager
                 .getSdHttpService()
