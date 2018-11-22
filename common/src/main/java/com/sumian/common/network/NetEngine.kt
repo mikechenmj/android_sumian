@@ -22,7 +22,7 @@ class NetEngine private constructor(baseUrl: String, isDebug: Boolean = false, d
 
     companion object {
 
-        private const val TIMEOUT = 3L
+        private const val TIMEOUT = 5L
 
     }
 
