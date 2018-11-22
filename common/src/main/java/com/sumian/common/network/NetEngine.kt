@@ -22,16 +22,16 @@ class NetEngine private constructor(baseUrl: String, isDebug: Boolean = false, d
 
     companion object {
 
-        private const val TIMEOUT = 10L
+        private const val TIMEOUT = 5L
 
     }
 
     private val mRetrofit by lazy {
 
         val okHttpClientBuilder = OkHttpClient.Builder()
-//                .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-//                .readTimeout(TIMEOUT, TimeUnit.SECONDS)
-//                .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .protocols(arrayListOf(Protocol.HTTP_1_1, Protocol.HTTP_2))
                 .dns(dns)
                 .addInterceptor(HttpLoggingInterceptor().setLevel(if (isDebug) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE))
