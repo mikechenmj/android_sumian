@@ -22,7 +22,7 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.device.command.BlueCmd
-import com.sumian.sd.device.pattern.SyncPatternManager
+import com.sumian.sd.device.pattern.SyncPatternService
 import com.sumian.sd.device.wrapper.BlueDeviceWrapper
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.utils.StorageUtil
@@ -872,7 +872,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onSyncSuccess() {
-        SyncPatternManager.syncPatternInPossible(App.getAppContext())
+        SyncPatternService.startIfPossible(App.getAppContext())
         for (listener in mMonitorEventListeners) {
             listener.onSyncSuccess()
         }
