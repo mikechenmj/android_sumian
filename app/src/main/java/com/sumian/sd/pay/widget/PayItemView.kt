@@ -1,6 +1,6 @@
 @file:Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
 
-package com.sumian.sd.pay.pay
+package com.sumian.sd.pay.widget
 
 import android.content.Context
 import android.util.AttributeSet

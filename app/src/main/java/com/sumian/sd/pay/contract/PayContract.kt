@@ -5,6 +5,7 @@ import android.content.Intent
 
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
+import com.sumian.sd.pay.bean.PayCouponCode
 import com.sumian.sd.pay.bean.PayOrder
 
 /**
@@ -32,6 +33,10 @@ interface PayContract {
 
         fun onCheckOrderPayIsInvalid(invalidError: String)
 
+        fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode)
+
+        fun onCheckCouponCodeFailed(error: String)
+
         /**
          * 原因：ping++ 的服务器回调可能会比 客户端回调 晚，此时服务端还未生成电话预约，所以会返回上一次的数据
          *
@@ -46,6 +51,8 @@ interface PayContract {
         fun createPayOrder(activity: Activity, payOrder: PayOrder)
 
         fun checkPayOrder()
+
+        fun checkCouponCode(couponCode: String, packageId: Int)
 
         fun doPay(activity: Activity)
 

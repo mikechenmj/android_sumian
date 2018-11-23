@@ -81,27 +81,26 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <com.sumian.sd.pay.pay.PayCalculateItemView
+            <com.sumian.sd.pay.widget.PayCalculateItemView
                 android:id="@+id/pay_calculate_item_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_16" />
 
-            <com.sumian.sd.pay.pay.PayItemGroupView
+            <com.sumian.sd.pay.widget.PayItemGroupView
                 android:id="@+id/pay_group_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_16" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/bt_pay"
                 style="@style/bt_t1_style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_50"
-                android:layout_marginBottom="@dimen/space_36"
                 android:layout_marginLeft="@dimen/space_32"
-                android:layout_marginRight="@dimen/space_32"
                 android:layout_marginTop="@dimen/space_40"
+                android:layout_marginRight="@dimen/space_32"
+                android:layout_marginBottom="@dimen/space_36"
                 android:clickable="true"
                 android:elevation="@dimen/space_2"
                 android:focusable="true"

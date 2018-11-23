@@ -3,18 +3,19 @@ package com.sumian.sd.pay.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.doctor.bean.DoctorServicePackage
-import com.sumian.sd.pay.bean.PayOrder
+import com.sumian.sd.pay.bean.PayCouponCode
 import com.sumian.sd.pay.contract.PayContract
 import com.sumian.sd.pay.dialog.PayDialog
-import com.sumian.sd.pay.pay.PayCalculateItemView
-import com.sumian.sd.pay.pay.PayItemGroupView
 import com.sumian.sd.pay.presenter.PayPresenter
+import com.sumian.sd.pay.widget.PayCalculateItemView
+import com.sumian.sd.pay.widget.PayItemGroupView
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.ActionLoadingDialogV2
 import kotlinx.android.synthetic.main.activity_main_shopping_car.*
@@ -28,6 +29,8 @@ import kotlinx.android.synthetic.main.activity_main_shopping_car.*
 class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
 
     companion object {
+
+        private val TAG = PaymentActivity::class.java.simpleName
 
         private const val WECHAT_PAY_TYPE = "wx"
         private const val ALIPAY_PAY_TYPE = "alipay"
@@ -70,7 +73,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     private var mPackage: DoctorServicePackage.ServicePackage? = null
 
     override fun initBundle(bundle: Bundle?): Boolean {
-        if (bundle != null) {
+        bundle?.let {
             this.mDoctorService = bundle.getParcelable(ARGS_DOCTOR_SERVICE)
             val packageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID)
             for (servicePackage in mDoctorService!!.service_packages) {
@@ -98,11 +101,13 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun initData() {
         super.initData()
-        ImageLoader.loadImage(mDoctorService!!.icon, lay_group_icon)
-        tv_name.text = mDoctorService!!.name
-        tv_desc.text = mServicePackage!!.name
+        mDoctorService?.let {
+            ImageLoader.loadImage(mDoctorService!!.icon, lay_group_icon)
+            tv_name.text = mDoctorService?.name
+            tv_desc.text = mServicePackage?.name
+            pay_calculate_item_view.defaultMoney = mPackage?.unit_price ?: 998.00
+        }
 
-        pay_calculate_item_view.defaultMoney = mPackage!!.unit_price
     }
 
     override fun initPresenter() {
@@ -124,8 +129,8 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     private fun pay() {
-        val payOrder = PayOrder(pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-        mPresenter.createPayOrder(this, payOrder)
+        // val payOrder = PayOrder(pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+        //  mPresenter.createPayOrder(this, payOrder)
     }
 
     override fun onSelectWechatPayWay() {
@@ -151,6 +156,11 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         bt_pay.alpha = if (money > 0.00f) 1.00f else 0.50f
     }
 
+    override fun onCheckCouponCode(couponCode: String) {
+        Log.e(TAG, "onCheckCouponCode: -------->")
+        mPresenter.checkCouponCode(couponCode, mPackage!!.id)
+    }
+
     override fun setPresenter(presenter: PayContract.Presenter) {
         this.mPresenter = presenter
     }
@@ -163,7 +173,6 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     override fun onBegin() {
         showLoading()
     }
-
 
     override fun onFinish() {
         dismissLoading()
@@ -205,12 +214,6 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         finish()
     }
 
-    private fun cancelPayDialog() {
-        if (mPayDialog.isShowing) {
-            mPayDialog.cancel()
-        }
-    }
-
     override fun onCheckOrderPayIsInvalid(invalidError: String) {
         showCenterToast(invalidError)
         if (!mPayDialog.isShowing) {
@@ -227,6 +230,13 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         finish()
     }
 
+    override fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode) {
+
+    }
+
+    override fun onCheckCouponCodeFailed(error: String) {
+    }
+
     override fun showLoading() {
         mActionLoadingDialog.show()
     }
@@ -234,6 +244,12 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     override fun dismissLoading() {
         if (mActionLoadingDialog.isShowing) {
             mActionLoadingDialog.dismiss()
+        }
+    }
+
+    private fun cancelPayDialog() {
+        if (mPayDialog.isShowing) {
+            mPayDialog.cancel()
         }
     }
 }

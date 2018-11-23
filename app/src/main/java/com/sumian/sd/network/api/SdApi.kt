@@ -28,6 +28,7 @@ import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.oss.OssResponse
 import com.sumian.sd.pay.bean.OrderDetail
+import com.sumian.sd.pay.bean.PayCouponCode
 import com.sumian.sd.pay.bean.PayOrder
 import com.sumian.sd.scale.bean.FilledScale
 import com.sumian.sd.scale.bean.NotFilledScale
@@ -244,6 +245,10 @@ interface SdApi {
 
     @POST("orders")
     fun createOrder(@Body payOrder: PayOrder): Call<Any>
+
+    //校验支付优惠码
+    @GET("discount-code/available")
+    fun checkCouponCode(@Query("code") code: String, @Query("package_id") packageId: Int): Call<PayCouponCode>
 
     //user advisory
 
