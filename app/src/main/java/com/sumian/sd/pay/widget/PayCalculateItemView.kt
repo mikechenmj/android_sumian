@@ -1,12 +1,15 @@
-package com.sumian.sd.pay.pay
+package com.sumian.sd.pay.widget
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
+import com.sumian.sd.pay.bean.PayCouponCode
 import kotlinx.android.synthetic.main.lay_pay_calculate_item_view.view.*
 import java.util.*
 
@@ -33,18 +36,32 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
 
     private var mOnMoneyChangeCallback: OnMoneyChangeCallback? = null
 
+    private var mTimes: Long = 0
+
     init {
         initView(context)
     }
 
     private fun initView(context: Context) {
+        gravity = Gravity.CENTER
+        orientation = LinearLayout.VERTICAL
         View.inflate(context, R.layout.lay_pay_calculate_item_view, this)
         iv_faq.visibility = View.GONE
         iv_faq.setOnClickListener(this)
         iv_reduce_duration.setOnClickListener(this)
         iv_add_duration.setOnClickListener(this)
-        gravity = Gravity.CENTER
-        orientation = LinearLayout.VERTICAL
+        et_coupon_code.addTextChangedListener(object : EmptyTextWatcher() {
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                super.onTextChanged(s, start, before, count)
+                if (!TextUtils.isEmpty(s.toString().trim())) {
+                    if (System.currentTimeMillis() - mTimes >= 200) {
+                        mOnMoneyChangeCallback?.onCheckCouponCode(s.toString().trim())
+                    }
+                    mTimes = System.currentTimeMillis()
+                }
+            }
+        })
     }
 
     fun setOnMoneyChangeCallback(onMoneyChangeCallback: OnMoneyChangeCallback) {
@@ -112,7 +129,18 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         tv.text = String.format(Locale.getDefault(), "%.2f", money / 100.00f)
     }
 
+
+    fun updateCouponCodeTips(couponCode: PayCouponCode?) {
+        if (couponCode == null) {
+
+        } else {
+            tv_pay_coupon_code_tips.text = "此优惠码无效"
+        }
+    }
+
     interface OnMoneyChangeCallback {
         fun onMoneyChange(money: Double)
+
+        fun onCheckCouponCode(couponCode: String)
     }
 }

@@ -115,14 +115,14 @@
         <activity
             android:name=".pay.activity.PaymentActivity"
             android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".setting.SettingActivity"
             android:configChanges="keyboardHidden|orientation"
-
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -533,6 +533,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />

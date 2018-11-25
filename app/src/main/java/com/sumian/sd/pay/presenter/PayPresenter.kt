@@ -12,10 +12,11 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
-import com.sumian.sd.pay.bean.PayOrder
-import com.sumian.sd.pay.contract.PayContract
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.pay.bean.OrderDetail
+import com.sumian.sd.pay.bean.PayCouponCode
+import com.sumian.sd.pay.bean.PayOrder
+import com.sumian.sd.pay.contract.PayContract
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -136,6 +137,32 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
                 mView?.onFinish()
             }
         })
+    }
+
+    override fun checkCouponCode(couponCode: String, packageId: Int) {
+        mView?.onBegin()
+        val call = AppManager.getSdHttpService().checkCouponCode(couponCode, packageId)
+        mCalls.add(call)
+        call.enqueue(object : BaseSdResponseCallback<PayCouponCode>() {
+
+            override fun onSuccess(response: PayCouponCode?) {
+                response?.let {
+                    mView?.onCheckCouponCodeSuccess(response)
+                }
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onCheckCouponCodeFailed(error = errorResponse.message)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                mView?.onFinish()
+            }
+
+        })
+
+
     }
 
     fun autoCheckOrderStatus() {

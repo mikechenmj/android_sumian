@@ -675,4 +675,7 @@
     <string name="medicine_history">服用促进睡眠类药物</string>
     <string name="is_using_medicine">有服用</string>
     <string name="not_using_medicine">没有</string>
+    <string name="pay_coupon_code">优惠码</string>
+    <string name="pay_coupon_code_hint">请填写优惠码</string>
+    <string name="none_pay_coupon_code">暂未使用优惠</string>
 </resources>

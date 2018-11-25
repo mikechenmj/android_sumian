@@ -6,11 +6,17 @@ package com.sumian.sd.pay.bean
  * on 2018/6/2 21:48
  * desc:用户创建的支付订单
  **/
-data class PayOrder(var amount: Double = 0.00,//支付总金额（单位：分）
-                    var channel: String = "wx",//付款平台（wx:微信app，alipay：支付宝app，wx_pub:微信公众号）//允许值: {"wx", "alipay", "wx_pub"}
-                    var currency: String = "cny",//货币代码，目前仅支持人民币 cny 允许值: {"cny"}
-                    var subject: String,//商品标题
-                    var body: String,
-                    var package_id: Int,//套餐 id
-                    var quantity: Int = 0//购买数量
+data class PayOrder(
+        val discount_code: String?,//优惠码
+        val reseller_id: Int?,//分销 id
+        val mobile: String?,//手机号
+        val captcha: String?,//验证码
+        val amount: Double = 0.00,//支付总金额（单位：分）
+        val channel: String = "wx",//付款平台（wx:微信app，alipay：支付宝app，wx_pub:微信公众号）//允许值: {"wx", "alipay", "wx_pub"}
+        val currency: String = "cny",//货币代码，目前仅支持人民币 cny 允许值: {"cny"}
+        val subject: String,//商品标题
+        val body: String,
+        val open_id: String?,//open_id 微信公众号购买为必填
+        val package_id: Int,//套餐 id
+        val quantity: Int = 0//购买数量
 )
