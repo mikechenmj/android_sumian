@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
@@ -40,12 +39,10 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
     companion object {
         private const val UNREGISTER_BLUE_DATA_CALLBACK_DELAY = 5000L
 
-        fun startIfPossible(context: Context) {
+        fun start(context: Context) {
             LogUtils.d("start")
-            if (AppManager.getBlueManager().isBluePeripheralConnected && AppUtils.isAppForeground()) {
-                val intent = Intent(context, SyncPatternService::class.java)
-                context.startService(intent)
-            }
+            val intent = Intent(context, SyncPatternService::class.java)
+            context.startService(intent)
         }
     }
 
