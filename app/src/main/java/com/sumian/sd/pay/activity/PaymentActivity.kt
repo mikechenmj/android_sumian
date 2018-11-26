@@ -249,6 +249,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         if (code == 1) {
             pay_calculate_item_view.updateCouponCodeTips(null)
             pay_calculate_item_view.updateCouponCodeFailed(error)
+            showCenterToast(error)
         } else {
             showCenterToast(error)
             pay_calculate_item_view.updateCouponCodeTips(null)

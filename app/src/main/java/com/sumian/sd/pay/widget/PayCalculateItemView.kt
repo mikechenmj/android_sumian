@@ -71,11 +71,11 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
                     tv_pay_coupon_code_tips.text = getString(R.string.none_pay_coupon_code)
                     tv_pay_coupon_code_tips.background = null
                     tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
-                    autoUpdateMoney()
+                    mDiscountMoney = 0.00
                 }
+                autoUpdateMoney()
             }
         })
-        // showCheckCouponCodeLoading()
     }
 
     fun getCouponCode(): String? = et_coupon_code.text?.toString()?.trim()
