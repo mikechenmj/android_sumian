@@ -678,4 +678,10 @@
     <string name="pay_coupon_code">优惠码</string>
     <string name="pay_coupon_code_hint">请填写优惠码</string>
     <string name="none_pay_coupon_code">暂未使用优惠</string>
+    <string name="none_join_count">0人参与</string>
+    <string name="join">人参与</string>
+    <string name="submit_success">提交成功</string>
+    <string name="service_submit_success_msg">您的情况已提交给医生，如有新消息，我们将会通过消息中心通知您，请耐心等待</string>
+    <string name="show_detail">查看详情</string>
+    <string name="go_back_home"><u>返回主页</u></string>
 </resources>

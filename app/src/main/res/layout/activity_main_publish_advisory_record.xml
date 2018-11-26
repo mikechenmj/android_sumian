@@ -15,140 +15,151 @@
         app:show_back="true"
         app:text="问题详情" />
 
-    <android.support.v4.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_10"
-                android:background="@color/white"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/et_input"
-                    style="@style/text_t1_16"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/space_264"
-                    android:background="@null"
-                    android:gravity="start"
-                    android:hint="@string/input_question_hint"
-                    android:padding="@dimen/space_20"
-                    android:textColorHint="@color/t2_color" />
-
-                <TextView
-                    android:id="@+id/tv_input_text_count"
-                    style="@style/text_t2_14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|right"
-                    android:layout_marginEnd="@dimen/space_20"
-                    android:layout_marginBottom="@dimen/space_20"
-                    android:text="0/500"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/photo_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_10"
-                android:minHeight="@dimen/space_120">
-
-                <com.sumian.common.media.widget.PicturesPreviewer
-                    android:id="@+id/publish_pictures_previewer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:padding="@dimen/space_20"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
                 <LinearLayout
-                    android:id="@+id/lay_picture_place"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/space_120"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10"
                     android:background="@color/white"
-                    android:orientation="horizontal"
-                    tools:ignore="UseCompoundDrawables">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/iv_take_picture"
-                        android:layout_width="@dimen/space_80"
-                        android:layout_height="@dimen/space_80"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/space_20"
-                        android:layout_marginEnd="@dimen/space_20"
-                        android:contentDescription="@null"
-                        app:srcCompat="@mipmap/ic_advisory_btn_uploadphoto" />
+                    <EditText
+                        android:id="@+id/et_input"
+                        style="@style/text_t1_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_264"
+                        android:background="@null"
+                        android:gravity="start"
+                        android:hint="@string/input_question_hint"
+                        android:padding="@dimen/space_20"
+                        android:textColorHint="@color/t2_color"
+                        tools:ignore="Autofill,TextFields" />
 
                     <TextView
+                        android:id="@+id/tv_input_text_count"
                         style="@style/text_t2_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center|right"
                         android:layout_marginEnd="@dimen/space_20"
-                        android:lineSpacingExtra="@dimen/space_2"
-                        android:text="@string/take_picture" />
+                        android:layout_marginBottom="@dimen/space_20"
+                        android:text="0/500"
+                        tools:ignore="HardcodedText,RtlHardcoded" />
 
                 </LinearLayout>
 
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/lay_report"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_64"
-                android:layout_marginTop="@dimen/space_10"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    style="@style/text_t1_16"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:id="@+id/photo_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/space_20"
-                    android:text="@string/select_report" />
+                    android:layout_marginTop="@dimen/space_10"
+                    android:minHeight="@dimen/space_120">
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    <com.sumian.common.media.widget.PicturesPreviewer
+                        android:id="@+id/publish_pictures_previewer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:padding="@dimen/space_20"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
-                <TextView
-                    android:id="@+id/tv_report_count"
-                    style="@style/text_t2_16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/space_20"
-                    android:textColor="@color/t4_color"
-                    tools:ignore="HardcodedText"
-                    tools:text="已选择1份" />
+                    <LinearLayout
+                        android:id="@+id/lay_picture_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_120"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
 
-                <ImageView
-                    android:layout_width="@dimen/space_10"
-                    android:layout_height="@dimen/space_16"
-                    android:layout_gravity="center|right"
-                    android:layout_marginStart="@dimen/space_20"
-                    android:layout_marginEnd="@dimen/space_20"
-                    android:contentDescription="@null"
-                    app:srcCompat="@mipmap/ic_record_icon_right"
-                    tools:ignore="RtlHardcoded" />
+                        <ImageView
+                            android:id="@+id/iv_take_picture"
+                            android:layout_width="@dimen/space_80"
+                            android:layout_height="@dimen/space_80"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/space_20"
+                            android:layout_marginEnd="@dimen/space_20"
+                            android:contentDescription="@null"
+                            app:srcCompat="@mipmap/ic_advisory_btn_uploadphoto" />
+
+                        <TextView
+                            style="@style/text_t2_14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/space_20"
+                            android:lineSpacingExtra="@dimen/space_2"
+                            android:text="@string/take_picture" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_64"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/text_t1_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_20"
+                        android:text="@string/select_report" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_report_count"
+                        style="@style/text_t2_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/space_20"
+                        android:textColor="@color/t4_color"
+                        tools:ignore="HardcodedText"
+                        tools:text="已选择1份" />
+
+                    <ImageView
+                        android:layout_width="@dimen/space_10"
+                        android:layout_height="@dimen/space_16"
+                        android:layout_gravity="center|right"
+                        android:layout_marginStart="@dimen/space_20"
+                        android:layout_marginEnd="@dimen/space_20"
+                        android:contentDescription="@null"
+                        app:srcCompat="@mipmap/ic_record_icon_right"
+                        tools:ignore="RtlHardcoded" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-    </android.support.v4.widget.NestedScrollView>
+        <com.sumian.sd.service.widget.ServiceSuccessStateView
+            android:id="@+id/service_state_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
 </LinearLayout>

@@ -14,6 +14,7 @@ import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingPublishContract
 import com.sumian.sd.service.tel.presenter.TelBookingPublishPresenter
 import com.sumian.sd.service.tel.sheet.TelBookingBottomSheet
+import com.sumian.sd.service.widget.ServiceSuccessStateView
 import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
 
@@ -121,8 +122,17 @@ class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContrac
 
     override fun onPublishTelBookingOrderSuccess(telBooking: TelBooking) {//publish success
         invalidTelBooking(telBooking)
-        TelBookingDetailActivity.show(telBookingId = telBooking.id)
-        finish()
+        service_state_view.setOnServiceSuccessCallback(object : ServiceSuccessStateView.OnServiceSuccessCallback {
+            override fun showServiceDetailCallback() {
+                TelBookingDetailActivity.show(telBookingId = telBooking.id)
+                finish()
+            }
+
+            override fun goBackHome() {
+                finish()
+            }
+
+        }).show()
     }
 
     override fun onPublishTelBookingOrderFailed(error: String) {

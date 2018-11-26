@@ -3,9 +3,7 @@ package com.sumian.sd.notification.push.schemeResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.sd.anxiousandfaith.AnxietyActivity
 import com.sumian.sd.anxiousandfaith.AnxiousAndFaithActivity
-import com.sumian.sd.homepage.RelaxationActivity
 
 /**
  * @author : Zhan Xuzhao
