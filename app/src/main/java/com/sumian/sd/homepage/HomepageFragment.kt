@@ -23,7 +23,6 @@ import com.sumian.sd.device.widget.DeviceCardView
 import com.sumian.sd.event.CBTIProgressChangeEvent
 import com.sumian.sd.event.CBTIServiceBoughtEvent
 import com.sumian.sd.event.EventBusUtil
-import com.sumian.sd.event.SleepRecordFilledEvent
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse

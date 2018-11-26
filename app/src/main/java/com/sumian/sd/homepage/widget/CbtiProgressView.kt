@@ -9,6 +9,7 @@ import com.sumian.sd.R
 import com.sumian.sd.homepage.bean.CbtiChapterData
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import kotlinx.android.synthetic.main.view_cbti_progress.view.*
+import java.util.*
 
 /**
  * <pre>
@@ -35,6 +36,7 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
             updateProgressViewList(dataList)
 
             tv_progress.text = if (chaptersData.meta.allFinished) resources.getString(R.string.is_finished) else chaptersData.meta.currentStatus
+            tv_cbti_lesson_people_count.text = String.format(Locale.getDefault(), "%d%s", chaptersData.meta.joinedCount, resources.getString(R.string.join))
         }
     }
 

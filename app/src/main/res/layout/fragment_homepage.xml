@@ -35,6 +35,7 @@
                     tools:text="张三" />
 
                 <TextView
+                    android:id="@+id/tv_home_random_text"
                     style="@style/text_t2_14"
                     android:layout_marginTop="@dimen/space_10"
                     android:text="@string/homepage_sleep_slogan" />
