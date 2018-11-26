@@ -148,11 +148,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
                 isLock = response?.meta?.isLock != false
-                if (!isLock) {
-                    cbti_progress_view.setData(response)
-                } else {
-                    cbti_progress_view.setData(null)
-                }
+                cbti_progress_view.setData(response)
             }
         })
     }
