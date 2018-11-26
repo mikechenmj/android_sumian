@@ -43,15 +43,30 @@
                 android:background="@color/b3_color"
                 android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_avatar"
-                    android:layout_width="@dimen/space_80"
-                    android:layout_height="@dimen/space_80"
-                    android:layout_gravity="center"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/ic_info_avatar_patient"
-                    app:civ_border_color="@android:color/white"
-                    app:civ_border_width="@dimen/space_4" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="@dimen/space_80"
+                        android:layout_height="@dimen/space_80"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@mipmap/ic_info_avatar_patient"
+                        app:civ_border_color="@android:color/white"
+                        app:civ_border_width="@dimen/space_4" />
+
+                    <ImageView
+                        android:id="@+id/iv_modify"
+                        android:layout_width="@dimen/space_20"
+                        android:layout_height="@dimen/space_20"
+                        android:layout_gravity="center|bottom|right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_info_personal"
+                        tools:ignore="RtlHardcoded" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/tv_nickname"

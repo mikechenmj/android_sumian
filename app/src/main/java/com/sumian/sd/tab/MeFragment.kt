@@ -93,7 +93,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener, P
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.iv_avatar, R.id.tv_nickname -> SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
+            R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
             R.id.dv_setting -> SettingActivity.show(context, SettingActivity::class.java)
             R.id.iv_notification -> NotificationListActivity.launch(activity)
             R.id.siv_customer_service -> {
