@@ -1,8 +1,10 @@
 package com.sumian.sd.account.login
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -49,7 +51,16 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
         iv_user_agreement.setOnClickListener { onIvUserAgreementClick() }
         tv_user_agreement.setOnClickListener { SimpleWebActivity.launch(this, H5Uri.USER_AGREEMENT_URL) }
         tv_user_privacy_policy.setOnClickListener { SimpleWebActivity.launch(this, H5Uri.USER_POLICY_URL) }
-        tv_wechat_login.setOnClickListener { wechatLogin() }
+
+        tv_wechat_login?.apply {
+
+            val drawable = getDrawable(R.drawable.ic_sign_wechat) as Drawable
+            drawable.setBounds(0, 0, resources.getDimensionPixelOffset(R.dimen.space_22), resources.getDimensionPixelOffset(R.dimen.space_18))
+            text = QMUISpanHelper.generateSideIconText(true, resources.getDimensionPixelOffset(R.dimen.space_10), getString(R.string.wechat_login), drawable)
+            tv_wechat_login.postInvalidate()
+            setOnClickListener { wechatLogin() }
+
+        }
         tv_captcha_login.setOnClickListener { turnOnCaptchaLogin(true) }
         tv_password_login.setOnClickListener { turnOnCaptchaLogin(false) }
         tv_forget_password.setOnClickListener { ValidatePhoneNumberActivity.launchForForgetPassword() }

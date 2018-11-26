@@ -180,20 +180,21 @@
         <TextView
             android:id="@+id/tv_wechat_login"
             style="@style/text_t2_14"
-            android:layout_width="120dp"
-            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:gravity="center"
             android:padding="@dimen/space_20"
             android:text="@string/wechat_login" />
 
         <View
             style="@style/HwVerticalDividerLine"
-            android:layout_height="@dimen/space_12" />
+            android:layout_height="@dimen/space_12"
+            android:background="@color/l3_color_day" />
 
         <TextView
             android:id="@+id/tv_captcha_login"
             style="@style/text_t2_14"
-            android:layout_width="120dp"
-            android:gravity="start"
+            android:layout_width="wrap_content"
+            android:gravity="center"
             android:padding="@dimen/space_20"
             android:text="@string/captcha_login"
             android:visibility="gone" />
@@ -201,8 +202,8 @@
         <TextView
             android:id="@+id/tv_password_login"
             style="@style/text_t2_14"
-            android:layout_width="120dp"
-            android:gravity="start"
+            android:layout_width="wrap_content"
+            android:gravity="center"
             android:padding="@dimen/space_20"
             android:text="@string/password_login"
             android:visibility="visible" />
