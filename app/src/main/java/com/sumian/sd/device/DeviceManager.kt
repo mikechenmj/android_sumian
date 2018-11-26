@@ -3,8 +3,11 @@
 package com.sumian.sd.device
 
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
+import android.content.Intent
 import android.support.annotation.StringRes
 import android.text.TextUtils
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.blue.callback.BlueAdapterCallback
@@ -26,6 +29,7 @@ import com.sumian.sd.device.pattern.SyncPatternService
 import com.sumian.sd.device.wrapper.BlueDeviceWrapper
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.utils.StorageUtil
+import com.umeng.socialize.utils.DeviceConfig.context
 import java.util.*
 
 /**
@@ -872,7 +876,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onSyncSuccess() {
-        SyncPatternService.startIfPossible(App.getAppContext())
+        if (AppManager.getBlueManager().isBluePeripheralConnected && AppUtils.isAppForeground()) {
+            SyncPatternService.start(App.getAppContext())
+        }
         for (listener in mMonitorEventListeners) {
             listener.onSyncSuccess()
         }
