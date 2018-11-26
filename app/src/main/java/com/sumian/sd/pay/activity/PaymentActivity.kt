@@ -75,6 +75,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     private var mPackage: DoctorServicePackage.ServicePackage? = null
 
     private var mIsCheckCouponCode = false
+    private var mGoNextPay = false
 
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
@@ -160,6 +161,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun onCheckCouponCode(couponCode: String) {
         Log.e(TAG, "onCheckCouponCode: -------->")
+        mGoNextPay = false
         checkCouponCode(false)
     }
 
@@ -234,6 +236,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?, payCouponCodeText: String, is2Pay: Boolean) {
         mIsCheckCouponCode = false
+        mGoNextPay = false
         pay_calculate_item_view.updateCouponCodeTips(payCouponCode)
         if (is2Pay) {
             val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
@@ -244,14 +247,15 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     override fun onCheckCouponCodeFailed(error: String, code: Int, payCouponCodeText: String?, is2Pay: Boolean) {
         mIsCheckCouponCode = false
         if (code == 1) {
+            pay_calculate_item_view.updateCouponCodeTips(null)
             pay_calculate_item_view.updateCouponCodeFailed(error)
         } else {
             showCenterToast(error)
+            pay_calculate_item_view.updateCouponCodeTips(null)
         }
-        pay_calculate_item_view.updateCouponCodeTips(null)
         if (code == 1 && is2Pay) {
-            val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-            mPresenter.createPayOrder(this, payOrder)
+            mGoNextPay = true
+            showCenterToast(error)
         }
     }
 
@@ -272,14 +276,20 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     private fun pay() {
         Log.e(TAG, "go pay: -------->")
-        checkCouponCode(true)
+        if (mGoNextPay) {
+            mIsCheckCouponCode = false
+            val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+            mPresenter.createPayOrder(this, payOrder)
+        } else {
+            checkCouponCode(true)
+        }
     }
 
     private fun checkCouponCode(is2Pay: Boolean) {
         val payCouponCodeText = pay_calculate_item_view.getCouponCode()
         if (TextUtils.isEmpty(payCouponCodeText)) {
             mIsCheckCouponCode = false
-            val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+            val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
             mPresenter.createPayOrder(this, payOrder)
         } else {
             mIsCheckCouponCode = true

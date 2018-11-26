@@ -155,7 +155,7 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
                 this.mDiscountMoney = couponCode.discount
                 tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.white))
                 tv_pay_coupon_code_tips.setBackgroundResource(R.drawable.shape_rect_b4_corner_4dp)
-                tv_pay_coupon_money.text = String.format(Locale.getDefault(), "%.2f%s", couponCode.discount / 100.00f, "元")
+                tv_pay_coupon_money.text = String.format(Locale.getDefault(), "%s%.2f%s", "-", couponCode.discount / 100.00f, "元")
             } else {
                 this.mDiscountMoney = 0.00
                 tv_pay_coupon_money.text = null
@@ -184,7 +184,8 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         val drawable = resources.getDrawable(R.drawable.pay_coupon_code_loading_animation)
 
         tv_pay_coupon_money.text = null
-        val loadingText = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_10), "暂未使用优惠", drawable)
+        val loadingText = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_10), tv_pay_coupon_code_tips?.text?.toString()?.trim()
+                ?: "", drawable)
         tv_pay_coupon_code_tips.background = null
         tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
         tv_pay_coupon_code_tips.text = loadingText
