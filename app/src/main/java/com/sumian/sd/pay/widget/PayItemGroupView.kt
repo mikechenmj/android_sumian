@@ -41,15 +41,11 @@ class PayItemGroupView @JvmOverloads constructor(context: Context, attrs: Attrib
         when (v.id) {
             R.id.wechat_pay_item -> {
                 alipay_pay_item.unSelect()
-                if (mOnSelectPayWayListener != null) {
-                    mOnSelectPayWayListener!!.onSelectWechatPayWay()
-                }
+                mOnSelectPayWayListener?.onSelectWechatPayWay()
             }
             R.id.alipay_pay_item -> {
                 wechat_pay_item.unSelect()
-                if (mOnSelectPayWayListener != null) {
-                    mOnSelectPayWayListener!!.onSelectAlipayWay()
-                }
+                mOnSelectPayWayListener?.onSelectAlipayWay()
             }
             else -> {
             }

@@ -35,7 +35,7 @@ interface PayContract {
 
         fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?, payCouponCodeText: String, is2Pay: Boolean)
 
-        fun onCheckCouponCodeFailed(error: String)
+        fun onCheckCouponCodeFailed(error: String, code: Int = 1, payCouponCodeText: String?, is2Pay: Boolean)
 
         /**
          * 原因：ping++ 的服务器回调可能会比 客户端回调 晚，此时服务端还未生成电话预约，所以会返回上一次的数据

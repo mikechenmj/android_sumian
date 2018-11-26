@@ -96,39 +96,49 @@
             android:text="@string/pay_coupon_code" />
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_width="@dimen/space_10"
+            android:layout_height="0dp" />
 
         <EditText
             android:id="@+id/et_coupon_code"
             style="@style/text_t2_16"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/space_8"
+            android:layout_weight="1"
             android:background="@null"
             android:cursorVisible="true"
-            android:gravity="center|start"
+            android:ellipsize="end"
+            android:gravity="center|right"
             android:hint="@string/pay_coupon_code_hint"
             android:inputType="textVisiblePassword"
             android:lines="1"
+            android:maxEms="30"
             android:singleLine="true"
             android:textColorHint="@color/t2_color_day"
             android:textCursorDrawable="@drawable/shape_cursor"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill,RtlHardcoded" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_pay_coupon_code_tips"
-        style="@style/text_t2_14"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_40"
         android:background="@color/b1_color_day"
-        android:gravity="center|start"
         android:paddingStart="@dimen/space_20"
-        android:paddingEnd="@dimen/space_20"
-        android:text="@string/none_pay_coupon_code" />
+        tools:ignore="RtlSymmetry">
+
+        <TextView
+            android:id="@+id/tv_pay_coupon_code_tips"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:gravity="center"
+            android:padding="@dimen/space_4"
+            android:text="@string/none_pay_coupon_code"
+            tools:ignore="RtlHardcoded" />
+    </FrameLayout>
 
     <View
         android:layout_width="match_parent"

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import android.support.annotation.StringRes
-import android.text.TextUtils
 import com.google.gson.Gson
 import com.pingplusplus.android.Pingpp
 import com.sumian.common.network.response.ErrorResponse
@@ -145,7 +144,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onCheckCouponCodeFailed(error = errorResponse.message)
+                mView?.onCheckCouponCodeFailed(error = errorResponse.message, code = errorResponse.code, payCouponCodeText = null, is2Pay = is2Pay)
             }
 
             override fun onFinish() {

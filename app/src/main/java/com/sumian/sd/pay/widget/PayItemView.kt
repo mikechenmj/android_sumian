@@ -58,20 +58,18 @@ class PayItemView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     fun select() {
-        iv_pay_icon.tag = true
-        iv_pay_icon.setImageResource(R.mipmap.ic_group_pay_selected)
-        if (mOnPayWayCallback != null) {
-            mOnPayWayCallback!!.onSelectPayWay(this)
-        }
+        iv_pay_select.tag = true
+        iv_pay_select.setImageResource(R.mipmap.ic_group_pay_selected)
+        mOnPayWayCallback?.onSelectPayWay(this)
     }
 
     fun unSelect() {
-        iv_pay_icon.tag = null
-        iv_pay_icon.setImageResource(R.mipmap.ic_group_pay_unselected)
+        iv_pay_select.tag = null
+        iv_pay_select.setImageResource(R.mipmap.ic_group_pay_unselected)
     }
 
     override fun onClick(v: View) {
-        if (iv_pay_icon.tag == null) {
+        if (iv_pay_select.tag == null) {
             select()
         }
     }

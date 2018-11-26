@@ -88,6 +88,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_16" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1"
+                android:background="@color/l1_color" />
+
             <com.sumian.sd.pay.widget.PayItemGroupView
                 android:id="@+id/pay_group_view"
                 android:layout_width="match_parent"

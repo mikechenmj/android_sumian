@@ -99,7 +99,6 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         super.initWidget(root)
         nested_scroll_view.setOnClickListener {
             pay_calculate_item_view.closeKeyBoard()
-            checkCouponCode(false)
         }
         title_bar.setOnBackClickListener(this)
         bt_pay.setOnClickListener(this)
@@ -242,11 +241,18 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         }
     }
 
-    override fun onCheckCouponCodeFailed(error: String) {
+    override fun onCheckCouponCodeFailed(error: String, code: Int, payCouponCodeText: String?, is2Pay: Boolean) {
         mIsCheckCouponCode = false
+        if (code == 1) {
+            pay_calculate_item_view.updateCouponCodeFailed(error)
+        } else {
+            showCenterToast(error)
+        }
         pay_calculate_item_view.updateCouponCodeTips(null)
-        pay_calculate_item_view.updateCouponCodeFailed(error)
-        showCenterToast(error)
+        if (code == 1 && is2Pay) {
+            val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+            mPresenter.createPayOrder(this, payOrder)
+        }
     }
 
     override fun showLoading() {
@@ -270,14 +276,14 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     private fun checkCouponCode(is2Pay: Boolean) {
-        val payCouponCode = pay_calculate_item_view.getCouponCode()
-        if (TextUtils.isEmpty(payCouponCode)) {
+        val payCouponCodeText = pay_calculate_item_view.getCouponCode()
+        if (TextUtils.isEmpty(payCouponCodeText)) {
             mIsCheckCouponCode = false
-            val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+            val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
             mPresenter.createPayOrder(this, payOrder)
         } else {
             mIsCheckCouponCode = true
-            mPresenter.checkCouponCode(is2Pay, payCouponCode!!, mPackage!!.id)
+            mPresenter.checkCouponCode(is2Pay, payCouponCodeText!!, mPackage!!.id)
         }
     }
 

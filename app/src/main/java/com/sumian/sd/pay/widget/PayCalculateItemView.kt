@@ -15,6 +15,7 @@ import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.hw.utils.UiUtil
 import com.sumian.sd.R
 import com.sumian.sd.pay.bean.PayCouponCode
+import com.sumian.sd.utils.getString
 import kotlinx.android.synthetic.main.lay_pay_calculate_item_view.view.*
 import java.util.*
 
@@ -24,11 +25,10 @@ import java.util.*
  * desc:
  */
 
-class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr), View.OnClickListener {
+class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr), View.OnClickListener, Runnable {
 
     companion object {
-
-        private const val CHECK_DELAY = 100
+        private const val CHECK_DELAY = 2000L
     }
 
     var currentBuyCount = 1
@@ -44,8 +44,6 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         private set
 
     private var mOnMoneyChangeCallback: OnMoneyChangeCallback? = null
-
-    private var mTimes: Long = 0
 
     private var mDiscountMoney = 0.00
 
@@ -65,15 +63,19 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
+                removeCallbacks(this@PayCalculateItemView)
                 if (!TextUtils.isEmpty(s.toString().trim())) {
-                    if (System.currentTimeMillis() - mTimes >= CHECK_DELAY) {
-                        showCheckCouponCodeLoading()
-                        mOnMoneyChangeCallback?.onCheckCouponCode(s.toString().trim())
-                    }
-                    mTimes = System.currentTimeMillis()
+                    postDelayed(this@PayCalculateItemView, CHECK_DELAY)
+                } else {
+                    tv_pay_coupon_money.text = null
+                    tv_pay_coupon_code_tips.text = getString(R.string.none_pay_coupon_code)
+                    tv_pay_coupon_code_tips.background = null
+                    tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
+                    autoUpdateMoney()
                 }
             }
         })
+        // showCheckCouponCodeLoading()
     }
 
     fun getCouponCode(): String? = et_coupon_code.text?.toString()?.trim()
@@ -126,21 +128,17 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         }
 
         tv_duration.text = currentBuyCount.toString()
-        currentMoney = defaultMoney * currentBuyCount - mDiscountMoney
+        autoUpdateMoney()
+    }
 
-        if (mOnMoneyChangeCallback != null) {
-            mOnMoneyChangeCallback!!.onMoneyChange(currentMoney)
+    override fun run() {
+        val couponCode = getCouponCode()
+        if (TextUtils.isEmpty(couponCode)) {
+            removeCallbacks(this@PayCalculateItemView)
+        } else {
+            showCheckCouponCodeLoading()
+            mOnMoneyChangeCallback?.onCheckCouponCode(couponCode!!)
         }
-        updateMoney(currentMoney)
-    }
-
-    private fun updateMoney(currentMoney: Double) {
-        this.currentMoney = currentMoney
-        formatMoney(tv_money, this.currentMoney)
-    }
-
-    private fun formatMoney(tv: TextView, money: Double) {
-        tv.text = String.format(Locale.getDefault(), "%.2f", money / 100.00f)
     }
 
     @SuppressLint("SetTextI18n")
@@ -148,37 +146,62 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         if (couponCode == null) {
             this.mDiscountMoney = 0.00
             tv_pay_coupon_money.text = null
-            tv_pay_coupon_code_tips.text = "此优惠码无效"
+            tv_pay_coupon_code_tips.text = getString(R.string.none_pay_coupon_code)
+            tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
+            tv_pay_coupon_code_tips.background = null
         } else {
             tv_pay_coupon_code_tips.text = couponCode.tips()
             if (couponCode.status == 1) {
                 this.mDiscountMoney = couponCode.discount
-                tv_pay_coupon_money.text = "-${couponCode.discount / 100.00f}元"
+                tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.white))
+                tv_pay_coupon_code_tips.setBackgroundResource(R.drawable.shape_rect_b4_corner_4dp)
+                tv_pay_coupon_money.text = String.format(Locale.getDefault(), "%.2f%s", couponCode.discount / 100.00f, "元")
             } else {
                 this.mDiscountMoney = 0.00
                 tv_pay_coupon_money.text = null
+                tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
+                tv_pay_coupon_code_tips.background = null
             }
         }
+
+        autoUpdateMoney()
     }
 
     fun closeKeyBoard() {
         UiUtil.closeKeyboard(et_coupon_code)
+        removeCallbacks(this@PayCalculateItemView)
+        postDelayed(this@PayCalculateItemView, 200)
     }
 
     fun updateCouponCodeFailed(invalidMsg: String) {
+        tv_pay_coupon_code_tips.background = null
+        tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
         tv_pay_coupon_code_tips.text = invalidMsg
         tv_pay_coupon_money.text = null
     }
 
     fun showCheckCouponCodeLoading() {
-        val loadingText = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_10), "暂未使用优惠", resources.getDrawable(R.drawable.pay_coupon_code_loading_animation))
-        tv_pay_coupon_code_tips.text = loadingText
+        val drawable = resources.getDrawable(R.drawable.pay_coupon_code_loading_animation)
+
         tv_pay_coupon_money.text = null
+        val loadingText = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_10), "暂未使用优惠", drawable)
+        tv_pay_coupon_code_tips.background = null
+        tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
+        tv_pay_coupon_code_tips.text = loadingText
+    }
+
+    private fun formatMoney(tv: TextView, money: Double) {
+        tv.text = String.format(Locale.getDefault(), "%.2f", money / 100.00f)
+    }
+
+    private fun autoUpdateMoney() {
+        this.currentMoney = defaultMoney * currentBuyCount - mDiscountMoney
+        mOnMoneyChangeCallback?.onMoneyChange(currentMoney)
+        formatMoney(tv_money, this.currentMoney)
     }
 
     interface OnMoneyChangeCallback {
         fun onMoneyChange(money: Double)
-
         fun onCheckCouponCode(couponCode: String)
     }
 }
