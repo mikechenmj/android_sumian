@@ -1,5 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.sd.pay.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -7,7 +10,9 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.widget.adapter.EmptyTextWatcher
+import com.sumian.hw.utils.UiUtil
 import com.sumian.sd.R
 import com.sumian.sd.pay.bean.PayCouponCode
 import kotlinx.android.synthetic.main.lay_pay_calculate_item_view.view.*
@@ -21,6 +26,10 @@ import java.util.*
 
 class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr), View.OnClickListener {
 
+    companion object {
+
+        private const val CHECK_DELAY = 100
+    }
 
     var currentBuyCount = 1
         private set
@@ -37,6 +46,8 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
     private var mOnMoneyChangeCallback: OnMoneyChangeCallback? = null
 
     private var mTimes: Long = 0
+
+    private var mDiscountMoney = 0.00
 
     init {
         initView(context)
@@ -55,7 +66,8 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
                 if (!TextUtils.isEmpty(s.toString().trim())) {
-                    if (System.currentTimeMillis() - mTimes >= 200) {
+                    if (System.currentTimeMillis() - mTimes >= CHECK_DELAY) {
+                        showCheckCouponCodeLoading()
                         mOnMoneyChangeCallback?.onCheckCouponCode(s.toString().trim())
                     }
                     mTimes = System.currentTimeMillis()
@@ -63,6 +75,8 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
             }
         })
     }
+
+    fun getCouponCode(): String? = et_coupon_code.text?.toString()?.trim()
 
     fun setOnMoneyChangeCallback(onMoneyChangeCallback: OnMoneyChangeCallback) {
         mOnMoneyChangeCallback = onMoneyChangeCallback
@@ -112,7 +126,7 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         }
 
         tv_duration.text = currentBuyCount.toString()
-        currentMoney = defaultMoney * currentBuyCount
+        currentMoney = defaultMoney * currentBuyCount - mDiscountMoney
 
         if (mOnMoneyChangeCallback != null) {
             mOnMoneyChangeCallback!!.onMoneyChange(currentMoney)
@@ -129,13 +143,37 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         tv.text = String.format(Locale.getDefault(), "%.2f", money / 100.00f)
     }
 
-
+    @SuppressLint("SetTextI18n")
     fun updateCouponCodeTips(couponCode: PayCouponCode?) {
         if (couponCode == null) {
-
-        } else {
+            this.mDiscountMoney = 0.00
+            tv_pay_coupon_money.text = null
             tv_pay_coupon_code_tips.text = "此优惠码无效"
+        } else {
+            tv_pay_coupon_code_tips.text = couponCode.tips()
+            if (couponCode.status == 1) {
+                this.mDiscountMoney = couponCode.discount
+                tv_pay_coupon_money.text = "-${couponCode.discount / 100.00f}元"
+            } else {
+                this.mDiscountMoney = 0.00
+                tv_pay_coupon_money.text = null
+            }
         }
+    }
+
+    fun closeKeyBoard() {
+        UiUtil.closeKeyboard(et_coupon_code)
+    }
+
+    fun updateCouponCodeFailed(invalidMsg: String) {
+        tv_pay_coupon_code_tips.text = invalidMsg
+        tv_pay_coupon_money.text = null
+    }
+
+    fun showCheckCouponCodeLoading() {
+        val loadingText = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_10), "暂未使用优惠", resources.getDrawable(R.drawable.pay_coupon_code_loading_animation))
+        tv_pay_coupon_code_tips.text = loadingText
+        tv_pay_coupon_money.text = null
     }
 
     interface OnMoneyChangeCallback {

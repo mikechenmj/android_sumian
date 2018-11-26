@@ -30,6 +30,7 @@ import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sd.service.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sd.service.advisory.utils.AdvisoryContentCacheUtils
+import com.sumian.sd.service.widget.ServiceSuccessStateView
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import com.sumian.sd.widget.dialog.ActionLoadingDialog
@@ -51,7 +52,6 @@ import kotlin.collections.ArrayList
 class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContact.Presenter>(),
         PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
-
 
     private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
 
@@ -137,7 +137,6 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         lay_report.setOnClickListener {
             OnlineReportListActivity.launchForPick(this, PICK_REPORT_CODE_PHOTO, mSelectOnlineRecords)
         }
-
     }
 
     override fun initData() {
@@ -237,8 +236,21 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         this.mAdvisory = advisory
         this.mAdvisoryId = advisory.id
         //this.mPresenter.getLastAdvisory()
-        AdvisoryDetailActivity.show(this@PublishAdvisoryRecordActivity, advisoryId = advisory.id)
-        finish()
+
+        runOnUiThread {
+            title_bar.hideMore().more.visibility = View.INVISIBLE
+            service_state_view.setOnServiceSuccessCallback(object : ServiceSuccessStateView.OnServiceSuccessCallback {
+                override fun showServiceDetailCallback() {
+                    AdvisoryDetailActivity.show(this@PublishAdvisoryRecordActivity, advisoryId = advisory.id)
+                    finish()
+                }
+
+                override fun goBackHome() {
+                    finish()
+                }
+
+            }).show()
+        }
     }
 
     override fun onPublishAdvisoryRecordFailed(error: String) {
@@ -327,8 +339,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
@@ -409,7 +420,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         supportFragmentManager
                 .beginTransaction()
                 .add(PictureBottomSheet.newInstance().addOnTakePhotoCallback(this), PictureBottomSheet::class.java.simpleName)
-                .commitNow()
+                .commitNowAllowingStateLoss()
     }
 
 }

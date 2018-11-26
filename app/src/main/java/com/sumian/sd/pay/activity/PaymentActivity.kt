@@ -3,6 +3,7 @@ package com.sumian.sd.pay.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.sumian.common.image.ImageLoader
@@ -11,6 +12,7 @@ import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.doctor.bean.DoctorServicePackage
 import com.sumian.sd.pay.bean.PayCouponCode
+import com.sumian.sd.pay.bean.PayOrder
 import com.sumian.sd.pay.contract.PayContract
 import com.sumian.sd.pay.dialog.PayDialog
 import com.sumian.sd.pay.presenter.PayPresenter
@@ -72,6 +74,8 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     private var mPackage: DoctorServicePackage.ServicePackage? = null
 
+    private var mIsCheckCouponCode = false
+
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
             this.mDoctorService = bundle.getParcelable(ARGS_DOCTOR_SERVICE)
@@ -93,6 +97,10 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun initWidget(root: View) {
         super.initWidget(root)
+        nested_scroll_view.setOnClickListener {
+            pay_calculate_item_view.closeKeyBoard()
+            checkCouponCode(false)
+        }
         title_bar.setOnBackClickListener(this)
         bt_pay.setOnClickListener(this)
         pay_group_view.setOnSelectPayWayListener(this)
@@ -105,7 +113,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
             ImageLoader.loadImage(mDoctorService!!.icon, lay_group_icon)
             tv_name.text = mDoctorService?.name
             tv_desc.text = mServicePackage?.name
-            pay_calculate_item_view.defaultMoney = mPackage?.unit_price ?: 998.00
+            pay_calculate_item_view.defaultMoney = mPackage?.unit_price!!
         }
 
     }
@@ -126,11 +134,6 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
             else -> {
             }
         }
-    }
-
-    private fun pay() {
-        // val payOrder = PayOrder(pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-        //  mPresenter.createPayOrder(this, payOrder)
     }
 
     override fun onSelectWechatPayWay() {
@@ -158,7 +161,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun onCheckCouponCode(couponCode: String) {
         Log.e(TAG, "onCheckCouponCode: -------->")
-        mPresenter.checkCouponCode(couponCode, mPackage!!.id)
+        checkCouponCode(false)
     }
 
     override fun setPresenter(presenter: PayContract.Presenter) {
@@ -230,24 +233,56 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         finish()
     }
 
-    override fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode) {
-
+    override fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?, payCouponCodeText: String, is2Pay: Boolean) {
+        mIsCheckCouponCode = false
+        pay_calculate_item_view.updateCouponCodeTips(payCouponCode)
+        if (is2Pay) {
+            val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+            mPresenter.createPayOrder(this, payOrder)
+        }
     }
 
     override fun onCheckCouponCodeFailed(error: String) {
+        mIsCheckCouponCode = false
+        pay_calculate_item_view.updateCouponCodeTips(null)
+        pay_calculate_item_view.updateCouponCodeFailed(error)
+        showCenterToast(error)
     }
 
     override fun showLoading() {
+        if (mIsCheckCouponCode) {
+            bt_pay.isEnabled = false
+            return
+        }
         mActionLoadingDialog.show()
     }
 
     override fun dismissLoading() {
+        bt_pay.isEnabled = true
         if (mActionLoadingDialog.isShowing) {
             mActionLoadingDialog.dismiss()
         }
     }
 
+    private fun pay() {
+        Log.e(TAG, "go pay: -------->")
+        checkCouponCode(true)
+    }
+
+    private fun checkCouponCode(is2Pay: Boolean) {
+        val payCouponCode = pay_calculate_item_view.getCouponCode()
+        if (TextUtils.isEmpty(payCouponCode)) {
+            mIsCheckCouponCode = false
+            val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+            mPresenter.createPayOrder(this, payOrder)
+        } else {
+            mIsCheckCouponCode = true
+            mPresenter.checkCouponCode(is2Pay, payCouponCode!!, mPackage!!.id)
+        }
+    }
+
     private fun cancelPayDialog() {
+        mIsCheckCouponCode = false
         if (mPayDialog.isShowing) {
             mPayDialog.cancel()
         }

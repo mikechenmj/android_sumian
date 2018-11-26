@@ -1,5 +1,7 @@
 package com.sumian.sd.pay.bean
 
+import com.google.gson.annotations.SerializedName
+
 /**
  *
  *Created by sm
@@ -7,8 +9,10 @@ package com.sumian.sd.pay.bean
  * desc:用户创建的支付订单
  **/
 data class PayOrder(
-        val discount_code: String?,//优惠码
-        val reseller_id: Int?,//分销 id
+        @SerializedName("discount_code")
+        val discountCode: String?,//优惠码
+        @SerializedName("reseller_id")
+        val resellerId: Int?,//分销 id
         val mobile: String?,//手机号
         val captcha: String?,//验证码
         val amount: Double = 0.00,//支付总金额（单位：分）
@@ -16,7 +20,9 @@ data class PayOrder(
         val currency: String = "cny",//货币代码，目前仅支持人民币 cny 允许值: {"cny"}
         val subject: String,//商品标题
         val body: String,
-        val open_id: String?,//open_id 微信公众号购买为必填
-        val package_id: Int,//套餐 id
+        @SerializedName("open_id")
+        val openId: String?,//open_id 微信公众号购买为必填
+        @SerializedName("package_id")
+        val packageId: Int,//套餐 id
         val quantity: Int = 0//购买数量
 )

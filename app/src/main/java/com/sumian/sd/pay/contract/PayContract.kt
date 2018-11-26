@@ -33,7 +33,7 @@ interface PayContract {
 
         fun onCheckOrderPayIsInvalid(invalidError: String)
 
-        fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode)
+        fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?, payCouponCodeText: String, is2Pay: Boolean)
 
         fun onCheckCouponCodeFailed(error: String)
 
@@ -52,7 +52,7 @@ interface PayContract {
 
         fun checkPayOrder()
 
-        fun checkCouponCode(couponCode: String, packageId: Int)
+        fun checkCouponCode(is2Pay: Boolean = false, couponCode: String, packageId: Int)
 
         fun doPay(activity: Activity)
 

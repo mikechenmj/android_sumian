@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import android.support.annotation.StringRes
+import android.text.TextUtils
 import com.google.gson.Gson
 import com.pingplusplus.android.Pingpp
 import com.sumian.common.network.response.ErrorResponse
@@ -48,17 +49,14 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
     }
 
     companion object {
-
-
+        @JvmStatic
         fun init(view: PayContract.View) {
             PayPresenter(view)
         }
     }
 
     override fun createPayOrder(activity: Activity, payOrder: PayOrder) {
-
         mView?.onBegin()
-
         val call: Call<Any> = AppManager.getSdHttpService().createOrder(payOrder)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Any>(), Callback<Any> {
@@ -87,11 +85,8 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
     }
 
     override fun checkPayOrder() {
-
         mCheckOrderCount++
-
         mView?.onBegin()
-
         val call = AppManager.getSdHttpService().getOrderDetail(mOrderNo!!)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<OrderDetail>() {
@@ -139,16 +134,14 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
         })
     }
 
-    override fun checkCouponCode(couponCode: String, packageId: Int) {
+    override fun checkCouponCode(is2Pay: Boolean, couponCode: String, packageId: Int) {
         mView?.onBegin()
         val call = AppManager.getSdHttpService().checkCouponCode(couponCode, packageId)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<PayCouponCode>() {
 
             override fun onSuccess(response: PayCouponCode?) {
-                response?.let {
-                    mView?.onCheckCouponCodeSuccess(response)
-                }
+                mView?.onCheckCouponCodeSuccess(response, couponCode, is2Pay)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -159,10 +152,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
                 super.onFinish()
                 mView?.onFinish()
             }
-
         })
-
-
     }
 
     fun autoCheckOrderStatus() {
@@ -189,9 +179,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
     override fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent) {
         //支付页面返回处理
         if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
-
             val result = data.extras!!.getString("pay_result")
-
             @StringRes val payResultMsg: Int
 
             when (result) {
