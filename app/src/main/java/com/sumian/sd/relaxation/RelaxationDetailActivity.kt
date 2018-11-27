@@ -5,12 +5,12 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.player.CommonAudioPlayer
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.h5.H5Uri
@@ -49,24 +49,47 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_close.setOnClickListener { onBackPressed() }
         iv_share.setOnClickListener { RelaxationShareBottomSheet.show(supportFragmentManager, getShareUrl(), "放松训练", mRelaxationData!!.name) }
-        iv_play.setOnClickListener { ToastUtils.showShort("play") }
+        iv_play.setOnClickListener { CommonAudioPlayer.playOrPause() }
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                updateTimeTv(tv_current_time, progress)
+
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                CommonAudioPlayer.seekTo(seekBar!!.progress)
             }
         })
     }
 
     override fun initData() {
         super.initData()
-        val id = intent.getIntExtra(KEY_RELAXATION_ID, 0)
-        queryData(id)
+        CommonAudioPlayer.setStateChangeListener(mPlayStateChangeListener)
+        queryData(intent.getIntExtra(KEY_RELAXATION_ID, 0))
+    }
+
+    private val mPlayStateChangeListener = object : CommonAudioPlayer.StateListener {
+        override fun onPrepared() {
+        }
+
+        override fun onProgressChange(progress: Int, total: Int) {
+            seek_bar.progress = progress
+            seek_bar.max = total
+            updateTimeTv(tv_current_time, progress / 1000)
+            updateTimeTv(tv_total_time, total / 1000)
+
+        }
+
+        override fun onPlayStatusChange(isPlaying: Boolean) {
+            iv_play.setImageResource(if (isPlaying) R.drawable.relaxation_btn_pause else R.drawable.relaxation_btn_play)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CommonAudioPlayer.release()
     }
 
     private fun queryData(id: Int) {
@@ -84,11 +107,10 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
 
     private fun updateRelaxation(response: RelaxationData?) {
         mRelaxationData = response ?: return
-        updateTimeTv(tv_current_time, 0)
-        updateTimeTv(tv_total_time, 1000)
         tv_relaxation_title.text = mRelaxationData!!.name
         tv_relaxation_desc.text = mRelaxationData!!.description
         ImageLoader.loadImage(mRelaxationData!!.background!!, iv_bg)
+        CommonAudioPlayer.prepare(mRelaxationData!!.audio!!, true)
     }
 
     private fun getShareUrl(): String {
