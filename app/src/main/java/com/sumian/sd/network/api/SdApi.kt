@@ -484,6 +484,11 @@ interface SdApi {
     @POST("raw-data/pass-through-file")
     fun uploadTransData(@FieldMap map: MutableMap<String, Any>): Call<com.sumian.hw.oss.bean.OssResponse>
 
+    /**
+     *
+     * @param map MutableMap<String, Any>
+     * @return Call<LogOssResponse>
+     */
     @FormUrlEncoded
     @POST("feedback-auto")
     fun autoUploadLog(@FieldMap map: MutableMap<String, Any>): Call<LogOssResponse>
@@ -516,5 +521,13 @@ interface SdApi {
     @FormUrlEncoded
     @POST("message-boards")
     fun writeCBTIMessageBoard(@FieldMap map: MutableMap<String, Any>): Call<Any>
+
+    /**
+     *
+     * 获取首页显示一句话
+     * @return Call<SentencePoolText>
+     */
+    @GET("sentence-pools")
+    fun getSentencePool(): Call<SentencePoolText>
 
 }

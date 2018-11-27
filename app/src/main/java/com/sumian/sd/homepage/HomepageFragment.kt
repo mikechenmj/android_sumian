@@ -26,6 +26,7 @@ import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
+import com.sumian.sd.homepage.bean.SentencePoolText
 import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -117,6 +118,21 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     private fun refreshData() {
         queryCbti()
         querySleepPrescription()
+        querySentencePool()
+    }
+
+    private fun querySentencePool() {
+        val call = AppManager.getSdHttpService().getSentencePool()
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<SentencePoolText>() {
+            override fun onSuccess(response: SentencePoolText?) {
+                tv_home_random_text.text = response?.homeSentence ?: getString(R.string.homepage_sleep_slogan)
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+            }
+
+        })
     }
 
     private fun querySleepPrescription() {
