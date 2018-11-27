@@ -684,4 +684,7 @@
     <string name="service_submit_success_msg">您的情况已提交给医生，如有新消息，我们将会通过消息中心通知您，请耐心等待</string>
     <string name="show_detail">查看详情</string>
     <string name="go_back_home"><u>返回主页</u></string>
+    <string name="moment_peace">片刻宁静</string>
+    <string name="let_tense_life_relax">让紧张的生活喘息的机会</string>
+    <string name="relaxation_list_bottom_hint">- 速眠医生建议放松训练结合CBTI课程使用 -</string>
 </resources>

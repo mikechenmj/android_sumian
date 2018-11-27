@@ -30,6 +30,7 @@ import com.sumian.sd.oss.OssResponse
 import com.sumian.sd.pay.bean.OrderDetail
 import com.sumian.sd.pay.bean.PayCouponCode
 import com.sumian.sd.pay.bean.PayOrder
+import com.sumian.sd.relaxation.bean.RelaxationData
 import com.sumian.sd.scale.bean.FilledScale
 import com.sumian.sd.scale.bean.NotFilledScale
 import com.sumian.sd.scale.bean.Scale
@@ -529,5 +530,11 @@ interface SdApi {
      */
     @GET("sentence-pools")
     fun getSentencePool(): Call<SentencePoolText>
+
+    @GET("cbti-relaxations")
+    fun getRelaxations(): Call<MutableList<RelaxationData>>
+
+    @GET("cbti-relaxations/{id}")
+    fun getRelaxationDetail(@Path("id") id: Int): Call<RelaxationData>
 
 }
