@@ -30,6 +30,7 @@ import com.sumian.sd.homepage.bean.SentencePoolText
 import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.relaxation.RelaxationListActivity
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
@@ -63,7 +64,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         super.initWidget(root)
         initUserInfo()
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
-        tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationActivity::class.java) }
+        tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationListActivity::class.java) }
         tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity, H5Uri.CBTI_SLEEP_HEALTH) }
         tv_scale.setOnClickListener { ScaleListActivity.launch() }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionSettingActivity.launch() }

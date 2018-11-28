@@ -92,10 +92,9 @@ class RelaxationShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.
                                 this@RelaxationShareBottomSheet)
             }
             R.id.tv_cancel -> {
-                dismissAllowingStateLoss()
             }
         }
-
+        dismissAllowingStateLoss()
     }
 
     override fun onStart(shareMedia: SHARE_MEDIA?) {

@@ -533,6 +533,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".relaxation.RelaxationListActivity" />
+        <activity android:name=".relaxation.RelaxationDetailActivity"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"/>
 
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"

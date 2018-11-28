@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="@color/green_50">
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="450dp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:elevation="-1dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:id="@+id/tv_relaxation_title"
+                            style="@style/text_t3_18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="意向法-草原篇" />
+
+                        <SeekBar
+                            android:id="@+id/seek_bar"
+                            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:max="100"
+                            android:maxHeight="4dp"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:progressDrawable="@drawable/seek_bar_progress_drawable_blue"
+                            android:thumb="@drawable/seek_bar_thumb_blue"
+                            tools:progress="0" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="0dp">
+
+                            <TextView
+                                android:id="@+id/tv_current_time"
+                                style="@style/text_t2_14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="00:00" />
+
+                            <TextView
+                                android:id="@+id/tv_total_time"
+                                style="@style/text_t2_14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                tools:text="12:00" />
+
+                        </FrameLayout>
+
+                        <View
+                            style="@style/HorizontalDividerLine"
+                            android:layout_marginTop="20dp" />
+
+                        <TextView
+                            android:id="@+id/tv_relaxation_desc"
+                            style="@style/text_t2_16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            tools:text="当我们感到紧张的时候，我们的呼吸会变得急促､快而浅及采用胸式呼吸为主。
+
+而腹式呼吸放松练习能够控制和减慢您的呼吸频率，从而平复您对焦虑和紧张心理的生理反应，达到放松身体的目的。
+
+腹式呼吸放松强调慢、长、深的呼吸，通过鼻子吸气，直达腹部深处，再用嘴巴呼气。坚持进行腹式呼吸练习能够帮您减轻紧张和焦虑的情绪。" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/iv_play"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="30dp"
+                    android:elevation="2dp"
+                    android:src="@drawable/relaxation_btn_play"
+                    tools:ignore="ContentDescription" />
+
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:padding="15dp"
+        android:src="@drawable/nav_icon_close"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/iv_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:padding="15dp"
+        android:src="@drawable/nav_icon_share_black"
+        tools:ignore="ContentDescription" />
+</FrameLayout>
