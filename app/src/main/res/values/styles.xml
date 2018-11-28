@@ -114,6 +114,11 @@
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
+    <style name="text_b4_14" parent="BaseText">
+        <item name="android:textColor">@color/b4_color</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
     <style name="text_b2_14" parent="text_b2_22">
         <item name="android:textSize">@dimen/font_14</item>
     </style>
@@ -408,4 +413,5 @@
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">20dp</item>
     </style>
+
 </resources>

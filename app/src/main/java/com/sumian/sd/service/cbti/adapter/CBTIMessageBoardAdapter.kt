@@ -34,6 +34,10 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
             itemView.findViewById<CircleImageView>(R.id.civ_avatar)
         }
 
+        private val tvTopping by lazy {
+            itemView.findViewById<TextView>(R.id.tv_topping)
+        }
+
         private val tvWriteTime by lazy {
             itemView.findViewById<TextView>(R.id.tv_write_time)
         }
@@ -56,6 +60,7 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
                     civAvatar,
                     R.mipmap.ic_info_avatar_patient,
                     R.mipmap.ic_info_avatar_patient)
+            tvTopping.visibility = if (item.isTopping()) View.VISIBLE else View.INVISIBLE
             item.showReply(tvReply, layReply)
             tvWriteTime.text = item.formatWriteTime()
             tvMessageBoard.text = item.message
