@@ -72,6 +72,9 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
 
     private val mPlayStateChangeListener = object : CommonAudioPlayer.StateListener {
         override fun onPrepared() {
+            if (iv_play.isActivated) {
+                CommonAudioPlayer.play()
+            }
         }
 
         override fun onProgressChange(progress: Int, total: Int) {
@@ -83,7 +86,7 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
         }
 
         override fun onPlayStatusChange(isPlaying: Boolean) {
-            iv_play.setImageResource(if (isPlaying) R.drawable.relaxation_btn_pause else R.drawable.relaxation_btn_play)
+            iv_play.isActivated = isPlaying
         }
     }
 
@@ -110,7 +113,7 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
         tv_relaxation_title.text = mRelaxationData!!.name
         tv_relaxation_desc.text = mRelaxationData!!.description
         ImageLoader.loadImage(mRelaxationData!!.background!!, iv_bg)
-        CommonAudioPlayer.prepare(mRelaxationData!!.audio!!, true)
+        CommonAudioPlayer.prepare(mRelaxationData!!.audio!!)
     }
 
     private fun getShareUrl(): String {
