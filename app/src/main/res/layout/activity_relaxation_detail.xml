@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -24,11 +25,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Space
+            <View
+                android:id="@+id/space"
                 android:layout_width="0dp"
-                android:layout_height="450dp" />
+                tools:layout_height="400dp"
+                android:layout_height="1000dp" />
 
             <FrameLayout
+                android:id="@+id/vg_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
