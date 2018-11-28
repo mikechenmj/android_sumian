@@ -1,6 +1,7 @@
 package com.sumian.sd.relaxation
 
 import android.content.Intent
+import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
@@ -74,10 +75,12 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
     }
 
     private val mPlayStateChangeListener = object : CommonAudioPlayer.StateListener {
+        override fun onPreparing() {
+            showPlayBtn(false)
+        }
+
         override fun onPrepared() {
-            if (iv_play.isActivated) {
-                CommonAudioPlayer.play()
-            }
+            showPlayBtn(true)
         }
 
         override fun onProgressChange(progress: Int, total: Int) {
@@ -96,6 +99,11 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
     override fun onDestroy() {
         super.onDestroy()
         CommonAudioPlayer.release()
+    }
+
+    private fun showPlayBtn(show: Boolean) {
+        iv_play.visibility = if (show) View.VISIBLE else View.GONE
+        iv_loading.visibility = if (!show) View.VISIBLE else View.GONE
     }
 
     private fun queryData(id: Int) {
@@ -121,7 +129,7 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
         // 不加post，获取vg_content 的 height是赋值前的
         // 加post，能获取到赋值后的height，但是执行有大概1秒的延时
 //        vg_root.postDelayed({
-            space.layoutParams.height = vg_root.height - Math.min(mBottomContentDefaultHeight.toInt(), vg_content.height)
+        space.layoutParams.height = vg_root.height - Math.min(mBottomContentDefaultHeight.toInt(), vg_content.height)
 //        }, 0)
 
     }
