@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -24,11 +25,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Space
+            <View
+                android:id="@+id/space"
                 android:layout_width="0dp"
-                android:layout_height="450dp" />
+                android:layout_height="1000dp"
+                tools:layout_height="400dp" />
 
             <FrameLayout
+                android:id="@+id/vg_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -114,15 +118,30 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <ImageView
-                    android:id="@+id/iv_play"
+                <FrameLayout
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_gravity="end"
                     android:layout_marginEnd="30dp"
-                    android:elevation="2dp"
-                    android:src="@drawable/relaxation_btn_sel"
-                    tools:ignore="ContentDescription" />
+                    android:background="@drawable/relaxation_btn_bg"
+                    android:elevation="2dp">
+
+                    <ImageView
+                        android:id="@+id/iv_play"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/relaxation_btn_sel"
+                        android:visibility="gone"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/iv_loading"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/relaxation_loading"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
+
 
             </FrameLayout>
         </LinearLayout>

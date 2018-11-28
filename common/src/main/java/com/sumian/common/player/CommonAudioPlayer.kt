@@ -29,16 +29,25 @@ object CommonAudioPlayer {
             setAudioStreamType(AudioManager.STREAM_MUSIC)
             setDataSource(url)
             prepareAsync() // might take long! (for buffering, etc)
+            mStateListener?.onPreparing()
             setOnPreparedListener { onPrepared() }
             setOnCompletionListener {
                 if (mMediaPlayer?.isLooping != true) {
                     mStateListener?.onPlayStatusChange(false)
                     prepareAsync()
+                    mStateListener?.onPreparing()
                 }
             }
             isLooping = true
         }
     }
+//
+//    private fun prepareAsync() {
+//        mMediaPlayer?.let {
+//            mStateListener?.onPreparing()
+//            mMediaPlayer?.prepareAsync()
+//        }
+//    }
 
     private fun onPrepared() {
         startProgressTimer()
@@ -107,6 +116,7 @@ object CommonAudioPlayer {
     }
 
     interface StateListener {
+        fun onPreparing()
         fun onPrepared()
         fun onProgressChange(progress: Int, total: Int)
         fun onPlayStatusChange(isPlaying: Boolean)
