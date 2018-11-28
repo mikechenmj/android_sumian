@@ -1,12 +1,12 @@
 package com.sumian.sd.service.cbti.adapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
@@ -15,17 +15,16 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoard>(context) {
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lay_item_cbti_message_board, parent, false))
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, item: MessageBoard, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: MessageBoard, position: Int) {
         val messageBoard = mItems[position]
         (holder as ViewHolder).initView(messageBoard)
     }
 
-
-    inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val tvNickName by lazy {
             itemView.findViewById<TextView>(R.id.tv_nickname)

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import com.sumian.common.R;
 import com.sumian.common.base.BaseRecyclerAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by haibin
  * on 17/2/27.
@@ -41,7 +43,7 @@ class ImageAdapter extends BaseRecyclerAdapter<Image> {
     }
 
     @Override
-    protected void onBindViewHolder(RecyclerView.ViewHolder holder, Image item, int position) {
+    protected void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, @NotNull Image item, int position) {
         if (item.getId() != 0) {
             ImageViewHolder h = (ImageViewHolder) holder;
             h.mCheckView.setSelected(item.isSelect());

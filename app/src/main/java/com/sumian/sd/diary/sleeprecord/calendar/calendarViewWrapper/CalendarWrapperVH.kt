@@ -1,9 +1,9 @@
 package com.sumian.sd.diary.sleeprecord.calendar.calendarViewWrapper
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.sumian.sd.R
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
 
@@ -17,7 +17,7 @@ import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
  * version: 1.0
 </pre> *
  */
-class CalendarWrapperVH private constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+class CalendarWrapperVH private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val mCalendarView: CalendarView  by lazy {
         itemView.findViewById<CalendarView>(R.id.cv)
     }

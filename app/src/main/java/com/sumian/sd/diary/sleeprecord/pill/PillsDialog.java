@@ -3,9 +3,6 @@ package com.sumian.sd.diary.sleeprecord.pill;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -13,6 +10,10 @@ import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.bean.SleepPill;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * <pre>

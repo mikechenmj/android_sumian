@@ -2,12 +2,12 @@ package com.sumian.sd.service.cbti.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.base.holder.SdBaseViewHolder
@@ -23,11 +23,11 @@ import java.util.*
  */
 class CourseAdapter(context: Context) : BaseRecyclerAdapter<Course>(context) {
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lay_cbti_item_lesson, parent, false))
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, item: Course, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: Course, position: Int) {
         (holder as ViewHolder).initView(item)
     }
 

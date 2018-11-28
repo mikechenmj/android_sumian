@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.sumian.common.R;
 import com.sumian.common.base.BaseRecyclerAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by haibin
  * on 17/2/27.
@@ -27,7 +29,7 @@ class FolderAdapter extends BaseRecyclerAdapter<Folder> {
     }
 
     @Override
-    protected void onBindViewHolder(RecyclerView.ViewHolder holder, Folder item, int position) {
+    protected void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, @NotNull Folder item, int position) {
         FolderViewHolder h = (FolderViewHolder) holder;
         h.tv_name.setText(item.getName());
         h.tv_size.setText(String.format("(%s)", item.getImages().size()));

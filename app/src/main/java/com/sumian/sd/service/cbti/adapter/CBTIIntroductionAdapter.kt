@@ -1,12 +1,12 @@
 package com.sumian.sd.service.cbti.adapter
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
@@ -24,15 +24,15 @@ import com.sumian.sd.service.cbti.widget.CBTIProgressView
  */
 class CBTIIntroductionAdapter(context: Context) : BaseRecyclerAdapter<CbtiChapterData>(context) {
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder?, item: CbtiChapterData, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: CbtiChapterData, position: Int) {
         (holder as? ViewHolder)?.initView(cbtiChapterData = item)
     }
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent!!.context).inflate(R.layout.lay_cbti_item_introduction, parent, false))
     }
 
-    inner class ViewHolder constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val tvTitle: TextView  by lazy {
             itemView.findViewById<TextView>(R.id.tv_title)

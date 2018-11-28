@@ -2,6 +2,7 @@ package com.sumian.common.widget.recycler
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -20,13 +21,13 @@ class LoadMoreRecyclerView @JvmOverloads constructor(context: Context, attrs: At
     private var mOnLoadCallback: OnLoadCallback? = null
 
     init {
-        addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 //Log.e(TAG, "onScrollStateChanged: newState=$newState")
-                if (newState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val layoutManager = recyclerView.layoutManager
-                    if (layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
+                    if (layoutManager is LinearLayoutManager) {
                         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                         if (firstVisibleItemPosition == 0) {
                             //Log.e(TAG, "onScrollStateChanged: --------->$firstVisibleItemPosition")
@@ -45,7 +46,7 @@ class LoadMoreRecyclerView @JvmOverloads constructor(context: Context, attrs: At
                 }
             }
 
-            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 //Log.e(TAG, "onScrollStateChanged: ------->newState=${recyclerView!!.scrollState}   dx=$dx  dy=$dy")
                 if (dy == 0) return

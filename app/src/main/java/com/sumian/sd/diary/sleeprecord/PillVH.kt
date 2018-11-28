@@ -1,10 +1,10 @@
 package com.sumian.sd.diary.sleeprecord
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.sumian.sd.R
 import com.sumian.sd.diary.sleeprecord.bean.SleepPill
 import java.util.*
@@ -18,7 +18,7 @@ import java.util.*
  * version: 1.0
 </pre> *
  */
-class PillVH private constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+class PillVH private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val tvPill: TextView by lazy {
         itemView.findViewById<TextView>(R.id.tv_pill)
