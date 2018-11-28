@@ -2,7 +2,7 @@ package com.sumian.sd.account.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.io.Serializable;
 import java.lang.annotation.Retention;

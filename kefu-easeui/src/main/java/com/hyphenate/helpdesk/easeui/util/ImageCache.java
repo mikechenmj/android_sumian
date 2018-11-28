@@ -9,9 +9,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.util.LruCache;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.collection.LruCache;
 
 import java.io.File;
 import java.lang.ref.SoftReference;
@@ -50,7 +50,7 @@ public class ImageCache {
 	/**
 	 * Create a new ImageCache object using the specified parameters. This
 	 * should not be called directly by other classes, instead use
-	 * {@link ImageCache#getInstance(android.support.v4.app.FragmentManager, ImageCacheParams)}
+	 * {@link ImageCache#getInstance(FragmentManager, ImageCacheParams)}
 	 * to fetch an ImageCache instance.
 	 *
 	 * @param cacheParams

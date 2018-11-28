@@ -1,7 +1,7 @@
 package com.sumian.sd.service.advisory.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +41,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
 
     private lateinit var mMediaPlayer: VoicePlayer
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
+    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return when (type) {
             Record.RECORD_QUESTION_TYPE -> {
                 QuestionViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_record_question_item, parent, false))
@@ -55,7 +55,7 @@ class RecordAdapter(context: Context) : BaseRecyclerAdapter<Record>(context) {
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Record, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder?, item: Record, position: Int) {
         when (getItemViewType(position)) {
             Record.RECORD_QUESTION_TYPE -> {
                 (holder as QuestionViewHolder).initView(item)

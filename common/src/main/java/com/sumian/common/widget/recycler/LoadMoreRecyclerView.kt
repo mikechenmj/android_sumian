@@ -1,9 +1,8 @@
 package com.sumian.common.widget.recycler
 
 import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by sm
@@ -21,13 +20,13 @@ class LoadMoreRecyclerView @JvmOverloads constructor(context: Context, attrs: At
     private var mOnLoadCallback: OnLoadCallback? = null
 
     init {
-        addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+        addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 //Log.e(TAG, "onScrollStateChanged: newState=$newState")
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val layoutManager = recyclerView!!.layoutManager
-                    if (layoutManager is LinearLayoutManager) {
+                if (newState == androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE) {
+                    val layoutManager = recyclerView.layoutManager
+                    if (layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
                         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                         if (firstVisibleItemPosition == 0) {
                             //Log.e(TAG, "onScrollStateChanged: --------->$firstVisibleItemPosition")
@@ -35,18 +34,18 @@ class LoadMoreRecyclerView @JvmOverloads constructor(context: Context, attrs: At
                         }
 
                         val lastCompletelyVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                        if (lastCompletelyVisibleItemPosition > 0 && lastCompletelyVisibleItemPosition == recyclerView.adapter.itemCount - 1) {
+                        if (lastCompletelyVisibleItemPosition > 0 && lastCompletelyVisibleItemPosition == recyclerView.adapter!!.itemCount - 1) {
                             mOnLoadCallback?.loadMore()
                         }
                     }
                 } else {
-                    if (recyclerView!!.adapter.itemCount <= 0) {
+                    if (recyclerView.adapter!!.itemCount <= 0) {
 
                     }
                 }
             }
 
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 //Log.e(TAG, "onScrollStateChanged: ------->newState=${recyclerView!!.scrollState}   dx=$dx  dy=$dy")
                 if (dy == 0) return

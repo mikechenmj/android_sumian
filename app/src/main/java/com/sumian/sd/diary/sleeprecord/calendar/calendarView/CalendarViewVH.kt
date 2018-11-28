@@ -3,7 +3,7 @@ package com.sumian.sd.diary.sleeprecord.calendar.calendarView
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ import com.sumian.sd.R
  * version: 1.0
 </pre> *
  */
-open class CalendarViewVH protected constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+open class CalendarViewVH protected constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
     protected var mContext: Context = itemView.context
 

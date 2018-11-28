@@ -1,7 +1,7 @@
 package com.sumian.sd.app
 
 import android.app.Application
-import android.arch.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.sumian.common.social.analytics.ActivityLifecycleCallbackForUserAnalysis
 import com.sumian.hw.log.LogManager
 

@@ -1,8 +1,8 @@
 package com.sumian.sd.account.userProfile;
 
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
+import androidx.lifecycle.Observer;
+import androidx.annotation.Nullable;
+import com.google.android.material.textfield.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;

@@ -1,7 +1,7 @@
 package com.sumian.sd.service.cbti.widget
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
 import com.sumian.common.widget.voice.IVisible

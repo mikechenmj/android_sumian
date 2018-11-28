@@ -4,9 +4,9 @@ package com.sumian.sd.widget.divider
 
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.annotation.Dimension
-import android.support.annotation.DrawableRes
+import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
+import androidx.annotation.DrawableRes
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue

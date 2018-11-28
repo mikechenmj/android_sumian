@@ -5,7 +5,7 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.view.AsyncLayoutInflater
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -22,7 +22,7 @@ import com.sumian.common.R
  * desc:
  *
  */
-class SmToast constructor(context: Context) : AsyncLayoutInflater.OnInflateFinishedListener, View.OnClickListener {
+class SmToast constructor(context: Context) : androidx.asynclayoutinflater.view.AsyncLayoutInflater.OnInflateFinishedListener, View.OnClickListener {
 
 
     private val mMainHandler: Handler by lazy {
@@ -82,7 +82,7 @@ class SmToast constructor(context: Context) : AsyncLayoutInflater.OnInflateFinis
 
     @SuppressLint("InflateParams")
     private fun initLayout() {
-        AsyncLayoutInflater(mContext).inflate(R.layout.layout_sm_toast, null, this)
+        androidx.asynclayoutinflater.view.AsyncLayoutInflater(mContext).inflate(R.layout.layout_sm_toast, null, this)
     }
 
     override fun onInflateFinished(view: View, resid: Int, parent: ViewGroup?) {

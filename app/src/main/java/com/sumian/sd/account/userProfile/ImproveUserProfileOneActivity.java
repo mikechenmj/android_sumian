@@ -1,6 +1,6 @@
 package com.sumian.sd.account.userProfile;
 
-import android.support.design.widget.TextInputEditText;
+import com.google.android.material.textfield.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;

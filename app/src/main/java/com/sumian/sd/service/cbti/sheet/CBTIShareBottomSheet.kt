@@ -1,6 +1,6 @@
 package com.sumian.sd.service.cbti.sheet
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.view.Gravity
 import android.view.View
 import com.sumian.common.helper.ToastHelper
@@ -24,7 +24,7 @@ class CBTIShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClic
     companion object {
 
         @JvmStatic
-        fun show(fragmentManager: FragmentManager) {
+        fun show(fragmentManager: androidx.fragment.app.FragmentManager) {
             val cbtiShareBottomSheet = CBTIShareBottomSheet()
             fragmentManager
                     .beginTransaction()

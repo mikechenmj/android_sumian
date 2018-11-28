@@ -1,11 +1,11 @@
 package com.sumian.sd.diary.monitorrecord
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.os.Handler
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.text.format.DateUtils
 import android.view.View
 import com.alibaba.fastjson.JSON
@@ -89,11 +89,11 @@ class MonitorDataVpFragment : BaseFragment() {
         view_pager_monitor.adapter = mAdapter
         mAdapter.addDays(TimeUtilV2.getDayStartTime(System.currentTimeMillis()), PRELOAD_THRESHOLD * 2, true)
         view_pager_monitor.setCurrentItem(mAdapter.count - 1, false)
-        view_pager_monitor.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        view_pager_monitor.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
                 val currentItem = view_pager_monitor.currentItem
                 date_bar.setCurrentTime(mAdapter.times[currentItem])
-                if (state == ViewPager.SCROLL_STATE_IDLE && currentItem < PRELOAD_THRESHOLD) {
+                if (state == androidx.viewpager.widget.ViewPager.SCROLL_STATE_IDLE && currentItem < PRELOAD_THRESHOLD) {
                     mAdapter.addDays(mAdapter.times[0], PRELOAD_THRESHOLD, false)
                 }
             }
@@ -154,10 +154,10 @@ class MonitorDataVpFragment : BaseFragment() {
         EventBusUtil.postEvent(UpdateMonitorDataEvent())
     }
 
-    class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    class InnerPagerAdapter(fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
         val times = ArrayList<Long>()
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             return MonitorDataFragment.newInstance(times[position])
         }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_50"
@@ -18,23 +18,23 @@
         app:tabTextAppearance="@style/TabTextAppearance"
         app:tabTextColor="@color/t2_color">
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_item_un_finished"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/coupon_code"
             tools:ignore="HardcodedText" />
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_item_is_finished"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/coupon_history"
             tools:ignore="HardcodedText" />
 
-    </android.support.design.widget.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

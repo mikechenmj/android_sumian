@@ -2,7 +2,7 @@ package com.sumian.sd.service.cbti.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View

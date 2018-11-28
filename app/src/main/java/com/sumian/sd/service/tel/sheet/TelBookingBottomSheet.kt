@@ -1,7 +1,7 @@
 package com.sumian.sd.service.tel.sheet
 
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.view.View
 import com.sumian.common.widget.picker.NumberPickerView
 import com.sumian.sd.R
@@ -32,7 +32,7 @@ class TelBookingBottomSheet : BaseBottomSheetView(), TelBookingSelectTimeContrac
             }
         }
 
-        fun show(fragmentManager: FragmentManager, telBookingTime: Int, onSelectTelBookingCallback: OnSelectTelBookingCallback) {
+        fun show(fragmentManager: androidx.fragment.app.FragmentManager, telBookingTime: Int, onSelectTelBookingCallback: OnSelectTelBookingCallback) {
             fragmentManager
                     .beginTransaction()
                     .add(newInstance(telBookingTime).setOnSelectTelBookingCallback(onSelectTelBookingCallback), TelBookingBottomSheet::class.java.simpleName)

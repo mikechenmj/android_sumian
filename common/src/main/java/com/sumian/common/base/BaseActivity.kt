@@ -2,8 +2,8 @@ package com.sumian.common.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.sumian.common.R

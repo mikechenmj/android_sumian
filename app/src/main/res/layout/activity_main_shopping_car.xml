@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:text="@string/pay" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/b2_color"
@@ -80,7 +80,7 @@
                     tools:ignore="RtlHardcoded"
                     tools:text="服务费用: 50元/次" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.sumian.sd.pay.widget.PayCalculateItemView
                 android:id="@+id/pay_calculate_item_view"
@@ -116,6 +116,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

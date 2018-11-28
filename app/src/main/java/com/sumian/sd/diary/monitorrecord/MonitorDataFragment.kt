@@ -1,7 +1,7 @@
 package com.sumian.sd.diary.monitorrecord
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.ThreadMode
  * desc   :
  * version: 1.0
  */
-class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
+class MonitorDataFragment : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
     private var mSelectedTime = System.currentTimeMillis()
 

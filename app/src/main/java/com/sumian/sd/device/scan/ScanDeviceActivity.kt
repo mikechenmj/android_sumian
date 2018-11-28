@@ -2,7 +2,7 @@ package com.sumian.sd.device.scan
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.hw.utils.JsonUtil
@@ -28,7 +28,7 @@ class ScanDeviceActivity : BasePresenterActivity<IPresenter>() {
     companion object {
         const val DATA = "data"
 
-        fun startForResult(fragment: Fragment, requestCode: Int) {
+        fun startForResult(fragment: androidx.fragment.app.Fragment, requestCode: Int) {
             fragment.startActivityForResult(Intent(fragment.context, ScanDeviceActivity::class.java), requestCode)
         }
     }

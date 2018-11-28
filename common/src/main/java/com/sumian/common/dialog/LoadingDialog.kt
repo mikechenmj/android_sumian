@@ -1,7 +1,9 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.common.dialog
 
 import android.content.Context
-import android.support.v7.app.AppCompatDialog
+import androidx.appcompat.app.AppCompatDialog
 import com.sumian.common.R
 import kotlinx.android.synthetic.main.common_lay_loading_dialog.*
 

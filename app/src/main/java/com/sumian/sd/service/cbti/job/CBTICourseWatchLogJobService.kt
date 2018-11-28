@@ -1,7 +1,7 @@
 package com.sumian.sd.service.cbti.job
 
 import android.content.Intent
-import android.support.v4.app.JobIntentService
+import androidx.core.app.JobIntentService
 import android.text.TextUtils
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.NetUtil

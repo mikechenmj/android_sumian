@@ -2,8 +2,8 @@ package com.sumian.sd.service.advisory.adapter
 
 import android.content.Context
 import android.os.CountDownTimer
-import android.support.annotation.StringRes
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.StringRes
+import androidx.recyclerview.widget.RecyclerView
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextUtils
@@ -29,13 +29,13 @@ import java.util.*
  **/
 class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(context) {
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
+    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         val viewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_item, parent, false))
         viewHolder.itemView.tag = viewHolder
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Advisory?, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder?, item: Advisory?, position: Int) {
         (holder as ViewHolder).init(item!!, mItems.size - 1 == position)
     }
 

@@ -1,7 +1,7 @@
 package com.sumian.sd.account.userProfile;
 
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.sumian.common.widget.picker.NumberPickerView;
 

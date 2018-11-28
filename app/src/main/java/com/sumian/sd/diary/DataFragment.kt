@@ -1,7 +1,7 @@
 package com.sumian.sd.diary
 
-import android.arch.lifecycle.Observer
-import android.support.v4.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import android.view.View
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
@@ -80,7 +80,7 @@ class DataFragment : BaseFragment() {
 
     private fun switchFragment(position: Int) {
         FragmentUtil.switchFragment(R.id.fl_container, fragmentManager!!, TAGS, position, object : FragmentUtil.FragmentCreator {
-            override fun createFragmentByPosition(position: Int): Fragment {
+            override fun createFragmentByPosition(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
                     0 -> SleepDiaryVpFragment()
                     else -> MonitorDataVpFragment()

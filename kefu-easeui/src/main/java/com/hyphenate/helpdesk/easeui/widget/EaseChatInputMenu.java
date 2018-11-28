@@ -3,7 +3,7 @@ package com.hyphenate.helpdesk.easeui.widget;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.emojicon.DefaultEmojiconDatas;
 import com.hyphenate.helpdesk.easeui.emojicon.EmojiconGroupEntity;
 import com.hyphenate.helpdesk.easeui.emojicon.EmojiconMenu;

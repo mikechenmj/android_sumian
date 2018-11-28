@@ -1,7 +1,7 @@
 package com.sumian.sd.homepage
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.view.View

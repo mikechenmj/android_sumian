@@ -1,8 +1,8 @@
 package com.sumian.sd.widget.sheet
 
 import android.content.Context
-import android.support.annotation.StringRes
-import android.support.design.widget.BottomSheetDialog
+import androidx.annotation.StringRes
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.view.LayoutInflater
 import com.blankj.utilcode.util.SnackbarUtils.dismiss
 import com.sumian.sd.R

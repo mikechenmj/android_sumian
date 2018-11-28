@@ -1,7 +1,7 @@
 package com.sumian.common.widget.refresh
 
 import android.content.Context
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.util.AttributeSet
 
 import com.sumian.common.R
@@ -13,7 +13,7 @@ import com.sumian.common.R
  * desc:
  */
 
-class SumianSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : SwipeRefreshLayout(context, attrs) {
+class SumianSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : androidx.swiperefreshlayout.widget.SwipeRefreshLayout(context, attrs) {
     private val mDismissRunnable = Runnable { this.hideRefreshAnim() }
 
     init {

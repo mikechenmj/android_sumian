@@ -2,8 +2,8 @@ package com.sumian.sd.account.userProfile;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
-import android.support.design.widget.TextInputEditText;
+import androidx.annotation.StringRes;
+import com.google.android.material.textfield.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;

@@ -3,7 +3,7 @@ package com.sumian.sd.diary.sleeprecord;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.sumian.common.network.response.ErrorResponse;

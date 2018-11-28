@@ -3,7 +3,7 @@ package com.sumian.sd.pay.presenter
 import android.app.Activity
 import android.content.Intent
 import android.os.Handler
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import com.google.gson.Gson
 import com.pingplusplus.android.Pingpp
 import com.sumian.common.network.response.ErrorResponse
@@ -175,10 +175,10 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
         this.mOrderNo = null
     }
 
-    override fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent?) {
         //支付页面返回处理
         if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
-            val result = data.extras!!.getString("pay_result")
+            val result = data?.extras!!.getString("pay_result")
             @StringRes val payResultMsg: Int
 
             when (result) {

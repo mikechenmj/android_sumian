@@ -2,8 +2,8 @@ package com.sumian.sd.service.diary
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
@@ -40,9 +40,9 @@ class DiaryEvaluationListActivity : BasePresenterActivity<IPresenter>() {
     override fun initWidget() {
         super.initWidget()
         mTitleBar.setTitle(R.string.diary_evaluation)
-        view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        view_pager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
                     0 -> DiaryEvaluationListFragment.newInstance(DiaryEvaluationListFragment.TYPE_UNFINISHED)
                     1 -> DiaryEvaluationListFragment.newInstance(DiaryEvaluationListFragment.TYPE_FINISHED)

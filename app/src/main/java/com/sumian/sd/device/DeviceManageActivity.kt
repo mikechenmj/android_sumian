@@ -1,6 +1,6 @@
 package com.sumian.sd.device
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.hw.utils.FragmentUtil
@@ -42,7 +42,7 @@ class DeviceManageActivity : BasePresenterActivity<IPresenter>() {
     private fun switchFragment(position: Int) {
         mCurrentFragmentIndex = position
         switchFragment(R.id.vg, supportFragmentManager, FRAGMENT_TAGS, position, object : FragmentUtil.FragmentCreator {
-            override fun createFragmentByPosition(position: Int): Fragment {
+            override fun createFragmentByPosition(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
                     0 -> {
                         val deviceManageFragment = DeviceManageFragment()
@@ -57,7 +57,7 @@ class DeviceManageActivity : BasePresenterActivity<IPresenter>() {
                 }
             }
         }, object : FragmentUtil.RunOnCommitCallback {
-            override fun runOnCommit(selectFragment: Fragment) {
+            override fun runOnCommit(selectFragment: androidx.fragment.app.Fragment) {
                 if (selectFragment is ScanDeviceFragment) {
                     selectFragment.rollback()
                 }

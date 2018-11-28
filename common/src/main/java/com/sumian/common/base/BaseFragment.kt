@@ -2,9 +2,9 @@ package com.sumian.common.base
 
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ import retrofit2.Call
  *
  * desc:
  */
-abstract class BaseFragment : Fragment(), BaseShowLoadingView {
+abstract class BaseFragment : androidx.fragment.app.Fragment(), BaseShowLoadingView {
 
     private var mCalls = HashSet<Call<*>>()
 

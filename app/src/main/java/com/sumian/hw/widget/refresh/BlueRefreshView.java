@@ -2,7 +2,7 @@ package com.sumian.hw.widget.refresh;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 
 import com.sumian.sd.R;

@@ -1,8 +1,8 @@
 package com.sumian.sd.device.widget
 
 import android.animation.ObjectAnimator
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.net.Uri

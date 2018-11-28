@@ -1,7 +1,7 @@
 package com.sumian.sd.device.bean;
 
 import android.bluetooth.BluetoothAdapter;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;

@@ -7,8 +7,8 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Handler
-import android.support.annotation.StringRes
-import android.support.v7.widget.LinearLayoutManager
+import androidx.annotation.StringRes
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.blue.callback.BlueAdapterCallback

@@ -1,6 +1,6 @@
 package com.sumian.common.image
 
-import android.support.annotation.DrawableRes
+import androidx.annotation.DrawableRes
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide

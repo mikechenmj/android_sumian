@@ -4,8 +4,8 @@ package com.sumian.hw.widget.refresh
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +21,13 @@ import com.sumian.sd.R
  * desc:
  */
 
-class ActionLoadingDialog : DialogFragment() {
+class ActionLoadingDialog : androidx.fragment.app.DialogFragment() {
 
     private var mIsShowing: Boolean = false // 判断当前dialog是否正在显示，如果正在显示，则不重复调用show()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_DialogWhenLarge_NoActionBar)
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_DialogWhenLarge_NoActionBar)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,7 +43,7 @@ class ActionLoadingDialog : DialogFragment() {
      * @param fragmentManager fragmentManager
      * @return ActionLoadingDialog.this
      */
-    fun show(fragmentManager: FragmentManager): ActionLoadingDialog {
+    fun show(fragmentManager: androidx.fragment.app.FragmentManager): ActionLoadingDialog {
         if (mIsShowing) {
             return this
         }

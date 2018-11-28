@@ -1,7 +1,7 @@
 package com.sumian.sd.pay.dialog
 
 import android.content.Context
-import android.support.annotation.LayoutRes
+import androidx.annotation.LayoutRes
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView

@@ -1,7 +1,7 @@
 package com.sumian.sd.service.coupon.adpater
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +18,13 @@ import com.sumian.sd.service.coupon.bean.Coupon
  **/
 class CouponListAdapter(context: Context) : BaseRecyclerAdapter<Coupon>(context) {
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
+    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         val viewHolder = ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_advisory_item, parent, false))
         viewHolder.itemView.tag = viewHolder
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Coupon, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder?, item: Coupon, position: Int) {
         (holder as ViewHolder).init(item, mItems.size - 1 == position)
     }
 

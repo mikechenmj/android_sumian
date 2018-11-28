@@ -41,7 +41,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
@@ -73,7 +73,7 @@ android {
     }
 
     testOptions {
-        execution 'ANDROID_TEST_ORCHESTRATOR'
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 
     buildTypes {
@@ -267,38 +267,13 @@ static def formatDate() {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-
-    implementation 'com.android.support:appcompat-v7:' + rootProject.ext.supportVersion
-    implementation 'com.android.support:support-v4:' + rootProject.ext.supportVersion
-    implementation 'com.android.support:design:' + rootProject.ext.supportVersion
-    implementation 'com.android.support:cardview-v7:' + rootProject.ext.supportVersion
-    implementation 'com.android.support:support-vector-drawable:' + rootProject.ext.supportVersion
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-
-    implementation 'com.qmuiteam:qmui:1.1.3'
-    implementation 'com.qmuiteam:arch:0.0.1'
-
-    // ViewModel and LiveData
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-    kapt 'android.arch.lifecycle:compiler:1.1.1'
-    implementation 'android.arch.lifecycle:viewmodel:1.1.1'
-
-    // Java8 support for Lifecycles
-    implementation 'android.arch.lifecycle:common-java8:1.1.1'
-
-//    // LeanCloud 基础包
-//    implementation 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
-//
-//    // 推送与实时聊天需要的包
-//    implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
 
     //aliyun oss
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
@@ -315,6 +290,7 @@ dependencies {
     implementation 'com.pingxx:pingpp-alipay:2.1.18'
 
     //拼音分词
+
     //implementation 'com.belerweb:pinyin4j:2.5.1'
 
     //scan qr code

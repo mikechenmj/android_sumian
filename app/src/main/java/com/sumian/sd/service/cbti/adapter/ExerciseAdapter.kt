@@ -1,7 +1,7 @@
 package com.sumian.sd.service.cbti.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,11 +21,11 @@ import com.sumian.sd.service.cbti.bean.Exercise
  */
 class ExerciseAdapter(context: Context) : BaseRecyclerAdapter<Exercise>(context) {
 
-    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): RecyclerView.ViewHolder {
+    override fun onCreateDefaultViewHolder(parent: ViewGroup?, type: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_cbti_item_practice, parent, false))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Exercise, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder?, item: Exercise, position: Int) {
         (holder as ViewHolder).initView(item)
     }
 

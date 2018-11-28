@@ -1,8 +1,8 @@
 package com.sumian.sd.tab
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.graphics.Color
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.View
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.leancloud.HwLeanCloudHelper
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * desc:
  */
 class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View,
-        SwipeRefreshLayout.OnRefreshListener, OnEnterListener, HwLeanCloudHelper.OnShowMsgDotCallback {
+        androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, OnEnterListener, HwLeanCloudHelper.OnShowMsgDotCallback {
 
     private var mIsInit = false
     private var mIsAutoRefresh = false

@@ -1,6 +1,6 @@
 package com.sumian.hw.report.weeklyreport.bean;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.sumian.hw.report.widget.bean.SleepAdvice;
 import com.sumian.hw.report.widget.bean.SleepDuration;
