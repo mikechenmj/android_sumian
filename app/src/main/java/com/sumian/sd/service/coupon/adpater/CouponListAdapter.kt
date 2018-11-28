@@ -1,10 +1,10 @@
 package com.sumian.sd.service.coupon.adpater
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
@@ -24,7 +24,7 @@ class CouponListAdapter(context: Context) : BaseRecyclerAdapter<Coupon>(context)
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Coupon, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: Coupon, position: Int) {
         (holder as ViewHolder).init(item, mItems.size - 1 == position)
     }
 

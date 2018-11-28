@@ -38,7 +38,8 @@ data class MessageBoard(
         @SerializedName("updated_at")
         val updatedAt: Int,
         @SerializedName("visible")
-        val visible: Int//是否可见 皆为1
+        val visible: Int,//是否可见 皆为1
+        @SerializedName("is_top") val isTop: Int//是否置顶 0:否 1:是
 ) {
 
     fun showReply(reply: TextView, replyLay: LinearLayout) {
@@ -60,4 +61,6 @@ data class MessageBoard(
     }
 
     fun formatWriteTime(): String = TimeUtilV2.formatDate("yyyy.MM.dd", createdAt * 1000L)
+
+    fun isTopping(): Boolean = (isTop == 1)
 }

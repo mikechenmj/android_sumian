@@ -17,11 +17,11 @@
             android:layout_height="wrap_content"
             tools:text="第一周 认识睡眠" />
 
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/coordinator_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                     android:background="@color/b1_color"
                     app:layout_scrollFlags="scroll|enterAlways" />
 
-                <android.support.design.widget.TabLayout
+                <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_40"
@@ -97,25 +97,25 @@
                     app:tabTextAppearance="@style/TabTextAppearance"
                     app:tabTextColor="@color/t2_color">
 
-                    <android.support.design.widget.TabItem
+                    <com.google.android.material.tabs.TabItem
                         android:id="@+id/tab_item_scan_qr_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/course"
                         tools:ignore="HardcodedText" />
 
-                    <android.support.design.widget.TabItem
+                    <com.google.android.material.tabs.TabItem
                         android:id="@+id/tab_item_input_sn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/practice"
                         tools:ignore="HardcodedText" />
 
-                </android.support.design.widget.TabLayout>
+                </com.google.android.material.tabs.TabLayout>
 
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -133,7 +133,7 @@
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>
 

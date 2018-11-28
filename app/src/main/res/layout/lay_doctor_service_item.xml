@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/space_10"
     android:background="@color/white">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/iv_wrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:layout_height="@dimen/space_80"
             tools:ignore="ContentDescription"
             tools:src="@mipmap/ic_doctor_service_item_view_sleep_diary" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"

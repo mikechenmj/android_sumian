@@ -1,10 +1,10 @@
 package com.sumian.sd.diary.monitorrecord
 
 import android.content.Intent
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import android.text.format.DateUtils
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
@@ -65,11 +65,11 @@ class WeeklyReportActivity : BasePresenterActivity<IPresenter>() {
         view_pager.adapter = mAdapter
         mAdapter.addDays(TimeUtilV2.getDayStartTime(System.currentTimeMillis()), PRELOAD_THRESHOLD * 2, true)
         view_pager.setCurrentItem(mAdapter.count - 1, false)
-        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        view_pager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
                 val currentItem = view_pager.currentItem
                 date_bar.setCurrentTime(mAdapter.times[currentItem])
-                if (state == ViewPager.SCROLL_STATE_IDLE && currentItem < PRELOAD_THRESHOLD) {
+                if (state == androidx.viewpager.widget.ViewPager.SCROLL_STATE_IDLE && currentItem < PRELOAD_THRESHOLD) {
                     mAdapter.addDays(mAdapter.times[0], PRELOAD_THRESHOLD, false)
                 }
             }
@@ -125,10 +125,10 @@ class WeeklyReportActivity : BasePresenterActivity<IPresenter>() {
         view_pager.setCurrentItem(mAdapter.times.indexOf(time), false)
     }
 
-    class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+    class InnerPagerAdapter(fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
         val times = ArrayList<Long>()
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             return WeeklyReportFragmentV2.newInstance(times[position])
         }
 

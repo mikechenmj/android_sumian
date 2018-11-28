@@ -1,6 +1,6 @@
 package com.sumian.hw.report.weeklyreport;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class WeekMeta {
 

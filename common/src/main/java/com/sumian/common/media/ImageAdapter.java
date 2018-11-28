@@ -2,13 +2,15 @@ package com.sumian.common.media;
 
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.sumian.common.R;
 import com.sumian.common.base.BaseRecyclerAdapter;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by haibin
@@ -41,7 +43,7 @@ class ImageAdapter extends BaseRecyclerAdapter<Image> {
     }
 
     @Override
-    protected void onBindViewHolder(RecyclerView.ViewHolder holder, Image item, int position) {
+    protected void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, @NotNull Image item, int position) {
         if (item.getId() != 0) {
             ImageViewHolder h = (ImageViewHolder) holder;
             h.mCheckView.setSelected(item.isSelect());

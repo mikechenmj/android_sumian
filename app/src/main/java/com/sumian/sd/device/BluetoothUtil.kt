@@ -2,7 +2,7 @@ package com.sumian.sd.device
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 /**
  * @author : Zhan Xuzhao
@@ -13,7 +13,7 @@ import android.support.v4.app.Fragment
  */
 
 object BluetoothUtil {
-    fun startActivityForOpenBluetooth(fragment: Fragment, requestCode: Int) {
+    fun startActivityForOpenBluetooth(fragment: androidx.fragment.app.Fragment, requestCode: Int) {
         fragment.startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), requestCode)
     }
 }

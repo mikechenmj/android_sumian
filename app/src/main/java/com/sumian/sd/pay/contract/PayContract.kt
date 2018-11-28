@@ -58,6 +58,6 @@ interface PayContract {
 
         fun clearPayAction()
 
-        fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent)
+        fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent?)
     }
 }

@@ -25,9 +25,23 @@
             style="@style/text_t1_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_10"
-            android:layout_marginRight="@dimen/space_10"
+            android:layout_marginStart="@dimen/space_10"
             android:text="@string/anonymous_nickname" />
+
+        <TextView
+            android:id="@+id/tv_topping"
+            style="@style/text_b4_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_6"
+            android:background="@drawable/shape_b4_border_1"
+            android:paddingLeft="@dimen/space_6"
+            android:paddingTop="@dimen/space_2"
+            android:paddingRight="@dimen/space_6"
+            android:paddingBottom="@dimen/space_2"
+            android:text="@string/topping_text"
+            android:visibility="invisible"
+            tools:visibility="visible" />
 
         <Space
             android:layout_width="0dp"

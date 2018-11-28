@@ -1,9 +1,9 @@
 package com.sumian.sd.service.tel.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
 import com.sumian.common.base.BasePresenterFragment
@@ -28,13 +28,13 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * desc: 电话预约列表, 已完成/未完成
  *
  */
-class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Presenter>(), TelBookingListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
+class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Presenter>(), TelBookingListContract.View, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
         private const val ARGS_TEL_BOOKING_TYPE: String = "com.sumian.app.extras.tel.booking.type"
 
-        fun newInstance(telBookingType: Int = TelBooking.UN_FINISHED_TYPE): Fragment {
+        fun newInstance(telBookingType: Int = TelBooking.UN_FINISHED_TYPE): androidx.fragment.app.Fragment {
             val args = Bundle().apply {
                 putInt(ARGS_TEL_BOOKING_TYPE, telBookingType)
             }

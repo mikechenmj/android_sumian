@@ -1,9 +1,9 @@
 package com.sumian.sd.service.advisory.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
@@ -23,13 +23,13 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:
  **/
-class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
+class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
         private const val ARGS_ADVISORY_TYPE: String = "com.sumian.app.extras.advisory.type"
 
-        fun newInstance(advisoryType: Int = Advisory.UNFINISHED_TYPE): Fragment? {
+        fun newInstance(advisoryType: Int = Advisory.UNFINISHED_TYPE): androidx.fragment.app.Fragment? {
             val args = Bundle()
             args.putInt(ARGS_ADVISORY_TYPE, advisoryType)
             return SdBaseFragment.newInstance(AdvisoryListFragment::class.java, args)

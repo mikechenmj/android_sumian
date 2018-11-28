@@ -4,10 +4,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.support.v4.app.Fragment
-import android.support.v4.content.LocalBroadcastManager
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
 import com.sumian.common.base.BasePresenterFragment
@@ -29,14 +29,14 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * desc: 兑换记录列表
  *
  */
-class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>(), CouponListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
+class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>(), CouponListContract.View, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
         const val AUTO_REFRESH_ACTION = "com.sumian.sd.action.auto_refresh"
 
         @JvmStatic
-        fun newInstance(): Fragment {
+        fun newInstance(): androidx.fragment.app.Fragment {
             return CouponListFragment()
         }
 
@@ -85,12 +85,12 @@ class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>()
         super.initData()
         mIsRefresh = true
         this.mPresenter?.getCouponList()
-        LocalBroadcastManager.getInstance(activity!!).registerReceiver(mDataBroadcastReceiver, IntentFilter(AUTO_REFRESH_ACTION))
+        androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(activity!!).registerReceiver(mDataBroadcastReceiver, IntentFilter(AUTO_REFRESH_ACTION))
     }
 
     override fun onRelease() {
         super.onRelease()
-        LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(mDataBroadcastReceiver)
+        androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(activity!!).unregisterReceiver(mDataBroadcastReceiver)
     }
 
     override fun onResume() {

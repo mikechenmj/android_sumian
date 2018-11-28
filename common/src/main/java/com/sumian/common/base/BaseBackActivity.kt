@@ -1,6 +1,6 @@
 package com.sumian.common.base
 
-import android.support.annotation.LayoutRes
+import androidx.annotation.LayoutRes
 import com.sumian.common.mvp.IPresenter
 
 /**

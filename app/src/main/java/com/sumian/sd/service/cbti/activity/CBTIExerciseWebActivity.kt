@@ -3,7 +3,7 @@ package com.sumian.sd.service.cbti.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.LocalBroadcastManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.common.h5.handler.SBridgeHandler
@@ -62,7 +62,7 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
                 sBridgeResult?.let {
                     if (it.code == 0) {
-                        LocalBroadcastManager.getInstance(this@CBTIExerciseWebActivity).sendBroadcastSync(Intent().apply {
+                        androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(this@CBTIExerciseWebActivity).sendBroadcastSync(Intent().apply {
                             action = "finished"
                         })
                         finish()

@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -116,7 +116,7 @@
 腹式呼吸放松强调慢、长、深的呼吸，通过鼻子吸气，直达腹部深处，再用嘴巴呼气。坚持进行腹式呼吸练习能够帮您减轻紧张和焦虑的情绪。" />
 
                     </LinearLayout>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
                 <ImageView
                     android:id="@+id/iv_play"

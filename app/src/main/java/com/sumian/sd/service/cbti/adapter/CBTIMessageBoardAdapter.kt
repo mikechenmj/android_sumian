@@ -1,12 +1,12 @@
 package com.sumian.sd.service.cbti.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
@@ -24,7 +24,6 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
         (holder as ViewHolder).initView(messageBoard)
     }
 
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val tvNickName by lazy {
@@ -33,6 +32,10 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
 
         private val civAvatar by lazy {
             itemView.findViewById<CircleImageView>(R.id.civ_avatar)
+        }
+
+        private val tvTopping by lazy {
+            itemView.findViewById<TextView>(R.id.tv_topping)
         }
 
         private val tvWriteTime by lazy {
@@ -57,6 +60,7 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
                     civAvatar,
                     R.mipmap.ic_info_avatar_patient,
                     R.mipmap.ic_info_avatar_patient)
+            tvTopping.visibility = if (item.isTopping()) View.VISIBLE else View.INVISIBLE
             item.showReply(tvReply, layReply)
             tvWriteTime.text = item.formatWriteTime()
             tvMessageBoard.text = item.message

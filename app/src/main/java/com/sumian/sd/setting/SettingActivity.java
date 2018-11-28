@@ -2,7 +2,7 @@ package com.sumian.sd.setting;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageInfo;
-import android.support.design.widget.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 

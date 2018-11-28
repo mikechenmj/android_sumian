@@ -1,11 +1,11 @@
 package com.sumian.sd.service.tel.adpater
 
 import android.content.Context
-import android.support.annotation.StringRes
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
@@ -25,7 +25,7 @@ class TelBookingListAdapter(context: Context) : BaseRecyclerAdapter<TelBooking>(
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: TelBooking, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: TelBooking, position: Int) {
         (holder as ViewHolder).init(item, mItems.size - 1 == position)
     }
 

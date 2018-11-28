@@ -2,7 +2,7 @@ package com.sumian.common.utils
 
 import android.content.Context
 import android.os.Build
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorRes
 
 /**
  * <pre>

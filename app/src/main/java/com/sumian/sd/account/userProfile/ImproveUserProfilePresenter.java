@@ -1,6 +1,6 @@
 package com.sumian.sd.account.userProfile;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.account.bean.UserInfo;

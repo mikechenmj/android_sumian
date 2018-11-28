@@ -2,8 +2,8 @@ package com.sumian.sd.service.advisory.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R
@@ -52,9 +52,9 @@ class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.O
         super.initWidget(root)
 
         title_bar?.setOnBackClickListener(this)
-        view_pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        view_pager?.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
                     0 -> {
                         AdvisoryListFragment.newInstance(Advisory.UNFINISHED_TYPE)!!

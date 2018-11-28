@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="@dimen/space_250"
         android:layout_height="match_parent"
         android:background="@color/dialog_bg_color">
@@ -21,6 +21,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical" />
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

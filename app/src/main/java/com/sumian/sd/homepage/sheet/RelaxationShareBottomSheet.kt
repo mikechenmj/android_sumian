@@ -1,7 +1,7 @@
 package com.sumian.sd.homepage.sheet
 
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.view.Gravity
 import android.view.View
 import com.sumian.common.helper.ToastHelper
@@ -29,7 +29,7 @@ class RelaxationShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.
 
 
         @JvmStatic
-        fun show(fragmentManager: FragmentManager, url: String, title: String, desc: String) {
+        fun show(fragmentManager: androidx.fragment.app.FragmentManager, url: String, title: String, desc: String) {
             val relaxationShareBottomSheet = RelaxationShareBottomSheet()
             relaxationShareBottomSheet.arguments = Bundle().apply {
                 putString(ARGS_URL, url)

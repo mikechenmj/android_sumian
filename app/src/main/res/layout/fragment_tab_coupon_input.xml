@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="@string/coupon_code" />
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_coupon_code"
             style="@style/edit_text_t2_style"
             android:layout_width="match_parent"

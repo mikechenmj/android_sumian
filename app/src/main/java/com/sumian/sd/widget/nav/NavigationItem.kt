@@ -1,8 +1,8 @@
 package com.sumian.sd.widget.nav
 
 import android.content.Context
-import android.support.annotation.AttrRes
-import android.support.annotation.DrawableRes
+import androidx.annotation.AttrRes
+import androidx.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View

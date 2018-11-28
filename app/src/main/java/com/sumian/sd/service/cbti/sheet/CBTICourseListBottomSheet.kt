@@ -2,7 +2,7 @@ package com.sumian.sd.service.cbti.sheet
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -34,7 +34,7 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
         private const val ARGS_CHAPTER_ID = "com.sumian.sleepdoctor.args.chapter.id"
         private const val ARGS_SELECT_POSITION = "com.sumian.sleepdoctor.args.select.position"
 
-        fun show(fragmentManager: FragmentManager, ChapterId: Int, position: Int, onCBTILessonListCallback: OnCBTILessonListCallback) {
+        fun show(fragmentManager: androidx.fragment.app.FragmentManager, ChapterId: Int, position: Int, onCBTILessonListCallback: OnCBTILessonListCallback) {
             val cbtiLessonListBottomSheet = CBTICourseListBottomSheet().setOnCbtiLessonListCallback(onCBTILessonListCallback)
 
             cbtiLessonListBottomSheet.arguments = Bundle().apply {

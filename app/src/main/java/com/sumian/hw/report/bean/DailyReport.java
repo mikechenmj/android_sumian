@@ -1,6 +1,6 @@
 package com.sumian.hw.report.bean;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 

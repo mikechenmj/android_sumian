@@ -1,7 +1,7 @@
 package com.sumian.sd.device.util;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Created by jzz

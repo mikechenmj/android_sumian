@@ -2,7 +2,7 @@ package com.sumian.common.media;
 
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.sumian.common.R;
 import com.sumian.common.base.BaseRecyclerAdapter;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by haibin
@@ -27,7 +29,7 @@ class FolderAdapter extends BaseRecyclerAdapter<Folder> {
     }
 
     @Override
-    protected void onBindViewHolder(RecyclerView.ViewHolder holder, Folder item, int position) {
+    protected void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, @NotNull Folder item, int position) {
         FolderViewHolder h = (FolderViewHolder) holder;
         h.tv_name.setText(item.getName());
         h.tv_size.setText(String.format("(%s)", item.getImages().size()));

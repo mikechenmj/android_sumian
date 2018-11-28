@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/nickname" />
 
-        <android.support.design.widget.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
             style="@style/edit_text_t2_style"
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_finish"
         style="@style/bt_t1_style"
         android:layout_width="match_parent"

@@ -1,9 +1,9 @@
 package com.sumian.sd.service.coupon.activity
 
 import android.content.Intent
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_main_coupon_center.*
  * on 2018/6/4 18:28
  * desc:兑换中心,包含了兑换码兑换,兑换记录等
  **/
-class CouponCenterActivity : BasePresenterActivity<IPresenter>(), ViewPager.OnPageChangeListener {
+class CouponCenterActivity : BasePresenterActivity<IPresenter>(), androidx.viewpager.widget.ViewPager.OnPageChangeListener {
 
     private var onKeyBoardCallback: OnKeyBoardCallback? = null
 
@@ -44,9 +44,9 @@ class CouponCenterActivity : BasePresenterActivity<IPresenter>(), ViewPager.OnPa
         super.initWidget()
         mTitleBar.openTopPadding(true)
         mTitleBar.setTitle(R.string.coupon_center)
-        view_pager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        view_pager.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
 
-            override fun getItem(position: Int): Fragment {
+            override fun getItem(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
                     0 -> CouponActionFragment.newInstance()
                     1 -> CouponListFragment.newInstance()

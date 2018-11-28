@@ -2,11 +2,11 @@
 
 package com.sumian.sd.main
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
@@ -268,7 +268,7 @@ class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnSh
     private fun showFragmentByPosition(position: Int) {
         FragmentUtil.switchFragment(R.id.sd_main_fragment_container, supportFragmentManager!!, mFragmentTags, position,
                 object : FragmentUtil.FragmentCreator {
-                    override fun createFragmentByPosition(position: Int): Fragment {
+                    override fun createFragmentByPosition(position: Int): androidx.fragment.app.Fragment {
                         return when (position) {
                             0 -> HomepageFragment()
                             1 -> DataFragment()

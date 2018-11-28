@@ -1,11 +1,11 @@
 package com.sumian.sd.service.cbti.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
 import com.sumian.sd.base.holder.SdBaseViewHolder
@@ -25,7 +25,7 @@ class CourseListAdapter(context: Context) : BaseRecyclerAdapter<Course>(context)
         return ViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.lay_item_cbti_lesson_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Course, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: Course, position: Int) {
         (holder as ViewHolder).initView(item)
     }
 

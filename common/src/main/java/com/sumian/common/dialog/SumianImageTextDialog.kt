@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatDialog
+import androidx.appcompat.app.AppCompatDialog
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils

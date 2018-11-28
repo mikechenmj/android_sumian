@@ -1,6 +1,6 @@
 package com.sumian.sd.device.util;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import com.sumian.sd.device.command.BlueCmd;
 

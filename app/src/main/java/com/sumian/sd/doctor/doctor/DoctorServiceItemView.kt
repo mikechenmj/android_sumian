@@ -3,7 +3,7 @@
 package com.sumian.sd.doctor.doctor
 
 import android.content.Context
-import android.support.annotation.DrawableRes
+import androidx.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout

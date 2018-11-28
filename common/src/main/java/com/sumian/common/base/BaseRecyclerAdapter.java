@@ -2,8 +2,6 @@ package com.sumian.common.base;
 
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,11 @@ import com.bumptech.glide.RequestManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+;
 
 /**
  * Created by haibin
@@ -59,7 +62,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
 
     protected abstract RecyclerView.ViewHolder onCreateDefaultViewHolder(ViewGroup parent, int type);
 
-    protected abstract void onBindViewHolder(RecyclerView.ViewHolder holder, T item, int position);
+    protected abstract void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @NonNull T item, int position);
 
     @Override
     public int getItemCount() {

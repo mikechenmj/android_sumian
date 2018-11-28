@@ -2,8 +2,6 @@ package com.sumian.sd.service.advisory.adapter
 
 import android.content.Context
 import android.os.CountDownTimer
-import android.support.annotation.StringRes
-import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextUtils
@@ -11,13 +9,15 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseRecyclerAdapter
-import com.sumian.sd.R
-import com.sumian.sd.service.advisory.bean.Advisory
-import com.sumian.sd.app.App
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.sd.R
+import com.sumian.sd.app.App
+import com.sumian.sd.service.advisory.bean.Advisory
 import java.util.*
 
 @Suppress("DEPRECATION")
@@ -35,8 +35,8 @@ class AdvisoryListAdapter(context: Context) : BaseRecyclerAdapter<Advisory>(cont
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, item: Advisory?, position: Int) {
-        (holder as ViewHolder).init(item!!, mItems.size - 1 == position)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: Advisory, position: Int) {
+        (holder as ViewHolder).init(item, mItems.size - 1 == position)
     }
 
     inner class ViewHolder constructor(itemView: View) : BaseViewHolder(itemView) {

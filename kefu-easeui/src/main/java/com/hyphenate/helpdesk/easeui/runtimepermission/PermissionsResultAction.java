@@ -16,7 +16,7 @@ package com.hyphenate.helpdesk.easeui.runtimepermission;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import java.util.Collections;
