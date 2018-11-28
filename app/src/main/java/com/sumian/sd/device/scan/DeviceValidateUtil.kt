@@ -1,8 +1,8 @@
 package com.sumian.sd.device.scan
 
-import com.sumian.sd.device.util.BluetoothDeviceUtil
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.BuildConfig
+import com.sumian.sd.device.util.BluetoothDeviceUtil
 
 /**
  * @author : Zhan Xuzhao

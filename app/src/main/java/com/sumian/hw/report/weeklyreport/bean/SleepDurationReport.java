@@ -1,7 +1,5 @@
 package com.sumian.hw.report.weeklyreport.bean;
 
-import androidx.annotation.NonNull;
-
 import com.sumian.hw.report.widget.bean.SleepAdvice;
 import com.sumian.hw.report.widget.bean.SleepDuration;
 import com.sumian.hw.utils.TimeUtil;
@@ -11,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by jzz

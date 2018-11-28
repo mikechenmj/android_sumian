@@ -8,11 +8,12 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.sumian.sd.R;
+
+import androidx.annotation.Nullable;
 
 /**
  * <pre>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.common.h5.bean.SBridgeResult;
@@ -21,6 +20,8 @@ import com.sumian.sd.main.MainActivity;
 import com.sumian.sd.utils.JsonUtil;
 
 import org.jetbrains.annotations.NotNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by sm

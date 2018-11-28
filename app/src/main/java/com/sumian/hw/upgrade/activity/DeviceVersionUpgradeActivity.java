@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +31,8 @@ import com.sumian.sd.widget.dialog.SumianAlertDialog;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import no.nordicsemi.android.dfu.DfuBaseService;
 import no.nordicsemi.android.dfu.DfuProgressListener;
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper;

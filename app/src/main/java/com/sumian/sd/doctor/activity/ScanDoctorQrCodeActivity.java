@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.doctor.bean.DoctorService;
@@ -21,6 +19,8 @@ import com.sumian.sd.widget.qr.QrCodeView;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**

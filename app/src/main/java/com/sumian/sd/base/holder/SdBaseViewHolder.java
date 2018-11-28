@@ -1,9 +1,5 @@
 package com.sumian.sd.base.holder;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
-import androidx.annotation.StringRes;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +10,11 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.Locale;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by jzz

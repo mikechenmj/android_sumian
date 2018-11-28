@@ -2,9 +2,9 @@ package com.sumian.sd.service.advisory.contract
 
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
-import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
+import com.sumian.sd.service.advisory.bean.Advisory
 
 /**
  *

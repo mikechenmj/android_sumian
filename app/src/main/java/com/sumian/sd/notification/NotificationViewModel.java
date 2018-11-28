@@ -1,9 +1,5 @@
 package com.sumian.sd.notification;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
@@ -12,6 +8,9 @@ import com.sumian.sd.notification.bean.QueryNotificationResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import retrofit2.Call;
 
 /**

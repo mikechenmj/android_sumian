@@ -2,10 +2,10 @@ package com.sumian.sd.service.cbti.activity
 
 import android.app.Activity
 import android.content.Intent
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.base.BaseRecyclerAdapter

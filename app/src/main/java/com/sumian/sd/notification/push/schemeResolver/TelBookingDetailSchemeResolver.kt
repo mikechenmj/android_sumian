@@ -3,7 +3,6 @@ package com.sumian.sd.notification.push.schemeResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.sd.service.diary.DiaryEvaluationListActivity
 import com.sumian.sd.service.tel.activity.TelBookingDetailActivity
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")

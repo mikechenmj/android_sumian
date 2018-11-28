@@ -12,8 +12,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.IBinder;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import android.text.TextPaint;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
@@ -35,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
 /**
  * Created by jzz

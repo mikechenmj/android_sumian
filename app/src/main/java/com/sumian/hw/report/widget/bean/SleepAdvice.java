@@ -1,8 +1,8 @@
 package com.sumian.hw.report.widget.bean;
 
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by jzz

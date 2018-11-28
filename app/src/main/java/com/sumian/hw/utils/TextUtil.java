@@ -1,13 +1,14 @@
 package com.sumian.hw.utils;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 
 import com.sumian.sd.R;
+
+import androidx.annotation.NonNull;
 
 /**
  * <pre>

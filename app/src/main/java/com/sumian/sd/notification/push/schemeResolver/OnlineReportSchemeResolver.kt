@@ -3,7 +3,6 @@ package com.sumian.sd.notification.push.schemeResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.sumian.sd.R
 import com.sumian.sd.onlinereport.OnlineReportDetailActivity
 
 /**

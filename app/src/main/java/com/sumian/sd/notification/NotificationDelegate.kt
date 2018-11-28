@@ -6,7 +6,6 @@ import android.os.Build
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.INotificationDelegate
-import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent

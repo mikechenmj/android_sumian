@@ -1,11 +1,11 @@
 package com.sumian.sd.device.util;
 
-import androidx.annotation.IntDef;
-
 import com.sumian.sd.device.command.BlueCmd;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 /**
  * <pre>

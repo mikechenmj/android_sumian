@@ -3,10 +3,10 @@
 package com.sumian.sd.doctor.doctor
 
 import android.content.Context
-import androidx.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.DrawableRes
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_doctor_service_item.view.*

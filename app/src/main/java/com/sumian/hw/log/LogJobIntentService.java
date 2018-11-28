@@ -2,8 +2,6 @@ package com.sumian.hw.log;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.core.app.JobIntentService;
 import android.util.Log;
 
 import com.alibaba.sdk.android.oss.ClientException;
@@ -29,6 +27,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
 import retrofit2.Call;
 
 /**

@@ -1,18 +1,18 @@
 package com.sumian.sd.device
 
 import android.animation.ObjectAnimator
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.utils.ColorCompatUtil
-import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.R
+import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.device.widget.SyncAnimatorUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_device_manage.*

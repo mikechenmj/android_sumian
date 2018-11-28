@@ -2,7 +2,6 @@ package com.sumian.sd.account.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
@@ -12,6 +11,8 @@ import com.sumian.sd.doctor.bean.Doctor;
 
 import java.io.Serializable;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by jzz

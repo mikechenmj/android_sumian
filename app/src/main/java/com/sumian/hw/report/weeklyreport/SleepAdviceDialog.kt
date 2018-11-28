@@ -1,12 +1,12 @@
 package com.sumian.hw.report.weeklyreport
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import com.sumian.sd.R
+import androidx.appcompat.app.AppCompatDialog
 import com.sumian.hw.report.widget.bean.SleepAdvice
+import com.sumian.sd.R
 
 /**
  * Created by jzz

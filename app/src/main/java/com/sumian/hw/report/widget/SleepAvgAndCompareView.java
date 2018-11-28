@@ -3,9 +3,6 @@ package com.sumian.hw.report.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -15,10 +12,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qmuiteam.qmui.util.QMUISpanHelper;
+import com.sumian.hw.report.widget.text.CountSleepDurationTextView;
 import com.sumian.hw.utils.TextUtil;
 import com.sumian.hw.utils.TimeUtil;
-import com.sumian.hw.report.widget.text.CountSleepDurationTextView;
 import com.sumian.sd.R;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 /**
  * Created by sm

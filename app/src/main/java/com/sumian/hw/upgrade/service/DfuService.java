@@ -2,10 +2,10 @@ package com.sumian.hw.upgrade.service;
 
 import android.app.Activity;
 
-import no.nordicsemi.android.dfu.DfuBaseService;
-
-import com.sumian.sd.BuildConfig;
 import com.sumian.hw.upgrade.activity.DeviceVersionUpgradeActivity;
+import com.sumian.sd.BuildConfig;
+
+import no.nordicsemi.android.dfu.DfuBaseService;
 
 /**
  * Created by jzz

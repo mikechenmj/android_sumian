@@ -8,8 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import androidx.annotation.ColorInt;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -22,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 
 /**
  * Created by jzz

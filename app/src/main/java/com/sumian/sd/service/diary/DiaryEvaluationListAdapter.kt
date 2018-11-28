@@ -2,10 +2,10 @@ package com.sumian.sd.service.diary
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
-import com.sumian.common.utils.TimeUtilV2
 
 /**
  * <pre>

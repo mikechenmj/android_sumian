@@ -7,9 +7,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.net.ConnectivityManagerCompat;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.SPUtils;
@@ -31,6 +28,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.net.ConnectivityManagerCompat;
 
 /**
  * Created by jzz

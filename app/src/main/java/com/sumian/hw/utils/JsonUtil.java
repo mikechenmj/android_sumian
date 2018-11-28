@@ -1,10 +1,10 @@
 package com.sumian.hw.utils;
 
-import androidx.annotation.Nullable;
-
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
+
+import androidx.annotation.Nullable;
 
 /**
  * <pre>

@@ -2,22 +2,23 @@ package com.sumian.sd.notification;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.sumian.common.notification.NotificationUtil;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.common.widget.CommonEmptyView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.notification.bean.Notification;
-import com.sumian.common.notification.NotificationUtil;
 import com.sumian.sd.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class NotificationListActivity extends SdBaseActivity<NotificationListContract.Presenter>

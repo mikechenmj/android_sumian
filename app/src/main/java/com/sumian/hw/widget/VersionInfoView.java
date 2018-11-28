@@ -2,13 +2,14 @@ package com.sumian.hw.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by jzz

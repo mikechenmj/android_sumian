@@ -6,11 +6,12 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.sumian.sd.R;
+
+import androidx.annotation.Nullable;
 
 /**
  * <pre>

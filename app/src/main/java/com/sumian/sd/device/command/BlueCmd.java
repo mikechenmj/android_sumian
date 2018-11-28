@@ -1,6 +1,5 @@
 package com.sumian.sd.device.command;
 
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -12,6 +11,8 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by jzz

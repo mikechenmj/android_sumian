@@ -1,12 +1,12 @@
 package com.sumian.sd.widget.nav
 
 import android.content.Context
-import androidx.annotation.AttrRes
-import androidx.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import androidx.annotation.AttrRes
+import androidx.annotation.DrawableRes
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_nav_tab_item.view.*
 

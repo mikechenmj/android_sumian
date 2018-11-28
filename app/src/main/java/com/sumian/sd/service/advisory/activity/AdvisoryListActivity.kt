@@ -2,8 +2,6 @@ package com.sumian.sd.service.advisory.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R

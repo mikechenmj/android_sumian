@@ -1,17 +1,18 @@
 package com.sumian.sd.account.userProfile;
 
-import androidx.lifecycle.Observer;
-import androidx.annotation.Nullable;
-import com.google.android.material.textfield.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.sumian.sd.R;
 import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.widget.TitleBar;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 
 
 /**

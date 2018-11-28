@@ -1,12 +1,10 @@
 package com.sumian.hw.upgrade.dialog
 
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-
 import com.sumian.hw.widget.BaseDialogFragment
 import com.sumian.sd.R
 

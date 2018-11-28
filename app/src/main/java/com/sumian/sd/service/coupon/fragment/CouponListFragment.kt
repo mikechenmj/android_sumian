@@ -4,12 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
