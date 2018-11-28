@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:id="@+id/ll_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +35,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/ll_progress"
@@ -92,7 +90,7 @@
                         android:id="@+id/tv_on_bed_duration"
                         style="@style/text_t1_16"
                         android:textStyle="bold"
-                        tools:text="@string/on_bed_duration" />
+                        tools:text="6小时15分钟" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -109,7 +107,6 @@
                     android:layout_height="110dp"
                     android:background="@color/white" />
             </FrameLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -230,38 +227,79 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:visibility="visible"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <LinearLayout
-                android:layout_width="@dimen/space_150"
-                android:layout_height="@dimen/space_150"
-                android:layout_marginTop="@dimen/space_40"
-                android:background="@drawable/ring_b1_10dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/tv_no_record_date"
+                <LinearLayout
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:background="@drawable/ring_b1_10dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_no_record_date"
+                        style="@style/text_b3_18"
+                        android:textStyle="bold"
+                        tools:text="4月5日" />
+
+                    <TextView
+                        style="@style/text_t2_14"
+                        android:layout_marginTop="@dimen/space_4"
+                        android:text="@string/no_record_yet" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="0dp" />
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/b3_color"
-                    android:textSize="@dimen/font_18"
-                    tools:text="4月5日" />
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_4"
-                    android:text="@string/no_record_yet"
-                    android:textColor="@color/t2_color"
-                    android:textSize="@dimen/font_14"
-                    android:textStyle="bold" />
+                    <TextView
+                        style="@style/SimpleSleepRecordGreyIconTv"
+                        android:drawableStart="@mipmap/ic_record_icon_clock"
+                        android:text="@string/record_sleep_duration" />
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:text="——"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <View
+                        style="@style/HorizontalDividerLine"
+                        android:layout_marginTop="@dimen/space_15"
+                        android:layout_marginBottom="@dimen/space_15" />
+
+                    <TextView
+                        style="@style/SimpleSleepRecordGreyIconTv"
+                        android:layout_marginBottom="5dp"
+                        android:drawableStart="@mipmap/ic_record_icon_sleep"
+                        android:text="@string/on_bed_duration" />
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:text="——"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space_20"
+                style="@style/text_t2_14"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:text="@string/no_sleep_record_hint" />
 
             <TextView

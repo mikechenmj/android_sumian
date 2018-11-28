@@ -46,6 +46,7 @@
     <color name="sleep_record_progress_middle_end">@color/b4_color</color>
     <color name="sleep_record_progress_low_start">#F2A291</color>
     <color name="sleep_record_progress_low_end">@color/t4_color</color>
+    <color name="sleep_status_wake">#F5D467</color>
 
     <!-- white opacity-->
     <color name="white_50">#7FFFFFFF</color>

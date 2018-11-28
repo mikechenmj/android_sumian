@@ -46,6 +46,7 @@ object CommonAudioPlayer {
             play()
         }
         mStateListener?.onPrepared()
+        updateProgress()
     }
 
     private fun startProgressTimer() {
@@ -57,11 +58,15 @@ object CommonAudioPlayer {
                     return
                 }
                 SumianExecutor.runOnUiThread({
-                    mStateListener?.onProgressChange(mMediaPlayer?.currentPosition
-                            ?: 0, mMediaPlayer?.duration ?: 0)
+                    updateProgress()
                 })
             }
         }, 0, PROGRESS_CHANGE_CALL_DURATION)
+    }
+
+    private fun updateProgress() {
+        mStateListener?.onProgressChange(mMediaPlayer?.currentPosition
+                ?: 0, mMediaPlayer?.duration ?: 0)
     }
 
     fun isPlaying(): Boolean {
