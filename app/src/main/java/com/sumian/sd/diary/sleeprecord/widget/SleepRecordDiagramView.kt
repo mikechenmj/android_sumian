@@ -30,7 +30,7 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     private var nwc = 0    // night wake count
     private var tnwd = 0L   // total night wake duration
     private var tobd = 0L   // total on bad duration
-    private val barColorNotSleep = Color.parseColor("#52CCA3")
+    private val barColorNotSleep = ColorCompatUtil.getColor(context, R.color.sleep_status_wake)
     private val barColorSleep = ColorCompatUtil.getColor(context, R.color.b3_color)
     private var wdr = 0f // wdr = width / tobd
     private var lineWidth = context.resources.getDimension(R.dimen.space_1)
@@ -43,6 +43,9 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     private val nwkBitmap: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.record_icon_workschedule)
     private val iconBottomMargin = context.resources.getDimension(R.dimen.space_5)
     private val dayThresholdTime = TimeUtilV2.parseTimeStr("18:00")
+    private var textWidth = 0f
+    private var textPadding = 0f
+    private var nwIconWidth = 0f // night wake icon width
 
     val iconSize = context.resources.getDimension(R.dimen.space_15)
 
@@ -55,7 +58,9 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
         paint.color = Color.GREEN
         paint.style = Paint.Style.FILL
         paint.textSize = textSize
-
+        textWidth = paint.measureText("00:00 睡着")
+        textPadding = paint.measureText("  ")
+        nwIconWidth = context.resources.getDimension(R.dimen.space_15)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -66,38 +71,56 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     }
 
     override fun onDraw(canvas: Canvas) {
-        // draw bar
+        val x0 = getXByTime(t0)
+        val x1 = getXByTime(t1)
+        val x2 = getXByTime(t2)
+        val x3 = getXByTime(t3)
+
+        // draw bar and icon
         drawRect(canvas, 0f, width, barColorNotSleep)
         if (nwc > 0) {
             val snwd = tnwd / nwc   // single night wake duration
+            val snww = durationToWidth(snwd) // single sleep width
             val ssd = (t2 - t1 - tnwd) / (nwc + 1) // single sleep duration
+            val ssw = durationToWidth(ssd) // single sleep width
+            val showNwIcon = snww + ssw > nwIconWidth
             var ssx: Float // sleep start x
             var sex: Float // sleep end x
             var isx: Float // icon start x
             for (i in 0..nwc) {
+                // draw bar
                 ssx = durationToWidth(t1 - t0 + i * (ssd + snwd))
                 sex = ssx + durationToWidth(ssd)
                 drawRect(canvas, ssx, sex, barColorSleep)
-                if (i != nwc) {
+                // draw icon
+                if (i != nwc && showNwIcon) {
                     isx = sex + durationToWidth(snwd) / 2 - iconSize / 2
                     drawIcon(canvas, isx)
                 }
             }
         } else {
-            drawRect(canvas, getXByTime(t1), getXByTime(t2), barColorSleep)
+            drawRect(canvas, x1, x2, barColorSleep)
         }
 
         // draw line
-        drawLine(canvas, getXByTime(t0), true)
-        drawLine(canvas, getXByTime(t1), false)
-        drawLine(canvas, getXByTime(t2), false)
-        drawLine(canvas, getXByTime(t3) - lineWidth, true)
+        drawLine(canvas, x0, true)
+        drawLine(canvas, x1, false)
+        drawLine(canvas, x2, false)
+        drawLine(canvas, x3 - lineWidth, true)
 
         // draw text
-        drawText(canvas, "${timeToString(t0)} 睡觉", getXByTime(t0), true, false)
-        drawText(canvas, "${timeToString(t1)} 睡着", getXByTime(t1), false, false)
-        drawText(canvas, "${timeToString(t2)} 醒来", getXByTime(t2), false, true)
-        drawText(canvas, "${timeToString(t3)} 起床", getXByTime(t3), true, true)
+        drawText(canvas, "${timeToString(t0)} 睡觉", x0, true, false)
+        drawText(canvas, "${timeToString(t3)} 起床", x3, true, true)
+        val doubleTextWidth = textWidth * 2 + textPadding
+        if (x2 - x1 > doubleTextWidth) {
+            drawText(canvas, "${timeToString(t1)} 睡着", x1, false, false)
+            drawText(canvas, "${timeToString(t2)} 醒来", x2, false, true)
+        } else {
+            val combineText = "${timeToString(t1)} 睡着  ${timeToString(t2)} 醒来"
+            val x = if (x1 < x3 - doubleTextWidth) x1 else x3
+            val orientation = x1 >= x3 - doubleTextWidth
+            drawText(canvas, combineText, x, false, orientation)
+        }
     }
 
     private fun getXByTime(time: Long): Float {
