@@ -6,13 +6,13 @@ import android.view.View
 import android.widget.LinearLayout
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.image.ImageLoader
+import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.sd.R
 import com.sumian.sd.doctor.activity.DoctorServiceWebActivity
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.kefu.KefuManager
 import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
-import com.sumian.sd.widget.refresh.SumianRefreshLayout
 import kotlinx.android.synthetic.main.lay_doctor_detail_view.view.*
 import java.util.*
 
@@ -21,7 +21,7 @@ import java.util.*
  * on 2018/5/30 17:36
  * desc:医生详情
  */
-class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : SumianRefreshLayout(context, attrs) {
+class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : SumianSwipeRefreshLayout(context, attrs) {
 
     init {
         initView(context)

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:text="@string/firmware_update_notice_hint" />
 
-    <com.sumian.hw.widget.refresh.BlueRefreshView
+    <com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -97,7 +97,7 @@
 
         </LinearLayout>
 
-    </com.sumian.hw.widget.refresh.BlueRefreshView>
+    </com.sumian.common.widget.refresh.SumianSwipeRefreshLayout>
 
 
 </LinearLayout>

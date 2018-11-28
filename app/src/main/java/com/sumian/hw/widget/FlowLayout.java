@@ -15,14 +15,13 @@ import com.sumian.sd.R;
  * {@link #mVerticalSpacing 每一行之间的间距}
  * {@link #mHorizontalSpacing 水平方向控件之间的间距}
  */
+@SuppressWarnings("ALL")
 public class FlowLayout extends ViewGroup {
     private float mVerticalSpacing;
     private float mHorizontalSpacing;
 
-
     public FlowLayout(Context context) {
-        super(context);
-        init(null, 0, 0);
+        this(context, null);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
@@ -79,10 +78,10 @@ public class FlowLayout extends ViewGroup {
             View childView = getChildAt(i);
             ViewGroup.LayoutParams childLayoutParams = childView.getLayoutParams();
             childView.measure(
-                getChildMeasureSpec(widthMeasureSpec, paddingLeft + paddingRight,
-                    childLayoutParams.width),
-                getChildMeasureSpec(heightMeasureSpec, paddingTop + paddingBottom,
-                    childLayoutParams.height));
+                    getChildMeasureSpec(widthMeasureSpec, paddingLeft + paddingRight,
+                            childLayoutParams.width),
+                    getChildMeasureSpec(heightMeasureSpec, paddingTop + paddingBottom,
+                            childLayoutParams.height));
             int childWidth = childView.getMeasuredWidth();
             int childHeight = childView.getMeasuredHeight();
             lineHeight = Math.max(childHeight, lineHeight);

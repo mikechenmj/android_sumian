@@ -3,11 +3,11 @@ package com.sumian.sd.diary.sleeprecord;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.utils.TimeUtilV2;
+import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
@@ -16,10 +16,10 @@ import com.sumian.sd.diary.sleeprecord.calendar.custom.CalendarPopup;
 import com.sumian.sd.diary.sleeprecord.widget.SleepRecordView;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.widget.dialog.SumianAlertDialogV2;
-import com.sumian.sd.widget.refresh.SumianRefreshLayout;
 
 import org.jetbrains.annotations.NotNull;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 
 @SuppressWarnings("ALL")
@@ -32,7 +32,7 @@ public class SleepDiaryFragment extends SdBaseFragment {
     SleepRecordView mSleepRecordView;
     private long mSelectedTime = System.currentTimeMillis();
     private CalendarPopup mCalendarPopup;
-    private SumianRefreshLayout mRefreshLayout;
+    private SumianSwipeRefreshLayout mRefreshLayout;
 
     public static SleepDiaryFragment newInstance(long time) {
         Bundle bundle = new Bundle();

@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_relaxation_list.*
  * desc   :
  * version: 1.0
  */
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class RelaxationListActivity : BasePresenterActivity<IPresenter>() {
     private val mAdapter = ItemAdapter()
 
