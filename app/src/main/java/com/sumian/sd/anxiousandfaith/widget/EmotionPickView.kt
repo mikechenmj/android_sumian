@@ -3,10 +3,10 @@
 package com.sumian.sd.anxiousandfaith.widget
 
 import android.content.Context
-import androidx.recyclerview.widget.GridLayoutManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.utils.ColorCompatUtil

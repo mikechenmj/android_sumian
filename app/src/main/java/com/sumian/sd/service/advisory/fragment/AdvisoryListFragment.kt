@@ -1,10 +1,8 @@
 package com.sumian.sd.service.advisory.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R

@@ -1,8 +1,6 @@
 package com.sumian.sd.service.coupon.fragment
 
 import android.content.Intent
-import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.View

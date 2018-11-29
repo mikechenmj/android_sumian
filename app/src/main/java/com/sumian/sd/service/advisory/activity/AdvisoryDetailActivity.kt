@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity

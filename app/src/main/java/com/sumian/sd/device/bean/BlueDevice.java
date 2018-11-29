@@ -1,12 +1,13 @@
 package com.sumian.sd.device.bean;
 
 import android.bluetooth.BluetoothAdapter;
-import androidx.annotation.NonNull;
 
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 
 import java.io.Serializable;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by sm

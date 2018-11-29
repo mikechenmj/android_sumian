@@ -3,7 +3,6 @@ package com.sumian.sd.scale;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -14,6 +13,8 @@ import com.sumian.sd.event.EventBusUtil;
 import com.sumian.sd.event.ScaleFinishFillingEvent;
 import com.sumian.sd.event.ScaleFinishFillingEvent2;
 import com.sumian.sd.h5.H5Uri;
+
+import androidx.annotation.NonNull;
 
 public class ScaleDetailActivity extends SdBaseWebViewActivity {
 

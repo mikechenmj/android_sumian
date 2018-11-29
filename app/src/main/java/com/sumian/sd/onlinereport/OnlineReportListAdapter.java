@@ -1,17 +1,18 @@
 package com.sumian.sd.onlinereport;
 
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sumian.sd.R;
 import com.sumian.common.utils.TimeUtilV2;
+import com.sumian.sd.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /**
  * <pre>

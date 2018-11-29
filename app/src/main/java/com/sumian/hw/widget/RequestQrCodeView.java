@@ -3,8 +3,6 @@ package com.sumian.hw.widget;
 import android.Manifest;
 import android.content.Context;
 import android.os.Vibrator;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -14,6 +12,8 @@ import com.sumian.common.helper.ToastHelper;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zbar.ZBarView;
 import pub.devrel.easypermissions.AfterPermissionGranted;

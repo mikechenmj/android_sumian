@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.common.h5.bean.SBridgeResult;
@@ -21,6 +20,8 @@ import com.sumian.sd.main.MainActivity;
 import com.sumian.sd.utils.JsonUtil;
 
 import org.jetbrains.annotations.NotNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by sm
@@ -70,7 +71,8 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
     protected String getUrlContentPart() {
         Uri argUri = Uri.parse(mArgUrl);
         String originUrl = H5Uri.BIND_DOCTOR;
-        return originUrl.replace("{id}", argUri.getQueryParameter("id"));
+        //https://sd-dev.sumian.com/doctor/null?url=wxxxxxxxxxxx
+        return originUrl.replace("{url}", argUri.toString());
     }
 
     @Override
@@ -102,13 +104,13 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         if (mIsFromRecord) {
             DoctorServiceWebActivity.show(this, mDoctorService, true);
         } else {
-            MainActivity.Companion.launch(MainActivity.TAB_2, null);
+            MainActivity.launch(MainActivity.TAB_2, null);
         }
     }
 
     @Override
     public void onBindDoctorFailed(@NotNull String message) {
-       showCenterToast(message);
+        showCenterToast(message);
     }
 
     @Override

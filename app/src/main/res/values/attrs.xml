@@ -145,12 +145,6 @@
         <attr name="textSize" format="dimension" />
     </declare-styleable>
 
-
-    <declare-styleable name="FlowLayout">
-        <attr name="horizontalSpace" format="dimension" />
-        <attr name="verticalSpace" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="TouchDailySleepHistogramView">
         <attr name="tdshv_label_text_size" format="dimension|reference" />
         <attr name="tdshv_label_text_color" format="color|reference" />
@@ -238,11 +232,6 @@
 
     <declare-styleable name="TabIndicatorItemView">
         <attr name="enable_tab" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="BlueRefreshView">
-        <attr name="brv_progress_color" format="color|reference" />
-        <attr name="brv_progress_bg_color" format="reference|color" />
     </declare-styleable>
 
 </resources>

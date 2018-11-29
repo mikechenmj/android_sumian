@@ -1,11 +1,11 @@
 package com.sumian.sd.pay.dialog
 
 import android.content.Context
-import androidx.annotation.LayoutRes
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.LayoutRes
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog
 import com.sumian.sd.R
 import com.sumian.sd.pay.contract.PayContract

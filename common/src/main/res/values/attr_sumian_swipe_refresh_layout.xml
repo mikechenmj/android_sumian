@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SumianSwipeRefreshLayout">
+        <attr name="ssrl_progress_color" format="color|reference" />
+        <attr name="ssrl_progress_bg_color" format="reference|color" />
+    </declare-styleable>
+
+</resources>

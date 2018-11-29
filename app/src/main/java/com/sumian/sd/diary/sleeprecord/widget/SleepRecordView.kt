@@ -27,6 +27,7 @@ import java.util.*
  * version: 1.0
 </pre> *
  */
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class SleepRecordView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
     private var mSleepRecord: SleepRecord? = null
     private var mTime: Long = 0

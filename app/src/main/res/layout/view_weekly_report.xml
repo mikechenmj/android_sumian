@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:skin="http://schemas.android.com/android/skin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -31,15 +30,12 @@
                 app:eog_color="@color/g2_color_day"
                 app:label_text_color="@color/t2_color_day"
                 app:light_color="@color/g2_color_day"
-                app:sober_color="@color/g3_color_day"
-                skin:enable="true" />
+                app:sober_color="@color/g3_color_day" />
 
             <com.sumian.hw.report.widget.ReportIndicatorRuleView
-                layout="@layout/hw_lay_report_sleep_rule"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_26"
-                android:layout_marginTop="@dimen/space_16"
-                skin:enable="true" />
+                android:layout_marginTop="@dimen/space_16" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -50,8 +46,7 @@
                 android:layout_marginBottom="@dimen/space_10"
                 app:cardBackgroundColor="@color/b2_color_day"
                 app:cardCornerRadius="@dimen/space_4"
-                app:cardElevation="0dp"
-                skin:enable="true">
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,8 +60,7 @@
                         android:layout_marginTop="@dimen/space_20"
                         app:compare_label_text="@string/compare_week_hint"
                         app:label_icon="@drawable/ic_home_sleep_time_day"
-                        app:label_text="@string/week_sleep_average_duration"
-                        skin:enable="true" />
+                        app:label_text="@string/week_sleep_average_duration" />
 
                     <com.sumian.hw.report.widget.SleepAvgAndCompareView
                         android:id="@+id/daily_sleep_light_avg_compare_view"
@@ -75,8 +69,7 @@
                         android:layout_marginTop="@dimen/space_20"
                         app:compare_label_text="@string/compare_week_hint"
                         app:label_icon="@drawable/ic_report_light_sleep_day"
-                        app:label_text="@string/week_sleep_light_average_duration"
-                        skin:enable="true" />
+                        app:label_text="@string/week_sleep_light_average_duration" />
 
                     <com.sumian.hw.report.widget.SleepAvgAndCompareView
                         android:id="@+id/daily_sleep_deep_avg_compare_view"
@@ -85,8 +78,7 @@
                         android:layout_marginTop="@dimen/space_20"
                         app:compare_label_text="@string/compare_week_hint"
                         app:label_icon="@drawable/ic_report_deep_sleep_day"
-                        app:label_text="@string/week_sleep_deep_average_duration"
-                        skin:enable="true" />
+                        app:label_text="@string/week_sleep_deep_average_duration" />
 
                     <com.sumian.hw.report.widget.SleepAvgAndCompareView
                         android:id="@+id/daily_sleep_awake_avg_compare_view"
@@ -97,8 +89,7 @@
                         app:compare_label_text="@string/compare_week_hint"
                         app:is_gone_divider="true"
                         app:label_icon="@drawable/ic_report_awake_day"
-                        app:label_text="@string/week_sleep_sober_average_duration"
-                        skin:enable="true" />
+                        app:label_text="@string/week_sleep_sober_average_duration" />
 
                 </LinearLayout>
 

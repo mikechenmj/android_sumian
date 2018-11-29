@@ -2,12 +2,11 @@
 
 package com.sumian.sd.main
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
@@ -15,6 +14,7 @@ import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
+import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.leancloud.HwLeanCloudHelper
@@ -39,7 +39,6 @@ import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.tab.DoctorFragment
 import com.sumian.sd.tab.MeFragment
-import com.sumian.common.notification.NotificationUtil
 import com.sumian.sd.utils.StatusBarUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*

@@ -2,8 +2,6 @@ package com.sumian.sd.diary.sleeprecord;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -13,15 +11,18 @@ import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseWebViewActivity;
+import com.sumian.sd.diary.sleeprecord.bean.FillSleepRecordResponse;
+import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.event.EventBusUtil;
 import com.sumian.sd.event.SleepRecordFilledEvent;
 import com.sumian.sd.h5.H5Uri;
-import com.sumian.sd.diary.sleeprecord.bean.FillSleepRecordResponse;
-import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.utils.JsonUtil;
 import com.sumian.sd.utils.TimeUtil;
 
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 /**
  * <pre>

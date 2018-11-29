@@ -24,7 +24,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            //设置支持的SO库架构
+            //设置支持的SO库架构  //默认 x5 只支持32位 所以只设置这一个架构，很无奈
             abiFilters 'armeabi-v7a'
         }
 

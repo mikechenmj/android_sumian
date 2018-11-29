@@ -3,7 +3,6 @@ package com.sumian.sd.service.cbti.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.common.h5.handler.SBridgeHandler

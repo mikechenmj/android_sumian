@@ -2,7 +2,6 @@ package com.sumian.sd.device
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import androidx.fragment.app.Fragment
 
 /**
  * @author : Zhan Xuzhao

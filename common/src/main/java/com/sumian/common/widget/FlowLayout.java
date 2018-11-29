@@ -18,6 +18,7 @@ import com.sumian.common.R;
  * @author qiujuer Email:qiujuer@live.cn
  * @version 1.0.0
  */
+@SuppressWarnings("ALL")
 public class FlowLayout extends ViewGroup {
     private float mVerticalSpacing;
     private float mHorizontalSpacing;

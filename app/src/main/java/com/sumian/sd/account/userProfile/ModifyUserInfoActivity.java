@@ -2,18 +2,19 @@ package com.sumian.sd.account.userProfile;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.StringRes;
-import com.google.android.material.textfield.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.sumian.sd.R;
 import com.sumian.sd.account.config.SumianConfig;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.utils.EditTextUtil;
 import com.sumian.sd.widget.TitleBar;
+
+import androidx.annotation.StringRes;
 
 /**
  * Created by sm

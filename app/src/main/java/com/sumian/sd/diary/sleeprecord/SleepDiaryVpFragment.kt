@@ -1,11 +1,8 @@
 package com.sumian.sd.diary.sleeprecord
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import android.text.format.DateUtils
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2

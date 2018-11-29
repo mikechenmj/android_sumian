@@ -4,9 +4,6 @@ package com.sumian.sd.widget.divider
 
 import android.content.Context
 import android.graphics.Color
-import androidx.annotation.ColorInt
-import androidx.annotation.Dimension
-import androidx.annotation.DrawableRes
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -16,6 +13,9 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
+import androidx.annotation.DrawableRes
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_setting_divider_item.view.*
 

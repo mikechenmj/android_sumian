@@ -1,12 +1,7 @@
 package com.sumian.sd.account.model;
 
 import android.app.Application;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import android.os.Looper;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -17,6 +12,12 @@ import com.sumian.sd.account.bean.Token;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.doctor.bean.Doctor;
 import com.sumian.sd.utils.JsonUtil;
+
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by jzz

@@ -1,10 +1,10 @@
 package com.sumian.sd.homepage
 
 import android.app.Activity
-import androidx.lifecycle.Observer
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.image.ImageLoader

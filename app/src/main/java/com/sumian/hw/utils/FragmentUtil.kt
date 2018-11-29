@@ -1,8 +1,6 @@
 package com.sumian.hw.utils
 
 import androidx.annotation.IdRes
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.sumian.sd.main.OnEnterListener
 
 /**

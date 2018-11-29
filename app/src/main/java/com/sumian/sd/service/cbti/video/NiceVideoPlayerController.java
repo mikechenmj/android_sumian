@@ -1,7 +1,6 @@
 package com.sumian.sd.service.cbti.video;
 
 import android.content.Context;
-import androidx.annotation.DrawableRes;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -10,6 +9,8 @@ import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import androidx.annotation.DrawableRes;
 
 /**
  * Created by XiaoJianjun on 2017/6/21.

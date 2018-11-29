@@ -7,8 +7,8 @@ import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.hw.base.HwBaseFragment;
-import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.qrcode.activity.QrCodeActivity;
+import com.sumian.hw.utils.UiUtil;
 import com.sumian.sd.R;
 
 @SuppressWarnings("ConstantConditions")

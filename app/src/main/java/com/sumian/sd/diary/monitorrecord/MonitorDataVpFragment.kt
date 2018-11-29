@@ -1,13 +1,10 @@
 package com.sumian.sd.diary.monitorrecord
 
-import androidx.lifecycle.Observer
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import android.text.format.DateUtils
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
 import com.blankj.utilcode.util.LogUtils

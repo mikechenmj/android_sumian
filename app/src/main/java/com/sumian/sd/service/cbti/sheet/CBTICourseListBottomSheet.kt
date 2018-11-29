@@ -2,7 +2,6 @@ package com.sumian.sd.service.cbti.sheet
 
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -108,8 +107,8 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
                     val viewHolder = CourseListAdapter.ViewHolder(LayoutInflater.from(context).inflate(R.layout.lay_item_cbti_lesson_item, flow_layout, false))
                     courses[position].current_course = true
                     viewHolder.initView(lesson)
-                    viewHolder.itemView?.tag = index
-                    viewHolder.itemView?.setOnClickListener {
+                    viewHolder.itemView.tag = index
+                    viewHolder.itemView.setOnClickListener {
                         val p = it.tag as Int
                         if (position == p) {
                             return@setOnClickListener

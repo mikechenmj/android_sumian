@@ -3,7 +3,6 @@ package com.sumian.sd.h5;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.h5.bean.H5PayloadData;
@@ -12,6 +11,8 @@ import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 public class SimpleWebActivity extends SdBaseWebViewActivity {
 

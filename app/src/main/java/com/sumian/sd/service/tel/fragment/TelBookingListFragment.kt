@@ -1,14 +1,13 @@
 package com.sumian.sd.service.tel.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Gravity
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.service.tel.activity.TelBookingDetailActivity
@@ -17,7 +16,6 @@ import com.sumian.sd.service.tel.adpater.TelBookingListAdapter
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingListContract
 import com.sumian.sd.service.tel.presenter.TelBookingListPresenter
-import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
 
 /**

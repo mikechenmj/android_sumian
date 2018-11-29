@@ -1,9 +1,9 @@
 package com.sumian.hw.report.widget
 
 import android.content.Context
-import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.AttributeSet
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.hw_lay_sleep_duration_view.view.*
 

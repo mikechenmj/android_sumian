@@ -4,11 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.cardview.widget.CardView;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -21,6 +16,12 @@ import com.sumian.sd.R;
 import com.sumian.sd.widget.dialog.theme.ITheme;
 import com.sumian.sd.widget.dialog.theme.LightTheme;
 import com.sumian.sd.widget.dialog.theme.ThemeFactory;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.cardview.widget.CardView;
 
 /**
  * <pre>

@@ -1,8 +1,6 @@
 package com.sumian.sd.device.widget
 
 import android.animation.ObjectAnimator
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +8,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.view_device_card.view.*
  * desc   :
  * version: 1.0
  */
+@Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : FrameLayout(context, attributeSet) {
 
     private var mRotateAnimator: ObjectAnimator? = null
@@ -149,7 +150,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
     }
 
     private fun updateUI(isBluetoothEnable: Boolean, monitor: BlueDevice?) {
-        switchDeviceUI(monitor!= null && isBluetoothEnable && monitor.status == BlueDevice.STATUS_CONNECTED)
+        switchDeviceUI(monitor != null && isBluetoothEnable && monitor.status == BlueDevice.STATUS_CONNECTED)
         if (monitor == null) {
             updateNoDeviceUI(R.drawable.ic_home_icon_adddevice, R.string.add_device, R.string.you_do_not_bind_device_click_add)
         } else {

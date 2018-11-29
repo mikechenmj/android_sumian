@@ -4,7 +4,6 @@ import android.text.TextUtils
 import com.sumian.common.utils.StreamUtil
 import com.sumian.sd.app.App
 import java.io.*
-import java.lang.StringBuilder
 
 /**
  * <pre>

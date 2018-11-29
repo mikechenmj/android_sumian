@@ -3,7 +3,6 @@ package com.sumian.hw.upgrade.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,13 +10,13 @@ import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BasePresenterActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
+import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionContract;
 import com.sumian.hw.upgrade.model.VersionModel;
 import com.sumian.hw.upgrade.presenter.DeviceVersionNoticePresenter;
 import com.sumian.hw.utils.UiUtil;
 import com.sumian.hw.widget.VersionInfoView;
-import com.sumian.hw.widget.refresh.BlueRefreshView;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -25,6 +24,8 @@ import com.sumian.sd.device.DeviceManager;
 import com.sumian.sd.network.response.AppUpgradeInfo;
 
 import java.util.Locale;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Created by jzz
@@ -36,7 +37,7 @@ import java.util.Locale;
 public class DeviceVersionNoticeActivity extends BasePresenterActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
         TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
 
-    private BlueRefreshView mRefresh;
+    private SumianSwipeRefreshLayout mRefresh;
     private TextView mTvAppVersionName;
     private TextView mTvMonitorVersionName;
     private TextView mTvSleepyVersionName;

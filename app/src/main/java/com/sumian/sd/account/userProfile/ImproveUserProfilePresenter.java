@@ -1,7 +1,5 @@
 package com.sumian.sd.account.userProfile;
 
-import androidx.annotation.NonNull;
-
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.account.bean.UserInfo;
 import com.sumian.sd.app.AppManager;
@@ -12,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 
 /**

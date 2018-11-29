@@ -3,14 +3,15 @@ package com.sumian.sd.service.cbti.video;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ContextThemeWrapper;
 import android.util.TypedValue;
 import android.view.WindowManager;
 
 import java.util.Formatter;
 import java.util.Locale;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 
 /**
  * Created by XiaoJianjun on 2017/5/8.

@@ -1,9 +1,6 @@
 package com.sumian.sd.diary.sleeprecord.bean
 
 import com.sumian.common.utils.TimeUtilV2
-import java.lang.Exception
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 /**
  * <pre>

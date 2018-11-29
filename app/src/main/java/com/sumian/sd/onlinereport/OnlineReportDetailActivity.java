@@ -2,7 +2,6 @@ package com.sumian.sd.onlinereport;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
@@ -14,6 +13,8 @@ import com.sumian.sd.main.MainActivity;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 /**
  * <pre>

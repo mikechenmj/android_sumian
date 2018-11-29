@@ -1,11 +1,11 @@
 package com.sumian.sd.doctor.doctor
 
 import android.content.Context
-import androidx.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.annotation.DrawableRes
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.R
 import com.sumian.sd.doctor.bean.DoctorService

@@ -33,8 +33,8 @@
             android:layout_marginLeft="@dimen/space_20"
             android:layout_marginRight="@dimen/space_20"
             android:orientation="horizontal"
-            app:horizontalSpace="@dimen/space_6"
-            app:verticalSpace="@dimen/space_6" />
+            app:sd_HorizontalSpace="@dimen/space_6"
+            app:sd_VerticalSpace="@dimen/space_6" />
 
         <TextView
             android:id="@+id/tv_submit"

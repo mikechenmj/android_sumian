@@ -1,8 +1,7 @@
 package com.sumian.sd.diary
 
-import androidx.lifecycle.Observer
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.lifecycle.Observer
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.log.LogManager

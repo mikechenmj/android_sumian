@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.sumian.hw.report.weeklyreport.SleepAdviceDialog
-import com.sumian.sd.R
 import com.sumian.hw.report.weeklyreport.bean.SleepDurationReport
+import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_sleep_data_less.view.*
 import kotlinx.android.synthetic.main.view_weekly_report.view.*
 

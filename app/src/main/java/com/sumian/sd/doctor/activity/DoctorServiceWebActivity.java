@@ -3,8 +3,6 @@ package com.sumian.sd.doctor.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.gson.reflect.TypeToken;
 import com.sumian.common.h5.bean.SBridgeResult;
@@ -22,6 +20,9 @@ import com.sumian.sd.service.tel.activity.TelBookingPublishActivity;
 import com.sumian.sd.utils.JsonUtil;
 
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * Created by sm

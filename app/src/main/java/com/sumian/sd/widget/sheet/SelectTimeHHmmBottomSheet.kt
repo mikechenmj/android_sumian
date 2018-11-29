@@ -1,13 +1,10 @@
 package com.sumian.sd.widget.sheet
 
 import android.content.Context
+import android.view.LayoutInflater
 import androidx.annotation.StringRes
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import android.view.LayoutInflater
-import com.blankj.utilcode.util.SnackbarUtils.dismiss
 import com.sumian.sd.R
-import com.sumian.sd.R.id.*
-import com.umeng.socialize.utils.DeviceConfig.context
 import kotlinx.android.synthetic.main.bottom_sheet_select_time_hh_mm.*
 
 /**

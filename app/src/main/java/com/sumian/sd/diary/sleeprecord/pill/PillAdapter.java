@@ -1,13 +1,14 @@
 package com.sumian.sd.diary.sleeprecord.pill;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.sumian.sd.diary.sleeprecord.PillVH;
 import com.sumian.sd.diary.sleeprecord.bean.SleepPill;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * <pre>

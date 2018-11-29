@@ -1,9 +1,9 @@
 package com.sumian.sd.tab
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.image.ImageLoader

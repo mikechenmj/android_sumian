@@ -1,8 +1,6 @@
 package com.sumian.sd.widget;
 
 import android.content.Context;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sumian.sd.R;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StringRes;
 
 /**
  * <pre>

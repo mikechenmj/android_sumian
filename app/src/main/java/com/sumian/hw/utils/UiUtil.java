@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Typeface;
 import android.net.Uri;
-import androidx.annotation.ColorRes;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -24,6 +23,8 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 
 import java.util.List;
+
+import androidx.annotation.ColorRes;
 
 /**
  * Created by jzz

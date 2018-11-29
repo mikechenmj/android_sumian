@@ -1,9 +1,8 @@
 package com.sumian.sd.tab
 
-import androidx.lifecycle.Observer
 import android.graphics.Color
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.View
+import androidx.lifecycle.Observer
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.sd.R
@@ -15,7 +14,6 @@ import com.sumian.sd.doctor.contract.DoctorContract
 import com.sumian.sd.doctor.presenter.DoctorPresenter
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.notification.NotificationListActivity
-import com.sumian.sd.utils.StatusBarUtil
 import com.sumian.sd.widget.RequestScanQrCodeView
 import kotlinx.android.synthetic.main.fragment_tab_doctor.*
 

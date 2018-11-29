@@ -1,7 +1,6 @@
 package com.sumian.hw.qrcode.fragment;
 
 import android.annotation.SuppressLint;
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -14,6 +13,8 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("ConstantConditions")
 public class QrCodeFragment extends HwBaseFragment implements View.OnClickListener, RequestQrCodeView.OnShowQrCodeCallback {

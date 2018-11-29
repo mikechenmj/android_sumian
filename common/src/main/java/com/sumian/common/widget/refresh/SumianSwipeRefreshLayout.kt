@@ -1,9 +1,8 @@
 package com.sumian.common.widget.refresh
 
 import android.content.Context
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.util.AttributeSet
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sumian.common.R
 
 
@@ -13,15 +12,22 @@ import com.sumian.common.R
  * desc:
  */
 
-class SumianSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : androidx.swiperefreshlayout.widget.SwipeRefreshLayout(context, attrs) {
+@Suppress("DEPRECATION")
+open class SumianSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : SwipeRefreshLayout(context, attrs) {
+
     private val mDismissRunnable = Runnable { this.hideRefreshAnim() }
 
     init {
-        initView()
+        initView(attrs)
     }
 
-    private fun initView() {
-        this.setColorSchemeResources(R.color.b3_color, R.color.b7_color)
+    private fun initView(attrs: AttributeSet?) {
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.SumianSwipeRefreshLayout)
+        val progressColor = attributes.getColor(R.styleable.SumianSwipeRefreshLayout_ssrl_progress_color, resources.getColor(R.color.b3_color))
+        val progressBgColor = attributes.getColor(R.styleable.SumianSwipeRefreshLayout_ssrl_progress_bg_color, resources.getColor(R.color.b2_color))
+        attributes.recycle()
+        setColorSchemeColors(progressColor)
+        setProgressBackgroundColorSchemeColor(progressBgColor)
     }
 
     fun showRefreshAnim() {
@@ -37,6 +43,6 @@ class SumianSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs
 
     companion object {
 
-        private val DELAY_MILLS = 6 * 1000L
+        private const val DELAY_MILLS = 6 * 1000L
     }
 }

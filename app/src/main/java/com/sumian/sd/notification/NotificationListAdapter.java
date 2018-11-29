@@ -1,7 +1,6 @@
 package com.sumian.sd.notification;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,6 +11,8 @@ import com.sumian.sd.notification.bean.Data;
 import com.sumian.sd.notification.bean.Notification;
 
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /**
  * <pre>

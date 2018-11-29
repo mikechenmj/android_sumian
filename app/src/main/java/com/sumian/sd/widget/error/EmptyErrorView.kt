@@ -1,14 +1,14 @@
 package com.sumian.sd.widget.error
 
 import android.content.Context
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R
 import com.sumian.sd.main.MainActivity

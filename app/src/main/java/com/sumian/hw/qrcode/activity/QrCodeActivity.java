@@ -3,14 +3,10 @@ package com.sumian.hw.qrcode.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.material.tabs.TabLayout;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BasePresenterActivity;
@@ -20,6 +16,11 @@ import com.sumian.hw.qrcode.fragment.QrCodeFragment;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.command.BlueCmd;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 @SuppressWarnings("ConstantConditions")
 public class QrCodeActivity extends BasePresenterActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
