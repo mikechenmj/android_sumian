@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -140,16 +139,16 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
             return;
         }
 
-        Uri uri = Uri.parse(qrCode);
-
-        String uriQuery = Uri.decode(uri.getQueryParameter("scheme"));
-        if (TextUtils.isEmpty(uriQuery)) {
-            showCenterToast("无效的二维码，请重新扫描...");
-            mZXingView.beginSpot();
-            Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
-            return;
-        }
-        DoctorWebActivity.show(this, uriQuery, mDoctorService, mIsFromRecord);
+        //Uri uri = Uri.parse(qrCode);
+        //Log.e(TAG, "onShowQrCode: uri=" + uri.toString());
+        //String uriQuery = Uri.decode(uri.getQueryParameter("scheme"));
+        //if (TextUtils.isEmpty(uriQuery)) {
+        //    showCenterToast("无效的二维码，请重新扫描...");
+        //    mZXingView.beginSpot();
+        //    Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
+        //return;
+        //}
+        DoctorWebActivity.show(this, qrCode, mDoctorService, mIsFromRecord);
     }
 
     @Override

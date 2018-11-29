@@ -71,7 +71,8 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
     protected String getUrlContentPart() {
         Uri argUri = Uri.parse(mArgUrl);
         String originUrl = H5Uri.BIND_DOCTOR;
-        return originUrl.replace("{id}", argUri.getQueryParameter("id"));
+        //https://sd-dev.sumian.com/doctor/null?url=wxxxxxxxxxxx
+        return originUrl.replace("{url}", argUri.toString());
     }
 
     @Override
@@ -103,13 +104,13 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         if (mIsFromRecord) {
             DoctorServiceWebActivity.show(this, mDoctorService, true);
         } else {
-            MainActivity.Companion.launch(MainActivity.TAB_2, null);
+            MainActivity.launch(MainActivity.TAB_2, null);
         }
     }
 
     @Override
     public void onBindDoctorFailed(@NotNull String message) {
-       showCenterToast(message);
+        showCenterToast(message);
     }
 
     @Override
