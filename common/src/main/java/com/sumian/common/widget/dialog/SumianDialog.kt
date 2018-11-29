@@ -73,15 +73,15 @@ class SumianDialog(context: Context) : Dialog(context, R.style.SumianDialog) {
         return this
     }
 
-    fun setLeftBtn(textRes: Int, listener: View.OnClickListener?): SumianDialog {
+    fun setLeftBtn(textRes: Int, listener: View.OnClickListener? = null): SumianDialog {
         return setBtn(btn_left, textRes, listener)
     }
 
-    fun setRightBtn(textRes: Int, listener: View.OnClickListener?): SumianDialog {
+    fun setRightBtn(textRes: Int, listener: View.OnClickListener? = null): SumianDialog {
         return setBtn(btn_right, textRes, listener)
     }
 
-    private fun setBtn(btn: TextView, textRes: Int, listener: View.OnClickListener?): SumianDialog {
+    private fun setBtn(btn: TextView, textRes: Int, listener: View.OnClickListener? = null): SumianDialog {
         btn.setOnClickListener {
             dismiss()
             listener?.onClick(btn)
