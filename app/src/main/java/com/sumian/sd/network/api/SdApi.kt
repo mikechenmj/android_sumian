@@ -23,7 +23,7 @@ import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.homepage.bean.*
 import com.sumian.sd.network.response.AppUpgradeInfo
 import com.sumian.sd.network.response.FirmwareInfo
-import com.sumian.sd.notification.bean.QueryNotificationResponse
+import com.sumian.sd.notification.bean.NotificationListResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.oss.OssResponse
 import com.sumian.sd.pay.bean.OrderDetail
@@ -182,7 +182,7 @@ interface SdApi {
     // ---------- notification ----------
     @GET("notifications")
     fun getNotificationList(@Query("page") page: Int,
-                            @Query("per_page") perPage: Int): Call<QueryNotificationResponse>
+                            @Query("per_page") perPage: Int): Call<NotificationListResponse>
 
     /**
      * notificationId 单消息id

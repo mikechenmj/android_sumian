@@ -5,7 +5,7 @@ import com.sumian.common.network.error.ErrorCode;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.notification.bean.Notification;
-import com.sumian.sd.notification.bean.QueryNotificationResponse;
+import com.sumian.sd.notification.bean.NotificationListResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,9 +38,9 @@ public class NotificationListPresenter implements NotificationListContract.Prese
         if (isInitLoad) {
             mPage = INIT_PAGE;
         }
-        Call<QueryNotificationResponse> call = AppManager.getSdHttpService().getNotificationList(mPage, PER_PAGE);
+        Call<NotificationListResponse> call = AppManager.getSdHttpService().getNotificationList(mPage, PER_PAGE);
         addCall(call);
-        call.enqueue(new BaseSdResponseCallback<QueryNotificationResponse>() {
+        call.enqueue(new BaseSdResponseCallback<NotificationListResponse>() {
             @Override
             protected void onFailure(@NotNull com.sumian.common.network.response.ErrorResponse errorResponse) {
                 LogUtils.d(errorResponse.getMessage());
@@ -48,7 +48,7 @@ public class NotificationListPresenter implements NotificationListContract.Prese
             }
 
             @Override
-            protected void onSuccess(QueryNotificationResponse response) {
+            protected void onSuccess(NotificationListResponse response) {
                 LogUtils.d(response);
                 List<Notification> data = response.getData();
                 mView.onLoadMore(data, data.size() == PER_PAGE);

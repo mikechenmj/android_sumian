@@ -4,7 +4,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
-import com.sumian.sd.notification.bean.QueryNotificationResponse;
+import com.sumian.sd.notification.bean.NotificationListResponse;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,16 +35,16 @@ public class NotificationViewModel extends ViewModel {
     }
 
     public void updateUnreadCount() {
-        Call<QueryNotificationResponse> call = AppManager.getSdHttpService().getNotificationList(1, 1);
-        call.enqueue(new BaseSdResponseCallback<QueryNotificationResponse>() {
+        Call<NotificationListResponse> call = AppManager.getSdHttpService().getNotificationList(1, 1);
+        call.enqueue(new BaseSdResponseCallback<NotificationListResponse>() {
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
                 LogUtils.d(errorResponse.getMessage());
             }
 
             @Override
-            protected void onSuccess(QueryNotificationResponse response) {
-                mUnreadCount.setValue(response.getMeta().getUnread_num());
+            protected void onSuccess(NotificationListResponse response) {
+                mUnreadCount.setValue(response.getMeta().getUnreadNum());
             }
         });
     }
