@@ -2,9 +2,9 @@ package com.sumian.sd.service.coupon.presenter
 
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.service.coupon.bean.Coupon
 import com.sumian.sd.service.coupon.contract.CouponListContract
 
@@ -41,13 +41,13 @@ class CouponListPresenter private constructor(view: CouponListContract.View) : C
 
         val call = AppManager.getSdHttpService().getCouponList(map)
         mCalls.add(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponse<Coupon>>() {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Coupon>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
                 mView?.onGetCouponListCouponFailed(errorResponse.message)
             }
 
-            override fun onSuccess(response: PaginationResponse<Coupon>?) {
+            override fun onSuccess(response: PaginationResponseV2<Coupon>?) {
                 val data = response?.data
                 if (mIsRefresh) {
                     mIsRefresh = false

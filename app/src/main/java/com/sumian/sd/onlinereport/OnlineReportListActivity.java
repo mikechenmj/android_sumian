@@ -10,11 +10,11 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.common.network.response.PaginationResponseV2;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.network.callback.BaseSdResponseCallback;
-import com.sumian.sd.network.response.PaginationResponse;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.error.EmptyErrorView;
 
@@ -128,18 +128,18 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     }
 
     private void loadOnlineReports() {
-        Call<PaginationResponse<OnlineReport>> call = AppManager.getSdHttpService().getReports(mPage, PER_PAGE);
+        Call<PaginationResponseV2<OnlineReport>> call = AppManager.getSdHttpService().getReports(mPage, PER_PAGE);
         addCall(call);
-        call.enqueue(new BaseSdResponseCallback<PaginationResponse<OnlineReport>>() {
+        call.enqueue(new BaseSdResponseCallback<PaginationResponseV2<OnlineReport>>() {
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
                 LogUtils.d(errorResponse.getMessage());
             }
 
             @Override
-            protected void onSuccess(PaginationResponse<OnlineReport> response) {
+            protected void onSuccess(PaginationResponseV2<OnlineReport> response) {
                 LogUtils.d(response);
-                List<OnlineReport> reportList = response.data;
+                List<OnlineReport> reportList = response.getData();
                 mAdapter.addData(reportList);
                 mPage++;
                 if (reportList.size() < PER_PAGE) {

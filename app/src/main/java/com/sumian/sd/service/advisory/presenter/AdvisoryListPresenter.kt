@@ -1,10 +1,10 @@
 package com.sumian.sd.service.advisory.presenter
 
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.contract.AdvisoryListContract
 import retrofit2.Callback
@@ -58,13 +58,13 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
 
         val call = AppManager.getSdHttpService().getDoctorAdvisories(map)
         mCalls?.add(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponse<Advisory>>(), Callback<PaginationResponse<Advisory>> {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Advisory>>(), Callback<PaginationResponseV2<Advisory>> {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
                 mView?.onGetAdvisoriesFailed(error = errorResponse.message)
             }
 
-            override fun onSuccess(response: PaginationResponse<Advisory>?) {
+            override fun onSuccess(response: PaginationResponseV2<Advisory>?) {
                 val data = response?.data
                 if (mIsRefresh) {
                     mIsRefresh = false

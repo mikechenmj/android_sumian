@@ -5,11 +5,11 @@ import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.setting.remind.bean.Reminder
-import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import kotlinx.android.synthetic.main.activity_remind_setting.*
 
 class RemindSettingActivity : BasePresenterActivity<IPresenter>() {
@@ -45,13 +45,13 @@ class RemindSettingActivity : BasePresenterActivity<IPresenter>() {
         AppManager
                 .getSdHttpService()
                 .getReminderList(reminderType)
-                .enqueue(object : BaseSdResponseCallback<ReminderListResponse>() {
+                .enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Reminder>>() {
                     override fun onFailure(errorResponse: ErrorResponse) {
                         LogUtils.d(errorResponse.message)
                     }
 
-                    override fun onSuccess(response: ReminderListResponse?) {
-                        mReminder = response?.getReminder()
+                    override fun onSuccess(response: PaginationResponseV2<Reminder>?) {
+                        mReminder = response?.let { if (it.data.isEmpty()) null else it.data[0] }
                         when (reminderType) {
                             Reminder.TYPE_SLEEP_DIARY -> {
                                 sdv_sleep_diary_remind.setContent(formatReminder() ?: "")

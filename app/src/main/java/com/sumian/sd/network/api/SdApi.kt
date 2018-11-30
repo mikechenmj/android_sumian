@@ -23,7 +23,6 @@ import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.homepage.bean.*
 import com.sumian.sd.network.response.AppUpgradeInfo
 import com.sumian.sd.network.response.FirmwareInfo
-import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.notification.bean.QueryNotificationResponse
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.oss.OssResponse
@@ -40,11 +39,9 @@ import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.service.cbti.bean.*
 import com.sumian.sd.service.coupon.bean.Coupon
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
-import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.setting.bean.Feedback
 import com.sumian.sd.setting.remind.bean.Reminder
-import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import com.sumian.sd.setting.version.bean.Version
 import retrofit2.Call
 import retrofit2.http.*
@@ -162,7 +159,7 @@ interface SdApi {
      */
     @GET("/online-reports")
     fun getReports(@Query("page") page: Int,
-                   @Query("per_page") perPage: Int): Call<PaginationResponse<OnlineReport>>
+                   @Query("per_page") perPage: Int): Call<PaginationResponseV2<OnlineReport>>
 
     @GET("services")
     fun getServiceList(): Call<DoctorServiceList>
@@ -206,7 +203,7 @@ interface SdApi {
     @GET("scale-distributions")
     fun getScaleList(@Query("page") page: Int,
                      @Query("per_page") perPage: Int = 15,
-                     @Query("type") type: String): Call<PaginationResponse<Scale>>
+                     @Query("type") type: String): Call<PaginationResponseV2<Scale>>
 
     @GET("scale-distributions")
     fun getNotFilledScaleList(@Query("page") page: Int,
@@ -254,7 +251,7 @@ interface SdApi {
     //user advisory
 
     @GET("advisories")
-    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Advisory>>
+    fun getDoctorAdvisories(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponseV2<Advisory>>
 
     @GET("advisories/{id}")
     fun getDoctorAdvisoryDetails(@Path("id") advisoryId: Int, @QueryMap map: MutableMap<String, Any>): Call<Advisory>
@@ -356,7 +353,7 @@ interface SdApi {
      * 获取电话预约列表  包括已使用/未使用列表清单
      */
     @GET("bookings")
-    fun getTelBookingList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<TelBooking>>
+    fun getTelBookingList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponseV2<TelBooking>>
 
     /**
      * 通过 id 获取该电话预约清单的详情
@@ -369,7 +366,7 @@ interface SdApi {
      * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒 3:放松训练提醒
      */
     @GET("reminders/subscriptions")
-    fun getReminderList(@Query("type") reminderType: Int = 2): Call<ReminderListResponse>
+    fun getReminderList(@Query("type") reminderType: Int = 2): Call<PaginationResponseV2<Reminder>>
 
     /**
      * type 提醒类型，1：睡眠提醒 2：睡眠日记提醒 3:放松训练提醒
@@ -397,7 +394,7 @@ interface SdApi {
     fun getDiaryEvaluations(@Query("type") type: Int,
                             @Query("include") include: String?,
                             @Query("page") page: Int = 1,
-                            @Query("per_page") perPage: Int = 10): Call<DiaryEvaluationsResponse>
+                            @Query("per_page") perPage: Int = 10): Call<PaginationResponseV2<DiaryEvaluationData>>
 
     @GET("diary-evaluation/latest")
     fun getLatestDiaryEvaluation(@Query("include") include: String? = null): Call<DiaryEvaluationData>
@@ -417,7 +414,7 @@ interface SdApi {
      * 获取兑换码  兑换列表
      */
     @GET("redeem-codes")
-    fun getCouponList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponse<Coupon>>
+    fun getCouponList(@QueryMap map: MutableMap<String, Any>): Call<PaginationResponseV2<Coupon>>
 
     /**
      * anxiety

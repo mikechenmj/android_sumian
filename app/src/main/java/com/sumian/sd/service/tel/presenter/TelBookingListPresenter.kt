@@ -2,9 +2,9 @@ package com.sumian.sd.service.tel.presenter
 
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
-import com.sumian.sd.network.response.PaginationResponse
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingListContract
 
@@ -57,13 +57,13 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
 
         val call = AppManager.getSdHttpService().getTelBookingList(map)
         mCalls.add(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponse<TelBooking>>() {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<TelBooking>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
                 mView?.onGetTelBookingListFailed(errorResponse.message)
             }
 
-            override fun onSuccess(response: PaginationResponse<TelBooking>?) {
+            override fun onSuccess(response: PaginationResponseV2<TelBooking>?) {
                 val data = response?.data
                 if (mIsRefresh) {
                     mIsRefresh = false

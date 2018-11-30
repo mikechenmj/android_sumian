@@ -9,12 +9,12 @@ import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.diary.bean.DiaryEvaluationData
-import com.sumian.sd.service.diary.bean.DiaryEvaluationsResponse
 import com.sumian.sd.widget.SumianLoadMoreView
 import kotlinx.android.synthetic.main.fragment_diary_evaluation_list.*
 import org.greenrobot.eventbus.Subscribe
@@ -97,12 +97,12 @@ class DiaryEvaluationListFragment : BaseFragment(), androidx.swiperefreshlayout.
             mPage = 1
         }
         val call = AppManager.getSdHttpService().getDiaryEvaluations(type, null, mPage, PAGE_SIZE)
-        call.enqueue(object : BaseSdResponseCallback<DiaryEvaluationsResponse>() {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<DiaryEvaluationData>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 LogUtils.d(errorResponse.message)
             }
 
-            override fun onSuccess(response: DiaryEvaluationsResponse?) {
+            override fun onSuccess(response: PaginationResponseV2<DiaryEvaluationData>?) {
                 LogUtils.d(response)
                 val data = response?.data
                 if (isInitData) {

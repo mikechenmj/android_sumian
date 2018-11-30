@@ -2,10 +2,10 @@ package com.sumian.sd.setting.remind
 
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.setting.remind.bean.Reminder
-import com.sumian.sd.setting.remind.bean.ReminderListResponse
 import retrofit2.Call
 
 /**
@@ -31,13 +31,13 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
     override fun queryReminder(reminderType: Int) {
         val call = AppManager.getSdHttpService().getReminderList(reminderType)
         mCalls.add(call)
-        call.enqueue(object : BaseSdResponseCallback<ReminderListResponse>() {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Reminder>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
             }
 
-            override fun onSuccess(response: ReminderListResponse?) {
-                view.updateReminder(response?.getReminder())
+            override fun onSuccess(response: PaginationResponseV2<Reminder>?) {
+                view.updateReminder(response?.let { if (it.data.isEmpty()) null else it.data[0] })
             }
         })
     }

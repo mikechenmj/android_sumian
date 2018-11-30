@@ -1,13 +1,8 @@
 package com.sumian.sd.homepage.bean
 
 data class SleepPrescriptionStatus(
-        val data: List<Data>,
+        val data: List<SleepPrescriptionData>,
         val meta: Meta
-)
-
-data class Data(
-        val id: Int,
-        val date: Int
 )
 
 data class Meta(
