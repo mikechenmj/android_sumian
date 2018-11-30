@@ -1,6 +1,7 @@
 package com.sumian.common.base
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +44,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         checkBundle(intent)
         setContentView(if (showBackNav()) R.layout.activity_main_back_container else getLayoutId())
         initWidgetBefore()
