@@ -384,6 +384,7 @@
         <activity
             android:name=".account.login.LoginActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
             android:name=".account.login.ValidatePhoneNumberActivity"
@@ -533,9 +534,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".relaxation.RelaxationListActivity" />
-        <activity android:name=".relaxation.RelaxationDetailActivity"
-            android:theme="@style/BaseAppTheme.TranslucentStatus"/>
+        <activity
+            android:name=".relaxation.RelaxationListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".relaxation.RelaxationDetailActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus" />
 
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"
