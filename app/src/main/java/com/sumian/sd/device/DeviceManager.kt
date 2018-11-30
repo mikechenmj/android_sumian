@@ -213,6 +213,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun syncSleepData() {
+        if (isSyncing()) return
         val bluePeripheral = getCurrentBluePeripheral() ?: return
         if (mMonitorLiveData.value?.isSyncing == true) return
         bluePeripheral.write(BlueCmd.cSleepData())
@@ -347,7 +348,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val indexOne = Integer.parseInt(cmd.substring(4, 6), 16) and 0x0f shl 8
         val indexTwo = Integer.parseInt(cmd.substring(6, 8), 16)
         val index = indexOne + indexTwo
-
+        LogManager.appendTransparentLog("收到透传数据：index：$index, cmd: $cmd")
         if (mCurrentIndex == -1) {
             mCurrentIndex = index
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
