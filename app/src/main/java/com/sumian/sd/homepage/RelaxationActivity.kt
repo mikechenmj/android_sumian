@@ -29,13 +29,6 @@ class RelaxationActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
         return H5Uri.CBTI_RELAXATIONS
     }
 
-    override fun registerHandler(sWebView: SWebView) {
-        super.registerHandler(sWebView)
-        sWebView.registerHandler("shareRelaxation") { data, function ->
-            RelaxationShareBottomSheet.show(supportFragmentManager, getCompleteUrl(), "放松训练", getTitleBar().mTvTitle.text.toString())
-        }
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         getTitleBar().visibility = View.VISIBLE

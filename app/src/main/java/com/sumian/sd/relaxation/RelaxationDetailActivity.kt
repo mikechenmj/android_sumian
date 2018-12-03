@@ -52,7 +52,7 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
         super.initWidget()
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_close.setOnClickListener { onBackPressed() }
-        iv_share.setOnClickListener { RelaxationShareBottomSheet.show(supportFragmentManager, getShareUrl(), "放松训练", mRelaxationData!!.name) }
+        iv_share.setOnClickListener { RelaxationShareBottomSheet.show(supportFragmentManager, getShareUrl(), "速眠医生·轻松入眠", "放松训练正在进行中，快来和我一起，劝烦恼打个盹~") }
         iv_play.setOnClickListener { CommonAudioPlayer.playOrPause() }
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
