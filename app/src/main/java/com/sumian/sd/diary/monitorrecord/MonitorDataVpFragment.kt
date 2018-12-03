@@ -3,8 +3,10 @@ package com.sumian.sd.diary.monitorrecord
 import android.os.Handler
 import android.text.format.DateUtils
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
 import com.blankj.utilcode.util.LogUtils
@@ -151,10 +153,10 @@ class MonitorDataVpFragment : BaseFragment() {
         EventBusUtil.postEvent(UpdateMonitorDataEvent())
     }
 
-    class InnerPagerAdapter(fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+    class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
         val times = ArrayList<Long>()
 
-        override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        override fun getItem(position: Int): Fragment {
             return MonitorDataFragment.newInstance(times[position])
         }
 

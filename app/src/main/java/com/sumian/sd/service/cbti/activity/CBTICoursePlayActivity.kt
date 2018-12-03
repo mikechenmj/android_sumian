@@ -24,6 +24,7 @@ import com.sumian.sd.service.cbti.dialog.CBTIQuestionDialog
 import com.sumian.sd.service.cbti.presenter.CBTICoursePlayAuthPresenter
 import com.sumian.sd.service.cbti.sheet.CBTICourseListBottomSheet
 import com.sumian.sd.service.cbti.video.NiceVideoPlayerManager
+import com.sumian.sd.service.cbti.video.NiceVideoView
 import com.sumian.sd.service.cbti.video.OnVideoViewEvent
 import com.sumian.sd.service.cbti.video.TxVideoPlayerController
 import com.sumian.sd.widget.TitleBar
@@ -104,7 +105,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
         tv_lesson_list.setOnClickListener(this)
         //nav_tab_lesson_review_last_week.setOnClickListener(this)
         aliyun_player.apply {
-            setPlayerType(com.sumian.sd.service.cbti.video.NiceVideoView.TYPE_ALIYUN)
+            setPlayerType(NiceVideoView.TYPE_ALIYUN)
             setOnVideoViewEvent(this@CBTICoursePlayActivity)
             setController(mController)
         }

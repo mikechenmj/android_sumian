@@ -40,6 +40,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         private const val ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service"
         private const val ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId"
 
+        @JvmStatic
         fun startForResult(activity: Activity, doctorService: DoctorService, packageId: Int, requestCode: Int) {
             val extras = Bundle()
             extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService)

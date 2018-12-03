@@ -58,7 +58,8 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textColor="@android:color/white"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            tools:ignore="HardcodedText" />
 
         <ProgressBar
             android:id="@+id/change_position_progress"
@@ -80,11 +81,13 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="8dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@null"
             android:src="@drawable/ic_palyer_brightness" />
 
         <ProgressBar
@@ -132,7 +135,7 @@
         android:id="@+id/completed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#6c0b0b0b"
+        android:background="@android:color/black"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
@@ -142,7 +145,7 @@
             style="@style/text_b2_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="本节课程结束"
+            android:text="@string/lesson_finished"
             android:textSize="@dimen/font_16" />
 
         <TextView
@@ -150,7 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_10"
-            android:text="完成随堂练习，巩固所学知识"
+            android:text="@string/lesson_practice_hint"
             android:textSize="@dimen/font_16" />
 
         <LinearLayout
@@ -169,7 +172,7 @@
                 android:layout_marginRight="@dimen/space_4"
                 android:background="@drawable/bt_go_play_next"
                 android:gravity="center"
-                android:text="继续观看"
+                android:text="@string/go_to_watch"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 tools:ignore="RtlHardcoded" />
@@ -182,7 +185,7 @@
                 android:layout_marginRight="@dimen/space_4"
                 android:background="@drawable/bg_bt"
                 android:gravity="center"
-                android:text="完成练习"
+                android:text="@string/finished_practice"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 tools:ignore="RtlHardcoded" />
@@ -280,7 +283,8 @@
                 android:layout_height="wrap_content"
                 android:text="00:00"
                 android:textColor="@android:color/white"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:ignore="HardcodedText,SmallSp" />
         </LinearLayout>
     </LinearLayout>
     <!--底部控制区-->
@@ -320,14 +324,16 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="/"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/duration"
@@ -335,14 +341,15 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/clarity"
             android:layout_width="@dimen/space_48"
             android:layout_height="@dimen/space_48"
             android:gravity="center"
-            android:text="列表"
+            android:text="@string/list"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:visibility="gone"

@@ -16,8 +16,7 @@ import androidx.annotation.DrawableRes;
  * Created by XiaoJianjun on 2017/6/21.
  * 控制器抽象类
  */
-public abstract class NiceVideoPlayerController
-        extends FrameLayout implements View.OnTouchListener {
+public abstract class NiceVideoPlayerController extends FrameLayout implements View.OnTouchListener {
 
     private Context mContext;
     protected INiceVideoPlayer mNiceVideoPlayer;

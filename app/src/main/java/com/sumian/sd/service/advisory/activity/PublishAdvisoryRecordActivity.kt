@@ -49,15 +49,13 @@ import kotlin.collections.ArrayList
  * on 2018/6/8 10:40
  * desc:图文咨询上传
  **/
-class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContact.Presenter>(),
-        PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
+class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContact.Presenter>(), PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
-
-    private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
 
     private var mSelectOnlineRecords: ArrayList<OnlineReport>? = null
 
     private var mAdvisoryId: Int = 0
+    private var mIsAskAgain = false
 
     private var mPictures = mutableListOf<String>()
 
@@ -71,7 +69,12 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     companion object {
 
+        private val TAG: String = PublishAdvisoryRecordActivity::class.java.simpleName
+
+        const val INVALID_ADVISORY_ID = 0
+
         private const val ARGS_ADVISORY = "com.sumian.sleepdoctor.extras.advisory"
+        private const val ARGS_ADVISORY_ACTION = "com.sumian.sleepdoctor.extras.advisory.action"
 
         private const val PICK_REPORT_CODE_PHOTO = 0x01
 
@@ -79,17 +82,20 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
         private const val REQUEST_WRITE_PERMISSION = 0x03
 
-
-        fun show(context: Context, advisoryId: Int) {
-            val extras = Bundle()
-            extras.putInt(ARGS_ADVISORY, advisoryId)
+        @JvmStatic
+        fun show(context: Context, advisoryId: Int = INVALID_ADVISORY_ID, isAskAgain: Boolean = false) {
+            val extras = Bundle().apply {
+                putInt(ARGS_ADVISORY, advisoryId)
+                putBoolean(ARGS_ADVISORY_ACTION, isAskAgain)
+            }
             show(context, PublishAdvisoryRecordActivity::class.java, extras)
         }
     }
 
     override fun initBundle(bundle: Bundle?): Boolean {
         bundle?.let {
-            this.mAdvisoryId = it.getInt(ARGS_ADVISORY, 0)
+            this.mAdvisoryId = it.getInt(ARGS_ADVISORY, INVALID_ADVISORY_ID)
+            this.mIsAskAgain = it.getBoolean(ARGS_ADVISORY_ACTION, false)
         }
         return super.initBundle(bundle)
     }
@@ -141,13 +147,11 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     override fun initData() {
         super.initData()
-        if (mAdvisoryId == 0) {
+        if (mAdvisoryId <= 0) {
             this.mPresenter.getLastAdvisory()
         }
-
         requestWritePermissions()
     }
-
 
     @AfterPermissionGranted(REQUEST_WRITE_PERMISSION)
     private fun requestWritePermissions() {
@@ -237,19 +241,24 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         this.mAdvisoryId = advisory.id
         //this.mPresenter.getLastAdvisory()
 
-        runOnUiThread {
-            title_bar.hideMore().more.visibility = View.INVISIBLE
-            service_state_view.setOnServiceSuccessCallback(object : ServiceSuccessStateView.OnServiceSuccessCallback {
-                override fun showServiceDetailCallback() {
-                    AdvisoryDetailActivity.show(this@PublishAdvisoryRecordActivity, advisoryId = advisory.id)
-                    finish()
-                }
+        title_bar.hideMore().more.visibility = View.INVISIBLE
 
-                override fun goBackHome() {
-                    finish()
-                }
+        if (mIsAskAgain) {//追问，直接进入详情页
+            AdvisoryDetailActivity.show(this@PublishAdvisoryRecordActivity, advisoryId = advisory.id)
+            finish()
+        } else {//不是追问
+            runOnUiThread {
+                service_state_view.setOnServiceSuccessCallback(object : ServiceSuccessStateView.OnServiceSuccessCallback {
+                    override fun showServiceDetailCallback() {
+                        AdvisoryDetailActivity.show(this@PublishAdvisoryRecordActivity, advisoryId = advisory.id)
+                        finish()
+                    }
 
-            }).show()
+                    override fun goBackHome() {
+                        finish()
+                    }
+                }).show()
+            }
         }
     }
 
@@ -310,9 +319,6 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
     override fun onPicPictureCallback() {
         SelectImageActivity.show(this, SelectOptions.Builder().setHasCam(false).setSelectCount(9).setSelectedImages(publish_pictures_previewer.paths).setCallback { it ->
-            it.forEach {
-                Log.e(TAG, it)
-            }
             mPictures = it.toMutableList()
             if (it.isNotEmpty()) {
                 publish_pictures_previewer.set(Util.toPathArray(mPictures))

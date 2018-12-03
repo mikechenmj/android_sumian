@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * desc: 电话预约列表, 已完成/未完成
  *
  */
-class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Presenter>(), TelBookingListContract.View, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
+class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Presenter>(), TelBookingListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
