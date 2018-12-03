@@ -86,8 +86,7 @@ android {
             shrinkResources true
             minifyEnabled true
             zipAlignEnabled true
-            pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
-            zipAlignEnabled rootProject.ext.zipAlignEnabled
+            pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
@@ -104,8 +103,7 @@ android {
             shrinkResources false
             minifyEnabled false
             zipAlignEnabled true
-            pseudoLocalesEnabled rootProject.ext.pseudoLocalesEnabled
-            zipAlignEnabled rootProject.ext.zipAlignEnabled
+            pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
