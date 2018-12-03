@@ -329,4 +329,6 @@ dependencies {
 
     //implementation project(':jsbridge')
     implementation project(':kefu-easeui')
+    // round corner image view
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
