@@ -390,9 +390,6 @@
             android:name=".account.login.ValidatePhoneNumberActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".account.login.SetPasswordActivity"
-            android:theme="@style/BaseAppTheme" />
-        <activity
             android:name=".h5.HwSimpleWebActivity"
             android:theme="@style/BaseAppTheme" />
         <activity

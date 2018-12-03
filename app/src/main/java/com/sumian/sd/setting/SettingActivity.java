@@ -43,7 +43,7 @@ import retrofit2.Call;
 
 public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackClickListener, View.OnClickListener {
 
-    TitleBar mTitleBar;
+    TitleBar           mTitleBar;
     SettingDividerView mSdvAppVersion;
 
     private BottomSheetDialog dialog;
@@ -119,7 +119,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
                 FeedbackActivity.show();
                 break;
             case R.id.sdv_modify_password:
-                ActivityUtils.startActivity(ModifyPasswordActivity.class);
+                ModifyPasswordActivity.Companion.start(AppManager.getAccountViewModel().getUserInfo().hasPassword, null);
                 break;
             case R.id.tv_logout:
                 showLogoutDialog();
@@ -144,7 +144,7 @@ public class SettingActivity extends SdBaseActivity implements TitleBar.OnBackCl
 
     private void invalidVersion() {
         PackageInfo packageInfo = UiUtils.getPackageInfo(this);
-        String versionName = packageInfo.versionName;
+        String      versionName = packageInfo.versionName;
         mSdvAppVersion.setContent(versionName);
     }
 

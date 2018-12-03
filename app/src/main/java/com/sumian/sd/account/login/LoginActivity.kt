@@ -73,6 +73,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
 
     override fun onStart() {
         super.onStart()
+        AppManager.getAccountViewModel().clearToken()
         mVersionDelegate.checkVersion(this)
     }
 

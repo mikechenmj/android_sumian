@@ -87,6 +87,7 @@ public class AccountViewModel extends AndroidViewModel {
         persistentTokenInSp();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void asyncUpdateToken(Token token) {
         mTokenLiveData.postValue(token);
         persistentTokenInSp();
@@ -149,5 +150,9 @@ public class AccountViewModel extends AndroidViewModel {
     public boolean isBindDoctor() {
         UserInfo userInfo = getUserInfo();
         return userInfo != null && userInfo.isBindDoctor();
+    }
+
+    public void clearToken() {
+        updateToken(null);
     }
 }

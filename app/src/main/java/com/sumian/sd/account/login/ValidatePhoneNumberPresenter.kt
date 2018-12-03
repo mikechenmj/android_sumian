@@ -42,7 +42,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
             }
 
             override fun onSuccess(response: Token?) {
-                SetPasswordActivity.launchForResetPassword(JsonUtil.toJson(response!!))
+                ModifyPasswordActivity.start(false, response?.token)
             }
 
             override fun onFinish() {
@@ -71,7 +71,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
                     return
                 }
                 AppManager.getAccountViewModel().updateToken(response)
-                 AppManager.launchMainAndFinishAll()
+                AppManager.launchMainAndFinishAll()
             }
 
             override fun onFinish() {
