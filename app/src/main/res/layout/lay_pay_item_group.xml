@@ -16,7 +16,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1"
-        android:background="@color/l1_color" />
+        android:background="@color/l1_color"
+        android:visibility="gone" />
 
     <com.sumian.sd.pay.widget.PayItemView
         android:id="@+id/alipay_pay_item"
