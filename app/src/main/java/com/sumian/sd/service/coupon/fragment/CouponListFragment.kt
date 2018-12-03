@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * desc: 兑换记录列表
  *
  */
-class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>(), CouponListContract.View, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
+class CouponListFragment : BasePresenterFragment<CouponListContract.Presenter>(), CouponListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 

@@ -193,7 +193,6 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 mCompleted.setVisibility(View.GONE);
                 setTopBottomVisible(false);
                 mCenterStart.setVisibility(View.GONE);
-                Log.e(TAG, "onPlayStateChanged: --------->preparing");
                 break;
             case NiceVideoView.STATE_PREPARED:
                 startUpdateProgressTimer();
@@ -203,7 +202,6 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 mCompleted.setVisibility(View.GONE);
                 setTopBottomVisible(false);
                 mCenterStart.setVisibility(View.GONE);
-                Log.e(TAG, "onPlayStateChanged: --------->prepared");
                 break;
             case NiceVideoView.STATE_PLAYING:
                 mLoading.setVisibility(View.GONE);
@@ -248,7 +246,6 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 cancelUpdateProgressTimer();
                 setTopBottomVisible(false);
                 mError.setVisibility(View.VISIBLE);
-                Log.e(TAG, "onPlayStateChanged: --------->error");
                 break;
             case NiceVideoView.STATE_COMPLETED:
                 cancelUpdateProgressTimer();
@@ -257,7 +254,6 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
                 mError.setVisibility(View.GONE);
                 mImage.setVisibility(View.GONE);
                 mCompleted.setVisibility(View.VISIBLE);
-                Log.e(TAG, "onPlayStateChanged: ------播放完成---->");
                 // mHavePractice.setVisibility(VISIBLE);
                 mReplay.setVisibility(VISIBLE);
 

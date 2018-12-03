@@ -77,7 +77,7 @@ class DiaryEvaluationListFragment : BaseFragment(), androidx.swiperefreshlayout.
         mAdapter.setOnLoadMoreListener(this, recycler)
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as DiaryEvaluationData
-            DiaryEvaluationDetailActivity.launch(activity, item.id)
+            DiaryEvaluationDetailActivity.launch(activity!!, item.id)
         }
         mAdapter.setLoadMoreView(SumianLoadMoreView())
     }

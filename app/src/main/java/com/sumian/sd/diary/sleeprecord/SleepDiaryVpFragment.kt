@@ -2,6 +2,9 @@ package com.sumian.sd.diary.sleeprecord
 
 import android.text.format.DateUtils
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
@@ -99,10 +102,10 @@ class SleepDiaryVpFragment : BaseFragment() {
         view_pager.setCurrentItem(mAdapter.times.indexOf(time), false)
     }
 
-    class InnerDiaryPagerAdapter(fragmentManager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(fragmentManager) {
+    class InnerDiaryPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
         val times = ArrayList<Long>()
 
-        override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        override fun getItem(position: Int): Fragment {
             return SleepDiaryFragment.newInstance(times[position])
         }
 

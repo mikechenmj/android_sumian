@@ -2,7 +2,9 @@ package com.sumian.sd.service.advisory.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
@@ -21,13 +23,14 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:
  **/
-class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
+class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
         private const val ARGS_ADVISORY_TYPE: String = "com.sumian.app.extras.advisory.type"
 
-        fun newInstance(advisoryType: Int = Advisory.UNFINISHED_TYPE): androidx.fragment.app.Fragment? {
+        @JvmStatic
+        fun newInstance(advisoryType: Int = Advisory.UNFINISHED_TYPE): Fragment? {
             val args = Bundle()
             args.putInt(ARGS_ADVISORY_TYPE, advisoryType)
             return SdBaseFragment.newInstance(AdvisoryListFragment::class.java, args)
@@ -87,7 +90,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
         val advisory = mListAdapter.getItem(position)
         when (advisory.status) {
             5 -> {
-                PublishAdvisoryRecordActivity.show(context!!, advisory.id)
+                PublishAdvisoryRecordActivity.show(context!!, advisory.id, false)
             }
             else -> {
                 AdvisoryDetailActivity.show(context!!, advisory.id)
@@ -99,10 +102,6 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
         super.onResume()
         this.mPresenter.refreshAdvisories()
         refresh.showRefreshAnim()
-    }
-
-    override fun onBegin() {
-        super.onBegin()
     }
 
     override fun onFinish() {

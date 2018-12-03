@@ -688,4 +688,9 @@
     <string name="let_tense_life_relax">让紧张的生活喘息的机会</string>
     <string name="relaxation_list_bottom_hint">- 速眠医生建议放松训练结合CBTI课程使用 -</string>
     <string name="topping_text">置顶</string>
+    <string name="lesson_finished">本节课程结束</string>
+    <string name="lesson_practice_hint">完成随堂练习，巩固所学知识</string>
+    <string name="go_to_watch">继续观看</string>
+    <string name="finished_practice">完成练习</string>
+    <string name="list">列表</string>
 </resources>

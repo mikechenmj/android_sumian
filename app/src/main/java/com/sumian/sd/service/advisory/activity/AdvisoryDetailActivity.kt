@@ -147,7 +147,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
             if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
                 MainActivity.launch(MainActivity.TAB_2)
             } else {
-                PublishAdvisoryRecordActivity.show(this, mAdvisory?.id!!)
+                PublishAdvisoryRecordActivity.show(this, mAdvisory?.id!!,true)
                 finish()
             }
         }

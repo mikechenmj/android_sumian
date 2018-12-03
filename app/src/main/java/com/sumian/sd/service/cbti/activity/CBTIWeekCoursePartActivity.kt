@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
@@ -164,8 +166,8 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         keyboard.hide()
     }
 
-    private fun initAdapter(): androidx.fragment.app.FragmentPagerAdapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
-        override fun getItem(position: Int): androidx.fragment.app.Fragment {
+    private fun initAdapter(): FragmentPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
+        override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> CourseFragment.newInstance(mChapterId)
                 1 -> ExerciseFragment.newInstance(mChapterId)

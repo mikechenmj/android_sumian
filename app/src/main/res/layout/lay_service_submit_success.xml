@@ -50,7 +50,8 @@
         style="@style/text_t2_14"
         android:gravity="center"
         android:padding="@dimen/space_20"
-        android:text="@string/go_back_home" />
+        android:text="@string/go_back_home"
+        android:visibility="gone" />
 
     <Space
         android:layout_width="wrap_content"

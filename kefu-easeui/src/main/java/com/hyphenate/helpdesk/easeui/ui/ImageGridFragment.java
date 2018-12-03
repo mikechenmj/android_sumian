@@ -36,6 +36,9 @@ import com.hyphenate.util.TextFormater;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
+@SuppressWarnings("ALL")
 public class ImageGridFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     private static final String TAG = "ImageGridFragment";
     private int mImageThumbSize;
@@ -75,8 +78,7 @@ public class ImageGridFragment extends BaseFragment implements AdapterView.OnIte
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.light_hd_image_grid_fragment,
                 container, false);
         final GridView mGridView = (GridView) v.findViewById(R.id.gridView);

@@ -84,7 +84,7 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
                 }.getType());
                 //0：立即购买； -1：未绑定医生
                 if (sBridgeResult.code == 0) {
-                    PaymentActivity.Companion.startForResult(DoctorServiceWebActivity.this, sBridgeResult.result.getService(), sBridgeResult.result.getPackageId(), REQUEST_CODE_BUY_SERVICE);
+                    PaymentActivity.startForResult(DoctorServiceWebActivity.this, sBridgeResult.result.getService(), sBridgeResult.result.getPackageId(), REQUEST_CODE_BUY_SERVICE);
                 } else {//未绑定医生
                     if (mIsFromRecord) {
                         ScanDoctorQrCodeActivity.show(DoctorServiceWebActivity.this, mDoctorService, mIsFromRecord);
@@ -107,7 +107,7 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
                         case DoctorService.SERVICE_TYPE_ADVISORY:
                             Intent intent = new Intent(ACTION_CLOSE_ACTIVE_ACTIVITY);
                             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-                            PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.class);
+                            PublishAdvisoryRecordActivity.show(this, PublishAdvisoryRecordActivity.INVALID_ADVISORY_ID, false);
                             break;
                         case DoctorService.SERVICE_TYPE_SLEEP_REPORT:
                             DiaryEvaluationDetailActivity.launchLatestEvaluation(this);

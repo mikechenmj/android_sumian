@@ -4,6 +4,7 @@ import android.content.Intent
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.helper.ToastHelper
 import com.sumian.hw.utils.UiUtil
@@ -20,7 +21,7 @@ class CouponActionFragment : BasePresenterFragment<CouponActionContract.Presente
 
     companion object {
         @JvmStatic
-        fun newInstance(): androidx.fragment.app.Fragment {
+        fun newInstance(): Fragment {
             return CouponActionFragment()
         }
     }
