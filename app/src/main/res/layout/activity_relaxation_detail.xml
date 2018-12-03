@@ -35,6 +35,7 @@
                 android:id="@+id/vg_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/gradient_relaxation_detail_bg"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView

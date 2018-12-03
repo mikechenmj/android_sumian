@@ -20,7 +20,7 @@ import java.util.*
  */
 class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val barHeight = 120f
+    private val barHeight = context.resources.getDimension(R.dimen.space_40)
     private var width = 0f
     private var height = 0f
     private var t0 = 0L
@@ -58,6 +58,7 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
         paint.color = Color.GREEN
         paint.style = Paint.Style.FILL
         paint.textSize = textSize
+        paint.strokeWidth = lineWidth
         textWidth = paint.measureText("00:00 睡着")
         textPadding = paint.measureText("  ")
         nwIconWidth = context.resources.getDimension(R.dimen.space_15)
@@ -145,7 +146,7 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     private fun drawLine(canvas: Canvas, x: Float, isHeight: Boolean) {
         paint.color = lineColor
         val lineHeight = if (isHeight) lineHeightLong else lineHeightShort
-        canvas.drawRect(x, height, x + lineWidth, height - lineHeight, paint)
+        canvas.drawLine(x, height, x + lineWidth, height - lineHeight, paint)
     }
 
     private fun drawRect(canvas: Canvas, startX: Float, endX: Float, color: Int) {

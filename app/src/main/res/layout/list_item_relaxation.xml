@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:layout_margin="5dp"
-    android:elevation="0dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="4dp">
+    android:elevation="0dp">
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/iv_relaxation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
+        app:riv_corner_radius="4dp"
         tools:ignore="ContentDescription"
         tools:src="@drawable/relax_bg_coming_soon" />
 
@@ -24,6 +23,7 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:gravity="center"
+        android:textStyle="bold"
         tools:text="腹式呼吸法" />
 
-</androidx.cardview.widget.CardView>
+</FrameLayout>
