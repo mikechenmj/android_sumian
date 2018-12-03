@@ -59,8 +59,8 @@ class ImageLoader {
 }
 
 /**
- * 拓展函数  可以更加方便的使用并加载图片   用法为 kotlin: ImageView().load()
- *                                             java:  ImageLoaderKt.load()
+ * 拓展函数  可以更加方便的使用并加载图片   用法为 kotlin: ImageView().loadImage()
+ *                                             java:  ImageLoaderKt.loadImage()
  *
  * @receiver ImageView
  * @param drawableId Int
@@ -84,8 +84,8 @@ fun ImageView.loadImage(@DrawableRes drawableId: Int = -1, @DrawableRes placeHol
 }
 
 /**
- * 拓展函数  可以更加方便的使用并加载图片   用法为 kotlin: ImageView().load()
- *                                             java:  ImageLoaderKt.load()
+ * 拓展函数  可以更加方便的使用并加载图片   用法为 kotlin: ImageView().loadImage()
+ *                                             java:  ImageLoaderKt.loadImage()
  * @receiver ImageView
  * @param url String
  * @param placeHolderId Int
