@@ -172,7 +172,7 @@ public final class BitmapUtil {
      * @param recycleSource   是否释放Bitmap源
      * @return 一个缩小后的Bitmap
      */
-    static Bitmap scaleBitmap(Bitmap source, int targetMaxWidth, int targetMaxHeight, boolean recycleSource) {
+    public static Bitmap scaleBitmap(Bitmap source, int targetMaxWidth, int targetMaxHeight, boolean recycleSource) {
         int sourceWidth = source.getWidth();
         int sourceHeight = source.getHeight();
 
