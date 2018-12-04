@@ -78,7 +78,7 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
         // 夜醒
         tv_night_wake_up_duration.text = getWakeupOrOtherSleepString("没醒过", answer.wake_times, answer.wake_minutes * 60)
         // 小睡
-        tv_little_sleep_duration.text = getWakeupOrOtherSleepString("没小睡", answer.other_sleep_total_minutes, answer.other_sleep_total_minutes * 60)
+        tv_little_sleep_duration.text = getWakeupOrOtherSleepString("没小睡", answer.other_sleep_times, answer.other_sleep_total_minutes * 60)
         // 服药
         tv_pills.text = getPillsString(answer.sleep_pills)
         tv_pills.isClickable = answer.sleep_pills != null && answer.sleep_pills!!.size != 0
