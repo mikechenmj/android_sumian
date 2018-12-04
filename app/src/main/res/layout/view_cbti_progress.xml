@@ -106,13 +106,11 @@
 
                 <TextView
                     android:id="@+id/tv_cbti_lesson_people_count"
-                    style="@style/text_b2_12"
+                    style="@style/text_b2_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/space_10"
-                    android:drawableStart="@drawable/ic_home_people"
-                    android:drawablePadding="@dimen/space_5"
                     android:gravity="center"
                     android:text="@string/none_join_count"
                     tools:text="2846人参与" />

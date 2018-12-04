@@ -1,10 +1,14 @@
 package com.sumian.sd.homepage.widget
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.sd.R
 import com.sumian.sd.homepage.bean.CbtiChapterData
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
@@ -34,9 +38,15 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
             tv_cbti_subtitle.text = resources.getString(if (chaptersData.meta.allFinished) R.string.cbti_ing_all_finished_desc else R.string.cbti_ing_describe)
             val dataList = chaptersData.data
             updateProgressViewList(dataList)
-
             tv_progress.text = if (chaptersData.meta.allFinished) resources.getString(R.string.is_finished) else chaptersData.meta.currentStatus
-            tv_cbti_lesson_people_count.text = String.format(Locale.getDefault(), "%d%s", chaptersData.meta.joinedCount, resources.getString(R.string.join))
+
+            val oldBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_home_people)
+            val newBmp = Bitmap.createScaledBitmap(oldBmp, resources.getDimensionPixelOffset(R.dimen.space_16), resources.getDimensionPixelOffset(R.dimen.space_12), true)
+            oldBmp.recycle()
+            val bitmapDrawable = BitmapDrawable(resources, newBmp)
+            val text = String.format(Locale.getDefault(), "%d%s", chaptersData.meta.joinedCount, resources.getString(R.string.join))
+            //drawable.setBounds(0, 0, resources.getDimensionPixelOffset(R.dimen.space_22), resources.getDimensionPixelOffset(R.dimen.space_18))
+            tv_cbti_lesson_people_count.text = QMUISpanHelper.generateSideIconText(true, resources.getDimensionPixelOffset(R.dimen.space_5), text, bitmapDrawable)
         }
     }
 

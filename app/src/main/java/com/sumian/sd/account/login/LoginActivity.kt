@@ -65,7 +65,6 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
             //drawable.setBounds(0, 0, resources.getDimensionPixelOffset(R.dimen.space_22), resources.getDimensionPixelOffset(R.dimen.space_18))
             text = QMUISpanHelper.generateSideIconText(true, resources.getDimensionPixelOffset(R.dimen.space_8), getString(R.string.wechat_login), bitmapDrawable)
             //newBmp.recycle()
-            tv_wechat_login.postInvalidate()
             setOnClickListener { wechatLogin() }
 
         }
