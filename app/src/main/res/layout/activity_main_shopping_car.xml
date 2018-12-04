@@ -96,7 +96,7 @@
             <com.sumian.sd.pay.widget.PayItemGroupView
                 android:id="@+id/pay_group_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="@dimen/space_120" />
 
             <Button
                 android:id="@+id/bt_pay"
