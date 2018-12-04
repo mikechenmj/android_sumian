@@ -45,12 +45,12 @@ class PayItemView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     private fun init(context: Context) {
-        View.inflate(context, R.layout.lay_pay_divider_item, this)
-        val padding = context.resources.getDimension(R.dimen.space_20).toInt()
-        setPadding(padding, padding, padding, padding)
-        setBackgroundColor(resources.getColor(R.color.b2_color))
         gravity = Gravity.CENTER
         orientation = LinearLayout.HORIZONTAL
+        View.inflate(context, R.layout.lay_pay_divider_item, this)
+        val padding = context.resources.getDimension(R.dimen.space_20).toInt()
+        setPadding(padding, 0, padding, 0)
+        setBackgroundColor(resources.getColor(R.color.b2_color))
     }
 
     fun setOnPayWayCallback(onPayWayCallback: OnPayWayCallback) {

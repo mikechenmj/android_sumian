@@ -2,13 +2,13 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/space_64"
+    android:layout_height="@dimen/space_120"
     android:orientation="vertical">
 
     <com.sumian.sd.pay.widget.PayItemView
         android:id="@+id/wechat_pay_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/space_60"
         app:desc="@string/wechat_pay"
         app:icon="@mipmap/ic_group_pay_icon_wechatpayment"
         app:is_select="true" />
@@ -16,12 +16,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1"
-        android:background="@color/l1_color" />
+        android:background="@color/l1_color"
+        android:visibility="gone" />
 
     <com.sumian.sd.pay.widget.PayItemView
         android:id="@+id/alipay_pay_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/space_60"
         app:desc="@string/alipay"
         app:icon="@mipmap/ic_group_pay_icon_alipay"
         app:is_select="false" />

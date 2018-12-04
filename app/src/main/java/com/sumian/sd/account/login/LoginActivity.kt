@@ -1,7 +1,9 @@
 package com.sumian.sd.account.login
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
@@ -54,10 +56,15 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
 
         tv_wechat_login?.apply {
 
-            val drawable = getDrawable(R.drawable.ic_sign_wechat) as Drawable
-            drawable.setBounds(0, 0, resources.getDimensionPixelOffset(R.dimen.space_22), resources.getDimensionPixelOffset(R.dimen.space_18))
-            text = QMUISpanHelper.generateSideIconText(true, resources.getDimensionPixelOffset(R.dimen.space_10), getString(R.string.wechat_login), drawable)
-            tv_wechat_login.postInvalidate()
+            //val drawable = getDrawable(R.drawable.ic_sign_wechat) as Drawable
+
+            val oldBmp = BitmapFactory.decodeResource(resources, R.drawable.ic_sign_wechat)
+            val newBmp = Bitmap.createScaledBitmap(oldBmp, resources.getDimensionPixelOffset(R.dimen.space_18), resources.getDimensionPixelOffset(R.dimen.space_14), true)
+            oldBmp.recycle()
+            val bitmapDrawable = BitmapDrawable(resources, newBmp)
+            //drawable.setBounds(0, 0, resources.getDimensionPixelOffset(R.dimen.space_22), resources.getDimensionPixelOffset(R.dimen.space_18))
+            text = QMUISpanHelper.generateSideIconText(true, resources.getDimensionPixelOffset(R.dimen.space_8), getString(R.string.wechat_login), bitmapDrawable)
+            //newBmp.recycle()
             setOnClickListener { wechatLogin() }
 
         }
