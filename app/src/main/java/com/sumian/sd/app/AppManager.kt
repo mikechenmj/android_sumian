@@ -34,6 +34,7 @@ import com.sumian.sd.base.ActivityDelegateFactory
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.FileHelper
 import com.sumian.sd.doctor.model.DoctorViewModel
+import com.sumian.sd.log.SdLogManager
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.SdApi
@@ -165,6 +166,7 @@ object AppManager {
         initUtils(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
         initAppNotificationManager(app)
+        SdLogManager.init(app)
     }
 
 

@@ -32,6 +32,7 @@ import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
 import com.sumian.sd.kefu.KefuManager
+import com.sumian.sd.log.SdLogManager
 import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
@@ -136,8 +137,8 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
         super.initData()
         DeviceManager.uploadCacheSn()
         //注册站内信消息接收容器
-            KefuManager.loginAndQueryUnreadMsg()
-            AppNotificationManager.uploadPushId()
+        KefuManager.loginAndQueryUnreadMsg()
+        AppNotificationManager.uploadPushId()
         AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
         SumianExecutor.runOnUiThread(({
             sendHeartBeats()
@@ -151,6 +152,7 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
                 }
             }
         })
+//        SdLogManager.log(mapOf("test" to "zxz"))
     }
 
     private fun changeStatusBarTextColor(isDark: Boolean) {
