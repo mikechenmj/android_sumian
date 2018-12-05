@@ -49,7 +49,7 @@ public class UIProvider {
 
     private boolean showProgress = true;
 
-    private OnMsgCallback mOnMsgCallback;
+    private UnreadMessageChangeListener mUnreadMessageChangeListener;
 
     private int mCacheMsgSize;
 
@@ -94,13 +94,12 @@ public class UIProvider {
         return showProgress;
     }
 
-    public void showDotCallback(OnMsgCallback onMsgCallback) {
-        mOnMsgCallback = onMsgCallback;
+    public void setUnreadMessageChangeListener(UnreadMessageChangeListener unreadMessageChangeListener) {
+        mUnreadMessageChangeListener = unreadMessageChangeListener;
     }
 
-    public interface OnMsgCallback {
-
-        void onMsg(int msgLength);
+    public interface UnreadMessageChangeListener {
+        void onMessageCountChange(int messageCount);
     }
 
     public int isHaveMsgSize() {
@@ -109,8 +108,8 @@ public class UIProvider {
 
     public void clearCacheMsg() {
         mCacheMsgSize = 0;
-        if (mOnMsgCallback != null) {
-            mOnMsgCallback.onMsg(mCacheMsgSize);
+        if (mUnreadMessageChangeListener != null) {
+            mUnreadMessageChangeListener.onMessageCountChange(mCacheMsgSize);
         }
     }
 
@@ -131,8 +130,9 @@ public class UIProvider {
                 mCacheMsgSize = msgs.size();
                 if (!EasyUtils.isAppRunningForeground(context)) {
                     UIProvider.getInstance().getNotifier().onNewMesg(msgs);
-                } else {
-                    mOnMsgCallback.onMsg(msgs.size());
+                }
+                if (mUnreadMessageChangeListener != null) {
+                    mUnreadMessageChangeListener.onMessageCountChange(msgs.size());
                 }
             }
 

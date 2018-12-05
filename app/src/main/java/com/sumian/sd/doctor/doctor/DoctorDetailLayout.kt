@@ -38,7 +38,6 @@ class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: Attr
         tv_department?.text = String.format(Locale.getDefault(), "%s %s", doctor.hospital, doctor.department)
         fold_layout?.setText(doctor.introduction_no_tag ?: "")
         siv_customer_service?.setOnClickListener {
-            UIProvider.getInstance().clearCacheMsg()
             KefuManager.launchKefuActivity()
         }
 
