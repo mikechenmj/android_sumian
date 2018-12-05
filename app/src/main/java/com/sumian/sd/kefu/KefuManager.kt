@@ -17,54 +17,33 @@ import com.sumian.sd.network.callback.BaseSdResponseCallback
  *     version: 1.0
  * </pre>
  */
-class KefuManager private constructor() {
+object KefuManager {
     /**
      * 每次打开客服页面，发送第一条消息时需要给服务器发送通知
      */
-    var waitingSendMessage = false
+    var mLaunchKefuActivity = false
 
-    companion object {
-
-        private val INSTANCE: KefuManager by lazy {
-            KefuManager()
-        }
-
-        @JvmStatic
-        fun getInstance(): KefuManager {
-            return INSTANCE
-        }
-
-        @JvmStatic
-        fun launchKefuActivity() {
-            HwLeanCloudHelper.loginEasemob { HwLeanCloudHelper.startEasemobChatRoom() }
-            INSTANCE.waitingSendMessage = true
-        }
+    @JvmStatic
+    fun launchKefuActivity() {
+        HwLeanCloudHelper.loginEasemob { HwLeanCloudHelper.startEasemobChatRoom() }
+        mLaunchKefuActivity = true
     }
 
     init {
         registerMessageListener()
     }
 
+    /**
+     * 需求：用户进入客服页面发送第一条消息时要上报服务器
+     */
     private fun registerMessageListener() {
         ChatClient.getInstance().chatManager().addMessageListener(object : ChatManager.MessageListener {
             override fun onMessage(msgs: MutableList<Message>?) {
             }
 
             override fun onMessageSent() {
-                if (waitingSendMessage) {
-                    AppManager
-                            .getSdHttpService()
-                            .newCustomerMessage()
-                            .enqueue(object : BaseSdResponseCallback<Any>() {
-                                override fun onFailure(errorResponse: ErrorResponse) {
-                                    LogUtils.d(errorResponse.message)
-                                }
-
-                                override fun onSuccess(response: Any?) {
-                                    LogUtils.d(response)
-                                }
-                            })
-                    waitingSendMessage = false
+                if (mLaunchKefuActivity) {
+                    notifyUserSendFirstMessage()
                 }
             }
 
@@ -74,5 +53,21 @@ class KefuManager private constructor() {
             override fun onMessageStatusUpdate() {
             }
         })
+    }
+
+    private fun notifyUserSendFirstMessage() {
+        AppManager
+                .getSdHttpService()
+                .newCustomerMessage()
+                .enqueue(object : BaseSdResponseCallback<Any>() {
+                    override fun onFailure(errorResponse: ErrorResponse) {
+                        LogUtils.d(errorResponse.message)
+                    }
+
+                    override fun onSuccess(response: Any?) {
+                        LogUtils.d(response)
+                    }
+                })
+        mLaunchKefuActivity = false
     }
 }
