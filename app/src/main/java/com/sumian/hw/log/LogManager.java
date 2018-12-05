@@ -4,16 +4,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.util.Log;
 import android.webkit.WebSettings;
 
-import com.sumian.hw.utils.StreamUtil;
-import com.sumian.sd.BuildConfig;
 import com.sumian.sd.app.App;
+import com.sumian.sd.log.SdLogManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -26,15 +23,15 @@ public class LogManager {
 
     public static final String LOG_FILE_NAME = "Android_sumian_app.txt";
 
-    private static final int PHONE_INFO_TYPE = 0x01;//系统信息
+    private static final int PHONE_INFO_TYPE        = 0x01;//系统信息
     private static final int BLUETOOTH_ADAPTER_TYPE = 0x02;//蓝牙
-    private static final int USER_OPERATION_TYPE = 0x03;//用户操作
-    private static final int MONITOR_TYPE = 0x04;//监测仪
-    private static final int SPEED_SLEEPER_TYPE = 0x05;//速眠仪
-    private static final int TRANSPARENT_DATA_TYPE = 0x06;//透传数据
+    private static final int USER_OPERATION_TYPE    = 0x03;//用户操作
+    private static final int MONITOR_TYPE           = 0x04;//监测仪
+    private static final int SPEED_SLEEPER_TYPE     = 0x05;//速眠仪
+    private static final int TRANSPARENT_DATA_TYPE  = 0x06;//透传数据
 
-    private static final String DELIMITER = " : ";
-    private static final String LEFT_BRACKETS = "[";
+    private static final String DELIMITER      = " : ";
+    private static final String LEFT_BRACKETS  = "[";
     private static final String RIGHT_BRACKETS = "]";
 
     private File mLogFile;
@@ -152,41 +149,42 @@ public class LogManager {
     }
 
     private static void appendLog(String log) {
-        synchronized (LogManager.class) {
-            INSTANCE.mWriteHandler.post(() -> {
-                RandomAccessFile randomAccessFile = null;
-                try {
-                    if (init().fileIsExists()) {
-                        if (init().mLogFile.length() / (1024.f * 1024.0f) > 5.0f) {
-                            boolean delete = init().mLogFile.delete();
-                            if (delete) {
-                                boolean newFile = init().mLogFile.createNewFile();
-                                if (newFile) {
-                                    randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
-                                    randomAccessFile.seek(randomAccessFile.length());
-                                    randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
-                                }
-                            }
-                        } else {
-                            randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
-                            randomAccessFile.seek(randomAccessFile.length());
-                            randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
-                        }
-                    } else {
-                        randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
-                        randomAccessFile.seek(randomAccessFile.length());
-                        randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
-                    }
-                    if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "appendLog: --------->" + log + "  " + init().mLogFile.length() / 1024.0f + " kb");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    StreamUtil.close(randomAccessFile);
-                }
-            });
-        }
+//        synchronized (LogManager.class) {
+//            INSTANCE.mWriteHandler.post(() -> {
+//                RandomAccessFile randomAccessFile = null;
+//                try {
+//                    if (init().fileIsExists()) {
+//                        if (init().mLogFile.length() / (1024.f * 1024.0f) > 5.0f) {
+//                            boolean delete = init().mLogFile.delete();
+//                            if (delete) {
+//                                boolean newFile = init().mLogFile.createNewFile();
+//                                if (newFile) {
+//                                    randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
+//                                    randomAccessFile.seek(randomAccessFile.length());
+//                                    randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
+//                                }
+//                            }
+//                        } else {
+//                            randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
+//                            randomAccessFile.seek(randomAccessFile.length());
+//                            randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
+//                        }
+//                    } else {
+//                        randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
+//                        randomAccessFile.seek(randomAccessFile.length());
+//                        randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
+//                    }
+//                    if (BuildConfig.DEBUG) {
+//                        Log.d(TAG, "appendLog: --------->" + log + "  " + init().mLogFile.length() / 1024.0f + " kb");
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } finally {
+//                    StreamUtil.close(randomAccessFile);
+//                }
+//            });
+//        }
+        SdLogManager.INSTANCE.logDevice(log);
     }
 
     private static String getUserAgent() {
@@ -216,8 +214,8 @@ public class LogManager {
         PackageManager packageManager = App.Companion.getAppContext().getPackageManager();
         try {
             PackageInfo packageInfo = packageManager.getPackageInfo(App.Companion.getAppContext().getPackageName(), 0);
-            String versionName = packageInfo.versionName;
-            int versionCode = packageInfo.versionCode;
+            String      versionName = packageInfo.versionName;
+            int         versionCode = packageInfo.versionCode;
 
             appInfo = "versionName=" + versionName + "  versionCode=" + versionCode;
 

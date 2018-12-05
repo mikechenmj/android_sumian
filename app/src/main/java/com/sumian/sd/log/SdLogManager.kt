@@ -5,16 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.text.TextUtils
-import androidx.core.content.getSystemService
-import androidx.core.net.ConnectivityManagerCompat
-import androidx.lifecycle.Observer
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.sumian.common.log.AliyunLogManager
+import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.BuildConfig
-import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
-import com.umeng.socialize.utils.DeviceConfig.context
+import com.sumian.sd.device.DeviceInfoFormatter
 import java.util.*
 
 /**
@@ -25,6 +23,7 @@ import java.util.*
  * https://www.tapd.cn/21254041/prong/stories/view/1121254041001003070?url_cache_key=aec350d6d1ce106539a689985e57282f&action_entry_type=stories
  * version: 1.0
  */
+@Suppress("MemberVisibilityCanBePrivate")
 object SdLogManager {
     public const val KEY_CLIENT_TYPE = "client_type"
     public const val KEY_NETWORK = "network"
@@ -45,6 +44,9 @@ object SdLogManager {
     public const val CLIENT_TYPE_ANDROID = "Android"
     public const val CLIENT_TYPE_IOS = "iOS"
 
+    public const val APP_TYPE_SD = "sd"
+    public const val APP_TYPE_SDD = "sdd"
+
     public const val NETWORK_TYPE_WIFI = "wifi"
     public const val NETWORK_TYPE_4G = "4G"
     public const val NETWORK_TYPE_3G = "3G"
@@ -55,13 +57,27 @@ object SdLogManager {
     public const val ACTION_TYPE_HTTP = "http"
     public const val ACTION_TYPE_DEVICE = "device"
 
+    public const val PAGE_OPERATION = ""
+
     var clientType = CLIENT_TYPE_ANDROID
     var network = NETWORK_TYPE_UNKNOWN
     var mobile = ""
     var userId = "0"
+    var appVersion = ""
+    var appType = APP_TYPE_SD
+    var deviceInfo = ""
 
-    fun createTemplateLogMap(): Map<String, String> {
-        return mapOf(KEY_CLIENT_TYPE to clientType, KEY_NETWORK to network, KEY_TIME to getTime(), KEY_MOBILE to mobile, KEY_USER_ID to userId)
+    fun createTemplateLogMap(): MutableMap<String, String> {
+        return mapOf(
+                KEY_CLIENT_TYPE to clientType,
+                KEY_NETWORK to network,
+                KEY_TIME to getTime(),
+                KEY_MOBILE to mobile,
+                KEY_USER_ID to userId,
+                KEY_APP_TYPE to appType,
+                KEY_APP_VERSION to appVersion
+        )
+                .toMutableMap()
     }
 
     private fun getTime(): String {
@@ -78,32 +94,70 @@ object SdLogManager {
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT
         )
+        network = getNetworkTypeString()
+        appVersion = AppUtils.getAppVersionName()
+        deviceInfo = JsonUtil.toJson(DeviceInfoFormatter.getDeviceInfoMap())
     }
 
     fun log(map: Map<String, String>) {
-        AliyunLogManager.log(map)
+        AliyunLogManager.log(addMap(createTemplateLogMap(), map))
+    }
+
+    fun logPage(pageClassName: String, open: Boolean) {
+        log(mapOf(
+                KEY_ACTION_TYPE to ACTION_TYPE_PAGE,
+                KEY_PAGE_DATA to "$pageClassName ${if (open) "打开" else "关闭"}"
+        ))
+    }
+
+    fun logDevice(s: String) {
+        log(mapOf(
+                KEY_ACTION_TYPE to ACTION_TYPE_DEVICE,
+                KEY_REMARK to s
+        ))
+    }
+
+    fun logHttp(request: String?, response: String?) {
+        log(mapOf(
+                KEY_ACTION_TYPE to ACTION_TYPE_HTTP,
+                KEY_HTTP_REQUEST to (request ?: ""),
+                KEY_HTTP_RESPONSE to (response ?: "")
+        ))
     }
 
     private fun observeNetworkState(context: Context) {
         context.registerReceiver(object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                when (NetworkUtils.getNetworkType()) {
-                    NetworkUtils.NetworkType.NETWORK_2G -> network = NETWORK_TYPE_2G
-                    NetworkUtils.NetworkType.NETWORK_3G -> network = NETWORK_TYPE_3G
-                    NetworkUtils.NetworkType.NETWORK_4G -> network = NETWORK_TYPE_4G
-                    NetworkUtils.NetworkType.NETWORK_WIFI -> network = NETWORK_TYPE_WIFI
-                    else -> network = NETWORK_TYPE_UNKNOWN
-                }
+                network = getNetworkTypeString()
             }
         }, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
+    private fun getNetworkTypeString(): String {
+        return when (NetworkUtils.getNetworkType()) {
+            NetworkUtils.NetworkType.NETWORK_2G -> NETWORK_TYPE_2G
+            NetworkUtils.NetworkType.NETWORK_3G -> NETWORK_TYPE_3G
+            NetworkUtils.NetworkType.NETWORK_4G -> NETWORK_TYPE_4G
+            NetworkUtils.NetworkType.NETWORK_WIFI -> NETWORK_TYPE_WIFI
+            else -> NETWORK_TYPE_UNKNOWN
+        }
+    }
+
     private fun observeUserInfo() {
-        AppManager.getAccountViewModel().liveDataToken.observeForever {
-            Observer<Token> { t ->
+        AppManager.getAccountViewModel().liveDataToken.observeForever { t ->
+            run {
                 mobile = t?.user?.mobile ?: ""
                 userId = t?.user?.id.toString() ?: "0"
+                LogUtils.d("token", t.toString())
             }
         }
+    }
+
+    private fun addMap(map1: Map<String, String>, map2: Map<String, String>): MutableMap<String, String> {
+        val map = map1.toMutableMap()
+        for ((k, v) in map2) {
+            map[k] = v
+        }
+        return map
     }
 }

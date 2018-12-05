@@ -23,12 +23,12 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppContext = this
-        LogManager.appendPhoneLog("APP 启动")
         AppManager.initOnAppStart(this)
         registerActivityLifecycleCallbacks(AppInitThirdPlatformLifecycleCallback.create())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
         ProcessLifecycleOwner.get().lifecycle.addObserver(ForegroundBackgroundListener())
+        LogManager.appendPhoneLog("APP 启动")
     }
 }
 
