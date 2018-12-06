@@ -11,7 +11,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
-import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.log.LogManager
@@ -30,7 +29,6 @@ import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
 import com.sumian.sd.kefu.KefuManager
 import com.sumian.sd.main.event.ChangeMainTabEvent
-import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.tab.DoctorFragment
@@ -190,19 +188,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
 
     override fun onBackPressed() {
         returnToPhoneLauncher()
-    }
-
-    private fun sendHeartBeats() {
-        val call = AppManager.getSdHttpService().sendHeartbeats("open_app")
-        call.enqueue(object : BaseSdResponseCallback<Any?>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-
-            }
-
-            override fun onSuccess(response: Any?) {
-
-            }
-        })
     }
 
     private fun returnToPhoneLauncher() {
