@@ -97,6 +97,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
             override fun onFailure(errorResponse: ErrorResponse) {
                 if (errorResponse.code == 404) {
                     openMap["nickname"] = openMap["screen_name"]
+                    openMap["headimgurl"] = openMap["profile_image_url"]
                     val socialInfo = JsonUtil.toJson(openMap)
                     ValidatePhoneNumberActivity.launchForBindMobile(socialInfo)
                 } else {
