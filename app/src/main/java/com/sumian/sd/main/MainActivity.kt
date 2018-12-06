@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.hw.log.LogManager
@@ -20,7 +19,6 @@ import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
-import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.constants.SpKeys
@@ -90,6 +88,11 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
         return R.layout.activity_main
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AppManager.onMainActivityCreate()
+    }
+
     override fun onStart() {
         super.onStart()
         mVersionDelegate.checkVersion(this)
@@ -133,13 +136,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
 
     override fun initData() {
         super.initData()
-        DeviceManager.uploadCacheSn()
-        //注册站内信消息接收容器
-        KefuManager.loginAndQueryUnreadMsg()
-        AppNotificationManager.uploadPushId()
-        AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
-        AppManager.sendHeartbeat()
-        syncUserInfo()
         // 中途医生绑定状态发生改变时，如果处于doctor tab，改变status 颜色
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
@@ -148,7 +144,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
                 }
             }
         })
-//        SdLogManager.log(mapOf("test" to "zxz"))
     }
 
     private fun changeStatusBarTextColor(isDark: Boolean) {
@@ -206,18 +201,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
 
             override fun onSuccess(response: Any?) {
 
-            }
-        })
-    }
-
-    private fun syncUserInfo() {
-        val call = AppManager.getSdHttpService().getUserProfile()
-        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-            }
-
-            override fun onSuccess(response: UserInfo?) {
-                AppManager.getAccountViewModel().updateUserInfo(response)
             }
         })
     }

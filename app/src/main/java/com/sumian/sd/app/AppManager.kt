@@ -32,6 +32,8 @@ import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
+import com.sumian.sd.account.bean.Token
+import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.account.login.NewUserGuideActivity
 import com.sumian.sd.account.model.AccountViewModel
@@ -39,6 +41,7 @@ import com.sumian.sd.base.ActivityDelegateFactory
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.FileHelper
 import com.sumian.sd.doctor.model.DoctorViewModel
+import com.sumian.sd.kefu.KefuManager
 import com.sumian.sd.log.SdLogManager
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.network.NetworkManager
@@ -296,6 +299,8 @@ object AppManager {
         return AppUtils.isAppForeground()
     }
 
+    // ------------ App's important lifecycle events start------------
+
     fun onAppForeground() {
         LogManager.appendUserOperationLog("App 进入 前台")
         DeviceManager.tryToConnectCacheMonitor()
@@ -306,6 +311,29 @@ object AppManager {
         LogManager.appendUserOperationLog("App 进入 后台")
     }
 
+    fun onMainActivityCreate() {
+        DeviceManager.uploadCacheSn()
+        KefuManager.loginAndQueryUnreadMsg()
+        AppNotificationManager.uploadPushId()
+        AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
+        AppManager.sendHeartbeat()
+        AppManager.syncUserInfo()
+    }
+
+    fun onLoginSuccess(token: Token?) {
+        if (token == null) {
+            ToastUtils.showShort(R.string.error)
+            return
+        }
+        AppManager.getAccountViewModel().updateToken(token)
+        AppManager.launchMainOrNewUserGuide()
+    }
+
+    fun onLogout() {
+
+    }
+
+    // ------------ App's important lifecycle events end------------
     fun sendHeartbeat() {
         if (!getAccountViewModel().isLogin) {
             return
@@ -320,5 +348,17 @@ object AppManager {
 
                     }
                 })
+    }
+
+    fun syncUserInfo() {
+        val call = AppManager.getSdHttpService().getUserProfile()
+        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+            }
+
+            override fun onSuccess(response: UserInfo?) {
+                AppManager.getAccountViewModel().updateUserInfo(response)
+            }
+        })
     }
 }

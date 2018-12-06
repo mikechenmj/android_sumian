@@ -30,7 +30,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
         call.enqueue(object : BaseSdResponseCallback<Token>() {
 
             override fun onSuccess(response: Token?) {
-                LoginHelper.onLoginSuccess(response)
+                AppManager.onLoginSuccess(response)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -53,7 +53,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onSuccess(response: Token?) {
-                LoginHelper.onLoginSuccess(response)
+                AppManager.onLoginSuccess(response)
             }
 
             override fun onFinish() {
@@ -106,7 +106,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onSuccess(response: Token?) {
-                LoginHelper.onLoginSuccess(response)
+                AppManager.onLoginSuccess(response)
             }
 
             override fun onFinish() {
@@ -117,7 +117,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
     }
 
     override fun requestCaptcha(mobile: String) {
-        LoginHelper.requestCaptcha(mobile, object : LoginHelper.RequestCaptchaListener {
+        CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
             override fun onStart() {
                 view.showLoading()
             }
