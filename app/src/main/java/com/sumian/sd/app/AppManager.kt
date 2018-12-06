@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.view.Gravity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -16,6 +20,7 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
@@ -38,6 +43,7 @@ import com.sumian.sd.log.SdLogManager
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.SdApi
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationConst
 import com.sumian.sd.notification.NotificationDelegate
 import com.sumian.sd.notification.SchemeResolver
@@ -167,6 +173,21 @@ object AppManager {
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
         initAppNotificationManager(app)
         SdLogManager.init(app)
+        observeAppLifecycle()
+    }
+
+    private fun observeAppLifecycle() {
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : LifecycleObserver {
+            @OnLifecycleEvent(Lifecycle.Event.ON_START)
+            fun onAppForeground() {
+                AppManager.onAppForeground()
+            }
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+            fun onAppBackground() {
+                AppManager.onAppBackground()
+            }
+        })
     }
 
 
@@ -273,5 +294,31 @@ object AppManager {
 
     fun isAppForeground(): Boolean {
         return AppUtils.isAppForeground()
+    }
+
+    fun onAppForeground() {
+        LogManager.appendUserOperationLog("App 进入 前台")
+        DeviceManager.tryToConnectCacheMonitor()
+        sendHeartbeat()
+    }
+
+    fun onAppBackground() {
+        LogManager.appendUserOperationLog("App 进入 后台")
+    }
+
+    fun sendHeartbeat() {
+        if (!getAccountViewModel().isLogin) {
+            return
+        }
+        AppManager.getSdHttpService().sendHeartbeats("open_app")
+                .enqueue(object : BaseSdResponseCallback<Any?>() {
+                    override fun onFailure(errorResponse: ErrorResponse) {
+
+                    }
+
+                    override fun onSuccess(response: Any?) {
+
+                    }
+                })
     }
 }

@@ -15,7 +15,6 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.utils.SettingsUtil
-import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.hw.upgrade.model.VersionModel
@@ -32,7 +31,6 @@ import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
 import com.sumian.sd.kefu.KefuManager
-import com.sumian.sd.log.SdLogManager
 import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
@@ -140,10 +138,8 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
         AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
-        SumianExecutor.runOnUiThread(({
-            sendHeartBeats()
-            syncUserInfo()
-        }), 200)
+        AppManager.sendHeartbeat()
+        syncUserInfo()
         // 中途医生绑定状态发生改变时，如果处于doctor tab，改变status 颜色
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
