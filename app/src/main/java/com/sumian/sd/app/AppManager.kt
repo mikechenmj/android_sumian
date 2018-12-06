@@ -12,8 +12,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
-import com.hyphenate.chat.ChatClient
-import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.blue.manager.BlueManager
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.dns.HttpDnsEngine
@@ -235,14 +233,7 @@ object AppManager {
     @JvmStatic
     fun initKefu(context: Context) {
         synchronized(AppManager::class) {
-            // Kefu SDK 初始化
-            val options = ChatClient.Options()
-            options.setConsoleLog(BuildConfig.DEBUG)
-            options.setAppkey(BuildConfig.EASEMOB_APP_KEY)//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
-            options.setTenantId(BuildConfig.EASEMOB_TENANT_ID)//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
-            ChatClient.getInstance().init(context, options)
-            // Kefu EaseUI的初始化
-            UIProvider.getInstance().init(context)
+            KefuManager.init(context)
         }
     }
 
@@ -251,25 +242,6 @@ object AppManager {
         AppManager.getBlueManager().bluePeripheral?.close()
         ActivityUtils.finishAllActivities()
         LogManager.appendUserOperationLog("用户退出 app.......")
-    }
-
-    fun logoutAndLaunchLoginActivity() {
-        // user report
-        AppManager.getOpenAnalytics().onProfileSignOff()
-        // release bluetooth
-        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().doStopScan() }
-        AppManager.getBlueManager().release()
-        // logout chat
-        ChatClient.getInstance().logout(true, null)
-        // cancel notification
-        NotificationUtil.cancelAllNotification(App.getAppContext())
-        // update token
-        AppManager.getAccountViewModel().updateToken(null)
-        // update WeChat token cache
-        AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
-        // finish all and start LoginActivity
-        ActivityUtils.finishAllActivities()
-        LoginActivity.show()
     }
 
     fun launchMainAndFinishAll() {
@@ -329,8 +301,22 @@ object AppManager {
         AppManager.launchMainOrNewUserGuide()
     }
 
-    fun onLogout() {
-
+    fun logoutAndLaunchLoginActivity() {
+        // user report
+        AppManager.getOpenAnalytics().onProfileSignOff()
+        // release bluetooth
+        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().doStopScan() }
+        AppManager.getBlueManager().release()
+        KefuManager.logout()
+        // cancel notification
+        NotificationUtil.cancelAllNotification(App.getAppContext())
+        // update token
+        AppManager.getAccountViewModel().updateToken(null)
+        // update WeChat token cache
+        AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
+        // finish all and start LoginActivity
+        ActivityUtils.finishAllActivities()
+        LoginActivity.show()
     }
 
     // ------------ App's important lifecycle events end------------
