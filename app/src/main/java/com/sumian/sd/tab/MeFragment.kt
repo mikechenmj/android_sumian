@@ -11,7 +11,7 @@ import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.account.userProfile.SdUserProfileActivity
+import com.sumian.sd.account.userProfile.UserInfoActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.base.SdBasePresenter
@@ -87,7 +87,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
+            R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> UserInfoActivity.show(context, UserInfoActivity::class.java)
             R.id.dv_setting -> SettingActivity.show(context, SettingActivity::class.java)
             R.id.iv_notification -> NotificationListActivity.launch(activity)
             R.id.siv_customer_service -> {
