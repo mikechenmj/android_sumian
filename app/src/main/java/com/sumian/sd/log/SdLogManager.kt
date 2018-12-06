@@ -6,13 +6,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.sumian.common.log.AliyunLogManager
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceInfoFormatter
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -23,66 +23,52 @@ import java.util.*
  * https://www.tapd.cn/21254041/prong/stories/view/1121254041001003070?url_cache_key=aec350d6d1ce106539a689985e57282f&action_entry_type=stories
  * version: 1.0
  */
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
 object SdLogManager {
-    public const val KEY_CLIENT_TYPE = "client_type"
-    public const val KEY_NETWORK = "network"
-    public const val KEY_TIME = "time"
-    public const val KEY_ACTION_TYPE = "action_type"
-    public const val KEY_MOBILE = "mobile"
-    public const val KEY_USER_ID = "user_id"
-    public const val KEY_PAGE_DATA = "page_data"
-    public const val KEY_HTTP_REQUEST = "http_request"
-    public const val KEY_HTTP_RESPONSE = "http_response"
-    public const val KEY_APP_VERSION = "app_version"
-    public const val KEY_APP_TYPE = "app_type"
-    public const val KEY_DEVICE_INFO = "device_info"
-    public const val KEY_REMARK = "remark"
-    public const val KEY_USER_AGENT = "user_agent"
+    const val KEY_CLIENT_TYPE = "client_type"
+    const val KEY_NETWORK = "network"
+    const val KEY_TIME_IN_MILLIS = "time_in_millis"
+    const val KEY_FORMAT_TIME = "format_time"
+    const val KEY_ACTION_TYPE = "action_type"
+    const val KEY_MOBILE = "mobile"
+    const val KEY_USER_ID = "user_id"
+    const val KEY_PAGE_DATA = "page_data"
+    const val KEY_HTTP_REQUEST = "http_request"
+    const val KEY_HTTP_RESPONSE = "http_response"
+    const val KEY_APP_VERSION = "app_version"
+    const val KEY_APP_TYPE = "app_type"
+    const val KEY_DEVICE_INFO = "device_info"
+    const val KEY_REMARK = "remark"
+    const val KEY_USER_AGENT = "user_agent"
 
-    public const val CLIENT_TYPE_H5 = "H5"
-    public const val CLIENT_TYPE_ANDROID = "Android"
-    public const val CLIENT_TYPE_IOS = "iOS"
+    const val CLIENT_TYPE_H5 = "H5"
+    const val CLIENT_TYPE_ANDROID = "Android"
+    const val CLIENT_TYPE_IOS = "iOS"
 
-    public const val APP_TYPE_SD = "sd"
-    public const val APP_TYPE_SDD = "sdd"
+    const val APP_TYPE_SD = "sd"
+    const val APP_TYPE_SDD = "sdd"
 
-    public const val NETWORK_TYPE_WIFI = "wifi"
-    public const val NETWORK_TYPE_4G = "4G"
-    public const val NETWORK_TYPE_3G = "3G"
-    public const val NETWORK_TYPE_2G = "2G"
-    public const val NETWORK_TYPE_UNKNOWN = "unknown"
+    const val NETWORK_TYPE_WIFI = "wifi"
+    const val NETWORK_TYPE_4G = "4G"
+    const val NETWORK_TYPE_3G = "3G"
+    const val NETWORK_TYPE_2G = "2G"
+    const val NETWORK_TYPE_UNKNOWN = "unknown"
 
-    public const val ACTION_TYPE_PAGE = "page"
-    public const val ACTION_TYPE_HTTP = "http"
-    public const val ACTION_TYPE_DEVICE = "device"
+    const val ACTION_TYPE_PAGE = "page"
+    const val ACTION_TYPE_HTTP = "http"
+    const val ACTION_TYPE_DEVICE = "device"
 
-    public const val PAGE_OPERATION = ""
+    const val PAGE_OPERATION = ""
 
-    var clientType = CLIENT_TYPE_ANDROID
-    var network = NETWORK_TYPE_UNKNOWN
-    var mobile = ""
-    var userId = "0"
-    var appVersion = ""
-    var appType = APP_TYPE_SD
-    var deviceInfo = ""
-
-    fun createTemplateLogMap(): MutableMap<String, String> {
-        return mapOf(
-                KEY_CLIENT_TYPE to clientType,
-                KEY_NETWORK to network,
-                KEY_TIME to getTime(),
-                KEY_MOBILE to mobile,
-                KEY_USER_ID to userId,
-                KEY_APP_TYPE to appType,
-                KEY_APP_VERSION to appVersion
-        )
-                .toMutableMap()
-    }
-
-    private fun getTime(): String {
-        return Date().toString()
-    }
+    private var timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+    private var date = Date()
+    private var clientType = CLIENT_TYPE_ANDROID
+    private var network = NETWORK_TYPE_UNKNOWN
+    private var mobile = ""
+    private var userId = "0"
+    private var appVersion = ""
+    private var appType = APP_TYPE_SD
+    private var deviceInfo = ""
 
     fun init(context: Context) {
         observeUserInfo()
@@ -97,6 +83,26 @@ object SdLogManager {
         network = getNetworkTypeString()
         appVersion = AppUtils.getAppVersionName()
         deviceInfo = JsonUtil.toJson(DeviceInfoFormatter.getDeviceInfoMap())
+    }
+
+
+    fun createTemplateLogMap(): MutableMap<String, String> {
+        return mapOf(
+                KEY_CLIENT_TYPE to clientType,
+                KEY_NETWORK to network,
+                KEY_FORMAT_TIME to getTime(),
+                KEY_TIME_IN_MILLIS to System.currentTimeMillis().toString(),
+                KEY_MOBILE to mobile,
+                KEY_USER_ID to userId,
+                KEY_APP_TYPE to appType,
+                KEY_APP_VERSION to appVersion
+        )
+                .toMutableMap()
+    }
+
+    private fun getTime(): String {
+        date.time = System.currentTimeMillis()
+        return timeFormat.format(date)
     }
 
     fun log(map: Map<String, String>) {
@@ -147,8 +153,7 @@ object SdLogManager {
         AppManager.getAccountViewModel().liveDataToken.observeForever { t ->
             run {
                 mobile = t?.user?.mobile ?: ""
-                userId = t?.user?.id.toString() ?: "0"
-                LogUtils.d("token", t.toString())
+                userId = t?.user?.id.toString()
             }
         }
     }
