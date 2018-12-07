@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.sumian.common.base.BaseActivityManager;
 import com.sumian.common.base.IActivityDelegate;
 import com.sumian.common.helper.ToastHelper;
@@ -42,13 +43,13 @@ import retrofit2.Call;
 
 public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
-    private static final String TAG = SdBaseActivity.class.getSimpleName();
-    protected View mRoot;
-    protected Presenter mPresenter;
-    protected Activity mActivity;
-    private Set<Call> mCalls = new HashSet<>();
-    private LoadingDialog mLoadingDialog;
-    private IActivityDelegate mActivityDelegate = BaseActivityManager.INSTANCE.createActivityDelegate(this);
+    private static final String            TAG               = SdBaseActivity.class.getSimpleName();
+    protected            View              mRoot;
+    protected            Presenter         mPresenter;
+    protected            Activity          mActivity;
+    private              Set<Call>         mCalls            = new HashSet<>();
+    private              LoadingDialog     mLoadingDialog;
+    private              IActivityDelegate mActivityDelegate = BaseActivityManager.INSTANCE.createActivityDelegate(this);
 
     public static void show(Context context, Class<? extends SdBaseActivity> clx) {
         show(context, clx, null);
@@ -155,6 +156,9 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
             finish();
         }
         mActivityDelegate.onCreate(savedInstanceState);
+        ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0)
+                .setOnClickListener(v -> KeyboardUtils.hideSoftInput(SdBaseActivity.this));
+
     }
 
     @Override

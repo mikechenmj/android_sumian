@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 
 import com.sumian.common.image.ImageLoader;
 import com.sumian.common.media.SelectImageActivity;
@@ -52,14 +51,14 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ALL")
-public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
+public class UserInfoActivity extends SdBaseActivity<SdUserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, SdUserInfoContract.View, UMAuthListener, Observer<Token> {
 
     @SuppressWarnings("unused")
-    private static final String TAG = SdUserProfileActivity.class.getSimpleName();
-    private final static String imagePathName = "/image/";
-    private static final int PIC_REQUEST_CODE_CAMERA = 0x02;
+    private static final String TAG                     = UserInfoActivity.class.getSimpleName();
+    private final static String imagePathName           = "/image/";
+    private static final int    PIC_REQUEST_CODE_CAMERA = 0x02;
 
     private TitleBar mTitleBar;
     private CircleImageView mIvAvatar;
@@ -82,7 +81,7 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_user_profile;
+        return R.layout.activity_user_info;
     }
 
     @Override
@@ -100,9 +99,6 @@ public class SdUserProfileActivity extends SdBaseActivity<SdUserInfoContract.Pre
         mDvArea.getContentView().setMaxLines(1);
         mDvArea.getContentView().setMaxEms(11);
         mDvArea.getContentView().setEllipsize(TextUtils.TruncateAt.END);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mDvArea.getContentView().getLayoutParams();
-        layoutParams.rightMargin = 0;
-        mDvArea.getContentView().setLayoutParams(layoutParams);
         mDvHeight = findViewById(R.id.dv_height);
         mDvWeight = findViewById(R.id.dv_weight);
         mDvEduLevel = findViewById(R.id.dv_edu_level);

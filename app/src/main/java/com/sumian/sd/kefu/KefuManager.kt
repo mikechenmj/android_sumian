@@ -1,5 +1,6 @@
 package com.sumian.sd.kefu
 
+import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
@@ -47,9 +48,21 @@ object KefuManager {
         mLaunchKefuActivity = true
     }
 
-    init {
+    fun init(context: Context) {
+        val options = ChatClient.Options()
+        options.setConsoleLog(BuildConfig.DEBUG)
+        options.setAppkey(BuildConfig.EASEMOB_APP_KEY)//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
+        options.setTenantId(BuildConfig.EASEMOB_TENANT_ID)//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
+        ChatClient.getInstance().init(context, options)
+        // Kefu EaseUI的初始化
+        UIProvider.getInstance().init(context)
         registerMessageListener()
         UIProvider.getInstance().setUnreadMessageChangeListener { mMessageCountLiveData.postValue(it) }
+    }
+
+    fun logout() {
+        // logout chat
+        ChatClient.getInstance().logout(true, null)
     }
 
     fun loginAndQueryUnreadMsg() {
