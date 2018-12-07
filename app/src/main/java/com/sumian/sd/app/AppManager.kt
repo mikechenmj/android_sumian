@@ -26,6 +26,7 @@ import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.job.SleepDataUploadManager
+import com.sumian.hw.log.LogJobIntentService
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.BuildConfig
@@ -281,6 +282,7 @@ object AppManager {
 
     fun onAppBackground() {
         LogManager.appendUserOperationLog("App 进入 后台")
+//        LogJobIntentService.uploadLogIfNeed(App.getAppContext())
     }
 
     fun onMainActivityCreate() {
