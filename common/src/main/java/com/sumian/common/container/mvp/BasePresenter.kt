@@ -1,7 +1,6 @@
 package com.sumian.common.container.mvp
 
 import com.sumian.common.container.delegate.ContainerDelegate
-import com.sumian.common.mvp.IView
 import retrofit2.Call
 
 /**
@@ -20,12 +19,16 @@ abstract class BasePresenter<View : IView> : IPresenter {
         ContainerDelegate.install()
     }
 
-    override fun addCall(call: Call<*>) {
-        mContainerDelegate.addCallAction(call)
+    protected fun addCall(call: Call<*>) {
+        mContainerDelegate.addCall(call)
+    }
+
+    override fun onCancel() {
+        mContainerDelegate.onCancel()
     }
 
     override fun onRelease() {
-        mContainerDelegate.onCancel()
+        onCancel()
         mContainerDelegate.onRelease()
         mView = null
     }

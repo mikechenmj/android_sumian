@@ -10,23 +10,22 @@ import java.lang.ref.WeakReference
  *
  * on 2018/12/5
  *
- * desc:
+ * desc: container delegate impl
  *
  */
 class ContainerDelegate : IContainerDelegate {
 
     companion object {
-
         @JvmStatic
         fun install(): ContainerDelegate {
             return ContainerDelegate()
         }
     }
 
-    private lateinit var weakActivity: WeakReference<Context>
+    private lateinit var weakContext: WeakReference<Context>
 
     private val mLoadingDialog: LoadingDialog by lazy {
-        LoadingDialog(weakActivity.get()!!)
+        LoadingDialog(weakContext.get()!!)
     }
 
     private val mCalls by lazy {
@@ -34,7 +33,7 @@ class ContainerDelegate : IContainerDelegate {
     }
 
     override fun setup(context: Context) {
-        weakActivity = WeakReference(context)
+        weakContext = WeakReference(context)
     }
 
     override fun onShowLoading() {
@@ -49,7 +48,7 @@ class ContainerDelegate : IContainerDelegate {
         }
     }
 
-    override fun addCallAction(call: Call<*>) {
+    override fun addCall(call: Call<*>) {
         mCalls.add(call)
     }
 
@@ -60,6 +59,7 @@ class ContainerDelegate : IContainerDelegate {
             //}
         }
         mCalls.clear()
+
     }
 
     override fun onRelease() {

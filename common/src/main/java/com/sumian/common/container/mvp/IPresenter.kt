@@ -1,7 +1,5 @@
 package com.sumian.common.container.mvp
 
-import retrofit2.Call
-
 /**
  * Created by sm
  *
@@ -11,8 +9,6 @@ import retrofit2.Call
  *
  */
 interface IPresenter {
-
-    fun addCall(call: Call<*>)
-
+    fun onCancel()
     fun onRelease()
 }

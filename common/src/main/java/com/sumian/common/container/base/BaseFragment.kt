@@ -1,6 +1,7 @@
 package com.sumian.common.container.base
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.os.MessageQueue
@@ -19,7 +20,7 @@ import com.sumian.common.container.mvp.IPresenter
  *
  * on 2018/12/5
  *
- * desc:
+ * desc: fragment container
  *
  */
 abstract class BaseFragment<Presenter : IPresenter> : Fragment(), IContainer, BaseShowLoadingView {
@@ -131,10 +132,12 @@ abstract class BaseFragment<Presenter : IPresenter> : Fragment(), IContainer, Ba
     }
 
     override fun onRelease() {
+        mPresenter?.onRelease()
         containerDelegate.onRelease()
     }
 
     override fun onCancel() {
+        mPresenter?.onCancel()
         containerDelegate.onCancel()
     }
 
@@ -147,10 +150,32 @@ abstract class BaseFragment<Presenter : IPresenter> : Fragment(), IContainer, Ba
     }
 
     private fun prepareDataTask() {
-        Looper.myQueue().addIdleHandler(mPrepareInitDataTask)
+        prepareTask(mPrepareInitDataTask)
     }
 
     private fun prepareWidgetTask() {
-        Looper.myQueue().addIdleHandler(mPrepareInitWidgetTask)
+        prepareTask(mPrepareInitWidgetTask)
+    }
+
+    private fun prepareTask(task: MessageQueue.IdleHandler) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            context?.mainLooper?.queue?.addIdleHandler(task)
+        } else {
+            Looper.myQueue().addIdleHandler(task)
+        }
+    }
+
+    private fun prepareTask(block: () -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            context?.mainLooper?.queue?.addIdleHandler {
+                block.invoke()
+                false
+            }
+        } else {
+            Looper.myQueue().addIdleHandler {
+                block.invoke()
+                false
+            }
+        }
     }
 }
