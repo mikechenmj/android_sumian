@@ -2,7 +2,6 @@
 
 package com.sumian.common.player
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -10,6 +9,7 @@ import android.content.IntentFilter
 import android.media.AudioManager
 import android.media.MediaPlayer
 import com.sumian.common.utils.SumianExecutor
+import java.lang.ref.WeakReference
 import java.util.*
 
 /**
@@ -19,19 +19,18 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-@SuppressLint("StaticFieldLeak")
 object CommonAudioPlayer {
     private const val PROGRESS_CHANGE_CALL_DURATION = 100L
     private var mMediaPlayer: MediaPlayer? = null
     private var mProgressTimer: Timer? = null
     private var mStateListener: StateListener? = null
     private var mStartOnPrepared = false
-    private var mContext: Context? = null
     private var mAudioManager: AudioManager? = null
     private var mAutoPlayIfPossible = false
+    private var mContextWR = WeakReference<Context>(null)
 
     fun prepare(context: Context, url: String, startOnPrepared: Boolean = false) {
-        mContext = context.applicationContext
+        setContext(context.applicationContext)
         mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         mStartOnPrepared = startOnPrepared
@@ -125,7 +124,7 @@ object CommonAudioPlayer {
     }
 
     fun release() {
-        mContext = null
+        mContextWR.clear()
         mProgressTimer?.cancel()
         mMediaPlayer?.release()
         mStateListener?.onPlayStatusChange(false)
@@ -145,11 +144,11 @@ object CommonAudioPlayer {
     }
 
     private fun registerBecomingNoisyReceiver() {
-        mContext?.registerReceiver(mBecomingNoisyReceiver, mBecomingNoiseIntentFilter)
+        getContext()?.registerReceiver(mBecomingNoisyReceiver, mBecomingNoiseIntentFilter)
     }
 
     private fun unregisterBecomingNoisyReceiver() {
-        mContext?.unregisterReceiver(mBecomingNoisyReceiver)
+        getContext()?.unregisterReceiver(mBecomingNoisyReceiver)
     }
 
     private val mBecomingNoiseIntentFilter = IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY)
@@ -183,6 +182,14 @@ object CommonAudioPlayer {
                 }
             }
         }
+    }
+
+    private fun setContext(context: Context) {
+        mContextWR = WeakReference(context)
+    }
+
+    private fun getContext(): Context? {
+        return mContextWR.get()
     }
 
     interface StateListener {
