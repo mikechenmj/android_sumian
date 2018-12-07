@@ -693,4 +693,5 @@
     <string name="go_to_watch">继续观看</string>
     <string name="finished_practice">完成练习</string>
     <string name="list">列表</string>
+    <string name="n_days_later_update_prescription">%d天后更新处方</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import com.sumian.sd.R
 import com.sumian.sd.homepage.bean.SleepPrescription
+import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import kotlinx.android.synthetic.main.view_sleep_prescription.view.*
 
 /**
@@ -23,7 +24,7 @@ class SleepPrescriptionView(context: Context, attributeSet: AttributeSet) : Fram
         LayoutInflater.from(context).inflate(R.layout.view_sleep_prescription, this, true)
     }
 
-    fun setPrescriptionData(data: SleepPrescription?) {
+    private fun setPrescriptionData(data: SleepPrescription?) {
         val prescriptionIsNull = data?.getUpAt == null
         ll_no_sleep_prescription_hint.visibility = if (prescriptionIsNull) View.VISIBLE else View.GONE
         ll_sleep_prescription.visibility = if (!prescriptionIsNull) View.VISIBLE else View.GONE
@@ -33,7 +34,16 @@ class SleepPrescriptionView(context: Context, attributeSet: AttributeSet) : Fram
         }
     }
 
-    fun setHasNewPrescription(hasNewPrescription: Boolean) {
+    private fun setHasNewPrescription(hasNewPrescription: Boolean) {
         tv_new_prescription.visibility = if (hasNewPrescription) View.VISIBLE else View.GONE
+    }
+
+    fun setPrescriptionData(data: SleepPrescriptionStatus) {
+        val meta = data.meta
+        val days_remain = meta.prescription.days_remain
+        setHasNewPrescription(meta.update)
+        setPrescriptionData(meta.prescription.data)
+        tv_remain_days.text = context.resources.getString(R.string.n_days_later_update_prescription, days_remain)
+        tv_remain_days.visibility = if (days_remain > 0) View.VISIBLE else View.GONE
     }
 }

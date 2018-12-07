@@ -149,8 +149,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 if (response == null) {
                     return
                 }
-                sleep_prescription_view.setHasNewPrescription(response.meta.update)
-                sleep_prescription_view.setPrescriptionData(response.meta.prescription.data)
+                sleep_prescription_view.setPrescriptionData(response)
             }
         })
     }
