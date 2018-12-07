@@ -19,7 +19,6 @@ class BaseActivityDelegate(activity: Activity) : IActivityDelegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         markNotificationAsReadIfNeed(getIntent())
-        SdLogManager.logPage(mActivity.javaClass.simpleName, true)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -39,7 +38,7 @@ class BaseActivityDelegate(activity: Activity) : IActivityDelegate {
     }
 
     override fun onDestroy() {
-        SdLogManager.logPage(mActivity.javaClass.simpleName, false)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
