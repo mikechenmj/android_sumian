@@ -22,17 +22,21 @@ class LogActivityLifecycleCallbacks : EmptyActivityLifecycleCallbacks() {
 
     override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
         super.onActivityCreated(activity, savedInstanceState)
-        SdLogManager.logPage(getClassSimpleName(activity), true)
-        registerFragmentLifecycleCallbacks(activity)
+        activity?.let {
+            SdLogManager.logPage(getClassSimpleName(activity), true)
+            registerFragmentLifecycleCallbacks(activity)
+        }
     }
 
     override fun onActivityDestroyed(activity: Activity?) {
+        activity?.let {
+            SdLogManager.logPage(getClassSimpleName(activity), false)
+        }
         super.onActivityDestroyed(activity)
-        SdLogManager.logPage(getClassSimpleName(activity), false)
     }
 
-    private fun registerFragmentLifecycleCallbacks(activity: Activity?) {
-        if (activity != null && activity is FragmentActivity) {
+    private fun registerFragmentLifecycleCallbacks(activity: Activity) {
+        if (activity is FragmentActivity) {
             activity.supportFragmentManager.registerFragmentLifecycleCallbacks(LogFragmentLifecycleCallbacks(), true)
         }
     }
@@ -44,8 +48,8 @@ class LogActivityLifecycleCallbacks : EmptyActivityLifecycleCallbacks() {
         }
 
         override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
-            super.onFragmentDestroyed(fm, f)
             SdLogManager.logPage(getClassSimpleName(f), false)
+            super.onFragmentDestroyed(fm, f)
         }
     }
 }
