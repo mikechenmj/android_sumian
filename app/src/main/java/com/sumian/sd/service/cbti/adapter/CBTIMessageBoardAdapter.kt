@@ -15,6 +15,15 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoard>(context) {
 
+    companion object {
+        const val MSG_SELF_LIST_TYPE = 0x01
+        const val MSG_NORMAL_LIST_TYPE = 0x02
+    }
+
+    private var msgType: Int = MSG_NORMAL_LIST_TYPE
+
+    private var mDelCallback: OnDelCallback? = null
+
     override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lay_item_cbti_message_board, parent, false))
     }
@@ -22,6 +31,16 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: MessageBoard, position: Int) {
         val messageBoard = mItems[position]
         (holder as ViewHolder).initView(messageBoard)
+    }
+
+    fun setMsgType(msgType: Int = MSG_NORMAL_LIST_TYPE): CBTIMessageBoardAdapter {
+        this.msgType = msgType
+        return this
+    }
+
+    fun setDelCallback(delCallback: OnDelCallback): CBTIMessageBoardAdapter {
+        this.mDelCallback = delCallback
+        return this
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,6 +61,10 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
             itemView.findViewById<TextView>(R.id.tv_write_time)
         }
 
+        private val tvDel by lazy {
+            itemView.findViewById<TextView>(R.id.tv_del)
+        }
+
         private val tvMessageBoard by lazy {
             itemView.findViewById<TextView>(R.id.tv_message_board)
         }
@@ -54,7 +77,7 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
             itemView.findViewById<LinearLayout>(R.id.lay_replay)
         }
 
-        fun initView(item: MessageBoard) {
+        fun initView(item: MessageBoard, msgType: Int = MSG_NORMAL_LIST_TYPE) {
             tvNickName.text = item.formatNickName()
             ImageLoader.loadImage(item.commenter.avatar,
                     civAvatar,
@@ -63,8 +86,17 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
             tvTopping.visibility = if (item.isTopping()) View.VISIBLE else View.INVISIBLE
             item.showReply(tvReply, layReply)
             tvWriteTime.text = item.formatWriteTime()
+            tvWriteTime.visibility = View.GONE
+            tvDel.visibility = if (msgType == MSG_SELF_LIST_TYPE) View.VISIBLE else View.GONE
+            tvDel.setOnClickListener {
+                mDelCallback?.delCallback(item)
+            }
             tvMessageBoard.text = item.message
-
         }
+
+    }
+
+    interface OnDelCallback {
+        fun delCallback(item: MessageBoard)
     }
 }

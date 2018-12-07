@@ -538,4 +538,10 @@ interface SdApi {
     @POST("authorizations/registration-validation")
     fun notifyRegisterImServer(@Field("userId") userId: Int): Call<UserInfo>
 
+    @DELETE("message-boards/{id}")
+    fun delSelfMessageKeyboard(@Path("id") msgId: Int): Call<Any>
+
+    @GET("message-boards/{id}")
+    fun getMsgKeyboardDetail(@Path("id") msgId: Int): Call<MessageBoard>
+
 }

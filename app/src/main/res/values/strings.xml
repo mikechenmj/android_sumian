@@ -694,4 +694,8 @@
     <string name="finished_practice">完成练习</string>
     <string name="list">列表</string>
     <string name="n_days_later_update_prescription">%d天后更新处方</string>
+    <string name="write_message_keyboard">写留言</string>
+    <string name="msg_keyboard_hint">欢迎留下您对课程的疑问和想法，留言将在筛选后展示。</string>
+    <string name="my_msg">我的留言</string>
+    <string name="del">删除</string>
 </resources>
