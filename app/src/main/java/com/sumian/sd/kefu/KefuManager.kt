@@ -3,6 +3,9 @@ package com.sumian.sd.kefu
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
+import android.view.Gravity
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
@@ -14,10 +17,12 @@ import com.hyphenate.helpdesk.callback.Callback
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder
 import com.hyphenate.helpdesk.model.ContentFactory
+import com.sumian.common.helper.ToastHelper
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
+import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -63,11 +68,18 @@ object KefuManager {
     fun logout() {
         // logout chat
         ChatClient.getInstance().logout(true, null)
+        UIProvider.getInstance().isLogin = false
     }
 
     fun loginAndQueryUnreadMsg() {
         loginEasemob(object : LoginCallback {
             override fun onSuccess() {
+                UIProvider.getInstance().isLogin = true
+            }
+
+            override fun onFailed(error: String) {
+                super.onFailed(error)
+                UIProvider.getInstance().isLogin = false
             }
         })
     }
@@ -76,16 +88,23 @@ object KefuManager {
         val userInfo = AppManager.getAccountViewModel().userInfo ?: return
         val imId = userInfo.getIm_id()
         val md5Pwd = userInfo.getIm_password()
-        if (TextUtils.isEmpty(imId) || TextUtils.isEmpty(md5Pwd)) return
+        if (TextUtils.isEmpty(imId) || TextUtils.isEmpty(md5Pwd)) {//可能账号未在环信注册，提醒后台去注册环信账号
+            UIProvider.getInstance().isLogin = false
+            val notifyCount = 0
+            notifyServerRegister2ImServer(userInfo, notifyCount)
+        }
         ChatClient.getInstance().login(imId, md5Pwd, object : Callback {
             override fun onSuccess() {
+                UIProvider.getInstance().isLogin = true
                 loginCallback?.onSuccess()
             }
 
             override fun onError(code: Int, error: String) {
                 if (code == Error.USER_ALREADY_LOGIN) {
+                    UIProvider.getInstance().isLogin = true
                     loginCallback?.onSuccess()
                 } else {
+                    UIProvider.getInstance().isLogin = false
                     loginCallback?.onFailed(error)
                 }
                 LogUtils.d(error)
@@ -93,6 +112,24 @@ object KefuManager {
 
             override fun onProgress(progress: Int, status: String) {
                 LogUtils.d(progress)
+            }
+        })
+    }
+
+    private fun notifyServerRegister2ImServer(userInfo: UserInfo, notifyCount: Int) {
+        val call = AppManager.getSdHttpService().notifyRegisterImServer(userInfo.id)
+        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onSuccess(response: UserInfo?) {
+                AppManager.getAccountViewModel().asyncUpdateUserInfo(response)
+                loginAndQueryUnreadMsg()
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                if (notifyCount <= 2) {
+                    notifyServerRegister2ImServer(userInfo, (notifyCount + 1))
+                } else {
+                    Log.e("TAG", "onFailure: -------->通知服务器注册3次失败，不管")
+                }
             }
         })
     }
@@ -135,6 +172,7 @@ object KefuManager {
         mLaunchKefuActivity = false
     }
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     private fun getChatRoomLaunchIntent(): Intent {
         val visitorInfo = ContentFactory.createVisitorInfo(null)
                 .nickName(AppManager.getAccountViewModel().userInfo!!.getNickname())
@@ -144,6 +182,22 @@ object KefuManager {
             if (Message.Direct.SEND == message.direct()) {
                 ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo!!.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
             }
+        }
+        UIProvider.getInstance().setAccountProvider { tvLoginStateTips ->
+            loginEasemob(object : LoginCallback {
+                override fun onSuccess() {
+                    tvLoginStateTips.post {
+                        ToastHelper.show(tvLoginStateTips.context, "您的睡眠管家已连接，开始对话吧...", Gravity.CENTER)
+                        tvLoginStateTips.visibility = View.GONE
+                    }
+                }
+
+                override fun onFailed(error: String) {
+                    super.onFailed(error)
+                    ToastHelper.show(tvLoginStateTips.context, "睡眠管家连接失败，请点击重试", Gravity.CENTER)
+                    tvLoginStateTips.visibility = View.VISIBLE
+                }
+            })
         }
         return IntentBuilder(App.getAppContext())
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)

@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+
 @SuppressWarnings("ALL")
 public class UIProvider {
     private static final String TAG = UIProvider.class.getSimpleName();
@@ -55,10 +57,20 @@ public class UIProvider {
 
     private int mThemeMode = LIGHT_THEME;
 
+    private boolean mIsLogin;
+
     /**
      * 用来记录注册了eventlistener的foreground Activity
      */
     private List<Activity> activityList = Collections.synchronizedList(new ArrayList<Activity>());
+
+    public boolean isLogin() {
+        return mIsLogin;
+    }
+
+    public void setLogin(boolean login) {
+        mIsLogin = login;
+    }
 
     public void pushActivity(Activity activity) {
         if (!activityList.contains(activity)) {
@@ -96,6 +108,10 @@ public class UIProvider {
 
     public void setUnreadMessageChangeListener(UnreadMessageChangeListener unreadMessageChangeListener) {
         mUnreadMessageChangeListener = unreadMessageChangeListener;
+    }
+
+    public void clickLogin(TextView tvNetWorkErrorTips) {
+
     }
 
     public interface UnreadMessageChangeListener {
@@ -177,6 +193,21 @@ public class UIProvider {
      */
     public void setUserProfileProvider(UserProfileProvider userProvider) {
         this.userProvider = userProvider;
+    }
+
+    private AccountPrivoder mAccountPrivoder;
+
+    public void setAccountProvider(AccountPrivoder accountProvider) {
+        this.mAccountPrivoder = accountProvider;
+    }
+
+    public AccountPrivoder getAccountPrivoder() {
+        return mAccountPrivoder;
+    }
+
+    public interface AccountPrivoder {
+
+        void autoLoginAccount(@NonNull TextView tvLoginStateTips);
     }
 
     /**

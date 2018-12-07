@@ -57,7 +57,7 @@ public class IntentBuilder {
         return this;
     }
 
-    public IntentBuilder setTitleName(String titleName){
+    public IntentBuilder setTitleName(String titleName) {
         this.titleName = titleName;
         return this;
     }
@@ -83,7 +83,7 @@ public class IntentBuilder {
             intent.putExtra(Config.EXTRA_AGENT_INFO, agentIdentityInfo);
         }
 
-        if (titleName != null){
+        if (titleName != null) {
             intent.putExtra(Config.EXTRA_TITLE_NAME, titleName);
         }
 

@@ -534,4 +534,8 @@ interface SdApi {
     @GET("cbti-relaxations/{id}")
     fun getRelaxationDetail(@Path("id") id: Int): Call<RelaxationData>
 
+    @FormUrlEncoded
+    @POST("authorizations/registration-validation")
+    fun notifyRegisterImServer(@Field("userId") userId: Int): Call<UserInfo>
+
 }

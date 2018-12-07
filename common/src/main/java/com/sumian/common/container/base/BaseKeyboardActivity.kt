@@ -2,7 +2,7 @@ package com.sumian.common.container.base
 
 import android.view.ViewGroup
 import com.blankj.utilcode.util.KeyboardUtils
-import com.sumian.common.mvp.IPresenter
+import com.sumian.common.container.mvp.IPresenter
 
 /**
  * Created by sm

@@ -14,11 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -64,6 +59,12 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener;
+
 /**
  * 可以直接new出来使用的聊天对话页面fragment，
  * 使用时需调用setArguments方法传入IM服务号
@@ -90,6 +91,8 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
     protected boolean showUserNick;
     protected MessageList messageList;
     protected EaseChatInputMenu inputMenu;
+
+    private TextView mTvNetWorkError;
 
     protected Conversation conversation;
     protected InputMethodManager inputManager;
@@ -144,7 +147,6 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
         fragmentArgs = getArguments();
         // IM服务号
         toChatUsername = fragmentArgs.getString(Config.EXTRA_SERVICE_IM_NUMBER);
@@ -197,6 +199,13 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
      */
     @Override
     protected void initView() {
+        this.mTvNetWorkError = getView().findViewById(R.id.tv_network_error);
+        mTvNetWorkError.setVisibility(UIProvider.getInstance().isLogin() ? View.VISIBLE : View.GONE);
+        mTvNetWorkError.setOnClickListener(v -> {
+            Toast.makeText(mTvNetWorkError.getContext(), "正在与客服建立连接...", Toast.LENGTH_SHORT).show();
+            mTvNetWorkError.setVisibility(View.GONE);
+            UIProvider.getInstance().getAccountPrivoder().autoLoginAccount(mTvNetWorkError);
+        });
         // 消息列表layout
         messageList = (MessageList) getView().findViewById(R.id.message_list);
         messageList.setShowUserNick(showUserNick);
