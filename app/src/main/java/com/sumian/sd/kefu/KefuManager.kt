@@ -92,28 +92,29 @@ object KefuManager {
             UIProvider.getInstance().isLogin = false
             val notifyCount = 0
             notifyServerRegister2ImServer(userInfo, notifyCount)
-        }
-        ChatClient.getInstance().login(imId, md5Pwd, object : Callback {
-            override fun onSuccess() {
-                UIProvider.getInstance().isLogin = true
-                loginCallback?.onSuccess()
-            }
-
-            override fun onError(code: Int, error: String) {
-                if (code == Error.USER_ALREADY_LOGIN) {
+        }else{
+            ChatClient.getInstance().login(imId, md5Pwd, object : Callback {
+                override fun onSuccess() {
                     UIProvider.getInstance().isLogin = true
                     loginCallback?.onSuccess()
-                } else {
-                    UIProvider.getInstance().isLogin = false
-                    loginCallback?.onFailed(error)
                 }
-                LogUtils.d(error)
-            }
 
-            override fun onProgress(progress: Int, status: String) {
-                LogUtils.d(progress)
-            }
-        })
+                override fun onError(code: Int, error: String) {
+                    if (code == Error.USER_ALREADY_LOGIN) {
+                        UIProvider.getInstance().isLogin = true
+                        loginCallback?.onSuccess()
+                    } else {
+                        UIProvider.getInstance().isLogin = false
+                        loginCallback?.onFailed(error)
+                    }
+                    LogUtils.d(error)
+                }
+
+                override fun onProgress(progress: Int, status: String) {
+                    LogUtils.d(progress)
+                }
+            })
+        }
     }
 
     private fun notifyServerRegister2ImServer(userInfo: UserInfo, notifyCount: Int) {

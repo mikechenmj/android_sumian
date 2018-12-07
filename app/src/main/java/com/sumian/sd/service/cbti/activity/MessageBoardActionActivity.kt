@@ -57,7 +57,7 @@ class MessageBoardActionActivity : BasePresenterActivity<CBTISelfMessageBoardAct
 
     override fun initData() {
         super.initData()
-        mPresenter?.getSelfMsgListMsg()
+        //mPresenter?.getSelfMsgListMsg()
     }
 
     override fun loadMore() {
@@ -71,7 +71,7 @@ class MessageBoardActionActivity : BasePresenterActivity<CBTISelfMessageBoardAct
     }
 
     override fun onPublishMessageBoardSuccess(success: String) {
-        mPresenter?.getSelfMsgListMsg()
+        // mPresenter?.getSelfMsgListMsg()
     }
 
     override fun onPublishMessageBoardFailed(error: String) {

@@ -85,14 +85,14 @@ class CBTISelfMessageBoardActionPresenter private constructor(view: CBTISelfMess
                 if (mIsRefresh) {
                     mIsRefresh = false
                     mPageNumber = 1
-                    mView?.onRefreshMessageBoardListSuccess(data!!)
+                   // mView?.onRefreshMessageBoardListSuccess(data!!)
                 } else {
                     mIsRefresh = false
                     if (mIsGetNext) {
                         mIsGetNext = false
-                        mView?.onGetNextMessageBoardListSuccess(data!!)
+                     //   mView?.onGetNextMessageBoardListSuccess(data!!)
                     } else {
-                        mView?.onGetMessageBoardListSuccess(data!!)
+                      //  mView?.onGetMessageBoardListSuccess(data!!)
                     }
                 }
                 if (data != null && !data.isEmpty()) {
@@ -102,11 +102,11 @@ class CBTISelfMessageBoardActionPresenter private constructor(view: CBTISelfMess
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
-                mView?.onGetMessageBoardListFailed(error = errorResponse.message)
+               // mView?.onGetMessageBoardListFailed(error = errorResponse.message)
             }
 
             override fun onFinish() {
-                mView?.onFinish()
+                mView?.dismissLoading()
             }
         })
     }
