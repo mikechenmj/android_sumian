@@ -51,7 +51,7 @@ class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContr
 
     private var mCbtiPartType: Int = 0
 
-    private var mIsLoadMore = false
+    private var mIsLoadMoreOrInit = false
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_message_board
@@ -79,6 +79,7 @@ class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContr
 
     override fun initData() {
         super.initData()
+        mIsLoadMoreOrInit = true
         mPresenter?.getSelfMsgListMsg(mCbtiPartType)
     }
 
@@ -91,22 +92,22 @@ class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContr
     }
 
     override fun showLoading() {
-        if (mIsLoadMore) {
+        if (mIsLoadMoreOrInit) {
             return
         }
         super.showLoading()
     }
 
     override fun dismissLoading() {
-        if (!mIsLoadMore) {
+        if (!mIsLoadMoreOrInit) {
             super.dismissLoading()
         }
-        mIsLoadMore = false
+        mIsLoadMoreOrInit = false
     }
 
     override fun loadMore() {
         super.loadMore()
-        mIsLoadMore = true
+        mIsLoadMoreOrInit = true
         mPresenter?.getNextSelfMsgListMsg()
     }
 
