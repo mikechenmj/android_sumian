@@ -17,7 +17,7 @@ import com.sumian.sd.setting.version.presenter.VersionPresenter
 import com.sumian.sd.utils.UiUtils
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.dialog.theme.ITheme
-import com.sumian.sd.widget.dialog.theme.LightTheme
+import com.sumian.sd.widget.dialog.theme.LightUpgradeTheme
 import com.sumian.sd.widget.dialog.theme.ThemeFactory
 
 /**
@@ -57,7 +57,8 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
         if (isHaveForce) {
             SumianAlertDialog(mActivity)
-                    .hideTopIcon(true)
+                    .setTopIconResource(R.drawable.ic_popups_update)
+                    .hideTopIcon(false)
                     .setTitle(R.string.version_upgrade)
                     .setTheme(createTheme())
                     .setVersionMsg(
@@ -72,7 +73,9 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         } else {
             if (isHaveUpgrade && VersionDialogAlertUtils.isCanAlert()) {
                 SumianAlertDialog(mActivity)
-                        .hideTopIcon(true)
+                        .setTopIconResource(R.drawable.ic_popups_update)
+                        .hideTopIcon(false)
+                        .setCloseIconVisible(true)
                         .setTitle(R.string.version_upgrade)
                         .setTheme(createTheme())
                         .setVersionMsg(if (TextUtils.isEmpty(versionMsg))
@@ -107,9 +110,9 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     private fun createTheme(): ITheme {
         return when (mActivity) {
-            is MainActivity -> ThemeFactory.create(LightTheme::class.java)
-            is LoginActivity -> ThemeFactory.create(LightTheme::class.java)
-            else -> ThemeFactory.create(LightTheme::class.java)
+            is MainActivity -> ThemeFactory.create(LightUpgradeTheme::class.java)
+            is LoginActivity -> ThemeFactory.create(LightUpgradeTheme::class.java)
+            else -> ThemeFactory.create(LightUpgradeTheme::class.java)
         }
     }
 
