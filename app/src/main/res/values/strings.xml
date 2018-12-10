@@ -214,9 +214,11 @@
     <!--version-->
     <string name="none_market">"您的手机没有安装应用市场!"</string>
     <string name="soft_upgrade">应用版本</string>
-    <string name="version_upgrade">新版本更新啦～</string>
+    <string name="version_upgrade">版本更新</string>
     <string name="current_version">当前版本号:</string>
     <string name="new_version">最新版本号:</string>
+    <string name="go_to_experience">立即体验</string>
+    <string name="version_upgrade_title">新版本更新啦～</string>
     <string name="this_is_last_version">当前已是最新版本</string>
     <string name="have_a_new_version">有新版本，请立即体验吧</string>
     <string name="force_upgrade_version">当前版本太低，请到应用市场升级后再使用</string>
@@ -705,5 +707,4 @@
     <string name="msg_board_is_deleted">留言已删除</string>
     <string name="msg_board_is_deleted_message">如有疑问，请咨询客服</string>
     <string name="msg_board_replay_notice">留言回复通知</string>
-    <string name="go_to_experience">立即体验</string>
 </resources>

@@ -59,7 +59,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
             SumianAlertDialog(mActivity)
                     .setTopIconResource(R.drawable.ic_popups_update)
                     .hideTopIcon(false)
-                    .setTitle(R.string.version_upgrade)
+                    .setTitle(R.string.version_upgrade_title)
                     .setTheme(createTheme())
                     .setVersionMsg(
                             if (TextUtils.isEmpty(versionMsg))
@@ -76,7 +76,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
                         .setTopIconResource(R.drawable.ic_popups_update)
                         .hideTopIcon(false)
                         .setCloseIconVisible(true)
-                        .setTitle(R.string.version_upgrade)
+                        .setTitle(R.string.version_upgrade_title)
                         .setTheme(createTheme())
                         .setVersionMsg(if (TextUtils.isEmpty(versionMsg))
                             App.getAppContext().getString(R.string.have_a_new_version)
