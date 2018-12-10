@@ -214,7 +214,7 @@
     <!--version-->
     <string name="none_market">"您的手机没有安装应用市场!"</string>
     <string name="soft_upgrade">应用版本</string>
-    <string name="version_upgrade">版本更新</string>
+    <string name="version_upgrade">新版本更新啦～</string>
     <string name="current_version">当前版本号:</string>
     <string name="new_version">最新版本号:</string>
     <string name="this_is_last_version">当前已是最新版本</string>
@@ -698,4 +698,11 @@
     <string name="msg_keyboard_hint">欢迎留下您对课程的疑问和想法，留言将在筛选后展示。</string>
     <string name="my_msg">我的留言</string>
     <string name="del">删除</string>
+    <string name="del_msg_keyboard_title">确定删除该留言？</string>
+    <string name="del_msg_keyboard_msg">删除后将不再保留该留言记录</string>
+    <string name="my_message_board">我的留言</string>
+    <string name="sumian_doctor_msg_replay">速眠医生回复</string>
+    <string name="msg_board_is_deleted">留言已删除</string>
+    <string name="msg_board_is_deleted_message">如有疑问，请咨询客服</string>
+    <string name="msg_board_replay_notice">留言回复通知</string>
 </resources>

@@ -139,6 +139,14 @@ class MaxMsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
         UiUtil.showSoftKeyboard(et_msg_board_input)
     }
 
+    fun hideKeyBoard() {
+        UiUtil.closeKeyboard(et_msg_board_input)
+    }
+
+    fun showKeyBoard() {
+        UiUtil.showSoftKeyboard(et_msg_board_input)
+    }
+
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, l, t, r, b)
         //Log.e("TAG", " changed  $changed b $b")

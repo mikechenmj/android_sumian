@@ -6,7 +6,7 @@ import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.cbti.bean.MessageBoard
-import com.sumian.sd.service.cbti.contract.CBTISelfMessageBoardActionContract
+import com.sumian.sd.service.cbti.contract.CBTISelfMessageBoardContract
 
 /**
  * Created by sm
@@ -16,16 +16,16 @@ import com.sumian.sd.service.cbti.contract.CBTISelfMessageBoardActionContract
  * desc:管理自己的留言  留言，删除，获取留言
  *
  */
-class CBTISelfMessageBoardActionPresenter private constructor(view: CBTISelfMessageBoardActionContract.View) : CBTISelfMessageBoardActionContract.Presenter {
+class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoardContract.View) : CBTISelfMessageBoardContract.Presenter {
 
     companion object {
         private const val DEFAULT_PAGES: Int = 15
 
         @JvmStatic
-        fun init(view: CBTISelfMessageBoardActionContract.View): CBTISelfMessageBoardActionContract.Presenter = CBTISelfMessageBoardActionPresenter(view)
+        fun init(view: CBTISelfMessageBoardContract.View): CBTISelfMessageBoardContract.Presenter = CBTISelfMessageBoardPresenter(view)
     }
 
-    private var mView: CBTISelfMessageBoardActionContract.View? = null
+    private var mView: CBTISelfMessageBoardContract.View? = null
 
     init {
         mView = view
@@ -61,11 +61,31 @@ class CBTISelfMessageBoardActionPresenter private constructor(view: CBTISelfMess
         })
     }
 
-    override fun delSelfMsg() {
+    override fun delSelfMsg(msgId: Int, position: Int) {
+        mView?.showLoading()
+        val call = AppManager.getSdHttpService().delSelfMessageKeyboard(msgId)
+        mCalls.add(call)
+        call.enqueue(object : BaseSdResponseCallback<Any>() {
+            override fun onSuccess(response: Any?) {
+                mView?.onDelSuccess("删除成功", position)
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                mView?.onDelFailed(errorResponse.message)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                mView?.dismissLoading()
+            }
+        })
     }
 
     override fun refreshSelfMsgListMsg() {
-
+        this.mPageNumber = 1
+        this.mIsRefresh = true
+        this.mIsGetNext = false
+        getSelfMsgListMsg(mType)
     }
 
     override fun getSelfMsgListMsg(type: Int) {
@@ -76,23 +96,24 @@ class CBTISelfMessageBoardActionPresenter private constructor(view: CBTISelfMess
         map["include"] = "commenter"
         map["page"] = mPageNumber
         map["per_page"] = DEFAULT_PAGES
+        map["commented_by"] = "me"
 
         val call = AppManager.getSdHttpService().getCBTIMessageBoardList(map)
-        mCalls?.add(call)
+        mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<MessageBoard>>() {
             override fun onSuccess(response: PaginationResponseV2<MessageBoard>?) {
                 val data = response?.data
                 if (mIsRefresh) {
                     mIsRefresh = false
                     mPageNumber = 1
-                   // mView?.onRefreshMessageBoardListSuccess(data!!)
+                    mView?.onRefreshMessageBoardListSuccess(data!!)
                 } else {
                     mIsRefresh = false
                     if (mIsGetNext) {
                         mIsGetNext = false
-                     //   mView?.onGetNextMessageBoardListSuccess(data!!)
+                        mView?.onGetNextMessageBoardListSuccess(data!!)
                     } else {
-                      //  mView?.onGetMessageBoardListSuccess(data!!)
+                        mView?.onGetSelfMsgListSuccess(data!!)
                     }
                 }
                 if (data != null && !data.isEmpty()) {
@@ -102,7 +123,7 @@ class CBTISelfMessageBoardActionPresenter private constructor(view: CBTISelfMess
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
-               // mView?.onGetMessageBoardListFailed(error = errorResponse.message)
+                mView?.onGetSelfMsgListFailed(error = errorResponse.message)
             }
 
             override fun onFinish() {
@@ -112,5 +133,7 @@ class CBTISelfMessageBoardActionPresenter private constructor(view: CBTISelfMess
     }
 
     override fun getNextSelfMsgListMsg() {
+        mIsGetNext = true
+        getSelfMsgListMsg(mType)
     }
 }

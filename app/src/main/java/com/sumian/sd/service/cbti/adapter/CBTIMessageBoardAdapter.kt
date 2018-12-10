@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.sd.service.cbti.adapter
 
 import android.content.Context
@@ -25,12 +27,18 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
     private var mDelCallback: OnDelCallback? = null
 
     override fun onCreateDefaultViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.lay_item_cbti_message_board, parent, false))
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.lay_item_cbti_message_board, parent, false)
+        itemView.setBackgroundColor(if (msgType == MSG_SELF_LIST_TYPE) {
+            parent.resources.getColor(R.color.b1_color_day)
+        } else {
+            parent.resources.getColor(R.color.b2_color_day)
+        })
+        return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: MessageBoard, position: Int) {
         val messageBoard = mItems[position]
-        (holder as ViewHolder).initView(messageBoard)
+        (holder as ViewHolder).initView(messageBoard, msgType)
     }
 
     fun setMsgType(msgType: Int = MSG_NORMAL_LIST_TYPE): CBTIMessageBoardAdapter {
@@ -77,6 +85,10 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
             itemView.findViewById<LinearLayout>(R.id.lay_replay)
         }
 
+        private val vDivider by lazy {
+            itemView.findViewById<View>(R.id.divider)
+        }
+
         fun initView(item: MessageBoard, msgType: Int = MSG_NORMAL_LIST_TYPE) {
             tvNickName.text = item.formatNickName()
             ImageLoader.loadImage(item.commenter.avatar,
@@ -89,14 +101,16 @@ class CBTIMessageBoardAdapter(context: Context) : BaseRecyclerAdapter<MessageBoa
             tvWriteTime.visibility = View.GONE
             tvDel.visibility = if (msgType == MSG_SELF_LIST_TYPE) View.VISIBLE else View.GONE
             tvDel.setOnClickListener {
-                mDelCallback?.delCallback(item)
+                mDelCallback?.delCallback(item, adapterPosition)
             }
+            vDivider.setBackgroundColor(if (msgType == MSG_SELF_LIST_TYPE) itemView.resources.getColor(R.color.l3_color_day)
+            else itemView.resources.getColor(R.color.l1_color_day))
             tvMessageBoard.text = item.message
         }
 
     }
 
     interface OnDelCallback {
-        fun delCallback(item: MessageBoard)
+        fun delCallback(item: MessageBoard, position: Int)
     }
 }

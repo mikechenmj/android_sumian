@@ -129,6 +129,13 @@ class EmptyErrorView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /**
+     * desc: 暂无留言，留言已被删除
+     */
+    fun invalidMessageBoardError() {
+        invalid(R.mipmap.ic_empty_state_advisory, R.string.msg_board_is_deleted, R.string.msg_board_is_deleted_message)
+    }
+
+    /**
      * desc: 暂无兑换记录
      */
     fun invalidCouponError() {

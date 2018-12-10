@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.android.material.tabs.TabLayout
 import com.sumian.sd.R
@@ -76,7 +77,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)
         //view_pager.offscreenPageLimit = 2
-        view_pager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener() {
+        view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 showMessageBoard(position)
@@ -95,10 +96,11 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
             }
         })
         tv_write_message.setOnClickListener {
-            tv_write_message.visibility = View.GONE
-            keyboard.show()
+            //tv_write_message.visibility = View.GONE
+            //   keyboard.show()
+            CBTIMessageBoardActivity.show(mCbtiType)
         }
-        keyboard.setOnKeyBoardCallback(this)
+        // keyboard.setOnKeyBoardCallback(this)
         ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICourseMetaLiveData().observe(this, this)
     }
 
@@ -112,7 +114,8 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
     }
 
     override fun sendContent(content: String, anonymousType: Int) {
-        CBTIMessageBoardActionPresenter.init(this).publishMessage(message = content, type = mCbtiType, isAnonymous = anonymousType)
+        //CBTIMessageBoardActionPresenter.init(this).publishMessage(message = content, type = mCbtiType, isAnonymous =
+        //anonymousType)
     }
 
     override fun close() {
@@ -149,7 +152,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
 
     override fun onPublishMessageBoardSuccess(success: String) {
         showMessageBoard(2)
-        keyboard.hide()
+        //keyboard.hide()
         showCenterToast(success)
     }
 
@@ -163,7 +166,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         } else {
             View.GONE
         }
-        keyboard.hide()
+        //keyboard.hide()
     }
 
     private fun initAdapter(): FragmentPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {

@@ -57,7 +57,7 @@ public class UIProvider {
 
     private int mThemeMode = LIGHT_THEME;
 
-    private boolean mIsLogin;
+    private volatile boolean mIsLogin;
 
     /**
      * 用来记录注册了eventlistener的foreground Activity

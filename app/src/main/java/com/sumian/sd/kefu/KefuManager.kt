@@ -46,6 +46,7 @@ object KefuManager {
     fun launchKefuActivity() {
         loginEasemob(object : LoginCallback {
             override fun onSuccess() {
+                UIProvider.getInstance().isLogin = true
                 UIProvider.getInstance().clearCacheMsg()
                 ActivityUtils.startActivity(getChatRoomLaunchIntent())
             }
@@ -67,8 +68,17 @@ object KefuManager {
 
     fun logout() {
         // logout chat
-        ChatClient.getInstance().logout(true, null)
-        UIProvider.getInstance().isLogin = false
+        ChatClient.getInstance().logout(true, object : Callback {
+            override fun onSuccess() {
+                UIProvider.getInstance().isLogin = false
+            }
+
+            override fun onProgress(progress: Int, status: String?) {
+            }
+
+            override fun onError(code: Int, error: String?) {
+            }
+        })
     }
 
     fun loginAndQueryUnreadMsg() {
@@ -92,7 +102,7 @@ object KefuManager {
             UIProvider.getInstance().isLogin = false
             val notifyCount = 0
             notifyServerRegister2ImServer(userInfo, notifyCount)
-        }else{
+        } else {
             ChatClient.getInstance().login(imId, md5Pwd, object : Callback {
                 override fun onSuccess() {
                     UIProvider.getInstance().isLogin = true
@@ -188,13 +198,14 @@ object KefuManager {
             loginEasemob(object : LoginCallback {
                 override fun onSuccess() {
                     tvLoginStateTips.post {
-                        ToastHelper.show(tvLoginStateTips.context, "您的睡眠管家已连接，开始对话吧...", Gravity.CENTER)
+                        UIProvider.getInstance().isLogin = true
                         tvLoginStateTips.visibility = View.GONE
                     }
                 }
 
                 override fun onFailed(error: String) {
                     super.onFailed(error)
+                    UIProvider.getInstance().isLogin = false
                     ToastHelper.show(tvLoginStateTips.context, "睡眠管家连接失败，请点击重试", Gravity.CENTER)
                     tvLoginStateTips.visibility = View.VISIBLE
                 }

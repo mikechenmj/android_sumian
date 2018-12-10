@@ -106,7 +106,7 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/space_1"
         android:layout_marginStart="@dimen/space_20"
         android:layout_marginTop="@dimen/space_20"
         android:background="@color/l1_color_day" />

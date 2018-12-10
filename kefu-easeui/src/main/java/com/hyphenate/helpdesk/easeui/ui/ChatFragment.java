@@ -200,9 +200,8 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
     @Override
     protected void initView() {
         this.mTvNetWorkError = getView().findViewById(R.id.tv_network_error);
-        mTvNetWorkError.setVisibility(UIProvider.getInstance().isLogin() ? View.VISIBLE : View.GONE);
+        mTvNetWorkError.setVisibility(UIProvider.getInstance().isLogin() ? View.GONE : View.VISIBLE);
         mTvNetWorkError.setOnClickListener(v -> {
-            Toast.makeText(mTvNetWorkError.getContext(), "正在与客服建立连接...", Toast.LENGTH_SHORT).show();
             mTvNetWorkError.setVisibility(View.GONE);
             UIProvider.getInstance().getAccountPrivoder().autoLoginAccount(mTvNetWorkError);
         });
