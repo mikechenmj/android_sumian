@@ -127,20 +127,29 @@ object KefuManager {
 
     private fun notifyServerRegister2ImServer(userInfo: UserInfo, notifyCount: Int) {
         val call = AppManager.getSdHttpService().notifyRegisterImServer(userInfo.id)
-        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
-            override fun onSuccess(response: UserInfo?) {
-                AppManager.getAccountViewModel().asyncUpdateUserInfo(response)
-                loginAndQueryUnreadMsg()
+        call.enqueue(object : BaseSdResponseCallback<KeFuMessage>() {
+            override fun onSuccess(response: KeFuMessage?) {
+                response?.let {
+                    if (it.isRegisterOk()) {
+                        loginAndQueryUnreadMsg()
+                    } else {
+                        retryRegister(notifyCount, userInfo)
+                    }
+                }
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                if (notifyCount <= 2) {
-                    notifyServerRegister2ImServer(userInfo, (notifyCount + 1))
-                } else {
-                    Log.e("TAG", "onFailure: -------->产品要求：通知服务器注册3次失败，不管")
-                }
+                retryRegister(notifyCount, userInfo)
             }
         })
+    }
+
+    private fun retryRegister(notifyCount: Int, userInfo: UserInfo): Any {
+        return if (notifyCount <= 2) {
+            notifyServerRegister2ImServer(userInfo, (notifyCount + 1))
+        } else {
+            Log.e("TAG", "onFailure: -------->产品要求：通知服务器注册3次失败，不管")
+        }
     }
 
     /**
