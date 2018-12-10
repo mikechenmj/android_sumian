@@ -174,7 +174,13 @@ object AppManager {
         initUtils(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
         initAppNotificationManager(app)
-        SdLogManager.init(app)
+        SdLogManager.init(app,
+                BuildConfig.ALIYUN_LOG_ACCESS_KEY_ID,
+                BuildConfig.ALIYUN_LOG_ACCESS_SECRET,
+                BuildConfig.ALIYUN_LOG_PROJECT,
+                BuildConfig.ALIYUN_LOG_LOG_STORE,
+                BuildConfig.ALIYUN_LOG_END_POINT
+        )
         observeAppLifecycle()
     }
 

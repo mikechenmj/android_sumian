@@ -119,7 +119,7 @@ class TelBookingListFragment : BasePresenterFragment<TelBookingListContract.Pres
 
     override fun dismissLoading() {
         //super.dismissLoading()
-        refresh.hideRefreshAnim()
+        refresh?.hideRefreshAnim()
         mIsRefresh = false
     }
 
