@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:background="#F2F3F5">
 
-    <com.hyphenate.helpdesk.easeui.widget.EaseTitleBar
+    <com.hyphenate.helpdesk.easeui.widget.ChatEaseTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"

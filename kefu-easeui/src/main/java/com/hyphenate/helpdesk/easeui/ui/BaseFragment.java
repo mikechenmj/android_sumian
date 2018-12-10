@@ -3,17 +3,18 @@ package com.hyphenate.helpdesk.easeui.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.widget.EaseTitleBar;
+import com.hyphenate.helpdesk.easeui.widget.ChatEaseTitleBar;
+
+import androidx.fragment.app.Fragment;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected EaseTitleBar mEaseTitleBar;
+    protected ChatEaseTitleBar mEaseTitleBar;
     protected InputMethodManager inputMethodManager;
 
     @Override
@@ -21,7 +22,7 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (getView() != null)
-            mEaseTitleBar = (EaseTitleBar) getView().findViewById(R.id.title_bar);
+            mEaseTitleBar = getView().findViewById(R.id.title_bar);
 
         initView();
         setUpView();

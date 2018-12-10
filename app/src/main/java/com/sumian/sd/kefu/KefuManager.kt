@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.ActivityUtils
@@ -17,7 +16,6 @@ import com.hyphenate.helpdesk.callback.Callback
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder
 import com.hyphenate.helpdesk.model.ContentFactory
-import com.sumian.common.helper.ToastHelper
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.BuildConfig
@@ -102,29 +100,29 @@ object KefuManager {
             UIProvider.getInstance().isLogin = false
             val notifyCount = 0
             notifyServerRegister2ImServer(userInfo, notifyCount)
-        } else {
-            ChatClient.getInstance().login(imId, md5Pwd, object : Callback {
-                override fun onSuccess() {
+            return
+        }
+        ChatClient.getInstance()?.login(imId, md5Pwd, object : Callback {
+            override fun onSuccess() {
+                UIProvider.getInstance().isLogin = true
+                loginCallback?.onSuccess()
+            }
+
+            override fun onError(code: Int, error: String) {
+                if (code == Error.USER_ALREADY_LOGIN) {
                     UIProvider.getInstance().isLogin = true
                     loginCallback?.onSuccess()
+                } else {
+                    UIProvider.getInstance().isLogin = false
+                    loginCallback?.onFailed(error)
                 }
+                LogUtils.d(error)
+            }
 
-                override fun onError(code: Int, error: String) {
-                    if (code == Error.USER_ALREADY_LOGIN) {
-                        UIProvider.getInstance().isLogin = true
-                        loginCallback?.onSuccess()
-                    } else {
-                        UIProvider.getInstance().isLogin = false
-                        loginCallback?.onFailed(error)
-                    }
-                    LogUtils.d(error)
-                }
-
-                override fun onProgress(progress: Int, status: String) {
-                    LogUtils.d(progress)
-                }
-            })
-        }
+            override fun onProgress(progress: Int, status: String) {
+                LogUtils.d(progress)
+            }
+        })
     }
 
     private fun notifyServerRegister2ImServer(userInfo: UserInfo, notifyCount: Int) {
@@ -139,7 +137,7 @@ object KefuManager {
                 if (notifyCount <= 2) {
                     notifyServerRegister2ImServer(userInfo, (notifyCount + 1))
                 } else {
-                    Log.e("TAG", "onFailure: -------->通知服务器注册3次失败，不管")
+                    Log.e("TAG", "onFailure: -------->产品要求：通知服务器注册3次失败，不管")
                 }
             }
         })
@@ -189,25 +187,26 @@ object KefuManager {
                 .nickName(AppManager.getAccountViewModel().userInfo!!.getNickname())
                 .name(AppManager.getAccountViewModel().userInfo!!.getNickname())
                 .phone(AppManager.getAccountViewModel().userInfo!!.getMobile())
-        UIProvider.getInstance().setUserProfileProvider { context, message, userAvatarView, usernickView ->
+        UIProvider.getInstance().setUserProfileProvider { context, message, userAvatarView, userNickNameView ->
             if (Message.Direct.SEND == message.direct()) {
                 ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo!!.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
             }
         }
-        UIProvider.getInstance().setAccountProvider { tvLoginStateTips ->
+        UIProvider.getInstance().setAccountProvider { tvLoginStateTips, chatTitleBar ->
             loginEasemob(object : LoginCallback {
                 override fun onSuccess() {
                     tvLoginStateTips.post {
                         UIProvider.getInstance().isLogin = true
                         tvLoginStateTips.visibility = View.GONE
+                        chatTitleBar.hideLoading()
                     }
                 }
 
                 override fun onFailed(error: String) {
                     super.onFailed(error)
                     UIProvider.getInstance().isLogin = false
-                    ToastHelper.show(tvLoginStateTips.context, "睡眠管家连接失败，请点击重试", Gravity.CENTER)
                     tvLoginStateTips.visibility = View.VISIBLE
+                    chatTitleBar.hideLoading()
                 }
             })
         }

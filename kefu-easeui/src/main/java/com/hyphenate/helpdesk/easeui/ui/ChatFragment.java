@@ -194,6 +194,17 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         }
     }
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
     /**
      * init view
      */
@@ -202,8 +213,9 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         this.mTvNetWorkError = getView().findViewById(R.id.tv_network_error);
         mTvNetWorkError.setVisibility(UIProvider.getInstance().isLogin() ? View.GONE : View.VISIBLE);
         mTvNetWorkError.setOnClickListener(v -> {
+            mEaseTitleBar.showLoading();
             mTvNetWorkError.setVisibility(View.GONE);
-            UIProvider.getInstance().getAccountPrivoder().autoLoginAccount(mTvNetWorkError);
+            UIProvider.getInstance().getAccountPrivoder().autoLoginAccount(mTvNetWorkError, mEaseTitleBar);
         });
         // 消息列表layout
         messageList = (MessageList) getView().findViewById(R.id.message_list);
