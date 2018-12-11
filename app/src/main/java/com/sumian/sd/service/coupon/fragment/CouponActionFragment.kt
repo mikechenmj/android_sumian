@@ -5,6 +5,7 @@ import android.text.InputFilter
 import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.blankj.utilcode.util.KeyboardUtils
 import com.sumian.common.base.BasePresenterFragment
 import com.sumian.common.helper.ToastHelper
 import com.sumian.hw.utils.UiUtil
@@ -40,6 +41,7 @@ class CouponActionFragment : BasePresenterFragment<CouponActionContract.Presente
         bt_coupon.setOnClickListener(this)
         et_coupon_code.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(16))
         (mActivity as CouponCenterActivity).setOnKeyBoardCallback(this)
+        vg_coupon_fragment_root.setOnClickListener { KeyboardUtils.hideSoftInput(activity) }
     }
 
     override fun onClick(v: View?) {
