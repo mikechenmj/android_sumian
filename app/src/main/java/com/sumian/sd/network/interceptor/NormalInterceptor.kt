@@ -3,6 +3,7 @@ package com.sumian.sd.network.interceptor
 import android.webkit.WebSettings
 import com.sumian.hw.utils.SystemUtil
 import com.sumian.sd.app.App
+import com.sumian.sd.app.AppManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -32,7 +33,8 @@ class NormalInterceptor private constructor() : Interceptor {
                 .newBuilder()
                 .addHeader("Accept-Language", SystemUtil.getSystemLanguage())
                 .addHeader("Content-Type", "application/json")
-                .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android")
+                .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android uid:${AppManager.getAccountViewModel().userInfo?.id
+                        ?: 0}")
                 .addHeader("Host", chain.request().url().newBuilder().build().host())
 
         return chain.proceed(builder.build())
