@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/tv_notification_title"
+            style="@style/text_t1_18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:textStyle="bold"
+            tools:text="这是一条标题这是一条标题这是一条标题这是一条标题" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/text_t2_14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            tools:text="2018.08.03 19:23" />
+
+        <View style="@style/HorizontalDividerLineMarginStart20" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_t2_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            tools:text="这是一条系统通知正文，随便写点东西来填充文案：您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。
+
+1. 系统通知正文第一条。
+2. 系统通知正文第二条，系统通知正文的第二条，系统通知正文第二条，正文第二条。
+
+您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。" />
+    </LinearLayout>
+
+
+</FrameLayout>

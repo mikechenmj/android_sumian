@@ -552,6 +552,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".notification.SystemNotificationDetailActivity" />
 
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"

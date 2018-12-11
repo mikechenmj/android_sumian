@@ -16,7 +16,6 @@ import com.sumian.sd.service.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.service.advisory.activity.AdvisoryListActivity
 import com.sumian.sd.service.cbti.activity.CBTIMessageBoardDetailActivity
 import com.sumian.sd.service.cbti.activity.CBTIWeekCoursePartActivity
-import com.sumian.sd.service.cbti.fragment.MessageBoardFragment
 import com.sumian.sd.service.diary.DiaryEvaluationDetailActivity
 import com.sumian.sd.service.diary.DiaryEvaluationListActivity
 import com.sumian.sd.service.tel.activity.TelBookingDetailActivity
@@ -52,13 +51,19 @@ object SchemeResolver : ISchemeResolver {
             "booking-detail" -> resolveTelBookingDetailScheme(context, uri)
             "diary-evaluations" -> resolveDiaryEvaluationScheme(context, uri)
             "message-boards" -> resolveMessageBoards(context, uri)
+            "system-notifications-detail" -> resolveSystemNotificationsDetail(context, uri)
             else -> null
         }
     }
 
+    private fun resolveSystemNotificationsDetail(context: Context, uri: Uri): Intent? {
+        return SystemNotificationDetailActivity.getIntent(context,
+                uri.getQueryParameter("notice_id")?.toInt() ?: 0)
+    }
+
     private fun resolveMessageBoards(context: Context, uri: Uri): Intent? {
         val date = uri.getQueryParameter("id")
-        return CBTIMessageBoardDetailActivity.getIntent(context, date?.toInt()?:0)
+        return CBTIMessageBoardDetailActivity.getIntent(context, date?.toInt() ?: 0)
     }
 
     /**

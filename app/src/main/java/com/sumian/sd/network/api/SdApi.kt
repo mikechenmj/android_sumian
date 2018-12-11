@@ -25,6 +25,7 @@ import com.sumian.sd.kefu.KeFuMessage
 import com.sumian.sd.network.response.AppUpgradeInfo
 import com.sumian.sd.network.response.FirmwareInfo
 import com.sumian.sd.notification.bean.NotificationListResponse
+import com.sumian.sd.notification.bean.SystemNotificationData
 import com.sumian.sd.onlinereport.OnlineReport
 import com.sumian.sd.oss.OssResponse
 import com.sumian.sd.pay.bean.OrderDetail
@@ -548,5 +549,8 @@ interface SdApi {
 
     @GET("message-boards/{id}")
     fun getMsgKeyboardDetail(@Path("id") msgId: Int): Call<MessageBoard>
+
+    @GET("notice/{id}/content-detail")
+    fun getSystemNotificationDetail(@Path("id") id: Int): Call<SystemNotificationData>
 
 }
