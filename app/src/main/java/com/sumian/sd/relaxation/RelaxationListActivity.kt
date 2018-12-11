@@ -63,7 +63,7 @@ class RelaxationListActivity : BasePresenterActivity<IPresenter>() {
         call.enqueue(object : BaseSdResponseCallback<MutableList<RelaxationData>>() {
             override fun onSuccess(response: MutableList<RelaxationData>?) {
                 response?.let {
-                    response.add(RelaxationData("", "", 0, "", "", ""))
+                    response.add(RelaxationData("", "", 0, "", "", "", ""))
                     mAdapter.setNewData(response)
                 }
             }

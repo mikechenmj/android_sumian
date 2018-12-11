@@ -15,6 +15,8 @@ data class RelaxationData(
         @SerializedName("audio")
         val audio: String?, // https://sleep-doctor.oss-cn-shenzhen.aliyuncs.com/cbti/relaxation/2a6ecf73-7b32-4d6d-8c68-9cb6d3a70f7a.mp3
         @SerializedName("background")
-        val background: String? // https://sleep-doctor-test.oss-cn-shenzhen.aliyuncs.com/cbti/relaxation/35341497-c930-41da-b631-124040a8b34d.jpg
+        val background: String?, // https://sleep-doctor-test.oss-cn-shenzhen.aliyuncs.com/cbti/relaxation/35341497-c930-41da-b631-124040a8b34d.jpg
+        @SerializedName("icon")
+        val icon: String? // https://sleep-doctor-test.oss-cn-shenzhen.aliyuncs.com/cbti/relaxation/35341497-c930-41da-b631-124040a8b34d.jpg
 
 )
