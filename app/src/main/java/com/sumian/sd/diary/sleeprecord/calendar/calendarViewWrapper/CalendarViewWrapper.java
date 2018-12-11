@@ -105,11 +105,15 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
                 mViewPager.setCurrentItem(mCurrentPosition + 1, true);
                 break;
             case R.id.tv_go_to_today:
-                mOnDateClickListener.onDateClick(TimeUtilV2.Companion.getDayStartTime(System.currentTimeMillis()));
+                onTodayClick();
                 break;
             default:
                 break;
         }
+    }
+
+    protected void onTodayClick() {
+        mOnDateClickListener.onDateClick(TimeUtilV2.Companion.getDayStartTime(System.currentTimeMillis()));
     }
 
     public void addMonthTimes(List<Long> monthTimes, boolean isInit) {
