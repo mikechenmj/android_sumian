@@ -25,15 +25,26 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/tv_remain_days"
+            style="@style/text_t2_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/n_days_later_update_prescription" />
+
+        <TextView
             android:id="@+id/tv_new_prescription"
             style="@style/text_b2_14"
             android:layout_width="62dp"
             android:layout_height="25dp"
-            android:layout_marginEnd="20dp"
             android:background="@drawable/shape_rect_b4_corner_4dp"
             android:gravity="center"
+            android:text="@string/new_prescription"
             android:visibility="gone"
-            android:text="@string/new_prescription" />
+            tools:visibility="visible" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="0dp" />
 
         <ImageView
             android:layout_width="wrap_content"

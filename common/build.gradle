@@ -123,13 +123,14 @@ dependencies {
     implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar') {
         transitive true
     }
-
     // utils
     api 'com.blankj:utilcode:1.19.0'
     // LeanCloud 基础包
     api 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
     // 推送与实时聊天需要的包
     api('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
+    // aliyun log
+    api 'com.aliyun.openservices:aliyun-log-android-sdk:2.0.0'
 }
 
 //项目主页
@@ -142,8 +143,8 @@ def libName = "common"
 //发布到组织名称名字，必须填写
 //compile 'com.sumian.sd:common:1.0.0'
 group = "com.sumian.sd"
-// 版本号，下次更新是只需要更改版本号即可
-version = "1.0.52"
+// common version 版本号，下次更新是只需要更改版本号即可
+version = "1.0.55"
 // 更新完运行 gradlew install, 再bintrayUpload
 
 //生成源文件

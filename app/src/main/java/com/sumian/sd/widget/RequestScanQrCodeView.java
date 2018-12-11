@@ -128,7 +128,6 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
                 requestCodeQRCodePermissions();
                 break;
             case R.id.siv_customer_service:
-                UIProvider.getInstance().clearCacheMsg();
                 KefuManager.launchKefuActivity();
                 break;
         }

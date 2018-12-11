@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
  * desc: 网络引擎
  */
 
-class NetEngine private constructor(baseUrl: String, isDebug: Boolean = false, dns: Dns = Dns.SYSTEM, interceptors: Array<out Interceptor>) {
+class NetEngine private constructor(baseUrl: String, isDebug: Boolean = false, dns: Dns = Dns.SYSTEM, interceptors: Array<out Interceptor>?) {
 
     companion object {
 
@@ -38,7 +38,7 @@ class NetEngine private constructor(baseUrl: String, isDebug: Boolean = false, d
                 .addInterceptor(StatusCodeInterceptor.create())
                 .addInterceptor(SpecialRequestInterceptor.create())
 
-        interceptors.forEach {
+        interceptors?.forEach {
             okHttpClientBuilder.addInterceptor(it)
         }
 
@@ -97,7 +97,7 @@ class NetEngine private constructor(baseUrl: String, isDebug: Boolean = false, d
         }
 
         fun build(): NetEngine {
-            return NetEngine(this.mBaseUrl, this.mIsDebug, this.mDns, this.mInterceptors!!)
+            return NetEngine(this.mBaseUrl, this.mIsDebug, this.mDns, this.mInterceptors)
         }
 
     }

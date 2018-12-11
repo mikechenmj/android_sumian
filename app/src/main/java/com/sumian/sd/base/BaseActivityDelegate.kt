@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.sumian.common.base.IActivityDelegate
 import com.sumian.common.notification.AppNotificationManager
+import com.sumian.sd.log.SdLogManager
 
 /**
  * @author : Zhan Xuzhao
@@ -37,6 +38,7 @@ class BaseActivityDelegate(activity: Activity) : IActivityDelegate {
     }
 
     override fun onDestroy() {
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

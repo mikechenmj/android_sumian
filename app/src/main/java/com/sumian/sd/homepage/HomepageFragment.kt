@@ -12,7 +12,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
-import com.sumian.sd.account.userProfile.SdUserProfileActivity
+import com.sumian.sd.account.userProfile.UserInfoActivity
 import com.sumian.sd.anxiousandfaith.AnxiousAndFaithActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
@@ -149,8 +149,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 if (response == null) {
                     return
                 }
-                sleep_prescription_view.setHasNewPrescription(response.meta.update)
-                sleep_prescription_view.setPrescriptionData(response.meta.prescription.data)
+                sleep_prescription_view.setPrescriptionData(response)
             }
         })
     }
@@ -187,7 +186,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun onAvatarClick() {
-        SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
+        UserInfoActivity.show(context, UserInfoActivity::class.java)
     }
 
     override fun onEnter(data: String?) {

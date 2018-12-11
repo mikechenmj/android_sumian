@@ -87,6 +87,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         }
     }
 
+    public void addItemPosition(int position, T item) {
+        if (item != null) {
+            this.mItems.add(position, item);
+            notifyItemInserted(position);
+        }
+    }
+
     public void updateItem(int position) {
         if (getItemCount() > position) {
             notifyItemChanged(position);
@@ -110,11 +117,17 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
         }
     }
 
+    public void removeItem(int position) {
+        if (mItems != null) {
+            mItems.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
     public final void clear() {
         this.mItems.clear();
         notifyDataSetChanged();
     }
-
 
     public static abstract class OnClickListener implements View.OnClickListener {
         @Override

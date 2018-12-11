@@ -3,10 +3,12 @@ package com.sumian.common.base
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.widget.LinearLayout
+import com.blankj.utilcode.util.KeyboardUtils
 import com.sumian.common.R
 import com.sumian.common.dialog.LoadingDialog
 import com.sumian.common.mvp.BaseShowLoadingView
@@ -51,6 +53,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         initWidget()
         initData()
         mActivityDelegate.onCreate(savedInstanceState)
+        findViewById<ViewGroup>(android.R.id.content).getChildAt(0)?.setOnClickListener { KeyboardUtils.hideSoftInput(this@BaseActivity) }
     }
 
     override fun onNewIntent(intent: Intent?) {

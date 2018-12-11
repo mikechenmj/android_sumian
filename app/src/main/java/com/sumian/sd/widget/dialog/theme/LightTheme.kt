@@ -11,32 +11,32 @@ import com.sumian.sd.R
  *
  * desc:白色主题
  */
-class LightTheme : ITheme {
+open class LightTheme : ITheme {
 
     @ColorRes
-    var bgColorRes: Int = R.color.b2_color
+    open var bgColorRes: Int = R.color.b2_color
 
     @DrawableRes
-    var dismissImageRes: Int = R.mipmap.ic_close
+    open var dismissImageRes: Int = R.mipmap.ic_close
 
     @DrawableRes
-    var noticeImageRes: Int = R.mipmap.ic_notification_alert
+    open var noticeImageRes: Int = R.mipmap.ic_notification_alert
 
     @ColorRes
-    var titleColorRes: Int = R.color.t3_color
+    open var titleColorRes: Int = R.color.t3_color
 
     @ColorRes
-    var messageColorRes: Int = R.color.t1_color
-
-    @DrawableRes
-    var leftButtonBgRes: Int = R.drawable.bg_btn_white
-    @ColorRes
-    var leftButtonFontColorRes: Int = R.color.t5_color
+    open var messageColorRes: Int = R.color.t1_color
 
     @DrawableRes
-    var rightButtonBgRes: Int = R.drawable.bg_bt
+    open var leftButtonBgRes: Int = R.drawable.bg_btn_white
     @ColorRes
-    var rightButtonFontColorRes: Int = R.color.b2_color
+    open var leftButtonFontColorRes: Int = R.color.t5_color
+
+    @DrawableRes
+    open var rightButtonBgRes: Int = R.drawable.bg_bt
+    @ColorRes
+    open var rightButtonFontColorRes: Int = R.color.b2_color
 
 
 }

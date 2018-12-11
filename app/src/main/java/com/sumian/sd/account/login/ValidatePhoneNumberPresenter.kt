@@ -2,8 +2,6 @@ package com.sumian.sd.account.login
 
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.hw.utils.JsonUtil
-import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -18,7 +16,7 @@ import com.sumian.sd.network.callback.BaseSdResponseCallback
  */
 class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) : ValidatePhoneNumberContract.Presenter {
     override fun requestCaptcha(mobile: String) {
-        LoginHelper.requestCaptcha(mobile, object : LoginHelper.RequestCaptchaListener {
+        CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
             override fun onStart() {
                 view.showLoading()
             }
@@ -66,12 +64,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
             }
 
             override fun onSuccess(response: Token?) {
-                if (response == null) {
-                    ToastUtils.showShort(R.string.error)
-                    return
-                }
-                AppManager.getAccountViewModel().updateToken(response)
-                AppManager.launchMainAndFinishAll()
+                AppManager.onLoginSuccess(response)
             }
 
             override fun onFinish() {

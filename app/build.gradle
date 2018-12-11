@@ -60,6 +60,10 @@ android {
         buildConfigField("String", "HTTP_DNS_ACCOUNT_ID", HTTP_DNS_ACCOUNT_ID)
         buildConfigField("String", "HTTP_DNS_SECRET_KEY", HTTP_DNS_SECRET_KEY)
         buildConfigField("String", "CBTI_SHARE_WEBSITE", CBTI_SHARE_WEBSITE)
+        buildConfigField("String", "ALIYUN_LOG_ACCESS_KEY_ID", ALIYUN_LOG_ACCESS_KEY_ID)
+        buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", ALIYUN_LOG_ACCESS_SECRET)
+        buildConfigField("String", "ALIYUN_LOG_LOG_STORE", ALIYUN_LOG_LOG_STORE)
+        buildConfigField("String", "ALIYUN_LOG_END_POINT", ALIYUN_LOG_END_POINT)
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -167,6 +171,7 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
             buildConfigField("String", "HW_BASE_URL", HW_DEV_URL)
             buildConfigField("String", "HW_QUESTION_URL", HW_DEV_QUESTION_URL)
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_DEV)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -191,6 +196,7 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
             buildConfigField("String", "HW_BASE_URL", HW_TEST_URL)
             buildConfigField("String", "HW_QUESTION_URL", HW_TEST_QUESTION_URL)
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_TEST)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -213,6 +219,7 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
             buildConfigField("String", "HW_BASE_URL", HW_OFFICIAL_URL)
             buildConfigField("String", "HW_QUESTION_URL", HW_OFFICIAL_QUESTION_URL)
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_OFFICIAL)
 
             resValue "string", "app_name", app_name
             println("${app_name}")

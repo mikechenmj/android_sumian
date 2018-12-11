@@ -4,11 +4,13 @@ package com.hyphenate.helpdesk.easeui;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.ChatManager;
 import com.hyphenate.chat.Message;
+import com.hyphenate.helpdesk.easeui.widget.ChatEaseTitleBar;
 import com.hyphenate.helpdesk.emojicon.Emojicon;
 import com.hyphenate.util.EasyUtils;
 
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("ALL")
 public class UIProvider {
@@ -49,16 +53,26 @@ public class UIProvider {
 
     private boolean showProgress = true;
 
-    private OnMsgCallback mOnMsgCallback;
+    private UnreadMessageChangeListener mUnreadMessageChangeListener;
 
     private int mCacheMsgSize;
 
     private int mThemeMode = LIGHT_THEME;
 
+    private volatile boolean mIsLogin;
+
     /**
      * 用来记录注册了eventlistener的foreground Activity
      */
     private List<Activity> activityList = Collections.synchronizedList(new ArrayList<Activity>());
+
+    public boolean isLogin() {
+        return mIsLogin;
+    }
+
+    public void setLogin(boolean login) {
+        mIsLogin = login;
+    }
 
     public void pushActivity(Activity activity) {
         if (!activityList.contains(activity)) {
@@ -94,13 +108,16 @@ public class UIProvider {
         return showProgress;
     }
 
-    public void showDotCallback(OnMsgCallback onMsgCallback) {
-        mOnMsgCallback = onMsgCallback;
+    public void setUnreadMessageChangeListener(UnreadMessageChangeListener unreadMessageChangeListener) {
+        mUnreadMessageChangeListener = unreadMessageChangeListener;
     }
 
-    public interface OnMsgCallback {
+    public void clickLogin(TextView tvNetWorkErrorTips) {
 
-        void onMsg(int msgLength);
+    }
+
+    public interface UnreadMessageChangeListener {
+        void onMessageCountChange(int messageCount);
     }
 
     public int isHaveMsgSize() {
@@ -109,8 +126,8 @@ public class UIProvider {
 
     public void clearCacheMsg() {
         mCacheMsgSize = 0;
-        if (mOnMsgCallback != null) {
-            mOnMsgCallback.onMsg(mCacheMsgSize);
+        if (mUnreadMessageChangeListener != null) {
+            mUnreadMessageChangeListener.onMessageCountChange(mCacheMsgSize);
         }
     }
 
@@ -131,8 +148,9 @@ public class UIProvider {
                 mCacheMsgSize = msgs.size();
                 if (!EasyUtils.isAppRunningForeground(context)) {
                     UIProvider.getInstance().getNotifier().onNewMesg(msgs);
-                } else {
-                    mOnMsgCallback.onMsg(msgs.size());
+                }
+                if (mUnreadMessageChangeListener != null) {
+                    mUnreadMessageChangeListener.onMessageCountChange(msgs.size());
                 }
             }
 
@@ -177,6 +195,21 @@ public class UIProvider {
      */
     public void setUserProfileProvider(UserProfileProvider userProvider) {
         this.userProvider = userProvider;
+    }
+
+    private AccountPrivoder mAccountPrivoder;
+
+    public void setAccountProvider(AccountPrivoder accountProvider) {
+        this.mAccountPrivoder = accountProvider;
+    }
+
+    public AccountPrivoder getAccountPrivoder() {
+        return mAccountPrivoder;
+    }
+
+    public interface AccountPrivoder {
+
+        void autoLoginAccount(@NonNull TextView tvLoginStateTips, @NonNull ChatEaseTitleBar chatEaseTitleBar);
     }
 
     /**

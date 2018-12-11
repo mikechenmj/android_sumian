@@ -124,14 +124,8 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
         tv_relaxation_title.text = mRelaxationData!!.name
         tv_relaxation_desc.text = mRelaxationData!!.description
         ImageLoader.loadImage(mRelaxationData!!.background!!, iv_bg)
-        CommonAudioPlayer.prepare(mRelaxationData!!.audio!!)
-
-        // 不加post，获取vg_content 的 height是赋值前的
-        // 加post，能获取到赋值后的height，但是执行有大概1秒的延时
-//        vg_root.postDelayed({
+        CommonAudioPlayer.prepare(this, mRelaxationData!!.audio!!)
         space.layoutParams.height = vg_root.height - Math.min(mBottomContentDefaultHeight.toInt(), vg_content.height)
-//        }, 0)
-
     }
 
     private fun getShareUrl(): String {

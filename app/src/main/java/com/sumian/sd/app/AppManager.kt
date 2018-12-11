@@ -4,18 +4,21 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.view.Gravity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
-import com.hyphenate.chat.ChatClient
-import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.blue.manager.BlueManager
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
@@ -23,10 +26,13 @@ import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.job.SleepDataUploadManager
+import com.sumian.hw.log.LogJobIntentService
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
+import com.sumian.sd.account.bean.Token
+import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.account.login.NewUserGuideActivity
 import com.sumian.sd.account.model.AccountViewModel
@@ -34,9 +40,12 @@ import com.sumian.sd.base.ActivityDelegateFactory
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.FileHelper
 import com.sumian.sd.doctor.model.DoctorViewModel
+import com.sumian.sd.kefu.KefuManager
+import com.sumian.sd.log.SdLogManager
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.SdApi
+import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationConst
 import com.sumian.sd.notification.NotificationDelegate
 import com.sumian.sd.notification.SchemeResolver
@@ -165,6 +174,28 @@ object AppManager {
         initUtils(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
         initAppNotificationManager(app)
+        SdLogManager.init(app,
+                BuildConfig.ALIYUN_LOG_ACCESS_KEY_ID,
+                BuildConfig.ALIYUN_LOG_ACCESS_SECRET,
+                BuildConfig.ALIYUN_LOG_PROJECT,
+                BuildConfig.ALIYUN_LOG_LOG_STORE,
+                BuildConfig.ALIYUN_LOG_END_POINT
+        )
+        observeAppLifecycle()
+    }
+
+    private fun observeAppLifecycle() {
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object : LifecycleObserver {
+            @OnLifecycleEvent(Lifecycle.Event.ON_START)
+            fun onAppForeground() {
+                AppManager.onAppForeground()
+            }
+
+            @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+            fun onAppBackground() {
+                AppManager.onAppBackground()
+            }
+        })
     }
 
 
@@ -209,14 +240,7 @@ object AppManager {
     @JvmStatic
     fun initKefu(context: Context) {
         synchronized(AppManager::class) {
-            // Kefu SDK 初始化
-            val options = ChatClient.Options()
-            options.setConsoleLog(BuildConfig.DEBUG)
-            options.setAppkey(BuildConfig.EASEMOB_APP_KEY)//必填项，appkey获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“AppKey”
-            options.setTenantId(BuildConfig.EASEMOB_TENANT_ID)//必填项，tenantId获取地址：kefu.easemob.com，“管理员模式 > 设置 > 企业信息”页面的“租户ID”
-            ChatClient.getInstance().init(context, options)
-            // Kefu EaseUI的初始化
-            UIProvider.getInstance().init(context)
+            KefuManager.init(context)
         }
     }
 
@@ -225,25 +249,6 @@ object AppManager {
         AppManager.getBlueManager().bluePeripheral?.close()
         ActivityUtils.finishAllActivities()
         LogManager.appendUserOperationLog("用户退出 app.......")
-    }
-
-    fun logoutAndLaunchLoginActivity() {
-        // user report
-        AppManager.getOpenAnalytics().onProfileSignOff()
-        // release bluetooth
-        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().doStopScan() }
-        AppManager.getBlueManager().release()
-        // logout chat
-        ChatClient.getInstance().logout(true, null)
-        // cancel notification
-        NotificationUtil.cancelAllNotification(App.getAppContext())
-        // update token
-        AppManager.getAccountViewModel().updateToken(null)
-        // update WeChat token cache
-        AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
-        // finish all and start LoginActivity
-        ActivityUtils.finishAllActivities()
-        LoginActivity.show()
     }
 
     fun launchMainAndFinishAll() {
@@ -271,5 +276,83 @@ object AppManager {
 
     fun isAppForeground(): Boolean {
         return AppUtils.isAppForeground()
+    }
+
+    // ------------ App's important lifecycle events start------------
+
+    fun onAppForeground() {
+        LogManager.appendUserOperationLog("App 进入 前台")
+        DeviceManager.tryToConnectCacheMonitor()
+        sendHeartbeat()
+    }
+
+    fun onAppBackground() {
+        LogManager.appendUserOperationLog("App 进入 后台")
+//        LogJobIntentService.uploadLogIfNeed(App.getAppContext())
+    }
+
+    fun onMainActivityCreate() {
+        DeviceManager.uploadCacheSn()
+        KefuManager.loginAndQueryUnreadMsg()
+        AppNotificationManager.uploadPushId()
+        AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
+        AppManager.sendHeartbeat()
+        AppManager.syncUserInfo()
+    }
+
+    fun onLoginSuccess(token: Token?) {
+        if (token == null) {
+            ToastUtils.showShort(R.string.error)
+            return
+        }
+        AppManager.getAccountViewModel().updateToken(token)
+        AppManager.launchMainOrNewUserGuide()
+    }
+
+    fun logoutAndLaunchLoginActivity() {
+        // user report
+        AppManager.getOpenAnalytics().onProfileSignOff()
+        // release bluetooth
+        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().doStopScan() }
+        AppManager.getBlueManager().release()
+        KefuManager.logout()
+        // cancel notification
+        NotificationUtil.cancelAllNotification(App.getAppContext())
+        // update token
+        AppManager.getAccountViewModel().updateToken(null)
+        // update WeChat token cache
+        AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
+        // finish all and start LoginActivity
+        ActivityUtils.finishAllActivities()
+        LoginActivity.show()
+    }
+
+    // ------------ App's important lifecycle events end------------
+    fun sendHeartbeat() {
+        if (!getAccountViewModel().isLogin) {
+            return
+        }
+        AppManager.getSdHttpService().sendHeartbeats("open_app")
+                .enqueue(object : BaseSdResponseCallback<Any?>() {
+                    override fun onFailure(errorResponse: ErrorResponse) {
+
+                    }
+
+                    override fun onSuccess(response: Any?) {
+
+                    }
+                })
+    }
+
+    fun syncUserInfo() {
+        val call = AppManager.getSdHttpService().getUserProfile()
+        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+            }
+
+            override fun onSuccess(response: UserInfo?) {
+                AppManager.getAccountViewModel().updateUserInfo(response)
+            }
+        })
     }
 }

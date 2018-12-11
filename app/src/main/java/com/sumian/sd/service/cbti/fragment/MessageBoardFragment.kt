@@ -35,7 +35,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
     }
 
     private val messageBoardAdapter by lazy {
-        CBTIMessageBoardAdapter(context = context!!)
+        CBTIMessageBoardAdapter(context = context!!).setMsgType(CBTIMessageBoardAdapter.MSG_NORMAL_LIST_TYPE)
     }
 
     private var mCbtiPartType: Int = 0

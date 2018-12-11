@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sumian.common.utils.ColorCompatUtil
-import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
@@ -13,6 +12,7 @@ import com.sumian.sd.doctor.activity.ScanDoctorQrCodeActivity
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.contract.DoctorContract
 import com.sumian.sd.doctor.presenter.DoctorPresenter
+import com.sumian.sd.kefu.KefuManager
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.notification.NotificationListActivity
 import com.sumian.sd.widget.RequestScanQrCodeView
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View, SwipeRefreshLayout.OnRefreshListener, OnEnterListener, HwLeanCloudHelper.OnShowMsgDotCallback {
+class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View, SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
 
     private var mIsInit = false
     private var mIsAutoRefresh = false
@@ -36,6 +36,9 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
         super.initWidget(root)
         doctor_detail_layout?.setOnRefreshListener(this)
         iv_notification?.setOnClickListener { NotificationListActivity.launch(activity) }
+        KefuManager.mMessageCountLiveData.observe(this, Observer {
+            showMessageDot(it > 0)
+        })
     }
 
     override fun initData() {
@@ -57,11 +60,6 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
             }
         }
         request_scan_qr_code_view?.setFragment(this)?.setOnGrantedCallback(this)
-        //去掉医生模块的通知提醒
-//        ViewModelProviders.of(Objects.requireNonNull<FragmentActivity>(activity))
-//                .get(NotificationViewModel::class.java)
-//                .unreadCount
-//                .observe(this, Observer { count -> iv_notification.isActivated = count != null && count > 0 })
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
                 switchUI(doctor != null)
@@ -70,8 +68,6 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
                 }
             }
         })
-
-        HwLeanCloudHelper.addOnAdminMsgCallback(this)
     }
 
     override fun onResume() {
@@ -140,20 +136,8 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     override fun onEnter(data: String?) {
-        runOnUiThread {
-            val isHaveMsg = HwLeanCloudHelper.isHaveCustomerMsg()
-            showMessageDot(isHaveMsg)
-        }
         if (mIsAutoRefresh) return
         onRefresh()
-    }
-
-    override fun onShowMsgDotCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        onHideMsgCallback(adminMsgLen, doctorMsgLen, customerMsgLen)
-    }
-
-    override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        runOnUiThread { showMessageDot(customerMsgLen > 0) }
     }
 
     private fun showMessageDot(isHaveMsg: Boolean) {

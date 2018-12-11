@@ -1,7 +1,6 @@
 package com.sumian.sd.app
 
 import android.app.Application
-import androidx.lifecycle.ProcessLifecycleOwner
 import com.sumian.common.social.analytics.ActivityLifecycleCallbackForUserAnalysis
 import com.sumian.hw.log.LogManager
 
@@ -23,12 +22,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppContext = this
-        LogManager.appendPhoneLog("APP 启动")
         AppManager.initOnAppStart(this)
         registerActivityLifecycleCallbacks(AppInitThirdPlatformLifecycleCallback.create())
-        registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUploadLog())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
-        ProcessLifecycleOwner.get().lifecycle.addObserver(ForegroundBackgroundListener())
+        registerActivityLifecycleCallbacks(LogActivityLifecycleCallbacks())
     }
 }
 

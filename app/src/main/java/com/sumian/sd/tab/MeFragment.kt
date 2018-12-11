@@ -5,15 +5,13 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
-import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.image.ImageLoader
-import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.account.userProfile.SdUserProfileActivity
+import com.sumian.sd.account.userProfile.UserInfoActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.base.SdBasePresenter
@@ -41,11 +39,8 @@ import kotlinx.android.synthetic.main.fragment_tab_me.*
  * desc:
  */
 
-class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback,
-        HwLeanCloudHelper.OnShowMsgDotCallback, OnEnterListener, VersionModel.ShowDotCallback {
-
-    //@BindView(R.id.siv_customer_service)
-    //ImageView mSivKefu;
+class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
+        PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, VersionModel.ShowDotCallback {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_me
@@ -80,7 +75,6 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener, P
                 .unreadCount
                 .observe(this, Observer<Int> { unreadCount -> iv_notification.isActivated = unreadCount != null && unreadCount > 0 })
 
-        // HwLeanCloudHelper.addOnAdminMsgCallback(this);
         DeviceManager.getMonitorLiveData().observe(this, Observer { blueDevice ->
             var monitorSn: String? = blueDevice?.sn
             if (TextUtils.isEmpty(monitorSn)) {
@@ -93,11 +87,11 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener, P
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> SdUserProfileActivity.show(context, SdUserProfileActivity::class.java)
+            R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> UserInfoActivity.show(context, UserInfoActivity::class.java)
             R.id.dv_setting -> SettingActivity.show(context, SettingActivity::class.java)
             R.id.iv_notification -> NotificationListActivity.launch(activity)
             R.id.siv_customer_service -> {
-                UIProvider.getInstance().clearCacheMsg()
+//                UIProvider.getInstance().clearCacheMsg()
                 KefuManager.launchKefuActivity()
             }
             R.id.dv_device_manage -> {
@@ -140,18 +134,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener, P
         OnlineReportListActivity.launchForShowAll(this)
     }
 
-    override fun onShowMsgDotCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        // onHideMsgCallback(adminMsgLen, doctorMsgLen, customerMsgLen);
-    }
-
-    override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        // runOnUiThread(() -> mSivKefu.setImageResource((customerMsgLen > 0) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
-    }
-
     override fun onEnter(data: String?) {
-        // if (mSivKefu != null) {
-        //    runOnUiThread(() -> mSivKefu.setImageResource((HwLeanCloudHelper.isHaveCustomerMsg()) ? R.drawable.ic_info_customerservice_reply : R.drawable.ic_info_customerservice));
-        // }
     }
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {

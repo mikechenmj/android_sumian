@@ -217,6 +217,8 @@
     <string name="version_upgrade">版本更新</string>
     <string name="current_version">当前版本号:</string>
     <string name="new_version">最新版本号:</string>
+    <string name="go_to_experience">立即体验</string>
+    <string name="version_upgrade_title">新版本更新啦～</string>
     <string name="this_is_last_version">当前已是最新版本</string>
     <string name="have_a_new_version">有新版本，请立即体验吧</string>
     <string name="force_upgrade_version">当前版本太低，请到应用市场升级后再使用</string>
@@ -693,4 +695,16 @@
     <string name="go_to_watch">继续观看</string>
     <string name="finished_practice">完成练习</string>
     <string name="list">列表</string>
+    <string name="n_days_later_update_prescription">%d天后更新处方</string>
+    <string name="write_message_keyboard">写留言</string>
+    <string name="msg_keyboard_hint">欢迎留下您对课程的疑问和想法，留言将在筛选后展示。</string>
+    <string name="my_msg">我的留言</string>
+    <string name="del">删除</string>
+    <string name="del_msg_keyboard_title">确定删除该留言？</string>
+    <string name="del_msg_keyboard_msg">删除后将不再保留该留言记录</string>
+    <string name="my_message_board">我的留言</string>
+    <string name="sumian_doctor_msg_replay">速眠医生回复</string>
+    <string name="msg_board_is_deleted">留言已删除</string>
+    <string name="msg_board_is_deleted_message">如有疑问，请咨询客服</string>
+    <string name="msg_board_replay_notice">留言回复通知</string>
 </resources>

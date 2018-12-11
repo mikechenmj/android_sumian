@@ -9,21 +9,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import com.hyphenate.helpdesk.easeui.UIProvider
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
-import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.utils.SettingsUtil
-import com.sumian.common.utils.SumianExecutor
-import com.sumian.hw.leancloud.HwLeanCloudHelper
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
-import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.constants.SpKeys
@@ -33,8 +27,8 @@ import com.sumian.sd.diary.DataFragment
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.NotificationUnreadCountChangeEvent
 import com.sumian.sd.homepage.HomepageFragment
+import com.sumian.sd.kefu.KefuManager
 import com.sumian.sd.main.event.ChangeMainTabEvent
-import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.notification.NotificationViewModel
 import com.sumian.sd.setting.version.delegate.VersionDelegate
 import com.sumian.sd.tab.DoctorFragment
@@ -45,7 +39,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnShowMsgDotCallback, VersionModel.ShowDotCallback {
+class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCallback {
 
     companion object {
         const val TAB_INVALID = -1
@@ -92,6 +86,11 @@ class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnSh
         return R.layout.activity_main
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AppManager.onMainActivityCreate()
+    }
+
     override fun onStart() {
         super.onStart()
         mVersionDelegate.checkVersion(this)
@@ -128,31 +127,13 @@ class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnSh
                 .observe(this, Observer<Int> { unreadCount ->
                     tb_me?.showDot(if (unreadCount != null && unreadCount > 0) View.VISIBLE else View.GONE)
                 })
+        KefuManager.mMessageCountLiveData.observe(this, Observer {
+            this.tb_doctor?.showDot(if (it > 0) android.view.View.VISIBLE else android.view.View.GONE)
+        })
     }
 
     override fun initData() {
         super.initData()
-        DeviceManager.uploadCacheSn()
-        //注册站内信消息接收容器
-        HwLeanCloudHelper.addOnAdminMsgCallback(this)
-        if (AppManager.getAccountViewModel().isLogin) {
-            HwLeanCloudHelper.loginEasemob(null)
-            AppNotificationManager.uploadPushId()
-        }
-
-        AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
-
-        UIProvider.getInstance().showDotCallback { msgLength ->
-            HwLeanCloudHelper.haveCustomerMsg(msgLength)
-            onShowMsgDotCallback(0, 0, msgLength)
-        }
-
-        SumianExecutor.runOnUiThread(({
-            sendHeartBeats()
-            syncUserInfo()
-        }), 200)
-
-        SumianExecutor.runOnUiThread(({ HwLeanCloudHelper.haveCustomerMsg(UIProvider.getInstance().isHaveMsgSize) }), 500)
         // 中途医生绑定状态发生改变时，如果处于doctor tab，改变status 颜色
         AppManager.getDoctorViewModel().getDoctorLiveData().observe(this, Observer { doctor ->
             run {
@@ -186,7 +167,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnSh
 
     override fun onRelease() {
         super.onRelease()
-        HwLeanCloudHelper.removeOnAdminMsgCallback(this)
         AppManager.getVersionModel().unRegisterShowDotCallback(this)
     }
 
@@ -208,31 +188,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnSh
 
     override fun onBackPressed() {
         returnToPhoneLauncher()
-    }
-
-    private fun sendHeartBeats() {
-        val call = AppManager.getSdHttpService().sendHeartbeats("open_app")
-        call.enqueue(object : BaseSdResponseCallback<Any?>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-
-            }
-
-            override fun onSuccess(response: Any?) {
-
-            }
-        })
-    }
-
-    private fun syncUserInfo() {
-        val call = AppManager.getSdHttpService().getUserProfile()
-        call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-            }
-
-            override fun onSuccess(response: UserInfo?) {
-                AppManager.getAccountViewModel().updateUserInfo(response)
-            }
-        })
     }
 
     private fun returnToPhoneLauncher() {
@@ -289,17 +244,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), HwLeanCloudHelper.OnSh
         ViewModelProviders.of(this)
                 .get(NotificationViewModel::class.java)
                 .updateUnreadCount()
-    }
-
-    override fun onShowMsgDotCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        onHideMsgCallback(adminMsgLen, doctorMsgLen, customerMsgLen)
-    }
-
-    override fun onHideMsgCallback(adminMsgLen: Int, doctorMsgLen: Int, customerMsgLen: Int) {
-        SumianExecutor.runOnUiThread({
-            this.tb_doctor?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
-            // this.tb_me?.showDot(if (adminMsgLen > 0 || doctorMsgLen > 0 || customerMsgLen > 0) android.view.View.VISIBLE else android.view.View.GONE)
-        })
     }
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {

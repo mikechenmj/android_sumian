@@ -21,6 +21,7 @@ import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
 import com.sumian.sd.homepage.bean.*
+import com.sumian.sd.kefu.KeFuMessage
 import com.sumian.sd.network.response.AppUpgradeInfo
 import com.sumian.sd.network.response.FirmwareInfo
 import com.sumian.sd.notification.bean.NotificationListResponse
@@ -69,6 +70,14 @@ interface SdApi {
     @FormUrlEncoded
     @POST("authorizations/retrieve-validation")
     fun validateCaptchaForResetPassword(@Field("mobile") mobile: String, @Field("captcha") captcha: String): Call<Token>
+
+    /**
+     *
+     * @param userId ") userId: Int
+     * @return Call<UserInfo>
+     */
+    @POST("authorizations/user/{userId}/easemob")
+    fun notifyRegisterImServer(@Field("userId") userId: Int): Call<KeFuMessage>
 
     @FormUrlEncoded
     @POST("authorizations/password")
@@ -533,5 +542,11 @@ interface SdApi {
 
     @GET("cbti-relaxations/{id}")
     fun getRelaxationDetail(@Path("id") id: Int): Call<RelaxationData>
+
+    @DELETE("message-boards/{id}")
+    fun delSelfMessageKeyboard(@Path("id") msgId: Int): Call<Any>
+
+    @GET("message-boards/{id}")
+    fun getMsgKeyboardDetail(@Path("id") msgId: Int): Call<MessageBoard>
 
 }
