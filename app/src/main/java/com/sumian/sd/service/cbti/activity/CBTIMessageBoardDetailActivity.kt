@@ -1,5 +1,6 @@
 package com.sumian.sd.service.cbti.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
@@ -36,6 +37,12 @@ class CBTIMessageBoardDetailActivity : BasePresenterActivity<CBTIMessageBoardDet
                     putExtra(ARGS_MSG_ID, msgId)
                 })
             }
+        }
+
+        fun getIntent(context: Context, msgId: Int): Intent {
+            val intent = Intent(context, CBTIMessageBoardDetailActivity::class.java)
+            intent.putExtra(ARGS_MSG_ID, msgId)
+            return intent
         }
 
     }
