@@ -127,7 +127,8 @@ class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContr
     override fun onPublishMessageBoardSuccess(success: String) {
         et_msg_board_input.text = null
         SumianImageTextToast.showToast(this, R.drawable.ic_dialog_success, success, false)
-        mPresenter?.refreshSelfMsgListMsg()
+        finish()
+        //mPresenter?.refreshSelfMsgListMsg()
     }
 
     override fun onPublishMessageBoardFailed(error: String) {

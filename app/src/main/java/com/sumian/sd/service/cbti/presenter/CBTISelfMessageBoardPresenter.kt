@@ -3,6 +3,8 @@ package com.sumian.sd.service.cbti.presenter
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.sd.R
+import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.cbti.bean.MessageBoard
@@ -47,7 +49,7 @@ class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoa
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onSuccess(response: Any?) {
-                mView?.onPublishMessageBoardSuccess("留言成功")
+                mView?.onPublishMessageBoardSuccess(App.getAppContext().getString(R.string.msg_board_send_success))
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -67,7 +69,7 @@ class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoa
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onSuccess(response: Any?) {
-                mView?.onDelSuccess("删除成功", position)
+                mView?.onDelSuccess(App.getAppContext().getString(R.string.msg_board_del_success), position)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {

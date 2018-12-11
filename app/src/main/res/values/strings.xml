@@ -708,4 +708,6 @@
     <string name="msg_board_is_deleted_message">如有疑问，请咨询客服</string>
     <string name="msg_board_replay_notice">留言回复通知</string>
     <string name="system_notification">系统通知</string>
+    <string name="msg_board_del_success">留言删除成功</string>
+    <string name="msg_board_send_success">留言发送成功</string>
 </resources>
