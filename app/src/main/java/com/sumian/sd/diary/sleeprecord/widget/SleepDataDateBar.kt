@@ -24,6 +24,7 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
     private var mDataLoader: CalendarPopup.DataLoader? = null
     private var mOnDateClickListener: CalendarView.OnDateClickListener? = null
     private var mSelectedTime = 0L
+    private var mPreviewDays = 0
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sleep_data_date_bar, this, true)
@@ -49,10 +50,14 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
         iv_weekly_report.setOnClickListener(onClickListener)
     }
 
+    fun setPreviewDays(previewDays: Int) {
+        mPreviewDays = previewDays
+    }
+
     private fun showDatePopup(show: Boolean) {
         iv_date_arrow.isActivated = show
         if (show) {
-            mCalendarPopup = CalendarPopup(context, mDataLoader!!)
+            mCalendarPopup = CalendarPopup(context, mDataLoader!!, mPreviewDays)
             mCalendarPopup!!.setOnDateClickListener(CalendarView.OnDateClickListener { time ->
                 mOnDateClickListener?.onDateClick(time)
                 setCurrentTime(time)

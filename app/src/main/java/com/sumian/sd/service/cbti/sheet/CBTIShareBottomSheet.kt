@@ -49,7 +49,7 @@ class CBTIShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClic
             R.id.tv_wechat_friend -> {
                 AppManager
                         .getOpenEngine()
-                        .shareWebForCallback(activity,
+                        .shareUrl(activity,
                                 BuildConfig.CBTI_SHARE_WEBSITE,
                                 "CBTI（失眠的认知行为治疗）", "治疗失眠的非药物疗法，国内外睡眠医学领域推荐为治疗失眠的首选方案",
                                 R.drawable.ic_share_launcher,
@@ -59,7 +59,7 @@ class CBTIShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClic
             R.id.tv_wechat_circle -> {
                 AppManager
                         .getOpenEngine()
-                        .shareWebForCallback(activity,
+                        .shareUrl(activity,
                                 BuildConfig.CBTI_SHARE_WEBSITE,
                                 "CBTI（失眠的认知行为治疗），国内外睡眠医学领域首推的非药物治疗方案",
                                 "治疗失眠的非药物疗法，国内外睡眠医学领域推荐为治疗失眠的首选方案",

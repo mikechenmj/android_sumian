@@ -1,6 +1,7 @@
 package com.sumian.sd.diary.sleeprecord.calendar.custom;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 
 import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarViewWrapper.CalendarViewWrapper;
@@ -20,14 +21,15 @@ import java.util.Set;
  * </pre>
  */
 public class SleepCalendarViewWrapper extends CalendarViewWrapper {
-    public static final int PRELOAD_THRESHOLD = 3;
-    private Set<Long> mHasRecordDays = new HashSet<>();
-    private long mSelectDayTime;
-    private long mTodayTime;
-    private LoadMoreListener mLoadMoreListener;
-    private boolean mIsWeekMode = false;
-    private long mWeekStartDayTime;
-    private long mWeekEndDayTime;
+    public static final int              PRELOAD_THRESHOLD = 3;
+    private             Set<Long>        mHasRecordDays = new HashSet<>();
+    private             long             mSelectDayTime;
+    private             long             mTodayTime;
+    private             LoadMoreListener mLoadMoreListener;
+    private             boolean          mIsWeekMode = false;
+    private             long             mWeekStartDayTime;
+    private             long             mWeekEndDayTime;
+    private             long             mPreviewDays;
 
     public SleepCalendarViewWrapper(Context context) {
         super(context);
@@ -49,13 +51,17 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
         mTodayTime = TimeUtil.getDayStartTime(todayTime);
     }
 
+    public void setPreviewDays(int previewDays) {
+        mPreviewDays = previewDays;
+    }
+
     @Override
     public int getDayTypeByTime(long timeInMillis) {
         int dayType;
         boolean hasData = mHasRecordDays.contains(timeInMillis);
         if (!mIsWeekMode && timeInMillis == mSelectDayTime) {
             dayType = hasData ? SleepDayType.SELECT_HAS_DATA : SleepDayType.SELECT_NO_DATA;
-        } else if (timeInMillis > mTodayTime) {
+        } else if (timeInMillis > mTodayTime + DateUtils.DAY_IN_MILLIS * mPreviewDays) {
             dayType = SleepDayType.FEATURE;
         } else {
             dayType = hasData ? SleepDayType.HAS_DATA : SleepDayType.NO_DATA;

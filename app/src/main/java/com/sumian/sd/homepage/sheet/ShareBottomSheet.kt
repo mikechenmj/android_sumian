@@ -18,27 +18,30 @@ import kotlinx.android.synthetic.main.lay_share_bottom_sheet.*
  *
  * desc:  放松训练  分享
  */
-class RelaxationShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClickListener {
+class ShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClickListener {
 
     companion object {
 
         private const val ARGS_URL = "com.sumian.sd.args.url"
         private const val ARGS_TITLE = "com.sumian.sd.args.title"
+        private const val ARGS_MOMENT_TITLE = "com.sumian.sd.args.moment_title"
         private const val ARGS_DESC = "com.sumian.sd.args.desc"
-
+        private const val ARGS_THUMB_URL = "com.sumian.sd.args.thumb_url"
 
         @JvmStatic
-        fun show(fragmentManager: androidx.fragment.app.FragmentManager, url: String, title: String, desc: String) {
-            val relaxationShareBottomSheet = RelaxationShareBottomSheet()
+        fun show(fragmentManager: androidx.fragment.app.FragmentManager, url: String, title: String, desc: String, momentTitle: String, thumbUrl: String) {
+            val relaxationShareBottomSheet = ShareBottomSheet()
             relaxationShareBottomSheet.arguments = Bundle().apply {
                 putString(ARGS_URL, url)
                 putString(ARGS_TITLE, title)
                 putString(ARGS_DESC, desc)
+                putString(ARGS_MOMENT_TITLE, momentTitle)
+                putString(ARGS_THUMB_URL, thumbUrl)
             }
 
             fragmentManager
                     .beginTransaction()
-                    .add(relaxationShareBottomSheet, RelaxationShareBottomSheet::class.java.simpleName)
+                    .add(relaxationShareBottomSheet, ShareBottomSheet::class.java.simpleName)
                     .commitNowAllowingStateLoss()
         }
     }
@@ -46,6 +49,8 @@ class RelaxationShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.
     private lateinit var shareUrl: String
     private lateinit var shareTitle: String
     private lateinit var shareDesc: String
+    private lateinit var shareMomentTitle: String
+    private lateinit var thumbUrl: String
 
     override fun getLayout(): Int {
         return R.layout.lay_share_bottom_sheet
@@ -55,8 +60,10 @@ class RelaxationShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.
         super.initBundle(arguments)
         arguments?.let {
             this.shareUrl = it.getString(ARGS_URL, "")
-            this.shareTitle = it.getString(ARGS_TITLE, "放松训练")
-            this.shareDesc = it.getString(ARGS_DESC, "放松训练")
+            this.shareTitle = it.getString(ARGS_TITLE, "")
+            this.shareDesc = it.getString(ARGS_DESC, "")
+            this.shareMomentTitle = it.getString(ARGS_MOMENT_TITLE, "")
+            this.thumbUrl = it.getString(ARGS_THUMB_URL, "")
         }
     }
 
@@ -72,23 +79,24 @@ class RelaxationShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.
             R.id.tv_wechat_friend -> {
                 AppManager
                         .getOpenEngine()
-                        .shareWebForCallback(activity,
+                        .shareUrl(activity,
                                 shareUrl,
-                                shareTitle, shareDesc,
-                                R.drawable.ic_share_launcher,
+                                shareTitle,
+                                shareDesc,
+                                thumbUrl,
                                 SHARE_MEDIA.WEIXIN,
-                                this@RelaxationShareBottomSheet)
+                                this@ShareBottomSheet)
             }
             R.id.tv_wechat_circle -> {
                 AppManager
                         .getOpenEngine()
-                        .shareWebForCallback(activity,
+                        .shareUrl(activity,
                                 shareUrl,
-                                shareTitle,
+                                shareMomentTitle,
                                 shareDesc,
-                                R.drawable.ic_share_launcher,
+                                thumbUrl,
                                 SHARE_MEDIA.WEIXIN_CIRCLE,
-                                this@RelaxationShareBottomSheet)
+                                this@ShareBottomSheet)
             }
             R.id.tv_cancel -> {
             }

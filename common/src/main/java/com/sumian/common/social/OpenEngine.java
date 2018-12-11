@@ -2,7 +2,6 @@ package com.sumian.common.social;
 
 import android.app.Activity;
 import android.content.Context;
-import androidx.annotation.DrawableRes;
 
 import com.sumian.common.social.analytics.OpenAnalytics;
 import com.sumian.common.social.login.OpenLogin;
@@ -14,6 +13,8 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 
+import androidx.annotation.DrawableRes;
+
 
 /**
  * Created by jzz
@@ -23,7 +24,7 @@ import com.umeng.socialize.media.UMWeb;
 
 public class OpenEngine {
 
-    private OpenLogin mOpenLogin;
+    private OpenLogin     mOpenLogin;
     private OpenAnalytics mOpenAnalytics;
 
     /**
@@ -57,7 +58,7 @@ public class OpenEngine {
         return mOpenAnalytics;
     }
 
-    public void shareWeb(Activity activity, String url, String title, String description, String thumb, SHARE_MEDIA shareMedia) {
+    public void shareUrl(Activity activity, String url, String title, String description, String thumb, SHARE_MEDIA shareMedia) {
         UMWeb web = new UMWeb(url);
         web.setTitle(title);
         web.setDescription(description);
@@ -68,11 +69,23 @@ public class OpenEngine {
                 .share();
     }
 
-    public void shareWebForCallback(Activity activity, String url, String title, String description, @DrawableRes int thumb, SHARE_MEDIA shareMedia, UMShareListener umShareListener) {
+    public void shareUrl(Activity activity, String url, String title, String description, @DrawableRes int thumb, SHARE_MEDIA shareMedia, UMShareListener umShareListener) {
         UMWeb web = new UMWeb(url);
         web.setTitle(title);
         web.setDescription(description);
         web.setThumb(new UMImage(activity, thumb));
+        new ShareAction(activity)
+                .withMedia(web)
+                .setCallback(umShareListener)
+                .setPlatform(shareMedia)
+                .share();
+    }
+
+    public void shareUrl(Activity activity, String url, String title, String description, String thumbUrl, SHARE_MEDIA shareMedia, UMShareListener umShareListener) {
+        UMWeb web = new UMWeb(url);
+        web.setTitle(title);
+        web.setDescription(description);
+        web.setThumb(new UMImage(activity, thumbUrl));
         new ShareAction(activity)
                 .withMedia(web)
                 .setCallback(umShareListener)
