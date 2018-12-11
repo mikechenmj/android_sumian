@@ -91,6 +91,7 @@ class AnxietyActivity : BasePresenterActivity<IPresenter>() {
             AppManager.getSdHttpService().updateAnxiety(mAnxietyData!!.id, anxiety, anxietySolution)
         }
         addCall(call)
+        bt_save.isEnabled = false
         call.enqueue(object : BaseSdResponseCallback<AnxietyData>() {
             override fun onSuccess(response: AnxietyData?) {
                 EventBusUtil.postStickyEvent(AnxietyChangeEvent(response!!))
@@ -99,6 +100,7 @@ class AnxietyActivity : BasePresenterActivity<IPresenter>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
+                bt_save.isEnabled = true
             }
         })
     }

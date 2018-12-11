@@ -130,6 +130,7 @@ class FaithActivity : BasePresenterActivity<IPresenter>() {
             AppManager.getSdHttpService().updateFaiths(mId, mEvent, mThought, mEmotion)
         }
         addCall(call)
+        bt_next_step.isEnabled = false
         call.enqueue(object : BaseSdResponseCallback<FaithData>() {
             override fun onSuccess(response: FaithData?) {
                 EventBusUtil.postStickyEvent(FaithChangeEvent(response!!))
@@ -138,6 +139,7 @@ class FaithActivity : BasePresenterActivity<IPresenter>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
+                bt_next_step.isEnabled = true
             }
         })
     }
