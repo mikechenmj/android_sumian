@@ -33,7 +33,7 @@ class NormalInterceptor private constructor() : Interceptor {
                 .newBuilder()
                 .addHeader("Accept-Language", SystemUtil.getSystemLanguage())
                 .addHeader("Content-Type", "application/json")
-                .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android uid${AppManager.getAccountViewModel().userInfo?.id
+                .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android uid:${AppManager.getAccountViewModel().userInfo?.id
                         ?: 0}")
                 .addHeader("Host", chain.request().url().newBuilder().build().host())
 
