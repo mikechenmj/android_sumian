@@ -707,4 +707,5 @@
     <string name="msg_board_is_deleted">留言已删除</string>
     <string name="msg_board_is_deleted_message">如有疑问，请咨询客服</string>
     <string name="msg_board_replay_notice">留言回复通知</string>
+    <string name="system_notification">系统通知</string>
 </resources>
