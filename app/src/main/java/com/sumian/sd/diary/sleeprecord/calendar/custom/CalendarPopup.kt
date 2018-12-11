@@ -1,6 +1,7 @@
 package com.sumian.sd.diary.sleeprecord.calendar.custom
 
 import android.content.Context
+import android.text.format.DateUtils
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import com.sumian.sd.diary.sleeprecord.calendar.calendarView.CalendarView
@@ -13,25 +14,28 @@ import com.sumian.sd.utils.TimeUtil
  * desc   :
  * version: 1.0
  */
-class CalendarPopup(context: Context, dataLoader: DataLoader)
+class CalendarPopup(context: Context, dataLoader: DataLoader, previewDays: Int = 0)
     : PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT) {
     companion object {
         private const val PRELOAD_MONTH_COUNT = 12
     }
 
     private val mCurrentTimeInMillis = System.currentTimeMillis()
+    private var mTodayTimeInMillis = System.currentTimeMillis()
     private var mOnDateClickListener: CalendarView.OnDateClickListener? = null
     private val mDataLoader: DataLoader
+    private var mPreviewDays = 0
 
     private val mCalendarViewWrapper: SleepCalendarViewWrapper by lazy {
         val calendarViewWrapper = SleepCalendarViewWrapper(context)
         calendarViewWrapper.apply {
-            setTodayTime(mCurrentTimeInMillis)
+            setTodayTime(mTodayTimeInMillis)
             setSelectDayTime(mCurrentTimeInMillis)
+            setPreviewDays(mPreviewDays)
             setOnBgClickListener { dismiss() }
             setLoadMoreListener { dataLoader.loadData(it, PRELOAD_MONTH_COUNT, false) }
             setOnDateClickListener {
-                if (it > TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis())) {
+                if (it > TimeUtil.getStartTimeOfTheDay(System.currentTimeMillis()) + DateUtils.DAY_IN_MILLIS * mPreviewDays) {
                     return@setOnDateClickListener
                 }
                 dismiss()
@@ -48,6 +52,7 @@ class CalendarPopup(context: Context, dataLoader: DataLoader)
         isFocusable = true
         mDataLoader = dataLoader
         mDataLoader.loadData(mCurrentTimeInMillis, PRELOAD_MONTH_COUNT, true)
+        mPreviewDays = previewDays
     }
 
     fun setOnDateClickListener(listener: CalendarView.OnDateClickListener) {

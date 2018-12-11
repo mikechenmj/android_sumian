@@ -118,6 +118,9 @@ class MonitorDataVpFragment : BaseFragment() {
     }
 
     private fun initDateBar() {
+        val calendar = Calendar.getInstance()
+        val previewDays = if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) 1 else 0
+        date_bar.setPreviewDays(previewDays)
         date_bar.setCurrentTime(getInitTime())
         date_bar.setDataLoader(object : CalendarPopup.DataLoader {
             override fun loadData(startMonthTime: Long, monthCount: Int, isInit: Boolean) {
