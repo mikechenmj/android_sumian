@@ -592,7 +592,7 @@
     <string name="monitor_version_message">监测仪固件新版本发布，为了保证给您的最佳体验，请及时升级</string>
     <string name="coupon_code">兑换码</string>
     <string name="coupon_history">兑换记录</string>
-    <string name="input_coupon">请输入您的兑换码</string>
+    <string name="input_coupon">输入兑换码</string>
     <string name="coupon">兑换</string>
     <string name="know_your_sleep_health_situation">了解您的睡眠健康及心理状况</string>
     <string name="not_evaluated">待测评</string>
@@ -708,4 +708,6 @@
     <string name="msg_board_is_deleted_message">如有疑问，请咨询客服</string>
     <string name="msg_board_replay_notice">留言回复通知</string>
     <string name="system_notification">系统通知</string>
+    <string name="msg_board_del_success">留言删除成功</string>
+    <string name="msg_board_send_success">留言发送成功</string>
 </resources>

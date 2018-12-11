@@ -3,7 +3,6 @@
 package com.sumian.sd.service.cbti.widget.keyboard
 
 import android.content.Context
-import android.text.InputFilter
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
@@ -46,7 +45,7 @@ class MaxMsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
     private fun initView(context: Context) {
         setBackgroundColor(resources.getColor(R.color.b2_color_day))
         View.inflate(context, R.layout.lay_max_msg_keyboard_view, this)
-        et_msg_board_input.filters = arrayOf(InputFilter.LengthFilter(MAX_LENGTH))
+        //et_msg_board_input.filters = arrayOf(InputFilter.LengthFilter(MAX_LENGTH))
         et_msg_board_input.addTextChangedListener(object : EmptyTextWatcher() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -54,16 +53,11 @@ class MaxMsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
                 tv_msg_count.isEnabled = !TextUtils.isEmpty(s)
                 tv_msg_count.text = String.format(Locale.getDefault(), "%d%s%d", s?.length
                         ?: 0, "/", MAX_LENGTH)
-                //if (s?.isEmpty()!!) {
-                //    tv_content_length.visibility = View.GONE
-                //  } else {
-                // if (s.length >= MAX_LENGTH) {
-                //     tv_content_length.setTextColor(ColorCompatUtil.getColor(this@FeedbackActivity, R.color.t4_color_day))
-                // } else {
-                tv_msg_count.setTextColor(ColorCompatUtil.getColor(context, R.color.t2_color_day))
-                // }
-                //tv_content_length.visibility = View.VISIBLE
-                // }
+                if (s != null && s.length > MAX_LENGTH) {
+                    tv_msg_count.setTextColor(ColorCompatUtil.getColor(context, R.color.t4_color_day))
+                } else {
+                    tv_msg_count.setTextColor(ColorCompatUtil.getColor(context, R.color.t2_color_day))
+                }
             }
         })
         invalidSpan()

@@ -18,6 +18,7 @@ import com.sumian.sd.service.cbti.presenter.CBTISelfMessageBoardPresenter
 import com.sumian.sd.service.cbti.widget.keyboard.MaxMsgBoardKeyBoard
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main_message_board.*
+import kotlinx.android.synthetic.main.lay_max_msg_keyboard_view.*
 
 /**
  * Created by sm
@@ -116,7 +117,7 @@ class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContr
                 .hideTopIcon(true)
                 .setCancelable(true)
                 .setLeftBtn(R.string.cancel, null)
-                .setRightBtn(R.string.submit) { mPresenter?.delSelfMsg(item.id, position) }
+                .setRightBtn(R.string.sure) { mPresenter?.delSelfMsg(item.id, position) }
                 .setMessage(R.string.del_msg_keyboard_msg)
                 .setTitle(R.string.del_msg_keyboard_title)
                 .whitenLeft()
@@ -124,8 +125,10 @@ class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContr
     }
 
     override fun onPublishMessageBoardSuccess(success: String) {
+        et_msg_board_input.text = null
         SumianImageTextToast.showToast(this, R.drawable.ic_dialog_success, success, false)
-        mPresenter?.refreshSelfMsgListMsg()
+        finish()
+        //mPresenter?.refreshSelfMsgListMsg()
     }
 
     override fun onPublishMessageBoardFailed(error: String) {
