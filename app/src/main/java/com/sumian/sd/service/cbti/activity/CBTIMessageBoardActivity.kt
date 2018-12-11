@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.KeyboardUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.dialog.SumianImageTextToast
 import com.sumian.common.helper.ToastHelper
@@ -76,6 +77,7 @@ class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContr
         recycler.adapter = messageBoardAdapter
         recycler.itemAnimator = null
         recycler.layoutManager = LinearLayoutManager(this@CBTIMessageBoardActivity)
+        vg_content.setOnClickListener { KeyboardUtils.hideSoftInput(this) }
     }
 
     override fun initData() {
