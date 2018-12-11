@@ -28,6 +28,7 @@ class WeeklySleepDataDateBar(context: Context, attributeSet: AttributeSet) : Fra
     private var mDataLoader: CalendarPopup.DataLoader? = null
     private var mOnDateClickListener: CalendarView.OnDateClickListener? = null
     private var mSelectedTime = 0L
+    private var mPreviewDays = 0
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_weekly_sleep_data_date_bar, this, true)
@@ -37,8 +38,12 @@ class WeeklySleepDataDateBar(context: Context, attributeSet: AttributeSet) : Fra
         updateCurrentTime(TimeUtilV2.getWeekStartDayTime(System.currentTimeMillis()))
     }
 
+    fun setPreviewDays(previewDays: Int) {
+        mPreviewDays = previewDays
+    }
+
     private fun showCalendarPop() {
-        mCalendarPopup = CalendarPopup(context, mDataLoader!!)
+        mCalendarPopup = CalendarPopup(context, mDataLoader!!, mPreviewDays)
         mCalendarPopup!!.setOnDateClickListener(CalendarView.OnDateClickListener { time -> onDateClick(time) })
         mCalendarPopup!!.setSelectDayTime(mSelectedTime)
         mCalendarPopup!!.setWeekMode(true)

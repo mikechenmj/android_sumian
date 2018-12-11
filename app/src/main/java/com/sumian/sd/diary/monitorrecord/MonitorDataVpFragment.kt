@@ -86,8 +86,7 @@ class MonitorDataVpFragment : BaseFragment() {
 
     private fun initViewPager() {
         view_pager_monitor.adapter = mAdapter
-        val time = getInitTime()
-        mAdapter.addDays(TimeUtilV2.getDayStartTime(time), PRELOAD_THRESHOLD * 2, true)
+        mAdapter.addDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
         view_pager_monitor.setCurrentItem(mAdapter.count - 1, false)
         view_pager_monitor.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
