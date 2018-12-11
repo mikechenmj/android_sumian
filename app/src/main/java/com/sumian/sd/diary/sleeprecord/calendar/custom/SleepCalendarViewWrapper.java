@@ -3,6 +3,7 @@ package com.sumian.sd.diary.sleeprecord.calendar.custom;
 import android.content.Context;
 import android.text.format.DateUtils;
 
+import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.sd.R;
 import com.sumian.sd.diary.sleeprecord.calendar.calendarViewWrapper.CalendarViewWrapper;
 import com.sumian.sd.utils.TimeUtil;
@@ -21,15 +22,15 @@ import java.util.Set;
  * </pre>
  */
 public class SleepCalendarViewWrapper extends CalendarViewWrapper {
-    public static final int              PRELOAD_THRESHOLD = 3;
-    private             Set<Long>        mHasRecordDays = new HashSet<>();
-    private             long             mSelectDayTime;
-    private             long             mTodayTime;
-    private             LoadMoreListener mLoadMoreListener;
-    private             boolean          mIsWeekMode = false;
-    private             long             mWeekStartDayTime;
-    private             long             mWeekEndDayTime;
-    private             long             mPreviewDays;
+    public static final int PRELOAD_THRESHOLD = 3;
+    private Set<Long> mHasRecordDays = new HashSet<>();
+    private long mSelectDayTime;
+    private long mTodayTime;
+    private LoadMoreListener mLoadMoreListener;
+    private boolean mIsWeekMode = false;
+    private long mWeekStartDayTime;
+    private long mWeekEndDayTime;
+    private long mPreviewDays;
 
     public SleepCalendarViewWrapper(Context context) {
         super(context);
@@ -131,6 +132,11 @@ public class SleepCalendarViewWrapper extends CalendarViewWrapper {
     public void setIsWeekMode(boolean isWeekMode) {
         mIsWeekMode = isWeekMode;
         mTvGoBack.setText(isWeekMode ? R.string.return_to_this_week : R.string.return_to_today);
+    }
+
+    @Override
+    protected void onTodayClick() {
+        mOnDateClickListener.onDateClick(TimeUtilV2.Companion.getDayStartTime(System.currentTimeMillis()) + DateUtils.DAY_IN_MILLIS * mPreviewDays);
     }
 
     private boolean isInTheWeek() {
