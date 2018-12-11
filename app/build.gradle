@@ -64,7 +64,6 @@ android {
         buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", ALIYUN_LOG_ACCESS_SECRET)
         buildConfigField("String", "ALIYUN_LOG_LOG_STORE", ALIYUN_LOG_LOG_STORE)
         buildConfigField("String", "ALIYUN_LOG_END_POINT", ALIYUN_LOG_END_POINT)
-
         // Enabling multidex support.
         multiDexEnabled true
 
