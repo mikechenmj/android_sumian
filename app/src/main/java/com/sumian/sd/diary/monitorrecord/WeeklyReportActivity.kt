@@ -63,7 +63,7 @@ class WeeklyReportActivity : BasePresenterActivity<IPresenter>() {
 
     private fun initViewPager() {
         view_pager.adapter = mAdapter
-        mAdapter.addDays(TimeUtilV2.getDayStartTime(System.currentTimeMillis()), PRELOAD_THRESHOLD * 2, true)
+        mAdapter.addDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
         view_pager.setCurrentItem(mAdapter.count - 1, false)
         view_pager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
@@ -82,7 +82,22 @@ class WeeklyReportActivity : BasePresenterActivity<IPresenter>() {
         })
     }
 
+    /**
+     * 监测数据是每天20：00开放 第二天的日期
+     */
+    private fun getInitTime(): Long {
+        val calendar = Calendar.getInstance()
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) {
+            TimeUtilV2.rollDay(calendar, 1)
+        }
+        return calendar.timeInMillis
+    }
+
     private fun initDateBar() {
+        val calendar = Calendar.getInstance()
+        val previewDays = if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) 1 else 0
+        date_bar.setPreviewDays(previewDays)
+        date_bar.setCurrentTime(getInitTime())
         date_bar.setDataLoader(object : CalendarPopup.DataLoader {
             override fun loadData(startMonthTime: Long, monthCount: Int, isInit: Boolean) {
                 val map = HashMap<String, Any>(0)
