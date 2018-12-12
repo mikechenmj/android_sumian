@@ -82,8 +82,7 @@ class ScanDeviceFragment : BaseFragment() {
         }
     }
 
-    override fun initData() {
-        super.initData()
+    private fun registerBlueCallback() {
         mBlueManager.addBlueAdapterCallback(mBlueAdapterEnableListener)
         mBlueManager.addBlueScanCallback(mScanCallback)
     }
@@ -250,6 +249,7 @@ class ScanDeviceFragment : BaseFragment() {
         mBlueManager.startScanAndAutoStopAfter(SCAN_DURATION)
         mStartScanTime = System.currentTimeMillis()
         switchDeviceListUI(isScanMore)
+        registerBlueCallback()
     }
 
     private fun checkScanResult() {
