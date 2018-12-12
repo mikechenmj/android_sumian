@@ -16,7 +16,7 @@ public interface INiceVideoPlayer {
      */
     void setUp(String url, Map<String, String> headers);
 
-    void setSourceData(String vid, String playAuth);
+    void setSourceData(int courseId, String vid, String playAuth);
 
     /**
      * 开始播放

@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by sm on 2018/7/21.
  * 播放器
@@ -108,6 +110,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     private OnVideoViewEvent mOnVideoViewEvent;
 
     private String mCurrentVid;
+    private int mCBTIChapterId;
 
     private long mOldFrame;
     private boolean mResumeOnFocusGain;
@@ -141,7 +144,8 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     }
 
     @Override
-    public void setSourceData(String vid, String playAuth) {
+    public void setSourceData(int courseId, String vid, String playAuth) {
+        this.mCBTIChapterId = courseId;
         mCurrentState = STATE_IDLE;
         if (!vid.equals(mCurrentVid)) {
             continueFromLastPosition = false;
@@ -549,9 +553,14 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             LogUtil.d("onCompletion ——> STATE_COMPLETED");
             // 清除屏幕常亮
             mContainer.setKeepScreenOn(false);
-            NiceUtil.savePlayPosition(mContext, mCurrentVid, 0);
+            NiceUtil.savePlayPosition(mContext, formatVideoUrl2SavePlayPosition(), 0);
         }
     };
+
+    @NonNull
+    private String formatVideoUrl2SavePlayPosition() {
+        return String.valueOf(mCBTIChapterId) + mCurrentVid;
+    }
 
     private IMediaPlayer.OnErrorListener mOnErrorListener = new IMediaPlayer.OnErrorListener() {
         @Override
@@ -791,9 +800,9 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     public void release() {
         // 保存播放位置
         if (isPlaying() || isBufferingPlaying() || isBufferingPaused() || isPaused()) {
-            NiceUtil.savePlayPosition(mContext, mCurrentVid, getCurrentPosition());
+            NiceUtil.savePlayPosition(mContext, formatVideoUrl2SavePlayPosition(), getCurrentPosition());
         } else if (isCompleted()) {
-            NiceUtil.savePlayPosition(mContext, mCurrentVid, 0);
+            NiceUtil.savePlayPosition(mContext, formatVideoUrl2SavePlayPosition(), 0);
         }
         // 退出全屏或小窗口
         if (isFullScreen()) {

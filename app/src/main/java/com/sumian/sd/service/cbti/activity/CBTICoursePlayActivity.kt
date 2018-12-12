@@ -307,7 +307,8 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
             }
         }
 
-        aliyun_player.setSourceData(coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
+        aliyun_player.setSourceData(mCurrentCourse?.id
+                ?: 0, coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
 
         nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) {
             nav_tab_lesson_practice.setOnClickListener(this)
