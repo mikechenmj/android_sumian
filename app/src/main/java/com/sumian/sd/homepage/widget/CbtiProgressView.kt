@@ -44,7 +44,7 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
             val newBmp = Bitmap.createScaledBitmap(oldBmp, resources.getDimensionPixelOffset(R.dimen.space_16), resources.getDimensionPixelOffset(R.dimen.space_12), true)
             oldBmp.recycle()
             val bitmapDrawable = BitmapDrawable(resources, newBmp)
-            val text = String.format(Locale.getDefault(), "%d%s", chaptersData.meta.joinedCount, resources.getString(R.string.join))
+            val text = String.format(Locale.getDefault(), "%s%s", if (chaptersData.meta.joinedCount <= 0) "--" else String.format(Locale.getDefault(), "%d", chaptersData.meta.joinedCount), resources.getString(R.string.join))
             //drawable.setBounds(0, 0, resources.getDimensionPixelOffset(R.dimen.space_22), resources.getDimensionPixelOffset(R.dimen.space_18))
             tv_cbti_lesson_people_count.text = QMUISpanHelper.generateSideIconText(true, resources.getDimensionPixelOffset(R.dimen.space_5), text, bitmapDrawable)
         }
