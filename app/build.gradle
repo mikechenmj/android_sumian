@@ -317,7 +317,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     //hw
-    implementation 'no.nordicsemi.android:dfu:1.7.0'
+    implementation 'no.nordicsemi.android:dfu:1.8.1'
 
     //sumian component
 
