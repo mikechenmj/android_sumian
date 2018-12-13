@@ -48,6 +48,13 @@ object KefuManager {
                 UIProvider.getInstance().clearCacheMsg()
                 ActivityUtils.startActivity(getChatRoomLaunchIntent())
             }
+
+            override fun onFailed(error: String) {
+                super.onFailed(error)
+                UIProvider.getInstance().isLogin = false
+                UIProvider.getInstance().clearCacheMsg()
+                ActivityUtils.startActivity(getChatRoomLaunchIntent())
+            }
         })
         mLaunchKefuActivity = true
     }
