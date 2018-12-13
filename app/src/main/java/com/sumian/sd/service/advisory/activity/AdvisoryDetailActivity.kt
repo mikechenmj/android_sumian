@@ -100,42 +100,46 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     @SuppressLint("SetTextI18n")
     override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
-        mAdvisory?.let { it ->
-            //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
-            when (it.status) {
-                2, 3, 4 -> {
-                    tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
-                    tv_bottom_notification.text = getString(R.string.continue_ask_question)
-                }
-                else -> {
-                    if (it.last_count == 0) {
+        if (mAdvisory == null) {
+            empty_error_view.visibility = View.VISIBLE
+        } else {
+            mAdvisory?.let { it ->
+                //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
+                when (it.status) {
+                    2, 3, 4 -> {
                         tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
                         tv_bottom_notification.text = getString(R.string.continue_ask_question)
-                    } else {
-                        tv_top_notification.setBackgroundColor(resources.getColor(R.color.b5_color))
-                        tv_bottom_notification.text = "追问 (剩余${it.last_count}机会)"
+                    }
+                    else -> {
+                        if (it.last_count == 0) {
+                            tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
+                            tv_bottom_notification.text = getString(R.string.continue_ask_question)
+                        } else {
+                            tv_top_notification.setBackgroundColor(resources.getColor(R.color.b5_color))
+                            tv_bottom_notification.text = "追问 (剩余${it.last_count}机会)"
+                        }
                     }
                 }
+                tv_top_notification.text = it.remind_description
+                tv_top_notification.visibility = View.VISIBLE
+                tv_bottom_notification.visibility = View.VISIBLE
+                it.doctor?.let {
+                    this.mAdapter.setDoctor(it)
+                }
+                it.user?.let {
+                    this.mAdapter.setUser(it)
+                }
+                this.mAdapter.resetItem(advisory.records)
+                val isRecordEmpty = advisory.records?.isNullOrEmpty() ?: true
+                empty_error_view.visibility = if (isRecordEmpty) View.VISIBLE else View.GONE
+                recycler.visibility = if (isRecordEmpty) View.GONE else View.VISIBLE
             }
-            tv_top_notification.text = it.remind_description
-            tv_top_notification.visibility = View.VISIBLE
-            tv_bottom_notification.visibility = View.VISIBLE
-            it.doctor?.let {
-                this.mAdapter.setDoctor(it)
-            }
-
-            it.user?.let {
-                this.mAdapter.setUser(it)
-            }
-            this.mAdapter.resetItem(advisory.records)
-            val isRecordEmpty = advisory.records?.isEmpty() ?: true
-            empty_error_view.visibility = if (isRecordEmpty) View.VISIBLE else View.GONE
-            recycler.visibility = if (isRecordEmpty) View.GONE else View.VISIBLE
         }
     }
 
     override fun onGetAdvisoryDetailFailed(error: String) {
         showCenterToast(error)
+        empty_error_view.visibility = if (mAdvisory == null) View.VISIBLE else View.GONE
     }
 
     override fun setPresenter(presenter: RecordContract.Presenter?) {
@@ -147,7 +151,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
             if (it.last_count == 0 || it.status == 2 || it.status == 3 || it.status == 4) {
                 MainActivity.launch(MainActivity.TAB_2)
             } else {
-                PublishAdvisoryRecordActivity.show(this, mAdvisory?.id!!,true)
+                PublishAdvisoryRecordActivity.show(this, mAdvisory?.id!!, true)
                 finish()
             }
         }
