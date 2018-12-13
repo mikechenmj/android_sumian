@@ -28,7 +28,7 @@ import androidx.lifecycle.MutableLiveData;
 public class AccountViewModel extends AndroidViewModel {
 
     private static final String SP_KEY_TOKEN = "token";
-    private MutableLiveData<Token> mTokenLiveData = new MutableLiveData<>();
+    private volatile MutableLiveData<Token> mTokenLiveData = new MutableLiveData<>();
 
     public AccountViewModel(@NonNull Application application) {
         super(application);
@@ -72,14 +72,18 @@ public class AccountViewModel extends AndroidViewModel {
 
     public void updateBoundDoctor(Doctor doctor) {
         Token token = getToken();
-        token.is_new = false;
-        UserInfo userProfile = getUserInfo();
-        if (doctor != null) {
-            userProfile.doctor_id = doctor.getId();
+        if (token != null) {
+            token.is_new = false;
+            UserInfo userProfile = getUserInfo();
+            if (userProfile != null) {
+                if (doctor != null) {
+                    userProfile.doctor_id = doctor.getId();
+                }
+                userProfile.doctor = doctor;
+                token.user = userProfile;
+                updateUserInfo(userProfile);
+            }
         }
-        userProfile.doctor = doctor;
-        token.user = userProfile;
-        updateUserInfo(userProfile);
     }
 
     public void updateToken(Token token) {
@@ -103,7 +107,9 @@ public class AccountViewModel extends AndroidViewModel {
     @MainThread
     public void updateUserInfo(UserInfo userInfo) {
         Token token = getToken();
-        token.user = userInfo;
+        if (token != null) {
+            token.user = userInfo;
+        }
         updateToken(token);
     }
 
