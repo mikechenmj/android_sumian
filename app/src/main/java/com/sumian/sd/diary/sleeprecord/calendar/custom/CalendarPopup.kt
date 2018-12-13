@@ -45,7 +45,6 @@ class CalendarPopup(context: Context, dataLoader: DataLoader, previewDays: Int =
     }
 
     init {
-        contentView = mCalendarViewWrapper
         isOutsideTouchable = true
         this.setBackgroundDrawable(null)
         animationStyle = 0
@@ -53,6 +52,7 @@ class CalendarPopup(context: Context, dataLoader: DataLoader, previewDays: Int =
         mDataLoader = dataLoader
         mDataLoader.loadData(mCurrentTimeInMillis, PRELOAD_MONTH_COUNT, true)
         mPreviewDays = previewDays
+        contentView = mCalendarViewWrapper
     }
 
     fun setOnDateClickListener(listener: CalendarView.OnDateClickListener) {
