@@ -83,6 +83,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
     public static final int REQUEST_CODE_EVAL = 5;
 
     public static final int REQUEST_CODE_SELECT_FILE = 6;
+
     /**
      * 传入fragment的参数
      */
@@ -215,7 +216,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         mTvNetWorkError.setOnClickListener(v -> {
             mEaseTitleBar.showLoading();
             mTvNetWorkError.setVisibility(View.GONE);
-            UIProvider.getInstance().getAccountPrivoder().autoLoginAccount(mTvNetWorkError, mEaseTitleBar, messageList);
+            UIProvider.getInstance().getAccountPrivoder().tryLoginAccount(mTvNetWorkError, mEaseTitleBar, messageList);
         });
         // 消息列表layout
         messageList = (MessageList) getView().findViewById(R.id.message_list);
@@ -264,7 +265,6 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ChatClient.getInstance().chatManager().addVisitorWaitListener(visitorWaitListener);
-
     }
 
     ChatManager.VisitorWaitListener visitorWaitListener = new ChatManager.VisitorWaitListener() {
@@ -335,6 +335,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         });
         mEaseTitleBar.setRightLayoutClickListener(v -> emptyHistory());
         setRefreshLayoutListener();
+        UIProvider.getInstance().getUserProfileProvider().gotoLoginKefuServer();
     }
 
     @Override
