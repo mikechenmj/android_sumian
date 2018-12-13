@@ -209,7 +209,7 @@ public class UIProvider {
 
     public interface AccountPrivoder {
 
-        void autoLoginAccount(@NonNull TextView tvLoginStateTips, @NonNull ChatEaseTitleBar chatEaseTitleBar, @NonNull MessageList messageList);
+        void tryLoginAccount(@NonNull TextView tvLoginStateTips, @NonNull ChatEaseTitleBar chatEaseTitleBar, @NonNull MessageList messageList);
     }
 
     /**
@@ -230,7 +230,9 @@ public class UIProvider {
     }
 
     public interface UserProfileProvider {
-        void setNickAndAvatar(Context context, Message message, ImageView userAvatarView, TextView usernickView);
+        void setNickAndAvatar(@NonNull Context context, @NonNull Message message, @NonNull ImageView userAvatarView, @NonNull TextView usernickView);
+
+        void gotoLoginKefuServer();
     }
 
     /**

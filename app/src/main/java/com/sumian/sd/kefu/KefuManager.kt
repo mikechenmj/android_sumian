@@ -5,6 +5,8 @@ import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
@@ -42,21 +44,7 @@ object KefuManager {
 
     @JvmStatic
     fun launchKefuActivity() {
-        loginEasemob(object : LoginCallback {
-            override fun onSuccess() {
-                UIProvider.getInstance().isLogin = true
-                UIProvider.getInstance().clearCacheMsg()
-                ActivityUtils.startActivity(getChatRoomLaunchIntent())
-            }
-
-            override fun onFailed(error: String) {
-                super.onFailed(error)
-                UIProvider.getInstance().isLogin = false
-                UIProvider.getInstance().clearCacheMsg()
-                ActivityUtils.startActivity(getChatRoomLaunchIntent())
-            }
-        })
-        mLaunchKefuActivity = true
+        ActivityUtils.startActivity(getChatRoomLaunchIntent())
     }
 
     fun init(context: Context) {
@@ -121,12 +109,6 @@ object KefuManager {
                         UIProvider.getInstance().isLogin = true
                         loginCallback?.onSuccess()
                     }
-//                    Error.USER_NOT_FOUND, Error.USER_REMOVED, Error.USER_REG_FAILED -> {
-//                        UIProvider.getInstance().isLogin = false
-//                        loginCallback?.onFailed(error)
-//                        val notifyCount = 0
-//                        notifyServerRegister2ImServer(userInfo, notifyCount)
-//                    }
                     else -> {
                         UIProvider.getInstance().isLogin = false
                         loginCallback?.onFailed(error)
@@ -210,13 +192,33 @@ object KefuManager {
 
     @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     private fun getChatRoomLaunchIntent(): Intent {
+        val userInfo = AppManager.getAccountViewModel().userInfo
         val visitorInfo = ContentFactory.createVisitorInfo(null)
-                .nickName(AppManager.getAccountViewModel().userInfo!!.getNickname())
-                .name(AppManager.getAccountViewModel().userInfo!!.getNickname())
-                .phone(AppManager.getAccountViewModel().userInfo!!.getMobile())
-        UIProvider.getInstance().setUserProfileProvider { context, message, userAvatarView, userNickNameView ->
-            if (Message.Direct.SEND == message.direct()) {
-                ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo!!.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
+                .nickName(userInfo.getNickname())
+                .name(userInfo.getNickname())
+                .phone(userInfo.getMobile())
+        //注册相关provider
+        UIProvider.getInstance().userProfileProvider = object : UIProvider.UserProfileProvider {
+            override fun setNickAndAvatar(context: Context, message: Message, userAvatarView: ImageView, usernickView: TextView) {
+                if (Message.Direct.SEND == message.direct()) {
+                    ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
+                }
+            }
+
+            override fun gotoLoginKefuServer() {
+                loginEasemob(object : LoginCallback {
+                    override fun onSuccess() {
+                        UIProvider.getInstance().isLogin = true
+                        UIProvider.getInstance().clearCacheMsg()
+                        mLaunchKefuActivity = true
+                    }
+
+                    override fun onFailed(error: String) {
+                        super.onFailed(error)
+                        UIProvider.getInstance().isLogin = false
+                        UIProvider.getInstance().clearCacheMsg()
+                    }
+                })
             }
         }
         UIProvider.getInstance().setAccountProvider { tvLoginStateTips, chatTitleBar, messageList ->
