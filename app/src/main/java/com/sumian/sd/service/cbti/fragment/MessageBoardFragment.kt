@@ -126,7 +126,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
     }
 
     private fun updateUi(msgBoardList: List<MessageBoard>) {
-        if (messageBoardAdapter.itemCount <= 0 && msgBoardList.isNullOrEmpty()) {
+        if (msgBoardList.isNullOrEmpty()) {
             showEmptyView()
         } else {
             messageBoardAdapter.resetItem(msgBoardList)
