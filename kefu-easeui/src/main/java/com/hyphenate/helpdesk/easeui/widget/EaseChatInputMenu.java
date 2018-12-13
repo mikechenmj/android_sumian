@@ -3,7 +3,6 @@ package com.hyphenate.helpdesk.easeui.widget;
 
 import android.content.Context;
 import android.os.Handler;
-import androidx.annotation.IdRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,8 @@ import com.hyphenate.helpdesk.manager.EmojiconManager.EmojiconPackage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.IdRes;
 
 /**
  * 聊天页面底部的聊天输入菜单栏
@@ -47,24 +48,23 @@ public class EaseChatInputMenu extends LinearLayout {
 
     List<EmojiconGroupEntity> localEmojiconGroupList = new ArrayList<>();
 
-    public EaseChatInputMenu(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
+    public EaseChatInputMenu(Context context) {
+        this(context, null);
     }
 
     public EaseChatInputMenu(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+        this(context, attrs, 0);
     }
 
-    public EaseChatInputMenu(Context context) {
-        super(context);
-        init(context, null);
+    public EaseChatInputMenu(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        layoutInflater.inflate(R.layout.light_hd_widget_chat_input_menu,this);
+        layoutInflater.inflate(R.layout.light_hd_widget_chat_input_menu, this);
         primaryMenuContainer = (FrameLayout) findViewById(R.id.primary_menu_container);
         emojiconMenuContainer = (FrameLayout) findViewById(R.id.emojicon_menu_container);
         chatExtendMenuContainer = (FrameLayout) findViewById(R.id.extend_menu_container);
@@ -86,7 +86,7 @@ public class EaseChatInputMenu extends LinearLayout {
         }
         // 主按钮菜单栏,没有定义用默认的
         if (chatPrimaryMenu == null) {
-            chatPrimaryMenu = (EaseChatPrimaryMenuBase) layoutInflater.inflate( R.layout.light_hd_layout_chat_primary_menu , null);
+            chatPrimaryMenu = (EaseChatPrimaryMenuBase) layoutInflater.inflate(R.layout.light_hd_layout_chat_primary_menu, null);
         }
         primaryMenuContainer.addView(chatPrimaryMenu);
         chatPrimaryMenu.setEmojiSendBtn(emojiSendBtn);

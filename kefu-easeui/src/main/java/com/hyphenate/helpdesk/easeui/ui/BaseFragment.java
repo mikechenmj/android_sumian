@@ -12,6 +12,7 @@ import com.hyphenate.helpdesk.easeui.widget.ChatEaseTitleBar;
 
 import androidx.fragment.app.Fragment;
 
+@SuppressWarnings("ALL")
 public abstract class BaseFragment extends Fragment {
 
     protected ChatEaseTitleBar mEaseTitleBar;

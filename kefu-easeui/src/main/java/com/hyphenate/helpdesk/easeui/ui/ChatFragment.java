@@ -215,7 +215,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         mTvNetWorkError.setOnClickListener(v -> {
             mEaseTitleBar.showLoading();
             mTvNetWorkError.setVisibility(View.GONE);
-            UIProvider.getInstance().getAccountPrivoder().autoLoginAccount(mTvNetWorkError, mEaseTitleBar);
+            UIProvider.getInstance().getAccountPrivoder().autoLoginAccount(mTvNetWorkError, mEaseTitleBar, messageList);
         });
         // 消息列表layout
         messageList = (MessageList) getView().findViewById(R.id.message_list);

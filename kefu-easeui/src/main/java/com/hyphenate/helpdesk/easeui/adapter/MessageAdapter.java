@@ -17,6 +17,7 @@ import com.hyphenate.chat.EMMessageBody;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
 import com.hyphenate.helpdesk.easeui.widget.MessageList.MessageListItemClickListener;
 import com.hyphenate.helpdesk.easeui.widget.chatrow.ChatRow;
@@ -164,13 +165,19 @@ public class MessageAdapter extends BaseAdapter {
         wm.getDefaultDisplay().getMetrics(displayMetrics);
         mMaxItemWidth = (int) (displayMetrics.widthPixels * 0.4f);
         mMinItemWidth = (int) (displayMetrics.widthPixels * 0.15f);
+        registerWelcomeMsg();
+    }
 
+    /**
+     * 第一次进来主动显示欢迎语
+     */
+    public void registerWelcomeMsg() {
         int allMsgCount = conversation.getAllMsgCount();
-        if (allMsgCount <= 0) {
+        if (allMsgCount <= 0 && UIProvider.getInstance().isLogin()) {
             Message message = Message.createReceiveMessage(Message.Type.TXT);
             EMMessageBody msgBody = new EMTextMessageBody(context.getString(R.string.doctor_say_hello));
             message.setBody(msgBody);
-            message.setTo(username);
+            message.setTo(toChatUsername);
             message.setMsgId(UUID.randomUUID().toString());
             message.setStatus(Message.Status.SUCCESS);
             conversation.addMessage(message);

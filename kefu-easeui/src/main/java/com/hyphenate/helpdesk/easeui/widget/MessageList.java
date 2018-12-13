@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ListView;
@@ -19,6 +18,8 @@ import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.adapter.MessageAdapter;
 import com.hyphenate.helpdesk.easeui.provider.CustomChatRowProvider;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MessageList extends RelativeLayout {
     protected static final String TAG = MessageList.class.getSimpleName();
@@ -51,10 +52,10 @@ public class MessageList extends RelativeLayout {
 
     private void init(Context context) {
         this.context = context;
-        LayoutInflater.from(context).inflate( R.layout.light_hd_chat_message_list, this);
+        LayoutInflater.from(context).inflate(R.layout.light_hd_chat_message_list, this);
         swipeRefreshLayout = findViewById(R.id.chat_swipe_layout);
-            swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.parseColor("#FFFFFFFF"));
-            swipeRefreshLayout.setColorSchemeResources(R.color.white);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.parseColor("#FFFFFFFF"));
+        swipeRefreshLayout.setColorSchemeResources(R.color.white);
 
         listView = (ListView) findViewById(R.id.list);
     }
@@ -79,6 +80,12 @@ public class MessageList extends RelativeLayout {
         listView.setAdapter(messageAdapter);
 
         refreshSelectLast();
+    }
+
+    public void registerWelcomeMsg() {
+        if (messageAdapter != null) {
+            messageAdapter.registerWelcomeMsg();
+        }
     }
 
     protected void parseStyle(Context context, AttributeSet attrs) {

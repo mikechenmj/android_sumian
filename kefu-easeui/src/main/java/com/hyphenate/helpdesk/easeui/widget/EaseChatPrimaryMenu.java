@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.helpdesk.R;
-import com.hyphenate.helpdesk.easeui.UIProvider;
 
 /**
  * 聊天输入栏主菜单栏
@@ -43,18 +42,17 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase implements View
     private Context context;
     private boolean emojiSengBtnEnable = false;
 
-    public EaseChatPrimaryMenu(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context, attrs);
+    public EaseChatPrimaryMenu(Context context) {
+        this(context, null);
     }
 
     public EaseChatPrimaryMenu(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public EaseChatPrimaryMenu(Context context) {
-        super(context);
-        init(context, null);
+    public EaseChatPrimaryMenu(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context, attrs);
     }
 
     private void init(final Context context, AttributeSet attrs) {

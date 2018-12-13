@@ -78,7 +78,7 @@ interface SdApi {
      * @return Call<UserInfo>
      */
     @POST("authorizations/user/{userId}/easemob")
-    fun notifyRegisterImServer(@Field("userId") userId: Int): Call<KeFuMessage>
+    fun notifyRegisterImServer(@Path("userId") userId: Int): Call<KeFuMessage>
 
     @FormUrlEncoded
     @POST("authorizations/password")

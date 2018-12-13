@@ -24,6 +24,7 @@ import com.hyphenate.helpdesk.easeui.recorder.AudioManager;
 import com.hyphenate.helpdesk.easeui.recorder.DialogManager;
 import com.hyphenate.util.PathUtil;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 
 /**
@@ -115,18 +116,15 @@ public class RecorderMenu extends RelativeLayout implements AudioManager.AudioSt
     };
 
     public RecorderMenu(Context context) {
-        super(context);
-        init(context);
+        this(context, null);
     }
 
     public RecorderMenu(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
+        this(context, attrs, 0);
     }
 
     public RecorderMenu(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -141,7 +139,12 @@ public class RecorderMenu extends RelativeLayout implements AudioManager.AudioSt
         mRecordText = (TextView) findViewById(R.id.record_menu_text);
         mRecordBtn = (ImageButton) findViewById(R.id.record_menu_image_btn);
         setMotionEventSplittingEnabled(false);
-        String dir = PathUtil.getInstance().getVoicePath().getPath();
+
+        File voicePath = PathUtil.getInstance().getVoicePath();
+        String dir = "";
+        if (voicePath != null) {
+            dir = voicePath.getPath();
+        }
         mAudioManager = AudioManager.getInstance(dir);
         mAudioManager.setOnAudioStateListener(this);
         mHandler = new WeakHandler(mRecordBtn);

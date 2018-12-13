@@ -116,14 +116,25 @@ object KefuManager {
             }
 
             override fun onError(code: Int, error: String) {
-                if (code == Error.USER_ALREADY_LOGIN) {
-                    UIProvider.getInstance().isLogin = true
-                    loginCallback?.onSuccess()
-                } else {
-                    UIProvider.getInstance().isLogin = false
-                    loginCallback?.onFailed(error)
+                when (code) {
+                    Error.USER_ALREADY_LOGIN -> {
+                        UIProvider.getInstance().isLogin = true
+                        loginCallback?.onSuccess()
+                    }
+//                    Error.USER_NOT_FOUND, Error.USER_REMOVED, Error.USER_REG_FAILED -> {
+//                        UIProvider.getInstance().isLogin = false
+//                        loginCallback?.onFailed(error)
+//                        val notifyCount = 0
+//                        notifyServerRegister2ImServer(userInfo, notifyCount)
+//                    }
+                    else -> {
+                        UIProvider.getInstance().isLogin = false
+                        loginCallback?.onFailed(error)
+                        val notifyCount = 0
+                        notifyServerRegister2ImServer(userInfo, notifyCount)
+                    }
                 }
-                LogUtils.d(error)
+                LogUtils.d("code=$code  error=$error")
             }
 
             override fun onProgress(progress: Int, status: String) {
@@ -208,21 +219,24 @@ object KefuManager {
                 ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo!!.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
             }
         }
-        UIProvider.getInstance().setAccountProvider { tvLoginStateTips, chatTitleBar ->
+        UIProvider.getInstance().setAccountProvider { tvLoginStateTips, chatTitleBar, messageList ->
             loginEasemob(object : LoginCallback {
                 override fun onSuccess() {
                     tvLoginStateTips.post {
                         UIProvider.getInstance().isLogin = true
                         tvLoginStateTips.visibility = View.GONE
+                        messageList.registerWelcomeMsg()
                         chatTitleBar.hideLoading()
                     }
                 }
 
                 override fun onFailed(error: String) {
                     super.onFailed(error)
-                    UIProvider.getInstance().isLogin = false
-                    tvLoginStateTips.visibility = View.VISIBLE
-                    chatTitleBar.hideLoading()
+                    tvLoginStateTips.post {
+                        UIProvider.getInstance().isLogin = false
+                        tvLoginStateTips.visibility = View.VISIBLE
+                        chatTitleBar.hideLoading()
+                    }
                 }
             })
         }

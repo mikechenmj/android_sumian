@@ -4,13 +4,13 @@ package com.hyphenate.helpdesk.easeui;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hyphenate.chat.ChatClient;
 import com.hyphenate.chat.ChatManager;
 import com.hyphenate.chat.Message;
 import com.hyphenate.helpdesk.easeui.widget.ChatEaseTitleBar;
+import com.hyphenate.helpdesk.easeui.widget.MessageList;
 import com.hyphenate.helpdesk.emojicon.Emojicon;
 import com.hyphenate.util.EasyUtils;
 
@@ -209,7 +209,7 @@ public class UIProvider {
 
     public interface AccountPrivoder {
 
-        void autoLoginAccount(@NonNull TextView tvLoginStateTips, @NonNull ChatEaseTitleBar chatEaseTitleBar);
+        void autoLoginAccount(@NonNull TextView tvLoginStateTips, @NonNull ChatEaseTitleBar chatEaseTitleBar, @NonNull MessageList messageList);
     }
 
     /**
