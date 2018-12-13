@@ -22,6 +22,7 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
     private var mPageNumber: Int = 1
     private var mIsRefresh: Boolean = false
     private var mIsGetNext = false
+    private var mIsCanLoadMore = false
 
     init {
         view.setPresenter(this)
@@ -60,9 +61,7 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
                         mView?.onGetMessageBoardListSuccess(data!!)
                     }
                 }
-                if (data != null && !data.isEmpty()) {
-                    mPageNumber++
-                }
+                mIsCanLoadMore = !response?.meta?.pagination?.isLastPage()!!
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -84,6 +83,10 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
     }
 
     override fun getNextMessageBoardList() {
+        if (!mIsCanLoadMore) {
+            return
+        }
+        mPageNumber++
         mIsGetNext = true
         getMessageBoardList(mType)
     }
