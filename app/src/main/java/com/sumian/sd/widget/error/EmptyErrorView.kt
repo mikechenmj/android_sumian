@@ -1,6 +1,7 @@
 package com.sumian.sd.widget.error
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
@@ -132,6 +133,9 @@ class EmptyErrorView @JvmOverloads constructor(context: Context, attrs: Attribut
      * desc: 暂无留言，留言已被删除
      */
     fun invalidMessageBoardError() {
+        mTvEmptyMsgTitle?.let {
+            it.setTypeface(it.typeface, Typeface.BOLD)
+        }
         invalid(R.mipmap.ic_empty_state_advisory, R.string.msg_board_is_deleted, R.string.msg_board_is_deleted_message)
     }
 
