@@ -199,9 +199,11 @@ object KefuManager {
                 .phone(userInfo.getMobile())
         //注册相关provider
         UIProvider.getInstance().userProfileProvider = object : UIProvider.UserProfileProvider {
-            override fun setNickAndAvatar(context: Context, message: Message, userAvatarView: ImageView, usernickView: TextView) {
+            override fun setNickAndAvatar(context: Context, message: Message, userAvatarView: ImageView?, usernickView: TextView?) {
                 if (Message.Direct.SEND == message.direct()) {
-                    ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
+                    userAvatarView?.let {
+                        ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
+                    }
                 }
             }
 

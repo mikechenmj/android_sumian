@@ -356,6 +356,9 @@ public class MessageAdapter extends BaseAdapter {
         Message message = getItem(position);
         if (convertView == null) {
             convertView = createChatRow(context, message, position);
+            convertView.setTag(convertView);
+        } else {
+            convertView = (View) convertView.getTag();
         }
         //缓存的view的message很可能不是当前item的，传入当前message和position更新ui
         ((ChatRow) convertView).setUpView(message, position, itemClickListener);

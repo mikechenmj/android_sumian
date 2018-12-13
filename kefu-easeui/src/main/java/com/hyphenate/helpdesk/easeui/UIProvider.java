@@ -230,7 +230,7 @@ public class UIProvider {
     }
 
     public interface UserProfileProvider {
-        void setNickAndAvatar(@NonNull Context context, @NonNull Message message, @NonNull ImageView userAvatarView, @NonNull TextView usernickView);
+        void setNickAndAvatar(@NonNull Context context, @NonNull Message message, ImageView userAvatarView, TextView usernickView);
 
         void gotoLoginKefuServer();
     }

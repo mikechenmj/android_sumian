@@ -115,22 +115,6 @@ public abstract class ChatRow extends LinearLayout {
                 }
             }
         }
-        //设置头像和nick
-
-        UIProvider.UserProfileProvider userInfoProvider = UIProvider.getInstance().getUserProfileProvider();
-
-        if (userInfoProvider != null) {
-            userInfoProvider.setNickAndAvatar(context, message, userAvatarView, usernickView);
-        } else {
-            if (message.direct() == Message.Direct.RECEIVE) {
-                if (usernickView != null) {
-                    UserUtil.setAgentNickAndAvatar(context, message, userAvatarView, usernickView);
-                }
-            } else {
-                UserUtil.setCurrentUserNickAndAvatar(context, userAvatarView, usernickView);
-            }
-        }
-
 
         if (adapter instanceof MessageAdapter) {
             if (userAvatarView != null) {
@@ -159,7 +143,23 @@ public abstract class ChatRow extends LinearLayout {
                 }
 
             }
+            //设置头像和nick
 
+            UIProvider.UserProfileProvider userInfoProvider = UIProvider.getInstance().getUserProfileProvider();
+
+            if (userInfoProvider != null) {
+                userInfoProvider.setNickAndAvatar(context, message, userAvatarView, usernickView);
+            } else {
+                if (message.direct() == Message.Direct.RECEIVE) {
+                    if (usernickView != null && userAvatarView != null) {
+                        UserUtil.setAgentNickAndAvatar(context, message, userAvatarView, usernickView);
+                    }
+                } else {
+                    if (usernickView != null && userAvatarView != null) {
+                        UserUtil.setCurrentUserNickAndAvatar(context, userAvatarView, usernickView);
+                    }
+                }
+            }
         }
     }
 
