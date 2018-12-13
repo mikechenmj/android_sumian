@@ -117,14 +117,16 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
 
     private fun hideEmptyView() {
         tv_msg_board_empty?.visibility = View.GONE
+        recycler.visibility = View.VISIBLE
     }
 
     private fun showEmptyView() {
         tv_msg_board_empty?.visibility = View.VISIBLE
+        recycler.visibility = View.GONE
     }
 
     private fun updateUi(msgBoardList: List<MessageBoard>) {
-        if (msgBoardList.isEmpty()) {
+        if (messageBoardAdapter.itemCount <= 0 && msgBoardList.isNullOrEmpty()) {
             showEmptyView()
         } else {
             messageBoardAdapter.resetItem(msgBoardList)

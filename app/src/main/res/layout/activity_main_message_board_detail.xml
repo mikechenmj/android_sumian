@@ -87,7 +87,9 @@
             android:layout_height="@dimen/space_40"
             android:background="@color/b4_color_day"
             android:gravity="center"
-            android:text="@string/msg_board_is_deleted" />
+            android:text="@string/msg_board_is_deleted"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </FrameLayout>
 
