@@ -45,7 +45,9 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
 
     private var mAdvisoryId: Int = 0
 
-    private lateinit var mAdapter: RecordAdapter
+    private val mAdapter: RecordAdapter by lazy {
+        RecordAdapter(this).registerMediaPlayer(mMediaPlayer)
+    }
 
     private var mAdvisory: Advisory? = null
 
@@ -75,7 +77,6 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
         title_bar.setOnMenuClickListener(this)
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.itemAnimator = null //避免 update 数据 item 闪烁
-        this.mAdapter = RecordAdapter(this).registerMediaPlayer(mMediaPlayer)
         recycler.adapter = mAdapter
         tv_bottom_notification.setOnClickListener(this)
     }
@@ -93,7 +94,6 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
     override fun onRelease() {
         super.onRelease()
         mMediaPlayer.release()
-        this.codeCacheDir
     }
 
     @Suppress("DEPRECATION")
@@ -130,7 +130,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
                     this.mAdapter.setUser(it)
                 }
                 this.mAdapter.resetItem(advisory.records)
-                val isRecordEmpty = advisory.records?.isNullOrEmpty() ?: true
+                val isRecordEmpty = advisory.records.isNullOrEmpty()
                 empty_error_view.visibility = if (isRecordEmpty) View.VISIBLE else View.GONE
                 recycler.visibility = if (isRecordEmpty) View.GONE else View.VISIBLE
             }
