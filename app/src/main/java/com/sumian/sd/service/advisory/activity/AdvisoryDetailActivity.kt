@@ -31,13 +31,14 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
 
         private const val ARGS_ADVISORY_ID = "com.sumian.app.extras.advisory.id"
 
+        @JvmStatic
         fun show(context: Context, advisoryId: Int) {
             context.startActivity(getLaunchIntent(context, advisoryId))
         }
 
+        @JvmStatic
         fun getLaunchIntent(context: Context, advisoryId: Int): Intent {
             val intent = Intent(context, AdvisoryDetailActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(ARGS_ADVISORY_ID, advisoryId)
             return intent
         }
@@ -103,37 +104,37 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
         if (mAdvisory == null) {
             empty_error_view.visibility = View.VISIBLE
         } else {
-            mAdvisory?.let { it ->
-                //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
-                when (it.status) {
-                    2, 3, 4 -> {
+
+            //咨询状态 0: 待回复 1：已回复 2：已结束 3：已关闭，4：已取消，5：待提问
+            when (advisory.status) {
+                2, 3, 4 -> {
+                    tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
+                    tv_bottom_notification.text = getString(R.string.continue_ask_question)
+                }
+                else -> {
+                    if (advisory.last_count == 0) {
                         tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
                         tv_bottom_notification.text = getString(R.string.continue_ask_question)
-                    }
-                    else -> {
-                        if (it.last_count == 0) {
-                            tv_top_notification.setBackgroundColor(resources.getColor(R.color.b4_color))
-                            tv_bottom_notification.text = getString(R.string.continue_ask_question)
-                        } else {
-                            tv_top_notification.setBackgroundColor(resources.getColor(R.color.b5_color))
-                            tv_bottom_notification.text = "追问 (剩余${it.last_count}机会)"
-                        }
+                    } else {
+                        tv_top_notification.setBackgroundColor(resources.getColor(R.color.b5_color))
+                        tv_bottom_notification.text = "追问 (剩余${advisory.last_count}机会)"
                     }
                 }
-                tv_top_notification.text = it.remind_description
-                tv_top_notification.visibility = View.VISIBLE
-                tv_bottom_notification.visibility = View.VISIBLE
-                it.doctor?.let {
-                    this.mAdapter.setDoctor(it)
-                }
-                it.user?.let {
-                    this.mAdapter.setUser(it)
-                }
-                this.mAdapter.resetItem(advisory.records)
-                val isRecordEmpty = advisory.records.isNullOrEmpty()
-                empty_error_view.visibility = if (isRecordEmpty) View.VISIBLE else View.GONE
-                recycler.visibility = if (isRecordEmpty) View.GONE else View.VISIBLE
             }
+            tv_top_notification.text = advisory.remind_description
+            tv_top_notification.visibility = View.VISIBLE
+            tv_bottom_notification.visibility = View.VISIBLE
+            advisory.doctor?.let {
+                this.mAdapter.setDoctor(it)
+            }
+            advisory.user?.let {
+                this.mAdapter.setUser(it)
+            }
+            this.mAdapter.resetItem(advisory.records)
+            val isRecordEmpty = advisory.records.isNullOrEmpty()
+            empty_error_view.visibility = if (isRecordEmpty) View.VISIBLE else View.GONE
+            recycler.visibility = if (isRecordEmpty) View.GONE else View.VISIBLE
+
         }
     }
 

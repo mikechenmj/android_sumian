@@ -12,7 +12,6 @@
         android:id="@+id/lay_record_tips"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_64"
-        android:orientation="horizontal"
         android:padding="@dimen/space_20">
 
         <TextView
@@ -52,9 +51,9 @@
         android:id="@+id/flow_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_20"
         android:layout_marginLeft="@dimen/space_20"
         android:layout_marginRight="@dimen/space_20"
+        android:layout_marginBottom="@dimen/space_20"
         app:sd_HorizontalSpace="@dimen/space_6"
         app:sd_VerticalSpace="@dimen/space_6" />
 

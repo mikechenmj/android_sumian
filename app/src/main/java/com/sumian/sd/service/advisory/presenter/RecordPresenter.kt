@@ -2,7 +2,6 @@ package com.sumian.sd.service.advisory.presenter
 
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.contract.RecordContract
@@ -36,8 +35,7 @@ class RecordPresenter private constructor(view: RecordContract.View) : RecordCon
         val map = mutableMapOf<String, Any>()
         map["include"] = "user,doctor,records"
         val call = AppManager.getSdHttpService().getDoctorAdvisoryDetails(advisoryId, map)
-        mCalls.add(call)
-
+        //addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Advisory>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onGetAdvisoryDetailFailed(error = errorResponse.message)
