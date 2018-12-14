@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_ANONYMOUS_PARAMETER")
+
 package com.sumian.sd.kefu
 
 import android.content.Context
@@ -5,8 +7,6 @@ import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
@@ -20,6 +20,7 @@ import com.hyphenate.helpdesk.easeui.util.IntentBuilder
 import com.hyphenate.helpdesk.model.ContentFactory
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
@@ -44,6 +45,9 @@ object KefuManager {
 
     @JvmStatic
     fun launchKefuActivity() {
+        //注册相关provider
+        registerAccountProvider()
+        registerUserProfileProvider()
         ActivityUtils.startActivity(getChatRoomLaunchIntent())
     }
 
@@ -75,16 +79,7 @@ object KefuManager {
     }
 
     fun loginAndQueryUnreadMsg() {
-        loginEasemob(object : LoginCallback {
-            override fun onSuccess() {
-                UIProvider.getInstance().isLogin = true
-            }
-
-            override fun onFailed(error: String) {
-                super.onFailed(error)
-                UIProvider.getInstance().isLogin = false
-            }
-        })
+        loginEasemob(null)
     }
 
     private fun loginEasemob(loginCallback: LoginCallback?) {
@@ -99,24 +94,32 @@ object KefuManager {
         }
         ChatClient.getInstance()?.login(imId, md5Pwd, object : Callback {
             override fun onSuccess() {
-                UIProvider.getInstance().isLogin = true
-                loginCallback?.onSuccess()
+                SumianExecutor.runOnUiThread({
+                    UIProvider.getInstance().isLogin = true
+                    loginCallback?.onSuccess()
+                    UIProvider.getInstance().onLoginCallback?.onLoginSuccess()
+                    // Log.e("TAG", "onSuccess: ----kefu ime----->")
+                })
             }
 
             override fun onError(code: Int, error: String) {
-                when (code) {
-                    Error.USER_ALREADY_LOGIN -> {
-                        UIProvider.getInstance().isLogin = true
-                        loginCallback?.onSuccess()
+                SumianExecutor.runOnUiThread({
+                    when (code) {
+                        Error.USER_ALREADY_LOGIN -> {
+                            UIProvider.getInstance().isLogin = true
+                            loginCallback?.onSuccess()
+                            UIProvider.getInstance().onLoginCallback?.onLoginSuccess()
+                        }
+                        else -> {
+                            UIProvider.getInstance().isLogin = false
+                            loginCallback?.onFailed(error)
+                            val notifyCount = 0
+                            notifyServerRegister2ImServer(userInfo, notifyCount)
+                            UIProvider.getInstance().onLoginCallback?.onLoginFailed()
+                        }
                     }
-                    else -> {
-                        UIProvider.getInstance().isLogin = false
-                        loginCallback?.onFailed(error)
-                        val notifyCount = 0
-                        notifyServerRegister2ImServer(userInfo, notifyCount)
-                    }
-                }
-                LogUtils.d("code=$code  error=$error")
+                    Log.e("TAG", "code=$code  error=$error")
+                })
             }
 
             override fun onProgress(progress: Int, status: String) {
@@ -197,57 +200,44 @@ object KefuManager {
                 .nickName(userInfo.getNickname())
                 .name(userInfo.getNickname())
                 .phone(userInfo.getMobile())
-        //注册相关provider
-        UIProvider.getInstance().userProfileProvider = object : UIProvider.UserProfileProvider {
-            override fun setNickAndAvatar(context: Context, message: Message, userAvatarView: ImageView?, usernickView: TextView?) {
-                if (Message.Direct.SEND == message.direct()) {
-                    userAvatarView?.let {
-                        ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
-                    }
-                }
-            }
-
-            override fun gotoLoginKefuServer() {
-                loginEasemob(object : LoginCallback {
-                    override fun onSuccess() {
-                        UIProvider.getInstance().isLogin = true
-                        UIProvider.getInstance().clearCacheMsg()
-                        mLaunchKefuActivity = true
-                    }
-
-                    override fun onFailed(error: String) {
-                        super.onFailed(error)
-                        UIProvider.getInstance().isLogin = false
-                        UIProvider.getInstance().clearCacheMsg()
-                    }
-                })
-            }
-        }
-        UIProvider.getInstance().setAccountProvider { tvLoginStateTips, chatTitleBar, messageList ->
-            loginEasemob(object : LoginCallback {
-                override fun onSuccess() {
-                    tvLoginStateTips.post {
-                        UIProvider.getInstance().isLogin = true
-                        tvLoginStateTips.visibility = View.GONE
-                        messageList.registerWelcomeMsg()
-                        chatTitleBar.hideLoading()
-                    }
-                }
-
-                override fun onFailed(error: String) {
-                    super.onFailed(error)
-                    tvLoginStateTips.post {
-                        UIProvider.getInstance().isLogin = false
-                        tvLoginStateTips.visibility = View.VISIBLE
-                        chatTitleBar.hideLoading()
-                    }
-                }
-            })
-        }
         return IntentBuilder(App.getAppContext())
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
                 .setShowUserNick(false)
                 .setVisitorInfo(visitorInfo).build()
+    }
+
+    private fun registerAccountProvider() {
+        UIProvider.getInstance().setAccountProvider { tvLoginStateTips, chatTitleBar, messageList ->
+            loginEasemob(object : LoginCallback {
+                override fun onSuccess() {
+                    SumianExecutor.runOnUiThread({
+                        UIProvider.getInstance().isLogin = true
+                        tvLoginStateTips.visibility = View.GONE
+                        messageList.registerWelcomeMsg()
+                        chatTitleBar.hideLoading()
+                    })
+                }
+
+                override fun onFailed(error: String) {
+                    super.onFailed(error)
+                    SumianExecutor.runOnUiThread({
+                        UIProvider.getInstance().isLogin = false
+                        tvLoginStateTips.visibility = View.VISIBLE
+                        chatTitleBar.hideLoading()
+                    })
+                }
+            })
+        }
+    }
+
+    private fun registerUserProfileProvider() {
+        UIProvider.getInstance().setUserProfileProvider { context, message, userAvatarView, usernickView ->
+            if (Message.Direct.SEND == message.direct()) {
+                userAvatarView?.let {
+                    ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
+                }
+            }
+        }
     }
 
     interface LoginCallback {

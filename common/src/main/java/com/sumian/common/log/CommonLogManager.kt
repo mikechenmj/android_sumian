@@ -64,7 +64,7 @@ abstract class CommonLogManager {
     private var appVersion = ""
 
     fun init(context: Context, accessKey: String, accessSecret: String,
-             projectName: String, logStore: String, endPoint: String) {
+             projectName: String, logStore: String, endPoint: String, isDebug: Boolean = false) {
         observeUserInfo()
         observeNetworkState(context)
         AliyunLogManager.init(context,
@@ -72,8 +72,8 @@ abstract class CommonLogManager {
                 accessSecret,
                 projectName,
                 logStore,
-                endPoint
-        )
+                endPoint,
+                isDebug)
         network = getNetworkTypeString()
         appVersion = AppUtils.getAppVersionName()
     }

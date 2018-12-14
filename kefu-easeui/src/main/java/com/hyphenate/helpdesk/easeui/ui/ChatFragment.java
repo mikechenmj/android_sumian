@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -71,7 +72,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener;
  * app也可继承此fragment续写
  * 参数传入示例可查看demo里的ChatActivity
  */
-@SuppressWarnings({"ConstantConditions", "ResultOfMethodCallIgnored"})
+@SuppressWarnings("ALL")
 public class ChatFragment extends BaseFragment implements ChatManager.MessageListener, EmojiconManager.EmojiconManagerDelegate {
 
     protected static final String TAG = ChatFragment.class.getSimpleName();
@@ -178,32 +179,6 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
             }
         });
         ChatClient.getInstance().chatManager().addAgentInputListener(agentInputListener);
-
-        // 为测试获取账号用，无实际意义
-        // setUserNameView();
-    }
-
-    private void setUserNameView() {
-        if (ChatClient.getInstance().isLoggedInBefore()) {
-            String currentUsername = ChatClient.getInstance().currentUserName();
-            if (getView() != null) {
-                TextView tvUname = (TextView) getView().findViewById(R.id.tv_username);
-                if (tvUname != null) {
-                    tvUname.setText(currentUsername);
-                }
-            }
-        }
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     /**
@@ -264,46 +239,53 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        ChatClient.getInstance().chatManager().addVisitorWaitListener(visitorWaitListener);
+        UIProvider.getInstance().setOnLoginCallback(new UIProvider.OnLoginCallback() {
+            @Override
+            public void onLoginSuccess() {
+                getActivity().runOnUiThread(() -> setUpView());
+                Log.e(TAG, "onLoginSuccess: -----kefu im------>");
+            }
+
+            @Override
+            public void onLoginFailed() {
+                getActivity().runOnUiThread(() -> mTvNetWorkError.setVisibility(UIProvider.getInstance().isLogin() ? View.GONE : View.VISIBLE));
+                Log.e(TAG, "onLoginFailed: ------kefu im----->");
+            }
+        });
+        UIProvider.getInstance().getAccountPrivoder().tryLoginAccount(mTvNetWorkError, mEaseTitleBar, messageList);
     }
 
-    ChatManager.VisitorWaitListener visitorWaitListener = new ChatManager.VisitorWaitListener() {
+    private ChatManager.VisitorWaitListener visitorWaitListener = new ChatManager.VisitorWaitListener() {
         @Override
         public void waitCount(final int num) {
             if (getActivity() == null) {
                 return;
             }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (num > 0) {
-                        tvTipWaitCount.setVisibility(View.VISIBLE);
-                        tvTipWaitCount.setText(getString(R.string.current_wait_count, num));
-                    } else {
-                        tvTipWaitCount.setVisibility(View.GONE);
-                    }
+            getActivity().runOnUiThread(() -> {
+                if (num > 0) {
+                    tvTipWaitCount.setVisibility(View.VISIBLE);
+                    tvTipWaitCount.setText(getString(R.string.current_wait_count, num));
+                } else {
+                    tvTipWaitCount.setVisibility(View.GONE);
                 }
             });
         }
     };
 
-    ChatManager.AgentInputListener agentInputListener = new ChatManager.AgentInputListener() {
+    private ChatManager.AgentInputListener agentInputListener = new ChatManager.AgentInputListener() {
         @Override
         public void onInputState(final String input) {
             if (getActivity() == null) {
                 return;
             }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (input != null) {
-                        // titleBar.setTitle(input);
+            getActivity().runOnUiThread(() -> {
+                if (input != null) {
+                    // titleBar.setTitle(input);
+                } else {
+                    if (!TextUtils.isEmpty(titleName)) {
+                        //   titleBar.setTitle(titleName);
                     } else {
-                        if (!TextUtils.isEmpty(titleName)) {
-                            //   titleBar.setTitle(titleName);
-                        } else {
-                            //  titleBar.setTitle(toChatUsername);
-                        }
+                        //  titleBar.setTitle(toChatUsername);
                     }
                 }
             });
@@ -323,7 +305,6 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         }
 
         mEaseTitleBar.setRightImageResource(R.drawable.hd_mm_title_remove);
-
         onConversationInit();
         onMessageListInit();
 
@@ -335,7 +316,6 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         });
         mEaseTitleBar.setRightLayoutClickListener(v -> emptyHistory());
         setRefreshLayoutListener();
-        UIProvider.getInstance().getUserProfileProvider().gotoLoginKefuServer();
     }
 
     @Override

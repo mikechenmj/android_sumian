@@ -2,24 +2,14 @@ package com.sumian.common.log
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.aliyun.sls.android.sdk.ClientConfiguration
-import com.aliyun.sls.android.sdk.SLSDatabaseManager
-import com.aliyun.sls.android.sdk.SLSLog
-import com.aliyun.sls.android.sdk.LOGClient
-import com.aliyun.sls.android.sdk.LogException
+import com.aliyun.sls.android.sdk.*
 import com.aliyun.sls.android.sdk.core.auth.PlainTextAKSKCredentialProvider
-import com.aliyun.sls.android.sdk.core.auth.StsTokenCredentialProvider
-import com.aliyun.sls.android.sdk.request.PostLogRequest
-import com.aliyun.sls.android.sdk.result.PostLogResult
 import com.aliyun.sls.android.sdk.core.callback.CompletedCallback
 import com.aliyun.sls.android.sdk.model.Log
 import com.aliyun.sls.android.sdk.model.LogGroup
+import com.aliyun.sls.android.sdk.request.PostLogRequest
+import com.aliyun.sls.android.sdk.result.PostLogResult
 import com.avos.avoscloud.AVOSCloud
-import com.avos.avoscloud.AVOSCloud.applicationContext
-import com.blankj.utilcode.util.LogUtils
-import java.lang.reflect.Executable
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 /**
@@ -36,14 +26,18 @@ object AliyunLogManager {
     private lateinit var mLogClient: LOGClient
     private var mProjectName: String = ""
     private var mLogStore = ""
+    private var mIsDebug = false
 
     fun init(applicationContext: Context, accessKey: String, accessSecret: String,
-             projectName: String, logStore: String, endPoint: String) {
+             projectName: String, logStore: String, endPoint: String, isDebug: Boolean = false) {
         mProjectName = projectName
         mLogStore = logStore
+        mIsDebug = isDebug
 
-        SLSDatabaseManager.getInstance().setupDB(applicationContext);
-        SLSLog.enableLog() // log打印在控制台
+        SLSDatabaseManager.getInstance().setupDB(applicationContext)
+        if (isDebug) {
+            SLSLog.enableLog() // log打印在控制台
+        }
 
         val conf = ClientConfiguration()
         conf.connectionTimeout = 15 * 1000 // 连接超时，默认15秒
@@ -67,11 +61,9 @@ object AliyunLogManager {
             val request = PostLogRequest(mProjectName, mLogStore, logGroup)
             mLogClient.asyncPostLog(request, object : CompletedCallback<PostLogRequest, PostLogResult> {
                 override fun onSuccess(request: PostLogRequest, result: PostLogResult) {
-                    LogUtils.d(result)
                 }
 
                 override fun onFailure(request: PostLogRequest, exception: LogException) {
-                    LogUtils.d(exception)
                 }
             })
         } catch (e: LogException) {

@@ -40,6 +40,7 @@ public class UIProvider {
     private UserProfileProvider userProvider;
 
     private SettingsProvider settingsProvider;
+    private OnLoginCallback mOnLoginCallback;
 
     /**
      * application context
@@ -229,10 +230,23 @@ public class UIProvider {
         return settingsProvider;
     }
 
+    public OnLoginCallback getOnLoginCallback() {
+        return mOnLoginCallback;
+    }
+
+    public void setOnLoginCallback(OnLoginCallback onLoginCallback) {
+        mOnLoginCallback = onLoginCallback;
+    }
+
+    public interface OnLoginCallback {
+
+        void onLoginSuccess();
+
+        void onLoginFailed();
+    }
+
     public interface UserProfileProvider {
         void setNickAndAvatar(@NonNull Context context, @NonNull Message message, ImageView userAvatarView, TextView usernickView);
-
-        void gotoLoginKefuServer();
     }
 
     /**

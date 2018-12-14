@@ -26,7 +26,6 @@ import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.job.SleepDataUploadManager
-import com.sumian.hw.log.LogJobIntentService
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.BuildConfig
@@ -179,8 +178,7 @@ object AppManager {
                 BuildConfig.ALIYUN_LOG_ACCESS_SECRET,
                 BuildConfig.ALIYUN_LOG_PROJECT,
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
-                BuildConfig.ALIYUN_LOG_END_POINT
-        )
+                BuildConfig.ALIYUN_LOG_END_POINT)
         observeAppLifecycle()
     }
 
