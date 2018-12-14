@@ -9,13 +9,13 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.service.tel.bean.TelBooking
 import com.sumian.sd.service.tel.contract.TelBookingPublishContract
 import com.sumian.sd.service.tel.presenter.TelBookingPublishPresenter
 import com.sumian.sd.service.tel.sheet.TelBookingBottomSheet
 import com.sumian.sd.service.widget.ServiceSuccessStateView
-import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
 
 /**
@@ -77,7 +77,7 @@ class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContrac
         super.initWidget()
         mTitleBar.setTitle(R.string.tel_ask_detail)
         sdv_make_date.setOnClickListener(this)
-        et_input_ask_question_more.addTextChangedListener(object : SimpleTextWatchAdapter() {
+        et_input_ask_question_more.addTextChangedListener(object : EmptyTextWatcher() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
