@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sumian.sd.diary.fillsleepdiary.widget.FillDiaryContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fill_diary_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="62dp"
+    tools:showIn="@layout/fragment_choose_sleep_time" />

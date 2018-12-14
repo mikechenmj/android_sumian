@@ -711,4 +711,10 @@
     <string name="system_notification">系统通知</string>
     <string name="msg_board_del_success">留言删除成功</string>
     <string name="msg_board_send_success">留言发送成功</string>
+    <string name="question_mark_x3">\???</string>
+    <string name="please_complete_the_question">请完成以上填写</string>
+    <string name="sleep">睡觉</string>
+    <string name="fall_asleep">睡着</string>
+    <string name="wake_up">醒来</string>
+    <string name="get_up">起床</string>
 </resources>

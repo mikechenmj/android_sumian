@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <com.sumian.sd.diary.fillsleepdiary.widget.FillSleepDiagramView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:gravity="center">
+
+        <com.sumian.common.widget.picker.NumberPickerView
+            android:id="@+id/picker_hour"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_170"
+            android:layout_weight="1"
+            android:background="@color/b2_color"
+            android:visibility="gone"
+            app:npv_DividerColor="@color/l1_color"
+            app:npv_DividerHeight="1dp"
+            app:npv_ItemPaddingHorizontal="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_MarginStartOfHint="@dimen/space_38"
+            app:npv_RespondChangeOnDetached="true"
+            app:npv_ShowCount="3"
+            app:npv_TextColorHint="@color/b3_color"
+            app:npv_TextColorNormal="@color/t1_alpha_30_color"
+            app:npv_TextColorSelected="@color/b3_color"
+            app:npv_TextSizeHint="@dimen/font_18"
+            app:npv_TextSizeNormal="@dimen/font_18"
+            app:npv_TextSizeSelected="@dimen/font_18"
+            app:npv_WrapSelectorWheel="true"
+            tools:visibility="visible" />
+
+        <TextView
+            style="@style/text_t1_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/b3_color"
+            tools:ignore="HardcodedText" />
+
+        <com.sumian.common.widget.picker.NumberPickerView
+            android:id="@+id/picker_minute"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_170"
+            android:layout_weight="1"
+            android:background="@color/b2_color"
+            android:visibility="gone"
+            app:npv_DividerColor="@color/l1_color"
+            app:npv_DividerHeight="1dp"
+            app:npv_ItemPaddingHorizontal="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_MarginStartOfHint="@dimen/space_38"
+            app:npv_RespondChangeOnDetached="true"
+            app:npv_ShowCount="3"
+            app:npv_TextColorHint="@color/b3_color"
+            app:npv_TextColorNormal="@color/t1_alpha_30_color"
+            app:npv_TextColorSelected="@color/b3_color"
+            app:npv_TextSizeHint="@dimen/font_18"
+            app:npv_TextSizeNormal="@dimen/font_18"
+            app:npv_TextSizeSelected="@dimen/font_18"
+            app:npv_WrapSelectorWheel="true"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+</LinearLayout>
