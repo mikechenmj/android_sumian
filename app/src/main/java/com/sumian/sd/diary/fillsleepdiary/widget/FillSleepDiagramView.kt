@@ -1,6 +1,7 @@
 package com.sumian.sd.diary.fillsleepdiary.widget
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -34,11 +35,14 @@ class FillSleepDiagramView(context: Context, attributeSet: AttributeSet) : Frame
             throw IllegalArgumentException("currentIndex must < 4")
         }
         for (i in 0 until timeArray.size) {
-            getTvTopByIndex(i).text =
+            val topTv = getTvTopByIndex(i)
+            val bottomTv = getTvBottomByIndex(i)
+            topTv.text =
                     if (i <= currentIndex) getFormatTime(timeArray[i]) else context.getString(R.string.question_mark_x3)
             val textColor = if (i == currentIndex) mFocusedTvColor else mUnfocusedTvColor
-            getTvTopByIndex(i).setTextColor(textColor)
-            getTvBottomByIndex(i).setTextColor(textColor)
+            topTv.setTextColor(textColor)
+            topTv.setTypeface(topTv.typeface, if (i <= currentIndex) Typeface.BOLD else Typeface.NORMAL)
+            bottomTv.setTextColor(textColor)
         }
         updateBgColor(currentIndex)
     }

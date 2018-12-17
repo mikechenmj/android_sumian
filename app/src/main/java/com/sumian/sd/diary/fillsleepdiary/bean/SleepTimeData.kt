@@ -1,8 +1,7 @@
-package com.sumian.sd.diary.fillsleepdiary
+package com.sumian.sd.diary.fillsleepdiary.bean
 
 import android.text.format.DateUtils
 import com.sumian.common.utils.TimeUtilV2
-import java.lang.IllegalArgumentException
 import java.util.*
 
 /**
@@ -24,7 +23,7 @@ class SleepTimeData {
         val DEFAULT_INIT_TIME_OF_WAKEUP_TIME = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("7:00")
     }
 
-    private val mTimeArray = longArrayOf(DEFAULT_INIT_TIME_OF_SLEEP_TIME, 0, DEFAULT_INIT_TIME_OF_WAKEUP_TIME, 0)
+    val mTimeArray = longArrayOf(DEFAULT_INIT_TIME_OF_SLEEP_TIME, 0, DEFAULT_INIT_TIME_OF_WAKEUP_TIME, 0)
     private fun indexTooBigException() = IllegalArgumentException("index must < 4")
 
     fun getStartAndEndTime(index: Int): Pair<Long, Long> {
@@ -102,7 +101,9 @@ class SleepTimeData {
 
     fun createHoursByStartAndEndTime(startTime: Long, endTime: Long): Array<String?> {
         val list = ArrayList<String>()
-        for (i in startTime..endTime step DateUtils.HOUR_IN_MILLIS) {
+        val formatStartTime = startTime - DateUtils.MINUTE_IN_MILLIS * getMinuteOfTime(startTime)
+        val formatEndTime = endTime - DateUtils.MINUTE_IN_MILLIS * getMinuteOfTime(endTime)
+        for (i in formatStartTime..formatEndTime step DateUtils.HOUR_IN_MILLIS) {
             list.add(getHourOfTime(i).toString())
         }
         return listToArray(list)
@@ -150,7 +151,18 @@ class SleepTimeData {
     }
 
     fun setTime(index: Int, hour: Int, minute: Int) {
-//        var time = parseHHmmToTime()
+        val addDay = when (index) {
+            0 -> hour < 18
+            1 -> if (mTimeArray[0] < SECOND_DAY_00_00) {
+                hour < 18
+            } else {
+                true
+            }
+            2, 3 -> true
+            else -> false
+        }
+        val time = parseHHmmToTime(hour, minute, addDay)
+        setTime(index, time)
     }
 
     fun getTime(index: Int): Long {

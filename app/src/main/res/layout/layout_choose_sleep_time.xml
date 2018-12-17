@@ -3,19 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/fill_diary_default_content_height"
+    android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingStart="20dp"
     android:paddingEnd="20dp">
 
     <com.sumian.sd.diary.fillsleepdiary.widget.FillSleepDiagramView
+        android:id="@+id/fill_sleep_diagram_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="170dp"
+        android:layout_marginTop="24dp"
         android:gravity="center">
 
         <com.sumian.common.widget.picker.NumberPickerView
@@ -24,7 +27,6 @@
             android:layout_height="@dimen/space_170"
             android:layout_weight="1"
             android:background="@color/b2_color"
-            android:visibility="gone"
             app:npv_DividerColor="@color/l1_color"
             app:npv_DividerHeight="1dp"
             app:npv_ItemPaddingHorizontal="5dp"
@@ -38,8 +40,7 @@
             app:npv_TextSizeHint="@dimen/font_18"
             app:npv_TextSizeNormal="@dimen/font_18"
             app:npv_TextSizeSelected="@dimen/font_18"
-            app:npv_WrapSelectorWheel="true"
-            tools:visibility="visible" />
+            app:npv_WrapSelectorWheel="false" />
 
         <TextView
             style="@style/text_t1_18"
@@ -55,7 +56,6 @@
             android:layout_height="@dimen/space_170"
             android:layout_weight="1"
             android:background="@color/b2_color"
-            android:visibility="gone"
             app:npv_DividerColor="@color/l1_color"
             app:npv_DividerHeight="1dp"
             app:npv_ItemPaddingHorizontal="5dp"
@@ -69,8 +69,7 @@
             app:npv_TextSizeHint="@dimen/font_18"
             app:npv_TextSizeNormal="@dimen/font_18"
             app:npv_TextSizeSelected="@dimen/font_18"
-            app:npv_WrapSelectorWheel="true"
-            tools:visibility="visible" />
+            app:npv_WrapSelectorWheel="false" />
 
     </LinearLayout>
 </LinearLayout>

@@ -6,6 +6,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.hw.utils.TimeUtil
 import com.sumian.sd.account.config.SumianConfig
 import org.junit.Test
+import kotlin.random.Random
 
 /**
  * <pre>
@@ -19,6 +20,7 @@ import org.junit.Test
 class KotlinTest {
     @Test
     fun test() {
+
     }
 
 }

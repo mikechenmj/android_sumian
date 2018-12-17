@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/shape_fill_sleep_diary_bg_0" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/shape_fill_sleep_diary_bg_1"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/shape_fill_sleep_diary_bg"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
 
         <TextView
             android:id="@+id/tv_fill_diary_title"
@@ -28,16 +25,20 @@
             android:textStyle="bold"
             tools:text="昨晚几点准备睡觉？" />
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="20dp" />
+
         <FrameLayout
             android:id="@+id/vg_fill_diary_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/fill_diary_default_content_height"
+            tools:minHeight="300dp" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/tv_fill_diary_progress"
@@ -61,9 +62,10 @@
                 android:layout_height="60dp"
                 android:layout_gravity="start"
                 android:scaleType="centerInside"
+                android:src="@drawable/record_h5_btn_left"
                 android:visibility="gone"
-                tools:visibility="visible"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_fill_diary_next"
@@ -71,10 +73,10 @@
                 android:layout_height="60dp"
                 android:layout_gravity="end"
                 android:scaleType="centerInside"
+                android:src="@drawable/record_h5_btn_right"
                 android:visibility="gone"
-                tools:visibility="visible"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+                tools:visibility="visible" />
         </FrameLayout>
     </LinearLayout>
-
-</FrameLayout>
+</ScrollView>

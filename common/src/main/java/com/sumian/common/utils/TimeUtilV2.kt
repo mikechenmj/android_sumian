@@ -235,5 +235,33 @@ class TimeUtilV2 {
         fun getMinute(time: Long): Int {
             return getField(time, Calendar.MINUTE)
         }
+
+        fun getHourMinuteStringFromSecond(second: Int, hourString: String, minuteString: String): String {
+            val hour = getHourFromSecond(second)
+            val min = getMinuteFromSecond(second)
+            val stringBuilder = StringBuilder()
+            if (hour != 0) {
+                stringBuilder.append(hour)
+                        .append(hourString)
+            }
+            stringBuilder.append(min)
+                    .append(minuteString)
+            return stringBuilder.toString()
+        }
+
+        /**
+         * x小时y分钟
+         */
+        fun getHourMinuteStringFromSecondInZh(second: Int): String {
+            return getHourMinuteStringFromSecond(second, "小时", "分钟")
+        }
+
+        fun getHourFromSecond(second: Int): Int {
+            return second / 3600
+        }
+
+        fun getMinuteFromSecond(second: Int): Int {
+            return second / 60 % 60
+        }
     }
 }

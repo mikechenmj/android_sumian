@@ -1,11 +1,9 @@
-package com.sumian.sd.diary.fillsleepdiary
+package com.sumian.sd.diary.fillsleepdiary.fragment
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProviders
-import com.sumian.common.base.BaseFragment
+import androidx.lifecycle.Observer
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
-import kotlinx.android.synthetic.main.fill_diary_bg.*
 import kotlinx.android.synthetic.main.layout_choose_sleep_time.*
 import java.lang.IllegalArgumentException
 
@@ -16,12 +14,9 @@ import java.lang.IllegalArgumentException
  * desc   : 参考需求文档 1.14.0 睡眠日记改版
  * version: 1.0
  */
-class ChooseSleepTimeFragment : BaseFragment() {
+class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     private var mType = TYPE_SLEEP_TIME
     private var mTimeIndex = 0
-    private val mFillDiaryModel: FillDiaryModel by lazy {
-        ViewModelProviders.of(activity!!).get(FillDiaryModel::class.java)
-    }
 
     companion object {
         private const val KEY_TYPE = "ChooseSleepTimeFragment.KEY_TYPE"
@@ -30,17 +25,18 @@ class ChooseSleepTimeFragment : BaseFragment() {
         const val TYPE_WAKEUP_TIME = 2
         const val TYPE_GET_UP_TIME = 3
 
-        fun newInstance(index: Int): ChooseSleepTimeFragment {
+        fun newInstance(progress: Int, type: Int): ChooseSleepTimeFragment {
             val fragment = ChooseSleepTimeFragment()
             val bundle = Bundle()
-            bundle.putInt(KEY_TYPE, index)
+            bundle.putInt(KEY_PROGRESS, progress)
+            bundle.putInt(KEY_TYPE, type)
             fragment.arguments = bundle
             return fragment
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_choose_sleep_time
+    override fun getContentViewLayout(): Int {
+        return R.layout.layout_choose_sleep_time
     }
 
     override fun initBundle(bundle: Bundle) {
@@ -51,41 +47,59 @@ class ChooseSleepTimeFragment : BaseFragment() {
 
     override fun initWidget() {
         super.initWidget()
-        fill_diary_bg.setProgress(0, FillDiaryConst.TOTAL_PAGE)
         initPicker()
     }
 
+    override fun initData() {
+        super.initData()
+        mFillDiaryViewModel.mSleepTimeLiveData.observe(this, Observer {
+            fill_sleep_diagram_view.setTimeAndCurrentIndex(it.mTimeArray, mTimeIndex)
+        })
+    }
+
     private fun initPicker() {
-        val hour = TimeUtilV2.getHourOfDay(getTime())
-        val minute = TimeUtilV2.getMinute(getTime())
+        val hour = getCurrentHour()
+        val minute = getCurrentMinute()
         val hours = getHours()
         val minutes = getMinutes(hour)
         picker_hour.refreshByNewDisplayedValues(hours)
         picker_hour.value = getIndexOfArray(hour.toString(), hours)
         picker_minute.refreshByNewDisplayedValues(minutes)
         picker_minute.value = getIndexOfArray(minute.toString(), minutes)
-
         picker_hour.setOnValueChangedListener { picker, oldVal, newVal ->
             run {
-
+                val newHour = getHours()[newVal]!!.toInt()
+                setTime(newHour, getCurrentMinute())
+                picker_minute.refreshByNewDisplayedValues(getMinutes(newHour))
             }
+        }
+        picker_minute.setOnValueChangedListener { picker, oldVal, newVal ->
+            run { setTime(getCurrentHour(), getMinutes(getCurrentHour())[newVal]!!.toInt()) }
         }
     }
 
     private fun getHours(): Array<String?> {
-        return mFillDiaryModel.mSleepTimeLiveData.value!!.createHoursByIndex(mTimeIndex)
+        return mFillDiaryViewModel.mSleepTimeLiveData.value!!.createHoursByIndex(mTimeIndex)
     }
 
     private fun getMinutes(hour: Int): Array<String?> {
-        return mFillDiaryModel.mSleepTimeLiveData.value!!.createMinutesByIndexAndHour(mTimeIndex, hour)
+        return mFillDiaryViewModel.mSleepTimeLiveData.value!!.createMinutesByIndexAndHour(mTimeIndex, hour)
     }
 
-    private fun setTime(time: Long) {
-        mFillDiaryModel.setSleepTime(mTimeIndex, time)
+    private fun setTime(hour: Int, minute: Int) {
+        mFillDiaryViewModel.setSleepTime(mTimeIndex, hour, minute)
     }
 
-    private fun getTime(): Long {
-        return mFillDiaryModel.getSleepTime(mTimeIndex)
+    private fun getCurrentTime(): Long {
+        return mFillDiaryViewModel.getSleepTime(mTimeIndex)
+    }
+
+    private fun getCurrentHour(): Int {
+        return TimeUtilV2.getHourOfDay(getCurrentTime())
+    }
+
+    private fun getCurrentMinute(): Int {
+        return TimeUtilV2.getMinute(getCurrentTime())
     }
 
     private fun getTimeIndexByType(): Int {
@@ -104,7 +118,6 @@ class ChooseSleepTimeFragment : BaseFragment() {
                 return index
             }
         }
-        return -1
+        return 0
     }
-
 }

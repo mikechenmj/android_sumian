@@ -4,5 +4,5 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/fill_diary_bg" />
+    <include layout="@layout/layout_fill_diary_bg" />
 </FrameLayout>

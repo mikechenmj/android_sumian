@@ -18,8 +18,7 @@
 
         <TextView
             android:id="@+id/tv_sleep_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/fill_diary_time_text"
             android:text="@string/question_mark_x3" />
 
         <TextView
@@ -52,8 +51,7 @@
 
         <TextView
             android:id="@+id/tv_fall_asleep_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/fill_diary_time_text"
             android:text="@string/question_mark_x3" />
 
         <TextView
@@ -66,8 +64,7 @@
 
         <TextView
             android:id="@+id/tv_wakeup_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/fill_diary_time_text"
             android:layout_alignParentEnd="true"
             android:text="@string/question_mark_x3" />
 
@@ -102,8 +99,7 @@
 
         <TextView
             android:id="@+id/tv_get_up_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/fill_diary_time_text"
             android:layout_alignParentEnd="true"
             android:text="@string/question_mark_x3" />
 

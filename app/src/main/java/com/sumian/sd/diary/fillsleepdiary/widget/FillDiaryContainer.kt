@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.sumian.sd.R
+import kotlinx.android.synthetic.main.hw_lay_dialog_version.view.*
 import kotlinx.android.synthetic.main.view_fill_diary_container.view.*
 
 
@@ -31,11 +32,12 @@ class FillDiaryContainer(context: Context, attributeSet: AttributeSet) : FrameLa
     }
 
     @SuppressLint("SetTextI18n")
-    fun setProgress(cur: Int, total: Int) {
-        tv_fill_diary_progress.text = "$cur/$total"
+    fun setProgress(cur: Int, total: Int = 9) {
+        tv_fill_diary_progress.text = "${cur + 1}/$total"
         iv_fill_diary_pre.visibility = if (cur == 0) View.GONE else View.VISIBLE
         iv_fill_diary_next.visibility = if (cur == total - 1) View.GONE else View.VISIBLE
         tv_fill_diary_progress.visibility = if (cur == total - 1) View.GONE else View.VISIBLE
         bt_fill_diary_complete.visibility = if (cur == total - 1) View.VISIBLE else View.GONE
+        tv_fill_diary_title.text = context.resources.getStringArray(R.array.fill_diary_title)[cur]
     }
 }
