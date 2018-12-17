@@ -20,6 +20,7 @@ import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
 import com.sumian.common.media.widget.PicturesPreviewer
+import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
@@ -32,7 +33,6 @@ import com.sumian.sd.service.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sd.service.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sd.service.widget.ServiceSuccessStateView
 import com.sumian.sd.widget.TitleBar
-import com.sumian.sd.widget.adapter.SimpleTextWatchAdapter
 import com.sumian.sd.widget.dialog.ActionLoadingDialog
 import com.sumian.sd.widget.sheet.PictureBottomSheet
 import kotlinx.android.synthetic.main.activity_main_publish_advisory_record.*
@@ -114,7 +114,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         title_bar.setOnBackClickListener(this)
         title_bar.setOnMenuClickListener(this)
 
-        et_input.addTextChangedListener(object : SimpleTextWatchAdapter() {
+        et_input.addTextChangedListener(object : EmptyTextWatcher() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
