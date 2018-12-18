@@ -79,7 +79,7 @@
         android:text="@string/warn_real_name"
         android:textSize="@dimen/font_12" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_complete"
         style="@style/bt_t1_style"
         android:layout_width="match_parent"

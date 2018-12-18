@@ -50,7 +50,7 @@
             android:textColor="@color/t2_color"
             android:textSize="@dimen/font_16" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_download"
             style="@style/SumianButton"
             android:layout_width="match_parent"

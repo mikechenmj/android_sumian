@@ -63,7 +63,7 @@
             android:layout_weight="1"
             tools:ignore="NestedWeights" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_re_scan"
             style="@style/SumianButton"
             android:layout_width="150dp"
@@ -144,7 +144,7 @@
                     tools:visibility="visible" />
             </FrameLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_confirm"
                 style="@style/SumianButton"
                 android:layout_width="150dp"

@@ -38,7 +38,7 @@
 
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_coupon"
         style="@style/bt_t1_style"
         android:layout_width="match_parent"

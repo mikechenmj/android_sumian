@@ -104,7 +104,7 @@
             app:cdtv_normal_text="@string/send_captcha" />
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_login"
         style="@style/SumianButton"
         android:layout_width="match_parent"

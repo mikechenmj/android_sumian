@@ -42,7 +42,7 @@
                 android:src="@mipmap/ic_arrow_bottom"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_title_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
             android:paddingRight="@dimen/space_16"
             android:paddingBottom="@dimen/space_8">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_preview"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/space_28"
@@ -118,7 +118,7 @@
                 android:textSize="14sp"
                 tools:ignore="RtlHardcoded" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_done"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/space_28"

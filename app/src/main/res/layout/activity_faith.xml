@@ -80,7 +80,7 @@
 
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_next_step"
         style="@style/SumianButton_HorizontalMargin"
         android:layout_marginTop="40dp"

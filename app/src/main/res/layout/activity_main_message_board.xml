@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/space_224" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_send"
                 style="@style/text_b2_16"
                 android:layout_width="match_parent"

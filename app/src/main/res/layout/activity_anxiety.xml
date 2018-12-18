@@ -75,7 +75,7 @@
         android:layout_margin="20dp"
         android:text="@string/add_anxiety_bottom_hint" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_save"
         style="@style/SumianButton"
         android:layout_width="match_parent"

@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_show_service"
         style="@style/SumianButton"
         android:layout_width="@dimen/space_150"

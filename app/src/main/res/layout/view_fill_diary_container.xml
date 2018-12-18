@@ -49,13 +49,13 @@
                 android:alpha="0.5"
                 tools:text="1/9" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_fill_diary_complete"
                 style="@style/SumianButton_150dp"
                 android:layout_gravity="center"
                 android:text="@string/complete"
-                tools:visibility="visible"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_fill_diary_pre"
