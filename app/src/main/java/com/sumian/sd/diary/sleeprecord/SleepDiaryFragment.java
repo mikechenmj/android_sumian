@@ -11,6 +11,7 @@ import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseFragment;
+import com.sumian.sd.diary.fillsleepdiary.FillSleepDiaryActivity;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.diary.sleeprecord.calendar.custom.CalendarPopup;
 import com.sumian.sd.diary.sleeprecord.widget.SleepRecordView;
@@ -96,7 +97,8 @@ public class SleepDiaryFragment extends SdBaseFragment {
     }
 
     private void launchFillSleepRecordActivity(long time) {
-        FillSleepRecordActivity.launchForResult(this, time, REQUEST_CODE_FILL_SLEEP_RECORD);
+//        FillSleepRecordActivity.launchForResult(this, time, REQUEST_CODE_FILL_SLEEP_RECORD);
+        FillSleepDiaryActivity.Companion.startForResult(this, time, REQUEST_CODE_FILL_SLEEP_RECORD);
     }
 
     private void changeSelectTime(long time) {
@@ -135,7 +137,7 @@ public class SleepDiaryFragment extends SdBaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FILL_SLEEP_RECORD) {
             if (resultCode == Activity.RESULT_OK) {
-                SleepRecord sleepRecord = FillSleepRecordActivity.resolveResultData(data);
+                SleepRecord sleepRecord = FillSleepDiaryActivity.Companion.getResponseData(data);
                 updateSleepRecordView(sleepRecord);
             }
         } else {

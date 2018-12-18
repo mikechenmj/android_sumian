@@ -23,7 +23,13 @@ class SleepTimeData {
         val DEFAULT_INIT_TIME_OF_WAKEUP_TIME = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("7:00")
     }
 
-    val mTimeArray = longArrayOf(DEFAULT_INIT_TIME_OF_SLEEP_TIME, 0, DEFAULT_INIT_TIME_OF_WAKEUP_TIME, 0)
+    val mTimeArray = longArrayOf(
+            DEFAULT_INIT_TIME_OF_SLEEP_TIME,
+            DEFAULT_INIT_TIME_OF_SLEEP_TIME,
+            DEFAULT_INIT_TIME_OF_WAKEUP_TIME,
+            DEFAULT_INIT_TIME_OF_WAKEUP_TIME
+    )
+
     private fun indexTooBigException() = IllegalArgumentException("index must < 4")
 
     fun getStartAndEndTime(index: Int): Pair<Long, Long> {
@@ -140,13 +146,15 @@ class SleepTimeData {
      */
     fun setTime(index: Int, time: Long) {
         mTimeArray[index] = time
-        if (index < mTimeArray.size - 1) {
-            for (i in index + 1 until mTimeArray.size) {
-                val currentOrMinValidTime = getCurrentOrMinValidTime(i)
-                if (currentOrMinValidTime > mTimeArray[i]) {
-                    mTimeArray[i] = currentOrMinValidTime
-                }
-            }
+    }
+
+    /**
+     * 刷新 时间 index，使其合法
+     */
+    fun updateTimeInNeed(index: Int) {
+        val currentOrMinValidTime = getCurrentOrMinValidTime(index)
+        if (currentOrMinValidTime > mTimeArray[index]) {
+            mTimeArray[index] = currentOrMinValidTime
         }
     }
 

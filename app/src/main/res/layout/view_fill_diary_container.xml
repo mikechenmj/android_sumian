@@ -54,6 +54,7 @@
                 style="@style/SumianButton_150dp"
                 android:layout_gravity="center"
                 android:text="@string/complete"
+                tools:visibility="visible"
                 android:visibility="gone" />
 
             <ImageView

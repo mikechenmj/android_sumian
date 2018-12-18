@@ -12,9 +12,9 @@ import com.sumian.common.widget.SimpleViewHolder
 import com.sumian.sd.R
 import com.sumian.sd.diary.fillsleepdiary.widget.WheelPickerBottomSheet
 import com.sumian.sd.diary.sleeprecord.bean.SleepPill
-import kotlinx.android.synthetic.main.fragment_pills.*
+import kotlinx.android.synthetic.main.fragment_sleep_pills.*
 import kotlinx.android.synthetic.main.list_item_pills.view.*
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author : Zhan Xuzhao
@@ -23,24 +23,24 @@ import java.util.ArrayList
  * desc   :
  * version: 1.0
  */
-class PillsFragment : BaseFillSleepDiaryFragment() {
+class SleepPillsFragment : BaseFillSleepDiaryFragment() {
     private val mAdapter = PillAdapter()
     private val mPillNameOptions by lazy { resources.getStringArray(R.array.pill_name_options) }
     private val mPillAmountOptions by lazy { resources.getStringArray(R.array.pill_amount_options) }
     private val mPillTimeOptions by lazy { resources.getStringArray(R.array.pill_time_options) }
 
     companion object {
-        fun newInstance(progress: Int): PillsFragment {
+        fun newInstance(progress: Int): SleepPillsFragment {
             val bundle = Bundle()
             bundle.putInt(KEY_PROGRESS, progress)
-            val fragment = PillsFragment()
+            val fragment = SleepPillsFragment()
             fragment.arguments = bundle
             return fragment
         }
     }
 
     override fun getContentViewLayout(): Int {
-        return R.layout.fragment_pills
+        return R.layout.fragment_sleep_pills
     }
 
     override fun initWidget() {

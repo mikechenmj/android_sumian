@@ -15,7 +15,9 @@ import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.anxiousandfaith.bean.FaithData
 import com.sumian.sd.device.pattern.PatternData
+import com.sumian.sd.diary.fillsleepdiary.bean.SleepDiaryData
 import com.sumian.sd.diary.sleeprecord.bean.DoctorServiceList
+import com.sumian.sd.diary.sleeprecord.bean.SleepPill
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.doctor.bean.Doctor
@@ -553,4 +555,9 @@ interface SdApi {
     @GET("notice/{id}/content-detail")
     fun getSystemNotificationDetail(@Path("id") id: Int): Call<SystemNotificationData>
 
+    @GET("/sleep-pills")
+    fun getSleepPills(): Call<List<SleepPill>>
+
+    @POST("/diaries")
+    fun postSleepDiary(@Body sleepDataData: SleepDiaryData): Call<SleepRecord>
 }

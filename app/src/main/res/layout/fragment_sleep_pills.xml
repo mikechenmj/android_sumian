@@ -10,7 +10,8 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_continue_add"
@@ -27,13 +28,13 @@
         android:paddingBottom="8dp"
         android:text="@string/continue_add"
         android:visibility="gone"
-        tools:showIn="@layout/fragment_pills"
+        tools:showIn="@layout/fragment_sleep_pills"
         tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/vg_add"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/fill_diary_default_content_height"
         android:gravity="center"
         android:orientation="vertical">
 

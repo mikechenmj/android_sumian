@@ -1,6 +1,5 @@
 package com.sumian.sd.diary.sleeprecord;
 
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
@@ -42,14 +41,7 @@ public class FillSleepRecordActivity extends SdBaseWebViewActivity {
         Intent intent = new Intent(ActivityUtils.getTopActivity(), FillSleepRecordActivity.class);
         intent.putExtra(KEY_TIME, time);
         launcher.startActivityForResult(intent, requestCode);
-        ActivityUtils.startActivity(new Intent(ActivityUtils.getTopActivity(), FillSleepDiaryActivity.class));
     }
-
-//    public static void launch(Context context, long time) {
-//        Intent intent = new Intent(context, FillSleepRecordActivity.class);
-//        intent.putExtra(KEY_TIME, time);
-//        ActivityUtils.startActivity(intent);
-//    }
 
     public static SleepRecord resolveResultData(Intent data) {
         FillSleepRecordResponse fillSleepRecordResponse = JsonUtil.fromJson(data.getStringExtra(SLEEP_RESPONSE), FillSleepRecordResponse.class);
