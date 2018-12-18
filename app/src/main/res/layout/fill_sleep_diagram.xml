@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="88dp"
+    android:gravity="bottom"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@color/l3_color" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_sleep_time"
+            style="@style/fill_diary_time_text"
+            android:text="@string/question_mark_x3" />
+
+        <TextView
+            android:id="@+id/tv_sleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_sleep_time"
+            android:layout_marginTop="2dp"
+            android:text="@string/sleep" />
+
+        <View
+            android:id="@+id/bg_0"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/b1_color" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@color/l3_color" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.3"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_fall_asleep_time"
+            style="@style/fill_diary_time_text"
+            android:text="@string/question_mark_x3" />
+
+        <TextView
+            android:id="@+id/tv_fall_asleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_fall_asleep_time"
+            android:layout_marginTop="2dp"
+            android:text="@string/fall_asleep" />
+
+        <TextView
+            android:id="@+id/tv_wakeup_time"
+            style="@style/fill_diary_time_text"
+            android:layout_alignParentEnd="true"
+            android:text="@string/question_mark_x3" />
+
+        <TextView
+            android:id="@+id/tv_wakeup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_wakeup_time"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:text="@string/wake_up" />
+
+        <View
+            android:id="@+id/bg_1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/b1_color" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@color/l3_color" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_get_up_time"
+            style="@style/fill_diary_time_text"
+            android:layout_alignParentEnd="true"
+            android:text="@string/question_mark_x3" />
+
+        <TextView
+            android:id="@+id/tv_get_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_get_up_time"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:text="@string/get_up" />
+
+        <View
+            android:id="@+id/bg_2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/b1_color" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@color/l3_color" />
+
+</LinearLayout>

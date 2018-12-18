@@ -193,16 +193,75 @@ class TimeUtilV2 {
             return list
         }
 
-        fun parseTimeStr(s: String): Long {
-            val format = SimpleDateFormat("HH:mm", Locale.US)
+        fun parseTimeStr(timeString: String): Long {
+            return parseTimeStr("HH:mm", timeString)
+        }
+
+        fun parseTimeStr(pattern: String, timeString: String): Long {
+            val format = SimpleDateFormat(pattern, Locale.US)
             var time = 0L
             try {
-                val date = format.parse(s)
+                val date = format.parse(timeString)
                 time = date.time
             } catch (e: Exception) {
                 e.printStackTrace()
             }
             return time
+        }
+
+        /**
+         * @param time time
+         * @param field the given calendar field.
+         */
+        fun getField(time: Long, field: Int): Int {
+            return getCalendar(time).get(field)
+        }
+
+        fun isInTheSame(t0: Long, t1: Long, field: Int): Boolean {
+            return when (field) {
+                Calendar.YEAR -> getField(t0, Calendar.YEAR) == getField(t1, Calendar.YEAR)
+                Calendar.MONTH -> isInTheSame(t0, t1, Calendar.YEAR) && getField(t0, Calendar.MONTH) == getField(t1, Calendar.MONTH)
+                Calendar.WEEK_OF_YEAR -> isInTheSame(t0, t1, Calendar.YEAR) && getField(t0, Calendar.WEEK_OF_YEAR) == getField(t1, Calendar.WEEK_OF_YEAR)
+                Calendar.DAY_OF_YEAR -> isInTheSame(t0, t1, Calendar.YEAR) && getField(t0, Calendar.DAY_OF_YEAR) == getField(t1, Calendar.DAY_OF_YEAR)
+                Calendar.HOUR_OF_DAY -> isInTheSame(t0, t1, Calendar.YEAR) && isInTheSame(t0, t1, Calendar.DAY_OF_YEAR) && getField(t0, Calendar.HOUR_OF_DAY) == getField(t1, Calendar.HOUR_OF_DAY)
+                else -> false
+            }
+        }
+
+        fun getHourOfDay(time: Long): Int {
+            return getField(time, Calendar.HOUR_OF_DAY)
+        }
+
+        fun getMinute(time: Long): Int {
+            return getField(time, Calendar.MINUTE)
+        }
+
+        fun getHourMinuteStringFromSecond(second: Int, hourString: String, minuteString: String): String {
+            val hour = getHourFromSecond(second)
+            val min = getMinuteFromSecond(second)
+            val stringBuilder = StringBuilder()
+            if (hour != 0) {
+                stringBuilder.append(hour)
+                        .append(hourString)
+            }
+            stringBuilder.append(min)
+                    .append(minuteString)
+            return stringBuilder.toString()
+        }
+
+        /**
+         * x小时y分钟
+         */
+        fun getHourMinuteStringFromSecondInZh(second: Int): String {
+            return getHourMinuteStringFromSecond(second, "小时", "分钟")
+        }
+
+        fun getHourFromSecond(second: Int): Int {
+            return second / 3600
+        }
+
+        fun getMinuteFromSecond(second: Int): Int {
+            return second / 60 % 60
         }
     }
 }

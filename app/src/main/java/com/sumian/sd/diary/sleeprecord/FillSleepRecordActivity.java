@@ -11,6 +11,7 @@ import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseWebViewActivity;
+import com.sumian.sd.diary.fillsleepdiary.FillSleepDiaryActivity;
 import com.sumian.sd.diary.sleeprecord.bean.FillSleepRecordResponse;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.event.EventBusUtil;
@@ -41,13 +42,14 @@ public class FillSleepRecordActivity extends SdBaseWebViewActivity {
         Intent intent = new Intent(ActivityUtils.getTopActivity(), FillSleepRecordActivity.class);
         intent.putExtra(KEY_TIME, time);
         launcher.startActivityForResult(intent, requestCode);
+        ActivityUtils.startActivity(new Intent(ActivityUtils.getTopActivity(), FillSleepDiaryActivity.class));
     }
 
-    public static void launch(Context context, long time) {
-        Intent intent = new Intent(context, FillSleepRecordActivity.class);
-        intent.putExtra(KEY_TIME, time);
-        ActivityUtils.startActivity(intent);
-    }
+//    public static void launch(Context context, long time) {
+//        Intent intent = new Intent(context, FillSleepRecordActivity.class);
+//        intent.putExtra(KEY_TIME, time);
+//        ActivityUtils.startActivity(intent);
+//    }
 
     public static SleepRecord resolveResultData(Intent data) {
         FillSleepRecordResponse fillSleepRecordResponse = JsonUtil.fromJson(data.getStringExtra(SLEEP_RESPONSE), FillSleepRecordResponse.class);

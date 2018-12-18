@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:id="@+id/tv_continue_add"
+        style="@style/text_b3_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rect_stroke_b3_1dp_corner_4dp"
+        android:drawableEnd="@drawable/record_h5_btn_add_s"
+        android:drawablePadding="5dp"
+        android:paddingStart="15dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="8dp"
+        android:text="@string/continue_add"
+        android:visibility="gone"
+        tools:showIn="@layout/fragment_pills"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/vg_add"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_add_pills"
+            style="@style/text_b3_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/record_h5_btn_add"
+            android:drawablePadding="10dp"
+            android:text="@string/add_pill_record"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/text_t2_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/add_pills_hint" />
+    </LinearLayout>
+
+</LinearLayout>
