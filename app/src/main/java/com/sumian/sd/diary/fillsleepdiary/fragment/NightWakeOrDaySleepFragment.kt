@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.common.widget.picker.WheelPickerBottomSheet
 import com.sumian.sd.R
-import com.sumian.sd.diary.fillsleepdiary.widget.WheelPickerBottomSheet
 import kotlinx.android.synthetic.main.layout_night_wake.*
 
 /**
@@ -77,8 +77,8 @@ class NightWakeOrDaySleepFragment : BaseFillSleepDiaryFragment() {
                 createPickerData(),
                 object : WheelPickerBottomSheet.Listener {
                     override fun onConfirmClick(values: List<Int>) {
-                        val duration = (values[0] + 1) * 5
-                        val times = values[1] + 1
+                        val times = values[0] + 1
+                        val duration = (values[1] + 1) * 5
                         if (mType == TYPE_NIGHT_WAKE) {
                             if (duration > mFillDiaryViewModel.getSleepDuration()) {
                                 ToastUtils.showShort(R.string.night_wake_time_cant_bigger_than_sleep_time)

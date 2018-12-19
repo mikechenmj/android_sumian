@@ -30,6 +30,7 @@
 
     <!--font color-->
     <color name="t1_color">#ff475266</color>
+    <color name="t1_alpha_30_color">#4d475266</color>
     <color name="t2_color">#ff878d99</color>
     <color name="t2_alpha_color">#b2878d99</color>
     <color name="t2_alpha_40_color">#b2878d99</color>
