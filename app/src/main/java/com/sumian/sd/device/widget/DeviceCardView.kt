@@ -27,6 +27,10 @@ import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.utils.getString
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.dialog.SumianImageTextToast
+import com.sumian.sd.wxapi.MiniProgramHelper
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
+import com.tencent.mm.opensdk.openapi.IWXAPI
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.android.synthetic.main.layout_device_card_view_device.view.*
 import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
 import kotlinx.android.synthetic.main.view_device_card.view.*
@@ -121,8 +125,9 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 EventBusUtil.postStickyEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
             }
             tv_know_device.setOnClickListener {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sumian.com"))
-                ActivityUtils.getTopActivity().startActivity(browserIntent)
+                //                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sumian.com"))
+//                ActivityUtils.getTopActivity().startActivity(browserIntent)
+                MiniProgramHelper.launchYouZan(ActivityUtils.getTopActivity())
             }
         }
     }

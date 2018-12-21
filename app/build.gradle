@@ -64,14 +64,16 @@ android {
         buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", ALIYUN_LOG_ACCESS_SECRET)
         buildConfigField("String", "ALIYUN_LOG_LOG_STORE", ALIYUN_LOG_LOG_STORE)
         buildConfigField("String", "ALIYUN_LOG_END_POINT", ALIYUN_LOG_END_POINT)
+        buildConfigField("String", "WECHAT_APP_ID", WECHAT_APP_ID)
+        buildConfigField("String", "WECHAT_APP_SECRET", WECHAT_APP_SECRET)
+        buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", WECHAT_MINI_PROGRAM_ID_YOUZAN)
+
         // Enabling multidex support.
         multiDexEnabled true
-
         ndk {
             //设置支持的SO库架构
             abiFilters 'armeabi-v7a'
         }
-
         resConfigs "zh"//,"en"
     }
 
@@ -94,8 +96,6 @@ android {
             applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
             resValue("string", "umeng_app_key", OFFICIAL_UMENG_APP_KEY)
-            buildConfigField("String", "WECHAT_APP_ID", OFFICIAL_WECHAT_APP_ID)
-            buildConfigField("String", "WECHAT_APP_SECRET", OFFICIAL_WECHAT_APP_SECRET)
         }
 
         debug {
@@ -112,8 +112,6 @@ android {
             versionNameSuffix rootProject.ext.versionNameSuffix
 
             resValue("string", "umeng_app_key", TEST_UMENG_APP_KEY)
-            buildConfigField("String", "WECHAT_APP_ID", OFFICIAL_WECHAT_APP_ID)
-            buildConfigField("String", "WECHAT_APP_SECRET", OFFICIAL_WECHAT_APP_SECRET)
         }
 
     }
