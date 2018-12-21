@@ -711,4 +711,7 @@
     <string name="system_notification">系统通知</string>
     <string name="msg_board_del_success">留言删除成功</string>
     <string name="msg_board_send_success">留言发送成功</string>
+    <string name="notice">提示</string>
+    <string name="sumian_doctor_want_to_open_wechat">“速眠医生”想打开“微信”</string>
+    <string name="open">打开</string>
 </resources>

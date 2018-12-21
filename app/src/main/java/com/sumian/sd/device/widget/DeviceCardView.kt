@@ -2,11 +2,10 @@ package com.sumian.sd.device.widget
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -14,6 +13,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.device.DeviceManager
@@ -28,9 +28,6 @@ import com.sumian.sd.utils.getString
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.dialog.SumianImageTextToast
 import com.sumian.sd.wxapi.MiniProgramHelper
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
-import com.tencent.mm.opensdk.openapi.IWXAPI
-import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.android.synthetic.main.layout_device_card_view_device.view.*
 import kotlinx.android.synthetic.main.layout_device_card_view_no_device.view.*
 import kotlinx.android.synthetic.main.view_device_card.view.*
@@ -125,9 +122,12 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 EventBusUtil.postStickyEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
             }
             tv_know_device.setOnClickListener {
-                //                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sumian.com"))
-//                ActivityUtils.getTopActivity().startActivity(browserIntent)
-                MiniProgramHelper.launchYouZan(ActivityUtils.getTopActivity())
+                SumianDialog(getContext())
+                        .setTitleText(R.string.notice)
+                        .setMessageText(R.string.sumian_doctor_want_to_open_wechat)
+                        .setLeftBtn(R.string.cancel, null)
+                        .setRightBtn(R.string.open, OnClickListener { MiniProgramHelper.launchYouZan(ActivityUtils.getTopActivity()) })
+                        .show()
             }
         }
     }
