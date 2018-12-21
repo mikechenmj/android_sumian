@@ -6,6 +6,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.image.ImageLoader
@@ -99,6 +100,11 @@ class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
 
         override fun onPlayStatusChange(isPlaying: Boolean) {
             iv_play.isActivated = isPlaying
+        }
+
+        override fun onError() {
+            ToastUtils.showShort("播放出错")
+            CommonAudioPlayer.prepare(this@RelaxationDetailActivity, mRelaxationData!!.audio!!)
         }
     }
 

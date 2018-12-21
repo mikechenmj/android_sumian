@@ -19,7 +19,8 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-object CommonAudioPlayer {
+object CommonAudioPlayer : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
+
     private const val PROGRESS_CHANGE_CALL_DURATION = 100L
     private var mMediaPlayer: MediaPlayer? = null
     private var mProgressTimer: Timer? = null
@@ -28,11 +29,11 @@ object CommonAudioPlayer {
     private var mAudioManager: AudioManager? = null
     private var mAutoPlayIfPossible = false
     private var mContextWR = WeakReference<Context>(null)
+    private var mIsPrepared = false
 
     fun prepare(context: Context, url: String, startOnPrepared: Boolean = false) {
         setContext(context.applicationContext)
         mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
         mStartOnPrepared = startOnPrepared
         if (mMediaPlayer != null) {
             release()
@@ -44,18 +45,14 @@ object CommonAudioPlayer {
             prepareAsync() // might take long! (for buffering, etc)
             mStateListener?.onPreparing()
             setOnPreparedListener { onPrepared() }
-            setOnCompletionListener {
-                if (mMediaPlayer?.isLooping != true) {
-                    mStateListener?.onPlayStatusChange(false)
-                    prepareAsync()
-                    mStateListener?.onPreparing()
-                }
-            }
+            setOnCompletionListener(this@CommonAudioPlayer)
+            setOnErrorListener(this@CommonAudioPlayer)
             isLooping = true
         }
     }
 
     private fun onPrepared() {
+        mIsPrepared = true
         startProgressTimer()
         if (mStartOnPrepared) {
             play()
@@ -77,6 +74,21 @@ object CommonAudioPlayer {
                 })
             }
         }, 0, PROGRESS_CHANGE_CALL_DURATION)
+    }
+
+    override fun onCompletion(mp: MediaPlayer?) {
+        mIsPrepared = false
+        if (mMediaPlayer?.isLooping != true) {
+            mStateListener?.onPlayStatusChange(false)
+            mMediaPlayer?.prepareAsync()
+            mStateListener?.onPreparing()
+        }
+    }
+
+    override fun onError(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+        release()
+        mStateListener?.onError()
+        return true
     }
 
     private fun updateProgress() {
@@ -197,6 +209,7 @@ object CommonAudioPlayer {
         fun onPrepared()
         fun onProgressChange(progress: Int, total: Int)
         fun onPlayStatusChange(isPlaying: Boolean)
+        fun onError()
     }
 }
 
