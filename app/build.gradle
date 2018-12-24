@@ -49,12 +49,11 @@ android {
         buildConfigField("String", "UMENG_APP_KEY", OFFICIAL_UMENG_APP_KEY)
         buildConfigField("String", "UMENG_PUSH_SECRET", UMENG_PUSH_SECRET)
         buildConfigField("String", "UMENG_CHANNEL", UMENG_CHANNEL)
-        buildConfigField("String", "EASEMOB_APP_KEY", HW_EASEMOB_APP_KEY)
-        buildConfigField("String", "EASEMOB_TENANT_ID", HW_EASEMOB_TENANT_ID)
-        buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", HW_EASEMOB_CUSTOMER_SERVICE_ID)
+        buildConfigField("String", "EASEMOB_APP_KEY", EASEMOB_APP_KEY)
+        buildConfigField("String", "EASEMOB_TENANT_ID", EASEMOB_TENANT_ID)
+        buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", EASEMOB_CUSTOMER_SERVICE_ID)
         buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
         buildConfigField("String", "USER_PRIVACY_POLICY_URL", USER_PRIVACY_POLICY_URL)
-        buildConfigField("String", "HW_USER_GUIDELINE_URL", HW_USER_GUIDELINE_URL)
         buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
         buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
         buildConfigField("String", "HTTP_DNS_ACCOUNT_ID", HTTP_DNS_ACCOUNT_ID)
@@ -64,14 +63,16 @@ android {
         buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", ALIYUN_LOG_ACCESS_SECRET)
         buildConfigField("String", "ALIYUN_LOG_LOG_STORE", ALIYUN_LOG_LOG_STORE)
         buildConfigField("String", "ALIYUN_LOG_END_POINT", ALIYUN_LOG_END_POINT)
+        buildConfigField("String", "WECHAT_APP_ID", WECHAT_APP_ID)
+        buildConfigField("String", "WECHAT_APP_SECRET", WECHAT_APP_SECRET)
+        buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", WECHAT_MINI_PROGRAM_ID_YOUZAN)
+
         // Enabling multidex support.
         multiDexEnabled true
-
         ndk {
             //设置支持的SO库架构
             abiFilters 'armeabi-v7a'
         }
-
         resConfigs "zh"//,"en"
     }
 
@@ -94,8 +95,6 @@ android {
             applicationIdSuffix rootProject.ext.applicationIdSuffix
             versionNameSuffix rootProject.ext.versionNameSuffix
             resValue("string", "umeng_app_key", OFFICIAL_UMENG_APP_KEY)
-            buildConfigField("String", "WECHAT_APP_ID", OFFICIAL_WECHAT_APP_ID)
-            buildConfigField("String", "WECHAT_APP_SECRET", OFFICIAL_WECHAT_APP_SECRET)
         }
 
         debug {
@@ -112,8 +111,6 @@ android {
             versionNameSuffix rootProject.ext.versionNameSuffix
 
             resValue("string", "umeng_app_key", TEST_UMENG_APP_KEY)
-            buildConfigField("String", "WECHAT_APP_ID", OFFICIAL_WECHAT_APP_ID)
-            buildConfigField("String", "WECHAT_APP_SECRET", OFFICIAL_WECHAT_APP_SECRET)
         }
 
     }
@@ -168,8 +165,6 @@ android {
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "HW_BASE_URL", HW_DEV_URL)
-            buildConfigField("String", "HW_QUESTION_URL", HW_DEV_QUESTION_URL)
             buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_DEV)
 
             resValue "string", "app_name", real_app_name
@@ -193,8 +188,6 @@ android {
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "HW_BASE_URL", HW_TEST_URL)
-            buildConfigField("String", "HW_QUESTION_URL", HW_TEST_QUESTION_URL)
             buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_TEST)
 
             resValue "string", "app_name", real_app_name
@@ -216,8 +209,6 @@ android {
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "HW_BASE_URL", HW_OFFICIAL_URL)
-            buildConfigField("String", "HW_QUESTION_URL", HW_OFFICIAL_QUESTION_URL)
             buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_OFFICIAL)
 
             resValue "string", "app_name", app_name

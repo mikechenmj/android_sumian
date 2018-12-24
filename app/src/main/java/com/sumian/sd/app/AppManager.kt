@@ -102,7 +102,7 @@ object AppManager {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             //注册 aliyun httpDns
             val iHttpDns = HttpDnsEngine().init(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY)
-            iHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.HW_BASE_URL, BuildConfig.BASE_H5_URL)
+            iHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.BASE_H5_URL)
             return@lazy iHttpDns
         } else {
             null
