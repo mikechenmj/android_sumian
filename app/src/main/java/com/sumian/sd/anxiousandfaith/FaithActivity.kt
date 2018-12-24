@@ -71,7 +71,9 @@ class FaithActivity : BasePresenterActivity<IPresenter>() {
         et_belief.addTextChangedListener(object : EmptyTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
                 super.afterTextChanged(s)
-                tv_belief_text_count.text = "${et_belief.text.toString().length}/200"
+                val length = et_belief.text.toString().length
+                tv_belief_text_count.text = "$length/200"
+                tv_belief_text_count.setTextColor(resources.getColor(if (length > 200) R.color.t4_color else R.color.t1_color))
                 when (mProgress) {
                     0 -> mEvent = getEtInput()
                     1 -> mThought = getEtInput()
@@ -112,11 +114,15 @@ class FaithActivity : BasePresenterActivity<IPresenter>() {
     }
 
     private fun checkInput(text: String): Boolean {
-        if (TextUtils.isEmpty(text)) {
+        return if (TextUtils.isEmpty(text)) {
             ToastUtils.showShort(R.string.please_finish_question_first)
-            return false
+            false
+        } else if (text.length > 200) {
+            ToastUtils.showShort(R.string.input_is_too_long)
+            false
+        } else {
+            true
         }
-        return true
     }
 
     private fun getEtInput(): String {

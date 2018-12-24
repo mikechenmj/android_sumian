@@ -714,4 +714,5 @@
     <string name="notice">提示</string>
     <string name="sumian_doctor_want_to_open_wechat">“速眠医生”想打开“微信”</string>
     <string name="open">打开</string>
+    <string name="input_is_too_long">字数超过限定值</string>
 </resources>
