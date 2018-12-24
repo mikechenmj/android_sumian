@@ -57,9 +57,9 @@ class DeviceInfoFormatter {
                 BlueDevice.CHANNEL_TYPE_NORMAL -> "正式"
                 else -> "null"
             }
-            val bomVersion = monitor.sleeperBomVersion
+            val bomVersion = monitor.bomVersion
             val bomVersionStr = if (bomVersion == null) "null" else "V$bomVersion"
-            return "${monitor.version}-$channel-$bomVersionStr}"
+            return "${monitor.version}-$channel-$bomVersionStr"
         }
 
         private fun getFormatSleeperFw(): String? {
