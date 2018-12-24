@@ -131,6 +131,10 @@ dependencies {
     api('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
     // aliyun log
     api 'com.aliyun.openservices:aliyun-log-android-sdk:2.0.0'
+
+    // tencent static
+    api 'com.qq.mta:mta:3.4.7-Release'
+    api 'com.tencent.mid:mid:4.06-Release'
 }
 
 //项目主页

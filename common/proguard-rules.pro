@@ -104,3 +104,7 @@ public static final int *;
 -keep class com.alibaba.sdk.android.**{*;}
 -keep class com.ut.**{*;}
 -keep class com.ta.**{*;}
+
+# tencent static
+-keep class com.tencent.stat.*{*;}
+-keep class com.tencent.mid.*{*;}

@@ -557,6 +557,13 @@
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".notification.MarkNotificationAsReadService" />
+
+        <provider
+            android:name="com.tencent.mid.api.MidProvider"
+            android:authorities="com.sumian.sd.TENCENT.MID.V3"
+            android:exported="true"
+            tools:replace="android:authorities">
+        </provider>
     </application>
 
 </manifest>

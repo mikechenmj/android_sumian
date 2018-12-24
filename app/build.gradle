@@ -66,6 +66,8 @@ android {
         buildConfigField("String", "WECHAT_APP_ID", WECHAT_APP_ID)
         buildConfigField("String", "WECHAT_APP_SECRET", WECHAT_APP_SECRET)
         buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", WECHAT_MINI_PROGRAM_ID_YOUZAN)
+        buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID)
+        buildConfigField("String", "CHANNEL", "\"yyb\"")
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -74,6 +76,11 @@ android {
             abiFilters 'armeabi-v7a'
         }
         resConfigs "zh"//,"en"
+        // tencent statics
+        manifestPlaceholders = [
+                MTA_APPKEY : TENCENT_STATIC_APP_ID,
+                MTA_CHANNEL: "yyb"
+        ]
     }
 
     testOptions {

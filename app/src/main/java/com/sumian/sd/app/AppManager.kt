@@ -24,6 +24,7 @@ import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
+import com.sumian.common.static.StaticUtil
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.job.SleepDataUploadManager
 import com.sumian.hw.log.LogManager
@@ -173,13 +174,25 @@ object AppManager {
         initUtils(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
         initAppNotificationManager(app)
+        initLogManager(app)
+        initStatic(app)
+        observeAppLifecycle()
+    }
+
+    private fun initStatic(app: Application) {
+        StaticUtil.init(app, BuildConfig.TENCENT_STATIC_APP_ID, BuildConfig.CHANNEL, BuildConfig.DEBUG)
+        StaticUtil.event("click_captcha")
+        StaticUtil.event("page_login")
+        StaticUtil.event("e_binding_success")
+    }
+
+    private fun initLogManager(app: Application) {
         SdLogManager.init(app,
                 BuildConfig.ALIYUN_LOG_ACCESS_KEY_ID,
                 BuildConfig.ALIYUN_LOG_ACCESS_SECRET,
                 BuildConfig.ALIYUN_LOG_PROJECT,
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT)
-        observeAppLifecycle()
     }
 
     private fun observeAppLifecycle() {
