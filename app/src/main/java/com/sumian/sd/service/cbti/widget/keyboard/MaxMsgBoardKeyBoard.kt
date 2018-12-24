@@ -47,17 +47,9 @@ class MaxMsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
         View.inflate(context, R.layout.lay_max_msg_keyboard_view, this)
         //et_msg_board_input.filters = arrayOf(InputFilter.LengthFilter(MAX_LENGTH))
         et_msg_board_input.addTextChangedListener(object : EmptyTextWatcher() {
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-                tv_msg_count.isEnabled = !TextUtils.isEmpty(s)
-                tv_msg_count.text = String.format(Locale.getDefault(), "%d%s%d", s?.length
-                        ?: 0, "/", MAX_LENGTH)
-                if (s != null && s.length > MAX_LENGTH) {
-                    tv_msg_count.setTextColor(ColorCompatUtil.getColor(context, R.color.t4_color_day))
-                } else {
-                    tv_msg_count.setTextColor(ColorCompatUtil.getColor(context, R.color.t2_color_day))
-                }
+                formatDefaultMaxInputLength(s)
             }
         })
         invalidSpan()
@@ -73,7 +65,7 @@ class MaxMsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
                 }
 
                 if (getContent().length > MAX_LENGTH) {
-                    ToastHelper.show(context, "留言内容不能超过200", Gravity.CENTER)
+                    ToastHelper.show(context, resources.getString(R.string.max_input_error), Gravity.CENTER)
                     return
                 }
 
@@ -112,6 +104,16 @@ class MaxMsgBoardKeyBoard : LinearLayout, View.OnClickListener, IVisible {
     fun setOnKeyBoardCallback(onKeyBoardCallback: OnKeyBoardCallback): MaxMsgBoardKeyBoard {
         this.mOnKeyBoardCallback = onKeyBoardCallback
         return this
+    }
+
+    private fun formatDefaultMaxInputLength(text: CharSequence?) {
+        val textLength = text?.length ?: 0
+        if (textLength > MAX_LENGTH) {
+            tv_msg_count.setTextColor(ColorCompatUtil.getColor(context, R.color.t4_color_day))
+        } else {
+            tv_msg_count.setTextColor(ColorCompatUtil.getColor(context, R.color.t2_color_day))
+        }
+        tv_msg_count.text = String.format(Locale.getDefault(), "%d%s%d", textLength, "/", MAX_LENGTH)
     }
 
     private fun getContent(): String = et_msg_board_input.text.toString().trim()

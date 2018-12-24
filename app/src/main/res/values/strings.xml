@@ -749,6 +749,7 @@
     <string name="add_pills_hint">若未服用药物，可直接跳过此题</string>
     <string name="take_pills_record">服药记录</string>
     <string name="add_pills_too_many_hint">最多可添加10次记录</string>
+    <string name="max_input_error">字数超过限定值</string>
     <string-array name="pill_name_options">
         <item>唑吡坦(思诺思)</item>
         <item>扎来普隆</item>
