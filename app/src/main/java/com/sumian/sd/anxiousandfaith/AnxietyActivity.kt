@@ -10,6 +10,7 @@ import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
+import com.sumian.sd.R
 import com.sumian.sd.R.layout
 import com.sumian.sd.R.string
 import com.sumian.sd.anxiousandfaith.bean.AnxietyData
@@ -62,13 +63,17 @@ class AnxietyActivity : BasePresenterActivity<IPresenter>() {
         et_anxiety.addTextChangedListener(object : EmptyTextWatcher() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-                tv_anxiety_text_count.text = "${et_anxiety.text.toString().length}/200"
+                val length = et_anxiety.text.toString().length
+                tv_anxiety_text_count.text = "$length/200"
+                tv_anxiety_text_count.setTextColor(resources.getColor(if (length > 200) R.color.t4_color else R.color.t1_color))
             }
         })
         et_anxiety_solution.addTextChangedListener(object : EmptyTextWatcher() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-                tv_anxiety_solution_text_count.text = "${et_anxiety_solution.text.toString().length}/200"
+                val length = et_anxiety_solution.text.toString().length
+                tv_anxiety_solution_text_count.text = "$length/200"
+                tv_anxiety_solution_text_count.setTextColor(resources.getColor(if (length > 200) R.color.t4_color else R.color.t1_color))
             }
         })
         bt_save.setOnClickListener { saveAnxiety() }
@@ -108,6 +113,9 @@ class AnxietyActivity : BasePresenterActivity<IPresenter>() {
     private fun checkEt(text: String): Boolean {
         return if (TextUtils.isEmpty(text)) {
             ToastUtils.showShort(getString(string.please_finish_question_first))
+            false
+        } else if (text.length > 200) {
+            ToastUtils.showShort(getString(string.input_is_too_long))
             false
         } else {
             true

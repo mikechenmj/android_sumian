@@ -32,7 +32,6 @@
             android:layout_height="195dp"
             android:layout_marginTop="20dp"
             android:hint="@string/input_event_hint"
-            android:maxLength="200"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             tools:ignore="Autofill,TextFields" />
