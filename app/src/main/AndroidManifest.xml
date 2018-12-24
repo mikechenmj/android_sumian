@@ -290,7 +290,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".notification.RefundActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -460,7 +460,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".account.login.ModifyPasswordActivity"
+            android:name=".account.login.SettingPasswordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -552,6 +552,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".notification.SystemNotificationDetailActivity" />
+        <activity android:name=".diary.fillsleepdiary.FillSleepDiaryActivity" />
 
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"

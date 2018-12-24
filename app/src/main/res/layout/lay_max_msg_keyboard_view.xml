@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="@dimen/space_20">
 
-    <EditText
+    <com.sumian.sd.widget.text.CountInputLengthEditTextView
         android:id="@+id/et_msg_board_input"
         style="@style/text_t2_16"
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
         android:gravity="top"
         android:hint="@string/msg_keyboard_hint"
         android:inputType="textMultiLine"
+        android:maxHeight="@dimen/space_180"
         android:maxEms="200"
         android:minHeight="@dimen/space_180"
         android:singleLine="false"

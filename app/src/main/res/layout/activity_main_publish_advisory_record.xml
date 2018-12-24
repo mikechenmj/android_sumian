@@ -35,14 +35,17 @@
                     android:background="@color/white"
                     android:orientation="vertical">
 
-                    <EditText
+                    <com.sumian.sd.widget.text.CountInputLengthEditTextView
                         android:id="@+id/et_input"
                         style="@style/text_t1_16"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/space_264"
+                        android:layout_height="wrap_content"
                         android:background="@null"
                         android:gravity="start"
                         android:hint="@string/input_question_hint"
+                        android:inputType="textMultiLine"
+                        android:maxHeight="@dimen/space_264"
+                        android:minHeight="@dimen/space_264"
                         android:padding="@dimen/space_20"
                         android:textColorHint="@color/t2_color"
                         tools:ignore="Autofill,TextFields" />

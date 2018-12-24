@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/shape_fill_sleep_diary_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:id="@+id/tv_fill_diary_title"
+            style="@style/text_t1_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            tools:text="昨晚几点准备睡觉？" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="20dp" />
+
+        <FrameLayout
+            android:id="@+id/vg_fill_diary_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/fill_diary_default_content_height"
+            tools:minHeight="300dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_fill_diary_progress"
+                style="@style/text_t2_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0.5"
+                tools:text="1/9" />
+
+            <Button
+                android:id="@+id/bt_fill_diary_complete"
+                style="@style/SumianButton_150dp"
+                android:layout_gravity="center"
+                android:text="@string/complete"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_fill_diary_pre"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="start"
+                android:scaleType="centerInside"
+                android:src="@drawable/record_h5_btn_left"
+                android:visibility="gone"
+                tools:ignore="ContentDescription"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_fill_diary_next"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="end"
+                android:scaleType="centerInside"
+                android:src="@drawable/record_h5_btn_right"
+                android:visibility="gone"
+                tools:ignore="ContentDescription"
+                tools:visibility="visible" />
+        </FrameLayout>
+    </LinearLayout>
+</ScrollView>
