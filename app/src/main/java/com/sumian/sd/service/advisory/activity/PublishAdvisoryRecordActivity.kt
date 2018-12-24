@@ -119,13 +119,13 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
                 et_input.post {
-                    tv_input_text_count.text = String.format(Locale.getDefault(), "%d%s%d", s?.length, "/", 500)
-                    if (count < 500) {
-                        tv_input_text_count.setTextColor(resources.getColor(R.color.t2_color))
-                    } else {
+                    val inputLength = s?.length ?: 0
+                    if (inputLength > 500) {
                         tv_input_text_count.setTextColor(resources.getColor(R.color.t4_color))
-                        showCenterToast("字数超过限定值")
+                    } else {
+                        tv_input_text_count.setTextColor(resources.getColor(R.color.t2_color))
                     }
+                    tv_input_text_count.text = String.format(Locale.getDefault(), "%d%s%d", inputLength, "/", 500)
                 }
             }
         })
@@ -194,6 +194,11 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
 
         if (TextUtils.isEmpty(inputContent) || inputContent.length < 10) {
             showCenterToast(R.string.more_than_ten_size)
+            return
+        }
+
+        if (inputContent.length > 500) {
+            showCenterToast(getString(R.string.max_input_error))
             return
         }
 
