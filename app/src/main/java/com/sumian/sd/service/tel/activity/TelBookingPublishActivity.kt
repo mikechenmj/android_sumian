@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.helper.ToastHelper
@@ -17,6 +18,7 @@ import com.sumian.sd.service.tel.presenter.TelBookingPublishPresenter
 import com.sumian.sd.service.tel.sheet.TelBookingBottomSheet
 import com.sumian.sd.service.widget.ServiceSuccessStateView
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
+import java.util.*
 
 /**
  * Created by sm
@@ -26,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
  * desc:电话预约服务
  *
  */
+@Suppress("DEPRECATION")
 class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContract.Presenter>(), View.OnClickListener,
         TelBookingPublishContract.View, TelBookingBottomSheet.OnSelectTelBookingCallback {
 
@@ -77,11 +80,18 @@ class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContrac
         super.initWidget()
         mTitleBar.setTitle(R.string.tel_ask_detail)
         sdv_make_date.setOnClickListener(this)
+        et_input_ask_question.addTextChangedListener(object : EmptyTextWatcher() {
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                super.onTextChanged(s, start, before, count)
+                showEditContentLength(s, 20, tv_input_ask_count)
+            }
+        })
         et_input_ask_question_more.addTextChangedListener(object : EmptyTextWatcher() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-                tv_input_count.text = showEditContentLength(s.toString().trim())
+                showEditContentLength(s, 400, tv_input_count)
             }
         })
         bt_submit.setOnClickListener(this)
@@ -136,7 +146,7 @@ class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContrac
     }
 
     override fun onPublishTelBookingOrderFailed(error: String) {
-        ToastHelper.show(this, error, Gravity.CENTER)
+        showCenterToast(error)
     }
 
     override fun onCheckInputContentFailed(error: String) {
@@ -157,8 +167,14 @@ class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContrac
         return if (TextUtils.isEmpty(content)) 0 else content?.length!!
     }
 
-    private fun showEditContentLength(content: String?): String {
-        return if (TextUtils.isEmpty(content)) "0/400" else "${content?.length}/400"
+    private fun showEditContentLength(content: CharSequence?, maxLength: Int, textView: TextView) {
+        val inputLength = content?.length ?: 0
+        if (inputLength > maxLength) {
+            textView.setTextColor(resources.getColor(R.color.t4_color))
+        } else {
+            textView.setTextColor(resources.getColor(R.color.t2_color))
+        }
+        textView.text = String.format(Locale.getDefault(), "%d%s%d", inputLength, '/', maxLength)
     }
 
     private fun invalidTelBooking(telBooking: TelBooking?) {
@@ -171,7 +187,12 @@ class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContrac
             et_input_ask_question.setSelection(editSelectPosition(it.consulting_question))
             et_input_ask_question_more.setText(it.add)
             et_input_ask_question_more.setSelection(editSelectPosition(it.add))
-            tv_input_count.text = showEditContentLength(it.add)
+            showEditContentLength(it.add, 20, tv_input_ask_count)
+            showEditContentLength(it.add, 400, tv_input_count)
         }
+    }
+
+    private fun showCenterToast(message: String) {
+        ToastHelper.show(this, message, Gravity.CENTER)
     }
 }

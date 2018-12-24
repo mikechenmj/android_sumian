@@ -95,14 +95,28 @@
                     android:id="@+id/et_input_ask_question"
                     style="@style/text_t2_16"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/space_86"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/ask_question_hint"
+                    android:inputType="textMultiLine"
+                    android:maxHeight="@dimen/space_86"
                     android:maxLines="2"
                     android:padding="@dimen/space_20"
                     android:textColorHint="@color/t2_color"
                     tools:ignore="Autofill,TextFields" />
+
+                <TextView
+                    android:id="@+id/tv_input_ask_count"
+                    style="@style/text_t2_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginRight="@dimen/space_20"
+                    android:layout_marginBottom="@dimen/space_20"
+                    android:gravity="right"
+                    android:text="0/20"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
 
             </LinearLayout>
 
@@ -135,7 +149,7 @@
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/ask_more_hint"
-                    android:maxHeight="@dimen/space_264"
+                    android:minHeight="@dimen/space_264"
                     android:padding="@dimen/space_20"
                     android:textColorHint="@color/t2_color"
                     tools:ignore="Autofill,TextFields" />

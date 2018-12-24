@@ -71,6 +71,7 @@ class TelBookingDetailActivity : BasePresenterActivity<TelBookingDetailContract.
         et_input_ask_question_more.isFocusable = false
         bt_submit.visibility = View.GONE
         tv_input_count.visibility = View.GONE
+        tv_input_ask_count.visibility = View.GONE
     }
 
     override fun initData() {

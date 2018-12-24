@@ -290,7 +290,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".notification.RefundActivity"
             android:configChanges="keyboardHidden|orientation"
