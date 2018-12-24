@@ -91,7 +91,7 @@
                     android:layout_marginStart="@dimen/space_20"
                     android:background="@color/l1_color" />
 
-                <EditText
+                <com.sumian.sd.widget.text.CountInputLengthEditTextView
                     android:id="@+id/et_input_ask_question"
                     style="@style/text_t2_16"
                     android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                     android:layout_marginStart="@dimen/space_20"
                     android:background="@color/l1_color" />
 
-                <EditText
+                <com.sumian.sd.widget.text.CountInputLengthEditTextView
                     android:id="@+id/et_input_ask_question_more"
                     style="@style/text_t2_16"
                     android:layout_width="match_parent"
@@ -149,6 +149,7 @@
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/ask_more_hint"
+                    android:maxHeight="@dimen/space_264"
                     android:minHeight="@dimen/space_264"
                     android:padding="@dimen/space_20"
                     android:textColorHint="@color/t2_color"

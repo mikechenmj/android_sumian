@@ -3,7 +3,6 @@
 package com.sumian.sd.setting
 
 import android.content.Intent
-import android.text.InputFilter
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
@@ -53,27 +52,13 @@ class FeedbackActivity : BasePresenterActivity<FeedbackContract.Presenter>(), Fe
     override fun initWidget() {
         super.initWidget()
         mTitleBar.setTitle(R.string.feedback)
-        et_input.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(MAX_LENGTH))
         et_input.addTextChangedListener(object : EmptyTextWatcher() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-                tv_content_length.text = String.format(Locale.getDefault(), "%d%s%d", s?.length
-                        ?: 0, "/", MAX_LENGTH)
-                //if (s?.isEmpty()!!) {
-                //    tv_content_length.visibility = View.GONE
-                //  } else {
-                // if (s.length >= MAX_LENGTH) {
-                //     tv_content_length.setTextColor(ColorCompatUtil.getColor(this@FeedbackActivity, R.color.t4_color_day))
-                // } else {
-                tv_content_length.setTextColor(ColorCompatUtil.getColor(this@FeedbackActivity, R.color.full_general_color))
-                // }
-                //tv_content_length.visibility = View.VISIBLE
-                // }
-                et_input.requestLayout()
+                formatDefaultMaxInputLength(s)
             }
         })
-
         val tvSubmit = findViewById<TextView>(R.id.tv_submit)
         tvSubmit.setOnClickListener { v ->
             val feedback = et_input.text.toString().trim()
@@ -97,8 +82,17 @@ class FeedbackActivity : BasePresenterActivity<FeedbackContract.Presenter>(), Fe
     override fun onFeedbackFailed(error: String) {
         tv_error.text = error
         tv_error.visibility = View.VISIBLE
-        //showCenterToast(error)
         showToast(error)
+    }
+
+    private fun formatDefaultMaxInputLength(text: CharSequence?) {
+        val textLength = text?.length ?: 0
+        if (textLength > MAX_LENGTH) {
+            tv_content_length.setTextColor(ColorCompatUtil.getColor(this@FeedbackActivity, R.color.t4_color_day))
+        } else {
+            tv_content_length.setTextColor(ColorCompatUtil.getColor(this@FeedbackActivity, R.color.t2_color_day))
+        }
+        tv_content_length.text = String.format(Locale.getDefault(), "%d%s%d", textLength, "/", MAX_LENGTH)
     }
 
     private fun showToast(error: String) {
