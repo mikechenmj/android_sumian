@@ -49,6 +49,7 @@ object KefuManager {
         registerAccountProvider()
         registerUserProfileProvider()
         ActivityUtils.startActivity(getChatRoomLaunchIntent())
+        mLaunchKefuActivity = true
     }
 
     fun init(context: Context) {
