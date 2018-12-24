@@ -40,7 +40,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
             }
 
             override fun onSuccess(response: Token?) {
-                ModifyPasswordActivity.start(false, response?.token)
+                SettingPasswordActivity.start(false, response?.token)
             }
 
             override fun onFinish() {

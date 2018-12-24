@@ -460,7 +460,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".account.login.ModifyPasswordActivity"
+            android:name=".account.login.SettingPasswordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />

@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.sumain_edit_text.view.*
  *     version: 1.0
  * </pre>
  */
+@Suppress("LeakingThis")
 class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
     private var mValidateRegex: String? = null
     private var mStateChangeListener: StateChangeListener? = null
@@ -26,7 +27,7 @@ class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayou
     }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.sumain_edit_text, this, true)
+        LayoutInflater.from(context).inflate(R.layout.sumain_edit_text, this@SumianEditText, true)
         val a = context.obtainStyledAttributes(attributeSet, R.styleable.SumianEditText)
         val text = a.getString(R.styleable.SumianEditText_set_text)
         val hint = a.getString(R.styleable.SumianEditText_set_hint)
@@ -61,7 +62,7 @@ class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayou
      * return origin text
      */
     fun getText(): String {
-        return et.text.toString()
+        return et.text.toString().trim()
     }
 
     /**

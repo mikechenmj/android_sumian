@@ -10,7 +10,6 @@ import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
-import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_modify_password.*
  * desc   :
  * version: 1.0
  */
-class ModifyPasswordActivity : BasePresenterActivity<IPresenter>() {
+class SettingPasswordActivity : BasePresenterActivity<IPresenter>() {
     private var mNeedOldPassword = false
     private var mToken: String? = null
 
@@ -32,7 +31,7 @@ class ModifyPasswordActivity : BasePresenterActivity<IPresenter>() {
         private const val KEY_TOKEN = "KEY_TOKEN"
 
         fun start(needOldPassword: Boolean = false, token: String?) {
-            val intent = Intent(ActivityUtils.getTopActivity(), ModifyPasswordActivity::class.java)
+            val intent = Intent(ActivityUtils.getTopActivity(), SettingPasswordActivity::class.java)
             intent.putExtra(KEY_NEED_OLD_PASSWORD, needOldPassword)
             intent.putExtra(KEY_TOKEN, token)
             ActivityUtils.startActivity(intent)
@@ -103,7 +102,7 @@ class ModifyPasswordActivity : BasePresenterActivity<IPresenter>() {
                 AppManager.getAccountViewModel().updateUserInfo(response)
                 ToastUtils.showShort(R.string.set_success)
                 ActivityUtils.finishAllActivities()
-                ActivityUtils.startActivity(this@ModifyPasswordActivity, LoginActivity::class.java)
+                ActivityUtils.startActivity(this@SettingPasswordActivity, LoginActivity::class.java)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -119,7 +118,7 @@ class ModifyPasswordActivity : BasePresenterActivity<IPresenter>() {
 
     private fun setPassword(token: String, password: String) {
         showLoading()
-        val authorization = "Bearer " + token
+        val authorization = "Bearer $token"
         val call = AppManager.getSdHttpService().modifyPasswordWithToken(authorization, password, password)
         call.enqueue(object : BaseSdResponseCallback<UserInfo>() {
             override fun onFailure(errorResponse: ErrorResponse) {
