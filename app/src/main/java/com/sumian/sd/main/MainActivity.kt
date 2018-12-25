@@ -2,6 +2,7 @@
 
 package com.sumian.sd.main
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -38,6 +39,7 @@ import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import pub.devrel.easypermissions.EasyPermissions
 
 class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCallback {
 
@@ -89,6 +91,15 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppManager.onMainActivityCreate()
+        requestPermission()
+    }
+
+    private fun requestPermission() {
+        val readPhoneStatePermission = Manifest.permission.READ_PHONE_STATE
+        val hasPermissions = EasyPermissions.hasPermissions(this, readPhoneStatePermission)
+        if (!hasPermissions) {
+            EasyPermissions.requestPermissions(this, "获取手机状态信息", 100, readPhoneStatePermission)
+        }
     }
 
     override fun onStart() {
