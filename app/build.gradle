@@ -44,6 +44,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
+        buildConfigField("String", "CHANNEL", "\"yyb\"")
         buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
         buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
         buildConfigField("String", "UMENG_APP_KEY", OFFICIAL_UMENG_APP_KEY)
@@ -66,7 +67,7 @@ android {
         buildConfigField("String", "WECHAT_APP_ID", WECHAT_APP_ID)
         buildConfigField("String", "WECHAT_APP_SECRET", WECHAT_APP_SECRET)
         buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", WECHAT_MINI_PROGRAM_ID_YOUZAN)
-        buildConfigField("String", "CHANNEL", "\"yyb\"")
+        buildConfigField("String", "YOUZAN_URL", YOUZAN_URL)
 
         // Enabling multidex support.
         multiDexEnabled true

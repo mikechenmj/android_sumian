@@ -4,7 +4,6 @@ import android.content.Context
 import com.sumian.sd.BuildConfig
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
-import com.umeng.socialize.utils.DeviceConfig.context
 
 /**
  * @author : Zhan Xuzhao
