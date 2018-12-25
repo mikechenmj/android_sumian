@@ -8,6 +8,7 @@ import com.tencent.mid.api.MidCallback
 import com.tencent.mid.api.MidService
 import com.tencent.stat.MtaSDkException
 import com.tencent.stat.StatConfig
+import com.tencent.stat.StatMultiAccount
 import com.tencent.stat.StatService
 import com.tencent.stat.common.StatConstants
 import java.util.*
@@ -51,6 +52,18 @@ object StatUtil {
                         Log.d("mid", "failed to get mid, errCode:" + errCode + ",msg:" + msg)
                     }
                 })
+    }
+
+    fun reportAccount(mobile: String, expireTimeSec: Long) {
+        val account = StatMultiAccount(StatMultiAccount.AccountType.PHONE_NO, mobile)
+        val time = System.currentTimeMillis() / 1000
+        account.lastTimeSec = time
+        account.expireTimeSec = expireTimeSec
+        StatService.reportMultiAccount(mContext, account)
+    }
+
+    fun removeAccount() {
+        StatService.removeMultiAccount(mContext, StatMultiAccount.AccountType.PHONE_NO)
     }
 
     fun event(eventId: String, properties: Map<String, String>? = null) {

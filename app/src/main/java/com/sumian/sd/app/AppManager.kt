@@ -315,6 +315,7 @@ object AppManager {
         }
         AppManager.getAccountViewModel().updateToken(token)
         AppManager.launchMainOrNewUserGuide()
+        StatUtil.reportAccount(token.user.mobile, token.expired_at.toLong())
     }
 
     fun logoutAndLaunchLoginActivity() {
@@ -333,6 +334,7 @@ object AppManager {
         // finish all and start LoginActivity
         ActivityUtils.finishAllActivities()
         LoginActivity.show()
+        StatUtil.removeAccount()
     }
 
     // ------------ App's important lifecycle events end------------
