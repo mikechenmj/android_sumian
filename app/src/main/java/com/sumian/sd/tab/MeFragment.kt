@@ -13,6 +13,7 @@ import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.account.userProfile.UserInfoActivity
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.device.DeviceManageActivity
@@ -88,7 +89,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
     override fun onClick(v: View) {
         when (v.id) {
             R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> UserInfoActivity.show(context, UserInfoActivity::class.java)
-            R.id.dv_setting -> SettingActivity.show(context, SettingActivity::class.java)
+            R.id.dv_setting -> SdBaseActivity.show(context, SettingActivity::class.java)
             R.id.iv_notification -> NotificationListActivity.launch(activity)
             R.id.siv_customer_service -> {
 //                UIProvider.getInstance().clearCacheMsg()

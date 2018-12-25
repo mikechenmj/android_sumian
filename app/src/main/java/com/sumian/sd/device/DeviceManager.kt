@@ -857,8 +857,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private fun notifyMonitorChange() {
         // LiveData 调用set时会下发数据
         setMonitorToLiveData(mMonitorLiveData.value)
-        mMonitorLiveData.value?.let {
-        }
     }
 
     // ---------------- monitor event listener start ----------------
