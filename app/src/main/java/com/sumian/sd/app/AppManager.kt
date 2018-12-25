@@ -43,6 +43,7 @@ import com.sumian.sd.doctor.model.DoctorViewModel
 import com.sumian.sd.kefu.KefuManager
 import com.sumian.sd.log.SdLogManager
 import com.sumian.sd.main.MainActivity
+import com.sumian.sd.main.MainLazyInitHelper
 import com.sumian.sd.network.NetworkManager
 import com.sumian.sd.network.api.SdApi
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -300,12 +301,7 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
-        DeviceManager.uploadCacheSn()
-        KefuManager.loginAndQueryUnreadMsg()
-        AppNotificationManager.uploadPushId()
-        AppManager.getSleepDataUploadManager().checkPendingTaskAndRun()
-        AppManager.sendHeartbeat()
-        AppManager.syncUserInfo()
+        MainLazyInitHelper.create().initLazyMainService()
     }
 
     fun onLoginSuccess(token: Token?) {
