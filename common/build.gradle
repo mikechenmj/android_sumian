@@ -148,7 +148,7 @@ def libName = "common"
 //compile 'com.sumian.sd:common:1.0.0'
 group = "com.sumian.sd"
 // common version 版本号，下次更新是只需要更改版本号即可
-version = "1.0.55"
+version = "1.0.56"
 // 更新完运行 gradlew install, 再bintrayUpload
 
 //生成源文件
