@@ -5,8 +5,10 @@ import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import com.sumian.sd.R
+import com.sumian.sd.utils.EditTextUtil
 import kotlinx.android.synthetic.main.sumain_edit_text.view.*
 
 /**
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.sumain_edit_text.view.*
 class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
     private var mValidateRegex: String? = null
     private var mStateChangeListener: StateChangeListener? = null
+    private var mHighlightable = true
 
     interface StateChangeListener {
         fun onHighlightChange(highlight: Boolean)
@@ -33,6 +36,8 @@ class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayou
         val hint = a.getString(R.styleable.SumianEditText_set_hint)
         val inputType = a.getInt(R.styleable.SumianEditText_set_input_type, 0)
         val showBg = a.getBoolean(R.styleable.SumianEditText_set_show_bg, true)
+        val showPassword = a.getBoolean(R.styleable.SumianEditText_set_show_password_icon, false)
+        mHighlightable = a.getBoolean(R.styleable.SumianEditText_set_highlightable, true)
         mValidateRegex = a.getString(R.styleable.SumianEditText_set_validation_regex)
         a.recycle()
         if (showBg) {
@@ -51,6 +56,11 @@ class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayou
         iv_clear.setOnClickListener {
             et.setText("")
             highlight(false)
+        }
+        iv_show_password.visibility = if (showPassword) View.VISIBLE else View.GONE
+        iv_show_password.setOnClickListener {
+            iv_show_password.isSelected = !iv_show_password.isSelected
+            EditTextUtil.showPassword(et, iv_show_password.isSelected)
         }
     }
 
@@ -80,9 +90,11 @@ class SumianEditText(context: Context, attributeSet: AttributeSet) : LinearLayou
     }
 
     fun highlight(highlight: Boolean) {
-        isActivated = highlight
-        iv_clear.visibility = if (!highlight) GONE else VISIBLE
-        mStateChangeListener?.onHighlightChange(highlight)
+        if (mHighlightable) {
+            isActivated = highlight
+            iv_clear.visibility = if (!highlight) GONE else VISIBLE
+            mStateChangeListener?.onHighlightChange(highlight)
+        }
     }
 
     fun setStateChangeListener(stateChangedListener: StateChangeListener) {

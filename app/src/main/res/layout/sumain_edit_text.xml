@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/et_bg_sel">
+    android:background="@drawable/et_bg_sel"
+    android:gravity="center_vertical">
 
     <EditText
         android:id="@+id/et"
@@ -18,5 +19,14 @@
         android:id="@+id/iv_clear"
         style="@style/HwEditTextClearIv"
         android:contentDescription="@null"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/iv_show_password"
+        android:layout_width="20dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/sel_show_password"
+        android:visibility="gone"
         tools:visibility="visible" />
 </merge>

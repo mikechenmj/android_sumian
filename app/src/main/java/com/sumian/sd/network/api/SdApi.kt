@@ -20,7 +20,9 @@ import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.doctor.bean.Doctor
 import com.sumian.sd.doctor.bean.DoctorService
-import com.sumian.sd.homepage.bean.*
+import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
+import com.sumian.sd.homepage.bean.SentencePoolText
+import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.kefu.KeFuMessage
 import com.sumian.sd.network.response.AppUpgradeInfo
 import com.sumian.sd.network.response.FirmwareInfo
@@ -277,18 +279,18 @@ interface SdApi {
 
     // ---------- homepage ----------
 
-    @Headers("Accept: application/vnd.sd.v2+json")
-    @GET("sleep-prescriptions")
-    fun getSleepPrescriptions(): Call<SleepPrescription?>
+//    @Headers("Accept: application/vnd.sd.v2+json")
+//    @GET("sleep-prescriptions")
+//    fun getSleepPrescriptions(): Call<SleepPrescription?>
 
     @GET("sleep-prescriptions/status")
     fun getSleepPrescriptionStatus(): Call<SleepPrescriptionStatus?>
 
-    @POST("sleep-prescriptions")
-    fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
+//    @POST("sleep-prescriptions")
+//    fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
 
-    @POST("sleep-prescriptions/fatigue")
-    fun updateSleepPrescriptionsWhenFatigue(@Body data: UpdateSleepPrescriptionWhenFatiguedData): Call<SleepPrescriptionWrapper>
+//    @POST("sleep-prescriptions/fatigue")
+//    fun updateSleepPrescriptionsWhenFatigue(@Body data: UpdateSleepPrescriptionWhenFatiguedData): Call<SleepPrescriptionWrapper>
 
     /**
      * include

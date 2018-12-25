@@ -76,8 +76,8 @@ class SettingPasswordActivity : BasePresenterActivity<IPresenter>() {
             }
             if (!TextUtils.equals(password, passwordConfirm)) {
                 ToastUtils.showShort(R.string.password_not_the_same)
-                et_password.highlight(true)
-                et_password_confirm.highlight(true)
+//                et_password.highlight(true)
+//                et_password_confirm.highlight(true)
                 return@setOnClickListener
             }
 

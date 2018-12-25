@@ -203,6 +203,8 @@
         <attr name="set_text" format="string|reference" />
         <attr name="set_validation_regex" format="string|reference" />
         <attr name="set_show_bg" format="boolean|reference" />
+        <attr name="set_show_password_icon" format="boolean|reference" />
+        <attr name="set_highlightable" format="boolean|reference" />
         <attr name="set_input_type" format="enum">
             <enum name="text" value="0" />
             <enum name="number" value="1" />
