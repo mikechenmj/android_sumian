@@ -8,6 +8,7 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.h5.H5Uri
@@ -40,6 +41,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event("page_login")
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_user_agreement.isSelected = true
         tv_send_captcha.setOnClickListener {
@@ -47,6 +49,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
             if (number != null) {
                 onRequestCaptchaSuccess()
                 mPresenter!!.requestCaptcha(number)
+                StatUtil.event("click_captcha", mapOf("type" to "登录注册", "mobile" to number))
             }
         }
         bt_login.setOnClickListener { onLoginClick() }
@@ -123,6 +126,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
 
     private fun wechatLogin() {
         mPresenter!!.loginByWechat(this)
+        StatUtil.event("click_wechat_login")
     }
 
     private fun turnOnCaptchaLogin(turnOn: Boolean) {

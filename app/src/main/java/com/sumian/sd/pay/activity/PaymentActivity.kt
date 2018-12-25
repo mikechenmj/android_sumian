@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.sumian.common.image.ImageLoader
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.doctor.bean.DoctorService
@@ -189,6 +190,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onOrderPaySuccess(payMsg: String) {
+        StatUtil.event("e_pay_success")
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show()
         }

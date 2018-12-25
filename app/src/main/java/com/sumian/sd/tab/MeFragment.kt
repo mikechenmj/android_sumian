@@ -88,7 +88,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
     override fun onClick(v: View) {
         when (v.id) {
             R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> UserInfoActivity.show(context, UserInfoActivity::class.java)
-            R.id.dv_setting -> SettingActivity.show(context, SettingActivity::class.java)
+            R.id.dv_setting -> ActivityUtils.startActivity(SettingActivity::class.java)
             R.id.iv_notification -> NotificationListActivity.launch(activity)
             R.id.siv_customer_service -> {
 //                UIProvider.getInstance().clearCacheMsg()

@@ -3,6 +3,7 @@ package com.sumian.sd.service.cbti.activity
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.bean.H5PayloadData
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -32,9 +33,11 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>()
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event("page_cbti_introduction")
         getTitleBar().openTopPadding(true)
         getTitleBar().showMoreIcon(R.drawable.ic_nav_share)
         getTitleBar().setOnMenuClickListener {
+            StatUtil.event("click_cbti_introduction_share")
             CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
         }
     }
