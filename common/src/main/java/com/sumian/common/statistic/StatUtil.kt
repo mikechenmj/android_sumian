@@ -36,7 +36,11 @@ object StatUtil {
             // MTA初始化失败
             Log.d("MTA", "MTA初始化失败" + e)
         }
+        logMid(app)
+        StatHybridHandlerForX5.init(app)
+    }
 
+    private fun logMid(app: Application) {
         MidService.requestMid(app,
                 object : MidCallback {
                     override fun onSuccess(mid: Any) {
