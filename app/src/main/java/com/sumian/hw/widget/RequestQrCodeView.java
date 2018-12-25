@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 
 import com.sumian.common.helper.ToastHelper;
@@ -73,7 +72,7 @@ public class RequestQrCodeView extends ZBarView implements QRCodeView.Delegate, 
 
     @AfterPermissionGranted(REQUEST_CODE_QR_CODE_PERMISSIONS)
     public void requestCodeQRCodePermissions() {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (isHasPermissions(perms)) {
             delayStartSpot();
         } else {
@@ -90,14 +89,6 @@ public class RequestQrCodeView extends ZBarView implements QRCodeView.Delegate, 
         startSpotAndShowRect();
     }
 
-    @Override
-    public void stopCamera() {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (isHasPermissions(perms)) {
-            //super.stopCamera();
-        }
-    }
-
     private void vibrate() {
         Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null) {
@@ -107,7 +98,6 @@ public class RequestQrCodeView extends ZBarView implements QRCodeView.Delegate, 
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        Log.e("TAG", "onPermissionsGranted: perms=" + perms.toString());
     }
 
     @Override
@@ -123,7 +113,6 @@ public class RequestQrCodeView extends ZBarView implements QRCodeView.Delegate, 
     private void showToast(String content) {
         ToastHelper.show(getContext(), content, Gravity.CENTER);
     }
-
 
     public interface OnShowQrCodeCallback {
 
