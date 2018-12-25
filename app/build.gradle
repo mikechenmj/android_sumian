@@ -66,7 +66,6 @@ android {
         buildConfigField("String", "WECHAT_APP_ID", WECHAT_APP_ID)
         buildConfigField("String", "WECHAT_APP_SECRET", WECHAT_APP_SECRET)
         buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", WECHAT_MINI_PROGRAM_ID_YOUZAN)
-        buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID)
         buildConfigField("String", "CHANNEL", "\"yyb\"")
 
         // Enabling multidex support.
@@ -78,7 +77,7 @@ android {
         resConfigs "zh"//,"en"
         // tencent statics
         manifestPlaceholders = [
-                MTA_APPKEY : TENCENT_STATIC_APP_ID,
+                MTA_APPKEY : TENCENT_STATIC_APP_ID_OFFICIAL,
                 MTA_CHANNEL: "yyb"
         ]
     }
@@ -173,6 +172,7 @@ android {
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
             buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_DEV)
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID_TEST)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -196,6 +196,7 @@ android {
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
             buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_TEST)
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID_TEST)
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -217,6 +218,7 @@ android {
             buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
             buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_OFFICIAL)
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID_OFFICIAL)
 
             resValue "string", "app_name", app_name
             println("${app_name}")

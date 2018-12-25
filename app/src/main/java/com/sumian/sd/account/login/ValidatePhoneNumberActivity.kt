@@ -51,6 +51,9 @@ class ValidatePhoneNumberActivity : BasePresenterActivity<ValidatePhoneNumberCon
     override fun initWidget() {
         super.initWidget()
         title_bar.setOnBackClickListener { onBackPressed() }
+        if (mLaunchType == LAUNCH_TYPE_BIND_SOCIAL) {
+            StatUtil.event("page_wechat_binding")
+        }
         tv_send_captcha.setOnClickListener {
             val mobile = et_mobile.getValidText()
             if (mobile == null) {
