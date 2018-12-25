@@ -24,7 +24,7 @@ import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
-import com.sumian.common.static.StaticUtil
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.hw.job.SleepDataUploadManager
 import com.sumian.hw.log.LogManager
@@ -181,10 +181,7 @@ object AppManager {
     }
 
     private fun initStatic(app: Application) {
-        StaticUtil.init(app, BuildConfig.TENCENT_STATIC_APP_ID, BuildConfig.CHANNEL, BuildConfig.DEBUG)
-        StaticUtil.event("click_captcha")
-        StaticUtil.event("page_login")
-        StaticUtil.event("e_binding_success")
+        StatUtil.init(app, BuildConfig.TENCENT_STATIC_APP_ID, BuildConfig.CHANNEL, BuildConfig.DEBUG)
     }
 
     private fun initLogManager(app: Application) {
@@ -314,6 +311,7 @@ object AppManager {
         }
         AppManager.getAccountViewModel().updateToken(token)
         AppManager.launchMainOrNewUserGuide()
+        StatUtil.reportAccount(token.user.mobile, token.expired_at.toLong())
     }
 
     fun logoutAndLaunchLoginActivity() {
@@ -332,6 +330,7 @@ object AppManager {
         // finish all and start LoginActivity
         ActivityUtils.finishAllActivities()
         LoginActivity.show()
+        StatUtil.removeAccount()
     }
 
     // ------------ App's important lifecycle events end------------

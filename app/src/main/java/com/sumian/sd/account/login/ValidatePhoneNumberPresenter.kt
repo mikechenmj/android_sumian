@@ -2,6 +2,7 @@ package com.sumian.sd.account.login
 
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -65,6 +66,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
+                StatUtil.event("e_login_success", mapOf("type" to "微信"))
             }
 
             override fun onFinish() {

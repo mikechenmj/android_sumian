@@ -3,6 +3,7 @@ package com.sumian.sd.account.login
 import android.app.Activity
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.hw.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
@@ -31,6 +32,8 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
+                StatUtil.event("e_login_success", mapOf("type" to "密码", "mobile" to mobile))
+
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -54,6 +57,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
+                StatUtil.event("e_login_success", mapOf("type" to "验证码", "mobile" to mobile))
             }
 
             override fun onFinish() {
@@ -107,6 +111,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
+                StatUtil.event("e_login_success", mapOf("type" to "微信"))
             }
 
             override fun onFinish() {

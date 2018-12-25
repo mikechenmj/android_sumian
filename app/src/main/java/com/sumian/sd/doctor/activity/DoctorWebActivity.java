@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sumian.common.h5.bean.SBridgeResult;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
+import com.sumian.common.statistic.StatUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.doctor.bean.Doctor;
@@ -20,6 +21,7 @@ import com.sumian.sd.main.MainActivity;
 import com.sumian.sd.utils.JsonUtil;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import androidx.annotation.NonNull;
 
@@ -57,6 +59,12 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         Intent intent = new Intent(context, DoctorWebActivity.class);
         intent.putExtras(extras);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatUtil.INSTANCE.event("page_binding_doctor", null);
     }
 
     @Override
@@ -106,6 +114,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
         } else {
             MainActivity.launch(MainActivity.TAB_2, null);
         }
+        StatUtil.INSTANCE.event("e_binding_success", null);
     }
 
     @Override

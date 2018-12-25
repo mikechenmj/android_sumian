@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -18,6 +17,7 @@ import com.sumian.common.BuildConfig;
 import com.sumian.common.dns.IHttpDns;
 import com.sumian.common.h5.WebViewManger;
 import com.sumian.common.h5.factory.WebViewTlsSniSocketFactory;
+import com.sumian.common.statistic.StatHybridHandlerForX5;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
@@ -42,6 +42,8 @@ import java.util.Set;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
+
+import androidx.annotation.Nullable;
 
 
 /**
@@ -110,6 +112,7 @@ public class SWebView extends BridgeWebView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         }
+        StatHybridHandlerForX5.initWebSettings(webSettings);
     }
 
     public void loadRequestUrl(String url) {
@@ -195,6 +198,14 @@ public class SWebView extends BridgeWebView {
 
         WVClient(BridgeWebView webView) {
             super(webView);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (StatHybridHandlerForX5.handleWebViewUrl(view, url)) {
+                return true;
+            }
+            return super.shouldOverrideUrlLoading(view, url);
         }
 
         @SuppressWarnings("ConstantConditions")

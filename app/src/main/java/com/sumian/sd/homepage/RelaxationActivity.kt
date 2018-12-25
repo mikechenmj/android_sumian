@@ -5,6 +5,7 @@ package com.sumian.sd.homepage
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.h5.H5Uri
@@ -20,6 +21,7 @@ class RelaxationActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event("page_cbti_relaxations")
         getTitleBar().openTopPadding(true)
     }
 

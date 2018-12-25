@@ -1,13 +1,16 @@
-package com.sumian.common.static
+package com.sumian.common.statistic
 
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import com.tencent.stat.common.StatConstants
 import com.tencent.mid.api.MidCallback
 import com.tencent.mid.api.MidService
-import com.tencent.stat.*
+import com.tencent.stat.MtaSDkException
+import com.tencent.stat.StatConfig
+import com.tencent.stat.StatMultiAccount
+import com.tencent.stat.StatService
+import com.tencent.stat.common.StatConstants
 import java.util.*
 
 
@@ -19,7 +22,7 @@ import java.util.*
  * version: 1.0
  */
 @SuppressLint("StaticFieldLeak")
-object StaticUtil {
+object StatUtil {
     private lateinit var mContext: Context
     fun init(app: Application, appKey: String, channel: String, debug: Boolean) {
         StatConfig.setDebugEnable(debug)
@@ -34,7 +37,11 @@ object StaticUtil {
             // MTA初始化失败
             Log.d("MTA", "MTA初始化失败" + e)
         }
+        logMid(app)
+        StatHybridHandlerForX5.init(app)
+    }
 
+    private fun logMid(app: Application) {
         MidService.requestMid(app,
                 object : MidCallback {
                     override fun onSuccess(mid: Any) {
@@ -45,6 +52,18 @@ object StaticUtil {
                         Log.d("mid", "failed to get mid, errCode:" + errCode + ",msg:" + msg)
                     }
                 })
+    }
+
+    fun reportAccount(mobile: String, expireTimeSec: Long) {
+        val account = StatMultiAccount(StatMultiAccount.AccountType.PHONE_NO, mobile)
+        val time = System.currentTimeMillis() / 1000
+        account.lastTimeSec = time
+        account.expireTimeSec = expireTimeSec
+        StatService.reportMultiAccount(mContext, account)
+    }
+
+    fun removeAccount() {
+        StatService.removeMultiAccount(mContext, StatMultiAccount.AccountType.PHONE_NO)
     }
 
     fun event(eventId: String, properties: Map<String, String>? = null) {
