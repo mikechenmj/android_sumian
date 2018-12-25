@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_coupon_fragment_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/vg_coupon_fragment_root"
     android:orientation="vertical">
 
     <LinearLayout
@@ -42,11 +42,12 @@
         android:id="@+id/bt_coupon"
         style="@style/bt_t1_style"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_50"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/space_36"
         android:layout_marginTop="@dimen/space_40"
         android:layout_marginRight="@dimen/space_36"
+        android:minHeight="@dimen/space_50"
         android:text="@string/coupon" />
 
 </LinearLayout>

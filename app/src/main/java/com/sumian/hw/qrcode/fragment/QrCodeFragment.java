@@ -21,10 +21,10 @@ public class QrCodeFragment extends HwBaseFragment implements View.OnClickListen
 
     private static final String TAG = QrCodeFragment.class.getSimpleName();
 
-    RequestQrCodeView zxingView;
-    LinearLayout mLayScanActionContainer;
-    Button btReScan;
-    Button btAction;
+    private RequestQrCodeView zxingView;
+    private LinearLayout mLayScanActionContainer;
+    private Button btReScan;
+    private Button btAction;
 
     private String mQrCode;
 
