@@ -66,7 +66,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("type" to "微信"))
+                StatUtil.event("e_login_success", mapOf("usage" to "微信"))
             }
 
             override fun onFinish() {

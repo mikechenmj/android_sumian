@@ -132,7 +132,10 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.bt_pay -> pay()
+            R.id.bt_pay -> {
+                pay()
+                StatUtil.event("click_pay")
+            }
             else -> {
             }
         }

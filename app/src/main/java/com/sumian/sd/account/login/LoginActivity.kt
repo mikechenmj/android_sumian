@@ -49,7 +49,7 @@ class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginCon
             if (number != null) {
                 onRequestCaptchaSuccess()
                 mPresenter!!.requestCaptcha(number)
-                StatUtil.event("click_captcha", mapOf("type" to "登录注册", "mobile" to number))
+                StatUtil.event("click_captcha", mapOf("usage" to "登录注册", "mobile" to number))
             }
         }
         bt_login.setOnClickListener { onLoginClick() }
