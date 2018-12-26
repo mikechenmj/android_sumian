@@ -30,6 +30,20 @@ class VersionUtil {
             return hasNewVersion(stringListToIntList(latestVersion), stringListToIntList(currentVersion))
         }
 
+        @JvmStatic
+        fun hasNewVersion(latestVersion: String, currentVersion: String): Boolean {
+            return hasNewVersion(stringListToIntList(latestVersion.split(".")), stringListToIntList(currentVersion.split(".")))
+        }
+
+        fun isVersionZero(version: String): Boolean {
+            val split = version.split(".")
+            for (c in split) {
+                if (c != "0")
+                    return false
+            }
+            return true
+        }
+
         private fun stringListToIntList(sList: List<String>): ArrayList<Int> {
             val iList = ArrayList<Int>()
             for (s in sList) {

@@ -77,7 +77,6 @@ class SettingDividerView @JvmOverloads constructor(context: Context, attrs: Attr
         tv_type_desc.setTextColor(typeDescColor)
         // mTvTypeDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, typeDescTextSize);
         tv_type_desc.text = typeDesc
-        v_dot.setBackgroundColor(dotColor)
         tv_setting_content.text = typeContent
         tv_setting_content.setTextColor(typeContentColor)
         tv_setting_content.visibility = if (TextUtils.isEmpty(typeContent)) View.GONE else View.VISIBLE

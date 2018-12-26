@@ -16,6 +16,7 @@ import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
+import com.sumian.common.utils.VersionUtil
 import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
@@ -26,6 +27,7 @@ import com.sumian.sd.device.command.BlueCmd
 import com.sumian.sd.device.pattern.SyncPatternService
 import com.sumian.sd.device.wrapper.BlueDeviceWrapper
 import com.sumian.sd.network.callback.BaseSdResponseCallback
+import com.sumian.sd.network.response.FirmwareInfo
 import com.sumian.sd.utils.StorageUtil
 import java.util.*
 
@@ -39,6 +41,8 @@ import java.util.*
 object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeripheralCallback, MonitorEventListener {
 
     private const val SP_KEY_MONITOR_CACHE = "DeviceManager.MonitorCache"
+    private const val VERSION_TYPE_MONITOR = 0
+    private const val VERSION_TYPE_SLEEPER = 1
 
     private var mCurrentIndex = -1
     private val m8fTransData = ArrayList<String>(0)
@@ -54,6 +58,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
     private val mMonitorEventListeners = HashSet<MonitorEventListener>()
     private val mIsUploadingSleepDataToServerLiveData = MutableLiveData<Boolean>()
+    val mMonitorNeedUpdateLiveData = MutableLiveData<Boolean>()
+    val mSleeperNeedUpdateLiveData = MutableLiveData<Boolean>()
 
     fun init() {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
@@ -617,6 +623,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x54 速眠仪的固件版本信息$sleepyFirmwareVersion  cmd=$cmd")
+        getAndCheckFirmVersion(sleepyFirmwareVersion, VERSION_TYPE_SLEEPER)
     }
 
     private fun receiveMonitorSnInfo(data: ByteArray, cmd: String) {
@@ -653,6 +660,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息$monitorFirmwareVersion  cmd=$cmd")
+        getAndCheckFirmVersion(monitorFirmwareVersion, VERSION_TYPE_MONITOR)
     }
 
     private fun cmdToInt(cmd: String, startIndex: Int, endIndex: Int): Int {
@@ -952,5 +960,40 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     fun uploadCacheSn() {
         val monitorCache = getCachedMonitor()
         uploadDeviceSns(monitorCache)
+    }
+
+
+    private fun getAndCheckFirmVersion(version: String, type: Int) {
+        val call = AppManager.getSdHttpService().syncFirmwareInfo()
+        call.enqueue(object : BaseSdResponseCallback<FirmwareInfo>() {
+            override fun onSuccess(response: FirmwareInfo?) {
+                checkFirmVersion(response, version, type)
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d(errorResponse.message)
+            }
+        })
+    }
+
+    private fun checkFirmVersion(firmwareInfo: FirmwareInfo?, version: String, type: Int) {
+        if (firmwareInfo == null) {
+            return
+        }
+        val latestVersion = if (type == VERSION_TYPE_MONITOR) {
+            firmwareInfo.monitor.version
+        } else {
+            firmwareInfo.sleeper.version
+        }
+        val hasNewVersion = !VersionUtil.isVersionZero(version) && VersionUtil.hasNewVersion(latestVersion, version)
+        if (type == VERSION_TYPE_MONITOR) {
+            mMonitorNeedUpdateLiveData.value = hasNewVersion
+        } else {
+            mSleeperNeedUpdateLiveData.value = hasNewVersion
+        }
+    }
+
+    fun hasFirmwareNeedUpdate(): Boolean {
+        return mMonitorNeedUpdateLiveData.value == true || mSleeperNeedUpdateLiveData.value == true
     }
 }

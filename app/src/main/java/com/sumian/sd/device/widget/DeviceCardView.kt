@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.format.DateUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +12,14 @@ import android.view.View.OnClickListener
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.hw.log.LogManager
+import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
+import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.device.MonitorEventListener
 import com.sumian.sd.device.bean.BlueDevice
@@ -49,6 +49,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
     private var mRotateAnimator: ObjectAnimator? = null
     private var mIsUIActive = false
+
     private val mMonitorEventListener = object : MonitorEventListener {
         override fun onSyncStart() {
             startSyncAnimation()
@@ -151,6 +152,31 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
         DeviceManager.getIsBluetoothEnableLiveData().observe(lifecycleOwner, Observer {
             updateUI(it ?: false, DeviceManager.getMonitorLiveData().value)
         })
+        DeviceManager.mMonitorNeedUpdateLiveData.observe(lifecycleOwner, Observer {
+            if (it) showUpgradeFirmwareDialog(0)
+        })
+        DeviceManager.mSleeperNeedUpdateLiveData.observe(lifecycleOwner, Observer {
+            if (it) showUpgradeFirmwareDialog(1)
+        })
+    }
+
+    /**
+     * @param type 0 monitor, 1 sleeper
+     */
+    private fun showUpgradeFirmwareDialog(type: Int) {
+        if (System.currentTimeMillis() - SPUtils.getInstance().getLong(SpKeys.SHOW_UPGRADE_FIRMWARE_DIALOG_TIME) < DateUtils.DAY_IN_MILLIS) {
+            return
+        }
+        SumianDialog(context)
+                .setTitleText(if (type == 0) R.string.monitor_firmware_upgrade else R.string.sleeper_firmware_upgrade)
+                .setMessageText(if (type == 0) R.string.monitor_firmware_upgrade_hint else R.string.sleeper_firmware_upgrade)
+                .setLeftBtn(R.string.cancel, null)
+                .setRightBtn(R.string.confirm, OnClickListener {
+                    ActivityUtils.startActivity(DeviceVersionNoticeActivity::class.java)
+                })
+                .whitenLeft()
+                .show()
+        SPUtils.getInstance().put(SpKeys.SHOW_UPGRADE_FIRMWARE_DIALOG_TIME, System.currentTimeMillis())
     }
 
     override fun onAttachedToWindow() {

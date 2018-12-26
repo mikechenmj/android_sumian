@@ -767,7 +767,7 @@
         <item>美利曲辛（黛利新）</item>
         <item>其他</item>
     </string-array>
-    <string-array name="pill_amount_options" >
+    <string-array name="pill_amount_options">
         <item>1/4片</item>
         <item>1/3片</item>
         <item>1/2片</item>
@@ -795,4 +795,8 @@
         <item>晚饭前／后</item>
         <item>睡前</item>
     </string-array>
+    <string name="monitor_firmware_upgrade">监测仪固件升级</string>
+    <string name="monitor_firmware_upgrade_hint">监测仪固件发布了新版本，为了保证给您最佳的体验，请及时升级</string>
+    <string name="sleeper_firmware_upgrade">速眠仪固件升级</string>
+    <string name="sleeper_firmware_upgrade_hint">速眠仪固件发布了新版本，为了保证给您最佳的体验，请及时升级</string>
 </resources>

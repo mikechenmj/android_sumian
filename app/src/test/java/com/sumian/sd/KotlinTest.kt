@@ -1,12 +1,7 @@
 package com.sumian.sd
 
-import android.text.format.DateUtils
-import com.google.gson.Gson
-import com.sumian.common.utils.TimeUtilV2
-import com.sumian.hw.utils.TimeUtil
-import com.sumian.sd.account.config.SumianConfig
+import com.sumian.common.utils.VersionUtil
 import org.junit.Test
-import kotlin.random.Random
 
 /**
  * <pre>
@@ -20,7 +15,7 @@ import kotlin.random.Random
 class KotlinTest {
     @Test
     fun test() {
-
+        println(VersionUtil.isVersionZero("0.0.0"))
     }
 
 }

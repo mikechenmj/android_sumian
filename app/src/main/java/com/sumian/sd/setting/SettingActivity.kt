@@ -19,6 +19,7 @@ import com.sumian.sd.account.login.SettingPasswordActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.base.SdBasePresenter
+import com.sumian.sd.device.DeviceManager
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -28,6 +29,8 @@ import com.sumian.sd.utils.UiUtils
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import com.sumian.sd.widget.divider.SettingDividerView
+import kotlinx.android.synthetic.main.activity_main_setting.*
+import kotlinx.android.synthetic.main.lay_setting_divider_item.view.*
 
 /**
  * Created by jzz
@@ -117,6 +120,7 @@ class SettingActivity : SdBaseActivity<SdBasePresenter<*>>(), TitleBar.OnBackCli
         val packageInfo = UiUtils.getPackageInfo(this)
         val versionName = packageInfo!!.versionName
         mSdvAppVersion.setContent(versionName)
+        sdv_device_version.v_dot.visibility = if (DeviceManager.hasFirmwareNeedUpdate()) View.VISIBLE else View.GONE
     }
 
     private fun showLogoutDialog() {

@@ -22,4 +22,5 @@ public interface SpKeys {
 
     // ---------- DEVICE -----------
     String DEVICE_PATTERN = "DEVICE_PATTERN";
+    String SHOW_UPGRADE_FIRMWARE_DIALOG_TIME = "SHOW_UPGRADE_FIRMWARE_DIALOG_TIME";
 }
