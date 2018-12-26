@@ -63,12 +63,13 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
         EventBusUtil.unregister(this)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     fun onUploadSleepDataFinishedEvent(event: UploadSleepDataFinishedEvent) {
         LogUtils.d(event)
         if (event.success) {
             updateCurrentTimeData() // refresh
         }
+        EventBusUtil.removeStickyEvent(event)
     }
 
     @Suppress("unused", "UNUSED_PARAMETER")

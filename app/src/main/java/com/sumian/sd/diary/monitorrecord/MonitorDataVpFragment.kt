@@ -57,7 +57,7 @@ class MonitorDataVpFragment : BaseFragment() {
         })
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     fun onUploadSleepDataFinishedEvent(event: UploadSleepDataFinishedEvent) {
         LogUtils.d(event)
         mHandler.removeCallbacks(mDismissBottomHintRunnable)

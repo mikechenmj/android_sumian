@@ -163,7 +163,7 @@ public class SleepDataUploadManager {
 
         @Override
         public void executeTaskFinish(SleepDataUploadTask sleepDataUploadTask, boolean isSuccess, boolean retry, @Nullable String message) {
-            EventBusUtil.postEvent(new UploadSleepDataFinishedEvent(isSuccess));
+            EventBusUtil.postStickyEvent(new UploadSleepDataFinishedEvent(isSuccess));
             DeviceManager.INSTANCE.postIsUploadingSleepDataToServer(false);
             mIsBusy = false;
             mSleepDataUploadTasks.remove(sleepDataUploadTask);
