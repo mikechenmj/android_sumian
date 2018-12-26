@@ -37,6 +37,7 @@ class WelcomeActivity : BasePresenterActivity<IPresenter>() {
     override fun initData() {
         super.initData()
         LogManager.appendUserOperationLog("用户启动 app.......")
+        AppManager.initKefu(application)
         Handler().postDelayed({
             val login = AppManager.getAccountViewModel().isLogin
             if (login) {
