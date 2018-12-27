@@ -128,28 +128,24 @@ public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
                 //if (VersionUtil.hasNewVersion(Arrays.asList(versionInfo.getVersion().split(".")), Arrays.asList(currentVersionInfo.split(".")))) {
                 if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
 
-                    versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                    versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
 
-                    if (versionType == MONITOR_VERSION_TYPE) {
-                        AppManager.getVersionModel().notifyMonitorDot(true);
-                    } else {
-                        AppManager.getVersionModel().notifySleepyDot(true);
-                    }
+                    notifyVersionDot(versionType, true);
                 } else {
                     versionInfo.setVersion(currentVersionInfo);
-                    notifyVersionDot(versionType);
+                    notifyVersionDot(versionType, false);
                 }
             } else {
                 versionInfo = new VersionInfo().setVersion(TextUtils.isEmpty(currentVersionInfo) ?
-                        App.Companion.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
-                notifyVersionDot(versionType);
+                        App.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
+                notifyVersionDot(versionType, false);
             }
         } else {
             if (versionInfo == null) {
                 versionInfo = new VersionInfo();
             }
-            versionInfo.setVersion(App.Companion.getAppContext().getString(R.string.none_connected_state_hint));
-            notifyVersionDot(versionType);
+            versionInfo.setVersion(App.getAppContext().getString(R.string.none_connected_state_hint));
+            notifyVersionDot(versionType, false);
         }
 
         if (versionType == MONITOR_VERSION_TYPE) {
@@ -163,14 +159,6 @@ public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
         }
     }
 
-    private void notifyVersionDot(int versionType) {
-        if (versionType == MONITOR_VERSION_TYPE) {
-            AppManager.getVersionModel().notifyMonitorDot(false);
-        } else {
-            AppManager.getVersionModel().notifySleepyDot(false);
-        }
-    }
-
     @Override
     public void syncAppVersionInfo() {
         VersionContract.View view = null;
@@ -181,7 +169,7 @@ public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
 
         Map<String, String> map = new HashMap<>();
 
-        PackageInfo packageInfo = UiUtil.getPackageInfo(App.Companion.getAppContext());
+        PackageInfo packageInfo = UiUtil.getPackageInfo(App.getAppContext());
 
         map.put("type", "1");
         map.put("current_version", packageInfo.versionName);
@@ -241,8 +229,11 @@ public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
         });
     }
 
-    @Override
-    public void release() {
-
+    private void notifyVersionDot(int versionType, boolean isShowDot) {
+        if (versionType == MONITOR_VERSION_TYPE) {
+            AppManager.getVersionModel().notifyMonitorDot(isShowDot);
+        } else {
+            AppManager.getVersionModel().notifySleepyDot(isShowDot);
+        }
     }
 }

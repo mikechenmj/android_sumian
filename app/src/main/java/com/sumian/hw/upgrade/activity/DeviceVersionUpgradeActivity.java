@@ -144,11 +144,13 @@ public class DeviceVersionUpgradeActivity extends BasePresenterActivity implemen
         @Override
         public void onDeviceDisconnecting(String deviceAddress) {
             LogManager.appendUserOperationLog("设备 dfu 固件升级,正在断开连接中  mac=" + deviceAddress);
+            cancelDialog();
         }
 
         @Override
         public void onDeviceDisconnected(String deviceAddress) {
             LogManager.appendUserOperationLog("设备 dfu 固件升级,已断开连接  mac=" + deviceAddress);
+            cancelDialog();
         }
 
         @Override

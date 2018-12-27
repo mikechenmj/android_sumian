@@ -21,6 +21,7 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.device.DeviceManager;
+import com.sumian.sd.device.bean.BlueDevice;
 import com.sumian.sd.network.response.AppUpgradeInfo;
 
 import java.util.Locale;
@@ -154,6 +155,13 @@ public class DeviceVersionNoticeActivity extends BasePresenterActivity implement
             mAppVersionInfo.updateUpgradeInfo(isShowAppDot, null);
             mMonitorVersionInfo.updateUpgradeInfo(isShowMonitorDot, DeviceManager.INSTANCE.getMonitorSn());
             mSleepVersionInfo.updateUpgradeInfo(isShowSleepyDot, DeviceManager.INSTANCE.getSleeperSn());
+
+            if (bluePeripheral != null && bluePeripheral.isConnected()) {
+                mMonitorVersionInfo.show();
+            }
+            if (bluePeripheral != null && bluePeripheral.isConnected() && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED) {
+                mSleepVersionInfo.show();
+            }
         });
     }
 

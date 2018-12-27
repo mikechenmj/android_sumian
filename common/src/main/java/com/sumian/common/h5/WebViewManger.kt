@@ -43,16 +43,22 @@ class WebViewManger private constructor() {
         QbSdk.setNeedInitX5FirstTime(true)
         QbSdk.setTbsListener(object : TbsListener {
             override fun onInstallFinish(p0: Int) {
+                if (isDebug()) {
+                    Log.e("TAG", "onInstallFinish------>p0=$p0")
+                }
             }
 
             override fun onDownloadFinish(p0: Int) {
-
+                if (isDebug()) {
+                    Log.e("TAG", "onDownloadFinish------>p0=$p0")
+                }
             }
 
             override fun onDownloadProgress(p0: Int) {
-
+                if (isDebug()) {
+                    Log.e("TAG", "onDownloadProgress------>p0=$p0")
+                }
             }
-
         })
         //x5内核初始化接口
         QbSdk.initX5Environment(context, object : QbSdk.PreInitCallback {
