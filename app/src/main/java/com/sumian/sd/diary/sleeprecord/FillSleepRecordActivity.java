@@ -1,6 +1,5 @@
 package com.sumian.sd.diary.sleeprecord;
 
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
@@ -11,7 +10,6 @@ import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseWebViewActivity;
-import com.sumian.sd.diary.fillsleepdiary.FillSleepDiaryActivity;
 import com.sumian.sd.diary.sleeprecord.bean.FillSleepRecordResponse;
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.event.EventBusUtil;
@@ -42,7 +40,7 @@ public class FillSleepRecordActivity extends SdBaseWebViewActivity {
         Intent intent = new Intent(ActivityUtils.getTopActivity(), FillSleepRecordActivity.class);
         intent.putExtra(KEY_TIME, time);
         launcher.startActivityForResult(intent, requestCode);
-        ActivityUtils.startActivity(new Intent(ActivityUtils.getTopActivity(), FillSleepDiaryActivity.class));
+//        ActivityUtils.startActivity(new Intent(ActivityUtils.getTopActivity(), FillSleepDiaryActivity.class));
     }
 
 //    public static void launch(Context context, long time) {
