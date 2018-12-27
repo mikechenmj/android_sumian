@@ -820,6 +820,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
         AppManager.getBlueManager().refresh()
         AppManager.getBlueManager().clearBluePeripheral()
+        mSleeperNeedUpdateLiveData.value = false
+        mMonitorNeedUpdateLiveData.value = false
     }
 
     override fun onTransportChannelReady(peripheral: BluePeripheral) {

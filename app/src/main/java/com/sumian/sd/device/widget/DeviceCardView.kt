@@ -154,19 +154,24 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
      * @param type 0 monitor, 1 sleeper
      */
     private fun showUpgradeFirmwareDialog(type: Int) {
-        if (System.currentTimeMillis() - SPUtils.getInstance().getLong(SpKeys.SHOW_UPGRADE_FIRMWARE_DIALOG_TIME) < DateUtils.DAY_IN_MILLIS) {
+        val spKey = if (type == 0) {
+            SpKeys.SHOW_UPGRADE_MONITOR_DIALOG_TIME
+        } else {
+            SpKeys.SHOW_UPGRADE_SLEEPER_DIALOG_TIME
+        }
+        if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
             return
         }
         SumianDialog(context)
                 .setTitleText(if (type == 0) R.string.monitor_firmware_upgrade else R.string.sleeper_firmware_upgrade)
-                .setMessageText(if (type == 0) R.string.monitor_firmware_upgrade_hint else R.string.sleeper_firmware_upgrade)
+                .setMessageText(if (type == 0) R.string.monitor_firmware_upgrade_hint else R.string.sleeper_firmware_upgrade_hint)
                 .setLeftBtn(R.string.cancel, null)
                 .setRightBtn(R.string.confirm, OnClickListener {
                     ActivityUtils.startActivity(DeviceVersionNoticeActivity::class.java)
                 })
                 .whitenLeft()
                 .show()
-        SPUtils.getInstance().put(SpKeys.SHOW_UPGRADE_FIRMWARE_DIALOG_TIME, System.currentTimeMillis())
+        SPUtils.getInstance().put(spKey, System.currentTimeMillis())
     }
 
     override fun onAttachedToWindow() {

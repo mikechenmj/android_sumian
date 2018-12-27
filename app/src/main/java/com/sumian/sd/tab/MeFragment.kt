@@ -84,7 +84,8 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
             }
             dv_device_manage.setContent(monitorSn!!)
         })
-
+        DeviceManager.mMonitorNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
+        DeviceManager.mSleeperNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
     }
 
     override fun onClick(v: View) {
