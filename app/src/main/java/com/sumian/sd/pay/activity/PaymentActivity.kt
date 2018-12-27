@@ -107,6 +107,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         bt_pay.setOnClickListener(this)
         pay_group_view.setOnSelectPayWayListener(this)
         pay_calculate_item_view.setOnMoneyChangeCallback(this)
+        StatUtil.event("page_pay")
     }
 
     override fun initData() {
