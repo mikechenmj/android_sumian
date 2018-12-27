@@ -32,7 +32,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("usage" to "密码", "mobile" to mobile))
+                StatUtil.event("e_login_success", mapOf("mode" to "密码", "mobile" to mobile))
 
             }
 
@@ -57,7 +57,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("usage" to "验证码", "mobile" to mobile))
+                StatUtil.event("e_login_success", mapOf("mode" to "验证码", "mobile" to mobile))
             }
 
             override fun onFinish() {
@@ -111,7 +111,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("usage" to "微信"))
+                StatUtil.event("e_login_success", mapOf("mode" to "微信"))
             }
 
             override fun onFinish() {
