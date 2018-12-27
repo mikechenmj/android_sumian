@@ -996,11 +996,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             mSleeperNeedUpdateLiveData.value = hasNewVersion
         }
         if (hasNewVersion) {
-            val spKey = if (type == 0) {
-                SpKeys.SHOW_UPGRADE_MONITOR_DIALOG_TIME
-            } else {
-                SpKeys.SHOW_UPGRADE_SLEEPER_DIALOG_TIME
-            }
+            val spKey = SpKeys.SHOW_UPGRADE_MONITOR_DIALOG_TIME
             if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
                 return
             }
