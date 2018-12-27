@@ -312,6 +312,7 @@ object AppManager {
         AppManager.getAccountViewModel().updateToken(token)
         AppManager.launchMainOrNewUserGuide()
         StatUtil.reportAccount(token.user.mobile, token.expired_at.toLong())
+        sendHeartbeat()
     }
 
     fun logoutAndLaunchLoginActivity() {
