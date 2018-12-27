@@ -799,4 +799,5 @@
     <string name="monitor_firmware_upgrade_hint">监测仪固件发布了新版本，为了保证给您最佳的体验，请及时升级</string>
     <string name="sleeper_firmware_upgrade">速眠仪固件升级</string>
     <string name="sleeper_firmware_upgrade_hint">速眠仪固件发布了新版本，为了保证给您最佳的体验，请及时升级</string>
+    <string name="device_market">设备商城</string>
 </resources>

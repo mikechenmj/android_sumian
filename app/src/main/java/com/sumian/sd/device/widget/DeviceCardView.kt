@@ -2,8 +2,6 @@ package com.sumian.sd.device.widget
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.text.format.DateUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -12,12 +10,14 @@ import android.view.View.OnClickListener
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
-import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.device.DeviceManager
@@ -127,17 +127,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 EventBusUtil.postStickyEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
             }
             tv_know_device.setOnClickListener {
-                if (AppUtils.isAppInstalled("com.tencent.mm")) {
-                    SumianDialog(getContext())
-                            .setTitleText(R.string.notice)
-                            .setMessageText(R.string.sumian_doctor_want_to_open_wechat)
-                            .setLeftBtn(R.string.cancel, null)
-                            .setRightBtn(R.string.open, OnClickListener { MiniProgramHelper.launchYouZan(ActivityUtils.getTopActivity()) })
-                            .show()
-                } else {
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.YOUZAN_URL))
-                    ActivityUtils.getTopActivity().startActivity(browserIntent)
-                }
+                MiniProgramHelper.launchYouZanOrWeb(getContext())
             }
         }
     }

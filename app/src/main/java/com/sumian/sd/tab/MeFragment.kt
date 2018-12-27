@@ -31,6 +31,7 @@ import com.sumian.sd.service.tel.activity.TelBookingListActivity
 import com.sumian.sd.setting.SettingActivity
 import com.sumian.sd.widget.tips.PatientRecordTips
 import com.sumian.sd.widget.tips.PatientServiceTips
+import com.sumian.sd.wxapi.MiniProgramHelper
 import kotlinx.android.synthetic.main.fragment_tab_me.*
 
 /**
@@ -57,6 +58,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
         dv_coupon_center.setOnClickListener(this)
         tips_service.setOnServiceTipsCallback(this)
         tips_record.setOnRecordTipsCallback(this)
+        dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
     }
 
     override fun initData() {
