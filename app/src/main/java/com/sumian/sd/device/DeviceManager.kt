@@ -993,6 +993,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         } else {
             mSleeperNeedUpdateLiveData.value = hasNewVersion
         }
+        if (hasNewVersion) UpgradeFirmwareDialogActivity.start(if (type == VERSION_TYPE_MONITOR) 0 else 1)
     }
 
     fun hasFirmwareNeedUpdate(): Boolean {

@@ -46,7 +46,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        if (portrait()) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         checkBundle(intent)
         setContentView(if (showBackNav()) R.layout.activity_main_back_container else getLayoutId())
         initWidgetBefore()
@@ -150,5 +152,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
     fun setTitle(title: String) {
         mTitleBar.setTitle(title)
+    }
+
+    open fun portrait(): Boolean {
+        return true
     }
 }

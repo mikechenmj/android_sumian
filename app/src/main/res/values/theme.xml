@@ -36,6 +36,16 @@
         <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 
+    <style name="DialogActivity" parent="BaseAppTheme.Fullscreen">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
     <!--默认的 activity 切换的动画-->
     <style name="AnimationStyle" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>
@@ -92,4 +102,5 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
 </resources>

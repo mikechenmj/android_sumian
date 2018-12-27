@@ -553,6 +553,9 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".notification.SystemNotificationDetailActivity" />
         <activity android:name=".diary.fillsleepdiary.FillSleepDiaryActivity" />
+        <activity
+            android:name=".device.UpgradeFirmwareDialogActivity"
+            android:theme="@style/DialogActivity" />
 
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"
