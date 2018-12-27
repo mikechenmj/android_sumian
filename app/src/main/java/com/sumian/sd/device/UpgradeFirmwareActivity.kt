@@ -54,7 +54,7 @@ class UpgradeFirmwareDialogActivity : BasePresenterActivity<IPresenter>() {
             SpKeys.SHOW_UPGRADE_SLEEPER_DIALOG_TIME
         }
         if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
-//            return
+            return
         }
         val dialog = SumianDialog(this)
                 .setTitleText(if (type == 0) R.string.monitor_firmware_upgrade else R.string.sleeper_firmware_upgrade)
