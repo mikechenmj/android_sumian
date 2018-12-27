@@ -3,6 +3,7 @@
 package com.sumian.sd.device
 
 import android.text.TextUtils
+import android.text.format.DateUtils
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.AppUtils
@@ -22,6 +23,7 @@ import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.device.command.BlueCmd
 import com.sumian.sd.device.pattern.SyncPatternService
@@ -993,7 +995,18 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         } else {
             mSleeperNeedUpdateLiveData.value = hasNewVersion
         }
-        if (hasNewVersion) UpgradeFirmwareDialogActivity.start(if (type == VERSION_TYPE_MONITOR) 0 else 1)
+        if (hasNewVersion) {
+            val spKey = if (type == 0) {
+                SpKeys.SHOW_UPGRADE_MONITOR_DIALOG_TIME
+            } else {
+                SpKeys.SHOW_UPGRADE_SLEEPER_DIALOG_TIME
+            }
+            if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
+                return
+            }
+            UpgradeFirmwareDialogActivity.start(if (type == VERSION_TYPE_MONITOR) 0 else 1)
+            SPUtils.getInstance().put(spKey, System.currentTimeMillis())
+        }
     }
 
     fun hasFirmwareNeedUpdate(): Boolean {
