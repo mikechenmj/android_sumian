@@ -66,7 +66,7 @@ object StatUtil {
         StatService.removeMultiAccount(mContext, StatMultiAccount.AccountType.PHONE_NO)
     }
 
-    fun event(eventId: String, properties: Map<String, Any>? = null) {
+    fun event(eventId: String, properties: Map<String, String>? = null) {
         val prop = Properties()
         if (properties != null) {
             for ((key, value) in properties) {
