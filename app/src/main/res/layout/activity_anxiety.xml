@@ -14,7 +14,7 @@
     <EditText
         android:id="@+id/et_anxiety"
         style="@style/SumianEditTextWhiteBg"
-        android:layout_height="85dp"
+        android:layout_height="90dp"
         android:hint="@string/anxiety_input_hint"
         android:padding="20dp"
         tools:ignore="Autofill,TextFields" />
@@ -45,7 +45,7 @@
     <EditText
         android:id="@+id/et_anxiety_solution"
         style="@style/SumianEditTextWhiteBg"
-        android:height="85dp"
+        android:height="90dp"
         android:hint="@string/anxiety_solution_input_hint"
         android:padding="20dp"
         tools:ignore="Autofill,TextFields" />

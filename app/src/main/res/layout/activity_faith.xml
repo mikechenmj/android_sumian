@@ -29,7 +29,7 @@
         <EditText
             android:id="@+id/et_belief"
             style="@style/SumianEditTextWhiteBg"
-            android:layout_height="195dp"
+            android:layout_height="150dp"
             android:layout_marginTop="20dp"
             android:hint="@string/input_event_hint"
             android:paddingStart="20dp"
