@@ -194,7 +194,13 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onOrderPaySuccess(payMsg: String) {
-        StatUtil.event("e_pay_success")
+        StatUtil.event("e_pay_success",
+                mapOf(
+                        "amount" to pay_calculate_item_view.currentMoney,
+                        "quantity" to pay_calculate_item_view.currentBuyCount,
+                        "channel" to if (mPayChannel == ALIPAY_PAY_TYPE) "支付宝" else "微信",
+                        "productName" to mDoctorService!!.name
+                ))
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_SUCCESS).show()
         }
