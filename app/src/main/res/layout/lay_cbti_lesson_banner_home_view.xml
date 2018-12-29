@@ -16,7 +16,7 @@
         android:lines="1"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:text="失眠的认知行为治疗 CBTi"
+        android:text="失眠的认知行为治疗 CBTI"
         tools:ignore="HardcodedText" />
 
     <TextView
