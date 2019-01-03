@@ -332,7 +332,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
     private fun transformProvince() {
         SumianExecutor.runOnBackgroundThread {
-            val provinceJson = StreamUtil.getJson("province.json")
+            val provinceJson = StreamUtil.getJson("areas.json")
             if (TextUtils.isEmpty(provinceJson)) return@runOnBackgroundThread
             val provinces = JSON.parseArray(provinceJson, Province::class.java)
             var mapArea: MutableMap<City, MutableList<String>>? = mMapArea
