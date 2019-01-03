@@ -18,7 +18,7 @@ import java.util.*
  * @author : Zhan Xuzhao
  * e-mail : 649912323@qq.com
  * time   : 2018/12/24 15:53
- * desc   :
+ * desc   : 埋点统计工具类
  * version: 1.0
  */
 @SuppressLint("StaticFieldLeak")

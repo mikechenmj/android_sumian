@@ -17,6 +17,7 @@ import com.sumian.common.BuildConfig;
 import com.sumian.common.dns.IHttpDns;
 import com.sumian.common.h5.WebViewManger;
 import com.sumian.common.h5.factory.WebViewTlsSniSocketFactory;
+import com.sumian.common.log.CommonLog;
 import com.sumian.common.statistic.StatHybridHandlerForX5;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
@@ -64,6 +65,7 @@ public class SWebView extends BridgeWebView {
         @Override
         public void run() {
             if (mWebViewListener != null) {
+                CommonLog.INSTANCE.log("load web time out");
                 mWebViewListener.onRequestNetworkErrorCallback(SWebView.this);
             }
         }
@@ -288,8 +290,9 @@ public class SWebView extends BridgeWebView {
         }
 
         @Override
-        public void onReceivedError(WebView webView, int i, String s, String s1) {
-            super.onReceivedError(webView, i, s, s1);
+        public void onReceivedError(WebView webView, int errorCode, String description, String url) {
+            super.onReceivedError(webView, errorCode, description, url);
+            CommonLog.INSTANCE.log(errorCode + "", description, url);
             if (isDebug()) {
                 Log.e(TAG, "onReceivedError: ------1--->");
             }
@@ -301,6 +304,7 @@ public class SWebView extends BridgeWebView {
         @Override
         public void onReceivedHttpError(WebView webView, WebResourceRequest webResourceRequest, WebResourceResponse webResourceResponse) {
             super.onReceivedHttpError(webView, webResourceRequest, webResourceResponse);
+            CommonLog.INSTANCE.log(webResourceRequest.toString(), webResourceResponse.toString());
             if (isDebug()) {
                 Log.e(TAG, "onReceivedHttpError: ---------3------->");
             }
@@ -313,6 +317,7 @@ public class SWebView extends BridgeWebView {
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             //https忽略证书问题
+            CommonLog.INSTANCE.log(error.toString());
             if (isDebug()) {
                 Log.e(TAG, "onReceivedSslError: ---------->");
             }
@@ -322,6 +327,7 @@ public class SWebView extends BridgeWebView {
         @Override
         public void onPageStarted(@NotNull WebView webView, @NotNull String s, @NotNull Bitmap bitmap) {
             super.onPageStarted(webView, s, bitmap);
+            CommonLog.INSTANCE.log(s);
             if (isDebug()) {
                 Log.e(TAG, "onPageStarted: ----------->" + s);
             }
@@ -333,6 +339,7 @@ public class SWebView extends BridgeWebView {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            CommonLog.INSTANCE.log(url);
             removeCallbacks(mDismissRunnable);
             if (isDebug()) {
                 Log.e(TAG, "onPageFinished: ---------->" + url);

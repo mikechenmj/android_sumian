@@ -14,12 +14,31 @@ import java.util.*
  * @author : Zhan Xuzhao
  * e-mail : 649912323@qq.com
  * time   : 2018/12/5 14:54
- * desc   : ref
+ * desc   : 日志类
+ *          由于该类依赖第三方key、用户信息等业务逻辑数据，所以将这些数据的传入做成抽象方法，交给子类去实现。
+ *          为了让common包下的代码也能打日志，采用依赖倒置的方式，把CommonLogManager的具体实现传入CommonLog
+ *
+ *
  * https://www.tapd.cn/21254041/prong/stories/view/1121254041001003070?url_cache_key=aec350d6d1ce106539a689985e57282f&action_entry_type=stories
+ * 客户端记录信息：
+1. client_type: H5 | iOS | Android
+2. network: wifi | 4G | 3G | 2G | unknown
+3. time: 日记记录时间, dateTimeString  格式：2018-12-05 15:49:15
+4. action_type: page | http | device
+5. mobile
+6. user_id
+7. page_data: // 页面操作： 页面名称(类名)， 动作（打开，关闭）
+8. http_request: // 请求：request:  >=500 + timeout, uri + params
+9. http_response: //
+10.app_version:
+11.app_type: sd, sdd
+12.device_info: {system_ver:'', model:'', monitor_fw:'', sleeper_fw:'', monitor_sn:'', sleeper_sn:''} // JSON 序列化
+13.remark: 备注
+14.user_agent: webview info
  * version: 1.0
  */
 @Suppress("MemberVisibilityCanBePrivate", "DEPRECATION")
-abstract class CommonLogManager {
+abstract class CommonLogManager : ILog {
     companion object {
         const val KEY_CLIENT_TYPE = "client_type"
         const val KEY_NETWORK = "network"
@@ -53,6 +72,7 @@ abstract class CommonLogManager {
         const val ACTION_TYPE_PAGE = "page"
         const val ACTION_TYPE_HTTP = "http"
         const val ACTION_TYPE_DEVICE = "device"
+        const val ACTION_TYPE_OTHERS = "others"
 
         const val PAGE_OPERATION = ""
     }
@@ -76,6 +96,7 @@ abstract class CommonLogManager {
                 isDebug)
         network = getNetworkTypeString()
         appVersion = AppUtils.getAppVersionName()
+        CommonLog.mLog = this
     }
 
     fun createTemplateLogMap(): MutableMap<String, String> {
@@ -98,8 +119,15 @@ abstract class CommonLogManager {
         return timeFormat.format(date)
     }
 
-    fun log(map: Map<String, String>) {
+    private fun log(map: Map<String, String>) {
         AliyunLogManager.log(addMap(createTemplateLogMap(), map))
+    }
+
+    override fun log(s: String) {
+        log(mapOf(
+                KEY_ACTION_TYPE to ACTION_TYPE_OTHERS,
+                KEY_REMARK to s
+        ))
     }
 
     fun logPage(pageClassName: String, open: Boolean) {

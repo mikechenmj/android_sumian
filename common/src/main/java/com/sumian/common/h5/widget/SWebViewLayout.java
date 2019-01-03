@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.sumian.common.R;
+import com.sumian.common.log.CommonLog;
 import com.tencent.smtt.sdk.WebView;
 
 import static com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR;
@@ -123,6 +124,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
 
     @Override
     public void onRequestNetworkErrorCallback(WebView view) {
+        CommonLog.INSTANCE.log("");
         this.mWebViewProgress.setVisibility(GONE);
         this.mWebViewProgress.setProgress(0);
         this.mEmptyErrorView.invalidNetworkError();
