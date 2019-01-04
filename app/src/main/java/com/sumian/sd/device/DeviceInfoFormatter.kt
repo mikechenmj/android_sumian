@@ -66,7 +66,7 @@ class DeviceInfoFormatter {
             val monitor = DeviceManager.getMonitorLiveData().value ?: return null
             val sleeperBomVersion = monitor.sleeperBomVersion
             val sleeperBomVersionStr = if (sleeperBomVersion == null) "null" else "V$sleeperBomVersion"
-            return "${monitor.sleeperVersion}-$sleeperBomVersionStr}"
+            return "${monitor.sleeperVersion}-$sleeperBomVersionStr"
         }
 
         private fun formatMonitorInfo(monitorInfo: String?): String {
