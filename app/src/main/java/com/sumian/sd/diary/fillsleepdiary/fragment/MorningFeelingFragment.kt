@@ -39,14 +39,10 @@ class MorningFeelingFragment : BaseFillSleepDiaryFragment() {
         }
     }
 
-    private fun changeFeeling(index: Int) {
-        mFillDiaryViewModel.mFeelingLiveData.value = index
-        updateSelectTvUI(index)
-    }
-
-    private fun updateSelectTvUI(selIndex: Int) {
+    private fun changeFeeling(feelingIndex: Int) {
+        mFillDiaryViewModel.mFeelingLiveData.value = feelingIndex
         for ((index, tv) in mTvs.withIndex()) {
-            tv.isSelected = index == selIndex
+            tv.isSelected = index == feelingIndex
         }
     }
 }

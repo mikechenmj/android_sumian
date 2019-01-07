@@ -23,7 +23,7 @@ import retrofit2.Call
  * version: 1.0
  */
 class FillDiaryViewModel : ViewModel() {
-    var mCurrentProgress = 0
+    private var mCurrentProgress = 0
     val mSleepTimeLiveData = MutableLiveData<SleepTimeData>()   //t0 - t3
     val mNightWakeLiveData = MutableLiveData<Pair<Int, Int>>()    // x time, y minus
     val mDaySleepLiveData = MutableLiveData<Pair<Int, Int>>()    // x time, y minus
