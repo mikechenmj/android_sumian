@@ -18,7 +18,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_264"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_10"
         android:background="@color/b2_color"
         android:orientation="vertical"
@@ -27,7 +27,7 @@
         <com.sumian.sd.widget.text.CountInputLengthEditTextView
             android:id="@+id/et_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_gravity="start"
             android:background="@null"
             android:gravity="top"
@@ -49,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:layout_marginTop="10dp"
             android:text="@string/feedback_text_count"
             android:textColor="@color/t2_color_day"
             android:textSize="@dimen/font_14"
