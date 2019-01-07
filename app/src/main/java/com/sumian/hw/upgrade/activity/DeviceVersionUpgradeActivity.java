@@ -162,10 +162,12 @@ public class DeviceVersionUpgradeActivity extends BasePresenterActivity implemen
                 case VERSION_TYPE_MONITOR:
                     stringId = R.string.firmware_upgrade_success_hint;
                     AppManager.getVersionModel().notifyMonitorDot(false);
+                    DeviceManager.INSTANCE.getMMonitorNeedUpdateLiveData().setValue(false);
                     break;
                 case VERSION_TYPE_SLEEPY:
                     stringId = R.string.sleeper_firmware_upgrade_success_hint;
                     AppManager.getVersionModel().notifySleepyDot(false);
+                    DeviceManager.INSTANCE.getMSleeperNeedUpdateLiveData().setValue(false);
                     break;
             }
             ToastUtils.showLong(stringId);
