@@ -78,7 +78,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     override fun onRefresh() {
         this.mPresenter.refreshAdvisories()
-        refresh.showRefreshAnim()
+        refresh?.showRefreshAnim()
     }
 
     override fun loadMore() {
@@ -101,12 +101,12 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
     override fun onResume() {
         super.onResume()
         this.mPresenter.refreshAdvisories()
-        refresh.showRefreshAnim()
+        refresh?.showRefreshAnim()
     }
 
     override fun onFinish() {
         super.onFinish()
-        refresh.hideRefreshAnim()
+        refresh?.hideRefreshAnim()
     }
 
     override fun onGetAdvisoriesSuccess(advisories: List<Advisory>) {
