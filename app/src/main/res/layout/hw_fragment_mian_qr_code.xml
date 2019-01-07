@@ -46,7 +46,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_re_scan"
             android:layout_width="150dp"
             android:layout_height="@dimen/button_height"
@@ -58,7 +58,7 @@
             android:layout_width="5dp"
             android:layout_height="0dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_action"
             style="@style/SumianButton"
             android:layout_width="150dp"

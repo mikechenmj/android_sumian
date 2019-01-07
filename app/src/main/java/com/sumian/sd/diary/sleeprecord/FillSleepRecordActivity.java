@@ -15,7 +15,7 @@ import com.sumian.sd.diary.sleeprecord.bean.SleepRecord;
 import com.sumian.sd.event.EventBusUtil;
 import com.sumian.sd.event.SleepRecordFilledEvent;
 import com.sumian.sd.h5.H5Uri;
-import com.sumian.sd.utils.JsonUtil;
+import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.utils.TimeUtil;
 
 import java.util.Locale;
@@ -42,12 +42,6 @@ public class FillSleepRecordActivity extends SdBaseWebViewActivity {
         launcher.startActivityForResult(intent, requestCode);
 //        ActivityUtils.startActivity(new Intent(ActivityUtils.getTopActivity(), FillSleepDiaryActivity.class));
     }
-
-//    public static void launch(Context context, long time) {
-//        Intent intent = new Intent(context, FillSleepRecordActivity.class);
-//        intent.putExtra(KEY_TIME, time);
-//        ActivityUtils.startActivity(intent);
-//    }
 
     public static SleepRecord resolveResultData(Intent data) {
         FillSleepRecordResponse fillSleepRecordResponse = JsonUtil.fromJson(data.getStringExtra(SLEEP_RESPONSE), FillSleepRecordResponse.class);

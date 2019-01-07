@@ -68,7 +68,7 @@
 
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_next_step"
         style="@style/bt_t1_style"
         android:layout_width="match_parent"

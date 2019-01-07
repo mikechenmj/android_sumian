@@ -35,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="30dp" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn"
         style="@style/SumianButton"
         android:layout_marginStart="20dp"

@@ -58,7 +58,7 @@
             tools:visibility="visible" />
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/tv_submit"
         style="@style/SumianButton"
         android:layout_marginStart="@dimen/space_36"

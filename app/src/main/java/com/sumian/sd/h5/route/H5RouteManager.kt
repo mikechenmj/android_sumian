@@ -2,7 +2,7 @@ package com.sumian.sd.h5.route
 
 import android.content.Context
 import android.content.Intent
-import com.sumian.hw.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.h5.SimpleWebActivity
 
 /**

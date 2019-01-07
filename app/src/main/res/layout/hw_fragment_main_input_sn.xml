@@ -38,7 +38,7 @@
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_action"
         style="@style/SumianButton"
         android:layout_width="match_parent"

@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_left"
                 style="@style/SumianButton"
                 android:layout_height="@dimen/space_50"
@@ -87,7 +87,7 @@
                 android:layout_width="@dimen/space_20"
                 android:layout_height="wrap_content" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_right"
                 style="@style/SumianButton"
                 android:layout_height="@dimen/space_50"

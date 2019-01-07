@@ -35,7 +35,7 @@
         android:gravity="right"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/alert_left_btn"
             android:layout_width="74dp"
             android:layout_height="36dp"
@@ -47,7 +47,7 @@
             android:textColor="#666666"
             android:visibility="gone" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/alert_right_btn"
             android:layout_width="74dp"
             android:layout_height="36dp"

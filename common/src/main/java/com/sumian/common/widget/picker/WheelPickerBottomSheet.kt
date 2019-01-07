@@ -1,10 +1,9 @@
-package com.sumian.sd.diary.fillsleepdiary.widget
+package com.sumian.common.widget.picker
 
 import android.content.Context
 import android.view.LayoutInflater
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.sumian.common.widget.picker.NumberPickerView
-import com.sumian.sd.R
+import com.sumian.common.R
 import kotlinx.android.synthetic.main.view_wheel_picker_bottom_sheet.*
 
 /**

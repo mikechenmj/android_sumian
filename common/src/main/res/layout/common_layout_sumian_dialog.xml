@@ -57,7 +57,7 @@
         android:paddingStart="20dp"
         tools:ignore="RtlSymmetry">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_left"
             style="@style/SumianButton"
             android:layout_width="0dp"
@@ -68,7 +68,7 @@
             tools:text="@string/cancel"
             tools:visibility="visible" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_right"
             style="@style/SumianButton"
             android:layout_width="0dp"

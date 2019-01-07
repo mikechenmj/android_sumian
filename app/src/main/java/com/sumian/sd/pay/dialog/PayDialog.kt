@@ -28,7 +28,7 @@ class PayDialog(context: Context, private val listener: Listener) : QMUIDialog(c
 
     }
     private val mBtJoin: Button by lazy {
-        val btJoin = findViewById<Button>(R.id.bt_join)
+        val btJoin = findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.bt_join)
         btJoin.setOnClickListener(this@PayDialog)
         btJoin
     }

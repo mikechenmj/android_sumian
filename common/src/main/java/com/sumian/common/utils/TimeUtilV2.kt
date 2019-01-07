@@ -1,7 +1,6 @@
 package com.sumian.common.utils
 
 import android.text.format.DateUtils
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -262,6 +261,10 @@ class TimeUtilV2 {
 
         fun getMinuteFromSecond(second: Int): Int {
             return second / 60 % 60
+        }
+
+        fun currentTimeInSecond(): Int {
+            return (System.currentTimeMillis() / 1000).toInt()
         }
     }
 }

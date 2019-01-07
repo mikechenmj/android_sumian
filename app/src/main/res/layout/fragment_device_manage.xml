@@ -205,7 +205,7 @@
                 android:visibility="gone"
                 tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_turn_on_pa"
                 style="@style/SumianButton"
                 android:layout_width="150dp"
