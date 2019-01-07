@@ -17,7 +17,7 @@ import com.sumian.sd.doctor.contract.BindDoctorContract;
 import com.sumian.sd.doctor.presenter.BindDoctorPresenter;
 import com.sumian.sd.h5.H5Uri;
 import com.sumian.sd.main.MainActivity;
-import com.sumian.sd.utils.JsonUtil;
+import com.sumian.common.utils.JsonUtil;
 
 import org.jetbrains.annotations.NotNull;
 

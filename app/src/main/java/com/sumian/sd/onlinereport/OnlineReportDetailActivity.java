@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
-import com.sumian.hw.utils.JsonUtil;
+import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.h5.SimpleWebActivity;
 import com.sumian.sd.main.MainActivity;
 

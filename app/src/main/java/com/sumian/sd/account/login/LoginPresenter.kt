@@ -3,7 +3,7 @@ package com.sumian.sd.account.login
 import android.app.Activity
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.hw.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.app.AppManager

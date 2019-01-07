@@ -17,7 +17,7 @@ import com.sumian.sd.pay.activity.PaymentActivity;
 import com.sumian.sd.service.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sd.service.diary.DiaryEvaluationDetailActivity;
 import com.sumian.sd.service.tel.activity.TelBookingPublishActivity;
-import com.sumian.sd.utils.JsonUtil;
+import com.sumian.common.utils.JsonUtil;
 
 import java.util.Locale;
 

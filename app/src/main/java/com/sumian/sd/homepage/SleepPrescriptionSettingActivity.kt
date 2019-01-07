@@ -14,7 +14,7 @@ import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.SleepPrescriptionUpdatedEvent
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.homepage.bean.SleepPrescriptionWrapper
-import com.sumian.sd.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
 
 /**

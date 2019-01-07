@@ -24,7 +24,7 @@ import com.sumian.sd.service.advisory.bean.Advisory
 import com.sumian.sd.service.advisory.bean.PictureOssSts
 import com.sumian.sd.service.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.service.advisory.contract.PublishAdvisoryRecordContact
-import com.sumian.sd.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 import org.json.JSONObject
 import java.util.*
 

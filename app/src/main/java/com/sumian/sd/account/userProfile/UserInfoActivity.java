@@ -24,7 +24,7 @@ import com.sumian.sd.account.sheet.ModifySelectBottomSheet;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.base.SdBaseActivity;
-import com.sumian.sd.utils.JsonUtil;
+import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 import com.sumian.sd.widget.divider.SettingDividerView;

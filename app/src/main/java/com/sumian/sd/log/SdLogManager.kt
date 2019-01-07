@@ -1,7 +1,7 @@
 package com.sumian.sd.log
 
 import com.sumian.common.log.CommonLogManager
-import com.sumian.hw.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.device.DeviceInfoFormatter
 

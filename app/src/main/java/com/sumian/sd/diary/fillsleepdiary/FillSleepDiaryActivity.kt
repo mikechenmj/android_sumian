@@ -13,7 +13,7 @@ import com.sumian.sd.diary.fillsleepdiary.fragment.*
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.SleepRecordFilledEvent
-import com.sumian.sd.utils.JsonUtil
+import com.sumian.common.utils.JsonUtil
 
 /**
  * @author : Zhan Xuzhao
