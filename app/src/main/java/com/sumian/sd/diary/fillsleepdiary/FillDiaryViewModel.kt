@@ -30,7 +30,7 @@ class FillDiaryViewModel : ViewModel() {
     val mFeelingLiveData = MutableLiveData<Int>()    // 0-4
     val mPillsLiveData = MutableLiveData<List<SleepPill>>()
     val mRemarkLiveData = MutableLiveData<String>()
-    var mSwitchProgressListener: SwitchProgressListener? = null
+    var mProgressListener: ProgressListener? = null
     var mDayTime = System.currentTimeMillis()
 
     private val mCalls = ArrayList<Call<*>>()
@@ -49,7 +49,7 @@ class FillDiaryViewModel : ViewModel() {
     }
 
     fun previous() {
-        mSwitchProgressListener?.switchProgress(--mCurrentProgress, false)
+        mProgressListener?.onProgressChange(--mCurrentProgress, false)
     }
 
     fun next() {
@@ -62,16 +62,12 @@ class FillDiaryViewModel : ViewModel() {
             return
         }
         mCurrentProgress++
-        updateTimeIfNeed()
-        mSwitchProgressListener?.switchProgress(mCurrentProgress, true)
-    }
-
-    private fun updateTimeIfNeed() {
+        // update next sleep time
         when (mCurrentProgress) {
             in 1..3 -> mSleepTimeLiveData.value!!.updateTimeInNeed(mCurrentProgress)
             else -> Unit
         }
-
+        mProgressListener?.onProgressChange(mCurrentProgress, true)
     }
 
     private fun postDiaryToServer() {
@@ -92,7 +88,7 @@ class FillDiaryViewModel : ViewModel() {
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<SleepRecord>() {
             override fun onSuccess(response: SleepRecord?) {
-                mSwitchProgressListener?.finishWithResult(response)
+                mProgressListener?.finishWithResult(response)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -121,8 +117,8 @@ class FillDiaryViewModel : ViewModel() {
         }
     }
 
-    interface SwitchProgressListener {
-        fun switchProgress(index: Int, next: Boolean)
+    interface ProgressListener {
+        fun onProgressChange(index: Int, next: Boolean)
         fun finishWithResult(sleepRecord: SleepRecord?)
     }
 
@@ -146,7 +142,7 @@ class FillDiaryViewModel : ViewModel() {
         return getSleepTime(2) - getSleepTime(1)
     }
 
-    fun getPreviousSleepPills() {
+    private fun getPreviousSleepPills() {
         val call = AppManager.getSdHttpService().getSleepPills()
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<List<SleepPill>>() {
@@ -166,4 +162,5 @@ class FillDiaryViewModel : ViewModel() {
             call.cancel()
         }
     }
+
 }

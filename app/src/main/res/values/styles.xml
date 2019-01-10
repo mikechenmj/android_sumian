@@ -426,4 +426,34 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="NumberPickerView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="npv_DividerColor">@color/l1_color</item>
+        <item name="npv_DividerHeight">1dp</item>
+        <item name="npv_ItemPaddingHorizontal">5dp</item>
+        <item name="npv_ItemPaddingVertical">5dp</item>
+        <item name="npv_MarginStartOfHint">@dimen/space_38</item>
+        <item name="npv_RespondChangeOnDetached">true</item>
+        <item name="npv_ShowCount">3</item>
+        <item name="npv_TextColorHint">@color/b3_color</item>
+        <item name="npv_TextColorNormal">@color/t1_alpha_30_color</item>
+        <item name="npv_TextColorSelected">@color/b3_color</item>
+        <item name="npv_TextSizeHint">@dimen/font_18</item>
+        <item name="npv_TextSizeNormal">@dimen/font_18</item>
+        <item name="npv_TextSizeSelected">@dimen/font_18</item>
+        <item name="npv_WrapSelectorWheel">false</item>
+    </style>
+
+    <style name="TodayYesterdayTv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">62dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textColor">@color/l2_color</item>
+    </style>
+
 </resources>

@@ -22,7 +22,7 @@ import com.sumian.common.utils.JsonUtil
  * desc   :
  * version: 1.0
  */
-class FillSleepDiaryActivity : BasePresenterActivity<IPresenter>(), FillDiaryViewModel.SwitchProgressListener {
+class FillSleepDiaryActivity : BasePresenterActivity<IPresenter>(), FillDiaryViewModel.ProgressListener {
     companion object {
         private const val KEY_TIME = "time"
         private const val KEY_RESPONSE_DATA = "response_data"
@@ -63,10 +63,10 @@ class FillSleepDiaryActivity : BasePresenterActivity<IPresenter>(), FillDiaryVie
 
     override fun initData() {
         super.initData()
-        mFillDiaryViewViewModel.mSwitchProgressListener = this
+        mFillDiaryViewViewModel.mProgressListener = this
     }
 
-    override fun switchProgress(index: Int, next: Boolean) {
+    override fun onProgressChange(index: Int, next: Boolean) {
         if (index < 0 || index == FillDiaryViewModel.TOTAL_PAGE) {
             finish()
             return

@@ -20,7 +20,7 @@ class FillDiaryTest {
         val model = SleepTimeData()
         for (minuteShift in arrayOf(-5, 0, 5)) {
 //        for (minuteShift in arrayOf(0)) {
-            val firstTime = SleepTimeData.SECOND_DAY_00_00 + DateUtils.MINUTE_IN_MILLIS * minuteShift
+            val firstTime = SleepTimeData.TODAY_00_00 + DateUtils.MINUTE_IN_MILLIS * minuteShift
             println("T0 --> ${TimeUtilV2.formatDate("HH:mm", firstTime)}")
             model.setTime(0, firstTime)
             model.setTime(1, model.getStartAndEndTime(1).first)
@@ -38,8 +38,8 @@ class FillDiaryTest {
             }
         }
 
-        println("${Date(model.parseHHmmToTime(1, 1))}")
-        println("${Date(model.parseHHmmToTime(13, 21))}")
+        println("${Date(SleepTimeData.parseHHmmToTime(1, 1))}")
+        println("${Date(SleepTimeData.parseHHmmToTime(13, 21))}")
     }
 
     private fun format(num: Int): String? {

@@ -13,31 +13,35 @@ import java.util.*
  */
 class SleepTimeData {
     companion object {
-        const val FIVE_MINUTES_IN_MILLIS = DateUtils.MINUTE_IN_MILLIS * 5
-        val FIRST_DAY_18_00 = TimeUtilV2.parseTimeStr("18:00")
-        val SECOND_DAY_00_00 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("00:00")
-        val SECOND_DAY_17_55 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("17:55")
-        val SECOND_DAY_23_50 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("23:50")
-        val SECOND_DAY_23_55 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("23:55")
+        const val FIVE_MIN = DateUtils.MINUTE_IN_MILLIS * 5
+        val YESTERDAY_18_00 = TimeUtilV2.parseTimeStr("18:00")
+        val TODAY_00_00 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("00:00")
+        val TODAY_17_55 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("17:55")
+        val TODAY_23_50 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("23:50")
+        val TODAY_23_55 = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("23:55")
         val DEFAULT_INIT_TIME_OF_SLEEP_TIME = TimeUtilV2.parseTimeStr("23:00")
         val DEFAULT_INIT_TIME_OF_WAKEUP_TIME = DateUtils.DAY_IN_MILLIS + TimeUtilV2.parseTimeStr("7:00")
+
+        fun parseHHmmToTime(hour: Int, minute: Int, addDay: Boolean = false): Long {
+            return TimeUtilV2.parseTimeStr("HH:mm", "$hour:$minute") + DateUtils.DAY_IN_MILLIS * (if (addDay) 1 else 0)
+        }
     }
 
     val mTimeArray = longArrayOf(
             DEFAULT_INIT_TIME_OF_SLEEP_TIME,
-            DEFAULT_INIT_TIME_OF_SLEEP_TIME,
+            YESTERDAY_18_00,
             DEFAULT_INIT_TIME_OF_WAKEUP_TIME,
-            DEFAULT_INIT_TIME_OF_WAKEUP_TIME
+            TODAY_00_00
     )
 
     private fun indexTooBigException() = IllegalArgumentException("index must < 4")
 
     fun getStartAndEndTime(index: Int): Pair<Long, Long> {
         return when (index) {
-            0 -> Pair(FIRST_DAY_18_00, SECOND_DAY_17_55)
-            1 -> if (mTimeArray[0] < SECOND_DAY_00_00) Pair(mTimeArray[0], SECOND_DAY_17_55) else Pair(mTimeArray[0], SECOND_DAY_23_50)
-            2 -> if (mTimeArray[1] < SECOND_DAY_00_00) Pair(SECOND_DAY_00_00, SECOND_DAY_23_55) else Pair(mTimeArray[1] + FIVE_MINUTES_IN_MILLIS, SECOND_DAY_23_55)
-            3 -> Pair(mTimeArray[2], SECOND_DAY_23_55)
+            0 -> Pair(YESTERDAY_18_00, TODAY_17_55)
+            1 -> Pair(mTimeArray[0], TODAY_23_50)
+            2 -> Pair(Math.max(mTimeArray[1] + FIVE_MIN, TODAY_00_00), TODAY_23_55)
+            3 -> Pair(mTimeArray[2], TODAY_23_55)
             else -> throw indexTooBigException()
         }
     }
@@ -46,7 +50,7 @@ class SleepTimeData {
         return when (index) {
             0 -> mTimeArray[0]
             1 -> if (mTimeArray[1] >= mTimeArray[0]) mTimeArray[1] else mTimeArray[0]
-            2 -> if (mTimeArray[2] >= mTimeArray[1] + FIVE_MINUTES_IN_MILLIS) mTimeArray[2] else mTimeArray[1] + FIVE_MINUTES_IN_MILLIS
+            2 -> if (mTimeArray[2] >= mTimeArray[1] + FIVE_MIN) mTimeArray[2] else mTimeArray[1] + FIVE_MIN
             3 -> if (mTimeArray[3] >= mTimeArray[2]) mTimeArray[3] else mTimeArray[2]
             else -> throw indexTooBigException()
         }
@@ -57,7 +61,7 @@ class SleepTimeData {
         return createHoursByStartAndEndTime(startAndEndTime.first, startAndEndTime.second)
     }
 
-    fun createMinutesByIndexAndHour(index: Int, hour: Int): Array<String?> {
+    fun createMinutesByIndexAndHour(index: Int, hour: Int, isToday: Boolean = false): Array<String?> {
         val startMinute: Int
         val endMinute: Int
         val time: Long
@@ -67,26 +71,22 @@ class SleepTimeData {
                 endMinute = 55
             }
             1 -> {
-                time = if (mTimeArray[index - 1] < SECOND_DAY_00_00) {
-                    getNextDayTimeByHour(hour, hour < 18)
-                } else {
-                    getNextDayTimeByHour(hour)
-                }
-                startMinute = getZeroOrPreviewMinute(index, time)
-                endMinute = if (isInTheSameHour(SECOND_DAY_23_50, time)) {
+                time = getTimeByHour(hour, isToday)
+                startMinute = getZeroOrPreviousMinute(index, time)
+                endMinute = if (isInTheSameHour(TODAY_23_50, time)) {
                     50
                 } else {
                     55
                 }
             }
             2 -> {
-                time = getNextDayTimeByHour(hour)
-                startMinute = getZeroOrPreviewMinute(index, time, true)
+                time = getTimeByHour(hour)
+                startMinute = getZeroOrPreviousMinute(index, time, true)
                 endMinute = 55
             }
             3 -> {
-                time = getNextDayTimeByHour(hour)
-                startMinute = getZeroOrPreviewMinute(index, time)
+                time = getTimeByHour(hour)
+                startMinute = getZeroOrPreviousMinute(index, time)
                 endMinute = 55
             }
             else -> throw indexTooBigException()
@@ -94,10 +94,10 @@ class SleepTimeData {
         return createMinutesByStartAndEndTime(startMinute, endMinute)
     }
 
-    private fun getNextDayTimeByHour(hour: Int, nextDay: Boolean = true) =
+    private fun getTimeByHour(hour: Int, nextDay: Boolean = true) =
             DateUtils.DAY_IN_MILLIS * (if (nextDay) 1 else 0) + TimeUtilV2.parseTimeStr("$hour:00")
 
-    private fun getZeroOrPreviewMinute(index: Int, time: Long, addFiveMinutesIfNeed: Boolean = false): Int {
+    private fun getZeroOrPreviousMinute(index: Int, time: Long, addFiveMinutesIfNeed: Boolean = false): Int {
         return if (isInTheSameHour(mTimeArray[index - 1], time)) {
             getMinuteOfTime(mTimeArray[index - 1]) + if (addFiveMinutesIfNeed) 5 else 0
         } else {
@@ -105,7 +105,7 @@ class SleepTimeData {
         }
     }
 
-    fun createHoursByStartAndEndTime(startTime: Long, endTime: Long): Array<String?> {
+    private fun createHoursByStartAndEndTime(startTime: Long, endTime: Long): Array<String?> {
         val list = ArrayList<String>()
         val formatStartTime = startTime - DateUtils.MINUTE_IN_MILLIS * getMinuteOfTime(startTime)
         val formatEndTime = endTime - DateUtils.MINUTE_IN_MILLIS * getMinuteOfTime(endTime)
@@ -161,7 +161,7 @@ class SleepTimeData {
     fun setTime(index: Int, hour: Int, minute: Int) {
         val addDay = when (index) {
             0 -> hour < 18
-            1 -> if (mTimeArray[0] < SECOND_DAY_00_00) {
+            1 -> if (mTimeArray[0] < TODAY_00_00) {
                 hour < 18
             } else {
                 true
@@ -176,9 +176,4 @@ class SleepTimeData {
     fun getTime(index: Int): Long {
         return mTimeArray[index]
     }
-
-    fun parseHHmmToTime(hour: Int, minute: Int, addDay: Boolean = false): Long {
-        return TimeUtilV2.parseTimeStr("HH:mm", "$hour:$minute") + DateUtils.DAY_IN_MILLIS * (if (addDay) 1 else 0)
-    }
-
 }
