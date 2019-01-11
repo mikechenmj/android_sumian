@@ -2,6 +2,7 @@ package com.sumian.common.widget.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
@@ -21,6 +22,7 @@ class SumianDialog(context: Context) : Dialog(context, R.style.SumianDialog) {
 
     init {
         setContentView(R.layout.common_layout_sumian_dialog)
+        iv_close.setOnClickListener { dismiss() }
     }
 
     fun setTopIcon(imageRes: Int): SumianDialog {
@@ -108,6 +110,16 @@ class SumianDialog(context: Context) : Dialog(context, R.style.SumianDialog) {
 
     fun setCanceledOnTouchOutsideV2(cancel: Boolean): SumianDialog {
         super.setCanceledOnTouchOutside(cancel)
+        return this
+    }
+
+    fun showCloseIcon(show: Boolean): SumianDialog {
+        iv_close.visibility = if (show) View.VISIBLE else View.GONE
+        return this
+    }
+
+    fun setOnDismissListenerWithReturn(listener: DialogInterface.OnDismissListener): SumianDialog {
+        setOnDismissListener(listener)
         return this
     }
 }

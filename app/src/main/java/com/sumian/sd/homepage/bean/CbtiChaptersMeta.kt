@@ -1,6 +1,8 @@
 package com.sumian.sd.homepage.bean
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  *     "meta": {
@@ -18,5 +20,26 @@ data class CbtiChaptersMeta(
         @SerializedName("current_status") val currentStatus: String,
         @SerializedName("expired_at") val expiredAt: Int,
         @SerializedName("all_finished") val allFinished: Boolean,
-        @SerializedName("joined_count") val joinedCount: Int = 0
+        @SerializedName("joined_count") val joinedCount: Int = 0,
+        @SerializedName("final_report") val finalReport: FinalReport
 )
+
+@Parcelize
+data class FinalReport(
+        @SerializedName("final_online_report_id")
+        val finalOnlineReportId: Int, // 0
+        @SerializedName("finished_at")
+        val finishedAt: Int, // 1546549200
+        @SerializedName("scheme")
+        val scheme: Scheme
+) : Parcelable {
+    @Parcelize
+    data class Scheme(
+            @SerializedName("cbti_id")
+            val cbtiId: Int, // 387
+            @SerializedName("chapter_id")
+            val chapterId: Int, // 6
+            @SerializedName("scale_distribution_ids")
+            val scaleDistributionIds: String // 9506,9507,9508
+    ) : Parcelable
+}

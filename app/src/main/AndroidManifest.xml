@@ -556,6 +556,9 @@
         <activity
             android:name=".device.UpgradeFirmwareDialogActivity"
             android:theme="@style/DialogActivity" />
+        <activity
+            android:name=".service.cbti.activity.CbtiFinalReportDialogActivity"
+            android:theme="@style/DialogActivity" />
 
         <service
             android:name=".service.cbti.job.CBTICourseWatchLogJobService"

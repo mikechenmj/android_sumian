@@ -300,7 +300,7 @@ interface SdApi {
      * courses.exercise 课后练习
      */
     @GET("cbti-chapters")
-    fun getCbtiChapters(@Query("include") include: String?): Call<GetCbtiChaptersResponse>
+    fun getCbtiChapters(@Query("include") include: String? = null): Call<GetCbtiChaptersResponse>
 
     //cbti
 

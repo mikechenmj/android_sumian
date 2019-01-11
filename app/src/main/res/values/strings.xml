@@ -816,4 +816,6 @@
     <string name="device_market">设备商城</string>
     <string name="yesterday_night">昨夜</string>
     <string name="today">今天</string>
+    <string name="cbti_final_report">CBTI 终期报告</string>
+    <string name="cbti_final_report_dialog_message">为了能够更好地了解您当前的情况，为您提供后续建议，需要您配合完成终期评估。</string>
 </resources>

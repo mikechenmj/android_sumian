@@ -32,6 +32,7 @@ import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.relaxation.RelaxationListActivity
 import com.sumian.sd.scale.ScaleListActivity
+import com.sumian.sd.service.cbti.CbtiManager
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
@@ -155,6 +156,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun queryCbti() {
+        CbtiManager.showFinalReportDialogIfNeed()
         val call = AppManager.getSdHttpService().getCbtiChapters(null)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<GetCbtiChaptersResponse>() {
