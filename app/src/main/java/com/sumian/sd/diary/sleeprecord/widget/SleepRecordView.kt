@@ -47,7 +47,7 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
         val hasRecord = mSleepRecord != null
         ll_sleep_record.visibility = if (hasRecord) View.VISIBLE else View.GONE
         ll_no_sleep_record.visibility = if (hasRecord) View.GONE else View.VISIBLE
-        val showRefill = hasRecord && TextUtils.isEmpty(sleepRecord!!.doctor_evaluation)
+        val showRefill = hasRecord && TextUtils.isEmpty(sleepRecord!!.doctorEvaluation)
         tv_refill.visibility = if (showRefill) View.VISIBLE else View.GONE
         if (hasRecord) {
             showSleepRecord(sleepRecord!!)
@@ -60,31 +60,31 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     @SuppressLint("SetTextI18n")
     private fun showSleepRecord(sleepRecord: SleepRecord) {
-        val answer = sleepRecord.answer
+//        val answer = sleepRecord.answer
         // 睡眠效率
-        progress_view_sleep.setProgress(sleepRecord.sleep_efficiency)
+        progress_view_sleep.setProgress(sleepRecord.sleepEfficiency)
         // 睡眠时长
-        tv_sleep_duration.text = TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.sleep_duration)
+        tv_sleep_duration.text = TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.sleepDuration)
         // 卧床时长
-        tv_on_bed_duration.text = TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.on_bed_duration)
+        tv_on_bed_duration.text = TimeUtil.getHourMinuteStringFromSecondInZh(sleepRecord.onBedDuration)
         // 睡眠图
         sleep_record_diagram_view.setData(
-                answer.getTryToSleepAtInMillis(), answer.getSleepAtInMillis(),
-                answer.getWakeUpAtInMillis(), answer.getGetUpAtInMillis(),
-                answer.wake_times, answer.getWakeDurationInMillis().toLong())
+                sleepRecord.tryToSleepAt * 1000L, sleepRecord.sleepAt * 1000L,
+                sleepRecord.wakeUpAt * 1000L, sleepRecord.getUpAt * 1000L,
+                sleepRecord.wakeTimes, sleepRecord.wakeMinutes * 60 * 1000L)
         // 情绪
-        tv_sleep_quality.text = getSleepQualityString(answer.energetic)
-        iv_emotion.setImageResource(getSleepQualityIcon(answer.energetic))
+        tv_sleep_quality.text = getSleepQualityString(sleepRecord.energetic)
+        iv_emotion.setImageResource(getSleepQualityIcon(sleepRecord.energetic))
         // 夜醒
-        tv_night_wake_up_duration.text = getWakeupOrOtherSleepString("没醒过", answer.wake_times, answer.wake_minutes * 60)
+        tv_night_wake_up_duration.text = getWakeupOrOtherSleepString("没醒过", sleepRecord.wakeTimes, sleepRecord.wakeMinutes * 60)
         // 小睡
-        tv_little_sleep_duration.text = getWakeupOrOtherSleepString("没小睡", answer.other_sleep_times, answer.other_sleep_total_minutes * 60)
+        tv_little_sleep_duration.text = getWakeupOrOtherSleepString("没小睡", sleepRecord.otherSleepTimes, sleepRecord.otherSleepTotalMinutes * 60)
         // 服药
-        tv_pills.text = getPillsString(answer.sleep_pills)
-        tv_pills.isClickable = answer.sleep_pills != null && answer.sleep_pills!!.size != 0
+        tv_pills.text = getPillsString(sleepRecord.sleepPills)
+        tv_pills.isClickable = sleepRecord.sleepPills != null && sleepRecord.sleepPills.isNotEmpty()
         // 睡眠备注
-        vg_sleep_desc.visibility = if (TextUtils.isEmpty(answer.remark)) View.GONE else View.VISIBLE
-        tv_sleep_desc.text = answer.remark
+        vg_sleep_desc.visibility = if (TextUtils.isEmpty(sleepRecord.remark)) View.GONE else View.VISIBLE
+        tv_sleep_desc.text = sleepRecord.remark
     }
 
     private fun getWakeupOrOtherSleepString(emptyString: String, times: Int, duration: Int): String {
@@ -126,7 +126,7 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     private fun getPillsString(pills: List<SleepPill>?): String {
-        if (pills == null || pills.size == 0) {
+        if (pills == null || pills.isEmpty()) {
             return resources.getString(R.string.do_not_eat_pills)
         }
         val strList = ArrayList<String>()
@@ -137,11 +137,11 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     private fun showPillsDialogIfNeed() {
-        val sleep_pills = mSleepRecord!!.answer.sleep_pills
-        if (sleep_pills == null || sleep_pills.size == 0) {
+        val pills = mSleepRecord!!.sleepPills
+        if (pills == null || pills.isEmpty()) {
             return
         }
-        PillsDialog.show(context, sleep_pills)
+        PillsDialog.show(context, pills)
     }
 
     fun setOnClickRefillSleepRecordListener(listener: View.OnClickListener) {
