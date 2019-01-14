@@ -77,4 +77,5 @@
     <dimen name="calendar_week_bg_radius">20dp</dimen>
     <dimen name="relaxation_detail_default_height">253dp</dimen>
     <dimen name="fill_diary_default_content_height">300dp</dimen>
+    <dimen name="today_yesterday_picker_item_height">56dp</dimen>
 </resources>

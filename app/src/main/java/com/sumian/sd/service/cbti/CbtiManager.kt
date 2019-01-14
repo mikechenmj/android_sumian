@@ -62,7 +62,7 @@ object CbtiManager {
         if (
                 currentTimeMillis - finalReport.finishedAt > SP_KEY_FIRST_SHOW_GAP_DURATION
                 && currentTimeMillis - lastShowTime > SP_KEY_ANOTHER_SHOW_GAP_DURATION
-                && (firstShowTime == 0L || currentTimeMillis - firstShowTime < SP_KEY_VALID_SHOW_DURATION)) {
+                && (firstShowTime == 0L || currentTimeMillis - finalReport.finishedAt < SP_KEY_VALID_SHOW_DURATION)) {
             sp.put(SP_KEY_LAST_SHOW_TIME, currentTimeMillis)
             if (firstShowTime == 0L) {
                 sp.put(SP_KEY_FIRST_SHOW_TIME, currentTimeMillis)

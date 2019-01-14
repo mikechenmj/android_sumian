@@ -2,7 +2,6 @@ package com.sumian.sd.diary.fillsleepdiary.fragment
 
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.utils.SumianExecutor
@@ -10,8 +9,6 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.diary.fillsleepdiary.bean.SleepTimeData
 import kotlinx.android.synthetic.main.layout_choose_sleep_time.*
-import kotlinx.android.synthetic.main.tx_video_palyer_controller.*
-import java.lang.IllegalArgumentException
 
 /**
  * @author : Zhan Xuzhao
@@ -21,9 +18,6 @@ import java.lang.IllegalArgumentException
  * version: 1.0
  */
 class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
-    private var mType = TYPE_SLEEP_TIME
-    private var mTimeIndex = 0
-
     companion object {
         private const val KEY_TYPE = "ChooseSleepTimeFragment.KEY_TYPE"
         const val TYPE_SLEEP_TIME = 0
@@ -40,6 +34,9 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
             return fragment
         }
     }
+
+    private var mType = TYPE_SLEEP_TIME
+    private var mTimeIndex = 0
 
     override fun getContentViewLayout(): Int {
         return R.layout.layout_choose_sleep_time
@@ -145,9 +142,7 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     }
 
     private fun updateTodayYesterdayUI(isToday: Boolean) {
-        tv_top.visibility = if (isToday) View.VISIBLE else View.GONE
-        tv_bottom.visibility = if (isToday) View.GONE else View.VISIBLE
-        tv_middle.text = getString(if (isToday) R.string.today else R.string.yesterday_night)
+        today_yesterday_view.setIsToday(isToday)
     }
 
     private fun isTodayByHourIndex(hourIndex: Int): Boolean {

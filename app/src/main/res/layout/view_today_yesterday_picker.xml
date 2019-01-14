@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/v_day_place_holder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/today_yesterday_picker_item_height" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/today_yesterday_picker_item_height">
+
+        <View
+            android:id="@+id/bg_yesterday"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_today_tv" />
+
+        <TextView
+            android:id="@+id/tv_yesterday"
+            style="@style/TodayYesterdayTv"
+            android:text="@string/yesterday_night" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/today_yesterday_picker_item_height">
+
+        <View
+            android:id="@+id/bg_today"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_today_tv" />
+
+        <TextView
+            android:id="@+id/tv_today"
+            style="@style/TodayYesterdayTv"
+            android:text="@string/today" />
+    </FrameLayout>
+</LinearLayout>

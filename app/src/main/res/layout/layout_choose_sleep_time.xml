@@ -22,8 +22,34 @@
         android:layout_marginTop="24dp">
 
         <LinearLayout
+            android:id="@+id/v_bg"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View style="@style/HorizontalDividerLine" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View style="@style/HorizontalDividerLine" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginLeft="70dp"
             android:gravity="center"
             tools:ignore="RtlHardcoded">
@@ -48,55 +74,10 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <com.sumian.sd.diary.fillsleepdiary.widget.TodayYesterdayPicker
+            android:id="@+id/today_yesterday_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_top"
-                    style="@style/TodayYesterdayTv"
-                    android:background="@drawable/rect_stroke_l3_4dp"
-                    android:text="@string/yesterday_night" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_middle"
-                    style="@style/TodayYesterdayTv"
-                    android:background="@drawable/rect_b5_4dp"
-                    android:text="@string/today"
-                    android:textColor="@color/white" />
-
-                <View style="@style/HorizontalDividerLine" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/tv_bottom"
-                    style="@style/TodayYesterdayTv"
-                    android:background="@drawable/rect_stroke_l3_4dp"
-                    android:text="@string/today" />
-
-                <View style="@style/HorizontalDividerLine" />
-            </FrameLayout>
-
-        </LinearLayout>
-
-
+            android:layout_marginStart="62dp" />
     </FrameLayout>
 </LinearLayout>
