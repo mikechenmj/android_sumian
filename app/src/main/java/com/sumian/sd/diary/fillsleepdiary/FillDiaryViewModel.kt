@@ -1,10 +1,10 @@
 package com.sumian.sd.diary.fillsleepdiary
 
+import android.text.format.DateUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -71,18 +71,19 @@ class FillDiaryViewModel : ViewModel() {
     }
 
     private fun postDiaryToServer() {
+        val yesterdayStartTime = TimeUtilV2.getDayStartTime(System.currentTimeMillis()) - DateUtils.DAY_IN_MILLIS
         val sleepDiaryData = SleepDiaryData(
                 (mDayTime / 1000).toInt(),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(0)),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(1)),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(2)),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(3)),
+                yesterdayStartTime + getSleepTime(0),
+                yesterdayStartTime + getSleepTime(1),
+                yesterdayStartTime + getSleepTime(2),
+                yesterdayStartTime + getSleepTime(3),
                 mNightWakeLiveData.value!!.first,
                 mNightWakeLiveData.value!!.second,
                 mDaySleepLiveData.value!!.second,
                 mDaySleepLiveData.value!!.second,
                 mFeelingLiveData.value!!,
-                JsonUtil.toJson(mPillsLiveData.value),
+                mPillsLiveData.value,
                 mRemarkLiveData.value)
         val call = AppManager.getSdHttpService().postSleepDiary(sleepDiaryData)
         mCalls.add(call)
