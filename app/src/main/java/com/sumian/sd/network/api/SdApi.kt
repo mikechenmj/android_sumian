@@ -550,6 +550,7 @@ interface SdApi {
     @GET("/sleep-pills")
     fun getSleepPills(): Call<List<SleepPill>>
 
+    @Headers("accept: application/vnd.sd.v2+json")
     @POST("/diaries")
     fun postSleepDiary(@Body sleepDataData: SleepDiaryData): Call<SleepRecord>
 }
