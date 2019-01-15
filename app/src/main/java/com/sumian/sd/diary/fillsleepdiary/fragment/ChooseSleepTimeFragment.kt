@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.common.widget.picker.NumberPickerView
 import com.sumian.sd.R
 import com.sumian.sd.diary.fillsleepdiary.bean.SleepTimeData
 import kotlinx.android.synthetic.main.layout_choose_sleep_time.*
@@ -63,27 +64,36 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
 
     private fun initPicker() {
         updatePickerValue()
-        picker_hour.setOnValueChangedListener { picker, oldVal, newVal ->
-            run {
-                val newHour = getHours()[newVal]!!.toInt()
-                val isToday = isTodayByHourIndex(newVal)
-                val minutes = getMinutes(newHour, isToday)
-                picker_minute.refreshByNewDisplayedValues(minutes)
-                setTime(newHour, minutes[picker_minute.value]!!.toInt(), isToday)
-            }
-        }
-        picker_hour.setOnScrollListener { view, scrollState ->
-            LogUtils.d(view.value, getHours()[view.value])
-            SumianExecutor.runOnUiThread(Runnable { updateTodayYesterdayUI(isTodayByHourIndex(view.value)) })
-        }
-        picker_minute.setOnValueChangedListener { picker, oldVal, newVal ->
-            run {
-                setTime(
-                        getCurrentHour(),
-                        getMinutes(getCurrentHour(), getCurrentTime() >= SleepTimeData.TODAY_00_00)[newVal]!!.toInt(),
-                        getCurrentTime() >= SleepTimeData.TODAY_00_00)
-            }
-        }
+        picker_hour.setOnValueChangedListener(mOnHourChangeListener)
+        picker_hour.setOnScrollListener(mOnHourScrollListener)
+        picker_minute.setOnValueChangedListener(mOnMinuteChangeListener)
+    }
+
+    override fun onDestroyView() {
+        picker_hour.setOnValueChangedListener(null)
+        picker_hour.setOnScrollListener(null)
+        picker_minute.setOnValueChangedListener(null)
+        super.onDestroyView()
+    }
+
+    private val mOnHourChangeListener = NumberPickerView.OnValueChangeListener { picker, oldVal, newVal ->
+        val newHour = getHours()[newVal]!!.toInt()
+        val isToday = isTodayByHourIndex(newVal)
+        val minutes = getMinutes(newHour, isToday)
+        picker_minute.refreshByNewDisplayedValues(minutes)
+        setTime(newHour, minutes[picker_minute.value]!!.toInt(), isToday)
+    }
+
+    private val mOnHourScrollListener = NumberPickerView.OnScrollListener { view, scrollState ->
+        LogUtils.d(view.value, getHours()[view.value])
+        SumianExecutor.runOnUiThread(Runnable { updateTodayYesterdayUI(isTodayByHourIndex(view.value)) })
+    }
+
+    private val mOnMinuteChangeListener = NumberPickerView.OnValueChangeListener { picker, oldVal, newVal ->
+        setTime(
+                getCurrentHour(),
+                getMinutes(getCurrentHour(), getCurrentTime() >= SleepTimeData.TODAY_00_00)[newVal]!!.toInt(),
+                getCurrentTime() >= SleepTimeData.TODAY_00_00)
     }
 
     private fun updatePickerValue() {

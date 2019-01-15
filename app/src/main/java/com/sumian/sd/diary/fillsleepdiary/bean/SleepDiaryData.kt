@@ -14,10 +14,10 @@ import java.util.*
  */
 data class SleepDiaryData(
         var date: Int,
-        var try_to_sleep_at: Long?,
-        var sleep_at: Long?,
-        var wake_up_at: Long?,
-        var get_up_at: Long?,
+        var try_to_sleep_at: Int?,
+        var sleep_at: Int?,
+        var wake_up_at: Int?,
+        var get_up_at: Int?,
         var wake_times: Int,
         var wake_minutes: Int,
         var other_sleep_times: Int,

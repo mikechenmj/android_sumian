@@ -71,13 +71,12 @@ class FillDiaryViewModel : ViewModel() {
     }
 
     private fun postDiaryToServer() {
-        val yesterdayStartTime = TimeUtilV2.getDayStartTime(System.currentTimeMillis()) - DateUtils.DAY_IN_MILLIS
         val sleepDiaryData = SleepDiaryData(
                 (mDayTime / 1000).toInt(),
-                yesterdayStartTime + getSleepTime(0),
-                yesterdayStartTime + getSleepTime(1),
-                yesterdayStartTime + getSleepTime(2),
-                yesterdayStartTime + getSleepTime(3),
+                getRealSleepTimeInSecond(0),
+                getRealSleepTimeInSecond(1),
+                getRealSleepTimeInSecond(2),
+                getRealSleepTimeInSecond(3),
                 mNightWakeLiveData.value!!.first,
                 mNightWakeLiveData.value!!.second,
                 mDaySleepLiveData.value!!.second,
@@ -96,6 +95,15 @@ class FillDiaryViewModel : ViewModel() {
                 ToastUtils.showShort(errorResponse.message)
             }
         })
+    }
+
+    /**
+     * 数组中存的 sleep time 是从 1970年1月1日 开始的，通过该方法转换成睡眠的那天如 2019年1月15日
+     */
+    private fun getRealSleepTimeInSecond(index: Int): Int {
+        val yesterdayStartTime = TimeUtilV2.getDayStartTime(mDayTime) - DateUtils.DAY_IN_MILLIS
+        val sleepTime = getSleepTime(index)
+        return ((yesterdayStartTime + sleepTime - TimeUtilV2.getStartTimeOfTheDay(0)) / 1000).toInt()
     }
 
     /**
