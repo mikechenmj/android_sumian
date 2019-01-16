@@ -55,7 +55,8 @@ class CbtiFinalReportDialogActivity : BaseDialogPresenterActivity<IPresenter>() 
         }
 
         private fun showFinalReportDialogIfNeed(finalReport: FinalReport) {
-            if (finalReport.finishedAt == 0) {  // 未看完视频
+            val finishedAt = finalReport.finishedAt * 1000L
+            if (finishedAt == 0L) {  // 未看完视频
                 return
             }
             if (finalReport.finalOnlineReportId != 0) { // 已完成报告
@@ -66,9 +67,9 @@ class CbtiFinalReportDialogActivity : BaseDialogPresenterActivity<IPresenter>() 
             val firstShowTime = sp.getLong(SP_KEY_FIRST_SHOW_TIME, 0L)
             val lastShowTime = sp.getLong(SP_KEY_LAST_SHOW_TIME, 0L)
             if (
-                    currentTimeMillis - finalReport.finishedAt > SP_KEY_FIRST_SHOW_GAP_DURATION
+                    currentTimeMillis - finishedAt > SP_KEY_FIRST_SHOW_GAP_DURATION
                     && currentTimeMillis - lastShowTime > SP_KEY_ANOTHER_SHOW_GAP_DURATION
-                    && (firstShowTime == 0L || currentTimeMillis - finalReport.finishedAt < SP_KEY_VALID_SHOW_DURATION)) {
+                    && (firstShowTime == 0L || currentTimeMillis - finishedAt < SP_KEY_VALID_SHOW_DURATION)) {
                 sp.put(SP_KEY_LAST_SHOW_TIME, currentTimeMillis)
                 if (firstShowTime == 0L) {
                     sp.put(SP_KEY_FIRST_SHOW_TIME, currentTimeMillis)

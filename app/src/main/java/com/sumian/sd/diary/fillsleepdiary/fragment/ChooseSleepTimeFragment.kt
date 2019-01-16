@@ -102,7 +102,7 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
         val hours = getHours()
         val minutes = getMinutes(hour, getCurrentTime() >= SleepTimeData.TODAY_00_00)
         picker_hour.refreshByNewDisplayedValues(hours)
-        picker_hour.value = getIndexOfArray(hour.toString(), hours)
+        picker_hour.value = getCurrentHourIndex(hour.toString(), hours)
         picker_minute.refreshByNewDisplayedValues(minutes)
         picker_minute.value = getIndexOfArray(minute.toString(), minutes)
     }
@@ -143,12 +143,30 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     }
 
     private fun getIndexOfArray(value: String, array: Array<String?>): Int {
+        val list = getIndexListOfArray(value, array)
+        return if (list.isEmpty()) 0 else list[0]
+    }
+
+    private fun getIndexListOfArray(value: String, array: Array<String?>): List<Int> {
+        val list = ArrayList<Int>()
         for ((index, v) in array.withIndex()) {
             if (value == v) {
-                return index
+                list.add(index)
             }
         }
-        return 0
+        return list
+    }
+
+    private fun getCurrentHourIndex(value: String, array: Array<String?>): Int {
+        val currentTime = getCurrentTime()
+        val list = getIndexListOfArray(value, array)
+        return if (list.isEmpty()) {
+            0
+        } else if (list.size == 1 || currentTime < SleepTimeData.TODAY_00_00) {
+            list[0]
+        } else {
+            list[1]
+        }
     }
 
     private fun updateTodayYesterdayUI(isToday: Boolean) {
