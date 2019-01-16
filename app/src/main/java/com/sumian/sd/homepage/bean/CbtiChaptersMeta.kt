@@ -21,7 +21,7 @@ data class CbtiChaptersMeta(
         @SerializedName("expired_at") val expiredAt: Int,
         @SerializedName("all_finished") val allFinished: Boolean,
         @SerializedName("joined_count") val joinedCount: Int = 0,
-        @SerializedName("final_report") val finalReport: FinalReport
+        @SerializedName("final_report") val finalReport: FinalReport?
 )
 
 @Parcelize

@@ -37,8 +37,7 @@ object CbtiManager {
                         if (response == null) {
                             return
                         }
-                        val finalReport = response.meta.finalReport
-
+                        val finalReport = response.meta.finalReport ?: return
                         showFinalReportDialogIfNeed(finalReport)
                     }
 
