@@ -1,5 +1,6 @@
 package com.sumian.sd.diary.fillsleepdiary.bean
 
+import android.telephony.PhoneNumberUtils.formatNumber
 import android.text.format.DateUtils
 import com.sumian.common.utils.TimeUtilV2
 import java.util.*
@@ -24,6 +25,10 @@ class SleepTimeData {
 
         fun parseHHmmToTime(hour: Int, minute: Int, addDay: Boolean = false): Long {
             return TimeUtilV2.parseTimeStr("HH:mm", "$hour:$minute") + DateUtils.DAY_IN_MILLIS * (if (addDay) 1 else 0)
+        }
+
+        fun formatNumber(number: Int): String {
+            return String.format("%02d", number)
         }
     }
 
@@ -121,10 +126,6 @@ class SleepTimeData {
             list.add(formatNumber(i))
         }
         return listToArray(list)
-    }
-
-    private fun formatNumber(number: Int): String {
-        return String.format("%02d", number)
     }
 
     private fun listToArray(list: ArrayList<String>): Array<String?> {

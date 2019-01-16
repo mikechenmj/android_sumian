@@ -63,7 +63,14 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     }
 
     private fun initPicker() {
-        updatePickerValue()
+        val hour = getCurrentHour()
+        val minute = getCurrentMinute()
+        val hours = getHours()
+        val minutes = getMinutes(hour, getCurrentTime() >= SleepTimeData.TODAY_00_00)
+        picker_hour.refreshByNewDisplayedValues(hours)
+        picker_hour.value = getCurrentHourIndex(SleepTimeData.formatNumber(hour), hours)
+        picker_minute.refreshByNewDisplayedValues(minutes)
+        picker_minute.value = getIndexOfArray(SleepTimeData.formatNumber(minute), minutes)
         picker_hour.setOnValueChangedListener(mOnHourChangeListener)
         picker_hour.setOnScrollListener(mOnHourScrollListener)
         picker_minute.setOnValueChangedListener(mOnMinuteChangeListener)
@@ -94,17 +101,6 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
                 getCurrentHour(),
                 getMinutes(getCurrentHour(), getCurrentTime() >= SleepTimeData.TODAY_00_00)[newVal]!!.toInt(),
                 getCurrentTime() >= SleepTimeData.TODAY_00_00)
-    }
-
-    private fun updatePickerValue() {
-        val hour = getCurrentHour()
-        val minute = getCurrentMinute()
-        val hours = getHours()
-        val minutes = getMinutes(hour, getCurrentTime() >= SleepTimeData.TODAY_00_00)
-        picker_hour.refreshByNewDisplayedValues(hours)
-        picker_hour.value = getCurrentHourIndex(hour.toString(), hours)
-        picker_minute.refreshByNewDisplayedValues(minutes)
-        picker_minute.value = getIndexOfArray(minute.toString(), minutes)
     }
 
     private fun getHours(): Array<String?> {
