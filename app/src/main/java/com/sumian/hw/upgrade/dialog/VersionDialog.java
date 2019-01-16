@@ -19,9 +19,9 @@ import java.util.Locale;
 
 public class VersionDialog extends BaseDialogFragment {
 
-    TextView mTvFirmwareTitle;
-    TextView mTvProgress;
-    ProgressBar mProgressBar;
+    private TextView mTvFirmwareTitle;
+    private TextView mTvProgress;
+    private ProgressBar mProgressBar;
 
     private String mDialogTitle;
 
@@ -67,6 +67,6 @@ public class VersionDialog extends BaseDialogFragment {
     }
 
     public void cancel() {
-        dismiss();
+        dismissAllowingStateLoss();
     }
 }
