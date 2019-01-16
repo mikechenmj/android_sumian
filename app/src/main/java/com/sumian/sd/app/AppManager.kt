@@ -301,6 +301,8 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
+        initKefu(App.getAppContext())
+        KefuManager.loginAndQueryUnreadMsg()
         MainLazyInitHelper.create().initLazyMainService()
     }
 

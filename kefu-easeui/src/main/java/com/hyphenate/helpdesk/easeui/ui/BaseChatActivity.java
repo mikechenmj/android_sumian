@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.hyphenate.chat.ChatClient;
+import com.hyphenate.chat.ChatManager;
 import com.hyphenate.helpdesk.R;
 import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.hyphenate.helpdesk.easeui.util.Config;
@@ -25,8 +26,13 @@ public class BaseChatActivity extends BaseActivity {
         chatFragment = new ChatFragment();
         // 传入参数
         chatFragment.setArguments(intent.getExtras());
-        getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
-        ChatClient.getInstance().chatManager().bindChat(toChatUsername);
+        getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commitNowAllowingStateLoss();
+
+        ChatManager chatManager = ChatClient.getInstance().chatManager();
+        if (chatManager == null) {
+            chatManager = ChatManager.getInstance();
+        }
+        chatManager.bindChat(toChatUsername);
     }
 
     @Override

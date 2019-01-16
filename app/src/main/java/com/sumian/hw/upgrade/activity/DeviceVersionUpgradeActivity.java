@@ -367,7 +367,7 @@ public class DeviceVersionUpgradeActivity extends BasePresenterActivity implemen
         SumianExecutor.INSTANCE.runOnUiThread(() -> {
             mIvUpgrade.setImageResource(R.mipmap.set_icon_upgrade);
             mBtDownload.setText(R.string.firmware_upgrade_hint);
-            mVersionDialog.cancel();
+            checkAndCancelDialog();
             ToastHelper.show(R.string.firmware_download_success_hint);
         });
     }
@@ -376,14 +376,14 @@ public class DeviceVersionUpgradeActivity extends BasePresenterActivity implemen
     public void onDownloadFirmwareFailed(String error) {
         SumianExecutor.INSTANCE.runOnUiThread(() -> {
             mBtDownload.setText(R.string.firmware_download_hint);
-            mVersionDialog.cancel();
+            checkAndCancelDialog();
             ToastHelper.show(error);
         });
     }
 
     @Override
     public void onCheckBluetoothAddressFailed() {
-        mVersionDialog.cancel();
+        checkAndCancelDialog();
         ToastHelper.show("蓝牙设备地址不正确,无法连接蓝牙设备.请待设备退出固件升级模式之后重试....");
     }
 
@@ -413,10 +413,14 @@ public class DeviceVersionUpgradeActivity extends BasePresenterActivity implemen
         if (mDismissDialogRunnable != null) {
             mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
         }
+        checkAndCancelDialog();
+        mDfuCount = 0;
+    }
+
+    private void checkAndCancelDialog() {
         if (mVersionDialog != null) {
             mVersionDialog.cancel();
         }
-        mDfuCount = 0;
     }
 
     private void showDialogByTitle(int titleResId) {

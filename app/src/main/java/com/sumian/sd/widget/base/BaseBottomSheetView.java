@@ -20,12 +20,9 @@ import androidx.annotation.Nullable;
 
 public abstract class BaseBottomSheetView extends BottomSheetDialogFragment {
 
-    protected Context mContext;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mContext = context;
         Bundle arguments = getArguments();
         if (arguments == null) return;
         initBundle(arguments);

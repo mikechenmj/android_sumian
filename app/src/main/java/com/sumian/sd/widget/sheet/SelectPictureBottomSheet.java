@@ -13,6 +13,7 @@ import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.Util;
 import com.sumian.common.media.config.SelectOptions;
 import com.sumian.sd.R;
+import com.sumian.sd.app.App;
 import com.sumian.sd.widget.base.BaseBottomSheetView;
 
 import java.io.File;
@@ -103,7 +104,7 @@ public class SelectPictureBottomSheet extends BaseBottomSheetView implements Vie
         if (EasyPermissions.hasPermissions(Objects.requireNonNull(getActivity()), permissions)) {
             mPhotoFile = createImageFile();
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            Uri uri = FileProviderHelper.getUriForFile(mContext, mPhotoFile);
+            Uri uri = FileProviderHelper.getUriForFile(App.getAppContext(), mPhotoFile);
 
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
