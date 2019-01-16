@@ -47,7 +47,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private const val SP_KEY_MONITOR_CACHE = "DeviceManager.MonitorCache"
     private const val VERSION_TYPE_MONITOR = 0
     private const val VERSION_TYPE_SLEEPER = 1
-    private const val PAYLOAD_TIMEOUT_TIME = 5000L
+    private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
 
     private var mCurrentIndex = -1
     private val m8fTransData = ArrayList<String>(0)
@@ -357,6 +357,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     private fun receiveSleepData(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
+        if(!isSyncing()) return // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
         val indexOne = Integer.parseInt(cmd.substring(4, 6), 16) and 0x0f shl 8
         val indexTwo = Integer.parseInt(cmd.substring(6, 8), 16)
         val index = indexOne + indexTwo
@@ -1027,6 +1028,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     private val mPayloadTimeoutCallback = Runnable {
         mMonitorLiveData.value?.isSyncing = false
+        notifyMonitorChange()
         onSyncFailed()
     }
 }
