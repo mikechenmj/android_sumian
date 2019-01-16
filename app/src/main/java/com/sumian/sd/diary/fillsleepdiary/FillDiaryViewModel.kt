@@ -79,7 +79,7 @@ class FillDiaryViewModel : ViewModel() {
                 getRealSleepTimeInSecond(3),
                 mNightWakeLiveData.value!!.first,
                 mNightWakeLiveData.value!!.second,
-                mDaySleepLiveData.value!!.second,
+                mDaySleepLiveData.value!!.first,
                 mDaySleepLiveData.value!!.second,
                 mFeelingLiveData.value!!,
                 mPillsLiveData.value,

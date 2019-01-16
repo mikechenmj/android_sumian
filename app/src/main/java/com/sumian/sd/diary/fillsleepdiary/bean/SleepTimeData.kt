@@ -110,7 +110,7 @@ class SleepTimeData {
         val formatStartTime = startTime - DateUtils.MINUTE_IN_MILLIS * getMinuteOfTime(startTime)
         val formatEndTime = endTime - DateUtils.MINUTE_IN_MILLIS * getMinuteOfTime(endTime)
         for (i in formatStartTime..formatEndTime step DateUtils.HOUR_IN_MILLIS) {
-            list.add(getHourOfTime(i).toString())
+            list.add(formatNumber(getHourOfTime(i)))
         }
         return listToArray(list)
     }
@@ -118,9 +118,13 @@ class SleepTimeData {
     private fun createMinutesByStartAndEndTime(startMinutes: Int, endMinutes: Int): Array<String?> {
         val list = ArrayList<String>()
         for (i in startMinutes..endMinutes step 5) {
-            list.add(i.toString())
+            list.add(formatNumber(i))
         }
         return listToArray(list)
+    }
+
+    private fun formatNumber(number: Int): String {
+        return String.format("%02d", number)
     }
 
     private fun listToArray(list: ArrayList<String>): Array<String?> {
