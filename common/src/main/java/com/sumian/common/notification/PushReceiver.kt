@@ -17,7 +17,10 @@ import android.content.Intent
  */
 class PushReceiver : BroadcastReceiver() {
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        if (context == null || intent == null) {
+            return
+        }
         val pushData: PushData = PushDataResolveUtil.getPushData(intent) ?: return
         AppNotificationManager.showNotificationIfPossible(context, pushData)
     }
