@@ -281,18 +281,8 @@ interface SdApi {
 
     // ---------- homepage ----------
 
-//    @Headers("Accept: application/vnd.sd.v2+json")
-//    @GET("sleep-prescriptions")
-//    fun getSleepPrescriptions(): Call<SleepPrescription?>
-
     @GET("sleep-prescriptions/status")
     fun getSleepPrescriptionStatus(): Call<SleepPrescriptionStatus?>
-
-//    @POST("sleep-prescriptions")
-//    fun updateSleepPrescriptions(@Body sleepPrescription: SleepPrescription): Call<SleepPrescriptionWrapper>
-
-//    @POST("sleep-prescriptions/fatigue")
-//    fun updateSleepPrescriptionsWhenFatigue(@Body data: UpdateSleepPrescriptionWhenFatiguedData): Call<SleepPrescriptionWrapper>
 
     /**
      * include
@@ -560,6 +550,7 @@ interface SdApi {
     @GET("/sleep-pills")
     fun getSleepPills(): Call<List<SleepPill>>
 
+    @Headers("accept: application/vnd.sd.v2+json")
     @POST("/diaries")
     fun postSleepDiary(@Body sleepDataData: SleepDiaryData): Call<SleepRecord>
 }

@@ -1,10 +1,10 @@
 package com.sumian.sd.diary.fillsleepdiary
 
+import android.text.format.DateUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -73,16 +73,16 @@ class FillDiaryViewModel : ViewModel() {
     private fun postDiaryToServer() {
         val sleepDiaryData = SleepDiaryData(
                 (mDayTime / 1000).toInt(),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(0)),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(1)),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(2)),
-                TimeUtilV2.formatDate("HH:mm", getSleepTime(3)),
+                getRealSleepTimeInSecond(0),
+                getRealSleepTimeInSecond(1),
+                getRealSleepTimeInSecond(2),
+                getRealSleepTimeInSecond(3),
                 mNightWakeLiveData.value!!.first,
                 mNightWakeLiveData.value!!.second,
-                mDaySleepLiveData.value!!.second,
+                mDaySleepLiveData.value!!.first,
                 mDaySleepLiveData.value!!.second,
                 mFeelingLiveData.value!!,
-                JsonUtil.toJson(mPillsLiveData.value),
+                mPillsLiveData.value,
                 mRemarkLiveData.value)
         val call = AppManager.getSdHttpService().postSleepDiary(sleepDiaryData)
         mCalls.add(call)
@@ -95,6 +95,15 @@ class FillDiaryViewModel : ViewModel() {
                 ToastUtils.showShort(errorResponse.message)
             }
         })
+    }
+
+    /**
+     * 数组中存的 sleep time 是从 1970年1月1日 开始的，通过该方法转换成睡眠的那天如 2019年1月15日
+     */
+    private fun getRealSleepTimeInSecond(index: Int): Int {
+        val yesterdayStartTime = TimeUtilV2.getDayStartTime(mDayTime) - DateUtils.DAY_IN_MILLIS
+        val sleepTime = getSleepTime(index)
+        return ((yesterdayStartTime + sleepTime - TimeUtilV2.getStartTimeOfTheDay(0)) / 1000).toInt()
     }
 
     /**

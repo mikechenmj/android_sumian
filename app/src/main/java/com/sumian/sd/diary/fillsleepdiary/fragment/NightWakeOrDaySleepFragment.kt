@@ -1,6 +1,7 @@
 package com.sumian.sd.diary.fillsleepdiary.fragment
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ToastUtils
@@ -80,7 +81,7 @@ class NightWakeOrDaySleepFragment : BaseFillSleepDiaryFragment() {
                         val times = values[0] + 1
                         val duration = (values[1] + 1) * 5
                         if (mType == TYPE_NIGHT_WAKE) {
-                            if (duration > mFillDiaryViewModel.getSleepDuration()) {
+                            if (duration * DateUtils.MINUTE_IN_MILLIS > mFillDiaryViewModel.getSleepDuration()) {
                                 ToastUtils.showShort(R.string.night_wake_time_cant_bigger_than_sleep_time)
                                 return
                             }

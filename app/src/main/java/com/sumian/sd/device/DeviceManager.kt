@@ -2,6 +2,8 @@
 
 package com.sumian.sd.device
 
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.text.format.DateUtils
 import androidx.annotation.StringRes
@@ -45,6 +47,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private const val SP_KEY_MONITOR_CACHE = "DeviceManager.MonitorCache"
     private const val VERSION_TYPE_MONITOR = 0
     private const val VERSION_TYPE_SLEEPER = 1
+    private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
 
     private var mCurrentIndex = -1
     private val m8fTransData = ArrayList<String>(0)
@@ -62,6 +65,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private val mIsUploadingSleepDataToServerLiveData = MutableLiveData<Boolean>()
     val mMonitorNeedUpdateLiveData = MutableLiveData<Boolean>()
     val mSleeperNeedUpdateLiveData = MutableLiveData<Boolean>()
+    private val mMainHandler = Handler(Looper.getMainLooper())
 
     fun init() {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
@@ -227,7 +231,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         bluePeripheral.write(BlueCmd.cSleepData())
         mPackageNumber = 1
         LogManager.appendTransparentLog("主动同步睡眠数据")
-        mMonitorLiveData.value?.isSyncing = true
+//        mMonitorLiveData.value?.isSyncing = true
         notifyMonitorChange()
     }
 
@@ -353,6 +357,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     private fun receiveSleepData(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
+        if(!isSyncing()) return // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
         val indexOne = Integer.parseInt(cmd.substring(4, 6), 16) and 0x0f shl 8
         val indexTwo = Integer.parseInt(cmd.substring(6, 8), 16)
         val index = indexOne + indexTwo
@@ -374,6 +379,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             }
         }
         onSyncDataProgressChange(index, mTotalDataCount)
+        postNextPayloadTimeoutCallback()
     }
 
     private fun receiveStartOrFinishTransportCmd(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
@@ -400,6 +406,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     onSyncStart()
                     AutoSyncDeviceDataUtil.saveAutoSyncTime()
                     mMonitorLiveData.value?.isSyncing = true
+                    postNextPayloadTimeoutCallback()
                 } else {
                     writeResponse(peripheral, data, false)
                     LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,磁盘空间不足 " + dataCount + "包数据" + "  cmd=" + cmd)
@@ -441,6 +448,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 }
                 onSyncSuccess()
                 mMonitorLiveData.value?.isSyncing = false
+                removePayloadTimeoutCallback()
             }
             else -> {
             }
@@ -680,18 +688,18 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private fun receiveRequestSleepDataResponse(cmd: String) {
         when (cmd) {
             "554f020188" -> {
-                mMonitorLiveData.value?.isSyncing = true
+//                mMonitorLiveData.value?.isSyncing = true
                 LogManager.appendTransparentLog("收到0x4f回复 发现设备有睡眠特征数据,准备同步中  cmd=$cmd")
             }
             "554f020100" -> {
-                mMonitorLiveData.value?.isSyncing = false
+//                mMonitorLiveData.value?.isSyncing = false
                 onSyncSuccess()
                 LogManager.appendTransparentLog("收到0x4f回复 设备没有睡眠特征数据  cmd=$cmd")
                 AutoSyncDeviceDataUtil.saveAutoSyncTime()
             }
             "554f0201ff" -> {
                 onSyncFailed()
-                mMonitorLiveData.value?.isSyncing = false
+//                mMonitorLiveData.value?.isSyncing = false
                 LogManager.appendTransparentLog("收到0x4f回复 设备4f 指令识别异常  cmd=$cmd")
             }
             else -> {
@@ -1007,5 +1015,20 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     fun hasFirmwareNeedUpdate(): Boolean {
         return mMonitorNeedUpdateLiveData.value == true || mSleeperNeedUpdateLiveData.value == true
+    }
+
+    private fun postNextPayloadTimeoutCallback() {
+        removePayloadTimeoutCallback()
+        mMainHandler.postDelayed(mPayloadTimeoutCallback, PAYLOAD_TIMEOUT_TIME)
+    }
+
+    private fun removePayloadTimeoutCallback() {
+        mMainHandler.removeCallbacks(mPayloadTimeoutCallback)
+    }
+
+    private val mPayloadTimeoutCallback = Runnable {
+        mMonitorLiveData.value?.isSyncing = false
+        notifyMonitorChange()
+        onSyncFailed()
     }
 }

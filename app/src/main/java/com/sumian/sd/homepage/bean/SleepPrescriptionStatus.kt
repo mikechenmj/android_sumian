@@ -1,8 +1,15 @@
 package com.sumian.sd.homepage.bean
 
+import com.google.gson.annotations.SerializedName
+
 data class SleepPrescriptionStatus(
         val data: List<SleepPrescriptionData>,
         val meta: Meta
+)
+
+data class SleepPrescriptionData(
+        val id: Int,
+        val date: Int
 )
 
 data class Meta(
@@ -20,4 +27,12 @@ data class Prescription(
         val sleep_duration_avg_new: Any,
         val days_remain:Int
 
+)
+
+data class SleepPrescription(
+        @SerializedName("id") val id: Int,
+        @SerializedName("user_id") val userId: Int,
+        @SerializedName("get_up_at") val getUpAt: String,
+        @SerializedName("sleep_at") val sleepAt: String,
+        @SerializedName("sleep_duration_avg") var sleepDurationAvg: Int
 )

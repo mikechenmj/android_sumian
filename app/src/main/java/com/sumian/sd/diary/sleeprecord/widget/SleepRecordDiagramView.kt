@@ -161,11 +161,10 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
      *
      */
     fun setData(t0: Long, t1: Long, t2: Long, t3: Long, nightWakeCount: Int, nightWakeTotalDuration: Long) {
-        val isBedAtToday = t0 < dayThresholdTime
-        this.t0 = t0 + if (isBedAtToday) DAY_IN_MILLIS else 0
-        this.t1 = t1 + if (isBedAtToday || t1 < dayThresholdTime) DAY_IN_MILLIS else 0
-        this.t2 = t2 + DAY_IN_MILLIS
-        this.t3 = t3 + DAY_IN_MILLIS
+        this.t0 = t0
+        this.t1 = t1
+        this.t2 = t2
+        this.t3 = t3
         tobd = this.t3 - this.t0
         calWidthDurationRatio()
 

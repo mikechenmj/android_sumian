@@ -16,6 +16,7 @@ class KotlinTest {
     @Test
     fun test() {
         println(VersionUtil.isVersionZero("0.0.0"))
+        print(String.format("%02d", 100))
     }
 
 }

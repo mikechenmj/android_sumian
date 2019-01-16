@@ -2,16 +2,14 @@ package com.sumian.sd.diary.fillsleepdiary.fragment
 
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.common.widget.picker.NumberPickerView
 import com.sumian.sd.R
 import com.sumian.sd.diary.fillsleepdiary.bean.SleepTimeData
 import kotlinx.android.synthetic.main.layout_choose_sleep_time.*
-import kotlinx.android.synthetic.main.tx_video_palyer_controller.*
-import java.lang.IllegalArgumentException
 
 /**
  * @author : Zhan Xuzhao
@@ -21,9 +19,6 @@ import java.lang.IllegalArgumentException
  * version: 1.0
  */
 class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
-    private var mType = TYPE_SLEEP_TIME
-    private var mTimeIndex = 0
-
     companion object {
         private const val KEY_TYPE = "ChooseSleepTimeFragment.KEY_TYPE"
         const val TYPE_SLEEP_TIME = 0
@@ -40,6 +35,9 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
             return fragment
         }
     }
+
+    private var mType = TYPE_SLEEP_TIME
+    private var mTimeIndex = 0
 
     override fun getContentViewLayout(): Int {
         return R.layout.layout_choose_sleep_time
@@ -65,39 +63,44 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     }
 
     private fun initPicker() {
-        updatePickerValue()
-        picker_hour.setOnValueChangedListener { picker, oldVal, newVal ->
-            run {
-                val newHour = getHours()[newVal]!!.toInt()
-                val isToday = isTodayByHourIndex(newVal)
-                val minutes = getMinutes(newHour, isToday)
-                picker_minute.refreshByNewDisplayedValues(minutes)
-                setTime(newHour, minutes[picker_minute.value]!!.toInt(), isToday)
-            }
-        }
-        picker_hour.setOnScrollListener { view, scrollState ->
-            LogUtils.d(view.value, getHours()[view.value])
-            SumianExecutor.runOnUiThread(Runnable { updateTodayYesterdayUI(isTodayByHourIndex(view.value)) })
-        }
-        picker_minute.setOnValueChangedListener { picker, oldVal, newVal ->
-            run {
-                setTime(
-                        getCurrentHour(),
-                        getMinutes(getCurrentHour(), getCurrentTime() >= SleepTimeData.TODAY_00_00)[newVal]!!.toInt(),
-                        getCurrentTime() >= SleepTimeData.TODAY_00_00)
-            }
-        }
-    }
-
-    private fun updatePickerValue() {
         val hour = getCurrentHour()
         val minute = getCurrentMinute()
         val hours = getHours()
         val minutes = getMinutes(hour, getCurrentTime() >= SleepTimeData.TODAY_00_00)
         picker_hour.refreshByNewDisplayedValues(hours)
-        picker_hour.value = getIndexOfArray(hour.toString(), hours)
+        picker_hour.value = getCurrentHourIndex(SleepTimeData.formatNumber(hour), hours)
         picker_minute.refreshByNewDisplayedValues(minutes)
-        picker_minute.value = getIndexOfArray(minute.toString(), minutes)
+        picker_minute.value = getIndexOfArray(SleepTimeData.formatNumber(minute), minutes)
+        picker_hour.setOnValueChangedListener(mOnHourChangeListener)
+        picker_hour.setOnScrollListener(mOnHourScrollListener)
+        picker_minute.setOnValueChangedListener(mOnMinuteChangeListener)
+    }
+
+    override fun onDestroyView() {
+        picker_hour.setOnValueChangedListener(null)
+        picker_hour.setOnScrollListener(null)
+        picker_minute.setOnValueChangedListener(null)
+        super.onDestroyView()
+    }
+
+    private val mOnHourChangeListener = NumberPickerView.OnValueChangeListener { picker, oldVal, newVal ->
+        val newHour = getHours()[newVal]!!.toInt()
+        val isToday = isTodayByHourIndex(newVal)
+        val minutes = getMinutes(newHour, isToday)
+        picker_minute.refreshByNewDisplayedValues(minutes)
+        setTime(newHour, minutes[picker_minute.value]!!.toInt(), isToday)
+    }
+
+    private val mOnHourScrollListener = NumberPickerView.OnScrollListener { view, scrollState ->
+        LogUtils.d(view.value, getHours()[view.value])
+        SumianExecutor.runOnUiThread(Runnable { updateTodayYesterdayUI(isTodayByHourIndex(view.value)) })
+    }
+
+    private val mOnMinuteChangeListener = NumberPickerView.OnValueChangeListener { picker, oldVal, newVal ->
+        setTime(
+                getCurrentHour(),
+                getMinutes(getCurrentHour(), getCurrentTime() >= SleepTimeData.TODAY_00_00)[newVal]!!.toInt(),
+                getCurrentTime() >= SleepTimeData.TODAY_00_00)
     }
 
     private fun getHours(): Array<String?> {
@@ -136,18 +139,34 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     }
 
     private fun getIndexOfArray(value: String, array: Array<String?>): Int {
+        val list = getIndexListOfArray(value, array)
+        return if (list.isEmpty()) 0 else list[0]
+    }
+
+    private fun getIndexListOfArray(value: String, array: Array<String?>): List<Int> {
+        val list = ArrayList<Int>()
         for ((index, v) in array.withIndex()) {
             if (value == v) {
-                return index
+                list.add(index)
             }
         }
-        return 0
+        return list
+    }
+
+    private fun getCurrentHourIndex(value: String, array: Array<String?>): Int {
+        val currentTime = getCurrentTime()
+        val list = getIndexListOfArray(value, array)
+        return if (list.isEmpty()) {
+            0
+        } else if (list.size == 1 || currentTime < SleepTimeData.TODAY_00_00) {
+            list[0]
+        } else {
+            list[1]
+        }
     }
 
     private fun updateTodayYesterdayUI(isToday: Boolean) {
-        tv_top.visibility = if (isToday) View.VISIBLE else View.GONE
-        tv_bottom.visibility = if (isToday) View.GONE else View.VISIBLE
-        tv_middle.text = getString(if (isToday) R.string.today else R.string.yesterday_night)
+        today_yesterday_view.setIsToday(isToday)
     }
 
     private fun isTodayByHourIndex(hourIndex: Int): Boolean {

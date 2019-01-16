@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
+import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.diary.fillsleepdiary.fragment.*
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.event.SleepRecordFilledEvent
-import com.sumian.common.utils.JsonUtil
 
 /**
  * @author : Zhan Xuzhao

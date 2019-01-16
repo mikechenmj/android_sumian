@@ -35,6 +35,9 @@ class MorningFeelingFragment : BaseFillSleepDiaryFragment() {
     override fun initWidget() {
         super.initWidget()
         for ((index, tv) in mTvs.withIndex()) {
+            tv.isSelected = index == mFillDiaryViewModel.mFeelingLiveData.value
+        }
+        for ((index, tv) in mTvs.withIndex()) {
             tv.setOnClickListener { changeFeeling(index) }
         }
     }
