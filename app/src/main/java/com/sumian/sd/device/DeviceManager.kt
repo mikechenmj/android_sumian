@@ -48,6 +48,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private const val VERSION_TYPE_MONITOR = 0
     private const val VERSION_TYPE_SLEEPER = 1
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
+    private const val CMD_RESEND_TIME = 1000L * 5
 
     private var mCurrentIndex = -1
     private val m8fTransData = ArrayList<String>(0)
@@ -357,7 +358,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     private fun receiveSleepData(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
-        if(!isSyncing()) return // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
+        if (!isSyncing()) return // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
         val indexOne = Integer.parseInt(cmd.substring(4, 6), 16) and 0x0f shl 8
         val indexTwo = Integer.parseInt(cmd.substring(6, 8), 16)
         val index = indexOne + indexTwo
@@ -847,6 +848,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 1800)
         peripheral.writeDelay(BlueCmd.cUserInfo(), 2000)
         peripheral.writeDelay(BlueCmd.cSleepData(), 2200)
+        mMainHandler.postDelayed(mQueryMonitorVersionDelayRunnable, CMD_RESEND_TIME)
+        mMainHandler.postDelayed(mQuerySleeperVersionDelayRunnable, CMD_RESEND_TIME)
         LogManager.appendMonitorLog("连接成功,开始初始化同步监测仪与速眠仪相关状态数据 " + peripheral.name)
     }
 
@@ -1030,5 +1033,31 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mMonitorLiveData.value?.isSyncing = false
         notifyMonitorChange()
         onSyncFailed()
+    }
+
+    private val mQueryMonitorVersionDelayRunnable: Runnable by lazy {
+        Runnable {
+            if (!isConnected()) return@Runnable
+            val peripheral = getCurrentBluePeripheral() ?: return@Runnable
+            if (mMonitorLiveData.value?.version == null) {
+                peripheral.writeDelay(BlueCmd.cMonitorFirmwareVersion(), 0)
+                mMainHandler.postDelayed(mQueryMonitorVersionDelayRunnable, CMD_RESEND_TIME)
+                LogManager.appendMonitorLog("重新请求 设备版本信息")
+                LogUtils.d("重新请求 设备版本信息")
+            }
+        }
+    }
+
+    private val mQuerySleeperVersionDelayRunnable: Runnable by lazy {
+        Runnable {
+            if (!isConnected() || mMonitorLiveData.value?.isSleeperConnected != true) return@Runnable
+            val peripheral = getCurrentBluePeripheral() ?: return@Runnable
+            if (mMonitorLiveData.value?.sleeperVersion == null) {
+                peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 0)
+                mMainHandler.postDelayed(mQuerySleeperVersionDelayRunnable, CMD_RESEND_TIME)
+                LogManager.appendMonitorLog("重新请求 监测仪版本信息")
+                LogUtils.d("重新请求 监测仪版本信息")
+            }
+        }
     }
 }
