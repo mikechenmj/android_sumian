@@ -172,7 +172,7 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     private fun isTodayByHourIndex(hourIndex: Int): Boolean {
         return when (mType) {
             // 准备睡觉时间为A，范围：18:00～17:55
-            TYPE_SLEEP_TIME -> hourIndex >= getHours().indexOf("0")
+            TYPE_SLEEP_TIME -> hourIndex >= getHours().indexOf("00")
             // 由于睡着时间为B，范围：A～23:50（今天），如果hourIndex与23:50的距离 <= 00:00（24），则说明B是今天
             TYPE_FALL_ASLEEP_TIME -> getHours().size - hourIndex <= 24
             // 醒来时间为C，范围：(B,23:55] ∩ [00:00,23:55]
