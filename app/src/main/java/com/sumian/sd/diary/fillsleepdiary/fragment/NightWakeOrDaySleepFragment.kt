@@ -80,12 +80,12 @@ class NightWakeOrDaySleepFragment : BaseFillSleepDiaryFragment() {
                     override fun onConfirmClick(values: List<Int>) {
                         val times = values[0] + 1
                         val duration = (values[1] + 1) * 5
-                        if (mType == TYPE_NIGHT_WAKE) {
-                            if (duration * DateUtils.MINUTE_IN_MILLIS > mFillDiaryViewModel.getSleepDuration()) {
-                                ToastUtils.showShort(R.string.night_wake_time_cant_bigger_than_sleep_time)
-                                return
-                            }
-                        }
+//                        if (mType == TYPE_NIGHT_WAKE) {
+//                            if (duration * DateUtils.MINUTE_IN_MILLIS > mFillDiaryViewModel.getSleepDuration()) {
+//                                ToastUtils.showShort(R.string.night_wake_time_cant_bigger_than_sleep_time)
+//                                return
+//                            }
+//                        }
                         setDataByType(times, duration)
                     }
                 })

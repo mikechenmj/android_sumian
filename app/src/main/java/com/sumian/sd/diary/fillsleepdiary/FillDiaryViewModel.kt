@@ -10,6 +10,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.diary.fillsleepdiary.bean.SleepDiaryData
 import com.sumian.sd.diary.fillsleepdiary.bean.SleepTimeData
+import com.sumian.sd.diary.fillsleepdiary.fragment.NightWakeOrDaySleepFragment.Companion.TYPE_NIGHT_WAKE
 import com.sumian.sd.diary.sleeprecord.bean.SleepPill
 import com.sumian.sd.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -56,6 +57,12 @@ class FillDiaryViewModel : ViewModel() {
         if (!isNextPageAvailable()) {
             ToastUtils.showShort(R.string.please_complete_the_question)
             return
+        }
+        if (mCurrentProgress == 4) {
+            if (mNightWakeLiveData.value!!.second * DateUtils.MINUTE_IN_MILLIS > getSleepDuration()) {
+                ToastUtils.showShort(R.string.night_wake_time_cant_bigger_than_sleep_time)
+                return
+            }
         }
         if (mCurrentProgress == TOTAL_PAGE - 1) {
             postDiaryToServer()
