@@ -22,10 +22,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppContext = this
-        SdLogManager.log("App onCreate")
         AppManager.initOnAppStart(this)
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
         registerActivityLifecycleCallbacks(LogActivityLifecycleCallbacks())
+        SdLogManager.log("App onCreate")
     }
 }
 
