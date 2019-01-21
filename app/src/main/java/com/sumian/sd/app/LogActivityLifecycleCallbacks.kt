@@ -12,7 +12,7 @@ import com.sumian.sd.log.SdLogManager
  * @author : Zhan Xuzhao
  * e-mail : 649912323@qq.com
  * time   : 2018/12/7 14:00
- * desc   :
+ * desc   : Log Activity and Fragment open and close
  * version: 1.0
  */
 class LogActivityLifecycleCallbacks : EmptyActivityLifecycleCallbacks() {
@@ -41,6 +41,9 @@ class LogActivityLifecycleCallbacks : EmptyActivityLifecycleCallbacks() {
         }
     }
 
+    /**
+     * Log Fragment open and close
+     */
     class LogFragmentLifecycleCallbacks : FragmentManager.FragmentLifecycleCallbacks() {
         override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
             super.onFragmentCreated(fm, f, savedInstanceState)

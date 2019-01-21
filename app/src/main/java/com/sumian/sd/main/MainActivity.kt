@@ -126,6 +126,11 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
         EventBusUtil.unregister(this)
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        AppManager.onMainActivityRestore()
+    }
+
     override fun initWidget() {
         super.initWidget()
         showOpenNotificationDialogIfNeeded()

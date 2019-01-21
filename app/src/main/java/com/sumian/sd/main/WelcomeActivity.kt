@@ -1,9 +1,9 @@
 package com.sumian.sd.main
 
+import android.os.Bundle
 import android.os.Handler
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
-import com.sumian.hw.log.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.AppManager
@@ -25,6 +25,11 @@ class WelcomeActivity : BasePresenterActivity<IPresenter>() {
         private const val SPLASH_DURATION = 500L
     }
 
+    override fun onResume() {
+        super.onResume()
+        AppManager.onWelcomeActivityResume()
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_main_welcome
     }
@@ -36,8 +41,6 @@ class WelcomeActivity : BasePresenterActivity<IPresenter>() {
 
     override fun initData() {
         super.initData()
-        LogManager.appendUserOperationLog("用户启动 app.......")
-        AppManager.initKefu(application)
         Handler().postDelayed({
             val login = AppManager.getAccountViewModel().isLogin
             if (login) {

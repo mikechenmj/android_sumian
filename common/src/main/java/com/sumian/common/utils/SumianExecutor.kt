@@ -36,4 +36,11 @@ object SumianExecutor {
     fun runOnBackgroundThread(runnable: Runnable) {
         mCachedThreadPool.execute(runnable)
     }
+
+    fun runOnLooperIdle(runnable: Runnable) {
+        Looper.myQueue().addIdleHandler {
+            runnable.run()
+            false
+        }
+    }
 }

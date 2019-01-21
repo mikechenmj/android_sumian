@@ -21,7 +21,7 @@ public class LogManager {
 
     private static volatile LogManager INSTANCE;
 
-    public static final String LOG_FILE_NAME = "Android_sumian_app.txt";
+    static final String LOG_FILE_NAME = "Android_sumian_app.txt";
 
     private static final int PHONE_INFO_TYPE        = 0x01;//系统信息
     private static final int BLUETOOTH_ADAPTER_TYPE = 0x02;//蓝牙
@@ -36,10 +36,6 @@ public class LogManager {
 
     private File mLogFile;
 
-
-    private Handler mWriteHandler;
-
-
     private ThreadLocal<SimpleDateFormat> mDateFormatThreadLocal = new ThreadLocal<SimpleDateFormat>() {
 
         @Override
@@ -51,7 +47,6 @@ public class LogManager {
     private LogManager() {
         HandlerThread handlerThread = new HandlerThread("log thread");
         handlerThread.start();
-        this.mWriteHandler = new Handler(handlerThread.getLooper());
         this.mLogFile = new File(App.Companion.getAppContext().getCacheDir(), LOG_FILE_NAME);
     }
 
@@ -149,41 +144,6 @@ public class LogManager {
     }
 
     private static void appendLog(String log) {
-//        synchronized (LogManager.class) {
-//            INSTANCE.mWriteHandler.post(() -> {
-//                RandomAccessFile randomAccessFile = null;
-//                try {
-//                    if (init().fileIsExists()) {
-//                        if (init().mLogFile.length() / (1024.f * 1024.0f) > 5.0f) {
-//                            boolean delete = init().mLogFile.delete();
-//                            if (delete) {
-//                                boolean newFile = init().mLogFile.createNewFile();
-//                                if (newFile) {
-//                                    randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
-//                                    randomAccessFile.seek(randomAccessFile.length());
-//                                    randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
-//                                }
-//                            }
-//                        } else {
-//                            randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
-//                            randomAccessFile.seek(randomAccessFile.length());
-//                            randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
-//                        }
-//                    } else {
-//                        randomAccessFile = new RandomAccessFile(init().mLogFile, "rw");
-//                        randomAccessFile.seek(randomAccessFile.length());
-//                        randomAccessFile.write((log + "\r\n").getBytes("utf-8"));
-//                    }
-//                    if (BuildConfig.DEBUG) {
-//                        Log.d(TAG, "appendLog: --------->" + log + "  " + init().mLogFile.length() / 1024.0f + " kb");
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } finally {
-//                    StreamUtil.close(randomAccessFile);
-//                }
-//            });
-//        }
         SdLogManager.INSTANCE.logDevice(log);
     }
 

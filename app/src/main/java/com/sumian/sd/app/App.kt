@@ -2,7 +2,7 @@ package com.sumian.sd.app
 
 import android.app.Application
 import com.sumian.common.social.analytics.ActivityLifecycleCallbackForUserAnalysis
-import com.sumian.hw.log.LogManager
+import com.sumian.sd.log.SdLogManager
 
 /**
  * Created by jzz
@@ -22,8 +22,8 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         mAppContext = this
+        SdLogManager.log("App onCreate")
         AppManager.initOnAppStart(this)
-        registerActivityLifecycleCallbacks(AppInitThirdPlatformLifecycleCallback.create())
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackForUserAnalysis())
         registerActivityLifecycleCallbacks(LogActivityLifecycleCallbacks())
     }

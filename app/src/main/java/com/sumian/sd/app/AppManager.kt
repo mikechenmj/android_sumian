@@ -207,16 +207,6 @@ object AppManager {
         })
     }
 
-
-    @JvmStatic
-    fun initOnFirstActivityStart(context: Context) {
-        synchronized(AppManager::class.java) {
-            initKefu(context)
-            DeviceManager.init()
-            initWebView(context)
-        }
-    }
-
     private fun initUtils(context: Context) {
         ToastHelper.init(context)
         Utils.init(context)
@@ -297,13 +287,29 @@ object AppManager {
 
     fun onAppBackground() {
         LogManager.appendUserOperationLog("App 进入 后台")
-//        LogJobIntentService.uploadLogIfNeed(App.getAppContext())
+    }
+
+    fun onWelcomeActivityResume() {
+        val context = App.getAppContext()
+        AppManager.initKefu(context)
+        SumianExecutor.runOnLooperIdle(Runnable {
+            synchronized(AppManager::class.java) {
+                initKefu(context)
+                DeviceManager.init()
+                initWebView(context)
+            }
+        })
     }
 
     fun onMainActivityCreate() {
         initKefu(App.getAppContext())
         KefuManager.loginAndQueryUnreadMsg()
         MainLazyInitHelper.create().initLazyMainService()
+    }
+
+    fun onMainActivityRestore() {
+        SdLogManager.log("on MainActivity Restore")
+        DeviceManager.reInitIfNeed()
     }
 
     fun onLoginSuccess(token: Token?) {
