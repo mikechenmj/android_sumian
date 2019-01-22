@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="#306299"
+    tools:context=".sleepguide.SleepGuideQuestionActivity">
+
+    <TextView
+        android:id="@+id/tv_question"
+        style="@style/text_white_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="40dp"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        tools:text="您醒来的时间比预期早30分钟或更多，并且之后再也睡不着吗？" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="150dp">
+
+        <TextView
+            style="@style/SleepGuideQuestionBtn"
+            android:text="@string/yes" />
+
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="0dp" />
+
+        <TextView
+            style="@style/SleepGuideQuestionBtn"
+            android:text="@string/no" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="65dp">
+
+        <ImageView
+            android:id="@+id/iv_pre"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_get_solution"
+            style="@style/SumianButton_150dp"
+            android:layout_gravity="center"
+            android:text="@string/get_good_sleep_solution"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white_50"
+            android:textSize="16sp"
+            tools:text="1/9" />
+    </FrameLayout>
+</FrameLayout>

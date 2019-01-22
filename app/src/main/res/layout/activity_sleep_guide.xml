@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#306299"
+    tools:context=".sleepguide.SleepGuideQuestionActivity">
+
+    <ImageView
+        android:id="@+id/ic_close"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:id="@+id/v_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_white_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/get_sleep_guide_in_30_sec" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_start_evaluate"
+            style="@style/SumianButton_150dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="60dp"
+            android:text="@string/start_evaluate" />
+
+    </LinearLayout>
+
+</RelativeLayout>

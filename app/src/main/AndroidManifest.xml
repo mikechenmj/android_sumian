@@ -2,21 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sumian.sd">
-
     <!-- 基础模块（必须加入以下声明）START -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 基础模块 END -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 基础模块 END -->
     <!-- Hw start -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- leancloud -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- leancloud -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -29,8 +26,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!--在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 在sdcard中创建/删除文件的权限 -->
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
@@ -138,16 +134,12 @@
         <activity
             android:name=".doctor.activity.ScanDoctorQrCodeActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Scan_qr_theme" />
-
-        <!-- third  loginByCaptcha -->
+            android:theme="@style/Scan_qr_theme" /> <!-- third  loginByCaptcha -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- pay start -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- pay start -->
         <activity
             android:name="com.pingplusplus.android.PaymentActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -157,9 +149,7 @@
             android:name="${applicationId}.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:targetActivity="com.pingplusplus.android.PaymentActivity"
-            android:theme="@style/BaseAppTheme" />
-
-        <!-- Alipay -->
+            android:theme="@style/BaseAppTheme" /> <!-- Alipay -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
@@ -175,9 +165,7 @@
 
         <service
             android:name="com.sumian.hw.log.LogJobIntentService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!-- 实时通信模块、推送（均需要加入以下声明） START -->
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
         <service android:name="com.avos.avoscloud.PushService" />
 
@@ -196,9 +184,7 @@
                     android:name="android.net.conn.CONNECTIVITY_CHANGE"
                     tools:ignore="BatteryLife" />
             </intent-filter>
-        </receiver>
-        <!-- 实时通信模块、推送 END -->
-
+        </receiver> <!-- 实时通信模块、推送 END -->
         <activity
             android:name=".doctor.activity.DoctorWebActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -219,12 +205,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <!-- online report -->
+            android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- online report -->
         <activity
             android:name=".onlinereport.OnlineReportListActivity"
             android:configChanges="keyboardHidden|orientation"
-
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
@@ -235,18 +219,14 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <!-- notification -->
+            android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- notification -->
         <activity
             android:name=".notification.NotificationListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <!-- sleep record -->
+            android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- sleep record -->
         <activity
             android:name=".diary.sleeprecord.FillSleepRecordActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -267,9 +247,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
-        <!-- scale -->
+            android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- scale -->
         <activity
             android:name=".scale.ScaleListActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -319,7 +297,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/PlayActivityTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".service.cbti.activity.CBTIWeekCoursePartActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -374,7 +351,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
@@ -431,7 +407,7 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
 
         <service
-            android:name="com.sumian.sd.device.pattern.SyncPatternService"
+            android:name=".device.pattern.SyncPatternService"
             android:exported="false" />
 
         <activity
@@ -575,6 +551,16 @@
             android:exported="true"
             tools:ignore="ExportedContentProvider"
             tools:replace="android:authorities" />
+
+        <activity
+            android:name=".sleepguide.SleepGuideQuestionActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/BaseAppTheme.Fullscreen" />
+
+        <activity
+            android:name=".sleepguide.SleepGuideResultActivity"
+            android:launchMode="singleTop" />
+
     </application>
 
 </manifest>

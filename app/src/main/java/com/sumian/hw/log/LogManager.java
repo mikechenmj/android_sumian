@@ -2,8 +2,8 @@ package com.sumian.hw.log;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.webkit.WebSettings;
 
 import com.sumian.sd.app.App;
@@ -23,15 +23,15 @@ public class LogManager {
 
     static final String LOG_FILE_NAME = "Android_sumian_app.txt";
 
-    private static final int PHONE_INFO_TYPE        = 0x01;//系统信息
+    private static final int PHONE_INFO_TYPE = 0x01;//系统信息
     private static final int BLUETOOTH_ADAPTER_TYPE = 0x02;//蓝牙
-    private static final int USER_OPERATION_TYPE    = 0x03;//用户操作
-    private static final int MONITOR_TYPE           = 0x04;//监测仪
-    private static final int SPEED_SLEEPER_TYPE     = 0x05;//速眠仪
-    private static final int TRANSPARENT_DATA_TYPE  = 0x06;//透传数据
+    private static final int USER_OPERATION_TYPE = 0x03;//用户操作
+    private static final int MONITOR_TYPE = 0x04;//监测仪
+    private static final int SPEED_SLEEPER_TYPE = 0x05;//速眠仪
+    private static final int TRANSPARENT_DATA_TYPE = 0x06;//透传数据
 
-    private static final String DELIMITER      = " : ";
-    private static final String LEFT_BRACKETS  = "[";
+    private static final String DELIMITER = " : ";
+    private static final String LEFT_BRACKETS = "[";
     private static final String RIGHT_BRACKETS = "]";
 
     private File mLogFile;
@@ -144,6 +144,7 @@ public class LogManager {
     }
 
     private static void appendLog(String log) {
+        Log.d("LogManager", log);
         SdLogManager.INSTANCE.logDevice(log);
     }
 
@@ -174,8 +175,8 @@ public class LogManager {
         PackageManager packageManager = App.Companion.getAppContext().getPackageManager();
         try {
             PackageInfo packageInfo = packageManager.getPackageInfo(App.Companion.getAppContext().getPackageName(), 0);
-            String      versionName = packageInfo.versionName;
-            int         versionCode = packageInfo.versionCode;
+            String versionName = packageInfo.versionName;
+            int versionCode = packageInfo.versionCode;
 
             appInfo = "versionName=" + versionName + "  versionCode=" + versionCode;
 
