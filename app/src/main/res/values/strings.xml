@@ -818,4 +818,7 @@
     <string name="today">今天</string>
     <string name="cbti_final_report">CBTI 终期报告</string>
     <string name="cbti_final_report_dialog_message">为了能够更好地了解您当前的情况，为您提供后续建议，需要您配合完成终期评估。</string>
+    <string name="cbti_medal_title">CBTI小成就</string>
+    <string name="more_medal_bottom_tips">- 更多勋章，敬请期待 -</string>
+    <string name="my_metal">我的勋章</string>
 </resources>

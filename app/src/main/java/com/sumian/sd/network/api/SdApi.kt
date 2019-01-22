@@ -12,6 +12,8 @@ import com.sumian.hw.report.weeklyreport.bean.WeeklyReportResponse
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
+import com.sumian.sd.account.medal.bean.Medal
+import com.sumian.sd.account.medal.bean.MyMedalShare
 import com.sumian.sd.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.anxiousandfaith.bean.FaithData
 import com.sumian.sd.device.pattern.PatternData
@@ -553,4 +555,12 @@ interface SdApi {
     @Headers("accept: application/vnd.sd.v2+json")
     @POST("/diaries")
     fun postSleepDiary(@Body sleepDataData: SleepDiaryData): Call<SleepRecord>
+
+    //我的勋章
+
+    @GET("metal")
+    fun getMyMetalList(): Call<PaginationResponseV2<Medal>>
+
+    @GET("share")
+    fun getMyMetalShareDetail(@Query("id") id: Int): Call<MyMedalShare>
 }
