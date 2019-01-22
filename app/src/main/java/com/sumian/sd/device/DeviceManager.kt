@@ -2,6 +2,7 @@
 
 package com.sumian.sd.device
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
@@ -21,6 +22,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.VersionUtil
 import com.sumian.hw.log.LogManager
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.app.App
@@ -33,7 +35,10 @@ import com.sumian.sd.device.wrapper.BlueDeviceWrapper
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.network.response.FirmwareInfo
 import com.sumian.sd.utils.StorageUtil
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * @author : Zhan Xuzhao
@@ -50,7 +55,11 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
     private const val CMD_RESEND_TIME = 1000L * 5
 
-    private var mCurrentIndex = -1
+    private var mPackageCurrentIndex = -1   // 透传单包进度
+    private var mTotalProgress = -1         // 透传总进度
+    private var mPackageTotalDataCount: Int = 0 // 透传单包数据总数
+    private var mTotalDataCount: Int = 0    // 透传总数据
+    private var mPackageNumber: Int = 1     // 透传数据 包的index
     private val m8fTransData = ArrayList<String>(0)
     private var mIsMonitoring: Boolean = false
     private var mIsUnbinding: Boolean = false
@@ -58,8 +67,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private var mBeginCmd: String? = null
     private var mReceiveStartedTime: Long = 0
     private var mBlueDeviceWrapper: BlueDeviceWrapper = BlueDeviceWrapper()
-    private var mTotalDataCount: Int = 0
-    private var mPackageNumber: Int = 1 // 透传数据 包的index
     private val mMonitorLiveData = MutableLiveData<BlueDevice>()
     private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
     private val mMonitorEventListeners = HashSet<MonitorEventListener>()
@@ -367,45 +374,60 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val indexOne = Integer.parseInt(cmd.substring(4, 6), 16) and 0x0f shl 8
         val indexTwo = Integer.parseInt(cmd.substring(6, 8), 16)
         val index = indexOne + indexTwo
-        if (index % 20 == 0) {
-            LogManager.appendTransparentLog("收到透传数据：index：$index, cmd: $cmd")
+        if (BuildConfig.DEBUG || index % 20 == 0) {
+            LogManager.appendMonitorLog("收到透传数据：index：$index, cmd: $cmd")
         }
-        if (mCurrentIndex == -1) {
-            mCurrentIndex = index
+        if (mPackageCurrentIndex != -1 && index > mPackageCurrentIndex + 1) {
+            peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0xff.toByte()))
+            LogManager.appendTransparentLog("index=$index  realCount=$mPackageCurrentIndex  该index 出错,要求重传 cmd=$cmd")
+        } else {
+            mPackageCurrentIndex = index
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
             m8fTransData.add(cmd)
-        } else {
-            if (index == mCurrentIndex + 1) {
-                mCurrentIndex = index
-                peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
-                m8fTransData.add(cmd)
-            } else if (index > mCurrentIndex + 1) {
-                peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0xff.toByte()))
-                LogManager.appendTransparentLog("index=$index  realCount=$mCurrentIndex  该index 出错,要求重传 cmd=$cmd")
+            mTotalDataCount++
+            if (mTotalDataCount == 0) { // old version
+                onSyncProgressChange(mPackageNumber, mPackageCurrentIndex, mPackageTotalDataCount)
+            } else {
+                onSyncProgressChangeV2(mPackageNumber, mTotalProgress, mTotalDataCount)
             }
+            postNextPayloadTimeoutCallback()
         }
-        onSyncDataProgressChange(index, mTotalDataCount)
-        postNextPayloadTimeoutCallback()
     }
 
     private fun receiveStartOrFinishTransportCmd(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
+        // 55 8e 1 000 01 5c46833f 386cd300 01 02 0003
+        // 55 指令头 1 byte，
+        // 8e 指令类型 1 byte，
+        // 1 000 数据类型 4 bit，数据长度 12 bit，
+        // 01 起始标记 1 byte，
+        // 5c46833f 传输id 4 byte，
+        // 386cd300 睡眠数据采集开始时间 4 byte
+        // 01 总段数 1 byte [27-28]
+        // 02 当前段 1 byte [29-30]
+        // 0003 所有0x8F 类型数据包 2 byte [31-34]
         val typeAndCount = Integer.parseInt(cmd.substring(4, 8), 16)
         //16 bit 包括4bit 类型 12bit 长度 向右移12位,得到高4位的透传数据类型
         val tranType = typeAndCount shr 12
-        val dataCount: Int
-        LogManager.appendFormatPhoneLog("receiveStartOrFinishTransportCmd: %d", data[4])
+        val dataCount: Int = getDataCountFromCmd(cmd)
+        LogManager.appendMonitorLog("receiveStartOrFinishTransportCmd: $cmd")
         when (data[4]) {
             0x01.toByte() //开始透传
             -> {
-                mCurrentIndex = -1
+                mPackageCurrentIndex = -1
                 if (!m8fTransData.isEmpty()) {
                     m8fTransData.clear()
                 }
                 mTranType = tranType
                 mBeginCmd = cmd
                 mReceiveStartedTime = getActionTimeInSecond()
-                mTotalDataCount = getDataCountFromCmd(cmd)
-                dataCount = mTotalDataCount
+                mPackageTotalDataCount = dataCount
+                if (cmd.length == 34) {
+                    mTotalDataCount = subHexStringToInt(cmd, 30, 34)
+                    val currentPackage = subHexStringToInt(cmd, 28, 30)
+                    if (currentPackage == 1) {
+                        mTotalProgress = 0
+                    }
+                }
                 if (isAvailableStorageEnough(dataCount)) {
                     writeResponse(peripheral, data, true)
                     LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,等待设备透传 " + dataCount + "包数据" + "  cmd=" + cmd)
@@ -423,7 +445,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             0x0f.toByte()// 结束。透传8f 数据接收完成,保存文件,准备上传数据到后台
             -> {
                 mPackageNumber++
-                dataCount = getDataCountFromCmd(cmd)
                 @Suppress("UNCHECKED_CAST")
                 if (dataCount == m8fTransData.size) {
                     val sleepData = m8fTransData.clone() as ArrayList<String>
@@ -447,8 +468,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 } else {
                     LogManager.appendMonitorLog(
                             "0x8e0f 透传数据" + dataCount + "包接收失败,原因是包数量不一致 实际收到包数量 RealDataCount="
-                                    + mCurrentIndex + " 重新透传数据已准备,等待设备重新透传  cmd=" + cmd)
-                    mCurrentIndex = -1
+                                    + mPackageCurrentIndex + " 重新透传数据已准备,等待设备重新透传  cmd=" + cmd)
+                    mPackageCurrentIndex = -1
                     this.m8fTransData.clear()
                     writeResponse(peripheral, data, false)
                 }
@@ -754,10 +775,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         LogManager.appendMonitorLog("收到0x40 监测仪校正时区成功")
     }
 
-    private fun onSyncDataProgressChange(current: Int, total: Int) {
-        onSyncProgressChange(mPackageNumber, current, total)
-    }
-
     /**
      * @param peripheral       peripheral
      * @param data             data
@@ -786,6 +803,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
      */
     private fun getDataCountFromCmd(cmd: String): Int {
         return Integer.parseInt(cmd.substring(5, 8), 16)
+    }
+
+    private fun subHexStringToInt(s: String, startIndex: Int, endIndex: Int): Int {
+        return Integer.parseInt(s.substring(startIndex, endIndex), 16)
     }
 
     override fun onConnecting(peripheral: BluePeripheral, connectState: Int) {
@@ -887,7 +908,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         setMonitorToLiveData(mMonitorLiveData.value)
     }
 
-    // ---------------- monitor event listener start ----------------
+// ---------------- monitor event listener start ----------------
 
     override fun onSyncStart() {
         for (listener in mMonitorEventListeners) {
@@ -895,9 +916,17 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
     }
 
-    override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
+    override fun onSyncProgressChange(packageNumber: Int, packageProgress: Int, packageTotalCount: Int) {
+        LogManager.appendMonitorLog("onSyncProgressChange $packageProgress / $packageTotalCount")
         for (listener in mMonitorEventListeners) {
-            listener.onSyncProgressChange(packageNumber, progress, total)
+            listener.onSyncProgressChange(packageNumber, packageProgress, packageTotalCount)
+        }
+    }
+
+    override fun onSyncProgressChangeV2(packageNumber: Int, totalProgress: Int, totalCount: Int) {
+        LogManager.appendMonitorLog("onSyncProgressChangeV2 $totalProgress / $totalCount")
+        for (listener in mMonitorEventListeners) {
+            listener.onSyncProgressChangeV2(packageNumber, totalProgress, totalCount)
         }
     }
 
@@ -959,7 +988,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
     }
 
-    // ---------------- monitor event listener end ----------------
+// ---------------- monitor event listener end ----------------
 
     private fun setMonitorToLiveData(monitor: BlueDevice?) {
         mMonitorLiveData.value = monitor
@@ -1064,5 +1093,29 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 LogUtils.d("重新请求 监测仪版本信息")
             }
         }
+    }
+
+    private var mTestFlag = 0
+    @SuppressLint("CheckResult")
+    private fun testSync() {
+        mTestFlag++
+        mMonitorLiveData.value?.isSyncing = true
+        notifyMonitorChange()
+        mTotalProgress = 0
+        Flowable.intervalRange(0, 100, 0, 50, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mTotalProgress++
+                    if (mTestFlag % 2 == 0) {
+                        onSyncProgressChange(1, mTotalProgress, 100)
+                    } else {
+                        onSyncProgressChangeV2(1, mTotalProgress, 100)
+                    }
+                    if (mTotalProgress == 100) {
+                        mMonitorLiveData.value?.isSyncing = false
+                        notifyMonitorChange()
+                        onSyncSuccess()
+                    }
+                }
     }
 }

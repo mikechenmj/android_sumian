@@ -48,9 +48,14 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
             startSyncAnimation()
         }
 
-        override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
-            tv_progress_0.text = resources.getString(R.string.sync_progress_0, packageNumber)
-            tv_progress_1.text = resources.getString(R.string.sync_progress_1, progress * 100 / total)
+        override fun onSyncProgressChange(packageNumber: Int, packageProgress: Int, packageTotalCount: Int) {
+            tv_package_index.text = resources.getString(R.string.sync_progress_0, packageNumber)
+            tv_progress.text = resources.getString(R.string.sync_progress_1, packageProgress * 100 / packageTotalCount)
+        }
+
+        override fun onSyncProgressChangeV2(packageNumber: Int, totalProgress: Int, totalCount: Int) {
+            tv_package_index.visibility = View.GONE
+            tv_progress.text = resources.getString(R.string.sync_progress_1, totalProgress * 100 / totalCount)
         }
 
         override fun onSyncSuccess() {
@@ -175,8 +180,8 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 iv_sync.isEnabled = !isSyncing
                 tv_sync.isEnabled = !isSyncing
                 tv_sync.text = resources.getString(if (isSyncing) R.string.syncing else R.string.sync)
-                tv_progress_0.visibility = if (isSyncing) View.VISIBLE else View.GONE
-                tv_progress_1.visibility = if (isSyncing) View.VISIBLE else View.GONE
+                tv_package_index.visibility = if (isSyncing) View.VISIBLE else View.GONE
+                tv_progress.visibility = if (isSyncing) View.VISIBLE else View.GONE
                 if (isSyncing && (mRotateAnimator == null || !mRotateAnimator!!.isRunning)) {
                     startSyncAnimation()
                 }

@@ -1,6 +1,7 @@
 package com.sumian.sd.device
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,8 +49,12 @@ class DeviceManageFragment : BaseFragment() {
             startSyncAnimation()
         }
 
-        override fun onSyncProgressChange(packageNumber: Int, progress: Int, total: Int) {
-            tv_bottom_progress.text = getString(R.string.sync_progress_package_progress, packageNumber, progress * 100 / total)
+        override fun onSyncProgressChange(packageNumber: Int, packageProgress: Int, packageTotalCount: Int) {
+            tv_bottom_progress.text = getString(R.string.sync_progress_package_progress, packageNumber, packageProgress * 100 / packageTotalCount)
+        }
+
+        override fun onSyncProgressChangeV2(packageNumber: Int, totalProgress: Int, totalCount: Int) {
+            tv_bottom_progress.text = getString(R.string.sync_progress_package_progress_v2, totalProgress * 100 / totalCount)
         }
 
         override fun onSyncSuccess() {
@@ -135,6 +140,7 @@ class DeviceManageFragment : BaseFragment() {
         sleeper_battery_view.setTextSize(14f)
     }
 
+    @SuppressLint("InflateParams")
     private fun showUnbindPopup() {
         val inflate = LayoutInflater.from(activity!!).inflate(R.layout.layout_undbind_popup, null, false)
         inflate.setOnClickListener {

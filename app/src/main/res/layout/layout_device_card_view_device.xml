@@ -43,16 +43,17 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/tv_progress_0"
+            android:id="@+id/tv_package_index"
             style="@style/text_t1_14"
-            android:layout_marginStart="20dp"
+            android:textStyle="bold"
             tools:text="第 1 段" />
 
         <TextView
-            android:id="@+id/tv_progress_1"
+            android:id="@+id/tv_progress"
             style="@style/text_t2_14"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="20dp"
+            android:textStyle="bold"
             tools:text="(90%)" />
 
         <Space style="@style/space_horizontal_weight_1" />

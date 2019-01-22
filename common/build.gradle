@@ -134,6 +134,8 @@ dependencies {
     // tencent static
     api 'com.qq.mta:mta:3.4.7-Release'
     api 'com.tencent.mid:mid:4.06-Release'
+    api 'io.reactivex.rxjava2:rxjava:2.2.5'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
 }
 
 //项目主页
