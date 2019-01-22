@@ -56,8 +56,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private const val CMD_RESEND_TIME = 1000L * 5
 
     private var mPackageCurrentIndex = -1   // 透传单包进度
-    private var mTotalProgress = -1         // 透传总进度
     private var mPackageTotalDataCount: Int = 0 // 透传单包数据总数
+    private var mTotalProgress = 0         // 透传总进度
     private var mTotalDataCount: Int = 0    // 透传总数据
     private var mPackageNumber: Int = 1     // 透传数据 包的index
     private val m8fTransData = ArrayList<String>(0)
@@ -384,7 +384,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             mPackageCurrentIndex = index
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
             m8fTransData.add(cmd)
-            mTotalDataCount++
+            mTotalProgress++
             if (mTotalDataCount == 0) { // old version
                 onSyncProgressChange(mPackageNumber, mPackageCurrentIndex, mPackageTotalDataCount)
             } else {

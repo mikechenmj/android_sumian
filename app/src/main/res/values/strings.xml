@@ -534,6 +534,7 @@
     <string name="starting_work" tools:ignore="TypographyEllipsis">开启中...</string>
     <string name="sync_progress_0">第 %d 段</string>
     <string name="sync_progress_1">(%d%%)</string>
+    <string name="sync_progress_1_v2">%d%%</string>
     <string name="sleeper_is_working_please_sleep">速眠仪正常工作中，请安心入睡</string>
     <string name="turn_on_pa_mode_failed_title">开启工作模式失败</string>
     <string name="turn_on_pa_mode_failed_desc">速眠仪开启工作模式失败，原因是：%s</string>

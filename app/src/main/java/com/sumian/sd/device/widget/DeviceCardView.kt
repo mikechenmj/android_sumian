@@ -55,7 +55,7 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
 
         override fun onSyncProgressChangeV2(packageNumber: Int, totalProgress: Int, totalCount: Int) {
             tv_package_index.visibility = View.GONE
-            tv_progress.text = resources.getString(R.string.sync_progress_1, totalProgress * 100 / totalCount)
+            tv_progress.text = resources.getString(R.string.sync_progress_1_v2, totalProgress * 100 / totalCount)
         }
 
         override fun onSyncSuccess() {
