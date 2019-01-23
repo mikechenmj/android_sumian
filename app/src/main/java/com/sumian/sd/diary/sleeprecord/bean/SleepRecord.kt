@@ -1,6 +1,8 @@
 package com.sumian.sd.diary.sleeprecord.bean
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 data class SleepRecord(
         @SerializedName("created_at")
@@ -50,5 +52,27 @@ data class SleepRecord(
         @SerializedName("wake_times")
         val wakeTimes: Int, // 0
         @SerializedName("wake_up_at")
-        val wakeUpAt: Int // 0
+        val wakeUpAt: Int, // 0
+        @SerializedName("shared_info")
+        val sharedInfo: ShareInfo?
 )
+
+@Parcelize
+data class ShareInfo(
+        @SerializedName("official_qr_code")
+        val officialQrCode: String, // https://sleep-doctor-dev.oss-cn-shenzhen.aliyuncs.com/official_account/diary_achievement.png
+        @SerializedName("sleep_knowledge")
+        val sleepKnowledge: SleepKnowledge,
+        @SerializedName("total_diaries")
+        val totalDiaries: Int // 37
+) : Parcelable {
+        @Parcelize
+        data class SleepKnowledge(
+                @SerializedName("answer")
+                val answer: String, // aaa1
+                @SerializedName("id")
+                val id: Int, // 1
+                @SerializedName("question")
+                val question: String // qqq1
+        ) : Parcelable
+}
