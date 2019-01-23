@@ -58,8 +58,8 @@
             android:layout_height="wrap_content"
             android:background="@color/b2_color_day">
 
-            <com.sumian.sd.homepage.widget.CBTIBannerLoopView
-                android:id="@+id/cbti_banner_loop_view"
+            <com.sumian.sd.widget.banner.BannerViewPager
+                android:id="@+id/cbti_banner_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_176"
                 android:layout_marginLeft="@dimen/space_10"

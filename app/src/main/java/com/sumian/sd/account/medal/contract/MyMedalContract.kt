@@ -2,7 +2,8 @@ package com.sumian.sd.account.medal.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
 import com.sumian.common.mvp.IPresenter
-import com.sumian.sd.account.medal.bean.Medal
+import com.sumian.sd.account.medal.bean.Data
+import com.sumian.sd.account.medal.bean.Meta
 
 /**
  * Created by jzz
@@ -14,8 +15,9 @@ import com.sumian.sd.account.medal.bean.Medal
 interface MyMedalContract {
 
     interface View : BaseShowLoadingView {
-        fun onGetMyMedalListSuccess(myMedalList: List<Medal>)
+        fun onGetMyMedalListSuccess(myMedalList: List<Data>)
         fun onGetMyMedalListFailed(error: String)
+        fun onGetMetaCallback(meta: Meta)
     }
 
     interface Presenter : IPresenter {

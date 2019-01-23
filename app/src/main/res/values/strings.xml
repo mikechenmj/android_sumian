@@ -828,4 +828,6 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="get_good_sleep_solution">获取好眠方案</string>
+    <string name="just_so_so_share">- 随手传递健康睡眠 -</string>
+    <string name="acquisition">获得</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.sumian.sd.account.medal.bean
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Created by jzz
  *
@@ -9,6 +11,7 @@ package com.sumian.sd.account.medal.bean
  */
 data class Medal(val id: Int,
                  val icon: String,
-                 val tips: String,
+                 @SerializedName("gain_medal_picture") val gainMedalPicture: String,
+                 @SerializedName("title") val tips: String,
                  val url: String) {
 }

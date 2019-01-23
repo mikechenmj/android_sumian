@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.sumian.sd.homepage.widget
+package com.sumian.sd.widget.banner
 
 import android.content.Context
 import android.graphics.Canvas
@@ -16,7 +16,7 @@ import com.sumian.sd.R
  *
  * desc:  indicator view
  */
-class CBTIIndicatorView @JvmOverloads constructor(
+class IndicatorView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 

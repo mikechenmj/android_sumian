@@ -2,8 +2,7 @@ package com.sumian.sd.account.medal.presenter
 
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.network.response.PaginationResponseV2
-import com.sumian.sd.account.medal.bean.Medal
+import com.sumian.sd.account.medal.bean.Achievement
 import com.sumian.sd.account.medal.contract.MyMedalContract
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.network.callback.BaseSdResponseCallback
@@ -28,15 +27,16 @@ class MyMedalPresenter private constructor(private val view: MyMedalContract.Vie
 
         val call = AppManager.getSdHttpService().getMyMetalList()
         mCalls.add(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Medal>>() {
+        call.enqueue(object : BaseSdResponseCallback<Achievement>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 view?.onGetMyMedalListFailed(error = errorResponse.message)
             }
 
-            override fun onSuccess(response: PaginationResponseV2<Medal>?) {
+            override fun onSuccess(response: Achievement?) {
                 response?.let {
                     val data = response.data
                     view?.onGetMyMedalListSuccess(data)
+                    view?.onGetMetaCallback(response.meta)
                 }
             }
 
