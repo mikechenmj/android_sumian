@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_176"
+    app:cardCornerRadius="@dimen/space_6">
+
+    <ImageView
+        android:id="@+id/iv_cbti_loop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_176"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_cbti_banner" />
+
+    <com.sumian.sd.homepage.widget.CBTIIndicatorView
+        android:id="@+id/cbti_indicator_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="@dimen/space_10"
+        android:padding="@dimen/space_2" />
+
+</merge>

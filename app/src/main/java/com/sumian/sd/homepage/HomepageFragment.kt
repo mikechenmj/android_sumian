@@ -115,6 +115,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onPause() {
         super.onPause()
         device_card_view.onPause()
+        cbti_banner_loop_view.pauseLoop()
     }
 
     private fun refreshData() {
@@ -167,6 +168,13 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
                 isLock = response?.meta?.isLock != false
                 cbti_progress_view.setData(response)
+                if (isLock) {
+                    cbti_progress_view.visibility = View.GONE
+                    cbti_banner_loop_view.show()
+                } else {
+                    cbti_progress_view.visibility = View.VISIBLE
+                    cbti_banner_loop_view.hide()
+                }
             }
         })
     }

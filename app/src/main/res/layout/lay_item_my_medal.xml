@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/space_116"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_30"
+    android:background="@color/trans"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@+id/iv_medal"
+        android:layout_width="@dimen/space_80"
+        android:layout_height="@dimen/space_80"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/belief_icon_facial3_selected" />
+
+    <TextView
+        android:id="@+id/tv_medal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_10"
+        android:gravity="center"
+        android:text="睡眠小白羊"
+        tools:text="睡眠小白羊" />
+</LinearLayout>
