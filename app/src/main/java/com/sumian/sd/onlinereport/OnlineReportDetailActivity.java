@@ -38,7 +38,7 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
         Map<String, Object> page = new HashMap<>(2);
         page.put("page", "onlineReport");
         page.put("payload", payload);
-        return SimpleWebActivity.getLaunchIntentWithRouteData(context, JsonUtil.toJson(page), OnlineReportDetailActivity.class);
+        return SimpleWebActivity.Companion.getLaunchIntentWithRouteData(context, JsonUtil.toJson(page), OnlineReportDetailActivity.class);
     }
 
     @Override

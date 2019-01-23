@@ -89,7 +89,7 @@ class SleepDiaryVpFragment : BaseFragment() {
         date_bar.setWeekIconClickListener(View.OnClickListener {
             val selectTimeInSecond = (date_bar.getCurrentTime() / 1000).toInt()
             val urlContentPart = H5Uri.SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", selectTimeInSecond.toString())
-            SimpleWebActivity.launch(activity, urlContentPart)
+            SimpleWebActivity.launch(activity!!, urlContentPart)
         })
     }
 

@@ -6,6 +6,8 @@ import android.content.Intent
 import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
@@ -34,6 +36,7 @@ import com.sumian.sd.relaxation.RelaxationListActivity
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.service.cbti.activity.CbtiFinalReportDialogActivity
+import com.sumian.sd.sleepguide.SleepGuideActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
 import org.greenrobot.eventbus.Subscribe
@@ -57,16 +60,19 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         const val SP_KEY_UPDATE_SLEEP_PRESCRIPTION_TIME = "update_sleep_prescription_time"
         const val REQUEST_CODE_SCAN_DEVICE = 1
         const val REQUEST_CODE_ENABLE_BLUETOOTH = 2
+        const val SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION = "SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION"
     }
 
     private var isLock: Boolean = false
 
+    var show = true
+    var flag = 1
     override fun initWidget(root: View) {
         super.initWidget(root)
         initUserInfo()
-        cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { launchCbtiActivity() })
+        cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { CBTIIntroductionActivity.show() })
         tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationListActivity::class.java) }
-        tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity, H5Uri.CBTI_SLEEP_HEALTH) }
+        tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH) }
         tv_scale.setOnClickListener { ScaleListActivity.launch() }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionSettingActivity.launch() }
         iv_avatar.setOnClickListener { onAvatarClick() }
@@ -82,15 +88,22 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
             }
         }
         tv_anxious_and_faith.setOnClickListener { ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java) }
+        home_page_sleep_guide_enter_btn.setOnClickListener { SleepGuideActivity.start() }
     }
 
-    private fun launchCbtiActivity() {
-        //if (isLock) {//未购买
-        //    CBTIIntroductionWebActivity.show()
-        //} else {//已购买
-        CBTIIntroductionActivity.show()
-        //}
-        //ActivityUtils.startActivity(CBTIIntroductionWebActivity::class.java)
+    private fun showSleepGuideDialogIfNeed() {
+        val sp = SPUtils.getInstance(javaClass.simpleName)
+        val showVersionCode = sp.getInt(SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION)
+        val appVersionCode = AppUtils.getAppVersionCode()
+        if (showVersionCode == appVersionCode) {
+            return
+        }
+        home_page_sleep_guide_enter_btn.viewTreeObserver.addOnGlobalLayoutListener {
+            val arr = intArrayOf(0, 0)
+            home_page_sleep_guide_enter_btn.getLocationInWindow(arr)
+            SleepGuideDialogActivity.start(arr[1])
+            sp.put(SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION, appVersionCode)
+        }
     }
 
     private fun initUserInfo() {
@@ -122,6 +135,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         queryCbti()
         querySleepPrescription()
         querySentencePool()
+        querySleepGuide()
     }
 
     private fun querySentencePool() {
@@ -175,6 +189,23 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                     cbti_progress_view.visibility = View.VISIBLE
                     cbti_banner_loop_view.hide()
                 }
+            }
+        })
+    }
+
+    private fun querySleepGuide() {
+        val call = AppManager.getSdHttpService().getSleepGuide()
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<Any?>() {
+            override fun onSuccess(response: Any?) {
+                LogUtils.d("getSleepGuide", response)
+                if (response == null) {
+                    showSleepGuideDialogIfNeed()
+                }
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d("getSleepGuide", errorResponse)
             }
         })
     }

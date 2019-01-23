@@ -9,7 +9,7 @@ import com.sumian.common.utils.JsonUtil
  * desc   :
  * version: 1.0
  */
-class H5PayloadData(val page: String, val payload: Map<String, Any>) {
+class H5PayloadData(val page: String, val payload: Map<String, Any?>) {
     fun toJson(): String {
         return JsonUtil.toJson(this)
     }

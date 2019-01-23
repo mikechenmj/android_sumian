@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.BridgeHandler
-import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.R
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.h5.bean.H5ShowToastData
+import com.sumian.common.h5.bean.NativeRouteData
+import com.sumian.common.h5.bean.ShareData
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.utils.JsonUtil
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.common_activity_base_webview.*
  *     version: 1.0
  * </pre>
  */
-@Suppress("ObjectLiteralToLambda", "MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "UNUSED_ANONYMOUS_PARAMETER")
 abstract class BaseWebViewActivity : BasePresenterActivity<IPresenter>(), SWebView.OnWebViewListener {
 
     protected var mSoftKeyBoardListener: SoftKeyBoardListener? = null
@@ -61,62 +62,68 @@ abstract class BaseWebViewActivity : BasePresenterActivity<IPresenter>(), SWebVi
     }
 
     private fun registerBaseHandler(sWebView: SWebView) {
-        sWebView.registerHandler("showToast", object : BridgeHandler {
-            override fun handler(data: String?, function: CallBackFunction) {
-                LogUtils.d(data)
-                val toastData = H5ShowToastData.fromJson(data)
-                if (mSumianImageTextDialog != null) {
-                    mSumianImageTextDialog!!.dismiss()
-                } else {
-                    mSumianImageTextDialog = SumianImageTextDialog(this@BaseWebViewActivity)
-                }
-                mSumianImageTextDialog!!.show(toastData)
+        sWebView.registerHandler("showToast") { data, function ->
+            LogUtils.d(data)
+            val toastData = H5ShowToastData.fromJson(data)
+            if (mSumianImageTextDialog != null) {
+                mSumianImageTextDialog!!.dismiss()
+            } else {
+                mSumianImageTextDialog = SumianImageTextDialog(this@BaseWebViewActivity)
             }
-        })
-        sWebView.registerHandler("hideToast", object : BridgeHandler {
-            override fun handler(data: String?, function: CallBackFunction) {
-                LogUtils.d(data)
-                val toastData = H5ShowToastData.fromJson(data)
-                if (mSumianImageTextDialog != null) {
-                    mSumianImageTextDialog!!.dismiss(toastData.delay)
-                }
+            mSumianImageTextDialog!!.show(toastData)
+        }
+        sWebView.registerHandler("hideToast") { data, function ->
+            LogUtils.d(data)
+            val toastData = H5ShowToastData.fromJson(data)
+            if (mSumianImageTextDialog != null) {
+                mSumianImageTextDialog!!.dismiss(toastData.delay)
             }
-        })
-        sWebView.registerHandler("finish", object : BridgeHandler {
-            override fun handler(data: String?, function: CallBackFunction) {
-                finish()
-            }
-        })
-        sWebView.registerHandler("return", object : BridgeHandler {
-            override fun handler(data: String?, function: CallBackFunction) {
-                onBackPressed()
-            }
-        })
-        sWebView.registerHandler("updatePageUI", object : BridgeHandler {
-            override fun handler(data: String?, function: CallBackFunction) {
-                val map = JsonUtil.fromJson<Map<String, Any>>(data, object : TypeToken<Map<String, Any>>() {
+        }
+        sWebView.registerHandler("finish") { data, function -> finish() }
+        sWebView.registerHandler("return") { data, function -> onBackPressed() }
+        sWebView.registerHandler("updatePageUI", BridgeHandler { data, function ->
+            val map = JsonUtil.fromJson<Map<String, Any>>(data, object : TypeToken<Map<String, Any>>() {
 
-                }.type) ?: return
-                for ((key, value) in map) {
-                    when (key) {
-                        "showNavigationBar" -> if (value is Boolean) {
-                            mTitleBar.visibility = if (value) View.VISIBLE else View.GONE
-                        }
-                        "showTitle" -> if (value is Boolean) {
-                            mTitleBar.showTitle(value)
-                        }
-                        "showBackArrow" -> if (value is Boolean) {
-                            mTitleBar.showBackArrow(value)
-                        }
-                        "setStatusBarTextColorDark" -> if (value is Boolean) {
-                            StatusBarUtil.setStatusBarTextColorDark(this@BaseWebViewActivity, value)
-                        }
-                        else -> {
-                        }
+            }.type) ?: return@BridgeHandler
+            for ((key, value) in map) {
+                when (key) {
+                    "showNavigationBar" -> if (value is Boolean) {
+                        mTitleBar.visibility = if (value) View.VISIBLE else View.GONE
+                    }
+                    "showTitle" -> if (value is Boolean) {
+                        mTitleBar.showTitle(value)
+                    }
+                    "showBackArrow" -> if (value is Boolean) {
+                        mTitleBar.showBackArrow(value)
+                    }
+                    "setStatusBarTextColorDark" -> if (value is Boolean) {
+                        StatusBarUtil.setStatusBarTextColorDark(this@BaseWebViewActivity, value)
+                    }
+                    else -> {
                     }
                 }
             }
         })
+        sWebView.registerHandler("getToPage") { data, function ->
+            run {
+                val routeData = JsonUtil.fromJson(data, NativeRouteData::class.java) ?: return@run
+                onGoToPage(routeData)
+            }
+        }
+        sWebView.registerHandler("share") { data, function ->
+            run {
+                val shareData = JsonUtil.fromJson(data, ShareData::class.java) ?: return@run
+                onShare(shareData)
+            }
+        }
+    }
+
+    protected open fun onGoToPage(routeData: NativeRouteData) {
+
+    }
+
+    protected open fun onShare(shareData: ShareData) {
+
     }
 
     override fun onResume() {

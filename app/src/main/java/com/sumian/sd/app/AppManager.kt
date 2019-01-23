@@ -144,13 +144,13 @@ object AppManager {
     @JvmStatic
     @Synchronized
     fun getOpenLogin(): OpenLogin {
-        return mOpenEngine.openLogin
+        return mOpenEngine.openLogin!!
     }
 
     @JvmStatic
     @Synchronized
     fun getOpenAnalytics(): OpenAnalytics {
-        return mOpenEngine.openAnalytics
+        return mOpenEngine.openAnalytics!!
     }
 
     @JvmStatic

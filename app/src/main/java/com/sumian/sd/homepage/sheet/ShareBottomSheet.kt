@@ -79,7 +79,7 @@ class ShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClickLis
             R.id.tv_wechat_friend -> {
                 AppManager
                         .getOpenEngine()
-                        .shareUrl(activity,
+                        .shareUrl(activity!!,
                                 shareUrl,
                                 shareTitle,
                                 shareDesc,
@@ -90,7 +90,7 @@ class ShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClickLis
             R.id.tv_wechat_circle -> {
                 AppManager
                         .getOpenEngine()
-                        .shareUrl(activity,
+                        .shareUrl(activity!!,
                                 shareUrl,
                                 shareMomentTitle,
                                 shareDesc,

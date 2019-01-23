@@ -567,13 +567,17 @@
             tools:replace="android:authorities" />
 
         <activity
-            android:name=".sleepguide.SleepGuideQuestionActivity"
+            android:name=".sleepguide.SleepGuideActivity"
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.Fullscreen" />
-
         <activity
             android:name=".sleepguide.SleepGuideResultActivity"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".homepage.SleepGuideDialogActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg" />
 
     </application>
 

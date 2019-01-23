@@ -563,4 +563,7 @@ interface SdApi {
 
     @GET("share")
     fun getMyMetalShareDetail(@Query("id") id: Int): Call<MyMedalShare>
+
+    @GET("sleep/guide")
+    fun getSleepGuide(): Call<Any?>
 }

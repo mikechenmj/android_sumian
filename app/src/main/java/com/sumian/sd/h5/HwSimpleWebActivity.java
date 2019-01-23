@@ -15,7 +15,7 @@ public class HwSimpleWebActivity extends SimpleWebActivity {
 
     public static void launch(Context context, String urlContentPart) {
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_URL_CONTENT_PART, urlContentPart);
+        bundle.putString(Companion.getKEY_URL_CONTENT_PART(), urlContentPart);
         Intent intent = new Intent(context, HwSimpleWebActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
@@ -23,7 +23,7 @@ public class HwSimpleWebActivity extends SimpleWebActivity {
 
     public static void launchWithCompleteUrl(Context context, String completeUrl) {
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_URL_COMPLETE, completeUrl);
+        bundle.putString(Companion.getKEY_URL_COMPLETE(), completeUrl);
         Intent intent = new Intent(context, HwSimpleWebActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);

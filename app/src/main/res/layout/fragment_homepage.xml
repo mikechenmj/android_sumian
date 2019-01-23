@@ -77,10 +77,20 @@
 
         <include layout="@layout/layout_homepage_fragment_grid_items" />
 
+        <ImageView
+            android:id="@+id/home_page_sleep_guide_enter_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/sel_sleep_guide_enter_btn"
+            tools:ignore="ContentDescription" />
+
         <com.sumian.sd.homepage.widget.SleepPrescriptionView
             android:id="@+id/sleep_prescription_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <com.sumian.sd.device.widget.DeviceCardView
             android:id="@+id/device_card_view"
