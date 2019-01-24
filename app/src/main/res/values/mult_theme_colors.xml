@@ -22,6 +22,7 @@
     <color name="t3_color_day">#ff2c2f37</color>
     <color name="t4_color_day">#ffe56a67</color>
     <color name="t5_color_day">#ff475266</color>
+    <color name="t6_color_day">#ffa66f00</color>
 
     <!--line color-->
     <color name="l1_color_day">#ffedeff0</color>

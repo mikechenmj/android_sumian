@@ -36,6 +36,7 @@ import com.sumian.sd.relaxation.RelaxationListActivity
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.service.cbti.activity.CbtiFinalReportDialogActivity
+import com.sumian.sd.widget.banner.BannerViewPager
 import com.sumian.sd.sleepguide.SleepGuideActivity
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
@@ -127,7 +128,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onPause() {
         super.onPause()
         device_card_view.onPause()
-        cbti_banner_loop_view.pauseLoop()
+        cbti_banner_view_pager.pauseLoop()
     }
 
     private fun refreshData() {
@@ -175,7 +176,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<GetCbtiChaptersResponse>() {
             override fun onFailure(errorResponse: ErrorResponse) {
-
             }
 
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
@@ -183,11 +183,17 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 cbti_progress_view.setData(response)
                 if (isLock) {
                     cbti_progress_view.visibility = View.GONE
-                    cbti_banner_loop_view.show()
+                    cbti_banner_view_pager.show()
                 } else {
                     cbti_progress_view.visibility = View.VISIBLE
-                    cbti_banner_loop_view.hide()
+                    cbti_banner_view_pager.hide()
                 }
+                cbti_banner_view_pager.bindBannerList(arrayListOf("1", "2", "3", "4"))
+                cbti_banner_view_pager.setBannerClickListener(object : BannerViewPager.OnBannerClickListener {
+                    override fun onClick(banner: View, position: Int) {
+
+                    }
+                })
             }
         })
     }

@@ -2,6 +2,7 @@ package com.sumian.common.social
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.annotation.DrawableRes
 import com.sumian.common.h5.bean.ShareData
 import com.sumian.common.social.analytics.OpenAnalytics
@@ -71,6 +72,16 @@ class OpenEngine {
 
     fun shareUrl(activity: Activity, shareData: ShareData, umShareListener: UMShareListener? = null) {
         shareUrl(activity, shareData.url, shareData.title, shareData.desc, shareData.icon, shareData.getPlatformEnum(), umShareListener)
+    }
+
+    fun shareImage(activity: Activity, bitmap: Bitmap, shareMedia: SHARE_MEDIA, umShareListener: UMShareListener? = null) {
+        val umImage = UMImage(activity, bitmap)
+        umImage.setThumb(umImage)
+        ShareAction(activity)
+                .withMedia(umImage)
+                .setCallback(umShareListener)
+                .setPlatform(shareMedia)
+                .share()
     }
 
     companion object {

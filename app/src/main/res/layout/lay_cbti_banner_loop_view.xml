@@ -13,7 +13,7 @@
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/ic_cbti_banner" />
 
-    <com.sumian.sd.homepage.widget.CBTIIndicatorView
+    <com.sumian.sd.widget.banner.IndicatorView
         android:id="@+id/cbti_indicator_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

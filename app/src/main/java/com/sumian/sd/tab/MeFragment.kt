@@ -5,10 +5,11 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.image.ImageLoader
+import com.sumian.common.image.loadImage
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.R
+import com.sumian.sd.account.achievement.MyAchievementActivity
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
 import com.sumian.sd.account.userProfile.UserInfoActivity
@@ -54,6 +55,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
         dv_setting.setOnClickListener(this)
         iv_notification.setOnClickListener(this)
         siv_customer_service.setOnClickListener(this)
+        dv_my_metal.setOnClickListener(this)
         dv_device_manage.setOnClickListener(this)
         dv_coupon_center.setOnClickListener(this)
         tips_service.setOnServiceTipsCallback(this)
@@ -97,6 +99,9 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
 //                UIProvider.getInstance().clearCacheMsg()
                 KefuManager.launchKefuActivity()
             }
+            R.id.dv_my_metal -> {
+                MyAchievementActivity.show()
+            }
             R.id.dv_device_manage -> {
                 LogManager.appendUserOperationLog("点击【设备管理】")
                 ActivityUtils.startActivity(DeviceManageActivity::class.java)
@@ -108,7 +113,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
     }
 
     private fun updateUserProfile(userProfile: UserInfo) {
-        ImageLoader.loadImage(userProfile.avatar, iv_avatar, R.mipmap.ic_info_avatar_patient)
+        iv_avatar.loadImage(userProfile.avatar, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient)
         val nickname = userProfile.nickname
         tv_nickname.text = if (TextUtils.isEmpty(nickname)) userProfile.mobile else nickname
     }

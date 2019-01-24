@@ -31,7 +31,7 @@ class CBTIWeekCourseBannerHomeView : LinearLayout {
     private fun initView(context: Context) {
         orientation = VERTICAL
         inflate(context, R.layout.lay_cbti_lesson_banner_home_view, this)
-        setBackgroundResource(R.drawable.ic_cbti_banner)
+        setBackgroundResource(R.drawable.ic_cbti_img_banner1)
     }
 
     fun invalidateBanner(formatExpiredTime: String, formatTotalProgress: String) {
@@ -41,7 +41,7 @@ class CBTIWeekCourseBannerHomeView : LinearLayout {
     fun invalidateBannerExtras(bannerUrl: String, name: String, introduction: String) {
         tv_cbti_name.text = name
         tv_cbti_introduction.text = introduction
-        Glide.with(this).asDrawable().load(bannerUrl).apply(RequestOptions.placeholderOf(R.drawable.ic_cbti_banner).error(R.drawable.ic_cbti_banner)).into(object : SimpleTarget<Drawable>() {
+        Glide.with(this).asDrawable().load(bannerUrl).apply(RequestOptions.placeholderOf(R.drawable.ic_cbti_img_banner1).error(R.drawable.ic_cbti_img_banner1)).into(object : SimpleTarget<Drawable>() {
             override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
                 background = resource
             }
