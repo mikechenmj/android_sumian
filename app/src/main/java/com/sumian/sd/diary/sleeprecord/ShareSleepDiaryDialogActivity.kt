@@ -11,8 +11,9 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseDialogPresenterActivity
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.mvp.IPresenter
-import com.sumian.common.utils.ImageUtil
 import com.sumian.common.utils.JsonUtil
+import com.sumian.common.utils.ViewToImageFileListener
+import com.sumian.common.utils.viewToImageFile
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.constants.FilePath
@@ -94,7 +95,7 @@ class ShareSleepDiaryDialogActivity : BaseDialogPresenterActivity<IPresenter>() 
 
     private fun createImageAndShare(shareMedia: SHARE_MEDIA) {
         val file = File(FilePath.getExternalCacheDir(), "${System.currentTimeMillis()}.jpg")
-        ImageUtil.viewToImageFile(v_share_sleep_diary_root, file, 50, object : ImageUtil.ViewToImageFileListener {
+        viewToImageFile(v_share_sleep_diary_root, file, 50, object : ViewToImageFileListener {
             override fun onComplete() {
                 AppManager.getOpenEngine()
                         .shareImageFile(this@ShareSleepDiaryDialogActivity,

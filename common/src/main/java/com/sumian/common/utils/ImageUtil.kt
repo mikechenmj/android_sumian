@@ -18,44 +18,43 @@ import java.io.FileOutputStream
  * desc   :
  * version: 1.0
  */
-object ImageUtil {
-    @SuppressLint("CheckResult")
-    fun viewToImageFile(view: View, file: File, quality: Int = 50, listener: ViewToImageFileListener) {
-        view.postDelayed({
-            Flowable.fromCallable {
-                if (!file.exists()) {
-                    file.createNewFile()
-                }
-                view.isDrawingCacheEnabled = true
-                val bitmap = getBitmapFromView(view)
-                bitmap.compress(Bitmap.CompressFormat.JPEG, quality, FileOutputStream(file))
-                file
+
+@SuppressLint("CheckResult")
+fun viewToImageFile(view: View, file: File, quality: Int = 50, listener: ViewToImageFileListener) {
+    view.postDelayed({
+        Flowable.fromCallable {
+            if (!file.exists()) {
+                file.createNewFile()
             }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        listener.onComplete()
-                    }, {
-                        listener.onError(it)
-                    })
-        }, 0)
-    }
-
-    private fun getBitmapFromView(view: View): Bitmap {
-        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(returnedBitmap)
-        val bgDrawable = view.background
-        if (bgDrawable != null) {
-            bgDrawable.draw(canvas)
-        } else {
-            canvas.drawColor(Color.WHITE)
+            view.isDrawingCacheEnabled = true
+            val bitmap = getBitmapFromView(view)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, FileOutputStream(file))
+            file
         }
-        view.draw(canvas)
-        return returnedBitmap
-    }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    listener.onComplete()
+                }, {
+                    listener.onError(it)
+                })
+    }, 0)
+}
 
-    interface ViewToImageFileListener {
-        fun onComplete()
-        fun onError(t: Throwable)
+private fun getBitmapFromView(view: View): Bitmap {
+    val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(returnedBitmap)
+    val bgDrawable = view.background
+    if (bgDrawable != null) {
+        bgDrawable.draw(canvas)
+    } else {
+        canvas.drawColor(Color.WHITE)
     }
+    view.draw(canvas)
+    return returnedBitmap
+}
+
+interface ViewToImageFileListener {
+    fun onComplete()
+    fun onError(t: Throwable)
 }
