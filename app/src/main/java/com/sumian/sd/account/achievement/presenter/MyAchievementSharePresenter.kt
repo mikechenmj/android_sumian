@@ -4,7 +4,8 @@ import android.app.Activity
 import android.os.Environment
 import android.view.ViewGroup
 import androidx.core.view.drawToBitmap
-import com.sumian.common.utils.ImageUtil
+import com.sumian.common.utils.ViewToImageFileListener
+import com.sumian.common.utils.viewToImageFile
 import com.sumian.sd.account.achievement.contract.MyAchievementShareContract
 import com.sumian.sd.app.AppManager
 import com.umeng.socialize.UMShareListener
@@ -32,8 +33,8 @@ class MyAchievementSharePresenter private constructor() : MyAchievementShareCont
 
     }
 
-    override fun saveShareView(shareView: ViewGroup, listener: ImageUtil.ViewToImageFileListener) {
-        ImageUtil.viewToImageFile(shareView,
+    override fun saveShareView(shareView: ViewGroup, listener: ViewToImageFileListener) {
+        viewToImageFile(shareView,
                 createSaveFile(),
                 50, listener)
     }

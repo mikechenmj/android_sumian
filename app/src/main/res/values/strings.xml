@@ -831,5 +831,5 @@
     <string name="just_so_so_share">- 随手传递健康睡眠 -</string>
     <string name="acquisition">获得</string>
     <string name="share_healthy_sleep">- 随手传递健康睡眠 -</string>
-    <string name="today_is_xx_day_fill_sleep_diary">今天是我第 250 天关注自己的睡眠健康。爱自己，就要从察觉身体的需要开始。坚持就是胜利！</string>
+    <string name="today_is_xx_day_fill_sleep_diary">今天是我第 %d 天关注自己的睡眠健康。爱自己，就要从察觉身体的需要开始。坚持就是胜利！</string>
 </resources>

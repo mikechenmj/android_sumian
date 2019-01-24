@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.image.loadImage
-import com.sumian.common.utils.ImageUtil
+import com.sumian.common.utils.ViewToImageFileListener
 import com.sumian.sd.R
 import com.sumian.sd.account.achievement.bean.Achievement
 import com.sumian.sd.account.achievement.bean.LastAchievementData
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_main_my_achievement_share.*
  *
  * desc: 我的勋章成就分享
  */
-class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContract.Presenter>(), UMShareListener, ImageUtil.ViewToImageFileListener {
+class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContract.Presenter>(), UMShareListener, ViewToImageFileListener {
 
     private var shareAchievement: ShareAchievement? = null
 
