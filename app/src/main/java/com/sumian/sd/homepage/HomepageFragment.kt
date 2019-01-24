@@ -99,12 +99,10 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         if (showVersionCode == appVersionCode) {
             return
         }
-        home_page_sleep_guide_enter_btn.viewTreeObserver.addOnGlobalLayoutListener {
-            val arr = intArrayOf(0, 0)
-            home_page_sleep_guide_enter_btn.getLocationInWindow(arr)
-            SleepGuideDialogActivity.start(arr[1])
-            sp.put(SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION, appVersionCode)
-        }
+        val arr = intArrayOf(0, 0)
+        home_page_sleep_guide_enter_btn.getLocationInWindow(arr)
+        sp.put(SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION, appVersionCode)
+        SleepGuideDialogActivity.start(arr[1])
     }
 
     private fun initUserInfo() {
@@ -119,6 +117,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onStart() {
         super.onStart()
         refreshData()
+//        ShareSleepDiaryDialogActivity.startFotTest()
     }
 
     override fun onResume() {
@@ -205,6 +204,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         call.enqueue(object : BaseSdResponseCallback<Any?>() {
             override fun onSuccess(response: Any?) {
                 LogUtils.d("getSleepGuide", response)
+                home_page_sleep_guide_enter_btn.isActivated = response != null
                 if (response == null) {
                     showSleepGuideDialogIfNeed()
                 }

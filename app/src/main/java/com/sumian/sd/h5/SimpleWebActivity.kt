@@ -50,11 +50,6 @@ open class SimpleWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
             ActivityUtils.startActivity(intent)
         }
 
-        fun launchWithRouteData(context: Context, routePageData: String) {
-            val intent = getLaunchIntentWithRouteData(context, routePageData, SimpleWebActivity::class.java)
-            ActivityUtils.startActivity(intent)
-        }
-
         private fun getLaunchIntentWithPartUrl(context: Context, urlContentPart: String): Intent {
             val intent = Intent(context, SimpleWebActivity::class.java)
             intent.putExtra(KEY_URL_CONTENT_PART, urlContentPart)
@@ -67,7 +62,7 @@ open class SimpleWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
             return intent
         }
 
-        fun getLaunchIntentWithRouteData(context: Context, pageName: String, data: Map<String, Any?>): Intent {
+        fun getLaunchIntentWithRouteData(context: Context, pageName: String, data: Map<String, Any?>? = null): Intent {
             return getLaunchIntentWithRouteData(context, H5PayloadData(pageName, data).toJson(), SimpleWebActivity::class.java)
         }
 

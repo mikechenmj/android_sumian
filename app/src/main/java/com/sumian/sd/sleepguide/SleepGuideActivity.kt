@@ -1,6 +1,7 @@
 package com.sumian.sd.sleepguide
 
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.h5.bean.NativeRouteData
 import com.sumian.common.h5.bean.ShareData
 import com.sumian.sd.app.AppManager
@@ -16,7 +17,10 @@ class SleepGuideActivity : SimpleWebActivity() {
 
     companion object {
         fun start() {
-            val intent = getLaunchIntentWithRouteData(ActivityUtils.getTopActivity(), "sleepGuide", SimpleWebActivity::class.java)
+            val intent = getLaunchIntentWithRouteData(
+                    ActivityUtils.getTopActivity(),
+                    H5PayloadData("sleepGuide", null).toJson(),
+                    SleepGuideActivity::class.java)
             ActivityUtils.startActivity(intent)
         }
     }

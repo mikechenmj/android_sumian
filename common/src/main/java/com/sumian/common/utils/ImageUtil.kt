@@ -34,7 +34,7 @@ object ImageUtil {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        listener.onComplete(it)
+                        listener.onComplete()
                     }, {
                         listener.onError(it)
                     })
@@ -55,7 +55,7 @@ object ImageUtil {
     }
 
     interface ViewToImageFileListener {
-        fun onComplete(file: File)
+        fun onComplete()
         fun onError(t: Throwable)
     }
 }
