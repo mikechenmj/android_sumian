@@ -16,10 +16,9 @@ interface LastAchievementContract {
 
     interface View : BaseShowLoadingView {
         fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData)
-        fun onNoHave()
-        fun onGetAchievementListForTypeFailed(error: String)
-        fun onPopAchievementSuccess(lastAchievementData: LastAchievementData)
-        fun onPopAchievementFailed(error: String)
+        fun onGetAchievementListForTypeFailed(error: String) {}
+        fun onPopAchievementSuccess(lastAchievementData: LastAchievementData) {}
+        fun onPopAchievementFailed(error: String) {}
     }
 
     interface Presenter : IPresenter {

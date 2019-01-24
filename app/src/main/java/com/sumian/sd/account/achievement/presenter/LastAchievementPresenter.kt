@@ -32,9 +32,8 @@ class LastAchievementPresenter private constructor(var view: LastAchievementCont
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<LastAchievementData>() {
             override fun onSuccess(response: LastAchievementData?) {
-                if (response == null) {
-                    view?.onNoHave()
-                } else {
+                response?.let {
+                    if (response.isPop()) return
                     view?.onGetAchievementListForTypeSuccess(response)
                     popAchievement(response.id)
                 }
