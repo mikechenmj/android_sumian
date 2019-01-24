@@ -1,11 +1,11 @@
-package com.sumian.sd.account.medal.bean
+package com.sumian.sd.account.achievement.bean
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class AchievementX(
+data class Achievement(
         @SerializedName("achievement_category_id")
         val achievementCategoryId: Int,
         @SerializedName("context")
@@ -29,6 +29,10 @@ data class AchievementX(
         @SerializedName("updated_at")
         val updatedAt: Int
 ) : Parcelable {
+
+    companion object {
+        const val CBTI_TYPE = 0x00
+    }
 
 
     fun isHave(): Boolean = record != null

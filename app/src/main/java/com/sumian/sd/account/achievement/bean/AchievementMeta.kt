@@ -1,8 +1,8 @@
-package com.sumian.sd.account.medal.bean
+package com.sumian.sd.account.achievement.bean
 
 import com.google.gson.annotations.SerializedName
 
-data class Meta(
+data class AchievementMeta(
         @SerializedName("avatar")
         val avatar: String,
         @SerializedName("pagination")

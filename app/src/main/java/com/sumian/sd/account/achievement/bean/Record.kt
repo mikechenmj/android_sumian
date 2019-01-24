@@ -1,4 +1,4 @@
-package com.sumian.sd.account.medal.bean
+package com.sumian.sd.account.achievement.bean
 
 import android.os.Parcelable
 import com.sumian.sd.R

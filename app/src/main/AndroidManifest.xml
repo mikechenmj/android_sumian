@@ -541,14 +541,14 @@
             android:launchMode="singleTop"
             android:theme="@style/DialogActivity" />
         <activity
-            android:name=".account.medal.MyMedalActivity"
+            android:name=".account.achievement.MyAchievementActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.medal.MyMedalShareActivity"
+            android:name=".account.achievement.MyAchievementShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"
             android:launchMode="singleTop"

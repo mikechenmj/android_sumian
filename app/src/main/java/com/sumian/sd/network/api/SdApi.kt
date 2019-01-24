@@ -9,11 +9,12 @@ import com.sumian.hw.report.bean.DailyReport
 import com.sumian.hw.report.weeklyreport.WeekMeta
 import com.sumian.hw.report.weeklyreport.bean.SleepDurationReport
 import com.sumian.hw.report.weeklyreport.bean.WeeklyReportResponse
+import com.sumian.sd.account.achievement.bean.AchievementData
+import com.sumian.sd.account.achievement.bean.AchievementResponse
+import com.sumian.sd.account.achievement.bean.LastAchievementData
 import com.sumian.sd.account.bean.Social
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.account.medal.bean.Achievement
-import com.sumian.sd.account.medal.bean.MyMedalShare
 import com.sumian.sd.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.anxiousandfaith.bean.FaithData
 import com.sumian.sd.device.pattern.PatternData
@@ -558,11 +559,36 @@ interface SdApi {
 
     //我的勋章
 
+    /**
+     * 获取所有的成就列表
+     * @return Call<AchievementResponse>
+     */
     @GET("achievement-categories")
-    fun getMyMetalList(): Call<Achievement>
+    fun getMyAchievementList(): Call<AchievementResponse>
 
-    @GET("share")
-    fun getMyMetalShareDetail(@Query("id") id: Int): Call<MyMedalShare>
+    /**
+     * 获取特定类型的 achievement
+     * @param type ") type: Int
+     * @return Call<AchievementResponse>
+     */
+    @GET("achievement-category/{type}")
+    fun getMyAchievementListForType(@Path("type") type: Int): Call<AchievementData>
+
+    /**
+     * 获取最近是否需要弹窗的成就
+     * @param map MutableMap<String, Any>
+     * @return Call<AchievementData>
+     */
+    @GET("achievement/latest-records")
+    fun getLastAchievement(@QueryMap map: MutableMap<String, Any>): Call<LastAchievementData>
+
+    /**
+     * 最后弹窗的成功,通知服务器已弹窗
+     * @param id ") id: Int
+     * @return Call<AchievementData>
+     */
+    @PATCH("achievement-records/{id}")
+    fun popAchievement(@Path("id") id: Int): Call<LastAchievementData>
 
     @GET("sleep/guide")
     fun getSleepGuide(): Call<Any?>

@@ -9,9 +9,9 @@ import com.sumian.common.image.loadImage
 import com.sumian.hw.log.LogManager
 import com.sumian.hw.upgrade.model.VersionModel
 import com.sumian.sd.R
+import com.sumian.sd.account.achievement.MyAchievementActivity
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.bean.UserInfo
-import com.sumian.sd.account.medal.MyMedalActivity
 import com.sumian.sd.account.userProfile.UserInfoActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
@@ -100,7 +100,7 @@ class MeFragment : SdBaseFragment<SdBasePresenter<*>>(), View.OnClickListener,
                 KefuManager.launchKefuActivity()
             }
             R.id.dv_my_metal -> {
-                MyMedalActivity.show()
+                MyAchievementActivity.show()
             }
             R.id.dv_device_manage -> {
                 LogManager.appendUserOperationLog("点击【设备管理】")
