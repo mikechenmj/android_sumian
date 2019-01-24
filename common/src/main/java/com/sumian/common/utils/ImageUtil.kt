@@ -26,6 +26,7 @@ fun viewToImageFile(view: View, file: File, quality: Int = 50, listener: ViewToI
             if (!file.exists()) {
                 file.createNewFile()
             }
+            @Suppress("DEPRECATION")
             view.isDrawingCacheEnabled = true
             val bitmap = getBitmapFromView(view)
             bitmap.compress(Bitmap.CompressFormat.JPEG, quality, FileOutputStream(file))
@@ -34,7 +35,7 @@ fun viewToImageFile(view: View, file: File, quality: Int = 50, listener: ViewToI
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    listener.onComplete()
+                    listener.onComplete(file)
                 }, {
                     listener.onError(it)
                 })
@@ -55,6 +56,6 @@ private fun getBitmapFromView(view: View): Bitmap {
 }
 
 interface ViewToImageFileListener {
-    fun onComplete()
+    fun onComplete(file: File)
     fun onError(t: Throwable)
 }
