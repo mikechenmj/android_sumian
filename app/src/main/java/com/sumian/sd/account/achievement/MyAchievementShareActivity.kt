@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
@@ -21,7 +20,6 @@ import com.sumian.sd.account.achievement.presenter.MyAchievementSharePresenter
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_main_my_achievement_share.*
-import java.io.File
 
 
 /**
@@ -130,8 +128,7 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
     }
 
     @SuppressLint("LongLogTag")
-    override fun onComplete(file: File) {
-        Log.e(TAG, file.absolutePath)
+    override fun onComplete() {
         showToast("勋章保存成功啦,请在相册中查看")
     }
 

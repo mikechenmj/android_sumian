@@ -21,4 +21,7 @@ data class LastAchievementData(
         @SerializedName("achievement")
         val achievement: LastAchievement,
         val meta: AchievementMeta
-)
+) {
+
+    fun isPop(): Boolean = popAt != null
+}

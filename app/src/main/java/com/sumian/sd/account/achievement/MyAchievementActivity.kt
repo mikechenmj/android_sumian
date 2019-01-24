@@ -46,10 +46,6 @@ class MyAchievementActivity : BasePresenterActivity<MyAchievementContract.Presen
     private lateinit var mAchievementMeta: AchievementMeta
     private lateinit var mAchievementData: AchievementData
 
-    private val lastAchievementPresenter by lazy {
-        LastAchievementPresenter.init(this)
-    }
-
     override fun getLayoutId(): Int {
         return R.layout.activity_main_my_achievement
     }
@@ -92,7 +88,7 @@ class MyAchievementActivity : BasePresenterActivity<MyAchievementContract.Presen
 
     override fun onResume() {
         super.onResume()
-        lastAchievementPresenter.getLastAchievement()
+        LastAchievementPresenter.init(this).getLastAchievement()
     }
 
     override fun showLoading() {
@@ -104,7 +100,7 @@ class MyAchievementActivity : BasePresenterActivity<MyAchievementContract.Presen
     }
 
     override fun onGetMyAchievementListSuccess(achievementDataList: List<AchievementData>) {
-
+        // TODO
     }
 
     override fun onGetMyAchievementListForTypeFailed(error: String) {
@@ -127,20 +123,5 @@ class MyAchievementActivity : BasePresenterActivity<MyAchievementContract.Presen
 
     override fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData) {
         MyAchievementShareActivity.showFromLastAchievement(lastAchievementData)
-    }
-
-    override fun onNoHave() {
-    }
-
-    override fun onGetAchievementListForTypeFailed(error: String) {
-        onGetMyAchievementListForTypeFailed(error)
-    }
-
-    override fun onPopAchievementSuccess(lastAchievementData: LastAchievementData) {
-
-    }
-
-    override fun onPopAchievementFailed(error: String) {
-        onGetMyAchievementListForTypeFailed(error)
     }
 }

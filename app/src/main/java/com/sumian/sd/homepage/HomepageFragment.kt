@@ -13,6 +13,10 @@ import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
+import com.sumian.sd.account.achievement.MyAchievementShareActivity
+import com.sumian.sd.account.achievement.bean.LastAchievementData
+import com.sumian.sd.account.achievement.contract.LastAchievementContract
+import com.sumian.sd.account.achievement.presenter.LastAchievementPresenter
 import com.sumian.sd.account.bean.Token
 import com.sumian.sd.account.userProfile.UserInfoActivity
 import com.sumian.sd.anxiousandfaith.AnxiousAndFaithActivity
@@ -36,8 +40,8 @@ import com.sumian.sd.relaxation.RelaxationListActivity
 import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.service.cbti.activity.CbtiFinalReportDialogActivity
-import com.sumian.sd.widget.banner.BannerViewPager
 import com.sumian.sd.sleepguide.SleepGuideActivity
+import com.sumian.sd.widget.banner.BannerViewPager
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
 import org.greenrobot.eventbus.Subscribe
@@ -52,7 +56,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View, OnEnterListener {
+class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View, OnEnterListener, LastAchievementContract.View {
     override fun getLayoutId(): Int {
         return R.layout.fragment_homepage
     }
@@ -123,12 +127,17 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onResume() {
         super.onResume()
         device_card_view.onResume()
+        LastAchievementPresenter.init(this).getLastAchievement()
     }
 
     override fun onPause() {
         super.onPause()
         device_card_view.onPause()
         cbti_banner_view_pager.pauseLoop()
+    }
+
+    override fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData) {
+        MyAchievementShareActivity.showFromLastAchievement(lastAchievementData)
     }
 
     private fun refreshData() {
@@ -143,7 +152,8 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<SentencePoolText>() {
             override fun onSuccess(response: SentencePoolText?) {
-                tv_home_random_text.text = response?.homeSentence ?: getString(R.string.homepage_sleep_slogan)
+                tv_home_random_text.text = response?.homeSentence
+                        ?: getString(R.string.homepage_sleep_slogan)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
