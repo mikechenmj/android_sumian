@@ -44,7 +44,7 @@ public class BluetoothDeviceUtil {
      * 发送时间： 2018-04-17 16:25
      * 主题： Re: 关于区分临床版本与正式版本固件区分的修改方案
      *
-     * @param scanRecord Advertising data returned in onLeScanCallback()
+     * @param scanRecord Advertising data returned in onLeScan()
      * @return device version
      */
     @BluetoothDeviceVersion

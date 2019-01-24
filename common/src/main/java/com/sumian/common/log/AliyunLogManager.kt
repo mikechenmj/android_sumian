@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.sumian.common.log
 
 import android.annotation.SuppressLint
@@ -21,6 +23,7 @@ import com.avos.avoscloud.AVOSCloud
  * https://help.aliyun.com/document_detail/62681.html
  * version: 1.0
  */
+@Suppress("DEPRECATION")
 @SuppressLint("StaticFieldLeak")
 object AliyunLogManager {
     private lateinit var mLogClient: LOGClient

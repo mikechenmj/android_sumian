@@ -6,10 +6,12 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.blue.callback.BlueAdapterCallback
 import com.sumian.blue.callback.BlueScanCallback
@@ -87,11 +89,16 @@ class ScanDeviceFragment : BaseFragment() {
         mBlueManager.addBlueScanCallback(mScanCallback)
     }
 
-    override fun onDestroy() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        registerBlueCallback()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
         unregisterBlueCallbacks()
         mHandler.removeCallbacks(null)
         stopScanIfIsScanning()
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     private fun unregisterBlueCallbacks() {
@@ -101,11 +108,11 @@ class ScanDeviceFragment : BaseFragment() {
 
     private val mScanCallback = object : BlueScanCallback {
 
-        override fun onBeginScanCallback() {
+        override fun onScanStart() {
             mIsScanning = true
         }
 
-        override fun onLeScanCallback(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray?) {
+        override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray?) {
             if (!device.name.startsWith("M-SUMIAN") || rssi <= -80) {
                 return
             }
@@ -121,6 +128,7 @@ class ScanDeviceFragment : BaseFragment() {
                             device.address,
                             isDeviceVersionValid))
             if (isDeviceVersionValid && !mScanResults.contains(blueDevice)) {
+                LogUtils.d(mScanResults, blueDevice.name)
                 mScanResults.add(blueDevice)
                 mDeviceAdapter.setData(mScanResults)
             }
@@ -129,7 +137,7 @@ class ScanDeviceFragment : BaseFragment() {
             }
         }
 
-        override fun onFinishScanCallback() {
+        override fun onScanStop() {
             mIsScanning = false
             hideVgs()
             when (mScanResults.size) {
@@ -138,11 +146,14 @@ class ScanDeviceFragment : BaseFragment() {
                 else -> showMultiDeviceUI()
             }
         }
+
+        override fun onScanTimeout() {
+        }
     }
 
     private fun stopScanIfIsScanning() {
         if (mIsScanning) {
-            mBlueManager.doStopScan()
+            mBlueManager.stopScan()
         }
         mIsScanning = false
     }
@@ -249,7 +260,6 @@ class ScanDeviceFragment : BaseFragment() {
         mBlueManager.startScanAndAutoStopAfter(SCAN_DURATION)
         mStartScanTime = System.currentTimeMillis()
         switchDeviceListUI(isScanMore)
-        registerBlueCallback()
     }
 
     private fun checkScanResult() {

@@ -2,6 +2,7 @@ package com.sumian.hw.upgrade.presenter;
 
 import android.app.DownloadManager;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -11,13 +12,13 @@ import android.webkit.MimeTypeMap;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
+import com.sumian.blue.manager.BlueManager;
 import com.sumian.blue.model.BluePeripheral;
 import com.sumian.hw.log.LogManager;
 import com.sumian.hw.upgrade.activity.DeviceVersionUpgradeActivity;
 import com.sumian.hw.upgrade.bean.VersionInfo;
 import com.sumian.hw.upgrade.contract.VersionUpgradeContract;
 import com.sumian.hw.upgrade.service.DfuService;
-import com.sumian.hw.upgrade.wrapper.DfuWrapper;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -53,7 +54,6 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
     private VersionInfo mVersionInfo;
     private boolean mIsEnableDfu;
     private String mDfuMac;
-    private DfuWrapper mDfuWrapper;
     private DfuServiceController mDfuServiceController;
 
     private DeviceVersionUpgradePresenter(VersionUpgradeContract.View view) {
@@ -63,7 +63,6 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         if (bluePeripheral != null) {
             bluePeripheral.addPeripheralDataCallback(this);
         }
-        this.mDfuWrapper = new DfuWrapper();
     }
 
     public static DeviceVersionUpgradePresenter init(VersionUpgradeContract.View view) {
@@ -76,9 +75,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         if (bluePeripheral != null) {
             bluePeripheral.removePeripheralDataCallback(this);
         }
-        if (mDfuWrapper != null) {
-            mDfuWrapper.release();
-        }
+        AppManager.getBlueManager().stopScanForDevice();
     }
 
     //使用系统下载器下载
@@ -222,36 +219,40 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
                     view.showSleepConnectingDialog();
                 }
             }
+            AppManager.getBlueManager().scanForDevice(mDfuMac, new BlueManager.ScanForDeviceListener() {
+                @Override
+                public void onDeviceFound(BluetoothDevice device) {
+                    if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                        VersionUpgradeContract.View view = mViewWeakReference.get();
+                        if (view != null) {
+                            view.dismissSleepConnectingDialog();
+                        }
+                    }
 
-            mDfuWrapper.scan2Connect(mDfuMac, () -> {
+                    mDfuServiceController = new DfuServiceInitiator(dfuMac)
+                            //.setDeviceName(currentDevice.getName())
+                            //.setKeepBond(true)
+                            .setPacketsReceiptNotificationsEnabled(true)
+                            .setPacketsReceiptNotificationsValue(5)
+                            .setZip(mDownloadedFileUri)
+                            .setDisableNotification(false)
+                            .setForeground(true)
+                            //.setForceDfu(true)
+                            .start(context, DfuService.class);
+                    LogManager.appendUserOperationLog("正在启动 dfu service......");
+                }
 
-                if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                @Override
+                public void onScanTimeout() {
                     VersionUpgradeContract.View view = mViewWeakReference.get();
                     if (view != null) {
-                        view.dismissSleepConnectingDialog();
+                        view.onScanFailed(mDfuMac);
                     }
-                }
 
-                mDfuServiceController = new DfuServiceInitiator(dfuMac)
-                        //.setDeviceName(currentDevice.getName())
-                        //.setKeepBond(true)
-                        .setPacketsReceiptNotificationsEnabled(true)
-                        .setPacketsReceiptNotificationsValue(5)
-                        .setZip(mDownloadedFileUri)
-                        .setDisableNotification(false)
-                        .setForeground(true)
-                        //.setForceDfu(true)
-                        .start(context, DfuService.class);
-                LogManager.appendUserOperationLog("正在启动 dfu service......");
-            }, () -> {
-                VersionUpgradeContract.View view = mViewWeakReference.get();
-                if (view != null) {
-                    view.onScanFailed(mDfuMac);
-                }
-
-                if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
-                    if (view != null) {
-                        view.dismissSleepConnectingDialog();
+                    if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                        if (view != null) {
+                            view.dismissSleepConnectingDialog();
+                        }
                     }
                 }
             });

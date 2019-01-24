@@ -11,6 +11,7 @@ import com.sumian.common.mvp.IPresenter
  *
  * desc:
  */
+@Suppress("DEPRECATION")
 @Deprecated("use BaseActivity and override showNavBar")
 abstract class BaseBackPresenterActivity<Presenter : IPresenter> : BaseBackActivity() {
 }

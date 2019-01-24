@@ -93,6 +93,7 @@ object AppManager {
         }
         val blueManager = BlueManager.getInstance()
         blueManager.with(App.getAppContext())
+        blueManager.setLog { s -> LogManager.appendMonitorLog(s) }
         blueManager
     }
 
@@ -327,7 +328,7 @@ object AppManager {
         // user report
         AppManager.getOpenAnalytics().onProfileSignOff()
         // release bluetooth
-        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().doStopScan() }
+        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().stopScan() }
         AppManager.getBlueManager().release()
         KefuManager.logout()
         // cancel notification

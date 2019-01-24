@@ -1,5 +1,6 @@
 package com.sumian.blue.callback;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 
 /**
@@ -8,13 +9,15 @@ import android.bluetooth.BluetoothDevice;
  * desc:
  */
 
-public interface BlueScanCallback {
+public interface BlueScanCallback extends BluetoothAdapter.LeScanCallback {
 
-    default void onBeginScanCallback() {
+    default void onScanStart() {
     }
 
-    void onLeScanCallback(BluetoothDevice device, int rssi, byte[] scanRecord);
+    void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord);
 
-    default void onFinishScanCallback() {
+    default void onScanStop() {
     }
+
+    void onScanTimeout();
 }
