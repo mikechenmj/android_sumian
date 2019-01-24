@@ -7,7 +7,6 @@ import android.os.Message
 import android.util.AttributeSet
 import android.view.View
 import androidx.cardview.widget.CardView
-import com.sumian.common.image.loadImage
 import com.sumian.common.widget.voice.IVisible
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_cbti_banner_loop_view.view.*
@@ -64,7 +63,7 @@ class CBTIBannerLoopView @JvmOverloads constructor(
     }
 
     private fun updateView() {
-        iv_cbti_loop.loadImage(icons[currentIndex])
+//        iv_cbti_loop.loadImage(icons[currentIndex])
         cbti_indicator_view.scrollIndicatorFromIndex(currentIndex)
         currentIndex = if (currentIndex == icons.size) {
             0

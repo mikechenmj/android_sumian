@@ -47,7 +47,6 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:theme,android:label"
         tools:targetApi="n">
-        <activity android:name=".diary.sleeprecord.ShareSleepDiaryDialogActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -576,6 +575,10 @@
             android:name=".homepage.SleepGuideDialogActivity"
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg" />
+        <activity
+            android:name=".diary.sleeprecord.ShareSleepDiaryDialogActivity"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg" />
+
     </application>
 
 </manifest>

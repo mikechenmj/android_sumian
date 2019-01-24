@@ -28,7 +28,10 @@ class SleepGuideDialogActivity : BaseDialogPresenterActivity<IPresenter>() {
 
     override fun initWidget() {
         super.initWidget()
-        iv_sleep_guide.setOnClickListener { SleepGuideActivity.start() }
+        iv_sleep_guide.setOnClickListener {
+            SleepGuideActivity.start()
+            finish()
+        }
         iv_close.setOnClickListener { finish() }
 
         intent.getIntExtra(KEY_BUTTON_Y_POSITION, 0)

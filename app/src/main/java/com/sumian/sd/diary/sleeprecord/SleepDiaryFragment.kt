@@ -107,7 +107,7 @@ class SleepDiaryFragment : SdBaseFragment<SdBasePresenter<*>>() {
     }
 
     private fun showShareDialog(shareInfo: ShareInfo) {
-
+        ShareSleepDiaryDialogActivity.start(shareInfo)
     }
 
     companion object {

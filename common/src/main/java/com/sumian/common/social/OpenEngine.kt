@@ -13,6 +13,7 @@ import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
 import com.umeng.socialize.media.UMWeb
+import java.io.File
 
 
 /**
@@ -46,7 +47,7 @@ class OpenEngine {
                 .share()
     }
 
-    fun shareUrl(activity: Activity, url: String, title: String, description: String, thumbUrl: String, shareMedia: SHARE_MEDIA, umShareListener: UMShareListener? = null) {
+    fun shareUrl(activity: Activity, url: String?, title: String?, description: String?, thumbUrl: String?, shareMedia: SHARE_MEDIA, umShareListener: UMShareListener? = null) {
         val web = UMWeb(url)
         web.title = title
         web.description = description
@@ -56,6 +57,17 @@ class OpenEngine {
                 .setCallback(umShareListener)
                 .setPlatform(shareMedia)
                 .share()
+    }
+
+    fun shareImageFile(activity: Activity, file: File, text: String, shareMedia: SHARE_MEDIA, umShareListener: UMShareListener? = null) {
+        val image = UMImage(activity, file)//本地文件
+        image.setThumb(UMImage(activity, file))
+        ShareAction(activity)
+                .setPlatform(shareMedia)
+                .withText(text)
+                .withMedia(image)
+                .setCallback(umShareListener)
+                .share();
     }
 
     fun shareUrl(activity: Activity, shareData: ShareData, umShareListener: UMShareListener? = null) {
