@@ -8,6 +8,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
+import com.sumian.sd.account.achievement.MyAchievementShareActivity
+import com.sumian.sd.account.achievement.bean.Achievement
+import com.sumian.sd.account.achievement.bean.LastAchievementData
+import com.sumian.sd.account.achievement.contract.LastAchievementContract
+import com.sumian.sd.account.achievement.presenter.LastAchievementPresenter
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.service.cbti.activity.CBTICoursePlayActivity
 import com.sumian.sd.service.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
@@ -27,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener {
+class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener, LastAchievementContract.View {
 
     private lateinit var mCourseAdapter: CourseAdapter
 
@@ -102,10 +107,17 @@ class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIW
 
     override fun onGetCBTIMetaSuccess(cbtiMeta: CBTIMeta) {
         ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyCBTICourseMeta(cbtiMeta)
+        cbtiMeta.let {
+            LastAchievementPresenter.init(this).getLastAchievement(achievementCategoryType = Achievement.CBTI_TYPE, achievementItemType = it.chapter.index)
+        }
     }
 
     override fun onGetCBTIWeekLessonFailed(error: String) {
         showCenterToast(error)
+    }
+
+    override fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData) {
+        MyAchievementShareActivity.showFromLastAchievement(lastAchievementData)
     }
 
     override fun onChanged(t: List<Course>?) {
