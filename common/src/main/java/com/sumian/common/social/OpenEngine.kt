@@ -59,12 +59,11 @@ class OpenEngine {
                 .share()
     }
 
-    fun shareImageFile(activity: Activity, file: File, text: String, shareMedia: SHARE_MEDIA, umShareListener: UMShareListener? = null) {
+    fun shareImageFile(activity: Activity, file: File, shareMedia: SHARE_MEDIA, umShareListener: UMShareListener? = null) {
         val image = UMImage(activity, file)//本地文件
         image.setThumb(UMImage(activity, file))
         ShareAction(activity)
                 .setPlatform(shareMedia)
-                .withText(text)
                 .withMedia(image)
                 .setCallback(umShareListener)
                 .share();

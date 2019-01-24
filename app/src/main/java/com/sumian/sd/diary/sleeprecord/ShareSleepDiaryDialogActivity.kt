@@ -3,6 +3,10 @@ package com.sumian.sd.diary.sleeprecord
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ActivityUtils
@@ -22,6 +26,7 @@ import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_share_sleep_diary_dialog_content_1.*
 import kotlinx.android.synthetic.main.activity_share_sleep_diary_dialog_content_2.*
+import kotlinx.android.synthetic.main.tx_video_palyer_controller.*
 import java.io.File
 
 class ShareSleepDiaryDialogActivity : BaseDialogPresenterActivity<IPresenter>() {
@@ -59,18 +64,29 @@ class ShareSleepDiaryDialogActivity : BaseDialogPresenterActivity<IPresenter>() 
         super.initWidget()
         iv_close.setOnClickListener { finish() }
         val shareInfo = intent.getParcelableExtra<ShareInfo>(KEY_SHARE_INFO)
-        tv_day_1.text = shareInfo.totalDiaries.toString()
-        tv_day_2.text = shareInfo.totalDiaries.toString()
-        tv_desc_1.text = resources.getString(R.string.today_is_xx_day_fill_sleep_diary)
-        tv_desc_2.text = resources.getString(R.string.today_is_xx_day_fill_sleep_diary)
+        val totalDiaries = shareInfo.totalDiaries
+        val textSpan = getDescText(totalDiaries)
+        tv_day_1.text = totalDiaries.toString()
+        tv_day_2.text = totalDiaries.toString()
+        tv_desc_1.text = textSpan
+        tv_desc_2.text = textSpan
         tv_question_1.text = shareInfo.sleepKnowledge.question
         tv_question_2.text = shareInfo.sleepKnowledge.question
         tv_answer_1.text = shareInfo.sleepKnowledge.answer
         tv_answer_2.text = shareInfo.sleepKnowledge.answer
         ImageLoader.loadImage(shareInfo.officialQrCode, iv_qr)
-
         iv_weixin.setOnClickListener { checkPermissionForCreateImageAndShare(SHARE_MEDIA.WEIXIN) }
         iv_weixin_cicle.setOnClickListener { checkPermissionForCreateImageAndShare(SHARE_MEDIA.WEIXIN_CIRCLE) }
+    }
+
+    private fun getDescText(totalDiaries: Int): SpannableString {
+        val text = resources.getString(R.string.today_is_xx_day_fill_sleep_diary, totalDiaries)
+        val start = text.indexOf(totalDiaries.toString())
+        val end = start + totalDiaries.toString().length
+        val textSpan = SpannableString(text)
+        textSpan.setSpan(RelativeSizeSpan(1.2f), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        textSpan.setSpan(ForegroundColorSpan(resources.getColor(R.color.t6_color)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return textSpan
     }
 
     private fun checkPermissionForCreateImageAndShare(shareMedia: SHARE_MEDIA) {
@@ -98,27 +114,7 @@ class ShareSleepDiaryDialogActivity : BaseDialogPresenterActivity<IPresenter>() 
         viewToImageFile(v_share_sleep_diary_root, file, 50, object : ViewToImageFileListener {
             override fun onComplete() {
                 AppManager.getOpenEngine()
-                        .shareImageFile(this@ShareSleepDiaryDialogActivity,
-                                file,
-                                "",
-                                shareMedia,
-                                object : UMShareListener {
-                                    override fun onResult(p0: SHARE_MEDIA?) {
-                                        LogUtils.d()
-                                    }
-
-                                    override fun onCancel(p0: SHARE_MEDIA?) {
-                                        LogUtils.d()
-                                    }
-
-                                    override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
-                                        LogUtils.d()
-                                    }
-
-                                    override fun onStart(p0: SHARE_MEDIA?) {
-                                        LogUtils.d()
-                                    }
-                                })
+                        .shareImageFile(this@ShareSleepDiaryDialogActivity, file, shareMedia)
             }
 
             override fun onError(t: Throwable) {
