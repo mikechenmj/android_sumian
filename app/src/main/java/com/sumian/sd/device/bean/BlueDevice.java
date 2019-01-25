@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothAdapter;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 import androidx.annotation.NonNull;
@@ -42,7 +44,12 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public String version;
     public String bomVersion;
     public transient int channelType = CHANNEL_TYPE_UNKNOWN; //临床版，正式版
-    public transient int status;////0x00  未连接  0x01  连接中  0x02  在线  0x03 同步数据状态 0x04 pa 模式
+    /**
+     * @see #STATUS_UNCONNECTED
+     * @see #STATUS_CONNECTING
+     * @see #STATUS_CONNECTED
+     */
+    public transient int status;
     public transient int battery;//电池电量
     public transient int rssi;//信号强度
     public transient boolean isMonitoring;
@@ -58,6 +65,7 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public transient int sleeperBattery;
     public transient int sleeperPaStatus;
 
+    @NotNull
     @Override
     public String toString() {
         return "BlueDevice{" +

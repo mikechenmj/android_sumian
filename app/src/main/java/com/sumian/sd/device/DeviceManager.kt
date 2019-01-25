@@ -399,7 +399,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 onSyncProgressChangeV2(mPackageNumber, mTotalProgress, mTotalDataCount)
             }
             postNextPayloadTimeoutCallback()
-            removeDelaySyncSuccessRunnable()
         }
     }
 
@@ -502,7 +501,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     private val mDelaySyncSuccessRunnable = Runnable {
-        onSyncSuccess()
+        if (!isSyncing()) {
+            onSyncSuccess()
+        }
     }
 
     private fun receiveAllMonitorAndSleeperStatus(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
