@@ -387,10 +387,12 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0xff.toByte()))
             LogManager.appendTransparentLog("index=$index  realCount=$mPackageCurrentIndex  该index 出错,要求重传 cmd=$cmd")
         } else {
+            if (index == mPackageCurrentIndex + 1) {
+                mTotalProgress++
+            }
             mPackageCurrentIndex = index
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
             m8fTransData.add(cmd)
-            mTotalProgress++
             if (mTotalDataCount == 0) { // old version
                 onSyncProgressChange(mPackageNumber, mPackageCurrentIndex, mPackageTotalDataCount)
             } else {
