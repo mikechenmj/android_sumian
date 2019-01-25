@@ -4,9 +4,10 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
-import android.widget.ImageView
+import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatImageView
 import com.sumian.sd.R
+
 
 /**
  * Created by jzz
@@ -19,19 +20,14 @@ class RoundImageView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
-    init {
-        scaleType = ImageView.ScaleType.CENTER_INSIDE
-    }
-
-    private var clipPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
+    private val clipPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
         style = Paint.Style.FILL
-        color = Color.WHITE
+        color = Color.YELLOW
     }
     private var corner = resources.getDimension(R.dimen.space_4)
 
     private lateinit var mRectF: RectF
     private val xFerMode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)

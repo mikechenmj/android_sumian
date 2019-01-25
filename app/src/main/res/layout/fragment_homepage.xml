@@ -61,10 +61,12 @@
             <com.sumian.sd.widget.banner.BannerViewPager
                 android:id="@+id/cbti_banner_view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_176"
-                android:layout_marginLeft="@dimen/space_10"
-                android:layout_marginRight="@dimen/space_10"
-                android:visibility="gone"
+                android:layout_height="@dimen/space_174"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingLeft="@dimen/space_10"
+                android:paddingRight="@dimen/space_10"
+                android:visibility="visible"
                 tools:visibility="visible" />
 
         </FrameLayout>

@@ -31,6 +31,8 @@ import com.sumian.sd.event.CBTIServiceBoughtEvent
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.h5.H5Uri
 import com.sumian.sd.h5.SimpleWebActivity
+import com.sumian.sd.homepage.banner.BannerContract
+import com.sumian.sd.homepage.banner.BannerPresenter
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SentencePoolText
 import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
@@ -41,6 +43,7 @@ import com.sumian.sd.scale.ScaleListActivity
 import com.sumian.sd.service.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.service.cbti.activity.CbtiFinalReportDialogActivity
 import com.sumian.sd.sleepguide.SleepGuideActivity
+import com.sumian.sd.widget.banner.Banner
 import com.sumian.sd.widget.banner.BannerViewPager
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
@@ -56,7 +59,8 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View, OnEnterListener, LastAchievementContract.View {
+class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View, OnEnterListener, LastAchievementContract.View, BannerContract.View {
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_homepage
     }
@@ -140,6 +144,19 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         MyAchievementShareActivity.showFromLastAchievement(lastAchievementData)
     }
 
+    override fun onGetBannerListSuccess(banners: List<Banner>) {
+        cbti_banner_view_pager.bindBannerList(banners)
+        cbti_banner_view_pager.setBannerClickListener(object : BannerViewPager.OnBannerClickListener {
+            override fun onClick(banner: View, position: Int) {
+
+            }
+        })
+
+    }
+
+    override fun onGetBannerListFailed(error: String) {
+    }
+
     private fun refreshData() {
         queryCbti()
         querySleepPrescription()
@@ -193,17 +210,12 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 cbti_progress_view.setData(response)
                 if (isLock) {
                     cbti_progress_view.visibility = View.GONE
-                    cbti_banner_view_pager.show()
+                    //cbti_banner_view_pager.show()
                 } else {
                     cbti_progress_view.visibility = View.VISIBLE
-                    cbti_banner_view_pager.hide()
+                    //cbti_banner_view_pager.hide()
                 }
-                cbti_banner_view_pager.bindBannerList(arrayListOf("1", "2", "3", "4"))
-                cbti_banner_view_pager.setBannerClickListener(object : BannerViewPager.OnBannerClickListener {
-                    override fun onClick(banner: View, position: Int) {
-
-                    }
-                })
+                BannerPresenter.init(this@HomepageFragment).getBannerList()
             }
         })
     }

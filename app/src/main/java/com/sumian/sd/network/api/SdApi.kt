@@ -1,5 +1,6 @@
 package com.sumian.sd.network.api
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.hw.log.LogOssResponse
@@ -592,4 +593,7 @@ interface SdApi {
 
     @GET("sleep/guide")
     fun getSleepGuide(): Call<Any?>
+
+    @GET("configs")
+    fun getConfigs(): Call<JsonArray>
 }

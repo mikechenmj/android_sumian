@@ -1,6 +1,5 @@
 package com.sumian.sd.widget.banner
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -20,7 +19,7 @@ import com.sumian.sd.R
  *
  * desc:
  */
-class BannerViewPager : ViewPager, View.OnClickListener, IVisible {
+class BannerViewPager : ViewPager, IVisible, BannerAdapter.OnBannerCallback {
 
     companion object {
         private const val TAG = "BannerViewPager"
@@ -33,7 +32,7 @@ class BannerViewPager : ViewPager, View.OnClickListener, IVisible {
         addOnPageChangeListener(object : SimpleOnPageChangeListener() {
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                Log.e(TAG, "onPageScrollStateChanged------->state=$state")
+                //  Log.e(TAG, "onPageScrollStateChanged------->state=$state")
                 if (state != ViewPager.SCROLL_STATE_IDLE) {
                     pauseLoop()
                 } else {
@@ -43,29 +42,34 @@ class BannerViewPager : ViewPager, View.OnClickListener, IVisible {
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                Log.e(TAG, "onPageSelected------->position=$position")
+                // Log.e(TAG, "onPageSelected------->position=$position")
                 prepareLoop(position)
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                Log.e(TAG, "onPageScrolled----->position=$position   positionOffset=$positionOffset  positionOffsetPixels=$positionOffsetPixels")
+                //  Log.e(TAG, "onPageScrolled----->position=$position   positionOffset=$positionOffset  positionOffsetPixels=$positionOffsetPixels")
             }
         })
-        pageMargin = resources.getDimensionPixelOffset(R.dimen.space_4)
+        pageMargin = resources.getDimensionPixelOffset(R.dimen.space_10)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(ev: MotionEvent): Boolean {
-        when (ev.actionMasked) {
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        when (ev!!.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                pauseLoop()
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                scheduler()
+            }
             MotionEvent.ACTION_MOVE -> {
                 val moveX = ev.x
                 val moveY = ev.y
                 Log.d(TAG, "moveX=$moveX  moveY=$moveY")
+                pauseLoop()
             }
         }
-
-        return super.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
     }
 
     @Volatile
@@ -91,17 +95,16 @@ class BannerViewPager : ViewPager, View.OnClickListener, IVisible {
         this.onBannerClickListener = onBannerClickListener
     }
 
-    fun bindBannerList(bannerUrlList: List<String>) {
-        adapter = BannerAdapter(context = context, bannerUrlList = bannerUrlList).setOnClickListener(this)
-        currentIndex = 0
-        setCurrentItem(currentIndex, false)
+    fun bindBannerList(banners: List<Banner>) {
+        adapter = BannerAdapter(context = context, banners = banners).setOnBannerCallback(this)
+        currentIndex = modDefaultIndex(adapter!!.count, banners.size)
+        currentItem = currentIndex
         updateView()
         scheduler()
     }
 
-    override fun onClick(v: View) {
-        val position = v.getTag(R.drawable.ic_cbti_img_banner2) as Int
-        onBannerClickListener?.onClick(v, position = position)
+    override fun onBannerCallback(bannerView: View, position: Int, banner: Banner) {
+        Log.e(TAG, "position=$position   banner=$banner")
     }
 
     override fun show() {
@@ -116,7 +119,7 @@ class BannerViewPager : ViewPager, View.OnClickListener, IVisible {
 
     private fun updateView() {
         currentIndex = if (currentIndex == adapter!!.count) {
-            0
+            modDefaultIndex(adapter!!.count, (adapter as BannerAdapter).getBannerSize())
         } else {
             currentIndex + 1
         }
@@ -125,6 +128,21 @@ class BannerViewPager : ViewPager, View.OnClickListener, IVisible {
 
     fun pauseLoop() {
         clearMsg()
+    }
+
+    private fun modDefaultIndex(totalCount: Int, bannerCount: Int, offset: Int = 0): Int {
+        return if (bannerCount == 1) {
+            0
+        } else {
+            var shr = totalCount.shr(1)
+            shr += offset
+            val startIndex = shr % bannerCount
+            if (startIndex != 0) {
+                modDefaultIndex(totalCount, bannerCount, (offset + 1))
+            } else {
+                shr
+            }
+        }
     }
 
     private fun prepareLoop(index: Int = 0) {
