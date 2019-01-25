@@ -28,9 +28,19 @@ class FillSleepDiaryActivity : BasePresenterActivity<IPresenter>(), FillDiaryVie
         private const val KEY_RESPONSE_DATA = "response_data"
 
         fun startForResult(fragment: Fragment, time: Long, requestCode: Int) {
+            val intent = getLaunchIntent(time)
+            fragment.startActivityForResult(intent, requestCode)
+        }
+
+        fun startForResult(activity: Activity, time: Long, requestCode: Int) {
+            val intent = getLaunchIntent(time)
+            activity.startActivityForResult(intent, requestCode)
+        }
+
+        private fun getLaunchIntent(time: Long): Intent {
             val intent = Intent(ActivityUtils.getTopActivity(), FillSleepDiaryActivity::class.java)
             intent.putExtra(KEY_TIME, time)
-            fragment.startActivityForResult(intent, requestCode)
+            return intent
         }
 
         fun getResponseData(intent: Intent): SleepRecord? {

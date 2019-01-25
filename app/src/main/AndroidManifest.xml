@@ -312,7 +312,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".homepage.SleepPrescriptionSettingActivity"
+            android:name=".homepage.SleepPrescriptionActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -570,7 +570,7 @@
         <activity
             android:name=".sleepguide.SleepGuideActivity"
             android:launchMode="singleTop"
-            android:theme="@style/BaseAppTheme.Fullscreen" />
+            android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
             android:name=".sleepguide.SleepGuideResultActivity"
             android:launchMode="singleTop" />
@@ -581,6 +581,7 @@
         <activity
             android:name=".diary.sleeprecord.ShareSleepDiaryDialogActivity"
             android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg" />
+        <activity android:name=".diary.fillsleepdiary.SleepDiaryActivity" />
 
     </application>
 
