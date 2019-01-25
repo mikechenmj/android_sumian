@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.lay_cbti_banner_loop_view.view.*
  *
  * on 2019/1/22
  *
- * desc:CBTI banner 轮播 view
+ * desc:CBTI Banner 轮播 view
  */
 class CBTIBannerLoopView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

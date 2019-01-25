@@ -30,10 +30,9 @@ import androidx.fragment.app.DialogFragment;
 /**
  * 视频全屏下的课程列表
  */
-@SuppressWarnings("ConstantConditions")
 public class LessonListDialog extends DialogFragment implements CBTIWeekLessonContract.View, View.OnClickListener {
 
-    LinearLayout mLayContainer;
+    private LinearLayout mLayContainer;
 
     private CBTIWeekLessonContract.Presenter mPresenter;
     private List<Course> mCourses;

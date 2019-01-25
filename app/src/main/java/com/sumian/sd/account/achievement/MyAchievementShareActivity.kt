@@ -35,7 +35,6 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
     private var shareAchievement: ShareAchievement? = null
 
     companion object {
-        private const val TAG = "MyAchievementShareActivity"
 
         private const val EXTRAS_SHARE_ACHIEVEMENT = "com.sumian.sdd.extras.share.achievement"
 
@@ -130,7 +129,7 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
 
     @SuppressLint("LongLogTag")
     override fun onComplete(file: File) {
-        showToast("勋章保存成功啦,请在相册中查看")
+        showToast(getString(R.string.save_images_success))
     }
 
     override fun onError(t: Throwable) {
@@ -142,15 +141,15 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
     }
 
     override fun onCancel(shareMedia: SHARE_MEDIA?) {
-        showToast("分享已取消")
+        showToast(getString(R.string.cancel_share))
     }
 
     override fun onResult(shareMedia: SHARE_MEDIA?) {
-        showToast("分享成功")
+        showToast(getString(R.string.share_success))
     }
 
     override fun onError(shareMedia: SHARE_MEDIA?, throwable: Throwable?) {
-        showToast("分享失败")
+        showToast(getString(R.string.share_failed))
     }
 
     fun Activity.showToast(text: String) {

@@ -834,4 +834,8 @@
     <string name="acquisition">获得</string>
     <string name="share_healthy_sleep">- 随手传递健康睡眠 -</string>
     <string name="today_is_xx_day_fill_sleep_diary">今天是我第 %d 天关注自己的睡眠健康。爱自己，就要从察觉身体的需要开始。坚持就是胜利！</string>
+    <string name="cancel_share">分享已取消</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_failed">分享失败</string>
+    <string name="save_images_success">勋章保存成功啦,请在相册中查看</string>
 </resources>

@@ -19,4 +19,32 @@ class KotlinTest {
         print(String.format("%02d", 100))
     }
 
+
+    @Test
+    fun testMaxValue() {
+
+        val value = Int.MAX_VALUE
+
+        val modDefaultIndex = modDefaultIndex(value, 4, 0)
+
+        println("totalCount=$value   mod=$modDefaultIndex")
+
+    }
+
+
+    private fun modDefaultIndex(totalCount: Int, bannerCount: Int, offset: Int = 0): Int {
+        return if (bannerCount == 1) {
+            0
+        } else {
+            var shr = totalCount.shr(1)
+            shr += offset
+            val startIndex = shr % bannerCount
+            if (startIndex != 0) {
+                modDefaultIndex(totalCount, bannerCount, (offset + 1))
+            } else {
+                shr
+            }
+        }
+    }
+
 }
