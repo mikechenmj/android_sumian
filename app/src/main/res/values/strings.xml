@@ -768,6 +768,8 @@
         <item>帕罗西汀（塞乐特）</item>
         <item>奥氮平</item>
         <item>美利曲辛（黛利新）</item>
+        <item>右佐匹克隆</item>
+        <item>米氮平</item>
         <item>其他</item>
     </string-array>
     <string-array name="pill_amount_options">
