@@ -3,6 +3,7 @@
 package com.sumian.sd.device
 
 import android.annotation.SuppressLint
+import android.bluetooth.BluetoothDevice
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
@@ -16,6 +17,7 @@ import com.sumian.blue.callback.BlueAdapterCallback
 import com.sumian.blue.callback.BluePeripheralCallback
 import com.sumian.blue.callback.BluePeripheralDataCallback
 import com.sumian.blue.constant.BlueConstant
+import com.sumian.blue.manager.BlueManager
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
 import com.sumian.common.network.response.ErrorResponse
@@ -31,7 +33,6 @@ import com.sumian.sd.constants.SpKeys
 import com.sumian.sd.device.bean.BlueDevice
 import com.sumian.sd.device.command.BlueCmd
 import com.sumian.sd.device.pattern.SyncPatternService
-import com.sumian.sd.device.wrapper.BlueDeviceWrapper
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.network.response.FirmwareInfo
 import com.sumian.sd.utils.StorageUtil
@@ -53,8 +54,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private const val VERSION_TYPE_MONITOR = 0
     private const val VERSION_TYPE_SLEEPER = 1
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
+    private const val DELAY_SYNC_SUCCESS_DURATION = 1000L * 2
     private const val CMD_RESEND_TIME = 1000L * 5
-
     private var mPackageCurrentIndex = -1   // 透传单包进度
     private var mPackageTotalDataCount: Int = 0 // 透传单包数据总数
     private var mTotalProgress = 0         // 透传总进度
@@ -66,7 +67,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private var mTranType: Int = 0
     private var mBeginCmd: String? = null
     private var mReceiveStartedTime: Long = 0
-    private var mBlueDeviceWrapper: BlueDeviceWrapper = BlueDeviceWrapper()
     private val mMonitorLiveData = MutableLiveData<BlueDevice>()
     private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
     private val mMonitorEventListeners = HashSet<MonitorEventListener>()
@@ -195,8 +195,14 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         monitor.status = BlueDevice.STATUS_CONNECTING
         setMonitorToLiveData(monitor)
         onConnectStart()
-        mBlueDeviceWrapper.scan2Connect(monitor, { connect(monitor) }, {
-            onConnectFailed()
+        AppManager.getBlueManager().scanForDevice(monitor.mac, object : BlueManager.ScanForDeviceListener {
+            override fun onDeviceFound(device: BluetoothDevice?) {
+                connect(monitor)
+            }
+
+            override fun onScanTimeout() {
+                onConnectFailed()
+            }
         })
     }
 
@@ -254,7 +260,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         getCurrentBluePeripheral()?.close()
         clearCacheDevice()
         AppManager.getBlueManager().clearBluePeripheral()
-        mBlueDeviceWrapper.release()
+        AppManager.getBlueManager().stopScanForDevice()
         LogManager.appendMonitorLog("主动解绑监测仪")
     }
 
@@ -284,7 +290,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     override fun onAdapterDisable() {
         mIsBluetoothEnableLiveData.value = false
         AppManager.getBlueManager().clearBluePeripheral()
-        mBlueDeviceWrapper.release()
+        AppManager.getBlueManager().stopScanForDevice()
         LogManager.appendBluetoothLog("蓝牙 turn off")
     }
 
@@ -381,16 +387,19 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0xff.toByte()))
             LogManager.appendTransparentLog("index=$index  realCount=$mPackageCurrentIndex  该index 出错,要求重传 cmd=$cmd")
         } else {
+            if (index == mPackageCurrentIndex + 1) {
+                mTotalProgress++
+            }
             mPackageCurrentIndex = index
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
             m8fTransData.add(cmd)
-            mTotalProgress++
             if (mTotalDataCount == 0) { // old version
                 onSyncProgressChange(mPackageNumber, mPackageCurrentIndex, mPackageTotalDataCount)
             } else {
                 onSyncProgressChangeV2(mPackageNumber, mTotalProgress, mTotalDataCount)
             }
             postNextPayloadTimeoutCallback()
+            removeDelaySyncSuccessRunnable()
         }
     }
 
@@ -473,7 +482,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     this.m8fTransData.clear()
                     writeResponse(peripheral, data, false)
                 }
-                onSyncSuccess()
+                postDelaySyncSuccess()
                 mMonitorLiveData.value?.isSyncing = false
                 removePayloadTimeoutCallback()
             }
@@ -481,6 +490,19 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             }
         }
         notifyMonitorChange()
+    }
+
+    private fun postDelaySyncSuccess() {
+        removeDelaySyncSuccessRunnable()
+        mMainHandler.postDelayed(mDelaySyncSuccessRunnable, DELAY_SYNC_SUCCESS_DURATION)
+    }
+
+    private fun removeDelaySyncSuccessRunnable() {
+        mMainHandler.removeCallbacks(mDelaySyncSuccessRunnable)
+    }
+
+    private val mDelaySyncSuccessRunnable = Runnable {
+        onSyncSuccess()
     }
 
     private fun receiveAllMonitorAndSleeperStatus(peripheral: BluePeripheral, data: ByteArray, cmd: String) {

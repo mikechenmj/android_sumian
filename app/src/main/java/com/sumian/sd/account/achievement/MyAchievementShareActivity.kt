@@ -20,6 +20,7 @@ import com.sumian.sd.account.achievement.presenter.MyAchievementSharePresenter
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_main_my_achievement_share.*
+import java.io.File
 
 
 /**
@@ -128,7 +129,7 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
     }
 
     @SuppressLint("LongLogTag")
-    override fun onComplete() {
+    override fun onComplete(file: File) {
         showToast("勋章保存成功啦,请在相册中查看")
     }
 
