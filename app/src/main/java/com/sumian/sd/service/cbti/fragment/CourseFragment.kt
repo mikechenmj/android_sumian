@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener, LastAchievementContract.View {
+class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener {
 
     private lateinit var mCourseAdapter: CourseAdapter
 
@@ -107,17 +107,10 @@ class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIW
 
     override fun onGetCBTIMetaSuccess(cbtiMeta: CBTIMeta) {
         ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyCBTICourseMeta(cbtiMeta)
-        cbtiMeta.let {
-            LastAchievementPresenter.init(this).getLastAchievement(achievementCategoryType = Achievement.CBTI_TYPE, achievementItemType = it.chapter.index)
-        }
     }
 
     override fun onGetCBTIWeekLessonFailed(error: String) {
         showCenterToast(error)
-    }
-
-    override fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData) {
-        MyAchievementShareActivity.showFromLastAchievement(lastAchievementData)
     }
 
     override fun onChanged(t: List<Course>?) {
