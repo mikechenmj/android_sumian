@@ -54,7 +54,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private const val VERSION_TYPE_MONITOR = 0
     private const val VERSION_TYPE_SLEEPER = 1
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
-    private const val DELAY_SYNC_SUCCESS_DURATION = 1000L * 2
+    private const val DELAY_SYNC_SUCCESS_DURATION = 1000L * 1
     private const val CMD_RESEND_TIME = 1000L * 5
     private var mPackageCurrentIndex = -1   // 透传单包进度
     private var mPackageTotalDataCount: Int = 0 // 透传单包数据总数
@@ -449,6 +449,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     onSyncFailed()
                     mMonitorLiveData.value?.isSyncing = false
                 }
+                notifyMonitorChange()
             }
             0x0f.toByte()// 结束。透传8f 数据接收完成,保存文件,准备上传数据到后台
             -> {
@@ -482,13 +483,12 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     writeResponse(peripheral, data, false)
                 }
                 postDelaySyncSuccess()
-                mMonitorLiveData.value?.isSyncing = false
                 removePayloadTimeoutCallback()
             }
             else -> {
             }
         }
-        notifyMonitorChange()
+
     }
 
     private fun postDelaySyncSuccess() {
@@ -500,11 +500,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mMainHandler.removeCallbacks(mDelaySyncSuccessRunnable)
     }
 
-    private val mDelaySyncSuccessRunnable = Runnable {
-        if (!isSyncing()) {
-            onSyncSuccess()
-        }
-    }
+    private val mDelaySyncSuccessRunnable = Runnable { onSyncSuccess() }
 
     private fun receiveAllMonitorAndSleeperStatus(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
         //byte1表示监测仪的监测模式状态
@@ -954,6 +950,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     override fun onSyncSuccess() {
+        mMonitorLiveData.value?.isSyncing = false
+        notifyMonitorChange()
         if (AppManager.getBlueManager().isBluePeripheralConnected && AppUtils.isAppForeground()) {
             SyncPatternService.start(App.getAppContext())
         }
