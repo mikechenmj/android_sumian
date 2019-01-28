@@ -1,6 +1,5 @@
 package com.sumian.sd
 
-import com.sumian.common.utils.VersionUtil
 import org.junit.Test
 
 /**
@@ -15,8 +14,9 @@ import org.junit.Test
 class KotlinTest {
     @Test
     fun test() {
-        println(VersionUtil.isVersionZero("0.0.0"))
-        print(String.format("%02d", 100))
+        var s = "1.2.0-dev"
+        s = s.substring(0, s.indexOf("-"))
+        println(s)
     }
 
 

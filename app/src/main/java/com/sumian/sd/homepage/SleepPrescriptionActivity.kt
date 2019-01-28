@@ -2,10 +2,10 @@ package com.sumian.sd.homepage
 
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
-import com.github.lzyzsd.jsbridge.BridgeHandler
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.bean.H5BaseResponse
+import com.sumian.common.h5.bean.NativeRouteData
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
@@ -65,12 +65,17 @@ class SleepPrescriptionActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
                 reload()
             }
         })
-        sWebView.registerHandler("sleepDiarySubmit", object : BridgeHandler {
-            override fun handler(data: String?, function: CallBackFunction?) {
-                val map = JsonUtil.fromJson<Map<String, Int>>(data, object : TypeToken<Map<String, Int>>() {}.type)
-                        ?: return
-                FillSleepDiaryActivity.startForResult(this@SleepPrescriptionActivity, map.get("date")!! * 1000L, 0)
+    }
+
+    override fun onGoToPage(routeData: NativeRouteData) {
+        super.onGoToPage(routeData)
+        when (routeData.page) {
+            "sleepDiarySubmit" -> {
+                val dateAny = routeData.data?.get("date") ?: return
+                val date = dateAny as Int
+                FillSleepDiaryActivity.startForResult(this@SleepPrescriptionActivity, date * 1000L, 0)
             }
-        })
+        }
+
     }
 }

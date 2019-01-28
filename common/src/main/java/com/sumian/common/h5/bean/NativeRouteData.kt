@@ -7,4 +7,4 @@ package com.sumian.common.h5.bean
  * desc   :
  * version: 1.0
  */
-data class NativeRouteData(val page: String, val data: Map<String, Any>)
+data class NativeRouteData(val page: String, val data: Map<String, Any?>?)

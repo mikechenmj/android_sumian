@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
@@ -120,8 +121,16 @@ public class SWebView extends BridgeWebView {
     public void loadRequestUrl(String url) {
         this.mErrorCode = -1;
         postDelayed(mDismissRunnable, DEFAULT_DELAY_MILLIS);
-        getSettings().setUserAgentString(" Sumian-Doctor-Android");
+        getSettings().setUserAgentString(" Sumian-Doctor-Android " + getAgentVersionName());
         postOnAnimation(() -> loadUrl(url));
+    }
+
+    private String getAgentVersionName() {
+        String versionName = AppUtils.getAppVersionName();
+        if (versionName.contains("-")) {
+            versionName = versionName.substring(0, versionName.indexOf("-"));
+        }
+        return "v" + versionName;
     }
 
     @Override
