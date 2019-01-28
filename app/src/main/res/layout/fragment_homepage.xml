@@ -53,17 +53,33 @@
                 tools:src="@mipmap/ic_info_avatar_patient" />
         </LinearLayout>
 
-        <com.sumian.sd.widget.banner.BannerViewPager
-            android:id="@+id/cbti_banner_view_pager"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_174"
-            android:background="@color/b2_color_day"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingLeft="@dimen/space_10"
-            android:paddingRight="@dimen/space_10"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:layout_height="wrap_content">
+
+            <com.sumian.sd.widget.banner.BannerViewPager
+                android:id="@+id/cbti_banner_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_174"
+                android:background="@color/b2_color_day"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingLeft="@dimen/space_10"
+                android:paddingRight="@dimen/space_10"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_default_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_174"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_10"
+                android:scaleType="centerCrop"
+                app:qmui_corner_radius="@dimen/space_4"
+                app:srcCompat="@drawable/ic_default_banner" />
+
+        </FrameLayout>
 
         <com.sumian.sd.homepage.widget.CbtiProgressView
             android:id="@+id/cbti_progress_view"
