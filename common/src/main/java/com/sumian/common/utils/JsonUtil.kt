@@ -1,6 +1,8 @@
 package com.sumian.common.utils
 
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import java.lang.reflect.Type
 
 /**
@@ -43,6 +45,14 @@ class JsonUtil {
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
+            }
+        }
+
+        fun getJsonObject(json: String?): JsonObject? {
+            return if (json == null) {
+                null
+            } else {
+                JsonParser().parse(json).asJsonObject
             }
         }
     }

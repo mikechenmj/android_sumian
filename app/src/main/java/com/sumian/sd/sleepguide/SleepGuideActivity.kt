@@ -3,7 +3,6 @@ package com.sumian.sd.sleepguide
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.bean.H5PayloadData
-import com.sumian.common.h5.bean.NativeRouteData
 import com.sumian.common.h5.bean.ShareData
 import com.sumian.sd.anxiousandfaith.AnxiousAndFaithActivity
 import com.sumian.sd.app.AppManager
@@ -33,9 +32,8 @@ class SleepGuideActivity : SimpleWebActivity() {
         mTitleBar.visibility = View.GONE
     }
 
-    override fun onGoToPage(routeData: NativeRouteData) {
-        super.onGoToPage(routeData)
-        when (routeData.page) {
+    override fun onGoToPage(page: String, rawData: String) {
+        when (page) {
             "sleepDiary" -> ActivityUtils.startActivity(SleepDiaryActivity::class.java)
             "relaxation" -> ActivityUtils.startActivity(RelaxationListActivity::class.java)
             "cbti" -> CBTIIntroductionActivity.show()

@@ -1,5 +1,6 @@
 package com.sumian.sd
 
+import com.sumian.common.utils.JsonUtil
 import org.junit.Test
 
 /**
@@ -14,9 +15,12 @@ import org.junit.Test
 class KotlinTest {
     @Test
     fun test() {
-        var s = "1.2.0-dev"
-        s = s.substring(0, s.indexOf("-"))
-        println(s)
+        val json = "{\n" +
+                "\"name\":123\n" +
+                "}"
+        val jsonObject = JsonUtil.getJsonObject(json) ?: return
+        val jsonElement = jsonObject["name"]
+        println(jsonElement.asInt)
     }
 
 

@@ -1,5 +1,7 @@
 package com.sumian.sd.homepage
 
+import android.app.Activity
+import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.CallBackFunction
@@ -31,7 +33,7 @@ import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
 class SleepPrescriptionActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
 
     companion object {
-
+        private const val REQUEST_CODE_FILL_DIARY = 1000
         fun launch() {
             ActivityUtils.startActivity(SleepPrescriptionActivity::class.java)
         }
@@ -67,15 +69,25 @@ class SleepPrescriptionActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
         })
     }
 
-    override fun onGoToPage(routeData: NativeRouteData) {
-        super.onGoToPage(routeData)
-        when (routeData.page) {
+    override fun onGoToPage(page: String, rawData: String) {
+        when (page) {
             "sleepDiarySubmit" -> {
-                val dateAny = routeData.data?.get("date") ?: return
-                val date = dateAny as Int
-                FillSleepDiaryActivity.startForResult(this@SleepPrescriptionActivity, date * 1000L, 0)
+                val date = JsonUtil.fromJson<NativeRouteData<DateBean>>(rawData, object : TypeToken<NativeRouteData<DateBean>>() {}.type)
+                        ?: return
+                FillSleepDiaryActivity.startForResult(this@SleepPrescriptionActivity, date.data?.date!! * 1000L, REQUEST_CODE_FILL_DIARY)
             }
         }
-
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_FILL_DIARY) {
+            if (resultCode == Activity.RESULT_OK) {
+                reload()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    data class DateBean(val date: Int)
 }

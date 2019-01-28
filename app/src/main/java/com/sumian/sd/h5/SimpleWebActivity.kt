@@ -3,11 +3,8 @@ package com.sumian.sd.h5
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.bean.H5PayloadData
-import com.sumian.common.h5.bean.NativeRouteData
-import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBasePresenter
@@ -73,10 +70,6 @@ open class SimpleWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
                     .replace("{token}", AppManager.getAccountViewModel().token.token)
             val completeUrl = BuildConfig.BASE_H5_URL + urlContent
             return getLaunchIntentWithCompleteUrl(context, completeUrl, cls)
-        }
-
-        protected fun resolveNativeRouteData(json: String): NativeRouteData? {
-            return JsonUtil.fromJson(json, NativeRouteData::class.java)
         }
     }
 }

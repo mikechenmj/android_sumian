@@ -9,7 +9,6 @@ import com.sumian.common.R
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.h5.bean.H5ShowToastData
-import com.sumian.common.h5.bean.NativeRouteData
 import com.sumian.common.h5.bean.ShareData
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.mvp.IPresenter
@@ -106,8 +105,9 @@ abstract class BaseWebViewActivity : BasePresenterActivity<IPresenter>(), SWebVi
         })
         sWebView.registerHandler("goToPage") { data, function ->
             run {
-                val routeData = JsonUtil.fromJson(data, NativeRouteData::class.java) ?: return@run
-                onGoToPage(routeData)
+                val page = JsonUtil.getJsonObject(data)?.get("page")?.asString
+                        ?: return@registerHandler
+                onGoToPage(page, data)
             }
         }
         sWebView.registerHandler("share") { data, function ->
@@ -118,7 +118,11 @@ abstract class BaseWebViewActivity : BasePresenterActivity<IPresenter>(), SWebVi
         }
     }
 
-    protected open fun onGoToPage(routeData: NativeRouteData) {
+    protected open fun onGoToPage(page: String) {
+
+    }
+
+    protected open fun onGoToPage(page: String, rawData: String) {
 
     }
 
