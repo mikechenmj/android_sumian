@@ -88,7 +88,7 @@
                 android:layout_marginLeft="@dimen/space_40"
                 android:layout_marginTop="@dimen/space_20"
                 android:layout_marginRight="@dimen/space_40"
-                android:minHeight="@dimen/space_80" />
+                android:minHeight="@dimen/space_40" />
 
             <ImageView
                 android:id="@+id/iv_share_qr_code"
@@ -105,7 +105,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/space_20"
                 android:layout_marginBottom="@dimen/space_30"
-                android:text="@string/just_so_so_share" />
+                android:text="@string/share_bottom_tips" />
 
         </LinearLayout>
 

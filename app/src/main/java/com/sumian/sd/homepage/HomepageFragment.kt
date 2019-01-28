@@ -215,28 +215,13 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 isLock = response?.meta?.isLock != false
                 cbti_progress_view.setData(response)
                 if (isLock) {
-//                    val options = RequestOptions
-//                            .placeholderOf(R.drawable.ic_default_banner)
-//                            .error(R.drawable.ic_default_banner)
-//                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-//                    Glide.with(iv_default_banner).asBitmap().load(R.drawable.ic_default_banner).apply(options).listener(object : RequestListener<Bitmap> {
-//                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
-//                            iv_default_banner.setImageResource(R.drawable.ic_default_banner)
-//                            return true
-//                        }
-//
-//                        override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-//                            iv_default_banner.setImageBitmap(resource)
-//                            return true
-//                        }
-//
-//                    }).preload(iv_default_banner.width, iv_default_banner.resources.getDimensionPixelOffset(R.dimen.space_174))
                     iv_default_banner.setOnClickListener {
                         CBTIIntroductionActivity.show()
                     }
                     cbti_progress_view.visibility = View.GONE
                     BannerPresenter.init(this@HomepageFragment).getBannerList()
                 } else {
+                    iv_default_banner.visibility = View.GONE
                     cbti_progress_view.visibility = View.VISIBLE
                     cbti_banner_view_pager.hide()
                 }
