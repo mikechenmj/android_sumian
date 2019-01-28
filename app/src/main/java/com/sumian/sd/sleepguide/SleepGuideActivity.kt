@@ -5,6 +5,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.h5.bean.NativeRouteData
 import com.sumian.common.h5.bean.ShareData
+import com.sumian.sd.anxiousandfaith.AnxiousAndFaithActivity
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.diary.fillsleepdiary.SleepDiaryActivity
 import com.sumian.sd.h5.H5Uri
@@ -39,7 +40,7 @@ class SleepGuideActivity : SimpleWebActivity() {
             "relaxation" -> ActivityUtils.startActivity(RelaxationListActivity::class.java)
             "cbti" -> CBTIIntroductionActivity.show()
             "youzan" -> MiniProgramHelper.launchYouZanOrWeb(this)
-            "anxietyAndFaith" -> ActivityUtils.startActivity(RelaxationListActivity::class.java)
+            "anxietyAndFaith" -> ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
             "sleepHealth" -> SimpleWebActivity.launch(this, H5Uri.CBTI_SLEEP_HEALTH)
             "onlineConsult" -> KefuManager.launchKefuActivity()
         }

@@ -104,7 +104,7 @@ abstract class BaseWebViewActivity : BasePresenterActivity<IPresenter>(), SWebVi
                 }
             }
         })
-        sWebView.registerHandler("getToPage") { data, function ->
+        sWebView.registerHandler("goToPage") { data, function ->
             run {
                 val routeData = JsonUtil.fromJson(data, NativeRouteData::class.java) ?: return@run
                 onGoToPage(routeData)
