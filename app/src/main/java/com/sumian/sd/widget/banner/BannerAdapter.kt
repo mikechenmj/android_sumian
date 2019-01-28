@@ -24,7 +24,7 @@ import com.sumian.sd.R
 class BannerAdapter constructor(context: Context, private val banners: List<Banner>) : PagerAdapter() {
 
     companion object {
-        private const val DEFAULT_TOTAL_COUNT = 1000
+        private const val DEFAULT_TOTAL_COUNT = 88
     }
 
     private var onBannerCallback: OnBannerCallback? = null
@@ -75,7 +75,7 @@ class BannerAdapter constructor(context: Context, private val banners: List<Bann
     }
 
     override fun getCount(): Int {
-        return if (banners.size == 1) 1 else DEFAULT_TOTAL_COUNT
+        return if (banners.size == 1) 1 else getBannerSize() * DEFAULT_TOTAL_COUNT
     }
 
     fun getBannerSize(): Int = banners.size

@@ -62,12 +62,6 @@ class BannerViewPager : ViewPager, IVisible, BannerAdapter.OnBannerCallback {
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 scheduler()
             }
-            MotionEvent.ACTION_MOVE -> {
-                val moveX = ev.x
-                val moveY = ev.y
-                Log.d(TAG, "moveX=$moveX  moveY=$moveY")
-                pauseLoop()
-            }
         }
         return super.dispatchTouchEvent(ev)
     }
@@ -99,7 +93,7 @@ class BannerViewPager : ViewPager, IVisible, BannerAdapter.OnBannerCallback {
         adapter = BannerAdapter(context = context, banners = banners).setOnBannerCallback(this)
         currentIndex = modDefaultIndex(adapter!!.count, banners.size)
         currentItem = currentIndex
-        updateView()
+        setCurrentItem(currentIndex, false)
         scheduler()
     }
 
@@ -118,6 +112,7 @@ class BannerViewPager : ViewPager, IVisible, BannerAdapter.OnBannerCallback {
     }
 
     private fun updateView() {
+        clearMsg()
         currentIndex = if (currentIndex == adapter!!.count) {
             modDefaultIndex(adapter!!.count, (adapter as BannerAdapter).getBannerSize())
         } else {
