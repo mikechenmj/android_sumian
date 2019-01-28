@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseDialogPresenterActivity
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.mvp.IPresenter
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -79,7 +80,14 @@ class ShareSleepDiaryDialogActivity : BaseDialogPresenterActivity<IPresenter>() 
     }
 
     private fun checkPermissionForCreateImageAndShare(shareMedia: SHARE_MEDIA) {
+        val channel = if (shareMedia == SHARE_MEDIA.WEIXIN) "微信会话" else "微信朋友圈"
+        StatUtil.event("click_sleep_diary_share", mapOf("channel" to channel))
         AppManager.getOpenEngine().shareImage(this, v_share_sleep_diary_root.drawToBitmap(), shareMedia)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        StatUtil.event("click_sleep_diary_share_cancel")
     }
 
 }

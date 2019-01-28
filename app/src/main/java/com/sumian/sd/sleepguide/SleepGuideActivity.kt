@@ -28,6 +28,7 @@ class SleepGuideActivity : SimpleWebActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        mTitleBar.openTopPadding(true)
         mTitleBar.visibility = View.GONE
     }
 
