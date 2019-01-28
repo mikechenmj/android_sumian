@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.image.loadImage
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.ViewToImageFileListener
 import com.sumian.sd.R
 import com.sumian.sd.account.achievement.bean.Achievement
@@ -103,16 +104,20 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
         super.initWidget()
         shadow.setOnClickListener { finish() }
         iv_close.setOnClickListener {
+            postEvent(null, "click_medal_share_cancel")
             finish()
         }
         iv_share_wx.setOnClickListener {
             mPresenter?.share(this, SHARE_MEDIA.WEIXIN, achievement_share_view, this)
+            postEvent(SHARE_MEDIA.WEIXIN)
         }
         iv_share_wx_circle.setOnClickListener {
             mPresenter?.share(this, SHARE_MEDIA.WEIXIN_CIRCLE, achievement_share_view, this)
+            postEvent(SHARE_MEDIA.WEIXIN)
         }
         iv_save_bitmap.setOnClickListener {
             mPresenter?.saveShareView(achievement_share_view, this)
+            postEvent(SHARE_MEDIA.MORE)
         }
         shareAchievement?.let {
             val achievement = it.achievement
@@ -156,4 +161,20 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
         ToastHelper.show(this, text, Gravity.CENTER)
     }
 
+    private fun postEvent(shareMedia: SHARE_MEDIA?, eventName: String = "click_medal_share") {
+        val map = mutableMapOf<String, String>()
+        if (shareMedia != null) {
+            map["channel"] = shareDesc(shareMedia)
+        }
+        map["typeId"] = shareAchievement?.type.toString()
+        StatUtil.event(eventName, map)
+    }
+
+    private fun shareDesc(shareMedia: SHARE_MEDIA): String {
+        return when (shareMedia) {
+            SHARE_MEDIA.WEIXIN -> "微信会话"
+            SHARE_MEDIA.WEIXIN_CIRCLE -> "微信朋友圈"
+            else -> "本地相册"
+        }
+    }
 }

@@ -148,7 +148,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         cbti_banner_view_pager.bindBannerList(banners)
         cbti_banner_view_pager.setBannerClickListener(object : BannerViewPager.OnBannerClickListener {
             override fun onClick(banner: View, position: Int) {
-
+                CBTIIntroductionActivity.show()
             }
         })
         cbti_banner_view_pager.show()
