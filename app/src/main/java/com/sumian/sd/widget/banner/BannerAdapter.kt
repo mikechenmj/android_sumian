@@ -58,7 +58,7 @@ class BannerAdapter constructor(context: Context, private val banners: List<Bann
                     return true
                 }
 
-            }).preload(container.width, container.height)
+            }).preload(container.resources.getDimensionPixelOffset(R.dimen.space_354), container.resources.getDimensionPixelOffset(R.dimen.space_174))
 
             container.addView(bannerView)
         }

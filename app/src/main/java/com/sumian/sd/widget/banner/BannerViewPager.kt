@@ -104,7 +104,7 @@ class BannerViewPager : ViewPager, IVisible, BannerAdapter.OnBannerCallback {
     }
 
     override fun onBannerCallback(bannerView: View, position: Int, banner: Banner) {
-        Log.e(TAG, "position=$position   banner=$banner")
+        onBannerClickListener?.onClick(bannerView, position)
     }
 
     override fun show() {
