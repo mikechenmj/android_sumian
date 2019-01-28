@@ -22,7 +22,7 @@ class LastAchievementPresenter private constructor(var view: LastAchievementCont
     }
 
     override fun getLastAchievement(achievementCategoryType: Int, achievementItemType: Int) {
-        view?.showLoading()
+        //view?.showLoading()
         val map = mutableMapOf<String, Any>()
         map["achievement_category_type"] = achievementCategoryType
         if (achievementItemType != -1) {
@@ -45,14 +45,14 @@ class LastAchievementPresenter private constructor(var view: LastAchievementCont
 
             override fun onFinish() {
                 super.onFinish()
-                view?.dismissLoading()
+                //view?.dismissLoading()
             }
         })
 
     }
 
     override fun popAchievement(id: Int) {
-        view?.showLoading()
+        //view?.showLoading()
         val call = AppManager.getSdHttpService().popAchievement(id)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<LastAchievementData>() {
@@ -68,9 +68,8 @@ class LastAchievementPresenter private constructor(var view: LastAchievementCont
 
             override fun onFinish() {
                 super.onFinish()
-                view?.dismissLoading()
+                //view?.dismissLoading()
             }
-
         })
     }
 }

@@ -38,7 +38,7 @@ class MyMedalAdapter(context: Context) : BaseRecyclerAdapter<Achievement>(contex
             } else {
                 item.notGainMedalPicture
             }
-            iv_medal.loadImage(iconUrl, R.drawable.ic_popups_days, R.drawable.ic_popups_days)
+            iv_medal.loadImage(iconUrl)
             tv_medal.text = item.title
         }
 

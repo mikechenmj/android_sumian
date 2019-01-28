@@ -69,7 +69,10 @@ class MyAchievementActivity : BasePresenterActivity<MyAchievementContract.Presen
 
     override fun onItemClick(position: Int, itemId: Long) {
         val achievement = adapter.getItem(position)
-        //if (!achievement.isHave()) return
+        if (!achievement.isHave()) {
+            ToastHelper.show(this, getString(R.string.none_get_achievement_toast), Gravity.CENTER)
+            return
+        }
         val shareAchievement = ShareAchievement(achievement = achievement,
                 createdAt = mAchievementData.createdAt,
                 id = mAchievementData.id,

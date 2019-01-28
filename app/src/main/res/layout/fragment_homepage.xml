@@ -53,23 +53,17 @@
                 tools:src="@mipmap/ic_info_avatar_patient" />
         </LinearLayout>
 
-        <FrameLayout
+        <com.sumian.sd.widget.banner.BannerViewPager
+            android:id="@+id/cbti_banner_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/b2_color_day">
-
-            <com.sumian.sd.widget.banner.BannerViewPager
-                android:id="@+id/cbti_banner_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_174"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingLeft="@dimen/space_10"
-                android:paddingRight="@dimen/space_10"
-                android:visibility="visible"
-                tools:visibility="visible" />
-
-        </FrameLayout>
+            android:layout_height="@dimen/space_174"
+            android:background="@color/b2_color_day"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <com.sumian.sd.homepage.widget.CbtiProgressView
             android:id="@+id/cbti_progress_view"

@@ -151,7 +151,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
 
             }
         })
-
+        cbti_banner_view_pager.show()
     }
 
     override fun onGetBannerListFailed(error: String) {
@@ -210,12 +210,11 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 cbti_progress_view.setData(response)
                 if (isLock) {
                     cbti_progress_view.visibility = View.GONE
-                    //cbti_banner_view_pager.show()
+                    BannerPresenter.init(this@HomepageFragment).getBannerList()
                 } else {
                     cbti_progress_view.visibility = View.VISIBLE
-                    //cbti_banner_view_pager.hide()
+                    cbti_banner_view_pager.hide()
                 }
-                BannerPresenter.init(this@HomepageFragment).getBannerList()
             }
         })
     }
