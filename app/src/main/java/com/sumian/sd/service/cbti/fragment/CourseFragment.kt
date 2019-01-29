@@ -32,7 +32,8 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View, Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener {
+class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View,
+        Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener, LastAchievementContract.View {
 
     private lateinit var mCourseAdapter: CourseAdapter
 
@@ -95,7 +96,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIW
     override fun onItemClick(position: Int, itemId: Long) {
         val lesson = mCourseAdapter.getItem(position)
         if (lesson.is_lock) {
-            showCenterToast("完成上节课程后解锁")
+            showCenterToast(getString(R.string.finished_lesson_to_be_unlock))
             return
         }
         CBTICoursePlayActivity.show(activity!!, lesson, position)
@@ -107,11 +108,19 @@ class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIW
 
     override fun onGetCBTIMetaSuccess(cbtiMeta: CBTIMeta) {
         ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyCBTICourseMeta(cbtiMeta)
+        cbtiMeta.let {
+            LastAchievementPresenter.init(this).getLastAchievement(achievementCategoryType = Achievement.CBTI_TYPE, achievementItemType = it.chapter.index)
+        }
     }
 
     override fun onGetCBTIWeekLessonFailed(error: String) {
         showCenterToast(error)
     }
+
+    override fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData) {
+        MyAchievementShareActivity.showFromLastAchievement(lastAchievementData)
+    }
+
 
     override fun onChanged(t: List<Course>?) {
         if (t == null) {
