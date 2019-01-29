@@ -8,6 +8,7 @@ import android.text.style.RelativeSizeSpan
 import androidx.core.view.drawToBitmap
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseDialogPresenterActivity
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.mvp.IPresenter
@@ -16,6 +17,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.diary.sleeprecord.bean.ShareInfo
+import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_share_sleep_diary_dialog_content_1.*
 import kotlinx.android.synthetic.main.activity_share_sleep_diary_dialog_content_2.*
@@ -82,7 +84,20 @@ class ShareSleepDiaryDialogActivity : BaseDialogPresenterActivity<IPresenter>() 
     private fun checkPermissionForCreateImageAndShare(shareMedia: SHARE_MEDIA) {
         val channel = if (shareMedia == SHARE_MEDIA.WEIXIN) "微信会话" else "微信朋友圈"
         StatUtil.event("click_sleep_diary_share", mapOf("channel" to channel))
-        AppManager.getOpenEngine().shareImage(this, v_share_sleep_diary_root.drawToBitmap(), shareMedia)
+        AppManager.getOpenEngine().shareImage(this, v_share_sleep_diary_root.drawToBitmap(), shareMedia, object : UMShareListener {
+            override fun onResult(p0: SHARE_MEDIA?) {
+            }
+
+            override fun onCancel(p0: SHARE_MEDIA?) {
+            }
+
+            override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+                ToastUtils.showShort(R.string.share_failed)
+            }
+
+            override fun onStart(p0: SHARE_MEDIA?) {
+            }
+        })
     }
 
     override fun onDestroy() {
