@@ -82,6 +82,12 @@ public class DeviceVersionNoticeActivity extends BasePresenterActivity implement
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        DeviceManager.INSTANCE.getAndCheckFirmVersion();
+    }
+
+    @Override
     protected void onRelease() {
         AppManager.getVersionModel().unRegisterShowDotCallback(this);
         super.onRelease();

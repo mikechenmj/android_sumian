@@ -284,6 +284,7 @@ object AppManager {
         LogManager.appendUserOperationLog("App 进入 前台")
         DeviceManager.tryToConnectCacheMonitor()
         sendHeartbeat()
+        DeviceManager.getAndCheckFirmVersion()
     }
 
     fun onAppBackground() {

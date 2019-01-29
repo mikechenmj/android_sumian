@@ -679,7 +679,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x54 速眠仪的固件版本信息$sleepyFirmwareVersion  cmd=$cmd")
-        getAndCheckFirmVersion(sleepyFirmwareVersion, VERSION_TYPE_SLEEPER)
+        getAndCheckFirmVersion()
     }
 
     private fun receiveMonitorSnInfo(data: ByteArray, cmd: String) {
@@ -716,7 +716,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息$monitorFirmwareVersion  cmd=$cmd")
-        getAndCheckFirmVersion(monitorFirmwareVersion, VERSION_TYPE_MONITOR)
+        getAndCheckFirmVersion()
     }
 
     private fun cmdToInt(cmd: String, startIndex: Int, endIndex: Int): Int {
@@ -1033,11 +1033,11 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
 
-    private fun getAndCheckFirmVersion(version: String, type: Int) {
+    fun getAndCheckFirmVersion() {
         val call = AppManager.getSdHttpService().syncFirmwareInfo()
         call.enqueue(object : BaseSdResponseCallback<FirmwareInfo>() {
             override fun onSuccess(response: FirmwareInfo?) {
-                checkFirmVersion(response, version, type)
+                checkFirmVersion(response ?: return)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -1046,29 +1046,23 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         })
     }
 
-    private fun checkFirmVersion(firmwareInfo: FirmwareInfo?, version: String, type: Int) {
-        if (firmwareInfo == null) {
-            return
-        }
-        val latestVersion = if (type == VERSION_TYPE_MONITOR) {
-            firmwareInfo.monitor.version
-        } else {
-            firmwareInfo.sleeper.version
-        }
-        val hasNewVersion = !VersionUtil.isVersionZero(version) && VersionUtil.hasNewVersion(latestVersion, version)
-        if (type == VERSION_TYPE_MONITOR) {
-            mMonitorNeedUpdateLiveData.value = hasNewVersion
-        } else {
-            mSleeperNeedUpdateLiveData.value = hasNewVersion
-        }
-        if (hasNewVersion) {
+    private fun checkFirmVersion(firmwareInfo: FirmwareInfo) {
+        val monitorVersion = mMonitorLiveData.value?.version
+        val sleeperVersion = mMonitorLiveData.value?.sleeperVersion
+        mMonitorNeedUpdateLiveData.value = hasNewFirmwareVersion(monitorVersion, firmwareInfo.monitor.version)
+        mSleeperNeedUpdateLiveData.value = hasNewFirmwareVersion(sleeperVersion, firmwareInfo.sleeper.version)
+        if (mMonitorNeedUpdateLiveData.value == true || mSleeperNeedUpdateLiveData.value == true) {
             val spKey = SpKeys.SHOW_UPGRADE_MONITOR_DIALOG_TIME
             if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
                 return
             }
-            UpgradeFirmwareDialogActivity.start(if (type == VERSION_TYPE_MONITOR) 0 else 1)
+            UpgradeFirmwareDialogActivity.start(if (mMonitorNeedUpdateLiveData.value == true) 0 else 1)
             SPUtils.getInstance().put(spKey, System.currentTimeMillis())
         }
+    }
+
+    private fun hasNewFirmwareVersion(currentVersion: String?, latestVersion: String): Boolean {
+        return !TextUtils.isEmpty(currentVersion) && !VersionUtil.isVersionZero(currentVersion!!) && VersionUtil.hasNewVersion(latestVersion, currentVersion)
     }
 
     fun hasFirmwareNeedUpdate(): Boolean {
