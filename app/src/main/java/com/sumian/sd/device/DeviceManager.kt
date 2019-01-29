@@ -331,9 +331,9 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             "50"//获取监测仪固件版本信息
             -> receiveMonitorVersionInfo(cmd)
             "59"//使速眠仪进入 dfu 模式开启成功
-            -> receiveSleeperEnterDfuSuccessResponse(cmd)
+            -> receiveSleeperEnterDfuResponse(cmd)
             "51"//监测仪自己固件 dfu 模式开启成功
-            -> receiveMonitorEnterDfuSuccessResponse(cmd)
+            -> receiveMonitorEnterDfuResponse(cmd)
             "52" -> LogManager.appendBluetoothLog("0x52 正在绑定速眠仪中,$cmd")
             "53"//获取监测仪的 sn 号
             -> receiveMonitorSnInfo(data, cmd)
@@ -689,20 +689,28 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         notifyMonitorChange()
     }
 
-    private fun receiveMonitorEnterDfuSuccessResponse(cmd: String) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
-        mMonitorLiveData.value?.battery = 0
-        mMonitorLiveData.value?.resetSleeper()
-        notifyMonitorChange()
-        LogManager.appendSpeedSleeperLog("0x51 监测仪进入dfu 模式成功  cmd=$cmd")
+    private fun receiveMonitorEnterDfuResponse(cmd: String) {
+        if ("88".equals(cmd.substring(6, 8))) {
+            mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+            mMonitorLiveData.value?.battery = 0
+            mMonitorLiveData.value?.resetSleeper()
+            notifyMonitorChange()
+            LogManager.appendSpeedSleeperLog("0x51 监测仪进入dfu 模式成功  cmd=$cmd")
+        } else {
+            LogManager.appendSpeedSleeperLog("0x51 监测仪进入dfu 模式失败  cmd=$cmd")
+        }
     }
 
-    private fun receiveSleeperEnterDfuSuccessResponse(cmd: String) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
-        mMonitorLiveData.value?.battery = 0
-        mMonitorLiveData.value?.resetSleeper()
-        notifyMonitorChange()
-        LogManager.appendMonitorLog("0x59 速眠仪进入dfu 模式成功 cmd=$cmd")
+    private fun receiveSleeperEnterDfuResponse(cmd: String) {
+        if ("88".equals(cmd.substring(6, 8))) {
+            mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+            mMonitorLiveData.value?.sleeperBattery = 0
+            mMonitorLiveData.value?.resetSleeper()
+            notifyMonitorChange()
+            LogManager.appendMonitorLog("0x59 速眠仪进入dfu 模式成功 cmd=$cmd")
+        } else {
+            LogManager.appendMonitorLog("0x59 速眠仪进入dfu 模式失败 cmd=$cmd")
+        }
     }
 
     private fun receiveMonitorVersionInfo(cmd: String) {
