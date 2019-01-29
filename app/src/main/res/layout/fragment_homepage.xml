@@ -85,7 +85,7 @@
             android:id="@+id/cbti_progress_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <include layout="@layout/layout_homepage_fragment_grid_items" />
 

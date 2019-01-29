@@ -53,7 +53,6 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
         private const val KEY_TAB_INDEX = "key_tab_name"
         private const val KEY_TAB_DATA = "key_tab_data"
         private const val REQUEST_CODE_OPEN_NOTIFICATION = 1
-        private var mCurrentPosition = TAB_INVALID
 
         @JvmStatic
         fun launch(tab: Int, tabData: String? = null) {
@@ -75,6 +74,7 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
             MeFragment::class.java.simpleName)
     private var mLaunchTabData: String? = null
     private var mIsResume = false
+    var mCurrentPosition = TAB_INVALID
 
     private val mVersionDelegate: VersionDelegate  by lazy {
         VersionDelegate.init()

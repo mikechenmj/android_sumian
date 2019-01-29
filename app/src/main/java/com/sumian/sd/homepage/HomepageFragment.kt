@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
+import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.R
 import com.sumian.sd.account.achievement.MyAchievementShareActivity
 import com.sumian.sd.account.achievement.bean.LastAchievementData
@@ -36,6 +37,7 @@ import com.sumian.sd.homepage.banner.BannerPresenter
 import com.sumian.sd.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.homepage.bean.SentencePoolText
 import com.sumian.sd.homepage.bean.SleepPrescriptionStatus
+import com.sumian.sd.main.MainActivity
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.network.callback.BaseSdResponseCallback
 import com.sumian.sd.relaxation.RelaxationListActivity
@@ -107,8 +109,9 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         if (showVersionCode == appVersionCode) {
             return
         }
+        if ((activity as MainActivity?)?.mCurrentPosition != MainActivity.TAB_0) return
         val arr = intArrayOf(0, 0)
-        home_page_sleep_guide_enter_btn.getLocationInWindow(arr)
+        home_page_sleep_guide_enter_btn?.getLocationInWindow(arr) ?: return
         sp.put(SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION, appVersionCode)
         SleepGuideDialogActivity.start(arr[1])
     }
@@ -125,7 +128,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onStart() {
         super.onStart()
         refreshData()
-//        ShareSleepDiaryDialogActivity.startFotTest()
     }
 
     override fun onResume() {
@@ -167,7 +169,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         queryCbti()
         querySleepPrescription()
         querySentencePool()
-        querySleepGuide()
     }
 
     private fun querySentencePool() {
@@ -219,12 +220,14 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                         CBTIIntroductionActivity.show()
                     }
                     cbti_progress_view.visibility = View.GONE
+                    cbti_banner_view_pager.visibility = View.INVISIBLE
                     BannerPresenter.init(this@HomepageFragment).getBannerList()
                 } else {
                     iv_default_banner.visibility = View.GONE
                     cbti_progress_view.visibility = View.VISIBLE
                     cbti_banner_view_pager.hide()
                 }
+                querySleepGuide()
             }
         })
     }
