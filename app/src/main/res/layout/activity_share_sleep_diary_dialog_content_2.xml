@@ -97,7 +97,7 @@
                 android:background="@drawable/sleepdiary_img_days"
                 android:gravity="center"
                 android:textColor="@color/t6_color"
-                android:textSize="30sp"
+                android:textSize="40sp"
                 android:textStyle="bold"
                 tools:ignore="ContentDescription"
                 tools:text="100" />
