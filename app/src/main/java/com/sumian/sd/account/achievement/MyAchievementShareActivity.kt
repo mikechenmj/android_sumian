@@ -103,6 +103,10 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
         this.mPresenter = MyAchievementSharePresenter.create()
     }
 
+    override fun portrait(): Boolean {
+        return false
+    }
+
     @SuppressLint("SetTextI18n")
     override fun initWidget() {
         super.initWidget()

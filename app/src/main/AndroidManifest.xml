@@ -542,16 +542,13 @@
         <activity
             android:name=".account.achievement.MyAchievementActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".account.achievement.MyAchievementShareActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
