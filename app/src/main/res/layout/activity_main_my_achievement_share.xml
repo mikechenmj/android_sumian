@@ -126,7 +126,7 @@
                 <com.sumian.common.h5.widget.SWebView
                     android:id="@+id/web_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/space_100"
                     android:layout_marginLeft="@dimen/space_30"
                     android:layout_marginTop="@dimen/space_10"
                     android:layout_marginRight="@dimen/space_30"
