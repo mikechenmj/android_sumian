@@ -9,6 +9,7 @@ import com.sumian.common.image.loadImage
 import com.sumian.sd.R
 import com.sumian.sd.account.achievement.bean.ShareAchievement
 import com.sumian.sd.account.achievement.formatHtml
+import com.tencent.smtt.sdk.WebSettings
 import kotlinx.android.synthetic.main.lay_achievement_share_view.view.*
 
 /**
@@ -32,12 +33,17 @@ class AchievementShareView : LinearLayout {
     fun bindAchievement(shareAchievement: ShareAchievement) {
         iv_share_avatar.loadImage(shareAchievement.avatar, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient, true)
         val achievement = shareAchievement.achievement
-        tv_share_medal_title.text = shareAchievement.name
+        tv_share_medal_title.text = achievement.title
         tv_share_get_date.text = achievement.record?.formatDate()
         tv_share_medal_content_title.text = achievement.sentence
-        web_view_share.post {
-            web_view_share.sWebView.loadDataWithBaseURL(null, formatHtml(achievement.context), "text/html", "utf-8", null)
+        web_view_share.sWebView.run {
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+            isVerticalScrollBarEnabled = false
+            this.setVerticalScrollbarOverlay(false)
+            isHorizontalScrollBarEnabled = false
+            this.setHorizontalScrollbarOverlay(false)
+            loadDataWithBaseURL(null, formatHtml(achievement.context), "text/html", "utf-8", null)
         }
-        iv_share_qr_code.loadImage(shareAchievement.qrCode)
+        iv_share_qr_code.loadImage(shareAchievement.qrCode, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient)
     }
 }
