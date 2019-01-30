@@ -133,7 +133,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onResume() {
         super.onResume()
         device_card_view.onResume()
-        LastAchievementPresenter.init(this).getLastAchievement()
+        //LastAchievementPresenter.init(this).getLastAchievement()
     }
 
     override fun onPause() {
