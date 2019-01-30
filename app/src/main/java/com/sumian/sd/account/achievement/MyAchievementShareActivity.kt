@@ -4,7 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BasePresenterActivity
@@ -142,6 +145,7 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
     @SuppressLint("LongLogTag")
     override fun onComplete(file: File) {
         showToast(getString(R.string.save_images_success))
+        MediaScannerConnection.scanFile(this, arrayOf(file.absolutePath), null, null)
     }
 
     override fun onError(t: Throwable) {

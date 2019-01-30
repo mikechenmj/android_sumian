@@ -13,7 +13,6 @@
         android:layout_marginStart="@dimen/space_16"
         android:layout_marginTop="@dimen/space_40"
         android:layout_marginEnd="@dimen/space_16"
-        android:layout_marginBottom="@dimen/space_78"
         android:background="@drawable/bg_my_medal"
         android:elevation="0dp"
         android:gravity="center"
@@ -35,19 +34,22 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_20"
-            android:minHeight="@dimen/space_316" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_20" />
 
         <TextView
             style="@style/text_t2_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_60"
+            android:layout_marginTop="@dimen/space_20"
             android:layout_marginBottom="@dimen/space_30"
             android:text="@string/more_medal_bottom_tips" />
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>
