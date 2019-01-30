@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
-import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.R
 import com.sumian.sd.account.achievement.MyAchievementShareActivity
 import com.sumian.sd.account.achievement.bean.LastAchievementData
@@ -48,7 +47,6 @@ import com.sumian.sd.sleepguide.SleepGuideActivity
 import com.sumian.sd.widget.banner.Banner
 import com.sumian.sd.widget.banner.BannerViewPager
 import kotlinx.android.synthetic.main.fragment_homepage.*
-import kotlinx.android.synthetic.main.fragment_homepage.view.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -134,7 +132,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     override fun onResume() {
         super.onResume()
         device_card_view.onResume()
-        //LastAchievementPresenter.init(this).getLastAchievement()
+        LastAchievementPresenter.init(this).getLastAchievement()
     }
 
     override fun onPause() {
@@ -266,7 +264,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
             }
         }
     }
-
 
 
     private fun querySleepGuide() {
