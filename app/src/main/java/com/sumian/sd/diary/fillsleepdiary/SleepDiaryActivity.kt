@@ -15,4 +15,13 @@ class SleepDiaryActivity : BasePresenterActivity<IPresenter>() {
     override fun getLayoutId(): Int {
         return R.layout.activity_sleep_diary
     }
+
+    override fun initWidget() {
+        super.initWidget()
+        setTitle(R.string.sleep_diary)
+    }
+
+    override fun showBackNav(): Boolean {
+        return true
+    }
 }
