@@ -1,5 +1,6 @@
 package com.sumian.sd.account.achievement
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -21,6 +22,8 @@ import com.sumian.sd.account.achievement.presenter.MyAchievementSharePresenter
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_main_my_achievement_share.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 
 
@@ -31,11 +34,12 @@ import java.io.File
  *
  * desc: 我的勋章成就分享
  */
-class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContract.Presenter>(), UMShareListener, ViewToImageFileListener {
+class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContract.Presenter>(), UMShareListener, ViewToImageFileListener, EasyPermissions.PermissionCallbacks {
 
     private var shareAchievement: ShareAchievement? = null
 
     companion object {
+        private const val WRITE_PERMISSION = 0x01
 
         private const val EXTRAS_SHARE_ACHIEVEMENT = "com.sumian.sdd.extras.share.achievement"
 
@@ -116,8 +120,7 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
             postEvent(SHARE_MEDIA.WEIXIN)
         }
         iv_save_bitmap.setOnClickListener {
-            mPresenter?.saveShareView(achievement_share_view, this)
-            postEvent(SHARE_MEDIA.MORE)
+            requestPermission()
         }
         shareAchievement?.let {
             val achievement = it.achievement
@@ -159,6 +162,29 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
 
     fun Activity.showToast(text: String) {
         ToastHelper.show(this, text, Gravity.CENTER)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        showToast(getString(R.string.save_permission_tips))
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+    }
+
+    @AfterPermissionGranted(WRITE_PERMISSION)
+    private fun requestPermission() {
+        val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *permissions)) {
+            mPresenter?.saveShareView(achievement_share_view, this)
+            postEvent(SHARE_MEDIA.MORE)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.request_save_permissions_tips), WRITE_PERMISSION, *permissions)
+        }
     }
 
     private fun postEvent(shareMedia: SHARE_MEDIA?, eventName: String = "click_medal_share") {

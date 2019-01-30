@@ -12,11 +12,6 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
-import com.sumian.sd.account.achievement.MyAchievementShareActivity
-import com.sumian.sd.account.achievement.bean.Achievement
-import com.sumian.sd.account.achievement.bean.LastAchievementData
-import com.sumian.sd.account.achievement.contract.LastAchievementContract
-import com.sumian.sd.account.achievement.presenter.LastAchievementPresenter
 import com.sumian.sd.event.CBTIServiceBoughtEvent
 import com.sumian.sd.event.EventBusUtil
 import com.sumian.sd.homepage.bean.CbtiChapterData
@@ -35,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
  *
  */
 class CBTIIntroductionActivity : BasePresenterActivity<CBTIIntroductionContract.Presenter>(), CBTIIntroductionContract.View,
-        BaseRecyclerAdapter.OnItemClickListener, LastAchievementContract.View {
+        BaseRecyclerAdapter.OnItemClickListener {
 
     companion object {
         @JvmStatic
@@ -153,16 +148,8 @@ class CBTIIntroductionActivity : BasePresenterActivity<CBTIIntroductionContract.
             showCBTIIntroductionWebView()
         } else {
             hideCBTIIntroductionWebView()
-            val items = mAdapter.items
-            items?.last()?.let {
-                LastAchievementPresenter.init(this).getLastAchievement(achievementCategoryType = Achievement.CBTI_TYPE, achievementItemType = it.index)
-            }
         }
         // CBTIIntroductionWebActivity.show()//已过期，跳转去购买服务
-    }
-
-    override fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData) {
-        MyAchievementShareActivity.showFromLastAchievement(lastAchievementData)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
