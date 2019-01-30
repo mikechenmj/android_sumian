@@ -227,25 +227,6 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                     cbti_progress_view.visibility = View.VISIBLE
                     cbti_banner_view_pager.hide()
                 }
-                querySleepGuide()
-            }
-        })
-    }
-
-    private fun querySleepGuide() {
-        val call = AppManager.getSdHttpService().getSleepGuide()
-        addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<Any?>() {
-            override fun onSuccess(response: Any?) {
-                LogUtils.d("getSleepGuide", response)
-                home_page_sleep_guide_enter_btn.isActivated = response != null
-                if (response == null) {
-                    showSleepGuideDialogIfNeed()
-                }
-            }
-
-            override fun onFailure(errorResponse: ErrorResponse) {
-                LogUtils.d("getSleepGuide", errorResponse)
             }
         })
     }
