@@ -22,9 +22,11 @@ import com.sumian.sd.account.achievement.bean.Record
 import com.sumian.sd.account.achievement.bean.ShareAchievement
 import com.sumian.sd.account.achievement.contract.MyAchievementShareContract
 import com.sumian.sd.account.achievement.presenter.MyAchievementSharePresenter
+import com.tencent.smtt.sdk.WebSettings
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_main_my_achievement_share.*
+import kotlinx.android.synthetic.main.lay_achievement_share_view.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
@@ -135,9 +137,7 @@ class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContr
             tv_medal_title.text = achievement.title
             tv_get_date.text = achievement.record?.formatDate()
             tv_medal_content_title.text = achievement.sentence
-            web_view.post {
-                web_view.sWebView.loadDataWithBaseURL(null, formatHtml(achievement.context), "text/html", "utf-8", null)
-            }
+            web_view.loadDataWithBaseURL(null, formatHtml(achievement.context), "text/html", "utf-8", null)
             achievement_share_view.bindAchievement(it)
         }
     }

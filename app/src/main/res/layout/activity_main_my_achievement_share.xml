@@ -10,7 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <com.sumian.sd.account.achievement.widget.AchievementShareView
             android:id="@+id/achievement_share_view"
@@ -123,14 +123,15 @@
                     android:textStyle="bold"
                     tools:text="“我的睡眠健康我主宰”" />
 
-                <com.sumian.common.h5.widget.SWebViewLayout
+                <com.sumian.common.h5.widget.SWebView
                     android:id="@+id/web_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_30"
                     android:layout_marginTop="@dimen/space_10"
                     android:layout_marginRight="@dimen/space_30"
-                    android:layout_marginBottom="@dimen/space_30" />
+                    android:layout_marginBottom="@dimen/space_30"
+                    android:minHeight="@dimen/space_10" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

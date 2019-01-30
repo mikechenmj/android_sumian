@@ -36,14 +36,7 @@ class AchievementShareView : LinearLayout {
         tv_share_medal_title.text = achievement.title
         tv_share_get_date.text = achievement.record?.formatDate()
         tv_share_medal_content_title.text = achievement.sentence
-        web_view_share.sWebView.run {
-            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-            isVerticalScrollBarEnabled = false
-            this.setVerticalScrollbarOverlay(false)
-            isHorizontalScrollBarEnabled = false
-            this.setHorizontalScrollbarOverlay(false)
-            loadDataWithBaseURL(null, formatHtml(achievement.context), "text/html", "utf-8", null)
-        }
+        web_view_share.loadDataWithBaseURL(null, formatHtml(achievement.context), "text/html", "utf-8", null)
         iv_share_qr_code.loadImage(shareAchievement.qrCode, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient)
     }
 }
