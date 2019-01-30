@@ -48,6 +48,7 @@ import com.sumian.sd.sleepguide.SleepGuideActivity
 import com.sumian.sd.widget.banner.Banner
 import com.sumian.sd.widget.banner.BannerViewPager
 import kotlinx.android.synthetic.main.fragment_homepage.*
+import kotlinx.android.synthetic.main.fragment_homepage.view.*
 import kotlinx.android.synthetic.main.layout_homepage_fragment_grid_items.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -169,6 +170,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
         queryCbti()
         querySleepPrescription()
         querySentencePool()
+        querySleepGuide()
     }
 
     private fun querySentencePool() {
@@ -263,5 +265,22 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
                 DeviceManager.scanAndConnect(blueDevice)
             }
         }
+    }
+
+
+
+    private fun querySleepGuide() {
+        val call = AppManager.getSdHttpService().getSleepGuide()
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<Any?>() {
+            override fun onSuccess(response: Any?) {
+                LogUtils.d("getSleepGuide", response)
+                home_page_sleep_guide_enter_btn.isActivated = response != null
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                LogUtils.d("getSleepGuide", errorResponse)
+            }
+        })
     }
 }
