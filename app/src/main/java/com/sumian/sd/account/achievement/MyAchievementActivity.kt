@@ -9,10 +9,7 @@ import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.account.achievement.adapter.MyMedalAdapter
-import com.sumian.sd.account.achievement.bean.AchievementData
-import com.sumian.sd.account.achievement.bean.AchievementMeta
-import com.sumian.sd.account.achievement.bean.LastAchievementData
-import com.sumian.sd.account.achievement.bean.ShareAchievement
+import com.sumian.sd.account.achievement.bean.*
 import com.sumian.sd.account.achievement.contract.LastAchievementContract
 import com.sumian.sd.account.achievement.contract.MyAchievementContract
 import com.sumian.sd.account.achievement.presenter.LastAchievementPresenter
@@ -64,6 +61,12 @@ class MyAchievementActivity : BasePresenterActivity<MyAchievementContract.Presen
         setTitle(R.string.my_metal)
         recycler.layoutManager = GridLayoutManager(this, 3)
         recycler.itemAnimator = null
+        val items = mutableListOf<Achievement>()
+        for (index in 0 until 6) {
+            val achievement = Achievement(0, "", 0, "", 0, "", null, "", "", 0, 0)
+            items.add(achievement)
+        }
+        adapter.resetItem(items)
         recycler.adapter = adapter
     }
 
