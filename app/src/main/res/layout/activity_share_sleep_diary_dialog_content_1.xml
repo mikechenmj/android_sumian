@@ -6,7 +6,8 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     android:paddingStart="15dp"
-    android:paddingEnd="15dp">
+    android:paddingEnd="15dp"
+    tools:background="@color/black_50">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -49,9 +50,8 @@
                         android:id="@+id/tv_question_1"
                         style="@style/text_t1_16"
                         android:layout_width="wrap_content"
-                        android:layout_height="45dp"
+                        android:layout_height="70dp"
                         android:layout_marginStart="70dp"
-                        android:layout_marginTop="15dp"
                         android:layout_marginEnd="15dp"
                         android:gravity="center_vertical"
                         android:textStyle="bold"
@@ -62,9 +62,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="15dp"
                         android:textColor="@color/t2_color"
                         android:textSize="15sp"
                         tools:text="晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为不用担心，你很健康！" />
