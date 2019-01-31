@@ -208,8 +208,6 @@ public class BlueManager implements BlueScanCallback {
         if (mBluePeripheral != null) {
             mBluePeripheral.release();
         }
-        mBlueAdapterCallbacks.clear();
-        mBlueScanCallbacks.clear();
     }
 
     @Override
