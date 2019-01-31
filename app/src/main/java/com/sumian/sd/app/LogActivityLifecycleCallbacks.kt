@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.sumian.common.lifecycle.EmptyActivityLifecycleCallbacks
-import com.sumian.sd.log.SdLogManager
+import com.sumian.sd.common.log.SdLogManager
 
 /**
  * @author : Zhan Xuzhao

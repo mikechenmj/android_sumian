@@ -1,14 +1,13 @@
 package com.sumian.sd.main
 
-import android.os.Bundle
 import android.os.Handler
 import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
-import com.sumian.sd.account.login.LoginActivity
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.kefu.KefuManager
-import com.sumian.sd.utils.StatusBarUtil
+import com.sumian.sd.buz.account.login.LoginActivity
+import com.sumian.sd.buz.kefu.KefuManager
+import com.sumian.sd.common.utils.StatusBarUtil
 
 
 /**

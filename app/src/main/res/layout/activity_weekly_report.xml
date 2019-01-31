@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.sumian.sd.diary.sleeprecord.widget.WeeklySleepDataDateBar
+    <com.sumian.sd.buz.diary.sleeprecord.widget.WeeklySleepDataDateBar
         android:id="@+id/date_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

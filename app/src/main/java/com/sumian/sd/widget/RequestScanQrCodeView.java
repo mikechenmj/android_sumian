@@ -8,11 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseFragment;
-import com.sumian.sd.kefu.KefuManager;
+import com.sumian.sd.buz.kefu.KefuManager;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

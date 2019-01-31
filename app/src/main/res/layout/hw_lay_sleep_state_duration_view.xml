@@ -19,7 +19,7 @@
         skin:enable="true"
         tools:ignore="MissingPrefix" />
 
-    <com.sumian.hw.report.widget.text.PercentTextView
+    <com.sumian.sd.buz.report.widget.text.PercentTextView
         android:id="@+id/tv_sleep_duration_percent"
         android:layout_width="@dimen/space_80"
         android:layout_height="@dimen/space_80"
@@ -27,7 +27,7 @@
         android:gravity="center"
         skin:enable="true" />
 
-    <com.sumian.hw.report.widget.text.CountSleepDurationTextView
+    <com.sumian.sd.buz.report.widget.text.CountSleepDurationTextView
         android:id="@+id/tv_sleep_duration_count"
         style="@style/text_t5_14"
         android:layout_width="wrap_content"

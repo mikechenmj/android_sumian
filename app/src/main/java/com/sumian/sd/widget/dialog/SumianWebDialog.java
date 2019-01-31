@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.sumian.common.h5.widget.SWebViewLayout;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
-import com.sumian.sd.h5.H5Uri;
+import com.sumian.sd.common.h5.H5Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

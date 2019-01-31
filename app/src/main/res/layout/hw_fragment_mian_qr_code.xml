@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/transparent">
 
-    <com.sumian.hw.widget.RequestQrCodeView
+    <com.sumian.sd.widget.RequestQrCodeView
         android:id="@+id/request_qr_code_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

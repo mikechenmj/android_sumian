@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/scan_device_fragment"
-        android:name="com.sumian.sd.device.scan.ScanDeviceFragment"
+        android:name="com.sumian.sd.buz.device.scan.ScanDeviceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

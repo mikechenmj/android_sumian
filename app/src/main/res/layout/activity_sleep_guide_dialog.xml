@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_50"
-    tools:context=".homepage.SleepGuideDialogActivity">
+    tools:context=".buz.homepage.SleepGuideDialogActivity">
 
     <ImageView
         android:id="@+id/iv_close"

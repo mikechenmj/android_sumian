@@ -81,7 +81,7 @@
 
         </FrameLayout>
 
-        <com.sumian.sd.homepage.widget.CbtiProgressView
+        <com.sumian.sd.buz.homepage.widget.CbtiProgressView
             android:id="@+id/cbti_progress_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,13 +98,13 @@
             android:src="@drawable/sel_sleep_guide_enter_btn"
             tools:ignore="ContentDescription" />
 
-        <com.sumian.sd.homepage.widget.SleepPrescriptionView
+        <com.sumian.sd.buz.homepage.widget.SleepPrescriptionView
             android:id="@+id/sleep_prescription_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />
 
-        <com.sumian.sd.device.widget.DeviceCardView
+        <com.sumian.sd.buz.device.widget.DeviceCardView
             android:id="@+id/device_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

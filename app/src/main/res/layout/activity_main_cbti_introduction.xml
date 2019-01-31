@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.sumian.sd.service.cbti.widget.CBTIWeekCourseBannerHomeView
+            <com.sumian.sd.buz.cbti.widget.CBTIWeekCourseBannerHomeView
                 android:id="@+id/cbti_introduction_list_home_banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_212"
@@ -33,7 +33,7 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.sumian.sd.service.cbti.widget.CBTIIntroductionWebView
+    <com.sumian.sd.buz.cbti.widget.CBTIIntroductionWebView
         android:id="@+id/cbti_introduction_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

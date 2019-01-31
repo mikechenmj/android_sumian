@@ -75,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp" />
 
-            <com.sumian.hw.widget.VersionInfoView
+            <com.sumian.sd.widget.VersionInfoView
                 android:id="@+id/app_version_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,13 +83,13 @@
                 app:upgrade_label="@string/app_upgrade"
                 tools:visibility="visible" />
 
-            <com.sumian.hw.widget.VersionInfoView
+            <com.sumian.sd.widget.VersionInfoView
                 android:id="@+id/monitor_version_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:upgrade_label="@string/monitor_upgrade" />
 
-            <com.sumian.hw.widget.VersionInfoView
+            <com.sumian.sd.widget.VersionInfoView
                 android:id="@+id/sleepy_version_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

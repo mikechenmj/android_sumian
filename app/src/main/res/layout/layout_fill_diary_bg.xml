@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sumian.sd.diary.fillsleepdiary.widget.FillDiaryContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.sumian.sd.buz.diary.fillsleepdiary.widget.FillDiaryContainer xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fill_diary_bg"
         android:layout_width="match_parent"

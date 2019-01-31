@@ -82,7 +82,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.sumian.sd.pay.widget.PayCalculateItemView
+            <com.sumian.sd.common.pay.widget.PayCalculateItemView
                 android:id="@+id/pay_calculate_item_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                 android:layout_height="@dimen/space_1"
                 android:background="@color/l1_color" />
 
-            <com.sumian.sd.pay.widget.PayItemGroupView
+            <com.sumian.sd.common.pay.widget.PayItemGroupView
                 android:id="@+id/pay_group_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_120" />

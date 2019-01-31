@@ -20,7 +20,7 @@
         skin:enable="true"
         tools:ignore="MissingPrefix" />
 
-    <com.sumian.hw.report.widget.text.CountSleepDurationTextView
+    <com.sumian.sd.buz.report.widget.text.CountSleepDurationTextView
         android:id="@+id/tv_sleep_today_duration"
         style="@style/text_t5_14"
         android:layout_width="wrap_content"
@@ -52,14 +52,14 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="@+id/divider">
 
-        <com.sumian.hw.report.widget.SleepStateDurationView
+        <com.sumian.sd.buz.report.widget.SleepStateDurationView
             android:id="@+id/light_sleep_duration_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center" />
 
-        <com.sumian.hw.report.widget.SleepStateDurationView
+        <com.sumian.sd.buz.report.widget.SleepStateDurationView
             android:id="@+id/deep_sleep_duration_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

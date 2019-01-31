@@ -23,7 +23,7 @@
             android:layout_marginTop="@dimen/space_10"
             android:orientation="vertical">
 
-            <com.sumian.sd.service.cbti.widget.keyboard.MaxMsgBoardKeyBoard
+            <com.sumian.sd.buz.cbti.widget.keyboard.MaxMsgBoardKeyBoard
                 android:id="@+id/max_msg_keyboard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -93,7 +93,7 @@
                     android:text="@string/already_connected" />
             </LinearLayout>
 
-            <com.sumian.sd.device.widget.BatteryView
+            <com.sumian.sd.buz.device.widget.BatteryView
                 android:id="@+id/monitor_battery_view"
                 android:layout_width="100dp"
                 android:layout_height="55dp"
@@ -132,7 +132,7 @@
                     android:text="@string/already_connected" />
             </LinearLayout>
 
-            <com.sumian.sd.device.widget.BatteryView
+            <com.sumian.sd.buz.device.widget.BatteryView
                 android:id="@+id/sleeper_battery_view"
                 android:layout_width="100dp"
                 android:layout_height="55dp"

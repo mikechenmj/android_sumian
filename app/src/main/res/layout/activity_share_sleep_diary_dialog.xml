@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_50"
-    tools:context=".diary.sleeprecord.ShareSleepDiaryDialogActivity">
+    tools:context=".buz.diary.sleeprecord.ShareSleepDiaryDialogActivity">
 
     <include layout="@layout/activity_share_sleep_diary_dialog_content_1" />
 

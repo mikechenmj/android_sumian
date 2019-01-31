@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sumian.hw.report.weeklyreport.widget.WeeklyReportView
+    <com.sumian.sd.buz.report.weeklyreport.widget.WeeklyReportView
         android:id="@+id/weekly_report_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

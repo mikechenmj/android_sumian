@@ -6,7 +6,7 @@
     android:background="@color/b1_color"
     android:orientation="vertical">
 
-    <com.sumian.sd.diary.sleeprecord.widget.SleepDataDateBar
+    <com.sumian.sd.buz.diary.sleeprecord.widget.SleepDataDateBar
         android:id="@+id/date_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

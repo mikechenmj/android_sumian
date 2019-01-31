@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/b3_color_day"
     android:orientation="vertical"
-    tools:context=".account.achievement.MyAchievementActivity">
+    tools:context=".buz.account.achievement.MyAchievementActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

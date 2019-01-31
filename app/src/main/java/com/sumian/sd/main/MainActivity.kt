@@ -14,27 +14,26 @@ import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.utils.SettingsUtil
-import com.sumian.hw.log.LogManager
-import com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity
-import com.sumian.hw.upgrade.model.VersionModel
-import com.sumian.hw.utils.FragmentUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.constants.SpKeys
-import com.sumian.sd.device.AutoSyncDeviceDataUtil
-import com.sumian.sd.device.DeviceManager
-import com.sumian.sd.diary.DataFragment
-import com.sumian.sd.event.EventBusUtil
-import com.sumian.sd.event.NotificationUnreadCountChangeEvent
-import com.sumian.sd.homepage.HomepageFragment
-import com.sumian.sd.kefu.KefuManager
+import com.sumian.sd.buz.device.AutoSyncDeviceDataUtil
+import com.sumian.sd.buz.device.DeviceManager
+import com.sumian.sd.buz.diary.DataFragment
+import com.sumian.sd.buz.homepage.HomepageFragment
+import com.sumian.sd.buz.kefu.KefuManager
+import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
+import com.sumian.sd.buz.notification.NotificationViewModel
+import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
+import com.sumian.sd.buz.tab.DoctorFragment
+import com.sumian.sd.buz.tab.MeFragment
+import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
+import com.sumian.sd.buz.upgrade.model.VersionModel
+import com.sumian.sd.common.log.LogManager
+import com.sumian.sd.common.utils.EventBusUtil
+import com.sumian.sd.common.utils.FragmentUtil
+import com.sumian.sd.common.utils.StatusBarUtil
 import com.sumian.sd.main.event.ChangeMainTabEvent
-import com.sumian.sd.notification.NotificationViewModel
-import com.sumian.sd.setting.version.delegate.VersionDelegate
-import com.sumian.sd.tab.DoctorFragment
-import com.sumian.sd.tab.MeFragment
-import com.sumian.sd.utils.StatusBarUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
@@ -50,6 +49,7 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
         const val TAB_2 = 2
         const val TAB_3 = 3
 
+        private const val SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME = "SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME"
         private const val KEY_TAB_INDEX = "key_tab_name"
         private const val KEY_TAB_DATA = "key_tab_data"
         private const val REQUEST_CODE_OPEN_NOTIFICATION = 1
@@ -187,7 +187,7 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
     }
 
     private fun showOpenNotificationDialogIfNeeded() {
-        val previousShowTime = SPUtils.getInstance().getLong(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0)
+        val previousShowTime = SPUtils.getInstance().getLong(SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, 0)
         val alreadyShowed = previousShowTime > 0
         if (NotificationUtil.areNotificationsEnabled(this@MainActivity) || alreadyShowed) {
             return
@@ -199,7 +199,7 @@ class MainActivity : BasePresenterActivity<IPresenter>(), VersionModel.ShowDotCa
                 .setMessage(R.string.open_notification_and_receive_doctor_response)
                 .setRightBtn(R.string.open_notification) { SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
                 .show()
-        SPUtils.getInstance().put(SpKeys.SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis())
+        SPUtils.getInstance().put(SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME, System.currentTimeMillis())
     }
 
     override fun onBackPressed() {

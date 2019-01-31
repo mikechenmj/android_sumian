@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".notification.NotificationListActivity">
+    tools:context=".buz.notification.NotificationListActivity">
 
     <com.sumian.sd.widget.TitleBar
         android:id="@+id/title_bar"

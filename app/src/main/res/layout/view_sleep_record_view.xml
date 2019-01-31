@@ -48,7 +48,7 @@
                 android:paddingBottom="30dp"
                 tools:visibility="gone">
 
-                <com.sumian.sd.diary.sleeprecord.widget.SleepRecordProgressView
+                <com.sumian.sd.buz.diary.sleeprecord.widget.SleepRecordProgressView
                     android:id="@+id/progress_view_sleep"
                     android:layout_width="@dimen/space_140"
                     android:layout_height="@dimen/space_140"
@@ -101,7 +101,7 @@
                 android:background="@color/white"
                 android:padding="20dp">
 
-                <com.sumian.sd.diary.sleeprecord.widget.SleepRecordDiagramView
+                <com.sumian.sd.buz.diary.sleeprecord.widget.SleepRecordDiagramView
                     android:id="@+id/sleep_record_diagram_view"
                     android:layout_width="match_parent"
                     android:layout_height="110dp"

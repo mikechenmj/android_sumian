@@ -2,7 +2,7 @@ package com.sumian.sd.sleepdiary
 
 import android.text.format.DateUtils
 import com.sumian.common.utils.TimeUtilV2
-import com.sumian.sd.diary.fillsleepdiary.bean.SleepTimeData
+import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepTimeData
 import org.junit.Test
 import java.text.DecimalFormat
 import java.util.*

@@ -22,7 +22,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.sumian.hw.report.widget.histogram.TouchDailySleepHistogramView
+                <com.sumian.sd.buz.report.widget.histogram.TouchDailySleepHistogramView
                     android:id="@+id/day_sleep_histogram_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_200"
@@ -34,7 +34,7 @@
                     app:tdshv_light_color="@color/g2_color_day"
                     app:tdshv_sober_color="@color/g3_color_day" />
 
-                <com.sumian.hw.report.widget.ReportIndicatorRuleView
+                <com.sumian.sd.buz.report.widget.ReportIndicatorRuleView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_26" />
 
@@ -50,7 +50,7 @@
                     app:cardElevation="0dp"
                     app:contentPadding="@dimen/space_20">
 
-                    <com.sumian.hw.report.widget.ReportSleepDurationView
+                    <com.sumian.sd.buz.report.widget.ReportSleepDurationView
                         android:id="@+id/report_sleep_duration_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

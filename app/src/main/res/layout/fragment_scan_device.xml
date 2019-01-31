@@ -126,7 +126,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="60dp">
 
-                <com.sumian.hw.widget.ripple.RippleScanningView
+                <com.sumian.sd.widget.ripple.RippleScanningView
                     android:id="@+id/ripple_view"
                     android:layout_width="@dimen/space_200"
                     android:layout_height="@dimen/space_200"

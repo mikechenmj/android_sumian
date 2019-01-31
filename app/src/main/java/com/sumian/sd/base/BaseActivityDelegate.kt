@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.sumian.common.base.IActivityDelegate
 import com.sumian.common.notification.AppNotificationManager
-import com.sumian.sd.log.SdLogManager
 
 /**
  * @author : Zhan Xuzhao

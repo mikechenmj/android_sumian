@@ -5,14 +5,14 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".account.achievement.MyAchievementActivity">
+    tools:context=".buz.account.achievement.MyAchievementActivity">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sumian.sd.account.achievement.widget.AchievementShareView
+        <com.sumian.sd.buz.account.achievement.widget.AchievementShareView
             android:id="@+id/achievement_share_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.sumian.sd.device.widget.BatteryProgressView
+    <com.sumian.sd.buz.device.widget.BatteryProgressView
         android:id="@+id/battery_progress_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -88,21 +88,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".account.userProfile.ImproveUserProfileOneActivity"
+            android:name="com.sumian.sd.buz.account.userProfile.ImproveUserProfileOneActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.userProfile.ImproveUserProfileTwoActivity"
+            android:name="com.sumian.sd.buz.account.userProfile.ImproveUserProfileTwoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.userProfile.UserInfoActivity"
+            android:name="com.sumian.sd.buz.account.userProfile.UserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"
             android:launchMode="singleTop"
@@ -110,7 +110,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".pay.activity.PaymentActivity"
+            android:name="com.sumian.sd.common.pay.activity.PaymentActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"
             android:launchMode="singleTop"
@@ -118,21 +118,21 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".setting.SettingActivity"
+            android:name="com.sumian.sd.buz.setting.SettingActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.userProfile.ModifyUserInfoActivity"
+            android:name="com.sumian.sd.buz.account.userProfile.ModifyUserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".doctor.activity.ScanDoctorQrCodeActivity"
+            android:name="com.sumian.sd.buz.doctor.activity.ScanDoctorQrCodeActivity"
             android:launchMode="singleTop"
             android:theme="@style/Scan_qr_theme" /> <!-- third  loginByCaptcha -->
         <activity
@@ -164,7 +164,7 @@
             android:theme="@style/BaseAppTheme" />
 
         <service
-            android:name="com.sumian.hw.log.LogJobIntentService"
+            android:name=".common.log.LogJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
         <service android:name="com.avos.avoscloud.PushService" />
@@ -186,154 +186,154 @@
             </intent-filter>
         </receiver> <!-- 实时通信模块、推送 END -->
         <activity
-            android:name=".doctor.activity.DoctorWebActivity"
+            android:name="com.sumian.sd.buz.doctor.activity.DoctorWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".doctor.activity.DoctorServiceWebActivity"
+            android:name="com.sumian.sd.buz.doctor.activity.DoctorServiceWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".h5.SimpleWebActivity"
+            android:name="com.sumian.sd.common.h5.SimpleWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- online report -->
         <activity
-            android:name=".onlinereport.OnlineReportListActivity"
+            android:name=".buz.onlinereport.OnlineReportListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".onlinereport.OnlineReportDetailActivity"
+            android:name=".buz.onlinereport.OnlineReportDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- notification -->
         <activity
-            android:name=".notification.NotificationListActivity"
+            android:name="com.sumian.sd.buz.notification.NotificationListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- sleep record -->
         <activity
-            android:name=".diary.sleeprecord.FillSleepRecordActivity"
+            android:name="com.sumian.sd.buz.diary.sleeprecord.FillSleepRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.advisory.activity.AdvisoryListActivity"
+            android:name="com.sumian.sd.buz.advisory.activity.AdvisoryListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.advisory.activity.AdvisoryDetailActivity"
+            android:name="com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- scale -->
         <activity
-            android:name=".scale.ScaleListActivity"
+            android:name="com.sumian.sd.buz.scale.ScaleListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".scale.ScaleDetailActivity"
+            android:name="com.sumian.sd.buz.scale.ScaleDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.advisory.activity.PublishAdvisoryRecordActivity"
+            android:name="com.sumian.sd.buz.advisory.activity.PublishAdvisoryRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".notification.RefundActivity"
+            android:name="com.sumian.sd.buz.notification.RefundActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".h5.SleepFileWebActivity"
+            android:name="com.sumian.sd.common.h5.SleepFileWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".setting.version.VersionActivity"
+            android:name="com.sumian.sd.buz.setting.version.VersionActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.cbti.activity.CBTICoursePlayActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTICoursePlayActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/PlayActivityTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.cbti.activity.CBTIWeekCoursePartActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTIWeekCoursePartActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".account.userProfile.MyTargetAndInformationActivity"
+            android:name="com.sumian.sd.buz.account.userProfile.MyTargetAndInformationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".homepage.SleepPrescriptionActivity"
+            android:name="com.sumian.sd.buz.homepage.SleepPrescriptionActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.cbti.activity.CBTIExerciseWebActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTIExerciseWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.upgrade.activity.DeviceVersionUpgradeActivity"
+            android:name="com.sumian.sd.buz.upgrade.activity.DeviceVersionUpgradeActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name="com.sumian.hw.upgrade.activity.DeviceVersionNoticeActivity"
+            android:name="com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -341,11 +341,11 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <service
-            android:name="com.sumian.hw.upgrade.service.DfuService"
+            android:name="com.sumian.sd.buz.upgrade.service.DfuService"
             tools:ignore="ExportedService" />
 
         <activity
-            android:name="com.sumian.hw.qrcode.activity.QrCodeActivity"
+            android:name=".buz.qrcode.activity.QrCodeActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -357,205 +357,205 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
-            android:name=".account.login.LoginActivity"
+            android:name="com.sumian.sd.buz.account.login.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
-            android:name=".account.login.ValidatePhoneNumberActivity"
+            android:name="com.sumian.sd.buz.account.login.ValidatePhoneNumberActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".h5.HwSimpleWebActivity"
+            android:name="com.sumian.sd.common.h5.HwSimpleWebActivity"
             android:theme="@style/BaseAppTheme" />
         <activity
-            android:name=".service.tel.activity.TelBookingPublishActivity"
+            android:name="com.sumian.sd.buz.tel.activity.TelBookingPublishActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".service.tel.activity.TelBookingDetailActivity"
+            android:name="com.sumian.sd.buz.tel.activity.TelBookingDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.tel.activity.TelBookingListActivity"
+            android:name="com.sumian.sd.buz.tel.activity.TelBookingListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".setting.remind.RemindSettingActivity" />
+        <activity android:name="com.sumian.sd.buz.setting.remind.RemindSettingActivity" />
         <activity
-            android:name=".setting.remind.SleepDiaryRemindSettingActivity"
+            android:name="com.sumian.sd.buz.setting.remind.SleepDiaryRemindSettingActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".account.login.NewUserGuideActivity"
+            android:name="com.sumian.sd.buz.account.login.NewUserGuideActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
-            android:name=".homepage.RelaxationActivity"
+            android:name="com.sumian.sd.buz.homepage.RelaxationActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
 
         <service
-            android:name=".device.pattern.SyncPatternService"
+            android:name="com.sumian.sd.buz.device.pattern.SyncPatternService"
             android:exported="false" />
 
         <activity
-            android:name=".service.diary.DiaryEvaluationListActivity"
+            android:name="com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".service.diary.DiaryEvaluationDetailActivity"
+            android:name="com.sumian.sd.buz.diaryevaluation.DiaryEvaluationDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".diary.monitorrecord.WeeklyReportActivity"
+            android:name="com.sumian.sd.buz.diary.monitorrecord.WeeklyReportActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".device.scan.ScanDeviceActivity"
+            android:name="com.sumian.sd.buz.device.scan.ScanDeviceActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".device.DeviceManageActivity"
+            android:name="com.sumian.sd.buz.device.DeviceManageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".account.login.SettingPasswordActivity"
+            android:name="com.sumian.sd.buz.account.login.SettingPasswordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".service.coupon.activity.CouponCenterActivity"
+            android:name="com.sumian.sd.buz.coupon.activity.CouponCenterActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.cbti.activity.CBTIIntroductionActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.cbti.activity.CBTIEvaluationWebActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTIEvaluationWebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.cbti.activity.CBTIIntroduction2WebActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTIIntroduction2WebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".anxiousandfaith.AnxiousAndFaithActivity"
+            android:name="com.sumian.sd.buz.anxiousandfaith.AnxiousAndFaithActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".anxiousandfaith.AnxietyActivity"
+            android:name="com.sumian.sd.buz.anxiousandfaith.AnxietyActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".anxiousandfaith.FaithActivity"
+            android:name="com.sumian.sd.buz.anxiousandfaith.FaithActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".anxiousandfaith.AnxietyListActivity"
+            android:name="com.sumian.sd.buz.anxiousandfaith.AnxietyListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".anxiousandfaith.FaithListActivity"
+            android:name="com.sumian.sd.buz.anxiousandfaith.FaithListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".setting.FeedbackActivity"
+            android:name="com.sumian.sd.buz.setting.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".diary.sleeprecord.SleepRecordActivity"
+            android:name="com.sumian.sd.buz.diary.sleeprecord.SleepRecordActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".relaxation.RelaxationListActivity"
+            android:name="com.sumian.sd.buz.relaxation.RelaxationListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".relaxation.RelaxationDetailActivity"
+            android:name="com.sumian.sd.buz.relaxation.RelaxationDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
-            android:name=".service.cbti.activity.CBTIMessageBoardActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTIMessageBoardActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".service.cbti.activity.CBTIMessageBoardDetailActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CBTIMessageBoardDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".notification.SystemNotificationDetailActivity" />
+        <activity android:name="com.sumian.sd.buz.notification.SystemNotificationDetailActivity" />
         <activity
-            android:name=".diary.fillsleepdiary.FillSleepDiaryActivity"
+            android:name="com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".device.UpgradeFirmwareDialogActivity"
+            android:name="com.sumian.sd.buz.device.UpgradeFirmwareDialogActivity"
             android:launchMode="singleTop"
             android:theme="@style/DialogActivity" />
         <activity
-            android:name=".service.cbti.activity.CbtiFinalReportDialogActivity"
+            android:name="com.sumian.sd.buz.cbti.activity.CbtiFinalReportDialogActivity"
             android:launchMode="singleTop"
             android:theme="@style/DialogActivity" />
         <activity
-            android:name=".account.achievement.MyAchievementActivity"
+            android:name="com.sumian.sd.buz.account.achievement.MyAchievementActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".account.achievement.MyAchievementShareActivity"
+            android:name="com.sumian.sd.buz.account.achievement.MyAchievementShareActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
         <service
-            android:name=".service.cbti.job.CBTICourseWatchLogJobService"
+            android:name="com.sumian.sd.buz.cbti.job.CBTICourseWatchLogJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".notification.MarkNotificationAsReadService" />
+        <service android:name="com.sumian.sd.buz.notification.MarkNotificationAsReadService" />
 
         <provider
             android:name="com.tencent.mid.api.MidProvider"
@@ -565,20 +565,20 @@
             tools:replace="android:authorities" />
 
         <activity
-            android:name=".sleepguide.SleepGuideActivity"
+            android:name="com.sumian.sd.buz.sleepguide.SleepGuideActivity"
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
         <activity
-            android:name=".sleepguide.SleepGuideResultActivity"
+            android:name="com.sumian.sd.buz.sleepguide.SleepGuideResultActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".homepage.SleepGuideDialogActivity"
+            android:name="com.sumian.sd.buz.homepage.SleepGuideDialogActivity"
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg" />
         <activity
-            android:name=".diary.sleeprecord.ShareSleepDiaryDialogActivity"
+            android:name="com.sumian.sd.buz.diary.sleeprecord.ShareSleepDiaryDialogActivity"
             android:theme="@style/BaseAppTheme.TranslucentStatus.TranslucentBg" />
-        <activity android:name=".diary.fillsleepdiary.SleepDiaryActivity" />
+        <activity android:name="com.sumian.sd.buz.diary.fillsleepdiary.SleepDiaryActivity" />
 
     </application>
 

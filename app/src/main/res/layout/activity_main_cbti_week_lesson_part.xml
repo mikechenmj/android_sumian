@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/trans">
 
-                <com.sumian.sd.service.cbti.widget.CBTIWeekCourseBannerView
+                <com.sumian.sd.buz.cbti.widget.CBTIWeekCourseBannerView
                     android:id="@+id/cbti_week_lesson_banner_view"
                     android:layout_width="match_parent"
                     android:layout_height="210dp"
@@ -137,7 +137,7 @@
 
     </LinearLayout>
 
-    <com.sumian.sd.service.cbti.widget.keyboard.MsgBoardKeyBoard
+    <com.sumian.sd.buz.cbti.widget.keyboard.MsgBoardKeyBoard
         android:id="@+id/keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

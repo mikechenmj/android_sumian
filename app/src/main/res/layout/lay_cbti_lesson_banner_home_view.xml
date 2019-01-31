@@ -39,7 +39,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <com.sumian.sd.service.cbti.widget.CBTICoursePlanHomeView
+    <com.sumian.sd.buz.cbti.widget.CBTICoursePlanHomeView
         android:id="@+id/cbti_lesson_plan_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

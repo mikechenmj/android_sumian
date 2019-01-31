@@ -20,7 +20,7 @@
         skin:enable="true"
         tools:ignore="MissingPrefix" />
 
-    <com.sumian.hw.report.widget.text.CountSleepDurationTextView
+    <com.sumian.sd.buz.report.widget.text.CountSleepDurationTextView
         android:id="@+id/tv_duration"
         style="@style/text_b3_14"
         android:layout_width="wrap_content"

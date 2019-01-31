@@ -33,7 +33,7 @@
             tools:visibility="visible" />
     </FrameLayout>
 
-    <com.sumian.sd.doctor.doctor.DoctorDetailLayout
+    <com.sumian.sd.buz.doctor.doctor.DoctorDetailLayout
         android:id="@+id/doctor_detail_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

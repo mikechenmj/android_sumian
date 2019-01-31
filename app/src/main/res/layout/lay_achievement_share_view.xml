@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/ic_cbti_share_bg"
     android:orientation="vertical"
-    tools:context=".account.achievement.MyAchievementActivity">
+    tools:context=".buz.account.achievement.MyAchievementActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/space_210"

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         tools:text="1-1 睡眠的奥秘" />
 
-    <com.sumian.sd.service.cbti.video.NiceVideoView
+    <com.sumian.sd.buz.cbti.video.NiceVideoView
         android:id="@+id/aliyun_player"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_212" />

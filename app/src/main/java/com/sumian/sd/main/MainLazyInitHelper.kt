@@ -7,8 +7,8 @@ import com.sumian.common.notification.AppNotificationManager
 import com.sumian.sd.app.AppManager.getSleepDataUploadManager
 import com.sumian.sd.app.AppManager.sendHeartbeat
 import com.sumian.sd.app.AppManager.syncUserInfo
-import com.sumian.sd.device.DeviceManager
-import com.sumian.sd.kefu.KefuManager
+import com.sumian.sd.buz.device.DeviceManager
+import com.sumian.sd.buz.kefu.KefuManager
 
 /**
  * Created by sm

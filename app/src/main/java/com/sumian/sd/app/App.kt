@@ -2,7 +2,7 @@ package com.sumian.sd.app
 
 import android.app.Application
 import com.sumian.common.social.analytics.ActivityLifecycleCallbackForUserAnalysis
-import com.sumian.sd.log.SdLogManager
+import com.sumian.sd.common.log.SdLogManager
 
 /**
  * Created by jzz

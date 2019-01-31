@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".service.tel.activity.TelBookingPublishActivity">
+    tools:context=".buz.tel.activity.TelBookingPublishActivity">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -190,7 +190,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.sumian.sd.service.widget.ServiceSuccessStateView
+    <com.sumian.sd.buz.tel.widget.ServiceSuccessStateView
         android:id="@+id/service_state_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -12,7 +12,7 @@
         android:layout_marginStart="@dimen/space_3"
         android:layout_weight="1" />
 
-    <com.sumian.sd.homepage.widget.ProgressViewPlus
+    <com.sumian.sd.buz.homepage.widget.ProgressViewPlus
         android:id="@+id/progress_view_plus"
         android:layout_width="@dimen/space_16"
         android:layout_height="@dimen/space_16" />

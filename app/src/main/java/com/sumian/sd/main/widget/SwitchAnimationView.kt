@@ -15,7 +15,7 @@ import android.view.ViewAnimationUtils
 import android.widget.FrameLayout
 import com.blankj.utilcode.util.ScreenUtils
 import com.sumian.sd.R
-import com.sumian.sd.utils.StatusBarUtil
+import com.sumian.sd.common.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.view_switch_animation.view.*
 
 /**

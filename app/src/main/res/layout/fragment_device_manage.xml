@@ -104,7 +104,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <com.sumian.sd.device.widget.BatteryView
+            <com.sumian.sd.buz.device.widget.BatteryView
                 android:id="@+id/monitor_battery_view"
                 android:layout_width="52dp"
                 android:layout_height="31dp" />
@@ -140,7 +140,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <com.sumian.sd.device.widget.BatteryView
+            <com.sumian.sd.buz.device.widget.BatteryView
                 android:id="@+id/sleeper_battery_view"
                 android:layout_width="52dp"
                 android:layout_height="31dp" />
@@ -173,7 +173,7 @@
                     android:contentDescription="@null"
                     android:src="@drawable/ic_equip_bg" />
 
-                <com.sumian.hw.widget.ripple.RippleScanningView
+                <com.sumian.sd.widget.ripple.RippleScanningView
                     android:id="@+id/ripple_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

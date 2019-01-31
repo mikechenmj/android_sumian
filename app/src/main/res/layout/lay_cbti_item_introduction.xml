@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="第1周 认识睡眠" />
 
-    <com.sumian.sd.service.cbti.widget.CBTIProgressView
+    <com.sumian.sd.buz.cbti.widget.CBTIProgressView
         android:id="@+id/cbti_progress_view"
         android:layout_width="@dimen/space_18"
         android:layout_height="@dimen/space_18"
