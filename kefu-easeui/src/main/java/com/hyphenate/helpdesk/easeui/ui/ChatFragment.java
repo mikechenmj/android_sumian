@@ -181,6 +181,20 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         ChatClient.getInstance().chatManager().addAgentInputListener(agentInputListener);
     }
 
+    private UIProvider.OnLoginCallback mOnLoginCallback = new UIProvider.OnLoginCallback() {
+        @Override
+        public void onLoginSuccess() {
+            getActivity().runOnUiThread(() -> setUpView());
+            Log.e(TAG, "onLoginSuccess: -----kefu im------>");
+        }
+
+        @Override
+        public void onLoginFailed() {
+            getActivity().runOnUiThread(() -> mTvNetWorkError.setVisibility(UIProvider.getInstance().isLogin() ? View.GONE : View.VISIBLE));
+            Log.e(TAG, "onLoginFailed: ------kefu im----->");
+        }
+    };
+
     /**
      * init view
      */
@@ -239,19 +253,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        UIProvider.getInstance().setOnLoginCallback(new UIProvider.OnLoginCallback() {
-            @Override
-            public void onLoginSuccess() {
-                getActivity().runOnUiThread(() -> setUpView());
-                Log.e(TAG, "onLoginSuccess: -----kefu im------>");
-            }
-
-            @Override
-            public void onLoginFailed() {
-                getActivity().runOnUiThread(() -> mTvNetWorkError.setVisibility(UIProvider.getInstance().isLogin() ? View.GONE : View.VISIBLE));
-                Log.e(TAG, "onLoginFailed: ------kefu im----->");
-            }
-        });
+        UIProvider.getInstance().setOnLoginCallback(mOnLoginCallback);
         UIProvider.getInstance().getAccountPrivoder().tryLoginAccount(mTvNetWorkError, mEaseTitleBar, messageList);
     }
 
@@ -326,10 +328,11 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         ChatClient.getInstance().chatManager().unbindChat();
         ChatClient.getInstance().chatManager().removeAgentInputListener(agentInputListener);
         ChatClient.getInstance().chatManager().removeVisitorWaitListener(visitorWaitListener);
+        UIProvider.getInstance().setOnLoginCallback(null);
+        super.onDestroyView();
     }
 
     /**
