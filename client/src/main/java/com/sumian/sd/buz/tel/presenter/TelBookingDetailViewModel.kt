@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.tel.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.tel.bean.TelBooking
@@ -14,7 +15,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  * desc:
  *
  */
-class TelBookingDetailPresenter private constructor(view: TelBookingDetailContract.View) : TelBookingDetailContract.Presenter {
+class TelBookingDetailViewModel private constructor(view: TelBookingDetailContract.View) : BaseViewModel() {
 
     private var mView: TelBookingDetailContract.View? = null
 
@@ -24,13 +25,13 @@ class TelBookingDetailPresenter private constructor(view: TelBookingDetailContra
 
     companion object {
 
-        fun init(view: TelBookingDetailContract.View): TelBookingDetailContract.Presenter {
-            return TelBookingDetailPresenter(view)
+        fun init(view: TelBookingDetailContract.View): TelBookingDetailViewModel {
+            return TelBookingDetailViewModel(view)
         }
 
     }
 
-    override fun getTelBookingDetail(telBookingId: Int) {
+    fun getTelBookingDetail(telBookingId: Int) {
 
         mView?.showLoading()
 

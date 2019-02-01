@@ -6,7 +6,8 @@ import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.BridgeHandler
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.R
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.h5.bean.H5ShowToastData
 import com.sumian.common.h5.bean.ShareData
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.common_activity_base_webview.*
  * </pre>
  */
 @Suppress("MemberVisibilityCanBePrivate", "UNUSED_ANONYMOUS_PARAMETER")
-abstract class BaseWebViewActivity : BasePresenterActivity<IPresenter>(), SWebView.OnWebViewListener {
+abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener {
 
     protected var mSoftKeyBoardListener: SoftKeyBoardListener? = null
     protected var mSumianImageTextDialog: SumianImageTextDialog? = null

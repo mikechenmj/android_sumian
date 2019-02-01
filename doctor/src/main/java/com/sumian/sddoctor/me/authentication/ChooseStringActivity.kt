@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import kotlinx.android.synthetic.main.activity_choose_string.*
 
 /**
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_choose_string.*
  * desc   :
  * version: 1.0
  */
-class ChooseStringActivity : SddBaseActivity<IPresenter>() {
+class ChooseStringActivity : SddBaseActivity() {
     private lateinit var mTitle: String
     private lateinit var mStringArr: Array<String>
     private var mCanAddMore: Boolean = false

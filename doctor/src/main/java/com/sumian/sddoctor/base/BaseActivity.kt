@@ -22,9 +22,9 @@ import java.util.*
  *     version: 1.0
  * </pre>
  *
- * @see SddBaseActivity
+ * @see SddBaseViewModelActivity
  */
-@Deprecated("see #SddBaseActivity")
+@Deprecated("see #SddBaseViewModelActivity")
 @Suppress("MemberVisibilityCanBePrivate")
 abstract class BaseActivity : AppCompatActivity(), BaseView {
     protected var mCalls: MutableSet<Call<*>> = HashSet()

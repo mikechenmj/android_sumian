@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.cbti.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
@@ -18,13 +19,13 @@ import com.sumian.sddoctor.service.cbti.contract.CBTISelfMessageBoardContract
  * desc:管理自己的留言  留言，删除，获取留言
  *
  */
-class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoardContract.View) : CBTISelfMessageBoardContract.Presenter {
+class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoardContract.View) : BaseViewModel() {
 
     companion object {
         private const val DEFAULT_PAGES: Int = 15
 
         @JvmStatic
-        fun init(view: CBTISelfMessageBoardContract.View): CBTISelfMessageBoardContract.Presenter = CBTISelfMessageBoardPresenter(view)
+        fun init(view: CBTISelfMessageBoardContract.View): CBTISelfMessageBoardPresenter = CBTISelfMessageBoardPresenter(view)
     }
 
     private var mView: CBTISelfMessageBoardContract.View? = null
@@ -39,14 +40,14 @@ class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoa
     private var mIsRefresh: Boolean = false
     private var mIsGetNext = false
 
-    override fun publishMessage(message: String, type: Int, isAnonymous: Int) {
+     fun publishMessage(message: String, type: Int, isAnonymous: Int) {
         mView?.showLoading()
         val map = mutableMapOf<String, Any>()
         map["type"] = type
         map["message"] = message
         map["anonymous"] = isAnonymous
         val call = AppManager.getHttpService().writeCBTIMessageBoard(map = map)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onSuccess(response: Any?) {
                 mView?.onPublishMessageBoardSuccess(App.getAppContext().getString(R.string.msg_board_send_success))
@@ -63,10 +64,10 @@ class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoa
         })
     }
 
-    override fun delSelfMsg(msgId: Int, position: Int) {
+     fun delSelfMsg(msgId: Int, position: Int) {
         mView?.showLoading()
         val call = AppManager.getHttpService().delSelfMessageKeyboard(msgId)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onSuccess(response: Any?) {
                 mView?.onDelSuccess(App.getAppContext().getString(R.string.msg_board_del_success), position)
@@ -83,14 +84,14 @@ class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoa
         })
     }
 
-    override fun refreshSelfMsgListMsg() {
+     fun refreshSelfMsgListMsg() {
         this.mPageNumber = 1
         this.mIsRefresh = true
         this.mIsGetNext = false
         getSelfMsgListMsg(mType)
     }
 
-    override fun getSelfMsgListMsg(type: Int) {
+     fun getSelfMsgListMsg(type: Int) {
         this.mType = type
         mView?.showLoading()
         val map = mutableMapOf<String, Any>()
@@ -101,7 +102,7 @@ class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoa
         map["commented_by"] = "me"
 
         val call = AppManager.getHttpService().getCBTIMessageBoardList(map)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<MessageBoard>>() {
             override fun onSuccess(response: PaginationResponseV2<MessageBoard>?) {
                 val data = response?.data
@@ -134,7 +135,7 @@ class CBTISelfMessageBoardPresenter private constructor(view: CBTISelfMessageBoa
         })
     }
 
-    override fun getNextSelfMsgListMsg() {
+     fun getNextSelfMsgListMsg() {
         mIsGetNext = true
         getSelfMsgListMsg(mType)
     }

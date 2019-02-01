@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSONArray
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.JsonObject
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
@@ -24,7 +24,7 @@ import com.sumian.sd.buz.report.weeklyreport.WeeklyReportFragmentV2
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_weekly_report.*
 import java.util.*
-
+import com.sumian.common.base.BaseActivity
 /**
  * @author : Zhan Xuzhao
  * e-mail : xuzhao.z@sumian.com
@@ -32,7 +32,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class WeeklyReportActivity : BasePresenterActivity<IPresenter>() {
+class WeeklyReportActivity : BaseActivity() {
     private val mAdapter by lazy { InnerPagerAdapter(supportFragmentManager!!) }
 
     companion object {

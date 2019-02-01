@@ -5,8 +5,9 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 
-class PatientSleepDiaryDetailActivity : SddBaseActivity<IPresenter>() {
+class PatientSleepDiaryDetailActivity : SddBaseActivity() {
     override fun showBackNav(): Boolean {
         return true
     }

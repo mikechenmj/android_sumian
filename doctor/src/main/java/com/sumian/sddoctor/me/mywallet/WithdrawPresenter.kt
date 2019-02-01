@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.me.mywallet
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRecord
@@ -12,7 +13,7 @@ import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
  * desc   :
  * version: 1.0
  */
-class WithdrawPresenter(view: WithdrawContract.View) : WithdrawContract.Presenter {
+class WithdrawPresenter(view: WithdrawContract.View) : BaseViewModel() {
     private val mView = view
 
     companion object {
@@ -20,7 +21,7 @@ class WithdrawPresenter(view: WithdrawContract.View) : WithdrawContract.Presente
         private const val SP_FILE_NAME_WITHDRAW_RULES = "withdraw_rules"
     }
 
-    override fun withdraw(amount: Long) {
+    fun withdraw(amount: Long) {
         val call = AppManager.getHttpService().withdraw(amount)
         mView.addCalls(call)
         call.enqueue(object : BaseSdResponseCallback<WithdrawRecord>() {

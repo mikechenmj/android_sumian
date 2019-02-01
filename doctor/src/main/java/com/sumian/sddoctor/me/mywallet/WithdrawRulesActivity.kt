@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRule
 import kotlinx.android.synthetic.main.activity_withdraw_rules.*
 
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_withdraw_rules.*
  * desc   :
  * version: 1.0
  */
-class WithdrawRulesActivity : SddBaseActivity<IPresenter>() {
+class WithdrawRulesActivity : SddBaseActivity() {
     override fun showBackNav(): Boolean {
         return true
     }

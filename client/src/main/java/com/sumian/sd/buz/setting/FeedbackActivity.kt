@@ -7,7 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.common.widget.adapter.EmptyTextWatcher
@@ -23,7 +23,7 @@ import java.util.*
  * desc:
  */
 
-class FeedbackActivity : BasePresenterActivity<FeedbackContract.Presenter>(), FeedbackContract.View {
+class FeedbackActivity : BaseViewModelActivity<FeedbackPresenter>(), FeedbackContract.View {
 
     companion object {
         private const val MAX_LENGTH = 500

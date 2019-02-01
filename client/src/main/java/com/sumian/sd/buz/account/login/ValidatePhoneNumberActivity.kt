@@ -2,12 +2,12 @@ package com.sumian.sd.buz.account.login
 
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.activity_validate_phone_number.*
 
-class ValidatePhoneNumberActivity : BasePresenterActivity<ValidatePhoneNumberContract.Presenter>(), ValidatePhoneNumberContract.View {
+class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPresenter>(), ValidatePhoneNumberContract.View {
     private var mLaunchType = LAUNCH_TYPE_BIND_SOCIAL
     private var mSocialInfo: String? = null
 

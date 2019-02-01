@@ -8,6 +8,7 @@ import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.login.register.AuthenticateViewModel
 import kotlinx.android.synthetic.main.activity_authentication_activity.*
 
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_authentication_activity.*
  * desc   :
  * version: 1.0
  */
-class AuthenticationActivity : SddBaseActivity<IPresenter>() {
+class AuthenticationActivity : SddBaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_authentication_activity
     }

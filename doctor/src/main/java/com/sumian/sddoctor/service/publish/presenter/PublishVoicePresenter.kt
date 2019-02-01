@@ -13,6 +13,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.alibaba.sdk.android.oss.model.ObjectMetadata
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.error.ErrorInfo499
 import com.sumian.common.network.response.ErrorResponse
@@ -35,13 +36,13 @@ import java.util.*
  * desc:医生图文咨询/周日记评估  语音回复
  *
  **/
-class PublishVoicePresenter private constructor(view: PublishVoiceContact.View) : PublishVoiceContact.Presenter {
+class PublishVoicePresenter private constructor(view: PublishVoiceContact.View) : BaseViewModel() {
 
     companion object {
 
         private val TAG = PublishVoicePresenter::class.java.simpleName
 
-        fun init(view: PublishVoiceContact.View): PublishVoiceContact.Presenter {
+        fun init(view: PublishVoiceContact.View): PublishVoicePresenter {
             return PublishVoicePresenter(view)
         }
     }
@@ -53,7 +54,7 @@ class PublishVoicePresenter private constructor(view: PublishVoiceContact.View) 
     }
 
 
-    override fun getPublishVoiceSts(publishType: Int, publishId: Int, voiceFilePath: String, duration: Int) {
+     fun getPublishVoiceSts(publishType: Int, publishId: Int, voiceFilePath: String, duration: Int) {
 
         mView?.showLoading()
 
@@ -63,7 +64,7 @@ class PublishVoicePresenter private constructor(view: PublishVoiceContact.View) 
             AppManager.getHttpService().getDiaryEvaluationVoiceSts(publishId, duration)
         }
 
-        mCalls.add(call)
+         addCall(call)
 
         call.enqueue(object : BaseSdResponseCallback<OssResponse>() {
             override fun onFailure(errorResponse: ErrorResponse) {

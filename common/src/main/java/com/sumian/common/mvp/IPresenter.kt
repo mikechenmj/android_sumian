@@ -18,10 +18,9 @@ interface IPresenter {
         val mCalls: MutableList<Call<*>> by lazy {
             mutableListOf<Call<*>>()
         }
-
     }
 
-    fun onRelease() {
+    fun onCleared() {
         mCalls.forEach {
             if (it.isExecuted && !it.isCanceled) {
                 it.cancel()

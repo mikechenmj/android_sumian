@@ -9,7 +9,8 @@ import androidx.core.view.drawToBitmap
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BaseDialogPresenterActivity
+import com.sumian.common.base.BaseDialogViewModelActivity
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.statistic.StatUtil
@@ -22,7 +23,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_share_sleep_diary_dialog_content_1.*
 import kotlinx.android.synthetic.main.activity_share_sleep_diary_dialog_content_2.*
 
-class ShareSleepDiaryDialogActivity : BaseDialogPresenterActivity<IPresenter>() {
+class ShareSleepDiaryDialogActivity : BaseDialogViewModelActivity<BaseViewModel>() {
     companion object {
         private const val KEY_SHARE_INFO = "KEY_SHARE_INFO"
         fun start(shareInfo: ShareInfo) {

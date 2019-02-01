@@ -3,12 +3,13 @@ package com.sumian.sd.buz.diaryevaluation
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.activity_main_tel_booking.*
 
-class DiaryEvaluationListActivity : BasePresenterActivity<IPresenter>() {
+class DiaryEvaluationListActivity : BaseActivity() {
     private var mType = DiaryEvaluationListFragment.TYPE_UNFINISHED
 
     companion object {

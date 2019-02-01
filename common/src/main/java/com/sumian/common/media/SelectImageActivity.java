@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.sumian.common.R;
-import com.sumian.common.base.BasePresenterActivity;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.media.config.SelectOptions;
 import com.sumian.common.media.contract.SelectImageContract;
 import com.sumian.common.utils.DialogHelper;
@@ -27,7 +27,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * on 2016/09/01
  */
 @SuppressWarnings("All")
-public class SelectImageActivity extends BasePresenterActivity implements EasyPermissions.PermissionCallbacks, SelectImageContract.Operator {
+public class SelectImageActivity extends BaseViewModelActivity implements EasyPermissions.PermissionCallbacks, SelectImageContract.Operator {
     private static final int RC_CAMERA_PERM = 0x03;
     private static final int RC_EXTERNAL_STORAGE = 0x04;
     public static final String KEY_CONFIG = "config";

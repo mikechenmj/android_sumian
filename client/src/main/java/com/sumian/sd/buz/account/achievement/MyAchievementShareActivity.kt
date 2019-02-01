@@ -8,7 +8,7 @@ import android.media.MediaScannerConnection
 import android.os.Bundle
 import android.view.Gravity
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
@@ -35,7 +35,7 @@ import java.io.File
  *
  * desc: 我的勋章成就分享
  */
-class MyAchievementShareActivity : BasePresenterActivity<MyAchievementShareContract.Presenter>(), UMShareListener, ViewToImageFileListener, EasyPermissions.PermissionCallbacks {
+class MyAchievementShareActivity : BaseViewModelActivity<MyAchievementSharePresenter>(), UMShareListener, ViewToImageFileListener, EasyPermissions.PermissionCallbacks {
 
     private var shareAchievement: ShareAchievement? = null
 

@@ -6,7 +6,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.KeyboardUtils
-import com.sumian.common.base.BasePresenterFragment
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_tab_coupon_input.*
 /**
  * 兑换码 兑换
  */
-class CouponActionFragment : BasePresenterFragment<CouponActionContract.Presenter>(), View.OnClickListener, CouponActionContract.View, CouponCenterActivity.OnKeyBoardCallback {
+class CouponActionFragment : BaseViewModelFragment<CouponActionPresenter>(), View.OnClickListener, CouponActionContract.View, CouponCenterActivity.OnKeyBoardCallback {
 
     companion object {
         @JvmStatic

@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.evaluation.bean.WeekEvaluation
 import com.sumian.sddoctor.service.evaluation.fragment.WeekEvaluationListFragment
 import kotlinx.android.synthetic.main.activity_main_evaluation.*
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main_evaluation.*
  * on 2018/6/4 14:20
  * desc: 睡眠日记周评估列表
  */
-class WeekEvaluationListActivity : SddBaseActivity<IPresenter>() {
+class WeekEvaluationListActivity : SddBaseActivity() {
 
     companion object {
 

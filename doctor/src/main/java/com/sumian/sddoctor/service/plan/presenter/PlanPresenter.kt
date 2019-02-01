@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.plan.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -13,11 +14,11 @@ import com.sumian.sddoctor.service.plan.contract.PlanContract
  *
  * desc:
  */
-class PlanPresenter private constructor(view: PlanContract.View) : PlanContract.Presenter {
+class PlanPresenter private constructor(view: PlanContract.View) : BaseViewModel(){
 
     companion object {
 
-        fun init(view: PlanContract.View): PlanContract.Presenter {
+        fun init(view: PlanContract.View): PlanPresenter {
             return PlanPresenter(view)
         }
 
@@ -29,7 +30,7 @@ class PlanPresenter private constructor(view: PlanContract.View) : PlanContract.
         this.mView = view
     }
 
-    override fun getFollowPlans() {
+     fun getFollowPlans() {
 
         mView?.showLoading()
 
@@ -56,7 +57,7 @@ class PlanPresenter private constructor(view: PlanContract.View) : PlanContract.
 
     }
 
-    override fun sendFollowPlans(patientId: Int, followPlanId: Int) {
+     fun sendFollowPlans(patientId: Int, followPlanId: Int) {
 
         if (followPlanId == -1) {
             mView?.onSendFollowPlansFailed("未选择任何随访计划")

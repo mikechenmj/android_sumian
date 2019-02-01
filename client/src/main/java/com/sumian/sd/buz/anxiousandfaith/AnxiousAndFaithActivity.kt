@@ -5,7 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_anxious_and_faith.*
  * desc   :
  * version: 1.0
  */
-class AnxiousAndFaithActivity : BasePresenterActivity<IPresenter>() {
+class AnxiousAndFaithActivity : BaseActivity() {
     private var mHasAnxiety = false
     private var mHasBelief = false
 

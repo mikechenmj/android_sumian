@@ -2,6 +2,7 @@
 
 package com.sumian.sd.buz.setting.version.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.VersionUtil
 import com.sumian.sd.app.App

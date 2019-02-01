@@ -1,13 +1,13 @@
 package com.sumian.sd.buz.device
 
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.bean.BlueDevice
 import com.sumian.sd.buz.device.scan.ScanDeviceFragment
 import com.sumian.sd.common.utils.FragmentUtil
 import com.sumian.sd.common.utils.FragmentUtil.Companion.switchFragment
-
+import com.sumian.common.base.BaseActivity
 /**
  * @author : Zhan Xuzhao
  * e-mail : xuzhao.z@sumian.com
@@ -15,7 +15,7 @@ import com.sumian.sd.common.utils.FragmentUtil.Companion.switchFragment
  * desc   :
  * version: 1.0
  */
-class DeviceManageActivity : BasePresenterActivity<IPresenter>() {
+class DeviceManageActivity : BaseActivity() {
 
     companion object {
         private val FRAGMENT_TAGS = arrayOf(DeviceManageFragment::class.java.simpleName, ScanDeviceFragment::class.java.simpleName)

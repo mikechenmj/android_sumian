@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.tel.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
@@ -14,7 +15,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  * on 2018/6/4 16:01
  * desc:
  **/
-class TelBookingListPresenter private constructor(view: TelBookingListContract.View) : TelBookingListContract.Presenter {
+class TelBookingListPresenter private constructor(view: TelBookingListContract.View) : BaseViewModel(){
 
     private var mView: TelBookingListContract.View? = null
 
@@ -31,19 +32,19 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
 
         const val DEFAULT_PAGES: Int = 15
 
-        fun init(view: TelBookingListContract.View): TelBookingListContract.Presenter {
+        fun init(view: TelBookingListContract.View): TelBookingListPresenter {
             return TelBookingListPresenter(view)
         }
     }
 
-    override fun refreshTelBookingList() {
+     fun refreshTelBookingList() {
         this.mPageNumber = 1
         this.mIsRefresh = true
         this.mIsGetNext = false
         getTelBookingList(mTelBookingType)
     }
 
-    override fun getTelBookingList(telBookingListType: Int) {
+     fun getTelBookingList(telBookingListType: Int) {
         this.mTelBookingType = telBookingListType
 
         mView?.showLoading()
@@ -56,7 +57,7 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
         map["include"] = "package.servicePackage.service"
 
         val call = AppManager.getSdHttpService().getTelBookingList(map)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<TelBooking>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
@@ -90,7 +91,7 @@ class TelBookingListPresenter private constructor(view: TelBookingListContract.V
         })
     }
 
-    override fun getNextTelBookingList() {
+     fun getNextTelBookingList() {
         this.mIsGetNext = true
         getTelBookingList(mTelBookingType)
     }

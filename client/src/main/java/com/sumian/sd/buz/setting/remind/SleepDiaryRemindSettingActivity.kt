@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 import com.sumian.sd.common.utils.TimeUtil
@@ -13,7 +13,7 @@ import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
 import kotlinx.android.synthetic.main.activity_sleep_diary_remind_setting.*
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class SleepDiaryRemindSettingActivity : BasePresenterActivity<SleepDiaryReminderSettingContract.Presenter>(),
+class SleepDiaryRemindSettingActivity : BaseViewModelActivity<SleepDiaryReminderSettingPresenter>(),
         SleepDiaryReminderSettingContract.View {
 
     companion object {

@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.report.fragment.DailyReportFragment
 
 /**
@@ -16,7 +17,7 @@ import com.sumian.sddoctor.service.report.fragment.DailyReportFragment
  *
  * desc:睡眠数据监测报告
  */
-class ReportActivity : SddBaseActivity<IPresenter>() {
+class ReportActivity : SddBaseActivity() {
 
     companion object {
         @JvmStatic

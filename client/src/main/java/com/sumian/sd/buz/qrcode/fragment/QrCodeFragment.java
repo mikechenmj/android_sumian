@@ -5,10 +5,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.base.BaseFragment;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.base.HwBaseFragment;
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity;
 import com.sumian.sd.widget.RequestQrCodeView;
 
@@ -17,7 +18,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeFragment extends HwBaseFragment implements View.OnClickListener, RequestQrCodeView.OnShowQrCodeCallback {
+public class QrCodeFragment extends BaseFragment implements View.OnClickListener, RequestQrCodeView.OnShowQrCodeCallback {
 
     private static final String TAG = QrCodeFragment.class.getSimpleName();
 
@@ -29,21 +30,19 @@ public class QrCodeFragment extends HwBaseFragment implements View.OnClickListen
     private String mQrCode;
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.hw_fragment_mian_qr_code;
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        zxingView = getView().findViewById(R.id.request_qr_code_view);
+        mLayScanActionContainer = getView().findViewById(R.id.lay_scan_action_container);
+        btReScan = getView().findViewById(R.id.bt_re_scan);
+        btAction = getView().findViewById(R.id.bt_action);
 
-        zxingView = root.findViewById(R.id.request_qr_code_view);
-        mLayScanActionContainer = root.findViewById(R.id.lay_scan_action_container);
-        btReScan = root.findViewById(R.id.bt_re_scan);
-        btAction = root.findViewById(R.id.bt_action);
-
-        root.findViewById(R.id.bt_re_scan).setOnClickListener(this);
-        root.findViewById(R.id.bt_action).setOnClickListener(this);
+        getView().findViewById(R.id.bt_re_scan).setOnClickListener(this);
+        getView().findViewById(R.id.bt_action).setOnClickListener(this);
 
         zxingView.bindFragment(this);
         zxingView.setOnShowQrCodeCallback(this);
@@ -129,7 +128,7 @@ public class QrCodeFragment extends HwBaseFragment implements View.OnClickListen
         } else if (i == R.id.bt_action) {
             BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
             if (bluePeripheral == null || !bluePeripheral.isConnected()) {
-                showToast("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
+                ToastUtils.showShort("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
                 return;
             }
 

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.sumian.common.base.BasePresenterFragment
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.service.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sddoctor.service.advisory.adapter.AdvisoryListAdapter
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:图文咨询列表
  **/
-class AdvisoryListFragment : BasePresenterFragment<AdvisoryListContract.Presenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener,
+class AdvisoryListFragment : BaseViewModelFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener,
         LoadMoreRecyclerView.OnLoadCallback, BaseRecyclerAdapter.OnItemClickListener {
 
     companion object {

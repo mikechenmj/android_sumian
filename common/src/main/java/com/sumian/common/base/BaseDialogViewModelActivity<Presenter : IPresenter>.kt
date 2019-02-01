@@ -13,7 +13,7 @@ import com.sumian.common.mvp.IPresenter
  * desc:
  *
  */
-open class BaseDialogPresenterActivity<Presenter : IPresenter> : BasePresenterActivity<Presenter>() {
+open class BaseDialogViewModelActivity<Presenter : BaseViewModel> : BaseViewModelActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

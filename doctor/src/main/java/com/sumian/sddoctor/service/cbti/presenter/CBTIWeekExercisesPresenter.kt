@@ -53,7 +53,7 @@ class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.Vie
             }
         })
 
-        mCalls.add(call)
+        addCall(call)
     }
 
 }

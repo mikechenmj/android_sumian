@@ -3,7 +3,8 @@ package com.sumian.sd.buz.device
 import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
@@ -16,7 +17,7 @@ import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
  * desc   :
  * version: 1.0
  */
-class UpgradeFirmwareDialogActivity : BasePresenterActivity<IPresenter>() {
+class UpgradeFirmwareDialogActivity : BaseActivity() {
 
     companion object {
         private const val KEY_TYPE = "KEY_TYPE"

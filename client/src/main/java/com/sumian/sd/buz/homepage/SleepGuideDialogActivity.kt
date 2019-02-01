@@ -4,13 +4,14 @@ import android.content.Intent
 import android.view.ViewGroup
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
-import com.sumian.common.base.BaseDialogPresenterActivity
+import com.sumian.common.base.BaseDialogViewModelActivity
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity
 import kotlinx.android.synthetic.main.activity_sleep_guide_dialog.*
 
-class SleepGuideDialogActivity : BaseDialogPresenterActivity<IPresenter>() {
+class SleepGuideDialogActivity : BaseDialogViewModelActivity<BaseViewModel>() {
 
     companion object {
         private const val KEY_BUTTON_Y_POSITION = "KEY_BUTTON_Y_POSITION"

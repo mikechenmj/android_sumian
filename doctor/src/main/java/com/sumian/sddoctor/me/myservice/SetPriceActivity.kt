@@ -11,6 +11,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.myservice.bean.Packages
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.BooleanUtil
@@ -25,7 +26,7 @@ import retrofit2.Call
  * desc   :
  * version: 1.0
  */
-class SetPriceActivity : SddBaseActivity<IPresenter>() {
+class SetPriceActivity : SddBaseActivity() {
     private var updateServicePackageCall: Call<Packages>? = null
 
     override fun showBackNav(): Boolean {

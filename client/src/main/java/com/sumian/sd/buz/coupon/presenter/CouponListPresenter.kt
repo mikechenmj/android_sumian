@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.coupon.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
@@ -8,7 +9,7 @@ import com.sumian.sd.buz.coupon.bean.Coupon
 import com.sumian.sd.buz.coupon.contract.CouponListContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
-class CouponListPresenter private constructor(view: CouponListContract.View) : CouponListContract.Presenter {
+class CouponListPresenter private constructor(view: CouponListContract.View) : BaseViewModel() {
 
     private var mView: CouponListContract.View? = null
 
@@ -25,12 +26,12 @@ class CouponListPresenter private constructor(view: CouponListContract.View) : C
         private const val DEFAULT_PAGES: Int = 15
 
         @JvmStatic
-        fun init(view: CouponListContract.View): CouponListContract.Presenter {
+        fun init(view: CouponListContract.View): CouponListPresenter {
             return CouponListPresenter(view)
         }
     }
 
-    override fun getCouponList() {
+     fun getCouponList() {
 
         mView?.showLoading()
 
@@ -40,7 +41,7 @@ class CouponListPresenter private constructor(view: CouponListContract.View) : C
         map["per_page"] = DEFAULT_PAGES
 
         val call = AppManager.getSdHttpService().getCouponList(map)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Coupon>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false
@@ -73,14 +74,14 @@ class CouponListPresenter private constructor(view: CouponListContract.View) : C
         })
     }
 
-    override fun refreshCouponList() {
+     fun refreshCouponList() {
         this.mPageNumber = 1
         this.mIsRefresh = true
         this.mIsGetNext = false
         getCouponList()
     }
 
-    override fun getNextCouponList() {
+     fun getNextCouponList() {
         this.mIsGetNext = true
         getCouponList()
     }

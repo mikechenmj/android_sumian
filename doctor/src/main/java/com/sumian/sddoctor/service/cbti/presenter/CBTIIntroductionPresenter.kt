@@ -1,6 +1,7 @@
 package com.sumian.sddoctor.service.cbti.presenter
 
 import com.google.gson.JsonObject
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
@@ -18,11 +19,11 @@ import org.json.JSONObject
  * desc:
  *
  */
-class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionContract.View? = null) : CBTIIntroductionContract.Presenter {
-    override fun getConfigs() {
+class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionContract.View? = null) : BaseViewModel() {
+     fun getConfigs() {
         view?.showLoading()
         val call = AppManager.getHttpService().getConfigs()
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<JsonObject>() {
             override fun onSuccess(response: JsonObject?) {
                 response?.let {
@@ -63,15 +64,15 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
     companion object {
 
         @JvmStatic
-        fun init(view: CBTIIntroductionContract.View): CBTIIntroductionContract.Presenter {
+        fun init(view: CBTIIntroductionContract.View): CBTIIntroductionPresenter {
             return CBTIIntroductionPresenter(view)
         }
     }
 
-    override fun getCBTIServiceDetail() {
+     fun getCBTIServiceDetail() {
         view?.showLoading()
         val call = AppManager.getHttpService().getServiceByType(DoctorService.SERVICE_TYPE_CBTI)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<DoctorService>() {
             override fun onSuccess(response: DoctorService?) {
                 response?.let {
@@ -90,10 +91,10 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
         })
     }
 
-    override fun getCBTIIntroductionList() {
+     fun getCBTIIntroductionList() {
         view?.showLoading()
         val call = AppManager.getHttpService().getCbtiChapters("courses")
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<GetCbtiChaptersResponse>() {
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
                 response?.let {

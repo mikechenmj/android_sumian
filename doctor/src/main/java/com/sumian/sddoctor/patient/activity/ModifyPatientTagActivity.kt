@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.widget.TitleBar
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.patient.bean.Patient
 import com.sumian.sddoctor.patient.contract.ModifyPatientTagContract
 import com.sumian.sddoctor.patient.presenter.ModifyPatientTagPresenter
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main_modify_patient_tag.*
  * desc:  修改患者 已面诊/未面诊状态标签
  *
  * */
-class ModifyPatientTagActivity : SddBaseActivity<ModifyPatientTagContract.Presenter>(), View.OnClickListener, ModifyPatientTagContract.View, TitleBar.OnMenuClickListener {
+class ModifyPatientTagActivity : SddBaseViewModelActivity<ModifyPatientTagPresenter>(), View.OnClickListener, ModifyPatientTagContract.View, TitleBar.OnMenuClickListener {
 
     companion object {
 

@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.account.login
 
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.app.AppManager
@@ -15,8 +16,8 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  *     version: 1.0
  * </pre>
  */
-class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) : ValidatePhoneNumberContract.Presenter {
-    override fun requestCaptcha(mobile: String) {
+class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) : BaseViewModel() {
+    fun requestCaptcha(mobile: String) {
         CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
             override fun onStart() {
                 view.showLoading()
@@ -32,7 +33,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
         })
     }
 
-    override fun validatePhoneNumberForResetPassword(mobile: String, captcha: String) {
+    fun validatePhoneNumberForResetPassword(mobile: String, captcha: String) {
         view.showLoading()
         val call = AppManager.getSdHttpService().validateCaptchaForResetPassword(mobile, captcha)
         call.enqueue(object : BaseSdResponseCallback<Token>() {
@@ -51,7 +52,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
         })
     }
 
-    override fun bindMobile(mobile: String, captcha: String, socialInfo: String) {
+    fun bindMobile(mobile: String, captcha: String, socialInfo: String) {
         view.showLoading()
         val map = mutableMapOf<String, Any>()
         map["mobile"] = mobile

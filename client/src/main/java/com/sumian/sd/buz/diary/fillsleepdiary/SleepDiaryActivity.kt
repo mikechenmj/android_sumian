@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.diary.fillsleepdiary
 
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 
@@ -11,7 +12,7 @@ import com.sumian.sd.R
  * desc   :
  * version: 1.0
  */
-class SleepDiaryActivity : BasePresenterActivity<IPresenter>() {
+class SleepDiaryActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_sleep_diary
     }

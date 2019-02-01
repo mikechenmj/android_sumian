@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.sumian.common.base.BasePresenterFragment
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.service.evaluation.activity.WeekEvaluationDetailWebActivity
 import com.sumian.sddoctor.service.evaluation.adapter.EvaluationListAdapter
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:睡眠日记周评估列表
  **/
-class WeekEvaluationListFragment : BasePresenterFragment<WeekEvaluationListContract.Presenter>(), WeekEvaluationListContract.View, SwipeRefreshLayout.OnRefreshListener,
+class WeekEvaluationListFragment : BaseViewModelFragment<WeekEvaluationListPresenter>(), WeekEvaluationListContract.View, SwipeRefreshLayout.OnRefreshListener,
         LoadMoreRecyclerView.OnLoadCallback, BaseRecyclerAdapter.OnItemClickListener {
 
     companion object {

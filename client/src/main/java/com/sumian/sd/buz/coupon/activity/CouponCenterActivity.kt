@@ -2,13 +2,13 @@ package com.sumian.sd.buz.coupon.activity
 
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import com.sumian.sd.buz.coupon.fragment.CouponActionFragment
 import com.sumian.sd.buz.coupon.fragment.CouponListFragment
 import kotlinx.android.synthetic.main.activity_main_coupon_center.*
-
+import com.sumian.common.base.BaseActivity
 
 /**
  *
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main_coupon_center.*
  * on 2018/6/4 18:28
  * desc:兑换中心,包含了兑换码兑换,兑换记录等
  **/
-class CouponCenterActivity : BasePresenterActivity<IPresenter>(), androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+class CouponCenterActivity : BaseActivity(), androidx.viewpager.widget.ViewPager.OnPageChangeListener {
 
     private var onKeyBoardCallback: OnKeyBoardCallback? = null
 

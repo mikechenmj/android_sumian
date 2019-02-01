@@ -10,6 +10,7 @@ import com.sumian.common.utils.InputCheckUtil
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import kotlinx.android.synthetic.main.layout_label_edittext.*
 
 /**
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.layout_label_edittext.*
  * desc   :
  * version: 1.0
  */
-class InputStringActivity : SddBaseActivity<IPresenter>() {
+class InputStringActivity : SddBaseActivity() {
     private lateinit var mTitle: String
     private lateinit var mMenu: String
     private lateinit var mLabel: String

@@ -8,7 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.booking.DoctorQrCodeActivity
 import com.sumian.sddoctor.patient.adapter.PatientAdapter
 import com.sumian.sddoctor.patient.bean.Patient
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_main_patient_list.*
  * desc:获取绑定的患者列表   默认是按绑定的时间排序
  *
  */
-class PatientListActivity : SddBaseActivity<PatientListContract.Presenter>(),
+class PatientListActivity : SddBaseViewModelActivity<PatientListPresenter>(),
         SwipeRefreshLayout.OnRefreshListener, LoadMoreRecyclerView.OnLoadCallback,
         PatientEmptyView.OnEmptyPatientCallback, BaseRecyclerAdapter.OnItemClickListener, PatientListContract.View {
 

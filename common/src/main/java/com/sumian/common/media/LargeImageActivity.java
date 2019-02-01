@@ -24,7 +24,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.sumian.common.R;
-import com.sumian.common.base.BasePresenterActivity;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.utils.BitmapUtil;
 import com.sumian.common.utils.StreamUtil;
 import com.sumian.common.utils.SumianExecutor;
@@ -44,7 +44,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ALL")
-public class LargeImageActivity extends BasePresenterActivity implements EasyPermissions.PermissionCallbacks, View.OnClickListener {
+public class LargeImageActivity extends BaseViewModelActivity implements EasyPermissions.PermissionCallbacks, View.OnClickListener {
 
     SubsamplingScaleImageView mImageView;
 

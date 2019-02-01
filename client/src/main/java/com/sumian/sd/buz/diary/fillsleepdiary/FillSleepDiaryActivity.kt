@@ -6,7 +6,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
@@ -22,7 +23,7 @@ import com.sumian.sd.common.utils.EventBusUtil
  * desc   :
  * version: 1.0
  */
-class FillSleepDiaryActivity : BasePresenterActivity<IPresenter>(), FillDiaryViewModel.ProgressListener {
+class FillSleepDiaryActivity : BaseActivity(), FillDiaryViewModel.ProgressListener {
     companion object {
         private const val KEY_TIME = "time"
         private const val KEY_RESPONSE_DATA = "response_data"

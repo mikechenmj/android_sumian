@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.scale.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -13,11 +14,11 @@ import com.sumian.sddoctor.service.scale.contract.ScaleContract
  *
  * desc:
  */
-class ScalePresenter private constructor(view: ScaleContract.View) : ScaleContract.Presenter {
+class ScalePresenter private constructor(view: ScaleContract.View) : BaseViewModel(){
 
     companion object {
 
-        fun init(view: ScaleContract.View): ScaleContract.Presenter {
+        fun init(view: ScaleContract.View): ScalePresenter {
             return ScalePresenter(view)
         }
 
@@ -29,7 +30,7 @@ class ScalePresenter private constructor(view: ScaleContract.View) : ScaleContra
         this.mView = view
     }
 
-    override fun getScales() {
+    fun getScales() {
 
         mView?.showLoading()
 
@@ -55,7 +56,7 @@ class ScalePresenter private constructor(view: ScaleContract.View) : ScaleContra
 
     }
 
-    override fun sendScale(patientId: Int, scaleIds: List<Int>) {
+    fun sendScale(patientId: Int, scaleIds: List<Int>) {
 
         if (scaleIds.isEmpty()) {
             mView?.onSendScaleFailed("请先选择量表")

@@ -1,10 +1,11 @@
 package com.sumian.sd.buz.sleepguide
 
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 
-class SleepGuideResultActivity : BasePresenterActivity<IPresenter>() {
+class SleepGuideResultActivity : BaseActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_sleep_guide_result
     }

@@ -7,7 +7,7 @@ import android.view.View
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.SpUtil
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
  * desc:CBTI 课程介绍页  (已购买/未购买状态) 包括课程列表、banner，学习进度，过期时间，了解更多 h5
  *
  */
-class CBTIIntroductionActivity : BasePresenterActivity<CBTIIntroductionContract.Presenter>(), CBTIIntroductionContract.View,
+class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter>(), CBTIIntroductionContract.View,
         BaseRecyclerAdapter.OnItemClickListener {
 
     override fun getConfigsSuccess() {

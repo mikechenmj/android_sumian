@@ -7,7 +7,8 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.mvp.IPresenter
@@ -30,7 +31,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class RelaxationDetailActivity : BasePresenterActivity<IPresenter>() {
+class RelaxationDetailActivity : BaseActivity(){
     private var mRelaxationData: RelaxationData? = null
     private val mBottomContentDefaultHeight by lazy {
         resources.getDimension(R.dimen.relaxation_detail_default_height)

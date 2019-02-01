@@ -2,6 +2,7 @@ package com.sumian.sd.buz.account.login
 
 import android.app.Activity
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
@@ -23,9 +24,9 @@ import java.util.*
  *     version: 1.0
  * </pre>
  */
-class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
+class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
 
-    override fun loginByPassword(mobile: String, password: String) {
+     fun loginByPassword(mobile: String, password: String) {
         view.showLoading()
         val call = AppManager.getSdHttpService().loginByPassword(mobile, password)
         call.enqueue(object : BaseSdResponseCallback<Token>() {
@@ -47,7 +48,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
         })
     }
 
-    override fun loginByCaptcha(mobile: String, captcha: String) {
+     fun loginByCaptcha(mobile: String, captcha: String) {
         view.showLoading()
         val call = AppManager.getSdHttpService().loginByCaptcha(mobile, captcha)
         call.enqueue(object : BaseSdResponseCallback<Token>(), Callback<Token> {
@@ -67,7 +68,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
         })
     }
 
-    override fun loginByWechat(activity: Activity) {
+     fun loginByWechat(activity: Activity) {
         view.showLoading()
         AppManager.getOpenLogin().weChatLogin(activity, object : UMAuthListener {
             override fun onComplete(shareMedia: SHARE_MEDIA?, p1: Int, map: MutableMap<String, String?>?) {
@@ -121,7 +122,7 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
         })
     }
 
-    override fun requestCaptcha(mobile: String) {
+     fun requestCaptcha(mobile: String) {
         CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
             override fun onStart() {
                 view.showLoading()

@@ -1,7 +1,7 @@
 package com.sumian.sd.buz.account.login;
 
+import com.sumian.common.mvp.IPresenter;
 import com.sumian.sd.base.HwBaseNetView;
-import com.sumian.sd.base.HwBasePresenter;
 
 /**
  * Created by jzz
@@ -28,7 +28,7 @@ public interface ModifyUserInfoContract {
 
     }
 
-    interface Presenter extends HwBasePresenter {
+    interface Presenter extends IPresenter {
 
         void doModifyUserInfo(String formKey, Object formValue);
 

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.common.base.BasePresenterActivity;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.utils.SumianExecutor;
 import com.sumian.common.widget.TitleBar;
@@ -48,7 +48,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ConstantConditions")
-public class DeviceVersionUpgradeActivity extends BasePresenterActivity implements View.OnClickListener, TitleBar.OnBackClickListener
+public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implements View.OnClickListener, TitleBar.OnBackClickListener
         , VersionUpgradeContract.View, EasyPermissions.PermissionCallbacks {
     public static final int VERSION_TYPE_MONITOR = 0x02;
     public static final int VERSION_TYPE_SLEEPY = 0x03;
@@ -342,7 +342,7 @@ public class DeviceVersionUpgradeActivity extends BasePresenterActivity implemen
     protected void onRelease() {
         DfuServiceListenerHelper.unregisterProgressListener(this, mDfuProgressListener);
         super.onRelease();
-        mPresenter.release();
+        mPresenter.onCleared();
     }
 
     @Override

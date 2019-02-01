@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.advisory.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
@@ -13,7 +14,7 @@ import com.sumian.sddoctor.service.advisory.contract.RecordContract
  * on 2018/6/6 12:06
  * desc:
  **/
-class RecordPresenter private constructor(view: RecordContract.View) : RecordContract.Presenter {
+class RecordPresenter private constructor(view: RecordContract.View) : BaseViewModel() {
 
     private var mView: RecordContract.View? = null
 
@@ -23,17 +24,17 @@ class RecordPresenter private constructor(view: RecordContract.View) : RecordCon
 
     companion object {
 
-        fun init(view: RecordContract.View): RecordContract.Presenter {
+        fun init(view: RecordContract.View): RecordPresenter {
             return RecordPresenter(view)
         }
     }
 
-    override fun getAdvisoryDetail(advisoryId: Int) {
+     fun getAdvisoryDetail(advisoryId: Int) {
 
         this.mView?.showLoading()
 
         val call = AppManager.getHttpService().getDoctorAdvisoryDetails(advisoryId)
-        mCalls.add(call)
+         addCall(call)
 
         call.enqueue(object : BaseSdResponseCallback<Advisory>() {
 

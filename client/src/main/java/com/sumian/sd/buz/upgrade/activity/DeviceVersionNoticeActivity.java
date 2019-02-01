@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.common.base.BasePresenterActivity;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
@@ -19,7 +19,7 @@ import com.sumian.sd.buz.device.bean.BlueDevice;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 import com.sumian.sd.buz.upgrade.contract.VersionContract;
 import com.sumian.sd.buz.upgrade.model.VersionModel;
-import com.sumian.sd.buz.upgrade.presenter.DeviceVersionNoticePresenter;
+import com.sumian.sd.buz.upgrade.presenter.DeviceVersionNoticeViewModel;
 import com.sumian.sd.common.network.response.AppUpgradeInfo;
 import com.sumian.sd.common.utils.UiUtil;
 import com.sumian.sd.widget.VersionInfoView;
@@ -35,7 +35,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
  * desc:
  */
 
-public class DeviceVersionNoticeActivity extends BasePresenterActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+public class DeviceVersionNoticeActivity extends BaseViewModelActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
         TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
 
     private SumianSwipeRefreshLayout mRefresh;
@@ -78,7 +78,7 @@ public class DeviceVersionNoticeActivity extends BasePresenterActivity implement
         findViewById(R.id.sleepy_version_info).setOnClickListener(this);
 
         AppManager.getVersionModel().registerShowDotCallback(this);
-        DeviceVersionNoticePresenter.init(this);
+        DeviceVersionNoticeViewModel.init(this);
     }
 
     @Override

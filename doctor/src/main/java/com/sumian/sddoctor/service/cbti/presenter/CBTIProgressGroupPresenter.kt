@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.cbti.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
@@ -11,7 +12,7 @@ import com.sumian.sddoctor.service.cbti.bean.CBTIProgressGroup
 import com.sumian.sddoctor.service.cbti.bean.CBTIProgressGroupResponse
 import com.sumian.sddoctor.service.cbti.contract.CBTIProgressGroupContract
 
-class CBTIProgressGroupPresenter private constructor(view: CBTIProgressGroupContract.View) : CBTIProgressGroupContract.Presenter {
+class CBTIProgressGroupPresenter private constructor(view: CBTIProgressGroupContract.View) : BaseViewModel() {
 
     private var view: CBTIProgressGroupContract.View? = null
 
@@ -23,12 +24,12 @@ class CBTIProgressGroupPresenter private constructor(view: CBTIProgressGroupCont
 
     companion object {
         @JvmStatic
-        fun init(view: CBTIProgressGroupContract.View): CBTIProgressGroupContract.Presenter {
+        fun init(view: CBTIProgressGroupContract.View): CBTIProgressGroupPresenter {
             return CBTIProgressGroupPresenter(view)
         }
     }
 
-    override fun initDefaultCBTIProgressGroups() {
+     fun initDefaultCBTIProgressGroups() {
         val cbtiGroupArrays = App.getAppContext().resources.getStringArray(R.array.cbti_group_arrays)
         lateinit var cbtiProgressGroup: CBTIProgressGroup
         val patients = mutableListOf<Patient>()
@@ -41,7 +42,7 @@ class CBTIProgressGroupPresenter private constructor(view: CBTIProgressGroupCont
         view?.onGetCBTIProgressGroupsSuccess(currentCBTIProgressGroups)
     }
 
-    override fun getCBTIProgressGroups(groups: String?, isHavePatient: Boolean) {
+     fun getCBTIProgressGroups(groups: String? = null, isHavePatient: Boolean = false) {
         view?.showLoading()
         val map = mutableMapOf<String, Any>()
 
@@ -54,7 +55,7 @@ class CBTIProgressGroupPresenter private constructor(view: CBTIProgressGroupCont
         }
 
         val call = AppManager.getHttpService().getCBTIProgressGroups(map)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<CBTIProgressGroupResponse>() {
             override fun onSuccess(response: CBTIProgressGroupResponse?) {
                 response?.let {

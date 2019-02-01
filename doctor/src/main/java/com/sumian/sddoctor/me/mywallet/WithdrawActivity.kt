@@ -12,18 +12,16 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRecord
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRule
 import com.sumian.sddoctor.util.MoneyUtil
 import com.sumian.sddoctor.widget.dialog.SumianDialog
 import com.sumian.sddoctor.widget.edittext.FloatInputFilter
 import com.sumian.sddoctor.widget.text.EmptyTextWatcher
-import kotlinx.android.synthetic.main.activity_my_wallet.*
 import kotlinx.android.synthetic.main.activity_withdraw.*
 import kotlinx.android.synthetic.main.layout_withdraw_success.*
 import retrofit2.Call
-import java.math.BigDecimal
 
 @SuppressLint("SetJavaScriptEnabled")
 /**
@@ -33,7 +31,7 @@ import java.math.BigDecimal
  * desc   :
  * version: 1.0
  */
-class WithdrawActivity : SddBaseActivity<WithdrawPresenter>(), WithdrawContract.View {
+class WithdrawActivity : SddBaseViewModelActivity<WithdrawPresenter>(), WithdrawContract.View {
     private var mBalance = 0L
     private var mWithdrawAmount = 0L
     private val mWebView by lazy {

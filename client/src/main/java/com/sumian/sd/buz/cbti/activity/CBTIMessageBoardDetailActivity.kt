@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.cbti.bean.MessageBoard
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main_message_board_detail.*
  * desc:留言详情
  *
  */
-class CBTIMessageBoardDetailActivity : BasePresenterActivity<CBTIMessageBoardDetailContract.Presenter>(), CBTIMessageBoardDetailContract
+class CBTIMessageBoardDetailActivity : BaseViewModelActivity<CBTIMessageBoardDetailPresenter>(), CBTIMessageBoardDetailContract
 .View, SwipeRefreshLayout
 .OnRefreshListener {
 

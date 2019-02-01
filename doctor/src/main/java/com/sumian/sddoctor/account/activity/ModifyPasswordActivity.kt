@@ -9,6 +9,7 @@ import com.sumian.common.utils.InputCheckUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.constants.Configs
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_modify_password.*
  * desc:
  */
 
-class ModifyPasswordActivity : SddBaseActivity<IPresenter>() {
+class ModifyPasswordActivity : SddBaseActivity() {
     companion object {
 
         fun start() {

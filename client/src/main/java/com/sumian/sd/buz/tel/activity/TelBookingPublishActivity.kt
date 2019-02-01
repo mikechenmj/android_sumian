@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.adapter.EmptyTextWatcher
@@ -29,7 +29,7 @@ import java.util.*
  *
  */
 @Suppress("DEPRECATION")
-class TelBookingPublishActivity : BasePresenterActivity<TelBookingPublishContract.Presenter>(), View.OnClickListener,
+class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresenter>(), View.OnClickListener,
         TelBookingPublishContract.View, TelBookingBottomSheet.OnSelectTelBookingCallback {
 
     companion object {

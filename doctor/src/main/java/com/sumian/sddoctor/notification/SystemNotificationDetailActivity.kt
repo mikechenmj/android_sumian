@@ -3,7 +3,6 @@ package com.sumian.sddoctor.notification
 import android.content.Context
 import android.content.Intent
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BasePresenterActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
@@ -12,6 +11,7 @@ import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.notification.bean.SystemNotificationData
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import kotlinx.android.synthetic.main.activity_system_notification_detail.*
 
 /**
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_system_notification_detail.*
  * desc   :
  * version: 1.0
  */
-class SystemNotificationDetailActivity : SddBaseActivity<IPresenter>() {
+class SystemNotificationDetailActivity : SddBaseActivity() {
 
     companion object {
         private const val KEY_ID = "com.sumian.sddoctor.notification.SystemNotificationDetailActivity.id"

@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.cbti.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
@@ -8,18 +9,18 @@ import com.sumian.sddoctor.service.cbti.bean.MessageBoard
 import com.sumian.sddoctor.service.cbti.contract.CBTIMessageBoardDetailContract
 
 class CBTIMessageBoardDetailPresenter private constructor(var view: CBTIMessageBoardDetailContract.View?)
-    : CBTIMessageBoardDetailContract.Presenter {
+    : BaseViewModel() {
     companion object {
         @JvmStatic
-        fun init(view: CBTIMessageBoardDetailContract.View?): CBTIMessageBoardDetailContract.Presenter {
+        fun init(view: CBTIMessageBoardDetailContract.View?): CBTIMessageBoardDetailPresenter {
             return CBTIMessageBoardDetailPresenter(view)
         }
     }
 
-    override fun getMsgBoardDetail(msgInt: Int) {
+     fun getMsgBoardDetail(msgInt: Int) {
         view?.showLoading()
         val call = AppManager.getHttpService().getMsgKeyboardDetail(msgInt)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<MessageBoard>() {
             override fun onSuccess(response: MessageBoard?) {
                 if (response == null) {

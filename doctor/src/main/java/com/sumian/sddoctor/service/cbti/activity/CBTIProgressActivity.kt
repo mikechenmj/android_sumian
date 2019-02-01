@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.cbti.ITrigger
 import com.sumian.sddoctor.service.cbti.adapter.CBTIProgressGroupAdapter
 import com.sumian.sddoctor.service.cbti.bean.CBTIProgressGroup
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_progress.*
 /**
  * CBTI  患者进度查询中心
  */
-class CBTIProgressActivity : SddBaseActivity<CBTIProgressGroupContract.Presenter>(), CBTIProgressGroupContract.View, ITrigger, SwipeRefreshLayout.OnRefreshListener, CBTILauncherContract.View {
+class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter>(), CBTIProgressGroupContract.View, ITrigger, SwipeRefreshLayout.OnRefreshListener, CBTILauncherContract.View {
 
     companion object {
 

@@ -1,13 +1,14 @@
 package com.sumian.sd.buz.coupon.presenter
 
 import android.text.TextUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.coupon.contract.CouponActionContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
-class CouponActionPresenter private constructor(view: CouponActionContract.View) : CouponActionContract.Presenter {
+class CouponActionPresenter private constructor(view: CouponActionContract.View) : BaseViewModel() {
 
     private var mView: CouponActionContract.View? = null
 
@@ -17,12 +18,12 @@ class CouponActionPresenter private constructor(view: CouponActionContract.View)
 
     companion object {
         @JvmStatic
-        fun init(view: CouponActionContract.View): CouponActionContract.Presenter {
+        fun init(view: CouponActionContract.View): CouponActionPresenter {
             return CouponActionPresenter(view)
         }
     }
 
-    override fun checkCoupon(coupon: String) {
+     fun checkCoupon(coupon: String) {
         if (TextUtils.isEmpty(coupon)) {
             mView?.onInputCouponFailed("请输入您的兑换码")
             return
@@ -34,7 +35,7 @@ class CouponActionPresenter private constructor(view: CouponActionContract.View)
         mView?.showLoading()
 
         val call = AppManager.getSdHttpService().couponAction(coupon)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onSuccess(response: Any?) {
                 mView?.onInputCouponSuccess()

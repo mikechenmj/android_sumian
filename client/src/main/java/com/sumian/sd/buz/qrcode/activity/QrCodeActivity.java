@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.model.BluePeripheral;
-import com.sumian.common.base.BasePresenterActivity;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeActivity extends BasePresenterActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
+public class QrCodeActivity extends BaseViewModelActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
 
     private ViewPager mViewPager;
     private TitleBar mTitleBar;

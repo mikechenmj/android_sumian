@@ -27,7 +27,7 @@ class BannerPresenter private constructor(private var view: BannerContract.View?
 
     override fun getBannerList() {
         val call = AppManager.getSdHttpService().getConfigs()
-        mCalls.add(call)
+        // todo cancel call
         call.enqueue(object : BaseSdResponseCallback<JsonArray>() {
             override fun onSuccess(response: JsonArray?) {
                 response?.let {

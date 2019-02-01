@@ -2,7 +2,8 @@ package com.sumian.sd.buz.setting.remind
 
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
@@ -12,7 +13,7 @@ import com.sumian.sd.buz.setting.remind.bean.Reminder
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_remind_setting.*
 
-class RemindSettingActivity : BasePresenterActivity<IPresenter>() {
+class RemindSettingActivity : BaseActivity() {
     private var mReminder: Reminder? = null
 
     companion object {

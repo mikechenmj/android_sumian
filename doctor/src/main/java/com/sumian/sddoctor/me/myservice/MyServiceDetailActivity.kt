@@ -12,6 +12,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.myservice.bean.DoctorService
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.widget.divider.SettingDividerView
@@ -26,7 +27,7 @@ import retrofit2.Call
  * desc   :
  * version: 1.0
  */
-class MyServiceDetailActivity : SddBaseActivity<IPresenter>() {
+class MyServiceDetailActivity : SddBaseActivity() {
 
     companion object {
         private const val KEY_ID = "id"

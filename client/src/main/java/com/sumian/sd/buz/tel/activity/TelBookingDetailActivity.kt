@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.buz.tel.contract.TelBookingDetailContract
-import com.sumian.sd.buz.tel.presenter.TelBookingDetailPresenter
+import com.sumian.sd.buz.tel.presenter.TelBookingDetailViewModel
 import kotlinx.android.synthetic.main.activity_main_publish_tel_booking.*
 import kotlinx.android.synthetic.main.activity_tel_booking_detail.*
 
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_tel_booking_detail.*
  * desc:电话预约详情
  *
  */
-class TelBookingDetailActivity : BasePresenterActivity<TelBookingDetailContract.Presenter>(), TelBookingDetailContract.View {
+class TelBookingDetailActivity : BaseViewModelActivity<TelBookingDetailViewModel>(), TelBookingDetailContract.View {
 
     companion object {
 
@@ -58,7 +58,7 @@ class TelBookingDetailActivity : BasePresenterActivity<TelBookingDetailContract.
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = TelBookingDetailPresenter.init(this)
+        this.mPresenter = TelBookingDetailViewModel.init(this)
     }
 
     override fun initWidget() {

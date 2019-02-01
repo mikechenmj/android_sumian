@@ -8,6 +8,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.authentication.AuthenticationHelper
 import com.sumian.sddoctor.me.mywallet.bean.WalletBalance
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawAbility
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_withdraw_amount.*
  * desc   :
  * version: 1.0
  */
-class WithdrawAmountActivity : SddBaseActivity<IPresenter>() {
+class WithdrawAmountActivity : SddBaseActivity() {
     private var mBalance = 0L
 
     override fun getLayoutId(): Int {

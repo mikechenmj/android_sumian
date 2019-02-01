@@ -18,6 +18,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.WalletBalance
 import com.sumian.sddoctor.me.mywallet.bean.WalletDetail
 import com.sumian.sddoctor.me.mywallet.bean.WalletDetailResponse
@@ -34,7 +35,7 @@ import kotlinx.android.synthetic.main.activity_my_wallet.*
  * version: 1.0
  */
 @Suppress("DEPRECATION")
-class MyWalletActivity : SddBaseActivity<IPresenter>() {
+class MyWalletActivity : SddBaseActivity() {
     private val mAdapter = MyWalletAdapter()
     private var mPage = 1
 

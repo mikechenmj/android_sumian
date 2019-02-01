@@ -79,7 +79,7 @@ class TelBookingBottomSheet : BaseBottomSheetView(), TelBookingSelectTimeContrac
 
     override fun release() {
         super.release()
-        mPresenter.onRelease()
+        mPresenter.onCleared()
     }
 
     override fun onClick(v: View) {

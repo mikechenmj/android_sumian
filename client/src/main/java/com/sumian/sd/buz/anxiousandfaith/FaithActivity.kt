@@ -8,7 +8,8 @@ import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_faith.*
  * version: 1.0
  */
 @SuppressLint("SetTextI18n")
-class FaithActivity : BasePresenterActivity<IPresenter>() {
+class FaithActivity : BaseActivity() {
     private var mProgress = 0
     private var mEvent = ""
     private var mThought = ""

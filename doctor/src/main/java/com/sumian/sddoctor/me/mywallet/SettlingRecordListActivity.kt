@@ -12,6 +12,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.SettlingRecord
 import com.sumian.sddoctor.network.bean.PaginationResponseV2
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view_padding_top_10.*
  * desc   :
  * version: 1.0
  */
-class SettlingRecordListActivity : SddBaseActivity<IPresenter>() {
+class SettlingRecordListActivity : SddBaseActivity() {
     override fun showBackNav(): Boolean {
         return true
     }

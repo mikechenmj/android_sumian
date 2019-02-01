@@ -7,7 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -17,7 +17,7 @@ import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : BasePresenterActivity<LoginContract.Presenter>(), LoginContract.View {
+class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.View {
 
     companion object {
         @JvmStatic

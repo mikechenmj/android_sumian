@@ -6,26 +6,26 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.common.base.BaseFragment;
 import com.sumian.sd.R;
-import com.sumian.sd.base.HwBaseFragment;
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity;
 import com.sumian.sd.common.utils.UiUtil;
 
 @SuppressWarnings("ConstantConditions")
-public class InputSnFragment extends HwBaseFragment implements View.OnClickListener {
+public class InputSnFragment extends BaseFragment implements View.OnClickListener {
 
     EditText etSn;
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.hw_fragment_main_input_sn;
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
-        etSn = root.findViewById(R.id.et_sn);
-        root.findViewById(R.id.bt_action).setOnClickListener(this);
+    protected void initWidget() {
+        super.initWidget();
+        etSn = getView().findViewById(R.id.et_sn);
+        getView().findViewById(R.id.bt_action).setOnClickListener(this);
     }
 
     @SuppressLint("SetTextI18n")

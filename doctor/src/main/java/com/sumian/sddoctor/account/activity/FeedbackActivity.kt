@@ -14,7 +14,7 @@ import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.contract.FeedbackContract
 import com.sumian.sddoctor.account.presenter.FeedbackPresenter
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.widget.text.EmptyTextWatcher
 import kotlinx.android.synthetic.main.activity_main_feedback.*
 import java.util.*
@@ -25,7 +25,7 @@ import java.util.*
  * desc:
  */
 
-class FeedbackActivity : SddBaseActivity<FeedbackContract.Presenter>(), FeedbackContract.View {
+class FeedbackActivity : SddBaseViewModelActivity<FeedbackPresenter>(), FeedbackContract.View {
 
     companion object {
         private const val MAX_LENGTH = 500

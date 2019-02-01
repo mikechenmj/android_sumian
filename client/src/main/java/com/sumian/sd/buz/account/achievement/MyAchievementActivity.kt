@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.Gravity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main_my_achievement.*
  *
  * desc: 我的勋章成就
  */
-class MyAchievementActivity : BasePresenterActivity<MyAchievementContract.Presenter>(), BaseRecyclerAdapter.OnItemClickListener, MyAchievementContract.View, LastAchievementContract.View {
+class MyAchievementActivity : BaseViewModelActivity<MyAchievementPresenter>(), BaseRecyclerAdapter.OnItemClickListener, MyAchievementContract.View, LastAchievementContract.View {
 
     companion object {
         @JvmStatic

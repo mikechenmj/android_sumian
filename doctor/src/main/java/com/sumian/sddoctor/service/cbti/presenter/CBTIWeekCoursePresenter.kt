@@ -55,7 +55,7 @@ class CBTIWeekCoursePresenter constructor(view: CBTIWeekLessonContract.View) : C
             }
         })
 
-        mCalls.add(call)
+        addCall(call)
     }
 
 }

@@ -6,7 +6,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sumian.common.base.BasePresenterFragment
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.sddoctor.R
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_detail.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表(语音,文字,图片...),在线报告列表
  **/
-class AdvisoryDetailFragment : BasePresenterFragment<RecordContract.Presenter>(), RecordContract.View, View.OnClickListener {
+class AdvisoryDetailFragment : BaseViewModelFragment<RecordPresenter>(), RecordContract.View, View.OnClickListener {
 
     companion object {
 

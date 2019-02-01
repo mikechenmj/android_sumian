@@ -8,7 +8,7 @@ import com.sumian.common.widget.voice.IVisible
 import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.common.widget.voice.VoicePlayerView
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.advisory.bean.Record
 import com.sumian.sddoctor.service.publish.bean.Publish
 import com.sumian.sddoctor.service.publish.contract.PublishVoiceContact
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_main_reply_publish_voice.*
  *
  * desc: 医生图文咨询/周日记评估  语音回复
  */
-class ReplyVoiceActivity : SddBaseActivity<PublishVoiceContact.Presenter>(),
+class ReplyVoiceActivity : SddBaseViewModelActivity<PublishVoicePresenter>(),
         RecordVoiceView.VoiceRecordCallback, VoiceAuditionView.VoiceAuditionCallback, PublishVoiceContact.View,
         VoicePlayer.onPlayStatusListener, VoicePlayerView.OnVoiceViewListener {
 

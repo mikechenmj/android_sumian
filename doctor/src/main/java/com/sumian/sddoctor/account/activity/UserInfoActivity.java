@@ -98,7 +98,7 @@ public class UserInfoActivity extends BasePresenterActivity implements TitleBar.
     @Override
     protected void onDestroy() {
         if (mPresenter != null) {
-            mPresenter.onRelease();
+            mPresenter.onCleared();
         }
         super.onDestroy();
     }

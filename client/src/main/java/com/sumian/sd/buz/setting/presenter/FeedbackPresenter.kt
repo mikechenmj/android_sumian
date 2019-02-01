@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.setting.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
@@ -9,12 +10,12 @@ import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.contract.FeedbackContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
-class FeedbackPresenter private constructor(view: FeedbackContract.View) : FeedbackContract.Presenter {
+class FeedbackPresenter private constructor(view: FeedbackContract.View) : BaseViewModel() {
 
     companion object {
 
         @JvmStatic
-        fun init(view: FeedbackContract.View): FeedbackContract.Presenter {
+        fun init(view: FeedbackContract.View): FeedbackPresenter {
             return FeedbackPresenter(view)
         }
     }
@@ -25,11 +26,11 @@ class FeedbackPresenter private constructor(view: FeedbackContract.View) : Feedb
         this.mView = view
     }
 
-    override fun feedback(feedback: String) {
+    fun feedback(feedback: String) {
         mView?.showLoading()
 
         val call = AppManager.getSdHttpService().feedback(feedback)
-        mCalls.add(call)
+        addCall(call)
 
         call.enqueue(object : BaseSdResponseCallback<Feedback>() {
             override fun onFailure(errorResponse: ErrorResponse) {

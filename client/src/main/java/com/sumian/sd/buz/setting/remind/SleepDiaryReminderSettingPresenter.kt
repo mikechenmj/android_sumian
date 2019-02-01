@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.setting.remind
 
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
@@ -16,10 +17,10 @@ import retrofit2.Call
  *     version: 1.0
  * </pre>
  */
-class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingContract.View) : SleepDiaryReminderSettingContract.Presenter {
+class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingContract.View) : BaseViewModel() {
     private val mCalls = ArrayList<Call<*>>()
 
-    override fun release() {
+     fun release() {
         for (call in mCalls) {
             if (call.isExecuted) {
                 call.cancel()
@@ -28,7 +29,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         mCalls.clear()
     }
 
-    override fun queryReminder(reminderType: Int) {
+     fun queryReminder(reminderType: Int) {
         val call = AppManager.getSdHttpService().getReminderList(reminderType)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Reminder>>() {
@@ -42,7 +43,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         })
     }
 
-    override fun addReminder(reminderType: Int, timeInSecond: Int) {
+     fun addReminder(reminderType: Int, timeInSecond: Int) {
         val call = AppManager.getSdHttpService().addReminder(reminderType, remindAtInSecond = timeInSecond)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Reminder>() {
@@ -57,7 +58,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
         })
     }
 
-    override fun modifyReminder(reminderId: Int, timeInSecond: Int, enable: Boolean) {
+     fun modifyReminder(reminderId: Int, timeInSecond: Int, enable: Boolean) {
         val call = AppManager.getSdHttpService().modifyReminder(reminderId, timeInSecond, if (enable) 1 else 0)
         mCalls.add(call)
         call.enqueue(object : BaseSdResponseCallback<Reminder>() {

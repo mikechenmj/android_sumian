@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.cbti.presenter
 
 import android.text.TextUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
@@ -18,20 +19,20 @@ import com.sumian.sd.common.utils.TimeUtil
  * desc:
  *
  */
-class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionContract.View? = null) : CBTIIntroductionContract.Presenter {
+class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionContract.View? = null) : BaseViewModel() {
 
     companion object {
 
         @JvmStatic
-        fun init(view: CBTIIntroductionContract.View): CBTIIntroductionContract.Presenter {
+        fun init(view: CBTIIntroductionContract.View): CBTIIntroductionPresenter {
             return CBTIIntroductionPresenter(view)
         }
     }
 
-    override fun getCBTIServiceDetail() {
+    fun getCBTIServiceDetail() {
         view?.showLoading()
         val call = AppManager.getSdHttpService().getServiceByType(DoctorService.SERVICE_TYPE_CBTI)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<DoctorService>() {
             override fun onSuccess(response: DoctorService?) {
                 response?.let {
@@ -50,7 +51,7 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
         })
     }
 
-    override fun getCBTIIntroductionList() {
+    fun getCBTIIntroductionList() {
         view?.showLoading()
         val call = AppManager.getSdHttpService().getCbtiChapters("courses")
         mCalls.add(call)

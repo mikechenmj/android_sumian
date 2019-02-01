@@ -7,7 +7,8 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import com.sumian.common.base.BaseDialogPresenterActivity
+import com.sumian.common.base.BaseDialogViewModelActivity
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.dialog.SumianDialog
@@ -26,7 +27,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class CbtiFinalReportDialogActivity : BaseDialogPresenterActivity<IPresenter>() {
+class CbtiFinalReportDialogActivity : BaseDialogViewModelActivity<BaseViewModel>() {
 
     companion object {
         private const val KEY_FINAL_REPORT = "KEY_FINAL_REPORT"

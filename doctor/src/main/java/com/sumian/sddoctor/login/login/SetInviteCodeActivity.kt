@@ -8,6 +8,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.main.MainActivity
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_set_invite_code.*
  * desc   :
  * version: 1.0
  */
-class SetInviteCodeActivity : SddBaseActivity<IPresenter>() {
+class SetInviteCodeActivity : SddBaseActivity() {
     override fun showBackNav(): Boolean {
         return true
     }

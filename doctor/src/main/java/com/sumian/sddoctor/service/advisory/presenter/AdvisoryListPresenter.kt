@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.advisory.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
@@ -14,13 +15,13 @@ import com.sumian.sddoctor.service.advisory.contract.AdvisoryListContract
  * on 2018/6/4 16:01
  * desc:
  **/
-class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View) : AdvisoryListContract.Presenter {
+class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View) : BaseViewModel() {
 
     companion object {
 
         private const val DEFAULT_PAGES: Int = 10
 
-        fun init(view: AdvisoryListContract.View): AdvisoryListContract.Presenter {
+        fun init(view: AdvisoryListContract.View): AdvisoryListPresenter {
             return AdvisoryListPresenter(view)
         }
     }
@@ -37,14 +38,14 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         this.mView = view
     }
 
-    override fun refreshAdvisories() {
+     fun refreshAdvisories() {
         mCurrentPageIndex = 1
         mIsHaveMore = false
         mIsRefresh = true
         getAdvisories(mAdvisoryType)
     }
 
-    override fun getAdvisories(advisoryType: Int) {
+     fun getAdvisories(advisoryType: Int) {
         this.mAdvisoryType = advisoryType
 
         mView?.showLoading()
@@ -61,7 +62,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         map["include"] = "traceable.user"
 
         val call = AppManager.getHttpService().getDoctorAdvisories(map)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<AdvisoryResponse>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -90,7 +91,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         })
     }
 
-    override fun getNextAdvisories() {
+     fun getNextAdvisories() {
         if (!mIsHaveMore) return
         mCurrentPageIndex++
         getAdvisories(mAdvisoryType)

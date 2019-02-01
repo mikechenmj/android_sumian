@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_anxiety.*
  * desc   :
  * version: 1.0
  */
-class AnxietyActivity : BasePresenterActivity<IPresenter>() {
+class AnxietyActivity : BaseActivity() {
     private var mAnxietyData: AnxietyData? = null
 
     override fun showBackNav(): Boolean {

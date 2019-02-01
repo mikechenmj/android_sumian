@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.evaluation.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
@@ -14,13 +15,13 @@ import com.sumian.sddoctor.service.evaluation.contract.WeekEvaluationListContrac
  * on 2018/6/4 16:01
  * desc:
  **/
-class WeekEvaluationListPresenter private constructor(view: WeekEvaluationListContract.View) : WeekEvaluationListContract.Presenter {
+class WeekEvaluationListPresenter private constructor(view: WeekEvaluationListContract.View) : BaseViewModel() {
 
     companion object {
 
         private const val DEFAULT_PAGES: Int = 10
 
-        fun init(view: WeekEvaluationListContract.View): WeekEvaluationListContract.Presenter {
+        fun init(view: WeekEvaluationListContract.View): WeekEvaluationListPresenter {
             return WeekEvaluationListPresenter(view)
         }
     }
@@ -37,14 +38,14 @@ class WeekEvaluationListPresenter private constructor(view: WeekEvaluationListCo
         this.mView = view
     }
 
-    override fun refreshEvaluationList() {
+     fun refreshEvaluationList() {
         mCurrentPageIndex = 1
         mIsHaveMore = false
         mIsRefresh = true
         getEvaluationList(mEvaluationType)
     }
 
-    override fun getEvaluationList(WeekEvaluationType: String) {
+     fun getEvaluationList(WeekEvaluationType: String) {
         this.mEvaluationType = WeekEvaluationType
 
         mView?.showLoading()
@@ -58,7 +59,7 @@ class WeekEvaluationListPresenter private constructor(view: WeekEvaluationListCo
         map["include"] = "user,doctor"
 
         val call = AppManager.getHttpService().getDoctorDiaryEvaluations(map)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<EvaluationResponse>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -87,7 +88,7 @@ class WeekEvaluationListPresenter private constructor(view: WeekEvaluationListCo
         })
     }
 
-    override fun getNextEvaluationList() {
+     fun getNextEvaluationList() {
         if (!mIsHaveMore) return
         mCurrentPageIndex++
         getEvaluationList(mEvaluationType)

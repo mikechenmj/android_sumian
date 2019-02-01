@@ -2,7 +2,6 @@ package com.sumian.sddoctor.base
 
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import com.sumian.common.base.BaseActivity
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
@@ -15,7 +14,7 @@ import com.sumian.common.mvp.IPresenter
  * version: 1.0
  */
 
-abstract class SddBaseActivity : BaseActivity() {
+abstract class SddBaseViewModelActivity<Presenter : BaseViewModel> : BaseViewModelActivity<Presenter>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

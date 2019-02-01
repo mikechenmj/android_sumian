@@ -14,6 +14,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.authentication.AuthenticationHelper
 import com.sumian.sddoctor.me.myservice.bean.Packages
 import com.sumian.sddoctor.me.myservice.bean.ServicePackage
@@ -29,7 +30,7 @@ import retrofit2.Call
  * desc   :
  * version: 1.0
  */
-class OpenServiceActivity : SddBaseActivity<IPresenter>() {
+class OpenServiceActivity : SddBaseActivity() {
     private val mServicePackage by lazy {
         JsonUtil.fromJson(intent.getStringExtra(KEY_SERVICE_PACKAGE), ServicePackage::class.java)!!
     }

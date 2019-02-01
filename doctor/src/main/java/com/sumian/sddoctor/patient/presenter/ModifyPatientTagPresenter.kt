@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.patient.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
@@ -14,7 +15,7 @@ import com.sumian.sddoctor.patient.contract.ModifyPatientTagContract
  *
  * desc:
  */
-class ModifyPatientTagPresenter private constructor(view: ModifyPatientTagContract.View) : ModifyPatientTagContract.Presenter {
+class ModifyPatientTagPresenter private constructor(view: ModifyPatientTagContract.View) : BaseViewModel() {
 
     private var mView: ModifyPatientTagContract.View? = null
 
@@ -23,17 +24,17 @@ class ModifyPatientTagPresenter private constructor(view: ModifyPatientTagContra
     }
 
     companion object {
-        fun init(view: ModifyPatientTagContract.View): ModifyPatientTagContract.Presenter {
+        fun init(view: ModifyPatientTagContract.View): ModifyPatientTagPresenter {
             return ModifyPatientTagPresenter(view)
         }
     }
 
-    override fun getPatient(patientId: Int) {
+     fun getPatient(patientId: Int) {
 
         mView?.showLoading()
 
         val call = AppManager.getHttpService().getPatientDetail(patientId)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Patient>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onGetPatientFailed(error = errorResponse.message)
@@ -50,12 +51,12 @@ class ModifyPatientTagPresenter private constructor(view: ModifyPatientTagContra
         })
     }
 
-    override fun consultedPatient(patientId: Int, consulted: Int) {
+     fun consultedPatient(patientId: Int, consulted: Int) {
 
         mView?.showLoading()
 
         val call = AppManager.getHttpService().consulted(patientId, consulted)
-        mCalls.add(call)
+         addCall(call)
 
         call.enqueue(object : BaseSdResponseCallback<Patient>() {
             override fun onFailure(errorResponse: ErrorResponse) {

@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.plan.adapter.PlanListAdapter
 import com.sumian.sddoctor.service.plan.bean.Plan
 import com.sumian.sddoctor.service.plan.contract.PlanContract
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_main_scale_list.*
  *
  * desc:  随访计划选择列表
  */
-class PlanListActivity : SddBaseActivity<PlanContract.Presenter>(), BaseQuickAdapter.OnItemClickListener, View.OnClickListener, PlanContract.View {
+class PlanListActivity : SddBaseViewModelActivity<PlanPresenter>(), BaseQuickAdapter.OnItemClickListener, View.OnClickListener, PlanContract.View {
 
     companion object {
 

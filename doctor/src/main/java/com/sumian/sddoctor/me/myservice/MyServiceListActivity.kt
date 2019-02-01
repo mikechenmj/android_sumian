@@ -11,6 +11,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.myservice.bean.DoctorService
 import com.sumian.sddoctor.network.bean.PaginationResponse
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -25,7 +26,7 @@ import retrofit2.Call
  *  desc   :
  *  version: 1.0
  */
-class MyServiceListActivity : SddBaseActivity<IPresenter>() {
+class MyServiceListActivity : SddBaseActivity() {
     private val mMyServiceListAdapter = MyServiceListAdapter()
 
     override fun showBackNav(): Boolean {

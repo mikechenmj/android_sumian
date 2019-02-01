@@ -9,7 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.scale.adapter.ScaleListAdapter
 import com.sumian.sddoctor.service.scale.bean.Scale
 import com.sumian.sddoctor.service.scale.contract.ScaleContract
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_main_scale_list.*
  *
  * desc:  量表选择列表
  */
-class ScaleListActivity : SddBaseActivity<ScaleContract.Presenter>(), BaseQuickAdapter.OnItemClickListener, View.OnClickListener, ScaleContract.View {
+class ScaleListActivity : SddBaseViewModelActivity<ScalePresenter>(), BaseQuickAdapter.OnItemClickListener, View.OnClickListener, ScaleContract.View {
 
     companion object {
 

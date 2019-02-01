@@ -2,8 +2,8 @@ package com.sumian.sd.buz.upgrade.contract;
 
 import android.content.Context;
 
+import com.sumian.common.mvp.IPresenter;
 import com.sumian.sd.base.HwBaseNetView;
-import com.sumian.sd.base.HwBasePresenter;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 
 /**
@@ -37,7 +37,7 @@ public interface VersionUpgradeContract {
 
     }
 
-    interface Presenter extends HwBasePresenter {
+    interface Presenter extends IPresenter {
 
         void downloadFile(int versionType, VersionInfo versionInfo);
 

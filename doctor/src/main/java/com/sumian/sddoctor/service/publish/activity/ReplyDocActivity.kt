@@ -9,7 +9,7 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.publish.bean.Publish
 import com.sumian.sddoctor.service.publish.contract.PublishDocContract
 import com.sumian.sddoctor.service.publish.presenter.PublishDocPresenter
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_main_reply_publish_doc.*
  *
  * desc: 医生图文咨询/周日记评估  文本回复
  */
-class ReplyDocActivity : SddBaseActivity<PublishDocContract.Presenter>(), PublishDocContract.View, View.OnClickListener {
+class ReplyDocActivity : SddBaseViewModelActivity<PublishDocPresenter>(), PublishDocContract.View, View.OnClickListener {
 
     companion object {
 

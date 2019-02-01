@@ -7,7 +7,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.KeyboardUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.dialog.SumianImageTextToast
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.lay_max_msg_keyboard_view.*
  * desc:留言板，直接留言、显示留言列表、删除留言
  *
  */
-class CBTIMessageBoardActivity : BasePresenterActivity<CBTISelfMessageBoardContract.Presenter>(), CBTIMessageBoardAdapter.OnDelCallback,
+class CBTIMessageBoardActivity : BaseViewModelActivity<CBTISelfMessageBoardPresenter>(), CBTIMessageBoardAdapter.OnDelCallback,
         LoadMoreRecyclerView.OnLoadCallback, CBTISelfMessageBoardContract.View, MaxMsgBoardKeyBoard.OnKeyBoardCallback {
 
     companion object {

@@ -1,12 +1,13 @@
 package com.sumian.sddoctor.patient.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.network.response.PatientsResponse
 import com.sumian.sddoctor.patient.contract.PatientListContract
 
-class PatientListPresenter private constructor(view: PatientListContract.View) : PatientListContract.Presenter {
+class PatientListPresenter private constructor(view: PatientListContract.View) : BaseViewModel(){
 
     private var mView: PatientListContract.View? = null
 
@@ -20,12 +21,12 @@ class PatientListPresenter private constructor(view: PatientListContract.View) :
 
     companion object {
 
-        fun init(view: PatientListContract.View): PatientListContract.Presenter {
+        fun init(view: PatientListContract.View): PatientListPresenter {
             return PatientListPresenter(view)
         }
     }
 
-    override fun getPatients() {
+     fun getPatients() {
 
         mView?.showLoading()
 
@@ -61,13 +62,13 @@ class PatientListPresenter private constructor(view: PatientListContract.View) :
         })
     }
 
-    override fun getNextPatients() {
+     fun getNextPatients() {
         if (!mIsHaveMore) return
         mCurrentPageIndex++
         getPatients()
     }
 
-    override fun refreshPatients() {
+     fun refreshPatients() {
         mCurrentPageIndex = 1
         mIsHaveMore = false
         mIsRefresh = true

@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
@@ -21,7 +21,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.activity_anxiety_faith_list.*
 import org.greenrobot.eventbus.Subscribe
-
+import com.sumian.common.base.BaseActivity
 /**
  * @author : Zhan Xuzhao
  * e-mail : xuzhao.z@sumian.com
@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class AnxietyListActivity : BasePresenterActivity<IPresenter>() {
+class AnxietyListActivity : BaseActivity() {
 
     private val mAdapter = AnxietyAdapter()
     private var mPage = 1

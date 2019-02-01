@@ -49,7 +49,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         mView?.onBegin()
 
         val call = AppManager.getHttpService().getCBTIPlayAuth(id = courseId)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<CoursePlayAuth>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onGetCBTIPlayAuthFailed(error = errorResponse.message)
@@ -74,7 +74,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         mView?.onBegin()
 
         val call = AppManager.getHttpService().uploadCBTICourseLogs(courseId, videoId, videoProgress.toUpperCase(), endpoint)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<CoursePlayLog>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onUploadLessonLogFailed(error = errorResponse.message)
@@ -126,7 +126,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
     override fun playNextCBTIVideo(courseId: Int) {
         mView?.onBegin()
         val call = AppManager.getHttpService().getCBTIPlayAuth(id = courseId)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<CoursePlayAuth>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onGetCBTINextPlayAuthFailed(error = errorResponse.message)
@@ -148,7 +148,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
     override fun uploadCBTIQuestionnaires(courseId: Int, position: Int) {
         mView?.onBegin()
         val call = AppManager.getHttpService().uploadCBTIVideoQuestionnaires(courseId, JSON.toJSONString(position))
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<CoursePlayAuth>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onUploadCBTIQuestionnairesFailed(error = errorResponse.message)

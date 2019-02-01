@@ -5,9 +5,9 @@ import android.view.Gravity
 import com.sumian.common.helper.ToastHelper
 
 /**
- * @see SddBaseActivity
+ * @see SddBaseViewModelActivity
  */
-@Deprecated("see #SddBaseActivity")
+@Deprecated("see #SddBaseViewModelActivity")
 abstract class BasePresenterActivity<Presenter : BasePresenter> : BaseActivity() {
 
     protected var mPresenter: Presenter? = null

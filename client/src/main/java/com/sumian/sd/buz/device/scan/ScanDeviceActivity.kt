@@ -2,7 +2,8 @@ package com.sumian.sd.buz.device.scan
 
 import android.app.Activity
 import android.content.Intent
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
@@ -15,7 +16,7 @@ import com.sumian.sd.buz.device.bean.BlueDevice
  * desc   :
  * version: 1.0
  */
-class ScanDeviceActivity : BasePresenterActivity<IPresenter>() {
+class ScanDeviceActivity : BaseActivity() {
     override fun showBackNav(): Boolean {
         return true
     }

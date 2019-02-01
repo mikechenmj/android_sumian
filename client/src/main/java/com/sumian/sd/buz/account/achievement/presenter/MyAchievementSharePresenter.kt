@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Environment
 import android.view.ViewGroup
 import androidx.core.view.drawToBitmap
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.utils.ViewToImageFileListener
 import com.sumian.common.utils.viewToImageFile
 import com.sumian.sd.app.AppManager
@@ -19,21 +20,21 @@ import java.io.File
  *
  * desc:
  */
-class MyAchievementSharePresenter private constructor() : MyAchievementShareContract.Presenter {
+class MyAchievementSharePresenter private constructor() : BaseViewModel(){
 
     companion object {
         private const val TAG = "MyAchievementSharePresenter"
         @JvmStatic
-        fun create(): MyAchievementShareContract.Presenter = MyAchievementSharePresenter()
+        fun create(): MyAchievementSharePresenter = MyAchievementSharePresenter()
     }
 
-    override fun share(activity: Activity, shareType: SHARE_MEDIA, shareView: ViewGroup, umShareListener: UMShareListener?) {
+     fun share(activity: Activity, shareType: SHARE_MEDIA, shareView: ViewGroup, umShareListener: UMShareListener?) {
         val drawToBitmap = shareView.drawToBitmap()
         AppManager.getOpenEngine().shareImage(activity, drawToBitmap, shareType, umShareListener)
 
     }
 
-    override fun saveShareView(shareView: ViewGroup, listener: ViewToImageFileListener) {
+     fun saveShareView(shareView: ViewGroup, listener: ViewToImageFileListener) {
         viewToImageFile(shareView,
                 createSaveFile(),
                 50, listener)

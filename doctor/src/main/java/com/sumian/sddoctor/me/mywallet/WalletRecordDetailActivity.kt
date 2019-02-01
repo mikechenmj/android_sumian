@@ -10,6 +10,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.WalletDetail
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.MoneyUtil
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_wallet_record_detail.*
  * desc   :
  * version: 1.0
  */
-class WalletRecordDetailActivity : SddBaseActivity<IPresenter>() {
+class WalletRecordDetailActivity : SddBaseActivity() {
 
     override fun showBackNav(): Boolean {
         return true

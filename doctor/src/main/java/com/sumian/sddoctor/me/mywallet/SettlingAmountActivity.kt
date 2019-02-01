@@ -8,14 +8,11 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.me.authentication.AuthenticationHelper
+import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.WalletBalance
-import com.sumian.sddoctor.me.mywallet.bean.WithdrawAbility
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.MoneyUtil
-import com.sumian.sddoctor.widget.dialog.SumianDialog
 import kotlinx.android.synthetic.main.activity_settling_amount.*
-import kotlinx.android.synthetic.main.activity_withdraw_amount.*
 
 @SuppressLint("SetJavaScriptEnabled")
 /**
@@ -25,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_withdraw_amount.*
  * desc   :
  * version: 1.0
  */
-class SettlingAmountActivity : SddBaseActivity<IPresenter>() {
+class SettlingAmountActivity : SddBaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_settling_amount

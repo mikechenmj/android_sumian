@@ -4,7 +4,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_relaxation_list.*
  * version: 1.0
  */
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class RelaxationListActivity : BasePresenterActivity<IPresenter>() {
+class RelaxationListActivity : BaseActivity() {
     private val mAdapter = ItemAdapter()
 
     override fun getLayoutId(): Int {

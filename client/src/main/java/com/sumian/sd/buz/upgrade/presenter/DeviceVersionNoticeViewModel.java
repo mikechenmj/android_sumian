@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.text.TextUtils;
 
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.R;
@@ -34,27 +35,27 @@ import retrofit2.Call;
  * desc:
  */
 
-public class DeviceVersionNoticePresenter implements VersionContract.Presenter {
+public class DeviceVersionNoticeViewModel extends BaseViewModel implements VersionContract.Presenter {
 
     private static final int MONITOR_VERSION_TYPE = 0x01;
     private static final int SLEEPY_VERSION_TYPE = 0x02;
     private WeakReference<VersionContract.View> mViewWeakReference;
 
-    private DeviceVersionNoticePresenter() {
+    private DeviceVersionNoticeViewModel() {
     }
 
-    private DeviceVersionNoticePresenter(VersionContract.View view) {
+    private DeviceVersionNoticeViewModel(VersionContract.View view) {
         this();
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
     }
 
-    public static DeviceVersionNoticePresenter init(VersionContract.View view) {
-        return new DeviceVersionNoticePresenter(view);
+    public static DeviceVersionNoticeViewModel init(VersionContract.View view) {
+        return new DeviceVersionNoticeViewModel(view);
     }
 
-    public static DeviceVersionNoticePresenter init() {
-        return new DeviceVersionNoticePresenter();
+    public static DeviceVersionNoticeViewModel init() {
+        return new DeviceVersionNoticeViewModel();
     }
 
     @Override

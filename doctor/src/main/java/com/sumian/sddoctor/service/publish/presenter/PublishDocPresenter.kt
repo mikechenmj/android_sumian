@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.service.publish.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
@@ -14,7 +15,7 @@ import com.sumian.sddoctor.service.publish.contract.PublishDocContract
  *
  * desc:
  */
-class PublishDocPresenter private constructor(view: PublishDocContract.View) : PublishDocContract.Presenter {
+class PublishDocPresenter private constructor(view: PublishDocContract.View) : BaseViewModel() {
 
     private var mView: PublishDocContract.View? = null
 
@@ -24,12 +25,12 @@ class PublishDocPresenter private constructor(view: PublishDocContract.View) : P
 
     companion object {
 
-        fun init(view: PublishDocContract.View): PublishDocContract.Presenter {
+        fun init(view: PublishDocContract.View): PublishDocPresenter {
             return PublishDocPresenter(view)
         }
     }
 
-    override fun publishDoc(publishType: Int, publishId: Int, content: String) {
+     fun publishDoc(publishType: Int, publishId: Int, content: String) {
 
         mView?.showLoading()
 
@@ -41,8 +42,7 @@ class PublishDocPresenter private constructor(view: PublishDocContract.View) : P
             AppManager.getHttpService().publishDocDiaryEvaluation(publishId, content)
         }
 
-        mCalls.add(call)
-
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onPublishFailed(error = errorResponse.message)

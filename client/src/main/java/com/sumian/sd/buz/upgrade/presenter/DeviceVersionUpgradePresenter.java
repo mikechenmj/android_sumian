@@ -70,7 +70,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
     }
 
     @Override
-    public void release() {
+    public void onCleared() {
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.removePeripheralDataCallback(this);

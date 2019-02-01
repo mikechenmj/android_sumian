@@ -3,7 +3,8 @@ package com.sumian.sd.buz.notification
 import android.content.Context
 import android.content.Intent
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BasePresenterActivity
+import com.sumian.common.base.BaseActivity
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_system_notification_detail.*
  * desc   :
  * version: 1.0
  */
-class SystemNotificationDetailActivity : BasePresenterActivity<IPresenter>() {
+class SystemNotificationDetailActivity : BaseActivity() {
 
     companion object {
         private const val KEY_ID = "com.sumian.sd.buz.notification.SystemNotificationDetailActivity.id"

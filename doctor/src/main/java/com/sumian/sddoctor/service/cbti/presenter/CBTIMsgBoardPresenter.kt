@@ -44,7 +44,7 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
         map["per_page"] = DEFAULT_PAGES
 
         val call = AppManager.getHttpService().getCBTIMessageBoardList(map)
-        mCalls?.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<MessageBoard>>() {
             override fun onSuccess(response: PaginationResponseV2<MessageBoard>?) {
                 val data = response?.data

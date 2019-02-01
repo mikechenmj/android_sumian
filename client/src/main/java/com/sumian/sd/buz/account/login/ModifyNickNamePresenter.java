@@ -35,7 +35,7 @@ public class ModifyNickNamePresenter implements ModifyUserInfoContract.Presenter
     }
 
     @Override
-    public void release() {
+    public void onCleared() {
         Call call = this.mCall;
         if (call == null) {
             return;
