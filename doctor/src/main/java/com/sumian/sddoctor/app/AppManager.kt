@@ -18,6 +18,7 @@ import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.social.OpenEngine
+import com.sumian.common.social.login.OpenLogin
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
@@ -86,6 +87,10 @@ object AppManager {
     @Synchronized
     fun getOpenEngine(): OpenEngine {
         return mOpenEngine
+    }
+
+    fun getOpenLogin(): OpenLogin {
+        return mOpenEngine.openLogin!!
     }
 
     @JvmStatic

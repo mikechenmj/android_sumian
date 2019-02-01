@@ -169,7 +169,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        AppManager.getOpenEngine().openLogin.delegateActivityResult(requestCode, resultCode, data)
+        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data)
     }
 
     override fun onBackPressed() {

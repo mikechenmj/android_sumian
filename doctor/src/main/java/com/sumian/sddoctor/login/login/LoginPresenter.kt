@@ -67,13 +67,13 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
 
     override fun loginByWechat(activity: Activity) {
         view.showLoading()
-        AppManager.getOpenEngine().openLogin.weChatLogin(activity, object : UMAuthListener {
+        AppManager.getOpenLogin().weChatLogin(activity, object : UMAuthListener {
             override fun onStart(share_media: SHARE_MEDIA) {
                 LogUtils.d()
             }
 
             override fun onComplete(share_media: SHARE_MEDIA, i: Int, map: MutableMap<String, String>) {
-                AppManager.getOpenEngine().openLogin.deleteWechatTokenCache(activity, null)
+                AppManager.getOpenLogin().deleteWechatTokenCache(activity, null)
                 LogUtils.d(map)
                 val unionId = map["unionid"] ?: ""
                 val openId = map["openid"] ?: ""

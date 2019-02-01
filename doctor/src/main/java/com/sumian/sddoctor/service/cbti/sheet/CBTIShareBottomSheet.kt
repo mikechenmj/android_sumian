@@ -90,7 +90,7 @@ class CBTIShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClic
         }
         AppManager
                 .getOpenEngine()
-                .shareUrl(activity,
+                .shareUrl(activity!!,
                         shareUrl,
                         title,
                         description,

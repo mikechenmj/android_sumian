@@ -91,7 +91,7 @@ class SettingsPresenter private constructor(view: SettingsContract.View) : Setti
 
         mView?.showLoading()
 
-        AppManager.getOpenEngine().openLogin.weChatLogin(activity, object : UMAuthListener {
+        AppManager.getOpenLogin().weChatLogin(activity, object : UMAuthListener {
 
             override fun onStart(share_media: SHARE_MEDIA) {
                 LogUtils.d()
@@ -99,7 +99,7 @@ class SettingsPresenter private constructor(view: SettingsContract.View) : Setti
 
             override fun onComplete(share_media: SHARE_MEDIA, i: Int, map: MutableMap<String, String>) {
                 LogUtils.d(map)
-                AppManager.getOpenEngine().openLogin.deleteWechatTokenCache(activity, null)
+                AppManager.getOpenLogin().deleteWechatTokenCache(activity, null)
                 map["nickname"] = map.getValue("name")
                 val toJson = JsonUtil.toJson(map)
                 bindWechat(toJson)
