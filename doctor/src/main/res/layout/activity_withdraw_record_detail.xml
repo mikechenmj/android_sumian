@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space style="@style/space_height_10" />
+
+    <LinearLayout
+        style="@style/mp_wc_horizontal_padding_20"
+        android:layout_height="82dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/money_yuan" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            style="@style/text_t1_16"
+            android:text="@string/_0_00"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="-500.00" />
+    </LinearLayout>
+
+    <View style="@style/HorizontalDividerLine" />
+
+    <LinearLayout
+        style="@style/mp_wc_horizontal_padding_20"
+        android:layout_height="62dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/apply_time" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+        <TextView
+            android:id="@+id/tv_apply_time"
+            style="@style/text_t1_16"
+            android:text="@string/_0_00"
+            tools:text="2018.10.13 19:09" />
+    </LinearLayout>
+
+    <View style="@style/HorizontalDividerLine" />
+
+    <LinearLayout
+        style="@style/mp_wc_horizontal_padding_20"
+        android:layout_height="62dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/progress" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+        <TextView
+            android:id="@+id/tv_progress"
+            style="@style/text_t1_16"
+            android:text="@string/_0_00"
+            tools:text="审核成功" />
+    </LinearLayout>
+
+    <View style="@style/HorizontalDividerLine" />
+
+    <LinearLayout
+        android:id="@+id/vg_approve_time"
+        style="@style/mp_wc_horizontal_padding_20"
+        android:layout_height="62dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/approve_time" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+        <TextView
+            android:id="@+id/tv_approve_time"
+            style="@style/text_t1_16"
+            android:text="@string/_0_00"
+            tools:text="2018.10.13 19:09" />
+    </LinearLayout>
+
+    <View style="@style/HorizontalDividerLine" />
+
+    <LinearLayout
+        android:id="@+id/vg_remark"
+        style="@style/mp_wc_horizontal_padding_20"
+        android:layout_height="62dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/remark" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+        <TextView
+            android:id="@+id/tv_remark"
+            style="@style/text_t1_16"
+            android:text="@string/_0_00"
+            tools:text="账户信息有误" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_bottom_hint"
+        style="@style/text_t2_13"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:text="@string/please_wait_one_to_three_day_blala" />
+
+</LinearLayout>

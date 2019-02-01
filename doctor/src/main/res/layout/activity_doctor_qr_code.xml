@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".booking.DoctorQrCodeActivity">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/add_patient" />
+
+    <TextView
+        style="@style/text_t1_16"
+        android:layout_marginTop="@dimen/space_50"
+        android:text="@string/weixin_scan"
+        android:textSize="@dimen/font_20"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_add_doctor_hint"
+        style="@style/text_t1_16"
+        android:layout_marginTop="@dimen/space_20"
+        tools:text="@string/add_xx_doctor" />
+
+    <ImageView
+        android:id="@+id/iv_qr"
+        android:layout_width="@dimen/space_210"
+        android:layout_height="@dimen/space_210"
+        android:layout_marginTop="@dimen/space_40"
+        android:background="@drawable/bg_qr_code"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_10"
+        tools:src="@drawable/rect_solid_b3_radius_4dp" />
+
+    <TextView
+        style="@style/text_t2_14"
+        android:layout_width="@dimen/space_200"
+        android:layout_marginTop="@dimen/space_40"
+        android:gravity="center"
+        android:text="@string/weixin_scan_bind_doctor_desc" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_share"
+        style="@style/text_b2_t2_16_blue_grey_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_62"
+        android:background="@color/b3_color"
+        android:gravity="center"
+        android:text="@string/one_key_share_to_patient" />
+</LinearLayout>

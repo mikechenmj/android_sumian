@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/authentication_fragment"
+        android:name="com.sumian.sddoctor.me.authentication.AuthenticationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/vg_commit_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_login_icon_success"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_marginTop="40dp"
+            android:text="@string/commit_success"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/text_t2_13"
+            android:layout_width="200dp"
+            android:layout_marginTop="10dp"
+
+            android:gravity="center"
+            android:text="@string/authentication_commit_success_hint" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            style="@style/SumianButton_150dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/confirm" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/my_wallet_head_height"
+                android:background="@drawable/msg_bg_wallet"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="30dp">
+
+                <TextView
+                    style="@style/text_white_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="94dp"
+                    android:text="@string/available_withdraw_amount" />
+
+                <TextView
+                    android:id="@+id/tv_withdraw_amount"
+                    style="@style/text_white_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textSize="30sp"
+                    tools:text="¥8888.00" />
+
+                <TextView
+                    android:id="@+id/tv_inspect"
+                    style="@style/text_white_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="116dp"
+                    android:background="@drawable/my_wallet_inspect_tv_bg"
+                    android:drawableEnd="@drawable/ic_wallet_right"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/inspect" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/v_settling"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_wallet_settlement"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settling_amount" />
+
+                    <TextView
+                        style="@style/text_t1_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/pending_income"
+                        android:textColor="#7C7CA0" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_settling_amount"
+                    style="@style/text_t1_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1288.00" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/ic_settlement_right"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="10dp" />
+
+            <TextView
+                style="@style/TitleTextWithUnderline"
+                android:text="@string/wallet_detail" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/v_toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_72"
+            android:paddingTop="24dp">
+
+            <ImageView
+                android:id="@+id/iv_nav_icon"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_nav_icon_back"
+                android:tint="@color/white"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_toolbar"
+                style="@style/text_white_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/my_wallet" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/v_wallet_detail_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/b1_color" />
+
+            <TextView
+                style="@style/TitleTextWithUnderline"
+                android:text="@string/wallet_detail" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

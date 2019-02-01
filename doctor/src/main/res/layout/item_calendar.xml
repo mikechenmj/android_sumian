@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/space_50"
+    android:layout_height="@dimen/space_50">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="@dimen/space_32"
+        android:layout_height="@dimen/space_32"
+        android:layout_gravity="center"
+        android:background="@drawable/ring_blue_b5"
+        android:gravity="center"
+        android:textSize="@dimen/font_16"
+        tools:text="12" />
+</FrameLayout>

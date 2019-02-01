@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".notification.NotificationListActivity">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu_text="@string/all_read"
+        app:text="@string/notification_center" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/space_10" />
+
+        <com.sumian.sddoctor.widget.EmptyErrorView
+            android:id="@+id/empty_error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:eev_desc="@string/notification_list_empty_desc"
+            app:eev_icon="@mipmap/ic_empty_state_alarm"
+            app:eev_title="@string/notification_list_empty_title"
+            tools:visibility="visible" />
+    </FrameLayout>
+</LinearLayout>

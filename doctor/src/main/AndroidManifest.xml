@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sumian.sddoctor">
+
+    <!-- 基础模块（必须加入以下声明）START -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- 基础模块 END -->
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:theme,android:label,android:fullBackupContent"
+        tools:targetApi="n">
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name=".welcome.WelcomeActivity"
+            android:theme="@style/FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <data
+                    android:host="${host}"
+                    android:scheme="${scheme}" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:launchMode="singleTask" />
+        <!-- wechat -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- share -->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <!-- login -->
+        <activity
+            android:name=".login.login.LoginActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".login.login.BindWechatActivity" />
+        <!-- booking -->
+        <activity android:name=".booking.BookingManagementActivity" />
+        <!-- push -->
+        <service android:name="com.avos.avoscloud.PushService" />
+        <service android:name=".notification.MarkNotificationAsReadService" />
+
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.sumian.common.notification.PushReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.sumian.sdd.action.PUSH" />
+            </intent-filter>
+        </receiver>
+        <!-- me -->
+        <activity
+            android:name=".account.activity.UserInfoActivity"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name=".account.activity.SettingsActivity"
+            android:theme="@style/ActivityTheme" />
+
+        <!-- patient -->
+
+        <activity android:name=".booking.DoctorQrCodeActivity" />
+        <activity android:name=".homepage.FreeAnonymousCallActivity" />
+        <activity android:name=".account.activity.ModifyDoctorInfoActivity" />
+        <activity android:name=".account.activity.ModifyPasswordActivity" />
+        <activity android:name=".login.register.RegisterActivity" />
+        <activity android:name=".account.activity.VersionActivity" />
+        <activity android:name=".notification.NotificationListActivity" />
+        <activity android:name=".patient.activity.PatientInfoActivity" />
+        <activity android:name=".booking.BookingDetailActivity" />
+        <activity android:name=".login.register.RegisterSuccessActivity" />
+        <activity android:name=".service.advisory.activity.AdvisoryListActivity" />
+        <activity android:name=".patient.activity.ModifyPatientTagActivity" />
+        <activity
+            android:name=".service.advisory.activity.AdvisoryDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".service.publish.activity.ReplyDocActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name=".service.publish.activity.ReplyVoiceActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityTheme" />
+        <activity android:name=".patient.activity.PatientListActivity" />
+        <activity android:name=".service.plan.activity.PlanListActivity" />
+        <activity android:name=".service.scale.activity.ScaleListActivity" />
+        <activity android:name=".service.advisory.onlinereport.OnlineReportDetailActivity" />
+        <activity android:name=".service.advisory.onlinereport.OnlineReportListActivity" />
+        <activity
+            android:name=".service.evaluation.activity.WeekEvaluationListActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name=".service.evaluation.activity.WeekEvaluationDetailWebActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityTheme" />
+        <activity
+            android:name=".me.myservice.MyServiceListActivity"
+            android:exported="true" />
+        <activity android:name=".me.myservice.MyServiceDetailActivity" />
+        <activity android:name=".me.myservice.OpenServiceActivity" />
+        <activity android:name=".me.myservice.SetPriceActivity" />
+        <activity
+            android:name=".login.login.UserProtocolActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".h5.SimpleWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".me.mywallet.MyWalletActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.TranslucentStatus" />
+        <activity android:name=".me.mywallet.WalletRecordDetailActivity" />
+        <activity android:name=".service.cbti.activity.CBTIProgressActivity" />
+        <activity
+            android:name=".me.mywallet.WithdrawActivity"
+            android:windowSoftInputMode="stateVisible"
+            android:exported="true" />
+        <activity android:name=".me.mywallet.WithdrawRulesActivity" />
+        <activity
+            android:name=".service.report.activity.ReportActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".me.mywallet.WithdrawRecordListActivity"
+            android:exported="true" />
+        <activity android:name=".me.mywallet.WithdrawDetailActivity" />
+        <activity
+            android:name=".account.activity.FeedbackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".patient.sleepdiary.PatientSleepDiaryDetailActivity" />
+        <activity
+            android:name=".me.authentication.AuthenticationActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".me.authentication.ChooseStringActivity" />
+        <activity
+            android:name=".me.authentication.InputStringActivity"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+        <activity android:name=".notification.SystemNotificationDetailActivity" />
+        <activity android:name=".login.login.SetInviteCodeActivity" />
+
+        <activity
+            android:name=".service.cbti.activity.CBTIIntroduction2WebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
+            android:name=".service.cbti.activity.CBTIMessageBoardActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".service.cbti.activity.CBTIMessageBoardDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <service
+            android:name=".service.cbti.job.CBTICourseWatchLogJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity
+            android:name=".service.cbti.activity.CBTIIntroductionActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TranslucentStatus"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".service.cbti.activity.CBTIEvaluationWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TranslucentStatus"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
+            android:name=".service.cbti.activity.CBTICoursePlayActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/PlayActivityTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity
+            android:name=".service.cbti.activity.CBTIWeekCoursePartActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".me.mywallet.WithdrawAmountActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".me.mywallet.SettlingRecordListActivity" />
+        <activity android:name=".me.mywallet.SettlingRecordDetailActivity" />
+        <activity android:name=".me.mywallet.SettlingAmountActivity" />
+    </application>
+
+</manifest>

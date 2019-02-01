@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_invite_code"
+        style="@style/SumianEditText"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="36dp"
+        android:hint="@string/input_invite_code_hint"
+        tools:ignore="Autofill,TextFields" />
+
+    <Button
+        android:id="@+id/bt_complete"
+        style="@style/SumianButton_HorizontalMargin"
+        android:layout_marginTop="40dp"
+        android:text="@string/complete" />
+
+    <TextView
+        style="@style/text_t2_13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/set_invite_code_explain" />
+</LinearLayout>

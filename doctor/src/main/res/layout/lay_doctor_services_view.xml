@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_112"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_10"
+    android:paddingBottom="@dimen/space_16">
+
+    <TextView
+        android:id="@+id/tv_cbti_progress"
+        style="@style/text_t1_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_home_cbti"
+        android:drawablePadding="@dimen/space_4"
+        android:gravity="center"
+        android:text="@string/cbti" />
+
+    <TextView
+        android:id="@+id/tv_booking"
+        style="@style/text_t1_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_home_booking"
+        android:drawablePadding="@dimen/space_4"
+        android:gravity="center"
+        android:text="@string/tel_consult" />
+
+    <TextView
+        android:id="@+id/tv_doc_advisory"
+        style="@style/text_t1_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_home_consult"
+        android:drawablePadding="@dimen/space_4"
+        android:gravity="center"
+        android:text="@string/doc_advisory" />
+
+    <TextView
+        android:id="@+id/tv_note_evaluate"
+        style="@style/text_t1_12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_home_diary"
+        android:drawablePadding="@dimen/space_4"
+        android:gravity="center"
+        android:text="@string/note_evaluate" />
+
+</LinearLayout>

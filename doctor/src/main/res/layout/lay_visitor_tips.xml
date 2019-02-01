@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_warning"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_40"
+    android:background="@color/b4_color_day"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/bg_material_ripple"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/space_20"
+    android:paddingRight="@dimen/space_20"
+    android:visibility="gone"
+    tools:showIn="@layout/fragment_me"
+    tools:visibility="visible">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_experience_becareful" />
+
+    <TextView
+        android:id="@+id/tv_warning"
+        style="@style/text_b2_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_10"
+        android:text="@string/click_logout_visitor" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/iv_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        app:srcCompat="@drawable/ic_info_enter_white" />
+</LinearLayout>

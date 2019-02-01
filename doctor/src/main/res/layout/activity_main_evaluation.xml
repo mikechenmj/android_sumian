@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_50"
+        app:tabBackground="@color/b2_color"
+        app:tabIndicatorColor="@color/b3_color"
+        app:tabIndicatorHeight="@dimen/space_2"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/b3_color"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabTextColor="@color/t2_color">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/have_a_evaluate"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_finish"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancelled"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_five"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/closed"
+            tools:ignore="HardcodedText" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

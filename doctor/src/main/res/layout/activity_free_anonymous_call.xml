@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".homepage.FreeAnonymousCallActivity">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/free_anonymous_call" />
+
+    <TextView
+        style="@style/text_t1_16"
+        android:layout_marginTop="@dimen/space_40"
+        android:layout_marginBottom="@dimen/space_20"
+        android:text="@string/system_call_at_the_same_time"
+        android:textColor="@color/b3_color" />
+
+    <FrameLayout
+        android:layout_width="@dimen/space_250"
+        android:layout_height="@dimen/space_250"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/bg_patient_img_free_call" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_patient_avatar"
+            android:layout_width="@dimen/space_124"
+            android:layout_height="@dimen/space_124"
+            android:layout_gravity="center"
+            android:elevation="@dimen/space_4"
+            tools:src="@drawable/circle_b3" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_doctor_avatar"
+            android:layout_width="@dimen/space_40"
+            android:layout_height="@dimen/space_40"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="@dimen/space_42"
+            android:layout_marginBottom="@dimen/space_24"
+            android:elevation="@dimen/space_4"
+            tools:src="@drawable/circle_b3" />
+    </FrameLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/dv_doctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="visible"
+        app:divider_more_visible="visible"
+        app:show_iv="true"
+        app:use_circle_type_iv="true"
+        tools:type_content="13500000000"
+        tools:type_desc="doctor name" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/dv_patient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="gone"
+        app:divider_more_visible="gone"
+        app:show_iv="true"
+        app:use_circle_type_iv="true"
+        tools:type_content="13500000000"
+        tools:type_desc="patient name" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_call"
+        style="@style/text_b2_t2_16_blue_grey_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_item_height_62"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/start_call" />
+</LinearLayout>

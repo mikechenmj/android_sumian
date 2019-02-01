@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space style="@style/space_height_10" />
+
+    <LinearLayout
+        style="@style/mp_wc_horizontal_padding_20"
+        android:layout_height="82dp"
+        android:layout_marginBottom="1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/money_yuan" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            style="@style/text_t1_16"
+            android:text="@string/_0_00"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="-500.00" />
+    </LinearLayout>
+
+    <com.sumian.sddoctor.me.mywallet.widget.WalletDetailItemView
+        android:id="@+id/item_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        app:tv_start="@string/type" />
+
+    <com.sumian.sddoctor.me.mywallet.widget.WalletDetailItemView
+        android:id="@+id/item_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        app:tv_start="@string/trade_time" />
+
+    <com.sumian.sddoctor.me.mywallet.widget.WalletDetailItemView
+        android:id="@+id/item_serial_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        app:tv_start="@string/serial_number" />
+
+    <com.sumian.sddoctor.me.mywallet.widget.WalletDetailItemView
+        android:id="@+id/item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        app:tv_start="@string/content" />
+
+    <com.sumian.sddoctor.me.mywallet.widget.WalletDetailItemView
+        android:id="@+id/item_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        app:tv_start="@string/progress" />
+
+    <com.sumian.sddoctor.me.mywallet.widget.WalletDetailItemView
+        android:id="@+id/item_in_account_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        app:tv_start="@string/predict_in_account_time" />
+
+    <LinearLayout
+        android:id="@+id/vg_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/explain" />
+
+        <TextView
+            android:id="@+id/tv_explain"
+            style="@style/text_t2_14"
+            android:layout_marginTop="20dp"
+            tools:text="展示后台撤回时填写的备注内容，限制最多100字。" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_contact_us"
+        style="@style/text_t2_13"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:text="@string/any_question_please_call_xxx" />
+
+</LinearLayout>

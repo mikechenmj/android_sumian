@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="departments">
+        <item>睡眠医学科</item>
+        <item>精神医学科</item>
+        <item>神经内科</item>
+        <item>呼吸内科</item>
+        <item>心理科</item>
+        <!--<item>心理行为医学科</item>-->
+        <!--<item>心身医学科</item>-->
+    </string-array>
+
+    <string-array name="job_titles">
+        <item>主治医师</item>
+        <item>副主任医师</item>
+        <item>主任医师</item>
+        <item>教授</item>
+        <item>副教授</item>
+        <item>助理教授</item>
+    </string-array>
+
+    <string-array name="duration">
+        <item>20时</item>
+        <item>0时</item>
+        <item>4时</item>
+        <item>12时</item>
+    </string-array>
+
+    <string-array name="cbti_group_arrays">
+        <item>第1周</item>
+        <item>第2周</item>
+        <item>第3周</item>
+        <item>第4周</item>
+        <item>第5周</item>
+        <item>第6周</item>
+        <item>已达标</item>
+        <item>未达标</item>
+    </string-array>
+
+</resources>

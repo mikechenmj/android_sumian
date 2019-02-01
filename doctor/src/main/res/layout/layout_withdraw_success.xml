@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_withdraw_success"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:visibility="visible">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_msg_icon_success"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        style="@style/text_t3_16"
+        android:layout_marginTop="30dp"
+        android:text="@string/withdraw_is_processing"
+        android:textStyle="bold" />
+
+    <TextView
+        style="@style/text_t2_14"
+        android:layout_marginTop="20dp"
+        android:text="@string/it_will_cost_about_3_day_please_wait" />
+
+    <Button
+        android:id="@+id/btn_complete"
+        style="@style/SumianButtonWithMargin35"
+        android:layout_marginTop="40dp"
+        android:text="@string/complete" />
+
+</LinearLayout>

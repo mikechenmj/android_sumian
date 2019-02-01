@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/b2_color"
+    android:foreground="@drawable/bg_material_ripple"
+    android:orientation="vertical"
+    tools:targetApi="m">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/lay_avatar_container"
+            android:layout_width="@dimen/space_58"
+            android:layout_height="@dimen/space_50"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_10"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/space_50"
+                android:layout_height="@dimen/space_50"
+                app:qmui_corner_radius="@dimen/space_4"
+                app:srcCompat="@mipmap/ic_info_avatar_patient"
+                tools:ignore="RtlHardcoded" />
+
+            <ImageView
+                android:id="@+id/iv_patient_level"
+                android:layout_width="@dimen/space_16"
+                android:layout_height="@dimen/space_16"
+                android:layout_gravity="bottom|right"
+                android:contentDescription="@null"
+                android:visibility="invisible"
+                tools:ignore="RtlHardcoded"
+                tools:srcCompat="@drawable/ic_book_details_v" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_50"
+            android:layout_marginStart="@dimen/space_12"
+            android:gravity="center|left"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/lay_avatar_container"
+            app:layout_constraintLeft_toRightOf="@id/lay_avatar_container"
+            app:layout_constraintTop_toTopOf="@id/lay_avatar_container"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:ignore="RtlHardcoded">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/text_t3_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_2"
+                android:ellipsize="marquee"
+                android:maxEms="12"
+                android:singleLine="true"
+                tools:text="够高小姐姐名字有十二个字" />
+
+            <TextView
+                android:id="@+id/tv_sex_and_age"
+                style="@style/text_t2_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:layout_marginEnd="@dimen/space_10"
+                tools:text="女 | 18 岁" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_20"
+            android:layout_marginRight="@dimen/space_20"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/container"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/container">
+
+            <TextView
+                style="@style/text_t2_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cbti_progress_start_time"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_add_date"
+                style="@style/text_t2_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2"
+                android:textSize="13sp"
+                tools:text="2017-9-14" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/l3_color" />
+
+</LinearLayout>

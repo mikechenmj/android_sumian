@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="files_root"
+        path="Android/data/com.sumian.media/" />
+    <external-path
+        name="external_storage_root"
+        path="." />
+    <files-path
+        name="images"
+        path="images/" />
+    <files-path
+        name="docs"
+        path="docs/" />
+    <cache-path
+        name="images"
+        path="images/" />
+</paths>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_t1_14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_54"
+        android:background="@color/b2_color"
+        android:gravity="center"
+        android:text="@string/select_job_title" />
+
+    <com.sumian.common.widget.picker.NumberPickerView
+        android:id="@+id/picker"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_174"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/b2_color"
+        app:npv_DividerColor="@color/l1_color"
+        app:npv_ItemPaddingHorizontal="5dp"
+        app:npv_ItemPaddingVertical="5dp"
+        app:npv_RespondChangeOnDetached="true"
+        app:npv_ShowCount="3"
+        app:npv_ShowDivider="true"
+        app:npv_TextColorHint="@color/b3_color"
+        app:npv_TextColorNormal="#4c475266"
+        app:npv_TextColorSelected="@color/b3_color"
+        app:npv_TextSizeHint="@dimen/font_16"
+        app:npv_TextSizeNormal="@dimen/font_16"
+        app:npv_TextSizeSelected="@dimen/font_16"
+        app:npv_WrapSelectorWheel="true" />
+
+    <TextView
+        android:id="@+id/tv_sure"
+        style="@style/text_t1_14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_56"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/b2_color"
+        android:gravity="center"
+        android:text="@string/sure" />
+
+</LinearLayout>

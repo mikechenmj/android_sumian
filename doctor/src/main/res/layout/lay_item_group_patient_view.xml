@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.sumian.sddoctor.patient.widget.GroupTagTipsView
+        android:id="@+id/group_tag_tips_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:background="@color/b1_color"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/lay_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10"
+        android:background="@color/b1_color" />
+
+    <TextView
+        android:id="@+id/tv_patient_count"
+        style="@style/text_t2_14"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_60"
+        android:background="@color/b1_color"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:text="- 总共475名患者 - "
+        tools:visibility="visible" />
+
+</LinearLayout>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/text_t1_14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/b2_color"
+        android:gravity="center"
+        android:paddingBottom="@dimen/space_16"
+        android:paddingTop="@dimen/space_16"
+        android:text="@string/lesson_list" />
+
+    <com.sumian.common.widget.FlowLayout
+        android:id="@+id/flow_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/b2_color"
+        android:padding="@dimen/space_20"
+        app:sd_HorizontalSpace="@dimen/space_10"
+        app:sd_VerticalSpace="@dimen/space_10" />
+
+</LinearLayout>

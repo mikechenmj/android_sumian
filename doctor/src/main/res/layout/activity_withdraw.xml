@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/vg_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:visibility="visible">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10dp" />
+
+        <LinearLayout style="@style/ll_mp_wc_bg_white_vertical">
+
+            <Space style="@style/space_height_10" />
+
+            <TextView
+                android:id="@+id/tv_hint"
+                style="@style/text_t2_16"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/input_withdraw_amount" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/yuan_mark"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/et_amount"
+                    style="@style/SumianEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:ignore="Autofill,HardcodedText"
+                    tools:text="100.00" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/HorizontalDividerLineMarginStart20"
+                android:layout_marginTop="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_available_withdraw_amount"
+                    style="@style/text_t2_14"
+                    tools:text="@string/available_withdraw_amount_xx" />
+
+                <Space style="@style/space_horizontal_weight_1" />
+
+                <TextView
+                    android:id="@+id/bt_withdraw_all"
+                    style="@style/text_b3_14"
+                    android:text="@string/withdraw_all"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space style="@style/space_height_10" />
+
+        <Button
+            android:id="@+id/bt_withdraw"
+            style="@style/SumianButton"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="35dp"
+            android:enabled="false"
+            android:text="@string/confirm_withdraw" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_withdraw_rules"-->
+        <!--style="@style/text_t2_13"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:text="@string/withdraw_rules_u"-->
+        <!--android:textColor="@color/b3_color" />-->
+    </LinearLayout>
+
+    <include layout="@layout/layout_withdraw_success" />
+</LinearLayout>

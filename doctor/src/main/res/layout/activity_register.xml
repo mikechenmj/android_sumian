@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".login.register.RegisterActivity">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/register" />
+
+    <!--<View style="@style/HorizontalDividerLine" />-->
+
+    <!--<com.sumian.sddoctor.login.login.widget.RegisterProgressView-->
+    <!--android:visibility="gone"-->
+    <!--android:id="@+id/register_progress_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/space_60"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:paddingEnd="@dimen/space_26"-->
+    <!--android:paddingStart="@dimen/space_22" />-->
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/space_10" />
+</LinearLayout>

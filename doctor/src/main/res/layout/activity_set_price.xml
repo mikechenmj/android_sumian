@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_warn"
+        style="@style/text_b2_16"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/b8_color"
+        android:gravity="center"
+        android:text="@string/max_price_hint"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_item_height_62"
+        android:layout_marginTop="10dp"
+        android:background="@color/b2_color"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price" />
+
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="@null"
+            android:inputType="numberDecimal|numberSigned"
+            tools:hint='200.00' />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_complete"
+        style="@style/SumianButton"
+        android:layout_width="match_parent"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="36dp"
+        android:text="@string/complete" />
+</LinearLayout>

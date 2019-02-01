@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="10dp" />
+
+        <include
+            android:id="@+id/service_item"
+            layout="@layout/layout_service_item" />
+
+        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="120dp"-->
+        <!--android:background="@color/b2_color"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="20dp"-->
+        <!--android:layout_marginEnd="20dp"-->
+        <!--android:elevation="32dp"-->
+        <!--app:cardBackgroundColor="@color/white"-->
+        <!--app:cardCornerRadius="4dp">-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/iv_service2"-->
+        <!--android:layout_width="70dp"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:layout_margin="@dimen/space_5"-->
+        <!--android:contentDescription="@null" />-->
+        <!--</android.support.v7.widget.CardView>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_title2"-->
+        <!--style="@style/text_t3_18"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--tools:text="电话预约咨询" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_desc2"-->
+        <!--style="@style/text_t1_14"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/dp_10"-->
+        <!--tools:text="连续7天监测你的睡眠日记" />-->
+
+        <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
+
+        <TextView
+            android:id="@+id/tv_package_label"
+            style="@style/text_t2_13"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_38"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/service_type_number" />
+
+        <LinearLayout
+            android:id="@+id/ll_package_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.sumian.sddoctor.widget.divider.SettingDividerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:type_content="content"
+                app:type_desc="desc"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/text_t2_13"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_38"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/service_detail_introduction" />
+
+        <TextView
+            android:id="@+id/tv_service_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="20dp"
+            tools:text="【适用人群】
+• 随便给点字来占位
+• 失眠是一种常见的睡眠障碍，困扰着许多人。
+• 目前的治疗方法包括药物治疗和非药物治疗。
+
+【医生寄语】
+占位，失眠是一种常见的睡眠障碍，困扰着许多人。目前的治疗方法包括药物治疗和非药物治疗。失眠是一种常见的睡眠障碍，困扰着许多人。这里是大概四行文本的长度。" />
+
+        <TextView
+            style="@style/text_t2_13"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/if_you_need_more_operation_use_desk_version" />
+    </LinearLayout>
+
+</ScrollView>

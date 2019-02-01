@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b2_color"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        style="@style/text_t1_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_error_tips_one" />
+
+    <TextView
+        style="@style/text_t2_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10"
+        android:text="@string/empty_error_tips_two" />
+
+    <Button
+        android:id="@+id/bt_add_patient"
+        style="@style/bt_t1_style"
+        android:layout_width="@dimen/space_150"
+        android:layout_height="@dimen/space_50"
+        android:layout_marginTop="@dimen/space_40"
+        android:text="@string/add_patient"
+        tools:visibility="visible" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

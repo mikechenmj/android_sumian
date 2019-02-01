@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color_day"
+    android:orientation="vertical">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/write_message_keyboard" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/vg_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_10"
+            android:orientation="vertical">
+
+            <com.sumian.sddoctor.service.cbti.widget.keyboard.MaxMsgBoardKeyBoard
+                android:id="@+id/max_msg_keyboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/space_224" />
+
+            <Button
+                android:id="@+id/btn_send"
+                style="@style/text_b2_16"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_50"
+                android:layout_marginLeft="@dimen/space_36"
+                android:layout_marginTop="@dimen/space_40"
+                android:layout_marginRight="@dimen/space_36"
+                android:background="@drawable/bg_bt"
+                android:text="@string/send" />
+
+            <TextView
+                style="@style/text_t2_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_40"
+                android:layout_marginRight="@dimen/space_20"
+                android:text="@string/my_msg" />
+
+            <com.sumian.common.widget.recycler.LoadMoreRecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_msg_board_empty"
+                style="@style/text_t2_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_20"
+                android:layout_marginBottom="@dimen/space_20"
+                android:gravity="center"
+                android:text="@string/msg_board_empty_hint" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <com.sumian.common.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="1-1 睡眠的奥秘" />
+
+    <com.sumian.sddoctor.service.cbti.video.NiceVideoView
+        android:id="@+id/aliyun_player"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_212" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lay_lesson_tips"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_62"
+                android:layout_marginBottom="@dimen/space_10"
+                android:background="@color/b2_color"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.sumian.sddoctor.widget.nav.NavigationItem
+                    android:id="@+id/nav_tab_lesson_practice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    app:tab_icon="@drawable/ic_cbti_icon_exercise"
+                    app:tab_text="@string/lesson_practice"
+                    tools:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/b2_color"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/space_20"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lesson_summary" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_lesson_list"
+                        style="@style/text_b3_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_cbti_icon_list"
+                        android:drawablePadding="@dimen/space_10"
+                        android:text="@string/lesson_list"
+                        android:textSize="@dimen/font_16" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1"
+                    android:layout_marginStart="@dimen/space_20"
+                    android:background="@color/l1_color" />
+
+                <com.sumian.common.h5.widget.SWebView
+                    android:id="@+id/tv_summary"
+                    style="@style/text_t2_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_20"
+                    android:lineSpacingExtra="@dimen/space_4"
+                    tools:ignore="HardcodedText"
+                    tools:text="这个 CBTI 课程一共包括 65 节课，每周一节，这是希望每学完一节课你能够有一个星期的的时间去实践每节课所提到的内容和技巧。而且，我们会根据你每个星期的睡眠日记给你提供个性化的意见。睡眠改善是需要时间的，所以，在接下来的6周，你将会了解更多关于改善失眠的技巧和策略。
+
+整个过程中，记录睡眠日记是一个非常重要的指标，也是睡眠改善的重要评估工具。谨记每天早上都填写你的睡眠日记，这将会大大增加成功的机会。" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

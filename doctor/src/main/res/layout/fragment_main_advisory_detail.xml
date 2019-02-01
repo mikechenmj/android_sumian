@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipChildren="true"
+        android:clipToPadding="true" />
+
+    <LinearLayout
+        android:id="@+id/lay_record_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_64"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_voice_reply"
+            style="@style/TopNotificationText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_64"
+            android:layout_weight="1"
+            android:background="@color/b5_color"
+            android:foreground="@drawable/bg_material_ripple"
+            android:gravity="center"
+            android:text="@string/voice_reply" />
+
+        <TextView
+            android:id="@+id/tv_doc_reply"
+            style="@style/TopNotificationText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_64"
+            android:layout_weight="1"
+            android:background="@color/b3_color"
+            android:foreground="@drawable/bg_material_ripple"
+            android:gravity="center"
+            android:text="@string/doc_reply" />
+
+    </LinearLayout>
+
+</LinearLayout>

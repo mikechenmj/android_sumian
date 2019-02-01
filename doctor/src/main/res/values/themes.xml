@@ -1,0 +1,53 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:launchMode">singleTop</item>
+        <item name="android:windowAnimationStyle">@style/AnimationStyle</item>
+        <item name="android:windowBackground">@color/b1_color</item>
+    </style>
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.TranslucentStatus">
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowOverscan">true</item>
+    </style>
+
+    <style name="PlayActivityTheme" parent="@style/AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <style name="ActivityTheme" parent="AppTheme">
+        <item name="android:configChanges">keyboardHidden|orientation</item>
+        <item name="android:launchMode">singleTop</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
+    </style>
+
+    <!--默认的 activity 切换的动画-->
+    <style name="AnimationStyle" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <style name="dialog_change_clarity" parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@color/dialog_bg_color</item>
+    </style>
+
+</resources>

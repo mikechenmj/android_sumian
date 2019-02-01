@@ -1,0 +1,27 @@
+@startuml
+class CalendarView {
+    setMonthTime(long weekTime)
+    setEmphasizeDays(@CalendarView.DayType int dayType, List<Integer> days)
+    setOnDateClickListener(CalendarDayAdapter.OnDateClickListener onDateClickListener)
+}
+class CalendarDayVH
+class CalendarDayAdapter
+
+class SleepCalendarDayVH
+class SleepCalendarDayAdapter
+
+class CalendarViewWrapper
+class CalendarViewWrapperVH
+class CalendarViewWrapperAdapter
+
+CalendarDayVH <|- SleepCalendarDayVH: extends
+CalendarDayAdapter <|- SleepCalendarDayAdapter: extends
+SleepCalendarDayVH <-- SleepCalendarDayAdapter
+
+CalendarDayVH <-- CalendarDayAdapter: 1:n
+SleepCalendarDayAdapter <-- CalendarView
+CalendarView <-- CalendarViewWrapperVH
+CalendarViewWrapperVH <-- CalendarViewWrapperAdapter: 1:n
+CalendarViewWrapperAdapter <-- CalendarViewWrapper
+
+@enduml

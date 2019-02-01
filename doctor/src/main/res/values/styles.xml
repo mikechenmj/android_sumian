@@ -1,0 +1,429 @@
+<resources>
+
+    <!--text-->
+    <style name="WrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BaseText" parent="WrapContent" />
+
+    <style name="text_t1_style" parent="BaseText">
+        <item name="android:textColor">@color/t1_color</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t1_12" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
+    <style name="text_t1_14" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t1_16" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t1_18" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t2_style" parent="BaseText">
+        <item name="android:textColor">@color/t2_color</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t2_13" parent="text_t2_style">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="text_t2_14" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t2_16" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t2_18" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t3_style" parent="BaseText">
+        <item name="android:textColor">@color/t3_color</item>
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t3_14" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t3_16" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t3_18" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t3_30" parent="text_t3_style">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="text_t4_style" parent="BaseText">
+        <item name="android:textColor">@color/t4_color</item>
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t4_14" parent="text_t4_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t4_16" parent="text_t4_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t4_18" parent="text_t4_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t4_30" parent="text_t4_style">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="text_t5" parent="BaseText">
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textColor">@color/t5_color_day</item>
+    </style>
+
+    <style name="text_t5_14" parent="text_t5">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t5_21" parent="text_t5">
+        <item name="android:textSize">@dimen/font_21</item>
+    </style>
+
+    <style name="text_white" parent="BaseText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_white_14" parent="text_white">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_white_16" parent="text_white">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_white_18" parent="text_white">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_b2_12" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
+    <style name="text_b2_14" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_b2_22" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_22</item>
+    </style>
+
+    <style name="text_lesson_style" parent="@style/text_b2_14">
+        <item name="android:textColor">@color/bt_lesson_text_color</item>
+        <item name="android:background">@drawable/bg_bt_lesson_action</item>
+    </style>
+
+    <style name="text_b3" parent="BaseText">
+        <item name="android:textColor">@color/b3_color</item>
+    </style>
+
+    <style name="text_b3_14" parent="text_b3">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_b3_16" parent="text_b3">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_b3_18" parent="text_b3">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_b4_14" parent="BaseText">
+        <item name="android:textColor">@color/b4_color</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_b2_t2_16_blue_grey_bg" parent="text_t2_16">
+        <item name="android:background">@drawable/sel_bg_b3_l3</item>
+        <item name="android:textColor">@color/sel_b2_t2</item>
+    </style>
+    <!--button-->
+    <style name="bt_t1_style">
+        <item name="android:layout_height">@dimen/space_50</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/bg_bt</item>
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="SumianButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_50</item>
+        <item name="android:background">@drawable/bg_bt</item>
+        <item name="android:textColor">@color/sel_btn_text</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="SumianButtonWithMargin35" parent="SumianButton">
+        <item name="android:layout_marginStart">35dp</item>
+        <item name="android:layout_marginEnd">35dp</item>
+    </style>
+
+    <style name="SumianButton.RightCorner">
+        <item name="android:background">@drawable/bg_bt_right_corner</item>
+        <item name="android:height">@dimen/normal_item_height_62</item>
+    </style>
+
+    <!--EditText-->
+    <style name="edit_text_t2_style">
+        <item name="android:maxEms">20</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/t2_color</item>
+        <item name="android:textColorHint">@color/t2_color</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="TopNotificationText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_40</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="TopNotificationText.Blue">
+        <item name="android:background">@color/b5_color</item>
+    </style>
+
+    <style name="TopNotificationText.Red">
+        <item name="android:background">#FFF0918E</item>
+    </style>
+
+    <style name="TopNotificationText.Yellow">
+        <item name="android:background">@color/b4_color</item>
+    </style>
+
+    <style name="BottomNotificationText" parent="@style/TopNotificationText">
+        <item name="android:background">@color/l3_color</item>
+    </style>
+
+    <style name="HorizontalWeight">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="CalendarDateText" parent="HorizontalWeight">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textColor">@color/t2_color</item>
+    </style>
+
+    <style name="SleepRecordMedicineTv" parent="text_t1_12">
+        <item name="android:layout_marginTop">@dimen/space_8</item>
+        <item name="android:layout_marginBottom">@dimen/space_8</item>
+        <item name="android:drawableLeft">@drawable/rect_b5_10dp</item>
+        <item name="android:drawablePadding">@dimen/space_6</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="SleepRecordGreyIconTv" parent="text_t2_14">
+        <item name="android:layout_marginBottom">@dimen/space_10</item>
+        <item name="android:drawablePadding">@dimen/space_10</item>
+    </style>
+
+    <style name="SleepRecordTimeTv" parent="text_t1_16">
+        <item name="android:layout_marginBottom">@dimen/space_20</item>
+    </style>
+
+    <style name="DividerLine">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/l1_color</item>
+    </style>
+
+    <style name="HorizontalDividerLine" parent="DividerLine">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="HorizontalDividerLineMarginStart20" parent="HorizontalDividerLine">
+        <item name="android:layout_marginStart">@dimen/space_20</item>
+    </style>
+
+    <style name="VerticalDividerLine" parent="DividerLine">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <!-- notification -->
+    <style name="NotificationIcon">
+        <item name="android:layout_width">@dimen/tool_bar_height</item>
+        <item name="android:layout_height">@dimen/tool_bar_height</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:src">@drawable/sel_notification</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
+    <style name="SumianSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/b3_color</item>
+    </style>
+
+    <style name="ButtonSheetItem" parent="text_t1_16">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/space_20</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="SumianEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/space_48</item>
+        <item name="android:background">@drawable/sel_et_bg</item>
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textColor">@color/t1_color</item>
+        <item name="android:drawableEnd">@drawable/sel_et_drawable_end</item>
+    </style>
+
+    <style name="SumianDialog">
+        <item name="android:windowMinWidthMinor">90%</item> <!-- 宽度屏占比 -->
+        <!-- 默认背景是白色的圆角矩形，改为透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+    <style name="SumianLoadingDialog">
+        <!-- 默认背景是白色的圆角矩形，改为透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="SumianLoadingDialog.NotDim">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="EditTextClearIv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="android:contentDescription">false</item>
+        <item name="android:padding">@dimen/space_10</item>
+        <item name="android:src">@drawable/ic_et_error</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="RegisterDot">
+        <item name="android:layout_width">@dimen/space_10</item>
+        <item name="android:layout_height">@dimen/space_10</item>
+        <item name="android:src">@drawable/register_dot</item>
+        <item name="android:layout_margin">@dimen/space_5</item>
+    </style>
+
+    <style name="RegisterLine">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/rect_b1_b5</item>
+        <item name="android:layout_height">@dimen/space_1</item>
+        <item name="android:layout_marginStart">@dimen/space_5</item>
+    </style>
+
+    <style name="TitleTextWithUnderline" parent="text_t1_16">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">62dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/bg_line_l1_margin_start_20dp_white_bg</item>
+    </style>
+
+    <style name="ll_mp_wc_bg_white_vertical">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ll_mp_wc_bg_white_vertical_padding_20" parent="ll_mp_wc_bg_white_vertical">
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="space_height_10">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">10dp</item>
+    </style>
+
+    <style name="space_height_20" parent="space_height_10">
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+    <style name="space_horizontal_weight_1">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="mp_wc">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="mp_wc_horizontal_padding_20" parent="mp_wc">
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <style name="SimpleSleepRecordGreyIconTv" parent="SleepRecordGreyIconTv">
+        <item name="android:layout_marginBottom">@dimen/space_5</item>
+        <item name="android:drawablePadding">@dimen/space_10</item>
+    </style>
+
+    <style name="ll_height_62_horizontal_padding_20_gravity_center_vertical">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/normal_item_height_62</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+    </style>
+
+    <declare-styleable name="TitleView">
+        <attr name="title_text" format="string|reference" />
+        <attr name="content_text" format="string|reference" />
+        <attr name="tv_show_right_arrow" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="WalletDetailItemView">
+        <attr name="tv_start" format="string|reference" />
+        <attr name="tv_end" format="string|reference" />
+    </declare-styleable>
+
+</resources>

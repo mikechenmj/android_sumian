@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_114"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_wechat_friend"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_wechat"
+            android:drawablePadding="@dimen/space_10"
+            android:gravity="center"
+            android:text="@string/wechat_friend" />
+
+        <TextView
+            android:id="@+id/tv_wechat_circle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_wechat_circle"
+            android:drawablePadding="@dimen/space_10"
+            android:gravity="center"
+            android:text="@string/wechat_circle" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10"
+        android:background="@color/b1_color" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/text_t1_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_62"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/cancel" />
+
+</LinearLayout>

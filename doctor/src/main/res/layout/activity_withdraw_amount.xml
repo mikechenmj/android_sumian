@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/msg_icon_cash"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        style="@style/text_t2_14"
+        android:layout_marginTop="20dp"
+        android:text="@string/available_withdraw_amount" />
+
+    <TextView
+        android:id="@+id/tv_wallet_balance"
+        style="@style/text_t3_14"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="¥150.00" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_withdraw"
+        style="@style/SumianButton_150dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/withdraw" />
+
+
+    <TextView
+        android:id="@+id/tv_withdraw_record"
+        style="@style/text_b3_14"
+        android:padding="20dp"
+        android:text="@string/withdraw_record_u" />
+</LinearLayout>

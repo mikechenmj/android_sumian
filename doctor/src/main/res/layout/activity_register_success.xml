@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".login.register.RegisterSuccessActivity">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="@string/register_authentication" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_100"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_login_icon_success" />
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_marginTop="@dimen/space_40"
+            android:text="@string/submit_success" />
+
+        <TextView
+            style="@style/text_t2_14"
+            android:layout_width="@dimen/space_200"
+            android:layout_marginTop="@dimen/space_10"
+            android:gravity="center"
+            android:text="@string/register_success_desc" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/SumianButton"
+            android:layout_width="@dimen/space_150"
+            android:layout_marginTop="@dimen/space_40"
+            android:text="@string/confirm" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_60"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/v_time_line_top"
+                style="@style/VerticalDividerLine"
+                android:layout_width="@dimen/space_1"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View
+                android:id="@+id/v_time_line_dot"
+                android:layout_width="@dimen/space_10"
+                android:layout_height="@dimen/space_10"
+                android:background="@drawable/sel_booking_item_time_line_dot" />
+
+            <View
+                android:id="@+id/v_time_line_bottom"
+                style="@style/VerticalDividerLine"
+                android:layout_width="@dimen/space_1"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/text_t2_14"
+            tools:text="10:00-10:15" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/text_t1_14"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/space_26"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="123123123121231233 名字" />
+        </FrameLayout>
+
+        <View
+            style="@style/VerticalDividerLine"
+            android:layout_height="@dimen/space_10"
+            android:layout_marginStart="@dimen/space_10"
+            android:layout_marginEnd="@dimen/space_10" />
+
+        <TextView
+            android:id="@+id/tv_phone_counseling"
+            style="@style/text_t2_14"
+            android:layout_marginEnd="@dimen/space_20"
+            android:text="@string/phone_counseling" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/v_bottom_divider"
+        style="@style/HorizontalDividerLine"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="@dimen/space_50" />
+</FrameLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TitleTextWithUnderline"
+        android:text="@string/patient_static" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="132dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_t2_14"
+                android:text="@string/last_week_new_patient" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/tv_last_week_new_patient"
+                style="@style/text_t3_30"
+                android:text="0"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
+        <View
+            style="@style/VerticalDividerLine"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_t2_14"
+                android:text="@string/last_week_new_cbti" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/tv_last_week_new_cbti"
+                style="@style/text_t3_30"
+                android:text="0"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

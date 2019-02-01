@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_cbti_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <com.sumian.sddoctor.service.cbti.widget.CBTIWeekCourseBannerHomeView
+            android:id="@+id/cbti_introduction_list_home_banner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_212"
+            app:layout_scrollFlags="scroll|enterAlways" />
+
+        <LinearLayout
+            android:id="@+id/lay_oh_i_see_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_66"
+            android:background="@color/b5_color_day"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_20"
+            android:paddingTop="@dimen/space_10"
+            android:paddingBottom="@dimen/space_10"
+            android:visibility="gone"
+            app:layout_scrollFlags="scroll|enterAlways"
+            tools:ignore="RtlSymmetry,UseCompoundDrawables"
+            tools:visibility="visible">
+
+            <TextView
+                style="@style/text_b2_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lineSpacingExtra="@dimen/space_2"
+                android:text="@string/cbti_doctor_visit_info" />
+
+            <ImageView
+                android:id="@+id/iv_oh_i_see"
+                android:layout_width="@dimen/space_48"
+                android:layout_height="@dimen/space_48"
+                android:layout_gravity="bottom|center"
+                android:contentDescription="@null"
+                android:padding="@dimen/space_20"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_record_delete_two" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.sumian.common.widget.recycler.LoadMoreRecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

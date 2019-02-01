@@ -1,0 +1,50 @@
+package com.sumian.sddoctor.service.advisory.bean
+
+import com.sumian.sddoctor.service.advisory.onlinereport.OnlineReport
+
+/**
+ *
+ *Created by sm
+ * on 2018/6/4 14:56
+ * desc:提问或者回复记录
+ **/
+data class Record(var id: Int,//记录 ID
+                  var traceable_id: Int,
+                  var traceable_type: String,
+                  var advisory_mission_id: Int,//咨询 id
+                  var type: Int, //类型  0：提问 1：回答
+                  var content_type: Int,//内容类型 0：文字 1：声音
+                  var sound: Sound, //content_type=1时取此值 如果没有，为null
+                  var content: String,//记录的内容  content_type=0时取此值
+                  var created_at: Int,//记录时间  unix 时间戳
+                  var updated_at: Int,//记录更新时间  Unix 时间戳
+                  var question_index: Int,//第几次提问, type为0才返回
+                  var images: ArrayList<String>,//图片 URL 列表
+                  var reports: ArrayList<OnlineReport>//在线报告列表
+) {
+
+    companion object {
+        const val RECORD_QUESTION_TYPE = 0x00
+        const val RECORD_REPLY_TYPE = 0x01
+    }
+
+    data class Sound(var url: String, //声音url
+                     var duration: Int,//声音时长 单位：秒
+                     var progress: Int,//当前播放的进度
+                     var status: Int// 当前sound 的播放状态  0x00 idle 0x01 prepare 0x02 playing
+    ) {
+
+        companion object {
+
+            const val IDLE_STATUS = 0x00
+            const val PREPARE_STATUS = 0x01
+            const val PLAYING_STATUS = 0x02
+
+        }
+
+        fun isPlaying(): Boolean {
+            return status == 0x02
+        }
+
+    }
+}

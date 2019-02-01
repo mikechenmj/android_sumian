@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_92"
+    android:background="@color/b2_color"
+    android:orientation="vertical"
+    tools:layout_marginTop="24dp">
+
+    <ImageView
+        android:id="@+id/iv_selected"
+        android:layout_width="@dimen/space_24"
+        android:layout_height="@dimen/space_24"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/space_20"
+        android:contentDescription="@null"
+        android:src="@drawable/sel_select_btn"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:layout_toStartOf="@id/iv_selected"
+        android:gravity="center|left"
+        android:orientation="vertical"
+        tools:ignore="RtlHardcoded">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_t1_16"
+            android:gravity="start"
+            android:textStyle="bold"
+            tools:text="匹兹堡睡眠质量指数监测报告如果这条报告名称很长就这样换行" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/text_t2_14"
+            android:layout_marginLeft="@dimen/space_20"
+            android:layout_marginTop="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_20"
+            android:visibility="gone"
+            tools:text="2018/03/29 07:31:12" />
+    </LinearLayout>
+
+    <View
+        style="@style/HorizontalDividerLine"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20" />
+</RelativeLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_homepage">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/TitleTextWithUnderline"
+            android:text="@string/my_qr_code" />
+
+        <ImageView
+            android:id="@+id/iv_share_doctor_qr"
+            android:layout_width="22.5dp"
+            android:layout_height="22.5dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/space_20"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_home_share"
+            tools:ignore="RtlHardcoded" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/iv_doctor_qr"
+        android:layout_width="225dp"
+        android:layout_height="225dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@null" />
+
+    <TextView
+        style="@style/text_t2_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/scan_qr_code_bind_doctor" />
+
+</LinearLayout>

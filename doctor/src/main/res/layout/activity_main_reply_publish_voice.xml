@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b2_color"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.sumian.sddoctor.service.publish.widget.RecordVoiceView
+        android:id="@+id/record_voice_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.sumian.sddoctor.service.publish.widget.VoiceAuditionView
+        android:id="@+id/voice_audition_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</FrameLayout>

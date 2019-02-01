@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="10dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:background="@color/white"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_gravity="center_vertical"
+            android:text="@string/amount_yuan" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            style="@style/text_t1_16"
+            android:layout_gravity="center_vertical|end"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="+100.00" />
+    </FrameLayout>
+
+    <View style="@style/HorizontalDividerLine" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_more_visible="gone"
+        app:show_iv="false"
+        app:type_desc="@string/type" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_trade_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_more_visible="gone"
+        app:show_iv="false"
+        app:type_desc="@string/trade_time" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_sn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_more_visible="gone"
+        app:show_iv="false"
+        app:type_desc="@string/serial_number" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_more_visible="gone"
+        app:show_iv="false"
+        app:type_desc="@string/content" />
+
+</LinearLayout>

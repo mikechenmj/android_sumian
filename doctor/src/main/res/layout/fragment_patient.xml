@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu_icon="@mipmap/ic_nav_icon_add"
+        app:show_back="false"
+        app:show_spanner="true"
+        app:text="@string/patient_level" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1"
+                android:background="@color/l1_color" />
+
+            <LinearLayout
+                android:id="@+id/lay_show_new_patient_list"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_62"
+                android:background="@color/b2_color"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_t1_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/space_20"
+                    android:gravity="center"
+                    android:text="@string/new_patient_list" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/space_16"
+                    android:contentDescription="@null"
+                    app:srcCompat="@drawable/ic_nav_icon_right" />
+
+            </LinearLayout>
+
+            <com.sumian.sddoctor.widget.SumianSwipeRefreshLayout
+                android:id="@+id/swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/b1_color"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:paddingTop="@dimen/space_10" />
+
+                    <com.sumian.sddoctor.patient.widget.PatientEmptyView
+                        android:id="@+id/patient_empty_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone" />
+
+                </FrameLayout>
+
+            </com.sumian.sddoctor.widget.SumianSwipeRefreshLayout>
+
+        </LinearLayout>
+
+        <com.sumian.sddoctor.patient.widget.PatientSortView
+            android:id="@+id/patient_sort_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+</LinearLayout>

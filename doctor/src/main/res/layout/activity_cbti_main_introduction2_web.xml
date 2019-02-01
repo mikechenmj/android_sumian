@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/lay_visitor_tips"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40" />
+
+    <com.sumian.common.h5.widget.SWebViewLayout
+        android:id="@+id/sm_webview_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/bt_go_to_cbti"
+            style="@style/text_t2_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_62"
+            android:layout_gravity="bottom"
+            android:background="@color/l3_color_day"
+            android:gravity="center"
+            android:text="@string/learn_cbti"
+            android:visibility="gone" />
+
+    </com.sumian.common.h5.widget.SWebViewLayout>
+
+</LinearLayout>

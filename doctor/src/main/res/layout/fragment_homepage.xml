@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".main.MainActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tool_bar_height"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/sumian_doctor" />
+
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            style="@style/NotificationIcon"
+            android:contentDescription="@null" />
+    </FrameLayout>
+
+    <com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".main.MainActivity">
+
+            <LinearLayout
+                android:id="@+id/ll_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/space_20"
+                    android:paddingBottom="@dimen/space_20">
+
+                    <LinearLayout
+                        android:id="@+id/ll_doctor_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_20"
+                        android:layout_marginEnd="@dimen/space_20"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        tools:ignore="UselessParent">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/space_20"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                style="@style/text_t3_16"
+                                android:textSize="21sp"
+                                android:textStyle="bold"
+                                tools:text="张医生" />
+
+                            <TextView
+                                android:id="@+id/tv_introduction"
+                                style="@style/text_t2_14"
+                                android:layout_gravity="bottom"
+                                android:layout_marginTop="@dimen/space_10"
+                                tools:text="人民医院"
+                                tools:visibility="visible" />
+                        </LinearLayout>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_avatar"
+                            android:layout_width="@dimen/space_60"
+                            android:layout_height="@dimen/space_60"
+                            android:layout_gravity="end"
+                            android:src="@drawable/ic_info_avatar_doctor" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_58"
+                        android:background="@color/b2_color" />
+
+                    <com.sumian.sddoctor.homepage.widget.DoctorServicesView
+                        android:id="@+id/doctor_services_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_112" />
+
+                </FrameLayout>
+
+                <include layout="@layout/layout_homepage_patient_static" />
+
+                <include layout="@layout/layout_homepage_my_qr" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.sumian.common.widget.refresh.SumianSwipeRefreshLayout>
+</LinearLayout>

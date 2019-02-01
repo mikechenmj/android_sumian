@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b2_color"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <com.sumian.sddoctor.service.publish.widget.VoiceTextView
+            android:id="@+id/voice_text_view"
+            style="@style/text_t2_14"
+            android:layout_width="@dimen/space_250"
+            android:layout_height="@dimen/space_250"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="0:00"
+            android:textSize="@dimen/font_44"
+            tools:ignore="HardcodedText" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/tv_voice_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_voice_label"
+            style="@style/text_t1_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/space_20"
+            android:gravity="center"
+            android:text="@string/can_talk" />
+
+        <FrameLayout
+            android:id="@+id/lay_voice"
+            android:layout_width="@dimen/space_100"
+            android:layout_height="@dimen/space_100"
+            android:layout_below="@+id/tv_voice_label"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/space_20">
+
+            <ImageView
+                android:id="@+id/iv_voice_anim"
+                android:layout_width="@dimen/space_100"
+                android:layout_height="@dimen/space_100"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:contentDescription="@null"
+                android:focusable="true"
+                app:srcCompat="@drawable/bg_record_voice" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_line"
+            android:layout_width="@dimen/space_30"
+            android:layout_height="@dimen/space_60"
+            android:layout_alignBottom="@+id/lay_voice"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_toEndOf="@+id/lay_voice"
+            android:contentDescription="@null"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_input_box_line"
+            tools:ignore="RtlHardcoded"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_garbage"
+            android:layout_width="@dimen/space_60"
+            android:layout_height="@dimen/space_60"
+            android:layout_alignBottom="@+id/lay_voice"
+            android:layout_marginBottom="@dimen/space_20"
+            android:layout_toEndOf="@+id/iv_line"
+            android:contentDescription="@null"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/bg_voice_garbage"
+            tools:ignore="RtlHardcoded"
+            tools:visibility="visible" />
+    </RelativeLayout>
+
+</LinearLayout>

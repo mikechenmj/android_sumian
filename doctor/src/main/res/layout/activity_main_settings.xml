@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.sddoctor.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_10"
+        app:text="@string/setting" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_mobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:type_desc="手机号码"
+        tools:type_content="13112345678" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_modify_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:type_desc="@string/set_password" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_bind_wechat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_more_visible="invisible"
+        app:show_switch="true"
+        app:type_desc="微信绑定" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="visible"
+        app:divider_more_visible="visible"
+        app:type_desc="@string/feedback" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="visible"
+        app:divider_more_visible="visible"
+        app:type_desc="版本更新"
+        tools:type_content="v1.0.0" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_user_agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:divider_line_visible="invisible"
+        app:divider_more_visible="visible"
+        app:type_desc="@string/user_agreement" />
+
+    <TextView
+        android:id="@+id/tv_logout"
+        style="@style/text_t2_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_62"
+        android:layout_marginTop="@dimen/space_10"
+        android:background="@color/b2_color"
+        android:foreground="@drawable/bg_material_ripple"
+        android:gravity="center"
+        android:text="@string/logout"
+        android:textColor="@color/t4_color" />
+
+</LinearLayout>

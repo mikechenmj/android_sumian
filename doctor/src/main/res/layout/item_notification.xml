@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:layout_marginTop="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        android:layout_marginEnd="@dimen/space_20"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/v_red_dot"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginEnd="@dimen/space_4"
+            android:background="@drawable/circle_t4" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_t3_16"
+            android:textStyle="bold"
+            tools:text="医生建议更新" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        style="@style/text_t2_14"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10"
+        android:layout_marginEnd="@dimen/space_20"
+        tools:text="张大大医生对您4月17日的睡眠记录进行反馈，点击查看。" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_t2_14"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10"
+        android:layout_marginEnd="@dimen/space_20"
+        tools:text="2018/04/17 11:31" />
+
+    <View
+        style="@style/HorizontalDividerLine"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20" />
+</LinearLayout>

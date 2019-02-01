@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/space_124"
+    android:layout_height="140dp"
+    android:background="@drawable/ic_bookdetails_more_bg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_modify_tags"
+        style="@style/text_t1_14"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/space_10"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/modify_patient_tags"
+        tools:visibility="visible" />
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/space_1"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginLeft="@dimen/space_20"-->
+    <!--android:layout_marginRight="@dimen/space_20"-->
+    <!--android:background="@color/l1_color"-->
+    <!--tools:visibility="visible" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_recommend_patients"-->
+    <!--style="@style/text_t1_14"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginBottom="@dimen/space_10"-->
+    <!--android:layout_marginTop="@dimen/space_10"-->
+    <!--android:clickable="true"-->
+    <!--android:focusable="true"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/recommend_patients" />-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:background="@color/l1_color"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_send_scale"
+        style="@style/text_t1_14"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_10"
+        android:layout_marginBottom="@dimen/space_10"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/send_scale" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginRight="@dimen/space_20"
+        android:background="@color/l1_color"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_send_follow_up_plan"
+        style="@style/text_t1_14"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_10"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/send_follow_up_plan" />
+
+</LinearLayout>

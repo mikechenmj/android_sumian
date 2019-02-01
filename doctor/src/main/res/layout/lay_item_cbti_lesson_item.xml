@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/space_40"
+    android:layout_marginEnd="@dimen/space_4"
+    android:layout_marginStart="@dimen/space_4">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_b3_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_cbti_lesson_list_item"
+        android:padding="@dimen/space_10"
+        tools:text="1-1 睡眠的奥秘" />
+
+</FrameLayout>

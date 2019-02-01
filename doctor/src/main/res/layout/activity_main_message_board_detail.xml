@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sumian.common.widget.refresh.SumianSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color_day">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/msg_board_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/b2_color_day"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_t5_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_20"
+                android:layout_marginRight="@dimen/space_20"
+                android:text="@string/my_message_board"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_msg"
+                style="@style/text_t2_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_20"
+                tools:text="可以考虑先停药看看，看停了药以后是否还会有这个问题，如果有，需要导医院做进一步的检查，如果没有，可以考虑继续服药一段时间。注意白天的时候要少赖床，多去运动，注意情绪的调节，放松心态，保证营养也很重要，但是要少吃辛辣刺激类的食物。" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_20"
+                android:background="@color/l1_color_day" />
+
+            <TextView
+                android:id="@+id/tv_doctor_reply"
+                style="@style/text_t5_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_20"
+                android:layout_marginRight="@dimen/space_20"
+                android:text="@string/sumian_doctor_msg_replay"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_replay_msg"
+                style="@style/text_t2_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_20"
+                tools:text="您好，感谢您对速眠医生CBTI的认可。CBTI 已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。" />
+
+        </LinearLayout>
+
+        <com.sumian.sddoctor.widget.EmptyErrorView
+            android:id="@+id/empty_error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:eev_auto_hide="true"
+            app:eev_show_service="false" />
+
+        <TextView
+            android:id="@+id/tv_msg_tips"
+            style="@style/text_b2_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40"
+            android:background="@color/b4_color_day"
+            android:gravity="center"
+            android:text="@string/msg_board_is_deleted"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+</com.sumian.common.widget.refresh.SumianSwipeRefreshLayout>

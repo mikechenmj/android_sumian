@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/space_174"
+    android:layout_height="@dimen/space_50"
+    android:background="@drawable/ic_cbti_bg_tips"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/text_b2_14"
+        android:layout_gravity="center_horizontal"
+        android:drawableEnd="@drawable/ic_cbti_close"
+        android:drawablePadding="@dimen/space_22"
+        android:gravity="center"
+        android:text="@string/click_go_to_cbti_lesson" />
+</LinearLayout>

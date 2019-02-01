@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_item_height_62"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/space_20"
+            android:paddingEnd="@dimen/space_20">
+
+            <TextView
+                style="@style/text_t1_16"
+                android:text="@string/order_state" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_order_status"
+                style="@style/text_t1_16"
+                android:text="@string/order_state" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_10" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_patient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:divider_line_visible="visible"
+            app:divider_more_visible="gone"
+            app:type_content_text_color="@color/t2_color"
+            app:type_desc="@string/patient_name"
+            tools:type_content="张三" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_booking_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:divider_line_visible="visible"
+            app:divider_more_visible="gone"
+            app:type_content_text_color="@color/t2_color"
+            app:type_desc="@string/booking_time"
+            tools:type_content="2018/09/02 10:15" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_booking_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:divider_line_visible="invisible"
+            app:divider_more_visible="gone"
+            app:type_content_text_color="@color/t2_color"
+            app:type_desc="@string/booking_duration"
+            tools:type_content="15分钟" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/space_20"
+            android:paddingBottom="@dimen/space_20">
+
+            <TextView
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginEnd="@dimen/space_20"
+                android:text="@string/advisory_question" />
+
+            <TextView
+                android:id="@+id/tv_advisory_question"
+                style="@style/text_t2_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_10"
+                android:layout_marginEnd="@dimen/space_20"
+                tools:text="是否可以换药？" />
+
+            <View
+                style="@style/HorizontalDividerLineMarginStart20"
+                android:layout_marginTop="@dimen/space_20" />
+
+            <TextView
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_20"
+                android:layout_marginEnd="@dimen/space_20"
+                android:text="@string/supplementary_instruction" />
+
+            <TextView
+                android:id="@+id/tv_supplementary_instruction"
+                style="@style/text_t2_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_10"
+                android:layout_marginEnd="@dimen/space_20"
+                tools:text="听别人说吃佐匹克隆不错，不知道要不要换？而且我可以喝酒么？" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_btn_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_anonymous_call"
+            style="@style/SumianButton.RightCorner"
+            android:layout_gravity="bottom"
+            android:text="@string/anonymous_call"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_contact_support_staff"
+            style="@style/SumianButton.RightCorner"
+            android:layout_gravity="bottom"
+            android:text="@string/contact_support_staff"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_reject"
+            style="@style/SumianButton.RightCorner"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@color/b5_color"
+            android:text="@string/reject"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/SumianButton.RightCorner"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/confirm"
+            android:visibility="gone" />
+    </LinearLayout>
+</FrameLayout>

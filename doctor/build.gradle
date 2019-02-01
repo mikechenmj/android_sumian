@@ -1,0 +1,257 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+import java.text.SimpleDateFormat
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def appProperties = new Properties()
+appProperties.load(new FileInputStream(getProject().file("app.properties")))
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    signingConfigs {
+        configs {
+            keyAlias appProperties['APP_KEY_ALIAS']
+            keyPassword appProperties['APP_KEY_PASSWORD']
+            storePassword appProperties['APP_STORE_PASSWORD']
+
+            def userName = System.getProperty("user.name")//根据 os 账户信息动态生成keystore 保存路径
+            def keystore_path = Os.isFamily(Os.FAMILY_WINDOWS) ? appProperties['WINDOWS_RELEASE_STORE_FILE'] : appProperties['LINUX_RELEASE_STORE_FILE']
+            keystore_path = keystore_path.replace("{user_name}", userName)
+
+            //加载资源
+            //Properties properties = new Properties()
+            //InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+            //properties.load( inputStream )
+
+            //读取文件
+            //def keystore_file = properties.getProperty('RELEASE_STORE_FILE')
+
+            storeFile file(keystore_path)
+        }
+    }
+
+    defaultConfig {
+        //    app info
+        applicationId = "com.sumian.sddoctor"
+        applicationIdSuffix = null
+        versionCode = new Date().format('yyyyMMddHH').toInteger()
+        versionName = "1.14.0"
+        versionNameSuffix = null
+
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        // wechat
+        buildConfigField("String", "WECHAT_APP_ID", appProperties['WECHAT_APP_ID'])
+        buildConfigField("String", "WECHAT_APP_SECRET", appProperties['WECHAT_APP_SECRET'])
+        // umeng
+        buildConfigField("String", "UMENG_APP_KEY", appProperties['UMENG_APP_KEY'])
+        buildConfigField("String", "UMENG_CHANNEL", appProperties['UMENG_CHANNEL'])
+        buildConfigField("String", "UMENG_PUSH_SECRET", appProperties['UMENG_PUSH_SECRET'])
+        buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", appProperties['DEFAULT_APK_DOWNLOAD_URL'])
+        buildConfigField("String", "HTTP_DNS_ACCOUNT_ID", appProperties['HTTP_DNS_ACCOUNT_ID'])
+        buildConfigField("String", "HTTP_DNS_SECRET_KEY", appProperties['HTTP_DNS_SECRET_KEY'])
+        //visitor account
+        buildConfigField("String", "VISITOR_MOBILE", appProperties['VISITOR_MOBILE'])
+        buildConfigField("String", "VISITOR_PWD", appProperties['VISITOR_PWD'])
+        // aliyun log
+        buildConfigField("String", "ALIYUN_LOG_ACCESS_KEY_ID", appProperties['ALIYUN_LOG_ACCESS_KEY_ID'])
+        buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", appProperties['ALIYUN_LOG_ACCESS_SECRET'])
+        buildConfigField("String", "ALIYUN_LOG_LOG_STORE", appProperties['ALIYUN_LOG_LOG_STORE'])
+        buildConfigField("String", "ALIYUN_LOG_END_POINT", appProperties['ALIYUN_LOG_END_POINT'])
+        buildConfigField("String", "CBTI_SHARE_WEBSITE", appProperties['CBTI_SHARE_WEBSITE'])
+        // Enabling multidex support.
+        multiDexEnabled true
+
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi-v7a'
+        }
+
+        resConfigs "zh"//,"en"
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.configs
+            useProguard false  //默认 false，如果开启了混淆， 但是我们可以不应用 proguard 文件
+            shrinkResources false
+            minifyEnabled false
+            zipAlignEnabled true
+            pseudoLocalesEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            jniDebuggable true
+            signingConfig signingConfigs.configs
+            useProguard true  //默认 false，如果开启了混淆， 但是我们可以不应用 proguard 文件
+            shrinkResources false
+            minifyEnabled false
+            zipAlignEnabled true
+            pseudoLocalesEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    lintOptions {
+        abortOnError rootProject.ext.abortOnError
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    flavorDimensions("market", "environment")
+    productFlavors {
+        def app_name = "速眠医生"
+
+        yyb {//应用宝
+            dimension "market"
+            resValue "string", "app_name", app_name
+        }
+
+        oppo {
+            dimension "market"
+            resValue "string", "app_name", "${app_name}-医生版"
+        }
+
+        _360 {
+            dimension "market"
+            resValue "string", "app_name", "${app_name}医生版"
+        }
+
+        official {
+            dimension "environment"
+            versionNameSuffix null
+            buildConfigField("String", "BASE_URL", appProperties['BASE_RELEASE_URL'])
+            buildConfigField("String", "BASE_H5_URL", appProperties['BASE_RELEASE_H5_URL'])
+            buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['OFFICIAL_LEANCLOUD_APP_ID'])
+            buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['OFFICIAL_LEANCLOUD_APP_KEY'])
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_OFFICIAL'])
+        }
+
+        alpha {
+            dimension "environment"
+            versionNameSuffix "-test"
+            buildConfigField("String", "BASE_URL", appProperties['BASE_TEST_URL'])
+            buildConfigField("String", "BASE_H5_URL", appProperties['BASE_TEST_H5_URL'])
+            buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['TEST_LEANCLOUD_APP_ID'])
+            buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['TEST_LEANCLOUD_APP_KEY'])
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_TEST'])
+        }
+
+        dev {
+            dimension "environment"
+            versionNameSuffix "-dev"
+            buildConfigField("String", "BASE_URL", appProperties['BASE_DEV_URL'])
+            buildConfigField("String", "BASE_H5_URL", appProperties['BASE_DEV_H5_URL'])
+            buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['DEV_LEANCLOUD_APP_ID'])
+            buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['DEV_LEANCLOUD_APP_KEY'])
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_DEV'])
+        }
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [scheme     : "${appProperties['SCHEME']}", host: "${appProperties['HOST']}", MTA_APPKEY: appProperties['TENCENT_STATIC_APP_ID'],
+                                           MTA_CHANNEL: "yyb"]
+        }
+
+    }
+
+    // If you use each() to iterate through the variant objects,
+    // you need to start using all(). That's because each() iterates
+    // through only the objects that already exist during configuration time—
+    // but those object don't exist at configuration time with the new model.
+    // However, all() adapts to the new model by picking up object as they are
+    // added during execution.
+
+    // rename the apk with the version name
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            //输出 apk 文件名
+
+            def fileName = "速眠医生-医生版_${variant.flavorName}_${buildType.name}_${formatDate()}.apk"
+
+            println fileName
+
+            //新方式
+            outputFileName = fileName
+
+            //该方式已被废除
+            //output.outputFile = new File(output.outputFile.parent, fileName)
+        }
+    }
+
+    //启动 as 自带的 kotlin parcelize 序列化功能
+    androidExtensions {
+        experimental = true
+    }
+}
+
+static def formatDate() {
+    def sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm")
+    def formatDate = sdf.format(new Date())
+    return formatDate
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
+    // Base Adapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+    // recycler view pager
+    implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+
+    //aliyun oss
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
+
+    //sumian component
+    implementation 'com.sumian.sd:common:1.0.56'
+
+    //aliyun player sdk
+    implementation(name: 'AlivcReporter-1.2', ext: 'aar')
+    implementation(name: 'AlivcPlayer-3.4.8', ext: 'aar')
+    implementation(name: 'AliyunVodPlayer-3.4.8', ext: 'aar')
+
+    // LeanCloud 基础包
+    implementation('cn.leancloud.android:avoscloud-sdk:v4.7.6')
+    // 推送与即时通讯需要的包
+    implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
+}

@@ -1,0 +1,25 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 让status bar 透明（默认主题色），并且 activity 的 view 可以叠在status bar 下方-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:statusBarColor">@color/b3_color</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="ActivityTheme" parent="AppTheme">
+        <item name="android:configChanges">keyboardHidden|orientation</item>
+        <item name="android:launchMode">singleInstance</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
+    </style>
+
+</resources>

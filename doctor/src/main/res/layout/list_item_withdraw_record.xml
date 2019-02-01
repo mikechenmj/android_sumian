@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="95dp"
+    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_amount"
+        style="@style/text_t3_18"
+        android:textStyle="bold"
+        tools:text="+500.00元" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_t2_14"
+        android:layout_gravity="bottom"
+        tools:text="2018.10.13 15:24" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        style="@style/text_t3_14"
+        android:layout_gravity="center_vertical|end"
+        tools:text="@string/approve_passed" />
+
+</FrameLayout>

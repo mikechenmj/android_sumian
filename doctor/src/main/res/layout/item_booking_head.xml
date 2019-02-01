@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_60"
+    android:layout_marginTop="@dimen/space_10"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/text_t1_16"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/space_20"
+        android:textColor="@color/sel_booking_item_time"
+        tools:text="6月4日" />
+
+    <TextView
+        android:id="@+id/tv_no_booking"
+        style="@style/text_t2_14"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/space_20"
+        android:text="@string/today_has_no_booking"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/v_bottom_divider"
+        style="@style/HorizontalDividerLine"
+        android:layout_gravity="bottom" />
+</FrameLayout>

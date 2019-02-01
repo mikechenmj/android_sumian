@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_50"
+        app:tabBackground="@color/b2_color"
+        app:tabIndicatorColor="@color/b3_color"
+        app:tabIndicatorHeight="@dimen/space_2"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/b3_color"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabTextColor="@color/t2_color">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="问题详情"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="患者档案"
+            tools:ignore="HardcodedText" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="@dimen/space_10" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
