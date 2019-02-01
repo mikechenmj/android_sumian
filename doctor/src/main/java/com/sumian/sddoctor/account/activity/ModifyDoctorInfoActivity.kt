@@ -1,28 +1,30 @@
 package com.sumian.sddoctor.account.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.contract.AccountContract
 import com.sumian.sddoctor.account.presenter.AccountPresenter
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BasePresenterActivity
 import com.sumian.sddoctor.constants.Configs
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.util.InputCheckUtil
-import com.sumian.sddoctor.widget.TitleBar
 import kotlinx.android.synthetic.main.activity_modify_name.*
 
 @Suppress("DEPRECATION")
-class ModifyDoctorInfoActivity : BasePresenterActivity<AccountContract.Presenter>(), TitleBar.OnBackClickListener, View.OnClickListener, AccountContract.View {
+class ModifyDoctorInfoActivity : BaseViewModelActivity<AccountPresenter>(), View.OnClickListener, AccountContract.View {
 
     override fun onModifySuccess(doctorInfo: DoctorInfo) {
         finish()
     }
 
     override fun onModifyFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     private var modifyType: Int = MODIFY_TYPE_NAME
@@ -35,23 +37,20 @@ class ModifyDoctorInfoActivity : BasePresenterActivity<AccountContract.Presenter
         const val MODIFY_TYPE_JOB_TITLE = 0x04
 
         fun show(context: Context, modifyType: Int = MODIFY_TYPE_NAME) {
-            val extras = Bundle().apply {
-                putInt(EXTRAS_MODIFY_TYPE, modifyType)
-            }
-            show(context, ModifyDoctorInfoActivity::class.java, extras = extras)
+            val intent = Intent(context, ModifyDoctorInfoActivity::class.java)
+            intent.putExtra(EXTRAS_MODIFY_TYPE, modifyType)
+            ActivityUtils.startActivity(intent)
         }
 
     }
 
-    override fun initBundle(bundle: Bundle?) {
+    override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        bundle?.let {
-            modifyType = bundle.getInt(EXTRAS_MODIFY_TYPE, MODIFY_TYPE_NAME)
-        }
+        modifyType = bundle.getInt(EXTRAS_MODIFY_TYPE, MODIFY_TYPE_NAME)
+
     }
 
     override fun onClick(v: View?) {
-
         val input = et_name.text.toString().trim()
         if (!InputCheckUtil.checkInput(input, getFieldName(), getFieldMinLength(), getFieldMaxLength())) {
             return
@@ -59,23 +58,22 @@ class ModifyDoctorInfoActivity : BasePresenterActivity<AccountContract.Presenter
         mPresenter?.modifyDoctorInfo(modifyType, input)
     }
 
-    override fun onBack(v: View?) {
-        finish()
-    }
-
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_modify_name
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
-        this.mPresenter = AccountPresenter.init(this)
+    override fun initWidgetBefore() {
+        mPresenter = AccountPresenter.init(this)
     }
 
     override fun initWidget() {
         super.initWidget()
-        title_bar.setOnBackClickListener(this)
+        setTitle(R.string.modify_name)
         bt_finish.setOnClickListener(this)
+    }
+
+    override fun showBackNav(): Boolean {
+        return true
     }
 
     override fun initData() {
@@ -122,10 +120,18 @@ class ModifyDoctorInfoActivity : BasePresenterActivity<AccountContract.Presenter
     }
 
     private fun initUI(titleRes: Int, etLabelRes: Int, etText: String, etHint: Int) {
-        title_bar.setTitle(titleRes)
+        setTitle(titleRes)
         tv_label.text = getString(etLabelRes)
         et_name.setText(etText)
         et_name.hint = getString(etHint)
     }
 
+
+    override fun showLoading() {
+        super<BaseViewModelActivity>.showLoading()
+    }
+
+    override fun dismissLoading() {
+        super<BaseViewModelActivity>.dismissLoading()
+    }
 }

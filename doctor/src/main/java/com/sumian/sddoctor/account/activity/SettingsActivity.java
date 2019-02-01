@@ -1,17 +1,17 @@
 package com.sumian.sddoctor.account.activity;
 
 import android.content.pm.PackageInfo;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.sddoctor.R;
 import com.sumian.sddoctor.account.contract.SettingsContract;
 import com.sumian.sddoctor.account.presenter.SettingsPresenter;
 import com.sumian.sddoctor.account.sheet.LogoutBottomSheet;
 import com.sumian.sddoctor.app.AppManager;
-import com.sumian.sddoctor.base.BasePresenterActivity;
 import com.sumian.sddoctor.login.login.UserProtocolActivity;
 import com.sumian.sddoctor.login.login.bean.DoctorInfo;
 import com.sumian.sddoctor.login.login.bean.SocialiteInfo;
@@ -30,7 +30,7 @@ import androidx.lifecycle.Observer;
 
 
 @SuppressWarnings("ConstantConditions")
-public class SettingsActivity extends BasePresenterActivity<SettingsContract.Presenter> implements TitleBar.OnBackClickListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener, SettingsContract.View, Observer<DoctorInfo> {
+public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> implements TitleBar.OnBackClickListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener, SettingsContract.View, Observer<DoctorInfo> {
 
     private SettingDividerView mSdvMobile;
     private SettingDividerView mSdvBindWechat;
@@ -39,19 +39,14 @@ public class SettingsActivity extends BasePresenterActivity<SettingsContract.Pre
     private boolean mIsSuccess = false;
 
     @Override
-    protected int getContentId() {
+    public int getLayoutId() {
         return R.layout.activity_main_settings;
-    }
-
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-        setMPresenter(SettingsPresenter.Companion.init(this));
     }
 
     @Override
     protected void initWidget() {
         super.initWidget();
+        setMPresenter(SettingsPresenter.Companion.init(this));
         TitleBar titleBar = findViewById(R.id.title_bar);
         mSdvMobile = findViewById(R.id.sdv_mobile);
 
@@ -71,7 +66,7 @@ public class SettingsActivity extends BasePresenterActivity<SettingsContract.Pre
         );
         sdvModifyPwd.setOnClickListener(v -> ModifyPasswordActivity.Companion.start());
         mSdvBindWechat.setOnCheckedChangeListener(this);
-        mSdvVersion.setOnClickListener(v -> VersionActivity.show(this, VersionActivity.class));
+        mSdvVersion.setOnClickListener(v -> ActivityUtils.startActivity(VersionActivity.class));
         userAgreement.setOnClickListener(v -> ActivityUtils.startActivity(UserProtocolActivity.class));
         sdvFeedback.setOnClickListener(v -> FeedbackActivity.show());
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, this);
@@ -161,13 +156,13 @@ public class SettingsActivity extends BasePresenterActivity<SettingsContract.Pre
 
     @Override
     public void onUnbindSuccess() {
-        showCenterToast(this, getString(R.string.unbind_wechat_success));
+        ToastUtils.showShort(getString(R.string.unbind_wechat_success));
     }
 
     @Override
     public void onUnBindFailed(@NotNull String error) {
         mSdvBindWechat.setSwitchCheckedWithoutCallback(!mIsSuccess);
-        showCenterToast(this, error);
+        ToastUtils.showShort(error);
     }
 
     @Override
@@ -182,12 +177,12 @@ public class SettingsActivity extends BasePresenterActivity<SettingsContract.Pre
 
     @Override
     public void onBindSuccess() {
-        showCenterToast(this, getString(R.string.binding_wechat_success));
+        ToastUtils.showShort(getString(R.string.binding_wechat_success));
     }
 
     @Override
     public void onCancelBind(@NotNull String error) {
         mSdvBindWechat.setSwitchCheckedWithoutCallback(!mIsSuccess);
-        showCenterToast(this, error);
+        ToastUtils.showShort(error);
     }
 }

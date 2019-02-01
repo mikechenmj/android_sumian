@@ -3,6 +3,7 @@ package com.sumian.sddoctor.account.sheet;
 import android.view.Gravity;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sddoctor.R;
 import com.sumian.sddoctor.account.contract.LogoutContract;
@@ -67,7 +68,8 @@ public class LogoutBottomSheet extends AbstractBottomSheetView implements View.O
     @Override
     public void onLogoutSuccess() {
         showCenterToast(getString(R.string.logout_success));
-        LoginActivity.showClearTop(getContext(), LoginActivity.class);
+        ActivityUtils.finishAllActivities();
+        ActivityUtils.startActivity(LoginActivity.class);
     }
 
     @Override

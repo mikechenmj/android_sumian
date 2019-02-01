@@ -1,7 +1,7 @@
 package com.sumian.sddoctor.login.register
 
+import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_register.*
 
 
@@ -9,7 +9,7 @@ class RegisterActivity : BaseActivity() {
 
     private val mVerifyPhoneNumberFragment = RegisterVerifyPhoneNumberFragment()
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_register
     }
 

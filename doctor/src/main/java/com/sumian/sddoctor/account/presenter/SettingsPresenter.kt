@@ -2,13 +2,14 @@
 
 package com.sumian.sddoctor.account.presenter
 
+import android.app.Activity
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.contract.SettingsContract
 import com.sumian.sddoctor.app.App
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.login.login.bean.SocialiteInfo
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.JsonUtil
@@ -27,7 +28,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA
  *
  * </pre>
  */
-class SettingsPresenter private constructor(view: SettingsContract.View) : SettingsContract.Presenter {
+class SettingsPresenter private constructor(view: SettingsContract.View) : BaseViewModel() {
 
     private var mView: SettingsContract.View? = null
 
@@ -37,12 +38,12 @@ class SettingsPresenter private constructor(view: SettingsContract.View) : Setti
 
     companion object {
 
-        fun init(view: SettingsContract.View): SettingsContract.Presenter {
+        fun init(view: SettingsContract.View): SettingsPresenter {
             return SettingsPresenter(view)
         }
     }
 
-    override fun unbindWechat() {
+    fun unbindWechat() {
 
         mView?.showLoading()
 
@@ -87,7 +88,7 @@ class SettingsPresenter private constructor(view: SettingsContract.View) : Setti
         })
     }
 
-    override fun bindWechat(activity: BaseActivity) {
+    fun bindWechat(activity: Activity) {
 
         mView?.showLoading()
 

@@ -4,7 +4,9 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.sumian.common.base.BaseActivity;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.common.utils.ColorCompatUtil;
 import com.sumian.common.widget.dialog.SumianDialog;
@@ -13,7 +15,6 @@ import com.sumian.sddoctor.account.contract.UserAvatarContract;
 import com.sumian.sddoctor.account.presenter.UserAvatarPresenter;
 import com.sumian.sddoctor.account.sheet.SelectDoctorInfoBottomSheet;
 import com.sumian.sddoctor.app.AppManager;
-import com.sumian.sddoctor.base.BasePresenterActivity;
 import com.sumian.sddoctor.login.login.bean.DoctorInfo;
 import com.sumian.sddoctor.me.authentication.AuthenticationActivity;
 import com.sumian.sddoctor.widget.TitleBar;
@@ -24,7 +25,7 @@ import com.sumian.sddoctor.widget.sheet.SelectPictureBottomSheet;
 import org.jetbrains.annotations.NotNull;
 
 
-public class UserInfoActivity extends BasePresenterActivity implements TitleBar.OnBackClickListener, View.OnClickListener, UserAvatarContract.View {
+public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackClickListener, View.OnClickListener, UserAvatarContract.View {
 
     private QMUIRadiusImageView mQMUIRadiusImageView;
     private SettingDividerView mDvName;
@@ -38,7 +39,7 @@ public class UserInfoActivity extends BasePresenterActivity implements TitleBar.
     private DoctorInfo mDoctorInfo;
 
     @Override
-    protected int getContentId() {
+    protected int getLayoutId() {
         return R.layout.activity_main_user_info;
     }
 
@@ -161,6 +162,6 @@ public class UserInfoActivity extends BasePresenterActivity implements TitleBar.
     @Override
     public void onUploadAvatarFailed(@NotNull String error) {
         dismissLoading();
-        showCenterToast(this, error);
+        ToastUtils.showShort(error);
     }
 }

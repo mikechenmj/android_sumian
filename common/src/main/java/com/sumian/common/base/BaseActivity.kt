@@ -43,6 +43,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
     private val mCalls = HashSet<Call<*>>()
     private val mActivityDelegate = BaseActivityManager.createActivityDelegate(this)
+    protected val mActivity: BaseActivity by lazy { this }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

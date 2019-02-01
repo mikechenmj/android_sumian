@@ -5,9 +5,9 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.homepage.HomepageFragment.Companion.REQUEST_CODE_OPEN_NOTIFICATION
 import com.sumian.sddoctor.notification.bean.Notification
 import com.sumian.sddoctor.util.NotificationUtil
@@ -20,7 +20,7 @@ class NotificationListActivity : BaseActivity(), BaseQuickAdapter.OnItemClickLis
     private var mHeaderView: NotificationListHeadView? = null
     private val mPresenter: NotificationListPresenter by lazy { NotificationListPresenter(this) }
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_notification_list
     }
 
@@ -125,5 +125,13 @@ class NotificationListActivity : BaseActivity(), BaseQuickAdapter.OnItemClickLis
             removeHeadViewInNeeded()
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun showLoading() {
+        super<BaseActivity>.showLoading()
+    }
+
+    override fun dismissLoading() {
+        super<BaseActivity>.dismissLoading()
     }
 }

@@ -2,8 +2,11 @@
 
 package com.sumian.sddoctor.account.presenter
 
+import com.sumian.common.base.BaseViewModel
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.VersionUtil
+import com.sumian.sddoctor.account.activity.VersionActivity
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.contract.VersionContract
 import com.sumian.sddoctor.app.App
@@ -24,7 +27,7 @@ import com.sumian.sddoctor.util.UiUtils
  *
  * </pre>
  */
-class VersionPresenter private constructor(view: VersionContract.View) : VersionContract.Presenter {
+class VersionPresenter private constructor(view: VersionContract.View) : BaseViewModel() {
 
     private var mView: VersionContract.View? = null
 
@@ -33,12 +36,12 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
     }
 
     companion object {
-        fun init(view: VersionContract.View): VersionContract.Presenter {
+        fun init(view: VersionContract.View): VersionPresenter {
             return VersionPresenter(view)
         }
     }
 
-    override fun getVersion() {
+    fun getVersion() {
 
         this.mView?.showLoading()
 

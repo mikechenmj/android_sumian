@@ -19,7 +19,6 @@ import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.UserInfoActivity
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.base.BaseFragment
 import com.sumian.sddoctor.booking.BookingManagementActivity
 import com.sumian.sddoctor.constants.H5Uri
@@ -73,7 +72,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
     override fun initWidget(root: View?) {
         super.initWidget(root)
         iv_avatar.setOnClickListener {
-            BaseActivity.show(context!!, UserInfoActivity::class.java)
+            ActivityUtils.startActivity(UserInfoActivity::class.java)
         }
         showOpenNotificationDialogIfNeeded()
         iv_notification.setOnClickListener { ActivityUtils.startActivity(NotificationListActivity::class.java) }

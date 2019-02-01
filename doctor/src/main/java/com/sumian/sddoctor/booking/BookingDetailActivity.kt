@@ -7,10 +7,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.booking.bean.BookingDetail
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.patient.fragment.PatientInfoWebFragment
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_booking_detail.*
 class BookingDetailActivity : BaseActivity() {
     private var mAdapter: BookingDetailAdapter? = null
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_booking_detail
     }
 
@@ -57,7 +57,7 @@ class BookingDetailActivity : BaseActivity() {
                 if (response == null) {
                     return
                 }
-                mAdapter = BookingDetailAdapter(mActivity, supportFragmentManager, response)
+                mAdapter = BookingDetailAdapter(this@BookingDetailActivity, supportFragmentManager, response)
                 view_pager.adapter = mAdapter
             }
 

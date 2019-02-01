@@ -14,8 +14,6 @@ import com.sumian.sddoctor.account.activity.UserInfoActivity
 import com.sumian.sddoctor.account.contract.LogoutContract
 import com.sumian.sddoctor.account.presenter.LogoutPresenter
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
-import com.sumian.sddoctor.base.BaseActivity.Companion.show
 import com.sumian.sddoctor.base.BaseFragment
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
@@ -39,7 +37,8 @@ class MeFragment : BaseFragment(), LogoutContract.View {
 
     override fun onLogoutSuccess() {
         showCenterToast(getString(R.string.logout_success))
-        BaseActivity.showClearTop(context!!, LoginActivity::class.java)
+        ActivityUtils.finishAllActivities()
+        ActivityUtils.startActivity(LoginActivity::class.java)
     }
 
     override fun onLogoutFailed(error: String?) {
@@ -54,10 +53,10 @@ class MeFragment : BaseFragment(), LogoutContract.View {
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
-        iv_avatar.setOnClickListener { BaseActivity.show(context!!, UserInfoActivity::class.java) }
+        iv_avatar.setOnClickListener { ActivityUtils.startActivity(UserInfoActivity::class.java) }
         vg_warning.setOnClickListener { onWarningBannerClick() }
-        sdv_user_info.setOnClickListener { show(context!!, UserInfoActivity::class.java) }
-        sdv_setting.setOnClickListener { show(context!!, SettingsActivity::class.java) }
+        sdv_user_info.setOnClickListener { ActivityUtils.startActivity(UserInfoActivity::class.java) }
+        sdv_setting.setOnClickListener { ActivityUtils.startActivity(SettingsActivity::class.java) }
         sdv_my_service.setOnClickListener { ActivityUtils.startActivity(MyServiceListActivity::class.java) }
         sdv_my_wallet.setOnClickListener { ActivityUtils.startActivity(MyWalletActivity::class.java) }
     }

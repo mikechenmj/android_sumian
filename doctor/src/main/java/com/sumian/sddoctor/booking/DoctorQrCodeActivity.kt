@@ -7,10 +7,10 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.constants.H5Uri
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.util.ImageLoader
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_doctor_qr_code.*
 class DoctorQrCodeActivity : BaseActivity() {
     private var mDoctorInfo: DoctorInfo? = null
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_doctor_qr_code
     }
 
@@ -30,7 +30,7 @@ class DoctorQrCodeActivity : BaseActivity() {
         title_bar.setOnBackClickListener { finish() }
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer<DoctorInfo> { t ->
             val qrCodeUrl = t?.qr_code_raw
-            ImageLoader.load(mActivity, qrCodeUrl ?: return@Observer, iv_qr)
+            ImageLoader.load(this, qrCodeUrl ?: return@Observer, iv_qr)
             tv_add_doctor_hint.text = getString(R.string.add_xx_doctor, t.name)
             mDoctorInfo = t
         })

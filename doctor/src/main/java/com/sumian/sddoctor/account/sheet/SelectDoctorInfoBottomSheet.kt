@@ -30,7 +30,7 @@ class SelectDoctorInfoBottomSheet : AbstractBottomSheetView(), NumberPickerView.
         LoadingDialog(context!!)
     }
 
-    private val mPresenter: AccountContract.Presenter by lazy {
+    private val mPresenter: AccountPresenter by lazy {
         AccountPresenter.init(this)
     }
 

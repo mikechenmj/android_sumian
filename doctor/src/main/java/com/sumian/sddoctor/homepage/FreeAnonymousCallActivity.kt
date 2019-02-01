@@ -6,10 +6,10 @@ import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.booking.bean.GetIsHangingResponse
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_free_anonymous_call.*
 class FreeAnonymousCallActivity : BaseActivity() {
     private var mUserId = 0
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_free_anonymous_call
     }
 
@@ -35,11 +35,7 @@ class FreeAnonymousCallActivity : BaseActivity() {
         }
     }
 
-    override fun initBundle(bundle: Bundle?) {
-        super.initBundle(bundle)
-        if (bundle == null) {
-            return
-        }
+    override fun initBundle(bundle: Bundle) {
         mUserId = bundle.getInt(KEY_ID)
     }
 

@@ -96,7 +96,7 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         return false
     }
 
-    private val mPresenter: VersionContract.Presenter by lazy {
+    private val mPresenter: VersionPresenter by lazy {
         VersionPresenter.init(this)
     }
 

@@ -6,11 +6,11 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.constants.Configs
 import com.sumian.sddoctor.main.MainActivity
 import com.sumian.sddoctor.util.PhoneNumberUtil
@@ -31,12 +31,11 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         VersionDelegate.init()
     }
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_login
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
+    override fun initWidgetBefore() {
         mPresenter = LoginPresenter(this)
     }
 
@@ -179,5 +178,13 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
     override fun getContext(): Context {
         return this
+    }
+
+    override fun showLoading() {
+        super<BaseActivity>.showLoading()
+    }
+
+    override fun dismissLoading() {
+        super<BaseActivity>.dismissLoading()
     }
 }

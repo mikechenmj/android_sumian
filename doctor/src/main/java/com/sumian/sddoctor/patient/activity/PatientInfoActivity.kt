@@ -1,9 +1,11 @@
 package com.sumian.sddoctor.patient.activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.R
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.patient.bean.Patient
 import com.sumian.sddoctor.patient.fragment.PatientInfoWebFragment
 
@@ -32,7 +34,9 @@ class PatientInfoActivity : BaseActivity() {
                 putInt(EXTRAS_ID, patientId)
                 putInt(EXTRAS_FACED, faced)
             }
-            show(context, PatientInfoActivity::class.java, extras)
+            val intent = Intent(context, PatientInfoActivity::class.java)
+            intent.putExtras(extras)
+            ActivityUtils.startActivity(intent)
         }
     }
 
@@ -40,16 +44,13 @@ class PatientInfoActivity : BaseActivity() {
 
     private var mFaced = Patient.UN_FACED_TYPE
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_main_patient_info
     }
 
-    override fun initBundle(bundle: Bundle?) {
-        super.initBundle(bundle)
-        bundle?.let {
+    override fun initBundle(bundle: Bundle) {
             mPatientId = bundle.getInt(EXTRAS_ID, 0)
             mFaced = bundle.getInt(EXTRAS_FACED, Patient.UN_FACED_TYPE)
-        }
     }
 
     override fun initData() {

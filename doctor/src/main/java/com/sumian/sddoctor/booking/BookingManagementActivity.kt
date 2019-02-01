@@ -5,10 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.booking.adapter.BookingAdapter
 import com.sumian.sddoctor.booking.bean.BookingDayData
 import com.sumian.sddoctor.booking.bean.BookingSection
@@ -25,7 +25,7 @@ class BookingManagementActivity : BaseActivity(), BaseQuickAdapter.RequestLoadMo
     var mTopDate: Int = (mCurrentTime / 1000).toInt()
     var mBottomDate: Int = (mCurrentTime / 1000).toInt()
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_booking_management
     }
 

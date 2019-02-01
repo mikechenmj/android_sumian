@@ -3,12 +3,11 @@ package com.sumian.sddoctor.login.login
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.constants.Configs
 import com.sumian.sddoctor.login.login.bean.LoginResponse
 import com.sumian.sddoctor.main.MainActivity
@@ -30,15 +29,11 @@ class BindWechatActivity : BaseActivity() {
         }
     }
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_bind_wechat
     }
 
-    override fun initBundle(bundle: Bundle?) {
-        super.initBundle(bundle)
-        if (bundle == null) {
-            return
-        }
+    override fun initBundle(bundle: Bundle) {
         mSocialInfo = bundle.getString(KEY_SOCIAL_INFO)?:""
     }
 

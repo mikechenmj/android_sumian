@@ -4,10 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.base.BaseActivity
 import com.sumian.sddoctor.homepage.HomepageFragment
 import com.sumian.sddoctor.me.MeFragment
 import com.sumian.sddoctor.patient.fragment.PatientFragment
@@ -45,14 +45,11 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnSelectedTabChangeList
 
     private var position = 0
 
-    override fun initBundle(bundle: Bundle?) {
-        super.initBundle(bundle)
-        bundle?.let {
-            position = it.getInt(EXTRAS_POSITION, 0)
-        }
+    override fun initBundle(bundle: Bundle) {
+        position = bundle.getInt(EXTRAS_POSITION, 0)
     }
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_main
     }
 

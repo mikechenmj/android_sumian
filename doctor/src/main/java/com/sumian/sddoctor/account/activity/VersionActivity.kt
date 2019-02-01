@@ -2,11 +2,12 @@ package com.sumian.sddoctor.account.activity
 
 import android.annotation.SuppressLint
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.contract.VersionContract
 import com.sumian.sddoctor.account.presenter.VersionPresenter
-import com.sumian.sddoctor.base.BasePresenterActivity
 import com.sumian.sddoctor.util.UiUtils
 import kotlinx.android.synthetic.main.activity_main_version.*
 import java.util.*
@@ -24,17 +25,18 @@ import java.util.*
  *
  * </pre>
  */
-class VersionActivity : BasePresenterActivity<VersionContract.Presenter>(), VersionContract.View, View.OnClickListener {
+class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContract.View, View.OnClickListener {
 
     private var mIsHaveUpgrade = false
 
-    override fun getContentId(): Int {
+    override fun getLayoutId(): Int {
         return R.layout.activity_main_version
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
-        this.mPresenter = VersionPresenter.init(this)
+
+    override fun initWidgetBefore() {
+        super.initWidgetBefore()
+        mPresenter = VersionPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -59,7 +61,7 @@ class VersionActivity : BasePresenterActivity<VersionContract.Presenter>(), Vers
     }
 
     override fun onGetVersionFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
@@ -71,11 +73,19 @@ class VersionActivity : BasePresenterActivity<VersionContract.Presenter>(), Vers
         if (mIsHaveUpgrade) {
             UiUtils.openAppInMarket(this)
         } else {
-            showCenterToast(getString(R.string.this_is_last_version))
+            ToastUtils.showShort(getString(R.string.this_is_last_version))
         }
     }
 
     private fun formatVersion(versionLabel: String, version: String): String {
         return String.format(Locale.getDefault(), "%s%s%s", versionLabel, " ", version)
+    }
+
+    override fun showLoading() {
+        super<BaseViewModelActivity>.showLoading()
+    }
+
+    override fun dismissLoading() {
+        super<BaseViewModelActivity>.dismissLoading()
     }
 }

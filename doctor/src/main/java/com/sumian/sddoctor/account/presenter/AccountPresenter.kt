@@ -1,6 +1,8 @@
 package com.sumian.sddoctor.account.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.sddoctor.account.activity.ModifyDoctorInfoActivity
 import com.sumian.sddoctor.account.activity.ModifyDoctorInfoActivity.Companion.MODIFY_TYPE_DEPARTMENT
 import com.sumian.sddoctor.account.activity.ModifyDoctorInfoActivity.Companion.MODIFY_TYPE_HOSPITAL
 import com.sumian.sddoctor.account.activity.ModifyDoctorInfoActivity.Companion.MODIFY_TYPE_JOB_TITLE
@@ -11,7 +13,7 @@ import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import retrofit2.Call
 
-class AccountPresenter private constructor(view: AccountContract.View?) : AccountContract.Presenter {
+class AccountPresenter private constructor(view: AccountContract.View?) : BaseViewModel() {
 
     private var mView: AccountContract.View? = null
 
@@ -23,12 +25,12 @@ class AccountPresenter private constructor(view: AccountContract.View?) : Accoun
 
     companion object {
 
-        fun init(view: AccountContract.View): AccountContract.Presenter {
+        fun init(view: AccountContract.View): AccountPresenter {
             return AccountPresenter(view)
         }
     }
 
-    override fun modifyDoctorInfo(modifyType: Int, newContent: String) {
+    fun modifyDoctorInfo(modifyType: Int, newContent: String) {
 
         mView?.showLoading()
 
@@ -75,7 +77,7 @@ class AccountPresenter private constructor(view: AccountContract.View?) : Accoun
         })
     }
 
-    override fun onRelease() {
+    fun onRelease() {
         mCall?.cancel()
     }
 }

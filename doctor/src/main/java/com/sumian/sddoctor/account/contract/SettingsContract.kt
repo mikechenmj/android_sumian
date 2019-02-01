@@ -1,6 +1,6 @@
 package com.sumian.sddoctor.account.contract
 
-import com.sumian.sddoctor.base.BaseActivity
+import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.base.BasePresenter
 import com.sumian.sddoctor.base.BaseView
 
