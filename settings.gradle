@@ -1,4 +1,4 @@
-include ':app',
+include ':client',
         ':common',
         ':blue',
         ':kefu-easeui',
