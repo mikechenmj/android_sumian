@@ -59,14 +59,8 @@ ext {
 
     compileSdkVersion = 28
     buildToolsVersion = "28.0.3"
-    applicationId = "com.sumian.sd"
     minSdkVersion = 21
     targetSdkVersion = 28
-    versionCode = new Date().format('yyyyMMddHH').toInteger()
-    versionName = "1.20.0"
-
-    applicationIdSuffix = null
-    versionNameSuffix = null
 
     libVersionCode = 1
     libVersionName = "1.0"

@@ -10,18 +10,21 @@ apply plugin: 'kotlin-kapt'
 // make sure this line comes *after* you apply the Android plugin
 apply plugin: 'com.getkeepsafe.dexcount'
 
+def appProperties = new Properties()
+appProperties.load(new FileInputStream(getProject().file("app.properties")))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     signingConfigs {
         configs {
-            keyAlias APP_KEY_ALIAS
-            keyPassword APP_KEY_PASSWORD
-            storePassword APP_STORE_PASSWORD
+            keyAlias appProperties['APP_KEY_ALIAS']
+            keyPassword appProperties['APP_KEY_PASSWORD']
+            storePassword appProperties['APP_STORE_PASSWORD']
 
             def userName = System.getProperty("user.name")//根据 os 账户信息动态生成keystore 保存路径
-            def keystore_path = Os.isFamily(Os.FAMILY_WINDOWS) ? WINDOWS_RELEASE_STORE_FILE : LINUX_RELEASE_STORE_FILE
+            def keystore_path = Os.isFamily(Os.FAMILY_WINDOWS) ? appProperties['WINDOWS_RELEASE_STORE_FILE'] : appProperties['LINUX_RELEASE_STORE_FILE']
             keystore_path = keystore_path.replace("{user_name}", userName)
 
             //加载资源
@@ -37,37 +40,41 @@ android {
     }
 
     defaultConfig {
+        applicationId = "com.sumian.sd"
+        applicationIdSuffix = null
+        versionCode = new Date().format('yyyyMMddHH').toInteger()
+        versionName = "1.20.0"
+        versionNameSuffix = null
+
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField("String", "CHANNEL", "\"yyb\"")
-        buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
-        buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
-        buildConfigField("String", "UMENG_APP_KEY", OFFICIAL_UMENG_APP_KEY)
-        buildConfigField("String", "UMENG_PUSH_SECRET", UMENG_PUSH_SECRET)
-        buildConfigField("String", "UMENG_CHANNEL", UMENG_CHANNEL)
-        buildConfigField("String", "EASEMOB_APP_KEY", EASEMOB_APP_KEY)
-        buildConfigField("String", "EASEMOB_TENANT_ID", EASEMOB_TENANT_ID)
-        buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", EASEMOB_CUSTOMER_SERVICE_ID)
-        buildConfigField("String", "USER_AGREEMENT_URL", USER_AGREEMENT_URL)
-        buildConfigField("String", "USER_PRIVACY_POLICY_URL", USER_PRIVACY_POLICY_URL)
+        buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])
+        buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", appProperties['LEANCLOUD_DOCTOR_SERVICE_ID'])
+        buildConfigField("String", "UMENG_APP_KEY", appProperties['OFFICIAL_UMENG_APP_KEY'])
+        buildConfigField("String", "UMENG_PUSH_SECRET", appProperties['UMENG_PUSH_SECRET'])
+        buildConfigField("String", "UMENG_CHANNEL", appProperties['UMENG_CHANNEL'])
+        buildConfigField("String", "EASEMOB_APP_KEY", appProperties['EASEMOB_APP_KEY'])
+        buildConfigField("String", "EASEMOB_TENANT_ID", appProperties['EASEMOB_TENANT_ID'])
+        buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", appProperties['EASEMOB_CUSTOMER_SERVICE_ID'])
+        buildConfigField("String", "USER_AGREEMENT_URL", appProperties['USER_AGREEMENT_URL'])
+        buildConfigField("String", "USER_PRIVACY_POLICY_URL", appProperties['USER_PRIVACY_POLICY_URL'])
         buildConfigField("boolean", "IS_CLINICAL_VERSION", "false")
-        buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", DEFAULT_APK_DOWNLOAD_URL)
-        buildConfigField("String", "HTTP_DNS_ACCOUNT_ID", HTTP_DNS_ACCOUNT_ID)
-        buildConfigField("String", "HTTP_DNS_SECRET_KEY", HTTP_DNS_SECRET_KEY)
-        buildConfigField("String", "CBTI_SHARE_WEBSITE", CBTI_SHARE_WEBSITE)
-        buildConfigField("String", "ALIYUN_LOG_ACCESS_KEY_ID", ALIYUN_LOG_ACCESS_KEY_ID)
-        buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", ALIYUN_LOG_ACCESS_SECRET)
-        buildConfigField("String", "ALIYUN_LOG_LOG_STORE", ALIYUN_LOG_LOG_STORE)
-        buildConfigField("String", "ALIYUN_LOG_END_POINT", ALIYUN_LOG_END_POINT)
-        buildConfigField("String", "WECHAT_APP_ID", WECHAT_APP_ID)
-        buildConfigField("String", "WECHAT_APP_SECRET", WECHAT_APP_SECRET)
-        buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", WECHAT_MINI_PROGRAM_ID_YOUZAN)
-        buildConfigField("String", "YOUZAN_URL", YOUZAN_URL)
+        buildConfigField("String", "DEFAULT_APK_DOWNLOAD_URL", appProperties['DEFAULT_APK_DOWNLOAD_URL'])
+        buildConfigField("String", "HTTP_DNS_ACCOUNT_ID", appProperties['HTTP_DNS_ACCOUNT_ID'])
+        buildConfigField("String", "HTTP_DNS_SECRET_KEY", appProperties['HTTP_DNS_SECRET_KEY'])
+        buildConfigField("String", "CBTI_SHARE_WEBSITE", appProperties['CBTI_SHARE_WEBSITE'])
+        buildConfigField("String", "ALIYUN_LOG_ACCESS_KEY_ID", appProperties['ALIYUN_LOG_ACCESS_KEY_ID'])
+        buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", appProperties['ALIYUN_LOG_ACCESS_SECRET'])
+        buildConfigField("String", "ALIYUN_LOG_LOG_STORE", appProperties['ALIYUN_LOG_LOG_STORE'])
+        buildConfigField("String", "ALIYUN_LOG_END_POINT", appProperties['ALIYUN_LOG_END_POINT'])
+        buildConfigField("String", "WECHAT_APP_ID", appProperties['WECHAT_APP_ID'])
+        buildConfigField("String", "WECHAT_APP_SECRET", appProperties['WECHAT_APP_SECRET'])
+        buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", appProperties['WECHAT_MINI_PROGRAM_ID_YOUZAN'])
+        buildConfigField("String", "YOUZAN_URL", appProperties['YOUZAN_URL'])
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -78,7 +85,7 @@ android {
         resConfigs "zh"//,"en"
         // tencent statics
         manifestPlaceholders = [
-                MTA_APPKEY : TENCENT_STATIC_APP_ID_OFFICIAL,
+                MTA_APPKEY : appProperties['TENCENT_STATIC_APP_ID_OFFICIAL'],
                 MTA_CHANNEL: "yyb"
         ]
     }
@@ -99,9 +106,7 @@ android {
             zipAlignEnabled true
             pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix rootProject.ext.applicationIdSuffix
-            versionNameSuffix rootProject.ext.versionNameSuffix
-            resValue("string", "umeng_app_key", OFFICIAL_UMENG_APP_KEY)
+            resValue("string", "umeng_app_key", appProperties['OFFICIAL_UMENG_APP_KEY'])
         }
 
         debug {
@@ -114,10 +119,8 @@ android {
             zipAlignEnabled true
             pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix rootProject.ext.applicationIdSuffix
-            versionNameSuffix rootProject.ext.versionNameSuffix
 
-            resValue("string", "umeng_app_key", TEST_UMENG_APP_KEY)
+            resValue("string", "umeng_app_key", appProperties['TEST_UMENG_APP_KEY'])
         }
 
     }
@@ -148,8 +151,6 @@ android {
     productFlavors {
 
         def app_name = "速眠医生"
-        def application_id = rootProject.ext.applicationId
-        def version_name = rootProject.ext.versionName
 
         yyb {//应用宝
             dimension "market"
@@ -157,23 +158,18 @@ android {
 
         devolop {
             dimension "environment"
-
             def real_app_name = "${app_name}-Dev"
-
-            applicationId = application_id
-            applicationIdSuffix = null
-            versionName = version_name
             versionNameSuffix = "-dev"
 
-            buildConfigField("String", "BASE_URL", BASE_DEV_URL)
-            buildConfigField("String", "BASE_H5_URL", BASE_DEV_H5_URL)
-            buildConfigField("String", "LEANCLOUD_APP_ID", DEV_LEANCLOUD_APP_ID)
-            buildConfigField("String", "LEANCLOUD_APP_KEY", DEV_LEANCLOUD_APP_KEY)
-            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
-            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
-            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_DEV)
-            buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID_TEST)
+            buildConfigField("String", "BASE_URL", appProperties['BASE_DEV_URL'])
+            buildConfigField("String", "BASE_H5_URL", appProperties['BASE_DEV_H5_URL'])
+            buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['DEV_LEANCLOUD_APP_ID'])
+            buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['DEV_LEANCLOUD_APP_KEY'])
+            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])
+            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", appProperties['LEANCLOUD_DOCTOR_SERVICE_ID'])
+            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", appProperties['DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID'])
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_DEV'])
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_TEST'])
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -181,23 +177,18 @@ android {
 
         alpha {
             dimension "environment"
-
             def real_app_name = "${app_name}-Test"
-
-            applicationId = application_id
-            applicationIdSuffix = null
-            versionName = version_name
             versionNameSuffix = "-test"
 
-            buildConfigField("String", "BASE_URL", BASE_TEST_URL)
-            buildConfigField("String", "BASE_H5_URL", BASE_TEST_H5_URL)
-            buildConfigField("String", "LEANCLOUD_APP_ID", TEST_LEANCLOUD_APP_ID)
-            buildConfigField("String", "LEANCLOUD_APP_KEY", TEST_LEANCLOUD_APP_KEY)
-            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
-            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
-            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_TEST)
-            buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID_TEST)
+            buildConfigField("String", "BASE_URL", appProperties['BASE_TEST_URL'])
+            buildConfigField("String", "BASE_H5_URL", appProperties['BASE_TEST_H5_URL'])
+            buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['TEST_LEANCLOUD_APP_ID'])
+            buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['TEST_LEANCLOUD_APP_KEY'])
+            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])
+            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", appProperties['LEANCLOUD_DOCTOR_SERVICE_ID'])
+            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", appProperties['TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID'])
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_TEST'])
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_TEST'])
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -205,28 +196,23 @@ android {
 
         official {
             dimension "environment"
-
-            applicationId = application_id
-            applicationIdSuffix = null
-            versionName = version_name
             versionNameSuffix = "-release"
-
-            buildConfigField("String", "BASE_URL", BASE_OFFICIAL_URL)
-            buildConfigField("String", "BASE_H5_URL", BASE_OFFICIAL_H5_URL)
-            buildConfigField("String", "LEANCLOUD_APP_ID", OFFICIAL_LEANCLOUD_APP_ID)
-            buildConfigField("String", "LEANCLOUD_APP_KEY", OFFICIAL_LEANCLOUD_APP_KEY)
-            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", LEANCLOUD_ONLINE_SERVICE_ID)
-            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", LEANCLOUD_DOCTOR_SERVICE_ID)
-            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID)
-            buildConfigField("String", "ALIYUN_LOG_PROJECT", ALIYUN_LOG_PROJECT_OFFICIAL)
-            buildConfigField("String", "TENCENT_STATIC_APP_ID", TENCENT_STATIC_APP_ID_OFFICIAL)
+            buildConfigField("String", "BASE_URL", appProperties['BASE_OFFICIAL_URL'])
+            buildConfigField("String", "BASE_H5_URL", appProperties['BASE_OFFICIAL_H5_URL'])
+            buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['OFFICIAL_LEANCLOUD_APP_ID'])
+            buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['OFFICIAL_LEANCLOUD_APP_KEY'])
+            buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])
+            buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", appProperties['LEANCLOUD_DOCTOR_SERVICE_ID'])
+            buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", appProperties['OFFICIAL_LEANCLOUD_BROADCAST_CONVERSATION_ID'])
+            buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_OFFICIAL'])
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_OFFICIAL'])
 
             resValue "string", "app_name", app_name
             println("${app_name}")
         }
 
         productFlavors.all { flavor ->
-            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name, scheme: "${SCHEME}", host: "${HOST}"]
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name, scheme: "${appProperties['SCHEME']}", host: "${appProperties['HOST']}"]
         }
 
     }
