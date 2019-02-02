@@ -176,4 +176,24 @@ public class LessonListDialog extends DialogFragment implements CBTIWeekLessonCo
 
         boolean showCBTICourse(int position, Course course);
     }
+
+    @Override
+    public void setPresenter(@NotNull CBTIWeekCoursePresenter presenter) {
+
+    }
+
+    @Override
+    public void onFailure(@NotNull String error) {
+
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
 }

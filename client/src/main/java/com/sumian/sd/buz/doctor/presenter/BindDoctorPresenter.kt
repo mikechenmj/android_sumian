@@ -5,12 +5,12 @@ import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.doctor.activity.DoctorWebActivity
 import com.sumian.sd.buz.doctor.bean.Doctor
-import com.sumian.sd.buz.doctor.contract.BindDoctorContract
 
-class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : BaseViewModel() {
+class BindDoctorPresenter private constructor(view: DoctorWebActivity) : BaseViewModel() {
 
-    private var mView: BindDoctorContract.View? = null
+    private var mView: DoctorWebActivity? = null
 
     init {
         view.setPresenter(this)
@@ -20,7 +20,7 @@ class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : B
     companion object {
 
         @JvmStatic
-        fun init(view: BindDoctorContract.View): BindDoctorPresenter {
+        fun init(view: DoctorWebActivity): BindDoctorPresenter {
             return BindDoctorPresenter(view)
         }
 

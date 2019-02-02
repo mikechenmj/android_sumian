@@ -36,14 +36,14 @@ import retrofit2.Call;
  */
 public class SdUserInfoPresenter extends BaseViewModel {
 
-    private SdUserInfoContract.View mView;
+    private UserInfoActivity mView;
 
-    private SdUserInfoPresenter(SdUserInfoContract.View view) {
+    private SdUserInfoPresenter(UserInfoActivity view) {
         view.setPresenter(this);
         mView = view;
     }
 
-    public static SdUserInfoPresenter init(SdUserInfoContract.View view) {
+    public static SdUserInfoPresenter init(UserInfoActivity view) {
         return new SdUserInfoPresenter(view);
     }
 

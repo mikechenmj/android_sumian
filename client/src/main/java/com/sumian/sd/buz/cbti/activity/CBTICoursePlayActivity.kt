@@ -19,7 +19,6 @@ import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.cbti.bean.Course
 import com.sumian.sd.buz.cbti.bean.CoursePlayAuth
 import com.sumian.sd.buz.cbti.bean.CoursePlayLog
-import com.sumian.sd.buz.cbti.contract.CBTIWeekPlayContract
 import com.sumian.sd.buz.cbti.dialog.CBTIQuestionDialog
 import com.sumian.sd.buz.cbti.event.CBTIProgressChangeEvent
 import com.sumian.sd.buz.cbti.presenter.CBTICoursePlayAuthPresenter
@@ -42,7 +41,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
  * desc:CBTI 一个课时详情中心,包含播放视频,课程列表,以及课程总结等模块
  *
  */
-class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
+class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
 
     private var mCourse: Course? = null
     private var mCoursePlayAuth: CoursePlayAuth? = null
@@ -152,30 +151,30 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
         super.onBackPressed()
     }
 
-    override fun onGetCBTIPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
+    fun onGetCBTIPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
         if (mIsSelect) {
             mIsSelect = false
         }
         updateView(coursePlayAuth)
     }
 
-    override fun onGetCBTIPlayAuthFailed(error: String) {
+    fun onGetCBTIPlayAuthFailed(error: String) {
         ToastUtils.showShort(error)
     }
 
-    override fun onUploadLessonLogSuccess(coursePlayLog: CoursePlayLog) {
+    fun onUploadLessonLogSuccess(coursePlayLog: CoursePlayLog) {
 
     }
 
-    override fun onUploadLessonLogFailed(error: String) {
+    fun onUploadLessonLogFailed(error: String) {
         //onGetCBTIPlayAuthFailed(error)
     }
 
-    override fun onUploadCBTIQuestionnairesSuccess(coursePlayAuth: CoursePlayAuth) {
+    fun onUploadCBTIQuestionnairesSuccess(coursePlayAuth: CoursePlayAuth) {
         mCBTIQuestionDialog?.updateQuestionResult()
     }
 
-    override fun onUploadCBTIQuestionnairesFailed(error: String) {
+    fun onUploadCBTIQuestionnairesFailed(error: String) {
         ToastUtils.showShort(error)
     }
 
@@ -239,13 +238,13 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
                 }.show()
     }
 
-    override fun onGetCBTINextPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
+    fun onGetCBTINextPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
         uploadCBTICourseWatchLog(mCurrentCourse?.id, mCurrentCourse?.video_id)
         mCurrentPosition += 1
         updateView(coursePlayAuth)
     }
 
-    override fun onGetCBTINextPlayAuthFailed(error: String) {
+    fun onGetCBTINextPlayAuthFailed(error: String) {
         mCurrentCourse = mCoursePlayAuth?.courses?.get(mCurrentPosition)
         uploadCBTICourseWatchLog(mCurrentCourse?.id, mCurrentCourse?.video_id)
         showPracticeDialog()
@@ -363,5 +362,13 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
         videoId?.let {
             mPresenter.uploadCBTICourseWatchLog(courseId ?: 0, it)
         }
+    }
+
+    fun onBegin() {
+
+    }
+
+    fun onFinish() {
+
     }
 }

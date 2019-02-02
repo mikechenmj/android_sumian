@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog
 import com.sumian.sd.R
-import com.sumian.sd.common.pay.contract.PayContract
+import com.sumian.sd.common.pay.presenter.PayPresenter
 import java.lang.ref.WeakReference
 
 /**
@@ -33,10 +33,10 @@ class PayDialog(context: Context, private val listener: Listener) : QMUIDialog(c
         btJoin
     }
 
-    private var mPresenterWeakReference: WeakReference<PayContract.Presenter>? = null
+    private var mPresenterWeakReference: WeakReference<PayPresenter>? = null
     private var mPayStatus: Int = 0
 
-    fun bindPresenter(presenter: PayContract.Presenter) {
+    fun bindPresenter(presenter: PayPresenter) {
         this.mPresenterWeakReference = WeakReference(presenter)
     }
 

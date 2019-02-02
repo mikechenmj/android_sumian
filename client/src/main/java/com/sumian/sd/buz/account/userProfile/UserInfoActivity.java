@@ -54,7 +54,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 @SuppressWarnings("ALL")
 public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
-        CompoundButton.OnCheckedChangeListener, SdUserInfoContract.View, UMAuthListener, Observer<Token> {
+        CompoundButton.OnCheckedChangeListener, UMAuthListener, Observer<Token> {
 
     @SuppressWarnings("unused")
     private static final String TAG                     = UserInfoActivity.class.getSimpleName();
@@ -135,7 +135,6 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
         mPresenter.getUserInfo();
     }
 
-    @Override
     public void setPresenter(SdUserInfoPresenter presenter) {
         this.mPresenter = presenter;
     }
@@ -296,34 +295,28 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
         showDialog(isChecked);
     }
 
-    @Override
     public void onGetUserInfoSuccess(UserInfo userProfile) {
         this.mUserProfile = userProfile;
         updateUserProfileUI(userProfile);
     }
 
-    @Override
     public void onGetUserInfoFailed(String error) {
         ToastUtils.showShort(error);
     }
 
-    @Override
     public void onUnBindWechatSuccess() {
         ToastUtils.showShort(R.string.unbind_success);
         updateSocialites(null);
     }
 
-    @Override
     public void onUnBindWechatFailed(String error) {
         ToastUtils.showShort(error);
     }
 
-    @Override
     public void onBindSocialSuccess(Social social) {
         updateSocialites(social);
     }
 
-    @Override
     public void onBindSocialFailed(String error) {
         bindSocialitesFailed(error);
     }
@@ -450,12 +443,10 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
         updateUserProfileUI(token.user);
     }
 
-    @Override
     public void onBegin() {
         showLoading();
     }
 
-    @Override
     public void onFinish() {
         dismissLoading();
     }

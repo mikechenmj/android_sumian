@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.setting.version.contract
 
 import com.sumian.common.base.BaseViewModel
-import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.buz.setting.version.bean.Version
 
 /**
@@ -19,7 +18,23 @@ import com.sumian.sd.buz.setting.version.bean.Version
  */
 interface VersionContract {
 
-    interface View : SdBaseView<BaseViewModel> {
+    interface View {
+
+        fun setPresenter(presenter: BaseViewModel) {
+
+        }
+
+        fun onFailure(error: String) {
+
+        }
+
+        fun onBegin() {
+
+        }
+
+        fun onFinish() {
+
+        }
 
         fun onGetVersionSuccess(version: Version)
 

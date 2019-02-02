@@ -26,10 +26,10 @@ import retrofit2.Call;
 public class NotificationListPresenter extends BaseViewModel {
     private static final int PER_PAGE = 15;
     private static final int INIT_PAGE = 1;
-    private NotificationListContract.View mView;
+    private NotificationListActivity mView;
     private int mPage = INIT_PAGE;
 
-    NotificationListPresenter(NotificationListContract.View view) {
+    NotificationListPresenter(NotificationListActivity view) {
         mView = view;
     }
 

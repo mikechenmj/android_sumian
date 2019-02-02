@@ -16,7 +16,6 @@ import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.buz.doctor.bean.Doctor;
 import com.sumian.sd.buz.doctor.bean.DoctorService;
-import com.sumian.sd.buz.doctor.contract.BindDoctorContract;
 import com.sumian.sd.buz.doctor.presenter.BindDoctorPresenter;
 import com.sumian.sd.common.h5.H5Uri;
 import com.sumian.sd.main.MainActivity;
@@ -32,7 +31,7 @@ import androidx.annotation.NonNull;
  * desc:
  **/
 @SuppressWarnings("ALL")
-public class DoctorWebActivity extends SdBaseWebViewActivity implements BindDoctorContract.View {
+public class DoctorWebActivity extends SdBaseWebViewActivity {
 
     private static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
 
@@ -104,12 +103,12 @@ public class DoctorWebActivity extends SdBaseWebViewActivity implements BindDoct
         });
     }
 
-    @Override
+
     public void setPresenter(BindDoctorPresenter presenter) {
         this.mPresenter = (BindDoctorPresenter) presenter;
     }
 
-    @Override
+
     public void onBindDoctorSuccess(@NotNull String message) {
         if (mIsFromRecord) {
             DoctorServiceWebActivity.show(this, mDoctorService, true);
@@ -119,12 +118,12 @@ public class DoctorWebActivity extends SdBaseWebViewActivity implements BindDoct
         StatUtil.INSTANCE.event("e_binding_success", null);
     }
 
-    @Override
+
     public void onBindDoctorFailed(@NotNull String message) {
         ToastUtils.showShort(message);
     }
 
-    @Override
+
     public void onIsSameDoctorCallback(@NotNull String message) {
         ToastUtils.showShort(message);
         finish();

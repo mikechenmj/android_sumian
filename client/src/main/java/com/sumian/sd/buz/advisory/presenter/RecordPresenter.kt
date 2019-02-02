@@ -3,8 +3,8 @@ package com.sumian.sd.buz.advisory.presenter
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.buz.advisory.bean.Advisory
-import com.sumian.sd.buz.advisory.contract.RecordContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
 /**
@@ -13,9 +13,9 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  * on 2018/6/6 12:06
  * desc:
  **/
-class RecordPresenter private constructor(view: RecordContract.View) : BaseViewModel(), RecordContract.Presenter {
+class RecordPresenter private constructor(view: AdvisoryDetailActivity) : BaseViewModel() {
 
-    private var mView: RecordContract.View? = null
+    private var mView: AdvisoryDetailActivity? = null
 
     init {
         view.setPresenter(this)
@@ -24,14 +24,14 @@ class RecordPresenter private constructor(view: RecordContract.View) : BaseViewM
 
     companion object {
 
-        fun init(view: RecordContract.View) {
+        fun init(view: AdvisoryDetailActivity) {
             RecordPresenter(view)
         }
     }
 
-    override fun getAdvisoryDetail(advisoryId: Int) {
+    fun getAdvisoryDetail(advisoryId: Int) {
 
-        this.mView?.onBegin()
+//        this.mView?.onBegin()
 
         val map = mutableMapOf<String, Any>()
         map["include"] = "user,doctor,records"
@@ -47,7 +47,7 @@ class RecordPresenter private constructor(view: RecordContract.View) : BaseViewM
             }
 
             override fun onFinish() {
-                mView?.onFinish()
+//                mView?.onFinish()
             }
 
         })

@@ -11,7 +11,6 @@ import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.cbti.adapter.CBTIMessageBoardAdapter
 import com.sumian.sd.buz.cbti.bean.CBTIMeta
 import com.sumian.sd.buz.cbti.bean.MessageBoard
-import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardContract
 import com.sumian.sd.buz.cbti.model.CbtiChapterViewModel
 import com.sumian.sd.buz.cbti.presenter.CBTIMsgBoardPresenter
 import kotlinx.android.synthetic.main.fragment_main_cbti_message_board.*
@@ -20,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_main_cbti_message_board.*
  * CBTI 留言板   留言板列表 和留言功能
  */
 class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRecyclerView.OnLoadCallback,
-        CBTIMessageBoardContract.View, Observer<CBTIMeta> {
+        Observer<CBTIMeta> {
 
     companion object {
 
@@ -82,26 +81,26 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
         mPresenter.getNextMessageBoardList()
     }
 
-    override fun setPresenter(presenter: CBTIMsgBoardPresenter?) {
+    fun setPresenter(presenter: CBTIMsgBoardPresenter?) {
         //super.setPresenter(presenter)
         this.mPresenter = presenter
     }
 
-    override fun onGetMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
+    fun onGetMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
         mIsInit = false
         updateUi(msgBoardList)
     }
 
-    override fun onRefreshMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
+    fun onRefreshMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
         updateUi(msgBoardList)
     }
 
-    override fun onGetNextMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
+    fun onGetNextMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
         messageBoardAdapter.addAll(msgBoardList)
         hideEmptyView()
     }
 
-    override fun onGetMessageBoardListFailed(error: String) {
+    fun onGetMessageBoardListFailed(error: String) {
         mIsInit = false
     }
 
@@ -132,5 +131,13 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
             messageBoardAdapter.resetItem(msgBoardList)
             hideEmptyView()
         }
+    }
+
+    fun onBegin() {
+
+    }
+
+    fun onFinish() {
+
     }
 }

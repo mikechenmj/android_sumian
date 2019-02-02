@@ -30,8 +30,8 @@ public class ImproveUserProfilePresenter extends BaseViewModel implements Improv
         this.mView = view;
     }
 
-    public static void init(ImproveUserProfileContract.View view) {
-        new ImproveUserProfilePresenter(view);
+    public static ImproveUserProfilePresenter init(ImproveUserProfileContract.View view) {
+        return new ImproveUserProfilePresenter(view);
     }
 
     @Override

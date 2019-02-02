@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSON
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.cbti.activity.CBTICoursePlayActivity
 import com.sumian.sd.buz.cbti.bean.CoursePlayAuth
 import com.sumian.sd.buz.cbti.bean.CoursePlayLog
-import com.sumian.sd.buz.cbti.contract.CBTIWeekPlayContract
 import com.sumian.sd.buz.cbti.job.CBTICourseWatchLogJobService
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import java.util.regex.Pattern
@@ -19,9 +19,9 @@ import java.util.regex.Pattern
  *
  * desc:
  */
-class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : BaseViewModel() {
+class CBTICoursePlayAuthPresenter(view: CBTICoursePlayActivity) : BaseViewModel() {
 
-    private var mView: CBTIWeekPlayContract.View? = null
+    private var mView: CBTICoursePlayActivity? = null
 
     private var mCurrentCourseId = -1
     private var mCurrentFrame: Long = 0
@@ -30,7 +30,6 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : BaseViewMod
     }
 
     init {
-        view.setPresenter(this)
         this.mView = view
     }
 
@@ -39,7 +38,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : BaseViewMod
         private val TAG = CBTICoursePlayAuthPresenter::class.java.simpleName
 
         @JvmStatic
-        fun init(view: CBTIWeekPlayContract.View): CBTICoursePlayAuthPresenter {
+        fun init(view: CBTICoursePlayActivity): CBTICoursePlayAuthPresenter {
             return CBTICoursePlayAuthPresenter(view)
         }
     }

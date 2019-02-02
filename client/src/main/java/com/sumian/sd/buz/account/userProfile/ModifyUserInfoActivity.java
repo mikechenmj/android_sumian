@@ -24,7 +24,7 @@ import androidx.annotation.StringRes;
  * desc:修改用户需要自己填写的信息   e.g. 昵称,姓名,职业
  */
 
-public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener, ImproveUserProfileContract.View {
+public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener, ImproveUserProfileContract.View {
 
     private static final String EXTRA_MODIFY = "com.sumian.sleepdoctor.extra.MODIFY";
 
@@ -80,7 +80,7 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
 
     @Override
     public void setPresenter(ImproveUserProfileContract.Presenter presenter) {
-        this.mPresenter = presenter;
+        this.mPresenter = (ImproveUserProfilePresenter) presenter;
     }
 
     private void initType() {
@@ -139,5 +139,15 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
     @Override
     public void onFailure(String error) {
         ToastUtils.showShort(error);
+    }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onFinish() {
+
     }
 }

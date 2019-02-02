@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class NotificationListActivity extends SdBaseActivity<NotificationListPresenter>
-        implements BaseQuickAdapter.OnItemClickListener, NotificationListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
+        implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;
     private TitleBar titleBar;
@@ -151,7 +151,6 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
         startActivity(intent);
     }
 
-    @Override
     public void onLoadMore(List<Notification> notificationList, boolean hasMore) {
         titleBar.setMenuVisibility(mAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
         if (notificationList == null) {
@@ -162,7 +161,6 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
         mAdapter.setEnableLoadMore(hasMore);
     }
 
-    @Override
     public void onReadSuccess() {
     }
 
@@ -182,5 +180,13 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
             removeHeadViewInNeeded();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onBegin() {
+
+    }
+
+    public void onFinish() {
+
     }
 }

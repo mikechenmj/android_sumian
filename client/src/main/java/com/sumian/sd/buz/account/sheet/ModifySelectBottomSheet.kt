@@ -167,7 +167,7 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.Vi
         dismissAllowingStateLoss()
     }
 
-    override fun onFailure(error: String?) {
+    override fun onFailure(error: String) {
         super.onFailure(error)
         ToastHelper.show(context, error, Gravity.CENTER)
     }

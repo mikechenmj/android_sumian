@@ -11,7 +11,6 @@ import com.sumian.sd.buz.cbti.activity.CBTIExerciseWebActivity
 import com.sumian.sd.buz.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
 import com.sumian.sd.buz.cbti.adapter.ExerciseAdapter
 import com.sumian.sd.buz.cbti.bean.Exercise
-import com.sumian.sd.buz.cbti.contract.CBTIWeekExercisesContract
 import com.sumian.sd.buz.cbti.presenter.CBTIWeekExercisesPresenter
 import kotlinx.android.synthetic.main.fragment_tab_practice.*
 
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_tab_practice.*
  * desc: CBTI 练习tab
  *
  */
-class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesContract.Presenter>(), CBTIWeekExercisesContract.View, BaseRecyclerAdapter.OnItemClickListener {
+class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesPresenter>(), BaseRecyclerAdapter.OnItemClickListener {
 
     private lateinit var mExerciseAdapter: ExerciseAdapter
 
@@ -69,16 +68,16 @@ class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesContract.Presenter>(), 
         this.mPresenter.getCBTIWeekExercises(mChapterId)
     }
 
-    override fun setPresenter(presenter: CBTIWeekExercisesContract.Presenter?) {
+    fun setPresenter(presenter: CBTIWeekExercisesPresenter?) {
         //super.setPresenter(presenter)
         this.mPresenter = presenter
     }
 
-    override fun onGetCBTIWeekPracticeSuccess(exercises: List<Exercise>) {
+    fun onGetCBTIWeekPracticeSuccess(exercises: List<Exercise>) {
         mExerciseAdapter.resetItem(exercises)
     }
 
-    override fun onGetCBTIWeekPracticeFailed(error: String) {
+    fun onGetCBTIWeekPracticeFailed(error: String) {
         showCenterToast(error)
     }
 
@@ -93,4 +92,11 @@ class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesContract.Presenter>(), 
         CBTIExerciseWebActivity.show(activity!!, exercise.cbti_course_id)
     }
 
+    fun onBegin() {
+
+    }
+
+    fun onFinish() {
+
+    }
 }

@@ -1,7 +1,5 @@
 package com.sumian.sd.buz.account.userProfile
 
-import com.sumian.sd.base.SdBaseView
-
 /**
  * Created by jzz
  * on 2018/1/18.
@@ -11,8 +9,23 @@ import com.sumian.sd.base.SdBaseView
 interface ImproveUserProfileContract {
 
 
-    interface View : SdBaseView<ImproveUserProfilePresenter> {
+    interface View {
 
+        fun setPresenter(presenter: Presenter) {
+
+        }
+
+        fun onFailure(error: String) {
+
+        }
+
+        fun onBegin() {
+
+        }
+
+        fun onFinish() {
+
+        }
         fun onImproveUserProfileSuccess()
     }
 

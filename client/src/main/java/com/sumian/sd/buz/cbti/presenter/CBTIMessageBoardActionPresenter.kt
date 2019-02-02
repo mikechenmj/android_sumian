@@ -3,17 +3,17 @@ package com.sumian.sd.buz.cbti.presenter
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardActionContract
+import com.sumian.sd.buz.cbti.activity.CBTIWeekCoursePartActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
-class CBTIMessageBoardActionPresenter private constructor(view: CBTIMessageBoardActionContract.View) : BaseViewModel() {
+class CBTIMessageBoardActionPresenter private constructor(view: CBTIWeekCoursePartActivity) : BaseViewModel() {
 
     companion object {
         @JvmStatic
-        fun init(view: CBTIMessageBoardActionContract.View): CBTIMessageBoardActionPresenter = CBTIMessageBoardActionPresenter(view)
+        fun init(view: CBTIWeekCoursePartActivity): CBTIMessageBoardActionPresenter = CBTIMessageBoardActionPresenter(view)
     }
 
-    private var mView: CBTIMessageBoardActionContract.View? = null
+    private var mView: CBTIWeekCoursePartActivity? = null
 
     init {
         view.setPresenter(this)

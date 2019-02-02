@@ -28,7 +28,6 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.advisory.bean.Advisory
-import com.sumian.sd.buz.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sd.buz.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sd.buz.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sd.buz.onlinereport.OnlineReport
@@ -51,7 +50,7 @@ import kotlin.collections.ArrayList
  * on 2018/6/8 10:40
  * desc:图文咨询上传
  **/
-class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresenter>(), PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
+class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresenter>(), TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
 
     private var mSelectOnlineRecords: ArrayList<OnlineReport>? = null
@@ -185,7 +184,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
         }
     }
 
-    override fun setPresenter(presenter: PublishAdvisoryRecordContact.Presenter) {
+    fun setPresenter(presenter: PublishAdvisoryRecordPresenter) {
         //super.setPresenter(presenter)
         this.mPresenter = presenter
     }
@@ -216,13 +215,11 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
         finish()
     }
 
-    override fun onBegin() {
-        super.onBegin()
+    fun onBegin() {
         this.mActionLoadingDialog = ActionLoadingDialog().show(supportFragmentManager)
     }
 
-    override fun onFinish() {
-        super.onFinish()
+    fun onFinish() {
         if (this.mActionLoadingDialog?.isAdded!!) {
             this.mActionLoadingDialog?.dismiss()
         }
@@ -230,16 +227,16 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
 
     private var mAdvisory: Advisory? = null
 
-    override fun onGetLastAdvisorySuccess(advisory: Advisory) {
+    fun onGetLastAdvisorySuccess(advisory: Advisory) {
         this.mAdvisory = advisory
         this.mAdvisoryId = advisory.id
     }
 
-    override fun onGetLastAdvisoryFailed(error: String) {
+    fun onGetLastAdvisoryFailed(error: String) {
         ToastUtils.showShort(error)
     }
 
-    override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
+    fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
         et_input.post {
             et_input.text = null
         }
@@ -269,28 +266,28 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
         }
     }
 
-    override fun onPublishAdvisoryRecordFailed(error: String) {
+    fun onPublishAdvisoryRecordFailed(error: String) {
         ToastUtils.showShort(error)
     }
 
-    override fun onGetPublishUploadStsFailed(error: String) {
+    fun onGetPublishUploadStsFailed(error: String) {
         ToastUtils.showShort(error)
     }
 
     override fun onProgress(request: PutObjectRequest?, currentSize: Long, totalSize: Long) {
     }
 
-    override fun onGetPublishUploadStsSuccess(successMsg: String) {
+    fun onGetPublishUploadStsSuccess(successMsg: String) {
         ToastUtils.showShort(successMsg)
         mPresenter.publishImages(Util.toPathArray(mPictures)!!, this)
     }
 
-    override fun onStartUploadImagesCallback() {
+    fun onStartUploadImagesCallback() {
         this.mActionLoadingDialog = ActionLoadingDialog().show(supportFragmentManager)
         this.mActionLoadingDialog?.isCancelable = false
     }
 
-    override fun onEndUploadImagesCallback() {
+    fun onEndUploadImagesCallback() {
         if (this.mActionLoadingDialog?.isAdded!!) {
             this.mActionLoadingDialog?.dismiss()
         }

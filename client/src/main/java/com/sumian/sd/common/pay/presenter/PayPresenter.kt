@@ -13,10 +13,10 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.pay.bean.OrderDetail
 import com.sumian.sd.common.pay.bean.PayCouponCode
 import com.sumian.sd.common.pay.bean.PayOrder
-import com.sumian.sd.common.pay.contract.PayContract
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -28,9 +28,9 @@ import retrofit2.Callback
  * desc:
  */
 
-class PayPresenter private constructor(view: PayContract.View) : BaseViewModel() {
+class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() {
 
-    private var mView: PayContract.View? = null
+    private var mView: PaymentActivity? = null
 
     private var mOrder: String? = null
 
@@ -49,7 +49,7 @@ class PayPresenter private constructor(view: PayContract.View) : BaseViewModel()
 
     companion object {
         @JvmStatic
-        fun init(view: PayContract.View) {
+        fun init(view: PaymentActivity) {
             PayPresenter(view)
         }
     }

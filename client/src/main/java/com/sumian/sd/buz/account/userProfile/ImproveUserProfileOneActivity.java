@@ -88,4 +88,14 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
     public void onImproveUserProfileSuccess() {
         onMenuClick(mRoot);
     }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
 }

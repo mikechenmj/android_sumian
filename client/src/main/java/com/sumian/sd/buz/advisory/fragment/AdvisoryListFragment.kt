@@ -72,8 +72,8 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
         this.mPresenter.getAdvisories(mAdvisoryType)
     }
 
-    override fun setPresenter(presenter: AdvisoryListContract.Presenter?) {
-        this.mPresenter = presenter as AdvisoryListPresenter
+    override fun setPresenter(presenter: AdvisoryListPresenter) {
+        this.mPresenter = presenter
     }
 
     override fun onRefresh() {

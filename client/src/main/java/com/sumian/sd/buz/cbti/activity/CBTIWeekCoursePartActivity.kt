@@ -16,7 +16,6 @@ import com.google.android.material.tabs.TabLayout
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.cbti.bean.CBTIMeta
-import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardActionContract
 import com.sumian.sd.buz.cbti.fragment.CourseFragment
 import com.sumian.sd.buz.cbti.fragment.ExerciseFragment
 import com.sumian.sd.buz.cbti.fragment.MessageBoardFragment
@@ -37,7 +36,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  *
  */
 class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresenter>(), TitleBar.OnBackClickListener,
-        Observer<CBTIMeta>, MsgBoardKeyBoard.OnKeyBoardCallback, CBTIMessageBoardActionContract.View {
+        Observer<CBTIMeta>, MsgBoardKeyBoard.OnKeyBoardCallback {
 
     private var mChapterId = 1
     private var mCbtiType = 1
@@ -67,6 +66,10 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresente
     override fun initPresenter() {
         super.initPresenter()
         CBTIMessageBoardActionPresenter.init(this)
+    }
+
+    fun setPresenter(presenter: CBTIMessageBoardActionPresenter) {
+        mPresenter = presenter
     }
 
     override fun getLayoutId(): Int {
@@ -150,13 +153,13 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresente
         }
     }
 
-    override fun onPublishMessageBoardSuccess(success: String) {
+    fun onPublishMessageBoardSuccess(success: String) {
         showMessageBoard(2)
         //keyboard.hide()
         ToastUtils.showShort(success)
     }
 
-    override fun onPublishMessageBoardFailed(error: String) {
+    fun onPublishMessageBoardFailed(error: String) {
         ToastUtils.showShort(error)
     }
 
@@ -197,5 +200,14 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresente
             }
 
         }
+    }
+
+
+    fun onBegin() {
+
+    }
+
+    fun onFinish() {
+
     }
 }

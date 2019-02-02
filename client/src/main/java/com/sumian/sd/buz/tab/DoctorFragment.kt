@@ -11,7 +11,6 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.doctor.activity.ScanDoctorQrCodeActivity
 import com.sumian.sd.buz.doctor.bean.Doctor
-import com.sumian.sd.buz.doctor.contract.DoctorContract
 import com.sumian.sd.buz.doctor.presenter.DoctorPresenter
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationListActivity
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View, SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
+class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
 
     private var mIsInit = false
     private var mIsAutoRefresh = false
@@ -94,14 +93,12 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
         request_scan_qr_code_view?.onRequestPermissionsResultDelegate(requestCode, permissions, grantResults)
     }
 
-    override fun onBegin() {
-        super.onBegin()
+    fun onBegin() {
         //doctor_detail_layout.showRefreshAnim()
         doctor_detail_layout?.hideRefreshAnim()
     }
 
-    override fun onFinish() {
-        super.onFinish()
+    fun onFinish() {
         mIsInit = false
         mIsAutoRefresh = false
         doctor_detail_layout?.hideRefreshAnim()
@@ -111,7 +108,7 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
         ActivityUtils.startActivity(ScanDoctorQrCodeActivity::class.java)
     }
 
-    override fun onGetDoctorInfoSuccess(doctor: Doctor?) {
+    fun onGetDoctorInfoSuccess(doctor: Doctor?) {
         doctor?.let {
             lay_doctor_title_container?.visibility = View.VISIBLE
             doctor_detail_layout?.invalidDoctor(doctor)
@@ -119,15 +116,15 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
         }
     }
 
-    override fun onNotBindDoctor() {
+    fun onNotBindDoctor() {
         switchUI(false)
     }
 
-    override fun onGetDoctorInfoFailed(error: String) {
+    fun onGetDoctorInfoFailed(error: String) {
         showCenterToast(error)
     }
 
-    override fun setPresenter(presenter: DoctorPresenter?) {
+    fun setPresenter(presenter: DoctorPresenter?) {
         this.mPresenter = presenter
     }
 

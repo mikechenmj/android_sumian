@@ -103,4 +103,14 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
     public void onChanged(@Nullable Token token) {
         onImproveUserProfileSuccess();
     }
+
+    @Override
+    public void onBegin() {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
 }

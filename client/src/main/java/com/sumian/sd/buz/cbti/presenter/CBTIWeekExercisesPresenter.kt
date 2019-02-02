@@ -5,7 +5,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.bean.CBTIDataResponse
 import com.sumian.sd.buz.cbti.bean.Exercise
-import com.sumian.sd.buz.cbti.contract.CBTIWeekExercisesContract
+import com.sumian.sd.buz.cbti.fragment.ExerciseFragment
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
 /**
@@ -15,9 +15,9 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  *
  * desc:
  */
-class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.View) : BaseViewModel(), CBTIWeekExercisesContract.Presenter {
+class CBTIWeekExercisesPresenter constructor(view: ExerciseFragment) : BaseViewModel() {
 
-    private val mView: CBTIWeekExercisesContract.View
+    private val mView: ExerciseFragment
 
     init {
         view.setPresenter(this)
@@ -26,12 +26,12 @@ class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.Vie
 
     companion object {
 
-        fun init(view: CBTIWeekExercisesContract.View): CBTIWeekExercisesContract.Presenter {
+        fun init(view: ExerciseFragment): CBTIWeekExercisesPresenter {
             return CBTIWeekExercisesPresenter(view)
         }
     }
 
-    override fun getCBTIWeekExercises(id: Int) {
+    fun getCBTIWeekExercises(id: Int) {
 
         mView.onBegin()
 

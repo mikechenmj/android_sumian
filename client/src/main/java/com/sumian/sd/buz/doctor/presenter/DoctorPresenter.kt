@@ -4,7 +4,7 @@ import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.doctor.bean.Doctor
-import com.sumian.sd.buz.doctor.contract.DoctorContract
+import com.sumian.sd.buz.tab.DoctorFragment
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
 /**
@@ -13,9 +13,9 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  * on 2018/5/30 16:30
  * desc:
  **/
-class DoctorPresenter private constructor(view: DoctorContract.View) : BaseViewModel(), DoctorContract.Presenter {
+class DoctorPresenter private constructor(view: DoctorFragment) : BaseViewModel() {
 
-    private var mView: DoctorContract.View? = null
+    private var mView: DoctorFragment? = null
 
     init {
         view.setPresenter(this)
@@ -24,13 +24,13 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : BaseViewM
 
     companion object {
 
-        fun init(view: DoctorContract.View) {
+        fun init(view: DoctorFragment) {
             DoctorPresenter(view)
         }
 
     }
 
-    override fun getBindDoctorInfo() {
+    fun getBindDoctorInfo() {
 
         mView?.onBegin()
 
@@ -63,7 +63,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : BaseViewM
         })
     }
 
-    override fun getDoctorServiceInfo(doctorId: Int) {
+    fun getDoctorServiceInfo(doctorId: Int) {
 
         val doctorInfoCall = AppManager.getSdHttpService().getDoctorInfo(doctorId)
 

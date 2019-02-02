@@ -20,10 +20,10 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.advisory.activity.PublishAdvisoryRecordActivity
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
 import com.sumian.sd.buz.advisory.body.AdvisoryRecordBody
-import com.sumian.sd.buz.advisory.contract.PublishAdvisoryRecordContact
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import org.json.JSONObject
 import java.util.*
@@ -34,11 +34,11 @@ import java.util.*
  * on 2018/6/8 11:11
  * desc:
  **/
-class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRecordContact.View) : BaseViewModel() {
+class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRecordActivity) : BaseViewModel() {
 
     private val TAG = PublishAdvisoryRecordPresenter::class.java.simpleName
 
-    private var mView: PublishAdvisoryRecordContact.View? = null
+    private var mView: PublishAdvisoryRecordActivity? = null
 
     private var mPublishIndex: Int = 0
 
@@ -50,7 +50,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
     }
 
     companion object {
-        fun init(view: PublishAdvisoryRecordContact.View) {
+        fun init(view: PublishAdvisoryRecordActivity) {
             PublishAdvisoryRecordPresenter(view)
         }
     }

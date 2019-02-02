@@ -15,7 +15,6 @@ import com.sumian.sd.buz.doctor.bean.DoctorService
 import com.sumian.sd.buz.doctor.bean.DoctorServicePackage
 import com.sumian.sd.common.pay.bean.PayCouponCode
 import com.sumian.sd.common.pay.bean.PayOrder
-import com.sumian.sd.common.pay.contract.PayContract
 import com.sumian.sd.common.pay.dialog.PayDialog
 import com.sumian.sd.common.pay.presenter.PayPresenter
 import com.sumian.sd.common.pay.widget.PayCalculateItemView
@@ -30,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_main_shopping_car.*
  * desc:
  */
 
-class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback, PayContract.View {
+class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback {
 
     companion object {
 
@@ -172,29 +171,29 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         checkCouponCode(false)
     }
 
-    override fun setPresenter(presenter: PayContract.Presenter) {
+    fun setPresenter(presenter: PayPresenter) {
         this.mPresenter = presenter
     }
 
-    override fun onFailure(error: String) {
+    fun onFailure(error: String) {
         ToastUtils.showShort(error)
         dismissLoading()
     }
 
-    override fun onBegin() {
+    fun onBegin() {
         showLoading()
     }
 
-    override fun onFinish() {
+    fun onFinish() {
         dismissLoading()
     }
 
-    override fun onCreatePayOrderSuccess() {
+    fun onCreatePayOrderSuccess() {
         mPresenter.doPay(this)
         ToastUtils.showShort(R.string.create_order_success)
     }
 
-    override fun onOrderPaySuccess(payMsg: String) {
+    fun onOrderPaySuccess(payMsg: String) {
         StatUtil.event("e_pay_success",
                 mapOf(
                         "amount" to pay_calculate_item_view.currentMoney.toString(),
@@ -207,32 +206,32 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         }
     }
 
-    override fun onOrderPayFailed(payMsg: String) {
+    fun onOrderPayFailed(payMsg: String) {
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show()
         }
     }
 
-    override fun onOrderPayInvalid(payMsg: String) {
+    fun onOrderPayInvalid(payMsg: String) {
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show()
         }
     }
 
-    override fun onOrderPayCancel(payMsg: String) {
+    fun onOrderPayCancel(payMsg: String) {
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_CANCELED).show()
         }
         dismissLoading()
     }
 
-    override fun onCheckOrderPayIsOk() {
+    fun onCheckOrderPayIsOk() {
         cancelPayDialog()
         setResult(Activity.RESULT_OK)
         finish()
     }
 
-    override fun onCheckOrderPayIsInvalid(invalidError: String) {
+    fun onCheckOrderPayIsInvalid(invalidError: String) {
         ToastUtils.showShort(invalidError)
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show()
@@ -241,14 +240,14 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         }
     }
 
-    override fun onCheckOrderPayFinialIsInvalid(invalidError: String) {
+    fun onCheckOrderPayFinialIsInvalid(invalidError: String) {
         ToastUtils.showShort(invalidError)
         cancelPayDialog()
         setResult(Activity.RESULT_CANCELED)
         finish()
     }
 
-    override fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?, payCouponCodeText: String, is2Pay: Boolean) {
+    fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?, payCouponCodeText: String, is2Pay: Boolean) {
         mIsCheckCouponCode = false
         mGoNextPay = false
         pay_calculate_item_view.updateCouponCodeTips(payCouponCode)
@@ -258,7 +257,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         }
     }
 
-    override fun onCheckCouponCodeFailed(error: String, code: Int, payCouponCodeText: String?, is2Pay: Boolean) {
+    fun onCheckCouponCodeFailed(error: String, code: Int, payCouponCodeText: String?, is2Pay: Boolean) {
         mIsCheckCouponCode = false
         if (code == 1) {
             pay_calculate_item_view.updateCouponCodeTips(null)

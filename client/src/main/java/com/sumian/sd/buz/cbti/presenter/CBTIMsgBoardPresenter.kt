@@ -5,19 +5,19 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.bean.MessageBoard
-import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardContract
+import com.sumian.sd.buz.cbti.fragment.MessageBoardFragment
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
-class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.View) : BaseViewModel() {
+class CBTIMsgBoardPresenter private constructor(view: MessageBoardFragment) : BaseViewModel() {
 
     companion object {
         private const val DEFAULT_PAGES: Int = 15
         @JvmStatic
-        fun init(view: CBTIMessageBoardContract.View): CBTIMsgBoardPresenter = CBTIMsgBoardPresenter(view)
+        fun init(view: MessageBoardFragment): CBTIMsgBoardPresenter = CBTIMsgBoardPresenter(view)
     }
 
     private var mType: Int = 0
-    private var mView: CBTIMessageBoardContract.View? = null
+    private var mView: MessageBoardFragment? = null
 
     private var mPageNumber: Int = 1
     private var mIsRefresh: Boolean = false

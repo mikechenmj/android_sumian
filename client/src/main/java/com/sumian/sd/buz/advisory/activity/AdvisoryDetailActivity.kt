@@ -12,7 +12,6 @@ import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.advisory.adapter.RecordAdapter
 import com.sumian.sd.buz.advisory.bean.Advisory
-import com.sumian.sd.buz.advisory.contract.RecordContract
 import com.sumian.sd.buz.advisory.presenter.RecordPresenter
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.main.MainActivity
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), RecordContract.View, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
+class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
 
     companion object {
 
@@ -100,7 +99,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), RecordContract
 
     @Suppress("DEPRECATION")
     @SuppressLint("SetTextI18n")
-    override fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
+    fun onGetAdvisoryDetailSuccess(advisory: Advisory) {
         this.mAdvisory = advisory
         if (mAdvisory == null) {
             empty_error_view.visibility = View.VISIBLE
@@ -139,12 +138,12 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), RecordContract
         }
     }
 
-    override fun onGetAdvisoryDetailFailed(error: String) {
+    fun onGetAdvisoryDetailFailed(error: String) {
         ToastUtils.showShort(error)
         empty_error_view.visibility = if (mAdvisory == null) View.VISIBLE else View.GONE
     }
 
-    override fun setPresenter(presenter: RecordPresenter?) {
+    fun setPresenter(presenter: RecordPresenter?) {
         this.mPresenter = presenter
     }
 
