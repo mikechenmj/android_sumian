@@ -2,12 +2,10 @@
 
 package com.sumian.sd.buz.setting.version.presenter
 
-import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.VersionUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.buz.setting.version.bean.Version
 import com.sumian.sd.buz.setting.version.contract.VersionContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -51,7 +49,7 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
         }
 
         val call = AppManager.getSdHttpService().getAppVersion(currentVersion = currentVersion)
-        mCalls.add(call)
+        addCall(call)
 
         call.enqueue(object : BaseSdResponseCallback<Version>() {
             override fun onFailure(errorResponse: ErrorResponse) {

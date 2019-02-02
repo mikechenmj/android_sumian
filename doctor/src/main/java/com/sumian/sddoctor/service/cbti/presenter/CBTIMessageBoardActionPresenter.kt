@@ -3,7 +3,6 @@ package com.sumian.sddoctor.service.cbti.presenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
-import com.sumian.sddoctor.service.cbti.base.SdBasePresenter.mCalls
 import com.sumian.sddoctor.service.cbti.contract.CBTIMessageBoardActionContract
 
 class CBTIMessageBoardActionPresenter private constructor(view: CBTIMessageBoardActionContract.View) : CBTIMessageBoardActionContract.Presenter {
@@ -27,7 +26,7 @@ class CBTIMessageBoardActionPresenter private constructor(view: CBTIMessageBoard
         map["message"] = message
         map["anonymous"] = isAnonymous
         val call = AppManager.getHttpService().writeCBTIMessageBoard(map = map)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onSuccess(response: Any?) {
                 mView?.onPublishMessageBoardSuccess("留言成功")

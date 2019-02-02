@@ -33,6 +33,7 @@ import retrofit2.Call;
  * desc:
  */
 
+@Deprecated
 public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
     private static final String TAG = SdBaseActivity.class.getSimpleName();

@@ -6,7 +6,7 @@ package com.sumian.sd.base;
  * <p>
  * desc:
  */
-
+@Deprecated
 public interface SdBaseView<Presenter extends SdBasePresenter> {
 
     default void setPresenter(Presenter presenter) {

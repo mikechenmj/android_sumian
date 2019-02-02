@@ -3,7 +3,6 @@ package com.sumian.sd.buz.cbti.presenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.buz.cbti.bean.MessageBoard
 import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -44,7 +43,7 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
         map["per_page"] = DEFAULT_PAGES
 
         val call = AppManager.getSdHttpService().getCBTIMessageBoardList(map)
-        mCalls?.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<MessageBoard>>() {
             override fun onSuccess(response: PaginationResponseV2<MessageBoard>?) {
                 val data = response?.data

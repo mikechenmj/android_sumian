@@ -3,7 +3,6 @@ package com.sumian.sd.buz.advisory.presenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.contract.AdvisoryListContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -57,7 +56,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         map["type"] = advisoryType
 
         val call = AppManager.getSdHttpService().getDoctorAdvisories(map)
-        mCalls?.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Advisory>>(), Callback<PaginationResponseV2<Advisory>> {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mIsRefresh = false

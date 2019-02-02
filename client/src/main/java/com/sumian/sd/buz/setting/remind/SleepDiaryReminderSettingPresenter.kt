@@ -31,7 +31,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
 
      fun queryReminder(reminderType: Int) {
         val call = AppManager.getSdHttpService().getReminderList(reminderType)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Reminder>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
@@ -45,7 +45,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
 
      fun addReminder(reminderType: Int, timeInSecond: Int) {
         val call = AppManager.getSdHttpService().addReminder(reminderType, remindAtInSecond = timeInSecond)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Reminder>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
@@ -60,7 +60,7 @@ class SleepDiaryReminderSettingPresenter(val view: SleepDiaryReminderSettingCont
 
      fun modifyReminder(reminderId: Int, timeInSecond: Int, enable: Boolean) {
         val call = AppManager.getSdHttpService().modifyReminder(reminderId, timeInSecond, if (enable) 1 else 0)
-        mCalls.add(call)
+         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Reminder>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)

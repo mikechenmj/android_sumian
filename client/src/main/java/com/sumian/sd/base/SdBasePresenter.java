@@ -11,7 +11,7 @@ import retrofit2.Call;
  * <p>
  * desc:
  */
-
+@Deprecated
 public interface SdBasePresenter<T> {
 
     List<Call> mCalls = new ArrayList<>(0);
@@ -30,7 +30,4 @@ public interface SdBasePresenter<T> {
         mCalls.add(call);
     }
 
-    default void removeCall(Call call) {
-        mCalls.remove(call);
-    }
 }

@@ -19,7 +19,6 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
 import com.sumian.sd.buz.advisory.body.AdvisoryRecordBody
@@ -69,7 +68,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         }
 
         val call = AppManager.getSdHttpService().publishAdvisoryRecord(advisoryRecordBody)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Advisory>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 if (BuildConfig.DEBUG) Log.e(TAG, "上传失败")
@@ -101,7 +100,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         advisoryRecordBody.picture_count = pictureCount
 
         val call = AppManager.getSdHttpService().publishPicturesAdvisoryRecord(advisoryRecordBody)
-        mCalls.add(call)
+        addCall(call)
 
         call.enqueue(object : BaseSdResponseCallback<PictureOssSts>() {
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -129,7 +128,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         map["include"] = "user,doctor,records"
 
         val call = AppManager.getSdHttpService().getLastAdvisoryDetails(map)
-        mCalls.add(call)
+        addCall(call)
 
         call.enqueue(object : BaseSdResponseCallback<Advisory>() {
             override fun onFailure(errorResponse: ErrorResponse) {

@@ -2,7 +2,6 @@ package com.sumian.sd.buz.doctor.presenter
 
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.buz.doctor.bean.Doctor
 import com.sumian.sd.buz.doctor.contract.DoctorContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -36,7 +35,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
         val doctorInfoCall = AppManager.getSdHttpService().getBindDoctorInfo()
 
-        mCalls?.add(doctorInfoCall)
+        addCall(doctorInfoCall)
 
         doctorInfoCall.enqueue(object : BaseSdResponseCallback<Doctor>() {
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -67,7 +66,7 @@ class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorCon
 
         val doctorInfoCall = AppManager.getSdHttpService().getDoctorInfo(doctorId)
 
-        mCalls?.add(doctorInfoCall)
+        addCall(doctorInfoCall)
 
         doctorInfoCall.enqueue(object : BaseSdResponseCallback<Doctor>() {
             override fun onFailure(errorResponse: ErrorResponse) {

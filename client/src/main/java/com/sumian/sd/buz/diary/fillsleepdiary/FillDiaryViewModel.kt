@@ -2,8 +2,8 @@ package com.sumian.sd.buz.diary.fillsleepdiary
 
 import android.text.format.DateUtils
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
@@ -13,7 +13,6 @@ import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepTimeData
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepPill
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import retrofit2.Call
 
 /**
  * @author : Zhan Xuzhao
@@ -22,7 +21,7 @@ import retrofit2.Call
  * desc   :
  * version: 1.0
  */
-class FillDiaryViewModel : ViewModel() {
+class FillDiaryViewModel : BaseViewModel() {
     private var mCurrentProgress = 0
     val mSleepTimeLiveData = MutableLiveData<SleepTimeData>()   //t0 - t3
     val mNightWakeLiveData = MutableLiveData<Pair<Int, Int>>()    // x time, y minus
@@ -32,8 +31,6 @@ class FillDiaryViewModel : ViewModel() {
     val mRemarkLiveData = MutableLiveData<String>()
     var mProgressListener: ProgressListener? = null
     var mDayTime = System.currentTimeMillis()
-
-    private val mCalls = ArrayList<Call<*>>()
 
     companion object {
         const val TOTAL_PAGE = 9
@@ -91,7 +88,7 @@ class FillDiaryViewModel : ViewModel() {
                 mPillsLiveData.value,
                 mRemarkLiveData.value)
         val call = AppManager.getSdHttpService().postSleepDiary(sleepDiaryData)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<SleepRecord>() {
             override fun onSuccess(response: SleepRecord?) {
                 mProgressListener?.finishWithResult(response)
@@ -159,7 +156,7 @@ class FillDiaryViewModel : ViewModel() {
 
     private fun getPreviousSleepPills() {
         val call = AppManager.getSdHttpService().getSleepPills()
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<List<SleepPill>>() {
             override fun onSuccess(response: List<SleepPill>?) {
                 mPillsLiveData.value = response
@@ -169,13 +166,6 @@ class FillDiaryViewModel : ViewModel() {
                 ToastUtils.showShort(errorResponse.message)
             }
         })
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        for (call in mCalls) {
-            call.cancel()
-        }
     }
 
 }

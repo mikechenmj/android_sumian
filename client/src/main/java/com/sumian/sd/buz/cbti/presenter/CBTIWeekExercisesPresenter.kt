@@ -2,7 +2,6 @@ package com.sumian.sd.buz.cbti.presenter
 
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.buz.cbti.bean.CBTIDataResponse
 import com.sumian.sd.buz.cbti.bean.Exercise
 import com.sumian.sd.buz.cbti.contract.CBTIWeekExercisesContract
@@ -53,7 +52,7 @@ class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.Vie
             }
         })
 
-        mCalls.add(call)
+        addCall(call)
     }
 
 }

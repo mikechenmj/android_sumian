@@ -11,7 +11,6 @@ import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.pay.bean.OrderDetail
 import com.sumian.sd.common.pay.bean.PayCouponCode
@@ -57,7 +56,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
     override fun createPayOrder(activity: Activity, payOrder: PayOrder) {
         mView?.onBegin()
         val call: Call<Any> = AppManager.getSdHttpService().createOrder(payOrder)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>(), Callback<Any> {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onFailure(errorResponse.message)
@@ -136,7 +135,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
     override fun checkCouponCode(is2Pay: Boolean, couponCode: String, packageId: Int) {
         mView?.onBegin()
         val call = AppManager.getSdHttpService().checkCouponCode(couponCode, packageId)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PayCouponCode>() {
 
             override fun onSuccess(response: PayCouponCode?) {

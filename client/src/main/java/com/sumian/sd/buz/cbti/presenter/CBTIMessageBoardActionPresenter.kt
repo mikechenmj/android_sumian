@@ -2,7 +2,6 @@ package com.sumian.sd.buz.cbti.presenter
 
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter.mCalls
 import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardActionContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
@@ -27,7 +26,7 @@ class CBTIMessageBoardActionPresenter private constructor(view: CBTIMessageBoard
         map["message"] = message
         map["anonymous"] = isAnonymous
         val call = AppManager.getSdHttpService().writeCBTIMessageBoard(map = map)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>() {
             override fun onSuccess(response: Any?) {
                 mView?.onPublishMessageBoardSuccess("留言成功")
