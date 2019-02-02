@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.google.android.material.snackbar.Snackbar;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
@@ -46,7 +47,7 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
         Bundle extras = new Bundle();
         extras.putBoolean(EXTRAS_FROM_RECORD, isFromRecord);
         extras.putParcelable(EXTRAS_DOCTOR_SERVICE, doctorService);
-        show(context, ScanDoctorQrCodeActivity.class, extras);
+        ActivityUtils.startActivity(extras, ScanDoctorQrCodeActivity.class);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.common.notification.NotificationUtil;
@@ -30,7 +31,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListCon
     private NotificationListHeadView mHeaderView;
 
     public static void launch(Context context) {
-        show(context, getLaunchIntent(context));
+        ActivityUtils.startActivity(getLaunchIntent(context));
     }
 
     public static Intent getLaunchIntent(Context context) {

@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import com.avos.avoscloud.AVInstallation
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -76,7 +77,7 @@ class SettingActivity : SdBaseActivity<SdBasePresenter<*>>(), TitleBar.OnBackCli
     override fun onClick(v: View) {
         when (v.id) {
             R.id.sdv_remind -> RemindSettingActivity.show()
-            R.id.sdv_app_version -> SdBaseActivity.show(v.context, VersionActivity::class.java)
+            R.id.sdv_app_version -> ActivityUtils.startActivity(VersionActivity::class.java)
             R.id.sdv_about_us -> SimpleWebActivity.launch(this, H5Uri.ABOUT_US)
             R.id.sdv_device_version -> DeviceVersionNoticeActivity.show(v.context)
             R.id.sdv_change_bind -> {

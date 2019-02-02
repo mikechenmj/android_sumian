@@ -1,9 +1,6 @@
 package com.sumian.sd.base;
 
 import android.app.Activity;
-import android.app.Application;
-import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
@@ -11,7 +8,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.sumian.common.base.BaseActivityManager;
@@ -50,86 +46,6 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
     private Set<Call> mCalls = new HashSet<>();
     private LoadingDialog mLoadingDialog;
     private IActivityDelegate mActivityDelegate = BaseActivityManager.INSTANCE.createActivityDelegate(this);
-
-    public static void show(Context context, Class<? extends SdBaseActivity> clx) {
-        show(context, clx, null);
-    }
-
-    public static void show(Context context, Class<? extends SdBaseActivity> clx, Bundle extras) {
-        Intent intent = new Intent(context, clx);
-        if (extras != null) {
-            intent.putExtras(extras);
-        }
-        show(context, intent);
-    }
-
-    public static void show(Context context, Intent intent) {
-        if (context instanceof Application || context instanceof Service) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        }
-        context.startActivity(intent);
-    }
-
-    public static void showClearTop(Context context, Class<? extends Activity> clx) {
-        showClearTop(context, clx, null);
-    }
-
-    public static void showClearTop(Context context, Class<? extends Activity> clx, Bundle bundle) {
-        Intent intent = new Intent(context, clx);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        showClearTop(context, intent);
-    }
-
-    public static void showClearTop(Context context, Intent intent) {
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 设置状态栏颜色
-     *
-     * @param activity 需要设置的activity
-     * @param color    状态栏颜色值
-     */
-    public static void setColor(Activity activity, int color) {
-//        // 设置状态栏透明
-//        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        // 生成一个状态栏大小的矩形
-//        View statusView = createStatusView(activity, color);
-//        // 添加 statusView 到布局中
-//        ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
-//        decorView.addView(statusView);
-//        // 设置根布局的参数
-//        ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-//        rootView.setFitsSystemWindows(true);
-//        rootView.setClipToPadding(true);
-    }
-
-    /**
-     * 生成一个和状态栏大小相同的矩形条
-     *
-     * @param activity 需要设置的activity
-     * @param color    状态栏颜色值
-     * @return 状态栏矩形条
-     */
-    private static View createStatusView(Activity activity, int color) {
-        // 获得状态栏高度
-        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
-
-        float dimension = activity.getResources().getDimension(resourceId);
-
-        int statusBarHeight = (int) (dimension <= 66.0f ? dimension + 4.0f : dimension + 0.5f);
-
-        // 绘制一个和状态栏一样高的矩形
-        View statusView = new View(activity);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                statusBarHeight);
-        statusView.setLayoutParams(params);
-        statusView.setBackgroundColor(color);
-        return statusView;
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -233,7 +149,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
     protected abstract int getLayoutId();
 
     protected void initWidget(View root) {
-        if (backable()) {
+        if (showBackNav()) {
             TitleBar toolbar = findViewById(R.id.title_bar);
             if (toolbar != null) {
                 toolbar.setOnBackClickListener(v -> finish());
@@ -313,7 +229,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         return false;
     }
 
-    protected boolean backable() {
+    protected boolean showBackNav() {
         return false;
     }
 

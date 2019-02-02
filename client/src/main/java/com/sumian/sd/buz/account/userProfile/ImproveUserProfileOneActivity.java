@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
@@ -74,7 +75,7 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void onMenuClick(View v) {
-        ImproveUserProfileTwoActivity.show(this, ImproveUserProfileTwoActivity.class);
+        ActivityUtils.startActivity(ImproveUserProfileTwoActivity.class);
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.BuildConfig
@@ -74,7 +75,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
                 putParcelable(EXTRA_CBTI_COURSE, course)
                 putInt(EXTRA_SELECT_POSITION, position)
             }
-            show(context, CBTICoursePlayActivity::class.java, extras)
+            ActivityUtils.startActivity(extras, CBTICoursePlayActivity::class.java)
         }
     }
 

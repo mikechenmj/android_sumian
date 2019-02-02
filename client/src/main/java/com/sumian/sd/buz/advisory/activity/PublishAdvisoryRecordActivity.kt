@@ -16,6 +16,7 @@ import android.util.Log
 import android.view.View
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
@@ -88,7 +89,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
                 putInt(ARGS_ADVISORY, advisoryId)
                 putBoolean(ARGS_ADVISORY_ACTION, isAskAgain)
             }
-            show(context, PublishAdvisoryRecordActivity::class.java, extras)
+            ActivityUtils.startActivity(extras, PublishAdvisoryRecordActivity::class.java)
         }
     }
 

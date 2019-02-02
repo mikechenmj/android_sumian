@@ -248,7 +248,7 @@ class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageC
     }
 
     private fun onAvatarClick() {
-        UserInfoActivity.show(context, UserInfoActivity::class.java)
+        ActivityUtils.startActivity(UserInfoActivity::class.java)
     }
 
     override fun onEnter(data: String?) {

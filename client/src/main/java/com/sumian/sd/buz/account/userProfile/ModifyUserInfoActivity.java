@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -35,7 +36,7 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
     public static void show(Context context, String modifyType) {
         Bundle extras = new Bundle();
         extras.putString(EXTRA_MODIFY, modifyType);
-        show(context, ModifyUserInfoActivity.class, extras);
+        ActivityUtils.startActivity(extras, ModifyUserInfoActivity.class);
     }
 
     @Override

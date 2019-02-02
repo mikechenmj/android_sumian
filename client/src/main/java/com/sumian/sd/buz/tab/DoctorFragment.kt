@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -107,7 +108,7 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
     }
 
     override fun onGrantedSuccess() {
-        ScanDoctorQrCodeActivity.show(context!!, ScanDoctorQrCodeActivity::class.java)
+        ActivityUtils.startActivity(ScanDoctorQrCodeActivity::class.java)
     }
 
     override fun onGetDoctorInfoSuccess(doctor: Doctor?) {

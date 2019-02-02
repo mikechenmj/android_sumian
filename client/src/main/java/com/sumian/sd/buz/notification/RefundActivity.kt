@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
@@ -29,7 +30,7 @@ class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
         private const val KEY_ORDER_NO = "KEY_ORDER_NO"
 
         fun launch(context: Context, orderNo: String) {
-            show(context, getLaunchIntent(context, orderNo))
+            ActivityUtils.startActivity(getLaunchIntent(context, orderNo))
         }
 
         fun getLaunchIntent(context: Context, orderNo: String): Intent {
@@ -53,7 +54,7 @@ class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
         title_bar.setOnBackClickListener { finish() }
     }
 
-    override fun backable(): Boolean {
+    override fun showBackNav(): Boolean {
         return true
     }
 
