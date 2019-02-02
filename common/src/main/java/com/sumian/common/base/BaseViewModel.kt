@@ -18,8 +18,8 @@ open class BaseViewModel : ViewModel(), IPresenter {
         mCalls.add(call)
     }
 
-    override fun onCleared() {
-        super<IPresenter>.onCleared()
+    override public fun onCleared() {
+        super<ViewModel>.onCleared()
         for (call in mCalls) {
             call.cancel()
         }

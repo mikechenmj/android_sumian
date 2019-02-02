@@ -2,7 +2,7 @@ package com.sumian.sddoctor.account.presenter
 
 import android.text.TextUtils
 import com.blankj.utilcode.util.LogUtils
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.account.contract.UserAvatarContract
 import com.sumian.sddoctor.app.AppManager
@@ -12,11 +12,11 @@ import com.sumian.sddoctor.oss.OssResponse
 import org.json.JSONException
 import org.json.JSONObject
 
-open class UserAvatarPresenter private constructor(view: UserAvatarContract.View) : UserAvatarContract.Presenter {
+open class UserAvatarPresenter private constructor(view: UserAvatarContract.View) : BaseViewModel() {
 
     companion object {
         @JvmStatic
-        fun init(view: UserAvatarContract.View): UserAvatarContract.Presenter {
+        fun init(view: UserAvatarContract.View): UserAvatarPresenter {
             return UserAvatarPresenter(view)
         }
     }
@@ -27,10 +27,10 @@ open class UserAvatarPresenter private constructor(view: UserAvatarContract.View
         this.mView = view
     }
 
-    override fun uploadAvatar(avatarPathUrl: String) {
+    fun uploadAvatar(avatarPathUrl: String) {
         mView?.showLoading()
         val call = AppManager.getHttpService().uploadAvatar()
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<OssResponse>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 mView?.onUploadAvatarFailed(error = errorResponse.message)

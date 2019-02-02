@@ -61,7 +61,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
     private TextView mTvVersionLatest;
     private TextView mTvVersionCurrent;
     private Button mBtDownload;
-    private VersionUpgradeContract.Presenter mPresenter;
+    private DeviceVersionUpgradePresenter mPresenter;
     private VersionDialog mVersionDialog;
     private Version2ConnectingDialog mVersion2ConnectingDialog;
     private int mVersionType;
@@ -437,7 +437,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
     }
 
     @Override
-    public void setPresenter(VersionUpgradeContract.Presenter presenter) {
+    public void setPresenter(DeviceVersionUpgradePresenter presenter) {
         this.mPresenter = presenter;
     }
 

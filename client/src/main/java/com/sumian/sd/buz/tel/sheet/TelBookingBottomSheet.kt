@@ -41,7 +41,7 @@ class TelBookingBottomSheet : BaseBottomSheetView(), TelBookingSelectTimeContrac
 
     private var mTelBookingTime: Int = 0
 
-    private val mPresenter: TelBookingSelectTimeContract.Presenter by lazy {
+    private val mPresenter: TelBookingSelectTimePresenter by lazy {
         TelBookingSelectTimePresenter.init(this@TelBookingBottomSheet)
     }
 

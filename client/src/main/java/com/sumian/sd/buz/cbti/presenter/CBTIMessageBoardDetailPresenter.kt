@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.cbti.presenter
 
 import com.sumian.common.base.BaseViewModel
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.bean.MessageBoard

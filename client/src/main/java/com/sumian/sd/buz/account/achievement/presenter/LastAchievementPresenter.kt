@@ -1,6 +1,6 @@
 package com.sumian.sd.buz.account.achievement.presenter
 
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
@@ -14,14 +14,14 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  *
  * desc:
  */
-class LastAchievementPresenter private constructor(var view: LastAchievementContract.View?) : LastAchievementContract.Presenter {
+class LastAchievementPresenter private constructor(var view: LastAchievementContract.View?) : BaseViewModel() {
 
     companion object {
         @JvmStatic
-        fun init(view: LastAchievementContract.View?): LastAchievementContract.Presenter = LastAchievementPresenter(view)
+        fun init(view: LastAchievementContract.View?): LastAchievementPresenter = LastAchievementPresenter(view)
     }
 
-    override fun getLastAchievement(achievementCategoryType: Int, achievementItemType: Int) {
+    fun getLastAchievement(achievementCategoryType: Int, achievementItemType: Int) {
         //view?.showLoading()
         val map = mutableMapOf<String, Any>()
         map["achievement_category_type"] = achievementCategoryType
@@ -29,7 +29,7 @@ class LastAchievementPresenter private constructor(var view: LastAchievementCont
             map["achievement_type"]
         }
         val call = AppManager.getSdHttpService().getLastAchievement(map)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<LastAchievementData>() {
             override fun onSuccess(response: LastAchievementData?) {
                 response?.let {
@@ -51,10 +51,10 @@ class LastAchievementPresenter private constructor(var view: LastAchievementCont
 
     }
 
-    override fun popAchievement(id: Int) {
+    fun popAchievement(id: Int) {
         //view?.showLoading()
         val call = AppManager.getSdHttpService().popAchievement(id)
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<LastAchievementData>() {
             override fun onSuccess(response: LastAchievementData?) {
                 response?.let {

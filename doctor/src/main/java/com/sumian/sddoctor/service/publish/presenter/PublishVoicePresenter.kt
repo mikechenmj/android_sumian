@@ -14,7 +14,6 @@ import com.alibaba.sdk.android.oss.model.ObjectMetadata
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
 import com.sumian.common.base.BaseViewModel
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.error.ErrorInfo499
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil

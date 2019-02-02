@@ -5,6 +5,7 @@ import android.content.Context;
 import com.sumian.common.mvp.IPresenter;
 import com.sumian.sd.base.HwBaseNetView;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
+import com.sumian.sd.buz.upgrade.presenter.DeviceVersionUpgradePresenter;
 
 /**
  * Created by jzz
@@ -15,7 +16,7 @@ import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 
 public interface VersionUpgradeContract {
 
-    interface View extends HwBaseNetView<Presenter> {
+    interface View extends HwBaseNetView<DeviceVersionUpgradePresenter> {
 
         void onDownloadStartCallback();
 

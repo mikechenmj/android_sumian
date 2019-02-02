@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.advisory.presenter
 
 import com.sumian.common.base.BaseViewModel
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback

@@ -13,18 +13,4 @@ import retrofit2.Call
  */
 interface IPresenter {
 
-    companion object {
-
-        val mCalls: MutableList<Call<*>> by lazy {
-            mutableListOf<Call<*>>()
-        }
-    }
-
-    fun onCleared() {
-        mCalls.forEach {
-            if (it.isExecuted && !it.isCanceled) {
-                it.cancel()
-            }
-        }
-    }
 }

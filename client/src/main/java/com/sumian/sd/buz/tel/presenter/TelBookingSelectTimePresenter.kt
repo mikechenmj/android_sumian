@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.tel.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.sd.buz.tel.bean.BookingTime
 import com.sumian.sd.buz.tel.contract.TelBookingSelectTimeContract
 import java.util.*
@@ -12,7 +13,7 @@ import java.util.*
  * desc:
  *
  */
-class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTimeContract.View) : TelBookingSelectTimeContract.Presenter {
+class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTimeContract.View) : BaseViewModel() {
 
     private var mView: TelBookingSelectTimeContract.View? = null
 
@@ -22,13 +23,13 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
 
     companion object {
 
-        fun init(view: TelBookingSelectTimeContract.View): TelBookingSelectTimeContract.Presenter {
+        fun init(view: TelBookingSelectTimeContract.View): TelBookingSelectTimePresenter {
             return TelBookingSelectTimePresenter(view)
         }
 
     }
 
-    override fun getHour(currentUnixTime: Int): Int {
+    fun getHour(currentUnixTime: Int): Int {
         return if (currentUnixTime == 0) {
             19
         } else {
@@ -38,7 +39,7 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
         }
     }
 
-    override fun getMinute(currentUnixTime: Int): Int {
+    fun getMinute(currentUnixTime: Int): Int {
         return if (currentUnixTime == 0) {
             0
         } else {
@@ -48,7 +49,7 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
         }
     }
 
-    override fun calculateDate(currentUnixTime: Int) {
+    fun calculateDate(currentUnixTime: Int) {
         val showBookingTimes = calculateShowBookingTimes()
         val dates = mutableListOf<String>()
         var isCheckDatePosition = 0
@@ -65,7 +66,7 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
         this.mView?.transformOneDisplayedValues(isCheckDatePosition, "", dates.toTypedArray())
     }
 
-    override fun calculateHour(currentHour: Int) {
+    fun calculateHour(currentHour: Int) {
         val hours = mutableListOf<String>()
         var isCheckDatePosition = 0
         var startHour = 18 //19-22
@@ -80,7 +81,7 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
         this.mView?.transformTwoDisplayedValues(isCheckDatePosition, ":", hours.toTypedArray())
     }
 
-    override fun calculateMinute(currentMinute: Int) {
+    fun calculateMinute(currentMinute: Int) {
         val minutes = mutableListOf<String>()
         var isCheckDatePosition = 0
         for (i in 0..59) { //00-59
@@ -93,7 +94,7 @@ class TelBookingSelectTimePresenter private constructor(view: TelBookingSelectTi
     }
 
 
-    override fun formatUnixTime(date: String, hour: String, minute: String): Int {
+    fun formatUnixTime(date: String, hour: String, minute: String): Int {
         val showBookingTimes = calculateShowBookingTimes()
         val find = showBookingTimes.find { it.formatDate() == date }
 

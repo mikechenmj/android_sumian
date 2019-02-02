@@ -35,7 +35,7 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackCli
     private SettingDividerView mDvJobTitle;
     private SettingDividerView mDvInviteCode;
 
-    private UserAvatarContract.Presenter mPresenter;
+    private UserAvatarPresenter mPresenter;
     private DoctorInfo mDoctorInfo;
 
     @Override

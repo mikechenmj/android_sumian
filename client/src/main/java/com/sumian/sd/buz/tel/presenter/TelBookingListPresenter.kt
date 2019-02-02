@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.tel.presenter
 
 import com.sumian.common.base.BaseViewModel
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager

@@ -2,7 +2,6 @@ package com.sumian.sd.buz.cbti.presenter
 
 import android.text.TextUtils
 import com.sumian.common.base.BaseViewModel
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.contract.CBTIIntroductionContract
@@ -54,7 +53,7 @@ class CBTIIntroductionPresenter private constructor(var view: CBTIIntroductionCo
     fun getCBTIIntroductionList() {
         view?.showLoading()
         val call = AppManager.getSdHttpService().getCbtiChapters("courses")
-        mCalls.add(call)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<GetCbtiChaptersResponse>() {
             override fun onSuccess(response: GetCbtiChaptersResponse?) {
                 response?.let {

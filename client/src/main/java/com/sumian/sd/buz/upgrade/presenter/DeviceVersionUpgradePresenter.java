@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.blue.callback.BluePeripheralDataCallback;
 import com.sumian.blue.manager.BlueManager;
 import com.sumian.blue.model.BluePeripheral;
+import com.sumian.common.base.BaseViewModel;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -42,7 +43,7 @@ import no.nordicsemi.android.dfu.DfuServiceInitiator;
  * desc:
  */
 
-public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Presenter, BluePeripheralDataCallback {
+public class DeviceVersionUpgradePresenter extends BaseViewModel implements BluePeripheralDataCallback {
 
     private static final String TAG = DeviceVersionUpgradePresenter.class.getSimpleName();
 
@@ -71,6 +72,7 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
 
     @Override
     public void onCleared() {
+        super.onCleared();
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (bluePeripheral != null) {
             bluePeripheral.removePeripheralDataCallback(this);
@@ -164,14 +166,12 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         }, 0, 10, TimeUnit.MILLISECONDS);
     }
 
-    @Override
     public void downloadFile(int versionType, VersionInfo versionInfo) {
         mVersionType = versionType;
         this.mVersionInfo = versionInfo;
         downloadFile(versionInfo.getUrl(), versionInfo.getVersion());
     }
 
-    @Override
     public void upgrade(int versionType) {
         Context context = App.Companion.getAppContext();
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
@@ -266,14 +266,12 @@ public class DeviceVersionUpgradePresenter implements VersionUpgradeContract.Pre
         // }, 500);
     }
 
-    @Override
     public void showDfuProgressNotification(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DfuServiceInitiator.createDfuNotificationChannel(context);
         }
     }
 
-    @Override
     public void abort() {
         if (mDfuServiceController != null) {
             mDfuServiceController.abort();

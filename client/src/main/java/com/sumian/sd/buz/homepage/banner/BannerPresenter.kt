@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.homepage.banner
 
 import com.google.gson.JsonArray
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback

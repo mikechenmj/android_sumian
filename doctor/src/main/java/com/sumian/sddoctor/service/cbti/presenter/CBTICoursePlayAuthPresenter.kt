@@ -2,7 +2,6 @@ package com.sumian.sddoctor.service.cbti.presenter
 
 import android.util.Log
 import com.alibaba.fastjson.JSON
-import com.sumian.common.mvp.IPresenter.Companion.mCalls
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
