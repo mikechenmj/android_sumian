@@ -69,7 +69,7 @@ class ReplyVoiceActivity : SddBaseViewModelActivity<PublishVoicePresenter>(),
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = PublishVoicePresenter.init(this)
+        this.mViewModel = PublishVoicePresenter.init(this)
     }
 
     override fun initWidget() {
@@ -155,7 +155,7 @@ class ReplyVoiceActivity : SddBaseViewModelActivity<PublishVoicePresenter>(),
     override fun publishVoice() {
         mMediaPlayer.stop()
         voice_audition_view.setVoice(mPath, mDuration, 0, true, Record.Sound.IDLE_STATUS)
-        mPresenter?.getPublishVoiceSts(publishType = mPublishType, publishId = mPublishId, voiceFilePath = mPath, duration = mDuration)
+        mViewModel?.getPublishVoiceSts(publishType = mPublishType, publishId = mPublishId, voiceFilePath = mPath, duration = mDuration)
     }
 
     override fun reRecordVoice() {

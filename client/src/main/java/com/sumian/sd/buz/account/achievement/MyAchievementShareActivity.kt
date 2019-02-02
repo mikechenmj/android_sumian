@@ -100,7 +100,7 @@ class MyAchievementShareActivity : BaseViewModelActivity<MyAchievementSharePrese
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = MyAchievementSharePresenter.create()
+        this.mViewModel = MyAchievementSharePresenter.create()
     }
 
     override fun portrait(): Boolean {
@@ -116,11 +116,11 @@ class MyAchievementShareActivity : BaseViewModelActivity<MyAchievementSharePrese
             finish()
         }
         iv_share_wx.setOnClickListener {
-            mPresenter?.share(this, SHARE_MEDIA.WEIXIN, achievement_share_view, this)
+            mViewModel?.share(this, SHARE_MEDIA.WEIXIN, achievement_share_view, this)
             postEvent(SHARE_MEDIA.WEIXIN)
         }
         iv_share_wx_circle.setOnClickListener {
-            mPresenter?.share(this, SHARE_MEDIA.WEIXIN_CIRCLE, achievement_share_view, this)
+            mViewModel?.share(this, SHARE_MEDIA.WEIXIN_CIRCLE, achievement_share_view, this)
             postEvent(SHARE_MEDIA.WEIXIN)
         }
         iv_save_bitmap.setOnClickListener {
@@ -183,7 +183,7 @@ class MyAchievementShareActivity : BaseViewModelActivity<MyAchievementSharePrese
     private fun requestPermission() {
         val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *permissions)) {
-            mPresenter?.saveShareView(achievement_share_view, this)
+            mViewModel?.saveShareView(achievement_share_view, this)
             postEvent(SHARE_MEDIA.MORE)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.request_save_permissions_tips), WRITE_PERMISSION, *permissions)

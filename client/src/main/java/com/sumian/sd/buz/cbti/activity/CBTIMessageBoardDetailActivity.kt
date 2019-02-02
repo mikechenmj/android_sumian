@@ -60,7 +60,7 @@ class CBTIMessageBoardDetailActivity : BaseViewModelActivity<CBTIMessageBoardDet
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = CBTIMessageBoardDetailPresenter.init(this)
+        this.mViewModel = CBTIMessageBoardDetailPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -71,11 +71,11 @@ class CBTIMessageBoardDetailActivity : BaseViewModelActivity<CBTIMessageBoardDet
 
     override fun initData() {
         super.initData()
-        mPresenter?.getMsgBoardDetail(msgId)
+        mViewModel?.getMsgBoardDetail(msgId)
     }
 
     override fun onRefresh() {
-        mPresenter?.getMsgBoardDetail(msgId)
+        mViewModel?.getMsgBoardDetail(msgId)
     }
 
     override fun showBackNav(): Boolean {

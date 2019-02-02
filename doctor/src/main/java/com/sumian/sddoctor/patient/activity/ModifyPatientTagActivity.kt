@@ -59,7 +59,7 @@ class ModifyPatientTagActivity : SddBaseViewModelActivity<ModifyPatientTagPresen
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = ModifyPatientTagPresenter.init(this)
+        this.mViewModel = ModifyPatientTagPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -75,7 +75,7 @@ class ModifyPatientTagActivity : SddBaseViewModelActivity<ModifyPatientTagPresen
 
     override fun initData() {
         super.initData()
-        mPresenter?.getPatient(mPatientId)
+        mViewModel?.getPatient(mPatientId)
     }
 
     override fun onClick(v: View) {
@@ -102,7 +102,7 @@ class ModifyPatientTagActivity : SddBaseViewModelActivity<ModifyPatientTagPresen
     }
 
     override fun onMenuClick(v: View) {
-        mPresenter?.consultedPatient(mPatientId, mFaced)
+        mViewModel?.consultedPatient(mPatientId, mFaced)
     }
 
     override fun onGetPatientSuccess(patient: Patient) {

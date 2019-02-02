@@ -33,7 +33,7 @@ class CouponActionFragment : BaseViewModelFragment<CouponActionPresenter>(), Vie
 
     override fun onInitWidgetBefore() {
         super.onInitWidgetBefore()
-        this.mPresenter = CouponActionPresenter.init(this)
+        this.mViewModel = CouponActionPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -46,7 +46,7 @@ class CouponActionFragment : BaseViewModelFragment<CouponActionPresenter>(), Vie
 
     override fun onClick(v: View?) {
         val input = et_coupon_code.text.toString().trim()
-        mPresenter?.checkCoupon(input)
+        mViewModel?.checkCoupon(input)
     }
 
     override fun onInputCouponSuccess() {

@@ -52,7 +52,7 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = CBTIProgressGroupPresenter.init(this)
+        this.mViewModel = CBTIProgressGroupPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -71,8 +71,8 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
 
     override fun initData() {
         super.initData()
-        mPresenter?.initDefaultCBTIProgressGroups()
-        mPresenter?.getCBTIProgressGroups()
+        mViewModel?.initDefaultCBTIProgressGroups()
+        mViewModel?.getCBTIProgressGroups()
     }
 
     override fun onRelease() {
@@ -91,11 +91,11 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
     }
 
     override fun onRefresh() {
-        mPresenter?.getCBTIProgressGroups()
+        mViewModel?.getCBTIProgressGroups()
     }
 
     override fun onTrigger(position: Int, group: CBTIProgressGroup) {
-        mPresenter?.getCBTIProgressGroups(group.key, isHavePatient = true)
+        mViewModel?.getCBTIProgressGroups(group.key, isHavePatient = true)
     }
 
     override fun onLauncherCBTIIntroduction() {

@@ -41,7 +41,7 @@ class WithdrawActivity : SddBaseViewModelActivity<WithdrawPresenter>(), Withdraw
     }
     private var mRules = ""
     private var mJs = ""
-    //    private val mPresenter by lazy { WithdrawPresenter(this) }
+    //    private val mViewModel by lazy { WithdrawPresenter(this) }
     private var mWithdrawRecord: WithdrawRecord? = null
 
     override fun showBackNav(): Boolean {
@@ -69,7 +69,7 @@ class WithdrawActivity : SddBaseViewModelActivity<WithdrawPresenter>(), Withdraw
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        mPresenter = WithdrawPresenter(this)
+        mViewModel = WithdrawPresenter(this)
     }
 
     override fun initWidget() {
@@ -112,7 +112,7 @@ class WithdrawActivity : SddBaseViewModelActivity<WithdrawPresenter>(), Withdraw
                 .setMessageText(R.string.withdraw_explain_desc)
                 .whitenLeft()
                 .setLeftBtn(R.string.cancel, null)
-                .setRightBtn(R.string.confirm_withdraw, View.OnClickListener { mPresenter!!.withdraw(amount) })
+                .setRightBtn(R.string.confirm_withdraw, View.OnClickListener { mViewModel!!.withdraw(amount) })
                 .show()
     }
 

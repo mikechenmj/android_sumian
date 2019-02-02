@@ -55,7 +55,7 @@ class AdvisoryListFragment : BaseViewModelFragment<AdvisoryListPresenter>(), Adv
 
     override fun onInitWidgetBefore() {
         super.onInitWidgetBefore()
-        this.mPresenter = AdvisoryListPresenter.init(this)
+        this.mViewModel = AdvisoryListPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -73,19 +73,19 @@ class AdvisoryListFragment : BaseViewModelFragment<AdvisoryListPresenter>(), Adv
     override fun initData() {
         super.initData()
         if (mIsInit) {
-            this.mPresenter?.getAdvisories(mAdvisoryType)
+            this.mViewModel?.getAdvisories(mAdvisoryType)
         }
     }
 
     override fun onRefresh() {
         refresh.showRefreshAnim()
-        this.mPresenter?.refreshAdvisories()
+        this.mViewModel?.refreshAdvisories()
         advisoryListAdapter.setState(BaseRecyclerAdapter.STATE_LOADING, true)
     }
 
     override fun loadMore() {
         super.loadMore()
-        mPresenter?.getNextAdvisories()
+        mViewModel?.getNextAdvisories()
     }
 
     override fun onItemClick(position: Int, itemId: Long) {

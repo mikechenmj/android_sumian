@@ -46,7 +46,7 @@ class FeedbackActivity : BaseViewModelActivity<FeedbackPresenter>(), FeedbackCon
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = FeedbackPresenter.init(this)
+        this.mViewModel = FeedbackPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -71,7 +71,7 @@ class FeedbackActivity : BaseViewModelActivity<FeedbackPresenter>(), FeedbackCon
                 return@setOnClickListener
             }
 
-            mPresenter?.feedback(feedback)
+            mViewModel?.feedback(feedback)
         }
     }
 

@@ -68,7 +68,7 @@ class PlanListActivity : SddBaseViewModelActivity<PlanPresenter>(), BaseQuickAda
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = PlanPresenter.init(this)
+        this.mViewModel = PlanPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -83,7 +83,7 @@ class PlanListActivity : SddBaseViewModelActivity<PlanPresenter>(), BaseQuickAda
 
     override fun initData() {
         super.initData()
-        mPresenter?.getFollowPlans()
+        mViewModel?.getFollowPlans()
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
@@ -92,7 +92,7 @@ class PlanListActivity : SddBaseViewModelActivity<PlanPresenter>(), BaseQuickAda
     }
 
     override fun onClick(v: View) {
-        mPresenter?.sendFollowPlans(patientId = mPatientId, followPlanId = mAdapter.getSelectedPlanId())
+        mViewModel?.sendFollowPlans(patientId = mPatientId, followPlanId = mAdapter.getSelectedPlanId())
     }
 
     override fun onSendFollowPlansSuccess(success: String) {

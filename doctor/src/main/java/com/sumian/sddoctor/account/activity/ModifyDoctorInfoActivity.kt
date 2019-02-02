@@ -55,7 +55,7 @@ class ModifyDoctorInfoActivity : BaseViewModelActivity<AccountPresenter>(), View
         if (!InputCheckUtil.checkInput(input, getFieldName(), getFieldMinLength(), getFieldMaxLength())) {
             return
         }
-        mPresenter?.modifyDoctorInfo(modifyType, input)
+        mViewModel?.modifyDoctorInfo(modifyType, input)
     }
 
     override fun getLayoutId(): Int {
@@ -63,7 +63,7 @@ class ModifyDoctorInfoActivity : BaseViewModelActivity<AccountPresenter>(), View
     }
 
     override fun initWidgetBefore() {
-        mPresenter = AccountPresenter.init(this)
+        mViewModel = AccountPresenter.init(this)
     }
 
     override fun initWidget() {

@@ -36,7 +36,7 @@ class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContra
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        mPresenter = VersionPresenter.init(this)
+        mViewModel = VersionPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -51,7 +51,7 @@ class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContra
         tv_current_app_version.text = formatVersion(getString(R.string.current_version), UiUtils.getPackageInfo(this).versionName)
         tv_new_app_version.text = formatVersion(getString(R.string.new_version), UiUtils.getPackageInfo(this).versionName)
         onHaveUpgrade(false, false, "")
-        this.mPresenter?.getVersion()
+        this.mViewModel?.getVersion()
     }
 
     @SuppressLint("SetTextI18n")

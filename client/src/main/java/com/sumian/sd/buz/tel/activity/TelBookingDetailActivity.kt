@@ -58,7 +58,7 @@ class TelBookingDetailActivity : BaseViewModelActivity<TelBookingDetailViewModel
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = TelBookingDetailViewModel.init(this)
+        this.mViewModel = TelBookingDetailViewModel.init(this)
     }
 
     override fun initWidget() {
@@ -76,7 +76,7 @@ class TelBookingDetailActivity : BaseViewModelActivity<TelBookingDetailViewModel
 
     override fun initData() {
         super.initData()
-        this.mPresenter?.getTelBookingDetail(mTelBookingId)
+        this.mViewModel?.getTelBookingDetail(mTelBookingId)
     }
 
     override fun onGetTelBookingDetailSuccess(telBooking: TelBooking) {

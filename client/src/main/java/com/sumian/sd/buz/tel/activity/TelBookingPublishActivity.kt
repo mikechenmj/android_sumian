@@ -73,7 +73,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = TelBookingPublishPresenter.init(this)
+        this.mViewModel = TelBookingPublishPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -102,7 +102,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
         invalidTelBooking(mTelBooking)
 
         if (mTelBooking == null) {
-            this.mPresenter?.getLatestTelBookingOrder()
+            this.mViewModel?.getLatestTelBookingOrder()
         }
     }
 
@@ -116,7 +116,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
                     onCheckInputContentFailed("请选择预约时间")
                     return
                 }
-                mPresenter?.checkInputContent(et_input_ask_question.text.toString().trim(), et_input_ask_question_more.text.toString().trim())
+                mViewModel?.checkInputContent(et_input_ask_question.text.toString().trim(), et_input_ask_question_more.text.toString().trim())
             }
         }
     }
@@ -154,7 +154,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     }
 
     override fun onCheckInputContentSuccess(consultingQuestion: String, add: String) {
-        mPresenter?.publishTelBookingOrder(mTelBooking?.id!!, mTelBookingUnixTime, consultingQuestion, add, true)
+        mViewModel?.publishTelBookingOrder(mTelBooking?.id!!, mTelBookingUnixTime, consultingQuestion, add, true)
     }
 
     override fun onSelectTelBookingTime(unixTime: Int): Boolean {

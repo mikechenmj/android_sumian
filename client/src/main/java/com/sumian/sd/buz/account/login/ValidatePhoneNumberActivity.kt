@@ -45,7 +45,7 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        mPresenter = ValidatePhoneNumberPresenter(this)
+        mViewModel = ValidatePhoneNumberPresenter(this)
     }
 
     override fun initWidget() {
@@ -60,7 +60,7 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
                 InputCheckUtil.toastPhoneNumberInvalidate()
                 return@setOnClickListener
             }
-            mPresenter!!.requestCaptcha(mobile)
+            mViewModel!!.requestCaptcha(mobile)
             onRequestCaptchaSuccess()
             val type = if (mLaunchType == LAUNCH_TYPE_BIND_SOCIAL) "绑定微信" else "忘记密码"
             StatUtil.event("click_captcha", mapOf("usage" to type, "mobile" to mobile))
@@ -77,8 +77,8 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
                 return@setOnClickListener
             }
             when (mLaunchType) {
-                LAUNCH_TYPE_BIND_SOCIAL -> mPresenter!!.bindMobile(mobile, captcha, mSocialInfo!!)
-                LAUNCH_TYPE_FORGET_PASSWORD -> mPresenter!!.validatePhoneNumberForResetPassword(mobile, captcha)
+                LAUNCH_TYPE_BIND_SOCIAL -> mViewModel!!.bindMobile(mobile, captcha, mSocialInfo!!)
+                LAUNCH_TYPE_FORGET_PASSWORD -> mViewModel!!.validatePhoneNumberForResetPassword(mobile, captcha)
             }
         }
     }

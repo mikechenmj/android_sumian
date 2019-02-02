@@ -244,7 +244,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         AdvisoryContentCacheUtils.clearCache(advisoryId = advisory.id)
         this.mAdvisory = advisory
         this.mAdvisoryId = advisory.id
-        //this.mPresenter.getLastAdvisory()
+        //this.mViewModel.getLastAdvisory()
 
         title_bar.hideMore().more.visibility = View.INVISIBLE
 

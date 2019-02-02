@@ -36,7 +36,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        mPresenter = LoginPresenter(this)
+        mViewModel = LoginPresenter(this)
     }
 
     override fun initWidget() {
@@ -48,7 +48,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
             val number = getPhoneNumberWithCheck()
             if (number != null) {
                 onRequestCaptchaSuccess()
-                mPresenter!!.requestCaptcha(number)
+                mViewModel!!.requestCaptcha(number)
                 StatUtil.event("click_captcha", mapOf("usage" to "登录注册", "mobile" to number))
             }
         }
@@ -95,7 +95,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                 InputCheckUtil.toastCaptchaInvalidate()
                 return
             }
-            mPresenter!!.loginByCaptcha(phone, captcha)
+            mViewModel!!.loginByCaptcha(phone, captcha)
         } else {
             val password = et_password.getValidText()
             if (password == null) {
@@ -103,7 +103,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                 ll_password_et_container.isActivated = true
                 return
             }
-            mPresenter!!.loginByPassword(phone, password)
+            mViewModel!!.loginByPassword(phone, password)
         }
     }
 
@@ -125,7 +125,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
     }
 
     private fun wechatLogin() {
-        mPresenter!!.loginByWechat(this)
+        mViewModel!!.loginByWechat(this)
         StatUtil.event("click_wechat_login")
     }
 

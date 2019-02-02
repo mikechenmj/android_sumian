@@ -7,8 +7,8 @@ import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
@@ -57,7 +57,7 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = CBTIIntroductionPresenter.init(this)
+        this.mViewModel = CBTIIntroductionPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -161,8 +161,8 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
     }
 
     private fun requestData() {
-        mPresenter?.getCBTIServiceDetail()
-        mPresenter?.getCBTIIntroductionList()
+        mViewModel?.getCBTIServiceDetail()
+        mViewModel?.getCBTIIntroductionList()
     }
 
     private fun initCBTIIntroductionWebView() {

@@ -59,7 +59,7 @@ class WeekEvaluationListFragment : BaseViewModelFragment<WeekEvaluationListPrese
 
     override fun onInitWidgetBefore() {
         super.onInitWidgetBefore()
-        this.mPresenter = WeekEvaluationListPresenter.init(this)
+        this.mViewModel = WeekEvaluationListPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -76,19 +76,19 @@ class WeekEvaluationListFragment : BaseViewModelFragment<WeekEvaluationListPrese
     override fun initData() {
         super.initData()
         if (mIsInit) {
-            this.mPresenter?.getEvaluationList(mEvaluationType)
+            this.mViewModel?.getEvaluationList(mEvaluationType)
         }
     }
 
     override fun onRefresh() {
         refresh.showRefreshAnim()
-        this.mPresenter?.refreshEvaluationList()
+        this.mViewModel?.refreshEvaluationList()
         mEvaluationAdapter.setState(BaseRecyclerAdapter.STATE_LOADING, true)
     }
 
     override fun loadMore() {
         super.loadMore()
-        mPresenter?.getNextEvaluationList()
+        mViewModel?.getNextEvaluationList()
     }
 
     override fun onItemClick(position: Int, itemId: Long) {

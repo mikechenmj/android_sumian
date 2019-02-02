@@ -42,7 +42,7 @@ class SleepDiaryRemindSettingActivity : BaseViewModelActivity<SleepDiaryReminder
     private var mSwitchPendingOff = false  // switch 点击后，如果没有pick 时间，则会回滚。
 
     init {
-        mPresenter = SleepDiaryReminderSettingPresenter(this)
+        mViewModel = SleepDiaryReminderSettingPresenter(this)
     }
 
     override fun initBundle(bundle: Bundle) {
@@ -81,7 +81,7 @@ class SleepDiaryRemindSettingActivity : BaseViewModelActivity<SleepDiaryReminder
                 showTimePicker()
             } else {
                 if (mReminder != null) {
-                    mPresenter?.modifyReminder(mReminder!!.id, mReminder!!.getRemindAtUnixTime(), false)
+                    mViewModel?.modifyReminder(mReminder!!.id, mReminder!!.getRemindAtUnixTime(), false)
                 }
             }
         })
@@ -90,7 +90,7 @@ class SleepDiaryRemindSettingActivity : BaseViewModelActivity<SleepDiaryReminder
 
     override fun initData() {
         super.initData()
-        mPresenter?.queryReminder(mReminderType)
+        mViewModel?.queryReminder(mReminderType)
     }
 
     override fun updateReminder(reminder: Reminder?) {
@@ -129,9 +129,9 @@ class SleepDiaryRemindSettingActivity : BaseViewModelActivity<SleepDiaryReminder
 
     fun addOrUpdateReminder(hour: Int, minute: Int) {
         if (mReminder != null) {
-            mPresenter?.modifyReminder(mReminder!!.id, getUnixTime(hour, minute), true)
+            mViewModel?.modifyReminder(mReminder!!.id, getUnixTime(hour, minute), true)
         } else {
-            mPresenter?.addReminder(mReminderType, getUnixTime(hour, minute))
+            mViewModel?.addReminder(mReminderType, getUnixTime(hour, minute))
         }
     }
 

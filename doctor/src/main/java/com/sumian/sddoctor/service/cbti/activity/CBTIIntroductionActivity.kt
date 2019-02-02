@@ -7,8 +7,8 @@ import android.view.View
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.SpUtil
 import com.sumian.sddoctor.R
@@ -68,7 +68,7 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = CBTIIntroductionPresenter.init(this)
+        this.mViewModel = CBTIIntroductionPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -142,9 +142,9 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
     }
 
     private fun requestData() {
-        // mPresenter?.getCBTIServiceDetail()
-        mPresenter?.getCBTIIntroductionList()
-        mPresenter?.getConfigs()
+        // mViewModel?.getCBTIServiceDetail()
+        mViewModel?.getCBTIIntroductionList()
+        mViewModel?.getConfigs()
     }
 
     private fun commitPopSp() {

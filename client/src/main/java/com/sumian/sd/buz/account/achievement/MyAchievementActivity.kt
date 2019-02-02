@@ -4,8 +4,8 @@ import android.content.Intent
 import android.view.Gravity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.account.achievement.adapter.MyMedalAdapter
@@ -53,7 +53,7 @@ class MyAchievementActivity : BaseViewModelActivity<MyAchievementPresenter>(), B
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = MyAchievementPresenter.create(this)
+        this.mViewModel = MyAchievementPresenter.create(this)
     }
 
     override fun initWidget() {
@@ -89,7 +89,7 @@ class MyAchievementActivity : BaseViewModelActivity<MyAchievementPresenter>(), B
 
     override fun initData() {
         super.initData()
-        mPresenter?.getMyAchievement()
+        mViewModel?.getMyAchievement()
     }
 
     override fun onResume() {

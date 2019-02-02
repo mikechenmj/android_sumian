@@ -69,7 +69,7 @@ class ScaleListActivity : SddBaseViewModelActivity<ScalePresenter>(), BaseQuickA
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = ScalePresenter.init(this)
+        this.mViewModel = ScalePresenter.init(this)
     }
 
     override fun initWidget() {
@@ -84,7 +84,7 @@ class ScaleListActivity : SddBaseViewModelActivity<ScalePresenter>(), BaseQuickA
 
     override fun initData() {
         super.initData()
-        mPresenter?.getScales()
+        mViewModel?.getScales()
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
@@ -93,7 +93,7 @@ class ScaleListActivity : SddBaseViewModelActivity<ScalePresenter>(), BaseQuickA
     }
 
     override fun onClick(v: View) {
-        mPresenter?.sendScale(patientId = mPatientId, scaleIds = mAdapter.selectedScaleIds)
+        mViewModel?.sendScale(patientId = mPatientId, scaleIds = mAdapter.selectedScaleIds)
     }
 
     override fun onSendScaleSuccess(success: String) {

@@ -58,7 +58,7 @@ class PatientListActivity : SddBaseViewModelActivity<PatientListPresenter>(),
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = PatientListPresenter.init(this)
+        this.mViewModel = PatientListPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -74,7 +74,7 @@ class PatientListActivity : SddBaseViewModelActivity<PatientListPresenter>(),
 
     override fun onResume() {
         super.onResume()
-        mPresenter?.refreshPatients()
+        mViewModel?.refreshPatients()
     }
 
     override fun showLoading() {
@@ -105,12 +105,12 @@ class PatientListActivity : SddBaseViewModelActivity<PatientListPresenter>(),
 
     override fun onRefresh() {
         swipe_refresh?.showRefreshAnim()
-        this.mPresenter?.refreshPatients()
+        this.mViewModel?.refreshPatients()
     }
 
     override fun loadMore() {
         super.loadMore()
-        mPresenter?.getNextPatients()
+        mViewModel?.getNextPatients()
     }
 
     override fun onHaveMore(isHaveMore: Boolean) {

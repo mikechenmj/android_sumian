@@ -48,7 +48,7 @@ class FeedbackActivity : SddBaseViewModelActivity<FeedbackPresenter>(), Feedback
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = FeedbackPresenter.init(this)
+        this.mViewModel = FeedbackPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -87,7 +87,7 @@ class FeedbackActivity : SddBaseViewModelActivity<FeedbackPresenter>(), Feedback
                 return@setOnClickListener
             }
 
-            mPresenter?.feedback(feedback)
+            mViewModel?.feedback(feedback)
         }
     }
 

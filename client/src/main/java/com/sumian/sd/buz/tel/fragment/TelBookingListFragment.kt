@@ -5,8 +5,8 @@ import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
@@ -59,7 +59,7 @@ class TelBookingListFragment : BaseViewModelFragment<TelBookingListPresenter>(),
 
     override fun onInitWidgetBefore() {
         super.onInitWidgetBefore()
-        this.mPresenter = TelBookingListPresenter.init(this)
+        this.mViewModel = TelBookingListPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -77,7 +77,7 @@ class TelBookingListFragment : BaseViewModelFragment<TelBookingListPresenter>(),
     override fun initData() {
         super.initData()
         mIsRefresh = true
-        this.mPresenter?.getTelBookingList(mTelBookingType)
+        this.mViewModel?.getTelBookingList(mTelBookingType)
     }
 
     override fun onResume() {
@@ -94,13 +94,13 @@ class TelBookingListFragment : BaseViewModelFragment<TelBookingListPresenter>(),
 
     override fun onRefresh() {
         mIsRefresh = true
-        this.mPresenter?.refreshTelBookingList()
+        this.mViewModel?.refreshTelBookingList()
         refresh.showRefreshAnim()
     }
 
     override fun loadMore() {
         super.loadMore()
-        mPresenter?.getNextTelBookingList()
+        mViewModel?.getNextTelBookingList()
     }
 
     override fun onItemClick(position: Int, itemId: Long) {

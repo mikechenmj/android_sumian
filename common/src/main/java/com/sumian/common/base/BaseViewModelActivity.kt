@@ -10,11 +10,11 @@ package com.sumian.common.base
  */
 abstract class BaseViewModelActivity<VM : BaseViewModel> : BaseActivity(), BaseShowLoadingView {
 
-    protected var mPresenter: VM? = null
+    protected var mViewModel: VM? = null
 
     override fun onRelease() {
         super.onRelease()
-        mPresenter?.onCleared()
+        mViewModel?.onCleared()
     }
 
 }

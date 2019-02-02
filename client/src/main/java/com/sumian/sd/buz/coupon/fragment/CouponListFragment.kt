@@ -8,8 +8,8 @@ import android.view.Gravity
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
@@ -64,7 +64,7 @@ class CouponListFragment : BaseViewModelFragment<CouponListPresenter>(), CouponL
 
     override fun onInitWidgetBefore() {
         super.onInitWidgetBefore()
-        this.mPresenter = CouponListPresenter.init(this)
+        this.mViewModel = CouponListPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -82,7 +82,7 @@ class CouponListFragment : BaseViewModelFragment<CouponListPresenter>(), CouponL
     override fun initData() {
         super.initData()
         mIsRefresh = true
-        this.mPresenter?.getCouponList()
+        this.mViewModel?.getCouponList()
         androidx.localbroadcastmanager.content.LocalBroadcastManager.getInstance(activity!!).registerReceiver(mDataBroadcastReceiver, IntentFilter(AUTO_REFRESH_ACTION))
     }
 
@@ -105,12 +105,12 @@ class CouponListFragment : BaseViewModelFragment<CouponListPresenter>(), CouponL
 
     override fun onRefresh() {
         mIsRefresh = true
-        this.mPresenter?.refreshCouponList()
+        this.mViewModel?.refreshCouponList()
     }
 
     override fun loadMore() {
         super.loadMore()
-        mPresenter?.getNextCouponList()
+        mViewModel?.getNextCouponList()
     }
 
     override fun onItemClick(position: Int, itemId: Long) {

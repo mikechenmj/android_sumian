@@ -63,7 +63,7 @@ class AdvisoryDetailFragment : BaseViewModelFragment<RecordPresenter>(), RecordC
 
     override fun onInitWidgetBefore() {
         super.onInitWidgetBefore()
-        this.mPresenter = RecordPresenter.init(this)
+        this.mViewModel = RecordPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -77,7 +77,7 @@ class AdvisoryDetailFragment : BaseViewModelFragment<RecordPresenter>(), RecordC
 
     override fun onResume() {
         super.onResume()
-        mPresenter?.getAdvisoryDetail(mAdvisoryId)
+        mViewModel?.getAdvisoryDetail(mAdvisoryId)
     }
 
     override fun onStop() {

@@ -9,10 +9,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
+import com.sumian.sddoctor.R
 import com.sumian.sddoctor.service.cbti.bean.MessageBoard
 import com.sumian.sddoctor.service.cbti.contract.CBTIMessageBoardDetailContract
 import com.sumian.sddoctor.service.cbti.presenter.CBTIMessageBoardDetailPresenter
-import com.sumian.sddoctor.R
 import kotlinx.android.synthetic.main.activity_main_message_board_detail.*
 
 /**
@@ -60,7 +60,7 @@ class CBTIMessageBoardDetailActivity : BaseViewModelActivity<CBTIMessageBoardDet
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = CBTIMessageBoardDetailPresenter.init(this)
+        this.mViewModel = CBTIMessageBoardDetailPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -71,11 +71,11 @@ class CBTIMessageBoardDetailActivity : BaseViewModelActivity<CBTIMessageBoardDet
 
     override fun initData() {
         super.initData()
-        mPresenter?.getMsgBoardDetail(msgId)
+        mViewModel?.getMsgBoardDetail(msgId)
     }
 
     override fun onRefresh() {
-        mPresenter?.getMsgBoardDetail(msgId)
+        mViewModel?.getMsgBoardDetail(msgId)
     }
 
     override fun showBackNav(): Boolean {

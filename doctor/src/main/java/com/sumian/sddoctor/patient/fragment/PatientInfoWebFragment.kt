@@ -142,7 +142,7 @@ class PatientInfoWebFragment : BaseWebViewFragment(), TitleBar.OnMenuClickListen
 
     override fun initData() {
         super.initData()
-//        mPresenter.getPatientRecommendStatus(mPatientId)
+//        mViewModel.getPatientRecommendStatus(mPatientId)
     }
 
     override fun getUrlContentPart(): String {
@@ -187,7 +187,7 @@ class PatientInfoWebFragment : BaseWebViewFragment(), TitleBar.OnMenuClickListen
                 ModifyPatientTagActivity.show(mPatientId)
             }
 //            R.id.tv_recommend_patients -> {//推荐患者
-//                mPresenter.bookRecommendPatient(mPatientId)
+//                mViewModel.bookRecommendPatient(mPatientId)
 //            }
             R.id.tv_send_scale -> {//发送量表
 //                if (!AuthenticationHelper.checkAuthenticationStatusWithToast(activity!!,R.string.after_authentication_you_can_send_scale)) return

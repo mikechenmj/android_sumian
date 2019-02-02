@@ -46,7 +46,7 @@ public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> i
     @Override
     protected void initWidget() {
         super.initWidget();
-        setMPresenter(SettingsPresenter.Companion.init(this));
+        setMViewModel(SettingsPresenter.Companion.init(this));
         TitleBar titleBar = findViewById(R.id.title_bar);
         mSdvMobile = findViewById(R.id.sdv_mobile);
 
@@ -134,7 +134,7 @@ public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> i
                     .setMessage(R.string.are_you_sure_unbind_wechat_message)
                     .setLeftBtn(R.string.cancel, v -> mSdvBindWechat.setSwitchCheckedWithoutCallback(!mIsSuccess))
                     .whitenLeft()
-                    .setRightBtn(R.string.unbind, v -> getMPresenter().unbindWechat())
+                    .setRightBtn(R.string.unbind, v -> getMViewModel().unbindWechat())
                     .show();
         } else {
             new SumianAlertDialog(this)
@@ -142,7 +142,7 @@ public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> i
                     .setMessage(R.string.are_you_sure_bind_wechat_message)
                     .setLeftBtn(R.string.cancel, v -> mSdvBindWechat.setSwitchCheckedWithoutCallback(!mIsSuccess))
                     .whitenLeft()
-                    .setRightBtn(R.string.binding, v -> getMPresenter().bindWechat(SettingsActivity.this))
+                    .setRightBtn(R.string.binding, v -> getMViewModel().bindWechat(SettingsActivity.this))
                     .show();
         }
     }

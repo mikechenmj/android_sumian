@@ -60,7 +60,7 @@ class ReplyDocActivity : SddBaseViewModelActivity<PublishDocPresenter>(), Publis
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = PublishDocPresenter.init(this)
+        this.mViewModel = PublishDocPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -92,7 +92,7 @@ class ReplyDocActivity : SddBaseViewModelActivity<PublishDocPresenter>(), Publis
             return
         }
 
-        mPresenter?.publishDoc(publishType = mPublishType, publishId = mPublishId, content = input)
+        mViewModel?.publishDoc(publishType = mPublishType, publishId = mPublishId, content = input)
     }
 
     override fun onPublishSuccess(success: String) {

@@ -3,6 +3,7 @@ package com.sumian.sd.buz.account.achievement.presenter
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.account.achievement.bean.Achievement
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 import com.sumian.sd.buz.account.achievement.contract.LastAchievementContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -21,7 +22,7 @@ class LastAchievementPresenter private constructor(var view: LastAchievementCont
         fun init(view: LastAchievementContract.View?): LastAchievementPresenter = LastAchievementPresenter(view)
     }
 
-    fun getLastAchievement(achievementCategoryType: Int, achievementItemType: Int) {
+    fun getLastAchievement(achievementCategoryType: Int = Achievement.CBTI_TYPE, achievementItemType: Int = -1) {
         //view?.showLoading()
         val map = mutableMapOf<String, Any>()
         map["achievement_category_type"] = achievementCategoryType

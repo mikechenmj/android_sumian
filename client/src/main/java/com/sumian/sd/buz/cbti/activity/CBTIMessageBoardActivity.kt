@@ -66,7 +66,7 @@ class CBTIMessageBoardActivity : BaseViewModelActivity<CBTISelfMessageBoardPrese
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()
-        this.mPresenter = CBTISelfMessageBoardPresenter.init(this)
+        this.mViewModel = CBTISelfMessageBoardPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -83,11 +83,11 @@ class CBTIMessageBoardActivity : BaseViewModelActivity<CBTISelfMessageBoardPrese
     override fun initData() {
         super.initData()
         mIsLoadMoreOrInit = true
-        mPresenter?.getSelfMsgListMsg(mCbtiPartType)
+        mViewModel?.getSelfMsgListMsg(mCbtiPartType)
     }
 
     override fun sendContent(content: String, anonymousType: Int) {
-        mPresenter?.publishMessage(content, mCbtiPartType, anonymousType)
+        mViewModel?.publishMessage(content, mCbtiPartType, anonymousType)
     }
 
     override fun close() {
@@ -111,7 +111,7 @@ class CBTIMessageBoardActivity : BaseViewModelActivity<CBTISelfMessageBoardPrese
     override fun loadMore() {
         super.loadMore()
         mIsLoadMoreOrInit = true
-        mPresenter?.getNextSelfMsgListMsg()
+        mViewModel?.getNextSelfMsgListMsg()
     }
 
     override fun delCallback(item: MessageBoard, position: Int) {
@@ -119,7 +119,7 @@ class CBTIMessageBoardActivity : BaseViewModelActivity<CBTISelfMessageBoardPrese
                 .hideTopIcon(true)
                 .setCancelable(true)
                 .setLeftBtn(R.string.cancel, null)
-                .setRightBtn(R.string.sure) { mPresenter?.delSelfMsg(item.id, position) }
+                .setRightBtn(R.string.sure) { mViewModel?.delSelfMsg(item.id, position) }
                 .setMessage(R.string.del_msg_keyboard_msg)
                 .setTitle(R.string.del_msg_keyboard_title)
                 .whitenLeft()
@@ -130,7 +130,7 @@ class CBTIMessageBoardActivity : BaseViewModelActivity<CBTISelfMessageBoardPrese
         et_msg_board_input.text = null
         SumianImageTextToast.showToast(this, R.drawable.ic_dialog_success, success, false)
         finish()
-        //mPresenter?.refreshSelfMsgListMsg()
+        //mViewModel?.refreshSelfMsgListMsg()
     }
 
     override fun onPublishMessageBoardFailed(error: String) {
