@@ -21,7 +21,6 @@ import com.sumian.common.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.device.DeviceManager;
-import com.sumian.sd.buz.upgrade.contract.VersionUpgradeContract;
 import com.sumian.sd.buz.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog;
 import com.sumian.sd.buz.upgrade.presenter.DeviceVersionUpgradePresenter;
@@ -49,7 +48,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 @SuppressWarnings("ConstantConditions")
 public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implements View.OnClickListener, TitleBar.OnBackClickListener
-        , VersionUpgradeContract.View, EasyPermissions.PermissionCallbacks {
+        , EasyPermissions.PermissionCallbacks {
     public static final int VERSION_TYPE_MONITOR = 0x02;
     public static final int VERSION_TYPE_SLEEPY = 0x03;
     private static final String EXTRA_VERSION_TYPE = "extra_version_type";
@@ -350,18 +349,15 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         finish();
     }
 
-    @Override
     public void onDownloadStartCallback() {
     }
 
-    @Override
     public void onDownloadProgress(int progress) {
         // Log.e(TAG, "onDownloadProgress: ------>" + progress);
         //0x00 固件下载 type
         mVersionDialog.updateProgress(progress);
     }
 
-    @Override
     public void onDownloadFirmwareSuccess() {
         SumianExecutor.INSTANCE.runOnUiThread(() -> {
             mIvUpgrade.setImageResource(R.mipmap.set_icon_upgrade);
@@ -371,7 +367,6 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         });
     }
 
-    @Override
     public void onDownloadFirmwareFailed(String error) {
         SumianExecutor.INSTANCE.runOnUiThread(() -> {
             mBtDownload.setText(R.string.firmware_download_hint);
@@ -380,26 +375,22 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         });
     }
 
-    @Override
     public void onCheckBluetoothAddressFailed() {
         checkAndCancelDialog();
         ToastHelper.show("蓝牙设备地址不正确,无法连接蓝牙设备.请待设备退出固件升级模式之后重试....");
     }
 
-    @Override
     public void onScanFailed(String deviceAddress) {
         mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
         mDfuProgressListener.onError(deviceAddress, 0, DfuBaseService.ERROR_TYPE_OTHER, "未扫描到 对应 mac 地址的dfu 模式的并且有广播的设备");
     }
 
-    @Override
     public void showSleepConnectingDialog() {
         Version2ConnectingDialog version2ConnectingDialog = Version2ConnectingDialog.Companion.newInstance();
         version2ConnectingDialog.show(getSupportFragmentManager(), Version2ConnectingDialog.class.getSimpleName());
         this.mVersion2ConnectingDialog = version2ConnectingDialog;
     }
 
-    @Override
     public void dismissSleepConnectingDialog() {
         if (mVersion2ConnectingDialog != null) {
             mVersion2ConnectingDialog.dismissAllowingStateLoss();
@@ -436,7 +427,6 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         showDialogByTitle(R.string.firmware_upgrade_title_hint);
     }
 
-    @Override
     public void setPresenter(DeviceVersionUpgradePresenter presenter) {
         this.mPresenter = presenter;
     }

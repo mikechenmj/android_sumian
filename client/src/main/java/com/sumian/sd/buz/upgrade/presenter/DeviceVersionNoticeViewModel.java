@@ -12,8 +12,8 @@ import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.device.DeviceManager;
 import com.sumian.sd.buz.device.bean.BlueDevice;
+import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
-import com.sumian.sd.buz.upgrade.contract.VersionContract;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.common.network.response.AppUpgradeInfo;
 import com.sumian.sd.common.network.response.FirmwareInfo;
@@ -39,18 +39,18 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
 
     private static final int MONITOR_VERSION_TYPE = 0x01;
     private static final int SLEEPY_VERSION_TYPE = 0x02;
-    private WeakReference<VersionContract.View> mViewWeakReference;
+    private WeakReference<DeviceVersionNoticeActivity> mViewWeakReference;
 
     private DeviceVersionNoticeViewModel() {
     }
 
-    private DeviceVersionNoticeViewModel(VersionContract.View view) {
+    private DeviceVersionNoticeViewModel(DeviceVersionNoticeActivity view) {
         this();
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
     }
 
-    public static DeviceVersionNoticeViewModel init(VersionContract.View view) {
+    public static DeviceVersionNoticeViewModel init(DeviceVersionNoticeActivity view) {
         return new DeviceVersionNoticeViewModel(view);
     }
 
@@ -60,7 +60,7 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
 
     public void syncMonitorVersionInfo() {
 
-        VersionContract.View view = null;
+        DeviceVersionNoticeActivity view = null;
         if (mViewWeakReference != null) {
             view = this.mViewWeakReference.get();
         }
@@ -70,7 +70,7 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
 
         Call<FirmwareInfo> call = AppManager.getSdHttpService().syncFirmwareInfo();
 
-        VersionContract.View finalView = view;
+        DeviceVersionNoticeActivity finalView = view;
 
         call.enqueue(new BaseSdResponseCallback<FirmwareInfo>() {
             @Override
@@ -114,7 +114,7 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
 
     }
 
-    private void checkVersionInfo(VersionContract.View view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
+    private void checkVersionInfo(DeviceVersionNoticeActivity view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
         boolean isConnected;
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (versionType == MONITOR_VERSION_TYPE) {
@@ -159,7 +159,7 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
     }
 
     public void syncAppVersionInfo() {
-        VersionContract.View view = null;
+        DeviceVersionNoticeActivity view = null;
 
         if (mViewWeakReference != null) {
             view = mViewWeakReference.get();
@@ -174,7 +174,7 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
 
         Call<AppUpgradeInfo> call = AppManager.getSdHttpService().syncUpgradeAppInfo(map);
 
-        VersionContract.View finalView = view;
+        DeviceVersionNoticeActivity finalView = view;
 
         call.enqueue(new BaseSdResponseCallback<AppUpgradeInfo>() {
             @Override

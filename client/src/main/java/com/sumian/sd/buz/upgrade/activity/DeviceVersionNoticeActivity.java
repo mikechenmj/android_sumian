@@ -17,7 +17,6 @@ import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.device.DeviceManager;
 import com.sumian.sd.buz.device.bean.BlueDevice;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
-import com.sumian.sd.buz.upgrade.contract.VersionContract;
 import com.sumian.sd.buz.upgrade.model.VersionModel;
 import com.sumian.sd.buz.upgrade.presenter.DeviceVersionNoticeViewModel;
 import com.sumian.sd.common.network.response.AppUpgradeInfo;
@@ -36,7 +35,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
  */
 
 public class DeviceVersionNoticeActivity extends BaseViewModelActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
-        TitleBar.OnBackClickListener, VersionContract.View, VersionModel.ShowDotCallback {
+        TitleBar.OnBackClickListener, VersionModel.ShowDotCallback {
 
     private SumianSwipeRefreshLayout mRefresh;
     private TextView mTvAppVersionName;
@@ -46,7 +45,7 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     private VersionInfoView mMonitorVersionInfo;
     private VersionInfoView mSleepVersionInfo;
 
-    private VersionContract.Presenter mPresenter;
+    private DeviceVersionNoticeViewModel mPresenter;
     private Handler mHandler = new Handler();
 
     public static void show(Context context) {
@@ -125,24 +124,20 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
         finish();
     }
 
-    @Override
-    public void setPresenter(VersionContract.Presenter presenter) {
+    public void setPresenter(DeviceVersionNoticeViewModel presenter) {
         this.mPresenter = presenter;
     }
 
-    @Override
     public void onSyncMonitorCallback(VersionInfo versionInfo) {
         setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
                 getString(R.string.monitor), versionInfo.getVersion()));
     }
 
-    @Override
     public void onSyncSleepyCallback(VersionInfo versionInfo) {
         setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
                 getString(R.string.speed_sleeper), versionInfo.getVersion()));
     }
 
-    @Override
     public void onSyncAppVersionCallback(AppUpgradeInfo appUpgradeInfo) {
         setText(mTvAppVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
                 "APP", appUpgradeInfo.version));
@@ -175,17 +170,14 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
         mHandler.post(() -> tv.setText(text));
     }
 
-    @Override
     public void onFailure(String error) {
         ToastHelper.show(error);
     }
 
-    @Override
     public void onBegin() {
         mRefresh.setRefreshing(true);
     }
 
-    @Override
     public void onFinish() {
         mRefresh.setRefreshing(false);
     }

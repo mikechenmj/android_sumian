@@ -23,7 +23,6 @@ import com.sumian.sd.buz.device.command.BlueCmd;
 import com.sumian.sd.buz.device.util.HashUtils;
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionUpgradeActivity;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
-import com.sumian.sd.buz.upgrade.contract.VersionUpgradeContract;
 import com.sumian.sd.buz.upgrade.service.DfuService;
 import com.sumian.sd.common.log.LogManager;
 
@@ -47,7 +46,7 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
 
     private static final String TAG = DeviceVersionUpgradePresenter.class.getSimpleName();
 
-    private WeakReference<VersionUpgradeContract.View> mViewWeakReference;
+    private WeakReference<DeviceVersionUpgradeActivity> mViewWeakReference;
     private long mTaskId;
     private DownloadManager mDownloadManager;
     private Uri mDownloadedFileUri;
@@ -57,7 +56,7 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
     private String mDfuMac;
     private DfuServiceController mDfuServiceController;
 
-    private DeviceVersionUpgradePresenter(VersionUpgradeContract.View view) {
+    private DeviceVersionUpgradePresenter(DeviceVersionUpgradeActivity view) {
         view.setPresenter(this);
         this.mViewWeakReference = new WeakReference<>(view);
         BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
@@ -66,7 +65,7 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
         }
     }
 
-    public static DeviceVersionUpgradePresenter init(VersionUpgradeContract.View view) {
+    public static DeviceVersionUpgradePresenter init(DeviceVersionUpgradeActivity view) {
         return new DeviceVersionUpgradePresenter(view);
     }
 
@@ -102,8 +101,8 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
         if (mDownloadManager != null) {
             mTaskId = mDownloadManager.enqueue(request);
         }
-        WeakReference<VersionUpgradeContract.View> viewWeakReference = this.mViewWeakReference;
-        VersionUpgradeContract.View view = viewWeakReference.get();
+        WeakReference<DeviceVersionUpgradeActivity> viewWeakReference = this.mViewWeakReference;
+        DeviceVersionUpgradeActivity view = viewWeakReference.get();
         if (view != null) {
             view.onDownloadStartCallback();
         }
@@ -214,7 +213,7 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
         if (isBluetoothAddress) {
 
             if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
-                VersionUpgradeContract.View view = mViewWeakReference.get();
+                DeviceVersionUpgradeActivity view = mViewWeakReference.get();
                 if (view != null) {
                     view.showSleepConnectingDialog();
                 }
@@ -223,7 +222,7 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
                 @Override
                 public void onDeviceFound(BluetoothDevice device) {
                     if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
-                        VersionUpgradeContract.View view = mViewWeakReference.get();
+                        DeviceVersionUpgradeActivity view = mViewWeakReference.get();
                         if (view != null) {
                             view.dismissSleepConnectingDialog();
                         }
@@ -244,7 +243,7 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
 
                 @Override
                 public void onScanTimeout() {
-                    VersionUpgradeContract.View view = mViewWeakReference.get();
+                    DeviceVersionUpgradeActivity view = mViewWeakReference.get();
                     if (view != null) {
                         view.onScanFailed(mDfuMac);
                     }
@@ -258,7 +257,7 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
             });
 
         } else {
-            VersionUpgradeContract.View view = mViewWeakReference.get();
+            DeviceVersionUpgradeActivity view = mViewWeakReference.get();
             if (view != null) {
                 view.onCheckBluetoothAddressFailed();
             }
