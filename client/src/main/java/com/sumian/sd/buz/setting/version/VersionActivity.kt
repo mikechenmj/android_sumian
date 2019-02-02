@@ -3,8 +3,8 @@ package com.sumian.sd.buz.setting.version
 import android.annotation.SuppressLint
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.setting.version.bean.Version
 import com.sumian.sd.buz.setting.version.contract.VersionContract
 import com.sumian.sd.buz.setting.version.presenter.VersionPresenter
@@ -25,7 +25,7 @@ import java.util.*
  *
  * </pre>
  */
-class VersionActivity : SdBaseActivity<VersionPresenter>(), VersionContract.View, View.OnClickListener {
+class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContract.View, View.OnClickListener {
 
     private var mIsHaveUpgrade = false
 
@@ -33,13 +33,10 @@ class VersionActivity : SdBaseActivity<VersionPresenter>(), VersionContract.View
         return R.layout.activity_main_version
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
-        this.mViewModel = VersionPresenter.init(this)
-    }
 
-    override fun initWidget(root: View) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
+        mViewModel = VersionPresenter.init(this)
         title_bar.setOnBackClickListener { finish() }
         sdv_go_market.setOnClickListener(this)
     }

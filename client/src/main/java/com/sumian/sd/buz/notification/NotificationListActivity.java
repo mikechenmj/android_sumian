@@ -7,11 +7,11 @@ import android.view.View;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.notification.NotificationUtil;
 import com.sumian.common.utils.SettingsUtil;
 import com.sumian.common.widget.CommonEmptyView;
 import com.sumian.sd.R;
-import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.buz.notification.bean.Notification;
 import com.sumian.sd.widget.TitleBar;
 
@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class NotificationListActivity extends SdBaseActivity<NotificationListPresenter>
+public class NotificationListActivity extends BaseViewModelActivity<NotificationListPresenter>
         implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;
@@ -44,8 +44,9 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        super.initWidget();
+        setMViewModel(new NotificationListPresenter(this));
         titleBar = findViewById(R.id.title_bar);
         titleBar.setOnBackClickListener(v -> finish());
         titleBar.setOnMenuClickListener(v -> markAllAsRead());
@@ -90,14 +91,9 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
 
 
     @Override
-    protected void initPresenter() {
-        mViewModel = new NotificationListPresenter(this);
-    }
-
-    @Override
     protected void initData() {
         super.initData();
-        mViewModel.loadData(true);
+        getMViewModel().loadData(true);
     }
 
     /**
@@ -107,7 +103,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mAdapter.setNewData(null);
-        mViewModel.loadData(true);
+        getMViewModel().loadData(true);
     }
 
     @Override
@@ -121,13 +117,13 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
     }
 
     private void markAsRead(Notification notification, int position) {
-        mViewModel.readNotification(notification.getId(), notification.getDataId());
+        getMViewModel().readNotification(notification.getId(), notification.getDataId());
         notification.setReadAt((int) (System.currentTimeMillis() / 1000L));
         mAdapter.setData(position, notification);
     }
 
     private void markAllAsRead() {
-        mViewModel.readNotification("0", 0);
+        getMViewModel().readNotification("0", 0);
         List<Notification> data = mAdapter.getData();
         long currentTimeMillis = System.currentTimeMillis();
         for (Notification notification : data) {
@@ -166,7 +162,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
 
     @Override
     public void onLoadMoreRequested() {
-        mViewModel.loadData(false);
+        getMViewModel().loadData(false);
     }
 
     @Override

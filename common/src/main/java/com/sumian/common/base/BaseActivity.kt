@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.KeyboardUtils
 import com.sumian.common.R
 import com.sumian.common.dialog.LoadingDialog
 import com.sumian.common.widget.TitleBar
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 
 /**
@@ -64,11 +65,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         mActivityDelegate.onNewIntent(intent)
     }
 
-    override fun onStart() {
-        super.onStart()
-        mActivityDelegate.onStart()
-    }
-
     override fun onResume() {
         super.onResume()
         mActivityDelegate.onResume()
@@ -79,9 +75,24 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         mActivityDelegate.onPause()
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (openEventBus()) {
+            EventBus.getDefault().register(this)
+        }
+        mActivityDelegate.onStart()
+    }
+
     override fun onStop() {
+        if (openEventBus()) {
+            EventBus.getDefault().unregister(this)
+        }
         super.onStop()
         mActivityDelegate.onStop()
+    }
+
+    protected open fun openEventBus(): Boolean {
+        return false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.advisory.adapter.RecordAdapter
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.presenter.RecordPresenter
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
+class AdvisoryDetailActivity : BaseViewModelActivity<RecordPresenter>(), TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
 
     companion object {
 
@@ -56,24 +56,19 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), TitleBar.OnBac
         VoicePlayer()
     }
 
-    override fun initBundle(bundle: Bundle?): Boolean {
+    override fun initBundle(bundle: Bundle) {
 
-        this.mAdvisoryId = bundle?.getInt(ARGS_ADVISORY_ID, 0)!!
+        this.mAdvisoryId = bundle.getInt(ARGS_ADVISORY_ID, 0)!!
 
-        return super.initBundle(bundle)
     }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory_detail
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
+    override fun initWidget() {
+        super.initWidget()
         RecordPresenter.init(this)
-    }
-
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
         title_bar.setOnBackClickListener(this)
         title_bar.setOnMenuClickListener(this)
         recycler.layoutManager = LinearLayoutManager(this)
@@ -84,7 +79,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), TitleBar.OnBac
 
     override fun initData() {
         super.initData()
-        mViewModel.getAdvisoryDetail(mAdvisoryId)
+        mViewModel?.getAdvisoryDetail(mAdvisoryId)
     }
 
     override fun onStop() {

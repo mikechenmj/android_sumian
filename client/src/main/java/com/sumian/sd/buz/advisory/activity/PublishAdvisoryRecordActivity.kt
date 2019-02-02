@@ -18,6 +18,7 @@ import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
@@ -26,7 +27,6 @@ import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sd.buz.advisory.utils.AdvisoryContentCacheUtils
@@ -50,7 +50,7 @@ import kotlin.collections.ArrayList
  * on 2018/6/8 10:40
  * desc:图文咨询上传
  **/
-class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresenter>(), TitleBar.OnBackClickListener,
+class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecordPresenter>(), TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
 
     private var mSelectOnlineRecords: ArrayList<OnlineReport>? = null
@@ -93,25 +93,21 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
         }
     }
 
-    override fun initBundle(bundle: Bundle?): Boolean {
-        bundle?.let {
+    override fun initBundle(bundle: Bundle) {
+        bundle.let {
             this.mAdvisoryId = it.getInt(ARGS_ADVISORY, INVALID_ADVISORY_ID)
             this.mIsAskAgain = it.getBoolean(ARGS_ADVISORY_ACTION, false)
         }
-        return super.initBundle(bundle)
     }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_publish_advisory_record
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
-        PublishAdvisoryRecordPresenter.init(this)
-    }
 
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
+        PublishAdvisoryRecordPresenter.init(this)
         title_bar.setOnBackClickListener(this)
         title_bar.setOnMenuClickListener(this)
 
@@ -149,7 +145,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
     override fun initData() {
         super.initData()
         if (mAdvisoryId <= 0) {
-            this.mViewModel.getLastAdvisory()
+            this.mViewModel?.getLastAdvisory()
         }
         requestWritePermissions()
     }
@@ -204,9 +200,9 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
         }
 
         if (mPictures.isEmpty()) {
-            this.mViewModel.publishAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds())
+            this.mViewModel?.publishAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds())
         } else {
-            this.mViewModel.publishPictureAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures.size)
+            this.mViewModel?.publishPictureAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures.size)
         }
 
     }
@@ -279,7 +275,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
 
     fun onGetPublishUploadStsSuccess(successMsg: String) {
         ToastUtils.showShort(successMsg)
-        mViewModel.publishImages(Util.toPathArray(mPictures)!!, this)
+        mViewModel?.publishImages(Util.toPathArray(mPictures)!!, this)
     }
 
     fun onStartUploadImagesCallback() {

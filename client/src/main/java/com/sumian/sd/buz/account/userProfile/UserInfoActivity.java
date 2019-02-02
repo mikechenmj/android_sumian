@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.config.SelectOptions;
@@ -21,7 +22,6 @@ import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.buz.account.bean.Social;
 import com.sumian.sd.buz.account.bean.Token;
 import com.sumian.sd.buz.account.bean.UserInfo;
@@ -52,7 +52,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ALL")
-public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
+public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, UMAuthListener, Observer<Token> {
 
@@ -86,8 +86,9 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        super.initWidget();
+        SdUserInfoPresenter.init(this);
         mTitleBar = findViewById(R.id.title_bar);
         mIvAvatar = findViewById(R.id.iv_avatar);
         findViewById(R.id.lay_avatar).setOnClickListener(this);
@@ -124,19 +125,13 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
     }
 
     @Override
-    protected void initPresenter() {
-        super.initPresenter();
-        SdUserInfoPresenter.init(this);
-    }
-
-    @Override
     protected void initData() {
         super.initData();
-        mViewModel.getUserInfo();
+        getMViewModel().getUserInfo();
     }
 
     public void setPresenter(SdUserInfoPresenter presenter) {
-        this.mViewModel = presenter;
+        this.setMViewModel(presenter);
     }
 
     @Override
@@ -330,7 +325,7 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
         map.put("nickname", map.get("name"));
         String userInfoJson = JsonUtil.toJson(map);
-        mViewModel.bindSocial(Social.SOCIAL_TYPE_WECHAT, userInfoJson);
+        getMViewModel().bindSocial(Social.SOCIAL_TYPE_WECHAT, userInfoJson);
     }
 
     @Override
@@ -355,14 +350,14 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
                 .setLeftBtn(leftBtn, v -> mDvWechat.setSwitchCheckedWithoutCallback(!isChecked))
                 .setRightBtn(rightBtn, v -> {
                     if (isChecked) {
-                        mViewModel.bindWechat(this, this);
+                        getMViewModel().bindWechat(this, this);
                     } else {
                         List<Social> socialites = mUserProfile.socialites;
                         if (socialites == null || socialites.size() == 0) {
                             return;
                         }
                         Social social = socialites.get(0);
-                        mViewModel.unBindWechat(social.id);
+                        getMViewModel().unBindWechat(social.id);
                     }
                 })
                 .show();
@@ -384,7 +379,7 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
     }
 
     private void uploadAvatar(String imageUrl) {
-        mViewModel.uploadAvatar(imageUrl);
+        getMViewModel().uploadAvatar(imageUrl);
     }
 
     private void updateDvWechatUI(List<Social> socialites) {

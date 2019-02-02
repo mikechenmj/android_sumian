@@ -6,9 +6,9 @@ import android.widget.Button;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.buz.account.bean.Token;
 import com.sumian.sd.widget.TitleBar;
 
@@ -22,7 +22,7 @@ import androidx.lifecycle.Observer;
  * desc:
  */
 
-public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
+public class ImproveUserProfileTwoActivity extends BaseViewModelActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, ImproveUserProfileContract.View, Observer<Token> {
 
     private TextInputEditText mEtCaptcha;
@@ -33,8 +33,9 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        super.initWidget();
+        ImproveUserProfilePresenter.init(this);
         TitleBar titleBar = findViewById(R.id.title_bar);
         titleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
 
@@ -49,11 +50,6 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
         super.initData();
     }
 
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-        ImproveUserProfilePresenter.init(this);
-    }
 
     @Override
     public void onClick(View v) {
@@ -68,7 +64,7 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
             return;
         }
 
-        mViewModel.improveUserProfile(ImproveUserProfileContract.IMPROVE_NAME_KEY, name);
+        getMViewModel().improveUserProfile(ImproveUserProfileContract.IMPROVE_NAME_KEY, name);
     }
 
     @Override
@@ -91,7 +87,7 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void setPresenter(ImproveUserProfileContract.Presenter presenter) {
-        this.mViewModel = (ImproveUserProfilePresenter) presenter;
+        this.setMViewModel((ImproveUserProfilePresenter) presenter);
     }
 
     @Override

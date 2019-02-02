@@ -13,8 +13,8 @@ import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.tabs.TabLayout
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.cbti.bean.CBTIMeta
 import com.sumian.sd.buz.cbti.fragment.CourseFragment
 import com.sumian.sd.buz.cbti.fragment.ExerciseFragment
@@ -35,7 +35,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  * desc: CBTI 周阶段课程模块  包含一周的课时/练习  e.g.  1-1/1-2/1-3   2-1/2-2/2-3
  *
  */
-class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresenter>(), TitleBar.OnBackClickListener,
+class CBTIWeekCoursePartActivity : BaseViewModelActivity<CBTIMessageBoardActionPresenter>(), TitleBar.OnBackClickListener,
         Observer<CBTIMeta>, MsgBoardKeyBoard.OnKeyBoardCallback {
 
     private var mChapterId = 1
@@ -56,16 +56,10 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresente
         }
     }
 
-    override fun initBundle(bundle: Bundle?): Boolean {
+    override fun initBundle(bundle: Bundle) {
         bundle?.let {
             mChapterId = it.getInt(CHAPTER_ID, 0)
         }
-        return super.initBundle(bundle)
-    }
-
-    override fun initPresenter() {
-        super.initPresenter()
-        CBTIMessageBoardActionPresenter.init(this)
     }
 
     fun setPresenter(presenter: CBTIMessageBoardActionPresenter) {
@@ -76,8 +70,9 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresente
         return R.layout.activity_main_cbti_week_lesson_part
     }
 
-    override fun initWidget(root: View) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
+        CBTIMessageBoardActionPresenter.init(this)
         title_bar.setOnBackClickListener(this)
         //view_pager.offscreenPageLimit = 2
         view_pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {

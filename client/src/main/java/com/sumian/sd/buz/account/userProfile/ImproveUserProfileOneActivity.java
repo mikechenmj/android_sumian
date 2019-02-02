@@ -7,9 +7,11 @@ import android.widget.Button;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.sd.R;
-import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.widget.TitleBar;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by jzz
@@ -17,7 +19,7 @@ import com.sumian.sd.widget.TitleBar;
  * desc:
  */
 
-public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener,
+public class ImproveUserProfileOneActivity extends BaseViewModelActivity<ImproveUserProfilePresenter> implements View.OnClickListener,
         TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, ImproveUserProfileContract.View {
 
     private TextInputEditText mEtCaptcha;
@@ -28,10 +30,10 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        super.initWidget();
+        ImproveUserProfilePresenter.init(this);
         TitleBar titleBar = findViewById(R.id.title_bar);
-
         mEtCaptcha = findViewById(R.id.et_captcha);
         Button btNextStep = findViewById(R.id.bt_next_step);
         btNextStep.setOnClickListener(this);
@@ -41,11 +43,6 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
         titleBar.setOnBackClickListener(this).setOnMenuClickListener(this);
     }
 
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-        ImproveUserProfilePresenter.init(this);
-    }
 
     @Override
     public void onClick(View v) {
@@ -61,7 +58,7 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
             return;
         }
 
-        mViewModel.improveUserProfile(ImproveUserProfileContract.IMPROVE_NICKNAME_KEY, nickname);
+        getMViewModel().improveUserProfile(ImproveUserProfileContract.IMPROVE_NICKNAME_KEY, nickname);
     }
 
     @Override
@@ -80,13 +77,13 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
     }
 
     @Override
-    public void setPresenter(ImproveUserProfileContract.Presenter presenter) {
-        this.mViewModel = (ImproveUserProfilePresenter) presenter;
+    public void setPresenter(@NotNull ImproveUserProfileContract.Presenter presenter) {
+        this.setMViewModel((ImproveUserProfilePresenter) presenter);
     }
 
     @Override
     public void onImproveUserProfileSuccess() {
-        onMenuClick(mRoot);
+        onMenuClick(getWindow().getDecorView());
     }
 
     @Override

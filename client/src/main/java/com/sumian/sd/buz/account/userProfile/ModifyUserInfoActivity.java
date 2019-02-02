@@ -9,12 +9,14 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.buz.account.config.SumianConfig;
 import com.sumian.sd.common.utils.EditTextUtil;
 import com.sumian.sd.widget.TitleBar;
+
+import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.StringRes;
 
@@ -24,7 +26,7 @@ import androidx.annotation.StringRes;
  * desc:修改用户需要自己填写的信息   e.g. 昵称,姓名,职业
  */
 
-public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener, ImproveUserProfileContract.View {
+public class ModifyUserInfoActivity extends BaseViewModelActivity<ImproveUserProfilePresenter> implements View.OnClickListener, TitleBar.OnBackClickListener, ImproveUserProfileContract.View {
 
     private static final String EXTRA_MODIFY = "com.sumian.sleepdoctor.extra.MODIFY";
 
@@ -41,11 +43,8 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePre
     }
 
     @Override
-    protected boolean initBundle(Bundle bundle) {
-        if (bundle != null) {
-            this.mModifyType = bundle.getString(EXTRA_MODIFY, ImproveUserProfileContract.IMPROVE_NICKNAME_KEY);
-        }
-        return super.initBundle(bundle);
+    protected void initBundle(@NotNull Bundle bundle) {
+        this.mModifyType = bundle.getString(EXTRA_MODIFY, ImproveUserProfileContract.IMPROVE_NICKNAME_KEY);
     }
 
     @Override
@@ -53,15 +52,11 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePre
         return R.layout.activity_main_modify_nickname;
     }
 
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-        ImproveUserProfilePresenter.init(this);
-    }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        super.initWidget();
+        ImproveUserProfilePresenter.init(this);
         mTitleBar = findViewById(R.id.title_bar);
         mTvLabel = findViewById(R.id.tv_label);
         mEtName = findViewById(R.id.et_name);
@@ -80,7 +75,7 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePre
 
     @Override
     public void setPresenter(ImproveUserProfileContract.Presenter presenter) {
-        this.mViewModel = (ImproveUserProfilePresenter) presenter;
+        this.setMViewModel((ImproveUserProfilePresenter) presenter);
     }
 
     private void initType() {
@@ -123,7 +118,7 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePre
             return;
         }
 
-        mViewModel.improveUserProfile(mModifyType, input);
+        getMViewModel().improveUserProfile(mModifyType, input);
     }
 
     @Override

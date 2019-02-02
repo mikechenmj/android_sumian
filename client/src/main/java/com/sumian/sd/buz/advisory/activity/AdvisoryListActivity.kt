@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.fragment.AdvisoryListFragment
 import com.sumian.sd.buz.advisory.presenter.AdvisoryListPresenter
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory.*
  * on 2018/6/4 14:20
  * desc: 用户图文咨询列表
  */
-class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.OnBackClickListener {
+class AdvisoryListActivity : BaseViewModelActivity<AdvisoryListPresenter>(), TitleBar.OnBackClickListener {
     private var mType = Advisory.UNFINISHED_TYPE
 
     companion object {
@@ -37,17 +37,16 @@ class AdvisoryListActivity : SdBaseActivity<AdvisoryListPresenter>(), TitleBar.O
         }
     }
 
-    override fun initBundle(bundle: Bundle?): Boolean {
-        mType = bundle?.getInt(KEY_TYPE) ?: Advisory.UNFINISHED_TYPE
-        return super.initBundle(bundle)
+    override fun initBundle(bundle: Bundle) {
+        mType = bundle.getInt(KEY_TYPE) ?: Advisory.UNFINISHED_TYPE
     }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory
     }
 
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
 
         title_bar?.setOnBackClickListener(this)
         view_pager?.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
