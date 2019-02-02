@@ -70,7 +70,7 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
 
 
     @Override
-    public void release() {
+    public void onCleared() {
         if (mCall == null) {
             return;
         }

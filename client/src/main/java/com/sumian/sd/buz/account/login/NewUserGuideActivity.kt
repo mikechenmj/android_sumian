@@ -9,14 +9,13 @@ import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.utils.StatusBarUtil
 import com.tencent.smtt.sdk.WebView
 
-class NewUserGuideActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
+class NewUserGuideActivity : SdBaseWebViewActivity() {
     override fun initWidget() {
         super.initWidget()
         StatusBarUtil.setStatusBarTextColorDark(this, true)

@@ -12,7 +12,6 @@ import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionWrapper
@@ -30,7 +29,7 @@ import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
  *     version: 1.0
  * </pre>
  */
-class SleepPrescriptionActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
+class SleepPrescriptionActivity : SdBaseWebViewActivity() {
 
     companion object {
         private const val REQUEST_CODE_FILL_DIARY = 1000

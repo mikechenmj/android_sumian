@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.reflect.TypeToken;
 import com.sumian.common.h5.bean.SBridgeResult;
 import com.sumian.common.h5.handler.SBridgeHandler;
@@ -31,13 +32,14 @@ import androidx.annotation.NonNull;
  * desc:
  **/
 @SuppressWarnings("ALL")
-public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter> implements BindDoctorContract.View {
+public class DoctorWebActivity extends SdBaseWebViewActivity implements BindDoctorContract.View {
 
     private static final String ARGS_URL = "com.sumian.sleepdoctor.extra.args.url";
 
     private String mArgUrl;
     private boolean mIsFromRecord;
     private DoctorService mDoctorService;
+    protected BindDoctorPresenter mPresenter;
 
     public static void show(DoctorServiceWebActivity context, String url) {
         Bundle extras = new Bundle();
@@ -119,12 +121,12 @@ public class DoctorWebActivity extends SdBaseWebViewActivity<BindDoctorPresenter
 
     @Override
     public void onBindDoctorFailed(@NotNull String message) {
-        showCenterToast(message);
+        ToastUtils.showShort(message);
     }
 
     @Override
     public void onIsSameDoctorCallback(@NotNull String message) {
-        showCenterToast(message);
+        ToastUtils.showShort(message);
         finish();
     }
 }

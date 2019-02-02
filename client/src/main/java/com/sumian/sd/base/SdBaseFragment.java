@@ -177,7 +177,7 @@ public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends 
 
     protected void onRelease() {
         if (mPresenter != null) {
-            mPresenter.release();
+            mPresenter.onCleared();
         }
     }
 

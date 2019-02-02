@@ -7,10 +7,9 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 
-open class SimpleWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
+open class SimpleWebActivity : SdBaseWebViewActivity() {
     private var mTitle: String? = null
     private var mUrlContentPart: String? = null
     private var mUrlComplete: String? = null

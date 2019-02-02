@@ -8,7 +8,6 @@ import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.common.h5.H5Uri
 import java.util.*
@@ -20,7 +19,7 @@ import java.util.*
  *
  * desc: 练习题 item
  */
-class CBTIExerciseWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
+class CBTIExerciseWebActivity : SdBaseWebViewActivity() {
 
     private var courseId: Int = 0
     private var mQuitWithoutCheck = false

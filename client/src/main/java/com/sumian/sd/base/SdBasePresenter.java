@@ -16,7 +16,7 @@ public interface SdBasePresenter<T> {
 
     List<Call> mCalls = new ArrayList<>(0);
 
-    default void release() {
+    default void onCleared() {
         for (int i = 0; i < mCalls.size(); i++) {
             Call call = mCalls.get(i);
             if (call.isExecuted()) {

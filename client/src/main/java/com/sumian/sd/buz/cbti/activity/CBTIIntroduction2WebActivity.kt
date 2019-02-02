@@ -7,7 +7,6 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
 import com.sumian.sd.common.h5.H5Uri
@@ -20,7 +19,7 @@ import com.sumian.sd.common.h5.H5Uri
  * desc:CBTI  h5介绍页  即了解更多那里跳转
  *
  */
-class CBTIIntroduction2WebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
+class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
 
     companion object {
         @JvmStatic

@@ -198,7 +198,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         getLifecycle().removeObserver(this);
         //this.mBind.unbind();
         if (mPresenter != null) {
-            mPresenter.release();
+            mPresenter.onCleared();
         }
         this.mRoot = null;
         for (Call call : mCalls) {
@@ -251,7 +251,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
 
     protected void onRelease() {
         if (mPresenter != null) {
-            mPresenter.release();
+            mPresenter.onCleared();
         }
     }
 

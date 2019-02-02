@@ -9,7 +9,6 @@ import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.common.h5.H5Uri
@@ -24,7 +23,7 @@ import com.sumian.sd.common.h5.H5Uri
  *     version: 1.0
  * </pre>
  */
-open class MyTargetAndInformationActivity : SdBaseWebViewActivity<SdBasePresenter<Any>>() {
+open class MyTargetAndInformationActivity : SdBaseWebViewActivity() {
     private var mIsFromMine = true
 
     companion object {

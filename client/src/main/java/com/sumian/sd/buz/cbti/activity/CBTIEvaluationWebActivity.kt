@@ -11,7 +11,6 @@ import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.common.h5.H5Uri
 
@@ -23,7 +22,7 @@ import com.sumian.sd.common.h5.H5Uri
  * desc:CBTI  前、中期评估（量表）
  *
  */
-class CBTIEvaluationWebActivity : SdBaseWebViewActivity<SdBasePresenter<*>>() {
+class CBTIEvaluationWebActivity : SdBaseWebViewActivity() {
 
     companion object {
         private const val EXTRAS_SCALE_IDS = "com.sumian.sd.extra.scale.ids"
