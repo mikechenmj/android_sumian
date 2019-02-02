@@ -35,7 +35,7 @@ class VersionActivity : SdBaseActivity<VersionPresenter>(), VersionContract.View
 
     override fun initPresenter() {
         super.initPresenter()
-        this.mPresenter = VersionPresenter.init(this)
+        this.mViewModel = VersionPresenter.init(this)
     }
 
     override fun initWidget(root: View) {
@@ -50,7 +50,7 @@ class VersionActivity : SdBaseActivity<VersionPresenter>(), VersionContract.View
         tv_current_app_version.text = formatVersion(getString(R.string.current_version), UiUtils.getPackageInfo(this).versionName)
         tv_new_app_version.text = formatVersion(getString(R.string.new_version), UiUtils.getPackageInfo(this).versionName)
         onHaveUpgrade(false, false, "")
-        this.mPresenter?.getVersion()
+        this.mViewModel?.getVersion()
     }
 
     @SuppressLint("SetTextI18n")

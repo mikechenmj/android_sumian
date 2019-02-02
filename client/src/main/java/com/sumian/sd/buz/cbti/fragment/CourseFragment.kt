@@ -80,7 +80,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLesson
 
     override fun onResume() {
         super.onResume()
-        this.mPresenter.getCBTIWeekLesson(mChapterId)
+        this.mViewModel.getCBTIWeekLesson(mChapterId)
     }
 
     override fun onRelease() {
@@ -90,7 +90,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLesson
 
     override fun setPresenter(presenter: CBTIWeekCoursePresenter) {
         // super.setPresenter(presenter)
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     override fun onItemClick(position: Int, itemId: Long) {

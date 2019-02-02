@@ -61,7 +61,7 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
             return;
         }
 
-        mPresenter.improveUserProfile(ImproveUserProfileContract.IMPROVE_NICKNAME_KEY, nickname);
+        mViewModel.improveUserProfile(ImproveUserProfileContract.IMPROVE_NICKNAME_KEY, nickname);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void setPresenter(ImproveUserProfileContract.Presenter presenter) {
-        this.mPresenter = (ImproveUserProfilePresenter) presenter;
+        this.mViewModel = (ImproveUserProfilePresenter) presenter;
     }
 
     @Override

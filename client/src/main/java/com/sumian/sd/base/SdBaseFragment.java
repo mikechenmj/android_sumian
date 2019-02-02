@@ -36,13 +36,13 @@ import retrofit2.Call;
  * desc: base fragment
  */
 @Deprecated
-public abstract class SdBaseFragment<Presenter extends BaseViewModel> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
+public abstract class SdBaseFragment<VM extends BaseViewModel> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
 
     private static final String TAG = SdBaseFragment.class.getSimpleName();
     public Bundle mBundle;
     protected Activity mActivity;
     protected View mRootView;
-    protected Presenter mPresenter;
+    protected VM mViewModel;
     private Set<Call> mCalls = new HashSet<>();
     private LoadingDialog mLoadingDialog;
 
@@ -178,8 +178,8 @@ public abstract class SdBaseFragment<Presenter extends BaseViewModel> extends Fr
     }
 
     protected void onRelease() {
-        if (mPresenter != null) {
-            mPresenter.onCleared();
+        if (mViewModel != null) {
+            mViewModel.onCleared();
         }
     }
 

@@ -69,7 +69,7 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresente
     }
 
     fun setPresenter(presenter: CBTIMessageBoardActionPresenter) {
-        mPresenter = presenter
+        mViewModel = presenter
     }
 
     override fun getLayoutId(): Int {

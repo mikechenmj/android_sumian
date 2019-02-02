@@ -66,7 +66,7 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
             }
         }).bindContentView(R.layout.dialog_pay)
         payDialog.ownerActivity = this@PaymentActivity
-        payDialog.bindPresenter(mPresenter)
+        payDialog.bindPresenter(mViewModel)
         return@lazy payDialog
     }
 
@@ -128,7 +128,7 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        mPresenter.onPayActivityResultDelegate(requestCode, resultCode, data)
+        mViewModel.onPayActivityResultDelegate(requestCode, resultCode, data)
     }
 
     override fun onClick(v: View) {
@@ -172,7 +172,7 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
     }
 
     fun setPresenter(presenter: PayPresenter) {
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     fun onFailure(error: String) {
@@ -189,7 +189,7 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
     }
 
     fun onCreatePayOrderSuccess() {
-        mPresenter.doPay(this)
+        mViewModel.doPay(this)
         ToastUtils.showShort(R.string.create_order_success)
     }
 
@@ -253,7 +253,7 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
         pay_calculate_item_view.updateCouponCodeTips(payCouponCode)
         if (is2Pay) {
             val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-            mPresenter.createPayOrder(this, payOrder)
+            mViewModel.createPayOrder(this, payOrder)
         }
     }
 
@@ -293,7 +293,7 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
         if (mGoNextPay) {
             mIsCheckCouponCode = false
             val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-            mPresenter.createPayOrder(this, payOrder)
+            mViewModel.createPayOrder(this, payOrder)
         } else {
             checkCouponCode(true)
         }
@@ -304,10 +304,10 @@ class PaymentActivity : SdBaseActivity<PayPresenter>(), View.OnClickListener, Pa
         if (TextUtils.isEmpty(payCouponCodeText)) {
             mIsCheckCouponCode = false
             val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-            mPresenter.createPayOrder(this, payOrder)
+            mViewModel.createPayOrder(this, payOrder)
         } else {
             mIsCheckCouponCode = true
-            mPresenter.checkCouponCode(is2Pay, payCouponCodeText!!, mPackage!!.id)
+            mViewModel.checkCouponCode(is2Pay, payCouponCodeText!!, mPackage!!.id)
         }
     }
 

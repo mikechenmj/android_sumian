@@ -132,11 +132,11 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.getUserInfo();
+        mViewModel.getUserInfo();
     }
 
     public void setPresenter(SdUserInfoPresenter presenter) {
-        this.mPresenter = presenter;
+        this.mViewModel = presenter;
     }
 
     @Override
@@ -330,7 +330,7 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
         map.put("nickname", map.get("name"));
         String userInfoJson = JsonUtil.toJson(map);
-        mPresenter.bindSocial(Social.SOCIAL_TYPE_WECHAT, userInfoJson);
+        mViewModel.bindSocial(Social.SOCIAL_TYPE_WECHAT, userInfoJson);
     }
 
     @Override
@@ -355,14 +355,14 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
                 .setLeftBtn(leftBtn, v -> mDvWechat.setSwitchCheckedWithoutCallback(!isChecked))
                 .setRightBtn(rightBtn, v -> {
                     if (isChecked) {
-                        mPresenter.bindWechat(this, this);
+                        mViewModel.bindWechat(this, this);
                     } else {
                         List<Social> socialites = mUserProfile.socialites;
                         if (socialites == null || socialites.size() == 0) {
                             return;
                         }
                         Social social = socialites.get(0);
-                        mPresenter.unBindWechat(social.id);
+                        mViewModel.unBindWechat(social.id);
                     }
                 })
                 .show();
@@ -384,7 +384,7 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implem
     }
 
     private void uploadAvatar(String imageUrl) {
-        mPresenter.uploadAvatar(imageUrl);
+        mViewModel.uploadAvatar(imageUrl);
     }
 
     private void updateDvWechatUI(List<Social> socialites) {

@@ -84,7 +84,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), TitleBar.OnBac
 
     override fun initData() {
         super.initData()
-        mPresenter.getAdvisoryDetail(mAdvisoryId)
+        mViewModel.getAdvisoryDetail(mAdvisoryId)
     }
 
     override fun onStop() {
@@ -144,7 +144,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), TitleBar.OnBac
     }
 
     fun setPresenter(presenter: RecordPresenter?) {
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     override fun onClick(v: View) {

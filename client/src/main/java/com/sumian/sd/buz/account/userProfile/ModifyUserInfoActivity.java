@@ -80,7 +80,7 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePre
 
     @Override
     public void setPresenter(ImproveUserProfileContract.Presenter presenter) {
-        this.mPresenter = (ImproveUserProfilePresenter) presenter;
+        this.mViewModel = (ImproveUserProfilePresenter) presenter;
     }
 
     private void initType() {
@@ -123,7 +123,7 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfilePre
             return;
         }
 
-        mPresenter.improveUserProfile(mModifyType, input);
+        mViewModel.improveUserProfile(mModifyType, input);
     }
 
     @Override

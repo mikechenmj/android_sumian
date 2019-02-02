@@ -56,7 +56,7 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
             }
             if (doctor?.services == null) {
                 mIsAutoRefresh = true
-                mPresenter.getBindDoctorInfo()
+                mViewModel.getBindDoctorInfo()
             }
         }
         request_scan_qr_code_view?.setFragment(this)?.setOnGrantedCallback(this)
@@ -125,12 +125,12 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
     }
 
     fun setPresenter(presenter: DoctorPresenter?) {
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     override fun onRefresh() {
         mIsAutoRefresh = true
-        mPresenter.getBindDoctorInfo()
+        mViewModel.getBindDoctorInfo()
     }
 
     override fun onEnter(data: String?) {

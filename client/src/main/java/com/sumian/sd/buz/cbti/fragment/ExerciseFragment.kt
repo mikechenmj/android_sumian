@@ -65,12 +65,12 @@ class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesPresenter>(), BaseRecyc
 
     override fun onResume() {
         super.onResume()
-        this.mPresenter.getCBTIWeekExercises(mChapterId)
+        this.mViewModel.getCBTIWeekExercises(mChapterId)
     }
 
     fun setPresenter(presenter: CBTIWeekExercisesPresenter?) {
         //super.setPresenter(presenter)
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     fun onGetCBTIWeekPracticeSuccess(exercises: List<Exercise>) {

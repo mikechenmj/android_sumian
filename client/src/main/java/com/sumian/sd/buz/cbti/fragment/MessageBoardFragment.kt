@@ -67,7 +67,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
     override fun initData() {
         super.initData()
         ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).getCBTICourseMetaLiveData().observe(this, this)
-        mPresenter.setType(mCbtiPartType)
+        mViewModel.setType(mCbtiPartType)
         mIsInit = true
     }
 
@@ -78,12 +78,12 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
 
     override fun loadMore() {
         super.loadMore()
-        mPresenter.getNextMessageBoardList()
+        mViewModel.getNextMessageBoardList()
     }
 
     fun setPresenter(presenter: CBTIMsgBoardPresenter?) {
         //super.setPresenter(presenter)
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     fun onGetMessageBoardListSuccess(msgBoardList: List<MessageBoard>) {
@@ -110,7 +110,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
                 return@let
             }
             this.mCbtiPartType = t.chapter.index
-            mPresenter.setType(mCbtiPartType)
+            mViewModel.setType(mCbtiPartType)
         }
     }
 

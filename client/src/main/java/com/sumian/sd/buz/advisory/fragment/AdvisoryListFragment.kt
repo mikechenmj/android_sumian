@@ -69,21 +69,21 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     override fun initData() {
         super.initData()
-        this.mPresenter.getAdvisories(mAdvisoryType)
+        this.mViewModel.getAdvisories(mAdvisoryType)
     }
 
     override fun setPresenter(presenter: AdvisoryListPresenter) {
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     override fun onRefresh() {
-        this.mPresenter.refreshAdvisories()
+        this.mViewModel.refreshAdvisories()
         refresh?.showRefreshAnim()
     }
 
     override fun loadMore() {
         super.loadMore()
-        mPresenter?.getNextAdvisories()
+        mViewModel?.getNextAdvisories()
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
@@ -100,7 +100,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     override fun onResume() {
         super.onResume()
-        this.mPresenter.refreshAdvisories()
+        this.mViewModel.refreshAdvisories()
         refresh?.showRefreshAnim()
     }
 

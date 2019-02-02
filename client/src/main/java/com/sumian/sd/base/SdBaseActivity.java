@@ -35,11 +35,11 @@ import retrofit2.Call;
  */
 
 @Deprecated
-public abstract class SdBaseActivity<Presenter extends BaseViewModel> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
+public abstract class SdBaseActivity<VM extends BaseViewModel> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
     private static final String TAG = SdBaseActivity.class.getSimpleName();
     protected View mRoot;
-    protected Presenter mPresenter;
+    protected VM mViewModel;
     protected Activity mActivity;
     private Set<Call> mCalls = new HashSet<>();
     private LoadingDialog mLoadingDialog;
@@ -111,8 +111,8 @@ public abstract class SdBaseActivity<Presenter extends BaseViewModel> extends Ap
         onRelease();
         getLifecycle().removeObserver(this);
         //this.mBind.unbind();
-        if (mPresenter != null) {
-            mPresenter.onCleared();
+        if (mViewModel != null) {
+            mViewModel.onCleared();
         }
         this.mRoot = null;
         for (Call call : mCalls) {
@@ -164,8 +164,8 @@ public abstract class SdBaseActivity<Presenter extends BaseViewModel> extends Ap
     }
 
     protected void onRelease() {
-        if (mPresenter != null) {
-            mPresenter.onCleared();
+        if (mViewModel != null) {
+            mViewModel.onCleared();
         }
     }
 

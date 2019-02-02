@@ -91,13 +91,13 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
 
     @Override
     protected void initPresenter() {
-        mPresenter = new NotificationListPresenter(this);
+        mViewModel = new NotificationListPresenter(this);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        mPresenter.loadData(true);
+        mViewModel.loadData(true);
     }
 
     /**
@@ -107,7 +107,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mAdapter.setNewData(null);
-        mPresenter.loadData(true);
+        mViewModel.loadData(true);
     }
 
     @Override
@@ -121,13 +121,13 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
     }
 
     private void markAsRead(Notification notification, int position) {
-        mPresenter.readNotification(notification.getId(), notification.getDataId());
+        mViewModel.readNotification(notification.getId(), notification.getDataId());
         notification.setReadAt((int) (System.currentTimeMillis() / 1000L));
         mAdapter.setData(position, notification);
     }
 
     private void markAllAsRead() {
-        mPresenter.readNotification("0", 0);
+        mViewModel.readNotification("0", 0);
         List<Notification> data = mAdapter.getData();
         long currentTimeMillis = System.currentTimeMillis();
         for (Notification notification : data) {
@@ -166,7 +166,7 @@ public class NotificationListActivity extends SdBaseActivity<NotificationListPre
 
     @Override
     public void onLoadMoreRequested() {
-        mPresenter.loadData(false);
+        mViewModel.loadData(false);
     }
 
     @Override

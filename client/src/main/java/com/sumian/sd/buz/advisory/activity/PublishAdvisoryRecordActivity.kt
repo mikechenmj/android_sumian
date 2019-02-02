@@ -149,7 +149,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
     override fun initData() {
         super.initData()
         if (mAdvisoryId <= 0) {
-            this.mPresenter.getLastAdvisory()
+            this.mViewModel.getLastAdvisory()
         }
         requestWritePermissions()
     }
@@ -186,7 +186,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
 
     fun setPresenter(presenter: PublishAdvisoryRecordPresenter) {
         //super.setPresenter(presenter)
-        this.mPresenter = presenter
+        this.mViewModel = presenter
     }
 
     override fun onMenuClick(v: View) {
@@ -204,9 +204,9 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
         }
 
         if (mPictures.isEmpty()) {
-            this.mPresenter.publishAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds())
+            this.mViewModel.publishAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds())
         } else {
-            this.mPresenter.publishPictureAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures.size)
+            this.mViewModel.publishPictureAdvisoryRecord(advisoryId = mAdvisoryId, content = inputContent, onlineReportIds = getSelectReportIds(), pictureCount = mPictures.size)
         }
 
     }
@@ -279,7 +279,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresen
 
     fun onGetPublishUploadStsSuccess(successMsg: String) {
         ToastUtils.showShort(successMsg)
-        mPresenter.publishImages(Util.toPathArray(mPictures)!!, this)
+        mViewModel.publishImages(Util.toPathArray(mPictures)!!, this)
     }
 
     fun onStartUploadImagesCallback() {

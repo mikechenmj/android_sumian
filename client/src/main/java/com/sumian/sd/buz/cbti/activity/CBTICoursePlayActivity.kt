@@ -95,7 +95,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
 
     override fun initPresenter() {
         super.initPresenter()
-        this.mPresenter = CBTICoursePlayAuthPresenter.init(this)
+        this.mViewModel = CBTICoursePlayAuthPresenter.init(this)
     }
 
     override fun initWidget(root: View?) {
@@ -112,7 +112,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
 
     override fun initData() {
         super.initData()
-        this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
+        this.mViewModel.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
     }
 
     override fun onClick(v: View) {
@@ -182,7 +182,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
         uploadCBTICourseWatchLog(mCurrentCourse?.id, mCurrentCourse?.video_id)
         this.mCurrentPosition = position
         this.mIsSelect = true
-        this.mPresenter.getCBTIPlayAuthInfo(course.id)
+        this.mViewModel.getCBTIPlayAuthInfo(course.id)
         return true
     }
 
@@ -221,7 +221,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
     override fun onFrameChangeCallback(currentFrame: Long, oldFrame: Long, totalFrame: Long) {
         //PlayLog.e(TAG, "currentFrame=$currentFrame    oldFrame=$oldFrame   totalFrame=$totalFrame")
         mCurrentCourse?.video_id?.let {
-            mPresenter.calculatePlayFrame(it, mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
+            mViewModel.calculatePlayFrame(it, mCurrentCourse?.id!!, currentFrame, oldFrame, totalFrame)
         }
         // PlayLog.e(TAG, "finalFrame=$hexPlayFrame   fl=$fl")
     }
@@ -234,7 +234,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
         SumianAlertDialog(this).setTitle(R.string.practice_dialog_title)
                 .setMessage(getString(R.string.dialog_finish_practice_msg))
                 .setRightBtn(R.string.good) {
-                    this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
+                    this.mViewModel.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
                 }.show()
     }
 
@@ -255,14 +255,14 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
             val nextPosition = mCurrentPosition + 1
             val nextCourse = mCoursePlayAuth?.courses?.get(nextPosition)
             nextCourse?.let {
-                mPresenter.playNextCBTIVideo(it.id)
+                mViewModel.playNextCBTIVideo(it.id)
             }
         }
     }
 
     override fun onPlayRetry() {
         //遇到错误后,尝试重新播放
-        this.mPresenter.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
+        this.mViewModel.getCBTIPlayAuthInfo(mCurrentCourse?.id!!)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -332,7 +332,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
 
                         override fun submitQuestionCallback(position: Int) {
                             mCurrentQuestionPosition = position
-                            mPresenter?.uploadCBTIQuestionnaires(mCurrentCourse!!.id, position)
+                            mViewModel?.uploadCBTIQuestionnaires(mCurrentCourse!!.id, position)
                         }
 
                         override fun dismissQuestionDialog(): Boolean {
@@ -360,7 +360,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), Vi
 
     private fun uploadCBTICourseWatchLog(courseId: Int?, videoId: String?) {
         videoId?.let {
-            mPresenter.uploadCBTICourseWatchLog(courseId ?: 0, it)
+            mViewModel.uploadCBTICourseWatchLog(courseId ?: 0, it)
         }
     }
 
