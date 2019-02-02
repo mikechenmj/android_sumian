@@ -1,4 +1,4 @@
-package com.sumian.common.mvp
+package com.sumian.common.base
 
 /**
  * Created by sm
@@ -8,7 +8,7 @@ package com.sumian.common.mvp
  * desc: 当操作需要添加屏蔽 e.y. loading 时 需要继承该 loading
  *
  */
-interface BaseShowLoadingView : IView {
+interface BaseShowLoadingView {
 
     fun showLoading()
 

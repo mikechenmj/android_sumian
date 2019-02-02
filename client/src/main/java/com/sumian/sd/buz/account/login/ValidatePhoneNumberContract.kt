@@ -1,6 +1,6 @@
 package com.sumian.sd.buz.account.login
 
-import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.base.BaseShowLoadingView
 
 /**
  * <pre>

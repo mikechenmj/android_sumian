@@ -1,6 +1,6 @@
 package com.sumian.sddoctor.me.mywallet
 
-import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.base.BaseShowLoadingView
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRecord
 import retrofit2.Call
 

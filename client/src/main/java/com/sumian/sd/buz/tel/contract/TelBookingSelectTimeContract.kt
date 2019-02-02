@@ -1,7 +1,5 @@
 package com.sumian.sd.buz.tel.contract
 
-import com.sumian.common.mvp.IView
-
 /**
  * Created by sm
  *
@@ -12,7 +10,7 @@ import com.sumian.common.mvp.IView
  */
 interface TelBookingSelectTimeContract {
 
-    interface View : IView {
+    interface View {
 
         fun transformOneDisplayedValues(currentPosition: Int, hintText: String, displayedValues: Array<out String>)
 

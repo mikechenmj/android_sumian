@@ -1,6 +1,6 @@
 package com.sumian.sddoctor.service.publish.contract
 
-import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.base.BaseShowLoadingView
 
 /**
  * Created by dq

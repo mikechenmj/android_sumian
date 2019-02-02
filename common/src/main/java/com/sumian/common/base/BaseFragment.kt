@@ -9,7 +9,6 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sumian.common.dialog.LoadingDialog
-import com.sumian.common.mvp.BaseShowLoadingView
 import retrofit2.Call
 
 /**

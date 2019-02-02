@@ -1,6 +1,6 @@
 package com.sumian.sddoctor.service.plan.contract
 
-import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.base.BaseShowLoadingView
 import com.sumian.sddoctor.service.plan.bean.Plan
 
 /**

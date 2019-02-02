@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.KeyboardUtils
 import com.sumian.common.R
 import com.sumian.common.dialog.LoadingDialog
-import com.sumian.common.mvp.BaseShowLoadingView
 import com.sumian.common.widget.TitleBar
 import retrofit2.Call
 

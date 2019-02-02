@@ -1,6 +1,6 @@
 package com.sumian.sd.buz.setting.remind
 
-import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.base.BaseShowLoadingView
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 
 /**

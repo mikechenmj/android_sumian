@@ -1,7 +1,5 @@
 package com.sumian.sddoctor.service.cbti.contract
 
-import com.sumian.common.mvp.IView
-
 /**
  * Created by jzz
  *
@@ -11,7 +9,7 @@ import com.sumian.common.mvp.IView
  */
 interface CBTILauncherContract {
 
-    interface View : IView {
+    interface View {
 
         fun onLauncherCBTIIntroduction() {
 

@@ -1,6 +1,6 @@
 package com.sumian.sd.buz.account.achievement.contract
 
-import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.base.BaseShowLoadingView
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 
 /**

@@ -1,6 +1,6 @@
 package com.sumian.sddoctor.patient.contract
 
-import com.sumian.common.mvp.BaseShowLoadingView
+import com.sumian.common.base.BaseShowLoadingView
 import com.sumian.sddoctor.patient.bean.Patient
 
 interface PatientListContract {

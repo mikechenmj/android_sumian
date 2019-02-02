@@ -1,7 +1,5 @@
 package com.sumian.common.base
 
-import com.sumian.common.mvp.BaseShowLoadingView
-
 /**
  * Created by sm
  *
