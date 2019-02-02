@@ -8,13 +8,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.authentication.AuthenticationHelper
 import com.sumian.sddoctor.me.myservice.bean.Packages
 import com.sumian.sddoctor.me.myservice.bean.ServicePackage

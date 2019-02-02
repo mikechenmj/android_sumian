@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.account.login
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 
 /**
  * <pre>
@@ -18,9 +17,4 @@ class ValidatePhoneNumberContract {
         fun onRequestCaptchaSuccess()
     }
 
-    interface Presenter : IPresenter {
-        fun requestCaptcha(mobile: String)
-        fun validatePhoneNumberForResetPassword(mobile: String, captcha: String)
-        fun bindMobile(mobile: String, captcha: String, socialInfo:String)
-    }
 }

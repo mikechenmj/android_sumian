@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.account.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 
 interface UserAvatarContract {
@@ -12,7 +11,4 @@ interface UserAvatarContract {
     }
 
 
-    interface Presenter : IPresenter {
-        fun uploadAvatar(avatarPathUrl: String)
-    }
 }

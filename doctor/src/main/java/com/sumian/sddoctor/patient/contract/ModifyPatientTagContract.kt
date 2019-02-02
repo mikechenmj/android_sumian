@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.patient.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.patient.bean.Patient
 
 /**
@@ -25,11 +24,4 @@ interface ModifyPatientTagContract {
 
     }
 
-    interface Presenter : IPresenter {
-
-        fun getPatient(patientId: Int)
-
-        fun consultedPatient(patientId: Int, consulted: Int)
-
-    }
 }

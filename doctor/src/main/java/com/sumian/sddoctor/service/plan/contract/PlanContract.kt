@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.plan.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.service.plan.bean.Plan
 
 /**
@@ -26,10 +25,4 @@ interface PlanContract {
 
     }
 
-    interface Presenter : IPresenter {
-
-        fun getFollowPlans()
-
-        fun sendFollowPlans(patientId: Int, followPlanId: Int)
-    }
 }

@@ -1,8 +1,6 @@
 package com.sumian.sd.buz.account.achievement.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
-import com.sumian.sd.buz.account.achievement.bean.Achievement
 import com.sumian.sd.buz.account.achievement.bean.AchievementData
 import com.sumian.sd.buz.account.achievement.bean.AchievementMeta
 
@@ -23,8 +21,4 @@ interface MyAchievementContract {
         fun onGetMetaCallback(achievementMeta: AchievementMeta)
     }
 
-    interface Presenter : IPresenter {
-        fun getMyAchievement(type: Int = Achievement.CBTI_TYPE)
-        fun getMyAchievementList()
-    }
 }

@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.widget.dialog.SumianArticleDialog

@@ -1,6 +1,5 @@
 package com.sumian.sd.buz.tel.contract
 
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.mvp.IView
 
 /**
@@ -23,19 +22,4 @@ interface TelBookingSelectTimeContract {
 
     }
 
-    interface Presenter : IPresenter {
-
-        fun getHour(currentUnixTime: Int): Int
-
-        fun getMinute(currentUnixTime: Int): Int
-
-        fun calculateDate(currentUnixTime: Int)
-
-        fun calculateHour(currentHour: Int)
-
-        fun calculateMinute(currentMinute: Int)
-
-        fun formatUnixTime(date: String, hour: String, minute: String): Int
-
-    }
 }

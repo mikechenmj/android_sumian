@@ -2,6 +2,7 @@ package com.sumian.sddoctor.service.cbti.presenter
 
 import android.content.Context
 import androidx.core.content.edit
+import com.sumian.common.base.BaseViewModel
 import com.sumian.sddoctor.app.App
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.service.cbti.contract.CBTILauncherContract
@@ -13,7 +14,7 @@ import com.sumian.sddoctor.service.cbti.contract.CBTILauncherContract
  *
  * desc:
  */
-class CBTILauncherPresenter private constructor(view: CBTILauncherContract.View? = null) : CBTILauncherContract.Presenter {
+class CBTILauncherPresenter private constructor(view: CBTILauncherContract.View? = null) : BaseViewModel() {
 
     private val mView = view
 
@@ -24,10 +25,10 @@ class CBTILauncherPresenter private constructor(view: CBTILauncherContract.View?
         private const val ACCOUNT_KEY = "account"
 
         @JvmStatic
-        fun create(view: CBTILauncherContract.View?): CBTILauncherContract.Presenter = CBTILauncherPresenter(view)
+        fun create(view: CBTILauncherContract.View?): CBTILauncherPresenter = CBTILauncherPresenter(view)
     }
 
-    override fun launcherCBTI() {
+    fun launcherCBTI() {
         val sp = App.getAppContext().getSharedPreferences(CBTI_LAUNCHER_FILE, Context.MODE_PRIVATE)
         val accountId = sp.getInt(ACCOUNT_KEY, 0)
         if (accountId <= 0) {//可能是体验账号或未在该手机上使用过的账号
@@ -54,7 +55,7 @@ class CBTILauncherPresenter private constructor(view: CBTILauncherContract.View?
         }
     }
 
-    override fun saveLauncherAction() {
+    fun saveLauncherAction() {
         val isVisitorAccount = AppManager.getAccountViewModel().isVisitorAccount()
         val doctorInfo = AppManager.getAccountViewModel().getDoctorInfo().value
         val accountId = doctorInfo?.id ?: 0

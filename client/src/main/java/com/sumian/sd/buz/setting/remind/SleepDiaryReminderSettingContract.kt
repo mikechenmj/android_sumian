@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.setting.remind
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 
 /**
@@ -18,10 +17,4 @@ class SleepDiaryReminderSettingContract {
         fun rollbackReminderUI()
     }
 
-    interface Presenter : IPresenter {
-        fun queryReminder(reminderType: Int)
-        fun addReminder(reminderType: Int = Reminder.TYPE_SLEEP_DIARY, timeInSecond: Int)
-        fun modifyReminder(reminderId: Int, timeInSecond: Int, enable: Boolean)
-        fun release()
-    }
 }

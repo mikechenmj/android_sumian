@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseDialogViewModelActivity
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.image.ImageLoader
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R

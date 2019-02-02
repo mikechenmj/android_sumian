@@ -18,7 +18,6 @@ import com.sumian.sd.buz.account.achievement.bean.Achievement
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 import com.sumian.sd.buz.account.achievement.bean.Record
 import com.sumian.sd.buz.account.achievement.bean.ShareAchievement
-import com.sumian.sd.buz.account.achievement.contract.MyAchievementShareContract
 import com.sumian.sd.buz.account.achievement.presenter.MyAchievementSharePresenter
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA

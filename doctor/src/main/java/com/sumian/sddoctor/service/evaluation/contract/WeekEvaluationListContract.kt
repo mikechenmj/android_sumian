@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.evaluation.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.service.evaluation.bean.WeekEvaluation
 
 /**
@@ -25,13 +24,4 @@ interface WeekEvaluationListContract {
     }
 
 
-    interface Presenter : IPresenter {
-
-        fun refreshEvaluationList()
-
-        fun getEvaluationList(WeekEvaluationType: String = WeekEvaluation.ALL_TYPE)
-
-        fun getNextEvaluationList()
-
-    }
 }

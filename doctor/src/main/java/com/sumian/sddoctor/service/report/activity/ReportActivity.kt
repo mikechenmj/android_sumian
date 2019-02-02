@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ReportFragment
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.report.fragment.DailyReportFragment
 
 /**

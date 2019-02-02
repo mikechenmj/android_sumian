@@ -10,8 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.sd.R
@@ -39,7 +38,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import pub.devrel.easypermissions.EasyPermissions
-import com.sumian.common.base.BaseActivity
+
 class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
 
     companion object {

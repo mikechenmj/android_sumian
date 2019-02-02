@@ -9,8 +9,6 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R

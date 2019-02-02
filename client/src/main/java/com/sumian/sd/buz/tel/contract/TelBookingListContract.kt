@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.tel.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.buz.tel.bean.TelBooking
 
 /**
@@ -27,13 +26,4 @@ interface TelBookingListContract {
     }
 
 
-    interface Presenter : IPresenter {
-
-        fun getTelBookingList(telBookingListType: Int = TelBooking.UN_FINISHED_TYPE)
-
-        fun refreshTelBookingList()
-
-        fun getNextTelBookingList()
-
-    }
 }

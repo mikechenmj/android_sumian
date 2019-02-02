@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.coupon.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.buz.coupon.bean.Coupon
 
 interface CouponListContract {
@@ -19,12 +18,4 @@ interface CouponListContract {
     }
 
 
-    interface Presenter : IPresenter {
-
-        fun getCouponList()
-
-        fun refreshCouponList()
-
-        fun getNextCouponList()
-    }
 }

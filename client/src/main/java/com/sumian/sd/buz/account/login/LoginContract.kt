@@ -1,8 +1,6 @@
 package com.sumian.sd.buz.account.login
 
-import android.app.Activity
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 
 /**
  * <pre>
@@ -19,10 +17,4 @@ class LoginContract {
         fun onRequestCaptchaSuccess()
     }
 
-    interface Presenter : IPresenter {
-        fun loginByPassword(mobile: String, password: String)
-        fun loginByCaptcha(mobile: String, captcha: String)
-        fun loginByWechat(activity: Activity)
-        fun requestCaptcha(mobile: String)
-    }
 }

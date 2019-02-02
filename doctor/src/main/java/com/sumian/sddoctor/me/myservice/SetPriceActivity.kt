@@ -5,13 +5,11 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.myservice.bean.Packages
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.BooleanUtil

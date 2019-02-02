@@ -35,7 +35,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public class DeviceVersionNoticeViewModel extends BaseViewModel implements VersionContract.Presenter {
+public class DeviceVersionNoticeViewModel extends BaseViewModel {
 
     private static final int MONITOR_VERSION_TYPE = 0x01;
     private static final int SLEEPY_VERSION_TYPE = 0x02;
@@ -58,7 +58,6 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel implements Versi
         return new DeviceVersionNoticeViewModel();
     }
 
-    @Override
     public void syncMonitorVersionInfo() {
 
         VersionContract.View view = null;
@@ -159,7 +158,6 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel implements Versi
         }
     }
 
-    @Override
     public void syncAppVersionInfo() {
         VersionContract.View view = null;
 

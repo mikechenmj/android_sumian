@@ -3,10 +3,8 @@ package com.sumian.sddoctor.me.mywallet
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRule
 import kotlinx.android.synthetic.main.activity_withdraw_rules.*
 

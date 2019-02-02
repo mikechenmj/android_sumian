@@ -11,14 +11,12 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.StatusBarUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.mywallet.bean.WalletBalance
 import com.sumian.sddoctor.me.mywallet.bean.WalletDetail
 import com.sumian.sddoctor.me.mywallet.bean.WalletDetailResponse

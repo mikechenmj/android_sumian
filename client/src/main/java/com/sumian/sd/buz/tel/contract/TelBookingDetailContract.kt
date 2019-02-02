@@ -2,7 +2,6 @@ package com.sumian.sd.buz.tel.contract
 
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.buz.tel.bean.TelBooking
 
 /**

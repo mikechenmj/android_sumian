@@ -1,8 +1,6 @@
 package com.sumian.sddoctor.service.publish.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
-import com.sumian.sddoctor.service.publish.bean.Publish
 
 /**
  * Created by dq
@@ -21,8 +19,4 @@ interface PublishDocContract {
     }
 
 
-    interface Presenter : IPresenter {
-
-        fun publishDoc(publishType: Int = Publish.PUBLISH_ADVISORY_TYPE, publishId: Int, content: String)
-    }
 }

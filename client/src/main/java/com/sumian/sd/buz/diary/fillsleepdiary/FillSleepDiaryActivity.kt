@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.diary.event.SleepRecordFilledEvent

@@ -8,7 +8,6 @@ import com.sumian.common.base.BaseViewModel
 import com.sumian.common.utils.ViewToImageFileListener
 import com.sumian.common.utils.viewToImageFile
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.account.achievement.contract.MyAchievementShareContract
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import java.io.File

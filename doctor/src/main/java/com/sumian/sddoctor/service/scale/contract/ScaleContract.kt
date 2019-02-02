@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.scale.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.service.scale.bean.Scale
 
 /**
@@ -26,10 +25,4 @@ interface ScaleContract {
 
     }
 
-    interface Presenter : IPresenter {
-
-        fun getScales()
-
-        fun sendScale(patientId: Int, scaleIds: List<Int>)
-    }
 }

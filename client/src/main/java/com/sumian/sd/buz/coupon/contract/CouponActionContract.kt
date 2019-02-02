@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.coupon.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 
 interface CouponActionContract {
 
@@ -16,8 +15,4 @@ interface CouponActionContract {
     }
 
 
-    interface Presenter : IPresenter {
-
-        fun checkCoupon(coupon: String)
-    }
 }

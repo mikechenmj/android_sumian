@@ -3,12 +3,10 @@ package com.sumian.sddoctor.login.login
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.main.MainActivity
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback

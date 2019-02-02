@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.activity_main_advisory.*
 

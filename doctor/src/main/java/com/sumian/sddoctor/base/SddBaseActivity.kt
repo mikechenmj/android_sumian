@@ -3,9 +3,6 @@ package com.sumian.sddoctor.base
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModel
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
 
 /**
  * @author : Zhan Xuzhao

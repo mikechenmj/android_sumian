@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.me.mywallet
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRecord
 import retrofit2.Call
 
@@ -19,7 +18,4 @@ interface WithdrawContract {
         fun withdrawFail(code: Int, message: String)
     }
 
-    interface Presenter : IPresenter {
-        fun withdraw(amount: Long)
-    }
 }

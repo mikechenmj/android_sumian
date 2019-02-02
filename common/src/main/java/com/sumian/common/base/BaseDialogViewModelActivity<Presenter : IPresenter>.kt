@@ -3,7 +3,6 @@ package com.sumian.common.base
 import android.os.Bundle
 import android.view.ViewGroup
 import com.sumian.common.R
-import com.sumian.common.mvp.IPresenter
 
 /**
  * Created by sm

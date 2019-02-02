@@ -4,10 +4,8 @@ import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.service.evaluation.bean.WeekEvaluation
 import com.sumian.sddoctor.service.evaluation.fragment.WeekEvaluationListFragment
 import kotlinx.android.synthetic.main.activity_main_evaluation.*

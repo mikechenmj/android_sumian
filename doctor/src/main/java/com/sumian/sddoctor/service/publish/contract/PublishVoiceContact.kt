@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.publish.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 
 /**
  *
@@ -23,7 +22,4 @@ interface PublishVoiceContact {
 
     }
 
-    interface Presenter : IPresenter {
-        fun getPublishVoiceSts(publishType: Int, publishId: Int, voiceFilePath: String, duration: Int)
-    }
 }

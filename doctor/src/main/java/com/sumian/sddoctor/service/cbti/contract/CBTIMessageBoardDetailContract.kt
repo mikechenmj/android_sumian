@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.cbti.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.service.cbti.bean.MessageBoard
 
 interface CBTIMessageBoardDetailContract {
@@ -14,7 +13,4 @@ interface CBTIMessageBoardDetailContract {
     }
 
 
-    interface Presenter : IPresenter {
-        fun getMsgBoardDetail(msgInt: Int)
-    }
 }

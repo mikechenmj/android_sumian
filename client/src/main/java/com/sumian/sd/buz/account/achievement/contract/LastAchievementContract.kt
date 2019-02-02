@@ -1,8 +1,6 @@
 package com.sumian.sd.buz.account.achievement.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
-import com.sumian.sd.buz.account.achievement.bean.Achievement
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 
 /**
@@ -21,8 +19,4 @@ interface LastAchievementContract {
         fun onPopAchievementFailed(error: String) {}
     }
 
-    interface Presenter : IPresenter {
-        fun getLastAchievement(achievementCategoryType: Int = Achievement.CBTI_TYPE, achievementItemType: Int = -1)
-        fun popAchievement(id: Int)
-    }
 }

@@ -8,10 +8,8 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.image.ImageLoader
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.player.CommonAudioPlayer
 import com.sumian.sd.R

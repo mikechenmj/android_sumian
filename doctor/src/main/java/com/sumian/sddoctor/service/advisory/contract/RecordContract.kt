@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.advisory.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.service.advisory.bean.Advisory
 
 /**
@@ -21,10 +20,6 @@ interface RecordContract {
 
     }
 
-    interface Presenter : IPresenter {
-
-        fun getAdvisoryDetail(advisoryId: Int = 0)
-    }
 
 
 }

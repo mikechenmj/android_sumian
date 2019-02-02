@@ -7,12 +7,10 @@ import com.github.lzyzsd.jsbridge.BridgeHandler
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.R
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.h5.bean.H5ShowToastData
 import com.sumian.common.h5.bean.ShareData
 import com.sumian.common.h5.widget.SWebView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.ScreenUtil
 import com.sumian.common.utils.StatusBarUtil

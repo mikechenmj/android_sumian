@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.tel.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.buz.tel.bean.TelBooking
 
 /**
@@ -31,12 +30,4 @@ interface TelBookingPublishContract {
     }
 
 
-    interface Presenter : IPresenter {
-
-        fun getLatestTelBookingOrder()
-
-        fun publishTelBookingOrder(telBookingId: Int, planStartAt: Int, consultingQuestion: String, add: String, include: Boolean = false)
-
-        fun checkInputContent(consultingQuestion: String, add: String)
-    }
 }

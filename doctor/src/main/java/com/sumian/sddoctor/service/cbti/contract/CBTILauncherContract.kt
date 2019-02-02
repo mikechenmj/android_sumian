@@ -1,6 +1,5 @@
 package com.sumian.sddoctor.service.cbti.contract
 
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.mvp.IView
 
 /**
@@ -23,8 +22,4 @@ interface CBTILauncherContract {
         }
     }
 
-    interface Presenter : IPresenter {
-        fun launcherCBTI()
-        fun saveLauncherAction()
-    }
 }

@@ -1,10 +1,6 @@
 package com.sumian.sd.buz.upgrade.contract;
 
-import android.content.Context;
-
-import com.sumian.common.mvp.IPresenter;
 import com.sumian.sd.base.HwBaseNetView;
-import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 import com.sumian.sd.buz.upgrade.presenter.DeviceVersionUpgradePresenter;
 
 /**
@@ -38,15 +34,4 @@ public interface VersionUpgradeContract {
 
     }
 
-    interface Presenter extends IPresenter {
-
-        void downloadFile(int versionType, VersionInfo versionInfo);
-
-        void upgrade(int versionType);
-
-        void showDfuProgressNotification(Context context);
-
-        void abort();
-
-    }
 }

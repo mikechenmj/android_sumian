@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.cbti.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.service.cbti.bean.CbtiChapterData
 
 /**
@@ -23,9 +22,4 @@ interface CBTIIntroductionContract {
         fun getConfigsFailed(error: String)
     }
 
-    interface Presenter : IPresenter {
-        fun getCBTIServiceDetail()
-        fun getCBTIIntroductionList()
-        fun getConfigs()
-    }
 }

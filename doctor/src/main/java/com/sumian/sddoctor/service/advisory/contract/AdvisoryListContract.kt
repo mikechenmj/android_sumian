@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.service.advisory.contract
 
 import com.sumian.common.mvp.BaseShowLoadingView
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sddoctor.service.advisory.bean.Advisory
 
 /**
@@ -25,13 +24,4 @@ interface AdvisoryListContract {
     }
 
 
-    interface Presenter : IPresenter {
-
-        fun refreshAdvisories()
-
-        fun getAdvisories(advisoryType: Int = Advisory.ALL_TYPE)
-
-        fun getNextAdvisories()
-
-    }
 }

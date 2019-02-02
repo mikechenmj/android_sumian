@@ -2,13 +2,11 @@ package com.sumian.sd.buz.coupon.activity
 
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
+import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.buz.coupon.fragment.CouponActionFragment
 import com.sumian.sd.buz.coupon.fragment.CouponListFragment
 import kotlinx.android.synthetic.main.activity_main_coupon_center.*
-import com.sumian.common.base.BaseActivity
 
 /**
  *

@@ -1,7 +1,6 @@
 package com.sumian.common.base
 
 import androidx.lifecycle.ViewModel
-import com.sumian.common.mvp.IPresenter
 import retrofit2.Call
 
 /**
@@ -11,15 +10,15 @@ import retrofit2.Call
  * desc   :
  * version: 1.0
  */
-open class BaseViewModel : ViewModel(), IPresenter {
+open class BaseViewModel : ViewModel() {
     private val mCalls = HashSet<Call<*>>()
 
     fun addCall(call: Call<*>) {
         mCalls.add(call)
     }
 
-    override public fun onCleared() {
-        super<ViewModel>.onCleared()
+    public override fun onCleared() {
+        super.onCleared()
         for (call in mCalls) {
             call.cancel()
         }

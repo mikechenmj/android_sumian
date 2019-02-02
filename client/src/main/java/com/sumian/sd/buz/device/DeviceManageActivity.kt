@@ -1,13 +1,12 @@
 package com.sumian.sd.buz.device
 
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
+import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.bean.BlueDevice
 import com.sumian.sd.buz.device.scan.ScanDeviceFragment
 import com.sumian.sd.common.utils.FragmentUtil
 import com.sumian.sd.common.utils.FragmentUtil.Companion.switchFragment
-import com.sumian.common.base.BaseActivity
+
 /**
  * @author : Zhan Xuzhao
  * e-mail : xuzhao.z@sumian.com

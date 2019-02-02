@@ -6,7 +6,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseDialogViewModelActivity
 import com.sumian.common.base.BaseViewModel
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity
 import kotlinx.android.synthetic.main.activity_sleep_guide_dialog.*

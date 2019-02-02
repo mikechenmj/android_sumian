@@ -5,9 +5,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.image.ImageLoader
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager

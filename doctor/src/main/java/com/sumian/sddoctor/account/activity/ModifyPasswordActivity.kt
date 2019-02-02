@@ -3,13 +3,11 @@ package com.sumian.sddoctor.account.activity
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.InputCheckUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.constants.Configs
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo

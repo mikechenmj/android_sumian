@@ -1,8 +1,8 @@
 package com.sumian.sd.buz.upgrade.contract;
 
-import com.sumian.common.mvp.IPresenter;
 import com.sumian.sd.base.HwBaseNetView;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
+import com.sumian.sd.buz.upgrade.presenter.DeviceVersionNoticeViewModel;
 import com.sumian.sd.common.network.response.AppUpgradeInfo;
 
 /**
@@ -14,7 +14,7 @@ import com.sumian.sd.common.network.response.AppUpgradeInfo;
 
 public interface VersionContract {
 
-    interface View extends HwBaseNetView<Presenter> {
+    interface View extends HwBaseNetView<DeviceVersionNoticeViewModel> {
 
         void onSyncMonitorCallback(VersionInfo versionInfo);
 
@@ -24,11 +24,5 @@ public interface VersionContract {
 
     }
 
-    interface Presenter extends IPresenter {
 
-        void syncMonitorVersionInfo();
-
-        void syncAppVersionInfo();
-
-    }
 }

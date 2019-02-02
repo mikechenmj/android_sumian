@@ -1,8 +1,6 @@
 package com.sumian.sd.buz.sleepguide
 
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 
 class SleepGuideResultActivity : BaseActivity() {

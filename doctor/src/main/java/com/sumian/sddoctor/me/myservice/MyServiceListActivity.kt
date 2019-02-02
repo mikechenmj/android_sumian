@@ -6,12 +6,10 @@ import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.image.ImageLoader
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.me.myservice.bean.DoctorService
 import com.sumian.sddoctor.network.bean.PaginationResponse
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback

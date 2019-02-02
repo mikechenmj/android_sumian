@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
-import com.sumian.common.base.BaseViewModelActivity
-import com.sumian.common.mvp.IPresenter
 import com.sumian.sd.R
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.buz.tel.fragment.TelBookingListFragment

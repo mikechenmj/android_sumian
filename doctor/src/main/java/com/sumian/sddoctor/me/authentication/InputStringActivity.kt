@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.text.Editable
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.mvp.IPresenter
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.common.utils.InputCheckUtil
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
-import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import kotlinx.android.synthetic.main.layout_label_edittext.*
 
 /**
