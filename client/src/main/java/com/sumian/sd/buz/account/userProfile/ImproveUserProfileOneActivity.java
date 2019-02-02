@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sumian.sd.R;
 import com.sumian.sd.base.SdBaseActivity;
@@ -51,12 +52,12 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
 
         String nickname = mEtCaptcha.getText().toString().trim();
         if (TextUtils.isEmpty(nickname)) {
-            showCenterToast(R.string.improve_user_profile_one_part_two);
+            ToastUtils.showShort(R.string.improve_user_profile_one_part_two);
             return;
         }
 
         if (nickname.length() <= 0 || nickname.length() > 10) {
-            showCenterToast(R.string.error_nickname);
+            ToastUtils.showShort(R.string.error_nickname);
             return;
         }
 
@@ -70,7 +71,7 @@ public class ImproveUserProfileOneActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void onFailure(String error) {
-        showToast(error);
+        ToastUtils.showShort(error);
     }
 
     @Override

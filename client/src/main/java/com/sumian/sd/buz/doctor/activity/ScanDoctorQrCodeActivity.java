@@ -10,11 +10,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.snackbar.Snackbar;
+import com.sumian.common.base.BaseActivity;
 import com.sumian.sd.R;
-import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.buz.doctor.bean.DoctorService;
 import com.sumian.sd.widget.qr.QrCodeView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +32,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:
  */
 
-public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnClickListener, QrCodeView.OnShowQrCodeCallback, EasyPermissions.PermissionCallbacks {
+public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnClickListener, QrCodeView.OnShowQrCodeCallback, EasyPermissions.PermissionCallbacks {
 
     public static final String EXTRAS_FROM_RECORD = "com.sumian.sleepdoctor.extras.from.record";
     public static final String EXTRAS_DOCTOR_SERVICE = "com.sumian.sleepdoctor.extras.doctor.service";
@@ -51,12 +54,9 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
     }
 
     @Override
-    protected boolean initBundle(Bundle bundle) {
-        if (bundle != null) {
+    public void initBundle(@NotNull Bundle bundle) {
             this.mIsFromRecord = bundle.getBoolean(EXTRAS_FROM_RECORD, false);
             this.mDoctorService = bundle.getParcelable(EXTRAS_DOCTOR_SERVICE);
-        }
-        return super.initBundle(bundle);
     }
 
     @Override
@@ -65,8 +65,8 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        super.initWidget();
         mZXingView = findViewById(R.id.zxing_view);
         mZXingView.setOnShowQrCodeCallback(this);
         findViewById(R.id.iv_back).setOnClickListener(this);
@@ -134,7 +134,7 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
         Log.e(TAG, "onScanQRCodeSuccess: --------scan--->" + qrCode);
 
         if (TextUtils.isEmpty(qrCode)) {
-            showCenterToast("无效的二维码，请重新扫描...");
+            ToastUtils.showShort("无效的二维码，请重新扫描...");
             mZXingView.beginSpot();
             Snackbar.make(mZXingView, qrCode, Snackbar.LENGTH_SHORT).show();
             return;
@@ -159,6 +159,6 @@ public class ScanDoctorQrCodeActivity extends SdBaseActivity implements View.OnC
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        showToast("扫描二维码需要打开相机和存储权限,权限已被禁止,请在设置中授予app 相关权限");
+        ToastUtils.showShort("扫描二维码需要打开相机和存储权限,权限已被禁止,请在设置中授予app 相关权限");
     }
 }

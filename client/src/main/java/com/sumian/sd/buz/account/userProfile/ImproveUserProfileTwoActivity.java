@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -58,12 +59,12 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
     public void onClick(View v) {
         String name = mEtCaptcha.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
-            showToast(R.string.improve_user_profile_two_part_one);
+            ToastUtils.showShort(R.string.improve_user_profile_two_part_one);
             return;
         }
 
         if (name.length() < 2 || name.length() > 8) {
-            showToast(R.string.name_error);
+            ToastUtils.showShort(R.string.name_error);
             return;
         }
 
@@ -77,7 +78,7 @@ public class ImproveUserProfileTwoActivity extends SdBaseActivity<ImproveUserPro
 
     @Override
     public void onFailure(String error) {
-        showToast(error);
+        ToastUtils.showShort(error);
     }
 
     @Override

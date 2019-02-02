@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
@@ -118,7 +119,7 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
     public void onClick(View v) {
         String input = mEtName.getText().toString().trim();
         if (TextUtils.isEmpty(input)) {
-            showCenterToast("请输入有效的信息");
+            ToastUtils.showShort("请输入有效的信息");
             return;
         }
 
@@ -137,6 +138,6 @@ public class ModifyUserInfoActivity extends SdBaseActivity<ImproveUserProfileCon
 
     @Override
     public void onFailure(String error) {
-        showCenterToast(error);
+        ToastUtils.showShort(error);
     }
 }

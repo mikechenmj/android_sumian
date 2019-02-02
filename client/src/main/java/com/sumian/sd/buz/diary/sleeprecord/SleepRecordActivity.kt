@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseActivity
-import com.sumian.sd.base.SdBasePresenter
 import kotlinx.android.synthetic.main.activity_refund.*
 
 /**
@@ -18,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_refund.*
  *     version: 1.0
  * </pre>
  */
-class SleepRecordActivity : SdBaseActivity<SdBasePresenter<Any>>() {
+class SleepRecordActivity : BaseActivity() {
 
     override fun initData() {
 
@@ -46,7 +45,8 @@ class SleepRecordActivity : SdBaseActivity<SdBasePresenter<Any>>() {
         }
     }
 
-    override fun initWidget(root: android.view.View) {
+    override fun initWidget() {
+        super.initWidget()
         title_bar.setOnBackClickListener { onBackPressed() }
         val sleepRecordFragment = SleepDiaryFragment.newInstance(
                 intent?.getLongExtra(KEY_SLEEP_RECORD_TIME, 0L) ?: 0L)

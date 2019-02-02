@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
@@ -176,7 +177,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onFailure(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
         dismissLoading()
     }
 
@@ -190,7 +191,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
 
     override fun onCreatePayOrderSuccess() {
         mPresenter.doPay(this)
-        showCenterToast(R.string.create_order_success)
+        ToastUtils.showShort(R.string.create_order_success)
     }
 
     override fun onOrderPaySuccess(payMsg: String) {
@@ -232,7 +233,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onCheckOrderPayIsInvalid(invalidError: String) {
-        showCenterToast(invalidError)
+        ToastUtils.showShort(invalidError)
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show()
         } else {
@@ -241,7 +242,7 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
     }
 
     override fun onCheckOrderPayFinialIsInvalid(invalidError: String) {
-        showCenterToast(invalidError)
+        ToastUtils.showShort(invalidError)
         cancelPayDialog()
         setResult(Activity.RESULT_CANCELED)
         finish()
@@ -262,14 +263,14 @@ class PaymentActivity : SdBaseActivity<PayContract.Presenter>(), View.OnClickLis
         if (code == 1) {
             pay_calculate_item_view.updateCouponCodeTips(null)
             pay_calculate_item_view.updateCouponCodeFailed(error)
-            showCenterToast(error)
+            ToastUtils.showShort(error)
         } else {
-            showCenterToast(error)
+            ToastUtils.showShort(error)
             pay_calculate_item_view.updateCouponCodeTips(null)
         }
         if (code == 1 && is2Pay) {
             mGoNextPay = true
-            showCenterToast(error)
+            ToastUtils.showShort(error)
         }
     }
 

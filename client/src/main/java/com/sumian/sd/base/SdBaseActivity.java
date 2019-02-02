@@ -3,16 +3,13 @@ package com.sumian.sd.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.sumian.common.base.BaseActivityManager;
 import com.sumian.common.base.IActivityDelegate;
-import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.R;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.dialog.LoadingDialog;
@@ -24,7 +21,6 @@ import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
@@ -199,30 +195,6 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         Log.d(TAG, "onDestroy: ----------->");
-    }
-
-    protected void showToast(String message) {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            ToastHelper.show(message);
-        } else {
-            runOnUiThread(() -> ToastHelper.show(message));
-        }
-    }
-
-    protected void showToast(@StringRes int messageId) {
-        showToast(getString(messageId));
-    }
-
-    protected void showCenterToast(String message) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-            runOnUiThread(() -> ToastHelper.show(this, message, Gravity.CENTER));
-        } else {
-            ToastHelper.show(this, message, Gravity.CENTER);
-        }
-    }
-
-    protected void showCenterToast(@StringRes int messageId) {
-        showCenterToast(getString(messageId));
     }
 
     protected boolean openEventBus() {

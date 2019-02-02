@@ -9,11 +9,11 @@ import android.view.View;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.sumian.common.base.BaseActivity;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.network.response.PaginationResponseV2;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.base.SdBaseActivity;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.error.EmptyErrorView;
@@ -37,7 +37,7 @@ import retrofit2.Call;
  *     version: 1.0
  * </pre>
  */
-public class OnlineReportListActivity extends SdBaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class OnlineReportListActivity extends BaseActivity implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.RequestLoadMoreListener {
     public static final String KEY_LAUNCH_TYPE = "KEY_LAUNCH_TYPE";
     public static final String KEY_LAUNCH_DATA = "KEY_LAUNCH_DATA";
     public static final String KEY_RESULT_DATA = "data";
@@ -82,19 +82,16 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     }
 
     @Override
-    protected boolean initBundle(Bundle bundle) {
-        if (bundle != null) {
+    protected void initBundle(Bundle bundle) {
             String launchType = bundle.getString(KEY_LAUNCH_TYPE);
             mIsShowListMode = LAUNCH_TYPE_SHOW_INPUT_DATA.equals(launchType);
             mIsPickMode = LAUNCH_TYPE_PICK.equals(launchType);
             mLaunchOnlineReports = bundle.getParcelableArrayList(KEY_LAUNCH_DATA);
-        }
-        return super.initBundle(bundle);
     }
 
     @Override
-    protected void initWidget(View root) {
-        super.initWidget(root);
+    protected void initWidget() {
+        super.initWidget();
         TitleBar titleBar = findViewById(R.id.title_bar);
         titleBar.setOnBackClickListener(v -> finish());
         titleBar.setMenuVisibility(mIsPickMode ? View.VISIBLE : View.GONE);

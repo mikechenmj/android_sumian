@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.config.SelectOptions;
@@ -303,18 +304,18 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoContract.Presente
 
     @Override
     public void onGetUserInfoFailed(String error) {
-        showCenterToast(error);
+        ToastUtils.showShort(error);
     }
 
     @Override
     public void onUnBindWechatSuccess() {
-        showCenterToast(R.string.unbind_success);
+        ToastUtils.showShort(R.string.unbind_success);
         updateSocialites(null);
     }
 
     @Override
     public void onUnBindWechatFailed(String error) {
-        showCenterToast(error);
+        ToastUtils.showShort(error);
     }
 
     @Override
@@ -385,7 +386,7 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoContract.Presente
     }
 
     private void bindSocialitesFailed(String message) {
-        showCenterToast(message);
+        ToastUtils.showShort(message);
         mDvWechat.setSwitchCheckedWithoutCallback(false);
     }
 

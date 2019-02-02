@@ -11,12 +11,11 @@ import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBaseActivity
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.buz.account.login.SettingPasswordActivity
 import com.sumian.sd.buz.device.DeviceManager
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity
@@ -39,7 +38,7 @@ import kotlinx.android.synthetic.main.lay_setting_divider_item.view.*
  * desc:
  */
 
-class SettingActivity : SdBaseActivity<SdBasePresenter<*>>(), TitleBar.OnBackClickListener, View.OnClickListener {
+class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnClickListener {
 
     private val mSdvAppVersion: SettingDividerView  by lazy {
         findViewById<SettingDividerView>(R.id.sdv_app_version)
@@ -51,8 +50,8 @@ class SettingActivity : SdBaseActivity<SdBasePresenter<*>>(), TitleBar.OnBackCli
         return R.layout.activity_main_setting
     }
 
-    override fun initWidget(root: View) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
         findViewById<TitleBar>(R.id.title_bar).setOnBackClickListener(this)
         findViewById<View>(R.id.sdv_app_version).setOnClickListener(this)
         findViewById<View>(R.id.sdv_about_us).setOnClickListener(this)

@@ -2,6 +2,7 @@ package com.sumian.sd.buz.setting.version
 
 import android.annotation.SuppressLint
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.setting.version.bean.Version
@@ -59,7 +60,7 @@ class VersionActivity : SdBaseActivity<VersionContract.Presenter>(), VersionCont
     }
 
     override fun onGetVersionFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
@@ -71,7 +72,7 @@ class VersionActivity : SdBaseActivity<VersionContract.Presenter>(), VersionCont
         if (mIsHaveUpgrade) {
             UiUtils.openAppInMarket(this)
         } else {
-            showCenterToast(getString(R.string.this_is_last_version))
+            ToastUtils.showShort(getString(R.string.this_is_last_version))
         }
     }
 

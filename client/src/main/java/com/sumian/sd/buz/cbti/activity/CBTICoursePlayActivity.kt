@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.BuildConfig
@@ -159,7 +160,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onGetCBTIPlayAuthFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onUploadLessonLogSuccess(coursePlayLog: CoursePlayLog) {
@@ -175,7 +176,7 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     }
 
     override fun onUploadCBTIQuestionnairesFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onSelectLesson(position: Int, course: Course): Boolean {

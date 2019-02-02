@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.tabs.TabLayout
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
@@ -153,11 +154,11 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
     override fun onPublishMessageBoardSuccess(success: String) {
         showMessageBoard(2)
         //keyboard.hide()
-        showCenterToast(success)
+        ToastUtils.showShort(success)
     }
 
     override fun onPublishMessageBoardFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     private fun showMessageBoard(position: Int) {

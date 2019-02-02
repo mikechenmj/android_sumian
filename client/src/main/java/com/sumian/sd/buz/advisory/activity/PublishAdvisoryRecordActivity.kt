@@ -17,6 +17,7 @@ import android.view.View
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
@@ -194,12 +195,12 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
         val inputContent = et_input.text.toString().trim()
 
         if (TextUtils.isEmpty(inputContent) || inputContent.length < 10) {
-            showCenterToast(R.string.more_than_ten_size)
+            ToastUtils.showShort(R.string.more_than_ten_size)
             return
         }
 
         if (inputContent.length > 500) {
-            showCenterToast(getString(R.string.max_input_error))
+            ToastUtils.showShort(getString(R.string.max_input_error))
             return
         }
 
@@ -235,7 +236,7 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     }
 
     override fun onGetLastAdvisoryFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
@@ -269,18 +270,18 @@ class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContac
     }
 
     override fun onPublishAdvisoryRecordFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onGetPublishUploadStsFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onProgress(request: PutObjectRequest?, currentSize: Long, totalSize: Long) {
     }
 
     override fun onGetPublishUploadStsSuccess(successMsg: String) {
-        showCenterToast(successMsg)
+        ToastUtils.showShort(successMsg)
         mPresenter.publishImages(Util.toPathArray(mPictures)!!, this)
     }
 

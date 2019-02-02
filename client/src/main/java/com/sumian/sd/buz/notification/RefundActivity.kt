@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBaseActivity
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.pay.bean.OrderDetail
 import com.sumian.sd.common.utils.TimeUtil
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_refund.*
 /**
  * 退款
  */
-class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
+class RefundActivity : BaseActivity() {
     private var mOrderNo: String = ""
 
     override fun getLayoutId(): Int {
@@ -42,15 +41,13 @@ class RefundActivity : SdBaseActivity<SdBasePresenter<Any>>() {
         }
     }
 
-    override fun initBundle(bundle: Bundle?): Boolean {
-        bundle?.let {
-            mOrderNo = it.getString(KEY_ORDER_NO, "")
-        }
-        return super.initBundle(bundle)
+    override fun initBundle(bundle: Bundle) {
+        mOrderNo = bundle.getString(KEY_ORDER_NO, "")
+
     }
 
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
         title_bar.setOnBackClickListener { finish() }
     }
 
