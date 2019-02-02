@@ -10,12 +10,12 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseViewModel
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.account.achievement.MyAchievementShareActivity
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 import com.sumian.sd.buz.account.achievement.contract.LastAchievementContract
@@ -61,7 +61,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : SdBaseFragment<BaseViewModel>(), OnEnterListener, LastAchievementContract.View, BannerContract.View {
+class HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, LastAchievementContract.View, BannerContract.View {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_homepage
@@ -78,8 +78,8 @@ class HomepageFragment : SdBaseFragment<BaseViewModel>(), OnEnterListener, LastA
 
     var show = true
     var flag = 1
-    override fun initWidget(root: View) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
         initUserInfo()
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { CBTIIntroductionActivity.show() })
         tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationListActivity::class.java) }

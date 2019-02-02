@@ -5,10 +5,11 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.doctor.activity.ScanDoctorQrCodeActivity
 import com.sumian.sd.buz.doctor.bean.Doctor
 import com.sumian.sd.buz.doctor.presenter.DoctorPresenter
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
+class DoctorFragment : BaseViewModelFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
 
     private var mIsInit = false
     private var mIsAutoRefresh = false
@@ -32,8 +33,9 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
         return R.layout.fragment_tab_doctor
     }
 
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
+        DoctorPresenter.init(this)
         doctor_detail_layout?.setOnRefreshListener(this)
         iv_notification?.setOnClickListener { NotificationListActivity.launch(activity) }
         KefuManager.mMessageCountLiveData.observe(this, Observer {
@@ -56,7 +58,7 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
             }
             if (doctor?.services == null) {
                 mIsAutoRefresh = true
-                mViewModel.getBindDoctorInfo()
+                mViewModel?.getBindDoctorInfo()
             }
         }
         request_scan_qr_code_view?.setFragment(this)?.setOnGrantedCallback(this)
@@ -76,11 +78,6 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
             if (mIsAutoRefresh) return
             onRefresh()
         }
-    }
-
-    override fun initPresenter() {
-        super.initPresenter()
-        DoctorPresenter.init(this)
     }
 
     override fun onRelease() {
@@ -121,7 +118,7 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
     }
 
     fun onGetDoctorInfoFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     fun setPresenter(presenter: DoctorPresenter?) {
@@ -130,7 +127,7 @@ class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.
 
     override fun onRefresh() {
         mIsAutoRefresh = true
-        mViewModel.getBindDoctorInfo()
+        mViewModel?.getBindDoctorInfo()
     }
 
     override fun onEnter(data: String?) {

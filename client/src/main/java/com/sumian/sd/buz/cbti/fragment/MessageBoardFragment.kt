@@ -5,9 +5,9 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.cbti.adapter.CBTIMessageBoardAdapter
 import com.sumian.sd.buz.cbti.bean.CBTIMeta
 import com.sumian.sd.buz.cbti.bean.MessageBoard
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_main_cbti_message_board.*
 /**
  * CBTI 留言板   留言板列表 和留言功能
  */
-class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRecyclerView.OnLoadCallback,
+class MessageBoardFragment : BaseViewModelFragment<CBTIMsgBoardPresenter>(), LoadMoreRecyclerView.OnLoadCallback,
         Observer<CBTIMeta> {
 
     companion object {
@@ -44,30 +44,26 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
         return R.layout.fragment_main_cbti_message_board
     }
 
-    override fun initBundle(bundle: Bundle?) {
+    override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        bundle?.let {
+        bundle.let {
             this.mCbtiPartType = it.getInt(ARGS_TYPE)
         }
     }
 
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
+        CBTIMsgBoardPresenter.init(this)
         recycler.setOnLoadCallback(this)
         recycler.adapter = messageBoardAdapter
         recycler.itemAnimator = null
         recycler.layoutManager = LinearLayoutManager(context!!)
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
-        CBTIMsgBoardPresenter.init(this)
-    }
-
     override fun initData() {
         super.initData()
         ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).getCBTICourseMetaLiveData().observe(this, this)
-        mViewModel.setType(mCbtiPartType)
+        mViewModel?.setType(mCbtiPartType)
         mIsInit = true
     }
 
@@ -78,7 +74,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
 
     override fun loadMore() {
         super.loadMore()
-        mViewModel.getNextMessageBoardList()
+        mViewModel?.getNextMessageBoardList()
     }
 
     fun setPresenter(presenter: CBTIMsgBoardPresenter?) {
@@ -110,7 +106,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRe
                 return@let
             }
             this.mCbtiPartType = t.chapter.index
-            mViewModel.setType(mCbtiPartType)
+            mViewModel?.setType(mCbtiPartType)
         }
     }
 

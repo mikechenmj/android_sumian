@@ -5,12 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.sumian.common.base.BaseViewModel
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity
 import com.sumian.sd.buz.diary.sleeprecord.bean.ShareInfo
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
@@ -18,7 +18,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.widget.dialog.SumianAlertDialogV2
 import kotlinx.android.synthetic.main.fragment_sleep_diary.*
 
-class SleepDiaryFragment : SdBaseFragment<BaseViewModel>() {
+class SleepDiaryFragment : BaseViewModelFragment<BaseViewModel>() {
 
     var selectedTime = System.currentTimeMillis()
     private var mRefreshLayout: SumianSwipeRefreshLayout? = null
@@ -30,8 +30,8 @@ class SleepDiaryFragment : SdBaseFragment<BaseViewModel>() {
         return R.layout.fragment_sleep_diary
     }
 
-    override fun initWidget(root: View) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
         sleep_record?.setOnClickRefillSleepRecordListener(View.OnClickListener {
             if (isRefillable) {
                 launchFillSleepRecordActivity(selectedTime)
@@ -44,7 +44,7 @@ class SleepDiaryFragment : SdBaseFragment<BaseViewModel>() {
                 launchFillSleepRecordActivity(selectedTime)
             }
         })
-        mRefreshLayout = root.findViewById(R.id.refresh_layout)
+        mRefreshLayout = view?.findViewById(R.id.refresh_layout)
         mRefreshLayout!!.setOnRefreshListener { queryAndShowSleepReportAtTime(selectedTime) }
     }
 

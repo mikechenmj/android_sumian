@@ -1,12 +1,12 @@
 package com.sumian.sd.buz.cbti.fragment
 
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.cbti.activity.CBTIExerciseWebActivity
 import com.sumian.sd.buz.cbti.activity.CBTIWeekCoursePartActivity.Companion.CHAPTER_ID
 import com.sumian.sd.buz.cbti.adapter.ExerciseAdapter
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_tab_practice.*
  * desc: CBTI 练习tab
  *
  */
-class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesPresenter>(), BaseRecyclerAdapter.OnItemClickListener {
+class ExerciseFragment : BaseViewModelFragment<CBTIWeekExercisesPresenter>(), BaseRecyclerAdapter.OnItemClickListener {
 
     private lateinit var mExerciseAdapter: ExerciseAdapter
 
@@ -33,13 +33,15 @@ class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesPresenter>(), BaseRecyc
             val args = Bundle().apply {
                 putInt(CHAPTER_ID, chapterId)
             }
-            return newInstance(ExerciseFragment::class.java, args) as ExerciseFragment
+            val fragment = ExerciseFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 
-    override fun initBundle(bundle: Bundle?) {
+    override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        bundle?.let {
+        bundle.let {
             this.mChapterId = it.getInt(CHAPTER_ID, 0)
         }
     }
@@ -48,14 +50,9 @@ class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesPresenter>(), BaseRecyc
         return R.layout.fragment_tab_practice
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
+    override fun initWidget() {
+        super.initWidget()
         CBTIWeekExercisesPresenter.init(this)
-    }
-
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
-
         mExerciseAdapter = ExerciseAdapter(context!!)
         mExerciseAdapter.setOnItemClickListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
@@ -65,7 +62,7 @@ class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesPresenter>(), BaseRecyc
 
     override fun onResume() {
         super.onResume()
-        this.mViewModel.getCBTIWeekExercises(mChapterId)
+        this.mViewModel?.getCBTIWeekExercises(mChapterId)
     }
 
     fun setPresenter(presenter: CBTIWeekExercisesPresenter?) {
@@ -78,14 +75,14 @@ class ExerciseFragment : SdBaseFragment<CBTIWeekExercisesPresenter>(), BaseRecyc
     }
 
     fun onGetCBTIWeekPracticeFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
 
         val exercise = mExerciseAdapter.getItem(position)
         if (exercise.is_lock) {
-            showCenterToast(R.string.see_lesson_2_unlock)
+            ToastUtils.showShort(R.string.see_lesson_2_unlock)
             return
         }
 

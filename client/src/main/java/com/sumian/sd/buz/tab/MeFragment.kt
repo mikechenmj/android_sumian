@@ -6,10 +6,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModel
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.loadImage
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.account.achievement.MyAchievementActivity
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
@@ -41,15 +41,15 @@ import kotlinx.android.synthetic.main.fragment_tab_me.*
  * desc:
  */
 
-class MeFragment : SdBaseFragment<BaseViewModel>(), View.OnClickListener,
+class MeFragment : BaseViewModelFragment<BaseViewModel>(), View.OnClickListener,
         PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, VersionModel.ShowDotCallback {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_me
     }
 
-    override fun initWidget(root: View) {
-        super.initWidget(root)
+    override fun initWidget() {
+        super.initWidget()
         iv_avatar.setOnClickListener(this)
         tv_nickname.setOnClickListener(this)
         dv_setting.setOnClickListener(this)

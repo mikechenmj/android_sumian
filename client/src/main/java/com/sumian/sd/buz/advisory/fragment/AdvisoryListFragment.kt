@@ -5,10 +5,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.buz.advisory.activity.PublishAdvisoryRecordActivity
 import com.sumian.sd.buz.advisory.adapter.AdvisoryListAdapter
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_main_advisory_list.*
  * on 2018/6/4 17:32
  * desc:
  **/
-class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
+class AdvisoryListFragment : BaseViewModelFragment<AdvisoryListPresenter>(), AdvisoryListContract.View, SwipeRefreshLayout.OnRefreshListener, BaseRecyclerAdapter.OnItemClickListener, LoadMoreRecyclerView.OnLoadCallback {
 
     companion object {
 
@@ -33,7 +34,9 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
         fun newInstance(advisoryType: Int = Advisory.UNFINISHED_TYPE): Fragment? {
             val args = Bundle()
             args.putInt(ARGS_ADVISORY_TYPE, advisoryType)
-            return SdBaseFragment.newInstance(AdvisoryListFragment::class.java, args)
+            val fragment = AdvisoryListFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 
@@ -41,22 +44,18 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     private var mAdvisoryType: Int = Advisory.UNFINISHED_TYPE
 
-    override fun initBundle(bundle: Bundle?) {
+    override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        this.mAdvisoryType = bundle?.getInt(ARGS_ADVISORY_TYPE, Advisory.UNFINISHED_TYPE)!!
+        this.mAdvisoryType = bundle.getInt(ARGS_ADVISORY_TYPE, Advisory.UNFINISHED_TYPE)!!
     }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_advisory_list
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
+    override fun initWidget() {
+        super.initWidget()
         AdvisoryListPresenter.init(this)
-    }
-
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
         refresh.setOnRefreshListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
         mListAdapter = AdvisoryListAdapter(context!!)
@@ -69,7 +68,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     override fun initData() {
         super.initData()
-        this.mViewModel.getAdvisories(mAdvisoryType)
+        this.mViewModel?.getAdvisories(mAdvisoryType)
     }
 
     override fun setPresenter(presenter: AdvisoryListPresenter) {
@@ -77,7 +76,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
     }
 
     override fun onRefresh() {
-        this.mViewModel.refreshAdvisories()
+        this.mViewModel?.refreshAdvisories()
         refresh?.showRefreshAnim()
     }
 
@@ -100,7 +99,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
 
     override fun onResume() {
         super.onResume()
-        this.mViewModel.refreshAdvisories()
+        this.mViewModel?.refreshAdvisories()
         refresh?.showRefreshAnim()
     }
 
@@ -121,7 +120,7 @@ class AdvisoryListFragment : SdBaseFragment<AdvisoryListPresenter>(), AdvisoryLi
     }
 
     override fun onGetAdvisoriesFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onGetNextAdvisoriesSuccess(advisories: List<Advisory>) {

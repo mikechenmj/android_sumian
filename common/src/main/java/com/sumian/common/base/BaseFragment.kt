@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sumian.common.dialog.LoadingDialog
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 
 /**
@@ -48,6 +49,24 @@ abstract class BaseFragment : Fragment(), BaseShowLoadingView {
         super.onViewCreated(view, savedInstanceState)
         initWidget()
         initData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (openEventBus()) {
+            EventBus.getDefault().register(this)
+        }
+    }
+
+    override fun onStop() {
+        if (openEventBus()) {
+            EventBus.getDefault().unregister(this)
+        }
+        super.onStop()
+    }
+
+    open fun openEventBus(): Boolean {
+        return false
     }
 
     override fun onDestroyView() {

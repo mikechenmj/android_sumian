@@ -10,7 +10,6 @@ import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.recycler.LoadMoreRecyclerView
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.tel.activity.TelBookingDetailActivity
 import com.sumian.sd.buz.tel.activity.TelBookingPublishActivity
 import com.sumian.sd.buz.tel.adpater.TelBookingListAdapter
@@ -37,7 +36,9 @@ class TelBookingListFragment : BaseViewModelFragment<TelBookingListPresenter>(),
             val args = Bundle().apply {
                 putInt(ARGS_TEL_BOOKING_TYPE, telBookingType)
             }
-            return SdBaseFragment.newInstance(TelBookingListFragment::class.java, args)
+            val fragment = TelBookingListFragment()
+            fragment.arguments = args
+            return fragment
         }
 
     }

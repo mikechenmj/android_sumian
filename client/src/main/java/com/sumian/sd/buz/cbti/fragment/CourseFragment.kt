@@ -1,14 +1,14 @@
 package com.sumian.sd.buz.cbti.fragment
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseRecyclerAdapter
+import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.sd.R
-import com.sumian.sd.base.SdBaseFragment
 import com.sumian.sd.buz.account.achievement.MyAchievementShareActivity
 import com.sumian.sd.buz.account.achievement.bean.Achievement
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLessonContract.View,
+class CourseFragment : BaseViewModelFragment<CBTIWeekCoursePresenter>(), CBTIWeekLessonContract.View,
         Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener, LastAchievementContract.View {
 
     private lateinit var mCourseAdapter: CourseAdapter
@@ -44,13 +44,15 @@ class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLesson
             val args = Bundle().apply {
                 putInt(CHAPTER_ID, chapterId)
             }
-            return newInstance(CourseFragment::class.java, args) as CourseFragment
+            val fragment = CourseFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
 
-    override fun initBundle(bundle: Bundle?) {
+    override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        bundle?.let {
+        bundle.let {
             this.mChapterId = it.getInt(CHAPTER_ID, 0)
         }
     }
@@ -59,13 +61,9 @@ class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLesson
         return R.layout.fragment_tab_lesson
     }
 
-    override fun initPresenter() {
-        super.initPresenter()
+    override fun initWidget() {
+        super.initWidget()
         CBTIWeekCoursePresenter.init(this)
-    }
-
-    override fun initWidget(root: View?) {
-        super.initWidget(root)
         mCourseAdapter = CourseAdapter(context!!)
         mCourseAdapter.setOnItemClickListener(this)
         recycler.layoutManager = LinearLayoutManager(context)
@@ -80,7 +78,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLesson
 
     override fun onResume() {
         super.onResume()
-        this.mViewModel.getCBTIWeekLesson(mChapterId)
+        this.mViewModel?.getCBTIWeekLesson(mChapterId)
     }
 
     override fun onRelease() {
@@ -96,7 +94,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLesson
     override fun onItemClick(position: Int, itemId: Long) {
         val lesson = mCourseAdapter.getItem(position)
         if (lesson.is_lock) {
-            showCenterToast(getString(R.string.finished_lesson_to_be_unlock))
+            ToastUtils.showShort(getString(R.string.finished_lesson_to_be_unlock))
             return
         }
         CBTICoursePlayActivity.show(activity!!, lesson, position)
@@ -114,7 +112,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLesson
     }
 
     override fun onGetCBTIWeekLessonFailed(error: String) {
-        showCenterToast(error)
+        ToastUtils.showShort(error)
     }
 
     override fun onGetAchievementListForTypeSuccess(lastAchievementData: LastAchievementData) {

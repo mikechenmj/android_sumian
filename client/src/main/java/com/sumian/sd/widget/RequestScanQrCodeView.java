@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.R;
-import com.sumian.sd.base.SdBaseFragment;
 import com.sumian.sd.buz.kefu.KefuManager;
 
 import java.lang.ref.WeakReference;
@@ -69,7 +68,7 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
         return this;
     }
 
-    public RequestScanQrCodeView setFragment(SdBaseFragment fragment) {
+    public RequestScanQrCodeView setFragment(Fragment fragment) {
         if (mFragmentWeakReference == null) {
             mFragmentWeakReference = new WeakReference<>(fragment);
         }
