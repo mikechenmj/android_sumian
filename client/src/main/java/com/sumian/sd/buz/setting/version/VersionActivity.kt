@@ -25,7 +25,7 @@ import java.util.*
  *
  * </pre>
  */
-class VersionActivity : SdBaseActivity<VersionContract.Presenter>(), VersionContract.View, View.OnClickListener {
+class VersionActivity : SdBaseActivity<VersionPresenter>(), VersionContract.View, View.OnClickListener {
 
     private var mIsHaveUpgrade = false
 

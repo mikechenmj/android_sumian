@@ -1,13 +1,11 @@
 package com.sumian.sd.buz.doctor.contract
 
-import com.sumian.common.h5.bean.SBridgeResult
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
-import com.sumian.sd.buz.doctor.bean.Doctor
+import com.sumian.sd.buz.doctor.presenter.BindDoctorPresenter
 
 interface BindDoctorContract {
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<BindDoctorPresenter> {
 
         fun onBindDoctorSuccess(message: String)
 
@@ -17,9 +15,4 @@ interface BindDoctorContract {
 
     }
 
-    interface Presenter : SdBasePresenter<Any> {
-
-        fun checkBindDoctorState(sBridgeResult: SBridgeResult<Doctor>)
-
-    }
 }

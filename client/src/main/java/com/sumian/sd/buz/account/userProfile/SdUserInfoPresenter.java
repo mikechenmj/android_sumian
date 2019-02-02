@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.Social;
@@ -33,7 +34,7 @@ import retrofit2.Call;
  *
  * </pre>
  */
-public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
+public class SdUserInfoPresenter extends BaseViewModel {
 
     private SdUserInfoContract.View mView;
 
@@ -46,7 +47,6 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
         return new SdUserInfoPresenter(view);
     }
 
-    @Override
     public void getUserInfo() {
         //mView.onBegin();
         Call<UserInfo> call = AppManager.getSdHttpService().getUserProfile();
@@ -73,7 +73,6 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
         addCall(call);
     }
 
-    @Override
     public void uploadAvatar(String imageUrl) {
         mView.onBegin();
         Call<OssResponse> call = AppManager.getSdHttpService().uploadAvatar();
@@ -115,12 +114,10 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
         });
     }
 
-    @Override
     public void bindWechat(Activity activity, UMAuthListener umAuthListener) {
         AppManager.getOpenLogin().weChatLogin(activity, umAuthListener);
     }
 
-    @Override
     public void bindSocial(int socialType, String socialInfo) {
         mView.onBegin();
         Call<Social> call = AppManager.getSdHttpService().bindSocialites(Social.SOCIAL_TYPE_WECHAT, socialInfo);
@@ -144,7 +141,6 @@ public class SdUserInfoPresenter implements SdUserInfoContract.Presenter {
         });
     }
 
-    @Override
     public void unBindWechat(int socialId) {
         mView.onBegin();
 

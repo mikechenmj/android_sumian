@@ -1,12 +1,8 @@
 package com.sumian.sd.common.pay.contract
 
-import android.app.Activity
-import android.content.Intent
-
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.common.pay.bean.PayCouponCode
-import com.sumian.sd.common.pay.bean.PayOrder
+import com.sumian.sd.common.pay.presenter.PayPresenter
 
 /**
  * Created by sm
@@ -17,7 +13,7 @@ import com.sumian.sd.common.pay.bean.PayOrder
 interface PayContract {
 
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<PayPresenter> {
 
         fun onCreatePayOrderSuccess()
 
@@ -46,18 +42,4 @@ interface PayContract {
 
     }
 
-    interface Presenter : SdBasePresenter<Any> {
-
-        fun createPayOrder(activity: Activity, payOrder: PayOrder)
-
-        fun checkPayOrder()
-
-        fun checkCouponCode(is2Pay: Boolean = false, couponCode: String, packageId: Int)
-
-        fun doPay(activity: Activity)
-
-        fun clearPayAction()
-
-        fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent?)
-    }
 }

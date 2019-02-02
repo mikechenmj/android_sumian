@@ -4,13 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseFragment
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity
 import com.sumian.sd.buz.diary.sleeprecord.bean.ShareInfo
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
@@ -18,7 +18,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.widget.dialog.SumianAlertDialogV2
 import kotlinx.android.synthetic.main.fragment_sleep_diary.*
 
-class SleepDiaryFragment : SdBaseFragment<SdBasePresenter<*>>() {
+class SleepDiaryFragment : SdBaseFragment<BaseViewModel>() {
 
     var selectedTime = System.currentTimeMillis()
     private var mRefreshLayout: SumianSwipeRefreshLayout? = null

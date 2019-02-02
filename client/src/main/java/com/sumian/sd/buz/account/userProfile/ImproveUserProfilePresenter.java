@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.account.userProfile;
 
+import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.UserInfo;
@@ -19,7 +20,7 @@ import retrofit2.Call;
  * desc:
  */
 
-public class ImproveUserProfilePresenter implements ImproveUserProfileContract.Presenter {
+public class ImproveUserProfilePresenter extends BaseViewModel implements ImproveUserProfileContract.Presenter {
 
     private ImproveUserProfileContract.View mView;
     private Call<UserInfo> mCall;
@@ -69,7 +70,6 @@ public class ImproveUserProfilePresenter implements ImproveUserProfileContract.P
     }
 
 
-    @Override
     public void onCleared() {
         if (mCall == null) {
             return;

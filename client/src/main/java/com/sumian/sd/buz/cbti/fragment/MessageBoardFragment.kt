@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_main_cbti_message_board.*
 /**
  * CBTI 留言板   留言板列表 和留言功能
  */
-class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(), LoadMoreRecyclerView.OnLoadCallback,
+class MessageBoardFragment : SdBaseFragment<CBTIMsgBoardPresenter>(), LoadMoreRecyclerView.OnLoadCallback,
         CBTIMessageBoardContract.View, Observer<CBTIMeta> {
 
     companion object {
@@ -82,7 +82,7 @@ class MessageBoardFragment : SdBaseFragment<CBTIMessageBoardContract.Presenter>(
         mPresenter.getNextMessageBoardList()
     }
 
-    override fun setPresenter(presenter: CBTIMessageBoardContract.Presenter?) {
+    override fun setPresenter(presenter: CBTIMsgBoardPresenter?) {
         //super.setPresenter(presenter)
         this.mPresenter = presenter
     }

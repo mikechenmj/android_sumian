@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.sumian.common.base.BaseActivityManager;
+import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.base.IActivityDelegate;
 import com.sumian.sd.R;
 import com.sumian.sd.widget.TitleBar;
@@ -34,7 +35,7 @@ import retrofit2.Call;
  */
 
 @Deprecated
-public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
+public abstract class SdBaseActivity<Presenter extends BaseViewModel> extends AppCompatActivity implements LifecycleOwner, DefaultLifecycleObserver {
 
     private static final String TAG = SdBaseActivity.class.getSimpleName();
     protected View mRoot;

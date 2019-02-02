@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_tab_lesson.*
  * desc:CBTI 课程 tab
  *
  */
-class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIWeekLessonContract.View,
+class CourseFragment : SdBaseFragment<CBTIWeekCoursePresenter>(), CBTIWeekLessonContract.View,
         Observer<List<Course>>, BaseRecyclerAdapter.OnItemClickListener, LastAchievementContract.View {
 
     private lateinit var mCourseAdapter: CourseAdapter
@@ -88,7 +88,7 @@ class CourseFragment : SdBaseFragment<CBTIWeekLessonContract.Presenter>(), CBTIW
         ViewModelProviders.of(this).get(CbtiChapterViewModel::class.java).getCBTICoursesLiveData().removeObserver(this)
     }
 
-    override fun setPresenter(presenter: CBTIWeekLessonContract.Presenter) {
+    override fun setPresenter(presenter: CBTIWeekCoursePresenter) {
         // super.setPresenter(presenter)
         this.mPresenter = presenter
     }

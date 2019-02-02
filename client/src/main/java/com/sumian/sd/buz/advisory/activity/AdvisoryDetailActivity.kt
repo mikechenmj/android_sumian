@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
  * on 2018/6/4 18:28
  * desc:咨询详情,包含了提问或者回复的记录列表,在线报告列表
  **/
-class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), RecordContract.View, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
+class AdvisoryDetailActivity : SdBaseActivity<RecordPresenter>(), RecordContract.View, TitleBar.OnBackClickListener, TitleBar.OnMenuClickListener, View.OnClickListener {
 
     companion object {
 
@@ -144,7 +144,7 @@ class AdvisoryDetailActivity : SdBaseActivity<RecordContract.Presenter>(), Recor
         empty_error_view.visibility = if (mAdvisory == null) View.VISIBLE else View.GONE
     }
 
-    override fun setPresenter(presenter: RecordContract.Presenter?) {
+    override fun setPresenter(presenter: RecordPresenter?) {
         this.mPresenter = presenter
     }
 

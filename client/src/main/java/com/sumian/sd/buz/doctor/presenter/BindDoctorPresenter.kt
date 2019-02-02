@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.doctor.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.sd.R
 import com.sumian.sd.app.App
@@ -7,7 +8,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.doctor.bean.Doctor
 import com.sumian.sd.buz.doctor.contract.BindDoctorContract
 
-class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : BindDoctorContract.Presenter {
+class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : BaseViewModel() {
 
     private var mView: BindDoctorContract.View? = null
 
@@ -25,7 +26,7 @@ class BindDoctorPresenter private constructor(view: BindDoctorContract.View) : B
 
     }
 
-    override fun checkBindDoctorState(sBridgeResult: SBridgeResult<Doctor>) {
+    fun checkBindDoctorState(sBridgeResult: SBridgeResult<Doctor>) {
         if (sBridgeResult.code == 0) {
             if (AppManager.getAccountViewModel().userInfo.isBindDoctor) {
                 val doctor = sBridgeResult.result

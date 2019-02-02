@@ -1,9 +1,9 @@
 package com.sumian.sd.buz.cbti.contract
 
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.buz.cbti.bean.CoursePlayAuth
 import com.sumian.sd.buz.cbti.bean.CoursePlayLog
+import com.sumian.sd.buz.cbti.presenter.CBTICoursePlayAuthPresenter
 
 /**
  * Created by dq
@@ -14,7 +14,7 @@ import com.sumian.sd.buz.cbti.bean.CoursePlayLog
  */
 interface CBTIWeekPlayContract {
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<CBTICoursePlayAuthPresenter> {
 
         fun onGetCBTIPlayAuthSuccess(coursePlayAuth: CoursePlayAuth)
 
@@ -34,18 +34,4 @@ interface CBTIWeekPlayContract {
     }
 
 
-    interface Presenter : SdBasePresenter<Any> {
-
-        fun getCBTIPlayAuthInfo(courseId: Int)
-
-        fun uploadCBTIVideoLog(videoId: String, courseId: Int, videoProgress: String, endpoint: Int)
-
-        fun calculatePlayFrame(videoId: String, currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long)
-
-        fun playNextCBTIVideo(courseId: Int)
-
-        fun uploadCBTIQuestionnaires(courseId: Int, position: Int)
-
-        fun uploadCBTICourseWatchLog(courseId: Int, videoId: String)
-    }
 }

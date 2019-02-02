@@ -1,10 +1,8 @@
 package com.sumian.sd.buz.advisory.contract
 
-import com.alibaba.sdk.android.oss.callback.OSSProgressCallback
-import com.alibaba.sdk.android.oss.model.PutObjectRequest
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.buz.advisory.bean.Advisory
+import com.sumian.sd.buz.advisory.presenter.PublishAdvisoryRecordPresenter
 
 /**
  *
@@ -14,7 +12,7 @@ import com.sumian.sd.buz.advisory.bean.Advisory
  **/
 interface PublishAdvisoryRecordContact {
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<PublishAdvisoryRecordPresenter> {
 
         fun onPublishAdvisoryRecordSuccess(advisory: Advisory)
 
@@ -35,14 +33,4 @@ interface PublishAdvisoryRecordContact {
     }
 
 
-    interface Presenter : SdBasePresenter<Any> {
-
-        fun publishAdvisoryRecord(advisoryId: Int, content: String, onlineReportIds: ArrayList<Int>?)
-
-        fun publishPictureAdvisoryRecord(advisoryId: Int, content: String, onlineReportIds: ArrayList<Int>?, pictureCount: Int)
-
-        fun publishImages(localFilePaths: Array<String>, oSSProgressCallback: OSSProgressCallback<PutObjectRequest>)
-
-        fun getLastAdvisory()
-    }
 }

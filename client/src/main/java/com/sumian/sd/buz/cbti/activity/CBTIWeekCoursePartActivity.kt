@@ -17,7 +17,6 @@ import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseActivity
 import com.sumian.sd.buz.cbti.bean.CBTIMeta
 import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardActionContract
-import com.sumian.sd.buz.cbti.contract.CBTIWeekLessonContract
 import com.sumian.sd.buz.cbti.fragment.CourseFragment
 import com.sumian.sd.buz.cbti.fragment.ExerciseFragment
 import com.sumian.sd.buz.cbti.fragment.MessageBoardFragment
@@ -37,7 +36,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
  * desc: CBTI 周阶段课程模块  包含一周的课时/练习  e.g.  1-1/1-2/1-3   2-1/2-2/2-3
  *
  */
-class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Presenter>(), TitleBar.OnBackClickListener,
+class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIMessageBoardActionPresenter>(), TitleBar.OnBackClickListener,
         Observer<CBTIMeta>, MsgBoardKeyBoard.OnKeyBoardCallback, CBTIMessageBoardActionContract.View {
 
     private var mChapterId = 1

@@ -1,8 +1,8 @@
 package com.sumian.sd.buz.advisory.contract
 
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.buz.advisory.bean.Advisory
+import com.sumian.sd.buz.advisory.presenter.AdvisoryListPresenter
 
 /**
  *
@@ -12,7 +12,7 @@ import com.sumian.sd.buz.advisory.bean.Advisory
  **/
 interface AdvisoryListContract {
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<AdvisoryListPresenter> {
 
         fun onGetAdvisoriesSuccess(advisories: List<Advisory>)
 
@@ -25,13 +25,4 @@ interface AdvisoryListContract {
     }
 
 
-    interface Presenter : SdBasePresenter<Any> {
-
-        fun refreshAdvisories()
-
-        fun getAdvisories(advisoryType: Int = Advisory.UNFINISHED_TYPE)
-
-        fun getNextAdvisories()
-
-    }
 }

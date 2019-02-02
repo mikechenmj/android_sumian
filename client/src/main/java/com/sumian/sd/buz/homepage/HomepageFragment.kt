@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
@@ -60,7 +61,7 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : SdBaseFragment<HomepageContract.Presenter>(), HomepageContract.View, OnEnterListener, LastAchievementContract.View, BannerContract.View {
+class HomepageFragment : SdBaseFragment<BaseViewModel>(), OnEnterListener, LastAchievementContract.View, BannerContract.View {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_homepage

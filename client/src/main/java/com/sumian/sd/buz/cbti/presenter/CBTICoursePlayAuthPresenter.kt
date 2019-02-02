@@ -2,6 +2,7 @@ package com.sumian.sd.buz.cbti.presenter
 
 import android.util.Log
 import com.alibaba.fastjson.JSON
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.bean.CoursePlayAuth
@@ -18,7 +19,7 @@ import java.util.regex.Pattern
  *
  * desc:
  */
-class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPlayContract.Presenter {
+class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : BaseViewModel() {
 
     private var mView: CBTIWeekPlayContract.View? = null
 
@@ -38,12 +39,12 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         private val TAG = CBTICoursePlayAuthPresenter::class.java.simpleName
 
         @JvmStatic
-        fun init(view: CBTIWeekPlayContract.View): CBTIWeekPlayContract.Presenter {
+        fun init(view: CBTIWeekPlayContract.View): CBTICoursePlayAuthPresenter {
             return CBTICoursePlayAuthPresenter(view)
         }
     }
 
-    override fun getCBTIPlayAuthInfo(courseId: Int) {
+    fun getCBTIPlayAuthInfo(courseId: Int) {
 
         mView?.onBegin()
 
@@ -68,7 +69,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         })
     }
 
-    override fun uploadCBTIVideoLog(videoId: String, courseId: Int, videoProgress: String, endpoint: Int) {
+    fun uploadCBTIVideoLog(videoId: String, courseId: Int, videoProgress: String, endpoint: Int) {
 
         mView?.onBegin()
 
@@ -93,7 +94,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         })
     }
 
-    override fun calculatePlayFrame(videoId: String, currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long) {
+    fun calculatePlayFrame(videoId: String, currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long) {
         this.mCurrentFrame = currentFrame
         if (mCurrentCourseId != currentCourseId) {//不一致说明是第一次播放，或者不是同一个视频,需要重新初始化
             mBrowseFrame.clear()
@@ -122,7 +123,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         }
     }
 
-    override fun playNextCBTIVideo(courseId: Int) {
+    fun playNextCBTIVideo(courseId: Int) {
         mView?.onBegin()
         val call = AppManager.getSdHttpService().getCBTIPLayAuth(id = courseId)
         addCall(call)
@@ -144,7 +145,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         })
     }
 
-    override fun uploadCBTIQuestionnaires(courseId: Int, position: Int) {
+    fun uploadCBTIQuestionnaires(courseId: Int, position: Int) {
         mView?.onBegin()
         val call = AppManager.getSdHttpService().uploadCBTIVideoQuestionnaires(courseId, JSON.toJSONString(position))
         addCall(call)
@@ -166,7 +167,7 @@ class CBTICoursePlayAuthPresenter(view: CBTIWeekPlayContract.View) : CBTIWeekPla
         })
     }
 
-    override fun uploadCBTICourseWatchLog(courseId: Int, videoId: String) {
+    fun uploadCBTICourseWatchLog(courseId: Int, videoId: String) {
         val hexWatchLength = appearNumber(mBrowseFrame.toString(), "1")
         if (hexWatchLength <= 0) {
             return

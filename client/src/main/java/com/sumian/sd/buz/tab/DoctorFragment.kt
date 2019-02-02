@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_tab_doctor.*
  * on 2018/5/2.
  * desc:
  */
-class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View, SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
+class DoctorFragment : SdBaseFragment<DoctorPresenter>(), RequestScanQrCodeView.OnGrantedCallback, DoctorContract.View, SwipeRefreshLayout.OnRefreshListener, OnEnterListener {
 
     private var mIsInit = false
     private var mIsAutoRefresh = false
@@ -127,7 +127,7 @@ class DoctorFragment : SdBaseFragment<DoctorContract.Presenter>(), RequestScanQr
         showCenterToast(error)
     }
 
-    override fun setPresenter(presenter: DoctorContract.Presenter?) {
+    override fun setPresenter(presenter: DoctorPresenter?) {
         this.mPresenter = presenter
     }
 

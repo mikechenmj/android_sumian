@@ -1,9 +1,9 @@
 package com.sumian.sd.buz.cbti.contract
 
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.buz.cbti.bean.CBTIMeta
 import com.sumian.sd.buz.cbti.bean.Course
+import com.sumian.sd.buz.cbti.presenter.CBTIWeekCoursePresenter
 
 /**
  * Created by dq
@@ -14,7 +14,7 @@ import com.sumian.sd.buz.cbti.bean.Course
  */
 interface CBTIWeekLessonContract {
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<CBTIWeekCoursePresenter> {
 
         fun onGetCBTIWeekLessonSuccess(courses: List<Course>)
 
@@ -25,10 +25,5 @@ interface CBTIWeekLessonContract {
     }
 
 
-    interface Presenter : SdBasePresenter<Any> {
-
-        fun getCBTIWeekLesson(id: Int = 1)
-
-    }
 
 }

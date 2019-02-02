@@ -34,7 +34,7 @@ public class LessonListDialog extends DialogFragment implements CBTIWeekLessonCo
 
     private LinearLayout mLayContainer;
 
-    private CBTIWeekLessonContract.Presenter mPresenter;
+    private CBTIWeekCoursePresenter mPresenter;
     private List<Course> mCourses;
 
     private OnCBTILessonListListener mListener;

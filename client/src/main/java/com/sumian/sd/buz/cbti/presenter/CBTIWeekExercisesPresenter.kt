@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.cbti.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.bean.CBTIDataResponse
@@ -14,7 +15,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  *
  * desc:
  */
-class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.View) : CBTIWeekExercisesContract.Presenter {
+class CBTIWeekExercisesPresenter constructor(view: CBTIWeekExercisesContract.View) : BaseViewModel(), CBTIWeekExercisesContract.Presenter {
 
     private val mView: CBTIWeekExercisesContract.View
 

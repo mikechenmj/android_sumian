@@ -2,6 +2,7 @@
 
 package com.sumian.sd.buz.setting.version.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.VersionUtil
 import com.sumian.sd.app.App
@@ -24,7 +25,7 @@ import com.sumian.sd.common.utils.UiUtils
  *
  * </pre>
  */
-class VersionPresenter private constructor(view: VersionContract.View) : VersionContract.Presenter {
+class VersionPresenter private constructor(view: VersionContract.View) : BaseViewModel(), VersionContract.Presenter {
 
     private var mView: VersionContract.View? = null
 
@@ -33,7 +34,7 @@ class VersionPresenter private constructor(view: VersionContract.View) : Version
     }
 
     companion object {
-        fun init(view: VersionContract.View): VersionContract.Presenter {
+        fun init(view: VersionContract.View): VersionPresenter {
             return VersionPresenter(view)
         }
     }

@@ -52,7 +52,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 @SuppressWarnings("ALL")
-public class UserInfoActivity extends SdBaseActivity<SdUserInfoContract.Presenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
+public class UserInfoActivity extends SdBaseActivity<SdUserInfoPresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, SdUserInfoContract.View, UMAuthListener, Observer<Token> {
 
@@ -136,7 +136,7 @@ public class UserInfoActivity extends SdBaseActivity<SdUserInfoContract.Presente
     }
 
     @Override
-    public void setPresenter(SdUserInfoContract.Presenter presenter) {
+    public void setPresenter(SdUserInfoPresenter presenter) {
         this.mPresenter = presenter;
     }
 

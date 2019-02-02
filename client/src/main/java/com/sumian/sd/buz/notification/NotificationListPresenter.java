@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.notification;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.notification.bean.Notification;
@@ -22,7 +23,7 @@ import retrofit2.Call;
  *     version: 1.0
  * </pre>
  */
-public class NotificationListPresenter implements NotificationListContract.Presenter {
+public class NotificationListPresenter extends BaseViewModel {
     private static final int PER_PAGE = 15;
     private static final int INIT_PAGE = 1;
     private NotificationListContract.View mView;
@@ -32,7 +33,6 @@ public class NotificationListPresenter implements NotificationListContract.Prese
         mView = view;
     }
 
-    @Override
     public void loadData(boolean isInitLoad) {
         mView.onBegin();
         if (isInitLoad) {
@@ -63,7 +63,6 @@ public class NotificationListPresenter implements NotificationListContract.Prese
     /**
      * @param notificationId notification id or "0" for reading all
      */
-    @Override
     public void readNotification(String notificationId, int notificationDataId) {
         Call<Object> call = AppManager.getSdHttpService().readNotification(notificationId, notificationDataId);
         addCall(call);

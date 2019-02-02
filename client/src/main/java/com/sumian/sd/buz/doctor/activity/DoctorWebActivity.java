@@ -105,7 +105,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity implements BindDoct
     }
 
     @Override
-    public void setPresenter(BindDoctorContract.Presenter presenter) {
+    public void setPresenter(BindDoctorPresenter presenter) {
         this.mPresenter = (BindDoctorPresenter) presenter;
     }
 

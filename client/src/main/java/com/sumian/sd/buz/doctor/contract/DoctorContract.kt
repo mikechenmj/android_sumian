@@ -1,8 +1,8 @@
 package com.sumian.sd.buz.doctor.contract
 
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.buz.doctor.bean.Doctor
+import com.sumian.sd.buz.doctor.presenter.DoctorPresenter
 
 /**
  *
@@ -12,7 +12,7 @@ import com.sumian.sd.buz.doctor.bean.Doctor
  **/
 class DoctorContract {
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<DoctorPresenter> {
 
         fun onGetDoctorInfoSuccess(doctor: Doctor?)
 
@@ -22,7 +22,7 @@ class DoctorContract {
 
     }
 
-    interface Presenter : SdBasePresenter<Any> {
+    interface Presenter {
 
         fun getBindDoctorInfo()
 

@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.doctor.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.doctor.bean.Doctor
@@ -12,7 +13,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  * on 2018/5/30 16:30
  * desc:
  **/
-class DoctorPresenter private constructor(view: DoctorContract.View) : DoctorContract.Presenter {
+class DoctorPresenter private constructor(view: DoctorContract.View) : BaseViewModel(), DoctorContract.Presenter {
 
     private var mView: DoctorContract.View? = null
 

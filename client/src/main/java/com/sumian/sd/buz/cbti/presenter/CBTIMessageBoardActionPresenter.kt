@@ -1,15 +1,16 @@
 package com.sumian.sd.buz.cbti.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardActionContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
-class CBTIMessageBoardActionPresenter private constructor(view: CBTIMessageBoardActionContract.View) : CBTIMessageBoardActionContract.Presenter {
+class CBTIMessageBoardActionPresenter private constructor(view: CBTIMessageBoardActionContract.View) : BaseViewModel() {
 
     companion object {
         @JvmStatic
-        fun init(view: CBTIMessageBoardActionContract.View): CBTIMessageBoardActionContract.Presenter = CBTIMessageBoardActionPresenter(view)
+        fun init(view: CBTIMessageBoardActionContract.View): CBTIMessageBoardActionPresenter = CBTIMessageBoardActionPresenter(view)
     }
 
     private var mView: CBTIMessageBoardActionContract.View? = null
@@ -19,7 +20,7 @@ class CBTIMessageBoardActionPresenter private constructor(view: CBTIMessageBoard
         mView = view
     }
 
-    override fun publishMessage(message: String, type: Int, isAnonymous: Int) {
+    fun publishMessage(message: String, type: Int, isAnonymous: Int) {
         mView?.onBegin()
         val map = mutableMapOf<String, Any>()
         map["type"] = type

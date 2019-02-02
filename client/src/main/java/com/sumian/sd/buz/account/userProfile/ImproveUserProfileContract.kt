@@ -1,6 +1,5 @@
 package com.sumian.sd.buz.account.userProfile
 
-import com.sumian.sd.base.SdBasePresenter
 import com.sumian.sd.base.SdBaseView
 
 /**
@@ -12,12 +11,12 @@ import com.sumian.sd.base.SdBaseView
 interface ImproveUserProfileContract {
 
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<ImproveUserProfilePresenter> {
 
         fun onImproveUserProfileSuccess()
     }
 
-    interface Presenter : SdBasePresenter<Any> {
+    interface Presenter {
 
         fun improveUserProfile(improveKey: String, newUserProfile: String)
 

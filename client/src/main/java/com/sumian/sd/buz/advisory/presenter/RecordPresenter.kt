@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.advisory.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.advisory.bean.Advisory
@@ -12,7 +13,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  * on 2018/6/6 12:06
  * desc:
  **/
-class RecordPresenter private constructor(view: RecordContract.View) : RecordContract.Presenter {
+class RecordPresenter private constructor(view: RecordContract.View) : BaseViewModel(), RecordContract.Presenter {
 
     private var mView: RecordContract.View? = null
 

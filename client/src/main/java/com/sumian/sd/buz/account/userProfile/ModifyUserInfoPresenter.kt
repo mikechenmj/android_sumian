@@ -3,6 +3,7 @@ package com.sumian.sd.buz.account.userProfile
 import android.text.TextUtils
 import android.view.View
 import com.alibaba.fastjson.JSON
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.common.widget.picker.NumberPickerView
@@ -26,7 +27,7 @@ import kotlin.collections.ArrayList
  *
  * desc:
  */
-class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserInfoContract.View) : ModifyUserInfoContract.Presenter {
+class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserInfoContract.View) : BaseViewModel(), ModifyUserInfoContract.Presenter {
 
     init {
         mView.setPresenter(this)

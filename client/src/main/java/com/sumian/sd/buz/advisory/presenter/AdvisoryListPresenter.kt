@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.advisory.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
@@ -14,7 +15,7 @@ import retrofit2.Callback
  * on 2018/6/4 16:01
  * desc:
  **/
-class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View) : AdvisoryListContract.Presenter {
+class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View) : BaseViewModel() {
 
     private var mView: AdvisoryListContract.View? = null
 
@@ -37,14 +38,14 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         }
     }
 
-    override fun refreshAdvisories() {
+    fun refreshAdvisories() {
         this.mPageNumber = 1
         this.mIsRefresh = true
         this.mIsGetNext = false
         getAdvisories(mAdvisoryType)
     }
 
-    override fun getAdvisories(advisoryType: Int) {
+    fun getAdvisories(advisoryType: Int) {
         this.mAdvisoryType = advisoryType
 
         mView?.onBegin()
@@ -90,7 +91,7 @@ class AdvisoryListPresenter private constructor(view: AdvisoryListContract.View)
         })
     }
 
-    override fun getNextAdvisories() {
+    fun getNextAdvisories() {
         mIsGetNext = true
         getAdvisories(mAdvisoryType)
     }

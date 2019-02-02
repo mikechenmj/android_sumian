@@ -1,5 +1,7 @@
 package com.sumian.sd.base;
 
+import com.sumian.common.base.BaseViewModel;
+
 /**
  * Created by jzz
  * on 2017/4/4.
@@ -7,7 +9,7 @@ package com.sumian.sd.base;
  * desc:
  */
 @Deprecated
-public interface SdBaseView<Presenter extends SdBasePresenter> {
+public interface SdBaseView<Presenter extends BaseViewModel> {
 
     default void setPresenter(Presenter presenter) {
 

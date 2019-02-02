@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.widget.dialog.LoadingDialog;
 
@@ -35,7 +36,7 @@ import retrofit2.Call;
  * desc: base fragment
  */
 @Deprecated
-public abstract class SdBaseFragment<Presenter extends SdBasePresenter> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
+public abstract class SdBaseFragment<Presenter extends BaseViewModel> extends Fragment implements DefaultLifecycleObserver, LifecycleOwner {
 
     private static final String TAG = SdBaseFragment.class.getSimpleName();
     public Bundle mBundle;

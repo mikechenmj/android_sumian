@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class NotificationListActivity extends SdBaseActivity<NotificationListContract.Presenter>
+public class NotificationListActivity extends SdBaseActivity<NotificationListPresenter>
         implements BaseQuickAdapter.OnItemClickListener, NotificationListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final int REQUEST_CODE_OPEN_NOTIFICATION = 1;

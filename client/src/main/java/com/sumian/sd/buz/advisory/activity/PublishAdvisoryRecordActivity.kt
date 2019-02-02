@@ -51,7 +51,7 @@ import kotlin.collections.ArrayList
  * on 2018/6/8 10:40
  * desc:图文咨询上传
  **/
-class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordContact.Presenter>(), PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
+class PublishAdvisoryRecordActivity : SdBaseActivity<PublishAdvisoryRecordPresenter>(), PublishAdvisoryRecordContact.View, TitleBar.OnBackClickListener,
         TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
 
     private var mSelectOnlineRecords: ArrayList<OnlineReport>? = null

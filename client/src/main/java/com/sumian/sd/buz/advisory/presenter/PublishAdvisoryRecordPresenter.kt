@@ -14,6 +14,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider
 import com.alibaba.sdk.android.oss.model.ObjectMetadata
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
@@ -33,7 +34,7 @@ import java.util.*
  * on 2018/6/8 11:11
  * desc:
  **/
-class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRecordContact.View) : PublishAdvisoryRecordContact.Presenter {
+class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRecordContact.View) : BaseViewModel() {
 
     private val TAG = PublishAdvisoryRecordPresenter::class.java.simpleName
 
@@ -54,7 +55,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         }
     }
 
-    override fun publishAdvisoryRecord(advisoryId: Int, content: String, onlineReportIds: ArrayList<Int>?) {
+    fun publishAdvisoryRecord(advisoryId: Int, content: String, onlineReportIds: ArrayList<Int>?) {
 
         this.mView?.onBegin()
 
@@ -87,7 +88,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         })
     }
 
-    override fun publishPictureAdvisoryRecord(advisoryId: Int, content: String, onlineReportIds: ArrayList<Int>?, pictureCount: Int) {
+    fun publishPictureAdvisoryRecord(advisoryId: Int, content: String, onlineReportIds: ArrayList<Int>?, pictureCount: Int) {
 
         this.mView?.onBegin()
 
@@ -120,7 +121,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
         })
     }
 
-    override fun getLastAdvisory() {
+    fun getLastAdvisory() {
 
         this.mView?.onBegin()
 
@@ -150,7 +151,7 @@ class PublishAdvisoryRecordPresenter private constructor(view: PublishAdvisoryRe
 
     private lateinit var mLocalFilePaths: Array<String>
 
-    override fun publishImages(localFilePaths: Array<String>, oSSProgressCallback: OSSProgressCallback<PutObjectRequest>) {
+    fun publishImages(localFilePaths: Array<String>, oSSProgressCallback: OSSProgressCallback<PutObjectRequest>) {
         mPublishIndex = 0
         mView?.onStartUploadImagesCallback()
         this.mLocalFilePaths = localFilePaths

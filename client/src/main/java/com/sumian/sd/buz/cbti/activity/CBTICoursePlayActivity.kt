@@ -42,7 +42,7 @@ import kotlinx.android.synthetic.main.activity_main_cbti_lesson_detail_center.*
  * desc:CBTI 一个课时详情中心,包含播放视频,课程列表,以及课程总结等模块
  *
  */
-class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
+class CBTICoursePlayActivity : SdBaseActivity<CBTICoursePlayAuthPresenter>(), View.OnClickListener, TitleBar.OnBackClickListener, CBTIWeekPlayContract.View, CBTICourseListBottomSheet.OnCBTILessonListCallback, OnVideoViewEvent, TxVideoPlayerController.OnControllerCallback {
 
     private var mCourse: Course? = null
     private var mCoursePlayAuth: CoursePlayAuth? = null

@@ -6,6 +6,7 @@ import android.os.Handler
 import androidx.annotation.StringRes
 import com.google.gson.Gson
 import com.pingplusplus.android.Pingpp
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
@@ -27,7 +28,7 @@ import retrofit2.Callback
  * desc:
  */
 
-class PayPresenter private constructor(view: PayContract.View) : PayContract.Presenter {
+class PayPresenter private constructor(view: PayContract.View) : BaseViewModel() {
 
     private var mView: PayContract.View? = null
 
@@ -53,7 +54,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
         }
     }
 
-    override fun createPayOrder(activity: Activity, payOrder: PayOrder) {
+    fun createPayOrder(activity: Activity, payOrder: PayOrder) {
         mView?.onBegin()
         val call: Call<Any> = AppManager.getSdHttpService().createOrder(payOrder)
         addCall(call)
@@ -82,7 +83,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
 
     }
 
-    override fun checkPayOrder() {
+    fun checkPayOrder() {
         mCheckOrderCount++
         mView?.onBegin()
         val call = AppManager.getSdHttpService().getOrderDetail(mOrderNo!!)
@@ -132,7 +133,7 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
         })
     }
 
-    override fun checkCouponCode(is2Pay: Boolean, couponCode: String, packageId: Int) {
+    fun checkCouponCode(is2Pay: Boolean, couponCode: String, packageId: Int) {
         mView?.onBegin()
         val call = AppManager.getSdHttpService().checkCouponCode(couponCode, packageId)
         addCall(call)
@@ -163,18 +164,18 @@ class PayPresenter private constructor(view: PayContract.View) : PayContract.Pre
         }
     }
 
-    override fun doPay(activity: Activity) {
+    fun doPay(activity: Activity) {
         Pingpp.DEBUG = BuildConfig.DEBUG
         Pingpp.enableDebugLog(BuildConfig.DEBUG)
         Pingpp.createPayment(activity, mOrder)
     }
 
-    override fun clearPayAction() {
+    fun clearPayAction() {
         this.mOrder = null
         this.mOrderNo = null
     }
 
-    override fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent?) {
+    fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent?) {
         //支付页面返回处理
         if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
             val result = data?.extras!!.getString("pay_result")

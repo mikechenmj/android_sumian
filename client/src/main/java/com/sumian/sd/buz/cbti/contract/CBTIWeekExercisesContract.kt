@@ -1,6 +1,6 @@
 package com.sumian.sd.buz.cbti.contract
 
-import com.sumian.sd.base.SdBasePresenter
+import com.sumian.common.base.BaseViewModel
 import com.sumian.sd.base.SdBaseView
 import com.sumian.sd.buz.cbti.bean.Exercise
 
@@ -13,7 +13,7 @@ import com.sumian.sd.buz.cbti.bean.Exercise
  */
 interface CBTIWeekExercisesContract {
 
-    interface View : SdBaseView<Presenter> {
+    interface View : SdBaseView<BaseViewModel> {
 
         fun onGetCBTIWeekPracticeSuccess(exercises: List<Exercise>)
 
@@ -21,7 +21,7 @@ interface CBTIWeekExercisesContract {
     }
 
 
-    interface Presenter : SdBasePresenter<Any> {
+    interface Presenter {
 
         fun getCBTIWeekExercises(id: Int = 1)
     }

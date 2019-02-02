@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.cbti.presenter
 
+import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.app.AppManager
@@ -7,12 +8,12 @@ import com.sumian.sd.buz.cbti.bean.MessageBoard
 import com.sumian.sd.buz.cbti.contract.CBTIMessageBoardContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
-class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.View) : CBTIMessageBoardContract.Presenter {
+class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.View) : BaseViewModel() {
 
     companion object {
         private const val DEFAULT_PAGES: Int = 15
         @JvmStatic
-        fun init(view: CBTIMessageBoardContract.View): CBTIMessageBoardContract.Presenter = CBTIMsgBoardPresenter(view)
+        fun init(view: CBTIMessageBoardContract.View): CBTIMsgBoardPresenter = CBTIMsgBoardPresenter(view)
     }
 
     private var mType: Int = 0
@@ -28,12 +29,12 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
         mView = view
     }
 
-    override fun setType(type: Int) {
+    fun setType(type: Int) {
         this.mType = type
         refreshMessageBoardList()
     }
 
-    override fun getMessageBoardList(type: Int) {
+    fun getMessageBoardList(type: Int) {
         this.mType = type
         mView?.onBegin()
         val map = mutableMapOf<String, Any>()
@@ -74,14 +75,14 @@ class CBTIMsgBoardPresenter private constructor(view: CBTIMessageBoardContract.V
         })
     }
 
-    override fun refreshMessageBoardList() {
+    fun refreshMessageBoardList() {
         this.mPageNumber = 1
         this.mIsRefresh = true
         this.mIsGetNext = false
         getMessageBoardList(mType)
     }
 
-    override fun getNextMessageBoardList() {
+    fun getNextMessageBoardList() {
         if (!mIsCanLoadMore) {
             return
         }
