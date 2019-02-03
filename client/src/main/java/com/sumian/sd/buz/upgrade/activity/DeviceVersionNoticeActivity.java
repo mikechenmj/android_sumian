@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
@@ -146,8 +145,8 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     @Override
     public void showDot(boolean isShowAppDot, boolean isShowMonitorDot, boolean isShowSleepyDot) {
         mHandler.post(() -> {
-            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-            if (bluePeripheral == null || !bluePeripheral.isConnected()) {
+            boolean isDeviceConnected = DeviceManager.INSTANCE.isConnected();
+            if (!isDeviceConnected) {
                 setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
                         getString(R.string.monitor), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
                 setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
@@ -157,10 +156,10 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
             mMonitorVersionInfo.updateUpgradeInfo(isShowMonitorDot, DeviceManager.INSTANCE.getMonitorSn());
             mSleepVersionInfo.updateUpgradeInfo(isShowSleepyDot, DeviceManager.INSTANCE.getSleeperSn());
 
-            if (bluePeripheral != null && bluePeripheral.isConnected()) {
+            if (isDeviceConnected) {
                 mMonitorVersionInfo.show();
             }
-            if (bluePeripheral != null && bluePeripheral.isConnected() && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED) {
+            if (isDeviceConnected && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED) {
                 mSleepVersionInfo.show();
             }
         });

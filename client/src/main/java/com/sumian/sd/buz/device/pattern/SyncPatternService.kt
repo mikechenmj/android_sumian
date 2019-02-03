@@ -13,6 +13,7 @@ import com.sumian.blue.model.BluePeripheral
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.device.DeviceManager
 import com.sumian.sd.buz.device.command.BlueCmd
 import com.sumian.sd.buz.device.command.Cmd
 import com.sumian.sd.common.log.LogManager
@@ -150,7 +151,7 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
     }
 
     private fun getConnectedBluePeripheral(): BluePeripheral? {
-        return if (AppManager.getBlueManager().isBluePeripheralConnected) {
+        return if (DeviceManager.isConnected()) {
             AppManager.getBlueManager().bluePeripheral
         } else {
             null

@@ -3,7 +3,6 @@ package com.sumian.sd.buz.upgrade.presenter;
 import android.content.pm.PackageInfo;
 import android.text.TextUtils;
 
-import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
@@ -116,11 +115,10 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
 
     private void checkVersionInfo(DeviceVersionNoticeActivity view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
         boolean isConnected;
-        BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
         if (versionType == MONITOR_VERSION_TYPE) {
-            isConnected = bluePeripheral != null && bluePeripheral.isConnected();
+            isConnected = DeviceManager.INSTANCE.isConnected();
         } else {
-            isConnected = (bluePeripheral != null && bluePeripheral.isConnected()) && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED;
+            isConnected = DeviceManager.INSTANCE.isConnected() && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED;
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息

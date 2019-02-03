@@ -6,10 +6,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BaseFragment;
 import com.sumian.sd.R;
-import com.sumian.sd.app.AppManager;
+import com.sumian.sd.buz.device.DeviceManager;
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity;
 import com.sumian.sd.widget.RequestQrCodeView;
 
@@ -126,8 +125,7 @@ public class QrCodeFragment extends BaseFragment implements View.OnClickListener
             zxingView.startSpotAndShowRect();
 
         } else if (i == R.id.bt_action) {
-            BluePeripheral bluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-            if (bluePeripheral == null || !bluePeripheral.isConnected()) {
+            if (!DeviceManager.INSTANCE.isConnected()) {
                 ToastUtils.showShort("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
                 return;
             }

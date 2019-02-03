@@ -2,7 +2,6 @@ package com.sumian.sd.buz.device
 
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.sd.app.App
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.device.bean.BlueDevice
 import com.sumian.sd.common.utils.SystemUtil
 
@@ -70,16 +69,14 @@ class DeviceInfoFormatter {
         }
 
         private fun formatMonitorInfo(monitorInfo: String?): String {
-            val bluePeripheral = AppManager.getBlueManager().bluePeripheral
-            if (bluePeripheral == null || !bluePeripheral.isConnected) {
+            if (!DeviceManager.isConnected()) {
                 return ""
             }
             return monitorInfo ?: ""
         }
 
         private fun formatSpeedSleeperInfo(speedSleeperInfo: String?): String {
-            val bluePeripheral = AppManager.getBlueManager().bluePeripheral
-            if (bluePeripheral == null || !bluePeripheral.isConnected) {
+            if (!DeviceManager.isConnected()) {
                 return ""
             }
             val monitor = DeviceManager.getMonitorLiveData().value
